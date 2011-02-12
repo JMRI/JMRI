@@ -12,7 +12,9 @@ import jmri.*;
  *
  * Description:	    tests for the SerialTurnoutManager class
  * @author			Bob Jacobsen Copyright 2004, 2008
- * @version  $Revision: 1.7 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version  $Revision: 1.8 $
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
@@ -20,7 +22,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 	    apps.tests.Log4JFixture.setUp();
 	    
 	    // replace the SerialTrafficController
-	    SerialTrafficController t = new jmri.jmrix.powerline.cm11.SpecificTrafficController() {
+	    SerialTrafficController t = new jmri.jmrix.powerline.SerialTrafficController() {
 	        SerialTrafficController test() {
 	            setInstance();
 	            return this;
@@ -29,7 +31,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 	    t.status();	// well it uses t
 //		t.registerSerialNode(new SerialNode(0, SerialNode.DAUGHTER));
 		// create and register the manager object
-		l = new SerialTurnoutManager();
+		l = new SerialTurnoutManager(t);
 		jmri.InstanceManager.setTurnoutManager(l);
 	}
 

@@ -10,7 +10,9 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.8 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version		$Revision: 1.9 $
  */
 public class SerialNodeTest extends TestCase {
 
@@ -19,7 +21,9 @@ public class SerialNodeTest extends TestCase {
         //SerialSensor s2 = new SerialSensor("PSA2","ab");
         //SerialSensor s3 = new SerialSensor("PSA3","abc");
 
-        SerialReply r = new jmri.jmrix.powerline.cm11.SpecificReply();
+    	SerialSystemConnectionMemo memo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
+    	SerialTrafficController t = new jmri.jmrix.powerline.cm11.SpecificTrafficController(memo);
+        SerialReply r = new jmri.jmrix.powerline.cm11.SpecificReply(t);
         r.setElement(0, 0x02);
         r.setElement(1, 0x00);
 

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.InsteonSequence;
@@ -30,12 +31,15 @@ import java.io.DataInputStream;
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
  * @author			Ken Cameron Copyright (C) 2010
- * @version			$Revision: 1.8 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.9 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
-	public SpecificTrafficController() {
+	public SpecificTrafficController(SerialSystemConnectionMemo memo) {
         super();
+        this.memo = memo;
         logDebug = log.isDebugEnabled();
         
         // not polled at all, so allow unexpected messages, and
@@ -45,6 +49,8 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     }
 
+	SerialSystemConnectionMemo memo = null;
+	
     /**
      * Send a sequence of X10 messages
      * <p>
@@ -123,7 +129,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     }
         
     protected AbstractMRReply newReply() { 
-        SpecificReply reply = new SpecificReply();
+        SpecificReply reply = new SpecificReply(memo.getTrafficController());
         return reply;
     }
     

@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -34,6 +34,6 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         // load individual lights
         return loadLights(lights);
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManagerXml.class.getName());
 }

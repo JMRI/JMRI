@@ -24,7 +24,9 @@ import jmri.jmrix.powerline.*;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
- * @version     $Revision: 1.10 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.11 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
@@ -33,27 +35,31 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificLight(String systemName) {
-        super(systemName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+    public SpecificLight(String systemName, SerialTrafficController tc) {
+        super(systemName, tc);
+        this.tc = tc;
+        maxDimStep = tc.getNumberOfIntensitySteps();
     }
     /**
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificLight(String systemName, String userName) {
-        super(systemName, userName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+    public SpecificLight(String systemName, SerialTrafficController tc, String userName) {
+        super(systemName, tc, userName);
+        this.tc = tc;
+        maxDimStep = tc.getNumberOfIntensitySteps();
     }
-        
+
+	SerialTrafficController tc = null;
+	
     /**
      * Optionally, force control to a known "dim count".
      * <p>
      * Invoked the first time intensity is set.
      */
     protected void initIntensity(double intensity) {
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+        maxDimStep = tc.getNumberOfIntensitySteps();
 
         // Set initial state
             
@@ -67,7 +73,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
             // then set to full dim
             out.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
             // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
+            tc.sendX10Sequence(out, null);
 
             lastOutputStep = 0;
             
@@ -83,7 +89,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
             // then set to full dim
             out.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
             // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
+            tc.sendX10Sequence(out, null);
             
             lastOutputStep = maxDimStep;
             

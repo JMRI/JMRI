@@ -7,22 +7,31 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.powerline.SerialSystemConnectionMemo;
+import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.SerialReply;
 
 /**
- * JUnit tests for the cm11.SpecficReply class.
+ * JUnit tests for the insteon2412s.SpecficReply class.
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009, 2010
- * @version	$Revision: 1.1 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version	$Revision: 1.2 $
  */
 public class SpecificReplyTest extends TestCase {
 
-	public void testCreate() {
-		SerialReply m = new SpecificReply();
+	SerialTrafficController t = null;
+	SerialSystemConnectionMemo memo = null;
+	
+	public void testCreate(SerialTrafficController tc) {
+		memo = new SpecificSystemConnectionMemo();
+		t = new SpecificTrafficController(memo);
+		SerialReply m = new SpecificReply(t);
 		Assert.assertNotNull("exists", m );
 	}
 
 	public void testBytesToString() {
-		SerialReply m = new SpecificReply();
+		SerialReply m = new SpecificReply(t);
 		m.setOpCode(0x81);
 		m.setElement(1, (byte)0x02);
 		m.setElement(2, (byte)0xA2);

@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -56,7 +56,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 	}
 
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        adapter = new SerialDriverAdapter();
+    }
+
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
 //    /**
@@ -101,7 +105,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
      
-
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
 

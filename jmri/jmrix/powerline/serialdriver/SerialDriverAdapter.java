@@ -3,6 +3,7 @@
 package jmri.jmrix.powerline.serialdriver;
 
 import jmri.jmrix.powerline.SerialPortController;
+import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 
 import java.io.DataInputStream;
@@ -20,11 +21,22 @@ import gnu.io.SerialPortEventListener;
  * Derived from the oaktree code.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.19 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.20 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
+
+    public SerialDriverAdapter() {
+        super();
+    }
+
+    @Override
+    public SerialSystemConnectionMemo getSystemConnectionMemo() {
+    	return adaptermemo;
+    }
 
     public String openPort(String portName, String appName)  {
         try {
@@ -172,46 +184,36 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      * connected to this port
      */
     public void configure() {
+        SerialTrafficController tc = null; 
         // set up the system connection first
         String opt1 = getCurrentOption1Setting();
         if (opt1.equals("CM11")) {
             // create a CM11 port controller
-            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cm11.SpecificTrafficController());
+        	adaptermemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(adaptermemo);
         } else if (opt1.equals("CP290")) {
             // create a CP290 port controller
-            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cp290.SpecificTrafficController());
+        	adaptermemo = new jmri.jmrix.powerline.cp290.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.cp290.SpecificTrafficController(adaptermemo);
         } else if (opt1.equals("Insteon 2412S")) {
             // create an Insteon 2412s port controller
-            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController());
+        	adaptermemo = new jmri.jmrix.powerline.insteon2412s.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController(adaptermemo);
         } else {
             // no connection at all - warn
             log.warn("protocol option "+opt1+" defaults to CM11");
             // create a CM11 port controller
-            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cm11.SpecificTrafficController());
+        	adaptermemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(adaptermemo);
         }    
 
         // connect to the traffic controller
-        SerialTrafficController.instance().connectPort(this);
-
-        // define the appropriate Sensor Manager
-        if (opt1.equals("CM11")) {
-        	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.cm11.SpecificSensorManager());
-        } else if (opt1.equals("CP290")) {
-        	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.cp290.SpecificSensorManager());
-        } else if (opt1.equals("Insteon 2412S")) {
-        	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.insteon2412s.SpecificSensorManager());
-        }
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.powerline.SerialTurnoutManager());
-
-        // define the appropriate LightManager
-        if (opt1.equals("CM11")) {
-            jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.cm11.SpecificLightManager());
-        } else if (opt1.equals("CP290")) {
-            jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.cp290.SpecificLightManager());
-        } else if (opt1.equals("Insteon 2412S")) {
-            jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.insteon2412s.SpecificLightManager());
-        }   
+        adaptermemo.setTrafficController(tc);
+        tc.setAdapterMemo(adaptermemo);     
+        adaptermemo.configureManagers();
+        tc.connectPort(this);
+        // Configure the form of serial address validation for this connection
+        adaptermemo.setSerialAddress(new jmri.jmrix.powerline.SerialAddress(adaptermemo));
 
         // declare up
         jmri.jmrix.powerline.ActiveFlag.setActive();
@@ -321,11 +323,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
-        return mInstance;
-    }
-    static SerialDriverAdapter mInstance = null;
+//    static public SerialDriverAdapter instance() {
+//        if (mInstance == null) mInstance = new SerialDriverAdapter();
+//        return mInstance;
+//    }
+//    static SerialDriverAdapter mInstance = null;
 
     String manufacturerName = jmri.jmrix.DCCManufacturerList.POWERLINE;
     

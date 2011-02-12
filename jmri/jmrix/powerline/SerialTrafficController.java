@@ -26,9 +26,11 @@ import jmri.jmrix.AbstractMRTrafficController;
  * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.19 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.20 $
  */
-public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
+abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
 	public SerialTrafficController() {
         super();
@@ -40,7 +42,13 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         mWaitBeforePoll = 1000;  // can take a long time to send
 
     }
-    
+
+    /**
+     * instance use of the traffic controller is no longer used for multiple connections
+     */
+	@Deprecated
+    public void setInstance(){}
+	
     /**
      * Send a sequence of X10 messages to an adapter.
      * <p>
@@ -146,35 +154,31 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return null;
     }
 
-    /**
-     * static function returning the SerialTrafficController instance to use.
-     * @return The registered SerialTrafficController instance for general use,
-     *         if need be creating one.
-     */
-    static public SerialTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) log.debug("Creating default SerialTrafficController instance");
-            self = new SerialTrafficController();
-        }
-        return self;
-    }
+//    /**
+//     * static function returning the SerialTrafficController instance to use.
+//     * @return The registered SerialTrafficController instance for general use,
+//     *         if need be creating one.
+//     */
+//    @Deprecated
+//    public SerialTrafficController instance() {
+//        if (self == null) {
+//            if (log.isDebugEnabled()) log.debug("Creating default SerialTrafficController instance");
+//            self = new SerialTrafficController();
+//        }
+//        return self;
+//    }
 
-    static volatile SerialTrafficController self;
+	public void setAdapterMemo(SerialSystemConnectionMemo adaptermemo) {
+		memo = adaptermemo;
+	}
+	
+	public SerialSystemConnectionMemo getAdapterMemo() {
+		return memo;
+	}
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                        justification="temporary until mult-system; only set at startup")
-    protected void setInstance() {
-        self = this;
-    }
-
-    
-    static public void checkInstance(SerialTrafficController tc) { 
-        if (self != tc) {
-            log.error("mismatched TrafficController instance"); 
-            new Exception("").printStackTrace();
-        }
-    }
-
+	private SerialSystemConnectionMemo memo = null;
+	SerialTrafficController self = null;
+       
     boolean sendInterlock = false; // send the 00 interlock when CRC received
     boolean expectLength = false;  // next byte is length of read
     boolean countingBytes = false; // counting remainingBytes into reply buffer
@@ -195,6 +199,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected AbstractMRReply newReply() {return null;}
       
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficController.class.getName());
+
 }
 
 

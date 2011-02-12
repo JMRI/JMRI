@@ -3,7 +3,7 @@
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.Light;
-import jmri.jmrix.powerline.SerialAddress;
+import jmri.jmrix.powerline.SerialTrafficController;
 
 /**
  * Implement light manager for powerline serial systems with Insteon 2412S adapters
@@ -12,27 +12,32 @@ import jmri.jmrix.powerline.SerialAddress;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009
- * @version	$Revision: 1.2 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version	$Revision: 1.3 $
  */
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
 
-    public SpecificLightManager() {
-        super();
+    public SpecificLightManager(SerialTrafficController tc) {
+        super(tc);
+        this.tc = tc;
     }
+    
+    SerialTrafficController tc = null;
 
     /** 
      * Create light of a specific type for the interface
      */
     protected Light createNewSpecificLight(String systemName, String userName) {
         if (isInsteon(systemName)) {
-            return new SpecificInsteonLight(systemName, userName);
+            return new SpecificInsteonLight(systemName, tc, userName);
         } else {
-            return new SpecificX10Light(systemName, userName);
+            return new SpecificX10Light(systemName, tc, userName);
         }
     }
     
     boolean isInsteon(String systemName) {
-        return SerialAddress.isInsteon(systemName);
+        return tc.getAdapterMemo().getSerialAddress().isInsteon(systemName);
     }
 }
 

@@ -24,7 +24,9 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.8 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.9 $
  */
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 
@@ -33,8 +35,9 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificX10Light(String systemName) {
-        super(systemName);
+    public SpecificX10Light(String systemName, SerialTrafficController tc) {
+        super(systemName, tc);
+        this.tc = tc;
         // fixed number of steps for X10 Insteon
         maxDimStep = 22;
     }
@@ -44,11 +47,14 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificX10Light(String systemName, String userName) {
-        super(systemName, userName);
+    public SpecificX10Light(String systemName, SerialTrafficController tc, String userName) {
+        super(systemName, tc, userName);
+        this.tc = tc;
         maxDimStep = 22;
     }
 
+    SerialTrafficController tc = null;
+    
     // System-dependent instance variables
     
     /**
@@ -86,7 +92,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
         X10Sequence out = new X10Sequence();
         out.addExtData(housecode, devicecode, X10Sequence.EXTCMD_DIM, newStep);
         // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
+        tc.sendX10Sequence(out, null);
         lastOutputStep = newStep;
 
     	if (log.isDebugEnabled()) {

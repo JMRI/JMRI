@@ -1,6 +1,6 @@
 // SerialPacketGenFrame.java
 
-package jmri.jmrix.powerline.packetgen;
+package jmri.jmrix.powerline.swing.packetgen;
 
 import jmri.util.StringUtil;
 import jmri.jmrix.powerline.SerialMessage;
@@ -17,7 +17,9 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision: 1.5 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version	$Revision: 1.1 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.powerline.SerialListener {
 
@@ -27,9 +29,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
     javax.swing.JCheckBox interlockButton = new javax.swing.JCheckBox("Interlock");
 
-    public SerialPacketGenFrame() {
+    public SerialPacketGenFrame(SerialTrafficController tc) {
         super();
+        this.tc = tc;
     }
+    SerialTrafficController tc = null;
 
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
@@ -74,13 +78,13 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        tc.sendSerialMessage(createPacket(packetTextField.getText()), this);
     }
 
     SerialMessage createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);
-        SerialMessage m = SerialTrafficController.instance().getSerialMessage(b.length);
+        SerialMessage m = tc.getSerialMessage(b.length);
         for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
         m.setInterlocked(interlockButton.isSelected());
         return m;

@@ -3,9 +3,9 @@
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.Sensor;
+import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
-import jmri.jmrix.powerline.SerialAddress;
 import jmri.jmrix.powerline.insteon2412s.Constants;
 import jmri.util.StringUtil;
 
@@ -20,13 +20,18 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
  * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
- * @version			$Revision: 1.5 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.6 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
-    public SpecificSensorManager() {
-        super();
+    public SpecificSensorManager(SerialTrafficController tc) {
+        super(tc);
+        this.tc = tc;
     }
+    
+    SerialTrafficController tc = null;
     
     /**
      *  Process a reply to a poll of Sensors of one node
@@ -53,7 +58,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 	        			List<String> sensors = getSystemNameList();
 	        			for (int ii = 0; ii < sensors.size(); ii++) {
 	        				String sName = sensors.get(ii);
-	        				if (newHouseCode.compareTo(SerialAddress.houseCodeFromSystemName(sName)) == 0) {
+	        				if (newHouseCode.compareTo(tc.getAdapterMemo().getSerialAddress().houseCodeFromSystemName(sName)) == 0) {
 	            				sensor = provideSensor(sName);
 	        					if (sensor != null) {
 	        						try {

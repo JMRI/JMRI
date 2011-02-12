@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.cm11;
 
+import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.util.StringUtil;
@@ -11,24 +12,31 @@ import jmri.util.StringUtil;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.8 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.9 $
  */
-public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
+public class SpecificReply extends SerialReply {
 
     // create a new one
-    public  SpecificReply() {
-        super();
+    public  SpecificReply(SerialTrafficController tc) {
+        super(tc);
+        this.tc = tc;
         setBinary(true);
     }
-    public SpecificReply(String s) {
-        super(s);
+    public SpecificReply(String s, SerialTrafficController tc) {
+        super(tc, s);
+        this.tc = tc;
         setBinary(true);
     }
-    public SpecificReply(SerialReply l) {
-        super(l);
+    public SpecificReply(SerialReply l, SerialTrafficController tc) {
+        super(tc, l);
+        this.tc = tc;
         setBinary(true);
     }
 
+    SerialTrafficController tc = null;
+    
     public String toMonitorString() {
         // check for valid length
         StringBuffer sb = new StringBuffer();

@@ -5,6 +5,7 @@ package jmri.jmrix.powerline.cp290;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialListener;
@@ -23,14 +24,17 @@ import jmri.jmrix.powerline.SerialMessage;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.12 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.13 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
 	private boolean cmdOutstanding;
 	
-	public SpecificTrafficController() {
+	public SpecificTrafficController(SerialSystemConnectionMemo memo) {
         super();
+        this.memo = memo;
         logDebug = log.isDebugEnabled();
         
         // not polled at all, so allow unexpected messages, and
@@ -39,6 +43,8 @@ public class SpecificTrafficController extends SerialTrafficController {
         mWaitBeforePoll = 1000;  // can take a long time to send
 
     }
+	
+	SerialSystemConnectionMemo memo = null;
 
     /**
      * Send a sequence of X10 messages
@@ -137,7 +143,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     }
         
     protected AbstractMRReply newReply() { 
-        SpecificReply reply = new SpecificReply();
+        SpecificReply reply = new SpecificReply(memo.getTrafficController());
         return reply;
     }
     

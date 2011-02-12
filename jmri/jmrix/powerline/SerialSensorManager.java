@@ -12,20 +12,24 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.14 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.15 $
  */
-abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager
-                            implements SerialListener {
+abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
 
-    public SerialSensorManager() {
+	SerialTrafficController tc = null;
+	
+    public SerialSensorManager(SerialTrafficController tc) {
         super();
-        SerialTrafficController.instance().addSerialListener(this);
+        this.tc = tc;
+        tc.addSerialListener(this);
     }
 
-    /**
+	/**
      * Return the system letter
      */
-    public String getSystemPrefix() { return "P"; }
+    public String getSystemPrefix() { return tc.getAdapterMemo().getSystemPrefix(); }
 
     // to free resources when no longer used
     public void dispose() {
@@ -39,7 +43,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
         if (sName=="") {
             // system name is not valid
             log.error("Invalid Sensor system name - "+systemName);
@@ -53,9 +57,9 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null)
-            s = new SerialSensor(sName);
+            s = new SerialSensor(sName, tc);
         else
-            s = new SerialSensor(sName, userName);
+            s = new SerialSensor(sName, tc, userName);
 
         return s;
     }

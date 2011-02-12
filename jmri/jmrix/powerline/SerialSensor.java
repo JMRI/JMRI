@@ -8,20 +8,26 @@ import jmri.implementation.AbstractSensor;
  * Extend jmri.AbstractSensor for serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.5 $
  */
 public class SerialSensor extends AbstractSensor {
 
-    public SerialSensor(String systemName) {
+    public SerialSensor(String systemName, SerialTrafficController tc) {
         super(systemName);
+        this.tc = tc;
         _knownState = UNKNOWN;
     }
 
-    public SerialSensor(String systemName, String userName) {
+    public SerialSensor(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);
+        this.tc = tc;
         _knownState = UNKNOWN;
     }
 
+    SerialTrafficController tc = null;
+    
     /**
      * Request an update on status.
      * <P>

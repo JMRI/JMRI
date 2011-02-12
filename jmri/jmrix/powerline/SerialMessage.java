@@ -19,7 +19,9 @@ package jmri.jmrix.powerline;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.7 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version   $Revision: 1.8 $
  */
 
 abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -42,7 +44,7 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * sequence to send, byte-for-byte.
      * @param m
      */
-    public  SerialMessage(String m,int l) {
+    public SerialMessage(String m, int l) {
         super(m);
         setResponseLength(l);
         setBinary(true);
@@ -78,14 +80,6 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
     static public SerialMessage getPoll(int addr) {
-        // eventually this will have to include logic for reading 
-        // various bytes on the card, but our supported 
-        // cards don't require that yet
-        // SerialMessage m = new SerialMessage(1);
-        // m.setResponseLength(2);
-        // m.setElement(0, addr);
-        //  m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
-        
         // Powerline implementation does not currently poll
         return null;
     }

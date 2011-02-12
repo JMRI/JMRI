@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline.cm11;
 
+import jmri.jmrix.powerline.SerialTrafficController;
+
 /**
  * Implementation of the Light Object for X10 CM11 interfaces.
  * <P>
@@ -23,7 +25,9 @@ package jmri.jmrix.powerline.cm11;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.12 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.13 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
          
@@ -32,18 +36,22 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificLight(String systemName) {
-        super(systemName);
+    public SpecificLight(String systemName, SerialTrafficController tc) {
+        super(systemName, tc);
+        this.tc = tc;
     }
     /**
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificLight(String systemName, String userName) {
-        super(systemName, userName);
+    public SpecificLight(String systemName, SerialTrafficController tc, String userName) {
+        super(systemName, tc, userName);
+        this.tc = tc;
     }
 
+    SerialTrafficController tc = null;
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificLight.class.getName());
 }
 

@@ -1,6 +1,6 @@
  // SerialMonFrame.java
 
-package jmri.jmrix.powerline.serialmon;
+package jmri.jmrix.powerline.swing.serialmon;
 
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
@@ -10,24 +10,30 @@ import jmri.jmrix.powerline.SerialTrafficController;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version         $Revision: 1.13 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version         $Revision: 1.1 $
  */
 
+@Deprecated
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    public SerialMonFrame(SerialTrafficController tc) {
         super();
+        this.tc = tc;
     }
+    
+    SerialTrafficController tc = null;
 
     protected String title() { return "Powerline Device Command Monitor"; }
 
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        tc.addSerialListener(this);
     }
 
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        tc.removeSerialListener(this);
         super.dispose();
     }
 

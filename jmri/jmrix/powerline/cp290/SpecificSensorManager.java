@@ -3,10 +3,10 @@
 package jmri.jmrix.powerline.cp290;
 
 import jmri.Sensor;
+import jmri.jmrix.powerline.SerialSensorManager;
+import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
-//import jmri.jmrix.powerline.SerialAddress;
-//import jmri.jmrix.powerline.cp290.Constants;
 
 /**
  * Manage the system-specific Sensor implementation.
@@ -20,12 +20,14 @@ import jmri.jmrix.powerline.SerialReply;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
- * @version			$Revision: 1.4 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.5 $
  */
-public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
+public class SpecificSensorManager extends SerialSensorManager {
 
-    public SpecificSensorManager() {
-        super();
+    public SpecificSensorManager(SerialTrafficController tc) {
+        super(tc);
     }
     
     /**

@@ -8,7 +8,7 @@ import javax.swing.*;
  * Definition of objects to handle configuring a layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -47,6 +47,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public boolean isOptList1Advanced() { return false; }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    SerialDriverAdapter adapter = null;
+    
+    protected void setInstance() { 
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
+    }
+    
 }
 

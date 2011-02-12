@@ -16,7 +16,9 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for powerline serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.12 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.13 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -25,13 +27,16 @@ public class SerialTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName) {
+    public SerialTurnout(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);
+        this.tc = tc;
         // Convert to the two-part X10 address
-        housecode = SerialAddress.houseCodeAsValueFromSystemName(getSystemName());
-        devicecode = SerialAddress.deviceCodeAsValueFromSystemName(getSystemName());
+        housecode = tc.getAdapterMemo().getSerialAddress().houseCodeAsValueFromSystemName(getSystemName());
+        devicecode = tc.getAdapterMemo().getSerialAddress().deviceCodeAsValueFromSystemName(getSystemName());
     }
 
+    SerialTrafficController tc = null;
+    
     /**
      * Handle a request to change state by sending a turnout command
      */
@@ -77,7 +82,7 @@ public class SerialTurnout extends AbstractTurnout {
         out.addAddress(housecode, devicecode);
         out.addFunction(housecode, (closed ? X10Sequence.FUNCTION_OFF : X10Sequence.FUNCTION_ON), 0);
         // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
+        tc.sendX10Sequence(out, null);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnout.class.getName());

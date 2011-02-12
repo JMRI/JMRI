@@ -10,13 +10,15 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version	$Revision: 1.8 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version	$Revision: 1.9 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
     public void testSensorCreationAndRegistration() {
 	    // replace the SerialTrafficController to get clean reset
-	    SerialTrafficController t = new jmri.jmrix.powerline.cm11.SpecificTrafficController() {
+	    SerialTrafficController t = new jmri.jmrix.powerline.SerialTrafficController() {
 	        SerialTrafficController test() {
 	            setInstance();
 	            return this;
@@ -24,7 +26,8 @@ public class SerialSensorManagerTest extends TestCase {
          }.test();
          Assert.assertNotNull("exists", t );
          
-        SerialSensorManager s = new SerialSensorManager(){
+         
+        SerialSensorManager s = new SerialSensorManager(t){
             public void reply(SerialReply r) {}
         };
         s.provideSensor("PSA3");

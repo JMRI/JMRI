@@ -3,6 +3,7 @@
 package jmri.jmrix.powerline.cp290;
 
 import jmri.Light;
+import jmri.jmrix.powerline.SerialTrafficController;
 
 /**
  * Implement light manager for powerline serial systems with CP290 adapters
@@ -11,19 +12,24 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.1 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version	$Revision: 1.2 $
  */
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
 
-    public SpecificLightManager() {
-        super();
+    public SpecificLightManager(SerialTrafficController tc) {
+        super(tc);
+        this.tc = tc;
     }
+    
+    SerialTrafficController tc = null;
 
     /** 
      * Create light of a specific type for the interface
      */
     protected Light createNewSpecificLight(String systemName, String userName) {
-        return new SpecificLight(systemName, userName);
+        return new SpecificLight(systemName, tc, userName);
     }
     
 }

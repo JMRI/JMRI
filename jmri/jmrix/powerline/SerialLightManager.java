@@ -12,17 +12,22 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.10 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version	$Revision: 1.11 $
  */
 abstract public class SerialLightManager extends AbstractLightManager {
 
-    public SerialLightManager() {
+	SerialTrafficController tc = null;
+	
+    public SerialLightManager(SerialTrafficController tc) {
+        super();
+        this.tc = tc;
     }
-
     /**
      *  Returns the system letter
      */
-    public String getSystemPrefix() { return "P"; }
+    public String getSystemPrefix() { return tc.getAdapterMemo().getSystemPrefix(); }
     
     /**
      * Method to create a new Light based on the system name
@@ -33,9 +38,9 @@ abstract public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
-        if ( SerialAddress.validSystemNameFormat(systemName,'L') ) {
+        if ( tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L') ) {
             lgt = createNewSpecificLight(systemName,userName); 
-            if (!SerialAddress.validSystemNameConfig(systemName,'L')) {
+            if (!tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName,'L')) {
                 log.warn("Light system Name does not refer to configured hardware: "
                                                             +systemName);
             }
@@ -56,7 +61,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      *   returns 'true' if system name has a valid format, else returns 'false'
      */
     public boolean validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName,'L'));
+        return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName,'L'));
         }
 
     /**
@@ -65,7 +70,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      *      else returns 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName,'L'));
+        return (tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName,'L'));
     }
     
     /**
@@ -75,7 +80,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      *      else returns "".
      */
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return (tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName));
     }
 	/**
 	 * Returns 'true' to indicate this system can support variable lights
@@ -86,4 +91,4 @@ abstract public class SerialLightManager extends AbstractLightManager {
 
 }
 
-/* @(#)SerialLighttManager.java */
+/* @(#)SerialLightManager.java */

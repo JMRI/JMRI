@@ -14,25 +14,35 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
-//import jmri.jmrix.powerline.SerialNode;
+import jmri.jmrix.powerline.SerialSystemConnectionMemo;
+import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialPortController;
 
 /**
  * JUnit tests for the SpecificTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.5 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version $Revision: 1.6 $
  */
 public class SpecificTrafficControllerTest extends TestCase {
 
-    public void testCreate() {
-        SpecificTrafficController m = new SpecificTrafficController();
+	SerialTrafficController t = null;
+	SerialSystemConnectionMemo memo = null;
+	
+    public void testCreate(SerialTrafficController tc) {
+        SpecificSystemConnectionMemo m = new SpecificSystemConnectionMemo();
+    	t = new SpecificTrafficController(m);
         Assert.assertNotNull("exists", m );
     }
     
     // inner class to give access to protected endOfMessage method
     class TestSerialTC extends SpecificTrafficController {
-        boolean testEndOfMessage(SerialReply r) {
+        public TestSerialTC(SerialSystemConnectionMemo memo) {
+			super(memo);
+		}
+		boolean testEndOfMessage(SerialReply r) {
             return endOfMessage(r);
         }
         protected void forwardToPort(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener reply){
@@ -40,15 +50,15 @@ public class SpecificTrafficControllerTest extends TestCase {
     }
     
     public void testReceiveStates1() {
-        TestSerialTC c = new TestSerialTC();
-        SerialReply r = new SpecificReply();
+        TestSerialTC c = new TestSerialTC(memo);
+        SerialReply r = new SpecificReply(t);
 
         r.setElement(0, 0x12);
         Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
     }
     public void testReceiveStatesRead() {
-        TestSerialTC c = new TestSerialTC();
-        SerialReply r = new SpecificReply();
+        TestSerialTC c = new TestSerialTC(memo);
+        SerialReply r = new SpecificReply(t);
 
         r.setElement(0, 0x5A);        
         Assert.assertTrue("wait for read", !c.testEndOfMessage(r));
@@ -66,7 +76,7 @@ public class SpecificTrafficControllerTest extends TestCase {
         Assert.assertTrue("3rd byte", c.testEndOfMessage(r));
     
         // and next reply OK
-        r = new SpecificReply();
+        r = new SpecificReply(t);
         r.setElement(0, 0x12);        
         Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
         

@@ -25,7 +25,9 @@ import jmri.util.StringUtil;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.6 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.7 $
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -48,20 +50,24 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificInsteonLight(String systemName) {
-        super(systemName);
-        // maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+    public SpecificInsteonLight(String systemName, SerialTrafficController tc) {
+        super(systemName, tc);
+        this.tc = tc;
+        // maxDimStep = tc.getNumberOfIntensitySteps();
     }
     /**
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificInsteonLight(String systemName, String userName) {
-        super(systemName, userName);
-        //maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+    public SpecificInsteonLight(String systemName, SerialTrafficController tc, String userName) {
+        super(systemName, tc, userName);
+        this.tc = tc;
+        //maxDimStep = tc.getNumberOfIntensitySteps();
     }
 
+    SerialTrafficController tc = null;
+    
     /**
      * Invoked the first time intensity is set.
      * @param intensity The next intensity value that will be set
@@ -108,7 +114,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         InsteonSequence out = new InsteonSequence();
         out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, Constants.FLAG_STD, Constants.CMD_LIGHT_CHG, newStep);
         // send
-        SerialTrafficController.instance().sendInsteonSequence(out, null);
+        tc.sendInsteonSequence(out, null);
 
     	if (log.isDebugEnabled()) {
     	    log.debug("sendIntensity(" + intensity + ") addr " + idhighbyte + idmiddlebyte + idlowbyte + " newStep " + newStep);
@@ -154,7 +160,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         InsteonSequence out = new InsteonSequence();
         out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, Constants.FLAG_STD, command1, 0);
         // send
-        SerialTrafficController.instance().sendInsteonSequence(out, null);
+        tc.sendInsteonSequence(out, null);
 
         if (log.isDebugEnabled()) {
             log.debug("end sendOnOff(" + newState + ")  insteon " + StringUtil.twoHexFromInt(idhighbyte) + "." + StringUtil.twoHexFromInt(idmiddlebyte) + "." + StringUtil.twoHexFromInt(idlowbyte) + " cmd1: " + command1);

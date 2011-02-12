@@ -8,7 +8,9 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.powerline.SerialTurnout class
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.8 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version			$Revision: 1.9 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -17,7 +19,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 	public void setUp() {
 		// prepare an interface
 		tcis = new SerialTrafficControlScaffold();
-		t = new SerialTurnout("PTA4","tA4");
+		t = new SerialTurnout("PTA4", tcis, "tA4");
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

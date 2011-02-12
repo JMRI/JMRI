@@ -21,7 +21,9 @@ package jmri.jmrix.powerline;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.5 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.6 $
  */
 public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
@@ -46,20 +48,25 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialX10Light(String systemName) {
-        super(systemName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+    public SerialX10Light(String systemName, SerialTrafficController tc) {
+        super(systemName, tc);
+        this.tc = tc;
+        maxDimStep = tc.getNumberOfIntensitySteps();
     }
+    
     /**
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialX10Light(String systemName, String userName) {
-        super(systemName, userName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+    public SerialX10Light(String systemName, SerialTrafficController tc, String userName) {
+        super(systemName, tc, userName);
+        this.tc = tc;
+        maxDimStep = tc.getNumberOfIntensitySteps();
     }
 
+    SerialTrafficController tc = null;
+    
     /**
      * Optionally, force control to a known "dim count".
      * <p>
@@ -71,7 +78,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
             log.debug("initIntensity("+intensity+")");
     	}
         
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+        maxDimStep = tc.getNumberOfIntensitySteps();
 
         // Set initial state
             
@@ -81,12 +88,12 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
             X10Sequence out3 = new X10Sequence();
             out3.addAddress(housecode, devicecode);
             out3.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
-            SerialTrafficController.instance().sendX10Sequence(out3, null);
+            tc.sendX10Sequence(out3, null);
             // going to low, send max dim count low
             X10Sequence out2 = new X10Sequence();
             out2.addAddress(housecode, devicecode);
             out2.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
-            SerialTrafficController.instance().sendX10Sequence(out2, null);
+            tc.sendX10Sequence(out2, null);
 
             lastOutputStep = 0;
             
@@ -98,13 +105,13 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
             X10Sequence out3 = new X10Sequence();
             out3.addAddress(housecode, devicecode);
             out3.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
-            SerialTrafficController.instance().sendX10Sequence(out3, null);
+            tc.sendX10Sequence(out3, null);
             // going to high, send max dim count high
             X10Sequence out2 = new X10Sequence();
             out2.addAddress(housecode, devicecode);
             out2.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
             // send
-            SerialTrafficController.instance().sendX10Sequence(out2, null);
+            tc.sendX10Sequence(out2, null);
             
             lastOutputStep = maxDimStep;
             
@@ -149,7 +156,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         X10Sequence out = new X10Sequence();
         out.addExtData(housecode, devicecode, X10Sequence.EXTCMD_DIM, newStep);
         // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
+        tc.sendX10Sequence(out, null);
         lastOutputStep = newStep;
 
     	if (log.isDebugEnabled()) {
@@ -162,7 +169,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
      * maintained in specific SerialTrafficController implementation
      */
     protected int getNumberOfSteps() {
-        return SerialTrafficController.instance().getNumberOfIntensitySteps();
+        return tc.getNumberOfIntensitySteps();
     }
     
     /**
@@ -196,7 +203,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         out.addAddress(housecode, devicecode);
         out.addFunction(housecode, function, 0);
         // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
+        tc.sendX10Sequence(out, null);
         
     	if (log.isDebugEnabled()) {
     		log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " funct: " + function);

@@ -16,23 +16,34 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialPortController;
+import jmri.jmrix.powerline.SerialSystemConnectionMemo;
+import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.insteon2412s.Constants;
 
 /**
  * JUnit tests for the SpecificTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008, 2009
- * @version $Revision: 1.3 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version $Revision: 1.4 $
  */
 public class SpecificTrafficControllerTest extends TestCase {
 
+	SerialTrafficController t = null;
+	SerialSystemConnectionMemo m = null;
+	
     public void testCreate() {
-        SpecificTrafficController m = new SpecificTrafficController();
+    	this.m = new SpecificSystemConnectionMemo();
+    	this.t = new SpecificTrafficController(m);
         Assert.assertNotNull("exists", m );
     }
     
     // inner class to give access to protected endOfMessage method
     class TestSerialTC extends SpecificTrafficController {
-        boolean testEndOfMessage(SerialReply r) {
+        public TestSerialTC(SerialSystemConnectionMemo m) {
+			super(m);
+		}
+		boolean testEndOfMessage(SerialReply r) {
             return endOfMessage(r);
         }
         protected void forwardToPort(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener reply){
@@ -40,8 +51,8 @@ public class SpecificTrafficControllerTest extends TestCase {
     }
     
     public void testReceiveStates1() {
-        TestSerialTC c = new TestSerialTC();
-        SerialReply r = new SpecificReply();
+        TestSerialTC c = new TestSerialTC(m);
+        SerialReply r = new SpecificReply(t);
 
         r.setElement(0, Constants.HEAD_STX);
         Assert.assertTrue("STX", !c.testEndOfMessage(r));
@@ -51,8 +62,8 @@ public class SpecificTrafficControllerTest extends TestCase {
     }
     public void testReceiveStatesRead() {
     	// build a dim for address 11.22.33 to 50%
-        TestSerialTC c = new TestSerialTC();
-        SerialReply r = new SpecificReply();
+        TestSerialTC c = new TestSerialTC(m);
+        SerialReply r = new SpecificReply(t);
 
         r.setElement(0, Constants.HEAD_STX);        
         Assert.assertTrue("wait for read", !c.testEndOfMessage(r));

@@ -8,21 +8,28 @@ package jmri.jmrix.powerline;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.4 $
  */
 abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
+	SerialTrafficController tc = null;
+	
     // create a new one
-    public  SerialReply() {
+    public  SerialReply(SerialTrafficController tc) {
         super();
+        this.tc = tc;
         setBinary(true);
     }
-    public SerialReply(String s) {
+    public SerialReply(SerialTrafficController tc, String s) {
         super(s);
+        this.tc = tc;
         setBinary(true);
     }
-    public SerialReply(SerialReply l) {
+    public SerialReply(SerialTrafficController tc, SerialReply l) {
         super(l);
+        this.tc = tc;
         setBinary(true);
     }
 

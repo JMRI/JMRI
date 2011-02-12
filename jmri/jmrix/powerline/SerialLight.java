@@ -3,7 +3,6 @@
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractVariableLight;
-import jmri.jmrix.powerline.SerialAddress;
 
 /**
  * Implementation of the Light Object for Powerline devices.
@@ -27,7 +26,9 @@ import jmri.jmrix.powerline.SerialAddress;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.28 $
+ * Converted to multiple connection
+ * @author kcameron Copyright (C) 2011
+ * @version     $Revision: 1.29 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -36,8 +37,9 @@ abstract public class SerialLight extends AbstractVariableLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName) {
+    public SerialLight(String systemName, SerialTrafficController tc) {
         super(systemName);
+        this.tc = tc;
         // Initialize the Light
         initializeLight();
     }
@@ -46,11 +48,14 @@ abstract public class SerialLight extends AbstractVariableLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName, String userName) {
+    public SerialLight(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);
+        this.tc = tc;
         initializeLight();
     }
         
+    SerialTrafficController tc = null;
+    
     /**
      * Invoked from constructors to set up details.
      * Note: most instance variables are in AbstractLight and
@@ -58,13 +63,13 @@ abstract public class SerialLight extends AbstractVariableLight {
      */
     protected void initializeLight() {
         // Convert to the two-part X10 address
-        housecode = SerialAddress.houseCodeAsValueFromSystemName(getSystemName());
-        devicecode = SerialAddress.deviceCodeAsValueFromSystemName(getSystemName());
+        housecode = tc.getAdapterMemo().getSerialAddress().houseCodeAsValueFromSystemName(getSystemName());
+        devicecode = tc.getAdapterMemo().getSerialAddress().deviceCodeAsValueFromSystemName(getSystemName());
         // not an X10, try Insteon
         if (housecode == -1) {
-        	idhighbyte = SerialAddress.idHighCodeAsValueFromSystemName(getSystemName());
-        	idmiddlebyte = SerialAddress.idMiddleCodeAsValueFromSystemName(getSystemName());
-        	idlowbyte = SerialAddress.idLowCodeAsValueFromSystemName(getSystemName());
+        	idhighbyte = tc.getAdapterMemo().getSerialAddress().idHighCodeAsValueFromSystemName(getSystemName());
+        	idmiddlebyte = tc.getAdapterMemo().getSerialAddress().idMiddleCodeAsValueFromSystemName(getSystemName());
+        	idlowbyte = tc.getAdapterMemo().getSerialAddress().idLowCodeAsValueFromSystemName(getSystemName());
         }
     }
     
@@ -117,7 +122,7 @@ abstract public class SerialLight extends AbstractVariableLight {
         out.addAddress(housecode, devicecode);
         out.addFunction(housecode, function, 0);
         // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
+        tc.sendX10Sequence(out, null);
 
  	    if (log.isDebugEnabled()) {
  		    log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " funct: " + function);
