@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -278,6 +278,8 @@ public final static int OPC_SW_STATE      = 0xbc;
 public final static int OPC_SW_ACK        = 0xbd;
 public final static int OPC_LOCO_ADR      = 0xbf;
 public final static int OPC_MULTI_SENSE   = 0xd0;
+public final static int OPC_PANEL_RESPONSE= 0xd7; // Undocumented name
+public final static int OPC_PANEL_QUERY   = 0xdf; // Undocumented name
 public final static int OPC_PEER_XFER     = 0xe5;
 public final static int OPC_SL_RD_DATA    = 0xe7;
 public final static int OPC_IMM_PACKET    = 0xed;
@@ -308,6 +310,8 @@ public final static String OPC_NAME(int opcode) { // encode LocoNet Opcode as a 
 		(opcode == OPC_SW_ACK)      ? "OPC_SW_ACK"  :
 		(opcode == OPC_LOCO_ADR)    ? "OPC_LOCO_ADR"  :
 		(opcode == OPC_MULTI_SENSE) ? "OPC_MULTI_SENSE"  :
+		(opcode == OPC_PANEL_QUERY) ? "OPC_PANEL_QUERY"  :
+		(opcode == OPC_PANEL_RESPONSE) ? "OPC_PANEL_RESPONSE"  :
 		(opcode == OPC_PEER_XFER)   ? "OPC_PEER_XFER"  :
 		(opcode == OPC_SL_RD_DATA)  ? "OPC_SL_RD_DATA"  :
 		(opcode == OPC_IMM_PACKET)  ? "OPC_IMM_PACKET"  :

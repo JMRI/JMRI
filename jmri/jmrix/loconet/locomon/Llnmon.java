@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.48 $
+ * @version			$Revision: 1.49 $
  */
 public class Llnmon {
 
@@ -154,7 +154,7 @@ public class Llnmon {
              * OPC_IDLE         0x85   ;FORCE IDLE state, Broadcast emergency STOP *
              **********************************************************************/
         case LnConstants.OPC_IDLE:                  /* page 8 of Loconet PE */
-            return "Force Idle, Emergency STOP\n";
+            return "Force Idle, Broadcast Emergency STOP\n";
 
             /*****************************************
              * ; 4 byte MESSAGE OPCODES               *
@@ -229,7 +229,11 @@ public class Llnmon {
              ************************************************************************************/
         case LnConstants.OPC_RQ_SL_DATA: {           /* page 8 of Loconet PE */
             int slot = l.getElement(1);
-            return "Request data/status for slot "+slot+"\n";
+			if (slot == 123) {
+				return "Request Fast Clock information\n";
+			} else {
+				return "Request data/status for slot "+slot+"\n";
+			}
         }
 
             /*******************************************************************************
@@ -339,19 +343,19 @@ public class Llnmon {
 
             switch (opcode | 0x80) {
             case (LnConstants.OPC_LOCO_ADR):             /* response for OPC_LOCO_ADR */
-                return "LONG_ACK: No free slot\n";
+                return "LONG_ACK: NO FREE SLOTS!\n";
 
             case (LnConstants.OPC_LINK_SLOTS):           /* response for OPC_LINK_SLOTS */
-                return "LONG_ACK: Invalid consist\n";
+                return "LONG_ACK: Invalid consist, unable to link\n";
 
             case (LnConstants.OPC_SW_ACK):               /* response for OPC_SW_ACK   */
                 if (ack1 == 0) {
-                    return "LONG_ACK: The DCS-100 FIFO is full, the switch command was rejected\n";
+                    return "LONG_ACK: The Command Station FIFO is full, the switch command was rejected\n";
                 } else if (ack1 == 0x7f) {
-                    return "LONG_ACK: The DCS-100 accepted the switch command\n";
+                    return "LONG_ACK: The Command Station accepted the switch command\n";
                 } else {
                     forceHex = true;
-                    return "LONG_ACK: Unknown response to 'Request Switch with ACK' command, 0x"+Integer.toHexString(ack1)+"\n";
+                    return "LONG_ACK: Unknown response to 'Request Switch with ACK' command, value 0x"+Integer.toHexString(ack1)+"\n";
                 }
 
             case (LnConstants.OPC_SW_REQ):               /* response for OPC_SW_REQ */
@@ -370,7 +374,7 @@ public class Llnmon {
                     return "LONG_ACK: Function not implemented, no reply will follow\n";
                 } else {
                     forceHex = true;
-                    return "LONG_ACK: Unknown response to Write Slot Data message 0x"+Integer.toHexString(ack1)+"\n";
+                    return "LONG_ACK: Unknown response to Write Slot Data message value 0x"+Integer.toHexString(ack1)+"\n";
                 }
 
             case (LnConstants.OPC_SW_STATE):
@@ -394,7 +398,7 @@ public class Llnmon {
                     return "LONG_ACK: the Send IMM Packet command was accepted\n";
                 } else {
                     forceHex = true;
-                    return "Unknown reponse to Send IMM Packet message 0x"+Integer.toHexString(ack1)+"\n";
+                    return "Unknown reponse to Send IMM Packet message value 0x"+Integer.toHexString(ack1)+"\n";
                 }
 
             case LnConstants.OPC_IMM_PACKET_2:    /* special response to OPC_IMM_PACKET */
@@ -429,34 +433,22 @@ public class Llnmon {
         case LnConstants.OPC_INPUT_REP:             /* page 9 of Loconet PE */
             int in1 = l.getElement(1);
             int in2 = l.getElement(2);
+			int sensor = (SENSOR_ADR(in1, in2)-1)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1);
 
-            String bdl = " (BDL16 "+((in1+(in2&0xF)*128)/8+1)+",";
-            int ch = 0;
-            if ( ((in1/2) & 3) == 0 ) ch = 0;
-            else if ( ((in1/2) & 3) == 1 ) ch = 4;
-            else if ( ((in1/2) & 3) == 2 ) ch = 8;
-            else ch = 12;
-            if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) ch+=4;
-            else if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)==0) ) ch+=3;
-            else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) ch+=2;
-            else ch+=1;
-            bdl = bdl+ch+")";
-
-            String ds = " (DS54 switch "+SENSOR_ADR(in1,in2)
-                +((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input)" : " Aux input)");
-
-            int sechannel =  (in1+(in2&0xF)*128)/8+ch;
-            int senum = (sechannel-1)/8+1;
-            String se = " (SE8c "+senum+" input "+sechannel+") ";
-            
-            return "General sensor input report: contact "+
-                ((SENSOR_ADR(in1, in2)-1)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1))
-                +((in2 & LnConstants.OPC_INPUT_REP_CB)!=0 ? bdl+ds : se)+
-                " is "+
-                ((in2 & LnConstants.OPC_INPUT_REP_HI)!=0 ? "Hi" : "Lo")
-                +"\n";
-
-
+			int bdlid = ((sensor - 1) / 16) + 1;
+			int bdlin = ((sensor - 1) % 16) + 1;
+			String bdl = "BDL16 ID " + bdlid + " Input DS" + bdlin;
+			
+			int boardid = ((sensor - 1) / 8) + 1;
+			int boardindex = ((sensor - 1) % 8); // Arrays start at 0.
+			String ds54sensors[] = { "AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD" };
+			String ds64sensors[] = { "A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4" };
+			String sec8sensors[] = { "DS01", "SW01", "DS02", "SW02", "DS03", "SW03", "DS04", "SW04" };
+				
+			return "Sensor " + sensor + " is " + ((in2 & LnConstants.OPC_INPUT_REP_HI)!=0 ? "Hi" : "Lo")
+				+  ".  (" + bdl + " or DS54/64/SEC8 board " + boardid + " Input "
+				+  ds54sensors[boardindex] + "/" + ds64sensors[boardindex] + "/" + sec8sensors[boardindex] + ")\n";
+		
             /***************************************************************************************
              * OPC_SW_REP       0xB1   ; Turnout SENSOR state REPORT                                *
              *                         ; <0xB1>,<SN1>,<SN2>,<CHK> SENSOR state REPORT               *
@@ -552,14 +544,40 @@ public class Llnmon {
                     ((sw2 & LnConstants.OPC_SW_REQ_OUT)!=0 ? "On"     : "Off")+"\n";
 
             } else if ( ((sw2 & 0xCF) == 0x07)  && ((sw1 & 0xFC) == 0x78) ) { // broadcast address LPU V1.0 page 13
-                retVal = "Request switch command is Interrogate LocoNet with bits "+
-                    "a="+ ((sw2 & 0x20)>>5) +
-                    " c="+ ((sw1&0x02)>>1) +
-                    " b="+ ((sw1&0x01)) +
-                    "\n\tOutput "+
-                    ((sw2 & LnConstants.OPC_SW_REQ_OUT)!=0 ? "On"     : "Off")+"\n"+
-                    ( ( (sw2&0x10) == 0 ) ? "" : "\tNote 0x10 bit in sw2 is unexpectedly 0\n");
-
+				// The purpose of these queries is to tickle all sensors in a range to report their
+				// status.  Command stations generally do this after a global power on event.
+				
+				// This has to be the most bizarre ordering ever, but it's right from the manual.
+				int a = (sw2 & 0x20)>>5;
+				int b = (sw1&0x01);
+				int c = (sw1&0x02)>>1;
+				
+				// This is a fair amount of work to pretty print the list, but it is worth it, IMHO.
+				int topbits = 0;
+				int midbits = (a << 2) + (c << 1) + b;
+				int count = 0;
+				String sensors = "";
+				for (topbits = 0; topbits < 32; topbits++) {
+					// The extra "+1" adjusts for the fact that we show 1-2048, rather than 0-2047 on the wire.
+					int lval = (topbits << 6) + (midbits << 3) + 1;
+					int hval = lval + 7 + 1;
+					
+					if ((count % 8) > 0) {
+						sensors = sensors + ", ";
+					} else {
+						if (count == 0) {
+							sensors = sensors + "\t";
+						} else {
+							sensors = sensors + ",\n\t";
+						}
+					}
+					sensors = sensors + lval + "-" + hval;
+					count++;
+				}
+				sensors = sensors + "\n";
+				
+				retVal = "Interrogate LocoNet Sensors with bits a/c/b of " + a + "/" + c + "/" + b + "; sensors...\n"
+				       + sensors;
             } else { // normal command
                 retVal = "Requesting Switch at "+
                     SENSOR_ADR(sw1, sw2)+
@@ -589,7 +607,7 @@ public class Llnmon {
                 +((snd & LnConstants.SND_F7) != 0  ? "On"  : "Off")
                 +", Sound4/F8="
                 +((snd & LnConstants.SND_F8) != 0  ? "On"  : "Off")
-                +"\n";
+                +".\n";
       	}
 
             /****************************************************
@@ -614,7 +632,7 @@ public class Llnmon {
                     +((dirf & LnConstants.DIRF_F3) != 0  ? "On, "  : "Off,")
                     +" F4="
                     +((dirf & LnConstants.DIRF_F4) != 0  ? "On"    : "Off")
-                    +"\n";
+                    +".\n";
             }
 
 
@@ -628,7 +646,7 @@ public class Llnmon {
             if (spd == LnConstants.OPC_LOCO_SPD_ESTOP) { /* emergency stop */
                 return "Set speed of loco in slot "+slot+" to EMERGENCY STOP!\n";
             } else {
-                return "Set speed of loco in slot "+slot+" to "+spd+"\n";
+                return "Set speed of loco in slot "+slot+" to "+spd+".\n";
             }
         }
 
@@ -679,7 +697,7 @@ public class Llnmon {
                     m+=l.getElement(4)+" (short) ";
                 else
                     m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
-                return m+"\n";
+                return m+".\n";
             case LnConstants.OPC_MULTI_SENSE_ABSENT:
                 m =  "Transponder absent in section "+section
                 	+" zone "+zone+" decoder address ";
@@ -687,13 +705,57 @@ public class Llnmon {
                     m+=l.getElement(4)+" (short) ";
                 else
                     m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
-                return m+"\n";
+                return m+".\n";
             default:
                 forceHex = true;
                 return "OPC_MULTI_SENSE unknown format\n";
             }
         }
+				
+				/************************************************************************
+				 * OPC_PANEL_QUERY      0xDF messages query panels and/o                 *
+				 *                           set the LocoNet                             *
+				 *************************************************************************/
+		case LnConstants.OPC_PANEL_QUERY: {
+			switch (l.getElement(1)) {
+				case 0x00: {
+					return "Query Available Panels\n";
+				}
+				case 0x40: {
+					return "Set LocoNet ID to "+l.getElement(3)+" and Query Available Panels\n";
+				}
+				default: {
+					return "Unknown Query Panels Request 0x"+Integer.toHexString(l.getElement(1))+"\n";
+				}
+			}
+		}
+				/************************************************************************
+				 * OPC_PANEL_RESPONSE   0xD7 messages describe panels                    *
+				 *                                                                       *
+				 *************************************************************************/
+		case LnConstants.OPC_PANEL_RESPONSE: {
+			switch (l.getElement(1)) {
+				// UR-92 Duplex Radio Panel
+				case 0x12: {
+					// Bit 0x08 is set, we think to indicate it is a duplex panel but we're not sure.
+					return "UR-92 Responding with LocoNet ID "+(l.getElement(3)&0x07)+"\n";
+				}
+				// UR-90 Infra-Red Panel
+				case 0x17: {
+					return "UR-90 Responding with LocoNet ID "+l.getElement(3)+"\n";
+				}
+				// UR-91 Simplex Panel
+				case 0x1F: {
+					return "UR-91 Responding with LocoNet ID "+l.getElement(3)+"\n";
+				}
+				default: {
+					return "Unknown Panel of type 0x"+Integer.toHexString(l.getElement(1))+" responding\n";
 
+				}
+			}
+		}
+				
+				
             /********************************************************************
              * ; VARIABLE Byte MESSAGE OPCODES                                   *
              * ; FORMAT = <OPC>,<COUNT>,<ARG2>,<ARG3>,...,<ARG(COUNT-3)>,<CKSUM> *
@@ -845,7 +907,7 @@ public class Llnmon {
              *                                                                                             *
              *     7 bit ms ID code written by THROTTLE/PC when STAT2.4=1                                  *
              **********************************************************************************************/
-        case LnConstants.OPC_WR_SL_DATA:            /* page 10 of Loconet PE */
+		case LnConstants.OPC_WR_SL_DATA:            /* page 10 of Loconet PE */
         case LnConstants.OPC_SL_RD_DATA:            /* page 10 of Loconet PE */
             {
                 String mode;
@@ -897,9 +959,9 @@ public class Llnmon {
                  */
 
                 if (command == LnConstants.OPC_WR_SL_DATA) {
-                    mode = "Write";
+                    mode = "Request";
                 } else {
-                    mode = "Read";
+                    mode = "Response";
                 }
 
                 if (slot == LnConstants.FC_SLOT) {
@@ -969,28 +1031,27 @@ public class Llnmon {
 
                     if (showStatus) {
                         logString = mode
-                            +" Fast Clock: "
-                            +((clk_cntrl & 0x20) != 0 ? "" : "(SYNC reply)")
-                            +"\n\t"
-                                +(clk_rate != 0 ? "Running" : "Frozen")
-                                +", rate is "+clk_rate
+                            +" Fast Clock is "
+                            +((clk_cntrl & 0x20) != 0 ? "" : "Synchronized, ")
+                                +(clk_rate != 0 ? "Running, " : "Frozen, ")
+                                +"rate is "+clk_rate
                                 +":1. Day "+days+", "+hours+":"+minutes+"."+frac_mins
                                 +". Last set by ID "+idString(id1, id2)
-                            +"\n\tMaster controller "
-                                +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
-                            +",\n\tTrack Status is "
-                                +((track_stat & LnConstants.GTRK_POWER)!=0  ? " On," : " Off,")
-                                +((track_stat & LnConstants.GTRK_IDLE)==0  ? " Paused " : " Running ")
-                            +",\n\tProgramming Track is "
+                            +"\n\tMaster: "
+                                +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "LocoNet 1.1" : "DT-200")
+                            +"; Track Status: "
+                                +((track_stat & LnConstants.GTRK_POWER)!=0  ? "On" : "Off")
+								+"/"
+                                +((track_stat & LnConstants.GTRK_IDLE)==0  ? "Paused" : "Running")
+                            +"; Programming Track: "
                                 +((track_stat & LnConstants.GTRK_PROG_BUSY)!=0 ? "Busy" : "Available")
                             +"\n";
                     } else {
                         logString = mode
-                            +" Fast Clock: "
-                            +((clk_cntrl & 0x20) != 0 ? "" : "(SYNC reply)")
-                            +"\n\t"
-                                +(clk_rate != 0 ? "Frozen" : "Running")
-                                +", rate is "+clk_rate
+                            +" Fast Clock is "
+                            +((clk_cntrl & 0x20) != 0 ? "" : "Synchronized, ")
+                                +(clk_rate != 0 ? "Frozen, " : "Running, ")
+                                +"rate is "+clk_rate
                                 +":1. Day "+days+", "+hours+":"+minutes
                                 +". Last set by ID "+idString(id1, id2)+"\n";
                     }
@@ -1156,73 +1217,67 @@ public class Llnmon {
                     /* are we sending or receiving? */
                     if ((pcmd & LnConstants.PCMD_RW) != 0) {
                         /* sending a command */
-                        operation = "Programming Track: Write";
-
+						operation = "Programming "+mode+": Write "+progMode;
+						
                         /* printout based on whether we're doing Ops mode or not */
                         if (opsMode) {
-                            logString = mode+" "
-                                +operation+" "
-                                +progMode+"\n"
-                                +"\tSetting CV"+cvNumber
-                                +" of Loco "+mixedAdrStr+" to "+cvData
-                                +" (0x"+Integer.toHexString(cvData)+")\n";
+                            logString = operation
+                                +" to CV"+cvNumber
+                                +" of Loco "+mixedAdrStr+" value "+cvData
+								+" (0x"+Integer.toHexString(cvData)+", "+Integer.toBinaryString(cvData)+").\n";
+
                         } else {
-                            logString = mode+" "
-                                +operation+" "
-                                +progMode+"\n"
-                                +"\tSetting CV"+cvNumber
-                                +" to "+cvData
-                                +" (0x"+Integer.toHexString(cvData)+")\n";
+                            logString = operation
+                                +" to CV"+cvNumber
+                                +" value "+cvData
+								+" (0x"+Integer.toHexString(cvData)+", "+Integer.toBinaryString(cvData)+").\n";
                         }
                     } else {
                         /* receiving a reply */
-                        operation = "Programming Track: Read";
+						operation = "Programming Track "+mode+": Read "+progMode+" ";
 
-                        /* printout based on whether we're doing Ops mode or not */
-                        if (opsMode) {
-                            logString = mode+" "
-                                +operation+" "
-                                +progMode+"\n"
-                                +"\tSetting CV"+cvNumber
-                                +" of Loco "+mixedAdrStr+" to "+cvData
-                                +" (0x"+Integer.toHexString(cvData)+")\n";
-                        } else {
-                            logString = mode+" "
-                                +operation+" "
-                                +progMode+"\n"
-                                +"\tSetting CV"+cvNumber
-                                +" to "+cvData
-                                +" (0x"+Integer.toHexString(cvData)+")\n";
-                        }
-
-                        /* if we're reading the slot back, check the status        */
+						/* if we're reading the slot back, check the status        */
                         /* this is supposed to be the Programming task final reply */
                         /* and will have the resulting status byte                 */
 
                         if (command == LnConstants.OPC_SL_RD_DATA) {
                             if (pstat != 0) {
                                 if ((pstat & LnConstants.PSTAT_USER_ABORTED) != 0) {
-                                    logString += "\tStatus = Failed, User Aborted\n";
+                                    operation += "Failed, User Aborted: ";
                                 }
 
                                 if ((pstat & LnConstants.PSTAT_READ_FAIL) != 0) {
-                                    logString += "\tStatus = Failed, Read Compare Acknowledge not detected\n";
+                                    operation += "Failed, Read Compare Acknowledge not detected: ";
                                 }
 
                                 if ((pstat & LnConstants.PSTAT_WRITE_FAIL) != 0 ) {
-                                    logString += "\tStatus = Failed, No Write Acknowledge from decoder\n";
+                                    operation += "Failed, No Write Acknowledge from decoder: ";
                                 }
 
                                 if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0 ) {
-                                    logString += "\tStatus = Failed, Service Mode programming track empty\n";
+                                    operation += "Failed, Service Mode programming track empty: ";
                                 }
                                 if ((pstat & 0xF0) != 0) {
-                                    logString += "\tUnexpected PSTAT value = 0x"
-                                        +Integer.toHexString(pstat)+"\n";
+                                    operation += "Unable to decode response = 0x"
+                                        +Integer.toHexString(pstat)+": ";
                                 }
                             } else {
-                                logString += "\tStatus = Success\n";
+                                operation += "Was Successful, set ";
                             }
+                        } else {
+							operation += "variable ";
+						}
+						/* printout based on whether we're doing Ops mode or not */
+                        if (opsMode) {
+                            logString = operation
+							+" CV"+cvNumber
+							+" of Loco "+mixedAdrStr+" value "+cvData
+							+" (0x"+Integer.toHexString(cvData)+", "+Integer.toBinaryString(cvData)+").\n";
+                        } else {
+                            logString = operation
+							+" CV"+cvNumber
+							+" value "+cvData
+							+" (0x"+Integer.toHexString(cvData)+", "+Integer.toBinaryString(cvData)+").\n";
                         }
                     }
                     // end programming track block
@@ -1270,10 +1325,10 @@ public class Llnmon {
                             +" Sound2/F6="+((snd  & LnConstants.SND_F6) != 0 ? "On, "  : "Off,")
                             +" Sound3/F7="+((snd  & LnConstants.SND_F7) != 0 ? "On, "  : "Off,")
                             +" Sound4/F8="+((snd  & LnConstants.SND_F8) != 0 ? "On"    : "Off")
-                            +"\n\tMaster controller "+((trk  & LnConstants.GTRK_MLOK1) !=0 ? "implements LocoNet 1.1" : "is a DT-200")
-                            +",\n\tTrack Status is "+((trk  & LnConstants.GTRK_IDLE) != 0  ? "On" : "Off")
-                            +",\n\tProgramming Track is "+((trk  & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
-                            +"\n\tSS2=0x"+Integer.toHexString(ss2)
+                            +"\n\tMaster: "+((trk  & LnConstants.GTRK_MLOK1) !=0 ? "LocoNet 1.1" : "DT-200")
+                            +"; Track: "+((trk  & LnConstants.GTRK_IDLE) != 0  ? "On" : "Off")
+                            +"; Programming Track: "+((trk  & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
+                            +"; SS2=0x"+Integer.toHexString(ss2)
                             +", ID="+idString(id1, id2)+"\n";
                     } else {
                         logString = mode
@@ -1339,40 +1394,113 @@ public class Llnmon {
                 return message+"\n";
             } else return "0XE6/0xEE message with unexpected length "+l.getElement(1)+"\n";
             
-        case 0xE5:
-            // there are several different formats for 0xE5 messages, with
-            // the length apparently the distinquishing item.
-            switch (l.getElement(1)) {
-            case 0x10: {
-                return peerToPeerMessage(l);
-            }
-            case 0x0A: {
-                // throttle status
-                int tcntrl = l.getElement(2);
-                String stat;
-                if (tcntrl==0x40) stat = " (OK) ";
-                else if (tcntrl==0x7F) stat = " (no key, immed, ignored) ";
-                else if (tcntrl==0x43) stat = " (+ key during msg) ";
-                else if (tcntrl==0x42) stat = " (- key during msg) ";
-                else if (tcntrl==0x41) stat = " (R/S key during msg, aborts) ";
-                else stat=" (unknown) ";
-
-                return "Throttle status TCNTRL="+Integer.toHexString(tcntrl)
-                    +stat
-                    +" ID1,ID2="+Integer.toHexString(l.getElement(3))
-                    +Integer.toHexString(l.getElement(4))
-                    +" SLA="+Integer.toHexString(l.getElement(7))
-                    +" SLB="+Integer.toHexString(l.getElement(8))
-                    +"\n";            
-            }
-            default: {
-                // 0xE5 message of unknown format
-                forceHex = true;
-                return "Message with opcode 0xE5 and unknown format";
-
-            }
-            } // end of 0xE5 switch statement
-
+			case LnConstants.OPC_PEER_XFER:
+				// there are several different formats for 0xE5 messages, with
+				// the length apparently the distinquishing item.
+				switch (l.getElement(1)) {
+					// This format is defined in LocoNet Personal Edition.
+					case 0x10: {
+						return peerToPeerMessage(l);
+					}
+					case 0x0A: {
+						// throttle status
+						int tcntrl = l.getElement(2);
+						String stat;
+						if (tcntrl==0x40) stat = " (OK) ";
+						else if (tcntrl==0x7F) stat = " (no key, immed, ignored) ";
+						else if (tcntrl==0x43) stat = " (+ key during msg) ";
+						else if (tcntrl==0x42) stat = " (- key during msg) ";
+						else if (tcntrl==0x41) stat = " (R/S key during msg, aborts) ";
+						else stat=" (unknown) ";
+						
+						return "Throttle status TCNTRL="+Integer.toHexString(tcntrl)
+						+stat
+						+" ID1,ID2="+Integer.toHexString(l.getElement(3))
+						+Integer.toHexString(l.getElement(4))
+						+" SLA="+Integer.toHexString(l.getElement(7))
+						+" SLB="+Integer.toHexString(l.getElement(8))
+						+"\n";            
+					}
+					case 0x14: {
+						// Duplex Group management?
+						switch (l.getElement(2)) {
+							// Request Duplex Radio Channel
+							case 0x02: {
+								switch (l.getElement(3)) {
+									case 0x08: {
+										return "Request Duplex Channel.\n";
+									}
+									case 0x10: {
+										return "Duplex Channel is "+l.getElement(5)+".\n";
+									}
+									default: {
+										forceHex = true;
+										return "Unknown Duplex Channel message.\n";
+									}
+								} // end of switch (l.getElement(3)
+							}
+							// Duplex Group Name
+							case 0x03: {
+								switch (l.getElement(3)) {
+									case 0x08: {
+										return "Request Duplex Group Name.\n";
+									}
+									case 0x10: {
+										char [] groupNameArray = {
+											(char)l.getElement(5),
+											(char)l.getElement(6),
+											(char)l.getElement(7),
+											(char)l.getElement(8),
+											// Element 9 is missing on purpose, for some unknown reason.
+											(char)l.getElement(10),
+											(char)l.getElement(11),
+											(char)l.getElement(12) };
+										String groupName = new String(groupNameArray);
+										return "Duplex Group Name is '"+groupName+"'.\n";
+									}
+									default: {
+										forceHex = true;
+										return "Unknown Duplex Group Name message.\n";
+									}
+								} // end of switch (l.getElement(3)
+							}
+							// Duplex Group Password
+							case 0x07: {
+								switch (l.getElement(3)) {
+									case 0x08: {
+										return "Request Duplex Group Password.\n";
+									}
+									case 0x10: {
+										char [] groupPasswordArray = {
+											(char)l.getElement(5),
+											(char)l.getElement(6),
+											(char)l.getElement(7),
+											(char)l.getElement(8) };
+										String groupPassword = new String(groupPasswordArray);
+										return "Duplex Group Password is '"+groupPassword+"'.\n";
+									}
+									default: {
+										forceHex = true;
+										return "Unknown Duplex Group Password message.\n";
+									}
+								} // end of switch (l.getElement(3)
+							}
+							default: {
+								// 0xE5 message of unknown format
+								forceHex = true;
+								return "Message with opcode 0xE5 and unknown format";
+								
+							}
+						} // switch (l.getElement(2))
+					}
+					default: {
+						// 0xE5 message of unknown format
+						forceHex = true;
+						return "Message with opcode 0xE5 and unknown format";
+						
+					}
+				} // end of 0xE5 switch statement
+				
 
             /***********************************************************************************
              *                  0xE4   ;                                                        *
@@ -1443,25 +1571,108 @@ public class Llnmon {
 
             /* see if it really is a 'Send Packet' as defined in Loconet PE */
             if (val7f == 0x7f) {
-                /* it is */
-                String val = "Send packet immediate: "+((reps & 0x70) >> 4)
-                    +" bytes, repeat count "+(reps & 0x07)
-                    +"\n\tDHI=0x"+Integer.toHexString(dhi)
-                    +", IM1=0x"+Integer.toHexString(im1)
-                    +", IM2=0x"+Integer.toHexString(im2)
-                    +", IM3=0x"+Integer.toHexString(im3)
-                    +", IM4=0x"+Integer.toHexString(im4)
-                    +", IM5=0x"+Integer.toHexString(im5)
-                    +"\n\tpacket: ";
-                int len = ((reps & 0x70) >> 4);
-                byte[] packet = new byte[len];
-                packet[0] = (byte) (im1 + ((dhi&0x01)!=0 ? 0x80 : 0));
-                if (len>=2) packet[1] = (byte) (im2 + ((dhi&0x02)!=0 ? 0x80 : 0));
-                if (len>=3) packet[2] = (byte) (im3 + ((dhi&0x04)!=0 ? 0x80 : 0));
-                if (len>=4) packet[3] = (byte) (im4 + ((dhi&0x08)!=0 ? 0x80 : 0));
-                if (len>=5) packet[4] = (byte) (im5 + ((dhi&0x10)!=0 ? 0x80 : 0));
-                
-                return val+jmri.NmraPacket.format(packet)+"\n";
+				/* it is */
+				int len = ((reps & 0x70) >> 4);
+				byte[] packet = new byte[len];
+				packet[0] = (byte) (im1 + ((dhi&0x01)!=0 ? 0x80 : 0));
+				if (len>=2) packet[1] = (byte) (im2 + ((dhi&0x02)!=0 ? 0x80 : 0));
+				if (len>=3) packet[2] = (byte) (im3 + ((dhi&0x04)!=0 ? 0x80 : 0));
+				if (len>=4) packet[3] = (byte) (im4 + ((dhi&0x08)!=0 ? 0x80 : 0));
+				if (len>=5) packet[4] = (byte) (im5 + ((dhi&0x10)!=0 ? 0x80 : 0));
+				
+				String generic = "Send packet immediate: "+((reps & 0x70) >> 4)
+				+" bytes, repeat count "+(reps & 0x07)+"("+reps+")"
+				+"\n\tDHI=0x"+Integer.toHexString(dhi)
+				+", IM1=0x"+Integer.toHexString(im1)
+				+", IM2=0x"+Integer.toHexString(im2)
+				+", IM3=0x"+Integer.toHexString(im3)
+				+", IM4=0x"+Integer.toHexString(im4)
+				+", IM5=0x"+Integer.toHexString(im5)
+				+"\n\tpacket: ";
+				
+				int address;
+				
+				/* This is where we need to pick up F keys over 8. */
+				if ((packet[0] & 0xC0) == 0xC0) {
+					// We have a long address
+					address = ((packet[0] & 0x3F) << 8) + packet[1];
+					
+					if ((packet[2] & 0xFF) == 0xDF) {
+						// Functions 21-28
+						return "Send packet immediate: Locomotive "+address+" set"
+							+" F21="+((packet[3] & 0x01) > 0 ? "On" : "Off")
+							+", F22="+((packet[3] & 0x02) > 0 ? "On" : "Off")
+							+", F23="+((packet[3] & 0x04) > 0 ? "On" : "Off")
+							+", F24="+((packet[3] & 0x08) > 0 ? "On" : "Off")
+							+", F25="+((packet[3] & 0x10) > 0 ? "On" : "Off")
+							+", F26="+((packet[3] & 0x20) > 0 ? "On" : "Off")
+							+", F27="+((packet[3] & 0x40) > 0 ? "On" : "Off")
+							+", F28="+((packet[3] & 0x80) > 0 ? "On" : "Off")
+							+"\n";
+					} else if ((packet[2] & 0xFF) == 0xDE) {
+						// Functions 13-20
+						return "Send packet immediate: Locomotive "+address+" set"
+							+" F13="+((packet[3] & 0x01) > 0 ? "On" : "Off")
+							+", F14="+((packet[3] & 0x02) > 0 ? "On" : "Off")
+							+", F15="+((packet[3] & 0x04) > 0 ? "On" : "Off")
+							+", F16="+((packet[3] & 0x08) > 0 ? "On" : "Off")
+							+", F17="+((packet[3] & 0x10) > 0 ? "On" : "Off")
+							+", F18="+((packet[3] & 0x20) > 0 ? "On" : "Off")
+							+", F19="+((packet[3] & 0x40) > 0 ? "On" : "Off")
+							+", F20="+((packet[3] & 0x80) > 0 ? "On" : "Off")
+							+"\n";
+					} else if ((packet[2] & 0xF0) == 0xA0) {
+						// Functions 8-12
+						return "Send packet immediate: Locomotive "+address+" set"
+							+", F09="+((packet[2] & 0x01) > 0 ? "On" : "Off")
+							+", F10="+((packet[2] & 0x02) > 0 ? "On" : "Off")
+							+", F11="+((packet[2] & 0x04) > 0 ? "On" : "Off")
+							+", F12="+((packet[2] & 0x08) > 0 ? "On" : "Off")
+							+"\n";
+					} else {
+						// Unknown
+						return generic+jmri.NmraPacket.format(packet)+"\n";
+					}
+				} else {
+					// We have a short address
+					address = packet[0];
+					if ((packet[1] & 0xFF) == 0xDF) {
+						// Functions 21-28
+						return "Send packet immediate: Locomotive "+address+" set"
+						+" F21="+((packet[2] & 0x01) > 0 ? "On" : "Off")
+						+", F22="+((packet[2] & 0x02) > 0 ? "On" : "Off")
+						+", F23="+((packet[2] & 0x04) > 0 ? "On" : "Off")
+						+", F24="+((packet[2] & 0x08) > 0 ? "On" : "Off")
+						+", F25="+((packet[2] & 0x10) > 0 ? "On" : "Off")
+						+", F26="+((packet[2] & 0x20) > 0 ? "On" : "Off")
+						+", F27="+((packet[2] & 0x40) > 0 ? "On" : "Off")
+						+", F28="+((packet[2] & 0x80) > 0 ? "On" : "Off")
+						+"\n";
+					} else if ((packet[1] & 0xFF) == 0xDE) {
+						// Functions 13-20
+						return "Send packet immediate: Locomotive "+address+" set"
+						+" F13="+((packet[2] & 0x01) > 0 ? "On" : "Off")
+						+", F14="+((packet[2] & 0x02) > 0 ? "On" : "Off")
+						+", F15="+((packet[2] & 0x04) > 0 ? "On" : "Off")
+						+", F16="+((packet[2] & 0x08) > 0 ? "On" : "Off")
+						+", F17="+((packet[2] & 0x10) > 0 ? "On" : "Off")
+						+", F18="+((packet[2] & 0x20) > 0 ? "On" : "Off")
+						+", F19="+((packet[2] & 0x40) > 0 ? "On" : "Off")
+						+", F20="+((packet[2] & 0x80) > 0 ? "On" : "Off")
+						+"\n";
+					} else if ((packet[1] & 0xF0) == 0xA0) {
+						// Functions 8-12
+						return "Send packet immediate: Locomotive "+address+" set"
+						+" F09="+((packet[1] & 0x01) > 0 ? "On" : "Off")
+						+", F10="+((packet[1] & 0x02) > 0 ? "On" : "Off")
+						+", F11="+((packet[1] & 0x04) > 0 ? "On" : "Off")
+						+", F12="+((packet[1] & 0x08) > 0 ? "On" : "Off")
+						+"\n";						
+					} else {
+						// Unknown
+						return generic+jmri.NmraPacket.format(packet)+"\n";
+					}
+				}
             } else {
                 /* Hmmmm... */
                 forceHex = true;

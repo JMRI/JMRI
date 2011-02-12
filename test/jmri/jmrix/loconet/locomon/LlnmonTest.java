@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class LlnmonTest extends TestCase {
 
@@ -20,31 +20,31 @@ public class LlnmonTest extends TestCase {
         Llnmon f = new Llnmon();
         
         l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x20, 0x08, 0x20, 0x26});
-        assertEquals("out A", "Transponder absent in section 10 zone A decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals("out A", "Transponder absent in section 10 zone A decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x20, 0x08, 0x20, 0x04});
-        assertEquals(" in A", "Transponder present in section 10 zone A decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in A", "Transponder present in section 10 zone A decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x22, 0x08, 0x20, 0x24});
-        assertEquals(" in B", "Transponder present in section 10 zone B decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in B", "Transponder present in section 10 zone B decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x24, 0x08, 0x20, 0x04});
-        assertEquals(" in C", "Transponder present in section 10 zone C decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in C", "Transponder present in section 10 zone C decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
-        assertEquals(" in D", "Transponder present in section 10 zone D decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in D", "Transponder present in section 10 zone D decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x28, 0x08, 0x20, 0x04});
-        assertEquals(" in E", "Transponder present in section 10 zone E decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in E", "Transponder present in section 10 zone E decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2A, 0x08, 0x20, 0x04});
-        assertEquals(" in F", "Transponder present in section 10 zone F decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in F", "Transponder present in section 10 zone F decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2C, 0x08, 0x20, 0x04});
-        assertEquals(" in G", "Transponder present in section 10 zone G decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in G", "Transponder present in section 10 zone G decoder address 1056 (long) .\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
-        assertEquals(" in H", "Transponder present in section 10 zone H decoder address 1056 (long) \n", f.displayMessage(l));
+        assertEquals(" in H", "Transponder present in section 10 zone H decoder address 1056 (long) .\n", f.displayMessage(l));
     }
 
     public void testLissy1() {
