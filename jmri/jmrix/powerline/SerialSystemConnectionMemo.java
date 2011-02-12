@@ -15,7 +15,7 @@ import jmri.*;
  * @author		Bob Jacobsen  Copyright (C) 2010
  * copied from NCE into Powerline for multiple connections by
  * @author		Ken Cameron Copyright (C) 2011
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
@@ -49,7 +49,6 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     
     /**
      * Always null as powerline doesn't have a programmer
-     * @return
      */
     public ProgrammerManager getProgrammerManager() {
         //Do not want to return a programmer ever
