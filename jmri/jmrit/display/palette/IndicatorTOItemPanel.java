@@ -459,16 +459,17 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     public Hashtable <String, Hashtable<String, NamedIcon>> getIconMaps() {
-        Hashtable<String, Hashtable<String, NamedIcon>> iconMaps =_updateGroupsMap;
-        if (iconMaps==null) {
+        Hashtable<String, Hashtable<String, NamedIcon>> iconMaps;
+        if (_updateWithSameMap) {
+            iconMaps = _updateGroupsMap;
+        } else {
             iconMaps = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
-            if (iconMaps==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                return null;
-            }
+        }
+        if (iconMaps==null) {
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                   ItemPalette.rbp.getString(_itemType), _family), 
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
         }
         return iconMaps;
     }
@@ -487,20 +488,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             if (bean==null) {
                 return null;
             }
-
-            Hashtable <String, Hashtable <String, NamedIcon>> iconMap = null;
-            if (_updateWithSameMap) {
-                iconMap = _updateGroupsMap;
-            } else {
-                iconMap = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);;
-            }
-            if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                return null;
-            }
+            Hashtable <String, Hashtable <String, NamedIcon>> iconMap = getIconMaps();
 
             IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
 

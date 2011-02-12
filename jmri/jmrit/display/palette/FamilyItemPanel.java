@@ -250,17 +250,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         panel.setLayout(new FlowLayout());
         JButton newFamilyButton = new JButton(ItemPalette.rbp.getString("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
-                ItemPanel parent;
                 public void actionPerformed(ActionEvent a) {
                     createNewFamily(_itemType);
                 }
-                ActionListener init(ItemPanel p) {
-                    parent = p;
-                    return this;
-                }
-        }.init(this));
-
-
+        });
         newFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 

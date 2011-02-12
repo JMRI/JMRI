@@ -174,7 +174,9 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     
     protected void setFamily(String family) {
         super.setFamily(family);
-        remove(_dndIconPanel);
+        if (_dndIconPanel!=null) {
+            remove(_dndIconPanel);
+        }
         makeDndIconPanel();        // need to have family identified  before calling
         add(_dndIconPanel, 1);
     }
