@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -671,9 +671,9 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("1st car in list by t1", c1, manager.getById(carList.get(0)));
         carList = manager.getByTrainList(t3);
         Assert.assertEquals("Number of Cars in t3", 3, carList.size());
-        Assert.assertEquals("1st car in list by t3", c2, manager.getById(carList.get(0)));
-        Assert.assertEquals("2nd car in list by t3", c3, manager.getById(carList.get(1)));
-        Assert.assertEquals("3rd car in list by t3", c5, manager.getById(carList.get(2)));
+        Assert.assertEquals("1st car in list by t3", c5, manager.getById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by t3", c2, manager.getById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by t3", c3, manager.getById(carList.get(2)));
         
         // now get cars by specific train
         carList = manager.getByTrainDestinationList(t1);

@@ -41,7 +41,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -711,9 +711,9 @@ public class OperationsEnginesTest extends TestCase {
         Assert.assertEquals("1st engine in list by t1", e1, manager.getById(engineList.get(0)));
         engineList = manager.getByTrainList(t3);
         Assert.assertEquals("Number of Engines in t3", 3, engineList.size());
-        Assert.assertEquals("1st engine in list by t3", e2, manager.getById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by t3", e3, manager.getById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by t3", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("1st engine in list by t3", e5, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by t3", e2, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by t3", e3, manager.getById(engineList.get(2)));
                     
         // how many engines available?
         engineList = manager.getAvailableTrainList(t1);

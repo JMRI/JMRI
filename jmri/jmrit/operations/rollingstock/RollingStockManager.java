@@ -22,7 +22,7 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RollingStockManager {
 	
@@ -538,15 +538,15 @@ public class RollingStockManager {
 	 * @return List of RollingStock ids assigned to the train
 	 */
     public List<String> getByTrainList(Train train) {
-    	List<String> byId = getByIdList();
+    	List<String> byLoc = getByLocationList();
     	List<String> inTrain = new ArrayList<String>();
     	RollingStock rs;
 
-    	for (int i = 0; i < byId.size(); i++) {
-    		rs = getById(byId.get(i));
+    	for (int i = 0; i < byLoc.size(); i++) {
+    		rs = getById(byLoc.get(i));
     		// get only rolling stock that is assigned to this train
     		if(rs.getTrain() == train)
-    			inTrain.add(byId.get(i));
+    			inTrain.add(byLoc.get(i));
     	}
     	return inTrain;
     }
