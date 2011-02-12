@@ -16,20 +16,13 @@ import jmri.jmrix.powerline.cm11.SpecificDriverAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
     }
-
-//	protected Element makeParameter(String name, String value) {
-//    	Element p = new Element("parameter");
-//       	p.setAttribute("name",name);
-//        p.addContent(value);
-//        return p;
-//	}
 
     protected void getInstance() {
         adapter = new SpecificDriverAdapter();
@@ -38,24 +31,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-
-    /**
-     * Service routine to look through "parameter" child elements
-     * to find a particular parameter value
-     * @param node Element containing parameters
-     * @param name name of desired parameter
-     * @return String value
-     */
-//    @SuppressWarnings("unchecked")
-//	String findParmValue(Element e, String name) {
-//        List<Element> l = e.getChildren("parameter");
-//        for (int i = 0; i<l.size(); i++) {
-//            Element n = l.get(i);
-//            if (n.getAttributeValue("name").equals(name))
-//                return n.getTextTrim();
-//        }
-//        return null;
-//    }
 
     protected void register() {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));

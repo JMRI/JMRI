@@ -15,7 +15,7 @@ import jmri.*;
  * @author		Bob Jacobsen  Copyright (C) 2010
  * copied from NCE into Powerline for multiple connections by
  * @author		Ken Cameron Copyright (C) 2011
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
@@ -52,11 +52,10 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
      * @return
      */
     public ProgrammerManager getProgrammerManager() {
-        //Do not want to return a programmer if the system is disabled
-        if (getDisabled())
-                return null;
+        //Do not want to return a programmer ever
         return null;
     }
+    
     public void setProgrammerManager(ProgrammerManager p) {
         // no programmer supported, should I throw an Exception??
     }

@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author	Ken Cameron, Copyright (C) 2008, 2009, 2010
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class SerialAddress {
 
@@ -49,28 +49,15 @@ public class SerialAddress {
      */
     public boolean validSystemNameFormat(String systemName, char type) {
     	// validate the system Name leader characters
-    	boolean t = aCodes.reset(systemName).matches();
-    	int g;
-    	String x;
-    	if (t) {
-        	g = aCodes.groupCount();
-        	for (int i = 1; i <= g; i++) {
-            	x = aCodes.group(i);
-        	}
-    	}
-        if ( (!aCodes.reset(systemName).matches()) || (aCodes.group(2).charAt(0) != type) ) {
+    	boolean aTest = aCodes.reset(systemName).matches();
+    	boolean hTest = hCodes.reset(systemName).matches();
+    	boolean iTest = iCodes.reset(systemName).matches();
+        if ( (!aTest) || (aCodes.group(2).charAt(0) != type) ) {
             // here if an illegal format 
             log.error("illegal character in header field system name: " + systemName);
             return (false);
         }
-        t = hCodes.reset(systemName).matches();
-    	if (t) {
-        	g = hCodes.groupCount();
-        	for (int i = 1; i <= g; i++) {
-            	x = hCodes.group(i);
-        	}
-    	}
-        if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 4) {
+        if (hTest && hCodes.groupCount() == 4) {
             // This is a PLaxx address - validate the house code and unit address fields
             if (hCodes.group(3).charAt(0) < minHouseCode || hCodes.group(3).charAt(0) > maxHouseCode) {
                 log.error("house code field out of range in system name: "
@@ -93,16 +80,9 @@ public class SerialAddress {
             }
             return (true);
         }
-        if (aCodes.reset(systemName).matches()) {
+        if (aTest) {
             // This is a PLaa:bb:cc address - validate the Insteon address fields
-            t = iCodes.reset(systemName).matches();
-        	if (t) {
-            	g = iCodes.groupCount();
-            	for (int i = 1; i <= g; i++) {
-                	x = iCodes.group(i);
-            	}
-        	}
-            if (!iCodes.reset(systemName).matches()) {
+            if (!iTest) {
                 // here if an illegal format
                 log.error("address did not match any valid forms: " + systemName);
                 return (false);
