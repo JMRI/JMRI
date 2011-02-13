@@ -382,12 +382,24 @@ public class ThrottleWindow extends JmriJFrame {
 			}
 		});
 
+                JMenuItem switchViewMode = new JMenuItem(throttleBundle.getString("ThrottleMenuViewSwitchMode"));
+		switchViewMode.addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent ev) {
+				switchMode();
+			}
+		});
+                JMenuItem viewThrottlesList = new JMenuItem(throttleBundle.getString("ThrottleMenuViewViewThrottleList"));
+		viewThrottlesList.addActionListener(new ThrottlesListAction());
+
 		viewMenu.add(viewAddressPanel);
 		viewMenu.add(viewControlPanel);
 		viewMenu.add(viewFunctionPanel);
 		viewMenu.addSeparator();
 		viewMenu.add(viewAllButtons);
 		viewMenu.add(makeAllComponentsInBounds);
+            	viewMenu.addSeparator();
+                viewMenu.add(switchViewMode);
+                viewMenu.add(viewThrottlesList);
 
 		JMenu editMenu = new JMenu(throttleBundle.getString("ThrottleMenuEdit"));
 		JMenuItem preferencesItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditFrameProperties"));
