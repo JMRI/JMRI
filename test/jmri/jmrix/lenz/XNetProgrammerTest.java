@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.7 $
+ * @version         $Revision: 2.8 $
  */
 
 package jmri.jmrix.lenz;
@@ -18,7 +18,6 @@ import junit.framework.TestSuite;
 public class XNetProgrammerTest extends TestCase {
 
 	public void testWriteCvSequence() throws JmriException {
-		XNetProgrammer.self = null; // avoid spurious warning message
 		// infrastructure objects
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
@@ -43,7 +42,6 @@ public class XNetProgrammerTest extends TestCase {
 	}
 
 	public void testWriteRegisterSequence() throws JmriException {
-		XNetProgrammer.self = null; // avoid spurious warning message
 		// infrastructure objects
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
@@ -72,7 +70,6 @@ public class XNetProgrammerTest extends TestCase {
 	}
 
 	public void testReadCvSequence() throws JmriException {
-		XNetProgrammer.self = null; // avoid spurious warning message
 		// infrastructure objects
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
@@ -98,7 +95,6 @@ public class XNetProgrammerTest extends TestCase {
 	}
 
 	public void testReadRegisterSequence() throws JmriException {
-		XNetProgrammer.self = null; // avoid spurious warning message
 		// infrastructure objects
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
