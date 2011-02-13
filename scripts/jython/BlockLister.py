@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 #
 #
 
@@ -234,11 +234,16 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " signal: " + self.giveSignalName(sig) + " aspect: " + self.cvtSignalToText(sig) + "\n")
             else :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signa headsl!\n")
-            mast = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(block, blockTest)
-            if (mast != None) :
-                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " mast: " + self.giveMastName(mast) + " aspect: " + self.cvtMastToText(mast) + "\n")
-            else :
-                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal masts!\n")
+            try :
+                mast = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(block, blockTest)
+                if (mast != None) :
+                    self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " mast: " + self.giveMastName(mast) + " aspect: " + self.cvtMastToText(mast) + "\n")
+                else :
+                    self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal masts!\n")
+            except :
+                # mast likely not supported, the dummy assignment is because I don't know how to have an empty except clause
+                #self.msgText("Masts not supported.\n")
+                x = 1
         return
         
     def displaySegmentData(self, b) :
