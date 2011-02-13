@@ -3,6 +3,7 @@
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractTurnoutTest;
+import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
 import junit.framework.*;
 
 /**
@@ -10,19 +11,22 @@ import junit.framework.*;
  * @author			Bob Jacobsen Copyright 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
-	private SerialTrafficControlScaffold tcis = new SerialTrafficControlScaffold();
+	private SerialSystemConnectionMemo memo = null;
+	private SerialTrafficControlScaffold tc = null;
 
 	public void setUp() {
 		// prepare an interface
-		tcis = new SerialTrafficControlScaffold();
-		t = new SerialTurnout("PTA4", tcis, "tA4");
+		memo = new SpecificSystemConnectionMemo();
+		tc = new SerialTrafficControlScaffold();
+		memo.setTrafficController(tc);
+		t = new SerialTurnout("PTA4", tc, "tA4");
 	}
 
-	public int numListeners() { return tcis.numListeners(); }
+	public int numListeners() { return tc.numListeners(); }
 
 	public void checkThrownMsgSent() {
                 

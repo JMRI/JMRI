@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.powerline package.
  * @author      Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class SerialTest extends TestCase {
 
@@ -36,10 +36,10 @@ public class SerialTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.powerline.SerialTest");
         suite.addTest(X10SequenceTest.suite());
-        suite.addTest(SerialTurnoutTest.suite());
-        suite.addTest(SerialSensorManagerTest.suite());
+        //suite.addTest(SerialTurnoutTest.suite());
+        //suite.addTest(SerialSensorManagerTest.suite());
         suite.addTest(SerialNodeTest.suite());
-        suite.addTest(SerialAddressTest.suite());
+        //suite.addTest(SerialAddressTest.suite());
         suite.addTest(jmri.jmrix.powerline.cm11.CM11Test.suite());
         suite.addTest(jmri.jmrix.powerline.insteon2412s.Insteon2412sTest.suite());
         return suite;

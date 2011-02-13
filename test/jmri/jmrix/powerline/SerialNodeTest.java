@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * @author		Dave Duchamp  multi-node extensions 2003
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
 public class SerialNodeTest extends TestCase {
 
@@ -21,9 +21,9 @@ public class SerialNodeTest extends TestCase {
         //SerialSensor s2 = new SerialSensor("PSA2","ab");
         //SerialSensor s3 = new SerialSensor("PSA3","abc");
 
-    	SerialSystemConnectionMemo memo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
-    	SerialTrafficController t = new jmri.jmrix.powerline.cm11.SpecificTrafficController(memo);
-        SerialReply r = new jmri.jmrix.powerline.cm11.SpecificReply(t);
+    	SerialSystemConnectionMemo memo = new jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo();
+    	SerialTrafficController t = new jmri.jmrix.powerline.simulator.SpecificTrafficController(memo);
+        SerialReply r = new jmri.jmrix.powerline.simulator.SpecificReply(t);
         r.setElement(0, 0x02);
         r.setElement(1, 0x00);
 

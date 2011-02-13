@@ -16,7 +16,7 @@ import jmri.jmrix.powerline.SerialTurnoutManager;
  * @author			Bob Jacobsen Copyright 2004, 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version  $Revision: 1.9 $
+ * @version  $Revision: 1.10 $
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
@@ -36,21 +36,20 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
 	public void testAsAbstractFactory () {
 		// ask for a Turnout, and check type
-		Turnout o = l.newTurnout("PT21", "my name");
+		Turnout o = l.newTurnout("PTB1", "my name");
 
 
 		if (log.isDebugEnabled()) log.debug("received turnout value "+o);
 		assertTrue( null != (SerialTurnout)o);
 
 		// make sure loaded into tables
-		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("PT21"));
+		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("PTB1"));
 		if (log.isDebugEnabled()) log.debug("by user name:   "+l.getByUserName("my name"));
 
-		assertTrue(null != l.getBySystemName("PT21"));
+		assertTrue(null != l.getBySystemName("PTB1"));
 		assertTrue(null != l.getByUserName("my name"));
 
 	}
-
 
 	// from here down is testing infrastructure
 
