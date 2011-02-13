@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005-2010
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -39,8 +39,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     JTextField adrTextField = new javax.swing.JTextField(4);
 
-    StackMonDataModel stackModel = new StackMonDataModel(1,4);
-    javax.swing.JTable stackTable = new javax.swing.JTable(stackModel);
+    StackMonDataModel stackModel = null;
+    javax.swing.JTable stackTable = null;
 
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.stackmon.StackMonBundle");
 
@@ -52,6 +52,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     public StackMonFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super();
 	    // Configure GUI components
+        stackModel = new StackMonDataModel(1,4,memo);
+        stackTable = new javax.swing.JTable(stackModel);
 
         // add listener object to retrieve the next entry
         nextButton.addActionListener(new ActionListener() {

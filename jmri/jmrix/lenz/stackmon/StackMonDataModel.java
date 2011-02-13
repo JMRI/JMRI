@@ -16,7 +16,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Lenz Command Station Stack information.
  *
  * @author              Paul Bender Copyright (c) 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
@@ -37,8 +37,8 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         protected XNetTrafficController tc = null;
 
         // Construct a new instance
-        StackMonDataModel(int row, int column) {
-          tc = XNetTrafficController.instance();
+        StackMonDataModel(int row, int column,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+          tc = memo.getXNetTrafficController();
         }
 
         void initTable(JTable stackTable, StackMonFrame stackFrame) {

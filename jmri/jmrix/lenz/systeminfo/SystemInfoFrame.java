@@ -21,15 +21,15 @@ import jmri.jmrix.lenz.*;
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.12 $
+ * @version			$Revision: 2.13 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
-    public SystemInfoFrame() {
+    public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super("XPressNet System Information");
-          tc=XNetTrafficController.instance();
+          tc=memo.getXNetTrafficController();
         getContentPane().setLayout(new GridLayout(0,2));
 
           getContentPane().add(new JLabel("Command Station: "));

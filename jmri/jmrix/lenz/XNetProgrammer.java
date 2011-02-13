@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.33 $
+ * @version $Revision: 2.34 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -51,14 +51,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
         }
 
-	/*
-	 * method to find the existing XNetProgrammer object, if need be creating one
-	 */
-        @Deprecated
-	static public XNetProgrammer instance() {
-		return self;
-		}
-	static XNetProgrammer self = null;  // needs to be accessible from tests
 
 	// handle mode
 	protected int _mode = Programmer.DIRECTBYTEMODE;
