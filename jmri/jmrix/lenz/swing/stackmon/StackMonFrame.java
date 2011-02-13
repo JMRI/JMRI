@@ -1,6 +1,6 @@
 // StackMonFrame.java
 
-package jmri.jmrix.lenz.stackmon;
+package jmri.jmrix.lenz.swing.stackmon;
 
 import jmri.jmrix.lenz.*;
 
@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005-2010
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.1 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 

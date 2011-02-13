@@ -1,6 +1,6 @@
 // StackMonDataModel.java
 
-package jmri.jmrix.lenz.stackmon;
+package jmri.jmrix.lenz.swing.stackmon;
 
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -16,7 +16,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Lenz Command Station Stack information.
  *
  * @author              Paul Bender Copyright (c) 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.1 $
  */
 
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
