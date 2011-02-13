@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.49 $
+ * @version			$Revision: 1.50 $
  */
 public class Llnmon {
 
@@ -560,7 +560,7 @@ public class Llnmon {
 				for (topbits = 0; topbits < 32; topbits++) {
 					// The extra "+1" adjusts for the fact that we show 1-2048, rather than 0-2047 on the wire.
 					int lval = (topbits << 6) + (midbits << 3) + 1;
-					int hval = lval + 7 + 1;
+					int hval = lval + 7;
 					
 					if ((count % 8) > 0) {
 						sensors = sensors + ", ";
