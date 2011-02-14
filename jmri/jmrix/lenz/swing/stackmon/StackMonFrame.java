@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005-2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -42,7 +42,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     StackMonDataModel stackModel = null;
     javax.swing.JTable stackTable = null;
 
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.stackmon.StackMonBundle");
+    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.stackmon.StackMonBundle");
 
     private boolean _getAll = false; // flag to know if get all or 
                                      // get next/previous was pressed
