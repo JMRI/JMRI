@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.16 2011-02-12 03:39:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.17 2011-02-14 18:07:12 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -184,10 +184,7 @@ Matt Harris fixed a problem with the System Console configuration
 Kevin Dickerson added a "New Throttle Window" to the File menu
 
 <p>
-Pete Cressman fixed a problem loading certain sensor icons
-
-<p>
-Pete Cressman added a dialog to correct broken icon paths
+Pete Cressman added a dialog to correct broken icon paths when loading a panel.
 
 <p>
 Dennis Miller fixed some help page links
@@ -206,7 +203,16 @@ James LeFevre added more functions to the TMCC throttle.
 Lionel Jeanson improved the ZeroConf handling.
 
 <p>
-Pete Cressman added a feature to report runtime Logix errors.
+New Logix features
+<ul>
+<li>A dialog will display Logix errors if any occur during runtime</li>
+<li>Conditionals can be set to calculate the triggering of their actions whenever one of the state 
+variable changes state.  Until now Conditionals have omly calculated the triggering of their actions  
+when the antecedent expression itself changed truth value.  In both cases, 
+actions are triggered according to the truth value of the antecedent expression.</li>
+<li>State variables to test the status of Occupancy Blocks have been added</li>
+<li>Actions for setting Occupancy Block conditions have been added</li>
+</ul>
 
 <p>
 Andrew Crosland added support for SPROG 3.
