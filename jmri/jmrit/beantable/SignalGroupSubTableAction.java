@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class SignalGroupSubTableAction {
@@ -234,8 +234,7 @@ public class SignalGroupSubTableAction {
             p.add(userLabel);
 
             contentPane.add(p);
-            
-            if (InstanceManager.signalHeadManagerInstance().getBySystemName(curSignal).getClass().getName().contains("SingleTurnoutSignalHead")){
+            if (InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal).getClass().getName().contains("SingleTurnoutSignalHead")){
                 jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.signalHeadManagerInstance().getBySystemName(curSignal);
                 if ((g.getSignalHeadOnState(curSignal)==0x00) && (g.getSignalHeadOffState(curSignal)==0x00)){
                     g.setSignalHeadOnState(curSignal, Signal.getOnAppearance());
