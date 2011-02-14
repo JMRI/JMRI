@@ -1,6 +1,6 @@
 // XNetMonFrame.java
 
-package jmri.jmrix.lenz.mon;
+package jmri.jmrix.lenz.swing.mon;
 
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.36 $
+ * @version         $Revision: 1.1 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 

@@ -6,10 +6,10 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
  * @author			Paul Bender     Copyright (C) 2008
- * @version         $Revision: 2.6 $
+ * @version         $Revision: 1.1 $
  */
 
-package jmri.jmrix.lenz.mon;
+package jmri.jmrix.lenz.swing.mon;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
