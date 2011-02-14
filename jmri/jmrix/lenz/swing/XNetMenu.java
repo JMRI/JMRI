@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a menu containing the XPressNet specific tools
  *
  * @author	Paul Bender   Copyright 2003,2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class XNetMenu extends JMenu {
     public XNetMenu(String name,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -29,7 +29,7 @@ public class XNetMenu extends JMenu {
         else
           setText(rb.getString("MenuXPressNet"));
 
-        add(new jmri.jmrix.lenz.mon.XNetMonAction(rb.getString("MenuItemXNetCommandMonitor"),memo));
+        add(new jmri.jmrix.lenz.swing.mon.XNetMonAction(rb.getString("MenuItemXNetCommandMonitor"),memo));
         add(new jmri.jmrix.lenz.swing.systeminfo.SystemInfoAction(rb.getString("MenuItemXNetSystemInformation"),memo));
         add(new jmri.jmrix.lenz.packetgen.PacketGenAction(rb.getString("MenuItemSendXNetCommand"),memo));
 	add(new javax.swing.JSeparator());
