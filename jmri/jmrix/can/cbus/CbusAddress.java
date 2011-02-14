@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanMessage;
 /**
  * Utilities for handling CBUS addresses.
  * <P>
- * CBus frames have a one byte command and length, optionally followed by
+ * CBUS frames have a one byte command and length, optionally followed by
  * data bytes.
  * JMRI maps these into address strings.
  * <p>
@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class CbusAddress {
 

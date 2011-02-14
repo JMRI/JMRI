@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
  * Extend jmri.AbstractSensor for CBUS controls.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
 
@@ -71,7 +71,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     }
 
     /**
-     * Request an update on status by sending CBus message.
+     * Request an update on status by sending CBUS message.
      * <p>
      * There is no known way to do this, so the request is
      * just ignored.
