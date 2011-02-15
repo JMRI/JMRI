@@ -10,134 +10,183 @@ import javax.swing.*;
 
 /**
  * User interface for setting the LocoNet ID
- *
- * @author			Bob Jacobsen   Copyright (C) 2006, 2010
- * @version			$Revision: 1.3 $
+ * 
+ * @author Bob Jacobsen Copyright (C) 2006, 2010
+ * @version $Revision: 1.4 $
  */
-public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
-                    implements LocoNetListener {
+public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
+		LocoNetListener {
 
-    // member declarations
-    javax.swing.JButton readButton;
-    javax.swing.JButton setButton;
-    javax.swing.JTextArea value;
+	// member declarations
+	javax.swing.JButton readButton;
+	javax.swing.JButton setButton;
+	javax.swing.JTextArea value;
 
-    public LocoIdPanel() {
-        super();
-    }
+	javax.swing.JComboBox idBox;
+	String IDValues[] = { "-", "0", "1", "2", "3", "4", "5", "6", "7" };
 
-    public void initComponents() throws Exception {
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locoid.LocoId");
+	public LocoIdPanel() {
+		super();
+	}
 
-        setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
-        readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
-        value = new javax.swing.JTextArea(12, 4);  // rows, columns
+	public void initComponents() throws Exception {
+		ResourceBundle rb = ResourceBundle
+				.getBundle("jmri.jmrix.loconet.locoid.LocoId");
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		// Create our UI elements, two buttons and a drop-down.
+		setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
+		readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
+		idBox = new javax.swing.JComboBox(IDValues);
 
-        JPanel p = new JPanel();
-        p.setLayout(new java.awt.FlowLayout());
-        p.add(readButton);
-        p.add(setButton);
+		// Do our layout, two buttons side by side, drop down below.
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(p);
+		JPanel p = new JPanel();
+		p.setLayout(new java.awt.FlowLayout());
+		p.add(readButton);
+		p.add(setButton);
 
-        p = new JPanel();
-        p.setLayout(new java.awt.FlowLayout());
-        p.add(new JLabel(rb.getString("LabelValue")));
-        p.add(value);
+		add(p);
 
-        add(p);
+		p = new JPanel();
+		p.setLayout(new java.awt.FlowLayout());
+		p.add(new JLabel(rb.getString("LabelValue")));
+		p.add(idBox);
 
-        setButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setButtonActionPerformed();
-                }
-            });
-        readButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    readButtonActionPerformed();
-                }
-            });
-    }
+		add(p);
 
-    public String getHelpTarget() { return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; }
-    public String getTitle() { 
-        return LocoNetBundle.bundle().getString("MenuItemSetID"); 
-    }
+		// Set our callbacks
+		setButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				setButtonActionPerformed();
+			}
+		});
+		readButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				readButtonActionPerformed();
+			}
+		});
+	}
 
-    public void initComponents(LocoNetSystemConnectionMemo memo) {
-        super.initComponents(memo);
+	public String getHelpTarget() {
+		return "package.jmri.jmrix.loconet.locoid.LocoIdFrame";
+	}
 
-        // connect to the LnTrafficController
-        connect(memo.getLnTrafficController());
+	public String getTitle() {
+		return LocoNetBundle.bundle().getString("MenuItemSetID");
+	}
 
-        // prompt for an update
-        readButtonActionPerformed();
-    }
-    
-    public void setButtonActionPerformed() {
-        memo.getLnTrafficController().sendLocoNetMessage(createSetPacket(value.getText()));
-    }
-    public void readButtonActionPerformed() {
-        value.setText("");
-        memo.getLnTrafficController().sendLocoNetMessage(createReadPacket());
-    }
+	public void initComponents(LocoNetSystemConnectionMemo memo) {
+		super.initComponents(memo);
 
-    /**
-     * Process the incoming message to look for the address
-     * @param m
-     */
-    public void message(LocoNetMessage m) {
-        if (m.getNumDataElements() != 6) return;
-        if ( (m.getElement(0)&0xFF) != 0xD7) return;
-        if ( ((m.getElement(1)&0xFF) != 0x1F) && ((m.getElement(1)&0xFF) != 0x17)) return;
-        if ( (m.getElement(2)&0xFF) != 0x00) return;
-        value.setText(value.getText()+m.getElement(3)+"\n");
-    }
+		// connect to the LnTrafficController
+		connect(memo.getLnTrafficController());
 
+		// press the Read button for the user, so we populate the current value
+		readButtonActionPerformed();
+	}
 
-    /**
-     * Create a LocoNet packet to read the LocoNet ID
-     * @return The packet, with contents filled-in
-     */
-    LocoNetMessage createReadPacket() {
-        LocoNetMessage m = new LocoNetMessage(6);
-        m.setElement(0, 0xDF);
-        m.setElement(1, 0x00);
-        m.setElement(2, 0x00);
-        m.setElement(3, 0x00);
-        m.setElement(4, 0x00);
+	/**
+	 * Callback when someone presses the Set button
+	 */
+	public void setButtonActionPerformed() {
+		String value = (String) idBox.getSelectedItem();
 
-        return m;
-    }
+		if (value != "-") {
+			memo.getLnTrafficController().sendLocoNetMessage(
+					createSetPacket(value));
+		}
+	}
 
-    /**
-     * Create a LocoNet packet to set the LocoNet ID
-     * @param s The desired value as a string in decimal
-     * @return The packet, with contents filled-in
-     */
-    LocoNetMessage createSetPacket(String s) {
-        // convert to int value
-        int data = Integer.parseInt(s);
-        // format packet
-        LocoNetMessage m = new LocoNetMessage(6);
-        m.setElement(0, 0xDF);
-        m.setElement(1, 0x40);
-        m.setElement(2, 0x1F);
-        m.setElement(3, data);
-        m.setElement(4, 0x00);
-        return m;
-    }
+	/**
+	 * Callback when someone presses the Read button
+	 */
+	public void readButtonActionPerformed() {
+		// We set the display to "-" until the callback gets the value from the
+		// Loconet
+		idBox.setSelectedIndex(0);
+		memo.getLnTrafficController().sendLocoNetMessage(createReadPacket());
+	}
 
-    // connect to the LnTrafficController
-    public void connect(LnTrafficController t) {
-        t.addLocoNetListener(~0, this);
-    }
+	/**
+	 * Process the incoming message, see if it is a panel response, and if so
+	 * parse the LocoNet ID. Use that value to set the ID box.
+	 * 
+	 * This is the callback called by the LnTrafficController
+	 * 
+	 * @param m
+	 *            Inbound LocoNet message to check.
+	 */
+	public void message(LocoNetMessage m) {
 
-    public void dispose() {
-        memo.getLnTrafficController().removeLocoNetListener(~0, this);
-        super.dispose();
-    }
+		// The message is 6 bytes long.
+		if (m.getNumDataElements() != 6)
+			return;
+
+		int b1 = m.getElement(0) & 0xFF;
+		int b2 = m.getElement(1) & 0xFF;
+		int b3 = m.getElement(2) & 0xFF;
+		int b4 = m.getElement(3) & 0x07; // UR-92's set bit 4 for duplex
+
+		// Response code is D7 {12, 17, 1F} 00 <value>
+		if ((b1 == 0xD7) && 
+		    ((b2 == 0x12) || (b2 == 0x17) || (b2 == 0x1F)) && 
+		    (b3 == 0x00)) {
+			// We start with "-", so index + 1
+			idBox.setSelectedIndex(b4 + 1);
+		}
+	}
+
+	/**
+	 * Create a LocoNet packet to Query panels for the LocoNet ID
+	 * 
+	 * @return The packet, with contents filled-in
+	 */
+	LocoNetMessage createReadPacket() {
+		LocoNetMessage m = new LocoNetMessage(6);
+		m.setElement(0, 0xDF);
+		m.setElement(1, 0x00);
+		m.setElement(2, 0x00);
+		m.setElement(3, 0x00);
+		m.setElement(4, 0x00);
+
+		return m;
+	}
+
+	/**
+	 * Create a LocoNet packet to set the LocoNet ID.
+	 * 
+	 * @param s
+	 *            The desired value as a string in decimal
+	 * @return The packet, with contents filled-in
+	 */
+	LocoNetMessage createSetPacket(String s) {
+		// convert to int value
+		int data = Integer.parseInt(s);
+		// format packet
+		LocoNetMessage m = new LocoNetMessage(6);
+		m.setElement(0, 0xDF);
+		m.setElement(1, 0x40);
+		m.setElement(2, 0x1F);
+		m.setElement(3, data);
+		m.setElement(4, 0x00);
+		return m;
+	}
+
+	/**
+	 * Tell the LocoNet controller we want to hear messages, which will
+	 * automatically call our "message"
+	 * 
+	 * @param t
+	 *            LocoNet instance to connect to
+	 */
+	public void connect(LnTrafficController t) {
+		t.addLocoNetListener(~0, this);
+	}
+
+	public void dispose() {
+		memo.getLnTrafficController().removeLocoNetListener(~0, this);
+		super.dispose();
+	}
 
 }
