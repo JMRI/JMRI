@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.9 2010-12-12 01:21:36 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.10 2011-02-15 22:32:01 jacobsen Exp $ -->
 <title>JMRI: CBUS Support</title>
 
 <!-- Style -->
@@ -101,6 +101,17 @@ preceeded by the node number:
 <br><code>MS200018</code><br>
 or by using the letters "N" and "E" to specify the separate parts:
 <br><code>MSN2E18</code><br>
+
+<p>
+You can mask off part of the CBUS packet, so any values in the
+masked part will still match, using the "M" format letter.
+<br><code>MS200018M07</code><br>
+
+"M" indicates the start of a hexadecimal mask that will be applied,
+where 1 bits in the mask will be zero bits in the resulting value.
+In the example above, "18" through "1F" will match. This is particularly
+useful for matching e.g. CBUS short events, where parts of the
+packet include the node number which should (usually) be ignored.
 
 <p>
 Finally, it's possible to connect a Sensor to 
