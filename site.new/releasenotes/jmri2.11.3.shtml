@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.19 2011-02-15 15:27:08 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.20 2011-02-15 16:55:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -342,6 +342,11 @@ Leo Bicknell improved the LocoNet monitor:
 <li>Changed OPC_PANEL_RESPONSE to indicate if it was duplex capable, if we're interpreting that bit correctly.
 <li>Included a long form decode of Command Station OpSw reponses.
 </ol>
+
+<p>
+Leo Bicknell fixed a presentation problem in the LocoNet ID tool
+
+
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
