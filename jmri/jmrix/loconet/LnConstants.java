@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -277,15 +277,18 @@ public final static int OPC_RQ_SL_DATA    = 0xbb;
 public final static int OPC_SW_STATE      = 0xbc;
 public final static int OPC_SW_ACK        = 0xbd;
 public final static int OPC_LOCO_ADR      = 0xbf;
-public final static int OPC_MULTI_SENSE   = 0xd0;
+public final static int OPC_MULTI_SENSE   = 0xd0; // Undocumented name
 public final static int OPC_PANEL_RESPONSE= 0xd7; // Undocumented name
 public final static int OPC_PANEL_QUERY   = 0xdf; // Undocumented name
+public final static int OPC_LISSY_UPDATE  = 0xe4; // Undocumented name
 public final static int OPC_PEER_XFER     = 0xe5;
+public final static int OPC_ALM_READ      = 0xe6; // Undocumented name
 public final static int OPC_SL_RD_DATA    = 0xe7;
 public final static int OPC_IMM_PACKET    = 0xed;
 public final static int OPC_IMM_PACKET_2  = 0xee;
 public final static int OPC_WR_SL_DATA    = 0xef;
 public final static int OPC_WR_SL_DATA_EXP = 0xee;
+public final static int OPC_ALM_WRITE     = 0xee; // Undocumented name
 public final static int OPC_MASK          = 0x7f;  /* mask for acknowledge opcodes */
 public final static String OPC_NAME(int opcode) { // encode LocoNet Opcode as a string
        return   (opcode == OPC_GPBUSY)      ? "OPC_GPBUSY" :
@@ -312,12 +315,16 @@ public final static String OPC_NAME(int opcode) { // encode LocoNet Opcode as a 
 		(opcode == OPC_MULTI_SENSE) ? "OPC_MULTI_SENSE"  :
 		(opcode == OPC_PANEL_QUERY) ? "OPC_PANEL_QUERY"  :
 		(opcode == OPC_PANEL_RESPONSE) ? "OPC_PANEL_RESPONSE"  :
+		(opcode == OPC_LISSY_UPDATE) ? "OPC_LISSY_UPDATE" :
 		(opcode == OPC_PEER_XFER)   ? "OPC_PEER_XFER"  :
+		(opcode == OPC_ALM_READ)    ? "OPC_ALM_READ"  :
 		(opcode == OPC_SL_RD_DATA)  ? "OPC_SL_RD_DATA"  :
 		(opcode == OPC_IMM_PACKET)  ? "OPC_IMM_PACKET"  :
 		(opcode == OPC_IMM_PACKET_2)? "OPC_IMM_PACKET_2"  :
 		(opcode == OPC_WR_SL_DATA)  ? "OPC_WR_SL_DATA"  :
 		(opcode == OPC_WR_SL_DATA_EXP)	? "OPC_WR_SL_DATA_EXP"  :
+		(opcode == OPC_ALM_WRITE)   ? "OPC_ALM_WRITE"  :
+
                            "<unknown>";
        }
 

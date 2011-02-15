@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class LlnmonTest extends TestCase {
 
@@ -51,21 +51,21 @@ public class LlnmonTest extends TestCase {
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4,0x08,0x00,0x60,0x01,0x42,0x35,0x05});
         Llnmon f = new Llnmon();
         
-        assertEquals("Lissy message 1", "Lissy 1: Loco 8501 moving south", f.displayMessage(l));
+        assertEquals("Lissy message 1", "Lissy 1: Loco 8501 moving south.\n", f.displayMessage(l));
     }
 
     public void testLissy2() {
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4,0x08,0x00,0x40,0x01,0x42,0x35,0x25});
         Llnmon f = new Llnmon();
         
-        assertEquals("Lissy message 2", "Lissy 1: Loco 8501 moving north", f.displayMessage(l));
+        assertEquals("Lissy message 2", "Lissy 1: Loco 8501 moving north.\n", f.displayMessage(l));
     }
 
     public void testLACK() {
         Llnmon f = new Llnmon();
         
         LocoNetMessage l = new LocoNetMessage(new int[]{0xB4,0x6F, 0x23, 0x07});
-        assertEquals("LACK 23", "LONG_ACK: DCS51 programming reply, thought to mean OK\n", f.displayMessage(l));
+        assertEquals("LACK 23", "LONG_ACK: DCS51 programming reply, thought to mean OK.\n", f.displayMessage(l));
     }
     
     // from here down is testing infrastructure
