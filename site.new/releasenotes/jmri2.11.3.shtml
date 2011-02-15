@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.18 2011-02-15 01:26:44 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.19 2011-02-15 15:27:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -331,6 +331,16 @@ Leo Bicknell improved the LocoNet monitor:
 <li>Added decodes for the Duplex Group Channel query and response.
 <li>Added decodes for the Duplex Group Password query and response.
 <li>Added logic in the SEND IMMEDIATE decode to decode F-keys F13..F28 and print something nice.
+<li>Made numerous improvements in internal structure and documentation
+<li>Corrected the inconsistency of "." or no "." on messages to always have a ".".
+<li>Better report a request for Command Station OpSw values (slot=127).
+<li>Annotated things that were reverse engineered.
+<li>Removed unnecessary dest address from DISPATCH PUT display.
+<li>Prefixed LONG_ACK a few places it was missing.
+<li>Fixed sensor reporting logic to properly display SE8c information. Thanks to Bob Milhaupt.
+<li>Improved decode of switch status broadcast, even though I've never seen anything send one.
+<li>Changed OPC_PANEL_RESPONSE to indicate if it was duplex capable, if we're interpreting that bit correctly.
+<li>Included a long form decode of Command Station OpSw reponses.
 </ol>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
