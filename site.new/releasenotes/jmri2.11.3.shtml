@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.17 2011-02-14 18:07:12 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.18 2011-02-15 01:26:44 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -145,7 +145,9 @@ New operations features and bug fixes:
 </ul>
 
 <p>
-Pete Cressman added support for invisible icons on panels
+Pete Cressman added support for invisible icons on panels.  The file "Invisible.gif" in the program icon directory can be selected 
+as a dimensionless icon.  This can be used when sensors are stacked amd allows "peeking through" a state of the top sensor
+to view the state of the sensor underneath.  For example. combining two sensors to depict a 3 state panel jewel.
 
 <p>
 Lionel Jeanson updated the JMRI mini web server
@@ -184,7 +186,7 @@ Matt Harris fixed a problem with the System Console configuration
 Kevin Dickerson added a "New Throttle Window" to the File menu
 
 <p>
-Pete Cressman added a dialog to correct broken icon paths when loading a panel.
+Pete Cressman added a dialog to correct or delete broken icon paths (bad url) when loading a panel.
 
 <p>
 Dennis Miller fixed some help page links
@@ -194,24 +196,31 @@ Giorgio Terdina updated AutoDispatcher2 to version 2.3.4,
 which copes with some changes in SignalHeadicon and is backwards compatible.
 
 <p>
-Pete Cressman added ability to allocate paths and occupancy detection to Logix. 
-
-<p>
 James LeFevre added more functions to the TMCC throttle.
 
 <p>
 Lionel Jeanson improved the ZeroConf handling.
 
 <p>
-New Logix features
+Pete Cressman added new Logix features
 <ul>
 <li>A dialog will display Logix errors if any occur during runtime</li>
 <li>Conditionals can be set to calculate the triggering of their actions whenever one of the state 
-variable changes state.  Until now Conditionals have omly calculated the triggering of their actions  
+variable changes state.  Until now Conditionals have only calculated the triggering of their actions  
 when the antecedent expression itself changed truth value.  In both cases, 
-actions are triggered according to the truth value of the antecedent expression.</li>
-<li>State variables to test the status of Occupancy Blocks have been added</li>
-<li>Actions for setting Occupancy Block conditions have been added</li>
+actions are still triggered according to the truth value of the antecedent expression.</li>
+<li>State variables to test the status of Occupancy Blocks have been added.</li>
+<li>Actions for setting Occupancy Block conditions have been added.</li>
+</ul>
+
+<p>
+Pete Cressman added new ControlPanelEditor features
+<ul>
+<li>Clipboard Copy & Paste can be done between two control panels,</li>
+<li>The Item Palette can hold multiple sets of icons for each item type.</li>
+<li>The Item Palette has "Indicator Track" and "Indicator Turnouts" that change color when their block sensor 
+shows occupacy.  When used with Occupancy Blocks and Warrants, indicator icons will show allocation, 
+path route, occupancy or error condition by color.</li>
 </ul>
 
 <p>
@@ -233,7 +242,7 @@ Paul Bender made changes to the XPressNet code toward multiple connection suppor
 Ken Cameron made it possible to select a default power manager when using multiple connections.
 
 <p>
-Pete Cressman improved path detection and display for simultaneous manual and auto train running
+Pete Cressman improved path detection and display for simultaneous manual and auto train running under warrants
 
 <p>
 Pete Cressman fixed an empty tooltip-text bug
@@ -242,7 +251,7 @@ Pete Cressman fixed an empty tooltip-text bug
 Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connections.
 
 <p>
-Pete Cressman added a loco icon to follow auto run trains
+Pete Cressman added a loco icon to follow auto trains running under warrants
 
 <p>
 Ken Cameron improved handling of the Digitrax DCS51 Super Zephyr.
@@ -279,11 +288,6 @@ Also added tools to return either a facing or protected blocks by signal heads, 
 <p>
 Kevin Dickerson has done some work on storing frame positions and sizes
 via the user preference manager.
-
-<p>
-Pete Cressman updated Logix Conditionals
-to implement trigger execution of action list on every state 
-calculation in addition to current policy of execute only on change.
 
 <p>
 Lionel Hebbos improved the Jynstrument throttle support:
