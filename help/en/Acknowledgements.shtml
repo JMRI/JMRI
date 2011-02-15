@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.121 2011-02-15 15:22:56 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.122 2011-02-15 15:29:43 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -299,6 +299,7 @@
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
 	<LI>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.
     <LI>Bob Milhaupt, who fixed a problem with transponding messages in the LocoNet monitor
+        and provided a lot of usability improvements in the LocoNet monitor
 	<LI>Dennis Miller, who greatly improved the CV printing, added the
 	run-time help system and repackaged the window icons
 	<LI>Jon Miller, who has been doing user support and decoder testing, plus contributing 
