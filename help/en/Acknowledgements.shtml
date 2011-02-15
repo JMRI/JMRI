@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.120 2011-01-23 16:42:04 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.121 2011-02-15 15:22:56 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -69,6 +69,7 @@
 	a model definition for the Z2 decoder.
 	<LI>Thomas Beutel, who helped with the early EasyDCC tests
 	<Li>John Bicknell, who worked with Ian Birchenough to update ZTC decoder definitions
+	<Li>Leo Bicknell, who updated the LocoNet monitor
 	<LI>Ian Birchenough, who contributed (with Phil Grainger) six
 	ZTC decoder definition files, plus the ZTC 4007, and the
 	Lenz Standard decoder.
