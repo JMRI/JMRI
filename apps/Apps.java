@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.130 $
+ * @version     $Revision: 1.131 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -380,7 +380,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     protected void debugMenu(JMenuBar menuBar, JFrame frame) {
         JMenu d = new jmri.jmrit.DebugMenu(this);
-        menuBar.add(d);
         
         // also add some tentative items from jmrix
         d.add(new JSeparator());
@@ -399,6 +398,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         d.add(new JSeparator());
         d.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
+        menuBar.add(d);
+
     }
 
     protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
@@ -849,7 +850,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     static String nameString = "JMRI program";
     
     public void propertyChange(PropertyChangeEvent ev){
-//   	log.info("property change: comm port status update");
+        if(log.isDebugEnabled())   	
+           log.debug("property change: comm port status update");
     	updateLine(0, cs4);
     	updateLine(1, cs5);
     	updateLine(2, cs6);
