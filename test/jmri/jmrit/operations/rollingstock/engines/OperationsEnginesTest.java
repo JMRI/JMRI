@@ -41,7 +41,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -720,12 +720,11 @@ public class OperationsEnginesTest extends TestCase {
         Assert.assertEquals("Number of Engines available for t1", 1, engineList.size());
         Assert.assertEquals("1st engine in list available for t1", e1, manager.getById(engineList.get(0)));
 
-        // only engines at the start of the route should be available
         engineList = manager.getAvailableTrainList(t3);
-        Assert.assertEquals("Number of Engines available for t3", 1, engineList.size());
-        Assert.assertEquals("1st engine in list available for t3", e2, manager.getById(engineList.get(0)));
-        //Assert.assertEquals("2nd engine in list available for t3", e3, manager.getById(engineList.get(1)));
-        // note that e5 isn't available since it is located at the end of the train's route
+        Assert.assertEquals("Number of Engines available for t3", 3, engineList.size());
+        Assert.assertEquals("1st engine in list available for t3", e5, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list available for t3", e2, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list available for t3", e3, manager.getById(engineList.get(2)));
         
         // release engines from trains
         e2.setTrain(null);
@@ -734,14 +733,14 @@ public class OperationsEnginesTest extends TestCase {
         
         // there should be more engines now
         engineList = manager.getAvailableTrainList(t1);
-        Assert.assertEquals("Number of Engines available t1 after release", 2, engineList.size());
+        Assert.assertEquals("Number of Engines available t1 after release", 4, engineList.size());
         // should be sorted by moves
         Assert.assertEquals("1st engine in list available for t1", e1, manager.getById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list available for t1", e2, manager.getById(engineList.get(1)));
+        Assert.assertEquals("2nd engine in list available for t1", e4, manager.getById(engineList.get(1)));
 
         engineList = manager.getAvailableTrainList(t3);
-        Assert.assertEquals("Number of Engines available for t3 after release", 1, engineList.size());
-        Assert.assertEquals("1st engine in list available for t3", e2, manager.getById(engineList.get(0)));
+        Assert.assertEquals("Number of Engines available for t3 after release", 5, engineList.size());
+        Assert.assertEquals("1st engine in list available for t3", e5, manager.getById(engineList.get(0)));
 
         // now get engines by road number
         engineList = manager.getByNumberList();

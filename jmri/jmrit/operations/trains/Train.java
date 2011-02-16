@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.106 $
+ * @version $Revision: 1.107 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -81,6 +81,27 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _logoURL ="";			// optional manifest logo for this train
 	protected Engine _leadEngine = null; 	// lead engine for icon
 	protected String _comment = "";
+	
+	// Engine change and helper engines
+	protected int _leg2Options = 0;					// options
+	protected RouteLocation _start2Leg = null;		// route location when 2nd leg begins
+	protected RouteLocation _end2Leg = null;		// route location where 2nd leg ends
+	protected String _number2Engines = "0";			// number of engines 2nd leg
+	protected String _engine2Road = "";				// engine road name 2nd leg 
+	protected String _engine2Model = "";			// engine model 2nd leg
+	protected String _caboose2Road = "";			// road name for caboose 2nd leg
+	
+	protected int _leg3Options = 0;					// options
+	protected RouteLocation _start3Leg = null;		// route location when 3rd leg begins
+	protected RouteLocation _end3Leg = null;		// route location where 3rd leg ends
+	protected String _number3Engines = "0";			// number of engines 3rd leg
+	protected String _engine3Road = "";				// engine road name 3rd leg 
+	protected String _engine3Model = "";			// engine model 3rd leg
+	protected String _caboose3Road = "";			// road name for caboose 3rd leg
+	
+	public static final int CHANGE_ENGINES = 1;		// change engines
+	public static final int HELPER_ENGINES = 2;		// add helper engines
+	public static final int CHANGE_CABOOSE = 4;		// change caboose
 	
 	// property change names
 	public static final String DISPOSE_CHANGED_PROPERTY = "TrainDispose";
@@ -1057,7 +1078,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void setNumberEngines(String number) {
 		_numberEngines = number;
 	}
-
+	
 	/**
 	 * Get the number of engines that this train requires.
 	 * @return The number of engines that this train requires.
@@ -1066,6 +1087,30 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _numberEngines;
 	}
 	
+	/**
+	 * Get the number of engines needed for the second set.
+	 * @return The number of engines needed in route
+	 */
+	public String getSecondLegNumberEngines() {
+		return _number2Engines;
+	}
+	
+	public void setSecondLegNumberEngines(String number) {
+		_number2Engines = number;
+	}
+
+	/**
+	 * Get the number of engines needed for the third set.
+	 * @return The number of engines needed in route
+	 */
+	public String getThirdLegNumberEngines() {
+		return _number3Engines;
+	}
+	
+	public void setThirdLegNumberEngines(String number) {
+		_number3Engines = number;
+	}
+
 	/**
 	 * Set the road name of engines servicing this train.
 	 * @param road The road name of engines servicing this train.
@@ -1083,6 +1128,39 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Set the road name of engines servicing this train 2nd leg.
+	 * @param road The road name of engines servicing this train.
+	 */
+	public void setSecondLegEngineRoad(String road) {
+		_engine2Road = road;
+	}
+
+	/**
+	 * Get the road name of engines servicing this train 2nd leg.
+	 * @return The road name of engines servicing this train.
+	 */
+	public String getSecondLegEngineRoad() {
+		return _engine2Road;
+	}
+	
+	/**
+	 * Set the road name of engines servicing this train 3rd leg.
+	 * @param road The road name of engines servicing this train.
+	 */
+	public void setThirdLegEngineRoad(String road) {
+		_engine3Road = road;
+	}
+
+	/**
+	 * Get the road name of engines servicing this train 3rd leg.
+	 * @return The road name of engines servicing this train.
+	 */
+	public String getThirdLegEngineRoad() {
+		return _engine3Road;
+	}
+	
+	
+	/**
 	 * Set the model name of engines servicing this train.
 	 * @param model The model name of engines servicing this train.
 	 */
@@ -1095,6 +1173,30 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Set the model name of engines servicing this train's 2nd leg.
+	 * @param model The model name of engines servicing this train.
+	 */
+	public void setSecondLegEngineModel(String model) {
+		_engine2Model = model;
+	}
+
+	public String getSecondLegEngineModel() {
+		return _engine2Model;
+	}
+	
+	/**
+	 * Set the model name of engines servicing this train's 3rd leg.
+	 * @param model The model name of engines servicing this train.
+	 */
+	public void setThirdLegEngineModel(String model) {
+		_engine3Model = model;
+	}
+
+	public String getThirdLegEngineModel() {
+		return _engine3Model;
+	}
+	
+	/**
 	 * Set the road name of the caboose servicing this train.
 	 * @param road The road name of the caboose servicing this train.
 	 */
@@ -1104,6 +1206,102 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	public String getCabooseRoad() {
 		return _cabooseRoad;
+	}
+	
+	/**
+	 * Set the road name of the second leg caboose servicing this train.
+	 * @param road The road name of the caboose servicing this train's 2nd leg.
+	 */
+	public void setSecondLegCabooseRoad(String road) {
+		_caboose2Road = road;
+	}
+
+	public String getSecondLegCabooseRoad() {
+		return _caboose2Road;
+	}
+	
+	/**
+	 * Set the road name of the third leg caboose servicing this train.
+	 * @param road The road name of the caboose servicing this train's 3rd leg.
+	 */
+	public void setThirdLegCabooseRoad(String road) {
+		_caboose3Road = road;
+	}
+
+	public String getThirdLegCabooseRoad() {
+		return _caboose3Road;
+	}
+	
+	public void setSecondLegStartLocation(RouteLocation rl){
+		_start2Leg = rl;
+	}
+	
+	public RouteLocation getSecondLegStartLocation(){
+		return _start2Leg;
+	}
+	
+	public String getSecondLegStartLocationName(){
+		if (getSecondLegStartLocation() == null)
+			return "";
+		return getSecondLegStartLocation().getName();
+	}
+	
+	public void setThirdLegStartLocation(RouteLocation rl){
+		_start3Leg = rl;
+	}
+	
+	public RouteLocation getThirdLegStartLocation(){
+		return _start3Leg;
+	}
+	
+	public String getThirdLegStartLocationName(){
+		if (getThirdLegStartLocation() == null)
+			return "";
+		return getThirdLegStartLocation().getName();
+	}
+	
+	public void setSecondLegEndLocation(RouteLocation rl){
+		_end2Leg = rl;
+	}
+	
+	public String getSecondLegEndLocationName(){
+		if (getSecondLegEndLocation() == null)
+			return "";
+		return getSecondLegEndLocation().getName();
+	}
+	
+	public RouteLocation getSecondLegEndLocation(){
+		return _end2Leg;
+	}
+	
+	public void setThirdLegEndLocation(RouteLocation rl){
+		_end3Leg = rl;
+	}
+	
+	public RouteLocation getThirdLegEndLocation(){
+		return _end3Leg;
+	}
+	
+	public String getThirdLegEndLocationName(){
+		if (getThirdLegEndLocation() == null)
+			return "";
+		return getThirdLegEndLocation().getName();
+	}
+	
+	public void setSecondLegOptions(int options){
+		_leg2Options = options;
+	}
+	
+	public int getSecondLegOptions(){
+		return _leg2Options;
+	}
+	
+	public void setThirdLegOptions(int options){
+		_leg3Options = options;
+	}
+	
+	public int getThirdLegOptions(){
+		return _leg3Options;
 	}
 	
 	public void setComment(String comment) {
@@ -1677,14 +1875,34 @@ public class Train implements java.beans.PropertyChangeListener {
     	}
     	if ((a = e.getAttribute("numberEngines")) != null)
     		_numberEngines = a.getValue();
+    	if ((a = e.getAttribute("number2Engines")) != null)
+    		_number2Engines = a.getValue();
+    	if ((a = e.getAttribute("number3Engines")) != null)
+    		_number3Engines = a.getValue();
     	if ((a = e.getAttribute("engineRoad")) != null)
     		_engineRoad = a.getValue();
+    	if ((a = e.getAttribute("engine2Road")) != null)
+    		_engine2Road = a.getValue();
+    	if ((a = e.getAttribute("engine3Road")) != null)
+    		_engine3Road = a.getValue();
     	if ((a = e.getAttribute("engineModel")) != null)
     		_engineModel = a.getValue();
+    	if ((a = e.getAttribute("engine2Model")) != null)
+    		_engine2Model = a.getValue();
+    	if ((a = e.getAttribute("engine3Model")) != null)
+    		_engine3Model = a.getValue();
     	if ((a = e.getAttribute("requires")) != null)
     		_requires = Integer.parseInt(a.getValue());
     	if ((a = e.getAttribute("cabooseRoad")) != null)
     		_cabooseRoad = a.getValue();
+    	if ((a = e.getAttribute("caboose2Road")) != null)
+    		_caboose2Road = a.getValue();
+    	if ((a = e.getAttribute("caboose3Road")) != null)
+    		_caboose3Road = a.getValue();
+    	if ((a = e.getAttribute("leg2Options")) != null)
+    		_leg2Options = Integer.parseInt(a.getValue());
+    	if ((a = e.getAttribute("leg3Options")) != null)
+    		_leg3Options = Integer.parseInt(a.getValue());
     	if ((a = e.getAttribute("built")) != null)
     		_built = a.getValue().equals("true");
     	if ((a = e.getAttribute("build")) != null)
@@ -1697,10 +1915,17 @@ public class Train implements java.beans.PropertyChangeListener {
     		_leadEngineId = a.getValue();
     	if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
     	if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-    	if ((a = e.getAttribute("current")) != null ){
-    		if (_route != null){
+    	if (_route != null){
+    		if ((a = e.getAttribute("current")) != null) 		
     			_current = _route.getLocationById(a.getValue());
-    		}
+    		if ((a = e.getAttribute("start2Leg")) != null) 		
+    			_start2Leg = _route.getLocationById(a.getValue());
+    		if ((a = e.getAttribute("start3Leg")) != null) 		
+    			_start3Leg = _route.getLocationById(a.getValue());
+       		if ((a = e.getAttribute("end2Leg")) != null) 		
+    			_end2Leg = _route.getLocationById(a.getValue());
+    		if ((a = e.getAttribute("end3Leg")) != null) 		
+    			_end3Leg = _route.getLocationById(a.getValue());
     	}
     	// check for scripts
     	if (e.getChild("scripts") != null){
@@ -1866,7 +2091,29 @@ public class Train implements java.beans.PropertyChangeListener {
         	Element l = new Element("manifestLogo");
         	l.setAttribute("name", getManifestLogoURL());
         	e.addContent(l);
-        }   
+        }
+        if (getSecondLegOptions() != 0 && !getSecondLegNumberEngines().equals("0")){
+        	e.setAttribute("leg2Options", Integer.toString(getSecondLegOptions()));
+        	e.setAttribute("number2Engines", getSecondLegNumberEngines());
+        	e.setAttribute("engine2Road", getSecondLegEngineRoad());
+        	e.setAttribute("engine2Model", getSecondLegEngineModel());
+        	e.setAttribute("caboose2Road", getSecondLegCabooseRoad());
+           	if (getSecondLegStartLocation() != null)
+        		e.setAttribute("start2Leg", getSecondLegStartLocation().getId());
+           	if (getSecondLegEndLocation() != null)
+        		e.setAttribute("end2Leg", getSecondLegEndLocation().getId());
+        }
+        if (getThirdLegOptions() != 0 && !getThirdLegNumberEngines().equals("0")){
+        	e.setAttribute("leg3Options", Integer.toString(getThirdLegOptions()));
+        	e.setAttribute("number3Engines", getThirdLegNumberEngines());
+        	e.setAttribute("engine3Road", getThirdLegEngineRoad());
+        	e.setAttribute("engine3Model", getThirdLegEngineModel());
+        	e.setAttribute("caboose3Road", getThirdLegCabooseRoad());
+        	if (getThirdLegStartLocation() != null)
+        		e.setAttribute("start3Leg", getThirdLegStartLocation().getId());
+          	if (getThirdLegEndLocation() != null)
+        		e.setAttribute("end3Leg", getThirdLegEndLocation().getId());
+        }
         return e;
     }
 

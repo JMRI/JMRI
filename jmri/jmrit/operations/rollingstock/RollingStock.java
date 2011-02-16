@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -501,14 +501,14 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		// check for car in kernel
 		if (this.getClass().equals(Car.class)){
 			Car car = (Car)this;
-			if (car.getKernel() != null){
+			if (car.getKernel() != null && car.getKernel().isLead(car)){
 				length = car.getKernel().getLength();
 			}
 		}
 		// check for engine in consist
 		if (this.getClass().equals(Engine.class)){
 			Engine eng = (Engine)this;
-			if (eng.getConsist() != null){
+			if (eng.getConsist() != null && eng.getConsist().isLead(eng)){
 				length = eng.getConsist().getLength();
 			}
 		}

@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.77 $
+ * @version $Revision: 1.78 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -4669,8 +4669,8 @@ public class OperationsTrainsTest extends TestCase {
 		// should fail since there are NH roads in staging
 		Assert.assertEquals("Train 1 After Build 11", false, train1.isBuilt());
 
-		// reduce Boston moves to 5, to force non caboose and FRED cars to Arlington
-		rl3.setMaxCarMoves(5);
+		// reduce Boston moves to 6, to force non caboose and FRED cars to Arlington
+		rl3.setMaxCarMoves(6);
 		train1.setRoadOption(Train.ALLROADS);
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 12", true, train1.isBuilt());

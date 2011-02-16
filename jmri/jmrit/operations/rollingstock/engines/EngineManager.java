@@ -23,7 +23,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class EngineManager extends RollingStockManager{
 	
@@ -185,14 +185,13 @@ public class EngineManager extends RollingStockManager{
     }
     
        /**
-	 * return a list available engines (no assigned train) at the _START_ of a route, engines are
+	 * return a list available engines (no assigned train) engines are
 	 * ordered least recently moved to most recently moved.
 	 * 
 	 * @param train
 	 * @return Ordered list of engine ids not assigned to a train
 	 */
     public List<String> getAvailableTrainList(Train train) {
-    	String departureName = train.getTrainDepartsName();
     	// get engines by moves list
     	List<String> enginesSortByMoves = getByMovesList();
     	// now build list of available engines for this route
@@ -201,8 +200,7 @@ public class EngineManager extends RollingStockManager{
  
     	for (int i = 0; i < enginesSortByMoves.size(); i++) {
     		engine = getById(enginesSortByMoves.get(i));
-    		// only use engines at start of route
-    		if((engine.getTrain()== null || engine.getTrain()==train) && engine.getLocationName().equals(departureName))
+    		if(engine.getTrack() != null && (engine.getTrain()== null || engine.getTrain()==train))
     			out.add(enginesSortByMoves.get(i));
     	}
     	return out;

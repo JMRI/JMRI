@@ -6,6 +6,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.JComboBox;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -17,7 +19,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
@@ -349,6 +351,26 @@ public class Route implements java.beans.PropertyChangeListener {
 				return OKAY;
 		}
 	   	return ORPHAN;
+    }
+    
+    public JComboBox getComboBox (){
+    	JComboBox box = new JComboBox();
+    	List<String> routeIds = getLocationsBySequenceList();
+    	for (int i=0; i<routeIds.size(); i++){
+    		RouteLocation rl = getLocationById(routeIds.get(i));
+    		box.addItem(rl);
+    	}
+    	return box;
+    }
+    
+    public void updateComboBox(JComboBox box){
+       	box.removeAllItems();
+    	box.addItem("");
+       	List<String> routeIds = getLocationsBySequenceList();
+    	for (int i=0; i<routeIds.size(); i++){
+    		RouteLocation rl = getLocationById(routeIds.get(i));
+    		box.addItem(rl);
+    	}
     }
 
  	

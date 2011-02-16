@@ -2,9 +2,12 @@
 
 package jmri.jmrit.operations.trains;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+//import java.text.MessageFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -13,8 +16,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-//import javax.swing.JMenu;
-//import javax.swing.JMenuBar;
+//import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,18 +24,23 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineModels;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -51,10 +58,22 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JPanel panelLoadNames = new JPanel();
 	JPanel panelOwnerNames = new JPanel();
 	JPanel panelBuilt = new JPanel();
+	JPanel panelTrainReq1 = new JPanel();
+	JPanel panelTrainReq2 = new JPanel();
 	JScrollPane roadPane;
 	JScrollPane loadPane;
 	JScrollPane ownerPane;
 	JScrollPane builtPane;
+	JScrollPane trainReq1Pane;
+	JScrollPane trainReq2Pane;
+	
+	JPanel engine1Option = new JPanel();
+	JPanel engine1DropOption = new JPanel();
+	JPanel engine1caboose = new JPanel();
+	
+	JPanel engine2Option = new JPanel();
+	JPanel engine2DropOption = new JPanel();
+	JPanel engine2caboose = new JPanel();
 
 	// labels
 	JLabel trainName = new JLabel();
@@ -71,52 +90,88 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JButton deleteAllLoadsButton = new JButton(rb.getString("DeleteAllLoads"));
 	
 	JButton addOwnerButton = new JButton(rb.getString("AddOwner"));
-	JButton deleteOwnerButton = new JButton(rb.getString("DeleteOwner"));
-	
+	JButton deleteOwnerButton = new JButton(rb.getString("DeleteOwner"));	
 	JButton saveTrainButton = new JButton(rb.getString("SaveTrain"));
 
 	// radio buttons    
     JRadioButton roadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton roadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton roadNameExclude = new JRadioButton(rb.getString("Exclude"));
+    
     JRadioButton loadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton loadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton loadNameExclude = new JRadioButton(rb.getString("Exclude"));
+    
     JRadioButton ownerNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton ownerNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton ownerNameExclude = new JRadioButton(rb.getString("Exclude"));
+    
     JRadioButton builtDateAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton builtDateAfter = new JRadioButton(rb.getString("After"));
     JRadioButton builtDateBefore = new JRadioButton(rb.getString("Before"));
     JRadioButton builtDateRange = new JRadioButton(rb.getString("Range"));
-
+    
     ButtonGroup roadGroup = new ButtonGroup();
     ButtonGroup loadGroup = new ButtonGroup();
     ButtonGroup ownerGroup = new ButtonGroup();
     ButtonGroup builtGroup = new ButtonGroup();
+    
+	// train requirements 1st set
+    JRadioButton none1 = new JRadioButton(rb.getString("None"));
+    JRadioButton change1Engine = new JRadioButton(rb.getString("EngineChange"));
+    JRadioButton helper1Service = new JRadioButton(rb.getString("HelperService"));
+    JRadioButton keep1Caboose = new JRadioButton(rb.getString("KeepCaboose"));
+    JRadioButton change1Caboose = new JRadioButton(rb.getString("ChangeCaboose"));
+    
+    ButtonGroup trainReq1Group = new ButtonGroup();
+    ButtonGroup cabooseOption1Group = new ButtonGroup();
+    
+	// train requirements 2nd set
+    JRadioButton none2 = new JRadioButton(rb.getString("None"));
+    JRadioButton change2Engine = new JRadioButton(rb.getString("EngineChange"));
+    JRadioButton helper2Service = new JRadioButton(rb.getString("HelperService"));
+    JRadioButton keep2Caboose = new JRadioButton(rb.getString("KeepCaboose"));
+    JRadioButton change2Caboose = new JRadioButton(rb.getString("ChangeCaboose"));
+
+    ButtonGroup trainReq2Group = new ButtonGroup();
+    ButtonGroup cabooseOption2Group = new ButtonGroup();
+    
+    // check boxes
 	
 	// text field
     JTextField builtAfterTextField = new JTextField(10);
     JTextField builtBeforeTextField = new JTextField(10);
-		
-	// for padding out panel
-	JLabel space1 = new JLabel("       ");
-	JLabel space2 = new JLabel("       ");
-	JLabel space3 = new JLabel("       ");
-	JLabel space4 = new JLabel("       ");
-	JLabel space5 = new JLabel("       ");
-	JLabel space6 = new JLabel("       ");
 	
 	// combo boxes
 	JComboBox roadBox = CarRoads.instance().getComboBox();
 	JComboBox typeBox = CarTypes.instance().getComboBox();
 	JComboBox loadBox = CarLoads.instance().getComboBox(null);
 	JComboBox ownerBox = CarOwners.instance().getComboBox();
+	
+	// train requirements 1st set
+	JComboBox routePickup1Box = new JComboBox();
+	JComboBox routeDrop1Box = new JComboBox();
+	JComboBox roadCaboose1Box = new JComboBox();
+	JComboBox roadEngine1Box = CarRoads.instance().getComboBox();
+	JComboBox modelEngine1Box = EngineModels.instance().getComboBox();
+	JComboBox numEngines1Box = new JComboBox();
+	
+	// train requirements 2nd set
+	JComboBox routePickup2Box = new JComboBox();
+	JComboBox routeDrop2Box = new JComboBox();
+	JComboBox roadCaboose2Box = new JComboBox();
+	JComboBox roadEngine2Box = CarRoads.instance().getComboBox();
+	JComboBox modelEngine2Box = EngineModels.instance().getComboBox();
+	JComboBox numEngines2Box = new JComboBox();
 
 	public static final String DISPOSE = "dispose" ;
 
 	public TrainEditBuildOptionsFrame() {
 		super();
+ 	}
+
+	public void initComponents(TrainEditFrame parent) {
+		
     	// Set up the jtable in a Scroll Pane..
       	roadPane = new JScrollPane(panelRoadNames);
     	roadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -133,10 +188,15 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
       	builtPane = new JScrollPane(panelBuilt);
       	builtPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       	builtPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BuiltTrain")));
- 	}
-
-	public void initComponents(TrainEditFrame parent) {
-
+      	
+      	trainReq1Pane = new JScrollPane(panelTrainReq1);
+      	trainReq1Pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+      	trainReq1Pane.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainRequires")));
+      	
+      	trainReq2Pane = new JScrollPane(panelTrainReq2);
+      	trainReq2Pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+      	trainReq2Pane.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainRequires")));
+      	
 		_trainEditFrame = parent;
 		_trainEditFrame.setChildFrame(this);
 		_train = _trainEditFrame._train;
@@ -167,25 +227,25 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	p1.add(pName);
     	p1.add(pDesc);
     		
-		// row 7
+		// row 3
 		panelRoadNames.setLayout(new GridBagLayout());
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
 		
-		// row 8
+		// row 5
 		panelLoadNames.setLayout(new GridBagLayout());
 		loadGroup.add(loadNameAll);
 		loadGroup.add(loadNameInclude);
 		loadGroup.add(loadNameExclude);
 		
-		// row 9
+		// row 7
 		panelOwnerNames.setLayout(new GridBagLayout());
 		ownerGroup.add(ownerNameAll);
 		ownerGroup.add(ownerNameInclude);
 		ownerGroup.add(ownerNameExclude);
 		
-		// row 11
+		// row 9
 		panelBuilt.setLayout(new GridBagLayout());
 		builtAfterTextField.setToolTipText(rb.getString("EnterYearTip"));
 		builtBeforeTextField.setToolTipText(rb.getString("EnterYearTip"));
@@ -202,6 +262,118 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		builtGroup.add(builtDateBefore);
 		builtGroup.add(builtDateRange);
 		
+		// row 11
+		panelTrainReq1.setLayout(new BoxLayout(panelTrainReq1, BoxLayout.Y_AXIS));
+		
+		JPanel trainOption1 = new JPanel();
+		trainOption1.add(none1);
+		trainOption1.add(change1Engine);
+		trainOption1.add(helper1Service);
+		panelTrainReq1.add(trainOption1);
+		
+		trainReq1Group.add(none1);
+		trainReq1Group.add(change1Engine);
+		trainReq1Group.add(helper1Service);
+		
+		// engine options
+		engine1Option.setLayout(new GridBagLayout());
+		
+    	for (int i=0; i<Setup.getEngineSize()+1; i++){
+    		numEngines1Box.addItem(Integer.toString(i));
+    	}
+    	numEngines1Box.setMinimumSize(new Dimension(50,20));
+    	modelEngine1Box.insertItemAt("",0);
+    	modelEngine1Box.setSelectedIndex(0);
+    	modelEngine1Box.setMinimumSize(new Dimension(120,20));
+    	modelEngine1Box.setToolTipText(rb.getString("ModelEngineTip"));
+    	roadEngine1Box.insertItemAt("",0);
+    	roadEngine1Box.setSelectedIndex(0);
+    	roadEngine1Box.setMinimumSize(new Dimension(120,20));
+    	roadEngine1Box.setToolTipText(rb.getString("RoadEngineTip"));
+		addItem (engine1Option, new JLabel(rb.getString("ChangeEnginesAt")), 0, 0);
+		addItem (engine1Option, routePickup1Box, 1, 0);
+    	addItem (engine1Option, new JLabel(rb.getString("Engines")), 2, 0);
+    	addItem (engine1Option, numEngines1Box, 3, 0);
+    	addItem (engine1Option, new JLabel(rb.getString("Model")), 4, 0);
+    	addItem (engine1Option, modelEngine1Box, 5, 0);
+    	addItem (engine1Option, new JLabel(rb.getString("Road")), 6, 0);
+    	addItem (engine1Option, roadEngine1Box, 7, 0);
+    	panelTrainReq1.add(engine1Option);
+    	
+    	// caboose options
+    	//roadCaboose1Box.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
+    	roadCaboose1Box.setMinimumSize(new Dimension(120,20));
+    	roadCaboose1Box.setToolTipText(rb.getString("RoadCabooseTip"));
+    	addItem (engine1caboose, keep1Caboose, 2, 6);
+    	addItem (engine1caboose, change1Caboose, 3, 6);
+     	addItem (engine1caboose, new JLabel(rb.getString("Road")), 5, 6);
+     	addItem (engine1caboose, roadCaboose1Box, 6, 6);
+       	panelTrainReq1.add(engine1caboose);
+    	
+    	cabooseOption1Group.add(keep1Caboose);
+    	cabooseOption1Group.add(change1Caboose);
+    	
+    	// drop engine panel
+    	addItem(engine1DropOption, new JLabel(rb.getString("DropEnginesAt")), 0 , 0);
+    	addItem(engine1DropOption, routeDrop1Box, 1, 0);
+    	panelTrainReq1.add(engine1DropOption);
+		
+		// row 13
+		panelTrainReq2.setLayout(new BoxLayout(panelTrainReq2, BoxLayout.Y_AXIS));
+		
+		JPanel trainOption2 = new JPanel();
+		trainOption2.add(none2);
+		trainOption2.add(change2Engine);
+		trainOption2.add(helper2Service);
+		panelTrainReq2.add(trainOption2);
+		
+		trainReq2Group.add(none2);
+		trainReq2Group.add(change2Engine);
+		trainReq2Group.add(helper2Service);
+		
+		// engine options
+		engine2Option.setLayout(new GridBagLayout());
+		
+    	for (int i=0; i<Setup.getEngineSize()+1; i++){
+    		numEngines2Box.addItem(Integer.toString(i));
+    	}
+    	numEngines2Box.setMinimumSize(new Dimension(50,20));
+    	modelEngine2Box.insertItemAt("",0);
+    	modelEngine2Box.setSelectedIndex(0);
+    	modelEngine2Box.setMinimumSize(new Dimension(120,20));
+    	modelEngine2Box.setToolTipText(rb.getString("ModelEngineTip"));
+    	roadEngine2Box.insertItemAt("",0);
+    	roadEngine2Box.setSelectedIndex(0);
+    	roadEngine2Box.setMinimumSize(new Dimension(120,20));
+    	roadEngine2Box.setToolTipText(rb.getString("RoadEngineTip"));
+		addItem (engine2Option, new JLabel(rb.getString("ChangeEnginesAt")), 0, 0);
+		addItem (engine2Option, routePickup2Box, 1, 0);
+    	addItem (engine2Option, new JLabel(rb.getString("Engines")), 2, 0);
+    	addItem (engine2Option, numEngines2Box, 3, 0);
+    	addItem (engine2Option, new JLabel(rb.getString("Model")), 4, 0);
+    	addItem (engine2Option, modelEngine2Box, 5, 0);
+    	addItem (engine2Option, new JLabel(rb.getString("Road")), 6, 0);
+    	addItem (engine2Option, roadEngine2Box, 7, 0);
+    	panelTrainReq2.add(engine2Option);
+    	
+    	// caboose options
+    	//roadCaboose2Box.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
+    	roadCaboose2Box.setMinimumSize(new Dimension(120,20));
+    	roadCaboose2Box.setToolTipText(rb.getString("RoadCabooseTip"));
+    	addItem (engine2caboose, keep2Caboose, 2, 6);
+    	addItem (engine2caboose, change2Caboose, 3, 6);
+     	addItem (engine2caboose, new JLabel(rb.getString("Road")), 5, 6);
+     	addItem (engine2caboose, roadCaboose2Box, 6, 6);
+       	panelTrainReq2.add(engine2caboose);
+    	
+    	cabooseOption2Group.add(keep2Caboose);
+    	cabooseOption2Group.add(change2Caboose);
+    	
+    	// drop engine panel
+    	addItem(engine2DropOption, new JLabel(rb.getString("DropEnginesAt")), 0 , 0);
+    	addItem(engine2DropOption, routeDrop2Box, 1, 0);
+    	panelTrainReq2.add(engine2DropOption);
+		
 		// row 15 buttons
 	   	JPanel pB = new JPanel();
     	pB.setLayout(new GridBagLayout());		
@@ -212,11 +384,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		getContentPane().add(loadPane);
 		getContentPane().add(ownerPane);
 		getContentPane().add(builtPane);
+		getContentPane().add(trainReq1Pane);
+		getContentPane().add(trainReq2Pane);
       	getContentPane().add(pB);
 		
 		// setup buttons
-		//addButtonAction(setButton);
-		//addButtonAction(clearButton);
 		addButtonAction(deleteRoadButton);
 		addButtonAction(addRoadButton);
 		addButtonAction(deleteLoadButton);
@@ -240,7 +412,23 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		addRadioButtonAction(builtDateBefore);
 		addRadioButtonAction(builtDateRange);
 		
+		addRadioButtonAction(none1);
+		addRadioButtonAction(change1Engine);
+		addRadioButtonAction(helper1Service);
+		addRadioButtonAction(keep1Caboose);
+		addRadioButtonAction(change1Caboose);		
+		addRadioButtonAction(none2);
+		addRadioButtonAction(change2Engine);
+		addRadioButtonAction(helper2Service);
+		addRadioButtonAction(keep2Caboose);
+		addRadioButtonAction(change2Caboose);
+		
 		addComboBoxAction(typeBox);
+		
+		addComboBoxAction(numEngines1Box);
+		addComboBoxAction(modelEngine1Box);
+		addComboBoxAction(numEngines2Box);
+		addComboBoxAction(modelEngine2Box);
 		
 		if (_train != null){
 			trainName.setText(_train.getName());
@@ -261,6 +449,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		updateLoadNames();
 		updateOwnerNames();
 		updateBuilt();
+		updateTrainRequires1Option();
+		updateTrainRequires2Option();
 
 		// get notified if car roads, loads, and owners gets modified
 		CarTypes.instance().addPropertyChangeListener(this);
@@ -355,14 +545,63 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			if (ae.getSource() == builtDateAll ||
 					ae.getSource() == builtDateAfter ||
 					ae.getSource() == builtDateBefore ||
-					ae.getSource() == builtDateRange )
+					ae.getSource() == builtDateRange ){
 				updateBuilt();	
+			}
+			if (ae.getSource() == none1){
+				_train.setSecondLegOptions(Train.NONE);
+				updateTrainRequires1Option();
+			}
+			if (ae.getSource() == change1Engine){
+				_train.setSecondLegOptions(Train.CHANGE_ENGINES);
+				updateTrainRequires1Option();
+			}
+			if (ae.getSource() == helper1Service){
+				_train.setSecondLegOptions(Train.HELPER_ENGINES);
+				updateTrainRequires1Option();
+			}
+			if (ae.getSource() == keep1Caboose ||
+					ae.getSource() == change1Caboose){
+				roadCaboose1Box.setEnabled(change1Caboose.isSelected());
+			}
+			if (ae.getSource() == none2){
+				_train.setThirdLegOptions(Train.NONE);
+				updateTrainRequires2Option();
+			}
+			if (ae.getSource() == change2Engine){
+				_train.setThirdLegOptions(Train.CHANGE_ENGINES);
+				updateTrainRequires2Option();
+			}
+			if (ae.getSource() == helper2Service){
+				_train.setThirdLegOptions(Train.HELPER_ENGINES);
+				updateTrainRequires2Option();
+			}
+			if (ae.getSource() == keep2Caboose ||
+					ae.getSource() == change2Caboose){
+				roadCaboose2Box.setEnabled(change2Caboose.isSelected());
+			}
 		}
 	}
 	
 	// Car type combo box has been changed, show loads associated with this car type
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		updateLoadComboBoxes();
+		if (ae.getSource() == typeBox){
+			updateLoadComboBoxes();
+		}
+		if (ae.getSource() == numEngines1Box){
+			modelEngine1Box.setEnabled(!numEngines1Box.getSelectedItem().equals("0"));
+			roadEngine1Box.setEnabled(!numEngines1Box.getSelectedItem().equals("0"));
+		}
+		if (ae.getSource() == modelEngine1Box){
+			updateEngineRoadComboBox(roadEngine1Box, (String)modelEngine1Box.getSelectedItem());
+		}
+		if (ae.getSource() == numEngines2Box){
+			modelEngine2Box.setEnabled(!numEngines2Box.getSelectedItem().equals("0"));
+			roadEngine2Box.setEnabled(!numEngines2Box.getSelectedItem().equals("0"));
+		}
+		if (ae.getSource() == modelEngine2Box){
+			updateEngineRoadComboBox(roadEngine2Box, (String)modelEngine2Box.getSelectedItem());
+		}
 	}
 	
 	private void updateRoadNames(){
@@ -557,9 +796,108 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		packFrame();
 	}
 	
+	private void updateTrainRequires1Option(){
+		none1.setSelected(true);
+		if (_train != null){
+			
+			updateCabooseRoadComboBox(roadCaboose1Box);
+			updateEngineRoadComboBox(roadEngine1Box, (String)modelEngine1Box.getSelectedItem());
+			if (_train.getRoute() != null){
+				_train.getRoute().updateComboBox(routePickup1Box);
+				_train.getRoute().updateComboBox(routeDrop1Box);
+			}
+
+			change1Engine.setSelected((_train.getSecondLegOptions() & Train.CHANGE_ENGINES)>0);
+			helper1Service.setSelected((_train.getSecondLegOptions() & Train.HELPER_ENGINES)>0);
+			numEngines1Box.setSelectedItem(_train.getSecondLegNumberEngines());
+			modelEngine1Box.setSelectedItem(_train.getSecondLegEngineModel());
+			routePickup1Box.setSelectedItem(_train.getSecondLegStartLocation());
+			routeDrop1Box.setSelectedItem(_train.getSecondLegEndLocation());
+			roadEngine1Box.setSelectedItem(_train.getSecondLegEngineRoad());
+			keep1Caboose.setSelected(true);
+			change1Caboose.setSelected((_train.getSecondLegOptions() & Train.CHANGE_CABOOSE)>0);
+			roadCaboose1Box.setEnabled(change1Caboose.isSelected());
+			roadCaboose1Box.setSelectedItem(_train.getSecondLegCabooseRoad());
+		} 
+		engine1Option.setVisible(!none1.isSelected());
+		engine1caboose.setVisible(change1Engine.isSelected() && (_train.getRequirements() & Train.CABOOSE)>0);
+		engine1DropOption.setVisible(helper1Service.isSelected());
+		engine1Option.setBorder(BorderFactory.createTitledBorder(rb.getString("EngineChange")));
+		if (helper1Service.isSelected())
+			engine1Option.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpers")));
+		packFrame();
+	}
+	
+	private void updateTrainRequires2Option(){
+		none2.setSelected(true);
+		if (_train != null){
+			
+			updateCabooseRoadComboBox(roadCaboose2Box);
+			updateEngineRoadComboBox(roadEngine2Box, (String)modelEngine2Box.getSelectedItem());
+			if (_train.getRoute() != null){
+				_train.getRoute().updateComboBox(routePickup2Box);
+				_train.getRoute().updateComboBox(routeDrop2Box);
+			}
+
+			change2Engine.setSelected((_train.getThirdLegOptions() & Train.CHANGE_ENGINES)>0);
+			helper2Service.setSelected((_train.getThirdLegOptions() & Train.HELPER_ENGINES)>0);
+			numEngines2Box.setSelectedItem(_train.getThirdLegNumberEngines());
+			modelEngine2Box.setSelectedItem(_train.getThirdLegEngineModel());
+			routePickup2Box.setSelectedItem(_train.getThirdLegStartLocation());
+			routeDrop2Box.setSelectedItem(_train.getThirdLegEndLocation());
+			roadEngine2Box.setSelectedItem(_train.getThirdLegEngineRoad());
+			keep2Caboose.setSelected(true);
+			change2Caboose.setSelected((_train.getThirdLegOptions() & Train.CHANGE_CABOOSE)>0);
+			roadCaboose2Box.setEnabled(change2Caboose.isSelected());
+			roadCaboose2Box.setSelectedItem(_train.getThirdLegCabooseRoad());
+		} 
+		engine2Option.setVisible(!none2.isSelected());
+		engine2caboose.setVisible(change2Engine.isSelected() && (_train.getRequirements() & Train.CABOOSE)>0);
+		engine2DropOption.setVisible(helper2Service.isSelected());
+		engine2Option.setBorder(BorderFactory.createTitledBorder(rb.getString("EngineChange")));
+		if (helper2Service.isSelected())
+			engine2Option.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpers")));
+		packFrame();
+	}
+	
 	private void saveTrain (){
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
+		
+		if (change1Caboose.isSelected())
+			_train.setSecondLegOptions(_train.getSecondLegOptions() | Train.CHANGE_CABOOSE);
+		else if (change1Engine.isSelected())
+			_train.setSecondLegOptions(Train.CHANGE_ENGINES);
+		if (routePickup1Box.getSelectedItem() != null && !routePickup1Box.getSelectedItem().equals(""))
+			_train.setSecondLegStartLocation((RouteLocation)routePickup1Box.getSelectedItem());
+		else
+			_train.setSecondLegStartLocation(null);
+		if (routeDrop1Box.getSelectedItem() != null && !routeDrop1Box.getSelectedItem().equals(""))
+			_train.setSecondLegEndLocation((RouteLocation)routeDrop1Box.getSelectedItem());
+		else
+			_train.setSecondLegEndLocation(null);
+		_train.setSecondLegNumberEngines((String)numEngines1Box.getSelectedItem());
+		_train.setSecondLegEngineModel((String)modelEngine1Box.getSelectedItem());
+		_train.setSecondLegEngineRoad((String)roadEngine1Box.getSelectedItem());
+		_train.setSecondLegCabooseRoad((String)roadCaboose1Box.getSelectedItem());
+		
+		if (change2Caboose.isSelected())
+			_train.setThirdLegOptions(_train.getThirdLegOptions() | Train.CHANGE_CABOOSE);
+		else if (change2Engine.isSelected())
+			_train.setThirdLegOptions(Train.CHANGE_ENGINES);
+		if (routePickup2Box.getSelectedItem() != null && !routePickup2Box.getSelectedItem().equals(""))
+			_train.setThirdLegStartLocation((RouteLocation)routePickup2Box.getSelectedItem());
+		else
+			_train.setThirdLegStartLocation(null);
+		if (routeDrop2Box.getSelectedItem() != null && !routeDrop2Box.getSelectedItem().equals(""))
+			_train.setThirdLegEndLocation((RouteLocation)routeDrop2Box.getSelectedItem());
+		else
+			_train.setThirdLegEndLocation(null);
+		_train.setThirdLegNumberEngines((String)numEngines2Box.getSelectedItem());
+		_train.setThirdLegEngineModel((String)modelEngine2Box.getSelectedItem());
+		_train.setThirdLegEngineRoad((String)roadEngine2Box.getSelectedItem());
+		_train.setThirdLegCabooseRoad((String)roadCaboose2Box.getSelectedItem());
+		
 		manager.save();
 	}
 	
@@ -569,6 +907,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		roadNameAll.setEnabled(enabled);
 		roadNameInclude.setEnabled(enabled);
 		roadNameExclude.setEnabled(enabled);
+		loadNameAll.setEnabled(enabled);
+		loadNameInclude.setEnabled(enabled);
+		loadNameExclude.setEnabled(enabled);
 		addRoadButton.setEnabled(enabled);
 		deleteRoadButton.setEnabled(enabled);
 		ownerNameAll.setEnabled(enabled);
@@ -577,7 +918,15 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		builtDateAll.setEnabled(enabled);
 		builtDateAfter.setEnabled(enabled);
 		builtDateBefore.setEnabled(enabled);
-		builtDateRange.setEnabled(enabled);		
+		builtDateRange.setEnabled(enabled);
+		
+		none1.setEnabled(enabled);
+		change1Engine.setEnabled(enabled);
+		helper1Service.setEnabled(enabled);
+		none2.setEnabled(enabled);
+		change2Engine.setEnabled(enabled);
+		helper2Service.setEnabled(enabled);
+		
 		saveTrainButton.setEnabled(enabled);
 	}
 	
@@ -586,7 +935,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		// remove types not serviced by this train
 		for (int i = typeBox.getItemCount()-1; i>=0; i--){
 			String type = (String)typeBox.getItemAt(i);
-			if (!_train.acceptsTypeName(type)){
+			if (_train != null && !_train.acceptsTypeName(type)){
 				typeBox.removeItem(type);
 			}
 		}
@@ -605,11 +954,49 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		CarOwners.instance().updateComboBox(ownerBox);
 	}
 	
+	// update caboose road box based on radio selection
+	private void updateCabooseRoadComboBox(JComboBox box){
+		box.removeAllItems();
+		box.addItem("");
+		List<String> roads = CarManager.instance().getCabooseRoadNames();
+		for (int i=0; i<roads.size(); i++){
+			box.addItem(roads.get(i));
+		}
+	}
+	
+	private void updateEngineRoadComboBox(JComboBox box, String engineModel){
+		if (engineModel == null)
+			return;
+		box.removeAllItems();
+		box.addItem("");
+		List<String> roads = EngineManager.instance().getEngineRoadNames(engineModel);
+		for (int i=0; i<roads.size(); i++){
+			box.addItem(roads.get(i));
+		}
+	}
+	
+	/*
+	private boolean checkModel(String model, String numberEngines){
+		if (numberEngines.equals("0") || model.equals(""))
+			return true;
+		String type = EngineModels.instance().getModelType(model);
+		if(_train.acceptsTypeName(type))
+			return true;
+		JOptionPane.showMessageDialog(this,
+				MessageFormat.format(rb.getString("TrainModelService"), new Object[] {model, type}), MessageFormat.format(rb.getString("CanNot"),
+						new Object[] {rb.getString("save")}),
+				JOptionPane.ERROR_MESSAGE);
+		return false;
+	}
+	*/
+	
     private void packFrame(){
+    	setPreferredSize(null);
     	setVisible(false);
  		pack();
- 		if(getWidth()<325)
- 			setSize(getWidth()+50, getHeight());
+ 		validate();
+ 		if(getWidth()<550)
+ 			setSize(550, getHeight());
 		setVisible(true);
     }
 	

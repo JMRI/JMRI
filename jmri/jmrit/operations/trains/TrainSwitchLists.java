@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -94,13 +93,9 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					}
 					// go through the list of engines and determine if the engine departs here
-					for (int j = 0; j < enginesList.size(); j++) {
-						Engine engine = engineManager
-								.getById(enginesList.get(j));
-						if (engine.getRouteLocation() == rl	&& !engine.getTrackName().equals("")){
-							pickupEngine(fileOut, engine);
-						}
-					}
+					
+					pickupEngines(fileOut, enginesList, rl);
+
 					// get a list of cars and determine if this location is serviced
 //					block cars by destination
 					for (int j = 0; j < routeList.size(); j++) {
@@ -114,13 +109,9 @@ public class TrainSwitchLists extends TrainCommon {
 							}
 						}
 					}
-					for (int j = 0; j < enginesList.size(); j++) {
-						Engine engine = engineManager
-								.getById(enginesList.get(j));
-						if (engine.getRouteDestination() == rl){
-							dropEngine(fileOut, engine);
-						}
-					}
+					
+					dropEngines(fileOut, enginesList, rl);
+					
 					for (int j=0; j<carList.size(); j++){
 						Car car = carManager.getById(carList.get(j));
 						if (car.getRouteDestination() == rl){

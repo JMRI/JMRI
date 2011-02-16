@@ -20,6 +20,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -34,6 +36,24 @@ public class TrainCommon {
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String BOX = " [ ] ";
 	protected static final String TAB = "    ";
+	EngineManager engineManager = EngineManager.instance();
+	
+	protected void pickupEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl){
+		for (int i =0; i < engineList.size(); i++){
+			Engine engine = engineManager.getById(engineList.get(i));
+			if (engine.getRouteLocation() == rl)
+				pickupEngine(fileOut, engine);
+		}
+	}
+	
+	protected void dropEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl){
+		for (int i =0; i < engineList.size(); i++){
+			Engine engine = engineManager.getById(engineList.get(i));
+			if (engine.getRouteDestination() == rl)
+				dropEngine(fileOut, engine);
+		}
+	}
+	
 	
 	protected void pickupEngine(PrintWriter file, Engine engine){
 		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup"));
