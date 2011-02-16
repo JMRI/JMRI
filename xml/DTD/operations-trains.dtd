@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.19 2011-02-10 22:28:12 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.20 2011-02-16 20:21:43 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -89,6 +89,20 @@
 <!ATTLIST train status				CDATA #IMPLIED>
 <!ATTLIST train current				CDATA #IMPLIED>
 <!ATTLIST train skip				CDATA #IMPLIED>
+<!ATTLIST train leg2Options			CDATA #IMPLIED>
+<!ATTLIST train leg3Options			CDATA #IMPLIED>
+<!ATTLIST train leg2Engines			CDATA #IMPLIED>
+<!ATTLIST train leg3Engines			CDATA #IMPLIED>
+<!ATTLIST train leg2Road			CDATA #IMPLIED>
+<!ATTLIST train leg3Road			CDATA #IMPLIED>
+<!ATTLIST train leg2Model			CDATA #IMPLIED>
+<!ATTLIST train leg3Model			CDATA #IMPLIED>
+<!ATTLIST train leg2CabooseRoad		CDATA #IMPLIED>
+<!ATTLIST train leg3CabooseRoad		CDATA #IMPLIED>
+<!ATTLIST train leg2Start			CDATA #IMPLIED>
+<!ATTLIST train leg3Start			CDATA #IMPLIED>
+<!ATTLIST train leg2End				CDATA #IMPLIED>
+<!ATTLIST train leg3End				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
 
 <!ATTLIST build name				CDATA #IMPLIED>
