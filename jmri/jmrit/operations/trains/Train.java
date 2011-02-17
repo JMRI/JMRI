@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.108 $
+ * @version $Revision: 1.109 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -1633,11 +1633,18 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	private boolean animation = true;	// when true use animation for icon moves
 	TrainIconAnimation _ta;
+	/*
+	 * rl = to the next route location for this train
+	 */
 	protected void moveTrainIcon(RouteLocation rl){
 		_trainIconRl = rl;
 		// create train icon if at departure or if program has been restarted
 		if (rl == getTrainDepartsRouteLocation() || _trainIcon == null){
 			createTrainIcon();
+		}
+		// is the lead engine still in train
+		if (getLeadEngine() != null && getLeadEngine().getRouteDestination() == rl){
+			log.debug("Engine ("+getLeadEngine().toString()+") arriving at destination "+rl.getName());			
 		}
 		if (_trainIcon != null && _trainIcon.isActive()){
 			setTrainIconColor();
@@ -1692,7 +1699,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _trainIcon;
 	}
 	
-	private void createTrainIcon() {
+	public void createTrainIcon() {
 		if (_trainIcon != null && _trainIcon.isActive()) {
 			_trainIcon.remove();
 			_trainIcon.dispose();
@@ -1704,6 +1711,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			if (getIconName().length() > 9) {
 				_trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
 			}
+			_trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
 			// add throttle if there's a throttle manager
 			if (jmri.InstanceManager.throttleManagerInstance()!=null) {
 				// add throttle if JMRI loco roster entry exist

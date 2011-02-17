@@ -5,12 +5,13 @@ import java.beans.PropertyChangeEvent;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.routes.RouteLocation;
 
 /**
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class Engine extends RollingStock {
 	
@@ -165,6 +166,19 @@ public class Engine extends RollingStock {
 	 */
 	public String testDestination(Location destination, Track track) {
 		return super.testDestination(destination, track);
+	}
+	
+	public void moveRollingStock(RouteLocation old, RouteLocation next){
+		if(old == getRouteLocation()){
+			if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))){
+				if (getTrain() != null && getTrain().getLeadEngine() != this){
+					log.debug("New lead engine ("+toString()+") for train " + getTrain().getName());
+					getTrain().setLeadEngine(this);
+					getTrain().createTrainIcon();
+				}
+			}
+		}
+		super.moveRollingStock(old, next);
 	}
 	
 	public void dispose(){
