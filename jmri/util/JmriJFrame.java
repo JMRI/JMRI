@@ -51,14 +51,21 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  * GT 28-AUG-2008 Added window menu
  */
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag, java.awt.event.ComponentListener {
 
-    public JmriJFrame() {
+    /**
+     * Creates a JFrame
+     * @param saveSize - Set true to save the last known size
+     * @param savePost - Set true to save the last known size
+     */
+    public JmriJFrame(boolean saveSize, boolean savePost) {
 	    super();
+        reuseFrameSavedPosition=savePost;
+        reuseFrameSavedSized=saveSize;
 	    self = this;
         addWindowListener(this);
         addComponentListener(this);
@@ -71,7 +78,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowCloseShortCut();
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        
         windowFrameRef = this.getClass().getName();
         if (!windowFrameRef.equals(JmriJFrame.class.getName())){
             if ((p != null) && (p.isWindowPositionSaved(windowFrameRef))) {
@@ -89,9 +95,23 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             }
         }
     }
-
+    
+    public JmriJFrame() {
+        this(true, true);
+    }
+    
     public JmriJFrame(String name) {
-        this();
+        this(name, true, true);
+    }
+
+    /**
+     * Creates a JMRI JFrame
+     * @param name - Title of the JFrame
+     * @param saveSize - Set true to save the last knowm size
+     * @param savePost - Set true to save the last known size
+     */
+    public JmriJFrame(String name, boolean saveSize, boolean savePost) {
+        this(saveSize, savePost);
         setTitle(name);
         if (windowFrameRef.equals(JmriJFrame.class.getName())){
             if ((this.getTitle()==null) || (this.getTitle().equals("")))
@@ -101,14 +121,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
             if ((p != null) && (p.isWindowPositionSaved(windowFrameRef))) {
                 Dimension screen = getToolkit().getScreenSize();
-                if (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
-                    (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight()))){
+                if ((reuseFrameSavedPosition) && (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
+                    (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight())))){
                     this.setLocation(p.getWindowLocation(windowFrameRef));
                 }
                 /* Simple case that if either height or width are zero, then we should
                 not set them */
-                if (!((p.getWindowSize(windowFrameRef).getWidth()==0.0) || 
-                    (p.getWindowSize(windowFrameRef).getHeight()==0.0))){
+                if ((reuseFrameSavedSized) &&(!((p.getWindowSize(windowFrameRef).getWidth()==0.0) ||
+                    (p.getWindowSize(windowFrameRef).getHeight()==0.0)))){
                     this.setPreferredSize(p.getWindowSize(windowFrameRef));
                 }
             }
@@ -391,17 +411,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
     }
 
-    /**
-     * Specifies if we should be setting the location of the frame to the last
-     * known position.
-     */
-    public void setSaveFramePosition(boolean boo) { reuseFrameSavedPosition = boo; }
     protected boolean reuseFrameSavedPosition = true;
-
-    /**
-     *  Specifies if we should be resizing the frame to what was last set.
-     */
-    public void setSaveFrameSize(boolean boo) { reuseFrameSavedSized = boo; }
     protected boolean reuseFrameSavedSized = true;
 
     /**
