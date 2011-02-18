@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.109 $
+ * @version $Revision: 1.110 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -2100,7 +2100,7 @@ public class Train implements java.beans.PropertyChangeListener {
         	l.setAttribute("name", getManifestLogoURL());
         	e.addContent(l);
         }
-        if (getSecondLegOptions() != 0 && !getSecondLegNumberEngines().equals("0")){
+        if (getSecondLegOptions() != Train.NONE){
         	e.setAttribute("leg2Options", Integer.toString(getSecondLegOptions()));
         	e.setAttribute("leg2Engines", getSecondLegNumberEngines());
         	e.setAttribute("leg2Road", getSecondLegEngineRoad());
@@ -2111,7 +2111,7 @@ public class Train implements java.beans.PropertyChangeListener {
            	if (getSecondLegEndLocation() != null)
         		e.setAttribute("leg2End", getSecondLegEndLocation().getId());
         }
-        if (getThirdLegOptions() != 0 && !getThirdLegNumberEngines().equals("0")){
+        if (getThirdLegOptions() != Train.NONE){
         	e.setAttribute("leg3Options", Integer.toString(getThirdLegOptions()));
         	e.setAttribute("leg3Engines", getThirdLegNumberEngines());
         	e.setAttribute("leg3Road", getThirdLegEngineRoad());
