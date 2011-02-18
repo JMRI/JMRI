@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -238,23 +238,36 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         // index through the paths, counting
         int count = 0;
         Path next = null;
-        for (int i = 0; i<paths.size(); i++) {
-            Path p = paths.get(i);
-            if (p.checkPathSet() && p.getBlock().getSensor() != null && p.getBlock().getSensor().getState()==Sensor.ACTIVE) {
+        // get statuses of everything once
+        int currPathCnt = paths.size();
+        Path pList[] = new Path[currPathCnt];
+        boolean isSet[] = new boolean[currPathCnt];
+        Sensor pSensor[] = new Sensor[currPathCnt];
+        boolean isActive[] = new boolean[currPathCnt];
+        int pDir[] = new int[currPathCnt];
+        int pFromDir[] = new int[currPathCnt];
+        for (int i = 0; i < currPathCnt; i++) {
+        	pList[i] = paths.get(i);
+            isSet[i] = pList[i].checkPathSet();
+            pSensor[i] = pList[i].getBlock().getSensor();
+            isActive[i] = pList[i].getBlock().getSensor().getState() == Sensor.ACTIVE;
+            pDir[i] = pList[i].getBlock().getDirection();
+            pFromDir[i] = pList[i].getFromBlockDirection();
+            if (isSet[i] && pSensor[i] != null && isActive[i]) {
                 count++;
-                next = p;
+                next = pList[i];
             }
         }
         // sort on number of neighbors
         if (count == 0) {
-			if (infoMessageCount<maxInfoMessages) {
+			if (infoMessageCount < maxInfoMessages) {
 				log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block "+getSystemName()+". Value not set.");
 				infoMessageCount ++;
 			}
 		}
         else if (count == 1) { // simple case
         
-            if ((next!= null) && (next.getBlock()!=null)) {
+            if ((next != null) && (next.getBlock() != null)) {
                 // normal case, transfer value object 
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
@@ -267,24 +280,22 @@ public class Block extends jmri.implementation.AbstractNamedBean {
 			if (log.isDebugEnabled()) log.debug ("Block "+getSystemName()+"- count of active linked blocks = "+count);
             next = null;
             count = 0;
-            for (int i = 0; i<paths.size(); i++) {
-                Path p = paths.get(i);
-                if (p.checkPathSet() && p.getBlock().getSensor() != null && p.getBlock().getSensor().getState()==Sensor.ACTIVE
-                    && (p.getBlock().getDirection() == p.getFromBlockDirection())) {
+            for (int i = 0; i < currPathCnt; i++) {
+                if (isSet[i] && pSensor[i] != null && isActive[i] && (pDir[i] == pFromDir[i])) {
                     count++;
-                    next = p;
+                    next = pList[i];
                 } 
             }
-            if (next==null)
+            if (next == null)
             	if (log.isDebugEnabled()) log.debug("next is null!");
-            if (next!=null && count==1) {
+            if (next != null && count == 1) {
                 // found one block with proper direction, assume that
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
                 if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+next.getBlock().getSystemName()+", direction="+Path.decodeDirection(getDirection()));
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                log.debug("count of "+count+" ACTIVE neightbors with proper direction can't be handled for block "+getSystemName());
+                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName());
             }
         }
         // in any case, go OCCUPIED
