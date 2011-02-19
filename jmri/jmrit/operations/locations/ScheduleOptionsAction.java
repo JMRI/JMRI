@@ -15,7 +15,7 @@ import jmri.jmrit.operations.OperationsFrame;
 /**
  * Action to launch schedule options.
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class ScheduleOptionsAction extends AbstractAction {
 		
@@ -41,6 +41,10 @@ class ScheduleOptionsFrame extends OperationsFrame{
 	// text field
 	JTextField factorTextField = new JTextField(5);
 	
+	// radio buttons
+	JRadioButton sequentialRadioButton = new JRadioButton(rb.getString("Sequential"));
+	JRadioButton matchRadioButton = new JRadioButton(rb.getString("Match"));
+	
     // major buttons
     JButton saveButton = new JButton(rb.getString("Save"));
     
@@ -60,15 +64,36 @@ class ScheduleOptionsFrame extends OperationsFrame{
 		pFactor.setLayout(new GridBagLayout());
 		pFactor.setBorder(BorderFactory.createTitledBorder(rb.getString("ScheduleFactor")));
 		addItem(pFactor, factorTextField, 0, 0);
-		addItem(pFactor, saveButton, 0, 1);
 		
 		factorTextField.setToolTipText(rb.getString("TipScheduleFactor"));
 		factorTextField.setText(Integer.toString(_track.getReservationFactor()));
+		
+		// row 2
+		JPanel pMode = new JPanel();
+		pMode.setLayout(new GridBagLayout());
+		pMode.setBorder(BorderFactory.createTitledBorder(rb.getString("ScheduleMode")));
+		addItem(pMode, sequentialRadioButton, 0, 0);
+		addItem(pMode, matchRadioButton, 1, 0);
+		
+		sequentialRadioButton.setToolTipText(rb.getString("TipSequential"));
+		matchRadioButton.setToolTipText(rb.getString("TipMatch"));
+		ButtonGroup group = new ButtonGroup();
+		group.add(sequentialRadioButton);
+		group.add(matchRadioButton);
+		
+		sequentialRadioButton.setSelected(_track.getScheduleMode() == Track.SEQUENTIAL);
+		matchRadioButton.setSelected(_track.getScheduleMode() == Track.MATCH);
+		
+		JPanel pControls = new JPanel();
+		pControls.add(saveButton);
   	
     	// button action
     	addButtonAction(saveButton);
     	
     	getContentPane().add(pFactor);
+    	getContentPane().add(pMode);
+    	getContentPane().add(pControls);
+    	
     	setTitle(rb.getString("MenuItemScheduleOptions"));
     	pack();
     	if (getWidth() < 300)
@@ -94,6 +119,10 @@ class ScheduleOptionsFrame extends OperationsFrame{
 				return;
 			}
 			_track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
+			if (sequentialRadioButton.isSelected())
+				_track.setScheduleMode(Track.SEQUENTIAL);
+			else
+				_track.setScheduleMode(Track.MATCH);
 			LocationManagerXml.instance().writeOperationsFile();
 		}		
 	}

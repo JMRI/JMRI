@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.49 $
+ * @version             $Revision: 1.50 $
  */
 public class Track {
 	
@@ -40,8 +40,6 @@ public class Track {
 	protected int _length = 0;						// length of track
 	protected int _reserved = 0;					// length of track reserved by trains
 	protected int _numberCarsInRoute = 0;			// number of cars in route to this track
-	protected int _reservedInRoute = 0;				// length of cars in route to this track
-	protected int _reservationFactor = 100;			// percentage of track space for cars in route
 	protected int _usedLength = 0;					// length of track filled by cars and engines 
 	protected int _moves = 0;						// count of the drops since creation
 	protected String _comment = "";
@@ -53,6 +51,9 @@ public class Track {
 	protected String _scheduleId = "";				// Schedule id if there's one
 	protected String _scheduleItemId = "";			// the current scheduled item id
 	protected int _scheduleCount = 0;				// the number of times the item has been delivered
+	protected int _reservedInRoute = 0;				// length of cars in route to this track
+	protected int _reservationFactor = 100;			// percentage of track space for cars in route
+	protected int _mode = SEQUENTIAL;
 	
 	// drop options
 	protected String _dropOption = ANY;				// controls which route or train can drop
@@ -96,6 +97,10 @@ public class Track {
 	public static final String ALLLOADS = rb.getString("All");			// track services all loads 
 	public static final String INCLUDELOADS = rb.getString("Include");
 	public static final String EXCLUDELOADS = rb.getString("Exclude");
+	
+	// schedule modes
+	public static final int SEQUENTIAL = 0;
+	public static final int MATCH = 1;
 	
 	//	 For property change
 	public static final String TYPES_CHANGED_PROPERTY = "types";
@@ -210,6 +215,17 @@ public class Track {
 	public int getReservationFactor(){
 		return _reservationFactor;
 	}
+	
+	public void setScheduleMode(int mode){
+		int old = _mode;
+		_mode = mode;
+		firePropertyChange("scheduleMode", old, mode);
+	}
+	
+	public int getScheduleMode(){
+		return _mode;
+	}
+	
 	
 	public boolean isSpaceAvailable(Car car){
 			int length = Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
@@ -753,12 +769,22 @@ public class Track {
     public String getScheduleName(){
     	if (getScheduleId().equals(""))
     		return "";
-    	Schedule schedule = ScheduleManager.instance().getScheduleById(getScheduleId());
+    	Schedule schedule = getSchedule();
     	if (schedule == null){
     		log.error("No schedule for id: "+getScheduleId());
     		return "";
     	}
     	return schedule.getName();
+    }
+    
+    public Schedule getSchedule(){
+    	if (getScheduleId().equals(""))
+    		return null;
+    	Schedule schedule = ScheduleManager.instance().getScheduleById(getScheduleId());
+    	if (schedule == null){
+    		log.error("No schedule for id: "+getScheduleId());
+    	}
+    	return schedule;
     }
     
     public String getScheduleId(){
@@ -810,7 +836,7 @@ public class Track {
     }
     
     public ScheduleItem getCurrentScheduleItem(){
-		Schedule sch = ScheduleManager.instance().getScheduleById(getScheduleId());
+		Schedule sch = getSchedule();
 		if (sch == null){
 			log.warn("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
 			return null;
@@ -826,22 +852,30 @@ public class Track {
     }
     
     public void bumpSchedule(){
-    	Schedule sch = ScheduleManager.instance().getScheduleById(getScheduleId());
-    	if (sch == null){
-    		log.warn("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
-    		return;
-    	}
     	// bump the track move count
     	setMoves(getMoves()+1);
+    	// is the schedule in match mode?
+    	if (getScheduleMode() == Track.MATCH)
+    		return;
     	// bump the schedule count
     	setScheduleCount(getScheduleCount()+1);
     	if (getScheduleCount() < getCurrentScheduleItem().getCount())
     		return;
     	// go to the next item on the schedule
     	setScheduleCount(0);
+    	getNextScheduleItem();
+    }
+    
+    public ScheduleItem getNextScheduleItem(){
+    	Schedule sch = getSchedule();
+    	if (sch == null){
+    		log.warn("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
+    		return null;
+    	}
     	List<String> l = sch.getItemsBySequenceList();
+    	ScheduleItem nextSi = null;
     	for (int i=0; i<l.size(); i++){
-    		ScheduleItem nextSi = sch.getItemById(l.get(i));
+    		nextSi = sch.getItemById(l.get(i));
     		if (getScheduleItemId().equals(nextSi.getId())){
     			if (++i < l.size()){
     				nextSi = sch.getItemById(l.get(i));
@@ -852,6 +886,7 @@ public class Track {
     			break;
     		}
     	}
+    	return nextSi;
     }
     
     /**
@@ -863,7 +898,7 @@ public class Track {
 		String status = "";
 		if (getScheduleId().equals(""))
 			return status;
-		Schedule schedule = ScheduleManager.instance().getScheduleById(getScheduleId());
+		Schedule schedule = getSchedule();
 		if (schedule == null)
 			return MessageFormat.format(rb.getString("CanNotFindSchedule"),new Object[]{getScheduleId()});
 		List<String> scheduleItems = schedule.getItemsBySequenceList();
@@ -1046,6 +1081,7 @@ public class Track {
         if ((a = e.getAttribute("itemId")) != null ) _scheduleItemId = a.getValue();
         if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("factor")) != null ) _reservationFactor = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("scheduleMode")) != null ) _mode = Integer.parseInt(a.getValue());
         
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("order")) != null ) _order = a.getValue();
@@ -1113,6 +1149,7 @@ public class Track {
     		e.setAttribute("itemId", getScheduleItemId());
     		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));
     		e.setAttribute("factor", Integer.toString(getReservationFactor()));
+    		e.setAttribute("scheduleMode", Integer.toString(getScheduleMode()));
     	}
     	if (_loadOptions != 0)
     		e.setAttribute("loadOptions", Integer.toString(_loadOptions));

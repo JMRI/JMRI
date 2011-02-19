@@ -12,8 +12,8 @@ import org.jdom.Element;
 /**
  * Represents a car delivery schedule for a location
  * 
- * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.7 $
+ * @author Daniel Boudreau Copyright (C) 2009, 2011
+ * @version             $Revision: 1.8 $
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
@@ -30,7 +30,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	public static final String DISPOSE = "dispose";
 	
 
-	public Schedule(String id, String name) {
+	public Schedule(String id, String name){
 		log.debug("New schedule (" + name + ") id: " + id);
 		_name = name;
 		_id = id;
@@ -40,7 +40,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		return _id;
 	}
 
-	public void setName(String name) {
+	public void setName(String name){
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
@@ -53,15 +53,19 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		return _name;
 	}
 
-	public String getName() {
+	public String getName(){
 		return _name;
 	}
-
-	public void setComment(String comment) {
-		_comment = comment;
+	
+	public int getSize(){
+		return _scheduleHashTable.size();
 	}
 
-	public String getComment() {
+	public void setComment(String comment){
+		_comment = comment;
+	}
+	
+	public String getComment(){
 		return _comment;
 	}
 

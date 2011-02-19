@@ -5,9 +5,7 @@ import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.router.Router;
@@ -16,7 +14,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.66 $
+ * @version             $Revision: 1.67 $
  */
 public class Car extends RollingStock {
 	
@@ -328,20 +326,28 @@ public class Car extends RollingStock {
 		// only sidings can have a schedule
 		if (!track.getLocType().equals(Track.SIDING))
 			return OKAY;
-		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
-		ScheduleManager scheduleManager = ScheduleManager.instance();
-		Schedule sch = scheduleManager.getScheduleById(track.getScheduleId());
-		if (sch == null){
-			log.warn("Could not find schedule ("+track.getScheduleId()+") for track ("+track.getName()+")");
-			return OKAY;
-		}
-		ScheduleItem si = sch.getItemById(track.getScheduleItemId());
+		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") mode "+track.getScheduleMode());
+
+		ScheduleItem si = track.getCurrentScheduleItem();
 		if (si == null){
-			log.warn("Could not find schedule item id ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
-			// reset and get first schedule item on the list
-			si = sch.getItemById(sch.getItemsBySequenceList().get(0));
-			track.setScheduleItemId(si.getId());
+			log.error("Could not find schedule item id ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
+			return SCHEDULE + " ERROR";
 		}
+		if (track.getScheduleMode() == Track.SEQUENTIAL)
+			return checkScheduleItem(track, si);
+		// schedule in is match mode search entire schedule for a match
+		for (int i=0; i<track.getSchedule().getSize(); i++){
+			si = track.getNextScheduleItem();
+			if (checkScheduleItem(track, si).equals(OKAY)){
+				log.debug("Found schedule match for car ("+toString()+") ship ("+si.getShip()+") " +
+						"destination ("+si.getDestinationName()+", "+si.getDestinationTrackName()+")");
+				return OKAY;
+			}
+		}
+		return SCHEDULE + " NO MATCH";
+	}
+	
+	private String checkScheduleItem(Track track, ScheduleItem si){
 		if (getType().equals(si.getType())) {
 			if (si.getRoad().equals("") || getRoad().equals(si.getRoad()))
 				if (si.getLoad().equals("") || getLoad().equals(si.getLoad()))
@@ -357,7 +363,7 @@ public class Car extends RollingStock {
 						+ ") "+ROAD+" (" + si.getRoad() + ")";
 		} else
 			return SCHEDULE + " (" + track.getScheduleName()
-					+ ") request car "+TYPE+" (" + si.getType() + ")";
+					+ ") request car "+TYPE+" (" + si.getType() + ")";		
 	}
 	
 	/**

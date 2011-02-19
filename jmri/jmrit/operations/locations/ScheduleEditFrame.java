@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -218,6 +218,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			_schedule.addItem((String)typeBox.getSelectedItem(),0);
 		else
 			_schedule.addItem((String)typeBox.getSelectedItem());
+		if (_track.getScheduleMode() == Track.MATCH && typeBox.getSelectedIndex() < typeBox.getItemCount()-1)
+			typeBox.setSelectedIndex(typeBox.getSelectedIndex()+1);
 	}
 	
 	private void saveNewSchedule(){
@@ -301,7 +303,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (log.isDebugEnabled()) log.debug("ScheduleEditFrame sees property change: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+		if (Control.showProperty && log.isDebugEnabled()) log.debug("ScheduleEditFrame sees property change: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){

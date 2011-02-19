@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -27,7 +28,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -254,7 +255,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     
     String notValidRoad =rb.getString("NotValid");
     private JComboBox getRoadComboBox(ScheduleItem si){
-    	log.debug("getRoadComboBox for ScheduleItem "+si.getType());
+    	//log.debug("getRoadComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = new JComboBox();
     	String[] roads = CarRoads.instance().getNames();
     	cb.addItem("");
@@ -276,7 +277,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
     
     private JComboBox getLoadComboBox(ScheduleItem si){
-    	log.debug("getLoadComboBox for ScheduleItem "+si.getType());
+    	//log.debug("getLoadComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());
     	filterLoads(cb);	// remove loads not accepted by this track
     	cb.setSelectedItem(si.getLoad());
@@ -289,7 +290,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
     
     private JComboBox getShipComboBox(ScheduleItem si){
-    	log.debug("getShipComboBox for ScheduleItem "+si.getType());
+    	//log.debug("getShipComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());  
     	cb.setSelectedItem(si.getShip());
     	if (!cb.getSelectedItem().equals(si.getShip())){
@@ -301,14 +302,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
     
     private JComboBox getDestComboBox(ScheduleItem si){
-    	log.debug("getDestComboBox for ScheduleItem "+si.getType());
+    	//log.debug("getDestComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = LocationManager.instance().getComboBox();  
     	cb.setSelectedItem(si.getDestination());
     	return cb;
     }
     
     private JComboBox getTrackComboBox(ScheduleItem si){
-    	log.debug("getTrackComboBox for ScheduleItem "+si.getType());
+    	//log.debug("getTrackComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = new JComboBox();
     	if (si.getDestination() != null){
     		Location dest = si.getDestination();
@@ -469,7 +470,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     // this table listens for changes to a schedule and it's car types
     public void propertyChange(PropertyChangeEvent e) {
-    	if (log.isDebugEnabled()) log.debug("ScheduleTableModel sees property change: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+    	if (Control.showProperty && log.isDebugEnabled()) log.debug("ScheduleTableModel sees property change: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
     	if (e.getPropertyName().equals(Schedule.LISTCHANGE_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
