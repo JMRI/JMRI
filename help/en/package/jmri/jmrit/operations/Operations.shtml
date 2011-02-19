@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.95 2011-02-18 18:50:06 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.96 2011-02-19 22:21:58 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -641,6 +641,23 @@ accept the car type are shown in the track pull down menu.</P>
 <P>You can optionally use your <A HREF="#StagingAndCarLoads">staging
 tracks</A> to empty cars with a "Schedule" load, and you can also optionally
 create "Schedule" loads using staging tracks.</P>
+
+<P>Schedules can operate in one of two modes, sequential as
+described above, or in match mode. In match mode, the program will
+search the entire schedule to find a car type and load that matches the
+car that the program is trying to place. In match mode the pointer shows
+the last car that the program found acceptable for the siding. To change
+the schedule to match mode, select in the edit schedule window
+"Tools->Options", select "Match" and press "Save". Match mode is useful
+when the order cars arrive isn't important, but you still want to either
+ship cars with a specific load or provide the car's next destination. In
+match mode the item count is ignored as it isn't used. All of the other
+fields will work, you can have the same type of car several times, with
+each item looking for a different receive loads, and you can ship loads
+and forward the cars to the various destinations. Also in match mode the
+car type selection box advances automatically to the next car type when
+adding a car type. This makes it easy to quickly add car types to the
+table.</P>
 
 <P>You can also access your Schedules from the Locations Tools menu.
 The Schedules table provides status for each schedule. Since you can
