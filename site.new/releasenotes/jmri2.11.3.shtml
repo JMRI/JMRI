@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.20 2011-02-15 16:55:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.21 2011-02-19 18:58:13 ken_c Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -346,6 +346,21 @@ Leo Bicknell improved the LocoNet monitor:
 <p>
 Leo Bicknell fixed a presentation problem in the LocoNet ID tool
 
+<p>
+Ken Cameron converted Powerline to support:
+<ul>
+<li>Multiple Connections.
+<li>Added a simulator connection.
+</ul>
+
+<p>
+Ken Cameron added a script, BlockLister.py, to investigate what is connected to a block.
+It displays which block connections, signals, signal masts, etc...
+
+<p>
+Ken Cameron updated RobotThrottle3.py to look past a block boundary without a signal.
+Added buttons to manually move a train at the red, yellow or green speed to add manual
+setups.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
