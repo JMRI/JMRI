@@ -16,6 +16,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 //import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
@@ -40,7 +41,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -861,6 +862,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	}
 	
 	private void saveTrain (){
+		if (!checkInput())
+			return;
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 		
@@ -899,6 +902,24 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setThirdLegCabooseRoad((String)roadCaboose2Box.getSelectedItem());
 		
 		manager.save();
+	}
+	
+	private boolean checkInput(){
+		if ((!none1.isSelected() && (routePickup1Box.getSelectedItem() == null || routePickup1Box.getSelectedItem().equals("")))
+				|| (!none2.isSelected() && (routePickup2Box.getSelectedItem() == null || routePickup2Box.getSelectedItem().equals("")))){
+			JOptionPane.showMessageDialog(this,
+					"You must select a location for the engine change or start of helper service", rb.getString("CanNotSave"),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if ((helper1Service.isSelected() && (routeDrop1Box.getSelectedItem() == null || routeDrop1Box.getSelectedItem().equals("")))
+				|| (helper2Service.isSelected() && (routeDrop2Box.getSelectedItem() == null || routeDrop2Box.getSelectedItem().equals("")))){
+			JOptionPane.showMessageDialog(this,
+					"You must select a location for the end of helper service", rb.getString("CanNotSave"),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 	
 	private void enableButtons(boolean enabled){
