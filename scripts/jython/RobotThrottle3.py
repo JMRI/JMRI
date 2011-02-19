@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -1243,8 +1243,18 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("Enabled Start\n")
         return
             
-    # handle the Move button on
-    def whenLocoMoveOn(self, event) :
+    # handle the Move Green button on
+    def whenLocoMoveOnGreen(self, event) :
+        self.doLocoMove(event, int(self.locoSpeedGreen.text) * 0.01)
+        return
+
+    # handle the Move Yellow button on
+    def whenLocoMoveOnYellow(self, event) :
+        self.doLocoMove(event, int(self.locoSpeedYellow.text) * 0.01)
+        return
+
+    # handle the Move Red button on
+    def whenLocoMoveOnRed(self, event) :
         self.doLocoMove(event, int(self.locoSpeedRed.text) * 0.01)
         return
 
@@ -1689,11 +1699,19 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoHorn.mousePressed = self.whenLocoHornOn
         self.locoHorn.mouseReleased = self.whenLocoHornOff
 
-        # loco move flag
-        self.locoMove = javax.swing.JButton("Move")
-        self.locoMove.setToolTipText("Moves loco at restricted speed")
-        self.locoMove.mousePressed = self.whenLocoMoveOn
-        self.locoMove.mouseReleased = self.whenLocoMoveOff
+        # loco move buttons
+        self.locoMoveGreen = javax.swing.JButton("Move @ Clear")
+        self.locoMoveGreen.setToolTipText("Moves loco at Clear speed")
+        self.locoMoveGreen.mousePressed = self.whenLocoMoveOnGreen
+        self.locoMoveGreen.mouseReleased = self.whenLocoMoveOff
+        self.locoMoveYellow = javax.swing.JButton("Move @ Limited")
+        self.locoMoveYellow.setToolTipText("Moves loco at Limited speed")
+        self.locoMoveYellow.mousePressed = self.whenLocoMoveOnYellow
+        self.locoMoveYellow.mouseReleased = self.whenLocoMoveOff
+        self.locoMoveRed = javax.swing.JButton("Move @ Restricted")
+        self.locoMoveRed.setToolTipText("Moves loco at Restricted speed")
+        self.locoMoveRed.mousePressed = self.whenLocoMoveOnRed
+        self.locoMoveRed.mouseReleased = self.whenLocoMoveOff
 
         # create the speed fields for a Green Flash Signal
         self.locoSpeedGreenFlash = javax.swing.JTextField(sizeSpeedField)    # sized to hold 5 characters
@@ -1930,7 +1948,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         temppanel1a.add(javax.swing.JLabel("Bell:"))
         temppanel1a.add(self.locoBell)
         temppanel1a.add(self.locoHorn)
-        temppanel1a.add(self.locoMove)
+        temppanel1a.add(self.locoMoveGreen)
+        temppanel1a.add(self.locoMoveYellow)
+        temppanel1a.add(self.locoMoveRed)
         
         # build speed table
         gLayout = java.awt.GridBagLayout()
