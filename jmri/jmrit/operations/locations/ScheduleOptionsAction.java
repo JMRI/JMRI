@@ -15,7 +15,7 @@ import jmri.jmrit.operations.OperationsFrame;
 /**
  * Action to launch schedule options.
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class ScheduleOptionsAction extends AbstractAction {
 		
@@ -96,8 +96,8 @@ class ScheduleOptionsFrame extends OperationsFrame{
     	
     	setTitle(rb.getString("MenuItemScheduleOptions"));
     	pack();
-    	if (getWidth() < 300)
-    		setSize(300, getHeight()+30);
+    	if (getWidth() < 300 || getHeight() < 200)
+    		setSize(300, 200);
     	setVisible(true); 	
 	}
 	
