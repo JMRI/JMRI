@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.96 2011-02-19 22:21:58 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.97 2011-02-20 16:11:11 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -626,6 +626,17 @@ Note only car types and roads that are accepted by this siding
 are available. If a car type or road isn't available, check the car
 types and roads for this siding and location.
 </P>
+<P>The schedule controls what cars will be delivered and the car
+order. It makes the siding more restrictive, only cars demanded by the 
+schedule will be delivered to the siding. Looking at the schedule you
+will see a pointer in the table under the heading "Current", the pointer
+shows the
+next car type and load that the program will to drop to the siding. When
+the program finds that car and sets the car's destination to this
+siding, the pointer will move the next item in the schedule.  After servicing
+the last item in the schedule, the pointer will return to the first item
+in the schedule.</P>
+
 <P>If you want custom <A HREF="#CarLoad">loads</A> for your cars,
 you can create them using the <A HREF="#EditCarLoads">Edit Car
 Attributes</A> for car "Load". Each new load is associated with the car
