@@ -7,7 +7,7 @@ package jmri.jmrix.can.adapters.loopback;
  * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -25,7 +25,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "CAN CBus Simulation"; }
+    public String name() { return "CAN Simulation"; }
 
     protected void setInstance() {
         adapter = new Port();
