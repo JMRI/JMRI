@@ -14,7 +14,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.67 $
+ * @version             $Revision: 1.68 $
  */
 public class Car extends RollingStock {
 	
@@ -527,6 +527,14 @@ public class Car extends RollingStock {
 				log.debug("Car ("+toString()+") has return when empty destination ("+getNextDestinationName()+", "+getNextDestTrackName()+")");
 			}
 		}
+	}
+	
+	protected void reset(){
+		setNextLoad("");
+		setNextWait(0);
+		setNextDestination(null);	// removes property change listener
+		setNextDestTrack(null);		// removes property change listener
+		super.reset();
 	}
 	
 	public void dispose(){

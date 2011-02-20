@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -737,6 +737,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		}
 	}
 	
+	protected void reset(){
+   		// the order of the next two instructions is important, otherwise rs will have train's route id
+   		setTrain(null);
+		setDestination(null, null);
+	}
+	
 	/**
 	 * Remove rolling stock.  Releases all listeners.
 	 */
@@ -923,9 +929,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
     			e.getNewValue().equals(Train.TRAINRESET) &&
     			e.getSource() == _train){
     		if (log.isDebugEnabled()) log.debug("Rolling stock (" +toString()+") is removed from train ("+_train.getName()+") by reset");   		
-    		// the order of the next two instructions is important, otherwise rs will have train's route id
-    		setTrain(null);
-    		setDestination(null, null);
+    		reset();
     	}
     	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
     		if (e.getOldValue().equals(getRoad())){

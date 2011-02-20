@@ -30,7 +30,7 @@ import java.util.Locale;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -984,39 +984,17 @@ public class OperationsCarRouterTest extends TestCase {
 		// check car destinations after reset
 		Assert.assertEquals("Car BA 3 destination","", c3.getDestinationName());
 		Assert.assertEquals("Car BA 3 destination track","", c3.getDestinationTrackName());
-		Assert.assertEquals("Car BA 3 next destination","Essex MA", c3.getNextDestinationName());
-		Assert.assertEquals("Car BA 3 next destination track","Essex Siding 2", c3.getNextDestTrackName());
+		Assert.assertEquals("Car BA 3 next destination","", c3.getNextDestinationName());
+		Assert.assertEquals("Car BA 3 next destination track","", c3.getNextDestTrackName());
 		Assert.assertEquals("Car BB 4 destination","", c4.getDestinationName());
 		Assert.assertEquals("Car BB 4 destination track","", c4.getDestinationTrackName());
-		Assert.assertEquals("Car BB 4 next destination","Danbury MA", c4.getNextDestinationName());
-		Assert.assertEquals("Car BB 4 next destination track","Danbury Siding 1", c4.getNextDestTrackName());
+		Assert.assertEquals("Car BB 4 next destination","", c4.getNextDestinationName());
+		Assert.assertEquals("Car BB 4 next destination track","", c4.getNextDestTrackName());
 		
 		// bias track
 		ES2.setMoves(100);
 		
-		// build train
-		ActonTrain.build();
-		Assert.assertTrue("Acton train built", ActonTrain.isBuilt());
-		
-		// destination should be the same since the next destinations were still active
-		Assert.assertEquals("Car BA 3 destination","Acton MA", c3.getDestinationName());
-		Assert.assertEquals("Car BA 3 destination track","Acton Interchange", c3.getDestinationTrackName());
-		Assert.assertEquals("Car BA 3 next destination","Essex MA", c3.getNextDestinationName());
-		Assert.assertEquals("Car BA 3 next destination track","Essex Siding 2", c3.getNextDestTrackName());
-		Assert.assertEquals("Car BB 4 destination","Acton MA", c4.getDestinationName());
-		Assert.assertEquals("Car BB 4 destination track","Acton Interchange", c4.getDestinationTrackName());
-		Assert.assertEquals("Car BB 4 next destination","Danbury MA", c4.getNextDestinationName());
-		Assert.assertEquals("Car BB 4 next destination track","Danbury Siding 1", c4.getNextDestTrackName());
-		
 		ActonTrain.reset();
-		
-		// now clear the next destinations
-		c3.setNextDestination(null);
-		c3.setNextDestTrack(null);
-		c3.setNextLoad("");
-		c4.setNextDestination(null);
-		c4.setNextDestTrack(null);
-		c4.setNextLoad("");
 		
 		// build train
 		ActonTrain.build();
