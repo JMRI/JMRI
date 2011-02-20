@@ -53,10 +53,10 @@ import jmri.jmrix.nce.NceTrafficController;
  * Bits 0 and 7 indicate the type of cab being use this session at this cab
  * address
  * 
- * Bit 7,0 = 0,0 Procab or other cab with an LCD display 
- * Bit 7,0 = 0,1 Cab04 other cab without an LCD 
- * Bit 7,0 = 1,0 USB or similar device 
- * Bit 7,0 = 1,1 AIU or similar device
+ * Bit 7,0 = 0,0 Procab or other cab with an LCD display (type A)
+ * Bit 7,0 = 0,1 Cab04 other cab without an LCD (type B)
+ * Bit 7,0 = 1,0 USB or similar device  (type C)
+ * Bit 7,0 = 1,1 AIU or similar device (type D)
  * 
  * 
  * CAB_BASE EQU 0 ; 
@@ -126,7 +126,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
  * @author Ken Cameron Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
@@ -151,12 +151,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private int replyLen = 0;						// expected byte length
 	private int waiting = 0;						// to catch responses not
 													// intended for this module
-	private static final int FLAGS1_PROCAB = 0x02;	// bit 0=0, bit 1=1, bit 7=0;
-	private static final int FLAGS1_CAB04 = 0x03;	// bit 0=1, bit 1=1, bit 7=0;
-	private static final int FLAGS1_USB = 0x82;		// bit 0=0, bit 1=1, bit 7=1;
-	private static final int FLAGS1_AIU = 0x83;		// bit 0=1, bit 1=1, bit 7=1;
-	private static final int FLAGS1_MASK = 0x83;	// Only bits 0,1, and 7.
-	private static final int FLAGS1_MASK_CABACTIVE = 0x01;	// if cab is active
+	private static final int FLAGS1_CABID_DISPLAY = 0x00;	// bit 0=0, bit 7=0;
+	private static final int FLAGS1_CABID_NODISP = 0x01;	// bit 0=1, bit 7=0;
+	private static final int FLAGS1_CABID_USB = 0x80;		// bit 0=0, bit 7=1;
+	private static final int FLAGS1_CABID_AIU = 0x81;		// bit 0=1, bit 7=1;
+	private static final int FLAGS1_CABISACTIVE = 0x02;	// if cab is active
+	private static final int FLAGS1_MASK_CABID = 0x81;	// Only bits 0 and 7.
+	private static final int FLAGS1_MASK_CABISACTIVE = 0x02;	// if cab is active
 	
 	private static final int FUNC_L_F0 = 0x10;		// F0 or headlight
 	private static final int FUNC_L_F1 = 0x01;		// F1
@@ -309,10 +310,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     // refresh button
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-    	if (ae.getSource() == refreshButton) {
+    	Object src = ae.getSource();
+    	if (src == refreshButton) {
     		refreshPanel();
-    	} else if (ae.getSource() == purgeButton) {
+    	} else if (src == purgeButton) {
     		purgeCab();
+    	} else {
+    		log.error("unknown action performed: " + src);
     	}
 	}
  
@@ -330,9 +334,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     		return;
     	}
     	// if id is active
-    	if ((cabFlag1Array[cab] & FLAGS1_MASK_CABACTIVE) != 0) {
+    	int act = cabFlag1Array[cab] & FLAGS1_MASK_CABISACTIVE;
+    	if (act != FLAGS1_CABISACTIVE) {
             log.error(rb.getString("ErrorCabNotActive") + purgeCabId.getText().trim());
-    		return;
     	}
     	// clear bit for active and cab type details
     	writeCabMemory1(cab, CAB_FLAGS1, 0);
@@ -372,7 +376,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	cabsPanel.removeAll();
     	int numberOfCabs = 0;
         // build table of cabs
-        for (int i=1; i<CAB_MAX; i++){
+        for (int i=2; i<CAB_MAX; i++){
         	JLabel number = new JLabel();
         	JLabel type = new JLabel();
          	JLabel address = new JLabel();
@@ -382,202 +386,209 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
            	JLabel lastUsed = new JLabel();
            	
            	int foundChange = 0;
+           	recChar = -1;
            	// create cab type by reading the FLAGS1 byte
         	readCabMemory1(i, CAB_FLAGS1);
            	if (!waitNce())
         		return;
            	if (log.isDebugEnabled()) log.debug("Read flag1 character "+recChar);
-        	// save value for purge
-        	if (recChar != cabFlag1Array[i]) {
-        		foundChange++;
-        		if (log.isDebugEnabled()) log.debug(i + ": Flag1 " + recChar + "<->" + cabFlag1Array[i]);
-        	}
-        	cabFlag1Array[i] = recChar;
-        	int flags1 = recChar & FLAGS1_MASK; // mask off don't care bits
-        	if (flags1 == FLAGS1_PROCAB){
-        		type.setText("ProCab");
-        		numberOfCabs++;
-        	}
-        	else if (flags1 == FLAGS1_CAB04){ 
-        		type.setText("Cab04/06");	// Cab04 or Cab06
-        		numberOfCabs++;
-        	}
-           	else if (flags1 == FLAGS1_USB){
-        		type.setText("USB/M-P");	// USB or Mini-Panel
+           	// test it really changed
+           	if (recChar != -1) {
+	        	// save value for purge
+	        	if (recChar != cabFlag1Array[i]) {
+	        		foundChange++;
+	        		if (log.isDebugEnabled()) log.debug(i + ": Flag1 " + recChar + "<->" + cabFlag1Array[i]);
+	        	}
+	        	cabFlag1Array[i] = recChar;
+	        	if ((recChar & FLAGS1_MASK_CABISACTIVE) != FLAGS1_CABISACTIVE) {
+	        		// not active slot
+	            	if (checkBoxActive.isSelected())
+	            		continue;
+	        	}
+	        	int cabId = recChar & FLAGS1_MASK_CABID; // mask off don't care bits
+	        	if (cabId == FLAGS1_CABID_DISPLAY){
+	        		type.setText("ProCab");
+	        		numberOfCabs++;
+	        	}
+	        	else if (cabId == FLAGS1_CABID_NODISP){ 
+	        		type.setText("Cab04/06");	// Cab04 or Cab06
+	        		numberOfCabs++;
+	        	}
+	           	else if (cabId == FLAGS1_CABID_USB){
+	        		type.setText("USB/M-P");	// USB or Mini-Panel
+	           	}
+	            else if (cabId == FLAGS1_CABID_AIU){
+	        		type.setText("AIU");
+	            }
+	            else {
+	            	type.setText(rb.getString("UnknownCabType") + ": " + recChar);
+	            }
+	        	// add items to table
+	        	addItem(cabsPanel, number, 1, i);
+	        	number.setText(Integer.toString(i));
+	        	addItem(cabsPanel, type, 2, i);
+	        	addItem(cabsPanel, address, 3, i);
+	          	addItem(cabsPanel, speed, 4, i);
+	          	addItem(cabsPanel, consist, 5, i);
+	          	addItem(cabsPanel, functions, 6, i);
+	          	addItem(cabsPanel, lastUsed, 7, i);
+	          	if (cabId != FLAGS1_CABID_AIU) {
+		          	// read 16 bytes of memory, we'll use 7 of the 16
+		        	readCabMemory16(i, CAB_CURR_SPEED);
+		        	if (!waitNce())
+		        		return;
+		        	// read the Speed byte
+		        	int readChar = recChars[0];
+		        	if (cabSpeedArray[i] != readChar) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(i + ": Speed " + readChar + "<->" + cabSpeedArray[i]);
+		        	}
+		        	cabSpeedArray[i] = readChar;
+		        	if (log.isDebugEnabled()) log.debug("Read speed character "+Integer.toString(readChar));
+		        	String sped = Integer.toString(readChar);
+		        	// read the FLAGS byte
+		        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
+		        	if (cabFlagsArray[i] != readChar) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(i + ": Flags " + readChar + "<->" + cabFlagsArray[i]);
+		        	}
+		        	cabFlagsArray[i] = readChar;
+		        	int direction = readChar & 0x04;
+		        	if (direction > 0)
+		        		sped = sped + " F";
+		        	else
+		        		sped = sped + " R";
+		        	int mode = readChar & 0x02;
+		        	// USB doesn't use the 28/128 bit
+		        	if (cabId != FLAGS1_CABID_USB){
+		        		if (mode > 0)
+		        			sped = sped + " / 128";
+		        		else
+		        			sped = sped + " / 28";
+		        	}
+		        	speed.setText(sped);
+		        	
+		        	// create loco address, read the high address byte
+		        	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
+		        	if (log.isDebugEnabled()) log.debug("Read address high character "+readChar);
+		        	int locoAddress = (readChar & 0x3F) *256;
+		        	// read the low address byte
+		        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
+		        	if (log.isDebugEnabled()) log.debug("Read address low character "+readChar);
+		        	locoAddress = locoAddress + (readChar & 0xFF);
+		        	if (cabLocoArray[i] != locoAddress) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(i + ": Loco " + locoAddress + "<->" + cabLocoArray[i]);
+		        	}
+		        	cabLocoArray[i] = locoAddress;
+		        	address.setText(Integer.toString(locoAddress));
+		        	
+		        	// create consist address
+		        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
+		        	if (cabConsistArray[i] != readChar) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(i + ": Consist " + readChar + "<->" + cabConsistArray[i]);
+		        	}
+		        	cabConsistArray[i] = readChar;
+		        	if(readChar == 0)
+		        		consist.setText(" ");
+		        	else
+		        		consist.setText(Integer.toString(readChar));
+		        	
+		        	// create function keys
+		        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
+		        	if (cabF0Array[i] != readChar) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(i + ": F0 " + readChar + "<->" + cabF0Array[i]);
+		        	}
+		        	cabF0Array[i] = readChar;
+		        	if (log.isDebugEnabled()) log.debug("Function low character "+readChar);
+		        	StringBuilder func = new StringBuilder();
+		        	if ((readChar & FUNC_L_F0) > 0)
+		        		func.append("L");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_L_F1) > 0)
+		           		func.append("1");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_L_F2) > 0)
+		           		func.append("2");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_L_F3) > 0)
+		           		func.append("3");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_L_F4) > 0)
+		           		func.append("4");
+		        	else
+		        		func.append("-");
+		        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
+		        	if (cabF5Array[i] != readChar) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(i + ": F5 " + readChar + "<->" + cabF5Array[i]);
+		        	}
+		        	cabF5Array[i] = readChar;
+		        	if (log.isDebugEnabled()) log.debug("Function high character "+readChar);
+		           	if ((readChar & FUNC_H_F5) > 0)
+		           		func.append("5");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_H_F6) > 0)
+		           		func.append("6");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_H_F7) > 0)
+		           		func.append("7");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_H_F8) > 0)
+		           		func.append("8");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_H_F9) > 0)
+		           		func.append("9");
+		        	else
+		        		func.append("-");
+		           	if ((readChar & FUNC_H_F10) > 0)
+		           		func.append("A");
+		        	else
+		        		func.append("-");
+		          	if ((readChar & FUNC_H_F11) > 0)
+		          		func.append("B");
+		        	else
+		        		func.append("-");
+		          	if ((readChar & FUNC_H_F12) > 0)
+		          		func.append("C");
+		        	else
+		        		func.append("-");
+		          	functions.setText(func.toString());
+	          	}
+	          	if (foundChange > 0 || cabLastChangeArray[i] == null) {
+	            	cabLastChangeArray[i] = Calendar.getInstance();
+	            }
+	          	
+	          	StringBuilder txt = new StringBuilder();
+	          	int h = cabLastChangeArray[i].get(Calendar.HOUR_OF_DAY);
+	          	int m = cabLastChangeArray[i].get(Calendar.MINUTE);
+	          	int s = cabLastChangeArray[i].get(Calendar.SECOND);
+	          	if (h < 10) {
+	          		txt.append("0");
+	          	}
+	            txt.append(h);
+	            txt.append(":");
+	            if (m < 10) {
+	            	txt.append("0");
+	            }
+	            txt.append(m);
+	            txt.append(":");
+	            if (s < 10) {
+	            	txt.append("0");
+	            }
+	            txt.append(s);
+	            lastUsed.setText(txt.toString());
            	}
-            else if (flags1 == FLAGS1_AIU){
-        		type.setText("AIU");
-            }
-            else {
-            	if (checkBoxActive.isSelected())
-            		continue;
-            	type.setText(rb.getString("UnknownCabType"));
-            }
-        	// add items to table
-        	addItem(cabsPanel, number, 1, i);
-        	number.setText(Integer.toString(i));
-        	addItem(cabsPanel, type, 2, i);
-        	addItem(cabsPanel, address, 3, i);
-          	addItem(cabsPanel, speed, 4, i);
-          	addItem(cabsPanel, consist, 5, i);
-          	addItem(cabsPanel, functions, 6, i);
-          	addItem(cabsPanel, lastUsed, 7, i);
-          	if (flags1 != FLAGS1_AIU) {
-	          	// read 16 bytes of memory, we'll use 7 of the 16
-	        	readCabMemory16(i, CAB_CURR_SPEED);
-	        	if (!waitNce())
-	        		return;
-	        	// read the Speed byte
-	        	int readChar = recChars[0];
-	        	if (cabSpeedArray[i] != readChar) {
-	        		foundChange++;
-	        		if (log.isDebugEnabled()) log.debug(i + ": Speed " + readChar + "<->" + cabSpeedArray[i]);
-	        	}
-	        	cabSpeedArray[i] = readChar;
-	        	if (log.isDebugEnabled()) log.debug("Read speed character "+Integer.toString(readChar));
-	        	String sped = Integer.toString(readChar);
-	        	// read the FLAGS byte
-	        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
-	        	if (cabFlagsArray[i] != readChar) {
-	        		foundChange++;
-	        		if (log.isDebugEnabled()) log.debug(i + ": Flags " + readChar + "<->" + cabFlagsArray[i]);
-	        	}
-	        	cabFlagsArray[i] = readChar;
-	        	int direction = readChar & 0x04;
-	        	if (direction > 0)
-	        		sped = sped + " F";
-	        	else
-	        		sped = sped + " R";
-	        	int mode = readChar & 0x02;
-	        	// USB doesn't use the 28/128 bit
-	        	if (flags1 != FLAGS1_USB){
-	        		if (mode > 0)
-	        			sped = sped + " / 128";
-	        		else
-	        			sped = sped + " / 28";
-	        	}
-	        	speed.setText(sped);
-	        	
-	        	// create loco address, read the high address byte
-	        	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
-	        	if (log.isDebugEnabled()) log.debug("Read address high character "+readChar);
-	        	int locoAddress = (readChar & 0x3F) *256;
-	        	// read the low address byte
-	        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
-	        	if (log.isDebugEnabled()) log.debug("Read address low character "+readChar);
-	        	locoAddress = locoAddress + (readChar & 0xFF);
-	        	if (cabLocoArray[i] != locoAddress) {
-	        		foundChange++;
-	        		if (log.isDebugEnabled()) log.debug(i + ": Loco " + locoAddress + "<->" + cabLocoArray[i]);
-	        	}
-	        	cabLocoArray[i] = locoAddress;
-	        	address.setText(Integer.toString(locoAddress));
-	        	
-	        	// create consist address
-	        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
-	        	if (cabConsistArray[i] != readChar) {
-	        		foundChange++;
-	        		if (log.isDebugEnabled()) log.debug(i + ": Consist " + readChar + "<->" + cabConsistArray[i]);
-	        	}
-	        	cabConsistArray[i] = readChar;
-	        	if(readChar == 0)
-	        		consist.setText(" ");
-	        	else
-	        		consist.setText(Integer.toString(readChar));
-	        	
-	        	// create function keys
-	        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
-	        	if (cabF0Array[i] != readChar) {
-	        		foundChange++;
-	        		if (log.isDebugEnabled()) log.debug(i + ": F0 " + readChar + "<->" + cabF0Array[i]);
-	        	}
-	        	cabF0Array[i] = readChar;
-	        	if (log.isDebugEnabled()) log.debug("Function low character "+readChar);
-	        	StringBuilder func = new StringBuilder();
-	        	if ((readChar & FUNC_L_F0) > 0)
-	        		func.append("L");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_L_F1) > 0)
-	           		func.append("1");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_L_F2) > 0)
-	           		func.append("2");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_L_F3) > 0)
-	           		func.append("3");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_L_F4) > 0)
-	           		func.append("4");
-	        	else
-	        		func.append("-");
-	        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
-	        	if (cabF5Array[i] != readChar) {
-	        		foundChange++;
-	        		if (log.isDebugEnabled()) log.debug(i + ": F5 " + readChar + "<->" + cabF5Array[i]);
-	        	}
-	        	cabF5Array[i] = readChar;
-	        	if (log.isDebugEnabled()) log.debug("Function high character "+readChar);
-	           	if ((readChar & FUNC_H_F5) > 0)
-	           		func.append("5");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_H_F6) > 0)
-	           		func.append("6");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_H_F7) > 0)
-	           		func.append("7");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_H_F8) > 0)
-	           		func.append("8");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_H_F9) > 0)
-	           		func.append("9");
-	        	else
-	        		func.append("-");
-	           	if ((readChar & FUNC_H_F10) > 0)
-	           		func.append("A");
-	        	else
-	        		func.append("-");
-	          	if ((readChar & FUNC_H_F11) > 0)
-	          		func.append("B");
-	        	else
-	        		func.append("-");
-	          	if ((readChar & FUNC_H_F12) > 0)
-	          		func.append("C");
-	        	else
-	        		func.append("-");
-	          	functions.setText(func.toString());
-          	}
-          	if (foundChange > 0 || cabLastChangeArray[i] == null) {
-            	cabLastChangeArray[i] = Calendar.getInstance();
-            }
-          	
-          	StringBuilder txt = new StringBuilder();
-          	int h = cabLastChangeArray[i].get(Calendar.HOUR_OF_DAY);
-          	int m = cabLastChangeArray[i].get(Calendar.MINUTE);
-          	int s = cabLastChangeArray[i].get(Calendar.SECOND);
-          	if (h < 10) {
-          		txt.append("0");
-          	}
-            txt.append(h);
-            txt.append(":");
-            if (m < 10) {
-            	txt.append("0");
-            }
-            txt.append(m);
-            txt.append(":");
-            if (s < 10) {
-            	txt.append("0");
-            }
-            txt.append(s);
-            lastUsed.setText(txt.toString());
         }
  
     	cabsPane.setVisible(true);
@@ -611,7 +622,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	public void reply(NceReply r) {
 		if (log.isDebugEnabled()) log.debug("Receive character");
 		if (waiting <= 0) {
-			log.error("unexpected response");
+			log.error("unexpected response. Len: " + r.getNumDataElements() + " code: " + r.getElement(0));
 			return;
 		}
 		waiting--;
@@ -639,8 +650,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
        	int nceCabAddr = (cabNum * CAB_SIZE) + CS_CAB_MEM + offset;
     	replyLen = REPLY_1;			// Expect 1 byte response
     	waiting++;
-		byte[] bl = NceBinaryCommand.accMemoryWriteN(nceCabAddr, 1);
-		bl[4] = (byte)value;
+		byte[] bl = NceBinaryCommand.accMemoryWrite1(nceCabAddr);
+		bl[3] = (byte)value;
 		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
 		tc.sendNceMessage(m, this);
     }
