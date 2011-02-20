@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.52 $
+ * @version             $Revision: 1.53 $
  */
 public class Track {
 	
@@ -771,7 +771,7 @@ public class Track {
     		return "";
     	Schedule schedule = getSchedule();
     	if (schedule == null){
-    		log.error("No schedule for id: "+getScheduleId());
+    		log.error("No name schedule for id: "+getScheduleId());
     		return "";
     	}
     	return schedule.getName();
@@ -843,7 +843,7 @@ public class Track {
     public ScheduleItem getCurrentScheduleItem(){
 		Schedule sch = getSchedule();
 		if (sch == null){
-			log.warn("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
+			log.debug("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
 			return null;
 		}
 		ScheduleItem currentSi = sch.getItemById(getScheduleItemId());
