@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class OlcbSensor extends AbstractSensor implements CanListener {
 
@@ -71,7 +71,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     }
 
     /**
-     * Request an update on status by sending CBus message.
+     * Request an update on status by sending CBUS message.
      * <p>
      * There is no known way to do this, so the request is
      * just ignored.
