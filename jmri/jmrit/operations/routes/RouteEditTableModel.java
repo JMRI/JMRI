@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -70,7 +70,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
  		list = _route.getLocationsBySequenceList();
 		// and add them back in
 		for (int i = 0; i < list.size(); i++){
-			log.debug("location ids: " + list.get(i));
+			//log.debug("location ids: " + list.get(i));
 			_route.getLocationById(list.get(i))
 					.addPropertyChangeListener(this);
 		}

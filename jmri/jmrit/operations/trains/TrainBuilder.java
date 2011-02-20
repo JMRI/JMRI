@@ -17,9 +17,7 @@ import javax.swing.JOptionPane;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.ScheduleItem;
-import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -39,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.136 $
+ * @version             $Revision: 1.137 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1529,11 +1527,7 @@ public class TrainBuilder extends TrainCommon{
 		for (int i=0; i<tracks.size(); i++){
 			Track track = tracks.get(i);
 			if (car.getTrack() != track && !track.getScheduleId().equals("")){
-				Schedule sch = ScheduleManager.instance().getScheduleById(track.getScheduleId());
-				if (sch == null)
-					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNoSchedule"),
-							new Object[]{track.getScheduleId(), track.getName(), track.getLocation().getName()}));
-				ScheduleItem si = sch.getItemById(track.getScheduleItemId());
+				ScheduleItem si = track.getCurrentScheduleItem();
 				if (si == null)
 					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNoScheduleItem"),
 							new Object[]{track.getScheduleItemId(), track.getScheduleName(), track.getName(), track.getLocation().getName()}));
@@ -1549,6 +1543,7 @@ public class TrainBuilder extends TrainCommon{
 						// send car to this destination
 						car.setNextDestination(track.getLocation());
 						car.setNextDestTrack(track);
+						car.setScheduleId(track.getCurrentScheduleItem().getId());
 						// is car part of kernel?
 						car.updateKernel();
 						track.bumpSchedule();
@@ -1572,11 +1567,7 @@ public class TrainBuilder extends TrainCommon{
 		for (int i=0; i<tracks.size(); i++){
 			Track track = tracks.get(i);
 			if (!track.getScheduleId().equals("")){
-				Schedule sch = ScheduleManager.instance().getScheduleById(track.getScheduleId());
-				if (sch == null)
-					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNoSchedule"),
-							new Object[]{track.getScheduleId(), track.getName(), track.getLocation().getName()}));
-				ScheduleItem si = sch.getItemById(track.getScheduleItemId());
+				ScheduleItem si = track.getCurrentScheduleItem();
 				if (si == null)
 					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNoScheduleItem"),
 							new Object[]{track.getScheduleItemId(), track.getScheduleName(), track.getName(), track.getLocation().getName()}));
@@ -1619,6 +1610,7 @@ public class TrainBuilder extends TrainCommon{
 					// return car with this custom load and destination
 					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
 							new Object[]{car.toString(), si.getLoad(), track.getLocation().getName(), track.getName()}));
+					car.setScheduleId(track.getCurrentScheduleItem().getId());
 					// is car part of kernel?
 					car.updateKernel();
 					track.bumpSchedule();
@@ -1915,8 +1907,7 @@ public class TrainBuilder extends TrainCommon{
 						log.debug("Siding ("+testTrack.getName()+") status: "+status);
 						// is car departing a staging track that can generate schedule loads?
 						if (car.getTrack().isAddLoadsEnabled() && car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
-							Schedule sch = ScheduleManager.instance().getScheduleById(testTrack.getScheduleId());
-							ScheduleItem si = sch.getItemById(testTrack.getScheduleItemId());
+							ScheduleItem si = testTrack.getCurrentScheduleItem();
 							// departing track and train must accept the schedule's load
 							if (car.getTrack().acceptsLoadName(si.getLoad()) && train.acceptsLoadName(si.getLoad())){
 								addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));

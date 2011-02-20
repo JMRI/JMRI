@@ -5,6 +5,7 @@ import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -14,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.68 $
+ * @version             $Revision: 1.69 $
  */
 public class Car extends RollingStock {
 	
@@ -33,6 +34,7 @@ public class Car extends RollingStock {
 	protected Track _rweDestTrack = null;		// return when empty track
 	
 	// schedule items
+	protected String _scheduleId = "";			// the schedule id assigned to this car
 	protected String _nextLoad = "";			// next load by schedule	
 	protected int _nextWait = 0;				// next wait by schedule
 	protected Location _nextDestination = null;	// next destination by schedule
@@ -97,6 +99,17 @@ public class Car extends RollingStock {
 	
 	public String getLoad(){
 		return _load;
+	}
+	
+	public void setScheduleId(String id){
+		String old = _scheduleId;
+		_scheduleId = id;
+		if (!old.equals(id))
+			firePropertyChange("carScheduleId", old, id);
+	}
+	
+	public String getScheduleId(){
+		return _scheduleId;
 	}
 	
 	public void setNextLoad(String load){
@@ -339,7 +352,7 @@ public class Car extends RollingStock {
 		for (int i=0; i<track.getSchedule().getSize(); i++){
 			si = track.getNextScheduleItem();
 			if (checkScheduleItem(track, si).equals(OKAY)){
-				log.debug("Found schedule match for car ("+toString()+") ship ("+si.getShip()+") " +
+				log.debug("Found schedule item ("+si.getId()+") match for car ("+toString()+") ship ("+si.getShip()+") " +
 						"destination ("+si.getDestinationName()+", "+si.getDestinationTrackName()+")");
 				return OKAY;
 			}
@@ -434,30 +447,46 @@ public class Car extends RollingStock {
 		}
 		if (track == null || track.getScheduleId().equals("") || loading)
 			return;
-		ScheduleItem currentSi = track.getCurrentScheduleItem();
-		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id: "+currentSi.getId());
 		// is car part of a kernel?
 		if (getKernel()!=null && !getKernel().isLead(this)){
 			log.debug("Car ("+toString()+") is part of kernel ("+getKernelName()+")");
 			return;
 		}
-		if (getType().equals(currentSi.getType())){
-			// set the car's next load
-			setNextLoad(currentSi.getShip());
-			// set the car's next destination and track
-			setNextDestination(currentSi.getDestination());
-			setNextDestTrack(currentSi.getDestinationTrack());
-			// set the wait count
-			setNextWait(currentSi.getWait());
-
-			log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+", "+getNextDestTrackName()+") next wait: "+getWait());
-			// set all cars in kernel to the next load
-			updateKernel();
+		if (!getScheduleId().equals("")){
+			log.debug("Car has schedule id "+getScheduleId());
+			Schedule sch = track.getSchedule();
+			if (sch != null){
+				ScheduleItem si = sch.getItemById(getScheduleId());
+				loadNext(si);
+			}
+			setScheduleId("");
+			return;
+		}
+		ScheduleItem currentSi = track.getCurrentScheduleItem();
+		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id: "+track.getScheduleItemId());
+		if (currentSi != null && getType().equals(currentSi.getType()) && (currentSi.getLoad().equals("") || getLoad().equals(currentSi.getLoad()))){
+			loadNext(currentSi);
 			// bump schedule
 			track.bumpSchedule();
+		} else if (currentSi != null){
+			log.debug("Car ("+toString()+") type ("+getType()+") load ("+getLoad()+") arrived out of sequence, needed type ("+currentSi.getType()+") load ("+currentSi.getLoad()+")");
 		} else {
-			log.debug("Car ("+toString()+") type ("+getType()+") arrived out of sequence, current type needed ("+currentSi.getType()+")");
+			log.error("ERROR Track "+track.getName()+" current schedule item is null!");
 		}
+	}
+	
+	private void loadNext(ScheduleItem scheduleItem){
+		// set the car's next load
+		setNextLoad(scheduleItem.getShip());
+		// set the car's next destination and track
+		setNextDestination(scheduleItem.getDestination());
+		setNextDestTrack(scheduleItem.getDestinationTrack());
+		// set the wait count
+		setNextWait(scheduleItem.getWait());
+
+		log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+", "+getNextDestTrackName()+") next wait: "+getWait());
+		// set all cars in kernel to the next load
+		updateKernel();
 	}
 	
 	public void updateKernel(){
@@ -588,10 +617,12 @@ public class Car extends RollingStock {
 		if ((a = e.getAttribute("wait")) != null){
 			_wait = Integer.parseInt(a.getValue());
 		}
+		if ((a = e.getAttribute("scheduleId")) != null){
+			_scheduleId = a.getValue();
+		}
 		if ((a = e.getAttribute("nextLoad")) != null){
 			_nextLoad = a.getValue();
 		}
-
 		if ((a = e.getAttribute("nextWait")) != null){
 			_nextWait = Integer.parseInt(a.getValue());
 		}
@@ -641,6 +672,10 @@ public class Car extends RollingStock {
 
 		if (getWait() != 0){
 			e.setAttribute("wait", Integer.toString(getWait()));
+		}
+		
+		if (!getScheduleId().equals("")){
+			e.setAttribute("scheduleId", getScheduleId());
 		}
 
 		if (!getNextLoad().equals("")){

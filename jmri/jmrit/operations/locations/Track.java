@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.51 $
+ * @version             $Revision: 1.52 $
  */
 public class Track {
 	
@@ -800,10 +800,6 @@ public class Track {
     	return _scheduleId;
     }
     
-    public String getScheduleItemId(){
-    	return _scheduleItemId;
-    }
-    
     public void setScheduleId(String id){
     	String old = _scheduleId;
     	_scheduleId = id;
@@ -819,22 +815,31 @@ public class Track {
     	}
     }
     
+    /**
+     * Recommend getCurrentScheduleItem() to get the
+     * current schedule item for this track.  Protects
+     * against user deleting a schedule item from the
+     * schedule.
+     * @return schedule item id
+     */
+    public String getScheduleItemId(){
+    	return _scheduleItemId;
+    }
+    
     public void setScheduleItemId(String id){
+    	log.debug("set schedule item id "+id+" for track "+getName());
     	String old = _scheduleItemId;
     	_scheduleItemId = id;
     	firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);
     }
     
-    public int getScheduleCount(){
-    	return _scheduleCount;
-    }
-    
-    public void setScheduleCount(int count){
-    	int old = _scheduleCount;
-    	_scheduleCount = count;
-    	firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, count);
-    }
-    
+    /**
+     * Get's the current schedule item for this track
+     * Protects against user deleting an item in a shared
+     * schedule.  Recommend using this versus getScheduleItemId()
+     * as the id can be obsolete.
+     * @return 
+     */
     public ScheduleItem getCurrentScheduleItem(){
 		Schedule sch = getSchedule();
 		if (sch == null){
@@ -843,7 +848,7 @@ public class Track {
 		}
 		ScheduleItem currentSi = sch.getItemById(getScheduleItemId());
 		if (currentSi == null && sch.getSize()>0){
-			log.warn("Can not find schedule item ("+getScheduleItemId()+") for schedule ("+getScheduleName()+")");
+			log.debug("Can not find schedule item ("+getScheduleItemId()+") for schedule ("+getScheduleName()+")");
 			// reset schedule
 			setScheduleItemId((sch.getItemById(sch.getItemsBySequenceList().get(0)).getId()));
 			currentSi = sch.getItemById(getScheduleItemId());
@@ -876,7 +881,7 @@ public class Track {
     	ScheduleItem nextSi = null;
     	for (int i=0; i<l.size(); i++){
     		nextSi = sch.getItemById(l.get(i));
-    		if (getScheduleItemId().equals(nextSi.getId())){
+    		if (getCurrentScheduleItem() == nextSi){
     			if (++i < l.size()){
     				nextSi = sch.getItemById(l.get(i));
     			}else{
@@ -887,6 +892,16 @@ public class Track {
     		}
     	}
     	return nextSi;
+    }
+    
+    public int getScheduleCount(){
+    	return _scheduleCount;
+    }
+    
+    public void setScheduleCount(int count){
+    	int old = _scheduleCount;
+    	_scheduleCount = count;
+    	firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, count);
     }
     
     /**
