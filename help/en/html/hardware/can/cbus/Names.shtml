@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Names.shtml,v 1.3 2008-07-16 10:58:56 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.4 2011-02-20 22:18:31 jacobsen Exp $ -->
 <title>JMRI: CBUS Naming</title>
 
 <!-- Style -->
@@ -38,29 +38,7 @@ internal objects such as Turnouts, Sensors, etc that
 are closely mapped to corresponding physical devices.
 This mapping is done via "System Names", which both 
 identify the how to access a particular device, and
-ar ethe key to looking up the corresponding object in JMRI.
-
-<p>
-Two examples will perhaps explain this best.
-
-<p>
-A DCC system uses "accessory decoders" to control e.g. turnouts on
-the layout.  These have addresses like 123, 45, and other small
-numbers.  If you dial the proper number into a handheld throttle,
-you can control the accessory decoder and hence the turnout on the layout.
-In JMRI, you access the accessory decoder via a Turnout object, and you 
-provide the needed address as part of the system name when requesting
-that Turnout.  "LT123" is a "T"urnout, accessed via the attached
-"L"oconet system, using address "123".  
-
-<p>
-Some layout control systems have more complicated addressing.
-For example, C/MRI addressing involves a node number and a bit number on 
-a specific node.  JMRI handles this via a system-specific structure
-within the system name used to reference C/MRI-connected objects.
-For example,
-CT12034 is a "T"urnout
-on a "C"/MRI system, with bit address "034" on node "12".
+are the key to looking up the corresponding object in JMRI.
 
 <h2>CBUS Events</h2>
 
