@@ -25,7 +25,7 @@ import java.util.Locale;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -75,7 +75,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// frame location can move just a bit on MacOS
 		p = f.getLocation();		
 		
-		f.setSize(610,250);
+		f.setSize(1010,250);
 		f.setLocation(20,10);
 		f.validate();
 		
@@ -99,7 +99,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		Assert.assertEquals("sort by id", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
-		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainsFrameSize());
+		Assert.assertEquals("size 3", new Dimension(1010,250), tmanager.getTrainsFrameSize());
 		Assert.assertTrue("Build Messages 3", tmanager.isBuildMessagesEnabled());
 		Assert.assertTrue("Build Report 3", tmanager.isBuildReportEnabled());
 		Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
