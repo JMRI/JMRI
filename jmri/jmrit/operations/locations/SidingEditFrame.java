@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.locations;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -19,7 +18,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -111,33 +110,15 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		Object selected =  comboBoxSchedules.getSelectedItem();	
 		if (selected == null || selected.equals("")){
 			track.setScheduleId("");
-			textSchError.setText("");
 		} else {
 			Schedule sch = (Schedule)selected;
 			// update only if the schedule has changed
 			if (sch != null){
-				List<String> l = sch.getItemsBySequenceList();	
-				//	must have at least one item in schedule
-				if(l.size()>0){
-					if (track.getScheduleId().equals("") ||
-							!track.getScheduleId().equals(sch.getId())){
-						track.setScheduleId(sch.getId());
-					} else {
-					// check to see if user deleted the current item for track
-						ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
-						if (currentSi == null){
-							track.setScheduleItemId(l.get(0));
-							track.setScheduleCount(0);
-						}
-					}
-					textSchError.setText(track.checkScheduleValid());
-				} else {
-					// no items in schedule so disable
-					track.setScheduleId("");
-					textSchError.setText(rb.getString("empty"));
-				}
+				track.setScheduleId(sch.getId());	
 			}
 		}
+		track.getCurrentScheduleItem();	// reset pointer if needed
+		textSchError.setText(track.checkScheduleValid());	
 		super.saveTrack(track);
 	}
 	

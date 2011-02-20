@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -243,6 +243,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			log.debug("schedule table edit true");
 			scheduleTable.getCellEditor().stopCellEditing();
 		}
+		if (_track != null)
+			_track.setScheduleId(_schedule.getId());
 
 		// save schedule file
 		managerXml.writeOperationsFile();
