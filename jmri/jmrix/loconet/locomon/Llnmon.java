@@ -37,7 +37,7 @@ import jmri.util.StringUtil;
  * provided by Leo Bicknell, used with permission.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 public class Llnmon {
 
@@ -168,10 +168,6 @@ public class Llnmon {
      * upon return, the message was not fully parsed.
      * @param l Message to parse
      * @return String representation
-     */
-    /**
-     * @param l
-     * @return
      */
     protected String format(LocoNetMessage l) {
 
