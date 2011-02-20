@@ -11,10 +11,10 @@ import javax.swing.AbstractAction;
  * <P>
  * The {@link LI101Frame} is a configuration tool. Note that this
  * class does not provide port services for the LI101; that's
- * the {@link jmri.jmrix.lenz.li101.LI101PortFrame} class.
+ * done elsewhere.
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LI101Action extends AbstractAction {
 
