@@ -223,10 +223,14 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
         
         protected void addToBottomBox(JComponent comp) {
-            bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
-            ++bottomBoxIndex;
-            bottomBox.add(comp, bottomBoxIndex);
-            ++bottomBoxIndex;
+            try {
+                bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
+                ++bottomBoxIndex;
+                bottomBox.add(comp, bottomBoxIndex);
+                ++bottomBoxIndex;
+            } catch (java.lang.IllegalArgumentException ex){
+                log.error (ex);
+            }
         }
         
         protected void dispose(){
