@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: BLI_Blueline_Paragon2_Steam.xml,v 1.3 2010-05-10 03:38:51 jacobsen Exp $ -->
+<!-- $Id: BLI_Blueline_Paragon2_Steam.xml,v 1.4 2011-02-21 22:30:01 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,16 +16,19 @@
   <version author="Bob Jacobsen" version="1" lastUpdated="200090407"/>
 <!-- Version 1 New file from 0.4 manual and BLI_Blueline_diesel v5 -->
 <!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
+  <version author="Michael Mosher" version="2" lastUpdated="20110129"/>
+<!-- Version 2 fix smoke control bug, CV116-117 bug, some pane tweeks, some default value changes -->
+<!--             add CV 121,122,203,204,205,206,207,211,234,235,236,237 -->
   <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
-      <model model="Steam" numOuts="3" numFns="27" connector="9pin">
+      <model model="Steam" numOuts="3" numFns="30" connector="9pin">
         <versionCV lowVersionID="32" highVersionID="63"/>
         <output name="1" label="headlight"/>
         <output name="2" label="rearlight"/>
       </model>
       <functionlabels>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
-        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="2" lockable="false">Whistle</functionlabel>
         <functionlabel num="3" lockable="true">Coupler</functionlabel>
         <functionlabel num="4" lockable="true">Air Pump</functionlabel>
         <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
@@ -87,11 +90,18 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="EMF Feedback Cutout" CV="10">
-        <decVal/>
+      <variable label="EMF Feedback Cutout" CV="10" default="1">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
         <label>EMF Feedback Cutout</label>
       </variable>
-      <variable label="Packet Time-out Value" CV="11">
+      <variable label="Packet Time-out Value" CV="11" default="2">
         <decVal/>
         <label>Packet Time-out Value</label>
       </variable>
@@ -118,7 +128,7 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
+      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="1" minFn="1">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -129,7 +139,7 @@
         </enumVal>
         <label>Consist Address Active For F1</label>
       </variable>
-      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="0" minFn="2">
+      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="1" minFn="2">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -140,7 +150,7 @@
         </enumVal>
         <label>Consist Address Active For F2</label>
       </variable>
-      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="0" minFn="3">
+      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="1" minFn="3">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -151,7 +161,7 @@
         </enumVal>
         <label>Consist Address Active For F3</label>
       </variable>
-      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="0" minFn="4">
+      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="1" minFn="4">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -162,7 +172,7 @@
         </enumVal>
         <label>Consist Address Active For F4</label>
       </variable>
-      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="0" minFn="5">
+      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="1" minFn="5">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -173,7 +183,7 @@
         </enumVal>
         <label>Consist Address Active For F5</label>
       </variable>
-      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="0" minFn="6">
+      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="1" minFn="6">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -184,7 +194,7 @@
         </enumVal>
         <label>Consist Address Active For F6</label>
       </variable>
-      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="0" minFn="7">
+      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="1" minFn="7">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -195,7 +205,7 @@
         </enumVal>
         <label>Consist Address Active For F7</label>
       </variable>
-      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="0" minFn="8">
+      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="1" minFn="8">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -206,7 +216,7 @@
         </enumVal>
         <label>Consist Address Active For F8</label>
       </variable>
-      <variable label="Consist Address Active For F0" CV="22" mask="XXXXXXXV" default="0" item="Consist Address Active For FL in Reverse">
+      <variable label="Consist Address Active For F0" CV="22" mask="XXXXXXXV" default="1" item="Consist Address Active For FL in Reverse">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -217,7 +227,7 @@
         </enumVal>
         <label>Consist Address Active For F0</label>
       </variable>
-      <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="0" minFn="9">
+      <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="1" minFn="9">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -228,7 +238,7 @@
         </enumVal>
         <label>Consist Address Active For F9</label>
       </variable>
-      <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="0" minFn="10">
+      <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="1" minFn="10">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -239,7 +249,7 @@
         </enumVal>
         <label>Consist Address Active For F10</label>
       </variable>
-      <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0" minFn="11">
+      <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="1" minFn="11">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -250,7 +260,7 @@
         </enumVal>
         <label>Consist Address Active For F11</label>
       </variable>
-      <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0" minFn="12">
+      <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="1" minFn="12">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -313,7 +323,7 @@
         </enumVal>
         <label>FL Location</label>
       </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
+      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <enumVal>
           <enumChoice choice="DCC only">
             <choice>DCC only</choice>
@@ -324,7 +334,7 @@
         </enumVal>
         <label>Power Source Conversion</label>
       </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -411,7 +421,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -518,7 +528,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -625,7 +635,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -732,7 +742,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -839,7 +849,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -946,7 +956,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1053,7 +1063,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1098,7 +1108,7 @@
         </enumVal>
         <label>F6 Output Function Definition</label>
       </variable>
-      <variable label="F7 Output Function Definition" CV="40" default="8" minFn="7" item="Function 7 effect generated">
+      <variable label="F7 Output Function Definition" CV="40" default="21" minFn="7" item="Function 7 effect generated">
         <enumVal>
           <enumChoice choice="Nothing" value="0">
             <choice>Nothing</choice>
@@ -1160,7 +1170,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1267,7 +1277,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1374,7 +1384,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1481,7 +1491,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1588,7 +1598,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1695,7 +1705,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1802,7 +1812,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -1909,7 +1919,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2016,7 +2026,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2123,7 +2133,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2230,7 +2240,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2337,7 +2347,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2444,7 +2454,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2551,7 +2561,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2658,7 +2668,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2765,7 +2775,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2810,7 +2820,7 @@
         </enumVal>
         <label>F22 Output Function Definition</label>
       </variable>
-      <variable label="F23 Output Function Definition" CV="56" default="0" minFn="23" item="Function 23 effect generated">
+      <variable label="F23 Output Function Definition" CV="56" default="8" minFn="23" item="Function 23 effect generated">
         <enumVal>
           <enumChoice choice="Nothing" value="0">
             <choice>Nothing</choice>
@@ -2872,7 +2882,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -2979,7 +2989,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -3086,7 +3096,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -3193,7 +3203,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -3300,7 +3310,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -3407,7 +3417,7 @@
           <enumChoice choice="Horn2 Toggle">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
-          <enumChoice choice="Smoke Control">
+          <enumChoice choice="Smoke Control" value="21">
             <choice>Smoke Control</choice>
           </enumChoice>
           <enumChoice choice="Horn Grade Crossing Sound" value="30">
@@ -3477,10 +3487,10 @@
         <label>BEMF Ki</label>
       </variable>
       <variable label="BEMF Kd" CV="116" default="0" item="EMF Droop Config" tooltip="BEMF derivative gain">
-        <splitVal highCV="115"/>
+        <splitVal highCV="117"/>
         <label>BEMF Kd</label>
       </variable>
-      <variable label="KpSlow" CV="118" item="EMF Option 1" default="2">
+      <variable label="KpSlow" CV="118" item="EMF Option 1" default="60">
         <decVal/>
         <label>KpSlow</label>
       </variable>
@@ -3488,19 +3498,195 @@
         <decVal/>
         <label>KlSlow</label>
       </variable>
-      <variable label="Speed Step Smoothing" CV="120" item="EMF Option 3" default="7">
+      <variable label="Speed Step Smoothing" CV="120" item="EMF Option 3" default="25">
         <decVal/>
         <label>Speed Step Smoothing</label>
+      </variable>
+      <variable label="Consist Address Active For F13" CV="121" mask="XXXXXXXV" default="1" minFn="13">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F13</label>
+      </variable>
+      <variable label="Consist Address Active For F14" CV="121" mask="XXXXXXVX" default="1" minFn="14">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F14</label>
+      </variable>
+      <variable label="Consist Address Active For F15" CV="121" mask="XXXXXVXX" default="1" minFn="15">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F15</label>
+      </variable>
+      <variable label="Consist Address Active For F16" CV="121" mask="XXXXVXXX" default="1" minFn="16">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F16</label>
+      </variable>
+      <variable label="Consist Address Active For F17" CV="121" mask="XXXVXXXX" default="1" minFn="17">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F17</label>
+      </variable>
+      <variable label="Consist Address Active For F18" CV="121" mask="XXVXXXXX" default="1" minFn="18">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F18</label>
+      </variable>
+      <variable label="Consist Address Active For F19" CV="121" mask="XVXXXXXX" default="1" minFn="19">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F19</label>
+      </variable>
+      <variable label="Consist Address Active For F20" CV="121" mask="VXXXXXXX" default="1" minFn="20">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F20</label>
+      </variable>
+      <variable label="Consist Address Active For F21" CV="122" mask="XXXXXXXV" default="1" minFn="21">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F21</label>
+      </variable>
+      <variable label="Consist Address Active For F22" CV="122" mask="XXXXXXVX" default="1" minFn="22">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F22</label>
+      </variable>
+      <variable label="Consist Address Active For F23" CV="122" mask="XXXXXVXX" default="1" minFn="23">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F23</label>
+      </variable>
+      <variable label="Consist Address Active For F24" CV="122" mask="XXXXVXXX" default="1" minFn="24">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F24</label>
+      </variable>
+      <variable label="Consist Address Active For F25" CV="122" mask="XXXVXXXX" default="1" minFn="25">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F25</label>
+      </variable>
+      <variable label="Consist Address Active For F26" CV="122" mask="XXVXXXXX" default="1" minFn="26">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F26</label>
+      </variable>
+      <variable label="Consist Address Active For F27" CV="122" mask="XVXXXXXX" default="1" minFn="27">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F27</label>
+      </variable>
+      <variable label="Consist Address Active For F28" CV="122" mask="VXXXXXXX" default="1" minFn="28">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F28</label>
       </variable>
       <variable label="Master Volume Sound Increment" CV="130" item="Sound Setting 1" default="16">
         <decVal/>
         <label>Master Volume Sound Increment</label>
       </variable>
-      <variable label="DC Sound Unit Startup Voltage" item="Analog Startup Voltage" CV="131" default="72">
+      <variable label="DC Sound Unit Startup Voltage" item="Analog Startup Voltage" CV="131" default="78">
         <decVal/>
         <label>DC Sound Unit Startup Voltage</label>
       </variable>
-      <variable label="DC Sound Unit Shutdown" item="Analog Shutdown Voltage" CV="132" default="58">
+      <variable label="DC Sound Unit Shutdown" item="Analog Shutdown Voltage" CV="132" default="62">
         <decVal/>
         <label>DC Sound Unit Shutdown</label>
       </variable>
@@ -3619,7 +3805,7 @@
         </enumVal>
         <label>Rule 17 Lighting</label>
       </variable>
-      <variable label="L1 Inactive State" CV="159" mask="XXXXXXVX" default="0">
+      <variable label="L1 Inactive State" CV="159" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Ditch Lights Off">
             <choice>Ditch Lights Off</choice>
@@ -3697,7 +3883,7 @@
         <decVal/>
         <label>Bell Ring Interval</label>
       </variable>
-      <variable label="Horn Fade In" CV="181" default="1" item="Sound Group 3 Option 4">
+      <variable label="Horn Fade In" CV="181" default="50" item="Sound Group 3 Option 4">
         <decVal/>
         <label>Horn Fade In</label>
       </variable>
@@ -3729,7 +3915,7 @@
         <decVal/>
         <label>Pitch Shift</label>
       </variable>
-      <variable label="Motor Load Chuff Power Filter" CV="189" default="12" item="Sound Group 2 Option 1">
+      <variable label="Motor Load Chuff Power Filter" CV="189" default="12">
         <decVal/>
         <label>Motor Load Chuff Power Filter</label>
       </variable>
@@ -3753,7 +3939,7 @@
         </enumVal>
         <label>Analog Sound Setup</label>
       </variable>
-      <variable label="Analog Brake Set Voltage" CV="191" default="70">
+      <variable label="Analog Brake Set Voltage" CV="191" default="76">
         <decVal max="255"/>
         <label>Analog Brake Set Voltage</label>
       </variable>
@@ -3769,7 +3955,7 @@
         <decVal max="25"/>
         <label>Articulated Chuff Offset</label>
       </variable>
-      <variable label="Articulated Chuff Timer" CV="195" default="20" item="Sound Setting 30">
+      <variable label="Articulated Chuff Timer" CV="195" default="2" item="Sound Setting 30">
         <decVal max="255"/>
         <label>Articulated Chuff Timer</label>
       </variable>
@@ -3789,17 +3975,37 @@
         <decVal max="255"/>
         <label>Chuff Magnitude Increase Volume</label>
       </variable>
-      <variable label="DCC Throttle Magnitude Increase" CV="200" default="0" item="Sound Setting 35">
+      <variable label="DCC Throttle Magnitude Increase" CV="200" default="0" item="Sound Setting 37">
         <decVal max="255"/>
         <label>DCC Throttle Magnitude Increase</label>
       </variable>
-      <variable label="DCC Throttle Magnitude Decrease" CV="201" default="0" item="Sound Setting 36">
+      <variable label="DCC Throttle Magnitude Decrease" CV="201" default="0" item="Sound Setting 38">
         <decVal max="255"/>
         <label>DCC Throttle Magnitude Decrease</label>
       </variable>
-      <variable label="Motor Load Power Filter" CV="202" default="12">
+      <variable label="Motor Load Power Filter" CV="202" default="20">
         <decVal max="255"/>
         <label>Motor Load Power Filter</label>
+      </variable>
+      <variable label="DC Track Change Magnitude Decrease" CV="203" default="20">
+        <decVal max="255"/>
+        <label>DC Track Change Magnitude Decrease</label>
+      </variable>
+      <variable label="F5 Chuff Magnitude Change Increment" CV="204" default="32" item="Sound Setting 35">
+        <decVal max="255"/>
+        <label>F5 Chuff Magnitude Change Increment</label>
+      </variable>
+      <variable label="F6 Chuff Magnitude Change Increment" CV="205" default="32" item="Sound Setting 36">
+        <decVal max="255"/>
+        <label>F6 Chuff Magnitude Change Increment</label>
+      </variable>
+      <variable label="DC Chuff Motor Power Scalar" CV="206" default="200">
+        <decVal max="255"/>
+        <label>DC Chuff Motor Power Scalar</label>
+      </variable>
+      <variable label="N Gauge Rev Level Motor Power Scalar" CV="207" default="46">
+        <decVal max="255"/>
+        <label>N Gauge Rev Level Motor Power Scalar</label>
       </variable>
       <variable label="DCC Cab Light Throttle Stop" CV="208" default="3">
         <decVal max="255"/>
@@ -3809,9 +4015,13 @@
         <decVal max="128"/>
         <label>DCC Brake Set Throttle Stop</label>
       </variable>
-      <variable label="DCC Brake Release Throttle Stop" CV="210" default="2">
+      <variable label="DCC Brake Release Throttle Stop" CV="210" default="1">
         <decVal max="128"/>
         <label>DCC Brake Release Throttle Stop</label>
+      </variable>
+      <variable label="Power Chuff Threshold" CV="211" default="90" item="Sound Setting 39">
+        <decVal max="128"/>
+        <label>Power Chuff Threshold</label>
       </variable>
       <variable label="Rev Level Power Threshold" CV="221" mask="XXXXXXXV" default="0">
         <enumVal>
@@ -3928,7 +4138,7 @@
         </enumVal>
         <label>Aux Select for DCMaster</label>
       </variable>
-      <variable label="Horn Select" CV="224" default="0">
+      <variable label="Horn Select" CV="224" default="0" item="Sound Group 2 Option 1">
         <enumVal>
           <enumChoice choice="Default">
             <choice>Default</choice>
@@ -4088,6 +4298,22 @@
         <decVal/>
         <label>Light Dimmer</label>
       </variable>
+      <variable label="Smoke Unit Fan Chuff Time" CV="234" default="25">
+        <decVal/>
+        <label>Smoke Unit Fan Chuff Time</label>
+      </variable>
+      <variable label="Smoke Unit Fan Idle Power" CV="235" default="250">
+        <decVal/>
+        <label>Smoke Unit Fan Idle Power</label>
+      </variable>
+      <variable label="Smoke Unit Chuff Heater Power" CV="236" default="80">
+        <decVal max="110"/>
+        <label>Smoke Unit Chuff Heater Power</label>
+      </variable>
+      <variable label="Smoke Unit Idle Heater Power" CV="237" default="50">
+        <decVal max="110"/>
+        <label>Smoke Unit Idle Heater Power</label>
+      </variable>
       <variable label="Macro Recorder Speed Steps" CV="238" mask="VVXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="126">
@@ -4105,7 +4331,7 @@
         </enumVal>
         <label>Macro Recorder Speed Steps</label>
       </variable>
-      <variable label="Recorder Repeats" CV="238" mask="XXXXVVVV" default="0">
+      <variable label="Recorder Repeats" CV="238" mask="XXXXVVVV" default="1">
         <decVal max="15"/>
         <label>Recorder Repeats</label>
       </variable>
@@ -4128,7 +4354,7 @@
         </enumVal>
         <label>Motor changes direction</label>
       </variable>
-      <variable label="CV write sound feedback" item="GSC1 bit 6" CV="245" mask="XVXXXXXX" default="1">
+      <variable label="CV write sound feedback" item="GSC1 bit 6" CV="245" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Enabled">
             <choice>Enabled</choice>
@@ -4150,7 +4376,7 @@
         </enumVal>
         <label>Motor speed smoothing</label>
       </variable>
-      <variable label="Macro recorder autosave" item="GSC1 bit 4" CV="245" mask="XXXVXXXX" default="0">
+      <variable label="Macro recorder autosave" item="GSC1 bit 4" CV="245" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -4204,6 +4430,17 @@
           </enumChoice>
         </enumVal>
         <label>Horn alternative ending</label>
+      </variable>
+      <variable label="Smoke Unit Power Up" item="GSC2 bit 7" CV="246" mask="VXXXXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="off">
+            <choice>off</choice>
+          </enumChoice>
+          <enumChoice choice="on">
+            <choice>on</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Motor loading</label>
       </variable>
       <variable label="Motor loading" item="GSC2 bit 1" CV="246" mask="XXXXXXVX" default="0">
         <enumVal>
@@ -4539,11 +4776,33 @@
         </label>
         <display item="DC Motor Control Dmin" layout="above" format="hslider"/>
       </row>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <row>
+        <display item="DC Track Change Magnitude Decrease" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="DC Track Change Magnitude Decrease" layout="above" format="hslider"/>
+      </row>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <row>
+        <display item="DC Chuff Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="DC Chuff Motor Power Scalar" layout="above" format="hslider"/>
+      </row>
     </column>
     <column>
-      <display item="Rev Level Power Threshold"/>
       <display item="Aux Select for DCMaster"/>
-      <display item="Horn Select"/>
       <display item="DC Rule 17 Lighting"/>
       <display item="Activates L1 on DC"/>
       <label label=" ">
@@ -4559,6 +4818,7 @@
   </pane>
   <pane name="Settings">
     <column>
+      <display item="Rev Level Power Threshold"/>
       <display item="GSC1 bit 7"/>
       <display item="GSC1 bit 6"/>
       <display item="GSC1 bit 5"/>
@@ -4578,6 +4838,80 @@
       <display item="GSC2 bit 2"/>
       <display item="GSC2 bit 1"/>
       <display item="GSC2 bit 0"/>
+    </column>
+    <column>
+      <row>
+        <display item="Smoke Unit Fan Chuff Time" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Smoke Unit Fan Chuff Time" layout="above" format="hslider"/>
+      </row>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <row>
+        <display item="Smoke Unit Fan Idle Power" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Smoke Unit Fan Idle Power" layout="above" format="hslider"/>
+      </row>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <row>
+        <display item="Smoke Unit Chuff Heater Power" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Smoke Unit Chuff Heater Power" layout="above" format="hslider"/>
+      </row>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <row>
+        <display item="Smoke Unit Idle Heater Power" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Smoke Unit Idle Heater Power" layout="above" format="hslider"/>
+      </row>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <row>
+        <display item="Motor Load Chuff Power Filter" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Motor Load Chuff Power Filter" layout="above" format="hslider"/>
+      <label label=" ">
+        <label> </label>
+      </label>
+      </row>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <row>
+        <display item="N Gauge Rev Level Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="N Gauge Rev Level Motor Power Scalar" layout="above" format="hslider"/>
+      </row>
     </column>
     <name>Settings</name>
   </pane>
