@@ -158,16 +158,18 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private void makeIconMenu() {
         _iconMenu = new JMenu(rb.getString("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
-        JMenuItem mi = new JMenuItem("Item Pallette");
+        JMenuItem mi = new JMenuItem(rb.getString("MenuItemItemPallette"));
         mi.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     makePalette();
                     _itemPalette.setVisible(true);
                 }
             });
-        mi.setAccelerator(
-          KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
-        _iconMenu.add(mi);                                                  
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        _iconMenu.add(mi);
+        _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemTableList")));                                                  
+        mi = (JMenuItem)_iconMenu.getMenuComponent(1); 
+        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
     }
 
     private void makeZoomMenu() {
@@ -1124,7 +1126,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
             // items with defaults or using overrides
             boolean popupSet = false;
-            popupSet |= p.setRotateOrthogonalMenu(popup);        
+//            popupSet |= p.setRotateOrthogonalMenu(popup);        
             popupSet |= p.setRotateMenu(popup);        
             popupSet |= p.setScaleMenu(popup);        
             if (popupSet) { 
