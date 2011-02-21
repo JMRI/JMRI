@@ -16,6 +16,7 @@
 
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
+<!-- version 3 - Add CV55.154.x hoot/fancy ending -->
 
 <pane name="Sound Control">
   <column>
@@ -105,18 +106,22 @@
         <row>
 	        <display item="CV55.154.0" layout="above" label="" />
 	        <display item="CV55.154.0" layout="above" format="hslider"/>
+	        <display item="CV55.154.0 hoot" format="checkbox" />
         </row>
         <row>
 	        <display item="CV55.154.2" layout="above" label="" />
 	        <display item="CV55.154.2" layout="above" format="hslider"/>
+	        <display item="CV55.154.2 hoot" format="checkbox" />
         </row>
         <row>
 	        <display item="CV55.154.4" layout="above" label="" />
 	        <display item="CV55.154.4" layout="above" format="hslider"/>
+	        <display item="CV55.154.4 hoot" format="checkbox" />
         </row>
         <row>
 	        <display item="CV55.154.6" layout="above" label="" />
 	        <display item="CV55.154.6" layout="above" format="hslider"/>
+	        <display item="CV55.154.6 hoot" format="checkbox" />
         </row>
       </column>
       <label label="        "/>
@@ -135,5 +140,9 @@
         </row>
       </column>
      </row>
+      <label label="    "/>
+      <label label="If Hoot/Fancy Ending checked and value is 9 or less then hoot sound used, if value is 10 or greater then fancy ending sound used"/>
+      <label label="Not all Firmware have Hoot and/or Fancy Ending, regular sound will be played instead"/>
+      <label label="Earlier Firmware do not support Hoot/Fancy Ending for Grade Crossing, if checked 12.8 seconds will be added to value"/>
   </column>
 </pane>
