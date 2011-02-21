@@ -35,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -281,28 +281,11 @@ public class TabbedPreferences extends AppConfigBase {
             }
         }
         
-        if (count==0)
+        if (count==0){
             addConnection(0,0);
-            newConnectionTab();
-            connectionPanel.addChangeListener(new ChangeListener() { 
-            // This method is called whenever the selected tab changes 
-            public void stateChanged(ChangeEvent evt) { 
-                JTabbedPane pane = (JTabbedPane)evt.getSource(); 
-                // Get current tab 
-                int sel = pane.getSelectedIndex();
-                if (sel == -1){
-                    addConnectionTab();
-                }
-                else {
-                    String paneTitle = pane.getTitleAt(sel);
-                    
-                    if (paneTitle.equals("+")){
-                        addConnectionTab();
-                    }
-                }
-            } 
-        }); 
-
+        }
+        connectionPanel.addChangeListener(addTabListener);
+        newConnectionTab();
     }
     
     public void setUIFontSize(float size){
@@ -544,6 +527,7 @@ public class TabbedPreferences extends AppConfigBase {
                 connectionPanel.removeChangeListener(connectionPanel.getChangeListeners()[0]);
             int jmrixinstance = connectionTabInstance.get(i);
             
+            connectionPanel.removeChangeListener(addTabListener);
             connectionPanel.remove(i);  //was x
             items.remove(JmrixConfigPane.instance(jmrixinstance));
             try{
@@ -554,25 +538,27 @@ public class TabbedPreferences extends AppConfigBase {
                 addConnectionTab();
             }
             connectionPanel.setSelectedIndex(connectionPanel.getTabCount()-2);
-            connectionPanel.addChangeListener(new ChangeListener() { 
-            // This method is called whenever the selected tab changes 
-                public void stateChanged(ChangeEvent evt) { 
-                    JTabbedPane pane = (JTabbedPane)evt.getSource(); 
-                    // Get current tab 
-                    int sel = pane.getSelectedIndex();
-                    if (sel == -1){
-                        addConnectionTab();
-                    }
-                    else {
-                        String paneTitle = pane.getTitleAt(sel);
-                        if (paneTitle.equals("+")){
-                            addConnectionTab();
-                        }
-                    }
-                } 
-            });
+            connectionPanel.addChangeListener(addTabListener);
         }        
     }
+
+    ChangeListener addTabListener = new ChangeListener() {
+            // This method is called whenever the selected tab changes
+        public void stateChanged(ChangeEvent evt) {
+            JTabbedPane pane = (JTabbedPane)evt.getSource();
+            // Get current tab
+            int sel = pane.getSelectedIndex();
+            if (sel == -1){
+                addConnectionTab();
+            }
+            else {
+                String paneTitle = pane.getTitleAt(sel);
+                if (paneTitle.equals("+")){
+                    addConnectionTab();
+                }
+            }
+        }
+    };
     
     class preferencesCatItems {
         
