@@ -13,12 +13,13 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public InternalSystemConnectionMemo() {
         super("I", "Internal");
+        InstanceManager.store(this, InternalSystemConnectionMemo.class); // also register as specific type
         register();
     }
     
@@ -31,13 +32,79 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
      */
     public void configureManagers() {
       
-        InstanceManager.setTurnoutManager(new jmri.managers.InternalTurnoutManager());
+        turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+        InstanceManager.setTurnoutManager(turnoutManager);
+        
+        sensorManager = new InternalSensorManager(getSystemPrefix());
+        InstanceManager.setSensorManager(sensorManager);
+        
+        powerManager = new jmri.managers.DefaultPowerManager();
+        jmri.InstanceManager.setPowerManager(powerManager);
 
-        InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
+       // Install a debug programmer
+        programManager = new jmri.progdebugger.DebugProgrammerManager();
+        jmri.InstanceManager.setProgrammerManager(programManager);
+
+        // Install a debug throttle manager
+        throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager();
+        jmri.InstanceManager.setThrottleManager(throttleManager
+                );
 
     }
     
-    public void dispose() { return; }
+    private InternalSensorManager sensorManager;
+    private InternalTurnoutManager turnoutManager;
+    private jmri.jmrix.debugthrottle.DebugThrottleManager throttleManager;
+    private jmri.managers.DefaultPowerManager powerManager;
+    private jmri.progdebugger.DebugProgrammerManager programManager;
+    
+    public InternalTurnoutManager getTurnoutManager() { return turnoutManager; }
+    public InternalSensorManager getSensorManager() { return sensorManager; }
+    public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() { return throttleManager; }
+    public jmri.managers.DefaultPowerManager getPowerManager() { return powerManager; }
+    public jmri.progdebugger.DebugProgrammerManager getProgrammerManager() { return programManager; }
+    
+    public boolean provides(Class<?> type) {
+        if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
+        if (type.equals(jmri.PowerManager.class))
+            return true;
+        if (type.equals(jmri.SensorManager.class))
+            return true;
+        if (type.equals(jmri.TurnoutManager.class))
+            return true;
+        return false; // nothing, by default
+    }
+    
+        public <T> T get(Class<?> T) {
+        if (getDisabled())
+            return null;
+        if (T.equals(jmri.ProgrammerManager.class))
+            return (T)getProgrammerManager();
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
+        if (T.equals(jmri.PowerManager.class))
+            return (T)getPowerManager();
+        if (T.equals(jmri.SensorManager.class))
+            return (T)getSensorManager();
+        if (T.equals(jmri.TurnoutManager.class))
+            return (T)getTurnoutManager();
+        return null; // nothing, by default
+    }
+    
+    public void dispose() { 
+        if(sensorManager!=null){
+            sensorManager.dispose();
+            sensorManager=null;
+        }
+        if(turnoutManager!=null){
+            turnoutManager.dispose();
+            turnoutManager=null;
+        }
+        super.dispose();
+    }
 }
 
 
