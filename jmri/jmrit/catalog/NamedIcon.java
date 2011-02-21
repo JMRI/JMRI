@@ -27,7 +27,7 @@ import javax.swing.ImageIcon;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -353,6 +353,9 @@ public class NamedIcon extends ImageIcon {
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
         _transformR.preConcatenate(t);
+        // convert total angle into degrees only
+        _deg += 90*mRotation;
+        mRotation=0;
         _deg += deg;
         _deg =_deg%360;
         if (log.isDebugEnabled()) debugDraw("After Rotation _deg="+_deg, comp);
