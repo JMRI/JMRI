@@ -6,7 +6,7 @@ package jmri.jmrix.internal;
  * Definition of objects to handle configuring a virtual layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -30,8 +30,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
         if (adapter == null)
             adapter = new InternalAdapter();
     }
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.NONE;
     
     public void dispose() {
         if (adapter != null)

@@ -7,7 +7,7 @@ package jmri.jmrix.internal;
  * Internal managers to be handled.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     implements jmri.jmrix.PortAdapter{
@@ -68,8 +68,6 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
         if(adaptermemo!=null)
             adaptermemo.setDisabled(disabled);
     }
-    
-    boolean mDisabled = false;
     
     @Override
     public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo() { 
