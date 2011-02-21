@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.21 2011-02-19 18:58:13 ken_c Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.22 2011-02-21 22:40:36 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -361,6 +361,31 @@ It displays which block connections, signals, signal masts, etc...
 Ken Cameron updated RobotThrottle3.py to look past a block boundary without a signal.
 Added buttons to manually move a train at the red, yellow or green speed to add manual
 setups.
+
+<p>
+Mike Mosher fixed a minor bug in certain ESU decoder definitions.
+
+<p>
+Mike Mosher did a major update to the QSI V7 definitions.
+
+<p>
+Mike Mosher updated the BLI P2 steam decoder definition to 
+fix smoke control bug, CV116-117 bug, some pane tweeks, some default value changes, 
+add CV 121,122,203,204,205,206,207,211,234,235,236,237.
+
+<p>
+Mike Mosher added a decoder definition for the MRC 1906 genset.
+
+<p>
+Mike Mosher updated the DecoderPro consist pane to add F13-F28
+needed for BLI P2 steam.
+
+<p>
+Mike Mosher updated the Tsunami Diesel Genesis OEM decoder definition
+version 3 to change SD70ACe model and add SD70M-2 model
+
+<p>
+Mike Mosher added new SoundTraxx MC and MC IMRC OEM decoder definitions
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
