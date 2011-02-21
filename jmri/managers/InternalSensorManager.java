@@ -2,14 +2,13 @@
 
 package jmri.managers;
 
-import jmri.managers.AbstractSensorManager;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
 /**
  * Implementation of the InternalSensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003, 2006
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class InternalSensorManager extends AbstractSensorManager {
 
@@ -23,6 +22,8 @@ public class InternalSensorManager extends AbstractSensorManager {
             public void requestUpdateFromLayout(){}
         };
     }
+    
+    protected String prefix = "I";
     
     public String getNextValidAddress(String curAddress, String prefix){
         //If the hardware address past does not already exist then this can
@@ -58,7 +59,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         }
     }
 	
-	public String getSystemPrefix() { return "I"; }
+	public String getSystemPrefix() { return prefix; }
 }
 
 /* @(#)InternalSensorManager.java */

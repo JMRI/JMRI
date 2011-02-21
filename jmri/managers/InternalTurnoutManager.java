@@ -4,13 +4,12 @@ package jmri.managers;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import jmri.managers.AbstractTurnoutManager;
 
 /**
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
  * @author			Bob Jacobsen Copyright (C) 2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 
@@ -24,7 +23,9 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         };
     }
     
-    public String getSystemPrefix() { return "I"; }
+    protected String prefix = "I";
+    
+    public String getSystemPrefix() { return prefix; }
     
     /*
      * Turnout operation support. Internal turnouts don't need retries.
