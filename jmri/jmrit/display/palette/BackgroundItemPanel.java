@@ -25,6 +25,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PositionableLabel;
@@ -46,6 +47,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     */
     public BackgroundItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
+        _level = Editor.BKG;
     }
 
     public void init() {
@@ -53,9 +55,18 @@ public class BackgroundItemPanel extends IconItemPanel {
         add(initBottomPanel(), 2);
     }
 
+    protected JPanel instructions() {
+        JPanel panel = super.instructions();
+        JPanel blurb = (JPanel)panel.getComponent(0);
+        blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToColorBackground"), 
+                                                       ItemPalette.rbp.getString("ButtonBackgroundColor"))));
+        blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        return panel;
+    }
+
     private JPanel initBottomPanel() {
         JPanel bottomPanel = new JPanel();
-        JButton backgroundButton = new JButton(ItemPalette.rbp.getString("BackgroundColor"));
+        JButton backgroundButton = new JButton(ItemPalette.rbp.getString("ButtonBackgroundColor"));
         backgroundButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     hideCatalog();
@@ -66,141 +77,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         bottomPanel.add(backgroundButton);
         return bottomPanel;
     }
-
-    class BkdDragJLabel extends DragJLabel {
-        public BkdDragJLabel(DataFlavor flavor) {
-            super(flavor);
-        }
-        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
-            if (!isDataFlavorSupported(flavor)) {
-                return null;
-            }
-            String url = ((NamedIcon)getIcon()).getURL();
-            if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
-            PositionableLabel b = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
-            b.setPopupUtility(null);        // no text
-            b.setPositionable(false);
-            b.setShowTooltip(false);
-            b.setLevel(Editor.BKG);
-            return b;
-        }
-    }
-
-    static class BackgroudCatalogPanel extends CatalogPanel {
-
-        /**
-        *  Display the icons in the preview panel
-        */
-        protected String setIcons() throws OutOfMemoryError {
-            resetPanel();
-            CatalogTreeNode node = getSelectedNode();
-            if (node == null) {
-                return null;
-            }
-            List<CatalogTreeLeaf> leaves = node.getLeaves();
-            if (leaves == null) {
-                return null;
-            }
-            int numCol = 1;
-            while (numCol*numCol <leaves.size()) {
-                numCol++;
-            }
-            if (numCol > 1) {
-                numCol--;
-            }
-            int numRow = leaves.size()/numCol;
-            int cnt = 0;
-            boolean newCol = false;
-            _noMemory = false;
-            // VM launches another thread to run ImageFetcher.
-            // This handler will catch memory exceptions from that thread
-            Thread.setDefaultUncaughtExceptionHandler(new MemoryExceptionHandler());
-            GridBagLayout gridbag = new GridBagLayout();
-            _preview.setLayout(gridbag);
-            GridBagConstraints c = new GridBagConstraints();
-            c.fill = GridBagConstraints.NONE;
-            c.anchor = GridBagConstraints.CENTER;
-            c.weightx = 1.0;
-            c.weighty = 1.0;
-            c.gridy = 0;
-            c.gridx = -1;
-            for (int i=0; i<leaves.size(); i++) {
-                if (_noMemory) {
-                    cnt++;
-                    continue;
-                }
-                CatalogTreeLeaf leaf = leaves.get(i);
-                NamedIcon icon = new NamedIcon(leaf.getPath(), leaf.getName());
-                double scale = icon.reduceTo(50, 80, .15);
-                if (_noMemory) {
-                    continue;
-                }
-                if (c.gridx < numCol) {
-                    c.gridx++;
-                } else if (c.gridy < numRow) { //start next row
-                    c.gridy++;
-                    if (!newCol) {
-                        c.gridx=0;
-                    }
-                } else if (!newCol) { // start new column
-                    c.gridx++;
-                    numCol++;
-                    c.gridy = 0;
-                    newCol = true;
-                } else {  // start new row
-                    c.gridy++;
-                    numRow++;
-                    c.gridx = 0;
-                    newCol = false;
-                }
-                JLabel image = null;
-                c.insets = new Insets(5, 5, 0, 0);
-                try {
-                    image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
-                } catch (java.lang.ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
-                    image = new JLabel();
-                }
-                image.setOpaque(true);
-                image.setName(leaf.getName());
-                image.setBackground(_currentBackground);
-                image.setIcon(icon);
-                JPanel p = new JPanel();
-                p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-                JPanel iPanel = new JPanel();
-                iPanel.add(image);
-                p.add(iPanel);
-                JLabel nameLabel = new JLabel(leaf.getName());
-                p.add(nameLabel);
-                JLabel label = new JLabel(java.text.MessageFormat.format(ItemPalette.rb.getString("scale"),
-                                    new Object[] {printDbl(scale,2)}));
-                p.add(label);
-                p.addMouseListener(this);
-
-                gridbag.setConstraints(p, c);
-                if (_noMemory) {
-                    continue;
-                }
-                _preview.add(p);
-                if (log.isDebugEnabled()) {
-                    log.debug(leaf.getName()+" inserted at ("+c.gridx+", "+c.gridy+
-                                  ") w= "+icon.getIconWidth()+", h= "+icon.getIconHeight());
-                }
-                cnt++;
-            }
-            c.gridy++;
-            c.gridx++;
-            JLabel bottom = new JLabel();
-            gridbag.setConstraints(bottom, c);
-            _preview.add(bottom);
-
-            Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
-            packParentFrame(this);
-            return java.text.MessageFormat.format(ItemPalette.rb.getString("numImagesInNode"),
-                                  new Object[] {node.getUserObject(),Integer.valueOf(leaves.size())});
-        }
-    }
-
+    
     class ColorDialog extends JDialog implements ChangeListener {
 
         JColorChooser _chooser;

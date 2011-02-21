@@ -79,7 +79,6 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         addIconsToPanel(iconMap);
         _iconPanel.setVisible(visible);
         _iconFamilyPanel.add(_iconPanel, 0);
-//        _paletteFrame.pack();
     }
 
     protected void addIconsToPanel(Hashtable<String, NamedIcon> allIconsMap) {

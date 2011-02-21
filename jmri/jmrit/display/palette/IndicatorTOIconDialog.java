@@ -58,8 +58,8 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     // override IconDialog initMap. Make placeholder for _iconPanel
-    protected JPanel initMap(String type, String family) {
-        return new JPanel(); 
+    protected void initMap(String type, String family) {
+        _iconPanel = new JPanel(); 
     }
 
     /**

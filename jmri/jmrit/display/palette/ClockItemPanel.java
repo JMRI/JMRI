@@ -18,6 +18,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,10 +32,9 @@ import jmri.jmrit.display.AnalogClock2Display;
 /**
 *  ItemPanel for for plain icons and backgrounds 
 */
-public class ClockItemPanel extends ItemPanel {
+public class ClockItemPanel extends IconItemPanel {
 
     Hashtable<String, NamedIcon> _iconMap;
-    JPanel _iconPanel;
 
     /**
     * Constructor for plain icons and backgrounds
@@ -42,62 +43,53 @@ public class ClockItemPanel extends ItemPanel {
         super(parentFrame,  type, family, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
-
-    public void init() {
-        initIconPanel();
-        initButtonPanel();
+    
+    protected JPanel instructions() {
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(ItemPalette.rbp.getString("AddClockToPanel")));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        return panel;
     }
 
-    /**
-    * Plain icons have only one family, usually named "set"
-    * overide for plain icon & background and put all icons here
-    */
-    protected void initIconPanel() {
-        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        if (families!=null && families.size()>0) {
-            if (families.size()!=1) {
-                log.warn("ItemType \""+_itemType+"\" has "+families.size()+" families.");
-            }
-            Iterator <String> iter = families.keySet().iterator();
-            while (iter.hasNext()) {
-                _family = iter.next();
-            }
-            _iconPanel = new JPanel();
-            _iconMap = families.get(_family);
-            Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
-               icon.reduceTo(100, 100, 0.2);
-               JPanel panel = new JPanel();
-               String borderName = ItemPalette.convertText(entry.getKey());
-               panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-                                                                borderName));
-               try {
-                   JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-                   label.setIcon(icon);
-                   label.setName(borderName);
-                   panel.add(label);
-               } catch (java.lang.ClassNotFoundException cnfe) {
-                   cnfe.printStackTrace();
+    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+           Entry<String, NamedIcon> entry = it.next();
+           NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
+           JPanel panel = new JPanel();
+           String borderName = ItemPalette.convertText(entry.getKey());
+           panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
+                                                            borderName));
+           try {
+               JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
+               if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+                   label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                   label.setForeground(Color.lightGray);
+               } else {
+                   icon.reduceTo(100, 100, 0.2);
                }
-               _iconPanel.add(panel);
-            }
-
-        } else {
-            log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");
+               label.setIcon(icon);
+               label.setName(borderName);
+               panel.add(label);
+           } catch (java.lang.ClassNotFoundException cnfe) {
+               cnfe.printStackTrace();
+           }
+           _iconPanel.add(panel);
         }
-        add(_iconPanel);
     }
-
     /**
     *  SOUTH Panel
     */
     public void initButtonPanel() {
+        /*
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
 
-        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("EditIcons"));
+        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("ButtonEditIcons"));
         editIconsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     openEditDialog();
@@ -107,6 +99,7 @@ public class ClockItemPanel extends ItemPanel {
         bottomPanel.add(editIconsButton);
 
         add(bottomPanel);
+        */
     }
 
     public class ClockDragJLabel extends DragJLabel {

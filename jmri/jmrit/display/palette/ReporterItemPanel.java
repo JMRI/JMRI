@@ -22,7 +22,7 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     /**
-    * Extend handler to export from JList and import to PicklistTable
+    * Extend handler to export from PicklistTable(JTable and import to panel
     */
     protected class ReporterDnD extends DnDTableItemHandler {
 

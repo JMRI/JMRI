@@ -276,7 +276,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 c.gridx++;
             }
             panel = new JPanel();
-            JButton button = new JButton(ItemPalette.rbp.getString("EditIcons"));
+            JButton button = new JButton(ItemPalette.rbp.getString("ButtonEditIcons"));
             button.addActionListener(new ActionListener() {
                     String key;
                     public void actionPerformed(ActionEvent a) {
@@ -362,7 +362,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                         _trainIdPanel.setVisible(false);
                         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
                     }
-                    _paletteFrame.pack();
                 }
         });
         _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
@@ -398,8 +397,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         reset();
         validate();
         repaint();
-        _paletteFrame.pack();
         _iconGroupsMap = groupsMap;
+        _paletteFrame.pack();
     }
 
     protected void setFamily(String family) {
@@ -413,6 +412,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _updateWithSameMap = false;     // not using saved update map
         _iconFamilyPanel.add(_iconPanel, 0);
         hideIcons();
+        _paletteFrame.pack();
     }
 
     protected void openEditDialog(String key) {

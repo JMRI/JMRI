@@ -42,7 +42,9 @@ public abstract class ItemPanel extends JPanel {
     /* Methods used upon return from Icon dialogs
     * to update the panel for TableItemPanel item types.
     */    
-    protected void initIconFamiliesPanel() {
+    protected void initIconFamiliesPanel(){
+    }
+    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap){
     }
     protected void setFamily(String family) {
     }

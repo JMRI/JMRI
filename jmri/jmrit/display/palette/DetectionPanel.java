@@ -274,7 +274,6 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
             _blockPathPanel.setVisible(false);
             _block = null;
         }
-        _parent._paletteFrame.pack();
     }
 
     protected void makePathList(OBlock block) {

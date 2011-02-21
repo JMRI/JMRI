@@ -225,13 +225,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         _iconPanel.setVisible(true);
                         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
                     }
-                    _paletteFrame.pack();
                 }
         });
         _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
         bottomPanel.add(_showIconsButton);
 
-        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("EditIcons"));
+        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("ButtonEditIcons"));
         editIconsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     openEditDialog();
@@ -272,7 +271,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _iconPanel.setVisible(false);
         }
         _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
-        _paletteFrame.pack();
     }
 
     protected void removeIconFamiliesPanel() {

@@ -4,10 +4,13 @@ package jmri.jmrit.display.palette;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -19,22 +22,24 @@ import jmri.jmrit.catalog.NamedIcon;
  * @author Pete Cressman  Copyright (c) 2010
  */
 
-public class SingleIconDialog extends IconDialog {
+public class SingleIconDialog extends IconDialog implements MouseListener {
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public SingleIconDialog(String type, String family, ItemPanel parent) {
         super(type, family, parent);
+        _familyName.setText("");
+        if (_iconPanel!=null) {
+            _iconPanel.addMouseListener(this);
+        }
     }
 
-    /**
-    * _familyName is used for icon name.
-    */
-    protected void init() {
-        _familyName.setEditable(true);
-        _familyName.setText("");
-        super.sizeLocate();
+    public void dispose() {
+        if (_iconPanel!=null) {
+            _iconPanel.removeMouseListener(this);
+        }
+        super.dispose();
     }
 
     protected JPanel makeButtonPanel() {
@@ -46,44 +51,28 @@ public class SingleIconDialog extends IconDialog {
     }
 
     /**
-    * add/delete icon. For Multisensor, it adds another sensor position.
+    * add/delete icon.
     */
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
         JButton addIcon = new JButton(ItemPalette.rbp.getString("addIcon"));
         addIcon.addActionListener(new ActionListener() {
-                IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
-                    if (addNewIcon(_familyName.getText())) {
-                        if (doDoneAction()) {
-                            dialog.dispose();
-                        }
-                    }
+                    addNewIcon(_familyName.getText());
                 }
-                ActionListener init(IconDialog d) {
-                    dialog = d;
-                    return this;
-                }
-        }.init(this));
+        });
         addIcon.setToolTipText(ItemPalette.rbp.getString(addTip));
         panel2.add(addIcon);
 
         JButton deleteIcon = new JButton(ItemPalette.rbp.getString("deleteIcon"));
         deleteIcon.addActionListener(new ActionListener() {
-                IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
                     if (deleteIcon()) {
-                        if (doDoneAction()) {
-                            dialog.dispose();
-                        }
+                        dispose();
                     }
                 }
-                ActionListener init(IconDialog d) {
-                    dialog = d;
-                    return this;
-                }
-        }.init(this));
+        });
         deleteIcon.setToolTipText(ItemPalette.rbp.getString(deleteTip));
         panel2.add(deleteIcon);
         buttonPanel.add(panel2);
@@ -106,8 +95,12 @@ public class SingleIconDialog extends IconDialog {
         }
         String fileName = "resources/icons/misc/X-red.gif";
         NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
-//        Hashtable<String, Hashtable<String, NamedIcon>> i = getFamilyMaps(_type);
         _iconMap.put(name, icon);
+        java.awt.Container con = getContentPane();
+        con.remove(_iconPanel);
+        _iconPanel = makeIconPanel(_iconMap);
+        con.add(_iconPanel, 1);
+        pack();
         return true;
     }
 
@@ -115,14 +108,17 @@ public class SingleIconDialog extends IconDialog {
     * Action item for makeAddIconButtonPanel
     */
     protected boolean deleteIcon() {
-        if (log.isDebugEnabled()) log.debug("deleteNewIcon Action: iconMap.size()= "+_iconMap.size());
-        String name = _familyName.getText();
-        if (_iconMap.remove(name)==null) {
+        if (log.isDebugEnabled()) log.debug("deleteIcon Action: iconMap.size()= "+_iconMap.size());
+        // for simple icons, _family is icon's name
+        String iconName = _familyName.getText();
+        if (_iconMap.remove(iconName)==null) {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("IconNotFound"), name),
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("IconNotFound"), iconName),
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
+        doDoneAction();
+//        _parent.updateFamiliesPanel();
         return true;
     }
         
@@ -131,16 +127,54 @@ public class SingleIconDialog extends IconDialog {
     */
     protected boolean doDoneAction() {
         //check text
-        String family = _familyName.getText();
-        if (addFamily(family, _iconMap)) {
-            ImageIndexEditor.indexChanged(true);
-            _parent.removeAll();
-            _parent.init();
+        if (_family!=null) {
+            ItemPalette.removeIconMap(_type, _family);
+        }
+        if (addFamily(_family, _iconMap)) {
+            //_parent.addIconsToPanel(_iconMap);
+            _parent.updateFamiliesPanel();
             return true;
         }
         return false;
     }
 
+
+    public void mousePressed(MouseEvent event) {}
+
+    public void mouseReleased(MouseEvent event) {
+        if (log.isDebugEnabled()) log.debug("mouseReleased at ("+event.getX()+", "+event.getY()+")");
+        java.awt.Component[] comp = _iconPanel.getComponents();
+        for (int i=0; i<comp.length; i++) {
+            if (comp[i] instanceof JPanel) {
+                JPanel p = (JPanel)comp[i];
+                java.awt.Component[] com = p.getComponents();
+                for (int k=0; k<com.length; k++) {
+                    if (com[k] instanceof JPanel) {
+                        JPanel panel = (JPanel)com[k];
+                        java.awt.Component[] c = panel.getComponents();
+                        for (int j=0; j<c.length; j++) {
+                            if (c[j] instanceof DropJLabel) {
+                                JLabel icon = (JLabel)c[j];
+                                java.awt.Rectangle r = p.getBounds();
+                                //if (log.isDebugEnabled()) log.debug("Name= "+icon.getName()+" at ("+r.x+", "+r.y+
+                                //                                    ") w= "+r.width+", h="+r.height);
+                                if (r.contains(event.getX(), event.getY())) {
+                                    _familyName.setText(icon.getName());
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        _familyName.setText("");
+    }
+
+    public void mouseClicked(MouseEvent event) {}
+    public void mouseEntered(MouseEvent event) {}
+    public void mouseExited(MouseEvent event) {}
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleIconDialog.class.getName());
 }
 

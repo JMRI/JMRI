@@ -47,7 +47,7 @@ public class SignalHeadIconDialog extends IconDialog {
         super(type, family,parent);
     }
 
-    protected JPanel initMap(String type, String family) {
+    protected void initMap(String type, String family) {
         _familyName.setEditable(true);
         if (family!=null) {
             _iconMap = ItemPalette.getIconMap(type, family);
@@ -58,7 +58,7 @@ public class SignalHeadIconDialog extends IconDialog {
             _family = null;
             _familyName.setText("");
         }
-        return makeIconPanel(_iconMap);
+        _iconPanel = makeIconPanel(_iconMap);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIconDialog.class.getName());
