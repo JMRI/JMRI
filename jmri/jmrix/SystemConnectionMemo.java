@@ -11,11 +11,12 @@ import java.util.ArrayList;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 abstract public class SystemConnectionMemo {
 
     protected SystemConnectionMemo(String prefix, String userName) {
+        initialise();
         if(!setSystemPrefix(prefix)){
             for (int x = 2; x<50; x++){
                 if(setSystemPrefix(prefix+x)){
@@ -30,6 +31,18 @@ abstract public class SystemConnectionMemo {
                     break;
                 }
             }
+        }
+    }
+    
+    private static boolean initialised = false;
+    /**
+     * Provides a method to reserve System Names and prefixes at creation
+     */
+    private static void initialise(){
+        if (!initialised){
+            addUserName("Internal");
+            addSystemPrefix("I");
+            initialised = true;
         }
     }
     
@@ -98,7 +111,6 @@ abstract public class SystemConnectionMemo {
             return true;
         }
         return false;
-        //this.prefix = prefix;
     }
     
     /**
