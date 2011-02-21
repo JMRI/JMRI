@@ -17,6 +17,8 @@
   <version author="Michael Mosher" version="1" lastUpdated="20100301"/>
 <!-- ver2 correction to CV124 definition -->
   <version author="Matthew Harris" version="2" lastUpdated="20100329"/>
+<!-- ver3 fix bug in sanding volume CV -->
+  <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
       <model model="LokSound Select Alco 244" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73401">
@@ -1822,7 +1824,7 @@
       <ivariable label="Brake Set/Release volume" CVname="347.1" CV="347" PI="1" default="128" item="Sound Setting 12">
         <indexedVal max="128"/>
       </ivariable>
-      <ivariable label="Sanding Valve volume" CVname="335.1" CV="355" PI="1" default="128" item="Sound Setting 13">
+      <ivariable label="Sanding Valve volume" CVname="355.1" CV="355" PI="1" default="128" item="Sound Setting 13">
         <indexedVal max="128"/>
       </ivariable>
       <ivariable label="Short Air Let Off volume" CVname="363.1" CV="363" PI="1" default="128" item="Sound Setting 14">

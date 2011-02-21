@@ -17,6 +17,8 @@
   <version author="Michael Mosher" version="1" lastUpdated="20101020"/>
 <!-- ver 2 add CV124 -->
   <version author="Michael Mosher" version="2" lastUpdated="20101201"/>
+<!-- ver3 fix bug in sanding volume CV -->
+  <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
       <model model="LokSound Select Steam 3 Driven Axles" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73413">
@@ -1527,7 +1529,7 @@
       <ivariable label="Brake Set/Release volume" CVname="347.1" CV="347" PI="1" default="128" item="Sound Setting 13">
         <indexedVal max="128"/>
       </ivariable>
-      <ivariable label="Sanding Valve volume" CVname="335.1" CV="355" PI="1" default="128" item="Sound Setting 14">
+      <ivariable label="Sanding Valve volume" CVname="355.1" CV="355" PI="1" default="128" item="Sound Setting 14">
         <indexedVal max="128"/>
       </ivariable>
       <ivariable label="Oil Burner volume" CVname="363.1" CV="363" PI="1" default="128" item="Sound Setting 15">
