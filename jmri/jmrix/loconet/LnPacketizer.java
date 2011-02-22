@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.28 $
+ * @version 		$Revision: 1.29 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -98,9 +98,14 @@ public class LnPacketizer extends LnTrafficController {
 
         if (debug) log.debug("queue LocoNet packet: "+m.toString());
         // in an atomic operation, queue the request and wake the xmit thread
-        synchronized(xmtHandler) {
-            xmtList.addLast(msg);
-            xmtHandler.notify();
+        try {
+            synchronized(xmtHandler) {
+                xmtList.addLast(msg);
+                xmtHandler.notify();
+            } 
+        }
+        catch (Exception e) {
+            log.warn("passing to xmit: unexpected exception: "+e);
         }
     }
 
