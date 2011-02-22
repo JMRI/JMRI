@@ -35,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -280,8 +280,6 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             }
         }
-        
-
 
         if (count==0){
             addConnection(0,0);
@@ -529,6 +527,7 @@ public class TabbedPreferences extends AppConfigBase {
                 connectionPanel.removeChangeListener(connectionPanel.getChangeListeners()[0]);
             int jmrixinstance = connectionTabInstance.get(i);
             
+            connectionPanel.removeChangeListener(addTabListener);
             connectionPanel.remove(i);  //was x
             items.remove(JmrixConfigPane.instance(jmrixinstance));
             try{
