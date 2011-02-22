@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.23 2011-02-22 01:51:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.24 2011-02-22 07:42:07 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -216,11 +216,12 @@ actions are still triggered according to the truth value of the antecedent expre
 <p>
 Pete Cressman added new ControlPanelEditor features
 <ul>
-<li>Clipboard Copy & Paste can be done between two control panels,</li>
+<li>Clipboard Copy & Paste can be done between two control panels.</li>
 <li>The Item Palette can hold multiple sets of icons for each item type.</li>
 <li>The Item Palette has "Indicator Track" and "Indicator Turnouts" that change color when their block sensor 
 shows occupacy.  When used with Occupancy Blocks and Warrants, indicator icons will show allocation, 
 path route, occupancy or error condition by color.</li>
+<li>Accelerator keys added for Item Palette and Table List.</li>
 </ul>
 
 <p>
@@ -303,6 +304,9 @@ Note: once the keyboard driver is running, all keyboard inputs will be considere
 
 <p>
 James LeFevre improved TMCC throttle support.
+
+<p>
+Pete Cressman fixed bug where orthogonal rotations overrode degree rotations when loading a panel
 
 <p>
 Matthew Harris corrected a bug where Layout Editor and Control Panel Editor Panels were not being deleted when 'Delete' was picked from the 'File' menu.
