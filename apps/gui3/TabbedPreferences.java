@@ -35,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -281,6 +281,8 @@ public class TabbedPreferences extends AppConfigBase {
             }
         }
         
+
+
         if (count==0){
             addConnection(0,0);
         }
@@ -527,7 +529,6 @@ public class TabbedPreferences extends AppConfigBase {
                 connectionPanel.removeChangeListener(connectionPanel.getChangeListeners()[0]);
             int jmrixinstance = connectionTabInstance.get(i);
             
-            connectionPanel.removeChangeListener(addTabListener);
             connectionPanel.remove(i);  //was x
             items.remove(JmrixConfigPane.instance(jmrixinstance));
             try{
@@ -539,27 +540,27 @@ public class TabbedPreferences extends AppConfigBase {
             }
             connectionPanel.setSelectedIndex(connectionPanel.getTabCount()-2);
             connectionPanel.addChangeListener(addTabListener);
-        }        
+        }
     }
 
     ChangeListener addTabListener = new ChangeListener() {
-            // This method is called whenever the selected tab changes
-        public void stateChanged(ChangeEvent evt) {
-            JTabbedPane pane = (JTabbedPane)evt.getSource();
-            // Get current tab
-            int sel = pane.getSelectedIndex();
-            if (sel == -1){
-                addConnectionTab();
-            }
-            else {
-                String paneTitle = pane.getTitleAt(sel);
-                if (paneTitle.equals("+")){
-                    addConnectionTab();
-                }
-            }
-        }
+            // This method is called whenever the selected tab changes 
+                public void stateChanged(ChangeEvent evt) { 
+                    JTabbedPane pane = (JTabbedPane)evt.getSource(); 
+                    // Get current tab 
+                    int sel = pane.getSelectedIndex();
+                    if (sel == -1){
+                        addConnectionTab();
+                    }
+                    else {
+                        String paneTitle = pane.getTitleAt(sel);
+                        if (paneTitle.equals("+")){
+                            addConnectionTab();
+                        }
+                    }
+                } 
     };
-    
+
     class preferencesCatItems {
         
         /* This contains details of all list items to be displayed in the preferences*/
@@ -648,8 +649,10 @@ public class TabbedPreferences extends AppConfigBase {
                 p.setLayout(new BorderLayout());
                 if (labelkey != null) {
                     // insert label at top
-                    JTextArea t = new JTextArea(labelkey);
-                    t.setEditable(false);
+                    // As this can be multi-line, embed the text within <html>
+                    // tags and replace newlines with <br> tag
+                    JLabel t = new JLabel("<html>"+labelkey.replace(String.valueOf('\n'), "<br>")+"</html>");
+                    t.setHorizontalAlignment(JLabel.CENTER);
                     t.setAlignmentX(0.5f);
                     t.setPreferredSize(t.getMinimumSize());
                     t.setMaximumSize(t.getMinimumSize());
