@@ -178,7 +178,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR    "Matt Harris for JMRI"        ; Author name
 !define APP       "JMRI"                        ; Application name
-!define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
+!define COPYRIGHT "© 1997-2011 JMRI Community"  ; Copyright string
 !ifndef JMRI_VER
   ; -- usually, this will be determined by the dist.xml ant script
   !define JMRI_VER  "unknown"                   ; Application version

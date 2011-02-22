@@ -846,6 +846,8 @@
 
 <mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_RouteFeatures" url="package/jmri/jmrit/operations/Operations.shtml#RouteFeatures"/>
+
 <mapID target="webindex" url="webindex.shtml"/>
 
 <mapID target="html.tools.Lights" url="html/tools/Lights.shtml"/>
@@ -936,6 +938,8 @@
 
 <mapID target="manual.Main_SPROG" url="manual/Main_SPROG.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_SwitcherService" url="package/jmri/jmrit/operations/Operations.shtml#SwitcherService"/>
+
 <mapID target="manual.Main_NCE" url="manual/Main_NCE.shtml"/>
 
 <mapID target="html.hardware.can.scripting" url="html/hardware/can/scripting.shtml"/>
@@ -1017,6 +1021,10 @@
 <mapID target="manual.index_Error" url="manual/index.shtml#Error"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Staging" url="package/jmri/jmrit/operations/Operations.shtml#Staging"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_ImportEngines" url="package/jmri/jmrit/operations/Operations.shtml#ImportEngines"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType" url="package/jmri/jmrit/operations/Operations.shtml#ModifyLocationsByCarType"/>
 
 <mapID target="html.tools.uss.index" url="html/tools/uss/index.shtml"/>
 
@@ -1490,6 +1498,8 @@
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_contents" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#contents"/>
 
+<mapID target="package.jmri.jmrix.nce.boosterprog.BoosterProgPanel" url="package/jmri/jmrix/nce/boosterprog/BoosterProgPanel.shtml"/>
+
 <mapID target="html.tools.Reporters" url="html/tools/Reporters.shtml"/>
 
 <mapID target="manual.Comp_ManfSpecific_Top" url="manual/Comp_ManfSpecific.shtml#Top"/>
@@ -1585,6 +1595,8 @@
 <mapID target="html.doc.Technical.index" url="html/doc/Technical/index.shtml"/>
 
 <mapID target="package.apps.AppConfigPanel" url="package/apps/AppConfigPanel.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_MoreSchedule" url="package/jmri/jmrit/operations/Operations.shtml#MoreSchedule"/>
 
 <mapID target="manual.Dcode_Testing" url="manual/Dcode_Testing.shtml"/>
 
