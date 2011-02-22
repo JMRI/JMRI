@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.69 $
+ * @version             $Revision: 1.70 $
  */
 public class Car extends RollingStock {
 	
@@ -559,6 +559,7 @@ public class Car extends RollingStock {
 	}
 	
 	protected void reset(){
+		setScheduleId("");
 		setNextLoad("");
 		setNextWait(0);
 		setNextDestination(null);	// removes property change listener
