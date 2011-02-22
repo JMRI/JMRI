@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_MC_IMRC_OEM.xml,v 1.1 2011-02-21 22:40:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_MC_IMRC_OEM.xml,v 1.2 2011-02-22 01:50:01 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -66,7 +66,8 @@
       </model>
 	  
       <model model="FP7" numOuts="4" numFns="14" connector="other" productID="F">
-        <versionCV lowVersionID="96        <output name="3" label="  FX5  "/>
+        <versionCV lowVersionID="96"/>
+        <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
         <output name="Brakes"/>
       </model>
