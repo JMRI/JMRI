@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.22 2011-02-21 22:40:36 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.23 2011-02-22 01:51:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -383,6 +383,9 @@ needed for BLI P2 steam.
 <p>
 Mike Mosher updated the Tsunami Diesel Genesis OEM decoder definition
 version 3 to change SD70ACe model and add SD70M-2 model
+
+<p>
+Walt Thompson added reset definitions to the TCS definitions.
 
 <p>
 Mike Mosher added new SoundTraxx MC and MC IMRC OEM decoder definitions
