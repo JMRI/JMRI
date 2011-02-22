@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: TCS_Tx_v27.xml,v 1.6 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx_v27.xml,v 1.7 2011-02-22 01:46:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -2048,7 +2048,11 @@
         <label>Momentary Pulse</label>
       </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
   </decoder>
+  
   <pane name="TCS Mapping">
     <column>
       <label label="TCS has changed the way they do function mapping to a non-standard method.">

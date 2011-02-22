@@ -18,6 +18,7 @@
 
 <!-- V1: - Created from TCS_bemf -->
 <!-- V2: - Added EU621 & LL8 decoders -->
+<!-- Version 2.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
 
     <decoder>
         <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="52">
@@ -1935,9 +1936,9 @@
             </variable>
         </variables>
         <resets>
-            <factReset label="Reset All CVs" CV="30" default="2"/>
+          <factReset label="Reset All CVs" CV="8" default="2"/>
         </resets>
-    </decoder>
+      </decoder>
 
     <pane name="Momentum">
         <column>

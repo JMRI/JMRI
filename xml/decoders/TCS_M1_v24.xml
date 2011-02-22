@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id: TCS_M1_v24.xml,v 1.8 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: TCS_M1_v24.xml,v 1.9 2011-02-22 01:46:39 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,8 @@
 <!-- Version 1 - made from TCS_Tx -->
 <!-- Version 2 - fix "rule 17" typos -->
 <!-- Modified for old version 24  ..Eddie  -->
+<!-- Version 2.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+
   <decoder>
     <family name="TCS Mx series decoders" mfg="Train Control Systems">
       <model model="M1_v24" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24">
@@ -1979,7 +1981,10 @@
         <label>Headlight wire in Consist</label>
       </variable>
     </variables>
-  </decoder>
+    <resets>
+        <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
+   </decoder>
   <pane name="TCS">
     <column>
       <display item="Burst duration"/>

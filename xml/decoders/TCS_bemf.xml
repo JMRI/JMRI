@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_bemf.xml,v 1.20 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: TCS_bemf.xml,v 1.21 2011-02-22 01:46:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -31,6 +31,8 @@
 <!-- V6: - updated version number from 47 to 50 -->
 <!-- V7: - added 15 new decoders to TCS X w/BEMF -->
 <!-- V8: - Add new models & CVs to support up to 8 functions & fix so BEMF is in function map tab -->
+<!-- Version 8.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+
   <decoder>
     <family name="TCS X w/BEMF" mfg="Train Control Systems" comment="TCS BEMF decoder range" lowVersionID="41" highVersionID="50">
       <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
@@ -3051,9 +3053,10 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="30" default="2"/>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
+  
   <pane name="Momentum">
     <column>
       <label label="If Accel 2, 3 and Decel 4, 5 are all set to zero,">

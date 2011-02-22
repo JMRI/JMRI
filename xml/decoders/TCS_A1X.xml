@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: TCS_A1X.xml,v 1.8 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: TCS_A1X.xml,v 1.9 2011-02-22 01:46:39 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,8 @@
 <!-- Version 1 - made from TCS A1 file. - joe -->
 <!-- Version 1.1 - Completed new F-key re-mapping pane to work with the new non-standard
 			 way TCS does it. - joe -->
+<!-- Version 1.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+
   <decoder>
     <family name="TCS A1X decoder" mfg="Train Control Systems">
       <model model="A1X" numOuts="4" numFns="2" lowVersionID="32"/>
@@ -2036,7 +2038,11 @@
         <label>Deccel Rate 2</label>
       </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
   </decoder>
+  
   <pane name="TCS Mapping">
     <column>
       <label label="TCS has changed the way they do function mapping to a non-standard method.">

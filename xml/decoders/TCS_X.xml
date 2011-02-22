@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: TCS_X.xml,v 1.15 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: TCS_X.xml,v 1.16 2011-02-22 01:46:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -28,6 +28,9 @@
 <!-- also added factory reset feature  -->
 <!-- Version 8 - High ver to 40 -->
 <!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
+<!-- Version 9.1 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+
+
   <decoder>
     <family name="TCS X Series Decoders" mfg="Train Control Systems">
       <model model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
@@ -2140,9 +2143,10 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="30" default="2"/>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
+
   <pane name="Momentum">
     <column>
       <label label="Accel Base Starting Point is 1">

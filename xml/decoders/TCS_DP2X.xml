@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: TCS_DP2X.xml,v 1.1 2010-10-03 20:43:38 jacobsen Exp $ -->
+<!-- $Id: TCS_DP2X.xml,v 1.2 2011-02-22 01:46:39 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,6 +27,8 @@
 		<!-- Version 1.2 - Completed new F-key re-mapping pane to work with the new non-standard
 			 way TCS does it. - joe -->
 		<!-- Version 1.2 - Copied from T1. by joe- Chris -->
+        <!-- Version 1.3 - 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+
 
 <decoder>
 	<family name="TCS DP2X decoder" mfg="Train Control Systems">
@@ -702,11 +704,12 @@
 				tooltip="60 = 1 sec; 255 = 4 sec">
 			<decVal/>
 			</variable>
-
-
 	</variables>
-
-</decoder>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
+  </decoder>
+  
 <pane name="TCS Mapping">
 	<column>
 		<label label="TCS has changed the way they do function mapping to a non-standard method." />

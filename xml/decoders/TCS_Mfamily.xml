@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id: TCS_Mfamily.xml,v 1.7 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: TCS_Mfamily.xml,v 1.8 2011-02-22 01:46:39 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -20,6 +20,7 @@
 <!-- Version 3-->
 <!-- made from M1 file with corrections and added M2 norman@erwbant.freeserve.co.ukJanuary 2005 -->
 <!-- Version 4 added M1P-UK from David Cuthbert -->
+<!-- Version 4.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Mx series decoders" mfg="Train Control Systems">
       <model model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24">
@@ -1264,7 +1265,11 @@
         <label>Headlight wire in Consist</label>
       </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
   </decoder>
+  
   <pane name="TCS">
     <column>
       <display item="Manufacturer ID - Reset" format="checkbox" label="Trigger Decoder Reset to Factory values">

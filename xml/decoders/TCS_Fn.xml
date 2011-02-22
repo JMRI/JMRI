@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id: TCS_Fn.xml,v 1.6 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: TCS_Fn.xml,v 1.7 2011-02-22 01:46:39 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,6 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20061010"/>
 <!-- Version 1 - made from TCS_X.xml -->
+<!-- Version 1.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Function Decoders" mfg="Train Control Systems">
       <model model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO">
@@ -1136,7 +1137,11 @@
         <label>User Private ID #2</label>
       </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
+    </resets>
   </decoder>
+  
   <pane name="Misc">
     <column>
       <display item="Decoder Lock ID number"/>
