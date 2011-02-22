@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.24 2010-10-04 01:48:39 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.25 2011-02-22 03:26:45 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall lcrr@bellsouth.net" 
 			version="11" lastUpdated="20100819"/>
@@ -231,6 +231,23 @@
 		
 		<definition item="Consist Address Active For F11" />
 		<definition item="Consist Address Active For F12" />
+
+		<definition item="Consist Address Active For F13" />
+		<definition item="Consist Address Active For F14" />
+		<definition item="Consist Address Active For F15" />
+		<definition item="Consist Address Active For F16" />
+		<definition item="Consist Address Active For F17" />
+		<definition item="Consist Address Active For F18" />
+		<definition item="Consist Address Active For F19" />
+		<definition item="Consist Address Active For F20" />
+		<definition item="Consist Address Active For F21" />
+		<definition item="Consist Address Active For F22" />
+		<definition item="Consist Address Active For F23" />
+		<definition item="Consist Address Active For F24" />
+		<definition item="Consist Address Active For F25" />
+		<definition item="Consist Address Active For F26" />
+		<definition item="Consist Address Active For F27" />
+		<definition item="Consist Address Active For F28" />
 
 		<definition item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV" />
 		<definition item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" />
