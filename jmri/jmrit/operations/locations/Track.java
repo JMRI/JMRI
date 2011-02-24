@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.53 $
+ * @version             $Revision: 1.54 $
  */
 public class Track {
 	
@@ -838,7 +838,6 @@ public class Track {
      * Protects against user deleting an item in a shared
      * schedule.  Recommend using this versus getScheduleItemId()
      * as the id can be obsolete.
-     * @return 
      */
     public ScheduleItem getCurrentScheduleItem(){
 		Schedule sch = getSchedule();
