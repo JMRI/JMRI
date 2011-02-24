@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.97 2011-02-20 16:11:11 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.98 2011-02-24 17:48:18 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -56,7 +56,7 @@ and can be found under the main menu heading "Tools-&gt;Operations".</P>
 <img src="images/MainMenuDecoderPro.png">
 </P>
 
-<A name="demo"></A>
+<A NAME="demo"></A>
 <H3>Operations Demo Files</H3>
 
 The operations program provides a set of demo files to help introduce
@@ -163,8 +163,8 @@ second train that uses this route to move cars in the opposite direction
 of your first train.</P>
 
 <P>You should now be well on your way with regards to JMRI
-operations. Help is also available at the <a
-	HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list</a></P>
+operations. Help is also available at the <A
+	HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list</A></P>
 
 <H3>British Railways</H3>
 
@@ -349,7 +349,7 @@ and Road Restrictions into Staging" is selected, the program will only
 deliver a train to a staging track has the same rolling stock and road
 name restrictions. This is useful when you want trains delivered to
 staging tracks based on the train's rolling stock restrictions. However,
-if you want certain car or road names to be transported by a train,
+if you want certain car types, car loads, or road names to be transported by a train,
 but not delivered to staging, deselect this feature.</P>
 
 <P>The next option is Car Routing, and it is recommended that you
@@ -651,24 +651,28 @@ it has been serviced by the siding. Only destination tracks that can
 accept the car type are shown in the track pull down menu.</P>
 <P>You can optionally use your <A HREF="#StagingAndCarLoads">staging
 tracks</A> to empty cars with a "Schedule" load, and you can also optionally
-create "Schedule" loads using staging tracks.</P>
+create "Schedule" loads using staging tracks. If you want to specify staging
+as the car's destination, do not select a track, let the program determine
+which is the appropriate track in staging to use.  Otherwise, if you did
+select a track, that track would become unavailable for other cars.</P>
 
 <P>Schedules can operate in one of two modes, sequential as
-described above, or in match mode. In match mode, the program will
-search the entire schedule to find a car type and load that matches the
-car that the program is trying to place. In match mode the pointer shows
-the last car that the program found acceptable for the siding. To change
-the schedule to match mode, select in the edit schedule window
-"Tools->Options", select "Match" and press "Save". Match mode is useful
-when the order cars arrive isn't important, but you still want to either
-ship cars with a specific load or provide the car's next destination. In
-match mode the item count is ignored as it isn't used. All of the other
-fields will work, you can have the same type of car several times, with
-each item looking for a different receive loads, and you can ship loads
-and forward the cars to the various destinations. Also in match mode the
-car type selection box advances automatically to the next car type when
-adding a car type. This makes it easy to quickly add car types to the
-table.</P>
+described above, or in match mode. Match mode eliminates the sequential
+aspects of a schedule. In match mode, the program will search the entire
+schedule to find a car type and load that matches the car that the
+program is trying to place. In match mode the pointer shows the last car
+that the program found acceptable for the siding. To change the schedule
+to match mode, select in the edit schedule window "Tools->Options",
+select "Match" and press "Save". Match mode is useful when the order
+cars arrive isn't important, but you still want to ship cars with a
+specific load, provide the car's next destination, or have the car wait
+for a specific number of trains at the siding. In match mode the
+schedule item count is ignored as it isn't used. All of the other fields
+will work, and you can have the same type of car several times, with
+each item in the schedule looking for a specific receive load. Also in
+match mode the car type selection box advances automatically to the next
+car type when adding a car type. This makes it easy to quickly add car
+types to the table.</P>
 
 <P>You can also access your Schedules from the Locations Tools menu.
 The Schedules table provides status for each schedule. Since you can
@@ -1420,7 +1424,9 @@ for each location. The tool allows you to specify the icon coordinates
 based on the train's direction. You can also update all of your existing
 routes and locations with these new coordinates. As an alternative, you
 can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to
-create coordinates unique to a specific route. <A NAME="Trains"></A>
+create coordinates unique to a specific route. 
+
+<A NAME="Trains"></A>
 <H2>Trains</H2>
 
 Now that we've created our routes we need trains to move cars! Create a

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.122 2011-02-15 15:29:43 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.123 2011-02-24 17:48:18 dan_boudreau Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -158,6 +158,7 @@
 	has helped with the EasyDCC code, helped debug the Ant compilation process,
 	and has been working on decoder files
 	<LI>Ray deBlieck, who let us test on his Empire Builder
+	<LI>Joan de Castro who contributed the Catalan internationalization </LI>
 	<li>Lou DeHayes, who provided a definition for the MRC Sound Brilliance 1806 decoder.
 	<LI>Eddie Delozier, who write the TCS M1 decoder file.
 	<LI>Kevin Dickerson, who figured out the ECoS protocol so JMRI
