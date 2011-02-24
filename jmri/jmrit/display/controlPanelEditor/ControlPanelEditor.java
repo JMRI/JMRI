@@ -1378,7 +1378,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 */
-    protected class PositionableListDnD implements Transferable {
+    static protected class PositionableListDnD implements Transferable {
 //        ArrayList<Positionable> _dragGroup;
         ControlPanelEditor _dragGroup;
         DataFlavor _dataFlavor;
