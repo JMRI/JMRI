@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -1093,15 +1093,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def whenDistanceFieldChanged(self, event) :
         ptr = event.getSource()
         self.msgText(ptr.getName() + " - ")
-        i = 0
+        f = 0
         try :
-            i = int(ptr.text)
-            ptr.text = i.toString()
+            f = float(round(float(ptr.text) * 100) / 100.00) 
+            ptr.text = f.toString()
             self.msgText(ptr.text)
         except ValueError :
             self.msgText("Invalid distance value: " + ptr.text)
             ptr.text = ""
-        if (i < 0) :
+        if (f < 0) :
             self.msgText("Negitive value for distance: " + ptr.text)
             ptr.text = ""
         self.msgText("\n")
