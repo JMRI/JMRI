@@ -22,7 +22,7 @@ import jmri.BeanSetting;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutEditorAuxTools 
@@ -632,8 +632,11 @@ public class LayoutEditorAuxTools
 							bs = new BeanSetting(ltx.getTurnout(),Turnout.THROWN);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName());
+						}
+						
 					}
 					else if (lc.getConnectedType()==LayoutEditor.TURNOUT_C) {
 						// Track Segment connected to diverging track of turnout
@@ -643,8 +646,10 @@ public class LayoutEditorAuxTools
 							bs = new BeanSetting(ltx.getTurnout(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + ltx.getName() + " " + ltx.getLayoutBlock().getDisplayName());
+						}
 					}
 				}
 				// is this Track Segment connected to the continuing track of a RH_XOVER or LH_XOVER
@@ -662,8 +667,10 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(ltz.getTurnout(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + ltz.getName() + " " + ltz.getLayoutBlock().getDisplayName());
+						}
 					}
 				}		
 			}
@@ -692,8 +699,10 @@ public class LayoutEditorAuxTools
 					typeCurConnection = LayoutEditor.TRACK;
 					if ( (bs != null) && (bs.getBean() != null) ) 
 						p.addSetting(bs);
-					else
+					else {
 						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+						log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+					}
 				}
 			}
 		}
@@ -721,8 +730,10 @@ public class LayoutEditorAuxTools
 				typeCurConnection = LayoutEditor.TRACK;
 				if ( (bs != null) && (bs.getBean() != null) ) 
 					p.addSetting(bs);
-				else
+				else {
 					InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+					log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+				}
 			}
 		}		
 		else {
@@ -751,8 +762,10 @@ public class LayoutEditorAuxTools
 							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
 							if (bs.getBean() != null) 
 								p.addSetting(bs);
-							else
+							else {
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+								log.error("BadBeanError: " + ((LayoutTurnout)curConnection).getName() + " " + ((LayoutTurnout)curConnection).getLayoutBlock().getDisplayName());
+							}
 							prevConnection = curConnection;
 							if (typeCurConnection==LayoutEditor.TURNOUT_A) {
 								curConnection = ((LayoutTurnout)curConnection).getConnectB();
@@ -782,8 +795,10 @@ public class LayoutEditorAuxTools
 							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + ((LayoutTurnout)curConnection).getName() + " " + ((LayoutTurnout)curConnection).getLayoutBlock().getDisplayName());
+						}
 						prevConnection = curConnection;
 						curConnection = ((LayoutTurnout)curConnection).getConnectA();
 						typeCurConnection = LayoutEditor.TRACK;
@@ -796,8 +811,10 @@ public class LayoutEditorAuxTools
 							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + ((LayoutTurnout)curConnection).getName() + " " + ((LayoutTurnout)curConnection).getLayoutBlock().getDisplayName());
+						}
 						prevConnection = curConnection;
 						curConnection = ((LayoutTurnout)curConnection).getConnectA();
 						typeCurConnection = LayoutEditor.TRACK;
@@ -850,8 +867,10 @@ public class LayoutEditorAuxTools
 					typeCurConnection = LayoutEditor.TRACK;
 					if ( (bs != null) && (bs.getBean() != null) ) 
 						p.addSetting(bs);
-					else
+					else {
 						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+						log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+					}
 				}
 			}
 		}
@@ -925,8 +944,10 @@ public class LayoutEditorAuxTools
 								bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
 							if (bs.getBean() != null) 
 								p.addSetting(bs);
-							else
+							else {
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+								log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+							}
 							if (lt.getLayoutBlock()!=layoutBlock) {						
 								curConnection = null;
 							}
@@ -944,8 +965,10 @@ public class LayoutEditorAuxTools
 								bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
 							if (bs.getBean() != null)
 								p.addSetting(bs);
-							else
+							else {
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+								log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+							}
 							if (lt.getLayoutBlock()!=layoutBlock) {						
 								curConnection = null;
 							}
@@ -973,8 +996,10 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+						}
 						if (lt.getLayoutBlock()!=layoutBlock) {
 							// left current block 
 							curConnection = null;
@@ -990,8 +1015,10 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getSystemName());
+						}
 						if (lt.getLayoutBlockC()!=layoutBlock) {
 							// left current block 
 							curConnection = null;
@@ -1015,8 +1042,10 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+						}
 						if (lt.getLayoutBlockB()!=layoutBlock) {
 							// left current block 
 							curConnection = null;
@@ -1032,8 +1061,10 @@ public class LayoutEditorAuxTools
 						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
-						else
+						else {
 							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							log.error("BadBeanError: " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+						}
 						if (lt.getLayoutBlockD()!=layoutBlock) {
 							// left current block
 							curConnection = null;
