@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.98 2011-02-24 17:48:18 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.99 2011-02-25 18:54:51 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Dan Boudreau" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI Help Operations Setup Cars Engines Trains Routes Locations Schedules">
+<META NAME="keywords" CONTENT="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -90,13 +90,13 @@ through the various options and features available. Start by entering
 only three or four <A HREF="#Locations">locations</A> with each location
 having only two or three tracks. Keep things simple and don't modify the
 location and track defaults by making them restrictive with regards to
-the type of cars or engines that they will service. Also, the track and
+the type of cars or locomotives that they will service. Also, the track and
 location default is to allow a train to service the location and track
 by trains traveling in any direction. Don't change the defaults until
 you can successfully build trains to your liking.</P>
 
 <P>Now enter some <A HREF="#CarsEdit">cars</A> into the operations
-database, don't bother entering engines for now. Be sure to place the
+database, don't bother entering locomotives for now. Be sure to place the
 cars on a track using the <A HREF="#CarsSet">set car location</A>. The
 program works best if you keep at least 50% of your tracks empty, so
 don't place too many cars on tracks until you understand how the program
@@ -110,7 +110,7 @@ don't modify the route in any way, just use the "Add Location" button.</P>
 <P>Now you're ready to create your first <A HREF="#Trains">train</A>.
 Be sure to select the route you created for your first train. Leave all
 of the train checkboxes alone which means the train will service all car and
-engine types. Leave the "Option train requirements" for engines and caboose area alone for
+locomotive types. Leave the "Option train requirements" for locomotives and caboose area alone for
 now. Save the train, close the window, and return to the Trains window.
 Press the <A HREF="#BuildingTrains">Build</A> button for the train. It
 should build. Now pressing the "Print" or "Preview" button will produce a
@@ -138,13 +138,14 @@ the <A HREF="#Cars">Cars</A> window will update to show the cars
 serviced by the train moving to their new location as the trains moves
 from location to location.</P>
 
-<P>Now enter some <A HREF="#Engines">engines</A> into the operations
-database, and change the train requirements to require one engine. Place
-the engines on a track located at the start of the route. Note that if
-you want two or more engines servicing your train, that the engines must
-be in a <A HREF="#EnginesAdd">consist</A>. The last location in your
-route must have a track that will service the engine type or the build
-will fail.</P>
+<P>Now enter some <A HREF="#Locomotives">locomotives</A> into the
+operations database, and change the train requirements to require one
+locomotive. Place some of your locomotives on a track located at the
+start of the route. Note that if you want two or more locomotives
+servicing your train, that the locomotives must be in a <A
+	HREF="#LocomotivesAdd">consist</A>. The last location in your route
+must have a track that will service the locomotive <A
+	HREF="#LocomotiveModels">type</A> or the build will fail.</P>
 
 <P>If you want a caboose or car with FRED for your train, first
 configure some of your cars to be a caboose by selecting the caboose or
@@ -218,10 +219,10 @@ Later you can override this length if you wish a shorter train between
 any two locations. A 1000 foot train can carry approximately 20 cars,
 and is of course dependent on the car lengths assigned to the train.
 
-<H3>Maximum Number of Engines</H3>
+<H3>Maximum Number of Locomotives</H3>
 
-Now set the maximum number of engines that you want the program to
-assign to a train. If you don't want the program assigning engines, set
+Now set the maximum number of locomotives that you want the program to
+assign to a train. If you don't want the program assigning locomotives, set
 this value to 0.
 
 <H3>Switch and Travel Times</H3>
@@ -263,8 +264,8 @@ load panel options available in JMRI.
 the operations program where to place the train icon on your panel when
 moving your train from location to location. Deselect this feature after
 your done teaching the program to prevent accidentally changing the
-train icon's position on your panel. If you also want the lead engine
-number as part of your train icon text, select the "Append Engine
+train icon's position on your panel. If you also want the lead locomotive
+number as part of your train icon text, select the "Append Locomotive
 Number" box. You can select the background color of your train icon
 depending on the train's direction. Select the color desired for each
 direction using the pull down menus.</P>
@@ -300,7 +301,7 @@ more than one railroad that you wanted to manage.</P>
 To reset the operation databases to their original defaults, use the
 Operations-&gt;Settings-&gt;Tools menu and select "Reset Databases". The "Reset Database"
 option will make a backup copy of the current operation files before
-deleting them. The results will be that the settings, cars, engines,
+deleting them. The results will be that the settings, cars, locomotives,
 locations, and trains databases will be purged.
 
 <A NAME="SettingsOptions"></A>
@@ -366,7 +367,7 @@ will try and route the car after every move.</P>
 <A NAME="LoggingOptions"></A>
 <H3>Logging Options</H3>
 
-If you want the operations program to log your engine and or car movements to
+If you want the operations program to log your locomotive and or car movements to
 a file, select the appropriate checkboxes.  The program will create a new
 directory called "logger" in the operations directory.  For each day's session
 the program will create a new file using the day's date.
@@ -435,12 +436,12 @@ to disk. The radio buttons control how much of that data is actually
 printed. The "Minimal" radio button provides the least amount of
 information and "Very Detailed" provides the most. If you're only
 interested why a train won't build, the "Minimal" setting can provide
-you with this information. The "Normal" setting shows which engines and
-cars are being excluded from the train, and which engines and cars are
+you with this information. The "Normal" setting shows which locomotives and
+cars are being excluded from the train, and which locomotives and cars are
 being picked up and dropped. The "Detailed" setting will generate quite
 a few pages depending on the size of your railroad. It will show all
-available cars and engines, and a bit how the program finds destinations
-for the cars and engines. The "Very Detailed" setting produces the most
+available cars and locomotives, and a bit how the program finds destinations
+for the cars and locomotives. The "Very Detailed" setting produces the most
 pages, and will show why cars are not picked up or dropped. Be sure and
 press "Save" after changing the build report selection.
 
@@ -448,7 +449,7 @@ press "Save" after changing the build report selection.
 <H2>Locations</H2>
 
 Locations are places on your railroad that trains visit to pickup or
-drop off cars and engines. Locations can be cities, towns, or just
+drop off cars and locomotives. Locations can be cities, towns, or just
 places where trains need to work cars. Select
 "Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your
 railroad. 
@@ -478,16 +479,16 @@ the bottom of the window. The various fields that were disabled should
 now appear.
 </P>
 <P>Each location can have several yard, siding, interchange or
-staging tracks. Yards are where cars and engines are placed for
+staging tracks. Yards are where cars and locomotives are placed for
 temporary storage. A siding can be an industry or any place where a car
 is loaded or unloaded. For a train to service a location, there must be
 at least one track for that location. See below how to add tracks to
 your location.</P>
 <P>The tables show the length of the tracks, the amount of track
-that is occupied (Used) by cars and engines, the total number of cars
-and engines (Rolling Stock) at each location, the number of cars and
-engines that will be picked up (Pickups) by trains, and the number of
-cars and engines that will be delivered (Drops) by trains.</P>
+that is occupied (Used) by cars and locomotives, the total number of cars
+and locomotives (Rolling Stock) at each location, the number of cars and
+locomotives that will be picked up (Pickups) by trains, and the number of
+cars and locomotives that will be delivered (Drops) by trains.</P>
 
 <H3>Location Service Direction</H3>
 
@@ -773,14 +774,14 @@ various trains.</P>
 <A NAME="Staging"></A>
 <H3>Staging Tracks</H3>
 
-A staging track allows you to have all cars and engines in a train
+A staging track allows you to have all cars and locomotives in a train
 delivered to one track. When terminating a train into staging, the
-program will search for a completely empty track, one with no engines or
+program will search for a completely empty track, one with no locomotives or
 cars. The staging track by <A HREF="#SettingsOptions">default</A> must
-also service all of the train's car and engine types and roads. Trains
+also service all of the train's car and locomotive types and roads. Trains
 can not share staging tracks; the program will only place one train per
 track. When departing a location with a staging track, all cars and
-engines on one track will be assigned to the train. A location can have
+locomotives on one track will be assigned to the train. A location can have
 multiple staging tracks, but can't have any other types of tracks,
 sidings, yards, etc. Staging tracks can be at the start of a route, the
 end of the route, or both. Staging tracks in the middle of a route are
@@ -795,11 +796,11 @@ number as a suffix. The hyphen and number are not printed on the switch
 lists or manifests.</p>
 
 <P>If you require a train leaving staging to have a certain number
-of engines, engine model, or road name; the program will search all
+of locomotives, locomotive model, or road name; the program will search all
 staging tracks at the departure location for a train meeting those
-requirements. If you set the engine requirements to 0, the program will
+requirements. If you set the locomotive requirements to 0, the program will
 select the next available train from staging; and will ignore the number
-of engines leaving that staging track. See <A HREF="#TrainRequires">Optional Train
+of locomotives leaving that staging track. See <A HREF="#TrainRequires">Optional Train
 Requirements</A> for more info.</P>
 
 <H3>Looping Trains through Staging</H3>
@@ -807,7 +808,7 @@ Requirements</A> for more info.</P>
 Sometimes for operations a train enters staging at one location (call it
 A) and then later departs at another location (call it B). From an
 operations perspective locations A and B are locations not directly
-connected by trains. So we need to relocate engines and cars from
+connected by trains. So we need to relocate locomotives and cars from
 location A to B so the train's manifest can make sense. One way to do
 this is to terminate the train into staging at location A. Then create a
 "virtual" train that simply moves the cars from location A staging to
@@ -1172,39 +1173,39 @@ print features use the same "Sort by" radio buttons as the cars window.
 One of the more useful sorts is by "Location", this allows you to
 quickly verify your car locations before or after an operations session.
 
-<A NAME="Engines"></A>
-<H2>Engines</H2>
+<A NAME="Locomotives"></A>
+<H2>Locomotives</H2>
 
-The engines window allows you to edit your engine roster. You can enter
-an engine's number, road, model, type, and length. You can optionally
-add the engine's build date and owner. If you want a group of engines to
-be assigned as a unit, you can create a "consist". The engine type is
-used by the program to determine where engines are picked up and or
-stored at the various locations on your layout. Some of default engine
+The locomotives window allows you to edit your locomotive roster. You can enter
+a locomotive's number, road, model, type, and length. You can optionally
+add the locomotive's build date and owner. If you want a group of locomotives to
+be assigned as a unit, you can create a "consist". The locomotive type is
+used by the program to determine where locomotives are picked up and or
+stored at the various locations on your layout. Some of default locomotive
 types are electric, diesel, gas turbine, and steam.
 
 <P>
-<img src="images/Engines.png">
+<img src="images/Locomotives.png">
 </P>
 
-<A NAME="ImportEngines"></A>
-<H3>Import Engines</H3>
+<A NAME="ImportLocomotives"></A>
+<H3>Import Locomotives</H3>
 
-If you already have a list of engines in your JMRI roster or in a
-database, you can import the engines into the program. To get your
-engines from your JMRI roster, select "Import from JMRI roster" from the
-Tools-&gt;Operations-&gt;Engines-&gt;Tools menu. Only engines that don't exist
-will be added to the programs engine roster. This way you can use this
-tool any time you add engines to your JMRI engine roster. The JMRI engine
+If you already have a list of locomotives in your JMRI roster or in a
+database, you can import the locomotives into the program. To get your
+locomotives from your JMRI roster, select "Import from JMRI roster" from the
+Tools-&gt;Operations-&gt;Locomotives-&gt;Tools menu. Only locomotives that don't exist
+will be added to the programs locomotive roster. This way you can use this
+tool any time you add locomotives to your JMRI locomotive roster. The JMRI locomotive
 roster doesn't have the length field, so a default length is entered for
-you. You should correct the engine length if you want the program to
+you. You should correct the locomotive length if you want the program to
 correctly calculate your train lengths.
 
-<H3>Import Engines from a File</H3>
+<H3>Import Locomotives from a File</H3>
 
 The import from file function requires an ACSII text file, with one line
-for each engine. The import order is engine number, engine road name,
-engine model, and engine length. The following shows two examples of the
+for each locomotive. The import order is locomotive number, road name,
+model, and length. The following shows two examples of the
 correct format:
 
 <P>236 UP RS4 40 <BR>
@@ -1223,7 +1224,7 @@ correct format:</P>
 <P>If you prefer to use comma delimiters instead of spaces, use a file with
 a .csv extension or place
 the word "comma" at the start of your import file and use commas instead
-of spaces. The following are two examples of importing engines with
+of spaces. The following are two examples of importing locomotives with
 comma deliminters.</P>
 <P>comma <BR>
 236,UP,RS 4,40,AT,1930,Home Town USA,-,Engine Terminal <BR>
@@ -1232,66 +1233,67 @@ comma deliminters.</P>
 delimitated file. The program will include leading and trailing spaces
 if they exist between the commas.</P>
 <P>To import a file, use the "Tools" menu in the upper left hand
-corner of the Tools-&gt;Operations-&gt;Engines menu. Select
-"Tools-&gt;Roster-&gt;Import. Note that the program will only add engines that
-don't exist in the program's engine roster. It the engine already
+corner of the Tools-&gt;Operations-&gt;Locomotives menu. Select
+"Tools-&gt;Roster-&gt;Import. Note that the program will only add locomotives that
+don't exist in the program's locomotive roster. It the locomotive already
 exists, it will be skipped by the program.</P>
 
-<P>After importing your engines, you must save them if you want to
+<P>After importing your locomotives, you must save them if you want to
 keep them as part of your roster. Press the "Save" button located at the
-bottom of the Engines window, or select any engine by pressing the edit
+bottom of the Locomotives window, or select any locomotive by pressing the edit
 button and then press the "Save" button that can be found at the bottom
-right of the "Edit Engine" window.</P>
+right of the "Edit Locomotive" window.</P>
 
-<A NAME="EnginesAdd"></A>
-<H3>Adding Engines to your Roster</H3>
+<A NAME="LocomotivesAdd"></A>
+<H3>Adding Locomotives to your Roster</H3>
 
-To manually add an engine to your roster, press the "Add" button located
-at the bottom of the "Engines" window. Then select the road for the
-engine. If the desired road doesn't exist, press the "Edit" button
+To manually add a locomotive to your roster, press the "Add" button located
+at the bottom of the "Locomotives" window. Then select the road for the
+locomotive. If the desired road doesn't exist, press the "Edit" button
 across from the road select menu box. This will allow you to add a new
-road or delete any that you don't need. Now enter the engine's number,
-model, type, length and horsepower. The engine's horsepower, the train's
+road or delete any that you don't need. Now enter the locomotive's number,
+model, type, length and horsepower. The locomotive's horsepower, the train's
 weight, and track grade is used by the program to calculate how many
-engines are required when using the "Auto" feature when building trains.
+locomotives are required when using the "Auto" feature when building trains.
 
-<p>Now set the engine's location on the layout. If the engine is off
-the layout, set the location to none (blank space). If wish this engine
+<p>Now set the locomotive's location on the layout. If the locomotive is off
+the layout, set the location to none (blank space). If wish this locomotive
 to be part of a consist, press "Edit" across from "Consist" and enter a
 consist name. Then select the consist name from the menu box. Finally
 you can optionally enter the build date, owner and comment for this
-engine.</P>
+locomotive.</P>
 
-<H3>Engine Models</H3>
+<A	NAME="LocomotiveModels"></A>
+<H3>Locomotive Models</H3>
 
-The program allows you organize your engines by model. Each model can
-only have one engine type, length, weight and horsepower rating
+The program allows you organize your locomotives by model. Each model can
+only have one locomotive type, length, weight and horsepower rating
 associated with it. For example, if you assign the model name "RS11" to
-a set of engines, when you change the length of one of the "RS11"s, the
+a set of locomotives, when you change the length of one of the "RS11"s, the
 length will also change for the others.
 
 <H3>Save</H3>
 
-Press "Save" to store the engine's settings. The program will create a
+Press "Save" to store the locomotive's settings. The program will create a
 file (OperationsEngineRoster.xml) in your JMRI directory in a folder
 called "operations". A backup file with the last settings for all of
-your engines is also created each time the "Save" button is pressed. 
+your locomotives is also created each time the "Save" button is pressed. 
 
-<A	NAME="EnginesSet"></A>
-<H3>Engine Set Location Button</H3>
+<A	NAME="LocomotivesSet"></A>
+<H3>Locomotive Set Location Button</H3>
 
-After creating an engine, you can set the engine's location, and
-optionally the engine's destination and train. Normally the engine's
+After creating a locomotive, you can set the locomotive's location, and
+optionally the locomotive's destination and train. Normally the locomotive's
 destination and assigned train are generated by the program, but you can
-use these fields to force an engine to a specific location using a
+use these fields to force a locomotive to a specific location using a
 specified train.
 
 <H3>Synchronize with NCE Consists</H3>
 
 If you are using NCE as your DCC command station, you can have the
-program synchronize your consist numbers with your engines. The program
+program synchronize your consist numbers with your locomotives. The program
 will read all of the consists out of the NCE system and then will search
-for matching engines in your operations roster. The program will assign
+for matching locomotives in your operations roster. The program will assign
 the consist name nce_xxx where xxx is the consist number. To synchronize
 your consists, select "Synchronize with NCE Consists" under the "Tools"
 menu. 
@@ -1338,7 +1340,7 @@ enter the number of minutes desired in the "Wait" cell.  Another choice
 is to specify the train's departure time from a location.</P>
 
 <P>You can also adjust the maximum train length that can depart each
-location. The grade is used to determine how many engines the train will
+location. The grade is used to determine how many locomotives the train will
 require for that segment.</P>
 
 <P>The X and Y are the coordinates on your dispatcher's panel for
@@ -1454,7 +1456,7 @@ train departure time selection is disabled.
 
 <H3>Train Rolling Stock</H3>
 
-You can determine what type of cars and engines the train will service.
+You can determine what type of cars and locomotives the train will service.
 Select the rolling stock the train will carry by clicking on the
 appropriate checkboxes. A checked box means the train will service this
 type of rolling stock. 
@@ -1462,25 +1464,25 @@ type of rolling stock.
 <A NAME="TrainRequires"></A>
 <H3>Optional Train Requirements</H3>
 
-You can control the number of engines that will be assigned to this
-train, and optionally, the engine's model and road name. If you want two
-or more engines assigned to a train, the engines must be part of a <A
-	HREF="#EnginesAdd">consist</A>. If you select "Auto", the program will
-calculate the number of engines required for this train based on the
-weight of the train, the track grade, and the horsepower of the engines.
+You can control the number of locomotives that will be assigned to this
+train, and optionally, the locomotive's model and road name. If you want two
+or more locomotives assigned to a train, the locomotives must be part of a <A
+	HREF="#LocomotivesAdd">consist</A>. If you select "Auto", the program will
+calculate the number of locomotives required for this train based on the
+weight of the train, the track grade, and the horsepower of the locomotives.
 
 <P>You can also require a <A HREF="#CabooseFredHazardous">caboose
 or car with FRED (Flashing Rear End Device)</A> as the last car in the
 train, and you can optionally specify the road name for the caboose or
 car with FRED. If you leave the road name blank, the program will try
-and find a caboose with the same road name as the engine.</P>
+and find a caboose with the same road name as the locomotive.</P>
 
 <A NAME="TrainReset"></A>
 <H3>Reset Train</H3>
 
-The "Reset Train" button allows you to remove engines and cars that have
+The "Reset Train" button allows you to remove locomotives and cars that have
 been assigned to a train. Useful when you want to try various build
-options and don't what to physically move engines and cars on the
+options and don't what to physically move locomotives and cars on the
 railroad.
 
 <H3>Save Train</H3>
@@ -1504,7 +1506,7 @@ In the edit train window menu under "Tools-&gt;Train Build Options"
 are additional options for building a train. You can control which
 car roads, load, owners, and built dates the train will service.
 
-<P>You can also specify an engine change in route or add helper engines.</P>
+<P>You can also specify a locomotive change in route or add helper locomotives.</P>
 
 <P><img src="images/TrainBuildOptions.png"></P>
 
@@ -1547,9 +1549,9 @@ see above.
 <H3>Train Built Dates</H3>
 
 You can control which rolling stock the train will service by their
-built date. If you want only engines and cars built after a certain
+built date. If you want only locomotives and cars built after a certain
 year, select the "After" radio button and enter a four digit year in the
-text box. If you only want engines and cars built before a certain year,
+text box. If you only want locomotives and cars built before a certain year,
 select the "Before" radio button and enter a four digit year in the text
 box. And if you want to specify a period, select the "Range" radio
 button and enter the after and before years you want the train to
@@ -1557,14 +1559,14 @@ service.
 
 <H3>Optional Train Requirements</H3>
 
-You can have up to two engine changes while the train is in route.
-Select "Engine change" where you want the change to happen in your
-route, and how many new engines should be assigned to the train. You can
-optionally select the new engines model and road. At the engine change
-location, the previously assigned engines will be removed from the
+You can have up to two locomotive changes while the train is in route.
+Select "Locomotive change" where you want the change to happen in your
+route, and how many new locomotives should be assigned to the train. You can
+optionally select the new locomotives model and road. At the locomotive change
+location, the previously assigned locomotives will be removed from the
 train.
 
-<P>You can also request helper engines for those long up hill
+<P>You can also request helper locomotives for those long up hill
 battles that your train might experience. The current code only adds a
 comment to the manifest requesting helper service starting at the
 location you select and removes the helper service at the location you
@@ -1700,7 +1702,7 @@ checkbox, then select the type of car you want to modify, and press
 <A NAME="SwitcherService"></A>
 <H3>Switcher Service</H3>
 
-Many operators assign an engine to a location to do the local switching.
+Many operators assign a locomotive to a location to do the local switching.
 Using the location's switchlist allows the person assigned to the
 location to service all trains that stop at that location. However,
 there can be locations that don't get enough work servicing through or
@@ -1782,7 +1784,7 @@ JMRI-&gt;operations-&gt;buildstatus directory. The build report shows
 the steps the operations program goes through while building a train.
 The first page provides the route the train will travel and the number
 of car moves requested for each location. The report then shows the car
-type and engine types that the train will service. By reading the
+type and locomotive types that the train will service. By reading the
 various comments in the report you can get an idea of steps the
 operations program goes through to build a train. When there's an issue
 that the operation's build can't resolve, the build will fail. To
@@ -1793,20 +1795,22 @@ understand why a train failed to build.
 <H3>More Build Report Details</H3>
 
 For those who want to understand how the program builds trains here's
-the details. If the train requires an engine or several engines, the
-program will look for engines at the start of the route and then
+the details. If the train requires a locomotive or several locomotives,
+the program will look for locomotives at the start of the route and then
 determines if the termination location will accept them. Note that if
-two or more engines are required for the train that the engines must be
-in a <A HREF="#EnginesAdd">consist</A>. The program assigns to the
-rolling stock (engines and cars) the number of moves that they experience during each
-session. The move count is bumped up each time the rolling stock is
-dropped off to a new location's track, or if the rolling stock was assigned to a
-train and the train was reset. The program sorts the rolling stock by the move count, and then tries to assign engines and cars with
-the least number of moves to the train. When building a train only rolling stock
-at locations that are part of the train's route are used.  With regards to 
-cars, in addition to the number of moves a car has experienced, the car's load
-priority is also considered.  The program will try and find destinations
-for cars with high priority loads before low priority loads.
+two or more locomotives are required for the train that the locomotives
+must be in a <A HREF="#LocomotivesAdd">consist</A>. The program assigns
+to the rolling stock (locomotives and cars) the number of moves that
+they experience during each session. The move count is bumped up each
+time the rolling stock is dropped off to a new location's track, or if
+the rolling stock was assigned to a train and the train was reset. The
+program sorts the rolling stock by the move count, and then tries to
+assign locomotives and cars with the least number of moves to the train.
+When building a train only rolling stock at locations that are part of
+the train's route are used. With regards to cars, in addition to the
+number of moves a car has experienced, the car's load priority is also
+considered. The program will try and find destinations for cars with
+high priority loads before low priority loads.
 
 <P>The next step is to optionally assign a caboose or car with FRED to the
 train. If the program finds the required caboose or car with FRED at the
@@ -1892,7 +1896,7 @@ switch list, you must keep the program database synchronized with the
 actual movement of trains on your layout. This is done by the train
 "Move" buttons located on the right side of the <A HREF="#Trains">Trains</A>
 window. Pressing the "Move" button will cause the train to depart its
-current location move to the next location in the route. The engines and
+current location move to the next location in the route. The locomotives and
 cars assigned to the train will travel to the next location on the
 railroad. At each location, cars can be picked up or dropped off. You
 can also move a train by selecting the train's icon and selecting "Move"
@@ -1901,7 +1905,7 @@ train closer to its terminal location. When the train arrives at the
 last location in the route, the last press of the "Move" button will
 terminate the train. Once a train is terminated, you can build it again.
 
-<P>Each time an engine or car is moved a count associated with them
+<P>Each time a locomotive or car is moved a count associated with them
 is incremented. The program uses this to determine which cars haven't
 moved recently and tries to select cars with the least number of moves
 when building new trains. Each time a location has a car picked up or
@@ -1912,10 +1916,10 @@ least number of car operations.</P>
 <H3>Terminate Trains</H3>
 
 When you terminate a train, you are asking the program to move the train
-from its current location to its final destination. The cars and engines
+from its current location to its final destination. The cars and locomotives
 associated with the train will be picked up and delivered to the
 locations shown in the train manifest. After terminating a train the
-engines and cars associated with that train become available for other
+locomotives and cars associated with that train become available for other
 trains. Therefore you should terminate a train only after it actually
 arrives at the final destination in the train's route. To terminate
 several trains, select the trains you wish to terminate in the build
@@ -1925,8 +1929,8 @@ window.
 <H3>Save Builds</H3>
 
 Pressing the "Save Builds" button causes the program to update the
-train, car, engine, and location xml files. Any time you "Move" a train
-the operations program will make changes to the train, car, engine, and
+train, car, locomotive, and location xml files. Any time you "Move" a train
+the operations program will make changes to the train, car, locomotive, and
 location databases. These databases must be saved before you shut down
 JMRI, otherwise you will lose all of the changes that the operations
 program made to move a train to the next location. Pressing the "Save
@@ -1939,7 +1943,7 @@ Most operating sessions require more than one train to keep your
 operators busy. The correct way to do this is to build and print all of
 the trains needed before terminating them. So if you need a dozen trains
 for a session, you must build twelve trains before you terminate any one
-train. Terminating a train tells the program that the engines and cars
+train. Terminating a train tells the program that the locomotives and cars
 in that particular train have been delivered to their final locations
 and can be used again when building new trains. So always build all,
 print all, THEN terminate each train after completing its run! It is
@@ -1949,7 +1953,7 @@ program and terminate the trains that completed their runs.
 
 <p>The correct time to terminate a train is when the train actually
 arrives at its destination. Terminating a train before it completes it
-run means that the operation database believes that the engines and cars
+run means that the operation database believes that the locomotives and cars
 have been delivered. It is better to build and print twelve trains and
 then later find out that only nine trains completed their runs. You
 would then terminate nine trains, and leave the other three for next
@@ -1972,14 +1976,14 @@ following operation windows:
 	<li>Edit Location</li>
 	<li>Cars</li>
 	<li>Edit Car</li>
-	<li>Engines</li>
-	<li>Edit Engine</li>
+	<li>Locomotives</li>
+	<li>Edit Locomotive</li>
 	<li>Trains</li>
 	<li>Edit Train</li>
 	<li>Timetable</li>
 </ul>
 
-<P>The program also allows you to resize the Cars, Engines, Trains
+<P>The program also allows you to resize the Cars, Locomotives, Trains
 and Timetable table column widths. Adjust the column widths to your
 liking and then press the window's "Save" or "Save Builds" to save your
 preferences.</P>
