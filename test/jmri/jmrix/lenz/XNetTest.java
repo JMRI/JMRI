@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.12 $
+ * @version			$Revision: 2.13 $
  */
 public class XNetTest extends TestCase {
 
@@ -29,6 +29,8 @@ public class XNetTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.XNetTest");  // no tests in this class itself
+        suite.addTest(new TestSuite(LenzCommandStationTest.class));
+        suite.addTest(new TestSuite(LenzConnectionTypeListTest.class));
         suite.addTest(new TestSuite(XNetMessageTest.class));
         suite.addTest(new TestSuite(XNetReplyTest.class));
         suite.addTest(new TestSuite(XNetTurnoutTest.class));
@@ -48,6 +50,10 @@ public class XNetTest extends TestCase {
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));
         suite.addTest(new TestSuite(XNetOpsModeProgrammerTest.class));
+        suite.addTest(new TestSuite(XNetPowerManagerTest.class));
+        suite.addTest(new TestSuite(XNetThrottleManagerTest.class));
+        suite.addTest(new TestSuite(XNetExceptionTest.class));
+        suite.addTest(new TestSuite(XNetMessageExceptionTest.class));
         suite.addTest(jmri.jmrix.lenz.li100.LI100Test.suite());
         suite.addTest(jmri.jmrix.lenz.li100f.LI100FTest.suite());
         suite.addTest(jmri.jmrix.lenz.li101.LI101Test.suite());
