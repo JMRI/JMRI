@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.hornbyelite package
  * @author                      Paul Bender  
- * @version                     $Revision: 1.2 $
+ * @version                     $Revision: 1.3 $
  */
 public class EliteTest extends TestCase {
 
@@ -29,7 +29,15 @@ public class EliteTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.hornbyelite.EliteTest");  // no tests in this class itself
+        suite.addTest(new TestSuite(HornbyEliteCommandStationTest.class));
         suite.addTest(new TestSuite(EliteAdapterTest.class));
+        suite.addTest(new TestSuite(EliteConnectionTypeListTest.class));
+        suite.addTest(new TestSuite(EliteXNetInitilizationManagerTest.class));
+        suite.addTest(new TestSuite(EliteXNetThrottleManagerTest.class));
+        suite.addTest(new TestSuite(EliteXNetThrottleTest.class));
+        suite.addTest(new TestSuite(EliteXNetTurnoutTest.class));
+        suite.addTest(new TestSuite(EliteXNetTurnoutManagerTest.class));
+        suite.addTest(new TestSuite(EliteXNetProgrammerTest.class));
         return suite;
     }
 
