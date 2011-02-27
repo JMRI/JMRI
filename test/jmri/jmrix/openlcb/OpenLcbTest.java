@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.nmranet package.
  * @author      Bob Jacobsen  Copyright 2009
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class OpenLcbTest extends TestCase {
 
@@ -37,6 +37,8 @@ public class OpenLcbTest extends TestCase {
         suite.addTest(OlcbAddressTest.suite());
         suite.addTest(OlcbSensorManagerTest.suite());
         suite.addTest(OlcbSensorTest.suite());
+        suite.addTest(OlcbTurnoutManagerTest.suite());
+        suite.addTest(OlcbTurnoutTest.suite());
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(jmri.jmrix.openlcb.swing.tie.TieToolFrameTest.suite());

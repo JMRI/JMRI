@@ -8,37 +8,29 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanMessage;
 
 /**
- * Utilities for handling OpenLCB addresses.
+ * Utilities for handling OpenLCB event messages as addresses.
  * <P>
- * OpenLCB frames have a one byte command and length, optionally followed by
- * data bytes.
+ * OpenLCB event messages have header information, plus
+ * an EventID in the data part.
  * JMRI maps these into address strings.
  * <p>
  * Forms:
  * <dl>
  * <dt>Full hex string preceeded by "x"<dd>Needs to be pairs of digits:  0123, not 123
- * <dt>+/-ddd<dd>ddd is node*100,000 (a.k.a NODEFACTOR) + event
- * <dt>+/-nNNNeEEE<dd>where NNN is a node number and EEE is an event number
  * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class OlcbAddress {
 
     // groups
-    // 1: +ddd/-ddd  where ddd is node*NODEFACTOR + event
-    // 2: the +/- from that
-    // 3: xhhhhhh
-    // 5: NE form
-    // 6: the +/- from that
-    // 7: optional "N"
-    // 8: node number
-    // 9: event number
-    //10: dotted hex form
-    static final String singleAddressPattern = "((\\+|-)?\\d++)|(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
+    static final int GROUP_FULL_HEX = 1; // xhhhhhh
+    static final int GROUP_DOT_HEX = 3; // dotted hex form
+
+    static final String singleAddressPattern = "(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
     
 	private Matcher hCode = Pattern.compile("^"+singleAddressPattern+"$").matcher("");
 
@@ -57,29 +49,9 @@ public class OlcbAddress {
         // now parse
         match = hCode.reset(aString).matches();
         if (match) {
-            if (hCode.group(1)!=null) {
-                // hit on +/-ddd
-                aFrame = new int[5];
-
-                int n = Integer.parseInt(aString.substring(1, aString.length()));  // skip +/-
-                int node = n/NODEFACTOR;
-                int event = n%NODEFACTOR;
-
-                aFrame[4] = event&0xff;
-                aFrame[3] = (event>>8)&0xff;
-                aFrame[2] = node&0xff;
-                aFrame[1] = (node>>8)&0xff;
-                
-                 // add command
-                if (aString.substring(0,1).equals("+"))
-                    aFrame[0] = OlcbConstants.CBUS_ACON;
-                else if (aString.substring(0,1).equals("-"))
-                    aFrame[0] = OlcbConstants.CBUS_ACOF;
-                else // default
-                    aFrame[0] = OlcbConstants.CBUS_ACON;
-            } else if (hCode.group(3)!=null) {
+            if (hCode.group(GROUP_FULL_HEX)!=null) {
                 // hit on hex form
-                String l = hCode.group(3);
+                String l = hCode.group(GROUP_FULL_HEX);
                 int len = (l.length()-1)/2;
                 aFrame = new int[len];
                 // get the frame data
@@ -87,28 +59,7 @@ public class OlcbAddress {
                     String two = l.substring(1+2*i, 1+2*i+2);
                     aFrame[i] = Integer.parseInt(two, 16);
                 }
-            } else if (hCode.group(5)!=null) {
-                // hit on EN form
-                aFrame = new int[5];
-
-                int node = Integer.parseInt(hCode.group(8));
-                int event = Integer.parseInt(hCode.group(9));
-
-                aFrame[4] = event&0xff;
-                aFrame[3] = (event>>8)&0xff;
-                aFrame[2] = node&0xff;
-                aFrame[1] = (node>>8)&0xff;
-                
-                 // add command
-                if (hCode.group(6)==null)
-                    aFrame[0] = OlcbConstants.CBUS_ACON;
-                else if (hCode.group(6).equals("+"))
-                    aFrame[0] = OlcbConstants.CBUS_ACON;
-                else if (hCode.group(6).equals("-"))
-                    aFrame[0] = OlcbConstants.CBUS_ACOF;
-                else // default
-                    aFrame[0] = OlcbConstants.CBUS_ACON;
-            } else if (hCode.group(10)!=null) {
+            } else if (hCode.group(GROUP_DOT_HEX)!=null) {
                 // dotted form, 7 dots
                 String[] terms = s.split("\\.");
                 if (terms.length != 8) log.error("unexpected number of terms: "+terms.length);
@@ -153,18 +104,22 @@ public class OlcbAddress {
     }
     
     boolean match(CanReply r) {
+        // check address first
         if (r.getNumDataElements() != aFrame.length) return false;
         for (int i = 0; i<aFrame.length; i++) {
             if (aFrame[i]!=r.getElement(i)) return false;
         }
+        // check for event message
         return true;
     }
     
     boolean match(CanMessage r) {
+        // check address first
         if (r.getNumDataElements() != aFrame.length) return false;
         for (int i = 0; i<aFrame.length; i++) {
             if (aFrame[i]!=r.getElement(i)) return false;
         }
+        // check for event message
         return true;
     }
     
