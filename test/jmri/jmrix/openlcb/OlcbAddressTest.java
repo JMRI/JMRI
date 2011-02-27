@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class OlcbAddressTest extends TestCase {
 
@@ -43,34 +43,39 @@ public class OlcbAddressTest extends TestCase {
     }
 
     public void testCbusIdParseMatchReply() {
-        assertTrue(new OlcbAddress("x123456789ABCDEF0").match(
-                new CanReply(
+        CanReply c = new CanReply(
                     new int[]{0x12,0x34,0x56,0x78,
-                              0x9A,0xBC,0xDE,0xF0}
-        )));
-        assertTrue(new OlcbAddress("12.34.56.78.9A.BC.DE.F0").match(
-                new CanReply(
-                    new int[]{0x12,0x34,0x56,0x78,
-                              0x9A,0xBC,0xDE,0xF0}
-        )));
-        assertTrue(new OlcbAddress("1.3.5.7.A.B.E.0").match(
-                new CanReply(
-                    new int[]{0x1,0x3,0x5,0x7,
-                              0xA,0xB,0xE,0x0}
-        )));
+                              0x9A,0xBC,0xDE,0xF0});
+        assertTrue(! new OlcbAddress("x123456789ABCDEF0").match(c));
+        c.setExtended(true);
+        c.setHeader(0x182df000);
+        assertTrue(new OlcbAddress("x123456789ABCDEF0").match(c));
+        
+        c = new CanReply(
+                    new int[]{0x01,0x34,0x05,0x00,
+                              0x9A,0x0B,0x0E,0x00});
+        assertTrue(! new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
+        c.setExtended(true);
+        c.setHeader(0x182df000);
+        assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
     }
     
     public void testCbusIdParseMatchMessage() {
-        assertTrue(new OlcbAddress("x123456789ABCDEF0").match(
-                new CanMessage(
+        CanMessage c = new CanMessage(
                     new int[]{0x12,0x34,0x56,0x78,
-                              0x9A,0xBC,0xDE,0xF0}
-        )));
-        assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(
-                new CanMessage(
+                              0x9A,0xBC,0xDE,0xF0});
+        assertTrue(! new OlcbAddress("x123456789ABCDEF0").match(c));
+        c.setExtended(true);
+        c.setHeader(0x182df000);
+        assertTrue(new OlcbAddress("x123456789ABCDEF0").match(c));
+        
+        c = new CanMessage(
                     new int[]{0x01,0x34,0x05,0x00,
-                              0x9A,0x0B,0x0E,0x00}
-        )));
+                              0x9A,0x0B,0x0E,0x00});
+        assertTrue(! new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
+        c.setExtended(true);
+        c.setHeader(0x182df000);
+        assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
     }
         
     public void testEqualsOK() {

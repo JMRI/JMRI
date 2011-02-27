@@ -22,7 +22,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class OlcbAddress {
 
@@ -96,7 +96,10 @@ public class OlcbAddress {
     }
   
     public CanMessage makeMessage() {
-        return new CanMessage(aFrame);
+        CanMessage c = new CanMessage(aFrame);
+        c.setExtended(true);
+        c.setHeader(0x182df000);
+        return c;
     }
         
     public boolean check() {
@@ -109,7 +112,9 @@ public class OlcbAddress {
         for (int i = 0; i<aFrame.length; i++) {
             if (aFrame[i]!=r.getElement(i)) return false;
         }
-        // check for event message
+        // check for event message type
+        if (! r.isExtended()) return false;        
+        if ( (r.getHeader() & 0x1FFFF000) != 0x182df000) return false;
         return true;
     }
     
@@ -119,7 +124,9 @@ public class OlcbAddress {
         for (int i = 0; i<aFrame.length; i++) {
             if (aFrame[i]!=r.getElement(i)) return false;
         }
-        // check for event message
+        // check for event message type
+        if (! r.isExtended()) return false;
+        if ( (r.getHeader() & 0x1FFFF000) != 0x182df000) return false;
         return true;
     }
     
