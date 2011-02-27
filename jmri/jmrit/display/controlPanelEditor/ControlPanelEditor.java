@@ -1214,6 +1214,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (tr.isDataFlavorSupported(_positionableDataFlavor)) {
                 Positionable item = (Positionable)tr.getTransferData(_positionableDataFlavor);
+                if (item==null) {
+                    if (_debug) log.debug("Drop of null POSITIONABLE_FLAVOR");
+                    return;
+                }
                 item.setLocation(pt.x, pt.y);
                 // now set display level in the pane.
                 item.setDisplayLevel(item.getDisplayLevel());
@@ -1271,119 +1275,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         evt.rejectDrop();
     }
 
-    /**
-    * Export a Positionable ArrayList of items from panel 
-    *
-    protected class PositionableListHandler extends TransferHandler {
-
-        protected Editor _editor;
-
-        PositionableListHandler(Editor editor) {
-            if (_debug) log.debug("PositionableListHandler.ctor:");
-            _editor = editor;
-        }
-
-        public int getSourceActions(JComponent c) {
-            return COPY;
-        }
-
-        public Transferable createTransferable(JComponent c) {
-            if (_debug) log.debug("PositionableListHandler.createTransferable:");
-            if (c instanceof JLayeredPane && _selectionGroup!=null) {
-                ArrayList <Positionable> dragGroup = new ArrayList <Positionable>();
-                if (_pastePending) {
-                    dragGroup = _selectionGroup;
-                } else {
-                    for (int i=0; i<_selectionGroup.size(); i++) {
-                        Positionable pos = _selectionGroup.get(i).deepClone();
-                        dragGroup.add(pos);
-                    }
-                }
-                abortPasteItems(dragGroup);
-                return new PositionableListDnD(dragGroup);
-            }
-            return null;
-        }
-
-        /////////////////////import
-        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-//            if (_debug) log.debug("PositionableListHandler.canImport ");
-            for (int k=0; k<transferFlavors.length; k++){
-                if (transferFlavors[k].equals(_positionableListDataFlavor)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public boolean importData(JComponent comp, Transferable tr) {
-            if (_debug) log.debug("PositionableListHandler.importData ");
-            DataFlavor[] flavors = new DataFlavor[] {_positionableListDataFlavor};
-
-            if (!canImport(comp, flavors)) {
-                return false;
-            }
-
-            try {
-                if (tr.isDataFlavorSupported(_positionableListDataFlavor)) {
-                    ArrayList dragGroup = 
-                            (ArrayList)tr.getTransferData(_positionableListDataFlavor);
-                    for (int i=0; i<dragGroup.size(); i++) {
-                        Positionable pos = (Positionable)dragGroup.get(i);
-                        putItem(pos);
-                        pos.updateSize();
-                        if (_debug) log.debug("DnD Add "+pos.getNameString());
-                    }
-                }
-            }
-            catch (UnsupportedFlavorException ufe) { 
-                log.warn("DnDHandler.importData: at table e= "+ufe);
-            }
-            catch (IOException ioe) { 
-                log.warn("DnDHandler.importData: at table e= "+ioe);
-            }
-            return false;
-        }
-    }
-
-    public class TransferActionListener implements ActionListener,
-                                              PropertyChangeListener {
-        private JComponent focusOwner = null;
-
-        public TransferActionListener() {
-            KeyboardFocusManager manager = KeyboardFocusManager.
-               getCurrentKeyboardFocusManager();
-            manager.addPropertyChangeListener("permanentFocusOwner", this);
-        }
-
-        public void propertyChange(PropertyChangeEvent e) {
-            Object o = e.getNewValue();
-            if (o instanceof JComponent) {
-                focusOwner = (JComponent)o;
-            } else {
-                focusOwner = null;
-            }
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if (focusOwner == null)
-                return;
-            String action = e.getActionCommand();
-            Action a = focusOwner.getActionMap().get(action);
-            if (a != null) {
-                a.actionPerformed(new ActionEvent(focusOwner,
-                                                  ActionEvent.ACTION_PERFORMED,
-                                                  null));
-            }
-        }
-    }
-*/
     static protected class PositionableListDnD implements Transferable {
-//        ArrayList<Positionable> _dragGroup;
         ControlPanelEditor _dragGroup;
         DataFlavor _dataFlavor;
 
-//        PositionableListDnD(ArrayList<Positionable> dragGroup) {
         PositionableListDnD(ControlPanelEditor dragGroup) {
             _dragGroup = dragGroup;
             try {
