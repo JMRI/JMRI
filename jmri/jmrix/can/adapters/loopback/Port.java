@@ -9,25 +9,12 @@ import java.io.DataOutputStream;
 
 
 /**
- * LnHexFilePort implements a LnPortController via a
- * ASCII-hex input file. See below for the file format
- * There are user-level controls for
- *      send next message
- *	how long to wait between messages
+ * Loopback connection to simulate a CAN link
  *
- * An object of this class should run in a thread
- * of its own so that it can fill the output pipe as
- * needed.
- *
- *	The input file is expected to have one message per line. Each line
- *	can contain as many bytes as needed, each represented by two Hex characters
- *	and separated by a space. Variable whitespace is not (yet) supported
- *
- * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @author			Bob Jacobsen    Copyright (C) 2008, 2010
+ * @version			$Revision: 1.12 $
  */
 public class Port extends AbstractSerialPortController {
-
 
     public Port() {
     }
