@@ -283,11 +283,12 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     }
 
     public ItemPalette() {
+        super(false, false);
         loadIcons();
     }
 
     public ItemPalette(String title, Editor editor) {
-        setTitle(title);
+        super(title, false, false);
         loadIcons();
         addWindowListener(new java.awt.event.WindowAdapter() {
                 Editor editor;
@@ -582,7 +583,6 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
 
     static protected JPanel makeBannerPanel(String labelText, Component field) {
         JPanel panel = new JPanel(); 
-//        panel.setLayout(new FlowLayout());
         panel.setLayout(new java.awt.GridBagLayout());
         java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
         c.gridwidth  = 1;

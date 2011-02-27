@@ -537,6 +537,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     ArrayList <Positionable> _clipGroup;
     public ArrayList <Positionable> getClipGroup() {
+        if (_clipGroup==null) {
+            return null;
+        }
         if (_debug) log.debug("getClipGroup: _clipGroup"+(_clipGroup==null?"=null":", size= "+_clipGroup.size()));
         ArrayList<Positionable> clipGrp = new ArrayList<Positionable>();
         for (int i=0; i<_clipGroup.size(); i++) {
@@ -546,18 +549,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         return clipGrp;
     }
-/*
-    private void setMappings() {
-        ActionMap map = _targetPanel.getActionMap();
-        map.put(TransferHandler.getCutAction().getValue(Action.NAME),
-                TransferHandler.getCutAction());
-        map.put(TransferHandler.getCopyAction().getValue(Action.NAME),
-                TransferHandler.getCopyAction());
-        map.put(TransferHandler.getPasteAction().getValue(Action.NAME),
-                TransferHandler.getPasteAction());
-
-    }
-*/
+    
     ///// implementation of ClipboardOwner
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
            /* don't care */
