@@ -56,19 +56,11 @@ public abstract class ItemPanel extends JPanel {
     }
     public void dispose() {
     }
+    protected void updateFamiliesPanel() {
+    }
 
     public String getFamilyName() {
         return _family;
-    }
-
-    protected void updateFamiliesPanel() {
-        if (log.isDebugEnabled()) log.debug("updateFamiliesPanel for "+_itemType);
-        removeIconFamiliesPanel();
-        initIconFamiliesPanel();
-        reset();
-        validate();
-        repaint();
-        _paletteFrame.pack();
     }
 
     /**
@@ -85,7 +77,7 @@ public abstract class ItemPanel extends JPanel {
     * overriden for many itemTypes.  This is for the remainder
     */
     protected void createNewFamily(String type) {
-        IconDialog dialog =new IconDialog(type, null, this);
+        IconDialog dialog = new IconDialog(type, null, this);
         dialog.sizeLocate();
     }
 

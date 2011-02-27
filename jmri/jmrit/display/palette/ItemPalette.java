@@ -514,14 +514,6 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
 
     /************** Currently only needed for IndicatorTO type ***************/
 
-    // add sub-family of key
-    static protected boolean addLevel4Family(java.awt.Frame frame, String type, String family, String key,
-                                   Hashtable<String, NamedIcon> iconMap) {
-        if (log.isDebugEnabled()) log.debug("addLevel4Family \""+family+" \" in type \""+type+"\" key= "+key);
-        getLevel4FamilyMaps(type).get(family).put(key, iconMap);
-        ImageIndexEditor.indexChanged(true);
-        return true;
-    }
     // add entire family
     static protected boolean addLevel4Family(java.awt.Frame frame, String type, String family,
                                    Hashtable<String, Hashtable<String, NamedIcon>> iconMap) {

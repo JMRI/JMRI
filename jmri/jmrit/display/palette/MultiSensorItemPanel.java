@@ -3,7 +3,10 @@ package jmri.jmrit.display.palette;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.datatransfer.Transferable; 
+
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -16,6 +19,7 @@ import jmri.jmrit.picker.PickListModel;
 
 import jmri.util.JmriJFrame;
 import jmri.NamedBean;
+import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.MultiSensorIcon;
 
@@ -32,7 +36,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
-        _table.setTransferHandler(new DnDTableItemHandler(editor));
         ROW_HEIGHT = _table.getRowHeight();
         TableColumn column = new TableColumn(PickListModel.POSITION_COL);
         column.setHeaderValue("Position");
@@ -40,7 +43,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _selectionModel = new MultiSensorSelectionModel(model);
         _table.setSelectionModel(_selectionModel);
         _table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        _table.setTransferHandler(new MultiSensorDnD(editor));
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -84,6 +86,10 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         return topPanel;
+    }
+
+    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+        super.makeDndIconPanel(iconMap, "second");
     }
 
     protected void initIconFamiliesPanel() {
@@ -156,6 +162,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
 
         protected ArrayList<NamedBean> getSelections() {
+            if (log.isDebugEnabled()) log.debug("getSelections: size= "+_selections.size()+
+                                                ", _nextPosition= "+_nextPosition);
+            if (_nextPosition < _postions.length) {
+                return null;
+            }
             return _selections;
         }
 
@@ -233,7 +244,70 @@ public class MultiSensorItemPanel extends TableItemPanel {
             }
         }
     }
- 
+
+    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+        return new IconDragJLabel(flavor, map);
+    }
+
+    protected class IconDragJLabel extends DragJLabel {
+        Hashtable <String, NamedIcon> iconMap;
+
+        public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
+            super(flavor);
+            iconMap = map;
+        }
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            return super.isDataFlavorSupported(flavor);
+        }
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
+            if (!isDataFlavorSupported(flavor)) {
+                return null;
+            }
+            if (iconMap==null) {
+                log.error("IconDragJLabel.getTransferData: iconMap is null!");
+                return null;
+            }
+            /*
+            NamedBean bean = getNamedBean();
+            if (bean==null) {
+                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
+                return null;
+            } */
+
+            _selectionModel.getPositions();
+            /*
+            Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
+            if (iconMap==null) {
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                       ItemPalette.rbp.getString(_itemType), _family), 
+                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                return null;
+            }
+            */
+            MultiSensorIcon ms = new MultiSensorIcon(_editor);
+            ms.setInactiveIcon(iconMap.get("SensorStateInactive"));
+            ms.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
+            ms.setUnknownIcon(iconMap.get("BeanStateUnknown"));
+            ArrayList<NamedBean> selections = _selectionModel.getSelections();
+            if (selections==null) {
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(
+                            ItemPalette.rbp.getString("NeedPosition"), _selectionModel.getPositions().length), 
+                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                return null;
+            }
+            for (int i=0; i<selections.size(); i++) {
+                ms.addEntry(selections.get(i).getDisplayName(), iconMap.get(POSITION[i]));
+            }
+            _selectionModel.clearSelection();
+            ms.setUpDown(_upDown);
+            ms.setLevel(Editor.SENSORS);
+            return ms;
+        }
+    }
+
+/* 
     protected class MultiSensorDnD extends DnDTableItemHandler {
 
         MultiSensorDnD(Editor editor) {
@@ -270,7 +344,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             ms.setLevel(Editor.SENSORS);
             return new PositionableDnD(ms, ms.getNameString());
         }
-    }
+    }  */
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorItemPanel.class.getName());
 }

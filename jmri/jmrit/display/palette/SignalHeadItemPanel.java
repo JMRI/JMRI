@@ -5,7 +5,10 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import java.awt.datatransfer.Transferable; 
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +31,7 @@ import jmri.jmrit.picker.PickListModel;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.display.SignalHeadIcon;
 
 public class SignalHeadItemPanel extends TableItemPanel implements ListSelectionListener {
@@ -40,7 +44,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
 
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
-        _table.setTransferHandler(new SignalHeadDnD(editor));
+//        _table.setTransferHandler(new SignalHeadDnD(editor));
         ROW_HEIGHT = _table.getRowHeight();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -64,21 +68,34 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         return topPanel;
     }
 
+    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+        super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
+    }
+
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
         }
         _selectedRow = _table.getSelectedRow();
-        boolean visible = _iconPanel.isVisible();
-        _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
-        Hashtable<String, NamedIcon>  iconMap = _currentIconMap;
-        if (_currentIconMap==null) {
-            iconMap = ItemPalette.getIconMap(_itemType, _family);
+        if (log.isDebugEnabled()) log.debug("Table valueChanged: row= "+_selectedRow);
+        remove(_iconFamilyPanel);
+        initIconFamiliesPanel();
+        add(_iconFamilyPanel, 1);
+        if (_selectedRow >= 0) {
+            if (_updateButton!=null) {
+                _updateButton.setEnabled(true);
+                _updateButton.setToolTipText(null);
+            }
+            _showIconsButton.setEnabled(true);
+            _showIconsButton.setToolTipText(null);
+        } else {
+            if (_updateButton!=null) {
+                _updateButton.setEnabled(false);
+                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+            }
+            _showIconsButton.setEnabled(false);
+            _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickRowToShowIcon"));
         }
-        addIconsToPanel(iconMap);
-        _iconPanel.setVisible(visible);
-        _iconFamilyPanel.add(_iconPanel, 0);
     }
 
     protected void addIconsToPanel(Hashtable<String, NamedIcon> allIconsMap) {
@@ -93,58 +110,6 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
             super.addIconsToPanel(iconMap);
         }
     }
-/*
-    protected void makeIconPanel() {
-        _iconPanel = new JPanel();
-        if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
-        /*
-        Hashtable<String, NamedIcon> iconMap = null;
-        if (_family!=null) {
-            iconMap = ItemPalette.getIconMap(_itemType, _family);
-            if (iconMap==null) {
-                if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
-                // Thread.dumpStack();
-                JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"),
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                _family = null;
-            }
-        }
-        *
-        if (_family==null) {
-            Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-            if (families!=null) {
-                Iterator <String> it = families.keySet().iterator();
-                while (it.hasNext()) {
-                    _family = it.next();
-                }
-            }
-        }
-
-        Hashtable<String, NamedIcon> allIconsMap = ItemPalette.getIconMap(_itemType, _family);
-        Hashtable<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
-        if (iconMap==null) {
-            iconMap = ItemPalette.getIconMap(_itemType, _family);
-            if (iconMap==null) {
-                _updateButton.setEnabled(false);
-                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
-            }
-        } else {
-            addIconsToPanel(iconMap);
-        }
-    }
-*/
-    private NamedBean getSelectedBean() {
-        int row = _table.getSelectedRow();
-        if (row >= 0) {
-            PickListModel model = (PickListModel)_table.getModel();
-            NamedBean b = model.getBeanAt(row);
-            if (log.isDebugEnabled()) log.debug("getSelectedBean: row= "+row+", bean= "+b.getDisplayName());
-            return b;
-        } else if (log.isDebugEnabled()) log.debug("getSelectedBean: row=0");
-        return null;
-    }
 
     protected Hashtable<String, NamedIcon> getFilteredIconMap(Hashtable<String, NamedIcon> allIconsMap) {
         if (allIconsMap==null) {
@@ -154,7 +119,11 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
-        SignalHead sh = (SignalHead)getSelectedBean();
+        if (_table==null || _table.getSelectedRow()<0) {
+            return allIconsMap;
+        }
+
+        SignalHead sh = (SignalHead)getNamedBean();
         if (sh!=null) {
             String[] states = sh.getValidStateNames();
             if (states.length == 0) {
@@ -192,22 +161,28 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         dialog.sizeLocate();
     }
 
-    /**
-    * Extend handler to export from JList and import to PicklistTable
-    */
-    protected class SignalHeadDnD extends DnDTableItemHandler {
+    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+        return new IconDragJLabel(flavor, map);
+    }
 
-        SignalHeadDnD(Editor editor) {
-            super(editor);
+    protected class IconDragJLabel extends DragJLabel {
+        Hashtable <String, NamedIcon> iconMap;
+
+        public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
+            super(flavor);
+            iconMap = map;
         }
-
-        public Transferable createPositionableDnD(JTable table) {
-            Hashtable <String, NamedIcon> iconMap = getIconMap();
-            if (iconMap==null) {
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
+            if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getNamedBean(table);
+            if (iconMap==null) {
+                log.error("IconDragJLabel.getTransferData: iconMap is null!");
+                return null;
+            }
+            NamedBean bean = getNamedBean();
             if (bean==null) {
+                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
                 return null;
             }
 
@@ -220,9 +195,9 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
             }
             sh.setFamily(_family);
             sh.setLevel(Editor.SIGNALS);
-            return new PositionableDnD(sh, bean.getDisplayName());
+            return sh;
         }
     }
-    
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadItemPanel.class.getName());
 }

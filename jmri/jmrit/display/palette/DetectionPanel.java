@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -44,6 +45,8 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
     private JTextField  _errSensorName = new JTextField();
     private JFrame      _pickFrame;
     private JButton     _openPicklistButton;
+    private JPanel      _trainIdPanel;
+    private JCheckBox   _showTrainName;
     private OBlock      _block;
     private JPanel      _blockPathPanel;
     private JList       _pathList;
@@ -96,6 +99,9 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
         panel.add(p);
         add(panel);
 
+        _trainIdPanel = makeTrainIdPanel();
+        add(_trainIdPanel);
+
         _blockPathPanel = new JPanel();
         _blockPathPanel.setLayout(new BoxLayout(_blockPathPanel, BoxLayout.Y_AXIS));
         p = new JPanel();
@@ -139,10 +145,24 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
 
     void openPickList() {
         _pickFrame = new JFrame();
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(ItemPalette.rbp.getString("DragOccupancyName")));
+        blurb.add(new JLabel(ItemPalette.rbp.getString("DragErrorName")));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        content.add(panel);
         PickListModel[] models = { PickListModel.oBlockPickModelInstance(),
                                     PickListModel.sensorPickModelInstance()
                                  };
-        _pickFrame.setContentPane(new PickPanel(models));
+        content.add(new PickPanel(models));
+
+        _pickFrame.setContentPane(content);
         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     closePickList();                   
@@ -161,6 +181,17 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
         _openPicklistButton.setText(ItemPalette.rbp.getString("OpenPicklist"));
     }
 
+    private JPanel makeTrainIdPanel() {
+        JPanel panel = new JPanel();
+        _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
+        _showTrainName.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        JPanel p = new JPanel();
+        p.add(_showTrainName);
+        p.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        panel.add(p);
+        return panel;
+    }
+
     public void dispose() {
         if (_pickFrame!=null) {
             _pickFrame.dispose();
@@ -169,6 +200,14 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
     }
 
     /****************** Getters & Setters ***************************/
+
+    public boolean getShowTrainName() {
+        return _showTrainName.isSelected();
+    }
+
+    public void setShowTrainName(boolean show) {
+        _showTrainName.setSelected(show);
+    }
 
     public String getErrSensor() {
         String name = _errSensorName.getText();

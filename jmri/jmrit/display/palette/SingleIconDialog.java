@@ -118,7 +118,6 @@ public class SingleIconDialog extends IconDialog implements MouseListener {
             return false;
         }
         doDoneAction();
-//        _parent.updateFamiliesPanel();
         return true;
     }
         

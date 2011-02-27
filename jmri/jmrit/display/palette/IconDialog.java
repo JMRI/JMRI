@@ -73,7 +73,7 @@ public class IconDialog extends ItemDialog {
         _catalog.setToolTipText(ItemPalette.rb.getString("ToolTipDragIcon"));
         panel.add(_catalog);
 
-        setContentPane(panel);
+        setContentPane(new javax.swing.JScrollPane(panel));
     }
 
     protected void initMap(String type, String family) {

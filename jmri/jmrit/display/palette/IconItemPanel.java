@@ -71,7 +71,6 @@ public class IconItemPanel extends ItemPanel {
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToAddDeleteModify"), 
                                                        ItemPalette.rbp.getString("ButtonEditIcons"))));
-//        blurb.add(new JLabel(ItemPalette.rbp.getString("PressEditIcons")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -138,6 +137,14 @@ public class IconItemPanel extends ItemPanel {
     protected void removeIconFamiliesPanel() {
         remove(_iconPanel);
     }
+
+    protected void updateFamiliesPanel() {
+        if (log.isDebugEnabled()) log.debug("updateFamiliesPanel for "+_itemType);
+        removeIconFamiliesPanel();
+        initIconFamiliesPanel();
+        validate();
+    }
+
     /**
     *  SOUTH Panel
     */

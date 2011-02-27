@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -29,7 +30,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         _key = key;
         if (_family!=null) {
             _familyName.setEditable(false);
-            _iconMap = parent._iconGroupsMap.get(key);
+            _iconMap = clone(parent._iconGroupsMap.get(key));
         } else {
             ArrayList<String> keys = new ArrayList<String>(); 
             for (int i=0; i<IndicatorTOItemPanel.STATUS_KEYS.length; i++) {
@@ -60,6 +61,18 @@ public class IndicatorTOIconDialog extends IconDialog {
     // override IconDialog initMap. Make placeholder for _iconPanel
     protected void initMap(String type, String family) {
         _iconPanel = new JPanel(); 
+    }
+
+    private Hashtable<String, NamedIcon> clone(Hashtable<String, NamedIcon> map) {
+        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
+        if (map!=null) {
+            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                clone.put(entry.getKey(), new NamedIcon(entry.getValue()));
+            }
+        }
+        return clone;
     }
 
     /**
@@ -106,20 +119,19 @@ public class IndicatorTOIconDialog extends IconDialog {
         if (_family!=null && _family.equals(subFamily)) {
             ItemPalette.removeLevel4IconMap(_type, _parent._family, subFamily);
         }
+        jmri.jmrit.catalog.ImageIndexEditor.indexChanged(true);
         return addFamily(_parent._family, _iconMap, subFamily);
     }
-
 
     protected boolean addFamily(String family, Hashtable<String, NamedIcon> iconMap, String subFamily) {
         log.debug("addFamily _type= \""+_type+"\", family= \""+family+"\""+", key= \""+
                   _familyName.getText()+"\", _iconMap.size= "+_iconMap.size());
-        if (ItemPalette.addLevel4Family(_parent._paletteFrame, _type, family, subFamily, _iconMap)) {
-            _parent.updateFamiliesPanel();
-            _parent._family = family;
-            _parent.reset();
-            return true;
-        }
-        return false;
+        IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
+        parent.updateIconGroupsMap(subFamily, _iconMap);
+        _parent.updateFamiliesPanel();
+        _parent._family = family;
+        return true;
+//        if (ItemPalette.addLevel4Family(_parent._paletteFrame, _type, family, subFamily, _iconMap)) {
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTOIconDialog.class.getName());

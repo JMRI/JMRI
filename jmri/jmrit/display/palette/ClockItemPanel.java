@@ -85,21 +85,6 @@ public class ClockItemPanel extends IconItemPanel {
     *  SOUTH Panel
     */
     public void initButtonPanel() {
-        /*
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-
-        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("ButtonEditIcons"));
-        editIconsButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    openEditDialog();
-                }
-        });
-        editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
-        bottomPanel.add(editIconsButton);
-
-        add(bottomPanel);
-        */
     }
 
     public class ClockDragJLabel extends DragJLabel {
