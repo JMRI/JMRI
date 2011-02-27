@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  * @since 2.7.2
  */
 
@@ -107,6 +107,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             memory.addPropertyChangeListener(this);
             namedMemory = m;
         }
+    }
+
+    public void setNumColumns(int nCols) {
+        _textBox.setColumns(nCols);
+        _nCols = nCols;
     }
 
     public NamedBeanHandle<Memory> getMemory() { return namedMemory; }

@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -238,7 +238,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         });
     }
 
-    /******** popup AbstractAction.actionPerformed method overrides *********/
+    /******** popup AbstractAction method overrides *********/
 
     protected void rotateOrthogonal() {
         Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();

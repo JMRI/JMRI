@@ -31,22 +31,16 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.81 $
+ * @version $Revision: 1.82 $
  */
 
-public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+public class SignalHeadIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
 
-    Hashtable <String, NamedIcon> _iconMap;
-    String  _iconFamily;
     String[] _validKey;
 
     public SignalHeadIcon(Editor editor){
-        // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/searchlights/left-red-short.gif",
-                            "resources/icons/smallschematics/searchlights/left-red-short.gif"), editor);
-        _control = true;
-        setPopupUtility(null);
+        super(editor);
     }
 
     public Positionable deepClone() {
@@ -145,42 +139,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             _iconMap.put(state, icon);
             displayState(headState());
         }
-    }
-
-    /**
-    * Get icon by its bean state name key found in jmri.NamedBeanBundle.properties
-    * Get icon by its localized bean state name
-    */
-    public NamedIcon getIcon(String state) {
-        return _iconMap.get(state);
-    }
-
-    public String getFamily() {
-        return _iconFamily;
-    }
-    public void setFamily(String family) {
-        _iconFamily = family;
-    }
-
-    public Enumeration<String> getIconStateNames() {
-        return _iconMap.keys(); 
-    }
-
-    public int maxHeight() {
-        int max = 0;
-        Enumeration <String> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            max = Math.max(_iconMap.get(e.nextElement()).getIconHeight(), max);
-        }
-        return max;
-    }
-    public int maxWidth() {
-        int max = 0;
-        Enumeration <String> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            max = Math.max(_iconMap.get(e.nextElement()).getIconWidth(), max);
-        }
-        return max;
     }
 
     /**
@@ -297,28 +255,17 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     /*************** popup AbstractAction.actionPerformed method overrides ************/
 
     protected void rotateOrthogonal() {
-        Enumeration <String> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            NamedIcon icon = _iconMap.get(e.nextElement()); 
-            icon.setRotation(icon.getRotation()+1, this);
-        }
+        super.rotateOrthogonal();
         displayState(headState());
-        repaint();    
     }
 
     public void setScale(double s) {
-        Enumeration <String> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            _iconMap.get(e.nextElement()).scale(s, this); 
-        }
+        super.setScale(s);
         displayState(headState());
     }
 
     public void rotate(int deg) {
-        Enumeration <String> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            _iconMap.get(e.nextElement()).rotate(deg, this); 
-        }
+        super.rotate(deg);
         displayState(headState());
     }
 
@@ -376,7 +323,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalHead")));
-        _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", _iconFamily,
+        _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
                                        PickListModel.signalHeadPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -394,7 +341,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     void updateItem() {
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
-        _iconFamily = _itemPanel.getFamilyName();
+        setFamily(_itemPanel.getFamilyName());
         Hashtable<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
         boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
         if (map1!=null) {
@@ -406,7 +353,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 Entry<String, NamedIcon> entry = it.next();
                 map2.put(jmri.jmrit.display.palette.ItemPalette.convertText(entry.getKey()), entry.getValue());
             }
-            setIcons(map2);
+            setIcons(map2, scaleRotate);
         }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
         _paletteFrame.dispose();
@@ -449,7 +396,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     Hashtable<String, NamedIcon> _saveMap;
 
-    private void setIcons(Hashtable<String, NamedIcon> map) {
+    private void setIcons(Hashtable<String, NamedIcon> map, boolean scaleRotate) {
         if (log.isDebugEnabled()) log.debug("setIcons: newmap size= "+map.size()+
                                             ", oldmap size= "+_saveMap.size());
         Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
@@ -460,18 +407,18 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             NamedIcon oldIcon = _saveMap.get(name);
             if (log.isDebugEnabled()) log.debug("key= "+entry.getKey()+", localKey= "+name+
                                                 ", newIcon= "+icon+", oldIcon= "+oldIcon);
-            if (oldIcon!=null) {
+            if (oldIcon!=null && scaleRotate) {
                 icon.setRotation(oldIcon.getRotation(), this);
                 icon.rotate(oldIcon.getDegrees(), this);
                 icon.scale(oldIcon.getScale(), this);
-                _iconMap.put(name, icon);
             }
+            _iconMap.put(name, icon);
         }
     }
 
     void updateSignal() {
         setSignalHead(_iconEditor.getTableSelection().getDisplayName());
-        setIcons(_iconEditor.getIconMap());
+        setIcons(_iconEditor.getIconMap(), true);
         displayState(headState());
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;

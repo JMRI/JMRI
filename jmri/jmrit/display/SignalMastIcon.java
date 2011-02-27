@@ -3,8 +3,12 @@
 package jmri.jmrit.display;
 
 import jmri.*;
+
+import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.picker.PickListModel;
 import jmri.util.NamedBeanHandle;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.awt.event.*;
@@ -19,17 +23,15 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
-public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
     public SignalMastIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/misc/X-red.gif","resources/icons/misc/X-red.gif"), editor);
-        _control = true;
+        super(editor);
         debug = log.isDebugEnabled();
-        setPopupUtility(null);
     }
     
     private SignalMast mMast;
@@ -88,13 +90,13 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
     }
 
     private void getIcons() {
-        iconCache = new java.util.Hashtable<String, NamedIcon>();
+        _iconMap = new java.util.Hashtable<String, NamedIcon>();
         java.util.Enumeration<String> e = mMast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
             String s = mMast.getAppearanceMap().getProperty(e.nextElement(), "imagelink");
             s = s.substring(s.indexOf("resources"));
             NamedIcon n = new NamedIcon(s,s);
-            iconCache.put(s, n);
+            _iconMap.put(s, n);
             if(_rotate!=0){
                 n.rotate(_rotate, this);
             }
@@ -189,6 +191,45 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         return true;
     }
 
+    SignalMastItemPanel _itemPanel;
+
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalMast"));
+        popup.add(new AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    editItem();
+                }
+            });
+        return true;
+    }
+    
+    protected void editItem() {
+        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalMast")));
+        _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
+                                       PickListModel.signalMastPickModelInstance(), _editor);
+        ActionListener updateAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        };
+        // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
+        _itemPanel.init(updateAction, _iconMap);
+        _itemPanel.setSelection(getSignalMast());
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
+    }
+
+    void updateItem() {
+        setSignalMast(_itemPanel.getTableSelection().getSystemName());
+        setFamily(_itemPanel.getFamilyName());
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel.dispose();
+        _itemPanel = null;
+        invalidate();
+    }
+
     /**
      * Change the SignalMast aspect when the icon is clicked.
      * @param e
@@ -228,8 +269,8 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
                 s = s.substring(s.indexOf("resources"));
                 
                 // tiny global cache, due to number of icons
-                if (iconCache==null) getIcons();
-                NamedIcon n = iconCache.get(s);
+                if (_iconMap==null) getIcons();
+                NamedIcon n = _iconMap.get(s);
                 super.setIcon(n);
                 setSize(n.getIconWidth(), n.getIconHeight());
             }
@@ -240,36 +281,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         return;
     }
     
-    public int maxHeight() {
-        int max = 0;
-        //Only defer to the default icon if the iconCache is empty
-        if (iconCache==null)
-            return super.maxHeight();
-        Set<String> set = iconCache.keySet();
-        Iterator<String> itr = set.iterator();
-        while (itr.hasNext()) {
-          String state = itr.next();
-          NamedIcon n = iconCache.get(state);
-          max = Math.max((n!=null) ? n.getIconHeight() : 0, max);
-        }
-        return max;
-    }
-    
-    public int maxWidth() {
-        int max = 0;
-        //Only defer to the default icon if the iconCache is empty
-        if (iconCache==null)
-            return super.maxWidth();
-        Set<String> set = iconCache.keySet();
-        Iterator<String> itr = set.iterator();
-        while (itr.hasNext()) {
-          String state = itr.next();
-          NamedIcon n = iconCache.get(state);
-          max = Math.max((n!=null) ? n.getIconWidth() : 0, max);
-        }
-        return max;
-    }
-
     public boolean setEditIconMenu(JPopupMenu popup) {
         return false;
     }
@@ -279,46 +290,17 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
     }
 
     public void rotate(int deg){
-        _rotate = (_rotate+deg)%360;
-        if (iconCache==null)
-            return;
-        Set<String> set = iconCache.keySet();
-        Iterator<String> itr = set.iterator();
-        while (itr.hasNext()) {
-          String state = itr.next();
-          NamedIcon n = iconCache.get(state);
-          n.rotate(deg, this);
-        }
+        super.rotate(deg);
         displayState(mastState());
     }
     
     public void setScale(double s) {
-        _scale = s*_scale;
-        Set<String> set = iconCache.keySet();
-        Iterator<String> itr = set.iterator();
-        while (itr.hasNext()) {
-          String state = itr.next();
-          NamedIcon n = iconCache.get(state);
-          n.scale(s, this);
-        }
+        super.setScale(s);
         displayState(mastState());
     }
 
-    double _scale = 1.0;
-    public double getScale(){
-        return _scale;
-    }
-
-    int _rotate = 0;
-    public int getRotation(){
-        return _rotate;
-    }
-    
-    private java.util.Hashtable<String, NamedIcon> iconCache;
-
     public void dispose() {
-        mMast.removePropertyChangeListener(this);
-        
+        mMast.removePropertyChangeListener(this);        
         super.dispose();
     }
 
