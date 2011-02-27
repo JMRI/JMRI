@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,19 +15,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.RouteManager;
 import jmri.TurnoutManager;
 import jmri.util.JmriJFrame;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.6 $
+ *	@version $Revision: 1.7 $
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener{
 
@@ -37,19 +40,19 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                                             rbx.getString("ColumnLabelInclude")};
     
     public ControllerFilterFrame(){
-        super("Controls Filter");
+        super("Controls Filter", true, true);
     }
 
     public void initComponents() throws Exception {
         JTabbedPane tabbedPane = new JTabbedPane();
         if (InstanceManager.turnoutManagerInstance()!=null) {
             
-            tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(),"Limit the turnouts controllable by WiFi devices.");
+            tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(),rb.getString("ToolTipTurnoutTab"));
         }
         
         if (InstanceManager.routeManagerInstance()!=null) {
             
-            tabbedPane.addTab(rb.getString("LabelRoute"), null, addRoutePanel(),"Limit the routes controllable by WiFi devices.");
+            tabbedPane.addTab(rb.getString("LabelRoute"), null, addRoutePanel(),rb.getString("ToolTipRouteTab"));
         }
         
         add(tabbedPane);
@@ -60,64 +63,38 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
     }
 
     private JPanel addTurnoutPanel(){
-        JPanel tPanel = new JPanel();
+        JPanel tPanel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel(rb.getString("LabelTurnoutTab"), SwingConstants.CENTER);
+        tPanel.add(label, BorderLayout.NORTH);
+        tPanel.add(addCancelSavePanel(), BorderLayout.WEST);
 
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add(new JLabel("Please select "));
-        p.add(new JLabel("Turnouts to "));
-        p.add(new JLabel("be controlled "));
-        p.add(new JLabel("by WiFi devices."));
-        p.add(new JLabel("\n"));
-        p.add(new JLabel("Save changes "));
-        p.add(new JLabel("to panel file."));
-        JButton saveButton = new JButton(rb.getString("ButtonSave"));
-        saveButton.addActionListener(new ActionListener (){
-            public void actionPerformed(ActionEvent event){
-                storeValues();
-                dispose();
-            }
-        });
-        p.add(saveButton);
-        tPanel.add(p);
-        
-        JTable table = new JTable(new TurnoutFilterModel());
+        final TurnoutFilterModel filterModel = new TurnoutFilterModel();
+        JTable table = new JTable(filterModel);
         buildTable(table);
 
         JScrollPane scrollPane = new JScrollPane(table);
         tPanel.add(scrollPane,BorderLayout.CENTER);
+
+        tPanel.add(getIncludeButtonsPanel(filterModel), BorderLayout.SOUTH);
 
         return tPanel;
     }
     
     private JPanel addRoutePanel(){
-        JPanel tPanel = new JPanel();
+        JPanel tPanel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel(rb.getString("LabelRouteTab"), SwingConstants.CENTER);
+        tPanel.add(label, BorderLayout.NORTH);
+        tPanel.add(addCancelSavePanel(), BorderLayout.WEST);
 
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add(new JLabel("Please select "));
-        p.add(new JLabel("Routes to "));
-        p.add(new JLabel("be controlled "));
-        p.add(new JLabel("by WiFi devices."));
-        p.add(new JLabel("\n"));
-        p.add(new JLabel("Save changes "));
-        p.add(new JLabel("to panel file."));
-        JButton saveButton = new JButton(rb.getString("ButtonSave"));
-        saveButton.addActionListener(new ActionListener (){
-            public void actionPerformed(ActionEvent event){
-                storeValues();
-                dispose();
-            }
-        });
-        p.add(saveButton);
-        tPanel.add(p);
-
-        JTable table = new JTable(new RouteFilterModel());
+        final RouteFilterModel filterModel = new RouteFilterModel();
+        JTable table = new JTable(filterModel);
         buildTable(table);
         
 
         JScrollPane scrollPane = new JScrollPane(table);
         tPanel.add(scrollPane,BorderLayout.CENTER);
+
+        tPanel.add(getIncludeButtonsPanel(filterModel), BorderLayout.SOUTH);
 
         return tPanel;
     }
@@ -154,12 +131,73 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         uName.setMaxWidth(440);
     }
 
+    private JPanel getIncludeButtonsPanel(final AbstractFilterModel fm){
+        JPanel pane = new JPanel();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
+        pane.add(Box.createHorizontalGlue());
+
+        JButton selectAllButton = new JButton(rb.getString("ButtonSelectAll"));
+        selectAllButton.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent event){
+                fm.setIncludeColToValue(true);
+            }
+        });
+        pane.add(selectAllButton);
+
+        JButton deselectAllButton = new JButton(rb.getString("ButtonDeselectAll"));
+        deselectAllButton.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent event){
+                fm.setIncludeColToValue(false);
+            }
+        });
+        pane.add(deselectAllButton);
+
+        JButton selectUserNamedButton = new JButton(rb.getString("ButtonSelectByUserName"));
+        selectUserNamedButton.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent event){
+                fm.SetIncludeToUserNamed();
+            }
+        });
+        pane.add(selectUserNamedButton);
+
+        return pane;
+    }
+
+    private JPanel addCancelSavePanel(){
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.add(Box.createVerticalGlue());
+
+        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
+        cancelButton.setAlignmentX(CENTER_ALIGNMENT);
+        cancelButton.setToolTipText(rb.getString("ToolTipCancel"));
+        cancelButton.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent event){
+                dispose();
+            }
+        });
+        p.add(cancelButton);
+
+        JButton saveButton = new JButton(rb.getString("ButtonSave"));
+        saveButton.setAlignmentX(CENTER_ALIGNMENT);
+        saveButton.setToolTipText(rb.getString("ToolTipSave"));
+        saveButton.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent event){
+                storeValues();
+                dispose();
+            }
+        });
+        p.add(saveButton);
+
+        return p;
+    }
+
     protected void storeValues() {
         new jmri.configurexml.StoreXmlUserAction().actionPerformed(null);
     }
 
     public void tableChanged(TableModelEvent e) {
-        log.debug("Set mod flag true for: "+getTitle());
+        if (log.isDebugEnabled()) log.debug("Set mod flag true for: "+getTitle());
         this.setModifiedFlag(true);
     }
 
@@ -205,6 +243,10 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         public boolean isCellEditable(int r,int c) {
             return (c==INCLUDECOL);
         }
+
+        abstract void setIncludeColToValue(boolean value);
+
+        abstract void SetIncludeToUserNamed();
         
         public static final int SNAMECOL = 0;
         public static final int UNAMECOL = 1;
@@ -256,6 +298,25 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                     break;
             }
         }
+
+        public void setIncludeColToValue(boolean value){
+            for (String sysName : sysNameList){
+                mgr.getBySystemName(sysName).setProperty("WifiControllable", value);
+            }
+            fireTableDataChanged();
+        }
+
+        public void SetIncludeToUserNamed(){
+            for (String sysName : sysNameList){
+                NamedBean bean = mgr.getBySystemName(sysName);
+                if ((bean.getUserName() != null) && (bean.getUserName().length() > 0)){
+                    bean.setProperty("WifiControllable", true);
+                }else {
+                    bean.setProperty("WifiControllable", false);
+                }
+            }
+            fireTableDataChanged();
+        }
     }
 
     class RouteFilterModel extends AbstractFilterModel{
@@ -302,6 +363,25 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                     }
                     break;
             }
+        }
+
+        public void setIncludeColToValue(boolean value){
+            for (String sysName : sysNameList){
+                mgr.getBySystemName(sysName).setProperty("WifiControllable", value);
+            }
+            fireTableDataChanged();
+        }
+
+        public void SetIncludeToUserNamed(){
+            for (String sysName : sysNameList){
+                NamedBean bean = mgr.getBySystemName(sysName);
+                if (bean.getUserName().length() > 0){
+                    bean.setProperty("WifiControllable", true);
+                }else {
+                    bean.setProperty("WifiControllable", false);
+                }
+            }
+            fireTableDataChanged();
         }
     }
 
