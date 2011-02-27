@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.24 2011-02-22 07:42:07 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.25 2011-02-27 19:03:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -393,6 +393,10 @@ Walt Thompson added reset definitions to the TCS definitions.
 
 <p>
 Mike Mosher added new SoundTraxx MC and MC IMRC OEM decoder definitions
+
+<p>
+Steve Todd improved the speed of the JMRI mini webserver.  
+He also provided a favorite icon for the server.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
