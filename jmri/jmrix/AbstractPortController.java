@@ -16,7 +16,7 @@ import java.io.DataOutputStream;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 abstract public class AbstractPortController implements PortAdapter {
 
@@ -83,7 +83,10 @@ abstract public class AbstractPortController implements PortAdapter {
     * connector.  this is here as we implement the serialdriveradpter.
     */
     public String getManufacturer() { return mManufacturer; }
-    public void setManufacturer(String Manufacturer) { mManufacturer = Manufacturer; }
+    public void setManufacturer(String manufacturer) { 
+        log.debug("update manufacturer from "+mManufacturer+" to "+manufacturer);
+        mManufacturer = manufacturer; 
+    }
     protected String mManufacturer = null;
     
     public boolean getDisabled() { return mDisabled; }
