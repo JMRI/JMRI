@@ -18,7 +18,7 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class MiniServerAction extends AbstractAction {
 
@@ -94,14 +94,14 @@ public class MiniServerAction extends AbstractAction {
                         	JFrame frame = new JFrame();
                             JPanel panel = new JPanel();
                             final String url = "http://" + getLocalAddress()
-                                +":"+getPort()+"/index.html";
-                            JButton webButton = new JButton("View in Browser");
+                                +":"+getPort();
+                            JButton webButton = new JButton("Open in Browser");
                             webButton.addActionListener(new ActionListener() {
                                public void actionPerformed(ActionEvent e) {
                                   BareBonesBrowserLaunch.openURL(url); }
                                } );
                             frame.setTitle("JMRI Mini Web Server Started");
-                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             panel.add(new JLabel("Web server started at " + url + "\n"));
                             panel.add(webButton);
                             frame.getContentPane().add(panel);

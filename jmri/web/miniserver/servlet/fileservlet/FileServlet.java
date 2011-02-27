@@ -20,7 +20,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -39,8 +39,13 @@ public class FileServlet extends AbstractServlet {
         
         // get input        
         getInputLines(in);
-        if (log.isDebugEnabled()) log.debug("request is : "+getRequest());
-        String filename = getFilename(URLDecoder.decode(getRequest().substring(1),  java.nio.charset.Charset.defaultCharset().toString())); // drop leading /
+
+        String rqst = getRequest();
+        if (rqst == null) return;  //bail if request not passed
+        if (rqst.equals("/")) rqst = "/index.html";  //if no path passed, set to index.html
+
+        if (log.isDebugEnabled()) log.debug("request is : "+rqst);
+        String filename = getFilename(URLDecoder.decode(rqst.substring(1),  java.nio.charset.Charset.defaultCharset().toString())); // drop leading /
         if (log.isDebugEnabled()) log.debug("resolve to filename: "+filename);
         
         // silently drop requests that don't satisfy security check
@@ -163,8 +168,10 @@ public class FileServlet extends AbstractServlet {
         // strip any trailing ? info
         int qm = name.indexOf('?');
         if (qm != -1) name = name.substring(0, qm);
+        
+        name = name.toLowerCase();  //type table is all lowercase
 
-        // Seach for longest match
+        // Search for longest match
         while (name.length()>0) {
             if (log.isDebugEnabled()) log.debug("Check ["+name+"]");
             try {
@@ -207,34 +214,33 @@ public class FileServlet extends AbstractServlet {
         return false;
     }
     
-    /**  
-     *  Taken in part from Core Servlets and JavaServer Pages
-     *  from Prentice Hall and Sun Microsystems Press,
-     *  http://www.coreservlets.com/.
-     *  &copy; 2000 Marty Hall; may be freely used or adapted.
-     */
-    protected void copyFileContent(String filename, OutputStream out) throws IOException {
-        InputStream in = null;
-        try {
-            // get file contents
-        	in = new BufferedInputStream(new FileInputStream(filename));
-                
-            // write out
-            int imageByte;
-            int count = 0;
-            while((imageByte = in.read()) != -1) {
-                out.write((byte)(imageByte&0xFF));
-                count++;
-            }
-            if (log.isDebugEnabled()) log.debug("wrote "+count+" bytes");
-        } catch (java.io.FileNotFoundException efnf) {
-            log. warn("file not found: "+filename);
-        } finally {
-            if (in != null)
-                in.close();
-            out.flush();
-        }
+    
+    /* this code based on http://java.sun.com/docs/books/performance/1st_edition/html/JPIOPerformance.fm.html  */
+    protected void copyFileContent(String from, OutputStream out) throws IOException{
+       InputStream in = null;
+       int BUFF_SIZE = 100000;  //set buffer to 100K
+       byte[] buffer = new byte[BUFF_SIZE];
+       try {
+          in = new FileInputStream(from);
+          while (true) {
+             synchronized (buffer) {
+                int amountRead = in.read(buffer);
+                if (amountRead == -1) {
+                   break;
+                }
+                out.write(buffer, 0, amountRead); 
+             }
+          } 
+       } finally {
+          if (in != null) {
+             in.close();
+          }
+          if (out != null) {
+             out.flush();
+          }
+       }
     }
+
     
     protected void createDirectoryContent(String filename, OutputStream out) throws IOException {
         log.debug("return directory listing");

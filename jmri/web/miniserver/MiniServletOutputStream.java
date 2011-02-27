@@ -9,7 +9,7 @@ import java.io.OutputStream;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class MiniServletOutputStream extends javax.servlet.ServletOutputStream {
@@ -23,5 +23,10 @@ public class MiniServletOutputStream extends javax.servlet.ServletOutputStream {
         throws java.io.IOException { 
         out.write(val);
     }
+
+    public void write( byte buf[], int offset, int len)
+        throws java.io.IOException  {
+    	out.write(buf, offset, len);
+    } 
     
 }
