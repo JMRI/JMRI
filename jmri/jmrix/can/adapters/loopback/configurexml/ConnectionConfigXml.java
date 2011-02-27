@@ -16,8 +16,8 @@ import org.jdom.Element;
  * as that class is the one actually registered. Reads are brought
  * here directly via the class attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.5 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2008, 2010
+ * @version $Revision: 1.6 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -33,12 +33,15 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {
-        getInstance();
 
+        adapter = ((ConnectionConfig) o).getAdapter();
         Element e = new Element("connection");
 
         if (adapter.getCurrentOption1Setting()!=null)
             e.setAttribute("option1", adapter.getCurrentOption1Setting());
+
+        if (adapter.getManufacturer()!=null)
+            e.setAttribute("manufacturer", adapter.getManufacturer());
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -52,13 +55,17 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
       */
     public boolean load(Element e) {
     	boolean result = true;
-        getInstance();
-
+        adapter = new Port();
         // simulator has fewer options in the XML, so implement
-        // just needed one here        
+        // just needed ones       
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
+        }
+        
+        if (e.getAttribute("manufacturer")!=null) {
+            String mfg = e.getAttribute("manufacturer").getValue();
+            adapter.setManufacturer(mfg);
         }
         
         adapter.configure();
@@ -70,10 +77,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
 
     protected void getInstance() {  
-        // do system initialization
-        
-        // initialize dummry port
-        adapter = Port.instance();
+        // obsolete?
+        log.warn("getInstance called");
     }
 
     protected void register() {
