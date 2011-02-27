@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.26 2011-02-27 19:06:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.27 2011-02-27 21:42:55 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -222,6 +222,8 @@ Pete Cressman added new ControlPanelEditor features
 shows occupacy.  When used with Occupancy Blocks and Warrants, indicator icons will show allocation, 
 path route, occupancy or error condition by color.</li>
 <li>Accelerator keys added for Item Palette and Table List.</li>
+<li>The Item Palette user interface has all tab items drag from a "Drag Panel" icon.  Dragging from a table
+row places a text label in the panel.</li>
 </ul>
 
 <p>
@@ -243,16 +245,18 @@ Paul Bender made changes to the XPressNet code toward multiple connection suppor
 Ken Cameron made it possible to select a default power manager when using multiple connections.
 
 <p>
-Pete Cressman improved path detection and display for simultaneous manual and auto train running under warrants
-
-<p>
-Pete Cressman fixed an empty tooltip-text bug
+Pete Cressman changes:
+<ul>
+<li>edited tooltip-text is saved and default tiooltip is its device display name
+<li>improved path detection and display for simultaneous manual and auto train running under warrants.
+<li>fixed duplication and copy of rotated Signal Masts bug.
+<li>improved path detection and display for simultaneous manual and auto train running under warrants.
+<li>added a loco icon to follow auto trains running under warrants
+<li>fixed bug where orthogonal rotations overrode degree rotations when loading a panel.
+</ul>
 
 <p>
 Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connections.
-
-<p>
-Pete Cressman added a loco icon to follow auto trains running under warrants
 
 <p>
 Ken Cameron improved handling of the Digitrax DCS51 Super Zephyr.
@@ -304,9 +308,6 @@ Note: once the keyboard driver is running, all keyboard inputs will be considere
 
 <p>
 James LeFevre improved TMCC throttle support.
-
-<p>
-Pete Cressman fixed bug where orthogonal rotations overrode degree rotations when loading a panel
 
 <p>
 Matthew Harris corrected a bug where Layout Editor and Control Panel Editor Panels were not being deleted when 'Delete' was picked from the 'File' menu.
