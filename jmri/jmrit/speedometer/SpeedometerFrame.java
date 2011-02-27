@@ -4,6 +4,7 @@ package jmri.jmrit.speedometer;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.util.NamedBeanHandle;
 import java.awt.FlowLayout;
@@ -27,7 +28,7 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -78,7 +79,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     }
     
     public SpeedometerFrame() {
-        super();
+        super(false, false);
         
         startOnEntry.setSelected(true);
         stopOnEntry1.setSelected(true);
@@ -105,6 +106,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane1.add(startOnEntry);
         pane1.add(startOnExit);
         startSensorIcon = new SensorIcon(new jmri.jmrit.display.panelEditor.PanelEditor());
+        setupIconMap(startSensorIcon);
         startSensorIcon.setToolTipText("Shows sensor state; click to change");
         pane1.add(startSensorIcon);
         getContentPane().add(pane1);
@@ -118,6 +120,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane2.add(stopOnEntry1);
         pane2.add(stopOnExit1);
         stopSensorIcon1 = new SensorIcon(new jmri.jmrit.display.panelEditor.PanelEditor());
+        setupIconMap(stopSensorIcon1);
         stopSensorIcon1.setToolTipText("Shows sensor state; click to change");
         pane2.add(stopSensorIcon1);
         getContentPane().add(pane2);
@@ -131,6 +134,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane3.add(stopOnEntry2);
         pane3.add(stopOnExit2);
         stopSensorIcon2 = new SensorIcon(new jmri.jmrit.display.panelEditor.PanelEditor());
+        setupIconMap(stopSensorIcon2);
         stopSensorIcon2.setToolTipText("Shows sensor state; click to change");
         pane3.add(stopSensorIcon2);
         getContentPane().add(pane3);
@@ -237,7 +241,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     boolean dim;
 
     // establish whether English or Metric representation is wanted
-    void dim() {
+    final void dim() {
         dimButton.setEnabled(true);
         if (dimButton.getText().equals ("To metric units")) {
           dimButton.setText("To English units");
@@ -385,6 +389,21 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             });
         stopSensorIcon2.setSensor(new NamedBeanHandle<Sensor>(stopSensor2.getText(),s));
 
+    }
+
+    private void setupIconMap(SensorIcon sensor) {
+        sensor.setIcon("SensorStateActive",
+                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
+                    "resources/icons/smallschematics/tracksegments/circuit-occupied.gif"));
+        sensor.setIcon("SensorStateInactive",
+                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif",
+                    "resources/icons/smallschematics/tracksegments/circuit-empty.gif"));
+        sensor.setIcon("BeanStateInconsistent",
+                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                    "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+        sensor.setIcon("BeanStateUnknown",
+                new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                    "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedometerFrame.class.getName());
