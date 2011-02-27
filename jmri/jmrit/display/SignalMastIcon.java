@@ -23,7 +23,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -51,6 +51,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     public Positionable finishClone(Positionable p) {
         SignalMastIcon pos = (SignalMastIcon)p;
         pos.setSignalMast(getPName());        
+        pos._iconMap = cloneMap(_iconMap, pos);
         return super.finishClone(pos);
     }
 
