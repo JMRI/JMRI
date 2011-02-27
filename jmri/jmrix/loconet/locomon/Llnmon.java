@@ -34,10 +34,10 @@ import jmri.util.StringUtil;
  * with permission.
  * <P>
  * Reverse engineering of the Duplex Group/Password/Channel management was
- * provided by Leo Bicknell, used with permission.
+ * provided by Leo Bicknell with help from B. Milhaupt, used with permission.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 public class Llnmon {
 
@@ -817,9 +817,9 @@ public class Llnmon {
             switch (l.getElement(1)) {
 
             case 0x12: {
-                // Bit 0x08 is set, we think to indicate it is a duplex panel
-                // but we're not sure, so far every panel with this op code is
-                // a duplex panel. Might mean something else....
+                // Bit 3 (0x08 in hex) is set by every UR-92 we've ever captured.
+            	// The hypothesis is this indicates duplex enabled, but this has
+            	// not been confirmed with Digitrax.
                 return "UR-92 Responding with LocoNet ID " + (l.getElement(3) & 0x07)
                        + ((l.getElement(3) & 0x08) == 0x08 ? ", duplex enabled.\n" : ".\n");
             }
@@ -1688,7 +1688,8 @@ public class Llnmon {
              *
              * Page 10 of LocoNet Personal Edition v1.0.
              * 
-             * Duplex group management reverse engineered by Leo Bicknell.
+             * Duplex group management reverse engineered by Leo Bicknell, with input from
+             * B. Milhaupt.
              */
         case LnConstants.OPC_PEER_XFER: {
             // The first byte seems to determine the type of message.
@@ -1805,26 +1806,21 @@ public class Llnmon {
                     // (Jabour/Deloof LocoIO), SV Programming messages format 1
                     String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
                     String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
-                    return ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx)
-                           + "=> "
-                           + (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
-                                   : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
-                                           : "LocoIO@0x" + Integer.toHexString(dst_l)
-                                             + dst_subaddrx))
-                           + " "
+                    
+                    String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
+                    String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
+                            		 : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
+                                       : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
+
+                    return src_dev + "=> " + dst_dev + " "
                            + ((dst_h == 0x01) ? ((d[0] == 2 ? "Read" : "Write") + " SV" + d[1]) : "")
                            + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
-                                   : " = "
-                                     + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
-                                             : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
-                                             : (d[7] < 10) ? "" + d[7] : d[7]
-                                                                         + " (0x"
-                                                                         + Integer.toHexString(d[7])
-                                                                         + ")")
-                                             : (d[7] < 10) ? "" + d[7] : d[7]
-                                                                         + " (0x"
-                                                                         + Integer.toHexString(d[7])
-                                                                         + ")"))
+                             : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
+                                       : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
+                                       : (d[7] < 10) ? "" + d[7] 
+                                       : d[7] + " (0x" + Integer.toHexString(d[7]) + ")")
+                                       : (d[7] < 10) ? "" + d[7] 
+                                       : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
                            + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
                 }
                 // check for a specific type - SV Programming messages format 2
@@ -1867,67 +1863,165 @@ public class Llnmon {
             
             case 0x14: {
                 // Duplex Radio Management
+
                 switch (l.getElement(2)) {
+                case 0x01: {
+                	// Seems to be a query for just duplex devices.
+                	switch (l.getElement(3)) {
+                	case 0x08: {
+                		return "Query Duplex Panels.\n";
+                	}
+                	case 0x10: {
+                		return "Duplex Panel Response.\n";
+                	}
+                	default: {
+                        forceHex = true;
+                        return "Unknown Duplex Channel message.\n";
+                    }
+                	} // end of switch (l.getElement(3))
+                }
                 case 0x02: {
                     // Request Duplex Radio Channel
                     switch (l.getElement(3)) {
+                    case 0x00: {
+                        // The MSB is stuffed elsewhere again...
+                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+                    	return "Set Duplex Channel to " + Integer.toString(channel) + ".\n";
+                    }
                     case 0x08: {
-                        return "Request Duplex Channel.\n";
+                        return "Query Duplex Channel.\n";
                     }
                     case 0x10: {
-                        return "Duplex Channel is " + l.getElement(5) + ".\n";
+                        // The MSB is stuffed elsewhere again...
+                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+                        return "Duplex Channel is " + Integer.toString(channel) + ".\n";
                     }
                     default: {
                         forceHex = true;
                         return "Unknown Duplex Channel message.\n";
                     }
-                    } // end of switch (l.getElement(3)
+                    } // end of switch (l.getElement(3))
                 }
 
                 case 0x03: {
                     // Duplex Group Name
+                	// Characters appear to be 8 bit values, but transmitted over a 7 bit
+                	// encoding, so high order bits are stashed in element 4 and 9.
+                	char[] groupNameArray = { (char) (l.getElement(5)  | ((l.getElement(4) & 0x01) << 7)),
+                							  (char) (l.getElement(6)  | ((l.getElement(4) & 0x02) << 6)),
+                							  (char) (l.getElement(7)  | ((l.getElement(4) & 0x04) << 5)),
+                							  (char) (l.getElement(8)  | ((l.getElement(4) & 0x08) << 4)),
+                							  (char) (l.getElement(10) | ((l.getElement(9) & 0x01) << 7)),
+                							  (char) (l.getElement(11) | ((l.getElement(9) & 0x02) << 6)),
+                							  (char) (l.getElement(12) | ((l.getElement(9) & 0x04) << 5)),
+                							  (char) (l.getElement(13) | ((l.getElement(9) & 0x08) << 4)) };
+                	String groupName = new String(groupNameArray);
+                	
+                	// The pass code is stuffed in here, each digit in 4 bits.  But again, it's a
+                	// 7 bit encoding, so the MSB of the "upper" half is stuffed into byte 14.
+                	int p1 = ((l.getElement(14) & 0x01) << 3) | ((l.getElement(15) & 0x70) >> 4);
+                    int p2 = l.getElement(15) & 0x0F;
+                	int p3 = ((l.getElement(14) & 0x02) << 2) | ((l.getElement(16) & 0x70) >> 4);
+                    int p4 = l.getElement(16) & 0x0F;
+                    
+                    // It's not clear you can set A-F from throttles or Digitrax's tools, but
+                    // they do take and get returned if you send them on the wire...
+                    String passcode = Integer.toHexString(p1) + Integer.toHexString(p2)
+                    				+ Integer.toHexString(p3) + Integer.toHexString(p4);
+
+                    // The MSB is stuffed elsewhere again...
+                    int channel = l.getElement(17) | ((l.getElement(14) & 0x04) << 5);
+
+                    // The MSB is stuffed elsewhere one last time.
+                    int id = l.getElement(18) | ((l.getElement(14) & 0x08) << 4);
+
                     switch (l.getElement(3)) {
+                    case 0x00: {
+                    	return "Set Duplex Group Name to '" + groupName + ".\n";
+                    }
                     case 0x08: {
-                        return "Request Duplex Group Name.\n";
+                        return "Query Duplex Group Information.\n";
                     }
                     case 0x10: {
-                        char[] groupNameArray = { (char) l.getElement(5),
-                                                  (char) l.getElement(6),
-                                                  (char) l.getElement(7),
-                                                  (char) l.getElement(8),
-                                                  // Element 9 is missing on purpose
-                                                  (char) l.getElement(10),
-                                                  (char) l.getElement(11),
-                                                  (char) l.getElement(12) };
-                        String groupName = new String(groupNameArray);
-                        return "Duplex Group Name is '" + groupName + "'.\n";
+                         return "Duplex Group Name is '" + groupName 
+                         	+ "', Password " + passcode
+                         	+ ", Channel " + Integer.toString(channel)
+                         	+ ", ID " + Integer.toString(id)
+                         	+ ".\n";
                     }
                     default: {
                         forceHex = true;
                         return "Unknown Duplex Group Name message.\n";
                     }
-                    } // end of switch (l.getElement(3)
+                    } // end of switch (l.getElement(3))
+                }
+                case 0x04: {
+                	// Duplex Group ID
+                	
+                    // The MSB is stuffed elsewhere again...
+                    int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+                	switch (l.getElement(3)) {
+                    case 0x00: {
+                    	return "Set Duplex Group ID to '" + Integer.toString(id) + ".\n";
+                    }
+                    case 0x08: {
+                        return "Query Duplex Group ID.\n";
+                    }
+                    case 0x10: {
+                         return "Duplex Group ID is " + Integer.toString(id) + ".\n";
+                    }
+                    default: {
+                        forceHex = true;
+                        return "Unknown Duplex Group ID message.\n";
+                    }
+                    } // end of switch (l.getElement(3))
                 }
                 case 0x07: {
                     // Duplex Group Password
+                    char[] groupPasswordArray = { (char) l.getElement(5),
+                    							  (char) l.getElement(6),
+                    							  (char) l.getElement(7),
+                    							  (char) l.getElement(8)};
+                    String groupPassword = new String(groupPasswordArray);
+
                     switch (l.getElement(3)) {
+                    case 0x00: {
+                        return "Set Duplex Group Password is '" + groupPassword + "'.\n";
+                    }
                     case 0x08: {
-                        return "Request Duplex Group Password.\n";
+                        return "Query Duplex Group Password.\n";
                     }
                     case 0x10: {
-                        char[] groupPasswordArray = { (char) l.getElement(5),
-                                                      (char) l.getElement(6),
-                                                      (char) l.getElement(7),
-                                                      (char) l.getElement(8) };
-                        String groupPassword = new String(groupPasswordArray);
-                        return "Duplex Group Password is '" + groupPassword
-                               + "'.\n";
+                        return "Duplex Group Password is '" + groupPassword + "'.\n";
                     }
                     default: {
                         forceHex = true;
                         return "Unknown Duplex Group Password message.\n";
                     }
-                    } // end of switch (l.getElement(3)
+                    } // end of switch (l.getElement(3))
+                }
+                case 0x10: {
+                	// Radio Channel Noise/Activity
+                    switch (l.getElement(3)) {
+                    case 0x08: {
+                        return "Query Duplex Channel " + Integer.toString(l.getElement(5)) + " noise/activity report.\n";
+                    }
+                    case 0x10: {
+                    	// High order bit stashed in another element again.
+                    	int level = (l.getElement(6) & 0x7F) | ((l.getElement(4) & 0x02) << 6);
+                    	
+                        return "Duplex Channel " + Integer.toString(l.getElement(5)) + " reports noise/activity level "
+                               + Integer.toString(level) + "/255.\n";
+                    }
+                    default: {
+                        forceHex = true;
+                        return "Unknown Duplex Channel Activity message.\n";
+                    }
+                    } // end of switch (l.getElement(3))
+
                 }
                 default: {
                     // 0xE5 message of unknown format
@@ -2175,7 +2269,7 @@ public class Llnmon {
             } else {
                 /* Hmmmm... */
                 forceHex = true;
-                return "Weird Send Packet Immediate, 3rd byte id 0x"
+                return "Undefined Send Packet Immediate, 3rd byte id 0x"
                        + Integer.toHexString(val7f) + " not 0x7f.\n";
             }
         } // case LnConstants.OPC_IMM_PACKET
