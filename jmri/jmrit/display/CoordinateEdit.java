@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -228,7 +228,7 @@ public class CoordinateEdit extends JmriJFrame {
     ////////////////////////////////////////////////////////////// 
 
 	public CoordinateEdit() {
-		super();
+		super(false, false);
 	}
 
 	public void windowClosed(java.awt.event.WindowEvent e) {
@@ -355,8 +355,8 @@ public class CoordinateEdit extends JmriJFrame {
         xTextField = new javax.swing.JTextField(15);
 		xTextField.setText(pl.getTooltip().getText());
 		xTextField.setToolTipText("Enter Tooltip");
-		xTextField.setMaximumSize(new Dimension(
-				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
+//		xTextField.setMaximumSize(new Dimension(
+//				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
 		getContentPane().setLayout(new GridBagLayout());
 		
@@ -580,8 +580,8 @@ public class CoordinateEdit extends JmriJFrame {
         xTextField = new javax.swing.JTextField(15);
 		xTextField.setText(pLabel.getText());
 		xTextField.setToolTipText("Enter Text");
-		xTextField.setMaximumSize(new Dimension(
-				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
+//		xTextField.setMaximumSize(new Dimension(1000, xTextField.getPreferredSize().height));
+//				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
 		getContentPane().setLayout(new GridBagLayout());
 		
@@ -660,8 +660,8 @@ public class CoordinateEdit extends JmriJFrame {
         xTextField = new javax.swing.JTextField(15);
 		xTextField.setText(oldStr);
 		xTextField.setToolTipText(rb.getString("PromptNewName"));
-		xTextField.setMaximumSize(new Dimension(
-				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
+//		xTextField.setMaximumSize(new Dimension(1000, xTextField.getPreferredSize().height));
+//				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
 		getContentPane().setLayout(new GridBagLayout());
 		
@@ -687,35 +687,41 @@ public class CoordinateEdit extends JmriJFrame {
 	}
 
     protected void addSpinItems(boolean addY) {
-        addItem(nameText, 0, 0, 2);
-        addItem(textX, 0, 1, 1);
-        addItem(spinX, 1, 1, 1);
+        addItem(nameText, 0, 0, 2, true);
+        addItem(textX, 0, 1, 1, true);
+        addItem(spinX, 1, 1, 1, false);
         if (addY) {
-            addItem(textY, 0, 2, 1);
-            addItem(spinY, 1, 2, 1);
-            addItem(cancelButton, 0, 3, 1);
-            addItem(okButton, 1, 3, 1);
+            addItem(textY, 0, 2, 1, true);
+            addItem(spinY, 1, 2, 1, false);
+            addItem(cancelButton, 0, 3, 1, false);
+            addItem(okButton, 1, 3, 1, false);
         } else {
-            addItem(cancelButton, 0, 2, 1);
-            addItem(okButton, 1, 2, 1);
+            addItem(cancelButton, 0, 2, 1, false);
+            addItem(okButton, 1, 2, 1, false);
         }
+        validate();
     }
 
     private void addTextItems() {
-        addItem(nameText, 0, 0, 2);
-        addItem(textX, 0, 1, 1);
-        addItem(xTextField, 1, 1, 1);
-        addItem(cancelButton, 0, 2, 1);
-        addItem(okButton, 1, 2, 1);
+        addItem(nameText, 0, 0, 2, true);
+        addItem(textX, 0, 1, 1, true);
+        addItem(xTextField, 1, 1, 1, true);
+        addItem(cancelButton, 0, 2, 1, false);
+        addItem(okButton, 1, 2, 1, false);
+        validate();
     }
 
-	private void addItem(JComponent c, int x, int y, int w) {
+	private void addItem(JComponent c, int x, int y, int w, boolean horzExpand) {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = x;
 		gc.gridy = y;
         gc.gridwidth = w;
 		gc.weightx = 100.0;
 		gc.weighty = 100.0;
+        gc.anchor = java.awt.GridBagConstraints.CENTER;
+        if (horzExpand) {
+            gc.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        }
 		getContentPane().add(c, gc);
 	}
 	
