@@ -28,7 +28,7 @@ import jmri.util.javaworld.GridLayout2;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
@@ -44,7 +44,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
     JToggleButton    mRunButton = new JToggleButton("Go");
 
-    JTextField srcAliasField = new JTextField("123 ");
+    JTextField srcAliasField = new JTextField("123");
     JTextField verifyNodeField = new JTextField("01 02 03 04 05 06 ");
     JTextField sendEventField = new JTextField("01 02 03 04 05 06 FF FE ");
     JTextField dstAliasField = new JTextField(4);
