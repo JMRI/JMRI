@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.1 2011-02-27 19:06:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.2 2011-03-01 00:40:35 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -99,6 +99,10 @@ None at the time of this release.
 
 <h3>Changes since production version 2.11.3</h3>
 
+<p>
+New operations features and bug fixes:
+<ul>
+<li>Cars with a final destination will no longer wander if the destination track doesn't have space for the car.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
