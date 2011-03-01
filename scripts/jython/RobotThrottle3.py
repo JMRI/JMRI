@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -122,6 +122,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     next3Block = None
     priorBlocks = []
     priornext1Blocks = []
+    priorSignal = None
+    priorSignalAspect = None
     currentSignal = None
     currentSignalAspect = None
     nearSignal = None
@@ -686,6 +688,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 if (nBlock == None) :
                     self.msgText("next block doesn't exist, treating as red.\n")
                     self.speedFromAppearance(RED)
+                    self.priorSignal = self.currentSignal
+                    self.priorSignalAspect = self.currentSignalAspect
                     self.currentSignal = None
                     self.currentSignalAspect = RED
                     self.next1Signal = None
@@ -705,6 +709,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                             else :
                                 useAspect = stopDistAspect
                         self.speedFromAppearance(useAspect)
+                        self.priorSignal = self.currentSignal
+                        self.priorSignalAspect = self.currentSignalAspect
                         self.currentSignal = wSig
                         self.currentSignalAspect = wSig.getAppearance()
                     else :
@@ -729,6 +735,24 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             ret = 6
         return ret
         
+    # return speed change distance sum for rank change
+    def rankSpeedChangeDistance(self, rankOld, rankNew) :
+        ret = 0
+        if (rankOld >= 1 and rankNew <= 1) :
+            ret = ret + float(self.locoDistRed.text)
+        if (rankOld >= 2 and rankNew <= 2) :
+            ret = ret + float(self.locoDistRedFlash.text)
+        if (rankOld >= 3 and rankNew <= 3) :
+            ret = ret + float(self.locoDistYellow.text)
+        if (rankOld >= 4 and rankNew <= 4) :
+            ret = ret + float(self.locoDistYellowFlash.text)
+        if (rankOld >= 5 and rankNew <= 5) :
+            ret = ret + float(self.locoDistGreen.text)
+        if (rankOld >= 6 and rankNew <= 6) :
+            ret = ret + float(self.locoDistGreenFlash.text)
+        self.msgText("rankSpeedChangeDistance(" + rankOld.toString() + ", " + rankNew.toString() + "): " + ret.toString() + "\n")
+        return ret
+            
     # convert signal appearance to text
     def textSignalAspect(self, sigAspect) :
         ret = "???"
@@ -978,6 +1002,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             dist = self.currentBlock.getLengthIn()
             rate = float(self.locoRateRed.text)
             stopDist = float(self.locoDistRed.text)
+            if (self.priorSignalAspect != None) :
+                stopDist = self.rankSpeedChangeDistance(self.rankSignalAspect(self.priorSignalAspect), self.rankSignalAspect(RED))
             if (dist != 0 and rate != 0) :
                 # the stop distance is the reserved space plus 10% from far end of block
                 # the less one covers the delay of the handle() routine
@@ -994,7 +1020,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.redDelayTimer.setInitialDelay(int(delay * 1000))
                     self.redDelayTimer.start()
                 else :
-                    self.msgText("stop delay less that 1 second")
+                    self.msgText("stop delay less that 1 second\n")
                     self.doStop()
             else :
                 self.doStop()
@@ -1122,6 +1148,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.scriptFrame.setTitle("Run Loco " + self.locoAddress.text)
             self.setName("RB2: " + self.locoAddress.text)
             if (self.locoAddress.text != self.oldLocoAddress) :
+                # clear old block assignments
+                self.clearLocoFromBlocks(self.oldLocoAddress)
                 self.oldLocoAddress = self.locoAddress.text
                 if (self.loadFromRoster.isSelected() == True) :
                     # take the loco id and try looking up values in roster
@@ -1354,8 +1382,12 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             if (c == None) :
                 self.msgText("Invalid block name: " + self.blockStart.text + " please try again\n")
             else :
+                # clear any prior block entries
+                self.clearLocoFromBlocks(self.locoAddress.text)
                 c.setValue(self.locoAddress.text)
                 self.currentBlock = c
+                self.priorSignal = None
+                self.priorSignalAspect = None
                 self.currentSignal = None
                 self.currentSignalAspect = None
                 self.next1Block = None
@@ -1407,7 +1439,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     
     def whenLocoDirectionButtonClicked(self, event) :
         self.msgText("Button Loco Direction clicked\n")
-        self.methodLocoDirection = self.locoForward.isSelected()
+        if (self.currentThrottle != None) :
+            self.currentThrottle.setIsForward(self.locoForward.isSelected())
         return
         
     def whenBlockDirectionButtonClicked(self, event) :
@@ -1480,6 +1513,16 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 blockList.append(b)
         return blockList
 
+    def clearLocoFromBlocks(self, oldId) :
+        # search the block list for the matching loco
+        blockList = []
+        blockArray = blocks.getSystemNameList().toArray()
+        for x in blockArray :
+            b = blocks.getBySystemName(x)
+            if (b.getValue() == oldId) :
+                b.setValue(None)
+        return
+        
     def findNextBlock(self, cB) :
         # look down list of getToBlockDirection for match
         # use 'suggestion' flag if current block doesn't have direction
