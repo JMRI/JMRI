@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.99 2011-02-25 18:54:51 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.100 2011-03-01 01:18:52 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -29,13 +29,13 @@
 The operations program allows you to build computer generated train
 manifests for your railroad. A train manifest details the work that a
 train will perform during an operations session. The manifest provides a
-list of car pickup and drops and shows where the car's are located and
+list of car pick up and set outs and shows where the car's are located and
 where they should be eventually positioned on the railroad. The program
 allows you to build a roster of cars, define locations on the railroad,
 and routes for trains to travel. The car roster includes information
 about the car, including road name, number, type of car, color, length,
 weight, date built, and owner. Trains are assigned routes that define
-locations where cars can be picked up or dropped. Features include the
+locations where cars can be picked up or set out. Features include the
 ability to control what car types and car road names a location can
 service, the available track space for a location, and the maximum
 length the train can be between any two locations on the route.
@@ -123,12 +123,12 @@ modifying some of the car types checkboxes in the <A HREF="#Trains">Edit Train
 </A> window. Use the train <A HREF="#TrainReset">reset</A> to release
 the cars that were assigned to the train so you can build it again
 without moving the train. With the new car types restriction in place,
-you should see that the train will only pickup and drop car types that
+you should see that the train will only pick up and set out car types that
 are selected in the Edit Train window.</P>
 
 <P>Now try restricting your <A HREF="#Yards">tracks</A> to only
 certain types of cars by modifying the car types serviced for a track.
-Now when you build the train, the train will only drop of cars to tracks
+Now when you build the train, the train will only set out of cars to tracks
 that are willing to accept them.</P>
 
 <P>Press the <A HREF="#TrainMove">Move</A> button located in the <A
@@ -230,7 +230,7 @@ this value to 0.
 The program when generating switch lists for the various locations on
 your railroad, will estimate the arrival times for your trains based on
 the train's departure time and the switch and travel times. Enter the
-average number of minutes it takes to drop or pickup a car on your
+average number of minutes it takes to set out or pick up a car on your
 railroad. Then enter the average amount of time in minutes it takes to
 travel from one location to the another.  Later when you create a <A HREF="#EditRoute">route</A>
 you will be able to increase or decrease the train's travel time between
@@ -315,16 +315,16 @@ selecting Operations-&gt;Settings-&gt;Tools-&gt;Options.
 
 There are two build train options, normal and aggressive. It is
 recommended that you select normal when you first begin using the
-program. Normal builds guarantee that when a car is delivered (dropped)
+program. Normal builds guarantee that when a car is delivered (set out)
 by a train that there will be track space available for the car.
 
 <P>
 Aggressive builds makes the car's track space available as soon as a
-car is scheduled for a pickup. Therefore there can be instances where a
-train was to pickup a car to vacate the track, but a "later" scheduled
-train arrives early with a drop to that track and the car hasn't been
+car is scheduled for a pick up. Therefore there can be instances where a
+train was to pick up a car to vacate the track, but a "later" scheduled
+train arrives early with a set out to that track and the car hasn't been
 picked up. However, more often than not the same train will perform the
-pickup and drop thus minimizing the number of conflicts. Aggressive also
+pick up and set out thus minimizing the number of conflicts. Aggressive also
 performs a two pass determination of car movements. The net effect is
 that more cars are moved within a given train. Aggressive also tends to
 deliver cars to all of the available sidings. The smaller the siding,
@@ -385,12 +385,12 @@ the print option window.
 The program supports several types of fonts for printing. Select the desired
 font and size using the pull down menus. 
 
-<H3>Drop Text Color</H3>
+<H3>Set Out Text Color</H3>
 
-You can select the text color of your manifest when the operation is to drop off a car.
+You can select the text color of your manifest when the operation is to set out a car.
 Select the desired color from the drop down box.
 
-<H3>Pickup Text Color</H3>
+<H3>pick Up Text Color</H3>
 
 You can select the text color of your manifest when the operation is to pick up a car.
 Select the desired color from the drop down box.
@@ -403,7 +403,7 @@ equally spaced characters like "Courier or Monospaced".
 
 <H3>Message Formats</H3>
 
-You can customize the pickup and drop messages for your manifests and
+You can customize the pick up and set out messages for your manifests and
 switch lists by selecting the appropriate drop down menus.  To remove an
 attribute select blank.
 
@@ -438,18 +438,18 @@ information and "Very Detailed" provides the most. If you're only
 interested why a train won't build, the "Minimal" setting can provide
 you with this information. The "Normal" setting shows which locomotives and
 cars are being excluded from the train, and which locomotives and cars are
-being picked up and dropped. The "Detailed" setting will generate quite
+being picked up and set out. The "Detailed" setting will generate quite
 a few pages depending on the size of your railroad. It will show all
 available cars and locomotives, and a bit how the program finds destinations
 for the cars and locomotives. The "Very Detailed" setting produces the most
-pages, and will show why cars are not picked up or dropped. Be sure and
+pages, and will show why cars are not picked up or set out. Be sure and
 press "Save" after changing the build report selection.
 
 <A NAME="Locations"></A>
 <H2>Locations</H2>
 
-Locations are places on your railroad that trains visit to pickup or
-drop off cars and locomotives. Locations can be cities, towns, or just
+Locations are places on your railroad that trains visit to pick up or
+set out cars and locomotives. Locations can be cities, towns, or just
 places where trains need to work cars. Select
 "Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your
 railroad. 
@@ -487,8 +487,8 @@ your location.</P>
 <P>The tables show the length of the tracks, the amount of track
 that is occupied (Used) by cars and locomotives, the total number of cars
 and locomotives (Rolling Stock) at each location, the number of cars and
-locomotives that will be picked up (Pickups) by trains, and the number of
-cars and locomotives that will be delivered (Drops) by trains.</P>
+locomotives that will be picked up (Pick ups) by trains, and the number of
+cars and locomotives that will be delivered (Set outs) by trains.</P>
 
 <H3>Location Service Direction</H3>
 
@@ -549,7 +549,7 @@ Only" if you want to build a list of car load names that the yard will
 accept. Select "Exclude" if you want to build a list of car load names that
 you want to exclude from the yard.
 
-<H3>Pickup car order</H3>
+<H3>Pick up car order</H3>
 
 There are three options for picking up cars from the yard. "Normal" uses
 the car's move count to determine the order cars are removed from the
@@ -632,7 +632,7 @@ order. It makes the siding more restrictive, only cars demanded by the
 schedule will be delivered to the siding. Looking at the schedule you
 will see a pointer in the table under the heading "Current", the pointer
 shows the
-next car type and load that the program will to drop to the siding. When
+next car type and load that the program wants to place at the siding. When
 the program finds that car and sets the car's destination to this
 siding, the pointer will move the next item in the schedule.  After servicing
 the last item in the schedule, the pointer will return to the first item
@@ -663,7 +663,7 @@ aspects of a schedule. In match mode, the program will search the entire
 schedule to find a car type and load that matches the car that the
 program is trying to place. In match mode the pointer shows the last car
 that the program found acceptable for the siding. To change the schedule
-to match mode, select in the edit schedule window "Tools->Options",
+to match mode, select in the edit schedule window "Tools-&gt;Options",
 select "Match" and press "Save". Match mode is useful when the order
 cars arrive isn't important, but you still want to ship cars with a
 specific load, provide the car's next destination, or have the car wait
@@ -682,7 +682,7 @@ additional status for each of the sidings that use that particular
 schedule. The table also allows you the edit a schedule once its been
 assigned to a siding.</P>
 
-<A	NAME="MoreSchedule"></A>
+<A	NAME="SchedulesAndLoads"></A>
 <H3>Schedules and Loads</H3>
 
 You've entered all of your cars, tracks, and trains and have been
@@ -737,6 +737,15 @@ the car to that industry. But once a car has a custom load, that car can
 only move to yards, interchanges, and staging. No sidings unless the
 siding also has a schedule demanding that car and load.</P>
 
+<P>One more considerations is empty cars. The program doesn't route
+cars with the default loads "E" or "L". So if your schedule is
+requesting an car with the empty default "E", it can take awhile before
+that car shows up. An alternative is to handle empty cars like cars
+with custom loads. You could create the custom load "E(mpty)" and use
+this load to signify an empty car. Now cars with this load will be
+routed and will have the same characteristics as cars with the "other"
+custom loads.</P>
+
 <A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
 
@@ -744,15 +753,15 @@ If you want the program to force the exchange of cars between trains you
 need to define an interchange track. Cars dropped off to an interchange
 track by a train on a given route will not be picked up by any train
 using that route. Another train with a different route is required to
-pickup the cars. For example, you might have a branch line that picks up
-and drops off cars from a terminal. By defining the track as an
+pick up the cars. For example, you might have a branch line that picks up
+and set out cars from a terminal. By defining the track as an
 interchange, once the branch line train delivers the cars, they will remain
 there until the main line train stops to service the terminal's
 interchange track.
 
 <P>If you want more control on how your interchange track will
-operate, you can optionally specify a train or route to pickup or drop
-off cars at an interchange track.</P>
+operate, you can optionally specify a train or route to pick up or set out
+cars at an interchange track.</P>
 
 <H3>How to Create a Classification Yard</H3>
 
@@ -761,7 +770,7 @@ a yard track is assigned to a specific train and cars are delivered to
 that track until there are enough cars to complete a train. To create a
 classification yard, you need to assign an <A HREF="#Interchange">interchange
 track</A> to each of the trains that will depart your yard. For each
-track, allow any train to drop off cars, but assign only one train to
+track, allow any train to set out cars, but assign only one train to
 pick them up. You should configure the interchange track to service the
 same car types and roads that the train services, otherwise you could
 end up with orphan cars.
@@ -1304,7 +1313,9 @@ menu.
 A route is a list of locations that a train will visit. Later you can
 decide if the train stops at a location for work. Routes can be point to
 point or out and back. To build a route, select
-"Tools-&gt;Operations-&gt;Routes".
+"Tools-&gt;Operations-&gt;Routes".  The Routes window also provides route status,
+for example, "Orphan" means the route hasn't been assigned to a train.
+
 
 <P><img src="images/Routes.png"></P>
 
@@ -1328,10 +1339,10 @@ move a location up or down in the sequence if needed.</P>
 <H3>Edit Route</H3>
 
 Each location has the train's departure direction, number of desired car
-moves, and whether car pickups and or car drops are allowed at that
-location. A car move can be a car pickup or car drop at that location.
-For example, 5 moves can be 5 pickups, or 5 drops, or any combination of
-5 pickups or drops. Picking up or dropping off a group of cars or a
+moves, and whether car pick ups and or car set outs are allowed at that
+location. A car move can be a car pick up or car set out at that location.
+For example, 5 moves can be 5 pick ups, or 5 set outs, or any combination of
+5 pick ups or set outs. Picking up or dropping off a group of cars or a
 <A	HREF="#Kernel">kernel</A> represents one move.
 
 <P>If you want to delay the departure of the train from a location
@@ -1379,14 +1390,14 @@ and departed once. Note that names "Danville", "Danville-1", and
 list printouts, but the program deals with them as though they were
 different locations.
 
-<P>For example, you can control if there are drops or pickups at any
-location in the route. Therefore if you wanted to only drop off 3 cars,
-you could specify only drops and 3 moves. But what if you wanted to
-drop off 3 cars and pick up 7 cars. If you specify 10 moves for a
-location it can be any combination of 10 pickups and drops. Using
+<P>For example, you can control if there are set outs or pick ups at any
+location in the route. Therefore if you wanted to only set out 3 cars,
+you could specify only set outs and 3 moves. But what if you wanted to
+set out 3 cars and pick up 7 cars. If you specify 10 moves for a
+location it can be any combination of 10 pick ups and set outs. Using
 "Danville" as our location, we can in our route specify "Danville"
-twice, back to back. In the first "Danville" we can specify 3 drops
-only. In the second "Danville" we can specify 7 pickups only. Now the
+twice, back to back. In the first "Danville" we can specify 3 set outs
+only. In the second "Danville" we can specify 7 pick ups only. Now the
 program will "try" and meet your request by picking up to 7 cars and
 dropping off up to 3 cars.</P>
 
@@ -1411,9 +1422,9 @@ that rules out using interchange tracks.</P>
 locals will service "Danville" and "Danville-1". Now the dilemma, do the
 locals service "Danville-1" or "Danville" first? Not an issue, we create
 a route for the locals that services "Danville-1", then "Danville", and
-then "Danville-1". At the first "Danville-1" we request only pickups at
-the sidings, at "Danville" we specify both pickups and drops to the
-yard, and at the second "Danville-1" we specify only drops. </P>
+then "Danville-1". At the first "Danville-1" we request only pick ups at
+the sidings, at "Danville" we specify both pick ups and set outs to the
+yard, and at the second "Danville-1" we specify only set outs. </P>
 
 <P>Now the mainline train only services Danville yard.  The locals service Danville yard and the
 sidings.</P> 
@@ -1592,10 +1603,10 @@ see how that car would be serviced.</P>
 <P>The window shows the train's route along with every location and
 track that can be serviced by the train. To the right of each track is
 the current status for the car type currently selected in the drop down
-menu. If the track status is "OK" then this train can pickup and drop
-this type of car to that specific track. If the track status is "Pickup"
-or "Drop" then the train can only pickup or drop off cars to this
-particular track. A status that starts off with an "X" means that the
+menu. If the track status is "OK" then this train can pick up and set out
+this type of car to that specific track. If the track status is "Pick up"
+or "Set out" then the train can only pick up or set out cars to this
+particular track. A status that begins with an "X" means that the
 train will not service the track. The following table provides a summary
 of the various track statuses.</P>
 
@@ -1606,15 +1617,15 @@ of the various track statuses.</P>
 	</tr>
 	<tr>
 		<td width="20%">OK</td>
-		<td>Selected car type can be picked up and dropped</td>
+		<td>Selected car type can be picked up and set out</td>
 	</tr>
 	<tr>
-		<td>Pickup</td>
+		<td>Pick up</td>
 		<td>Selected car type can only be picked up from this track</td>
 	</tr>
 	<tr>
-		<td>Drop</td>
-		<td>Selected car type can only be dropped to this track</td>
+		<td>Set out</td>
+		<td>Selected car type can only be set out to this track</td>
 	</tr>
 	<tr>
 		<td>X (Train Built)</td>
@@ -1641,16 +1652,16 @@ of the various track statuses.</P>
 		<td>The train doesn't service this location</td>
 	</tr>
 	<tr>
-		<td>X (Train Pickup)</td>
-		<td>The train can't pickup cars from this track</td>
+		<td>X (Train Pick up)</td>
+		<td>The train can't pick up cars from this track</td>
 	</tr>
 	<tr>
-		<td>X (Train Drop)</td>
-		<td>The train can't drop cars to this track</td>
+		<td>X (Train Set out)</td>
+		<td>The train can't set out cars to this track</td>
 	</tr>
 	<tr>
 		<td>X (Route)</td>
-		<td>The route doesn't allow pickups or drops for this location</td>
+		<td>The route doesn't allow pick ups or set outs for this location</td>
 	</tr>
 	<tr>
 		<td>X (Route Moves)</td>
@@ -1671,12 +1682,12 @@ of the various track statuses.</P>
 	<tr>
 		<td>X (Dir Loc)</td>
 		<td>Based on the train's departure direction, the location
-		doesn't allow drops or pickups</td>
+		doesn't allow set outs or pick ups</td>
 	</tr>
 	<tr>
 		<td>X (Dir Trk)</td>
 		<td>Based on the train's departure direction, the track doesn't
-		allow drops or pickups</td>
+		allow set outs or pick ups</td>
 	</tr>
 </table>
 
@@ -1714,7 +1725,7 @@ that will only service that location. Adjust the "Move" count in the
 route to control how many cars the switcher will service.
 
 <P>Some operators like to produce a train manifest that only shows
-drops or pickups from a yard or interchange, and then have a switchlist
+set outs or pick ups from a yard or interchange, and then have a switchlist
 that shows moves between the yard and sidings. To eliminate tracks from
 showing up on a train's manifest, deselect all of the direction boxes
 for that track. Only a "switcher" will service a track that doesn't have
@@ -1802,7 +1813,7 @@ two or more locomotives are required for the train that the locomotives
 must be in a <A HREF="#LocomotivesAdd">consist</A>. The program assigns
 to the rolling stock (locomotives and cars) the number of moves that
 they experience during each session. The move count is bumped up each
-time the rolling stock is dropped off to a new location's track, or if
+time the rolling stock is set out to a new location's track, or if
 the rolling stock was assigned to a train and the train was reset. The
 program sorts the rolling stock by the move count, and then tries to
 assign locomotives and cars with the least number of moves to the train.
@@ -1898,7 +1909,7 @@ actual movement of trains on your layout. This is done by the train
 window. Pressing the "Move" button will cause the train to depart its
 current location move to the next location in the route. The locomotives and
 cars assigned to the train will travel to the next location on the
-railroad. At each location, cars can be picked up or dropped off. You
+railroad. At each location, cars can be picked up or set out. You
 can also move a train by selecting the train's icon and selecting "Move"
 from the icon's popup menu. Each press of the "Move" button moves the
 train closer to its terminal location. When the train arrives at the
@@ -1908,8 +1919,8 @@ terminate the train. Once a train is terminated, you can build it again.
 <P>Each time a locomotive or car is moved a count associated with them
 is incremented. The program uses this to determine which cars haven't
 moved recently and tries to select cars with the least number of moves
-when building new trains. Each time a location has a car picked up or
-dropped, the program increments a count associated with that location.
+when building new trains. Each time a location has a car
+set out, the program increments a count associated with that location.
 The program tries to move cars to locations that have experienced the
 least number of car operations.</P>
 
