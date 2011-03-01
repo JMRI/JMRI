@@ -56,7 +56,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -629,7 +629,7 @@ public class LayoutBlock extends AbstractNamedBean
 		}
 		// Initialize if needed
 		if (editLayoutBlockFrame == null) {
-            editLayoutBlockFrame = new JmriJFrame( rb.getString("EditBlock") );
+            editLayoutBlockFrame = new JmriJFrame( rb.getString("EditBlock"), false, false);
             editLayoutBlockFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutBlock", true);
             editLayoutBlockFrame.setLocation(80,40);
             Container contentPane = editLayoutBlockFrame.getContentPane();        
