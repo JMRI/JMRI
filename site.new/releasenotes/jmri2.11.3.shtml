@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.27 2011-02-27 21:42:55 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.28 2011-03-01 00:13:46 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -120,8 +120,8 @@ New operations features and bug fixes:
 <li>New tabbed manifest and switch lists.
 <li>Minor enhancement to check the car's load when placing car at a location.
 <li>Improve how operations moves cars when a route services a location more than once.
-<li>Improved car routing when car has a scheduled load.
-<li>All car loads in a kernel are now updated by siding schedules.
+<li>Improved car routing when car has a custom load.
+<li>All car loads in a kernel are now updated by siding's schedule.
 <li>User can now change all of the loads in a kernel when editing a car's load.
 <li>Add GUI for selecting tabbed manifests
 <li>Update "Show Car Types Serviced" Tool for train, now shows load status for train and track.
@@ -131,17 +131,18 @@ New operations features and bug fixes:
 <li>Fix minor bug when restarting program: A track with a schedule would move to the next items during load when cars had that destination track.
 <li>Operations enhancement, in the Trains window, user can select "Show All" or "Show only build trains".
 <li>Operations enhancement, now the user can sort trains by status.
-<li>Modify all cars in kernel when creating schedule loads from staging.
+<li>The program modifies all cars in kernel when using custom loads from staging.
 <li>Users can now preview or print out the car loads for the various car types.  This feature can be found in the Edit Car Loads->&gt;Tools
 <li>Users can now control which staging track a train will use.
 <li>Provided a new operations sample script to deselect the train build button when a train terminates: OperationsDeselectBuild.py 
-<li>Users can now run scripts after operation files have been loaded.  And users can run scripts when the Trains window is closed. 
-<li>Check car and engine length field during file imports.
+<li>Users can now run scripts after operation files have been loaded, and users can run scripts when the Trains window is closed. 
+<li>The program now checks car and engine length field during file imports.
 <li>Users can now select where to place the backup operations files.  See Settings / Tools / Backups.
-<li>Send car from staging with a custom load directly to a siding / schedule demanding that car type and load.
-<li>Fix trains terminate button, it should have terminated all trains that have been printed.
+<li>The program now routes cars from staging with a custom load to a siding with a schedule demanding that car type and load.
+<li>Fixed trains terminate button, it should have terminated all trains that have been printed.
 <li>When printing car locations you can now optionally have a space or page break after each set of locations.</li>
 <li>New manifest print option, you can now show destination and track when picking up a car.</li>
+<li>Schedules can now operate in two modes, sequential or match.  Use match mode when you don't care about car order.</li>
 </ul>
 
 <p>
