@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.3 2011-03-02 14:11:02 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.4 2011-03-02 19:55:47 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -104,6 +104,7 @@ New operations features and bug fixes:
 <ul>
 <li>Cars with a final destination will no longer wander if the destination track doesn't have space for the car.</li>
 <li>The edit schedule destination track menu now shows only valid tracks.  Staging tracks are no longer shown.</li>
+<li>The program will now check the entire schedule in match mode when generating custom loads from staging.</li>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
