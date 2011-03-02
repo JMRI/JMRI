@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.28 2011-03-01 00:13:46 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.29 2011-03-02 17:30:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,11 @@
       Release Notes for JMRI 2.11.3 release
       </h2>
 
-	<p>Date: MMM DD, 2010</p>
+	<p>Date: March 1, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.11.3 of JMRI/DecoderPro is available for download.
  
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -49,7 +49,10 @@ It contains
 many new features, including:
 
 <ul>
-<li>
+<li>Many operations improvements
+<li>support for the new Digitrax DCS51 Super Chief Xtra and the SPROG 3
+<li>Major additions to Logix and Editors
+<li>Improvements to throttles, including web and smartphone throttles.
 </ul>
 along with other changes.  See the complete list below.
 
