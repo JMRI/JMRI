@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.100 2011-03-01 01:18:52 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.101 2011-03-02 20:36:24 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -26,7 +26,7 @@
 
 <H2>JMRI Operations</H2>
 
-The operations program allows you to build computer generated train
+The operations program allows you to create computer generated train
 manifests for your railroad. A train manifest details the work that a
 train will perform during an operations session. The manifest provides a
 list of car pick up and set outs and shows where the car's are located and
@@ -36,9 +36,9 @@ and routes for trains to travel. The car roster includes information
 about the car, including road name, number, type of car, color, length,
 weight, date built, and owner. Trains are assigned routes that define
 locations where cars can be picked up or set out. Features include the
-ability to control what car types and car road names a location can
+ability to control what car types, road names, and car loads a location can
 service, the available track space for a location, and the maximum
-length the train can be between any two locations on the route.
+length the train can be between any two locations on the train's route.
 <P>
 Locations can have sidings, yards, staging and interchange tracks.
 Optionally, trains can be configured to require a caboose or car with
@@ -84,7 +84,7 @@ locations that you first use yard and siding tracks, and try staging and
 interchange tracks when you're more comfortable with how the program
 operates.
 
-<P>If this is your first time using a computer generated operations
+<P>If this is your first time using a computer generated car forwarding
 program, it is best to start off small and gradually work your way
 through the various options and features available. Start by entering
 only three or four <A HREF="#Locations">locations</A> with each location
@@ -390,7 +390,7 @@ font and size using the pull down menus.
 You can select the text color of your manifest when the operation is to set out a car.
 Select the desired color from the drop down box.
 
-<H3>pick Up Text Color</H3>
+<H3>Pick Up Text Color</H3>
 
 You can select the text color of your manifest when the operation is to pick up a car.
 Select the desired color from the drop down box.
@@ -549,14 +549,14 @@ Only" if you want to build a list of car load names that the yard will
 accept. Select "Exclude" if you want to build a list of car load names that
 you want to exclude from the yard.
 
-<H3>Pick up car order</H3>
+<H3>Pick Up Car Order</H3>
 
 There are three options for picking up cars from the yard. "Normal" uses
 the car's move count to determine the order cars are removed from the
 yard, "FIFO" (First In First Out), and "LIFO" (Last In First Out).  LIFO is
 useful if you have a single ended yard that you use to service cars.  For
 example storing empty coal cars, it would make more sense to pull an empty
-coal car from the front of the line rather than dig one out from the middle of
+coal car from the front of the line rather than digging one out from the middle of
 the yard.
 
 <H3>Comment</H3>
@@ -582,8 +582,9 @@ window, select Tools-&gt;Change Track Type.  Select the desired track type and p
 A siding is used to service an industry. To add a siding, press the "Add
 Siding" button. Sidings are very similar to <A HREF="#Yards">Yards</A> ,
 so see above for more information. You can if you wish schedule the
-order that cars will be delivered to a siding. See <A HREF="#Schedules">Schedules</A>
-below for more information. 
+order that cars will be delivered to a siding, or demand cars with
+certain loads. See <A HREF="#Schedules">Schedules</A> below for more
+information. 
 
 <A NAME="Schedules"></A>
 <H3>Schedules</H3>
@@ -650,12 +651,30 @@ staging, and interchanges.</P>
 <P>You can if you wish, specify the next destination for a car once
 it has been serviced by the siding. Only destination tracks that can
 accept the car type are shown in the track pull down menu.</P>
+
 <P>You can optionally use your <A HREF="#StagingAndCarLoads">staging
-tracks</A> to empty cars with a "Schedule" load, and you can also optionally
-create "Schedule" loads using staging tracks. If you want to specify staging
-as the car's destination, do not select a track, let the program determine
-which is the appropriate track in staging to use.  Otherwise, if you did
-select a track, that track would become unavailable for other cars.</P>
+tracks</A> to empty cars with a custom load, and you can also optionally
+have the program place custom loads into cars using staging tracks. If
+you want to specify staging as the car's destination, do not select a
+track, let the program determine which is the appropriate track in
+staging to use. Otherwise, if you did select a track, that track would
+become unavailable for other cars. To prevent overloading a siding with
+cars with custom loads from staging, the program will normally limit the
+number of cars in route to a schedule to the available track space. So
+if you have space for three cars, the most the program would normally
+generate for you from staging is three cars. However, if you need to
+adjust the number of cars in route to a siding with a schedule, select
+Options under Tools in the Edit Schedule window. A new window should
+appear, and adjust the "Percentage of custom loads generated by
+staging". The default value is 100% which means only generate enough
+cars to fill 100% of the available track space. If you only want half of
+your car loads to come from staging, set the value to 50%, and if you
+don't want staging to ever generate a custom load car for the siding,
+set the value to 0%. Sometimes it is appropriate to overload a siding
+with cars, if you want this, increase the value up to 1000%. BTW 1000%
+means send 10 times the available space in cars to this siding. If you
+enter this value, you hopefully have 10 times the siding's available track space in a
+storage yard that is near by!</P>
 
 <P>Schedules can operate in one of two modes, sequential as
 described above, or in match mode. Match mode eliminates the sequential
@@ -833,34 +852,41 @@ terminated into staging.</P>
 <A	NAME="StagingAndCarLoads"></A>
 <H3>Staging and Car loads</H3>
 
-Staging tracks can optionally swap the default car loads from empty to
+Staging tracks can optionally swap the car default loads from empty to
 loaded, and loaded to empty. Select the "Swap default Loads and Empties"
 if you want your cars loads to change when arriving at the staging
-track. You can also empty the cars as they enter staging. Select the
-"Empty cars with default loads" to change a car's load status to empty.
-If you're using custom loads, you can optionally remove the load when
-the cars arrive at the staging track. Select the "Empty cars with
-custom loads" box if you want the program to remove your custom loads
-from your cars when the train arrives at the staging track.
+track. You can if you want, ask the program to empty cars as they
+enter staging. Select the "Empty cars with default loads" to change a
+car's load status to empty. If you're using custom loads, you can remove
+the custom load when the cars arrive at the staging track. Select the
+"Empty cars with custom loads" box if you want to replace your custom
+loads with the default empty.
 
-<P>You can also have the program place custom loads in your cars as
-they leave staging. Select the "Generate custom loads for trains
-departing this track" to add custom loads to your cars. The program will
-create a custom load for an empty car that is the correct type for a
-siding that is demanding a custom load. To demand a custom load, the
-siding must have a <A HREF="#Schedules">schedule</A>. For a custom load
-to be created, the siding must be directly serviced by the route that
-departs the staging track.</P>
+<P>The program provides two options for placing custom loads into
+cars when they depart staging. The first option is called "Generate
+custom loads for trains departing this track". If the first option is
+selected, the program will only check sidings with schedules along the
+departure train's route.</P>
 
-<P>If you want the program to create a custom load for a siding that
-is not directly served by the departing train, select the "Create custom
-loads for any siding". To restrict which loads the program will
-generate, you can use the staging tracks load service control feature.
-See "Select loads service by this track" when editing the staging track.
-You can also restrict which types of loads the program will generate by
-restricting the types of loads the departing train from staging is
-allowed to service. See "Select loads service by this train" under
-Edit-&gt;Train, then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
+<P>If the second option is selected, "Generate custom loads for any
+siding", the program will check all sidings with a schedule for a request.</P>
+
+<P>Both options work the same with regards to placing custom car
+loads into cars, only the number of sidings considered by the program
+changes. If a schedule demands a certain car type, and that car type is
+departing staging, and the car's load is default empty, the program will place the
+custom load into that car if the appropriate option is selected.</P>
+
+<P>For a siding to request a custom load, the siding must have a <A
+	HREF="#Schedules">schedule</A>.</P>
+
+<P>To restrict which loads the program will place into your cars,
+you can use the staging tracks load service control feature. See "Select
+loads service by this track" when editing the staging track. You can
+also restrict which types of loads the program will place by restricting
+the types of loads the train departing from staging is allowed to
+service. See "Select loads service by this train" under Edit-&gt;Train,
+then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
 
 <A NAME="ModifyLocationsByCarType"></A>
 <H3>Modify Locations by Car Type</H3>
@@ -1122,7 +1148,7 @@ the type of car and load. The messages can be useful if you have visible
 car loads that need to be added or removed by your operators.</P> 
 
 <A NAME="CarsSet"></A>
-<H3>Set Car Location Button</H3>
+<H3>Set Car Location</H3>
 
 After creating a car, you can set the car's location, and optionally the
 car's destination and train by using the "Set" button found for each car
@@ -1168,6 +1194,20 @@ ship the car. The last field is the train assignment.</P>
 <P>When manually setting a destination, you don't have to specify a
 track. And when manually setting a destination that is staging, you
 should never select a destination track, let the program do that for you.</P>
+
+<A NAME="SetCars"></A>
+<H3>Set Cars</H3>
+
+If you want to change the location, destinations, status, or train
+assignment for a group of cars use the "Set Cars" tool found under
+"Tools" in the <A HREF="#Cars">Cars</A> window. The tool works the same
+way as the <A HREF="#CarsSet">Set Car Location</A> as described above,
+except that multiple cars are modified. Select the cars you want to
+change in the table and then select "Set Cars". The first car selected
+becomes the default, and if you press the "Change" button, all of the
+other selected cars will have the same settings as the
+default car. Be sure to press "Save" in the Cars window if you want to
+keep your changes.
 
 <H3>Tools</H3>
 
