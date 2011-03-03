@@ -11,7 +11,6 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.Sensor;
 import jmri.Path;
-import jmri.InstanceManager;
 
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
@@ -45,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 

@@ -8,9 +8,6 @@ import jmri.jmrit.display.*;
 import java.awt.*;
 import java.awt.event.*;
 //import java.awt.event.KeyEvent;
-//import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import java.awt.geom.Rectangle2D;
 

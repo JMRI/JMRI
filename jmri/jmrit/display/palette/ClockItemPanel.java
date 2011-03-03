@@ -2,9 +2,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 //import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
@@ -20,7 +17,6 @@ import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 

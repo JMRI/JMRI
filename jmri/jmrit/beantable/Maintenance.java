@@ -21,7 +21,6 @@ import javax.swing.JDialog;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -62,7 +61,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class Maintenance

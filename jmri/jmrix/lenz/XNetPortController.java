@@ -2,15 +2,12 @@
 
 package jmri.jmrix.lenz;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * interface for XNetPortController objects.
  * <p>
  *
  * @author			Paul Bender    Copyright (C) 2010
- * @version			$Revision: 3.0 $
+ * @version			$Revision: 3.1 $
  */
 public interface XNetPortController extends jmri.jmrix.PortAdapter {
 

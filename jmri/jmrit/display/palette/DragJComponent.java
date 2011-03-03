@@ -5,10 +5,7 @@ import javax.swing.JPanel;
 
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
-
-import java.io.IOException;
 
 /**
  * Gives a JComponent the capability to Drag and Drop 

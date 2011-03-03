@@ -22,7 +22,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.CatalogPanel;

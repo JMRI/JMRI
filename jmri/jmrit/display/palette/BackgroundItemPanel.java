@@ -3,38 +3,23 @@ package jmri.jmrit.display.palette;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 
 import javax.swing.event.ChangeListener; 
 import javax.swing.event.ChangeEvent; 
 
 import jmri.util.JmriJFrame;
-import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PositionableLabel;
 
-import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.CatalogTreeLeaf;
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**

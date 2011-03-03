@@ -2,7 +2,6 @@
 
 package jmri.jmrix.sprog;
 
-import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
@@ -15,7 +14,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 

@@ -9,8 +9,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.NamedBeanHandle;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -23,7 +21,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {

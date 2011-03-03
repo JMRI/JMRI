@@ -2,7 +2,6 @@
 
 package jmri.jmrix.lenz.liusbserver;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -17,7 +16,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  *
  * @see LIUSBServerAdapter
  */

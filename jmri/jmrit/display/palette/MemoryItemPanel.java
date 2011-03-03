@@ -1,11 +1,7 @@
 package jmri.jmrit.display.palette;
 
-import java.util.Hashtable;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
