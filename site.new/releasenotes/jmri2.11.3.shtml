@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.29 2011-03-02 17:30:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.30 2011-03-03 00:36:47 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -146,6 +146,7 @@ New operations features and bug fixes:
 <li>When printing car locations you can now optionally have a space or page break after each set of locations.</li>
 <li>New manifest print option, you can now show destination and track when picking up a car.</li>
 <li>Schedules can now operate in two modes, sequential or match.  Use match mode when you don't care about car order.</li>
+<li>New optional train requirements, you can now have two locomotive changes in the train's route, or request helper service.</li>
 </ul>
 
 <p>
