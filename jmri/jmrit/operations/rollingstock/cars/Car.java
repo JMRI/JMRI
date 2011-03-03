@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.71 $
+ * @version             $Revision: 1.72 $
  */
 public class Car extends RollingStock {
 	
@@ -25,6 +25,7 @@ public class Car extends RollingStock {
 	protected boolean _hazardous = false;
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
+	protected boolean _loadGeneratedByStaging = false;
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected int _wait = 0;
@@ -99,6 +100,14 @@ public class Car extends RollingStock {
 	
 	public String getLoad(){
 		return _load;
+	}
+	
+	public void setLoadGeneratedFromStaging(boolean fromStaging){
+		_loadGeneratedByStaging = fromStaging;
+	}
+	
+	public boolean isLoadGeneratedFromStaging(){
+		return _loadGeneratedByStaging;
 	}
 	
 	public void setScheduleId(String id){
@@ -503,6 +512,7 @@ public class Car extends RollingStock {
 				Car c = cars.get(i);
 				c.setNextDestination(getNextDestination());
 				c.setNextDestTrack(getNextDestTrack());
+				c.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
 				if (c.getType().equals(getType())
 						|| getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 						|| getLoad().equals(CarLoads.instance().getDefaultLoadName()))
@@ -516,6 +526,7 @@ public class Car extends RollingStock {
 	}
 	
 	private void loadNext(Track destTrack){
+		setLoadGeneratedFromStaging(false);
 		if (destTrack != null && destTrack.getLocType().equals(Track.SIDING)){
 			// update wait count
 			setWait(getNextWait());
@@ -571,6 +582,11 @@ public class Car extends RollingStock {
 		setNextWait(0);
 		setNextDestination(null);	// removes property change listener
 		setNextDestTrack(null);		// removes property change listener
+		if (isLoadGeneratedFromStaging()){
+			setLoadGeneratedFromStaging(false);
+			setLoad(CarLoads.instance().getDefaultEmptyName());
+		}
+			
 		super.reset();
 	}
 	
@@ -620,6 +636,9 @@ public class Car extends RollingStock {
 		}
 		if ((a = e.getAttribute("load")) != null){
 			_load = a.getValue();
+		}
+		if ((a = e.getAttribute("loadFromStaging")) != null && a.getValue().equals("true")){
+			setLoadGeneratedFromStaging(true);
 		}
 
 		if ((a = e.getAttribute("wait")) != null){
@@ -677,6 +696,8 @@ public class Car extends RollingStock {
 		if (!getLoad().equals("")){
 			e.setAttribute("load", getLoad());
 		}
+		if (isLoadGeneratedFromStaging())
+			e.setAttribute("loadFromStaging", "true");
 
 		if (getWait() != 0){
 			e.setAttribute("wait", Integer.toString(getWait()));

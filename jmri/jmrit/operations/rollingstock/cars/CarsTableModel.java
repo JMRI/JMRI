@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.38 $
+ * @version   $Revision: 1.39 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -168,6 +168,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 		_roadNumber ="";
 		return -1;
+    }
+    
+    public Car getCarAtIndex(int index){
+    	return manager.getById(sysList.get(index));
     }
     
     synchronized void updateList() {
@@ -342,8 +346,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	}
      	if (row >= sysList.size())
     		return "ERROR row "+row;
-    	String carId = sysList.get(row);
-    	Car c = manager.getById(carId);
+    	Car c = manager.getById(sysList.get(row));
       	if (c == null)
     		return "ERROR car unknown "+row;
         switch (col) {
@@ -422,8 +425,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarSetFrame csf = null;
     
     public void setValueAt(Object value, int row, int col) {
-		String carId = sysList.get(row);
-    	Car car = manager.getById(carId);
+    	Car car = manager.getById(sysList.get(row));
         switch (col) {
         case SETCOLUMN:
         	log.debug("Set car location");

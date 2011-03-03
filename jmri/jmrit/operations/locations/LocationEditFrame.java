@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -271,10 +271,11 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		pack();
 		if (manager.getLocationEditFrameSize()!= null){
 			setSize(manager.getLocationEditFrameSize());
-		} else {
-			if((getWidth()<700)) setSize(700, getHeight());
-			setSize(getWidth(), 700);
-		}
+		} 
+		if (getWidth()<700)
+			setSize(700, getHeight());
+		if (getHeight()<500)
+			setSize(getWidth(), 500);
 		if (manager.getLocationEditFramePosition()!= null){
 			setLocation(manager.getLocationEditFramePosition());
 		}

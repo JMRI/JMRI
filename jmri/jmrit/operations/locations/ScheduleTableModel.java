@@ -28,7 +28,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -314,7 +314,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	if (si.getDestination() != null){
     		Location dest = si.getDestination();
         	dest.updateComboBox(cb);  
-        	filterTracks(dest, cb, si.getType());
+        	filterTracks(dest, cb, si.getType(), si.getRoad(), si.getShip());
         	cb.setSelectedItem(si.getDestinationTrack());
     	}
     	return cb;
@@ -443,12 +443,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	_schedule.deleteItem(si);
     }
     
-    // remove tracks that don't service the car's type
-    private void filterTracks (Location loc, JComboBox cb, String carType){
+    // remove destination tracks that don't service the car's type, road, or load
+    private void filterTracks (Location loc, JComboBox cb, String carType, String carRoad, String carLoad){
     	List<String> tracks = loc.getTracksByNameList(null);
     	for (int i=0; i<tracks.size(); i++){
     		Track track = loc.getTrackById(tracks.get(i));
-    		if (!track.acceptsTypeName(carType))
+    		if (!track.acceptsTypeName(carType) || track.getLocType().equals(Track.STAGING) 
+    				|| (!carRoad.equals("") && !track.acceptsRoadName(carRoad)) 
+    				|| (!carLoad.equals("") && !track.acceptsLoadName(carLoad)))
     			cb.removeItem(track);
     	}
     }

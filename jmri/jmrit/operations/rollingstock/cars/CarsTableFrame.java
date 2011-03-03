@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -205,6 +205,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		toolMenu.add(new CarRosterMenu("Roster", CarRosterMenu.MAINMENU, this));
 		toolMenu.add(new ModifyLocationsAction());
 		toolMenu.add(new TrainsByCarTypeAction());
+		toolMenu.add(new CarsSetFrameAction(carsModel, carsTable));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);

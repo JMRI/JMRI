@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class CarLoads {
 	
@@ -340,6 +340,28 @@ public class CarLoads {
     		return maxNameLength;
     	}
     }
+    
+    private List<CarLoad> getSortedList(String type){
+    	List<CarLoad> loads = list.get(type);
+    	List<CarLoad> out = new ArrayList<CarLoad>();
+    	
+    	// Sort load names
+    	String[] loadNames = new String[loads.size()];
+    	for (int i=0; i<loads.size(); i++){
+    		loadNames[i] = loads.get(i).getName();
+    	}
+    	jmri.util.StringUtil.sort(loadNames);
+    	// return a list sorted by load name
+    	for (int i=loadNames.length-1; i>=0; i--){
+    		for (int j=0; j<loads.size(); j++){
+    			if (loadNames[i].equals(loads.get(j).getName())){
+    				out.add(loads.get(j));
+    				break;
+    			}
+    		}
+    	}
+    	return out;
+    }
         
     @SuppressWarnings("unchecked")
 	public Hashtable<String, List<CarLoad>> getList(){
@@ -365,7 +387,7 @@ public class CarLoads {
 			String key = en.nextElement();
 			Element load = new Element("load");
 			load.setAttribute("type", key);
-			List<CarLoad> loads = list.get(key);
+			List<CarLoad> loads = getSortedList(key);
 			StringBuffer buf = new StringBuffer();
 			for (int j=0; j<loads.size(); j++){
 				buf.append(loads.get(j).getName());

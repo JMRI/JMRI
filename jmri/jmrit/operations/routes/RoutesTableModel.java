@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -20,7 +21,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -41,6 +42,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         super();
         manager = RouteManager.instance();
         manager.addPropertyChangeListener(this);
+        LocationManager.instance().addPropertyChangeListener(this);
         updateList();
     }
     
@@ -175,7 +177,10 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     public void propertyChange(PropertyChangeEvent e) {
     	if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	 if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)) {
+    	if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
+    		fireTableDataChanged();
+    	}
+    	else if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)) {
              updateList();
              fireTableDataChanged();
     	 }
@@ -204,6 +209,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         if (ref != null)
         	ref.dispose();
         manager.removePropertyChangeListener(this);
+        LocationManager.instance().removePropertyChangeListener(this);
         removePropertyChangeRoutes();
     }
 

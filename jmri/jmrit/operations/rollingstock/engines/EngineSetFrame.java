@@ -14,7 +14,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class EngineSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -38,7 +38,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements java.beans.P
 		
 		// disable location unknown, return when empty, final destination fields
 		locationUnknownCheckBox.setVisible(false);	
-		pOptionalrwe.setVisible(false);
+		pOptional.setVisible(false);
 		pFinalDestination.setVisible(false);
 			
 		packFrame();

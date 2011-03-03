@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.70 $
+ * @version $Revision: 1.71 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -983,6 +983,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (manager.getTrainEditFrameSize()!= null){
 			setSize(manager.getTrainEditFrameSize());
 		}
+		if (getWidth()<500)
+			setSize(500, getHeight());
+		if (getHeight()<500)
+			setSize(getWidth(), 500);
 		setVisible(true);
     }
     

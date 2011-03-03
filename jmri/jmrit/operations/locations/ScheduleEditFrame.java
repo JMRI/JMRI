@@ -7,6 +7,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import java.text.MessageFormat;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -49,8 +50,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	
 	// radio buttons
     JRadioButton addLocAtTop = new JRadioButton(rb.getString("Top"));
-    JRadioButton addLocAtBottom = new JRadioButton(rb.getString("Bottom"));
-    ButtonGroup group = new ButtonGroup();
+    JRadioButton addLocAtBottom = new JRadioButton(rb.getString("Bottom"));   
+	JRadioButton sequentialRadioButton = new JRadioButton(rb.getString("Sequential"));
+	JRadioButton matchRadioButton = new JRadioButton(rb.getString("Match"));
 	
 	// text field
 	JTextField scheduleNameTextField = new JTextField(20);
@@ -108,8 +110,25 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
 		addItem(pC, commentTextField, 0, 0);
 		
+		// row 1c mode
+		JPanel pMode = new JPanel();
+		pMode.setLayout(new GridBagLayout());
+		pMode.setBorder(BorderFactory.createTitledBorder(rb.getString("ScheduleMode")));
+		addItem(pMode, sequentialRadioButton, 0, 0);
+		addItem(pMode, matchRadioButton, 1, 0);
+		
+		sequentialRadioButton.setToolTipText(rb.getString("TipSequential"));
+		matchRadioButton.setToolTipText(rb.getString("TipMatch"));
+		ButtonGroup modeGroup = new ButtonGroup();
+		modeGroup.add(sequentialRadioButton);
+		modeGroup.add(matchRadioButton);
+		
+		sequentialRadioButton.setSelected(_track.getScheduleMode() == Track.SEQUENTIAL);
+		matchRadioButton.setSelected(_track.getScheduleMode() == Track.MATCH);
+		
 		p1.add(pName);
 		p1.add(pC);
+		p1.add(pMode);
 
 		// row 2
     	JPanel p3 = new JPanel();
@@ -119,6 +138,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     	addItem(p3, addTypeButton, 1, 1);
     	addItem(p3, addLocAtTop, 2, 1);
     	addItem(p3, addLocAtBottom, 3, 1);
+        ButtonGroup group = new ButtonGroup();
     	group.add(addLocAtTop);
     	group.add(addLocAtBottom);
     	addLocAtBottom.setSelected(true);
@@ -246,8 +266,13 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			log.debug("schedule table edit true");
 			scheduleTable.getCellEditor().stopCellEditing();
 		}
-		if (_track != null)
+		if (_track != null){
 			_track.setScheduleId(_schedule.getId());
+			if (sequentialRadioButton.isSelected())
+				_track.setScheduleMode(Track.SEQUENTIAL);
+			else
+				_track.setScheduleMode(Track.MATCH);
+		}
 
 		// save schedule file
 		managerXml.writeOperationsFile();

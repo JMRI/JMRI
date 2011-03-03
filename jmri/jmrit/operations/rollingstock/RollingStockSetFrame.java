@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -84,7 +84,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected JCheckBox outOfServiceCheckBox = new JCheckBox(rb.getString("OutOfService"));
 	
 	// optional panels
-	protected JPanel pOptionalrwe = new JPanel();
+	protected JPanel pOptional = new JPanel();
 	protected JPanel pFinalDestination = new JPanel();
 	
 	// Auto checkbox states
@@ -143,8 +143,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		pPanel.add(pLocation);
 		
 		// optional panel return when empty
-		pOptionalrwe.setLayout(new BoxLayout(pOptionalrwe,BoxLayout.Y_AXIS));
-		pOptionalrwe.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
+		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
 		
 		// row 5
 		JPanel pReturnWhenEmpty = new JPanel();
@@ -155,7 +155,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		addItem(pReturnWhenEmpty, destReturnWhenEmptyBox, 1, 1);
 		addItem(pReturnWhenEmpty, trackReturnWhenEmptyBox, 2, 1);
 		addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 3, 1);
-		pOptionalrwe.add(pReturnWhenEmpty);
+		pOptional.add(pReturnWhenEmpty);
 		
 		// optional panel 2
 		JPanel pOptional2 = new JPanel();
@@ -198,7 +198,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		getContentPane().add(pPanel);
-		getContentPane().add(pOptionalrwe);
+		getContentPane().add(pOptional);
 		getContentPane().add(pOptional2);
 		getContentPane().add(pButtons);
 				
@@ -276,6 +276,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	protected boolean save(){
+		return change(_rs);
+	}
+	
+	protected boolean change(RollingStock rs){
 		log.debug("Save button action");
 		// save the auto buttons
 		autoTrackCheckBoxSelected = autoTrackCheckBox.isSelected();
@@ -284,11 +288,11 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
 		
 		// save the statuses
-		_rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
-		_rs.setOutOfService(outOfServiceCheckBox.isSelected());
+		rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
+		rs.setOutOfService(outOfServiceCheckBox.isSelected());
 		
 		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
-			_rs.setLocation(null, null);
+			rs.setLocation(null, null);
 		} else {
 			if (trackLocationBox.getSelectedItem() == null
 					|| trackLocationBox.getSelectedItem().equals("")) {
@@ -298,9 +302,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				return false;
 			}
 			// update location only if it has changed
-			if (_rs.getLocation() == null || !_rs.getLocation().equals(locationBox.getSelectedItem()) 
-					|| _rs.getTrack() == null || !_rs.getTrack().equals(trackLocationBox.getSelectedItem())){
-				String status = _rs.setLocation((Location) locationBox.getSelectedItem(),
+			if (rs.getLocation() == null || !rs.getLocation().equals(locationBox.getSelectedItem()) 
+					|| rs.getTrack() == null || !rs.getTrack().equals(trackLocationBox.getSelectedItem())){
+				String status = rs.setLocation((Location) locationBox.getSelectedItem(),
 						(Track)trackLocationBox.getSelectedItem());
 				if (!status.equals(RollingStock.OKAY)){
 					log.debug ("Can't set rs's location because of "+ status);
@@ -313,7 +317,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			}
 		}
 		if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
-			_rs.setDestination(null, null);
+			rs.setDestination(null, null);
 		} else {
 			Track destTrack = null;
 			if (trackDestinationBox.getSelectedItem() != null 
@@ -321,7 +325,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				destTrack = (Track)trackDestinationBox.getSelectedItem();
 			}
 			Location destination = (Location) destinationBox.getSelectedItem();
-			String status = _rs.setDestination(destination, destTrack);
+			String status = rs.setDestination(destination, destTrack);
 			if (!status.equals(RollingStock.OKAY)){
 				log.debug ("Can't set rs's destination because of "+ status);
 				JOptionPane.showMessageDialog(this,
@@ -332,38 +336,38 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			}
 		}
 		if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals(""))
-			_rs.setTrain(null);
+			rs.setTrain(null);
 		else {
-			_rs.setTrain((Train)trainBox.getSelectedItem());
-			Train train = _rs.getTrain();
+			rs.setTrain((Train)trainBox.getSelectedItem());
+			Train train = rs.getTrain();
 			// determine if train services this rs's type
-			if (train != null && !train.acceptsTypeName(_rs.getType())){
+			if (train != null && !train.acceptsTypeName(rs.getType())){
 				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServType"), new Object[]{_rs.getType(), train.getName()}),
+						MessageFormat.format(getRb().getString("rsTrainNotServType"), new Object[]{rs.getType(), train.getName()}),
 						getRb().getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			// determine if train services this rs's road
-			if (train != null && !train.acceptsRoadName(_rs.getRoad())){
+			if (train != null && !train.acceptsRoadName(rs.getRoad())){
 				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServRoad"), new Object[]{_rs.getRoad(), train.getName()}),
+						MessageFormat.format(getRb().getString("rsTrainNotServRoad"), new Object[]{rs.getRoad(), train.getName()}),
 						getRb().getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			// determine if train services this rs's built date
-			if (train != null && !train.acceptsBuiltDate(_rs.getBuilt())){
+			if (train != null && !train.acceptsBuiltDate(rs.getBuilt())){
 				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServBuilt"), new Object[]{_rs.getBuilt(), train.getName()}),
+						MessageFormat.format(getRb().getString("rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}),
 						getRb().getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			// determine if train services this rs's built date
-			if (train != null && !train.acceptsOwnerName(_rs.getOwner())){
+			if (train != null && !train.acceptsOwnerName(rs.getOwner())){
 				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServOwner"), new Object[]{_rs.getOwner(), train.getName()}),
+						MessageFormat.format(getRb().getString("rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}),
 						getRb().getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
@@ -375,8 +379,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			if (train != null){
 				route = train.getRoute();
 				if (route != null){
-					rl = route.getLastLocationByName(_rs.getLocationName());
-					rd = route.getLastLocationByName(_rs.getDestinationName());
+					rl = route.getLastLocationByName(rs.getLocationName());
+					rd = route.getLastLocationByName(rs.getDestinationName());
 				}
 			} else {
 				log.error("Expected a train from combobox");
@@ -384,14 +388,14 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			}
 			if (rl == null){
 				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsLocNotServ"), new Object[]{_rs.getLocationName(), train.getName()}),
+						MessageFormat.format(getRb().getString("rsLocNotServ"), new Object[]{rs.getLocationName(), train.getName()}),
 						getRb().getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			if (rd == null && !_rs.getDestinationName().equals("")){
+			if (rd == null && !rs.getDestinationName().equals("")){
 				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsDestNotServ"), new Object[]{_rs.getDestinationName(), train.getName()}),
+						MessageFormat.format(getRb().getString("rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
 						getRb().getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
@@ -415,7 +419,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				}
 				if (!foundDes){
 					JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString("rsLocOrder"),
-							new Object[] {_rs.getDestinationName(),	_rs.getLocationName(),
+							new Object[] {rs.getDestinationName(),	rs.getLocationName(),
 						train.getName() }), getRb().getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 					return false;
@@ -423,8 +427,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			}
 		}
 		// prevent rs from being picked up and delivered
-		_rs.setRouteLocation(null);
-		_rs.setRouteDestination(null);
+		rs.setRouteLocation(null);
+		rs.setRouteDestination(null);
 		return true;
 	}
 	
@@ -547,7 +551,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				log.debug("CarSetFrame sees location: "+ locationBox.getSelectedItem());
 				Location l = (Location)locationBox.getSelectedItem();
 				l.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
-				if (_rs.getLocation() != null && _rs.getLocation().equals(l) && _rs.getTrack() != null)
+				if (_rs != null && _rs.getLocation() != null && _rs.getLocation().equals(l) && _rs.getTrack() != null)
 					trackLocationBox.setSelectedItem(_rs.getTrack());
 				packFrame();
 			}
@@ -562,7 +566,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				log.debug("CarSetFrame sees destination: "+ destinationBox.getSelectedItem());
 				Location l = (Location)destinationBox.getSelectedItem();
 				l.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
-				if (_rs.getDestination() != null && _rs.getDestination().equals(l) && _rs.getDestinationTrack() != null)
+				if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(l) && _rs.getDestinationTrack() != null)
 					trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
 				packFrame();
 			}
@@ -572,6 +576,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	protected void packFrame(){
 		pack();	
+		if (getHeight()<400)
+			setSize(getWidth(), 400);
 		setVisible(true);
 	}
 

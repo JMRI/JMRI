@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -298,6 +298,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
     public void replaceType(String oldType, String newType){
+   	   	// set dirty
+    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
@@ -318,6 +320,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
 	public void replaceRoad(String oldRoad, String newRoad){
+   	   	// set dirty
+    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
@@ -335,6 +339,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	}
 	
     public void replaceLoad(String oldLoadName, String newLoadName){
+   	   	// set dirty
+    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));

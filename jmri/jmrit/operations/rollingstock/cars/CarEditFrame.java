@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -92,7 +92,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
 	JComboBox kernelComboBox = carManager.getKernelComboBox(); 
 	
- 
+	CarLoadEditFrame lef = null;
+	
 	public static final String ROAD = rb.getString("Road");
 	public static final String TYPE = rb.getString("Type");
 	public static final String COLOR = rb.getString("Color");
@@ -547,8 +548,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 		
 	}
-	
-	CarLoadEditFrame lef = null;
 	
 	private boolean checkCar(Car c){
 		String roadNum = roadNumberTextField.getText();

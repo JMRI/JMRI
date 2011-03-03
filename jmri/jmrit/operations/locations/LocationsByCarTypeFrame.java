@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which locations service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -129,7 +129,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		toolMenu.add(new PrintLocationsByCarTypesAction(rb.getString("MenuItemPreviewByType"), new Frame(), true, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType", true);
 
 		setPreferredSize(null);	// we need to resize this frame
 		pack();

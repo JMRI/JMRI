@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  * Frame for user edit of a staging track
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class StagingEditFrame extends InterchangeEditFrame implements java.beans.PropertyChangeListener {
@@ -63,9 +63,13 @@ public class StagingEditFrame extends InterchangeEditFrame implements java.beans
 		// override text strings for tracks
 		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainStaging")));
 		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesStaging")));
+		dropPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("SelectTrainArrival")));
+		pickupPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("SelectTrainDeparture")));
 		deleteTrackButton.setText(rb.getString("DeleteStaging"));
 		addTrackButton.setText(rb.getString("AddStaging"));
 		saveTrackButton.setText(rb.getString("SaveStaging"));
+		
+		
 		
 		// setup the check boxes
 		if (_track !=null){
