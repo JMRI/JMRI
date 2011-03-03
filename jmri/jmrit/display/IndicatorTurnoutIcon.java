@@ -37,14 +37,14 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
 
     Hashtable<String, Hashtable<Integer, NamedIcon>> _iconMaps;
     ArrayList <String> _paths;      // list of paths that include this icon
-    String  _iconFamily;        // icon family
+//    String  _iconFamily;        // icon family
 
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;
@@ -148,7 +148,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             if (_iconMaps==null) {
                 initMaps();
             }
+            _status = "DontUseTrack";
             getOccSensor().addPropertyChangeListener(this);
+            displayState(turnoutState());
         } 
     }
 
@@ -185,7 +187,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             if (_iconMaps==null) {
                 initMaps();
             }
+            _status = "DontUseTrack";
             getOccBlock().addPropertyChangeListener(this);
+            displayState(turnoutState());
         } 
     }
     public OBlock getOccBlock() { 
@@ -245,14 +249,14 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     public boolean showTrain() {
         return _showTrain;
     }
-
+/*
     public String getFamily() {
         return _iconFamily;
     }
     public void setFamily(String family) {
         _iconFamily = family;
     }
-
+*/
     public Iterator<String> getPaths() {
         if (_paths==null) {
             return null;
@@ -274,6 +278,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                                 +stateName+" icom= "+icon.getURL());
 //                                            ") state= "+_name2stateMap.get(stateName)+
 //                                            " icon: w= "+icon.getIconWidth()+" h= "+icon.getIconHeight());
+        if (_iconMaps==null) {
+            initMaps();
+        }
         _iconMaps.get(status).put(_name2stateMap.get(stateName), icon);
         setIcon(_iconMaps.get("ClearTrack").get(_name2stateMap.get("BeanStateInconsistent")));
     }
@@ -421,18 +428,16 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
 			log.debug("property change: "+getNameString()+" property \""+evt.getPropertyName()+"\"= "
 					+evt.getNewValue()+" from "+evt.getSource().getClass().getName());
 
-        Object source = evt.getSource();
-        if (source instanceof Turnout) {
-            super.propertyChange(evt);
-            return;
-        }
         if (getErrSensor()!=null && getErrSensor().getKnownState()==Sensor.ACTIVE) {
             _status = "ErrorTrack";
             displayState(turnoutState());
             return;
         }
 
-        if (source instanceof OBlock) {
+        Object source = evt.getSource();
+        if (source instanceof Turnout) {
+            super.propertyChange(evt);
+        } else if (source instanceof OBlock) {
             OBlock block = (OBlock)source;
             String pathName = block.getAllocatedPathName();
             if ("state".equals(evt.getPropertyName()) || "path".equals(evt.getPropertyName())) {

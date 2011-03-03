@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
@@ -121,32 +121,13 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         Editor p = (Editor)o;
 
         IndicatorTurnoutIcon l = new IndicatorTurnoutIcon(p);
-        
         Element name = element.getChild("turnout");
+        
         if (name==null) {
             log.error("incorrect information for turnout; must use turnout name");
         } else {
             l.setTurnout(name.getText());
         }
-        name = element.getChild("occupancyblock");
-        if (name!=null) {
-            l.setOccBlock(name.getText());
-        }
-        name = element.getChild("occupancysensor");
-        if (name!=null) {
-            l.setOccSensor(name.getText());
-        }
-        name = element.getChild("errorsensor");
-        if (name!=null) {
-            l.setErrSensor(name.getText());
-        }
-        
-        l.setShowTrain(false);
-        name = element.getChild("showTrainName");
-        if (name!=null) {
-            if ("yes".equals(name.getText())) l.setShowTrain(true);
-        }
-        
         Element elem = element.getChild("iconmaps");
         if (elem!=null) {
             @SuppressWarnings("unchecked")
@@ -174,6 +155,26 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
                 l.setFamily(attr.getValue());
             }
         }
+
+        name = element.getChild("occupancyblock");
+        if (name!=null) {
+            l.setOccBlock(name.getText());
+        }
+        name = element.getChild("occupancysensor");
+        if (name!=null) {
+            l.setOccSensor(name.getText());
+        }
+        name = element.getChild("errorsensor");
+        if (name!=null) {
+            l.setErrSensor(name.getText());
+        }
+        
+        l.setShowTrain(false);
+        name = element.getChild("showTrainName");
+        if (name!=null) {
+            if ("yes".equals(name.getText())) l.setShowTrain(true);
+        }
+        
         elem = element.getChild("paths");
         if (elem!=null) {
             ArrayList<String> paths = new ArrayList<String>();

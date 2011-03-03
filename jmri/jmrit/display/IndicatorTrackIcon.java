@@ -31,15 +31,13 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
-public class IndicatorTrackIcon extends PositionableLabel 
+public class IndicatorTrackIcon extends PositionableIcon 
                         implements java.beans.PropertyChangeListener {
 
-    Hashtable<String, NamedIcon> _iconMap;
     ArrayList <String> _paths;      // list of paths that include this icon
-    String  _iconFamily;
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
@@ -48,13 +46,13 @@ public class IndicatorTrackIcon extends PositionableLabel
     private String _status;     // is a key for _iconMap
     private String _train;
     private boolean _showTrain; // this track should display _train when occupied
+    LocoIcon _loco = null;
+
 
     public IndicatorTrackIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/tracksegments/block.gif",
-                            "resources/icons/smallschematics/tracksegments/block.gif"), editor);
-        setPopupUtility(null);
-        _status = "DontUseTrack";
+        super(editor);
+        _status = "ClearTrack";
         _iconMap = new Hashtable<String, NamedIcon>();
     }
 
@@ -113,7 +111,9 @@ public class IndicatorTrackIcon extends PositionableLabel
              if (_iconMap==null) {
                  _iconMap = new Hashtable<String, NamedIcon>();
              }
+             _status = "DontUseTrack";
              getOccSensor().addPropertyChangeListener(this);
+             displayState(_status);
          } 
      }
      public Sensor getOccSensor() {
@@ -149,7 +149,9 @@ public class IndicatorTrackIcon extends PositionableLabel
             if (_iconMap==null) {
                 _iconMap = new Hashtable<String, NamedIcon>();
             }
+            _status = "DontUseTrack";
             getOccBlock().addPropertyChangeListener(this);
+            displayState(_status);
         } 
     }
     public OBlock getOccBlock() { 
@@ -209,13 +211,6 @@ public class IndicatorTrackIcon extends PositionableLabel
         return _showTrain;
     }
 
-    public String getFamily() {
-        return _iconFamily;
-    }
-    public void setFamily(String family) {
-        _iconFamily = family;
-    }
-
     public Iterator<String> getPaths() {
         if (_paths==null) {
             return null;
@@ -232,38 +227,16 @@ public class IndicatorTrackIcon extends PositionableLabel
     public void setIcon(String name, NamedIcon icon) {
         if (log.isDebugEnabled()) log.debug("set \""+name+"\" icon= "+icon);
         _iconMap.put(name, icon);
-        setIcon(_iconMap.get("ClearTrack"));
+        setIcon(_iconMap.get(_status));
     }
-
+/*
     public NamedIcon getIcon(String name) {
         if (log.isDebugEnabled()) log.debug("get \""+name+"\" icon");
         return _iconMap.get(name);
     }
-
+*/
     public String getStatus() {
         return _status;
-    }
-
-
-    public int maxHeight() {
-        int max = 0;
-        if (_iconMap!=null) {
-            Iterator<NamedIcon> iter = _iconMap.values().iterator();
-            while (iter.hasNext()) {
-                max = Math.max(iter.next().getIconHeight(), max);
-            }
-        }
-        return max;
-    }
-    public int maxWidth() {
-        int max = 0;
-        if (_iconMap!=null) {
-            Iterator<NamedIcon> iter = _iconMap.values().iterator();
-            while (iter.hasNext()) {
-                max = Math.max(iter.next().getIconWidth(), max);
-            }
-        }
-        return max;
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -288,8 +261,6 @@ public class IndicatorTrackIcon extends PositionableLabel
                     } else {
                         _status = "DontUseTrack";
                     }
-           //     } else if ((now & OBlock.UNOCCUPIED)!=0) {
-          //          _status = "ClearTrack";
                 } else if ((now & OBlock.OCCUPIED)!=0) {
                     if ((now & OBlock.RUNNING)!=0) {
                         if (_paths!=null && _paths.contains(pathName)) {
@@ -303,10 +274,12 @@ public class IndicatorTrackIcon extends PositionableLabel
                     }
                 } else if ((now & OBlock.ALLOCATED)!=0) {
                     if (_paths!=null && !_paths.contains(pathName)) {
-                        _status = "ClearTrack";
+                        _status = "AllocatedTrack";     // icon not on path
                     } else {
-                        _status = "AllocatedTrack";
+                        _status = "ClearTrack";
                     }
+                } else if ((now & Sensor.UNKNOWN)!=0) {
+                    _status = "DontUseTrack";
                 } else {
                     _status = "ClearTrack";
                 }
@@ -353,35 +326,6 @@ public class IndicatorTrackIcon extends PositionableLabel
     public boolean showPopUp(JPopupMenu popup) {
         return false;
 	}
-
-    /******** popup AbstractAction.actionPerformed method overrides *********/
-
-    protected void rotateOrthogonal() {
-        Iterator<NamedIcon> it = _iconMap.values().iterator();
-        while (it.hasNext()) {
-            NamedIcon icon = it.next();
-            icon.setRotation(icon.getRotation()+1, this);
-        }
-        displayState(_status);
-    }
-
-    public void setScale(double s) {
-        Iterator<NamedIcon> it = _iconMap.values().iterator();
-        while (it.hasNext()) {
-            it.next().scale(s, this);
-        }
-        displayState(_status);
-    }
-
-    public void rotate(int deg) {
-        Iterator<NamedIcon> it = _iconMap.values().iterator();
-        while (it.hasNext()) {
-            it.next().rotate(deg, this);
-        }
-        displayState(_status);
-    }
-
-    LocoIcon _loco = null;
 
     /**
 	 * Drive the current state of the display from the state of the turnout.
@@ -502,7 +446,7 @@ public class IndicatorTrackIcon extends PositionableLabel
         _iconMap = null;
         super.dispose();
     }
-
+/*
     protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map,
                                                      IndicatorTrackIcon pos) {
         Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
@@ -518,7 +462,7 @@ public class IndicatorTrackIcon extends PositionableLabel
         }
         return clone;
     }
-
+*/
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTrackIcon.class.getName());
 }
 

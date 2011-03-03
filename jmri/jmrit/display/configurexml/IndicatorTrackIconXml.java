@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 
@@ -113,6 +113,28 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
 
         IndicatorTrackIcon l = new IndicatorTrackIcon(p);
         
+        Element elem = element.getChild("iconmap");
+        if (elem!=null) {
+            @SuppressWarnings("unchecked")
+            List<Element>status = elem.getChildren();
+            if (status.size()>0) {
+                for (int i=0; i<status.size(); i++) {
+                    String msg = "IndicatorTrack \""+l.getNameString()+"\" icon \""+status.get(i).getName()+"\" ";
+                    NamedIcon icon = loadIcon(l, status.get(i).getName(), elem,
+                                              msg, p);
+                    if (icon!=null) {
+                        l.setIcon(status.get(i).getName(), icon);
+                    } else {
+                        log.info(msg+" removed for url= "+status.get(i).getName());
+                        return;
+                    }
+                }
+            }
+            Attribute attr = elem.getAttribute("family");
+            if (attr!=null) {
+                l.setFamily(attr.getValue());
+            }
+        }
         Element name = element.getChild("occupancyblock");
         if (name!=null) {
             l.setOccBlock(name.getText());
@@ -132,28 +154,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
             if ("yes".equals(name.getText())) l.setShowTrain(true);
         }
         
-        Element elem = element.getChild("iconmap");
-        if (elem!=null) {
-            @SuppressWarnings("unchecked")
-            List<Element>status = elem.getChildren();
-            if (status.size()>0) {
-                for (int i=0; i<status.size(); i++) {
-                    String msg = "IndicatorTrack \""+l.getNameString()+"\" icon \""+status.get(i).getName()+"\" ";
-                    NamedIcon icon = loadIcon(l, status.get(i).getName(), elem,
-                                              msg, p);
-                    if (icon!=null) {
-                        l.setIcon(status.get(i).getName(), icon);
-                    } else {
-                        log.info(msg+" removed for url= "+name);
-                        return;
-                    }
-                }
-            }
-            Attribute attr = elem.getAttribute("family");
-            if (attr!=null) {
-                l.setFamily(attr.getValue());
-            }
-        }
         elem = element.getChild("paths");
         if (elem!=null) {
             ArrayList<String> paths = new ArrayList<String>();
