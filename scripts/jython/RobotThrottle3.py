@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -151,8 +151,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     redFlashSignalIcon = None
     darkSignalIcon = None
     unknownSignalIcon = None
-    redDelayTimer = None
-    redDelayListener = None
+    speedChangeTimer = None
+    speedChangeListener = None
     shrinkGrow = True
     fullScrollRows = 15
     speedPane = None
@@ -618,9 +618,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def releaseAllListeners(self, event) :
         self.releaseSignalListParts()
         self.releaseBlockListParts()
-        if (self.redDelayTimer != None) :
-            for i in self.redDelayTimer.getActionListeners() :
-                self.redDelayTimer.removeActionListener(i)
+        if (self.speedChangeTimer != None) :
+            for i in self.speedChangeTimer.getActionListeners() :
+                self.speedChangeTimer.removeActionListener(i)
         if (self.hornDelayTimer != None) :
             for i in self.hornDelayTimer.getActionListeners() :
                 self.hornDelayTimer.removeActionListener(i)
@@ -718,6 +718,24 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         self.doHalt()
         return
     
+    # return rate from signal aspect
+    def rateFromSignalAspect(self, sigAspect) :
+        ret = 0
+        if (sigAspect & RED != 0) :
+            ret = float(self.locoRateRed.text)
+        elif (sigAspect & FLASHRED != 0) :
+            ret = float(self.locoRateRedFlash.text)
+        elif (sigAspect & YELLOW != 0) :
+            ret = float(self.locoRateYellow.text)
+        elif (sigAspect & FLASHYELLOW != 0) :
+            ret = float(self.locoRateYellowFlash.text)
+        elif (sigAspect & GREEN != 0) :
+            ret = float(self.locoRateGreen.text)
+        elif (sigAspect & FLASHGREEN != 0) :
+            ret = float(self.locoRateGreenFlash.text)
+        self.msgText("rateFromSignalAspect(" + self.textSignalAspect(sigAspect) + "): " + ret.toString() + "\n")
+        return ret
+        
     # convert signal appearance to a ranked value
     def rankSignalAspect(self, sigAspect) :
         ret = 0
@@ -937,8 +955,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return doesMatchA and doesMatchB
     
     def doSpeedGreenFlash(self):
-        if (self.redDelayTimer != None) :
-            self.redDelayTimer.stop()
+        if (self.speedChangeTimer != None) :
+            self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedGreenFlash.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
@@ -948,8 +966,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def doSpeedGreen(self):
-        if (self.redDelayTimer != None) :
-            self.redDelayTimer.stop()
+        if (self.speedChangeTimer != None) :
+            self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedGreen.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
@@ -959,8 +977,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def doSpeedYellowFlash(self):
-        if (self.redDelayTimer != None) :
-            self.redDelayTimer.stop()
+        if (self.speedChangeTimer != None) :
+            self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedYellowFlash.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
@@ -970,19 +988,47 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def doSpeedYellow(self):
-        if (self.redDelayTimer != None) :
-            self.redDelayTimer.stop()
+        if (self.speedChangeTimer != None) :
+            self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
-            i = int(self.locoSpeedYellow.text) * 0.01
-            self.currentThrottle.setSpeedSetting(i)
-            if (self.debugLevel >= LowDebug) :
-                self.msgText("doSpeedYellow: " + i.toString() + "\n")
-            self.locoSpeed.text = self.locoSpeedYellow.text
+            doYellowNow = True
+            # compute how long to delay speed change
+            dist = self.currentBlock.getLengthIn()
+            rate = self.rateFromSignalAspect(FLASHGREEN)
+            speedChgDist = self.rankSpeedChangeDistance(self.rankSignalAspect(FLASHGREEN), self.rankSignalAspect(FLASHYELLOW))
+            if (self.priorSignalAspect != None) :
+                rate = self.rateFromSignalAspect(self.priorSignalAspect)
+                speedChgDist = self.rankSpeedChangeDistance(self.rankSignalAspect(self.priorSignalAspect), self.rankSignalAspect(FLASHYELLOW))
+            if (dist > 0 and rate > 0) :
+                # the delay distance is the reserved space plus 10% from far end of block
+                # the less one covers the delay of the handle() routine
+                delay = (((dist* 0.90) - speedChgDist) / rate ) - 1
+                self.msgText("doSpeedYellow: dist: " + dist.toString() + " rate: " + rate.toString() + " speedChgDist: " + speedChgDist.toString() + " delay: " + delay.toString() + "\n")
+                if (delay > 1) :
+                    currentDelay = 0
+                    if (self.speedChangeTimer == None) :
+                        if (self.speedChangeListener == None) :
+                            self.speedChangeListener = self.SpeedChangeTimeoutReceiver()
+                        self.speedChangeTimer = javax.swing.Timer(int(delay * 0), self.speedChangeListener)
+                        self.speedChangeTimer.setInitialDelay(int(delay * 1000))
+                        self.speedChangeTimer.setRepeats(False);
+                    self.speedChangeListener.setCallBack(self.yellowDelayHandler)
+                    self.speedChangeTimer.setInitialDelay(int(delay * 1000))
+                    self.speedChangeTimer.start()
+                    doYellowNow = False
+                else :
+                    self.msgText("yellow delay less that 1 second\n")
+            if (doYellowNow) :
+                i = int(self.locoSpeedYellow.text) * 0.01
+                self.currentThrottle.setSpeedSetting(i)
+                if (self.debugLevel >= LowDebug) :
+                    self.msgText("doSpeedYellow: " + i.toString() + "\n")
+                self.locoSpeed.text = self.locoSpeedYellow.text
         return
         
     def doSpeedRedFlash(self):
-        if (self.redDelayTimer != None) :
-            self.redDelayTimer.stop()
+        if (self.speedChangeTimer != None) :
+            self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedRedFlash.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
@@ -992,7 +1038,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def doSpeedRed(self):
-        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.redDelayTimer == None or self.redDelayTimer.isRunning() == False)) :
+        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.speedChangeTimer == None or self.speedChangeTimer.isRunning() == False)) :
             i = int(self.locoSpeedRed.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
             if (self.debugLevel >= LowDebug) :
@@ -1011,14 +1057,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.msgText("doSpeedRed: dist: " + dist.toString() + " rate: " + rate.toString() + " stopDist: " + stopDist.toString() + " delay: " + delay.toString() + "\n")
                 if (delay > 1) :
                     currentDelay = 0
-                    if (self.redDelayTimer == None) :
-                        self.redDelayListener = self.RedStopTimeoutReceiver()
-                        self.redDelayListener.setCallBack(self.redDelayHandler)
-                        self.redDelayTimer = javax.swing.Timer(int(delay * 0), self.redDelayListener)
-                        self.redDelayTimer.setInitialDelay(int(delay * 1000))
-                        self.redDelayTimer.setRepeats(False);
-                    self.redDelayTimer.setInitialDelay(int(delay * 1000))
-                    self.redDelayTimer.start()
+                    if (self.speedChangeTimer == None) :
+                        if (self.speedChangeListener == None) :
+                            self.speedChangeListener = self.SpeedChangeTimeoutReceiver()
+                        self.speedChangeTimer = javax.swing.Timer(int(delay * 0), self.speedChangeListener)
+                        self.speedChangeTimer.setInitialDelay(int(delay * 1000))
+                        self.speedChangeTimer.setRepeats(False);
+                    self.speedChangeListener.setCallBack(self.redDelayHandler)
+                    self.speedChangeTimer.setInitialDelay(int(delay * 1000))
+                    self.speedChangeTimer.start()
                 else :
                     self.msgText("stop delay less that 1 second\n")
                     self.doStop()
@@ -1026,18 +1073,31 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.doStop()
         return
         
+    # handle the timeout for slowing to yellow
+    def yellowDelayHandler(self, event) :
+        if (self.debugLevel >= LowDebug) :
+                self.msgText("yellowDelayHandler, slow to yellow now!\n")
+        self.speedChangeTimer.stop()
+        if (self.currentThrottle != None) :
+            i = int(self.locoSpeedYellow.text) * 0.01
+            self.currentThrottle.setSpeedSetting(i)
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doSpeedYellow: " + i.toString() + "\n")
+            self.locoSpeed.text = self.locoSpeedYellow.text
+        return
+        
     # handle the timeout for stopping on red
     def redDelayHandler(self, event) :
         if (self.debugLevel >= LowDebug) :
                 self.msgText("redDelayHandler, stopping now!\n")
-        self.redDelayTimer.stop()
+        self.speedChangeTimer.stop()
         self.doStop()
         return
         
     # stopping for normal issues, allows for restarting automaticly
     def doStop(self):
-        if (self.redDelayTimer != None) :
-            self.redDelayTimer.stop()
+        if (self.speedChangeTimer != None) :
+            self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
             self.currentThrottle.setSpeedSetting(0)
             if (self.debugLevel >= LowDebug) :
@@ -1561,7 +1621,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return bTrav
         
     # ActionListener - used for the stop timeout
-    class RedStopTimeoutReceiver(java.awt.event.ActionListener):
+    class SpeedChangeTimeoutReceiver(java.awt.event.ActionListener):
         cb = None
 
         def actionPerformed(self, event) :
