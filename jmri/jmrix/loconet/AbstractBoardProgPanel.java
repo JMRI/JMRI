@@ -32,12 +32,23 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel 
         implements LocoNetListener {
 
+    /**
+     * Constructor which assumes the board ID number is 1
+     * @param boardNum
+     */
     protected AbstractBoardProgPanel() {
+        this(1);
+    }
+    /**
+     * Constructor which allows the caller to pass in the board ID number
+     * @param boardNum
+     */
+    protected AbstractBoardProgPanel(int boardNum) {
         super();
 
         // basic formatting: Create pane to hold contents
@@ -47,7 +58,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         add(scroll);
 
         // and prep for display
-        addrField.setText("1");
+        addrField.setText(Integer.toString(boardNum));
     }
 
     JPanel contents = new JPanel();
@@ -89,8 +100,8 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         );
         return pane0;
     }
-    JToggleButton readAllButton  = new JToggleButton();
-    JToggleButton writeAllButton = new JToggleButton();
+    public JToggleButton readAllButton  = new JToggleButton();
+    public JToggleButton writeAllButton = new JToggleButton();
     JTextField addrField = new JTextField(4);
     /**
      * provide the status line for the GUI
@@ -113,10 +124,10 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         contents.add(c);
     }
 
-    boolean read = false;
+    public boolean read = false;
     int state = 0;
     
-    void readAll() {
+    public void readAll() {
         // check the address
         try {
             setAddress(256);
@@ -149,6 +160,9 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     protected void setTypeWord(int type) {
         typeWord = type;
     }
+
+    public boolean onlyOneOperation = false;
+
     void nextRequest() {
         if (read) {
             // read op
@@ -244,17 +258,48 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         // Start the first operation
         read = false;
         state = 1;
+        // specify as single request, not multiple
+        onlyOneOperation = false;
+        nextRequest();
+    }
+
+        public void writeOne(int startIndex) {
+        // check the address
+        try {
+            setAddress(256);
+        } catch (Exception e) {
+            log.debug("writeOne aborted due to invalid address"+e);
+            readAllButton.setSelected(false);
+            writeAllButton.setSelected(false);
+            status.setText("");
+            return;
+        }
+
+        // copy over the display
+        copyToOpsw();
+
+        // Start the first operation
+        read = false;
+        state = startIndex;
+
+        // specify as single request, not multiple
+        onlyOneOperation = true;
         nextRequest();
     }
 
     /**
      * True is "closed", false is "thrown". This matches how we
      * do the check boxes also, where we use the terminology for the
-     * "closed" option.
+     * "closed" option.  Note that opsw[0] is not a legal OpSwitch.
      */
-    protected boolean[] opsw = new boolean[64];
+    protected boolean[] opsw = new boolean[65];
 
-    public void message(LocoNetMessage m) {
+    /**
+     * Processes incoming LocoNet messages for OpSw read and write operations,
+     * and automatically advances to the next OpSw operation as directed by
+     * nextState()
+     * @param m
+     */public void message(LocoNetMessage m) {
         if (log.isDebugEnabled()) log.debug("get message "+m);
         // are we reading? If not, ignore
         if (state == 0) return;

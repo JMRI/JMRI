@@ -23,12 +23,15 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     public PM4Panel() {
-        super();
+        this(1);
+    }
+    public PM4Panel(int boardNum) {
+        super(boardNum);
 
         appendLine(provideAddressing("PM4"));  // add read/write buttons, address
 

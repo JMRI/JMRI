@@ -21,12 +21,15 @@ import javax.swing.JCheckBox;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005, 2007, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     public DS64Panel() {
-        super();
+        this(1);
+    }
+    public DS64Panel(int boardNum) {
+        super(boardNum);
 
         appendLine(provideAddressing("DS64"));  // add read/write buttons, address
 

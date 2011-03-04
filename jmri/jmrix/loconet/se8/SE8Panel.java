@@ -26,12 +26,15 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003, 2004, 2007, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     public SE8Panel() {
-        super();
+        this(1);
+    }
+    public SE8Panel(int boardNum) {
+        super(boardNum);
 
         appendLine(provideAddressing("SE8"));  // add read/write buttons, address
 

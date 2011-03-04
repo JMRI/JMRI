@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -378,6 +378,21 @@ public final static int KEY_PEER_XFR		= 1<< 20;
 public final static int KEY_IMM_PACKET		= 1<< 21;
 public final static int KEY_WR_SL_DATA		= 1<< 22;
 
+// reverse-engineered constants
+public final static int RE_IPL_MFR_DIGITRAX            = 0x00;
+public final static int RE_IPL_DIGITRAX_HOST_UT4       = 0x04;
+public final static int RE_IPL_DIGITRAX_HOST_UR92      = 0x5C;
+public final static int RE_IPL_DIGITRAX_HOST_DCS51     = 0x33;
+public final static int RE_IPL_DIGITRAX_HOST_DT402     = 0x2A;
+public final static int RE_IPL_DIGITRAX_HOST_PR3       = 0x23;
+public final static int RE_IPL_DIGITRAX_HOST_ALL       = 0x00;
+public final static int RE_IPL_DIGITRAX_SLAVE_RF24     = 0x18;
+public final static int RE_IPL_DIGITRAX_SLAVE_ALL      = 0x00;
+public final static int RE_IPL_PING_OPERATION          = 0x08;
+public final static int RE_IPL_IDENTITY_OPERATION      = 0x0f;
+public final static int RE_LACK_SPEC_CASE1             = 0x50; // special case LACK response for OpSw accesses
+public final static int RE_LACK_SPEC_CASE2             = 0x00; // special case LACK response for OpSw accesses
+public final static int RE_OPC_PR3_MODE                = 0xD3;
 
 }
 
