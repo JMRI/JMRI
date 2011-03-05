@@ -17,7 +17,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 abstract public class AbstractCanTrafficController 
@@ -26,6 +26,7 @@ abstract public class AbstractCanTrafficController
 
     public AbstractCanTrafficController() {
         super();
+        allowUnexpectedReply = true;
     }
 
     // The methods to implement the CAN Interface
