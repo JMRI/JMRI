@@ -32,14 +32,14 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel 
         implements LocoNetListener {
 
     /**
      * Constructor which assumes the board ID number is 1
-     * @param boardNum
+     * @param
      */
     protected AbstractBoardProgPanel() {
         this(1);

@@ -37,7 +37,7 @@ import jmri.util.StringUtil;
  * provided by Leo Bicknell with help from B. Milhaupt, used with permission.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 public class Llnmon {
 
@@ -267,7 +267,6 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
        case LnConstants.OPC_SW_ACK: {
-            int sw1 = l.getElement(1);
             int sw2 = l.getElement(2);
             // get system and user names
             String turnoutSystemName = new String();
@@ -301,8 +300,6 @@ public class Llnmon {
             * Page 8 of LocoNet Personal Edition v1.0.
             */
         case LnConstants.OPC_SW_STATE: {
-            int sw1 = l.getElement(1);
-            int sw2 = l.getElement(2);
             // get system and user names
             String turnoutSystemName = new String();
             String turnoutUserName = new String();
@@ -607,7 +604,6 @@ public class Llnmon {
             catch (Exception e) {
                 sensorUserName = "()";
             }
-            if ( sensorUserName == null) sensorUserName = "";
 
                 int sensor = (SENSOR_ADR(in1, in2) - 1) * 2
                          + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
@@ -955,7 +951,6 @@ public class Llnmon {
              */
         case LnConstants.OPC_MULTI_SENSE: {
             int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
-            String m;
 
             int section = (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
 
@@ -1873,700 +1868,836 @@ public class Llnmon {
         case LnConstants.OPC_PEER_XFER: {
             // The first byte seems to determine the type of message.
             switch (l.getElement(1)) {
-            case 0x10: {
-                /*
-                 * SRC=7F is THROTTLE msg xfer
-                 *  ; <DSTL><DSTH> encode ID#,
-                 *  ; <0><0> is THROT B'CAST
-                 *  ; <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>
-                 *  ; XC0-XC2=ADR type CODE-0=7 bit Peer
-                 * TO Peer adrs * 
-                 *  ; 1=<D1>is SRC HI,<D2>is DST HI
-                 *  ; <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>
-                 *  ; XC3-XC5=data type CODE- 0=ANSI TEXT string,
-                 *  ; balance RESERVED *
-                 * ****************************************************
-                 * SV programming format 1
-                 * 
-                 * This is the message format as implemented by the certain
-                 * existing devices. New designs should not use this format. The
-                 * message bytes are assigned as follows:
-                 *   ; <0xE5> <0x10> <SRC> <DST> <0x01> <PXCT1> 
-                 *   ; <D1> <D2> <D3> <D4> <PXCT2> 
-                 *   ; <D5> <D6> <D7> <D8> <CHK> 
-                 *   
-                 * The upper nibble of PXCT1 must be 0,
-                 * and the upper nibble of PXCT2 must be 1. The meanings of the
-                 * remaining bytes are as defined in the LocoNet Personal
-                 * Edition specification.
-                 * *********************************************
-                 * SV programming format 2
-                 * 
-                 * This is the recommended format for new designs.
-                 * The message bytes as assigned as follows: * 
-                 *  ; <0xE5> <0x10> <SRC> <SV_CMD> <SV_TYPE> <SVX1>
-                 *  ; <DST_L> <DST_H> <SV_ADRL> <SV_ADRH> <SVX2>
-                 *  ; <D1> <D2> <D3> <D4> <CHK>
-                 * 
-                 * The upper nibble of both SVX1 (PXCT1) and SVX2 (PXCT2) must be 1.
-                 */
+                case 0x10: {
+                    /*
+                     * SRC=7F is THROTTLE msg xfer
+                     *  ; <DSTL><DSTH> encode ID#,
+                     *  ; <0><0> is THROT B'CAST
+                     *  ; <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>
+                     *  ; XC0-XC2=ADR type CODE-0=7 bit Peer
+                     * TO Peer adrs *
+                     *  ; 1=<D1>is SRC HI,<D2>is DST HI
+                     *  ; <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>
+                     *  ; XC3-XC5=data type CODE- 0=ANSI TEXT string,
+                     *  ; balance RESERVED *
+                     * ****************************************************
+                     * SV programming format 1
+                     *
+                     * This is the message format as implemented by the certain
+                     * existing devices. New designs should not use this format. The
+                     * message bytes are assigned as follows:
+                     *   ; <0xE5> <0x10> <SRC> <DST> <0x01> <PXCT1>
+                     *   ; <D1> <D2> <D3> <D4> <PXCT2>
+                     *   ; <D5> <D6> <D7> <D8> <CHK>
+                     *
+                     * The upper nibble of PXCT1 must be 0,
+                     * and the upper nibble of PXCT2 must be 1. The meanings of the
+                     * remaining bytes are as defined in the LocoNet Personal
+                     * Edition specification.
+                     * *********************************************
+                     * SV programming format 2
+                     *
+                     * This is the recommended format for new designs.
+                     * The message bytes as assigned as follows: *
+                     *  ; <0xE5> <0x10> <SRC> <SV_CMD> <SV_TYPE> <SVX1>
+                     *  ; <DST_L> <DST_H> <SV_ADRL> <SV_ADRH> <SVX2>
+                     *  ; <D1> <D2> <D3> <D4> <CHK>
+                     *
+                     * The upper nibble of both SVX1 (PXCT1) and SVX2 (PXCT2) must be 1.
+                     */
 
-                int src = l.getElement(2); // source of transfer
-                int dst_l = l.getElement(3); // ls 7 bits of destination
-                int dst_h = l.getElement(4); // ms 7 bits of destination
-                int pxct1 = l.getElement(5);
-                int pxct2 = l.getElement(10);
+                    int src = l.getElement(2); // source of transfer
+                    int dst_l = l.getElement(3); // ls 7 bits of destination
+                    int dst_h = l.getElement(4); // ms 7 bits of destination
+                    int pxct1 = l.getElement(5);
+                    int pxct2 = l.getElement(10);
 
-                int d[] = l.getPeerXfrData();
+                    int d[] = l.getPeerXfrData();
 
-                String generic = "Peer to Peer transfer: SRC=0x" 
-                                 + Integer.toHexString(src)
-                                 + ", DSTL=0x" 
-                                 + Integer.toHexString(dst_l) 
-                                 + ", DSTH=0x"
-                                 + Integer.toHexString(dst_h) 
-                                 + ", PXCT1=0x"
-                                 + Integer.toHexString(pxct1) 
-                                 + ", PXCT2=0x"
-                                 + Integer.toHexString(pxct2);
-                String data = "Data [0x" + Integer.toHexString(d[0]) 
-                              + " 0x" + Integer.toHexString(d[1]) 
-                              + " 0x" + Integer.toHexString(d[2])
-                              + " 0x" + Integer.toHexString(d[3]) 
-                              + ",0x" + Integer.toHexString(d[4]) 
-                              + " 0x" + Integer.toHexString(d[5])
-                              + " 0x" + Integer.toHexString(d[6]) 
-                              + " 0x" + Integer.toHexString(d[7]) + "]\n";
+                    String generic = "Peer to Peer transfer: SRC=0x"
+                                     + Integer.toHexString(src)
+                                     + ", DSTL=0x"
+                                     + Integer.toHexString(dst_l)
+                                     + ", DSTH=0x"
+                                     + Integer.toHexString(dst_h)
+                                     + ", PXCT1=0x"
+                                     + Integer.toHexString(pxct1)
+                                     + ", PXCT2=0x"
+                                     + Integer.toHexString(pxct2);
+                    String data = "Data [0x" + Integer.toHexString(d[0])
+                                  + " 0x" + Integer.toHexString(d[1])
+                                  + " 0x" + Integer.toHexString(d[2])
+                                  + " 0x" + Integer.toHexString(d[3])
+                                  + ",0x" + Integer.toHexString(d[4])
+                                  + " 0x" + Integer.toHexString(d[5])
+                                  + " 0x" + Integer.toHexString(d[6])
+                                  + " 0x" + Integer.toHexString(d[7]) + "]\n";
 
-                if ((src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
-                    && ((pxct1 & 0x70) == 0x40)) {
-                    // Download (firmware?) messages.
-                    int sub = pxct2 & 0x70;
-                    switch (sub) {
-                    case 0x00: // setup
-                        return "Download message, setup.\n";
-                    case 0x10: // set address
-                        return "Download message, set address "
-                               + StringUtil.twoHexFromInt(d[0])
-                               + StringUtil.twoHexFromInt(d[1])
-                               + StringUtil.twoHexFromInt(d[2]) + ".\n";
-                    case 0x20: // send data
-                        return "Download message, send data "
-                               + StringUtil.twoHexFromInt(d[0]) + " "
-                               + StringUtil.twoHexFromInt(d[1]) + " "
-                               + StringUtil.twoHexFromInt(d[2]) + " "
-                               + StringUtil.twoHexFromInt(d[3]) + " "
-                               + StringUtil.twoHexFromInt(d[4]) + " "
-                               + StringUtil.twoHexFromInt(d[5]) + " "
-                               + StringUtil.twoHexFromInt(d[6]) + " "
-                               + StringUtil.twoHexFromInt(d[7]) + ".\n";
-                    case 0x30: // verify
-                        return "Download message, verify.\n";
-                    case 0x40: // end op
-                        return "Download message, end operation.\n";
-                    default: // everything else isn't understood, go to default
+                    if ((src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
+                        && ((pxct1 & 0x70) == 0x40)) {
+                        // Download (firmware?) messages.
+                        int sub = pxct2 & 0x70;
+                        switch (sub) {
+                        case 0x00: // setup
+                            return "Download message, setup.\n";
+                        case 0x10: // set address
+                            return "Download message, set address "
+                                   + StringUtil.twoHexFromInt(d[0])
+                                   + StringUtil.twoHexFromInt(d[1])
+                                   + StringUtil.twoHexFromInt(d[2]) + ".\n";
+                        case 0x20: // send data
+                            return "Download message, send data "
+                                   + StringUtil.twoHexFromInt(d[0]) + " "
+                                   + StringUtil.twoHexFromInt(d[1]) + " "
+                                   + StringUtil.twoHexFromInt(d[2]) + " "
+                                   + StringUtil.twoHexFromInt(d[3]) + " "
+                                   + StringUtil.twoHexFromInt(d[4]) + " "
+                                   + StringUtil.twoHexFromInt(d[5]) + " "
+                                   + StringUtil.twoHexFromInt(d[6]) + " "
+                                   + StringUtil.twoHexFromInt(d[7]) + ".\n";
+                        case 0x30: // verify
+                            return "Download message, verify.\n";
+                        case 0x40: // end op
+                            return "Download message, end operation.\n";
+                        default: // everything else isn't understood, go to default
+                        }
                     }
-                }
-                if (src == 0x50) {
-                    // Packets from the LocoBuffer
-                    String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+                    if (src == 0x50) {
+                        // Packets from the LocoBuffer
+                        String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+                        if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
+                            && ((pxct2 & 0xF0) == 0x10)) {
+                            // LocoBuffer to LocoIO
+                            return "LocoBuffer => LocoIO@"
+                                   + ((dst_l == 0) ? "broadcast" : Integer.toHexString(dst_l) + dst_subaddrx)
+                                   + " "
+                                   + (d[0] == 2 ? "Read SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
+                                   + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
+                        }
+                    }
                     if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
-                        && ((pxct2 & 0xF0) == 0x10)) {
-                        // LocoBuffer to LocoIO
-                        return "LocoBuffer => LocoIO@"
-                               + ((dst_l == 0) ? "broadcast" : Integer.toHexString(dst_l) + dst_subaddrx)
-                               + " "
-                               + (d[0] == 2 ? "Read SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
+                        && ((pxct2 & 0xF0) == 0x00)) {
+                        // (Jabour/Deloof LocoIO), SV Programming messages format 1
+                        String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
+                        String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+
+                        String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
+                        String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
+                                             : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
+                                           : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
+
+                        return src_dev + "=> " + dst_dev + " "
+                               + ((dst_h == 0x01) ? ((d[0] == 2 ? "Read" : "Write") + " SV" + d[1]) : "")
+                               + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
+                                 : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
+                                           : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
+                                           : (d[7] < 10) ? "" + d[7]
+                                           : d[7] + " (0x" + Integer.toHexString(d[7]) + ")")
+                                           : (d[7] < 10) ? "" + d[7]
+                                           : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
                                + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
                     }
-                }
-                if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
-                    && ((pxct2 & 0xF0) == 0x00)) {
-                    // (Jabour/Deloof LocoIO), SV Programming messages format 1
-                    String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
-                    String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
-                    
-                    String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
-                    String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
-                            		 : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
-                                       : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
+                    // check for a specific type - SV Programming messages format 2
+                    // (New Designs)
+                    if (((pxct1 & 0xF0) == 0x10) && ((pxct2 & 0xF0) == 0x10)) {
+                        // New Designs, SV Programming messages format 2
+                        // We don't know what to do with them yet.
+                        return "SV Programming Protocol v2: " + generic + "\n\t"
+                               + data;
+                    }
 
-                    return src_dev + "=> " + dst_dev + " "
-                           + ((dst_h == 0x01) ? ((d[0] == 2 ? "Read" : "Write") + " SV" + d[1]) : "")
-                           + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
-                             : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
-                                       : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
-                                       : (d[7] < 10) ? "" + d[7] 
-                                       : d[7] + " (0x" + Integer.toHexString(d[7]) + ")")
-                                       : (d[7] < 10) ? "" + d[7] 
-                                       : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
-                           + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
-                }
-                // check for a specific type - SV Programming messages format 2
-                // (New Designs)
-                if (((pxct1 & 0xF0) == 0x10) && ((pxct2 & 0xF0) == 0x10)) {
-                    // New Designs, SV Programming messages format 2
-                    // We don't know what to do with them yet.
-                    return "SV Programming Protocol v2: " + generic + "\n\t"
-                           + data;
-                }
+                    // no specific type, return generic format
+                    return generic + "\n\t" + data;
+                } // case 0x10
 
-                // no specific type, return generic format
-                return generic + "\n\t" + data;
-            } // case 0x10
-            
-            case 0x0A: {
-                // throttle status
-                int tcntrl = l.getElement(2);
-                String stat;
-                if (tcntrl == 0x40)
-                    stat = " (OK) ";
-                else if (tcntrl == 0x7F)
-                    stat = " (no key, immed, ignored) ";
-                else if (tcntrl == 0x43)
-                    stat = " (+ key during msg) ";
-                else if (tcntrl == 0x42)
-                    stat = " (- key during msg) ";
-                else if (tcntrl == 0x41)
-                    stat = " (R/S key during msg, aborts) ";
-                else
-                    stat = " (unknown) ";
+                case 0x0A: {
+                    // throttle status
+                    int tcntrl = l.getElement(2);
+                    String stat;
+                    if (tcntrl == 0x40)
+                        stat = " (OK) ";
+                    else if (tcntrl == 0x7F)
+                        stat = " (no key, immed, ignored) ";
+                    else if (tcntrl == 0x43)
+                        stat = " (+ key during msg) ";
+                    else if (tcntrl == 0x42)
+                        stat = " (- key during msg) ";
+                    else if (tcntrl == 0x41)
+                        stat = " (R/S key during msg, aborts) ";
+                    else
+                        stat = " (unknown) ";
 
-                return "Throttle status TCNTRL=" + Integer.toHexString(tcntrl)
-                       + stat + " ID1,ID2="
-                       + Integer.toHexString(l.getElement(3))
-                       + Integer.toHexString(l.getElement(4)) + " SLA="
-                       + Integer.toHexString(l.getElement(7)) + " SLB="
-                       + Integer.toHexString(l.getElement(8)) + ".\n";
-            }
-            
-            case 0x14: {
-                // Duplex Radio Management and DigiIPL
+                    return "Throttle status TCNTRL=" + Integer.toHexString(tcntrl)
+                           + stat + " ID1,ID2="
+                           + Integer.toHexString(l.getElement(3))
+                           + Integer.toHexString(l.getElement(4)) + " SLA="
+                           + Integer.toHexString(l.getElement(7)) + " SLB="
+                           + Integer.toHexString(l.getElement(8)) + ".\n";
+                } // case 0x0A
 
-                switch (l.getElement(2)) {
-                case 0x01: {
-                	// Seems to be a query for just duplex devices.
-                	switch (l.getElement(3)) {
-                	case 0x08: {
-                		return "Query Duplex Receivers.\n";
-                	}
-                	case 0x10: {
-                		return "Duplex Receiver Response.\n";
-                	}
-                	default: {
-                        forceHex = true;
-                        return "Unknown Duplex Channel message.\n";
-                    }
-                	} // end of switch (l.getElement(3))
-                }
-                case 0x02: {
-                    // Request Duplex Radio Channel
-                    switch (l.getElement(3)) {
-                    case 0x00: {
-                        // The MSB is stuffed elsewhere again...
-                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+                case 0x14: {
+                    // Duplex Radio Management and DigiIPL
 
-                    	return "Set Duplex Channel to " + Integer.toString(channel) + ".\n";
-                    }
-                    case 0x08: {
-                        return "Query Duplex Channel.\n";
-                    }
-                    case 0x10: {
-                        // The MSB is stuffed elsewhere again...
-                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                        return "Reported Duplex Channel is " + Integer.toString(channel) + ".\n";
-                    }
-                    default: {
-                        forceHex = true;
-                        return "Unknown Duplex Channel message.\n";
-                    }
-                    } // end of switch (l.getElement(3))
-                }
-
-                case 0x03: {
-                    // Duplex Group Name
-                	// Characters appear to be 8 bit values, but transmitted over a 7 bit
-                	// encoding, so high order bits are stashed in element 4 and 9.
-                	char[] groupNameArray = { (char) (l.getElement(5)  | ((l.getElement(4) & 0x01) << 7)),
-                							  (char) (l.getElement(6)  | ((l.getElement(4) & 0x02) << 6)),
-                							  (char) (l.getElement(7)  | ((l.getElement(4) & 0x04) << 5)),
-                							  (char) (l.getElement(8)  | ((l.getElement(4) & 0x08) << 4)),
-                							  (char) (l.getElement(10) | ((l.getElement(9) & 0x01) << 7)),
-                							  (char) (l.getElement(11) | ((l.getElement(9) & 0x02) << 6)),
-                							  (char) (l.getElement(12) | ((l.getElement(9) & 0x04) << 5)),
-                							  (char) (l.getElement(13) | ((l.getElement(9) & 0x08) << 4)) };
-                	String groupName = new String(groupNameArray);
-                	
-                	// The pass code is stuffed in here, each digit in 4 bits.  But again, it's a
-                	// 7 bit encoding, so the MSB of the "upper" half is stuffed into byte 14.
-                	int p1 = ((l.getElement(14) & 0x01) << 3) | ((l.getElement(15) & 0x70) >> 4);
-                    int p2 = l.getElement(15) & 0x0F;
-                	int p3 = ((l.getElement(14) & 0x02) << 2) | ((l.getElement(16) & 0x70) >> 4);
-                    int p4 = l.getElement(16) & 0x0F;
-                    
-                    // It's not clear you can set A-F from throttles or Digitrax's tools, but
-                    // they do take and get returned if you send them on the wire...
-                    String passcode = Integer.toHexString(p1) + Integer.toHexString(p2)
-                    				+ Integer.toHexString(p3) + Integer.toHexString(p4);
-
-                    // The MSB is stuffed elsewhere again...
-                    int channel = l.getElement(17) | ((l.getElement(14) & 0x04) << 5);
-
-                    // The MSB is stuffed elsewhere one last time.
-                    int id = l.getElement(18) | ((l.getElement(14) & 0x08) << 4);
-
-                    switch (l.getElement(3)) {
-                    case 0x00: {
-                    	return "Set Duplex Group Name to '" + groupName + ".\n";
-                    }
-                    case 0x08: {
-                        return "Query Duplex Group Information.\n";
-                    }
-                    case 0x10: {
-                         return "Reported Duplex Group Name is '" + groupName
-                         	+ "', Password " + passcode
-                         	+ ", Channel " + Integer.toString(channel)
-                         	+ ", ID " + Integer.toString(id)
-                         	+ ".\n";
-                    }
-                    default: {
-                        forceHex = true;
-                        return "Unknown Duplex Group Name message.\n";
-                    }
-                    } // end of switch (l.getElement(3))
-                }
-                case 0x04: {
-                	// Duplex Group ID
-                	
-                    // The MSB is stuffed elsewhere again...
-                    int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                	switch (l.getElement(3)) {
-                    case 0x00: {
-                    	return "Set Duplex Group ID to '" + Integer.toString(id) + ".\n";
-                    }
-                    case 0x08: {
-                        return "Query Duplex Group ID.\n";
-                    }
-                    case 0x10: {
-                         return "Reported Duplex Group ID is " + Integer.toString(id) + ".\n";
-                    }
-                    default: {
-                        forceHex = true;
-                        return "Unknown Duplex Group ID message.\n";
-                    }
-                    } // end of switch (l.getElement(3))
-                }
-                case 0x07: {
-                    // Duplex Group Password
-                    char[] groupPasswordArray = { (char) l.getElement(5),
-                    							  (char) l.getElement(6),
-                    							  (char) l.getElement(7),
-                    							  (char) l.getElement(8)};
-                    String groupPassword = new String(groupPasswordArray);
-
-                    switch (l.getElement(3)) {
-                    case 0x00: {
-                        return "Set Duplex Group Password is '" + groupPassword + "'.\n";
-                    }
-                    case 0x08: {
-                        return "Query Duplex Group Password.\n";
-                    }
-                    case 0x10: {
-                        return "Reported Duplex Group Password is '" + groupPassword + "'.\n";
-                    }
-                    default: {
-                        forceHex = true;
-                        return "Unknown Duplex Group Password message.\n";
-                    }
-                    } // end of switch (l.getElement(3))
-                }
-                case 0x10: {
-                	// Radio Channel Noise/Activity
-                    switch (l.getElement(3)) {
-                    case 0x08: {
-                        return "Query Duplex Channel " + Integer.toString(l.getElement(5)) + " noise/activity report.\n";
-                    }
-                    case 0x10: {
-                    	// High order bit stashed in another element again.
-                    	int level = (l.getElement(6) & 0x7F) | ((l.getElement(4) & 0x02) << 6);
-                    	
-                        return "Reported Duplex Channel " + Integer.toString(l.getElement(5)) + " noise/activity level is "
-                               + Integer.toString(level) + "/255.\n";
-                    }
-                    default: {
-                        forceHex = true;
-                        return "Unknown Duplex Channel Activity message.\n";
-                    }
-                    } // end of switch (l.getElement(3))
-
-                }
-
-                case LnConstants.RE_IPL_PING_OPERATION: {
-                    String interpretedMessage;
-
-                    /************************************************************************************
-                     * IPL-capable device ping - OPC_RE_IPL (Device Ping Operations)                    *
-                     *    The message bytes as assigned as follows:                                     *
-                     *     <E5> <14> <08> <GR_OP_T> <DI_F2> <DI_Ss0> <DI_Ss1> ...                       *
-                     *     <DI_Ss2> <DI_Ss3> <DI_U1> <00> <00> <DI_U2> <DI_U3> ...                      *
-                     *     <00> <00><00> <00><00> <CHK>                                                 *
-                     *     where:                                                                       *
-                     *         <DI_F2>      encodes additional bits for the Slave device serial number. *
-                     *              bits 7-4    always 0000b                                            *
-                     *              bit 3       Bit 31 of Slave Device Serial Number                    *
-                     *              bit 2       Bit 23 of Slave Device Serial Number                    *
-                     *              bit 1       Bit 15 of Slave device Serial Number                    *
-                     *              bit 0       Bit 7 of Slave device Serial Number                     *
-                     *         <DI_Ss0>     encodes 7 bits of the 32 bit Host device serial number:     *
-                     *             bit 7        always 0                                                *
-                     *             bits 6-0     Bits 6:0 of Slave device serial number                  *
-                     *         <DI_Ss1>     encodes 7 bits of the 32 bit Host device serial number:     *
-                     *             bit 7        always 0                                                *
-                     *             bits 6-0     Bits 14:8 of Slave device serial number                 *
-                     *         <DI_Ss2>     encodes 7 bits of the 32 bit Host device serial number:     *
-                     *             bit 7        always 0                                                *
-                     *             bits 6-0     Bits 22:16 of Slave device serial number                *
-                     *         <DI_Ss3>     encodes 7 bits of the 32 bit Host device serial number:     *
-                     *              bit 7       always 0                                                *
-                     *              bits 6-0    Bits 30:24 of Slave device serial number                *
-                     *         <DI_U1>      unknown data                                                *
-                     *             when <GR_OP_T> = 0x08                                                *
-                     *                 is always 0                                                      *
-                     *             when <GR_OP_T> = 0x10                                                *
-                     *                 is not reverse-engineered and may be non-zero.                   *
-                     *         <DI_U2>      unknown data                                                *
-                     *             when <GR_OP_T> = 0x08                                                *
-                     *                 is always 0                                                      *
-                     *             when <GR_OP_T> = 0x10                                                *
-                     *                 is not reverse-engineered and may be non-zero.                   *
-                     *         <DI_U3>      unknown data                                                *
-                     *             when <GR_OP_T> = 0x08                                                *
-                     *                 is always 0                                                      *
-                     *             when <GR_OP_T> = 0x10                                                *
-                     *                 is not reverse-engineered and may be non-zero.                   *
-                     *                                                                                  *
-                     * Information reverse-engineered by B. Milhaupt and used with permission           *
-                     ************************************************************************************/
-                    /* OPC_RE_IPL (IPL Ping Operation) */
-                    // Operations related to DigiIPL Device "Ping" operations
-                    //
-                    // "Ping" request issued from DigiIPL ver 1.09 issues this message on LocoNet.
-                    // The LocoNet request message encodes a serial number but NOT a device type.
-                    //
-                    // Depending on which devices are selected in DigiIPL when the "ping"
-                    // is selected, (and probably the S/Ns of the devices attached to the LocoNet,
-                    // the response is as follows:
-                    //     DT402D  LocoNet message includes the serial number from the DT402D's
-                    //             Slave (RF24) serial number.  If a UR92 is attached to LocoNet,
-                    //             it will send the message via its RF link to the addressed
-                    //             DT402D.  (UR92 apparantly assumes that the long 802.15.4
-                    //             address of the DT402D is based on the serial number embedded
-                    //             in the LocoNet message, with the MS 32 bits based on the UR92
-                    //             long address MS 32 bits).  If more than one UR92 is attached
-                    //             to LocoNet, all will pass the message to the RF interface.
-                    //     UR92    LocoNet message includes the Slave serial number from the UR92.
-                    //             These messages are not passed to the RF link by the addressed
-                    //             UR92.  If more than one UR92 is attached to LocoNet, and the
-                    //             addressed UR92 hears the RF version of the LocoNet message, it
-                    //             will respond via the RF interface with an acknowledge packet,
-                    //             and a UR92 (not sure which one) responds on LocoNet with a
-                    //             Ping report <e5><14><08><10>.
-                    //     PR3     LocoNet message includes an effective serial number of all
-                    //             zeros.  There is no LocoNet message reply generated to a
-                    //             request to a PR3 S/N, but there will be a reply on the PR3's
-                    //             computer interface if the ping request was sent via the PR3's
-                    //             computer interface (i.e. not from some other loconet agent).
-                    //     UT4D    While it has been suggested that the UT4D supports firmware
-                    //             updates, the UT4D does not respond to the Ping message.
-                    //     LNRP    While it has been suggested that the LNRP supports firmware
-                    //             updates, the LNRP does not respond to the Ping message.
-                    //
-                    // Ping Report values:
-                    //     <unkn1> Seems always to be <0C>.  None of the bytes relate to
-                    //             Duplex Channel Number.
-                    //     <unkn2> Matches byte 15 of the MAC payload of the reply sent by the
-                    //             targeted UR92.
-                    //     <unkn3> Unclear what this byte means.
-                    //
-                    // Information reverse-engineered by B. Milhaupt and used with permission
-
-                    if (l.getElement(3) == 0x08) {  /* OPC_RE_IPL (IPL Ping Query) */
-                    // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
-
-
-                        if ((((l.getElement(4)&0xF) != 0) || (l.getElement(5) != 0) ||
-                            (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0)) &&
-                            (l.getElement(9) == 0) && (l.getElement(10) == 0) &&
-                            (l.getElement(11) == 0) && (l.getElement(12) == 0) &&
-                            (l.getElement(13) == 0) && (l.getElement(14) == 0) &&
-                            (l.getElement(15) == 0) && (l.getElement(16) == 0) &&
-                            (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
-
-                            interpretedMessage = "Ping request.\n";
-                            int hostSnInt = 0;
-                            hostSnInt = ( l.getElement(5)+(((l.getElement(4)&0x1)==1)?128:0))+
-                                ((l.getElement(6)+(((l.getElement(4)&0x2)==2)?128:0))*256)+
-                                ((l.getElement(7)+(((l.getElement(4)&0x4)==4)?128:0))*256*256)+
-                                ((l.getElement(8)+(((l.getElement(4)&0x8)==8)?128:0))*256*256*256)
-                                    ;
-                            interpretedMessage += "\tPinging device with serial number "+
-                                    Integer.toHexString(hostSnInt).toUpperCase()+"\n";
-                            return interpretedMessage;
+                    switch (l.getElement(2)) {
+                        case 0x01: {
+                                // Seems to be a query for just duplex devices.
+                                switch (l.getElement(3)) {
+                                    case 0x08: {
+                                            return "Query Duplex Receivers.\n";
+                                    }
+                                    case 0x10: {
+                                            return "Duplex Receiver Response.\n";
+                                    }
+                                    default: {
+                                        forceHex = true;
+                                        return "Unknown Duplex Channel message.\n";
+                                }
+                            } // end of switch (l.getElement(3))
                         }
-                    }
-                    else if (l.getElement(3) == 0x10) {  /* OPC_RE_IPL (IPL Ping Report) */
-                    // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
-                        if (((l.getElement(4)&0xF) != 0) ||(l.getElement(5) != 0) || (l.getElement(6) != 0) ||
-                                (l.getElement(7) != 0) | (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
+                        case 0x02: {
+                            // Request Duplex Radio Channel
+                            switch (l.getElement(3)) {
+                                case 0x00: {
+                                    // The MSB is stuffed elsewhere again...
+                                    int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
 
-                            interpretedMessage = "Ping Report.\n";
-                            int hostSnInt = 0;
-                            hostSnInt = ( l.getElement(5)+(((l.getElement(4)&0x1)==1)?128:0))+
-                                ((l.getElement(6)+(((l.getElement(4)&0x2)==2)?128:0))*256)+
-                                ((l.getElement(7)+(((l.getElement(4)&0x4)==4)?128:0))*256*256)+
-                                ((l.getElement(8)+(((l.getElement(4)&0x8)==8)?128:0))*256*256*256)
-                                    ;
-                            interpretedMessage += "\tPing response from device with serial number "+
-                                Integer.toHexString(hostSnInt).toUpperCase()+
-                                " Local RSSI = 0x"+ Integer.toHexString(l.getElement(12) + (((l.getElement(9))&0x4) == 0x4 ? 128 : 0)).toUpperCase()+
-                                " Remote RSSI = 0x"+Integer.toHexString(l.getElement(13) + (((l.getElement(9))&0x8) == 0x8 ? 128 : 0)).toUpperCase()+
-                                ".\n";
-                            return interpretedMessage;
+                                    return "Set Duplex Channel to " + Integer.toString(channel) + ".\n";
+                                }
+                                case 0x08: {
+                                    return "Query Duplex Channel.\n";
+                                }
+                                case 0x10: {
+                                    // The MSB is stuffed elsewhere again...
+                                    int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+                                    return "Reported Duplex Channel is " + Integer.toString(channel) + ".\n";
+                                }
+                                default: {
+                                    forceHex = true;
+                                    return "Unknown Duplex Channel message.\n";
+                                }
+                            } // end of switch (l.getElement(3))
                         }
-                        else {
-                            // 0xE5 message of unknown format
-                            forceHex = true;
-                            return "Message with opcode 0xE5 and unknown format.";
+
+                        case 0x03: {
+                            // Duplex Group Name
+                            // Characters appear to be 8 bit values, but transmitted over a 7 bit
+                            // encoding, so high order bits are stashed in element 4 and 9.
+                            char[] groupNameArray = { (char) (l.getElement(5)  | ((l.getElement(4) & 0x01) << 7)),
+                                                                              (char) (l.getElement(6)  | ((l.getElement(4) & 0x02) << 6)),
+                                                                              (char) (l.getElement(7)  | ((l.getElement(4) & 0x04) << 5)),
+                                                                              (char) (l.getElement(8)  | ((l.getElement(4) & 0x08) << 4)),
+                                                                              (char) (l.getElement(10) | ((l.getElement(9) & 0x01) << 7)),
+                                                                              (char) (l.getElement(11) | ((l.getElement(9) & 0x02) << 6)),
+                                                                              (char) (l.getElement(12) | ((l.getElement(9) & 0x04) << 5)),
+                                                                              (char) (l.getElement(13) | ((l.getElement(9) & 0x08) << 4)) };
+                            String groupName = new String(groupNameArray);
+
+                            // The pass code is stuffed in here, each digit in 4 bits.  But again, it's a
+                            // 7 bit encoding, so the MSB of the "upper" half is stuffed into byte 14.
+                            int p1 = ((l.getElement(14) & 0x01) << 3) | ((l.getElement(15) & 0x70) >> 4);
+                            int p2 = l.getElement(15) & 0x0F;
+                            int p3 = ((l.getElement(14) & 0x02) << 2) | ((l.getElement(16) & 0x70) >> 4);
+                            int p4 = l.getElement(16) & 0x0F;
+
+                            // It's not clear you can set A-F from throttles or Digitrax's tools, but
+                            // they do take and get returned if you send them on the wire...
+                            String passcode = Integer.toHexString(p1) + Integer.toHexString(p2)
+                                                        + Integer.toHexString(p3) + Integer.toHexString(p4);
+
+                            // The MSB is stuffed elsewhere again...
+                            int channel = l.getElement(17) | ((l.getElement(14) & 0x04) << 5);
+
+                            // The MSB is stuffed elsewhere one last time.
+                            int id = l.getElement(18) | ((l.getElement(14) & 0x08) << 4);
+
+                            switch (l.getElement(3)) {
+                                case 0x00: {
+                                    return "Set Duplex Group Name to '" + groupName + ".\n";
+                                }
+                                case 0x08: {
+                                    return "Query Duplex Group Information.\n";
+                                }
+                                case 0x10: {
+                                     return "Reported Duplex Group Name is '" + groupName
+                                            + "', Password " + passcode
+                                            + ", Channel " + Integer.toString(channel)
+                                            + ", ID " + Integer.toString(id)
+                                            + ".\n";
+                                }
+                                default: {
+                                    forceHex = true;
+                                    return "Unknown Duplex Group Name message.\n";
+                                }
+                            } // end of switch (l.getElement(3))
                         }
-                    }
-                    break;
-                } //end of case 0x08, which decodes 0xe5 0x14 0x08
+                        case 0x04: {
+                                // Duplex Group ID
 
-                case LnConstants.RE_IPL_IDENTITY_OPERATION: {
-                    String interpretedMessage;
-                    // Operations related to DigiIPL "Ping", "Identify" and "Discover"
-                    String device = "";
+                            // The MSB is stuffed elsewhere again...
+                            int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
 
-                    switch (l.getElement(3)) {
-                        case 0x08: {
-                            if ((l.getElement(4) == 0) &&
-                                (l.getElement(5) == 0) && (l.getElement(6) == 0) &&
-                                (l.getElement(7) == 0) && (l.getElement(8) == 0) &&
-                                (l.getElement(9) == 0) && (l.getElement(10) == 0) &&
-                                (l.getElement(11) == 1) && (l.getElement(12) == 0) &&
-                                (l.getElement(13) == 0) && (l.getElement(14) == 0) &&
-                                (l.getElement(15) == 0) && (l.getElement(16) == 0) &&
-                                (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
-                                /************************************************************************************
-                                 * IPL capable device query - RE_IPL_IDENTITY_OPERATION (Device Query)              *
-                                 *    The message bytes are assigned as follows:                                    *
-                                 *     <E5> <14> <0F> <08> <00> <00> <00> <00> <00> <00> <00> <01> <00> <00> ...    *
-                                 *             <00> <00> <00> <00> <00> <CHK>                                       *
-                                 *                                                                                  *
-                                 *      Information reverse-engineered by B. Milhaupt and used with permission      *
-                                 ************************************************************************************/
-                                // Request for all IPL-queryable devices to report their presence
-                                //
-                                // Information reverse-engineered by B. Milhaupt and used with permission
+                            switch (l.getElement(3)) {
+                                case 0x00: {
+                                    return "Set Duplex Group ID to '" + Integer.toString(id) + ".\n";
+                                }
+                                case 0x08: {
+                                    return "Query Duplex Group ID.\n";
+                                }
+                                case 0x10: {
+                                     return "Reported Duplex Group ID is " + Integer.toString(id) + ".\n";
+                                }
+                                default: {
+                                    forceHex = true;
+                                    return "Unknown Duplex Group ID message.\n";
+                                }
+                            } // end of switch (l.getElement(3))
+                        }
+                        case 0x07: {
+                            // Duplex Group Password
+                            char[] groupPasswordArray = { (char) l.getElement(5),
+                                                                                  (char) l.getElement(6),
+                                                                                  (char) l.getElement(7),
+                                                                                  (char) l.getElement(8)};
+                            String groupPassword = new String(groupPasswordArray);
 
-                                return "Discover all IPL-capable devices request.\n";
+                            switch (l.getElement(3)) {
+                                case 0x00: {
+                                    return "Set Duplex Group Password is '" + groupPassword + "'.\n";
+                                }
+                                case 0x08: {
+                                    return "Query Duplex Group Password.\n";
+                                }
+                                case 0x10: {
+                                    return "Reported Duplex Group Password is '" + groupPassword + "'.\n";
+                                }
+                                default: {
+                                    forceHex = true;
+                                    return "Unknown Duplex Group Password message.\n";
+                                }
+                            } // end of switch (l.getElement(3))
+                        }
+                        case 0x10: {
+                                // Radio Channel Noise/Activity
+                            switch (l.getElement(3)) {
+                                case 0x08: {
+                                    return "Query Duplex Channel " + Integer.toString(l.getElement(5)) + " noise/activity report.\n";
+                                }
+                                case 0x10: {
+                                    // High order bit stashed in another element again.
+                                    int level = (l.getElement(6) & 0x7F) | ((l.getElement(4) & 0x02) << 6);
+
+                                    return "Reported Duplex Channel " + Integer.toString(l.getElement(5)) + " noise/activity level is "
+                                           + Integer.toString(level) + "/255.\n";
+                                }
+                                default: {
+                                    forceHex = true;
+                                    return "Unknown Duplex Channel Activity message.\n";
+                                }
+                            } // end of switch (l.getElement(3))
+
+                        }
+
+                        case LnConstants.RE_IPL_PING_OPERATION: {
+                            String interpretedMessage;
+
+                            /************************************************************************************
+                             * IPL-capable device ping - OPC_RE_IPL (Device Ping Operations)                    *
+                             *    The message bytes as assigned as follows:                                     *
+                             *     <E5> <14> <08> <GR_OP_T> <DI_F2> <DI_Ss0> <DI_Ss1> ...                       *
+                             *     <DI_Ss2> <DI_Ss3> <DI_U1> <00> <00> <DI_U2> <DI_U3> ...                      *
+                             *     <00> <00><00> <00><00> <CHK>                                                 *
+                             *     where:                                                                       *
+                             *         <DI_F2>      encodes additional bits for the Slave device serial number. *
+                             *              bits 7-4    always 0000b                                            *
+                             *              bit 3       Bit 31 of Slave Device Serial Number                    *
+                             *              bit 2       Bit 23 of Slave Device Serial Number                    *
+                             *              bit 1       Bit 15 of Slave device Serial Number                    *
+                             *              bit 0       Bit 7 of Slave device Serial Number                     *
+                             *         <DI_Ss0>     encodes 7 bits of the 32 bit Host device serial number:     *
+                             *             bit 7        always 0                                                *
+                             *             bits 6-0     Bits 6:0 of Slave device serial number                  *
+                             *         <DI_Ss1>     encodes 7 bits of the 32 bit Host device serial number:     *
+                             *             bit 7        always 0                                                *
+                             *             bits 6-0     Bits 14:8 of Slave device serial number                 *
+                             *         <DI_Ss2>     encodes 7 bits of the 32 bit Host device serial number:     *
+                             *             bit 7        always 0                                                *
+                             *             bits 6-0     Bits 22:16 of Slave device serial number                *
+                             *         <DI_Ss3>     encodes 7 bits of the 32 bit Host device serial number:     *
+                             *              bit 7       always 0                                                *
+                             *              bits 6-0    Bits 30:24 of Slave device serial number                *
+                             *         <DI_U1>      unknown data                                                *
+                             *             when <GR_OP_T> = 0x08                                                *
+                             *                 is always 0                                                      *
+                             *             when <GR_OP_T> = 0x10                                                *
+                             *                 is not reverse-engineered and may be non-zero.                   *
+                             *         <DI_U2>      unknown data                                                *
+                             *             when <GR_OP_T> = 0x08                                                *
+                             *                 is always 0                                                      *
+                             *             when <GR_OP_T> = 0x10                                                *
+                             *                 is not reverse-engineered and may be non-zero.                   *
+                             *         <DI_U3>      unknown data                                                *
+                             *             when <GR_OP_T> = 0x08                                                *
+                             *                 is always 0                                                      *
+                             *             when <GR_OP_T> = 0x10                                                *
+                             *                 is not reverse-engineered and may be non-zero.                   *
+                             *                                                                                  *
+                             * Information reverse-engineered by B. Milhaupt and used with permission           *
+                             ************************************************************************************/
+                            /* OPC_RE_IPL (IPL Ping Operation) */
+                            // Operations related to DigiIPL Device "Ping" operations
+                            //
+                            // "Ping" request issued from DigiIPL ver 1.09 issues this message on LocoNet.
+                            // The LocoNet request message encodes a serial number but NOT a device type.
+                            //
+                            // Depending on which devices are selected in DigiIPL when the "ping"
+                            // is selected, (and probably the S/Ns of the devices attached to the LocoNet,
+                            // the response is as follows:
+                            //     DT402D  LocoNet message includes the serial number from the DT402D's
+                            //             Slave (RF24) serial number.  If a UR92 is attached to LocoNet,
+                            //             it will send the message via its RF link to the addressed
+                            //             DT402D.  (UR92 apparantly assumes that the long 802.15.4
+                            //             address of the DT402D is based on the serial number embedded
+                            //             in the LocoNet message, with the MS 32 bits based on the UR92
+                            //             long address MS 32 bits).  If more than one UR92 is attached
+                            //             to LocoNet, all will pass the message to the RF interface.
+                            //     UR92    LocoNet message includes the Slave serial number from the UR92.
+                            //             These messages are not passed to the RF link by the addressed
+                            //             UR92.  If more than one UR92 is attached to LocoNet, and the
+                            //             addressed UR92 hears the RF version of the LocoNet message, it
+                            //             will respond via the RF interface with an acknowledge packet,
+                            //             and a UR92 (not sure which one) responds on LocoNet with a
+                            //             Ping report <e5><14><08><10>.
+                            //     PR3     LocoNet message includes an effective serial number of all
+                            //             zeros.  There is no LocoNet message reply generated to a
+                            //             request to a PR3 S/N, but there will be a reply on the PR3's
+                            //             computer interface if the ping request was sent via the PR3's
+                            //             computer interface (i.e. not from some other loconet agent).
+                            //     UT4D    While it has been suggested that the UT4D supports firmware
+                            //             updates, the UT4D does not respond to the Ping message.
+                            //     LNRP    While it has been suggested that the LNRP supports firmware
+                            //             updates, the LNRP does not respond to the Ping message.
+                            //
+                            // Ping Report values:
+                            //     <unkn1> Seems always to be <0C>.  None of the bytes relate to
+                            //             Duplex Channel Number.
+                            //     <unkn2> Matches byte 15 of the MAC payload of the reply sent by the
+                            //             targeted UR92.
+                            //     <unkn3> Unclear what this byte means.
+                            //
+                            // Information reverse-engineered by B. Milhaupt and used with permission
+
+                            if (l.getElement(3) == 0x08) {  /* OPC_RE_IPL (IPL Ping Query) */
+                            // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
+
+
+                                if ((((l.getElement(4)&0xF) != 0) || (l.getElement(5) != 0) ||
+                                    (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0)) &&
+                                    (l.getElement(9) == 0) && (l.getElement(10) == 0) &&
+                                    (l.getElement(11) == 0) && (l.getElement(12) == 0) &&
+                                    (l.getElement(13) == 0) && (l.getElement(14) == 0) &&
+                                    (l.getElement(15) == 0) && (l.getElement(16) == 0) &&
+                                    (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
+
+                                    interpretedMessage = "Ping request.\n";
+                                    int hostSnInt = 0;
+                                    hostSnInt = ( l.getElement(5)+(((l.getElement(4)&0x1)==1)?128:0))+
+                                        ((l.getElement(6)+(((l.getElement(4)&0x2)==2)?128:0))*256)+
+                                        ((l.getElement(7)+(((l.getElement(4)&0x4)==4)?128:0))*256*256)+
+                                        ((l.getElement(8)+(((l.getElement(4)&0x8)==8)?128:0))*256*256*256)
+                                            ;
+                                    interpretedMessage += "\tPinging device with serial number "+
+                                            Integer.toHexString(hostSnInt).toUpperCase()+"\n";
+                                    return interpretedMessage;
+                                }
+                                else {
+                                    // 0xE5 message of unknown format
+                                    forceHex = true;
+                                    return "Message with opcode 0xE5 and unknown format.";
+                                }
                             }
-                            else if (((l.getElement(5) != 0) || (l.getElement(6) != 0)) ) {
-                                /************************************************************************************
-                                 * IPL device query by type - RE_IPL_IDENTITY_OPERATION (Device Query)              *
-                                 *    The message bytes are assigned as follows:                                    *
-                                 *     <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst> <DI_Slv> <00> <00> <00> <00> <01> ...  *
-                                 *             <00> <00> <00> <00> <00> <00> <00> <CHK>                             *
-                                 *    where:                                                                        *
-                                 *       <DI_Hmf>  DigiIPL-capable Host device manufacturer number.  This is not    *
-                                 *                 the same as an NMRA Manufacturer ID.                             *
-                                 *                 0x00                     Digitrax                                *
-                                 *                 Others                   No other Host device manufacturer       *
-                                 *                                                numbers have been reverse-        *
-                                 *                                                engineered                        *
-                                 *       <DI_Hst> encodes the DigiIPL-capable Host device type as follows:          *
-                                 *             When <DI_Hmf> = 0x00                                                 *
-                                 *                 0x00 (0 decimal)         No Host device type reported            *
-                                 *                 0x04 (4 decimal)         UT4D (Note that UT4D, UT4 and UT4R do   *
-                                 *                                                not respond to this DigiIPL       *
-                                 *                                                request)                          *
-                                 *                 0x18 (24 decimal)        RF24 - not typically a Host device      *
-                                 *                 0x23 (35 decimal)        PR3                                     *
-                                 *                 0x2A (42 decimal)        DT402 (or DT402R or DT402D)             *
-                                 *                 0x33 (51 decimal)        DCS51                                   *
-                                 *                 0x5C (92 decimal)        UR92                                    *
-                                 *                 Others                   No other Host device types have been    *
-                                 *                                                reverse-engineered                *
-                                 *             When <DI_Hmf> is not 0x00                                            *
-                                 *                 All values               Not reverse-engineered                  *
-                                 *       <DI_Slv> encodes the DigiIPL-capable Slave device type as follows:         *
-                                 *             When <DI_Smf> = 0x00                                                 *
-                                 *                 0x00 (0 decimal)         Report for all Slave device types       *
-                                 *                 0x18 (24 decimal)        RF24                                    *
-                                 *                 Others                   No other Slave device types have been   *
-                                 *                                                reverse-engineered                *
-                                 *                                                                                  *
-                                 *      Information reverse-engineered by B. Milhaupt and used with permission      *
-                                 ************************************************************************************/
-                                // Request for IPL-queryable devices of given manufacturer and type to report
-                                // their presence
-                                //
-                                // Note that standard definitions are provided for UT4D and RF24, even though these
-                                // devices do not respond to this query.  Note that UT4D will respond to IPL capable
-                                // device query with DI_Hmf = 0, DI_Hst = 0, DI_Slv = 0, and DI_Smf = 0.
-                                //
-                                // Information reverse-engineered by B. Milhaupt and used with permission
+                            else if (l.getElement(3) == 0x10) {  /* OPC_RE_IPL (IPL Ping Report) */
+                            // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
+                                if (((l.getElement(4)&0xF) != 0) ||(l.getElement(5) != 0) || (l.getElement(6) != 0) ||
+                                        (l.getElement(7) != 0) | (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
 
-                                device =  getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                                String slave =  getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
-                                interpretedMessage = "Discover " + device + 
-                                        " devices and/or " + slave +" devices.\n";
-                                return interpretedMessage;
+                                    interpretedMessage = "Ping Report.\n";
+                                    int hostSnInt = 0;
+                                    hostSnInt = ( l.getElement(5)+(((l.getElement(4)&0x1)==1)?128:0))+
+                                        ((l.getElement(6)+(((l.getElement(4)&0x2)==2)?128:0))*256)+
+                                        ((l.getElement(7)+(((l.getElement(4)&0x4)==4)?128:0))*256*256)+
+                                        ((l.getElement(8)+(((l.getElement(4)&0x8)==8)?128:0))*256*256*256)
+                                            ;
+                                    interpretedMessage += "\tPing response from device with serial number "+
+                                        Integer.toHexString(hostSnInt).toUpperCase()+
+                                        " Local RSSI = 0x"+ Integer.toHexString(l.getElement(12) + (((l.getElement(9))&0x4) == 0x4 ? 128 : 0)).toUpperCase()+
+                                        " Remote RSSI = 0x"+Integer.toHexString(l.getElement(13) + (((l.getElement(9))&0x8) == 0x8 ? 128 : 0)).toUpperCase()+
+                                        ".\n";
+                                    return interpretedMessage;
+                                }
+                                else {
+                                    // 0xE5 message of unknown format
+                                    forceHex = true;
+                                    return "Message with opcode 0xE5 and unknown format.";
+                                }
                             }
                             else {
                                 // 0xE5 message of unknown format
                                 forceHex = true;
                                 return "Message with opcode 0xE5 and unknown format.";
                             }
-                        } // end case 0x08, which decodes 0xe5 0x14 0x0f 0x08
-                        case 0x10: {
-                                /************************************************************************************
-                                 * IPL device identity report - RE_IPL_IDENTITY_OPERATION (Device Report)           *
-                                 *    The message bytes are assigned as follows:                                    *
-                                 *     <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst> <DI_Slv> <DI_Smf> <DI_Hsw> ...         *
-                                 *             <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1> <DI_Hs2> <DI_F2> <DI_Ss0> ...     *
-                                 *             <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK>                                     *
-                                 *    where:                                                                        *
-                                 *       <DI_Hmf>  DigiIPL-capable Host device manufacturer number.  This is not    *
-                                 *                 the same as an NMRA Manufacturer ID.                             *
-                                 *                 0x00                     Digitrax                                *
-                                 *                 Others                   No other Host device manufacturer       *
-                                 *                                                numbers have been reverse-        *
-                                 *                                                engineered                        *
-                                 *       <DI_Hst> encodes the DigiIPL-capable Host device type as follows:          *
-                                 *             When <DI_Hmf> = 0x00                                                 *
-                                 *                 0x00 (0 decimal)         No Host device type reported            *
-                                 *                 0x04 (4 decimal)         UT4D                                    *
-                                 *                 0x23 (35 decimal)        PR3                                     *
-                                 *                 0x2A (42 decimal)        DT402 (or DT402R or DT402D)             *
-                                 *                 0x33 (51 decimal)        DCS51                                   *
-                                 *                 0x5C (92 decimal)        UR92                                    *
-                                 *                 Others                   No other Host device types have been    *
-                                 *                                                reverse-engineered                *
-                                 *             When <DI_Hmf> is not 0x00                                            *
-                                 *                 All values               Not reverse-engineered                  *
-                                 *       <DI_Slv> encodes the DigiIPL-capable Slave device type as follows:         *
-                                 *             When <DI_Smf> = 0x00                                                 *
-                                 *                 0x00 (0 decimal)         Report for all Slave device types       *
-                                 *                 0x18 (24 decimal)        RF24                                    *
-                                 *                 Others                   No other Slave device types have been   *
-                                 *                                                reverse-engineered                *
-                                 *       <DI_Smf>  DigiIPL-capable Slave device manufacturer number.  This is not   *
-                                 *                 the same as an NMRA Manufacturer ID.                             *
-                                 *                 0x00                     Digitrax                                *
-                                 *                 Others                   No other Slave device manufacturer      *
-                                 *                                                numbers have been reverse-        *
-                                 *                                                engineered                        *
-                                 *       <DI_Hsw> encodes the DigiIPL-capable Host device firmware revision         *
-                                 *                number as follows:                                                *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Host device firmware major revision number              *
-                                 *              bits 2-0    Host device firmware minor revision number              *
-                                 *       <DI_F1> encodes additional bits for the Slave device firmware major        *
-                                 *               revision number and for the Host device serial number.             *
-                                 *              bits 7-4    always 0000b                                            *
-                                 *              bit 3       Bit 23 of Host Device Serial Number                     *
-                                 *              bit 2       Bit 15 of Host Device Serial Number                     *
-                                 *              bit 1       Bit 7 of Host Device Serial Number                      *
-                                 *              bit 0       bit 4 of Slave device firmware Major number             *
-                                 *       <DI_Ssw> encodes the DigiIPL-capable Slave device firmware revision        *
-                                 *                number as follows:                                                *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Host device firmware major revision number              *
-                                 *              bits 6-3    4 least-significant bits of Slave device firmware major *
-                                 *                              revision number (see also <DI_F1>[0])               *
-                                 *              bits 2-0    Slave device firmware minor revision number             *
-                                 *       <DI_Hs0> encodes 7 bits of the 24 bit Host device serial number:           *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Bits 6-0 of Host device serial number                   *
-                                 *       <DI_Hs1> encodes 7 bits of the 24 bit Host device serial number:           *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Bits 14-9 of Host device serial number                  *
-                                 *       <DI_Hs2> encodes 7 bits of the 24 bit Host device serial number:           *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Bits 22-16 of Host device serial number                 *
-                                 *       <DI_F2> encodes additional bits for the Slave device serial number.        *
-                                 *              bits 7-4    always 0000b                                            *
-                                 *              bit 3       Bit 31 of Slave Device Serial Number                    *
-                                 *              bit 2       Bit 23 of Slave Device Serial Number                    *
-                                 *              bit 1       Bit 15 of Slave Device Serial Number                    *
-                                 *              bit 0       Bit 7 of Slave Device Serial Number                     *
-                                 *       <DI_Ss0> encodes 7 bits of the 32 bit Slave device serial number:          *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Bits 6-0 of Slave device serial number                  *
-                                 *       <DI_Ss1> encodes 7 bits of the 32 bit Slave device serial number:          *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Bits 14-9 of Slave device serial number                 *
-                                 *       <DI_Ss2> encodes 7 bits of the 32 bit Slave device serial number:          *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Bits 22-16 of Slave device serial number                *
-                                 *       <DI_Ss3> encodes 7 bits of the 32 bit Slave device serial number:          *
-                                 *              bit 7       always 0                                                *
-                                 *              bits 6-3    Bits 30-24 of Slave device serial number                *
-                                 *                                                                                  *
-                                 * Information reverse-engineered by B. Milhaupt and used with permission           *
-                                 ************************************************************************************/
-                                // Request for one specific IPL-queryable device to return its identity information.
-                                // Expected response is of type <E5><14><10>...
-                                //
-                                // Note that standard definitions are provided for RF24, even though these
-                                // devices do not generate this report.
-                                //
-                                // Information reverse-engineered by B. Milhaupt and used with permission
-                            interpretedMessage = "IPL Identity report.\n";
-                            String HostType =  getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                            String HostVer = ((l.getElement(8)&0x78)>> 3)+"."+((l.getElement(8)&0x7));
-                            int hostSnInt = ((l.getElement(13)+(((l.getElement(9)&0x8)==8)?128:0))*256*256)+
-                                        ((l.getElement(12)+(((l.getElement(9)&0x4)==4)?128:0))*256)+
-                                        (l.getElement(11)+(((l.getElement(9)&0x2)==2)?128:0)) ;
-                            String HostSN = Integer.toHexString(hostSnInt).toUpperCase();
+                        } //end of case 0x08, which decodes 0xe5 0x14 0x08
 
-                            String SlaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
-                            String SlaveVer = "";
-                            String SlaveSN = "";
-                            if (l.getElement(6) > 0) {
-                                SlaveVer = (((l.getElement(10)&0x78)>> 3)+((l.getElement(9)&1)<<4))+"."+((l.getElement(10)&0x7));
-                                int slaveSnInt =
-                                        ((l.getElement(15)+(((l.getElement(14)&0x1)==1)?128:0)))+
-                                        ((l.getElement(16)+(((l.getElement(14)&0x2)==2)?128:0))*256)+
-                                        ((l.getElement(17)+(((l.getElement(14)&0x4)==4)?128:0))*256*256)+
-                                        ((l.getElement(18)+(((l.getElement(14)&0x8)==8)?128:0))*256*256*256);
-                                SlaveSN =
-                                        Integer.toHexString(slaveSnInt).toUpperCase();
+                        case LnConstants.RE_IPL_IDENTITY_OPERATION: {
+                            String interpretedMessage;
+                            // Operations related to DigiIPL "Ping", "Identify" and "Discover"
+                            String device = "";
+
+                            switch (l.getElement(3)) {
+                                case 0x08: {
+                                    if ((l.getElement(4) == 0) &&
+                                        (l.getElement(5) == 0) && (l.getElement(6) == 0) &&
+                                        (l.getElement(7) == 0) && (l.getElement(8) == 0) &&
+                                        (l.getElement(9) == 0) && (l.getElement(10) == 0) &&
+                                        (l.getElement(11) == 1) && (l.getElement(12) == 0) &&
+                                        (l.getElement(13) == 0) && (l.getElement(14) == 0) &&
+                                        (l.getElement(15) == 0) && (l.getElement(16) == 0) &&
+                                        (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
+                                        /************************************************************************************
+                                         * IPL capable device query - RE_IPL_IDENTITY_OPERATION (Device Query)              *
+                                         *    The message bytes are assigned as follows:                                    *
+                                         *     <E5> <14> <0F> <08> <00> <00> <00> <00> <00> <00> <00> <01> <00> <00> ...    *
+                                         *             <00> <00> <00> <00> <00> <CHK>                                       *
+                                         *                                                                                  *
+                                         *      Information reverse-engineered by B. Milhaupt and used with permission      *
+                                         ************************************************************************************/
+                                        // Request for all IPL-queryable devices to report their presence
+                                        //
+                                        // Information reverse-engineered by B. Milhaupt and used with permission
+
+                                        return "Discover all IPL-capable devices request.\n";
+                                    }
+                                    else if (((l.getElement(5) != 0) || (l.getElement(6) != 0)) ) {
+                                        /************************************************************************************
+                                         * IPL device query by type - RE_IPL_IDENTITY_OPERATION (Device Query)              *
+                                         *    The message bytes are assigned as follows:                                    *
+                                         *     <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst> <DI_Slv> <00> <00> <00> <00> <01> ...  *
+                                         *             <00> <00> <00> <00> <00> <00> <00> <CHK>                             *
+                                         *    where:                                                                        *
+                                         *       <DI_Hmf>  DigiIPL-capable Host device manufacturer number.  This is not    *
+                                         *                 the same as an NMRA Manufacturer ID.                             *
+                                         *                 0x00                     Digitrax                                *
+                                         *                 Others                   No other Host device manufacturer       *
+                                         *                                                numbers have been reverse-        *
+                                         *                                                engineered                        *
+                                         *       <DI_Hst> encodes the DigiIPL-capable Host device type as follows:          *
+                                         *             When <DI_Hmf> = 0x00                                                 *
+                                         *                 0x00 (0 decimal)         No Host device type reported            *
+                                         *                 0x04 (4 decimal)         UT4D (Note that UT4D, UT4 and UT4R do   *
+                                         *                                                not respond to this DigiIPL       *
+                                         *                                                request)                          *
+                                         *                 0x18 (24 decimal)        RF24 - not typically a Host device      *
+                                         *                 0x23 (35 decimal)        PR3                                     *
+                                         *                 0x2A (42 decimal)        DT402 (or DT402R or DT402D)             *
+                                         *                 0x33 (51 decimal)        DCS51                                   *
+                                         *                 0x5C (92 decimal)        UR92                                    *
+                                         *                 Others                   No other Host device types have been    *
+                                         *                                                reverse-engineered                *
+                                         *             When <DI_Hmf> is not 0x00                                            *
+                                         *                 All values               Not reverse-engineered                  *
+                                         *       <DI_Slv> encodes the DigiIPL-capable Slave device type as follows:         *
+                                         *             When <DI_Smf> = 0x00                                                 *
+                                         *                 0x00 (0 decimal)         Report for all Slave device types       *
+                                         *                 0x18 (24 decimal)        RF24                                    *
+                                         *                 Others                   No other Slave device types have been   *
+                                         *                                                reverse-engineered                *
+                                         *                                                                                  *
+                                         *      Information reverse-engineered by B. Milhaupt and used with permission      *
+                                         ************************************************************************************/
+                                        // Request for IPL-queryable devices of given manufacturer and type to report
+                                        // their presence
+                                        //
+                                        // Note that standard definitions are provided for UT4D and RF24, even though these
+                                        // devices do not respond to this query.  Note that UT4D will respond to IPL capable
+                                        // device query with DI_Hmf = 0, DI_Hst = 0, DI_Slv = 0, and DI_Smf = 0.
+                                        //
+                                        // Information reverse-engineered by B. Milhaupt and used with permission
+
+                                        device =  getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+                                        String slave =  getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+                                        interpretedMessage = "Discover " + device +
+                                                " devices and/or " + slave +" devices.\n";
+                                        return interpretedMessage;
+                                    }
+                                    else {
+                                        // 0xE5 message of unknown format
+                                        forceHex = true;
+                                        return "Message with opcode 0xE5 and unknown format.";
+                                    }
+                                } // end case 0x08, which decodes 0xe5 0x14 0x0f 0x08
+                                case 0x10: {
+                                    /************************************************************************************
+                                     * IPL device identity report - RE_IPL_IDENTITY_OPERATION (Device Report)           *
+                                     *    The message bytes are assigned as follows:                                    *
+                                     *     <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst> <DI_Slv> <DI_Smf> <DI_Hsw> ...         *
+                                     *             <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1> <DI_Hs2> <DI_F2> <DI_Ss0> ...     *
+                                     *             <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK>                                     *
+                                     *    where:                                                                        *
+                                     *       <DI_Hmf>  DigiIPL-capable Host device manufacturer number.  This is not    *
+                                     *                 the same as an NMRA Manufacturer ID.                             *
+                                     *                 0x00                     Digitrax                                *
+                                     *                 Others                   No other Host device manufacturer       *
+                                     *                                                numbers have been reverse-        *
+                                     *                                                engineered                        *
+                                     *       <DI_Hst> encodes the DigiIPL-capable Host device type as follows:          *
+                                     *             When <DI_Hmf> = 0x00                                                 *
+                                     *                 0x00 (0 decimal)         No Host device type reported            *
+                                     *                 0x04 (4 decimal)         UT4D                                    *
+                                     *                 0x23 (35 decimal)        PR3                                     *
+                                     *                 0x2A (42 decimal)        DT402 (or DT402R or DT402D)             *
+                                     *                 0x33 (51 decimal)        DCS51                                   *
+                                     *                 0x5C (92 decimal)        UR92                                    *
+                                     *                 Others                   No other Host device types have been    *
+                                     *                                                reverse-engineered                *
+                                     *             When <DI_Hmf> is not 0x00                                            *
+                                     *                 All values               Not reverse-engineered                  *
+                                     *       <DI_Slv> encodes the DigiIPL-capable Slave device type as follows:         *
+                                     *             When <DI_Smf> = 0x00                                                 *
+                                     *                 0x00 (0 decimal)         Report for all Slave device types       *
+                                     *                 0x18 (24 decimal)        RF24                                    *
+                                     *                 Others                   No other Slave device types have been   *
+                                     *                                                reverse-engineered                *
+                                     *       <DI_Smf>  DigiIPL-capable Slave device manufacturer number.  This is not   *
+                                     *                 the same as an NMRA Manufacturer ID.                             *
+                                     *                 0x00                     Digitrax                                *
+                                     *                 Others                   No other Slave device manufacturer      *
+                                     *                                                numbers have been reverse-        *
+                                     *                                                engineered                        *
+                                     *       <DI_Hsw> encodes the DigiIPL-capable Host device firmware revision         *
+                                     *                number as follows:                                                *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Host device firmware major revision number              *
+                                     *              bits 2-0    Host device firmware minor revision number              *
+                                     *       <DI_F1> encodes additional bits for the Slave device firmware major        *
+                                     *               revision number and for the Host device serial number.             *
+                                     *              bits 7-4    always 0000b                                            *
+                                     *              bit 3       Bit 23 of Host Device Serial Number                     *
+                                     *              bit 2       Bit 15 of Host Device Serial Number                     *
+                                     *              bit 1       Bit 7 of Host Device Serial Number                      *
+                                     *              bit 0       bit 4 of Slave device firmware Major number             *
+                                     *       <DI_Ssw> encodes the DigiIPL-capable Slave device firmware revision        *
+                                     *                number as follows:                                                *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Host device firmware major revision number              *
+                                     *              bits 6-3    4 least-significant bits of Slave device firmware major *
+                                     *                              revision number (see also <DI_F1>[0])               *
+                                     *              bits 2-0    Slave device firmware minor revision number             *
+                                     *       <DI_Hs0> encodes 7 bits of the 24 bit Host device serial number:           *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Bits 6-0 of Host device serial number                   *
+                                     *       <DI_Hs1> encodes 7 bits of the 24 bit Host device serial number:           *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Bits 14-9 of Host device serial number                  *
+                                     *       <DI_Hs2> encodes 7 bits of the 24 bit Host device serial number:           *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Bits 22-16 of Host device serial number                 *
+                                     *       <DI_F2> encodes additional bits for the Slave device serial number.        *
+                                     *              bits 7-4    always 0000b                                            *
+                                     *              bit 3       Bit 31 of Slave Device Serial Number                    *
+                                     *              bit 2       Bit 23 of Slave Device Serial Number                    *
+                                     *              bit 1       Bit 15 of Slave Device Serial Number                    *
+                                     *              bit 0       Bit 7 of Slave Device Serial Number                     *
+                                     *       <DI_Ss0> encodes 7 bits of the 32 bit Slave device serial number:          *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Bits 6-0 of Slave device serial number                  *
+                                     *       <DI_Ss1> encodes 7 bits of the 32 bit Slave device serial number:          *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Bits 14-9 of Slave device serial number                 *
+                                     *       <DI_Ss2> encodes 7 bits of the 32 bit Slave device serial number:          *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Bits 22-16 of Slave device serial number                *
+                                     *       <DI_Ss3> encodes 7 bits of the 32 bit Slave device serial number:          *
+                                     *              bit 7       always 0                                                *
+                                     *              bits 6-3    Bits 30-24 of Slave device serial number                *
+                                     *                                                                                  *
+                                     * Information reverse-engineered by B. Milhaupt and used with permission           *
+                                     ************************************************************************************/
+                                    // Request for one specific IPL-queryable device to return its identity information.
+                                    // Expected response is of type <E5><14><10>...
+                                    //
+                                    // Note that standard definitions are provided for RF24, even though these
+                                    // devices do not generate this report.
+                                    //
+                                    // Information reverse-engineered by B. Milhaupt and used with permission
+                                    interpretedMessage = "IPL Identity report.\n";
+                                    String HostType =  getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+                                    String HostVer = ((l.getElement(8)&0x78)>> 3)+"."+((l.getElement(8)&0x7));
+                                    int hostSnInt = ((l.getElement(13)+(((l.getElement(9)&0x8)==8)?128:0))*256*256)+
+                                                ((l.getElement(12)+(((l.getElement(9)&0x4)==4)?128:0))*256)+
+                                                (l.getElement(11)+(((l.getElement(9)&0x2)==2)?128:0)) ;
+                                    String HostSN = Integer.toHexString(hostSnInt).toUpperCase();
+
+                                    String SlaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+                                    String SlaveVer = "";
+                                    String SlaveSN = "";
+                                    if (l.getElement(6) > 0) {
+                                        SlaveVer = (((l.getElement(10)&0x78)>> 3)+((l.getElement(9)&1)<<4))+"."+((l.getElement(10)&0x7));
+                                        int slaveSnInt =
+                                                ((l.getElement(15)+(((l.getElement(14)&0x1)==1)?128:0)))+
+                                                ((l.getElement(16)+(((l.getElement(14)&0x2)==2)?128:0))*256)+
+                                                ((l.getElement(17)+(((l.getElement(14)&0x4)==4)?128:0))*256*256)+
+                                                ((l.getElement(18)+(((l.getElement(14)&0x8)==8)?128:0))*256*256*256);
+                                        SlaveSN =
+                                                Integer.toHexString(slaveSnInt).toUpperCase();
+                                    }
+                                    else {
+                                        SlaveVer = "N/A";
+                                        SlaveSN = "N/A";
+                                    }
+
+                                    interpretedMessage += "\tHost: "+HostType+
+                                            ", S/N: " +HostSN+
+                                            ", S/W Version: "+HostVer+
+                                            "\n\tSlave: "+SlaveType+
+                                            ", S/N: "+SlaveSN+
+                                            ", S/W Version: "+SlaveVer+"\n";
+                                    return interpretedMessage;
+                                } // end case 0x10, which decodes 0xe5 0x14 0x0f 0x10
+                                default: {
+                                    // 0xE5 message of unknown format
+                                    forceHex = true;
+                                    return "Message with opcode 0xE5 and unknown format.";
+                                }
+
+                            } // end of switch (l.getElement(3)), which decodes 0xe5 0x14 0x0f 0x??
+                        } //end of case 0x0f, which decodes 0xe5 0x14 0x0f
+
+                        default: {
+                            // 0xE5 message of unknown format
+                            forceHex = true;
+                            return "Message with opcode 0xE5 and unknown format.";
+
+                        }
+                    } // switch (l.getElement(2))
+                } // case 0x14  (length of message)
+                case 0x09: {
+                    /*
+                     * Transponding "find" query and report messages
+                     *
+                     * Information reverse-engineered by B. Milhaupt and used with permission */
+                    switch (l.getElement(2)) {
+                        case 0x40: {
+                            /************************************************************************************
+                             * Transponding "find" query message                                                *
+                             *    The message bytes are assigned as follows:                                    *
+                             *     <0xE5> <0x09> <0x40> <AD_H> <AD_L> <0x00> <0x00> <0x00> <CHK>                *
+                             *    where:                                                                        *
+                             *       <AD_H> is encoded as shown below:                                          *
+                             *          When <AD_H>  = 0x7D,                                                    *
+                             *              Address is a 7 bit value defined solely by <AD_L>.                  *
+                             *          When <AD_H>  is not 0x7D,                                               *
+                             *              Address is a 14 bit value; AD_H{6:0} represent the upper 7 bits     *
+                             *              of the 14 bit address.                                              *
+                             *       <AD_L> contains the least significant 7 bits of the 14 or 7 bit address.   *
+                             *                                                                                  *
+                             * Information reverse-engineered by B. Milhaupt and used with permission           *
+                             ************************************************************************************/
+                            int locoAddr = l.getElement(4);
+                            if (l.getElement(3) != 0x7d) {
+                                locoAddr += l.getElement(3)<<7;
                             }
-                            else {
-                                SlaveVer = "N/A";
-                                SlaveSN = "N/A";
+                            return "Transponding Find query for loco address " +
+                                    locoAddr + ".\n";
+                        }
+                        case 0x00: {
+                            /************************************************************************************
+                             * Transponding "find" report message                                               *
+                             *    The message bytes are assigned as follows:                                    *
+                             *     <0xE5> <0x09> <0x00> <AD_H> <AD_L> <TR_ST> <TR_ZS> <0x00> <CHK>              *
+                             * where:                                                                           *
+                             *      <AD_H>  is encoded as shown below:                                          *
+                             *          When <AD_H>  = 0x7D,                                                    *
+                             *              Address is a 7 bit value defined solely by <AD_L>.                  *
+                             *          When <AD_H>  is not 0x7D,                                               *
+                             *              Address is a 14 bit value; AD_H{6:0} represent the upper 7 bits     *
+                             *              of the 14 bit address.                                              *
+                             *      <AD_L>  contains the least significant 7 bits of the 14 or 7 bit address.   *
+                             *      <TR_ST> contains the transponding status for the addressed equipment,       *
+                             *              encoded as:                                                         *
+                             *          bits 7-6    always 00b                                                  *
+                             *          bit 5       encodes transponding presence                               *
+                             *                  0 = Addressed equipment is absent                               *
+                             *                  1 = Addressed equipment is present                              *
+                             *          bits 4-0    encode bits 7-3 of the Detection Section                    *
+                             *   <TR_ZS> contains the zone number and detection section, encoded as:            *
+                             *          bit 7       always 0                                                    *
+                             *          bits 6-4    encode bits 2-0 of the Detection Section                    *
+                             *          bits 3-1    encode the Transponding Zone as shown below                 *
+                             *                 000b     Zone A                                                  *
+                             *                 001b     Zone B                                                  *
+                             *                 010b     Zone C                                                  *
+                             *                 011b     Zone D                                                  *
+                             *                 100b     Zone E                                                  *
+                             *                 101b     Zone F                                                  *
+                             *                 110b     Zone G                                                  *
+                             *                 111b     Zone H                                                  *
+                             *          bit 0       always 0                                                    *
+                             *                                                                                  *
+                             * Information reverse-engineered by B. Milhaupt and used with permission           *
+                             ************************************************************************************/
+
+                            int section = ((l.getElement(5) & 0x1F)<<3) +((l.getElement(6)&0x70) >>4)+1;
+                            String zone;
+                            int locoAddr = l.getElement(4);
+
+                            if (l.getElement(3) != 0x7d) {
+                                locoAddr += l.getElement(3)<<7;
                             }
 
-                            interpretedMessage += "\tHost: "+HostType+
-                                    ", S/N: " +HostSN+
-                                    ", S/W Version: "+HostVer+
-                                    "\n\tSlave: "+SlaveType+
-                                    ", S/N: "+SlaveSN+
-                                    ", S/W Version: "+SlaveVer+"\n";
-                            return interpretedMessage;
-                        } // end case 0x10, which decodes 0xe5 0x14 0x0f 0x10
+                            switch (l.getElement(6)&0x0F) {
+                                case 0x00: zone = "A"; break;
+                                case 0x02: zone = "B"; break;
+                                case 0x04: zone = "C"; break;
+                                case 0x06: zone = "D"; break;
+                                case 0x08: zone = "E"; break;
+                                case 0x0A: zone = "F"; break;
+                                case 0x0C: zone = "G"; break;
+                                case 0x0E: zone = "H"; break;
+                                default: zone="<unknown "+(l.getElement(2)&0x0F)+">"; break;
+                            }
+
+                            // get system and user names
+                            String reporterSystemName = new String();
+                            String reporterUserName = new String();
+
+                            reporterSystemName = locoNetReporterPrefix +
+                                    ((l.getElement(5)&0x1F)*128 + l.getElement(6) +1);
+
+                            try {
+                                jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                                if ((reporter != null) && (reporter.getUserName().length() > 0))
+                                    reporterUserName = "(" + reporter.getUserName() + ")";
+                                else
+                                    reporterUserName = "()";
+                            }
+                            catch (Exception e) {
+                                reporterUserName = "()";
+                            }
+                            return "Transponder Find report : address "
+                                    + locoAddr
+                                    +((l.getElement(3) == 0x7d) ? " (short)" : " (long)")
+                                    + " present at "
+                                    + reporterSystemName + " " + reporterUserName
+                                    + " (BDL16x Board " + (section + 1)  + " RX4 zone " + zone
+                                    + ").\n";
+                        }
                         default: {
                             // 0xE5 message of unknown format
                             forceHex = true;
                             return "Message with opcode 0xE5 and unknown format.";
                         }
-
-                    } // end of switch (l.getElement(3)), which decodes 0xe5 0x14 0x0f 0x??
-                } //end of case 0x0f, which decodes 0xe5 0x14 0x0f
+                    } // end of switch (l.getElement(2))
+                } // end of case 0x09:
 
                 default: {
                     // 0xE5 message of unknown format
@@ -2574,194 +2705,73 @@ public class Llnmon {
                     return "Message with opcode 0xE5 and unknown format.";
 
                 }
-                } // switch (l.getElement(2))
-            } // case 0x14  (length of message
-            case 0x09: {
-                String interpretedMessage = "Unknown transponding operation.\n";
-                /*
-                 * Transponding "find" query and report messages
-                 *
-                 * Information reverse-engineered by B. Milhaupt and used with permission */
-                switch (l.getElement(2)) {
-                    case 0x40: {
-                        /************************************************************************************
-                         * Transponding "find" query message                                                *
-                         *    The message bytes are assigned as follows:                                    *
-                         *     <0xE5> <0x09> <0x40> <AD_H> <AD_L> <0x00> <0x00> <0x00> <CHK>                *
-                         *    where:                                                                        *
-                         *       <AD_H> is encoded as shown below:                                          *
-                         *          When <AD_H>  = 0x7D,                                                    *
-                         *              Address is a 7 bit value defined solely by <AD_L>.                  *
-                         *          When <AD_H>  is not 0x7D,                                               *
-                         *              Address is a 14 bit value; AD_H{6:0} represent the upper 7 bits     *
-                         *              of the 14 bit address.                                              *
-                         *       <AD_L> contains the least significant 7 bits of the 14 or 7 bit address.   *
-                         *                                                                                  *
-                         * Information reverse-engineered by B. Milhaupt and used with permission           *
-                         ************************************************************************************/
-                        int locoAddr = l.getElement(4);
-                        if (l.getElement(3) != 0x7d) {
-                            locoAddr += l.getElement(3)<<7;
-                        }
-                        interpretedMessage = "Transponding Find query for loco address " +
-                                locoAddr + ".\n";
-                        break;
-                    }
-                    case 0x00: {
-                        /************************************************************************************
-                         * Transponding "find" report message                                               *
-                         *    The message bytes are assigned as follows:                                    *
-                         *     <0xE5> <0x09> <0x00> <AD_H> <AD_L> <TR_ST> <TR_ZS> <0x00> <CHK>              *
-                         * where:                                                                           *
-                         *      <AD_H>  is encoded as shown below:                                          *
-                         *          When <AD_H>  = 0x7D,                                                    *
-                         *              Address is a 7 bit value defined solely by <AD_L>.                  *
-                         *          When <AD_H>  is not 0x7D,                                               *
-                         *              Address is a 14 bit value; AD_H{6:0} represent the upper 7 bits     *
-                         *              of the 14 bit address.                                              *
-                         *      <AD_L>  contains the least significant 7 bits of the 14 or 7 bit address.   *
-                         *      <TR_ST> contains the transponding status for the addressed equipment,       *
-                         *              encoded as:                                                         *
-                         *          bits 7-6    always 00b                                                  *
-                         *          bit 5       encodes transponding presence                               *
-                         *                  0 = Addressed equipment is absent                               *
-                         *                  1 = Addressed equipment is present                              *
-                         *          bits 4-0    encode bits 7-3 of the Detection Section                    *
-                         *   <TR_ZS> contains the zone number and detection section, encoded as:            *
-                         *          bit 7       always 0                                                    *
-                         *          bits 6-4    encode bits 2-0 of the Detection Section                    *
-                         *          bits 3-1    encode the Transponding Zone as shown below                 *
-                         *                 000b     Zone A                                                  *
-                         *                 001b     Zone B                                                  *
-                         *                 010b     Zone C                                                  *
-                         *                 011b     Zone D                                                  *
-                         *                 100b     Zone E                                                  *
-                         *                 101b     Zone F                                                  *
-                         *                 110b     Zone G                                                  *
-                         *                 111b     Zone H                                                  *
-                         *          bit 0       always 0                                                    *
-                         *                                                                                  *
-                         * Information reverse-engineered by B. Milhaupt and used with permission           *
-                         ************************************************************************************/
-
-                        int section = ((l.getElement(5) & 0x1F)<<3) +((l.getElement(6)&0x70) >>4)+1;
-                        String zone;
-                        int locoAddr = l.getElement(4);
-
-                        if (l.getElement(3) != 0x7d) {
-                            locoAddr += l.getElement(3)<<7;
-                        }
-
-                        switch (l.getElement(6)&0x0F) {
-                            case 0x00: zone = "A"; break;
-                            case 0x02: zone = "B"; break;
-                            case 0x04: zone = "C"; break;
-                            case 0x06: zone = "D"; break;
-                            case 0x08: zone = "E"; break;
-                            case 0x0A: zone = "F"; break;
-                            case 0x0C: zone = "G"; break;
-                            case 0x0E: zone = "H"; break;
-                            default: zone="<unknown "+(l.getElement(2)&0x0F)+">"; break;
-                        }
-
-                        // get system and user names
-                        String reporterSystemName = new String();
-                        String reporterUserName = new String();
-
-                        reporterSystemName = locoNetReporterPrefix +
-                                ((l.getElement(5)&0x1F)*128 + l.getElement(6) +1);
-
-                        try {
-                            jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                            if ((reporter != null) && (reporter.getUserName().length() > 0))
-                                reporterUserName = "(" + reporter.getUserName() + ")";
-                            else
-                                reporterUserName = "()";
-                        }
-                        catch (Exception e) {
-                            reporterUserName = "()";
-                        }
-                        return "Transponder Find report : address "
-                                + locoAddr
-                                +((l.getElement(3) == 0x7d) ? " (short)" : " (long)")
-                                + " present at "
-                                + reporterSystemName + " " + reporterUserName
-                                + " (BDL16x Board " + (section + 1)  + " RX4 zone " + zone
-                                + ").\n";
-                    }
-                }
-                return interpretedMessage;
-            }
-
-            default: {
-                // 0xE5 message of unknown format
-                forceHex = true;
-                return "Message with opcode 0xE5 and unknown format.";
-
-            }
-            } 
+            } // end of switch (l.getElement(1))
         } // case LnConstants.OPC_PEER_XFER
 
+        case LnConstants.OPC_LISSY_UPDATE: {
             /*
              * OPC_LISSY_UPDATE   0xE5
              *
              * LISSY is an automatic train detection system made by Uhlenbrock.
              * All documentation appears to be in German.
-             * 
+             *
              */
-        case LnConstants.OPC_LISSY_UPDATE: {
             switch (l.getElement(1)) {
-            case 0x08: // Format LISSY message
-                int unit = (l.getElement(4) & 0x7F);
-                int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                if (l.getElement(2) == 0x00) {
-                    // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                    // OPC_LISSY_REP
-                    return "Lissy " + unit +
-                            " IR Report: Loco " + address +
-                            " moving " +
-                            ((l.getElement(3)&0x20)==0 ? "north\n":"south\n");
-                }
-                else if (l.getElement(2) == 0x01) {
-                    // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                    // OPC_WHEELCNT_REP
-                    int wheelCount = (l.getElement(6)&0x7F)+128*(l.getElement(5)&0x7F);
-                    return "Lissy " + unit +
-                            " Wheel Report: " + wheelCount +
-                            " wheels moving " +
-                            ((l.getElement(3)&0x20)==0 ? "north\n":"south\n");
-                }
+                case 0x08: // Format LISSY message
+                    int unit = (l.getElement(4) & 0x7F);
+                    int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                    if (l.getElement(2) == 0x00) {
+                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                        // OPC_LISSY_REP
+                        return "Lissy " + unit +
+                                " IR Report: Loco " + address +
+                                " moving " +
+                                ((l.getElement(3)&0x20)==0 ? "north\n":"south\n");
+                    }
+                    else if (l.getElement(2) == 0x01) {
+                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                        // OPC_WHEELCNT_REP
+                        int wheelCount = (l.getElement(6)&0x7F)+128*(l.getElement(5)&0x7F);
+                        return "Lissy " + unit +
+                                " Wheel Report: " + wheelCount +
+                                " wheels moving " +
+                                ((l.getElement(3)&0x20)==0 ? "north\n":"south\n");
+                    }
+                    else {
+                        forceHex = true;
+                        return "Unrecognized Lissy message varient.\n";
+                     }
 
                 case 0x0A: // Format special message
-                int element = l.getElement(2) * 128 + l.getElement(3);
-                int stat1 = l.getElement(5);
-                int stat2 = l.getElement(6);
-                String status;
-                if ((stat1 & 0x10) != 0)
-                    if ((stat1 & 0x20) != 0)
-                        status = " AX, XA reserved; ";
+                    int element = l.getElement(2) * 128 + l.getElement(3);
+                    int stat1 = l.getElement(5);
+                    int stat2 = l.getElement(6);
+                    String status;
+                    if ((stat1 & 0x10) != 0)
+                        if ((stat1 & 0x20) != 0)
+                            status = " AX, XA reserved; ";
+                        else
+                            status = " AX reserved; ";
+                    else if ((stat1 & 0x20) != 0)
+                        status = " XA reserved; ";
                     else
-                        status = " AX reserved; ";
-                else if ((stat1 & 0x20) != 0)
-                    status = " XA reserved; ";
-                else
-                    status = " no reservation; ";
-                if ((stat2 & 0x01) != 0)
-                    status += "Turnout thrown; ";
-                else
-                    status += "Turnout closed; ";
-                if ((stat1 & 0x01) != 0)
-                    status += "Occupied";
-                else
-                    status += "Not occupied";
-                return "SE" + (element + 1) + " (" + element + ") reports AX:" + l.getElement(7)
-                       + " XA:" + l.getElement(8) + status + "\n";
+                        status = " no reservation; ";
+                    if ((stat2 & 0x01) != 0)
+                        status += "Turnout thrown; ";
+                    else
+                        status += "Turnout closed; ";
+                    if ((stat1 & 0x01) != 0)
+                        status += "Occupied";
+                    else
+                        status += "Not occupied";
+                    return "SE" + (element + 1) + " (" + element + ") reports AX:" + l.getElement(7)
+                           + " XA:" + l.getElement(8) + status + "\n";
 
-            default:
-                forceHex = true;
-                return "Unrecognized OPC_LISSY_UPDATE command varient.\n";
-            }
-        } // case LnConstants.OPC_LISSY_UPDATE
+                default:
+                    forceHex = true;
+                    return "Unrecognized OPC_LISSY_UPDATE command varient.\n";
+                }
+            } // case LnConstants.OPC_LISSY_UPDATE
         
             /*
              * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
@@ -2787,223 +2797,222 @@ public class Llnmon {
              * Decodes for the F9-F28 functions taken from the NMRA standards and
              * coded by Leo Bicknell.
              */
-        case LnConstants.OPC_IMM_PACKET: {
-            // sendPkt = (sendPktMsg *) msgBuf;
-            int val7f = l.getElement(2); /* fixed value of 0x7f */
-            int reps = l.getElement(3); /* repeat count */
-            int dhi = l.getElement(4); /* high bits of data bytes */
-            int im1 = l.getElement(5);
-            int im2 = l.getElement(6);
-            int im3 = l.getElement(7);
-            int im4 = l.getElement(8);
-            int im5 = l.getElement(9);
-            int mobileDecoderAddress =-999;
-            String stationaryDecoderAddress = new String("");
-            int nmraInstructionType = -999;
-            int nmraSubInstructionType = -999;
-            int playableWhistleLevel = -999;
+            case LnConstants.OPC_IMM_PACKET: {
+                // sendPkt = (sendPktMsg *) msgBuf;
+                int val7f = l.getElement(2); /* fixed value of 0x7f */
+                int reps = l.getElement(3); /* repeat count */
+                int dhi = l.getElement(4); /* high bits of data bytes */
+                int im1 = l.getElement(5);
+                int im2 = l.getElement(6);
+                int im3 = l.getElement(7);
+                int im4 = l.getElement(8);
+                int im5 = l.getElement(9);
+                int mobileDecoderAddress =-999;
+                int nmraInstructionType = -999;
+                int nmraSubInstructionType = -999;
+                int playableWhistleLevel = -999;
 
-            // see if it really is a 'Send Packet' as defined in Loconet PE
-            if (val7f == 0x7f) {
-                int len = ((reps & 0x70) >> 4);
-                // duplication of packet data as packetInt was deemed necessary
-                // due to issues with msBit loss when converting from "byte" to 
-                // integral forms
-                byte[] packet = new byte[len];
-                int[] packetInt = new int[len];
-                packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-                packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-                if (len >= 2) {
-                    packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                    packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                }
-                if (len >= 3) {
-                    packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
-                    packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
-                }
-                if (len >= 4) {
-                    packet[3] = (byte) (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
-                    packetInt[3] = (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
-                }
-                if (len >= 5) {
-                    packet[4] = (byte) (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
-                    packetInt[4] = (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
-                }
+                // see if it really is a 'Send Packet' as defined in Loconet PE
+                if (val7f == 0x7f) {
+                    int len = ((reps & 0x70) >> 4);
+                    // duplication of packet data as packetInt was deemed necessary
+                    // due to issues with msBit loss when converting from "byte" to
+                    // integral forms
+                    byte[] packet = new byte[len];
+                    int[] packetInt = new int[len];
+                    packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
+                    packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
+                    if (len >= 2) {
+                        packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+                        packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+                    }
+                    if (len >= 3) {
+                        packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
+                        packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
+                    }
+                    if (len >= 4) {
+                        packet[3] = (byte) (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
+                        packetInt[3] = (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
+                    }
+                    if (len >= 5) {
+                        packet[4] = (byte) (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
+                        packetInt[4] = (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
+                    }
 
-                int address;
-                // compute some information which is useful for decoding
-                // the "Playable" whistle message
-                // Information reverse-engineered by B. Milhaupt and used with permission
-                if ((packetInt[0] & 0x80)  == 0x0) {
-                    // immediate packet addresses a 7-bit multi-function (mobile) decoder
-                    mobileDecoderAddress = packetInt[0];
-                    nmraInstructionType = (packetInt[1] & 0xE) >> 5;
-                    nmraSubInstructionType = (packetInt[1] & 0x1f);
-                    if ((nmraSubInstructionType == 0x1d) && (packetInt[2] == 0x7f)) {
-                        playableWhistleLevel = packetInt[3];
-                    }
-                }
-                else if ((packetInt[0] & 0xC0) == 0xC0) {
-                    // immediate packet addresses a 14-bit multi-function (mobile) decoder
-                    mobileDecoderAddress =  ( (packetInt[0] & 0x3F) << 8) + packetInt[1];
-                    nmraInstructionType = (packetInt[2] & 0xE0) >> 5;
-                    nmraSubInstructionType = (packetInt[2] & 0x1f);
-                    if ((nmraSubInstructionType == 0x1d) && (packetInt[3] == 0x7f)) {
-                        playableWhistleLevel = packetInt[4];
-                    }
-                }
-                else {
-                    // immediate packet not addressed to a multi-function (mobile) decoder
-                }
-                String generic = new String();
-                if ((mobileDecoderAddress >= 0) &&
-                        (nmraInstructionType == 1) &&
-                        (nmraSubInstructionType == 0x1D)) {
+                    int address;
+                    // compute some information which is useful for decoding
                     // the "Playable" whistle message
                     // Information reverse-engineered by B. Milhaupt and used with permission
-                     generic = "Playable Whistle control - Loco " +
-                            mobileDecoderAddress +
-                            " whistle to " +
-                            playableWhistleLevel +
-                            " (repeat "+ (reps & 0x7) +" times).\n";
-                     return generic;
+                    if ((packetInt[0] & 0x80)  == 0x0) {
+                        // immediate packet addresses a 7-bit multi-function (mobile) decoder
+                        mobileDecoderAddress = packetInt[0];
+                        nmraInstructionType = (packetInt[1] & 0xE) >> 5;
+                        nmraSubInstructionType = (packetInt[1] & 0x1f);
+                        if ((nmraSubInstructionType == 0x1d) && (packetInt[2] == 0x7f)) {
+                            playableWhistleLevel = packetInt[3];
+                        }
+                    }
+                    else if ((packetInt[0] & 0xC0) == 0xC0) {
+                        // immediate packet addresses a 14-bit multi-function (mobile) decoder
+                        mobileDecoderAddress =  ( (packetInt[0] & 0x3F) << 8) + packetInt[1];
+                        nmraInstructionType = (packetInt[2] & 0xE0) >> 5;
+                        nmraSubInstructionType = (packetInt[2] & 0x1f);
+                        if ((nmraSubInstructionType == 0x1d) && (packetInt[3] == 0x7f)) {
+                            playableWhistleLevel = packetInt[4];
+                        }
+                    }
+                    else {
+                        // immediate packet not addressed to a multi-function (mobile) decoder
+                    }
+                    String generic = new String();
+                    if ((mobileDecoderAddress >= 0) &&
+                            (nmraInstructionType == 1) &&
+                            (nmraSubInstructionType == 0x1D)) {
+                        // the "Playable" whistle message
+                        // Information reverse-engineered by B. Milhaupt and used with permission
+                         generic = "Playable Whistle control - Loco " +
+                                mobileDecoderAddress +
+                                " whistle to " +
+                                playableWhistleLevel +
+                                " (repeat "+ (reps & 0x7) +" times).\n";
+                         return generic;
+                    }
+                    /*
+                     * We use this two places below, so we generate it once here.
+                     * That seems wrong, but what we really need is to be able to
+                     * decode any NMRA packet here, which is a lot more work!
+                     */
+                    generic = "Send packet immediate: "
+                                     + ((reps & 0x70) >> 4)
+                                     + " bytes, repeat count " + (reps & 0x07)
+                                     + "(" + reps + ")" + "\n\tDHI=0x"
+                                     + Integer.toHexString(dhi) + ", IM1=0x"
+                                     + Integer.toHexString(im1) + ", IM2=0x"
+                                     + Integer.toHexString(im2) + ", IM3=0x"
+                                     + Integer.toHexString(im3) + ", IM4=0x"
+                                     + Integer.toHexString(im4) + ", IM5=0x"
+                                     + Integer.toHexString(im5) + "\n\tpacket: ";
+
+                    // F9-F28 w/a long address.
+                    if ((packetInt[0] & 0xC0) == 0xC0) {
+                        address = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
+
+                        if ((packetInt[2] & 0xFF) == 0xDF) {
+                            // Functions 21-28
+                            return "Send packet immediate: Locomotive " + address
+                                   + " set" + " F21="
+                                   + ((packetInt[3] & 0x01) > 0 ? "On" : "Off")
+                                   + ", F22="
+                                   + ((packetInt[3] & 0x02) > 0 ? "On" : "Off")
+                                   + ", F23="
+                                   + ((packetInt[3] & 0x04) > 0 ? "On" : "Off")
+                                   + ", F24="
+                                   + ((packetInt[3] & 0x08) > 0 ? "On" : "Off")
+                                   + ", F25="
+                                   + ((packetInt[3] & 0x10) > 0 ? "On" : "Off")
+                                   + ", F26="
+                                   + ((packetInt[3] & 0x20) > 0 ? "On" : "Off")
+                                   + ", F27="
+                                   + ((packetInt[3] & 0x40) > 0 ? "On" : "Off")
+                                   + ", F28="
+                                   + ((packetInt[3] & 0x80) > 0 ? "On" : "Off") + "\n";
+                        } else if ((packetInt[2] & 0xFF) == 0xDE) {
+                            // Functions 13-20
+                            return "Send packet immediate: Locomotive " + address
+                                   + " set" + " F13="
+                                   + ((packetInt[3] & 0x01) > 0 ? "On" : "Off")
+                                   + ", F14="
+                                   + ((packetInt[3] & 0x02) > 0 ? "On" : "Off")
+                                   + ", F15="
+                                   + ((packetInt[3] & 0x04) > 0 ? "On" : "Off")
+                                   + ", F16="
+                                   + ((packetInt[3] & 0x08) > 0 ? "On" : "Off")
+                                   + ", F17="
+                                   + ((packetInt[3] & 0x10) > 0 ? "On" : "Off")
+                                   + ", F18="
+                                   + ((packetInt[3] & 0x20) > 0 ? "On" : "Off")
+                                   + ", F19="
+                                   + ((packetInt[3] & 0x40) > 0 ? "On" : "Off")
+                                   + ", F20="
+                                   + ((packetInt[3] & 0x80) > 0 ? "On" : "Off") + "\n";
+                        } else if ((packetInt[2] & 0xF0) == 0xA0) {
+                            // Functions 8-12
+                            return "Send packet immediate: Locomotive " + address
+                                   + " set" + ", F09="
+                                   + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
+                                   + ", F10="
+                                   + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
+                                   + ", F11="
+                                   + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
+                                   + ", F12="
+                                   + ((packetInt[2] & 0x08) > 0 ? "On" : "Off") + "\n";
+                        } else {
+                            // Unknown
+                            return generic + jmri.NmraPacket.format(packet) + "\n";
+                        }
+                    } else { // F9-F28 w/a short address.
+                        address = packetInt[0];
+                        if ((packetInt[1] & 0xFF) == 0xDF) {
+                            // Functions 21-28
+                            return "Send packet immediate: Locomotive " + address
+                                   + " set" + " F21="
+                                   + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
+                                   + ", F22="
+                                   + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
+                                   + ", F23="
+                                   + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
+                                   + ", F24="
+                                   + ((packetInt[2] & 0x08) > 0 ? "On" : "Off")
+                                   + ", F25="
+                                   + ((packetInt[2] & 0x10) > 0 ? "On" : "Off")
+                                   + ", F26="
+                                   + ((packetInt[2] & 0x20) > 0 ? "On" : "Off")
+                                   + ", F27="
+                                   + ((packetInt[2] & 0x40) > 0 ? "On" : "Off")
+                                   + ", F28="
+                                   + ((packetInt[2] & 0x80) > 0 ? "On" : "Off") + "\n";
+                        } else if ((packetInt[1] & 0xFF) == 0xDE) {
+                            // Functions 13-20
+                            return "Send packet immediate: Locomotive " + address
+                                   + " set" + " F13="
+                                   + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
+                                   + ", F14="
+                                   + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
+                                   + ", F15="
+                                   + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
+                                   + ", F16="
+                                   + ((packetInt[2] & 0x08) > 0 ? "On" : "Off")
+                                   + ", F17="
+                                   + ((packetInt[2] & 0x10) > 0 ? "On" : "Off")
+                                   + ", F18="
+                                   + ((packetInt[2] & 0x20) > 0 ? "On" : "Off")
+                                   + ", F19="
+                                   + ((packetInt[2] & 0x40) > 0 ? "On" : "Off")
+                                   + ", F20="
+                                   + ((packetInt[2] & 0x80) > 0 ? "On" : "Off") + "\n";
+                        } else if ((packetInt[1] & 0xF0) == 0xA0) {
+                            // Functions 8-12
+                            return "Send packet immediate: Locomotive " + address
+                                   + " set" + " F09="
+                                   + ((packetInt[1] & 0x01) > 0 ? "On" : "Off")
+                                   + ", F10="
+                                   + ((packetInt[1] & 0x02) > 0 ? "On" : "Off")
+                                   + ", F11="
+                                   + ((packetInt[1] & 0x04) > 0 ? "On" : "Off")
+                                   + ", F12="
+                                   + ((packetInt[1] & 0x08) > 0 ? "On" : "Off") + "\n";
+                        } else {
+                            // Unknown
+                            return generic + jmri.NmraPacket.format(packet) + "\n";
+                        }
+                    } // else { // F9-F28 w/a short address.
+                } else {
+                    /* Hmmmm... */
+                    forceHex = true;
+                    return "Undefined Send Packet Immediate, 3rd byte id 0x"
+                           + Integer.toHexString(val7f) + " not 0x7f.\n";
                 }
-                /*
-                 * We use this two places below, so we generate it once here.
-                 * That seems wrong, but what we really need is to be able to
-                 * decode any NMRA packet here, which is a lot more work!
-                 */
-                generic = "Send packet immediate: "
-                                 + ((reps & 0x70) >> 4)
-                                 + " bytes, repeat count " + (reps & 0x07)
-                                 + "(" + reps + ")" + "\n\tDHI=0x"
-                                 + Integer.toHexString(dhi) + ", IM1=0x"
-                                 + Integer.toHexString(im1) + ", IM2=0x"
-                                 + Integer.toHexString(im2) + ", IM3=0x"
-                                 + Integer.toHexString(im3) + ", IM4=0x"
-                                 + Integer.toHexString(im4) + ", IM5=0x"
-                                 + Integer.toHexString(im5) + "\n\tpacket: ";
-
-                // F9-F28 w/a long address.
-                if ((packetInt[0] & 0xC0) == 0xC0) {
-                    address = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
-
-                    if ((packetInt[2] & 0xFF) == 0xDF) {
-                        // Functions 21-28
-                        return "Send packet immediate: Locomotive " + address
-                               + " set" + " F21="
-                               + ((packetInt[3] & 0x01) > 0 ? "On" : "Off")
-                               + ", F22="
-                               + ((packetInt[3] & 0x02) > 0 ? "On" : "Off")
-                               + ", F23="
-                               + ((packetInt[3] & 0x04) > 0 ? "On" : "Off")
-                               + ", F24="
-                               + ((packetInt[3] & 0x08) > 0 ? "On" : "Off")
-                               + ", F25="
-                               + ((packetInt[3] & 0x10) > 0 ? "On" : "Off")
-                               + ", F26="
-                               + ((packetInt[3] & 0x20) > 0 ? "On" : "Off")
-                               + ", F27="
-                               + ((packetInt[3] & 0x40) > 0 ? "On" : "Off")
-                               + ", F28="
-                               + ((packetInt[3] & 0x80) > 0 ? "On" : "Off") + "\n";
-                    } else if ((packetInt[2] & 0xFF) == 0xDE) {
-                        // Functions 13-20
-                        return "Send packet immediate: Locomotive " + address
-                               + " set" + " F13="
-                               + ((packetInt[3] & 0x01) > 0 ? "On" : "Off")
-                               + ", F14="
-                               + ((packetInt[3] & 0x02) > 0 ? "On" : "Off")
-                               + ", F15="
-                               + ((packetInt[3] & 0x04) > 0 ? "On" : "Off")
-                               + ", F16="
-                               + ((packetInt[3] & 0x08) > 0 ? "On" : "Off")
-                               + ", F17="
-                               + ((packetInt[3] & 0x10) > 0 ? "On" : "Off")
-                               + ", F18="
-                               + ((packetInt[3] & 0x20) > 0 ? "On" : "Off")
-                               + ", F19="
-                               + ((packetInt[3] & 0x40) > 0 ? "On" : "Off")
-                               + ", F20="
-                               + ((packetInt[3] & 0x80) > 0 ? "On" : "Off") + "\n";
-                    } else if ((packetInt[2] & 0xF0) == 0xA0) {
-                        // Functions 8-12
-                        return "Send packet immediate: Locomotive " + address
-                               + " set" + ", F09="
-                               + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
-                               + ", F10="
-                               + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
-                               + ", F11="
-                               + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
-                               + ", F12="
-                               + ((packetInt[2] & 0x08) > 0 ? "On" : "Off") + "\n";
-                    } else {
-                        // Unknown
-                        return generic + jmri.NmraPacket.format(packet) + "\n";
-                    }
-                } else { // F9-F28 w/a short address.
-                    address = packetInt[0];
-                    if ((packetInt[1] & 0xFF) == 0xDF) {
-                        // Functions 21-28
-                        return "Send packet immediate: Locomotive " + address
-                               + " set" + " F21="
-                               + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
-                               + ", F22="
-                               + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
-                               + ", F23="
-                               + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
-                               + ", F24="
-                               + ((packetInt[2] & 0x08) > 0 ? "On" : "Off")
-                               + ", F25="
-                               + ((packetInt[2] & 0x10) > 0 ? "On" : "Off")
-                               + ", F26="
-                               + ((packetInt[2] & 0x20) > 0 ? "On" : "Off")
-                               + ", F27="
-                               + ((packetInt[2] & 0x40) > 0 ? "On" : "Off")
-                               + ", F28="
-                               + ((packetInt[2] & 0x80) > 0 ? "On" : "Off") + "\n";
-                    } else if ((packetInt[1] & 0xFF) == 0xDE) {
-                        // Functions 13-20
-                        return "Send packet immediate: Locomotive " + address
-                               + " set" + " F13="
-                               + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
-                               + ", F14="
-                               + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
-                               + ", F15="
-                               + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
-                               + ", F16="
-                               + ((packetInt[2] & 0x08) > 0 ? "On" : "Off")
-                               + ", F17="
-                               + ((packetInt[2] & 0x10) > 0 ? "On" : "Off")
-                               + ", F18="
-                               + ((packetInt[2] & 0x20) > 0 ? "On" : "Off")
-                               + ", F19="
-                               + ((packetInt[2] & 0x40) > 0 ? "On" : "Off")
-                               + ", F20="
-                               + ((packetInt[2] & 0x80) > 0 ? "On" : "Off") + "\n";
-                    } else if ((packetInt[1] & 0xF0) == 0xA0) {
-                        // Functions 8-12
-                        return "Send packet immediate: Locomotive " + address
-                               + " set" + " F09="
-                               + ((packetInt[1] & 0x01) > 0 ? "On" : "Off")
-                               + ", F10="
-                               + ((packetInt[1] & 0x02) > 0 ? "On" : "Off")
-                               + ", F11="
-                               + ((packetInt[1] & 0x04) > 0 ? "On" : "Off")
-                               + ", F12="
-                               + ((packetInt[1] & 0x08) > 0 ? "On" : "Off") + "\n";
-                    } else {
-                        // Unknown
-                        return generic + jmri.NmraPacket.format(packet) + "\n";
-                    }
-                } // else { // F9-F28 w/a short address.
-            } else {
-                /* Hmmmm... */
-                forceHex = true;
-                return "Undefined Send Packet Immediate, 3rd byte id 0x"
-                       + Integer.toHexString(val7f) + " not 0x7f.\n";
-            }
-        } // case LnConstants.OPC_IMM_PACKET
+            } // case LnConstants.OPC_IMM_PACKET
 
             case LnConstants.RE_OPC_PR3_MODE: {
                 /*
@@ -3085,9 +3094,9 @@ public class Llnmon {
                     "Digitrax (unknown slave device type)");
     } // end of public static String getSlaveNameFromIPLInfo
 
-    private static jmri.TurnoutManager turnoutManager;
-    private static jmri.SensorManager sensorManager;
-    private static jmri.ReporterManager reporterManager;
+    private jmri.TurnoutManager turnoutManager;
+    private jmri.SensorManager sensorManager;
+    private jmri.ReporterManager reporterManager;
     private static String locoNetTurnoutPrefix = new String();
     private static String locoNetSensorPrefix = new String();
     private static String locoNetReporterPrefix = new String();
@@ -3097,7 +3106,7 @@ public class Llnmon {
      * turnout "system names"
      * @param loconetTurnoutManager
      */
-    public static void setLocoNetTurnoutManager (jmri.TurnoutManager loconetTurnoutManager) {
+    public void setLocoNetTurnoutManager (jmri.TurnoutManager loconetTurnoutManager) {
         turnoutManager = loconetTurnoutManager;
         locoNetTurnoutPrefix = turnoutManager.getSystemPrefix() + "T";
     }
@@ -3107,12 +3116,12 @@ public class Llnmon {
      * sensor "system names"
      * @param loconetSensorManager
      */
-    public static void setLocoNetSensorManager (jmri.SensorManager loconetSensorManager) {
+    public void setLocoNetSensorManager (jmri.SensorManager loconetSensorManager) {
         sensorManager = loconetSensorManager;
         locoNetSensorPrefix = sensorManager.getSystemPrefix() +"S";
     }
 
-    public static void setLocoNetReporterManager (jmri.ReporterManager loconetReporterManager) {
+    public void setLocoNetReporterManager (jmri.ReporterManager loconetReporterManager) {
         reporterManager = loconetReporterManager;
         locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
     }
