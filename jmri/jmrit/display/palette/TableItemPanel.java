@@ -222,6 +222,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     protected class IconDragJLabel extends DragJLabel {
         Hashtable <String, NamedIcon> iconMap;
 
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;

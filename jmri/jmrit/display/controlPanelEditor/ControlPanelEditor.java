@@ -534,10 +534,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     ArrayList <Positionable> _clipGroup;
     public ArrayList <Positionable> getClipGroup() {
+        if (_debug) log.debug("getClipGroup: _clipGroup"+(_clipGroup==null?"=null":", size= "+_clipGroup.size()));
         if (_clipGroup==null) {
             return null;
         }
-        if (_debug) log.debug("getClipGroup: _clipGroup"+(_clipGroup==null?"=null":", size= "+_clipGroup.size()));
         ArrayList<Positionable> clipGrp = new ArrayList<Positionable>();
         for (int i=0; i<_clipGroup.size(); i++) {
             Positionable pos = _clipGroup.get(i).deepClone();

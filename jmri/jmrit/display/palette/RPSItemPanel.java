@@ -40,7 +40,6 @@ public class RPSItemPanel extends FamilyItemPanel {
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToAddDeleteModify"), 
                                                        ItemPalette.rbp.getString("ButtonEditIcons"))));
-//        blurb.add(new JLabel(ItemPalette.rbp.getString("PressEditIcons")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -61,6 +60,7 @@ public class RPSItemPanel extends FamilyItemPanel {
     protected class IconDragJLabel extends DragJLabel {
         Hashtable <String, NamedIcon> iconMap;
 
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;

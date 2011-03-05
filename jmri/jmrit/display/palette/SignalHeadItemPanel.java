@@ -43,7 +43,6 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
 
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
-//        _table.setTransferHandler(new SignalHeadDnD(editor));
         ROW_HEIGHT = _table.getRowHeight();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -167,6 +166,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
     protected class IconDragJLabel extends DragJLabel {
         Hashtable <String, NamedIcon> iconMap;
 
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;

@@ -111,6 +111,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     protected class IndicatorDragJLabel extends DragJLabel {
         Hashtable <String, NamedIcon> iconMap;
 
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IndicatorDragJLabel(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;

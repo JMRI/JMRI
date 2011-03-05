@@ -252,6 +252,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
     protected class IconDragJLabel extends DragJLabel {
         Hashtable <String, NamedIcon> iconMap;
 
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
@@ -267,24 +268,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 log.error("IconDragJLabel.getTransferData: iconMap is null!");
                 return null;
             }
-            /*
-            NamedBean bean = getNamedBean();
-            if (bean==null) {
-                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
-                return null;
-            } */
-
             _selectionModel.getPositions();
-            /*
-            Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
-            if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                return null;
-            }
-            */
+            
             MultiSensorIcon ms = new MultiSensorIcon(_editor);
             ms.setInactiveIcon(iconMap.get("SensorStateInactive"));
             ms.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
@@ -306,45 +291,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
             return ms;
         }
     }
-
-/* 
-    protected class MultiSensorDnD extends DnDTableItemHandler {
-
-        MultiSensorDnD(Editor editor) {
-            super(editor);
-        }
-
-        public Transferable createTransferable(JComponent c) {
-            if (c instanceof JTable) {
-                return createPositionableDnD((JTable)c);
-            }
-            return null;
-        }
-
-        public Transferable createPositionableDnD(JTable table) {
-            _selectionModel.getPositions();
-            Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
-            if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                return null;
-            }
-            MultiSensorIcon ms = new MultiSensorIcon(_editor);
-            ms.setInactiveIcon(iconMap.get("SensorStateInactive"));
-            ms.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
-            ms.setUnknownIcon(iconMap.get("BeanStateUnknown"));
-            ArrayList<NamedBean> selections = _selectionModel.getSelections();
-            for (int i=0; i<selections.size(); i++) {
-                ms.addEntry(selections.get(i).getDisplayName(), iconMap.get(POSITION[i]));
-            }
-            _selectionModel.clearSelection();
-            ms.setUpDown(_upDown);
-            ms.setLevel(Editor.SENSORS);
-            return new PositionableDnD(ms, ms.getNameString());
-        }
-    }  */
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorItemPanel.class.getName());
 }
