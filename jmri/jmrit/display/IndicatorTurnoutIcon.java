@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -148,8 +148,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             if (_iconMaps==null) {
                 initMaps();
             }
-            _status = "DontUseTrack";
-            getOccSensor().addPropertyChangeListener(this);
+            Sensor sensor = getOccSensor();
+            sensor.addPropertyChangeListener(this);
+            setStatus(sensor.getKnownState());
             displayState(turnoutState());
         } 
     }
@@ -178,17 +179,18 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
              log.error("Detection OBlock '"+pName+"' not available, icon won't see changes");
          }
      }   
-    public void setOccBlockHandle(NamedBeanHandle<OBlock> block) {
+    public void setOccBlockHandle(NamedBeanHandle<OBlock> blockHandle) {
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
         }
-        namedOccBlock = block;
+        namedOccBlock = blockHandle;
         if (namedOccBlock != null) {
             if (_iconMaps==null) {
                 initMaps();
             }
-            _status = "DontUseTrack";
-            getOccBlock().addPropertyChangeListener(this);
+            OBlock block = getOccBlock();
+            block.addPropertyChangeListener(this);
+            setStatus(block, block.getState());
             displayState(turnoutState());
         } 
     }
@@ -232,6 +234,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                 initMaps();
             }
             getErrSensor().addPropertyChangeListener(this);
+            setErrorStatus(getErrSensor().getKnownState());
+            displayState(turnoutState());
         }
     }
     
@@ -438,64 +442,85 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         if (source instanceof Turnout) {
             super.propertyChange(evt);
         } else if (source instanceof OBlock) {
-            OBlock block = (OBlock)source;
-            String pathName = block.getAllocatedPathName();
+            int now = ((Integer)evt.getNewValue()).intValue();
             if ("state".equals(evt.getPropertyName()) || "path".equals(evt.getPropertyName())) {
-                int now = ((Integer)evt.getNewValue()).intValue();
-                if ((now & OBlock.OUT_OF_SERVICE)!=0) {
-                    if ((now & OBlock.OCCUPIED)!=0) {
-                        _status = "OccupiedTrack";
-                    } else {
-                        _status = "DontUseTrack";
-                    }
-           //     } else if ((now & OBlock.UNOCCUPIED)!=0) {
-           //         _status = "ClearTrack";
-                } else if ((now & OBlock.OCCUPIED)!=0) {
-                    if ((now & OBlock.RUNNING)!=0) {
-                        if (_paths!=null && _paths.contains(pathName)) {
-                            _status = "PositionTrack";
-                            _train = (String)block.getValue();
-                        } else {
-                            _status = "ClearTrack";     // icon not on path
-                        }
-                    } else {
-                        _status = "OccupiedTrack";
-                    }
-                } else if ((now & OBlock.ALLOCATED)!=0) {
-                    if (_paths!=null && !_paths.contains(pathName)) {
-                        _status = "ClearTrack";
-                    } else {
-                        _status = "AllocatedTrack";
-                    }
-                } else {
-                    _status = "ClearTrack";
-                }
+                setStatus((OBlock)source, now);
             }
         } else if (source instanceof Sensor) {
             if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
-                    if (now==Sensor.ACTIVE) {
-                        _status = "OccupiedTrack";
-                    } else if (now==Sensor.INACTIVE) {
-                        _status = "ClearTrack";
-                    } else if (now==Sensor.UNKNOWN) {
-                        _status = "DontUseTrack";
-                    } else {
-                        _status = "ErrorTrack";
-                    }
+                    setStatus(now);
                 }
                 if (source.equals(getErrSensor())) {
-                    if (now==Sensor.ACTIVE) {
-                        _status = "ErrorTrack";
-                    } else {
-                        _status = "DontUseTrack";
-                    }
+                    setErrorStatus(now);
                 }
             }
         }
         displayState(turnoutState());
 	}
+    private void setStatus(OBlock block, int state) {
+        String pathName = block.getAllocatedPathName();
+        if ((state & OBlock.OUT_OF_SERVICE)!=0) {
+            if ((state & OBlock.OCCUPIED)!=0) {
+                _status = "OccupiedTrack";
+            } else {
+                _status = "DontUseTrack";
+            }
+        } else if ((state & OBlock.OCCUPIED)!=0) {
+            if ((state & OBlock.RUNNING)!=0) {
+                if (_paths!=null && _paths.contains(pathName)) {
+                    _status = "PositionTrack";
+                    _train = (String)block.getValue();
+                } else {
+                    _status = "ClearTrack";     // icon not on path
+                }
+            } else {
+                _status = "OccupiedTrack";
+            }
+        } else if ((state & OBlock.ALLOCATED)!=0) {
+            if (_paths!=null && !_paths.contains(pathName)) {
+                _status = "AllocatedTrack";     // icon not on path
+            } else {
+                _status = "ClearTrack";
+            }
+        } else if ((state & Sensor.UNKNOWN)!=0) {
+            _status = "DontUseTrack";
+        } else {
+            _status = "ClearTrack";
+        }
+    }
+
+    private void setStatus(int state) {
+        if (state==Sensor.ACTIVE) {
+            _status = "OccupiedTrack";
+        } else if (state==Sensor.INACTIVE) {
+            _status = "ClearTrack";
+        } else if (state==Sensor.UNKNOWN) {
+            _status = "DontUseTrack";
+        } else {
+            _status = "ErrorTrack";
+        }
+    }
+
+    private void setErrorStatus(int state) {
+        if (state==Sensor.ACTIVE) {
+            _status = "ErrorTrack";
+        } else {
+            // reset status from detectors.
+            OBlock block = getOccBlock();
+            if (block!=null) {
+                setStatus(block, block.getState());
+            } else {
+                Sensor sensor = getOccSensor();
+                if (sensor!=null) {
+                    setStatus(sensor.getState());
+                } else {
+                    _status = "DontUseTrack";
+                }
+            }
+        }
+    }
 
     IndicatorTOItemPanel _TOPanel;
 
@@ -529,14 +554,14 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         }
         _TOPanel.initUpdate(updateAction, iconMaps);
         _TOPanel.setSelection(getTurnout());
-        if (namedErrSensor!=null) {
-            _TOPanel.setErrSensor(namedErrSensor.getName());
-        }
         if (namedOccSensor!=null) {
             _TOPanel.setOccDetector(namedOccSensor.getName());
         }
         if (namedOccBlock!=null) {
             _TOPanel.setOccDetector(namedOccBlock.getName());
+        }
+        if (namedErrSensor!=null) {
+            _TOPanel.setErrSensor(namedErrSensor.getName());
         }
         _TOPanel.setShowTrainName(_showTrain);
         _TOPanel.setPaths(_paths);
@@ -548,9 +573,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     void updateItem() {
 		if (log.isDebugEnabled()) log.debug("updateItem: "+getNameString()+" family= "+_TOPanel.getFamilyName());
         setTurnout(_TOPanel.getTableSelection().getSystemName());
-        setErrSensor(_TOPanel.getErrSensor());
         setOccSensor(_TOPanel.getOccSensor());
         setOccBlock(_TOPanel.getOccBlock());
+        setErrSensor(_TOPanel.getErrSensor());
         _showTrain = _TOPanel.getShowTrainName();
         _iconFamily = _TOPanel.getFamilyName();
         _paths = _TOPanel.getPaths();
@@ -581,7 +606,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         _paletteFrame = null;
         _TOPanel.dispose();
         _TOPanel = null;
-        invalidate();
+        displayState(turnoutState());
+//        invalidate();
     }
 
     public void dispose() {

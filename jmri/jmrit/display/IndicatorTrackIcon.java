@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 
@@ -102,17 +102,18 @@ public class IndicatorTrackIcon extends PositionableIcon
              log.error("No SensorManager for this protocol, block icons won't see changes");
          }
      }
-     public void setOccSensorHandle(NamedBeanHandle<Sensor> sen) {
+     public void setOccSensorHandle(NamedBeanHandle<Sensor> senHandle) {
          if (namedOccSensor != null) {
              getOccSensor().removePropertyChangeListener(this);
          }
-         namedOccSensor = sen;
+         namedOccSensor = senHandle;
          if (namedOccSensor != null) {
              if (_iconMap==null) {
                  _iconMap = new Hashtable<String, NamedIcon>();
              }
-             _status = "DontUseTrack";
-             getOccSensor().addPropertyChangeListener(this);
+             Sensor sensor = getOccSensor();
+             sensor.addPropertyChangeListener(this);
+             setStatus(sensor.getKnownState());
              displayState(_status);
          } 
      }
@@ -140,17 +141,18 @@ public class IndicatorTrackIcon extends PositionableIcon
              log.error("Detection OBlock '"+pName+"' not available, icon won't see changes");
          }
      }   
-    public void setOccBlockHandle(NamedBeanHandle<OBlock> block) {
+    public void setOccBlockHandle(NamedBeanHandle<OBlock> blockHandle) {
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
         }
-        namedOccBlock = block;
+        namedOccBlock = blockHandle;
         if (namedOccBlock != null) {
             if (_iconMap==null) {
                 _iconMap = new Hashtable<String, NamedIcon>();
             }
-            _status = "DontUseTrack";
-            getOccBlock().addPropertyChangeListener(this);
+            OBlock block = getOccBlock();
+            block.addPropertyChangeListener(this);
+            setStatus(block, block.getState());
             displayState(_status);
         } 
     }
@@ -193,6 +195,8 @@ public class IndicatorTrackIcon extends PositionableIcon
                 _iconMap = new Hashtable<String, NamedIcon>();
             }
             getErrSensor().addPropertyChangeListener(this);
+            setErrorStatus(getErrSensor().getKnownState());
+            displayState(_status);
         }
     }
     
@@ -229,12 +233,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         _iconMap.put(name, icon);
         setIcon(_iconMap.get(_status));
     }
-/*
-    public NamedIcon getIcon(String name) {
-        if (log.isDebugEnabled()) log.debug("get \""+name+"\" icon");
-        return _iconMap.get(name);
-    }
-*/
+    
     public String getStatus() {
         return _status;
     }
@@ -250,65 +249,86 @@ public class IndicatorTrackIcon extends PositionableIcon
             return;
         }
         Object source = evt.getSource();
+        int now = ((Integer)evt.getNewValue()).intValue();
         if (source instanceof OBlock) {
-            OBlock block = (OBlock)source;
-            String pathName = block.getAllocatedPathName();
             if ("state".equals(evt.getPropertyName()) || "path".equals(evt.getPropertyName())) {
-                int now = ((Integer)evt.getNewValue()).intValue();
-                if ((now & OBlock.OUT_OF_SERVICE)!=0) {
-                    if ((now & OBlock.OCCUPIED)!=0) {
-                        _status = "OccupiedTrack";
-                    } else {
-                        _status = "DontUseTrack";
-                    }
-                } else if ((now & OBlock.OCCUPIED)!=0) {
-                    if ((now & OBlock.RUNNING)!=0) {
-                        if (_paths!=null && _paths.contains(pathName)) {
-                            _status = "PositionTrack";
-                            _train = (String)block.getValue();
-                        } else {
-                            _status = "ClearTrack";     // icon not on path
-                        }
-                    } else {
-                        _status = "OccupiedTrack";
-                    }
-                } else if ((now & OBlock.ALLOCATED)!=0) {
-                    if (_paths!=null && !_paths.contains(pathName)) {
-                        _status = "AllocatedTrack";     // icon not on path
-                    } else {
-                        _status = "ClearTrack";
-                    }
-                } else if ((now & Sensor.UNKNOWN)!=0) {
-                    _status = "DontUseTrack";
-                } else {
-                    _status = "ClearTrack";
-                }
+                setStatus((OBlock)source, now);
             }
         } else if (source instanceof Sensor) {
             if (evt.getPropertyName().equals("KnownState")) {
-                int now = ((Integer)evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
-                    if (now==Sensor.ACTIVE) {
-                        _status = "OccupiedTrack";
-                    } else if (now==Sensor.INACTIVE) {
-                        _status = "ClearTrack";
-                    } else if (now==Sensor.UNKNOWN) {
-                        _status = "DontUseTrack";
-                    } else {
-                        _status = "ErrorTrack";
-                    }
+                    setStatus(now);
                 }
                 if (source.equals(getErrSensor())) {
-                    if (now==Sensor.ACTIVE) {
-                        _status = "ErrorTrack";
-                    } else {
-                        _status = "DontUseTrack";
-                    }
+                    setErrorStatus(now);
                 }
             }
         }
         displayState(_status);
 	}
+
+    private void setStatus(OBlock block, int state) {
+        String pathName = block.getAllocatedPathName();
+        if ((state & OBlock.OUT_OF_SERVICE)!=0) {
+            if ((state & OBlock.OCCUPIED)!=0) {
+                _status = "OccupiedTrack";
+            } else {
+                _status = "DontUseTrack";
+            }
+        } else if ((state & OBlock.OCCUPIED)!=0) {
+            if ((state & OBlock.RUNNING)!=0) {
+                if (_paths!=null && _paths.contains(pathName)) {
+                    _status = "PositionTrack";
+                    _train = (String)block.getValue();
+                } else {
+                    _status = "ClearTrack";     // icon not on path
+                }
+            } else {
+                _status = "OccupiedTrack";
+            }
+        } else if ((state & OBlock.ALLOCATED)!=0) {
+            if (_paths!=null && !_paths.contains(pathName)) {
+                _status = "AllocatedTrack";     // icon not on path
+            } else {
+                _status = "ClearTrack";
+            }
+        } else if ((state & Sensor.UNKNOWN)!=0) {
+            _status = "DontUseTrack";
+        } else {
+            _status = "ClearTrack";
+        }
+    }
+
+    private void setStatus(int state) {
+        if (state==Sensor.ACTIVE) {
+            _status = "OccupiedTrack";
+        } else if (state==Sensor.INACTIVE) {
+            _status = "ClearTrack";
+        } else if (state==Sensor.UNKNOWN) {
+            _status = "DontUseTrack";
+        } else {
+            _status = "ErrorTrack";
+        }
+    }
+
+    private void setErrorStatus(int state) {
+        if (state==Sensor.ACTIVE) {
+            _status = "ErrorTrack";
+        } else {
+            // reset status from detectors.
+            OBlock block = getOccBlock();
+            if (block!=null) {
+                setStatus(block, block.getState());
+            } else {
+                Sensor sensor = getOccSensor();
+                if (sensor!=null) {
+                    setStatus(sensor.getState());
+                } else {
+                    _status = "DontUseTrack";
+                }
+            }
+        }
+    }
 
     public String getNameString() {
         String str = "";
@@ -398,9 +418,9 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     void updateItem() {
-        setErrSensor(_trackPanel.getErrSensor());
         setOccSensor(_trackPanel.getOccSensor());
         setOccBlock(_trackPanel.getOccBlock());
+        setErrSensor(_trackPanel.getErrSensor());
         _showTrain = _trackPanel.getShowTrainName();
         _iconFamily = _trackPanel.getFamilyName();
         _paths = _trackPanel.getPaths();
@@ -425,7 +445,8 @@ public class IndicatorTrackIcon extends PositionableIcon
         _paletteFrame = null;
         _trackPanel.dispose();
         _trackPanel = null;
-        invalidate();
+        displayState(_status);
+//        invalidate();
     }
 
     public void dispose() {
