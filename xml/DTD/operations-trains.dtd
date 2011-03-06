@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.20 2011-02-16 20:21:43 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.21 2011-03-06 23:39:02 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -86,6 +86,7 @@
 <!ATTLIST train build				(true | false) "false">
 <!ATTLIST train buildFailed			(true | false) "false">
 <!ATTLIST train printed				(true | false) "false">
+<!ATTLIST train switchListStatus	CDATA #IMPLIED>
 <!ATTLIST train status				CDATA #IMPLIED>
 <!ATTLIST train current				CDATA #IMPLIED>
 <!ATTLIST train skip				CDATA #IMPLIED>
