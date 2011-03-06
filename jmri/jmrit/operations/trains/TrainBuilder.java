@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.139 $
+ * @version             $Revision: 1.140 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1178,7 +1178,7 @@ public class TrainBuilder extends TrainCommon{
 	private boolean addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track){
 		if (!checkTrainLength(car, rl, rld))
 			return false;
-		Location location = locationManager.getLocationByName(rld.getName());
+		Location location = locationManager.getLocationByName(rl.getName());
 		location.setStatus();
 		Location destination = locationManager.getLocationByName(rld.getName());
 		destination.setStatus();

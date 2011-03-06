@@ -31,7 +31,7 @@ public class TrainSwitchLists extends TrainCommon {
 	TrainManager manager = TrainManager.instance();
 	
 	// builds a switch list for a location
-	public void buildSwitchList(Location location){
+	public void buildSwitchList(Location location, boolean newTrainsOnly){
 		// create manifest file
 		File file = TrainManagerXml.instance().createSwitchListFile(
 				location.getName());
@@ -61,6 +61,8 @@ public class TrainSwitchLists extends TrainCommon {
 			Train train = manager.getTrainById(trains.get(i));
 			if (!train.isBuilt())
 				continue;	// train wasn't built so skip
+			if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED))
+				continue;	// already printed this train
 			List<String> carList = carManager.getByTrainDestinationList(train);
 			List<String> enginesList = engineManager.getByTrainList(train);
 			// does the train stop once or more at this location?

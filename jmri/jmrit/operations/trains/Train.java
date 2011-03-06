@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.110 $
+ * @version $Revision: 1.111 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -80,6 +80,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _railroadName ="";		// optional railroad name for this train
 	protected String _logoURL ="";			// optional manifest logo for this train
 	protected Engine _leadEngine = null; 	// lead engine for icon
+	protected String _switchListStatus = UNKNOWN;		//print switch list status
 	protected String _comment = "";
 	
 	// Engine change and helper engines
@@ -143,6 +144,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String INCLUDELOADS = rb.getString("Include");
 	public static final String EXCLUDELOADS = rb.getString("Exclude");
 
+	// Switch list status
+	public static final String UNKNOWN = "";
+	public static final String PRINTED = rb.getString("Printed");
 	
 	public static final String AUTO = rb.getString("Auto");				// how engines are assigned to this train
 	
@@ -1489,6 +1493,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);
 		setPrinted(false);
+		setSwitchListStatus(UNKNOWN);
 	}
 	
 	public void printBuildReport(){
@@ -1784,6 +1789,21 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Sets the print status for this location's switch list
+	 * @param status UNKNOWN PRINTED
+	 */
+	public void setSwitchListStatus(String status){
+		String old = _switchListStatus;
+		_switchListStatus = status;
+		if (!old.equals(status))
+			firePropertyChange("switch list train status", old, status);
+	}
+	
+	public String getSwitchListStatus(){
+		return _switchListStatus;
+	}
+	
+	/**
 	 * Resets the train, removes engines and cars from this train.
 	 * @return true if reset successful
 	 */
@@ -1919,6 +1939,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_buildFailed = a.getValue().equals("true");
     	if ((a = e.getAttribute("printed")) != null)
     		_printed = a.getValue().equals("true");
+    	if ((a = e.getAttribute("switchListStatus")) != null)
+    		_switchListStatus = a.getValue();
     	if ((a = e.getAttribute("leadEngine")) != null)
     		_leadEngineId = a.getValue();
     	if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
@@ -2023,6 +2045,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
         e.setAttribute("printed", getPrinted()?"true":"false");
+        e.setAttribute("switchListStatus", getSwitchListStatus());
         if(getLeadEngine()!= null)
         	e.setAttribute("leadEngine", getLeadEngine().getId());
         e.setAttribute("status", getStatus());

@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.72 $
+ * @version             $Revision: 1.73 $
  */
 public class Car extends RollingStock {
 	
@@ -111,7 +111,7 @@ public class Car extends RollingStock {
 	}
 	
 	public void setScheduleId(String id){
-		log.debug("set schedule id "+id+" for car "+toString() );
+		log.debug("set schedule id ("+id+") for car ("+toString()+")");
 		String old = _scheduleId;
 		_scheduleId = id;
 		if (!old.equals(id))
@@ -332,10 +332,8 @@ public class Car extends RollingStock {
 	
 	private String testSchedule(Track track){
 		// does car already have this destination?
-		if (track == getDestinationTrack())
+		if (track == null || track == getDestinationTrack())
 			return OKAY;
-		if (track == null)
-			return SCHEDULE +" track is null";
 		if (track.getScheduleId().equals("")){
 			// does car have a scheduled load?
 			if (getLoad().equals(carLoads.getDefaultEmptyName()) || getLoad().equals(carLoads.getDefaultLoadName()))
@@ -463,7 +461,7 @@ public class Car extends RollingStock {
 			return;
 		}
 		if (!getScheduleId().equals("")){
-			log.debug("Car has schedule id "+getScheduleId());
+			log.debug("Car ("+toString()+") has schedule id "+getScheduleId());
 			Schedule sch = track.getSchedule();
 			if (sch != null){
 				ScheduleItem si = sch.getItemById(getScheduleId());

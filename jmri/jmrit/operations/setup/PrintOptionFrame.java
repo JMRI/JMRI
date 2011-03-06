@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,7 +30,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -335,6 +336,12 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
+			// Check font if user selected tab output
+			if (Setup.isTabEnabled() && (!Setup.getFontName().equals(Setup.COURIER) && !Setup.getFontName().equals(Setup.MONOSPACED))){
+				JOptionPane.showMessageDialog(this,
+						rb.getString("TabWorksBest"), rb.getString("ChangeFont"),
+						JOptionPane.WARNING_MESSAGE);				
+			}
 		}
 	}
 

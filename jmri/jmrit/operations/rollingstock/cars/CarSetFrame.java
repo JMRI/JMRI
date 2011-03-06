@@ -25,7 +25,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -144,8 +144,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
 			if (!status.equals(Car.OKAY)){
 				JOptionPane.showMessageDialog(this,
-						getRb().getString("rsCanNotFinalMsg")+ status,
-						getRb().getString("rsCanNotFinal"),
+						MessageFormat.format(rb.getString("rsCanNotFinalMsg"), new Object[]{car.toString(), status}),
+						rb.getString("rsCanNotFinal"),
 						JOptionPane.WARNING_MESSAGE);
 			}
 			car.setNextDestination((Location) finalDestinationBox.getSelectedItem());
@@ -163,8 +163,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				String status = car.testDestination((Location) destReturnWhenEmptyBox.getSelectedItem(), (Track)trackReturnWhenEmptyBox.getSelectedItem());
 				if (!status.equals(Car.OKAY)){
 					JOptionPane.showMessageDialog(this,
-							getRb().getString("rsCanNotRWEMsg")+ status,
-							getRb().getString("rsCanNotRWE"),
+							MessageFormat.format(rb.getString("rsCanNotRWEMsg"), new Object[]{car.toString(), status}),
+							rb.getString("rsCanNotRWE"),
 							JOptionPane.WARNING_MESSAGE);
 				}
 				car.setReturnWhenEmptyDestTrack((Track)trackReturnWhenEmptyBox.getSelectedItem());
@@ -175,7 +175,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		}
 		// car load
 		if (loadComboBox.getSelectedItem() != null){
-			car.setLoad((String)loadComboBox.getSelectedItem());
+			String load = (String)loadComboBox.getSelectedItem();
+			if (CarLoads.instance().containsName(car.getType(), load))
+				car.setLoad(load);
 		}
 		if (car.getTrain() != null){
 			Train train = car.getTrain();
