@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -1855,7 +1855,7 @@ public class OperationsTrainsTest extends TestCase {
 		//  Move the train #2
 		train1.move();
 		Assert.assertEquals("Train 1 After 2nd Move Current Name", "South End", train1.getCurrentLocationName());
-		Assert.assertEquals("Train 1 After 2nd Move Next Location Name", "South End", train1.getNextLocationName());
+		Assert.assertEquals("Train 1 After 2nd Move Next Location Name", "", train1.getNextLocationName());
 		// Is the train in route?
 		Assert.assertEquals("Train 1 in route after 2nd", true, train1.isTrainInRoute());
 
@@ -2894,7 +2894,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		Assert.assertEquals("Train 1 After Build Departs Name", "Westford", train1.getTrainDepartsName());
 		Assert.assertEquals("Train 1 After Build Terminates Name", "Westford", train1.getTrainTerminatesName());
-		Assert.assertEquals("Train 1 After Build Next Location Name", "Westford", train1.getNextLocationName());
+		Assert.assertEquals("Train 1 After Build Next Location Name", "", train1.getNextLocationName());
 		Assert.assertEquals("Train 1 After Build Built Status", true, train1.isBuilt());
 
 		// are the right cars assigned to the train?

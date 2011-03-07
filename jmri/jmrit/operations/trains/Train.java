@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.111 $
+ * @version $Revision: 1.112 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -457,6 +457,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return Train's next route location name
 	 */
 	public String getNextLocationName(){
+		RouteLocation rl = getNextLocation();
+		if (rl != null)
+			return rl.getName();
+		return "";
+	}
+	
+	public RouteLocation getNextLocation(){
 		List<String> routeList = getRoute().getLocationsBySequenceList();
 		for (int i=0; i<routeList.size(); i++){
 			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
@@ -464,12 +471,13 @@ public class Train implements java.beans.PropertyChangeListener {
 				i++;
 				if (i < routeList.size()){
 					rl = getRoute().getLocationById(routeList.get(i));
-					return rl.getName();
+					return rl;
 				} 
 				break;
 			}
 		}
-		return getCurrentLocationName();	// At end of route
+		return null;	// At end of route
+		
 	}
 	
 	/**
@@ -1065,6 +1073,50 @@ public class Train implements java.beans.PropertyChangeListener {
     		}
     	}
     	return cars.size();
+    }
+    
+    /**
+     * Gets the train's length at a certain location
+     * in the train's route.
+     * @param rl The location in the train's route
+     * @return The train length at this location
+     */
+    public int getTrainLength(RouteLocation rl){
+    	int length = 0;
+    	List<String> engines = EngineManager.instance().getByTrainList(this);
+    	for (int i=0; i<engines.size(); i++){
+       		Engine eng = EngineManager.instance().getById(engines.get(i));
+    		if (eng.getRouteLocation() == rl){
+    			length = length + Integer.parseInt(eng.getLength()) + Engine.COUPLER;
+    		}
+    	}
+    	List<String> cars = CarManager.instance().getByTrainList(this);
+    	for (int i=0; i<cars.size(); i++){
+       		Car car = CarManager.instance().getById(cars.get(i));
+    		if (car.getRouteLocation() == rl){
+    			length = length + Integer.parseInt(car.getLength()) + Car.COUPLER;
+    		}
+    	}
+    	return length;
+    }
+    
+    public int getTrainWeight(RouteLocation rl){
+    	int weight = 0;
+    	List<String> engines = EngineManager.instance().getByTrainList(this);
+    	for (int i=0; i<engines.size(); i++){
+       		Engine eng = EngineManager.instance().getById(engines.get(i));
+    		if (eng.getRouteLocation() == rl){
+    			weight = weight + eng.getAdjustedWeightTons();
+    		}
+    	}
+    	List<String> cars = CarManager.instance().getByTrainList(this);
+    	for (int i=0; i<cars.size(); i++){
+       		Car car = CarManager.instance().getById(cars.get(i));
+    		if (car.getRouteLocation() == rl){
+    			weight = weight + car.getAdjustedWeightTons();
+    		}
+    	}
+    	return weight;
     }
     
     public void setDescription(String description) {
@@ -1772,7 +1824,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void updateStatus(RouteLocation old, RouteLocation next){
 		if (next != null){
-			setStatus(TRAININROUTE+" "+getNumberCarsInTrain(next)+" "+rb.getString("cars"));
+			setStatus(TRAININROUTE+" "+getNumberCarsInTrain(next)+" "+rb.getString("cars")
+					+" "+getTrainLength(next)+" "+rb.getString("feet")
+					+", "+getTrainWeight(next)+" "+rb.getString("tons"));
 			// run move scripts
 			for (int i=0; i<getMoveScripts().size(); i++){
 				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getMoveScripts().get(i)));
