@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
@@ -21,11 +22,12 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class TrainIcon extends LocoIcon {
 
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
  
 	public TrainIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -104,7 +106,7 @@ public class TrainIcon extends LocoIcon {
 	}
 
 	private JMenu makeTrainRouteMenu(){
-		JMenu routeMenu = new JMenu("Route");
+		JMenu routeMenu = new JMenu(rb.getString("Route"));
 		Route route = train.getRoute();
 		if (route == null)
 			return routeMenu;
@@ -130,10 +132,13 @@ public class TrainIcon extends LocoIcon {
 			String rText = "";
 			String pickups = "";
 			String drops = "";
-			if (pickupCars > 0)
-				pickups = " Pickups " + pickupCars;
-			if (dropCars > 0)
-				drops = " Drops " + dropCars;
+			if (pickupCars > 0){
+				pickups = " "+rb.getString("Pickup")+" " + pickupCars;
+				if (dropCars > 0)
+					drops = ", "+rb.getString("SetOut")+" " + dropCars;
+			}
+			else if (dropCars > 0)
+				drops = " "+rb.getString("SetOut")+" " + dropCars;
 			if (pickupCars > 0 || dropCars > 0)
 				rText = current + rl.getName() +"  (" + pickups + drops +" )";
 			else
