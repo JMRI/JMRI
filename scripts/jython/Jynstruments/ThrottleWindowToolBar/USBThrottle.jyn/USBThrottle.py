@@ -110,8 +110,6 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                                 self.speedTimer.start()
                             else :
                                 self.speedTimer.stop()
-                        else :
-                            self.speedTimer.stop() # anything else, stop the speed change thread
                     except AttributeError:
                         self.speedTimer.stop() # just in case, stop it, really should never get there
     
@@ -448,7 +446,13 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                 del self.USBDriver
                 dd=ctrl.getName()
                 dd=dd.replace(" ", "")
-                dd=dd.replace(".", "")              
+                dd=dd.replace(".", "")
+                dd=dd.replace("(", "")
+                dd=dd.replace(")", "")
+                dd=dd.replace("{", "")
+                dd=dd.replace("}", "")
+                dd=dd.replace("[", "")
+                dd=dd.replace("]", "")              
                 self.USBDriver = __import__(dd)           
             except ImportError:  # On error load a default one
                 print "Driver \""+ dd +"\" not found in \""+self.getFolder()+"\", loading default one"
