@@ -24,6 +24,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         this("Multiple Tabbed");
     }
     
+    @Override
     protected void createModel(){
         dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
@@ -71,13 +72,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         return null;
     }
     
-    /*public JPanel getPanel() {
-        if (!init)
-            createModel();
-        return dataPanel;
-    }*/
-       
-    
+    @Override
     protected JTable makeJTable(TableSorter sorter) {
         return new JTable(sorter)  {
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
@@ -90,12 +85,12 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
             }
         };
     }
-    
+
+    @Override
     protected void setTitle() {
         //atf.setTitle("multiple turnouts");
     }
     
-    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.EcosLocoTable";
         }
