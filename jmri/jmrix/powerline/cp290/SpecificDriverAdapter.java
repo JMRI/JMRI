@@ -22,7 +22,7 @@ import gnu.io.SerialPortEventListener;
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -232,7 +232,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 4800;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = 600;  // default, but also defaulted in the initial value of selectedSpeed
                 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -247,7 +247,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     }
 
     protected String [] validSpeeds = new String[]{"(automatic)"};
-    protected int [] validSpeedValues = new int[]{4800};
+    protected int [] validSpeedValues = new int[]{600};
     protected String selectedSpeed=validSpeeds[0];
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificDriverAdapter.class.getName());
