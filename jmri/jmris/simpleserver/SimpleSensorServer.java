@@ -9,10 +9,10 @@ import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
 
 /**
- * Simple Server interface between the JMRI power manager and a
+ * Simple Server interface between the JMRI Sensor manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 public class SimpleSensorServer extends AbstractSensorServer {
