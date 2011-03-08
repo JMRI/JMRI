@@ -6,7 +6,7 @@ import jmri.jmrix.powerline.cm11.ConnectionConfig;
 import jmri.jmrix.powerline.cm11.SpecificDriverAdapter;
 
 /**
- * Handle XML persistance of layout connections by persisting
+ * Handle XML persistence of layout connections by persisting
  * the SerialDriverAdapter (and connections). Note this is
  * named as the XML version of a ConnectionConfig object,
  * but it's actually persisting the SerialDriverAdapter.
@@ -16,7 +16,7 @@ import jmri.jmrix.powerline.cm11.SpecificDriverAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
