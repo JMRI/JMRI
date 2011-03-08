@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 
@@ -249,13 +249,14 @@ public class IndicatorTrackIcon extends PositionableIcon
             return;
         }
         Object source = evt.getSource();
-        int now = ((Integer)evt.getNewValue()).intValue();
         if (source instanceof OBlock) {
             if ("state".equals(evt.getPropertyName()) || "path".equals(evt.getPropertyName())) {
+                int now = ((Integer)evt.getNewValue()).intValue();
                 setStatus((OBlock)source, now);
             }
         } else if (source instanceof Sensor) {
             if (evt.getPropertyName().equals("KnownState")) {
+                int now = ((Integer)evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
                     setStatus(now);
                 }
