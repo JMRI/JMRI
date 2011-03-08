@@ -22,7 +22,7 @@ import gnu.io.SerialPortEventListener;
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -249,6 +249,13 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     protected String [] validSpeeds = new String[]{"(automatic)"};
     protected int [] validSpeedValues = new int[]{4800};
     protected String selectedSpeed=validSpeeds[0];
+
+    @Override
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificDriverAdapter.class.getName());
 
