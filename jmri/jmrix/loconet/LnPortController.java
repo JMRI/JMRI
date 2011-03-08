@@ -8,11 +8,16 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
+
+    public LnPortController(){
+        super();
+        setManufacturer(jmri.jmrix.DCCManufacturerList.DIGITRAX);
+    }
 
     // returns the InputStream from the port
     public abstract DataInputStream getInputStream();
