@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -249,9 +249,20 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         for (int i = 0; i < currPathCnt; i++) {
         	pList[i] = paths.get(i);
             isSet[i] = pList[i].checkPathSet();
-            pSensor[i] = pList[i].getBlock().getSensor();
-            isActive[i] = pList[i].getBlock().getSensor().getState() == Sensor.ACTIVE;
-            pDir[i] = pList[i].getBlock().getDirection();
+            Block b = pList[i].getBlock();
+            if (b != null) {
+                pSensor[i] = b.getSensor();
+                if (pSensor[i] != null) {
+                    isActive[i] = pSensor[i].getState() == Sensor.ACTIVE;
+                } else {
+                    isActive[i] = false;
+                }
+                pDir[i] = b.getDirection();
+            } else {
+                pSensor[i] = null;
+                isActive[i] = false;
+                pDir[i] = -1;
+            }
             pFromDir[i] = pList[i].getFromBlockDirection();
             if (isSet[i] && pSensor[i] != null && isActive[i]) {
                 count++;
