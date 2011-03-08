@@ -24,7 +24,7 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.50 $
+ * @version			$Revision: 1.51 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -32,6 +32,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     
     public SerialDriverAdapter() {
         super();
+        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
         adaptermemo = new NceSystemConnectionMemo();
     }
 

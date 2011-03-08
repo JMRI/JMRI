@@ -29,7 +29,7 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -38,6 +38,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     public SerialDriverAdapter() {
         super();
         adaptermemo = new SpeedoSystemConnectionMemo();
+        setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
         mInstance=this;
     }
 
@@ -103,7 +104,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
             //AJB - add Sprog Traffic Controller as event listener
             try {
                 activeSerialPort.addEventListener(SpeedoTrafficController.instance());
-             } catch (TooManyListenersException e) {}
+             } catch (TooManyListenersException e) {}setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
              
              // AJB - activate the DATA_AVAILABLE notifier
              activeSerialPort.notifyOnDataAvailable(true);

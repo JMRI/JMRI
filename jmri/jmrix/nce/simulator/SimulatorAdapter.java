@@ -33,15 +33,15 @@ import java.io.IOException;
  * Commands range from 0x80 to 0xBF
  * <p>
  * Commands and formats supported:
- * Commands 0xAD to 0xBF are not used and return ‘0’
+ * Commands 0xAD to 0xBF are not used and return ï¿½0ï¿½
  * <p>
  * Errors returned:
- * ‘0’= command not supported
- * ’1'= loco address out of range
- * ’2'= cab address out of range
- * ’3'= data out of range
- * ’4'= byte count out of range
- * ’!’= command completed successfully
+ * ï¿½0ï¿½= command not supported
+ * ï¿½1'= loco address out of range
+ * ï¿½2'= cab address out of range
+ * ï¿½3'= data out of range
+ * ï¿½4'= byte count out of range
+ * ï¿½!ï¿½= command completed successfully
  * <p>
  * For a complete description of Binary Commands see: www.ncecorporation.com/pdf/
  * bincmds.pdf
@@ -120,13 +120,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
-<<<<<<< SimulatorAdapter.java
- * converting to multiple connection
- * @author kcameron Copyright (C) 2010
- * @version			$Revision: 1.15 $
-=======
- * @version			$Revision: 1.15 $
->>>>>>> 1.12
+ * @version			$Revision: 1.16 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -153,6 +147,7 @@ public class SimulatorAdapter extends NcePortController implements
     
     public SimulatorAdapter (){
         super();
+        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
         adaptermemo = new NceSystemConnectionMemo();
     }
 
