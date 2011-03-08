@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.10 2010-01-07 07:28:44 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.11 2011-03-08 03:45:36 ken_c Exp $ -->
 <title>JMRI: Power Line System Names</title>
 
 <!-- Style -->
@@ -77,15 +77,15 @@ because it caused way too much confusion)
 <h2>Insteon</h2>
 
 Insteon adapters are labelled with a four-part number that looks
-like "01.2A.B4.CD".  These are just random
+like "01.2A.B4".  These are just random
 strings as part as the user and the program is concerned, and
 we don't make any effort to subdivide them.  You should
 enter these exactly as they appear on the device you 
 want to address. Do not delete or add leading zeros, etc.
 
 <p>
-For example, if the device is labelled "01.2A.B4.CD",
-the corresponding Light system name is "PL01.2A.B4.CD".
+For example, if the device is labelled "01.2A.B4",
+the corresponding Light system name is "PL01.2A.B4".
 
 <h3>More Information</h3>
 

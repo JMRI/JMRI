@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author	Ken Cameron, Copyright (C) 2008, 2009, 2010
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class SerialAddress {
 
@@ -81,7 +81,7 @@ public class SerialAddress {
             return (true);
         }
         if (aTest) {
-            // This is a PLaa:bb:cc address - validate the Insteon address fields
+            // This is a PLaa.bb.cc address - validate the Insteon address fields
             if (!iTest) {
                 // here if an illegal format
                 log.error("address did not match any valid forms: " + systemName);
@@ -171,7 +171,7 @@ public class SerialAddress {
             // check for the presence of a char to differentiate the two address formats
             if ( iMatch && iCount == 5) {
                 // This is a PLaa.bb.cc Insteon address 
-                nName = iCodes.group(1) + iCodes.group(2) + ":" + hCodes.group(3) + ":" + iCodes.group(4);
+                nName = iCodes.group(1) + iCodes.group(2) + iCodes.group(3) + "." + iCodes.group(4) + "." + iCodes.group(5);
             } else {
         	    if (log.isDebugEnabled()) {
         		    log.debug("valid name doesn't normalize: " + systemName + " hMatch: " + hMatch + " hCount: " + hCount);
@@ -232,7 +232,7 @@ public class SerialAddress {
                 }
 			} else {
     			if (iCodes.reset(systemName).matches()) {
-                    dCode = iCodes.group(1)+iCodes.group(2)+iCodes.group(3);
+                    dCode = iCodes.group(3)+iCodes.group(4)+iCodes.group(5);
                 } else {
 					log.error("illegal insteon address: " + systemName);
 					return "";
