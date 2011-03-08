@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 
@@ -47,7 +47,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         The ecos throttle in turn will notify the throttle manager of a successful or
         unsuccessful throttle connection. */
         log.debug("new EcosDccThrottle for "+address);
-        new EcosDccThrottle((DccLocoAddress)address, adaptermemo, true);
+        new EcosDccThrottle((DccLocoAddress)address, adaptermemo, control);
         //notifyThrottleKnown(new EcosDccThrottle((DccLocoAddress)address), address);
     }
 
