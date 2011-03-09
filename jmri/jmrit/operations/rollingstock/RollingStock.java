@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -95,6 +95,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _id;
 	}
 
+	/**
+	 * Set the rolling stock identification or road number
+	 * @param number
+	 */
 	public void setNumber(String number) {
 		String old = _number;
 		_number = number;
@@ -135,6 +139,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _type;
 	}
 
+	/**
+	 * Sets the length of the rolling stock.
+	 * @param length
+	 */
 	public void setLength(String length) {
 		String old = _length;
 		_length = length;
@@ -231,6 +239,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _location;
 	}
 	
+	/**
+	 * Set the rolling stock's location.  Doesn't do any checking and
+	 * does not fire a property change.  Used exclusively by the Router code.
+	 * Use setLocation(Location, Track) instead. 
+	 * @param location where to set the rolling stock.
+	 */
 	public void setLocation(Location location){
 		_location = location;
 	}
@@ -259,6 +273,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _trackLocation;
 	}
 	
+	/**
+	 * Set the rolling stock's track.  Doesn't do any checking and
+	 * does not fire a property change.  Used exclusively by the Router code.
+	 * Use setLocation(Location, Track) instead. 
+	 * @param track to place the rolling stock on.
+	 */
 	public void setTrack(Track track){
 		_trackLocation = track;
 	}
@@ -527,9 +547,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	}
 	
 	/**
-	 * Sets rolling stock destination without reserving destination track space or
-	 * drop count.  Used by car router to test destinations.
-	 * @param destination
+	 * Sets rolling stock destination without reserving destination track space
+	 * or drop count. Does not fire a property change. Used by car router to
+	 * test destinations.  Use setDestination(Location, Track) instead.
+	 * 
+	 * @param destination for the rolling stock
 	 */
 	public void setDestination(Location destination){
 		_destination = destination;
@@ -549,7 +571,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	
 	/**
 	 * Sets rolling stock destination track without reserving destination track space or
-	 * drop count.  Used by car router to test destinations.
+	 * drop count.  Used by car router to test destinations.  Does not fire a property change.
+	 * Use setDestination(Location, Track) instead. 
 	 * @param track
 	 */
 	public void setDestinationTrack(Track track){
@@ -582,6 +605,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _moves;
 	}
 
+	/**
+	 * Sets the train that will service this rolling stock.
+	 * @param train
+	 */
 	public void setTrain(Train train) {
 		Train old = _train;
 		_train = train;
@@ -605,6 +632,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return "";
 	}
 	
+	/**
+	 * Sets the location where the rolling stock will be picked up by the train.
+	 * @param routeLocation the pick up location for this rolling stock.
+	 */
 	public void setRouteLocation (RouteLocation routeLocation){
 		if(_location == null){
 			log.debug("WARNING rolling stock ("+toString()+") does not have an assigned location");
@@ -650,6 +681,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			firePropertyChange("rolling stock rfid", old, id);
 	}
 	
+	/**
+	 * Set where in a train's route this rolling stock will be set out.
+	 * @param routeDestination the location where the rolling stock is to leave the train.
+	 */
 	public void setRouteDestination (RouteLocation routeDestination){
 		if(routeDestination != null && _destination != null && !routeDestination.getName().equals(_destination.getName()))
 			log.debug("WARNING route destination name ("+routeDestination.getName()+") not equal to destination name ("+_destination.getName()+") for rolling stock ("+toString()+")" );
@@ -677,6 +712,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _owner;
 	}
 	
+	/**
+	 * Set the rolling stock location as unknown.
+	 * @param unknown when true, the rolling stock location is unknown.
+	 */
 	public void setLocationUnknown(boolean unknown){
 		boolean old = _locationUnknown;
 		_locationUnknown = unknown;
@@ -692,6 +731,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _locationUnknown;
 	}
 	
+	/**
+	 * Sets the rolling stock service state.  When true,
+	 * rolling stock is out of service.  Normal state is
+	 * false, the rolling stock is in service and available.
+	 * @param outOfService when true, out of service
+	 */
 	public void setOutOfService(boolean outOfService){
 		boolean old = _outOfService;
 		_outOfService = outOfService;
@@ -713,7 +758,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	}
 
 	public void setComment(String comment) {
+		String old = _comment;
 		_comment = comment;
+		if (!old.equals(comment))
+			firePropertyChange("rolling stock comment", old, comment);		
 	}
 
 	public String getComment() {
