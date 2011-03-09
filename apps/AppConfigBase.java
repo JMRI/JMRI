@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.14 $
+ * @author	Ken Cameron Copyright (C) 2011
+ * @version	$Revision: 1.15 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -77,41 +79,41 @@ public class AppConfigBase extends JmriPanel {
      */
     private boolean checkDups() {
     
-        List<String> ports = new ArrayList<String>();
-        List<String> connections = new ArrayList<String>();
-        for (int count = 0; count <JmrixConfigPane.getNumberOfInstances(); count++){
-            
-            String port = getPort(count);
-            /*We need to test to make sure that the connection port is not set to (none)
-            If it is set to none, then it is likely that the connection has been removed
-            and therefore we should not be checking against it.*/
-            if(!port.equals(JmrixConfigPane.NONE)){
-                if (ports.contains(port)){
-                    return false;
-                }
+        Map<String, List<Integer>> ports = new HashMap<String, List<Integer>>();
+        Map<String, List<Integer>> conns = new HashMap<String, List<Integer>>();
+        int maxSize = JmrixConfigPane.getNumberOfInstances();
+        for (int count = 0; count < maxSize; count++) {
+            if (!getDisabled(count)) {
+		        String port = getPort(count);
+		        /*We need to test to make sure that the connection port is not set to (none)
+		        If it is set to none, then it is likely a simulator.*/
+		        if(!port.equals(JmrixConfigPane.NONE)){
+		            if (!ports.containsKey(port)){
+		            	List<Integer> arg1 = new ArrayList<Integer>();
+		            	arg1.add(count);
+						ports.put(port, arg1);
+		            } else {
+		            	ports.get(port).add(count);
+		            }
+		        }
             }
-            ports.add(port);
-            
-            /*Using to upper method as the original test, used ignorecase when doing the
-            comparison, so putting all in upper case will do the equivalent. This is
-            only temporary until all systems have been updated to allow multiple connections
-            of the same type*/
-            String c = getConnection(count).toUpperCase();
-            int x = c.indexOf(" ");
-            /*We need to test to make sure that the connection is not set to (NONE)
-            If it is set to NONE, then it is likely that the connection has been removed
-            and therefore we should not be checking against it.*/
-            if(!c.equals("(NONE)")){
-                if (x > 0) {
-                    c = c.substring(0, x);
-                }
-                if (connections.contains(c)) {
-                    return false;
-                }
-            }
-            connections.add(c);
         }
-        return true;
+        boolean ret = true;
+        /* one or more dups or NONE, lets see if it is dups */
+        for (Map.Entry<String, List<Integer>> e : ports.entrySet()) {
+        	if (e.getValue().size() > 1) {
+        		/* dup port found */
+        		ret = false;
+        		String instanceNames = "";
+        		for (int n = 0; n < e.getValue().size(); n++) {
+        			instanceNames = instanceNames + getManufacturerName(e.getValue().get(n)) + "|";
+        		}
+        		instanceNames = instanceNames.substring(0, instanceNames.lastIndexOf("|"));
+        		instanceNames = instanceNames.replaceAll("[|]", ", ");
+        		log.error("Duplicate ports found on: " + instanceNames + " for port: " + e.getKey());
+        	}
+        }
+        return ret;
     }
 
     /**
