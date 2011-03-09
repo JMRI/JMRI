@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -95,25 +95,58 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         jmri.InstanceManager.setCommandStation(sm);
 
     }
-
+    
     /** 
-     * Currently provides only Programmer this way
+     * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
+        if (getDisabled())
+            return false;
         if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
+        if (type.equals(jmri.PowerManager.class))
+            return true;
+        if (type.equals(jmri.SensorManager.class))
+            return true;
+        if (type.equals(jmri.TurnoutManager.class))
+            return true;
+        if (type.equals(jmri.LightManager.class))
+            return true;
+        if (type.equals(jmri.ReporterManager.class))
+            return true;
+        if (type.equals(jmri.ClockControl.class))
             return true;
         return false; // nothing, by default
     }
     
-    /** 
-     * Currently provides only Programmer this way
-     */
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
+        if (getDisabled())
+            return null;
         if (T.equals(jmri.ProgrammerManager.class))
             return (T)getProgrammerManager();
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
+        if (T.equals(jmri.PowerManager.class))
+            return (T)getPowerManager();
+        if (T.equals(jmri.SensorManager.class))
+            return (T)getSensorManager();
+        if (T.equals(jmri.TurnoutManager.class))
+            return (T)getTurnoutManager();
+        if (T.equals(jmri.LightManager.class))
+            return (T)getLightManager();
+        if (T.equals(jmri.ClockControl.class))
+            return (T)getClockControl();
+        if (T.equals(jmri.ReporterManager.class))
+            return (T)getReporterManager();
         return null; // nothing, by default
     }
+    
+    protected LocoNetThrottledTransmitter tm;
         
     /**
      * Configure the common managers for LocoNet connections.
@@ -122,33 +155,106 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public void configureManagers() {
     
-        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(getLnTrafficController());
+        tm = new LocoNetThrottledTransmitter(getLnTrafficController());
         
         InstanceManager.setPowerManager(
-            new jmri.jmrix.loconet.LnPowerManager(this));
+            getPowerManager());
 
         InstanceManager.setTurnoutManager(
-            new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix()));
+            getTurnoutManager());
 
         InstanceManager.setLightManager(
-            new jmri.jmrix.loconet.LnLightManager(getLnTrafficController(), getSystemPrefix()));
+            getLightManager());
 
         InstanceManager.setSensorManager(
-            new jmri.jmrix.loconet.LnSensorManager(getLnTrafficController(),getSystemPrefix()));
+            getSensorManager());
 
         InstanceManager.setThrottleManager(
-            new jmri.jmrix.loconet.LnThrottleManager(getSlotManager()));
+            getThrottleManager());
 
         jmri.InstanceManager.setProgrammerManager(
             getProgrammerManager());
 
         InstanceManager.setReporterManager(
-            new jmri.jmrix.loconet.LnReporterManager(getLnTrafficController(), getSystemPrefix()));
+            getReporterManager());
 
         InstanceManager.addClockControl(
-            new jmri.jmrix.loconet.LnClockControl(getSlotManager(), getLnTrafficController()));
+            getClockControl());
 
     }
+    
+    private LnPowerManager powerManager;
+    
+    public LnPowerManager getPowerManager() { 
+        if (getDisabled())
+            return null;
+        if (powerManager == null)
+            powerManager = new jmri.jmrix.loconet.LnPowerManager(this);
+        return powerManager;
+    }
+    
+    private LnThrottleManager throttleManager;
+    
+    public LnThrottleManager getThrottleManager() { 
+        if (getDisabled())
+            return null;
+        if (throttleManager == null)
+            throttleManager = new jmri.jmrix.loconet.LnThrottleManager(getSlotManager());
+        return throttleManager;
+    }
+    
+    private LnTurnoutManager turnoutManager;
+    
+    public LnTurnoutManager getTurnoutManager() { 
+        if (getDisabled())
+            return null;
+        if (turnoutManager == null)
+            turnoutManager = new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix());
+        return turnoutManager;
+    }
+    
+    private LnClockControl clockControl;
+    
+    public LnClockControl getClockControl() { 
+        if (getDisabled())
+            return null;
+        if (clockControl == null)
+            clockControl = new jmri.jmrix.loconet.LnClockControl(getSlotManager(), getLnTrafficController());
+        return clockControl;
+    }
+    
+    private LnReporterManager reporterManager;
+    
+    public LnReporterManager getReporterManager() { 
+        if (getDisabled())
+            return null;
+        if (reporterManager == null)
+            reporterManager = new jmri.jmrix.loconet.LnReporterManager(getLnTrafficController(), getSystemPrefix());
+        return reporterManager;
+    }
+    
+    private LnSensorManager sensorManager;
+    
+    public LnSensorManager getSensorManager() { 
+        if (getDisabled())
+            return null;
+        if (sensorManager == null)
+            sensorManager = new jmri.jmrix.loconet.LnSensorManager(getLnTrafficController(), getSystemPrefix());
+        return sensorManager;
+    }
+    
+    private LnLightManager lightManager;
+    
+    public LnLightManager getLightManager() { 
+        if (getDisabled())
+            return null;
+        if (lightManager == null)
+            lightManager = new jmri.jmrix.loconet.LnLightManager(getLnTrafficController(), getSystemPrefix());
+        return lightManager;
+    }
+    
+    
+    
     
     public void dispose() {
         lt = null;
@@ -156,6 +262,20 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) 
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        if (powerManager != null) 
+            InstanceManager.deregister(powerManager, jmri.jmrix.loconet.LnPowerManager.class);
+        if (turnoutManager != null) 
+            InstanceManager.deregister(turnoutManager, jmri.jmrix.loconet.LnTurnoutManager.class);
+        if (lightManager != null) 
+            InstanceManager.deregister(lightManager, jmri.jmrix.loconet.LnLightManager.class);
+        if (sensorManager != null) 
+            InstanceManager.deregister(sensorManager, jmri.jmrix.loconet.LnSensorManager.class);
+        if (reporterManager != null) 
+            InstanceManager.deregister(reporterManager, jmri.jmrix.loconet.LnReporterManager.class);
+        if (throttleManager != null) 
+            InstanceManager.deregister(throttleManager, jmri.jmrix.loconet.LnThrottleManager.class);
+        if (clockControl != null) 
+            InstanceManager.deregister(clockControl, jmri.jmrix.loconet.LnClockControl.class);
         super.dispose();
     }
     

@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -92,6 +92,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Tells which managers this provides by class
      */
     public boolean provides(Class<?> type) {
+        if (getDisabled())
+            return false;
         if (type.equals(jmri.ThrottleManager.class))
             return true;
         if (type.equals(jmri.PowerManager.class))

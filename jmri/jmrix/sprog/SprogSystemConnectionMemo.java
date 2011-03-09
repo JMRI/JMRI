@@ -1,9 +1,9 @@
-// SprogSystemConnectionMemo.java
-
+// SprogSystemConnectionMemo.javaf
 package jmri.jmrix.sprog;
 
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
+import jmri.ThrottleManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
 /**
@@ -15,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -78,28 +78,31 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
-    /**
-     * Currently provides only Programmer this way
-     */
     @Override
     public boolean provides(Class<?> type) {
+        if (getDisabled())
+            return false;
         if (type.equals(jmri.ProgrammerManager.class))
             return true;
         if (type.equals(jmri.PowerManager.class))
             return true;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
         return false; // nothing, by default
     }
 
-    /**
-     * Currently provides only Programmer this way
-     */
     @Override
     @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
+        if (getDisabled())
+            return null;
         if (T.equals(jmri.ProgrammerManager.class))
             return (T)getProgrammerManager();
         if (T.equals(jmri.PowerManager.class))
             return (T)getPowerManager();
+        if (T.equals(jmri.ThrottleManager.class)){
+            return (T)getThrottleManager();
+        }
         return null; // nothing, by default
     }
     /**
@@ -121,16 +124,20 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         
 
         switch (sprogMode){
-            case OPS : jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogCSThrottleManager());
-                break;
-            case SERVICE : jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
-                break;
+            case OPS :      sprogCSThrottleManager = new jmri.jmrix.sprog.SprogCSThrottleManager();
+                            jmri.InstanceManager.setThrottleManager(sprogCSThrottleManager);
+                            break;
+            case SERVICE :  sprogThrottleManager = new jmri.jmrix.sprog.SprogThrottleManager();
+                            jmri.InstanceManager.setThrottleManager(sprogThrottleManager);
+                            break;
 
         }
 
     }
 
     private ProgrammerManager programmerManager;
+    private SprogCSThrottleManager sprogCSThrottleManager;
+    private SprogThrottleManager sprogThrottleManager;
     private SprogPowerManager powerManager;
 
     public ProgrammerManager getProgrammerManager() {
@@ -144,6 +151,14 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public SprogPowerManager getPowerManager() { return powerManager; }
+    
+    public ThrottleManager getThrottleManager() { 
+        switch (sprogMode){
+            case OPS :      return sprogCSThrottleManager;
+            case SERVICE :  return sprogThrottleManager;
+        }
+        return null;
+    }
     
     public void dispose(){
         st = null;
