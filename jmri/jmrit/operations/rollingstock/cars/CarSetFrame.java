@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -42,6 +43,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	
 	// buttons
 	JButton editLoadButton = new JButton(rb.getString("Edit"));	
+	
+	// check boxes
+	protected JCheckBox ignoreLoadCheckBox = new JCheckBox(rb.getString("Ignore"));
 	
 	CarLoadEditFrame lef = null;
 		
@@ -63,15 +67,22 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		JPanel pLoad = new JPanel();
 		pLoad.setLayout(new GridBagLayout());
 		pLoad.setBorder(BorderFactory.createTitledBorder(rb.getString("Load")));
-		addItem(pLoad, loadComboBox, 1, 0);
-		addItem(pLoad, editLoadButton, 2, 0);
+		addItem(pLoad, ignoreLoadCheckBox, 1, 0);
+		addItem(pLoad, loadComboBox, 2, 0);
+		addItem(pLoad, editLoadButton, 3, 0);
 		pOptional.add(pLoad);
+		
+		// don't show ignore load checkbox
+		ignoreLoadCheckBox.setVisible(false);
 		
 		// setup combobox
 		addComboBoxAction(loadComboBox);
 		
 		// setup button
 		addButtonAction(editLoadButton);
+		
+		// setup checkboxes
+		addCheckBoxAction(ignoreLoadCheckBox);
 		
 		// get notified if combo box gets modified
 		CarLoads.instance().addPropertyChangeListener(this);
@@ -174,7 +185,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			car.setReturnWhenEmptyDestination((Location) destReturnWhenEmptyBox.getSelectedItem());
 		}
 		// car load
-		if (loadComboBox.getSelectedItem() != null){
+		if (!ignoreLoadCheckBox.isSelected() && loadComboBox.getSelectedItem() != null){
 			String load = (String)loadComboBox.getSelectedItem();
 			if (CarLoads.instance().containsName(car.getType(), load))
 				car.setLoad(load);
@@ -221,7 +232,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			car.setNextDestination(_car.getNextDestination());
 			car.setNextDestTrack(_car.getNextDestTrack());
 			// update car load
-			if (car.getType().equals(_car.getType()) 
+			if (!ignoreLoadCheckBox.isSelected() && car.getType().equals(_car.getType()) 
 					|| _car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 					|| _car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
 				car.setLoad(_car.getLoad());
@@ -235,6 +246,10 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			updateFinalDestination();
 		if (ae.getSource() == autoReturnWhenEmptyTrackCheckBox) 
 			updateReturnWhenEmpty();
+		if (ae.getSource() == ignoreLoadCheckBox){
+			loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected());
+			editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() & _car != null);
+		}
 	}
 	
 	protected void updateReturnWhenEmpty(){

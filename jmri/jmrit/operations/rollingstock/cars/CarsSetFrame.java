@@ -9,7 +9,7 @@ import javax.swing.JTable;
  * Frame for user to place a group of cars on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2011
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
@@ -25,14 +25,17 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		_carsTableModel = carsTableModel;
 		_carsTable = carsTable;
 		
+		super.initComponents();
+		
 		// modify Save button text to "Change"
 		saveButton.setText(rb.getString("Change"));
 		// disable edit load button if no cars selected
 		editLoadButton.setEnabled(false);
+		// show ignore load checkbox
+		ignoreLoadCheckBox.setVisible(true);
 		
-		int rows[] = _carsTable.getSelectedRows();
-		super.initComponents();
 		Car car;
+		int rows[] = _carsTable.getSelectedRows();
 		if (rows.length >0)
 			car = _carsTableModel.getCarAtIndex(rows[0]);
 		else
