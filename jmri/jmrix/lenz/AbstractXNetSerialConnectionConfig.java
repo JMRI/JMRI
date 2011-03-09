@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  * <P>
  *
  * @author      Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  */
 abstract public class AbstractXNetSerialConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
@@ -26,9 +26,6 @@ abstract public class AbstractXNetSerialConnectionConfig  extends jmri.jmrix.Abs
     public AbstractXNetSerialConnectionConfig() {
         super();
     }
-
-    @Override
-    public boolean isPortAdvanced() { return true;}
 
 }
 
