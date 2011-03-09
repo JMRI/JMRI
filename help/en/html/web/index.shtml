@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.12 2010-03-06 06:56:40 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.13 2011-03-09 10:39:13 hebbos Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -133,6 +133,24 @@ You can create your own web pages using any tool you'd like.
 To access JMRI from those pages, you just 
 need to know how the proper URLs to request the services you'd like. 
 Several examples are available in the "web" directory of the distribution. 
+
+<h3>To Display a formated JMRI roster list</h3>
+
+To get a nicely formated view of your JMRI roster simply go to:
+<code><pre>
+<a href="http://localhost:12080/prefs/roster.xml">http://localhost:12080/prefs/roster.xml</a>
+</pre></code>
+Note that this is your roster.xml file displayed only using a xslt transformation.
+
+<h3>To get to the throttle web application</h3>
+
+To use the throttle web application, you can go to:
+<code><pre>
+<a href="http://localhost:12080/prefs/roster.html">http://localhost:12080/prefs/roster.html</a>
+</pre></code>
+it will display a clickable locomotive list generated using using your JMRI roster, each click on a locomotive will generate and open a inControl web throttle in a new browser window.  
+
+Or use the inControl.html directly using its parameters to configure it. (see on mini web server starting page for info)
 
 <h3>To Display a Clickable JMRI Window</h3>
 
