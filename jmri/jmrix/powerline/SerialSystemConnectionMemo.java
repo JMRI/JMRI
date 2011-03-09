@@ -15,7 +15,7 @@ import jmri.*;
  * @author		Bob Jacobsen  Copyright (C) 2010
  * copied from NCE into Powerline for multiple connections by
  * @author		Ken Cameron Copyright (C) 2011
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
@@ -63,6 +63,8 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
      * Tells which managers this provides by class
      */
     public boolean provides(Class<?> type) {
+    	if (getDisabled())
+    		return false;
         if (type.equals(jmri.SensorManager.class))
             return true;
         if (type.equals(jmri.TurnoutManager.class))
