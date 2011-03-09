@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.30 2011-03-03 00:36:47 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.31 2011-03-09 19:31:18 ken_c Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -72,6 +72,13 @@ There have been extensive changes to the throttle code.
 If you have written scripts that use throttles, particularly
 multiple throttles, please check to make sure they still work.
 
+Due to working checking of panel files during the load,
+many users may see a popup about missing icon files.
+All past versions were silent if an icon file was not found.
+If the panel loaded 'clean' under the prior version, this is
+due to 'dirt' in the panel files of old icon file references that
+may be ignored. But save a copy of the panel file before updating.
+
 <h3>Older warnings</h3>
 
 The numerical values of "ON" and "OFF" for Lights changed in JMRI 2.11.2, 
@@ -82,7 +89,8 @@ in them, please recode them to use the symbolic values.
 
 <h3>Known problems with this release</h3>
 
-None at the time of this release.
+Powerline interfaces for CP290 and Insteon broken. Thanks to
+Jim LaFevre for spotting this.
 
 <h3>Download links:</h3>
 
