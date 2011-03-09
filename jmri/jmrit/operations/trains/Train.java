@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.113 $
+ * @version $Revision: 1.114 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -1060,7 +1060,6 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the number of cars in the train at the current location
      * in the train's route.
-     * @param rl The location in the train's route
      * @return The number of cars currently in the train
      */
     public int getNumberCarsInTrain(){
@@ -1080,7 +1079,6 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the train's length at the current location
      * in the train's route.
-     * @param rl The location in the train's route
      * @return The train length at this location
      */
     public int getTrainLength(){
