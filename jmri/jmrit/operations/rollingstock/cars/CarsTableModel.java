@@ -21,8 +21,8 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Table Model for edit of cars used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.39 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2011
+ * @version   $Revision: 1.40 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -69,6 +69,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBYOWNER = 12;
     public final int SORTBYRFID = 13;
     public final int SORTBYRWE = 14;	// return when empty
+    public final int SORTBYFINALDESTINATION = 15;
     
     private int _sort = SORTBYNUMBER;
     
@@ -100,7 +101,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		fireTableStructureChanged();
     		initTable(_table);
     	}
-    	else if (sort == SORTBYDESTINATION && !showDest){
+    	else if (sort == SORTBYDESTINATION || sort == SORTBYFINALDESTINATION){
     		showDest = true;
     		fireTableStructureChanged();
     		initTable(_table);
@@ -210,6 +211,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getByRfidList();
 		else if (_sort == SORTBYRWE)
 			list = manager.getByRweList();
+		else if (_sort == SORTBYFINALDESTINATION)
+			list = manager.getByFinalDestinationList();
 		else
 			list = manager.getByNumberList();
     	filterList(list);
@@ -281,10 +284,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         case KERNELCOLUMN: return rb.getString("Kernel");
         case LOCATIONCOLUMN: return rb.getString("Location");
         case DESTINATIONCOLUMN: {
-        		if (showDest)
-        			return rb.getString("Destination");
-        		else
-        			return rb.getString("ReturnWhenEmpty");
+        	if (_sort == SORTBYFINALDESTINATION)
+        		return rb.getString("FinalDestination");
+        	else if (showDest)
+        		return rb.getString("Destination");			
+        	else 
+        		return rb.getString("ReturnWhenEmpty");
         }
         case TRAINCOLUMN: return rb.getString("Train");
         case MOVESCOLUMN: {

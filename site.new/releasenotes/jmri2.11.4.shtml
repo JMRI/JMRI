@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.6 2011-03-07 23:37:44 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.7 2011-03-09 04:16:23 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -108,6 +108,7 @@ New operations features and bug fixes:
 <li>Fixed a minor bug with switch lists, the location status wouldn't become "Changed" when there were only car pick ups.</li>
 <li>The switch list "Print Switch List Changes" now only shows new trains since the last printing.</li>
 <li>New "Set Cars" tool.  Now you can set the location, destinations, and load for a group of cars.</li>
+<li>New car sort in the cars window, by car's final destination.</li>
 </ul>
 
 <p>

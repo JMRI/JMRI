@@ -22,7 +22,7 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class RollingStockManager {
 	
@@ -445,6 +445,7 @@ public class RollingStockManager {
     private static final int BY_OWNER = 11;
     private static final int BY_RFID = 12;
     // BY_RWE = 13
+    // BY_FINAL_DEST = 14
     
     protected Object getRsAttribute(RollingStock rs, int attribute){
     	switch (attribute){
