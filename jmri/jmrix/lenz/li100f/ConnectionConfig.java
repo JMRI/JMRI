@@ -11,7 +11,7 @@ package jmri.jmrix.lenz.li100f;
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @see LI100Adapter
  */
@@ -33,6 +33,6 @@ public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnect
 
     public String name() { return "Lenz LI100F"; }
 
-    protected void setInstance() { adapter = LI100Adapter.instance(); }
+    protected void setInstance() { adapter = new LI100Adapter(); }
 }
 

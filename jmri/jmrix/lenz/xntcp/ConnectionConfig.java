@@ -23,7 +23,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -102,7 +102,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
-    protected void setInstance() { adapter = XnTcpAdapter.instance(); }
+    protected void setInstance() { adapter = new XnTcpAdapter(); }
 
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();
