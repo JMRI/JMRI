@@ -5,6 +5,8 @@ import java.awt.Container;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import org.jdom.Element;
+
 /**
  * A Jynstrument is a Jython script and associated
  * other resources that can decorate a Java class.
@@ -90,5 +92,11 @@ public abstract class Jynstrument extends JPanel {
 	}
 	public void setPopUpMenu(JPopupMenu myPopUpMenu) {
 		this.myPopUpMenu = myPopUpMenu;
+	}
+	public void setXml(Element e){
+		return;
+	}
+	public Element getXml() {
+		return null;
 	}
 }

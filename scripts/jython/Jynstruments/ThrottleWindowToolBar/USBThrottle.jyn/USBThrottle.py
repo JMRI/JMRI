@@ -26,6 +26,7 @@ import net.java.games.input.Controller as Controller
 import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
 import javax.swing.JButton as JButton
 import javax.swing.ImageIcon as ImageIcon
+import org.jdom.Element as Element
 
 # Some default speeds that will be used in the program
 speedMaxSpeed = 1
@@ -460,6 +461,25 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
             reload(self.USBDriver)
             sys.path.remove(self.getFolder())
             self.driver = self.USBDriver.USBDriver()
+    
+    def setXml(self, elt):
+        if (elt.getChildren("USBThrottle") == None):
+            return
+        ctrl = elt.getChildren("USBThrottle")[0].getAttributeValue("DesiredController")
+        if (ctrl == None):
+            return
+        for mi in self.ctrlMenuItem :
+            if ( mi.getText() == ctrl ):
+                mi.setSelected(True)
+                break
+    
+    def getXml(self):
+       elt = Element("USBThrottle")
+       for mi in self.ctrlMenuItem :
+           if (mi.isSelected()) :
+               elt.setAttribute("DesiredController", mi.getText())
+               break
+       return elt
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address, isLong):

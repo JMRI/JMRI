@@ -47,7 +47,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.80 $
+ * @version $Revision: 1.81 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -637,10 +637,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         				j++;
         			}
         			if ((j<cmps2.length) && (cmps2[j] instanceof Jynstrument)) {
+        				Jynstrument jyn = (Jynstrument) cmps2[j];
         				Element elt = new Element("Jynstrument");
-        				elt.setAttribute("JynstrumentFolder", FileUtil.getPortableFilename( ((Jynstrument) cmps2[j]).getFolder() ));       					
+        				elt.setAttribute("JynstrumentFolder", FileUtil.getPortableFilename( jyn.getFolder() ));       					
         				java.util.ArrayList<Element> jychildren = new java.util.ArrayList<Element>(1);
         				jychildren.add(WindowPreferences.getPreferences((JInternalFrame)cmps[i]));
+						Element je = jyn.getXml();
+						if (je != null)
+							jychildren.add( je );
         				elt.setContent(jychildren);
         				children.add(elt);
         			}
@@ -717,6 +721,13 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
                 Element window = jinsts.get(i).getChild("window");
                 if ((window !=null) && (jif!=null))
                 	WindowPreferences.setPreferences(jif, window);
+                Component[] cmps2 = jif.getContentPane().getComponents();
+    			int j=0;
+    			while ((j<cmps2.length) && (! (cmps2[j] instanceof Jynstrument))) {
+    				j++;
+    			}
+    			if ((j<cmps2.length) && (cmps2[j] instanceof Jynstrument) && (jinsts.get(i)!=null))
+    				((Jynstrument)cmps2[j]).setXml(jinsts.get(i));
                 if (jif != null)
                 	jif.repaint();
         	}

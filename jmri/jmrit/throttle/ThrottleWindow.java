@@ -32,6 +32,7 @@ import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
@@ -299,16 +300,17 @@ public class ThrottleWindow extends JmriJFrame {
         updateGUI();
     }
     
-    public void ynstrument(String path) {
+    public Jynstrument ynstrument(String path) {
     	Jynstrument it = JynstrumentFactory.createInstrument(path, this);
     	if (it == null) {
     		log.error("Error while creating Jynstrument "+path);
-    		return ;
+    		return null;
     	}
     	ThrottleFrame.setTransparent(it, true);
     	it.setVisible(true);
     	throttleToolBar.add(it);
     	throttleToolBar.repaint();
+    	return it;
     }
     
     /**
@@ -462,8 +464,9 @@ public class ThrottleWindow extends JmriJFrame {
     private void editPreferences(){
         ThrottleFramePropertyEditor editor =
             ThrottleFrameManager.instance().getThrottleFrameEditor();
+//TODO        ThrottleFramePropertyEditor editor = new ThrottleFramePropertyEditor();
         editor.setThrottleFrame(this);
-        // editor.setLocation(this.getLocationOnScreen());
+//TODO        editor.setLocation(this.getLocationOnScreen());
         editor.setLocationRelativeTo(this);
         editor.setVisible(true);
     }
@@ -576,7 +579,6 @@ public class ThrottleWindow extends JmriJFrame {
         }
 	}
 	
-	
 	public void removeThrottleFrame() {
 		removeThrottleFrame( getCurentThrottleFrame() );
 	}
@@ -646,6 +648,29 @@ public class ThrottleWindow extends JmriJFrame {
         	if (cf != null)
         		cf.toFront();
         }
+        
+        // Save Jynstruments
+		Component[] cmps = throttleToolBar.getComponents();
+		if (cmps != null)
+			for (int i=0; i<cmps.length; i++) {
+				try {
+					if (cmps[i] instanceof Jynstrument) {
+						Jynstrument jyn = (Jynstrument) cmps[i];
+						Element elt = new Element("Jynstrument");
+						elt.setAttribute("JynstrumentFolder", FileUtil.getPortableFilename( jyn.getFolder() )); 
+						Element je = jyn.getXml();
+						if (je != null) {
+							java.util.ArrayList<Element> jychildren = new java.util.ArrayList<Element>(1);
+							jychildren.add( je );
+							elt.setContent(jychildren);
+						}
+						children.add(elt);
+					}
+
+				} catch (Exception ex) {
+					log.debug("Got exception (no panic) "+ex);
+				}
+			}
 
         me.setContent(children);        
         return me;
@@ -674,6 +699,16 @@ public class ThrottleWindow extends JmriJFrame {
         			tf = addThrottleFrame();
         		tf.setXml(tfes.get(i));
         	}
+        
+		List<Element> jinsts = e.getChildren("Jynstrument");
+        if ((jinsts != null) && (jinsts.size()>0)) {
+        	for (int i=0; i<jinsts.size(); i++) {
+        		Jynstrument jyn = ynstrument( FileUtil.getExternalFilename( jinsts.get(i).getAttributeValue("JynstrumentFolder")) );
+                if ((jyn != null) && (jinsts.get(i)!=null))
+                	jyn.setXml(jinsts.get(i));
+        	}
+        }
+        
         updateGUI();
 	}
 	
