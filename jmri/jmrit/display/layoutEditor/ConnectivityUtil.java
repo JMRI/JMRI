@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class ConnectivityUtil 
@@ -223,49 +223,49 @@ public class ConnectivityUtil
 				switch (lc.getXoverBoundaryType()) {
 					case LayoutConnectivity.XOVER_BOUNDARY_AB:
 						setting = Turnout.CLOSED;
-						if (lb==((TrackSegment)xt.getConnectA()).getLayoutBlock()) {
+						if (((TrackSegment)xt.getConnectA()!=null) && (lb==((TrackSegment)xt.getConnectA()).getLayoutBlock())) {
 							// block exits Xover at A
 							tr = (TrackSegment)xt.getConnectA();
 							prevConnectType = LayoutEditor.TURNOUT_A;
 						}
-						else if (lb==((TrackSegment)xt.getConnectB()).getLayoutBlock()) {
+						else if (((TrackSegment)xt.getConnectB()!=null) && (lb==((TrackSegment)xt.getConnectB()).getLayoutBlock())) {
 							// block exits Xover at B
 							tr = (TrackSegment)xt.getConnectB();
-						prevConnectType = LayoutEditor.TURNOUT_B;
+                            prevConnectType = LayoutEditor.TURNOUT_B;
 							}
 						break;
 					case LayoutConnectivity.XOVER_BOUNDARY_CD:
 						setting = Turnout.CLOSED;
-						if (lb==((TrackSegment)xt.getConnectC()).getLayoutBlock()) {
+						if (((TrackSegment)xt.getConnectC()!=null) && (lb==((TrackSegment)xt.getConnectC()).getLayoutBlock())) {
 							// block exits Xover at C
 							tr = (TrackSegment)xt.getConnectC();
 							prevConnectType = LayoutEditor.TURNOUT_C;
 						}
-						else if (lb==((TrackSegment)xt.getConnectD()).getLayoutBlock()) {
+						else if (((TrackSegment)xt.getConnectD()!=null) && (lb==((TrackSegment)xt.getConnectD()).getLayoutBlock())) {
 							// block exits Xover at D
 							tr = (TrackSegment)xt.getConnectD();
 							prevConnectType = LayoutEditor.TURNOUT_D;
 						}
 						break;
 					case LayoutConnectivity.XOVER_BOUNDARY_AC:
-						if (lb==((TrackSegment)xt.getConnectA()).getLayoutBlock()) {
+						if (((TrackSegment)xt.getConnectA()!=null) && (lb==((TrackSegment)xt.getConnectA()).getLayoutBlock())) {
 							// block exits Xover at A
 							tr = (TrackSegment)xt.getConnectA();
 							prevConnectType = LayoutEditor.TURNOUT_A;
 						}
-						else if (lb==((TrackSegment)xt.getConnectC()).getLayoutBlock()) {
+						else if (((TrackSegment)xt.getConnectC()!=null) && (lb==((TrackSegment)xt.getConnectC()).getLayoutBlock())) {
 							// block exits Xover at C
 							tr = (TrackSegment)xt.getConnectC();
 							prevConnectType = LayoutEditor.TURNOUT_C;
 						}
 						break;
 					case LayoutConnectivity.XOVER_BOUNDARY_BD:
-						if (lb==((TrackSegment)xt.getConnectB()).getLayoutBlock()) {
+						if (((TrackSegment)xt.getConnectB()!=null) && (lb==((TrackSegment)xt.getConnectB()).getLayoutBlock())) {
 							// block exits Xover at B
 							tr = (TrackSegment)xt.getConnectB();
 							prevConnectType = LayoutEditor.TURNOUT_B;
 						}
-						else if (lb==((TrackSegment)xt.getConnectD()).getLayoutBlock()) {
+						else if (((TrackSegment)xt.getConnectD()!=null) && (lb==((TrackSegment)xt.getConnectD()).getLayoutBlock())) {
 							// block exits Xover at D
 							tr = (TrackSegment)xt.getConnectD();
 							prevConnectType = LayoutEditor.TURNOUT_D;
