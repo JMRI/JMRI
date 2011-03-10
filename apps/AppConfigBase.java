@@ -26,7 +26,7 @@ import javax.swing.*;
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -80,7 +80,6 @@ public class AppConfigBase extends JmriPanel {
     private boolean checkDups() {
     
         Map<String, List<Integer>> ports = new HashMap<String, List<Integer>>();
-        Map<String, List<Integer>> conns = new HashMap<String, List<Integer>>();
         int maxSize = JmrixConfigPane.getNumberOfInstances();
         for (int count = 0; count < maxSize; count++) {
             if (!getDisabled(count)) {
