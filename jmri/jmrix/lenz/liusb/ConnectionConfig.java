@@ -11,7 +11,7 @@ package jmri.jmrix.lenz.liusb;
  * connection.
  *
  * @author      Paul Bender  Copyright (C) 2005
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @see LIUSBAdapter
  */
@@ -33,6 +33,6 @@ public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnect
 
     public String name() { return "Lenz LIUSB"; }
 
-    protected void setInstance() { adapter = new LIUSBAdapter(); }
+    protected void setInstance() { if(adapter==null) adapter = new LIUSBAdapter(); }
 }
 

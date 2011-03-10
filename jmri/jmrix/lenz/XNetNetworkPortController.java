@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004,2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements XNetPortController {
 
@@ -71,7 +71,11 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
 	}
     }
 
-
+    public void dispose(){
+       adaptermemo.dispose();
+       adaptermemo=null;
+       log.error("Dispose called");
+    }
 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetNetworkPortController.class.getName());

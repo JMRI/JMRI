@@ -21,7 +21,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author   Paul Bender Copyright (C) 2009	
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -66,8 +66,14 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void getInstance() {
-        adapter = LIUSBServerAdapter.instance();
+        if(adapter == null) adapter=new LIUSBServerAdapter();
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter=((ConnectionConfig) object).getAdapter();
     }
 
     protected void register() {

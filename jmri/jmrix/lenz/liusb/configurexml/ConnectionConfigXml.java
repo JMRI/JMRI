@@ -16,16 +16,22 @@ import jmri.jmrix.lenz.liusb.LIUSBAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Paul Bender Copyright: Copyright (c) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
     }
-
+    
+    @Override
     protected void getInstance() {
-        adapter = LIUSBAdapter.instance();
+        if(adapter == null) adapter=new LIUSBAdapter();
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter=((ConnectionConfig) object).getAdapter();
     }
 
     protected void register() {

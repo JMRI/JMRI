@@ -11,7 +11,7 @@ package jmri.jmrix.lenz.ztc640;
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  * @see ZTC640Adapter
  */
@@ -38,6 +38,6 @@ public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnect
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    protected void setInstance() { adapter = new ZTC640Adapter(); }
+    protected void setInstance() { if(adapter==null) adapter = new ZTC640Adapter(); }
 }
 

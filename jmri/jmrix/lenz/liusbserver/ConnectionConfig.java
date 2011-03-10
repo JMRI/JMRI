@@ -16,7 +16,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  *
  * @see LIUSBServerAdapter
  */
@@ -38,7 +38,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
-	super(new LIUSBServerAdapter());
+	super();
     }
 
     public String name() { return "Lenz LIUSB Server"; }
@@ -47,7 +47,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
-    protected void setInstance() { adapter = new LIUSBServerAdapter(); }
+    protected void setInstance() { if(adapter==null) adapter = new LIUSBServerAdapter(); }
 
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();

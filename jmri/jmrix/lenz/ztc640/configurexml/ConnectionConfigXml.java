@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.ztc640.ZTC640Adapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -24,9 +24,16 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = ZTC640Adapter.instance();
+        if(adapter == null) adapter=new ZTC640Adapter();
     }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter=((ConnectionConfig) object).getAdapter();
+    }
+
 
     protected void register() {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));

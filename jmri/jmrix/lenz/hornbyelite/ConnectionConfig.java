@@ -12,7 +12,7 @@ package jmri.jmrix.lenz.hornbyelite;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Paul Bender    Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  * @see EliteAdapter
  */
@@ -34,6 +34,6 @@ public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnect
 
     public String name() { return "Hornby Elite USB port"; }
     
-    protected void setInstance() { adapter = new EliteAdapter(); }
+    protected void setInstance() { if(adapter==null) adapter = new EliteAdapter(); }
 }
 

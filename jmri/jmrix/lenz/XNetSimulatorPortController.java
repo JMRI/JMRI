@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004,2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
 
@@ -59,6 +59,10 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
           log.debug("adapter memo null");
           return null;
 	}
+    }
+
+    public void dispose(){
+       adaptermemo.dispose();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSimulatorPortController.class.getName());
