@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Represents a car delivery schedule for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2011
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
@@ -89,7 +89,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	_scheduleHashTable.put(si.getId(), si);
 
     	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
-    	// listen for drop and pickup changes to forward
+    	// listen for set out and pick up changes to forward
     	si.addPropertyChangeListener(this);
     	return si;
     }
@@ -126,7 +126,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         if (si.getSequenceId() > _sequenceNum)
         	_sequenceNum = si.getSequenceId();
        	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
-        // listen for drop and pickup changes to forward
+        // listen for set out and pick up changes to forward
         si.addPropertyChangeListener(this);
     }
 

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -271,7 +271,7 @@ public class RouteManager {
 			newRl.setTrainDirection(oldRl.getTrainDirection());
 			newRl.setMaxTrainLength(oldRl.getMaxTrainLength());
 		}else{
-			// flip drops and pickups
+			// flip set outs and pick ups
 			newRl.setCanDrop(oldRl.canPickup());
 			newRl.setCanPickup(oldRl.canDrop());
 			// invert train directions

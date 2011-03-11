@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.140 $
+ * @version             $Revision: 1.141 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -64,7 +64,7 @@ public class TrainBuilder extends TrainCommon{
 	int carIndex;				// index for carList
 	List<String> carList;		// list of cars available for this train
 	List<String> routeList;		// list of locations from departure to termination served by this train
-	int moves;					// the number of pickup car moves for a location
+	int moves;					// the number of pick up car moves for a location
 	double maxWeight = 0;			// the maximum weight of cars in train
 	int reqNumOfMoves;			// the requested number of car moves for a location
 	Location departLocation;	// train departs this location
@@ -156,18 +156,18 @@ public class TrainBuilder extends TrainCommon{
 			if (l == null){
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorLocMissing"),new Object[]{train.getRoute().getName()}));
 			}				
-			// train doesn't drop or pickup cars from staging locations found in middle of a route
+			// train doesn't drop or pick up cars from staging locations found in middle of a route
 			List<String> slStage = l.getTracksByMovesList(Track.STAGING);
 			if (slStage.size() > 0 && i!=0 && i!=routeList.size()-1){
 				addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildLocStaging"),new Object[]{rl.getName()}));
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
 			}
-			// if a location is skipped, no car drops or pickups
+			// if a location is skipped, no car drops or pick ups
 			else if(train.skipsLocation(rl.getId())){
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocSkipped"),new Object[]{rl.getName(), train.getName()}));
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
 			}
-			// skip if a location doesn't allow drops or pickups
+			// skip if a location doesn't allow drops or pick ups
 			else if(!rl.canDrop() && !rl.canPickup()){
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocNoDropsOrPickups"),new Object[]{rl.getName()}));
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
@@ -1173,7 +1173,7 @@ public class TrainBuilder extends TrainCommon{
 	 * @param destination
 	 * @param track the final destination for car
 	 * @return true if car was successfully added to train.  Also makes
-	 * the boolean "success" true if location doesn't need any more pickups. 
+	 * the boolean "success" true if location doesn't need any more pick ups. 
 	 */
 	private boolean addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track){
 		if (!checkTrainLength(car, rl, rld))
@@ -1204,7 +1204,7 @@ public class TrainBuilder extends TrainCommon{
 			car.setDestination(destination, track);
 		}
 		numberCars++;		// bump number of cars moved by this train
-		moves++;			// bump number of car pickup moves for the location
+		moves++;			// bump number of car pick up moves for the location
 		reqNumOfMoves--; 	// decrement number of moves left for the location
 		if(reqNumOfMoves <= 0)
 			success = true;	// done with this location!
@@ -1740,7 +1740,7 @@ public class TrainBuilder extends TrainCommon{
 	 * Checks to see if car has a destination and tries to add car to train
 	 * @param car
 	 * @param rl the car's route location
-	 * @param routeIndex  where in the route the car pickup is
+	 * @param routeIndex  where in the route the car pick up is
 	 * @return true if car has a destination.
 	 * @throws BuildFailedException if destination was staging and can't place car there
 	 */
@@ -1763,7 +1763,7 @@ public class TrainBuilder extends TrainCommon{
 			int locCount = 0;
 			for (int k = routeIndex; k<routeList.size(); k++){
 				rld = train.getRoute().getLocationById(routeList.get(k));
-				// if car can be pickup up later at same location, skip
+				// if car can be picked up later at same location, skip
 				if (rl != rld && rld.getName().equals(car.getLocationName())
 						&& !rld.getName().equals(terminateLocation.getName())
 						&& (rld.getMaxCarMoves()-rld.getCarMoves()>0) 
@@ -1890,7 +1890,7 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
 				continue;
 			}
-			// if car can be pickup up later at same location, set flag	
+			// if car can be picked up later at same location, set flag	
 			if (rl != rld && rld.getName().equals(car.getLocationName())
 					&& !rld.getName().equals(terminateLocation.getName())
 					&& (rld.getMaxCarMoves()-rld.getCarMoves()>0) 

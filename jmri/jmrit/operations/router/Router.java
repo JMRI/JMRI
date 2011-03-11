@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class Router {
@@ -201,7 +201,7 @@ public class Router {
 			log.debug("Car's track is null! Can't route");
 			return false;
 		}
-		// now search for a yard or interchange that a train can pickup and deliver the car to its destination
+		// now search for a yard or interchange that a train can pick up and deliver the car to its destination
 		List<String> locations = LocationManager.instance().getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
 			Location location = LocationManager.instance().getLocationById(locations.get(i));

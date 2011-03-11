@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -934,7 +934,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					// train must service last location or single location
 					else if (i == locations.size()-1)
 						services = true;
-					// check can drop and pickup, and moves > 0
+					// check can drop and pick up, and moves > 0
 					if (services && (rl.canDrop() || rl.canPickup()) && rl.getMaxCarMoves()>0)
 						checkBox.setSelected(!_train.skipsLocation(rl.getId()));
 					else

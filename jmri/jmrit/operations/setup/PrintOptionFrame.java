@@ -30,7 +30,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -290,7 +290,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setFontName((String)fontComboBox.getSelectedItem());
 			// font size
 			Setup.setFontSize((Integer)fontSizeComboBox.getSelectedItem());
-			// drop and pickup color option
+			// drop and pick up color option
 			Setup.setDropTextColor((String)dropComboBox.getSelectedItem());
 			Setup.setPickupTextColor((String)pickupComboBox.getSelectedItem());
 			// save engine message format
@@ -306,7 +306,7 @@ public class PrintOptionFrame extends OperationsFrame{
 				format[i] = (String)b.getSelectedItem();
 			}
 			Setup.setDropEngineMessageFormat(format);
-			// save car pickup message format
+			// save car pick up message format
 			format = new String[carPickupMessageList.size()];
 			for (int i=0; i<carPickupMessageList.size(); i++){
 				JComboBox b = carPickupMessageList.get(i);

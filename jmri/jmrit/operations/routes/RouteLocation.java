@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 	
@@ -24,8 +24,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
 	protected int _maxTrainLength = Setup.getTrainLength();
 	protected int _maxCarMoves = Setup.getCarMoves();
-	protected boolean _drops = true;		// when true drops allowed at this location
-	protected boolean _pickups = true;		// when true pickups allowed at this location
+	protected boolean _drops = true;		// when true set outs allowed at this location
+	protected boolean _pickups = true;		// when true pick ups allowed at this location
 	protected int _sequenceId = 0;			// used to determine location order in route
 	protected double _grade = 0;			// maximum grade between locations
 	protected int _wait = 0;				// wait time at this location
@@ -203,8 +203,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * When true allow car pickups at this location
-	 * @param pickups when true pickups allowed at this location
+	 * When true allow car pick ups at this location
+	 * @param pickups when true pick ups allowed at this location
 	 */
 	public void setCanPickup (boolean pickups){
 		boolean old = _pickups;

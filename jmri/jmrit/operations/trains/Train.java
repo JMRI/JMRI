@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.114 $
+ * @version $Revision: 1.115 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -247,7 +247,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	/**
 	 * Gets the expected time when this train will arrive at
 	 * the location rl.  Expected arrival time is based on the
-	 * number of car pickup and drops for this train.
+	 * number of car pick up and set outs for this train.
 	 * TODO Doesn't provide expected arrival time if train
 	 * is in route, instead provides relative time.
 	 * @return expected arrival time

@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -251,10 +251,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		updateComboBoxes();
 		enableComponents(!locationUnknownCheckBox.isSelected());
 		if (_rs.getRouteLocation() != null)
-			log.debug("rs has a pickup location "+_rs.getRouteLocation().getName());
+			log.debug("rs has a pick up location "+_rs.getRouteLocation().getName());
 		if (_rs.getRouteDestination() != null)
 			log.debug("rs has a destination "+_rs.getRouteDestination().getName());
-		// has the program generated a pickup and drop for this rolling stock?
+		// has the program generated a pick up and set out for this rolling stock?
 		if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null){
 			JOptionPane.showMessageDialog(this,
 					getRb().getString("pressSaveWill"),	getRb().getString("rsInRoute"),

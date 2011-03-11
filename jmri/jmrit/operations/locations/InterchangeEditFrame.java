@@ -25,10 +25,10 @@ import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Frame for user edit of an interchange track.  Adds two panels 
- * to TrackEditFram for train/route car drops and pickups.
+ * to TrackEditFram for train/route car drops and pick ups.
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -100,7 +100,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		addTrackButton.setText(rb.getString("AddInterchange"));
 		saveTrackButton.setText(rb.getString("SaveInterchange"));
 		
-		// setup the pickup and drop panels
+		// setup the pick up and set out panels
 		updateDropOptions();
 		updatePickupOptions();
 		
@@ -338,7 +338,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 	}
 	
 	private void updatePickupOptions(){
-		log.debug("update pickup options");
+		log.debug("update pick up options");
 		pickupPanel.removeAll();
 		
     	JPanel p = new JPanel();

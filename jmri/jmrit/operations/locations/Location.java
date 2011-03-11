@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 	
@@ -326,7 +326,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * 
-	 * @return the number of cars and engines that are scheduled for pickup at this
+	 * @return the number of cars and engines that are scheduled for pick up at this
 	 *         location.
 	 */
 	public int getPickupRS() {

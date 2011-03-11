@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -82,7 +82,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JRadioButton loadNameExclude = new JRadioButton(rb.getString("Exclude"));
     ButtonGroup loadGroup = new ButtonGroup();
     
-	// car pickup order controls
+	// car pick up order controls
 	JRadioButton orderNormal = new JRadioButton(rb.getString("Normal"));
 	JRadioButton orderFIFO = new JRadioButton(rb.getString("DescriptiveFIFO"));
 	JRadioButton orderLIFO = new JRadioButton(rb.getString("DescriptiveLIFO"));

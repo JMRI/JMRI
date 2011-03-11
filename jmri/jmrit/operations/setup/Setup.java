@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -125,7 +125,7 @@ public class Setup {
 	public static final String HAZARDOUS = rb.getString("Hazardous");
 	public static final String NONE = " ";				// none has be a character or a space
 	
-	public static final String BLACK = rb.getString("Black");	// the supported pickup and drop colors
+	public static final String BLACK = rb.getString("Black");	// the supported pick up and set out colors
 	public static final String BLUE = rb.getString("Blue");
 	public static final String GREEN = rb.getString("Green");
 	public static final String RED = rb.getString("Red");

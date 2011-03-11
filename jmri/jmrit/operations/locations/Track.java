@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.54 $
+ * @version             $Revision: 1.55 $
  */
 public class Track {
 	
@@ -35,8 +35,8 @@ public class Track {
 	protected int _numberRS = 0;					// number of cars and engines
 	protected int _numberCars = 0;					// number of cars
 	protected int _numberEngines = 0;				// number of engines
-	protected int _pickupRS = 0;					// number of pickups by trains
-	protected int _dropRS = 0;						// number of drops by trains
+	protected int _pickupRS = 0;					// number of pick ups by trains
+	protected int _dropRS = 0;						// number of set outs by trains
 	protected int _length = 0;						// length of track
 	protected int _reserved = 0;					// length of track reserved by trains
 	protected int _numberCarsInRoute = 0;			// number of cars in route to this track
@@ -56,8 +56,8 @@ public class Track {
 	protected int _mode = SEQUENTIAL;
 	
 	// drop options
-	protected String _dropOption = ANY;				// controls which route or train can drop
-	protected String _pickupOption = ANY;			// controls which route or train can pickup
+	protected String _dropOption = ANY;				// controls which route or train can set out cars
+	protected String _pickupOption = ANY;			// controls which route or train can pick up cars
 	public static final String ANY = "Any";			// track accepts any train or route
 	public static final String TRAINS = "trains";	// track only accepts certain trains
 	public static final String ROUTES = "routes";	// track only accepts certain routes
@@ -349,8 +349,8 @@ public class Track {
 	
 	/**
 	 * 
-	 * @return the number of rolling stock (cars and or engines) that are
-	 *         scheduled for pickup from this track.
+	 * @return the number of rolling stock (cars and or locos) that are
+	 *         scheduled for pick up from this track.
 	 */
 	public int getPickupRS() {
 		return _pickupRS;
@@ -613,7 +613,7 @@ public class Track {
     }
     
     /**
-     * Set the car pickup option for this track.
+     * Set the car pick up option for this track.
      * @param option ANY, TRAINS, or ROUTES
      */
     public void setPickupOption (String option){
@@ -654,10 +654,10 @@ public class Track {
      }
     
     /**
-     * Determine if train can drop cars to this track.  Based on the train's
+     * Determine if train can set out cars to this track.  Based on the train's
      * id or train's route id.  See setDropOption(option).
      * @param train
-     * @return true if the train can drop cars to this track.
+     * @return true if the train can set out cars to this track.
      */
     public boolean acceptsDropTrain(Train train){
     	if (_dropOption.equals(ANY))
@@ -704,21 +704,21 @@ public class Track {
      	if (_pickupList.contains(id))
     		return;
     	_pickupList.add(id);
-    	log.debug("track " +getName()+ " add pickup id "+id);
+    	log.debug("track " +getName()+ " add pick up id "+id);
     	firePropertyChange (PICKUP_CHANGED_PROPERTY, null, id);
     }
     
     public void deletePickupId(String id){
     	_pickupList.remove(id);
-    	log.debug("track " +getName()+ " delete pickup id "+id);
+    	log.debug("track " +getName()+ " delete pick up id "+id);
     	firePropertyChange (PICKUP_CHANGED_PROPERTY, id, null);
      }
     
     /**
-     * Determine if train can pickup cars from this track.  Based on the train's
+     * Determine if train can pick up cars from this track.  Based on the train's
      * id or train's route id.  See setPickupOption(option).
      * @param train
-     * @return true if the train can pickup cars from this track.
+     * @return true if the train can pick up cars from this track.
      */
     public boolean acceptsPickupTrain(Train train){
     	if (_pickupOption.equals(ANY))

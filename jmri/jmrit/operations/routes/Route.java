@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
@@ -106,7 +106,7 @@ public class Route implements java.beans.PropertyChangeListener {
     	_routeHashTable.put(rl.getId(), rl);
 
     	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
-    	// listen for drop and pickup changes to forward
+    	// listen for drop and pick up changes to forward
     	rl.addPropertyChangeListener(this);
     	return rl;
     }
@@ -143,7 +143,7 @@ public class Route implements java.beans.PropertyChangeListener {
         if (rl.getSequenceId() > _sequenceNum)
         	_sequenceNum = rl.getSequenceId();
        	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
-        // listen for drop and pickup changes to forward
+        // listen for drop and pick up changes to forward
         rl.addPropertyChangeListener(this);
     }
 
@@ -422,7 +422,7 @@ public class Route implements java.beans.PropertyChangeListener {
     		log.debug("route (" + getName() + ") sees property change: "
     				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "
     				+ e.getNewValue());
-    	// forward drops, pickups, train direction, and max moves as a list change
+    	// forward drops, pick ups, train direction, and max moves as a list change
     	if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY)
