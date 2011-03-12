@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.32 2011-03-11 03:52:18 ken_c Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.33 2011-03-12 20:37:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -68,17 +68,17 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-<ul>
-<li>There have been extensive changes to the throttle code.
+<p>There have been extensive changes to the throttle code.
 If you have written scripts that use throttles, particularly
 multiple throttles, please check to make sure they still work.
-<li>Due to now working checking of panel files during the load,
+
+<p>Due to now working checking of panel files during the load,
 many users may see a popup about missing icon files.
 All past versions were silent if an icon file was not found.
 If the panel loaded 'clean' under the prior version, this is
 due to 'dirt' in the panel files of old icon file references that
 may be ignored. But save a copy of the panel file before updating.
-</ul>
+
 
 <h3>Older warnings</h3>
 
@@ -92,6 +92,11 @@ in them, please recode them to use the symbolic values.
 
 Powerline interfaces for CP290 and Insteon broken. Thanks to
 Jim LaFevre for spotting this.
+<p>
+People have reported spurious warnings when setting up multiple 
+connections.  If you get one, and you're sure that you have not
+configured two connections to use the same serial port, just 
+click the button to continue.
 
 <h3>Download links:</h3>
 
