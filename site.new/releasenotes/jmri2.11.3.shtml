@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.33 2011-03-12 20:37:14 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.34 2011-03-12 22:05:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -415,8 +415,22 @@ Walt Thompson added reset definitions to the TCS definitions.
 Mike Mosher added new SoundTraxx MC and MC IMRC OEM decoder definitions
 
 <p>
-Steve Todd improved the speed of the JMRI mini webserver.  
-He also provided a favorite icon for the server.
+Steve Todd made multiple updates to the JMRI mini webserver:
+<ul>
+<li>greatly improved the speed
+<li>provided a favorite icon for the server
+<li>modified the miniserver fileservlet to return the appropriate status
+(i.e. 404, 403) instead of unhandled exception or blank 200 responses. 
+<li>removed GetHost() which was causing timeouts on every access on some networks
+<li>set a 5-minute expiration on static files to avoid unneeded retrievals.
+<li>turned off caching on jframe images
+<li>added css folder so existing help files find default.css
+<li>improved index.html and dir listings to match jmri.org
+<li>changed headers from HTTP 1.0 to HTTP 1.1
+<li>added jmri icon for miniweb panel
+<li>added MiniServer preferences panel (port, rebuild, refreshes)
+<li>updated various help files related to miniserver
+</ul>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
