@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 
@@ -288,7 +288,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 _status = "OccupiedTrack";
             }
         } else if ((state & OBlock.ALLOCATED)!=0) {
-            if (_paths!=null && !_paths.contains(pathName)) {
+            if (_paths!=null && _paths.contains(pathName)) {
                 _status = "AllocatedTrack";     // icon not on path
             } else {
                 _status = "ClearTrack";
