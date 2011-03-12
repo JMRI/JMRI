@@ -37,7 +37,7 @@ import jmri.util.StringUtil;
  * provided by Leo Bicknell with help from B. Milhaupt, used with permission.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 public class Llnmon {
 
@@ -269,8 +269,8 @@ public class Llnmon {
        case LnConstants.OPC_SW_ACK: {
             int sw2 = l.getElement(2);
             // get system and user names
-            String turnoutSystemName = new String();
-            String turnoutUserName = new String();
+            String turnoutSystemName = "";
+            String turnoutUserName = "";
             turnoutSystemName = locoNetTurnoutPrefix +
                     SENSOR_ADR(l.getElement(1), l.getElement(2));
 
@@ -301,8 +301,8 @@ public class Llnmon {
             */
         case LnConstants.OPC_SW_STATE: {
             // get system and user names
-            String turnoutSystemName = new String();
-            String turnoutUserName = new String();
+            String turnoutSystemName = "";
+            String turnoutUserName = "";
             turnoutSystemName = locoNetTurnoutPrefix +
                     SENSOR_ADR(l.getElement(1), l.getElement(2));
 
@@ -589,7 +589,7 @@ public class Llnmon {
             int contactNum = ((SENSOR_ADR(in1, in2)-1)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1));
             // get system and user names
             String sensorSystemName = new String(locoNetSensorPrefix + contactNum);
-            String sensorUserName = new String("");
+            String sensorUserName = "";
             try {
                 sensorSystemName = locoNetSensorPrefix + contactNum;
                 jmri.Sensor sensor = sensorManager.getBySystemName(
@@ -667,8 +667,8 @@ public class Llnmon {
             int sn1 = l.getElement(1);
             int sn2 = l.getElement(2);
             // get system and user names
-            String turnoutSystemName = new String();
-            String turnoutUserName = new String();
+            String turnoutSystemName = "";
+            String turnoutUserName = "";
             turnoutSystemName = locoNetTurnoutPrefix +
                     SENSOR_ADR(sn1, sn2);
 
@@ -748,10 +748,10 @@ public class Llnmon {
              * This is also part of the poor code structure, as it is only used
              * by 2 of the three cases.
              */
-           int topbits = 0;
+            int topbits = 0;
             int midbits = (a << 2) + (c << 1) + b;
             int count = 0;
-            String addrList = "";
+            StringBuilder addrListB = new StringBuilder();
             for (topbits = 0; topbits < 32; topbits++) {
                 // The extra "+1" adjusts for the fact that we show 1-2048,
                 // rather than 0-2047 on the wire.
@@ -759,19 +759,22 @@ public class Llnmon {
                 int hval = lval + 7;
 
                 if ((count % 8) > 0) {
-                    addrList = addrList + ", ";
+                    addrListB.append(", ");
                 } else {
                     if (count == 0) {
-                        addrList = addrList + "\t";
+                        addrListB.append("\t");
                     } else {
-                        addrList = addrList + ",\n\t";
+                        addrListB.append(",\n\t");
                     }
                 }
-                addrList = addrList + lval + "-" + hval;
+                addrListB.append(""+lval);
+                addrListB.append("-" + hval);
                 count++;
             }
-            addrList = addrList + "\n";
+            addrListB.append("\n");
 
+            String addrList = new String(addrListB); 
+            
             if (((sw2 & 0xCF) == 0x0F) && ((sw1 & 0xFC) == 0x78)) {
                 // broadcast address LPU V1.0 page 12
                 retVal = "Interrogate Stationary Decoders with bits a/c/b of " + a + "/" + c + "/"
@@ -782,8 +785,8 @@ public class Llnmon {
                          + "/" + b + "; addresses...\n" + addrList;
             } else {
                 // get system and user names
-                String turnoutSystemName = new String();
-                String turnoutUserName = new String();
+                String turnoutSystemName = "";
+                String turnoutUserName = "";
                 turnoutSystemName = locoNetTurnoutPrefix +
                         SENSOR_ADR(l.getElement(1), l.getElement(2));
 
@@ -1090,8 +1093,8 @@ public class Llnmon {
             case LnConstants.OPC_MULTI_SENSE_ABSENT:
                 // Transponding Event
                 // get system and user names
-                String reporterSystemName = new String();
-                String reporterUserName = new String();
+                String reporterSystemName = "";
+                String reporterUserName = "";
                 String zone;
                 switch (l.getElement(2) & 0x0F) {
                 case 0x00: zone = "A"; break;
@@ -2667,8 +2670,8 @@ public class Llnmon {
                             }
 
                             // get system and user names
-                            String reporterSystemName = new String();
-                            String reporterUserName = new String();
+                            String reporterSystemName = "";
+                            String reporterUserName = "";
 
                             reporterSystemName = locoNetReporterPrefix +
                                     ((l.getElement(5)&0x1F)*128 + l.getElement(6) +1);
@@ -2864,7 +2867,7 @@ public class Llnmon {
                     else {
                         // immediate packet not addressed to a multi-function (mobile) decoder
                     }
-                    String generic = new String();
+                    String generic = "";
                     if ((mobileDecoderAddress >= 0) &&
                             (nmraInstructionType == 1) &&
                             (nmraSubInstructionType == 0x1D)) {
@@ -3097,9 +3100,9 @@ public class Llnmon {
     private jmri.TurnoutManager turnoutManager;
     private jmri.SensorManager sensorManager;
     private jmri.ReporterManager reporterManager;
-    private static String locoNetTurnoutPrefix = new String();
-    private static String locoNetSensorPrefix = new String();
-    private static String locoNetReporterPrefix = new String();
+    private String locoNetTurnoutPrefix = "";
+    private String locoNetSensorPrefix = "";
+    private String locoNetReporterPrefix = "";
 
     /**
      * sets the loconet turnout manager which is used to find turnout "user names" from
