@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.21 $
+ *	@version $Revision: 1.22 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -143,6 +143,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         String inPackage = null;
 
         keepReading = true;	//	Gets set to false when device sends 'Q'uit
+        int consecutiveErrors = 0;
                 
         do{
             try{
@@ -150,7 +151,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                 if (inPackage != null){
                     heartbeat = true;   //  Any contact will keep alive
-                    if (log.isDebugEnabled()) log.debug("Recieved: " + inPackage);
+                    consecutiveErrors = 0;  //reset error counter
+                    if (log.isDebugEnabled()) log.debug("Received: " + inPackage);
                     switch (inPackage.charAt(0)){
                         case 'T':{
                             keepReading = throttleController.sort(inPackage.substring(1));
@@ -296,7 +298,13 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                 }
 
             } catch (IOException exa){
-                if (keepReading) log.error("readLine from device failed");
+                if (keepReading) {
+                	consecutiveErrors += 1;
+                	log.error("readLine from device failed, consecutive error # " + consecutiveErrors);
+                	if (consecutiveErrors > 25) { //stop reading if number of errors exceeded
+                		keepReading = false;
+                	}
+                }
             } catch (IndexOutOfBoundsException exb){
                 log.warn("Bad message \""+inPackage+"\" from device: "+getName());
             }

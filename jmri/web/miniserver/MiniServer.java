@@ -7,6 +7,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import jmri.jmrit.withrottle.WiThrottleManager;
 import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
 
 /** A simple HTTP server that generates a Web page showing all
@@ -29,7 +30,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -47,7 +48,8 @@ public class MiniServer extends NetworkServer {
      */
     
     public static void main(String[] args) {
-        int port = 12080;
+        int port = Integer.parseInt(MiniServerManager.MiniServerPreferencesInstance().getPort());
+
         if (args.length > 0) {
             try {
                 port = Integer.parseInt(args[0]);
@@ -62,6 +64,9 @@ public class MiniServer extends NetworkServer {
         listen();
     }
     
+
+    static String lastConnectionAddr = "";
+    
     /** Overrides the NetworkServer handleConnection method to 
      *  invoke a particular servlet.
      */
@@ -69,12 +74,14 @@ public class MiniServer extends NetworkServer {
     public void handleConnection(Socket server)
         throws IOException {
 
-        String connectionName = server.getInetAddress().getHostName();
-        if (connectionName.equals(lastConnectionName))
-            log.debug(serverName + ": got connection from " +connectionName);
-        else 
-            log.info(serverName + ": got connection from " +connectionName+" (only reporting 1st one)");
-        lastConnectionName = connectionName;
+    	//log IP only for speed
+        String connectionAddr = server.getInetAddress().toString();
+        if (connectionAddr.equals(lastConnectionAddr)) {
+        	if (log.isDebugEnabled()) log.debug(serverName + ": got connection from " +connectionAddr);  
+        } else {
+        	log.info(serverName + ": got connection from " +connectionAddr+" (only reporting changes)");
+        }
+        lastConnectionAddr = connectionAddr; 
         
         BufferedReader in = SocketUtil.getReader(server);
         
@@ -112,8 +119,6 @@ public class MiniServer extends NetworkServer {
         
     }
 
-    static String lastConnectionName = "";
-    
     /**
      * Scan URL, trying to make the longest match against
      * the servlet properties.  

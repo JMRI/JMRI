@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.13 2011-03-09 10:39:13 hebbos Exp $ -->
+<!-- $Id: index.shtml,v 1.14 2011-03-12 21:26:57 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name = "viewport" content = "width = device-width" />
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -37,7 +38,7 @@ them and returns the information from JMRI back to the browser.
 <p>
 For example, the user can have their browser request the current 
 contents of a JMRI panel, which is 
-returned back to the browser as animage to be displayed. 
+returned back to the browser as an image to be displayed. 
 Or the user can click on the image of a JMRI panel, 
 which causes the browser to request a click in the same position on a JMRI panel. 
 JMRI acts on that click, 
@@ -76,7 +77,10 @@ to get to the welcome page of the JMRI web server.
 Otherwise, enter the starting URL from the "Web server started ..."
 message, which will be something like "http://10.0.1.7:12080/index.html"
 (or if you're browsing on the same computer right now, 
-<a href="http://localhost:12080/index.html">click here</a>).
+<a href="http://localhost:12080/index.html">click here</a>, or press the
+"Open in Browser" button).
+The default port is 12080, but this can be changed in 
+MiniServer Preferences.
 You should see a welcome screen.
 
 <p>
@@ -103,40 +107,43 @@ Click the "On" button to turn layout power on.
 <a id="Configure">
 <h2>Configuring</h2>
 
-You can use the 
-"<a href="../../package/apps/TabbedPreferences.shtml">Advanced Preferences</a>"
-to set JMRI to 
+You can use  
+"<a href="../../package/apps/TabbedPreferences.shtml">Preferences</a>"
+to tell JMRI to 
 start the server each time you start the program.
 <p>
-To do this, open the preferences window, check the 
-"Show Advanced Preferences" box, and 
+To do this, open the Preferences window, select the 
+"Start Up" tab, and 
 click "Add Action".  In the new selection box that
 appears, select "Start Web Miniserver".  
 Don't forget to save your changes!
+
+<p>
+The MiniServer defaults to port 12080, but this can be changed using
+the MiniServer Preferences dialog. 
 
 <p>
 The "index.html" page that you used in the 
 previous section
 is automatically created by the program in the JMRI
 preferences directory.  You can edit it to 
-display whatever you want; JMRI won't modify it once 
-you've changed it. 
+display whatever you want; by default, JMRI won't modify if it exists. 
 You can include links to web pages outside JMRI, and 
 links to various JMRI-served pages, see below.
 On the other hand, we periodically improve the 
-page, you you might want to delete the old one
-and let JMRI replace it with the newest version.
+page, you might want to turn on "Rebuild index.html?" in Preferences 
+to let JMRI replace it with the newest version.
 
 <a id="URLs">
 <h2>Access URLs</h2>
 You can create your own web pages using any tool you'd like. 
 To access JMRI from those pages, you just 
-need to know how the proper URLs to request the services you'd like. 
+need to know the proper URLs to request the services you'd like. 
 Several examples are available in the "web" directory of the distribution. 
 
-<h3>To Display a formated JMRI roster list</h3>
+<h3>To Display a formatted JMRI roster list</h3>
 
-To get a nicely formated view of your JMRI roster simply go to:
+To get a nicely formatted view of your JMRI roster simply go to:
 <code><pre>
 <a href="http://localhost:12080/prefs/roster.xml">http://localhost:12080/prefs/roster.xml</a>
 </pre></code>
@@ -150,7 +157,7 @@ To use the throttle web application, you can go to:
 </pre></code>
 it will display a clickable locomotive list generated using using your JMRI roster, each click on a locomotive will generate and open a inControl web throttle in a new browser window.  
 
-Or use the inControl.html directly using its parameters to configure it. (see on mini web server starting page for info)
+Or use the inControl.html directly using its parameters to configure it. (see mini web server starting page for info)
 
 <h3>To Display a Clickable JMRI Window</h3>
 
@@ -165,8 +172,8 @@ replace spaces by "%20" to make the name a
 valid URL, and that the name ends in ".html".
 <p>
 By default, that image refreshes every 5 seconds, and also refreshes one
-second after you click on it.  You can change the refresh interval by adding a modifier
-to the end of the URL:
+second after you click on it.  You can change the refresh interval in MiniServer Preferences
+or by adding a modifier to the end of the URL:
 <code><pre>
 <a href="http://localhost:12080/panel/Power%20Control.html?retry=12.3">http://localhost:12080/panel/Power%20Control.html?retry=12.3</a>
 </pre></code>
@@ -219,7 +226,7 @@ For example, to display "MyFile.xml" from the JMRI preferences directory, use
 <a href="http://localhost:12080/prefs/MyFile.xml">http://localhost:12080/prefs/MyFile.xml</a>
 </pre></code>
 
-<h3>XML and Ajax accress</h3>
+<h3>XML and Ajax access</h3>
 
 JMRI provides XML and Ajax access via a
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">XML IO custom servlet</a>.
@@ -240,7 +247,7 @@ updating a table when any change.
 By default, this is configured to handle URLs that start with "/xmlio".
 Information on use and customization can be found on a 
 <a href="XMLIO.shtml">separate page</a>.
-
+</div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

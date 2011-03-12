@@ -3,6 +3,8 @@
 package jmri.web.miniserver;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,11 +20,11 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class MiniServerAction extends AbstractAction {
 
-    int port = 12080;
+    int port = Integer.parseInt(MiniServerManager.MiniServerPreferencesInstance().getPort());
     ResourceBundle htmlStrings;
     ResourceBundle serviceStrings;
     
@@ -32,7 +34,8 @@ public class MiniServerAction extends AbstractAction {
         // make sure index page exists
         ensureIndexPage();
         
-        port = getPort();
+        //get port from preferences
+        port = Integer.parseInt(MiniServerManager.MiniServerPreferencesInstance().getPort());
         
         // start server
         startServer();
@@ -48,7 +51,8 @@ public class MiniServerAction extends AbstractAction {
     public void ensureIndexPage() {
         String name = jmri.jmrit.XmlFile.prefsDir()+"index.html";
         File file = new File(name);
-        if (!file.exists()) {
+        //build file if not found OR if rebuild set in preferences
+        if (!file.exists() || MiniServerManager.MiniServerPreferencesInstance().isRebuildIndex()) {
             PrintStream out = null;
             try {
                 // create it
@@ -65,12 +69,6 @@ public class MiniServerAction extends AbstractAction {
                 }
             }
         }
-    }
-    
-    int getPort() {
-        if (serviceStrings == null) serviceStrings = ResourceBundle.getBundle("jmri.web.miniserver.Services"); 
-        
-        return Integer.parseInt(serviceStrings.getString("Port"));        
     }
     
     ServerThread s;
@@ -100,11 +98,13 @@ public class MiniServerAction extends AbstractAction {
                                public void actionPerformed(ActionEvent e) {
                                   BareBonesBrowserLaunch.openURL(url); }
                                } );
-                            frame.setTitle("JMRI Mini Web Server Started");
-//                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             panel.add(new JLabel("Web server started at " + url + "\n"));
                             panel.add(webButton);
+                            frame.setTitle("JMRI Mini Web Server");
+//                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             frame.getContentPane().add(panel);
+                            java.net.URL imageURL = ClassLoader.getSystemResource("resources/jmri32x32.gif");
+                            frame.setIconImage(new ImageIcon(imageURL).getImage());
                             frame.pack();
                             frame.setVisible(true);
                         }

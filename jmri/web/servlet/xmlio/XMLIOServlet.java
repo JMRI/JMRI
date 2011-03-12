@@ -23,7 +23,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -136,8 +136,8 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
     
     protected void sendReply(Document doc) {
         // send reply header
-        out.print("HTTP/1.0 200 OK\r\n");
-        out.print("Server: JMRI\r\n");
+        out.print("HTTP/1.1 200 OK\r\n");
+        out.print("Server: JMRI-XMLIOServlet\r\n");
         out.print("Content-Type: text/xml\r\n");
         out.print("Cache-Control: no-cache\r\n");
         out.println();
@@ -150,6 +150,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         
         try {
             fmt.output(doc, out);  // new element is within existing document
+        	if (log.isDebugEnabled()) { log.debug("Returned: " + fmt.outputString(doc).replaceAll("\\r\\n"," ")); }
         } catch (IOException e) {
             log.error("IOException while in fmt.output: "+e,e);
         }

@@ -35,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -54,6 +54,7 @@ public class TabbedPreferences extends AppConfigBase {
     final JTabbedPane connectionPanel = new JTabbedPane();
     jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences;
     jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel;
+    jmri.web.miniserver.MiniServerPrefsPanel miniserverPrefsPanel;
     
     /* static */ ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
     /* static */ ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
@@ -85,11 +86,14 @@ public class TabbedPreferences extends AppConfigBase {
         
         preferencesArray.add(new preferencesCatItems("WITHROTTLE", rb.getString("MenuWiThrottle")));
 
+        preferencesArray.add(new preferencesCatItems("MINISERVER", rb.getString("MenuMiniServer")));
+
     }
     
     public void init(){
         throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
         withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
+        miniserverPrefsPanel = new jmri.web.miniserver.MiniServerPrefsPanel();
         pref.disallowSave();
         list = new JList();
         listScroller = new JScrollPane(list);
@@ -113,6 +117,7 @@ public class TabbedPreferences extends AppConfigBase {
                     invokeSaveOptions();
                     throttlePreferences.jbSaveActionPerformed(e);
                     withrottlePrefsPanel.storeValues();
+                    miniserverPrefsPanel.storeValues();
                     apps.FileLocationPane.save();
                     savePressed();
                     pref.allowSave();
@@ -161,7 +166,10 @@ public class TabbedPreferences extends AppConfigBase {
             throttlePreferences, false, null);
         
         addItem("WITHROTTLE", rb.getString("MenuWiThrottle"), null, null, 
-            withrottlePrefsPanel, false, null);
+                withrottlePrefsPanel, false, null);
+
+        addItem("MINISERVER", rb.getString("MenuMiniServer"), null, null, 
+                miniserverPrefsPanel, false, null);
             
         for(int x=0; x<preferencesArray.size(); x++){
             detailpanel.add(preferencesArray.get(x).getPanel(), preferencesArray.get(x).getPrefItem());

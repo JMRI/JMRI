@@ -9,8 +9,10 @@ import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.*;
 
+import java.util.Date;
 import java.util.StringTokenizer;
 import jmri.util.JmriJFrame;
+import jmri.web.miniserver.MiniServerManager;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
@@ -37,16 +39,16 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class JmriJFrameServlet implements Servlet {
 
-    String clickRetryTime = "0.3";
-    String noclickRetryTime = "5.0";
-    
+    String clickRetryTime = ((Integer)MiniServerManager.MiniServerPreferencesInstance().getClickDelay()).toString();
+    String noclickRetryTime = ((Integer)MiniServerManager.MiniServerPreferencesInstance().getRefreshDelay()).toString();
+
     protected int maxRequestLines = 50;
-    protected String serverName = "JFrameServer";
+    protected String serverName = "JMRI-JFrameServer";
     
     static java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
@@ -155,8 +157,7 @@ public class JmriJFrameServlet implements Servlet {
     
     void imageReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res ) 
             throws java.io.IOException {
-        printHeader(out);
-        putFrameImage(frame, res.getOutputStream());
+    	putFrameImage(frame, res.getOutputStream());
     }
     
     void htmlReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res, boolean click ) {
@@ -164,11 +165,21 @@ public class JmriJFrameServlet implements Servlet {
         // 1 is name
         // 2 is retry in META tag, click or noclick retry
         // 3 is retry in next URL, future retry
-        Object[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime, noclickRetryTime};
-        out.println(java.text.MessageFormat.format(rb.getString("StandardHeader"), args));
-        out.println(java.text.MessageFormat.format(rb.getString("StandardDocType"), args));
-        out.println(java.text.MessageFormat.format(rb.getString("StandardFront"), args));
-        out.println(java.text.MessageFormat.format(rb.getString("StandardBack"), args));
+    	Object[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime, noclickRetryTime};
+        String h = rb.getString("StandardHeader");
+        String s = java.text.MessageFormat.format(rb.getString("StandardDocType"), args);
+        s += java.text.MessageFormat.format(rb.getString("StandardFront"), args);
+        s += java.text.MessageFormat.format(rb.getString("StandardBack"), args);
+
+        h += s.length() + "\r\n";
+        Date now = new Date();
+		h += "Date: " + now + "\r\n";
+		h += "Last-Modified: " + now + "\r\n";
+		out.println(h);  //write header with calculated fields
+        out.println(s);  //write out rest of html page
+        out.flush();
+//        out.close();
+        if (log.isDebugEnabled()) log.debug("Sent " + s.length() + " bytes jframe html with click=" + (click ? "True" : "False"));
     }
     
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions
@@ -300,7 +311,7 @@ public class JmriJFrameServlet implements Servlet {
         PrintWriter out = res.getWriter();
 
         out.println
-            ("HTTP/1.0 200 OK\r\n" +
+            ("HTTP/1.1 200 OK\r\n" +
              "Server: " + serverName + "\r\n" +
              "Content-Type: text/html\r\n" +
              "\r\n" +
@@ -349,36 +360,59 @@ public class JmriJFrameServlet implements Servlet {
     }
     
     /** 
-     * Get the frame graphics as png
+     * Get the frame graphics as png and output to browser
      */
-    void putFrameImage(JmriJFrame frame, OutputStream out) {
-        try {
-            BufferedImage image 
-                = new BufferedImage(frame.getContentPane().getWidth(), 
-                                    frame.getContentPane().getHeight(), 
-                                    BufferedImage.TYPE_INT_RGB);
-            frame.getContentPane().paint(image.createGraphics());
-            
-            // send the image as a png, "jpg" also available
-            ImageIO.write(image, "png", out);
-            out.flush();
-            
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+    void putFrameImage(JmriJFrame frame, OutputStream outStream) {
+    	try {
+    		BufferedImage image 
+    		= new BufferedImage(frame.getContentPane().getWidth(), 
+    				frame.getContentPane().getHeight(), 
+    				BufferedImage.TYPE_INT_RGB);
+    		frame.getContentPane().paint(image.createGraphics());
+
+    		//put it in a temp file to get post-compression size
+    		ByteArrayOutputStream tmpFile = new ByteArrayOutputStream();
+    		ImageIO.write(image, "png", tmpFile);
+    		tmpFile.close();
+    		long contentLength = tmpFile.size();
+
+    		printHeader(new PrintWriter(outStream), contentLength);  //write header with length
+
+    		try {
+    			outStream.write(tmpFile.toByteArray());  //write image data
+    		} finally {
+    			if (outStream != null) {
+    				outStream.flush();
+    			}
+    		}
+    		if (log.isDebugEnabled()) log.debug("Sent [" + frame.getTitle() + "] as " + contentLength + " byte png.");
+
+    	} catch (Exception e) {
+    		log.error(e.getMessage());
+    	}
     }
         
-    // Send standard HTTP response for image/gif type
-    // Use HTTP 1.0 for compatibility with all clients.
-    
-    private void printHeader(PrintWriter out) {
-        out.print
-            ("HTTP/1.0 200 OK\r\n" +
-             "Server: " + serverName + "\r\n" +
-             "Content-Type: image/png\r\n" +
-             "\r\n");
+    // Send standard HTTP response for image/png type
+   
+    private void printHeader(PrintWriter out, long fileSize) {
+    	String h;
+		h = "HTTP/1.1 200 OK\r\n" +
+                "Server: " + serverName + "\r\n" +
+                "Content-Type: image/png\r\n" +
+                "Cache-Control: no-cache\r\n" +
+                "Connection: Keep-Alive\r\n" +
+                "Keep-Alive: timeout=5, max=100\r\n" +
+                "Content-Length: " + fileSize + "\r\n";
+        		Date now = new Date();
+        		h += "Date: " + now + "\r\n";
+        		h += "Last-Modified: " + now + "\r\n";
+        		
+                h += "\r\n";  //blank line to indicate end of header
+    	out.print(h);
+    	if (log.isDebugEnabled()) log.debug("Sent Header: "+h.replaceAll("\\r\\n"," | "));
         out.flush();
     }
+    
     
     // Normal Web page requests use GET, so this server can simply
     // read a line at a time. However, HTML forms can also use 

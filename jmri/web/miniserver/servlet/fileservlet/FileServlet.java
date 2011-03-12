@@ -2,6 +2,7 @@ package jmri.web.miniserver.servlet.fileservlet;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.util.Date;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -20,13 +21,14 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class FileServlet extends AbstractServlet {
 
     static java.util.ResourceBundle types = java.util.ResourceBundle.getBundle("jmri.web.miniserver.servlet.fileservlet.FileServletTypes");
     static java.util.ResourceBundle paths = java.util.ResourceBundle.getBundle("jmri.web.miniserver.servlet.fileservlet.FileServletPaths");
+    static java.util.ResourceBundle htmlStrings = java.util.ResourceBundle.getBundle("jmri.web.miniserver.Html");
 
     public void service(ServletRequest req, ServletResponse res) 
         throws java.io.IOException {
@@ -48,23 +50,30 @@ public class FileServlet extends AbstractServlet {
         String filename = getFilename(URLDecoder.decode(rqst.substring(1),  java.nio.charset.Charset.defaultCharset().toString())); // drop leading /
         if (log.isDebugEnabled()) log.debug("resolve to filename: "+filename);
         
-        // silently drop requests that don't satisfy security check
+        // refuse requests that don't satisfy security check
         if (!isSecurityLimitOK(filename)) {
             log.info("Dropping unauthorized request for \""+filename+"\"");
+            printHeader(out, "text/html", "403 Forbidden");
             return;
         }
         // now reply
         if (! isDirectory(filename) ) {
-            printHeader(out, getMimeType(filename));
-            copyFileContent(filename, res.getOutputStream());
+        	File tempFile = new File(filename);
+        	if (tempFile.exists()) {
+        		printHeader(out, getMimeType(filename), "200 OK", 
+        				new Date(tempFile.lastModified()), tempFile.length());
+        		copyFileContent(filename, res.getOutputStream());
+        	} else {
+        		printHeader(out, getMimeType(filename), "404 Not Found");
+        	}
         } else {
             if (filename.endsWith("/")) {
                 // show content
-                printHeader(out, "text/html");
+                printHeader(out, "text/html", "200 OK");
                 createDirectoryContent(filename, res.getOutputStream());
             } else {
                 // send redirect
-                printHeader(out, "text/html");
+                printHeader(out, "text/html", "200 OK");
                 OutputStreamWriter writer = new OutputStreamWriter(res.getOutputStream());
                 try {
                     writer.write("<head>\n");
@@ -219,6 +228,7 @@ public class FileServlet extends AbstractServlet {
     protected void copyFileContent(String from, OutputStream out) throws IOException{
        InputStream in = null;
        int BUFF_SIZE = 100000;  //set buffer to 100K
+       long bytesWritten = 0;
        byte[] buffer = new byte[BUFF_SIZE];
        try {
           in = new FileInputStream(from);
@@ -228,9 +238,11 @@ public class FileServlet extends AbstractServlet {
                 if (amountRead == -1) {
                    break;
                 }
-                out.write(buffer, 0, amountRead); 
+                out.write(buffer, 0, amountRead);
+                bytesWritten += amountRead;
              }
           } 
+    	   
        } finally {
           if (in != null) {
              in.close();
@@ -238,6 +250,7 @@ public class FileServlet extends AbstractServlet {
           if (out != null) {
              out.flush();
           }
+          if (log.isDebugEnabled()) log.debug("Sent " + bytesWritten + " bytes as " + from + ".");
        }
     }
 
@@ -247,9 +260,11 @@ public class FileServlet extends AbstractServlet {
         java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
         File dir = new File(filename);
         OutputStreamWriter writer = new OutputStreamWriter(out);
-        writer.write("<body>\n");
-        
-        writer.write("<table><tr><th>Name</th><th>Last modified</th><th>Size</th></tr><tr><th colspan=\"5\"><hr></th></tr>");
+
+        writer.write(htmlStrings.getString("DirectoryFront"));      
+
+        writer.write("<h2>Directory Listing of '" + filename + "'</h2>");
+        writer.write("<table class='data'>\r\n<tr><th>Name</th><th>Last modified</th><th>Size</th></tr>\r\n");
 
         try {
             // write out directory
@@ -260,10 +275,10 @@ public class FileServlet extends AbstractServlet {
                     +f.getName()+(f.isDirectory() ? "/" : "")+"\">"
                     +f.getName()+(f.isDirectory() ? "/" : "")+"</a></td><td align=\"right\">"
                     +df.format(new java.util.Date(f.lastModified()))
-                    +"</td><td align=\"right\">"+f.length()+"</td></tr>");
+                    +"</td><td align=\"right\">"+f.length()+"</td></tr>\r\n");
 
             }
-            writer.write("<tr><th colspan=\"5\"><hr></th></tr></table>");
+            writer.write("</table>");
             writer.write("<address>JMRI "+jmri.Version.name()+" Mini Server</address>" );
             writer.write("</body></html>");
 
@@ -273,17 +288,37 @@ public class FileServlet extends AbstractServlet {
         }
     }
     
-    // Send standard HTTP response for image/gif type
-    // Use HTTP 1.0 for compatibility with all clients.
-    
-    protected void printHeader(PrintWriter out, String mime) {
-        out.print
-            ("HTTP/1.0 200 OK\r\n" +
-             "Server: FileServlet\r\n" +
-             "Content-Type: "+mime+"\r\n" +
-             "\r\n");
-        out.flush();
+    // Send standard HTTP response (with default values)
+    protected void printHeader(PrintWriter out, String mimeType, String responseStatus) {
+    	printHeader(out, mimeType, responseStatus, null, -1);
     }
+    
+    protected void printHeader(PrintWriter out, String mimeType, String responseStatus, Date fileDate) {
+    	printHeader(out, mimeType, responseStatus, fileDate, -1);
+    }
+    
+    protected void printHeader(PrintWriter out, String mimeType, String responseStatus, Date fileDate, long fileSize) {
+    	String s;
+    	s = "HTTP/1.1 " + responseStatus + "\r\n" +
+    		"Server: JMRI-FileServlet\r\n" +
+    		"Content-Type: "+mimeType+"\r\n" +
+    		"Connection: Keep-Alive\r\n";
+    	if (fileDate != null) {
+    		Date now = new Date();
+    		s += "Date: " + now + "\r\n";
+    		s += "Last-Modified: " + fileDate + "\r\n";
+    		s += "Cache-Control: Public, max-age=" + 5*60 + "\r\n";  //max-age is in seconds
+    		s += "Expires: " + new Date(now.getTime() + 5*60*1000) + "\r\n";  //set expiration to 5 minutes in the future, in ms
+    	}
+    	if (fileSize != -1) {
+    		s += "Content-Length: " + fileSize + "\r\n";
+    	}
+    	s +=    "\r\n";  //blank line to indicate end of header
+    	out.print(s);
+    	if (log.isDebugEnabled()) log.debug("Sent Header: "+s.replaceAll("\\r\\n"," | "));
+    	out.flush();
+    }
+    
     
     // initialize logging
     static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileServlet.class.getName());
