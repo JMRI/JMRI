@@ -10,8 +10,9 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="name assigned historically")
 public class InternalTurnoutManagerXml extends jmri.managers.configurexml.InternalTurnoutManagerXml {
 
     public InternalTurnoutManagerXml() {
