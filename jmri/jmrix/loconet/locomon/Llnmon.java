@@ -37,7 +37,7 @@ import jmri.util.StringUtil;
  * provided by Leo Bicknell with help from B. Milhaupt, used with permission.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 public class Llnmon {
 
@@ -588,7 +588,7 @@ public class Llnmon {
             int in2 = l.getElement(2);
             int contactNum = ((SENSOR_ADR(in1, in2)-1)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1));
             // get system and user names
-            String sensorSystemName = new String(locoNetSensorPrefix + contactNum);
+            String sensorSystemName = locoNetSensorPrefix + contactNum;
             String sensorUserName = "";
             try {
                 sensorSystemName = locoNetSensorPrefix + contactNum;
@@ -2322,7 +2322,7 @@ public class Llnmon {
                             else if (l.getElement(3) == 0x10) {  /* OPC_RE_IPL (IPL Ping Report) */
                             // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
                                 if (((l.getElement(4)&0xF) != 0) ||(l.getElement(5) != 0) || (l.getElement(6) != 0) ||
-                                        (l.getElement(7) != 0) | (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
+                                        (l.getElement(7) != 0) || (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
 
                                     interpretedMessage = "Ping Report.\n";
                                     int hostSnInt = 0;
