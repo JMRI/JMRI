@@ -2,6 +2,8 @@ package jmri.jmrit.logix;
 
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,11 +13,28 @@ import jmri.Sensor;
 
 
 /**
- * Extends jmri.Block to be used in Logix Conditionals.  Adds an additional state,
- * ALLOCATED that can be set from ConditionalAction. 
+ * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It is the smallest
+ * piece of track that can have occupancy detection.  A better name would be Detection Circuit.
+ * However, an OBlock can be defined without an occupancy sensor and used to calculate routes.  
+ *
+ * Additional states are defined to indicate status of the track and trains to control panels.
  *
  *<P>
- * Restricts Path objects to be contained within the Block boundaries.
+ * Entrances (exits when train moves in opposute direction) to OBlocks have Portals. A
+ * Portal object is a pair of OBlocks.  Each OBlock has a list of its Portals.
+ *
+ *<P>
+ * When an OBlock (Detection Circuit) has a Portal whose entrance to the OBlock has a signal,
+ * then the OBlock and its chains of adjacent OBlocks up to the next OBlock having an entrance
+ * Portal with a signal, can be considered a "Block" in the sense of a prototypical railroad.
+ * Preferrably all entrances to the "Block" should have entrance Portals with a signal. 
+ *
+ *
+ *<P>
+ * A Portal has a list of paths (OPath objects) for each OBlock it separates.  The paths are
+ * determined by the turnout settings of the turnouts contained in the block. 
+ * Paths are contained within the Block boundaries. Names of OPath objects only need be unique
+ * within an OBlock.
  *
  *<P>
  *
@@ -33,22 +52,21 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
-    public static final String[] BLOCK_STATUS = { rb.getString("unoccupied"), rb.getString("occupied"),
-                            rb.getString("allocated"), rb.getString("running"), rb.getString("outOfService"),
-                            rb.getString("dark"), rb.getString("powerError") };
 
     /*
-    * Block state. Add the following to the 4 sensor states.
+    * Block states.
+    * NamedBean.UNKNOWN                 = 0x01;
+    * Block.OCCUPIED =  Sensor.ACTIVE =   0x02;
+    * Block.UNOCCUPIED = Sensor.INACTIVE= 0x04;
+    * NamedBean.INCONSISTENT            = 0x08;
+    * Add the following to the 4 sensor states.
     * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied by rouge
-    static final public int OCCUPIED =  Sensor.ACTIVE =   0x02;
-    static final public int UNOCCUPIED = Sensor.INACTIVE= 0x04;
     */
     static final public int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
     static final public int RUNNING = 0x20;     // Block that running train has reached 
@@ -56,10 +74,53 @@ public class OBlock extends jmri.Block {
     static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
     static final public int TRACK_ERROR = 0x80; // Block has Error
 
-    static final int[] BLOCK_STATE = {Sensor.INACTIVE, Sensor.ACTIVE, ALLOCATED, RUNNING,
-                            OUT_OF_SERVICE, DARK, TRACK_ERROR };
+    static final Hashtable<String, Integer> _oldstatusMap = new Hashtable<String, Integer>();
+    static final Hashtable<String, Integer> _statusMap = new Hashtable<String, Integer>();
+    static final Hashtable<String, String> _statusNameMap = new Hashtable<String, String>();
+    {
+        _oldstatusMap.put(rb.getString("unoccupied"), new Integer(UNOCCUPIED));
+        _oldstatusMap.put(rb.getString("occupied"), new Integer(OCCUPIED));
+        _oldstatusMap.put(rb.getString("allocated"), new Integer(ALLOCATED));
+        _oldstatusMap.put(rb.getString("running"), new Integer(RUNNING));
+        _oldstatusMap.put(rb.getString("outOfService"), new Integer(OUT_OF_SERVICE));
+        _oldstatusMap.put(rb.getString("dark"), new Integer(DARK));
+        _oldstatusMap.put(rb.getString("powerError"), new Integer(TRACK_ERROR));
 
-    ArrayList <Portal> _portals = new ArrayList <Portal>();     // portals to this block
+        _statusMap.put("unoccupied", new Integer(UNOCCUPIED));
+        _statusMap.put("occupied", new Integer(OCCUPIED));
+        _statusMap.put("allocated", new Integer(ALLOCATED));
+        _statusMap.put("running", new Integer(RUNNING));
+        _statusMap.put("outOfService", new Integer(OUT_OF_SERVICE));
+        _statusMap.put("dark", new Integer(DARK));
+        _statusMap.put("powerError", new Integer(TRACK_ERROR));
+
+        _statusNameMap.put(rb.getString("unoccupied"), "unoccupied");
+        _statusNameMap.put(rb.getString("occupied"), "occupied");
+        _statusNameMap.put(rb.getString("allocated"), "allocated");
+        _statusNameMap.put(rb.getString("running"), "running");
+        _statusNameMap.put(rb.getString("outOfService"), "outOfService");
+        _statusNameMap.put(rb.getString("dark"), "dark");
+        _statusNameMap.put(rb.getString("powerError"), "powerError");
+    }
+
+    public static Enumeration<String> getLocalStatusNames() {
+        Enumeration<String> keys = _statusNameMap.keys();
+        return keys;
+    }
+
+    public static String getLocalStatusName(String str) {
+        try {
+            return rb.getString(str);
+        } catch (java.util.MissingResourceException mre) {
+            return str;
+        }
+    }
+
+    public static String getSystemStatusName(String str) {
+        return _statusNameMap.get(str);
+    }
+
+    ArrayList<Portal> _portals = new ArrayList <Portal>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocateds to this warrant
     private String  _pathName;      // when not null, this is the allocated path
@@ -109,14 +170,20 @@ public class OBlock extends jmri.Block {
         return _scaleRatio;
     }
 
-    public boolean statusIs(String status) {
-        for (int i=0; i<BLOCK_STATUS.length; i++) {
-            if (BLOCK_STATUS[i].equals(status)) {
-                if (log.isDebugEnabled()) log.debug("OBlock \""+getSystemName()+"\" status= "
-                                        +status+" returns "+((getState() & BLOCK_STATE[i]) != 0));
-                return ((getState() & BLOCK_STATE[i]) != 0);
-            }
+    /*
+    *  From the universal name for block status, check if it is the current status
+    */
+    public boolean statusIs(String statusName) {
+        Integer i = _statusMap.get(statusName);
+        if (i==null) {
+            i = _oldstatusMap.get(statusName);
         }
+        if (i!=null) {
+            return ((getState() & i.intValue()) != 0);
+        }
+        log.error("\""+statusName+
+                    "\" resource not found.  Please update Conditional State Variable testing OBlock \""
+                    +getDisplayName()+"\" status.");
         return false;
     }
 
@@ -212,7 +279,7 @@ public class OBlock extends jmri.Block {
         } else {
             _warrant = null;
             _pathName = null;
-            setValue(null);
+            //setValue(null);
             int state = getState();
             setState(state & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
         }
@@ -403,12 +470,14 @@ public class OBlock extends jmri.Block {
      * Called by handleSensorChange
      */
     public void goingInactive() {
-        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
+//        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
         if (_warrant!=null) {
             _warrant.goingInactive(this);
+            setValue(null);
         }
+        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
     }
 
      /**

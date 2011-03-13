@@ -19,6 +19,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
@@ -61,7 +62,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.93 $
+ * @version $Revision: 1.94 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2781,10 +2782,11 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_OBLOCK:
                 _variableNameField.setText(_curVariable.getName());
                 _variableStateBox.removeAllItems();
-                for (int i=0; i< OBlock.BLOCK_STATUS.length; i++) {
-                    _variableStateBox.addItem(OBlock.BLOCK_STATUS[i]);
+                Enumeration<String> names = OBlock.getLocalStatusNames();
+                while (names.hasMoreElements()) {
+                    _variableStateBox.addItem(names.nextElement());
                 }
-                _variableStateBox.setSelectedItem(_curVariable.getDataString());
+                _variableStateBox.setSelectedItem(OBlock.getLocalStatusName(_curVariable.getDataString()));
                 _variableStateBox.setVisible(true);
                break;
         }
@@ -3638,8 +3640,9 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintOBlock"));
                 _variableNamePanel.setVisible(true);
                 _variableStateBox.removeAllItems();
-                for (int i=0; i< OBlock.BLOCK_STATUS.length; i++) {
-                    _variableStateBox.addItem(OBlock.BLOCK_STATUS[i]);
+                Enumeration<String> names = OBlock.getLocalStatusNames();
+                while (names.hasMoreElements()) {
+                    _variableStateBox.addItem(names.nextElement());
                 }
                 _variableStatePanel.setVisible(true);
                 break;
@@ -3795,7 +3798,8 @@ public class LogixTableAction extends AbstractTableAction {
                 if (name == null) {
                     return false;
                 }
-                _curVariable.setDataString((String)_variableStateBox.getSelectedItem());
+                String str = (String)_variableStateBox.getSelectedItem();
+                _curVariable.setDataString(OBlock.getSystemStatusName(str));
                 if (log.isDebugEnabled()) log.debug("OBlock \""+name+"\"of type '"+testType+
                                                     "' _variableStateBox.getSelectedItem()= "+
                                                     _variableStateBox.getSelectedItem()); 
