@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.13 2010-10-07 19:01:10 matthewharris Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.14 2011-03-13 23:16:40 matthewharris Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -257,9 +257,9 @@ If no argument is provided, the configuration file name is defaulted in the appl
 This allows you to create as many specialized configurations you'd like by creating a new Start Menu and/or Desktop shortcut to 'LaunchJMRI.exe' file and adding the preferences file as a parameter.
 </dl>
 
-<!-- <h3>Environment variables</h3>
+<h3>Environment variables</h3>
 
-As from JMRI version 2.9.5, it is possible to influence the settings used to launch JMRI via the use of Environment Variables.
+As from JMRI version 2.11.4, it is possible to influence the settings used to launch JMRI via the use of Environment Variables.
 
 The Environment Variables used are:
 
@@ -273,7 +273,7 @@ The Environment Variables used are:
 <dt>JMRI_USERHOME
 <dd>This specifies the location of an alternative user home directory
 </dl>
-If both JMRI_PREFSDIR and JMRI_USERHOME are defined, the location defined by JMRI_PREFSDIR will take precedence over the location defined by JMRI_USERHOME for determining the location of the preferences file. -->
+If both JMRI_PREFSDIR and JMRI_USERHOME are defined, the location defined by JMRI_PREFSDIR will take precedence over the location defined by JMRI_USERHOME for determining the location of the preferences file.
 
 <h3>Launcher details</h3>
 
@@ -304,11 +304,73 @@ This allows you to drop jar files into the JMRI install directory for the <a hre
 
 </dl>
 
-
+<h3>Start Menu shortcuts and Desktop icons</h3>
+In a default JMRI installation, a number of shortcuts are created in the Start Menu, along with Desktop Icons for DecoderPro and PanelPro.
+<h4>Start Menu shortcuts</h4>
+All JMRI Start Menu shortcuts are placed in the "JMRI" start menu folder (or sub-folders) in the following structure:
+<ul> <!-- id="side"> <!-- use sidebar css style -->
+ <li>JMRI
+ <ul>
+  <li>DecoderPro - launch DecoderPro application
+  <li>PanelPro - launch PanelPro application
+  <li>SoundPro - launch SoundPro application
+  <li>Uninstall - remove entire JMRI suite
+  <li>Tools and Demos
+  <ul>
+   <li>InstallTest - launch InstallTest application
+   <li>Preferences - open user preferences folder
+  </ul>
+ </ul>
+</ul>
+Additional icons may be placed within this structure depending on the options chosen during installation and the version of JMRI being installed.
 <p>
+Start Menu shortcut example for DecoderPro (assuming JMRI is installed in the default location "C:\Program Files\JMRI"):
+<dl>
+ <dt>Shortcut name
+ <dd>'All Users' on Windows 2000 and XP - C:\Documents and Settings\All Users\Start Menu\Programs\JMRI\DecoderPro.lnk
+ <dd>'All Users' on Windows Vista and 7 - C:\ProgramData\Microsoft\Windows\Start Menu\Programs\JMRI\DecoderPro.lnk
+ <dd>'Current User' on Windows 2000 and XP - C:\Documents and Settings\[username]\Start Menu\Programs\JMRI\DecoderPro.lnk
+ <dd>'Current User' on Windows Vista and 7 - C:\Users\[username]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\JMRI\DecoderPro.lnk
+ <dt>Target
+ <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro
+ <dt>Start In
+ <dd>"C:\Program Files\JMRI"
+ <dt>Shortcut Key
+ <dd>None
+ <dt>Run
+ <dd>Normal window
+ <dt>Comment
+ <dd>Start Decoder Pro
+ <dt>Icon
+ <dd>"C:\Program Files\JMRI\decpro5.ico"
+</dl>
+<h4>Desktop Icons</h4>
+Desktop Icons for DecoderPro and PanelPro are created in the default installation - at installation time an optional desktop icon can also be created for the SoundPro application.
+<p>
+The structure of Desktop Icon creation is similar to that of the Start Menu shortcuts above - example Desktop Icon for DecoderPro (again assuming JMRI is installed in the default location "C:\Program Files\JMRI"):
+<dl>
+ <dt>Shortcut name
+ <dd>'All Users' on Windows 2000 and XP - C:\Documents and Settings\All Users\Desktop\DecoderPro.lnk
+ <dd>'All Users' on Windows Vista and 7 - C:\Users\Public\Desktop\DecoderPro.lnk
+ <dd>'Current User' on Windows 2000 and XP - C:\Documents and Settings\[username]\Desktop\DecoderPro.lnk
+ <dd>'Current User' on Windows Vista and 7 - C:\Users\[username]\Desktop\DecoderPro.lnk
+ <dt>Target
+ <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro
+ <dt>Start In
+ <dd>"C:\Program Files\JMRI"
+ <dt>Shortcut Key
+ <dd>None
+ <dt>Run
+ <dd>Normal window
+ <dt>Comment
+ <dd>Start Decoder Pro
+ <dt>Icon
+ <dd>"C:\Program Files\JMRI\decpro5.ico"
+</dl>
+<!-- <p>
 (This section needs information on how icons and shortcuts work.
 The InstallerVISE installer does something to associate an icon
-and to put two shortcuts on the desktop)
+and to put two shortcuts on the desktop) -->
 
 
 <!--#include virtual="/Footer" -->
