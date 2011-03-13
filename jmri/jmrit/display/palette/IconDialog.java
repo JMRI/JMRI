@@ -415,7 +415,7 @@ public class IconDialog extends ItemDialog {
             _iconMap.put(label.getName(), newIcon);
             e.dropComplete(true);
             if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
-                                                 ", "+newIcon.getURL());
+                                                 ", "+(newIcon!=null ? newIcon.getURL().toString():" newIcon==null "));
         }
     }
     
