@@ -54,7 +54,7 @@ import jmri.util.JmriJFrame;
  * @author     Bob Jacobsen    Copyright 2008
  
  * @author     Pete Cressman   Copyright 2009
- * @version    $Revision: 1.11 $
+ * @version    $Revision: 1.12 $
  */
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
@@ -98,7 +98,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      */
     public LearnThrottleFrame(WarrantFrame warrantFrame)
     {
-        super();
+        super(false, false);
         _warrantFrame = warrantFrame;
         powerMgr = InstanceManager.powerManagerInstance();
         if (powerMgr == null) {
@@ -372,7 +372,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.11 $
+     * @version    $Revision: 1.12 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
