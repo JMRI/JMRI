@@ -30,7 +30,7 @@ import jmri.implementation.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
@@ -41,6 +41,7 @@ import jmri.implementation.AbstractReporter;
          _number = number;
          // At construction, register for messages
          tc.addLocoNetListener(~0, this);
+         this.tc = tc;
      }
 
     LnTrafficController tc;
