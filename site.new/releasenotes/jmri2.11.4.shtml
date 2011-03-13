@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.9 2011-03-09 19:39:26 ken_c Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.10 2011-03-13 21:58:42 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -121,6 +121,13 @@ Ken Cameron:
 <li>Fixed Powerline interfaces for CP290 and Insteon.</li>
 <li>Improved the testing of the ports used for interfaces when saving the preferences.
 It now will log an error message on the console with the port and conflicting interfaces.</li>
+</ul>
+
+<p>Matthew Harris:
+<ul>
+<li>Fixed a bug in the implementation of Reporters and updated the JavaDoc.</li>
+<li>Added a new column to the Reporters table that shows the last known report.</li>
+<li>Added a new test case for Reporter objects.</li>
 </ul>
 
 <!--#include virtual="/Footer" -->
