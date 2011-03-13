@@ -21,7 +21,7 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.16 $
+ * @version 		$Revision: 1.17 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -46,7 +46,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     /**
      * Request a new throttle object be created for the address
      **/
-	public void requestThrottleSetup(LocoAddress address, boolean control) {
+	synchronized public void requestThrottleSetup(LocoAddress address, boolean control) {
         _dccAddr = (DccLocoAddress)address;
         _intAddr = _dccAddr.getNumber();
 
