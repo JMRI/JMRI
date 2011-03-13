@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -31,6 +31,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private BlockOrder _viaOrder;
     private BlockOrder _avoidOrder;
     private ArrayList <ThrottleSetting> _throttleCommands = new ArrayList <ThrottleSetting>();
+    private String _trainName;
     private String _trainId;
     private DccLocoAddress _dccAddress;
     private boolean _runBlind;              // don't use block detection
@@ -97,6 +98,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _viaOrder = null;
         _avoidOrder = null;
         _throttleCommands = new ArrayList <ThrottleSetting>();
+        _trainName = null;
         _trainId = null;
         _dccAddress = null;
         _orders = _savedOrders;
@@ -227,6 +229,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _throttleCommands.add(ts);
     }
 
+    public String getTrainName() { return _trainName; }
+    public void setTrainName(String name) {
+        _trainName = name;
+    }
 
     public String getTrainId() { return _trainId; }
     public boolean setTrainId(String id) {
@@ -478,6 +484,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             OBlock b = bo.getBlock();
             bo.setPath(this);
             b.setValue(_trainId);
+//            b.setValue(_trainName);
             b.setState(b.getState() | OBlock.RUNNING);
         }
         _runMode = mode;
@@ -712,6 +719,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _idxCurrentOrder = activeIdx;
                 // set block state to show our train occupies the block
                 block.setValue(_trainId);
+//                block.setValue(_trainName);
                 block.setState(block.getState() | OBlock.RUNNING);
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
@@ -753,7 +761,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             // must be in destination block, let script finish according to recorded speeds
         	// end of script will deallocate warrant
         	if (_runMode==MODE_MANUAL) {
-                block.setValue(null);
                 block.deAllocate(this);
                 _routeSet = false;
                 _allocated = false;       		

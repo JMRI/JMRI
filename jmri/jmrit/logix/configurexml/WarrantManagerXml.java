@@ -93,6 +93,11 @@ public class WarrantManagerXml //extends XmlFile
             elem.setAttribute("dccType", ""+(addr.isLongAddress() ? "L" : "S"));
         }
         elem.setAttribute("runBlind", warrant.getRunBlind()?"true":"false");
+
+        str = warrant.getTrainName();
+        if (str==null) str = "";
+        elem.setAttribute("trainName", str);
+
         return elem;
     }
 
@@ -232,6 +237,9 @@ public class WarrantManagerXml //extends XmlFile
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
+        }
+        if (elem.getAttribute("trainName") != null) {
+            warrant.setTrainName(elem.getAttribute("trainName").getValue());
         }
     }
 

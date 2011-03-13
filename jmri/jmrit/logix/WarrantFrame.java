@@ -89,12 +89,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     int _thisActionEventId;     // id for the listener of the above items
 
     JTabbedPane _tabbedPane;
+    JPanel      _routePanel;
+    JPanel      _commandPanel;
     RosterEntry _train;
-    JComboBox   _rosterBox;
-    JTextField  _trainIdBox = new JTextField();
+    JComboBox   _rosterBox = new JComboBox();
     JTextField  _dccNumBox = new JTextField();
-    JTextField  _rrNameBox = new JTextField();
-    JTextField  _rrNumBox = new JTextField();
+    JTextField  _trainNameBox = new JTextField();
     JTextField  _throttleFactorBox =  new JTextField();
     JRadioButton _runProtect = new JRadioButton(rb.getString("RunProtected"), true);
     JRadioButton _runBlind = new JRadioButton(rb.getString("RunBlind"), false);
@@ -115,6 +115,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     *  Constructor for existing warrant
     */
     public WarrantFrame(String warrantName) {
+        super(false, false);
         _warrant = InstanceManager.warrantManagerInstance().provideWarrant(warrantName);
         _create = false;
         setup();
@@ -126,11 +127,14 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     *  Constructor for new warrant and GUI
     */
     public WarrantFrame(Warrant warrant, boolean create) {
+        super(false, false);
         _warrant = warrant;
         if (!create) {
             // this is a concatenation of warrants
             setup();
             create = true;  // allows warrant to be registered
+        } else {
+            getRoster();    // also done in setup()
         }
         _create = create;
         init();
@@ -193,28 +197,29 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             ThrottleSetting ts = new ThrottleSetting(tList.get(i));
             _throttleCommands.add(ts);
         }
-        _trainIdBox.setText(_warrant.getTrainId());
+        getRoster();
         if (!setTrainInfo(_warrant.getTrainId(), false)) {
             jmri.DccLocoAddress address = _warrant.getDccAddress();
             if (address!=null) {
                 _dccNumBox.setText(address.toString());
             }
         }
+        _trainNameBox.setText(_warrant.getTrainName());
         _runBlind.setSelected(_warrant.getRunBlind());
     }
 
     private void init() {
 
-        doSize(_originBlockBox, 500, 300);
-        doSize(_destBlockBox, 500, 300);
-        doSize(_viaBlockBox, 500, 300);
-        doSize(_avoidBlockBox, 500, 300);
-        doSize(_originPathBox, 500, 300);
-        doSize(_destPathBox, 500, 300);
-        doSize(_viaPathBox, 500, 300);
-        doSize(_avoidPathBox, 500, 300);
-        doSize(_originPortalBox, 500, 300);
-        doSize(_destPortalBox, 500, 300);
+        doSize(_originBlockBox, 500, 200);
+        doSize(_destBlockBox, 500, 200);
+        doSize(_viaBlockBox, 500, 200);
+        doSize(_avoidBlockBox, 500, 200);
+        doSize(_originPathBox, 500, 200);
+        doSize(_destPathBox, 500, 200);
+        doSize(_viaPathBox, 500, 200);
+        doSize(_avoidPathBox, 500, 200);
+        doSize(_originPortalBox, 500, 200);
+        doSize(_destPortalBox, 500, 200);
         doSize(_searchDepth, 30, 10);
         doSize(_searchStatus, 50, 30);
 
@@ -227,9 +232,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         contentPane.add(makeTopPanel(), BorderLayout.NORTH);
 
         _tabbedPane = new JTabbedPane();
-        JPanel tab2 = makeSetPowerTabPanel();
-        _tabbedPane.addTab(rb.getString("MakeRoute"), makeFindRouteTabPanel(tab2.getPreferredSize().height));
-        _tabbedPane.addTab(rb.getString("RecordPlay"), tab2);
+        _tabbedPane.addTab(rb.getString("MakeRoute"), makeFindRouteTabPanel());
+        _tabbedPane.addTab(rb.getString("RecordPlay"), makeSetPowerTabPanel());
         contentPane.add(_tabbedPane, BorderLayout.CENTER);
         
         contentPane.add(makeEditableButtonPanel(), BorderLayout.SOUTH);
@@ -326,7 +330,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         return topPanel;
     }
 
-    private JPanel makeFindRouteTabPanel(int size) {
+    private JPanel makeFindRouteTabPanel() {
         JPanel tab1 = new JPanel();
         tab1.setLayout(new BoxLayout(tab1, BoxLayout.X_AXIS));
 
@@ -444,15 +448,22 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         tab1.add(topRight);
 
         JPanel x = new JPanel();
-        x.setLayout(new FlowLayout(FlowLayout.CENTER));
-        x.add(tab1);
-        x.add(Box.createRigidArea(new Dimension(2, 2*size)));
+        x.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth  = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.CENTER;
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        x.add(tab1, c);
         return x;
     }
 
     private JPanel makeSetPowerTabPanel() {
         JPanel tab2 = new JPanel();
-        tab2.add(makeTabMidPanel(),  BorderLayout.NORTH);
+        tab2.setLayout(new BoxLayout(tab2, BoxLayout.Y_AXIS));
+        tab2.add(makeTabMidPanel());
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -464,7 +475,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(makePlaybackPanel());
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        tab2.add(panel, BorderLayout.CENTER);
+        tab2.add(panel);
 
         panel = new JPanel();
         String status = "";
@@ -491,13 +502,31 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
 
         panel.add(makeTextBoxPanel(false, _statusBox, "Status", false));
-        _statusBox.setMinimumSize(new Dimension(600, _statusBox.getPreferredSize().height));
+        _statusBox.setMinimumSize(new Dimension(300, _statusBox.getPreferredSize().height));
         _statusBox.setMaximumSize(new Dimension(900, _statusBox.getPreferredSize().height));
         _statusBox.setText(status);
         panel.add(_statusBox);
-        tab2.add(panel, BorderLayout.SOUTH);
+        tab2.add(panel);
 
         return tab2;
+    }
+
+    private void getRoster() {
+        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        _rosterBox.setRenderer(new jmri.jmrit.roster.RosterComboListRenderer());
+        _rosterBox.addItem(" ");
+        for (int i = 0; i < list.size(); i++) {
+            RosterEntry r = list.get(i);
+            _rosterBox.addItem(r.titleString());
+        }
+        _rosterBox.addItem(rb.getString("noSuchAddress"));
+        //_rosterBox = Roster.instance().fullRosterComboBox();
+        _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
+        _rosterBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setTrainInfo((String)_rosterBox.getSelectedItem(), false);
+                }
+        });
     }
 
     private JPanel makeTrainPanel() {
@@ -508,64 +537,23 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(false, _trainIdBox, "TrainId", true));
+        panel.add(makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeBoxPanel(false, _rosterBox, "Roster"));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
         trainPanel.add(panel);
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-
-        _trainIdBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (!setTrainInfo(_trainIdBox.getText(), false)) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                        rb.getString("noSuchTrain"), _trainIdBox.getText()),
-                            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                } else {
-                    _rosterBox.setSelectedItem(_trainIdBox.getText());
-                }
-            }
-        });
+        
         _dccNumBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!setTrainInfo(_dccNumBox.getText(), true)) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                        rb.getString("noSuchAddress"), _dccNumBox.getText()),
-                            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                }
+                setTrainInfo(_dccNumBox.getText(), true);
             }
         });
-
-        _rosterBox = Roster.instance().fullRosterComboBox();
-        _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
-        _rosterBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setTrainInfo((String)_rosterBox.getSelectedItem(), false);
-                }
-        });
-        panel = new JPanel(); 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        JLabel l = new JLabel(rb.getString("Roster"));
-        l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        panel.add(l);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(_rosterBox);
-        trainPanel.add(panel);
-        trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-
-        panel = new JPanel(); 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(false, _rrNameBox, "RoadName", false));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(false, _rrNumBox, "RoadNumber", false));
-        trainPanel.add(panel);
-        trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-
         JPanel x = new JPanel();
         x.setLayout(new BoxLayout(x, BoxLayout.Y_AXIS));
         x.add(trainPanel);
-        x.add(Box.createRigidArea(new Dimension(600, 2)));
+//        x.add(Box.createRigidArea(new Dimension(600, 2)));
 
         JPanel edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
@@ -625,13 +613,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         group.add(_runBlind);
         panel.add(_runProtect);
         panel.add(_runBlind);
-        /*
-        JPanel tPanel = new JPanel();
-        tPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        tPanel.add(new JLabel(rb.getString("ThrottleFactor")));
-        tPanel.add(_throttleFactorBox);
-        //panel.add(tPanel);
-        */
         runPanel.add(panel);
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -729,7 +710,31 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         tablePanel.add(makeRouteTablePanel());
         tablePanel.add(Box.createHorizontalStrut(5));
         tablePanel.add(makeThrottleTablePanel());
+        _routePanel.setVisible(true);
+        _commandPanel.setVisible(false);
         midPanel.add(tablePanel);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        ButtonGroup group = new ButtonGroup();
+        JRadioButton showRoute = new JRadioButton(rb.getString("showRoute"), true);
+        JRadioButton showScript = new JRadioButton(rb.getString("showScript"), false);
+        group.add(showRoute);
+        group.add(showScript);
+        buttonPanel.add(showRoute);
+        buttonPanel.add(showScript);
+        showRoute.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                _routePanel.setVisible(true);
+                _commandPanel.setVisible(false);
+                }
+            });
+        showScript.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                _routePanel.setVisible(false);
+                _commandPanel.setVisible(true);
+                }
+            });
+        midPanel.add(buttonPanel);
         midPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
 
@@ -749,12 +754,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         dim.height = routeTable.getRowHeight()*8;
         tablePane.getViewport().setPreferredSize(dim);
 
-        JPanel routePanel = new JPanel();
-        routePanel.setLayout(new BoxLayout(routePanel, BoxLayout.Y_AXIS));
+        _routePanel = new JPanel();
+        _routePanel.setLayout(new BoxLayout(_routePanel, BoxLayout.Y_AXIS));
         JLabel title = new JLabel(rb.getString("RouteTableTitle"));
-        routePanel.add(title, BorderLayout.NORTH);
-        routePanel.add(tablePane);
-        return routePanel;
+        _routePanel.add(title, BorderLayout.NORTH);
+        _routePanel.add(tablePane);
+        return _routePanel;
     }
 
     private JPanel makeThrottleTablePanel() {
@@ -771,12 +776,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         dim.height = ROW_HEIGHT*8;
         _throttlePane.getViewport().setPreferredSize(dim);
 
-        JPanel cmdPanel = new JPanel();
-        cmdPanel.setLayout(new BoxLayout(cmdPanel, BoxLayout.Y_AXIS));
+        _commandPanel = new JPanel();
+        _commandPanel.setLayout(new BoxLayout(_commandPanel, BoxLayout.Y_AXIS));
         JLabel title = new JLabel(rb.getString("CommandTableTitle"));
-        cmdPanel.add(title, BorderLayout.NORTH);
-        cmdPanel.add(_throttlePane);
-        return cmdPanel;
+        _commandPanel.add(title, BorderLayout.NORTH);
+        _commandPanel.add(_throttlePane);
+        return _commandPanel;
     }
 
     /**
@@ -832,6 +837,13 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     }
 
     private JPanel makeTextBoxPanel(boolean vertical, JTextField textField, String label, boolean editable) {
+        JPanel panel = makeBoxPanel(vertical, textField, label);
+        textField.setEditable(editable);
+        textField.setBackground(Color.white);        
+        return panel;
+    }
+
+    private JPanel makeBoxPanel(boolean vertical, JComponent textField, String label) {
         JPanel panel = new JPanel();
         JLabel l = new JLabel(rb.getString(label));
         if (vertical) {
@@ -849,8 +861,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
         textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
         textField.setMinimumSize(new Dimension(200, textField.getPreferredSize().height));
-        textField.setEditable(editable);
-        textField.setBackground(Color.white);        
         panel.add(textField);
         return panel;
     }
@@ -954,8 +964,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (log.isDebugEnabled()) log.debug("setTrainInfo for: "+name+" isAddress= "+isAddress);
         if (isAddress)  {
             _dccNumBox.setText(name);
-        } else {
-            _trainIdBox.setText(name);
         }
         if (name != null && name.length()>0) {
             _train = null;
@@ -973,17 +981,16 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 _train = Roster.instance().entryFromTitle(name);
             }
             if (_train !=null) {
-                _rrNameBox.setText(_train.getRoadName());
-                _rrNumBox.setText(_train.getRoadNumber());
+                _trainNameBox.setText(_train.getRoadName());
                 _dccNumBox.setText(_train.getDccLocoAddress().toString());
-                _trainIdBox.setText(_train.getId());
+                _rosterBox.setSelectedItem(_train.getId());
             } else {
-                _rrNameBox.setText("");
-                _rrNumBox.setText("");
+                _trainNameBox.setText("");
                 if (!isAddress) {
                     _dccNumBox.setText("");
+                    _rosterBox.setSelectedItem(rb.getString("noSuchAddress"));
                 } else {
-                    _trainIdBox.setText("");
+                    _rosterBox.setSelectedItem(" ");
                 }
                 return false;
             }
@@ -1489,7 +1496,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     private void runTrain(int mode) {
         String msg = null;
         if (_warrant.getRunMode()!=Warrant.MODE_NONE) {
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(rb.getString("TrainRunning"), _trainIdBox.getText()),
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(rb.getString("TrainRunning"), _trainNameBox.getText()),
                                            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -1699,6 +1706,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         for (int i=0; i<_throttleCommands.size(); i++) {
             _warrant.addThrottleCommand(new ThrottleSetting(_throttleCommands.get(i)));
         }
+        _warrant.setTrainName(_trainNameBox.getText());
         if (_train != null){
             _warrant.setTrainId(_train.getId());
             _warrant.setDccAddress(_train.getDccLocoAddress());
@@ -1706,7 +1714,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _warrant.setDccAddress(getLocoAddress());
         }
         _warrant.setRunBlind(_runBlind.isSelected());
-        if (log.isDebugEnabled()) log.debug("warrant saved _train "+(_train != null));
+        if (log.isDebugEnabled()) log.debug("warrant saved _train "+(_train != null)+", name= "+_trainNameBox.getText());
 
         if (_create) {
             InstanceManager.warrantManagerInstance().register(_warrant);
@@ -1834,7 +1842,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
 
         public int getPreferredWidth(int col) {
-            return new JTextField(14).getPreferredSize().width;
+            return new JTextField(20).getPreferredSize().width;
         }
 
         public Object getValueAt(int row, int col) {
@@ -1940,7 +1948,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 case VALUE_COLUMN:
                     return new JTextField(8).getPreferredSize().width;
                 case BLOCK_COLUMN:
-                    return new JTextField(11).getPreferredSize().width;
+                    return new JTextField(50).getPreferredSize().width;
             }
             return new JTextField(12).getPreferredSize().width;
         }
