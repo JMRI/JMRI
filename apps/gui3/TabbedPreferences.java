@@ -35,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -550,7 +550,7 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
 
-    ChangeListener addTabListener = new ChangeListener() {
+    transient ChangeListener addTabListener = new ChangeListener() {
             // This method is called whenever the selected tab changes 
                 public void stateChanged(ChangeEvent evt) { 
                     JTabbedPane pane = (JTabbedPane)evt.getSource(); 
