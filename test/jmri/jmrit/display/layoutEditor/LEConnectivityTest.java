@@ -18,7 +18,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the LayoutEditor 
  * @author			Dave Duchamp  Copyright 2011
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LEConnectivityTest extends jmri.util.SwingTestCase {
 
@@ -189,7 +189,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("24_25_26Connect",setting,Turnout.CLOSED);
 		pBlock = bm.getBlock("26");
 		nBlock = bm.getBlock("24");
-		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
+		//tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("26_25_24Connect",setting,Turnout.CLOSED);
