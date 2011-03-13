@@ -2,7 +2,7 @@
 
 package jmri.implementation;
 
-import jmri.*;
+import jmri.Reporter;
 
 /**
  * Abstract base for the Reporter interface.
@@ -14,7 +14,8 @@ import jmri.*;
  *
  * Description:		Abstract class providing the basic logic of the Reporter interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @author                      Matthew Harris  Copyright (C) 2011
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
 
@@ -26,9 +27,9 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         super(systemName.toUpperCase(), userName);
     }
 
-    public Object getCurrentReport() {return _lastReport;}
+    public Object getCurrentReport() {return _currentReport;}
 
-    public Object getLastReport() {return _currentReport;}
+    public Object getLastReport() {return _lastReport;}
     
     /**
      * Provide a general method for updating the report.
@@ -42,7 +43,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     }
     
     // internal data members
-    private Object _lastReport = "";
+    private Object _lastReport = null;
     private Object _currentReport = null;
 
  }

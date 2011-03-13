@@ -41,7 +41,8 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @author      Matthew Harris  Copyright (C) 2011
+ * @version	$Revision: 1.5 $
  * @see         jmri.Sensor
  * @see         jmri.ReporterManager
  * @see         jmri.InstanceManager
@@ -51,13 +52,16 @@ public interface Reporter extends NamedBean {
     /**
      * Query the last report.  This will return a 
      * value even if there's no current report available.
+     * If there is a current report, both this and the
+     * current report will be equal.  If nothing has ever
+     * been reported, this will return a null object.
      */
     public Object getLastReport();
 
     /**
      * Query the current report.  If there is no current report
      * available (e.g. the reporting hardware says no information is
-     * is currently available, this will return a null object.
+     * currently available) this will return a null object.
      */
     public Object getCurrentReport();
     /**

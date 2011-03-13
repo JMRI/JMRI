@@ -29,7 +29,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -64,8 +64,12 @@ public class ReporterTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
+
+            public static final int LASTREPORTCOL = NUMCOLUMN;
+
             public String getValue(String name) {
-                return reportManager.getBySystemName(name).getCurrentReport().toString();
+                Object value;
+                return (value=reportManager.getBySystemName(name).getCurrentReport())==null?"":value.toString();
             }
             public Manager getManager() { return reportManager; }
             public NamedBean getBySystemName(String name) { return reportManager.getBySystemName(name);}
@@ -85,16 +89,42 @@ public class ReporterTableAction extends AbstractTableAction {
             		Reporter t = (Reporter)getBySystemName(sysNameList.get(row));
 					t.setReport(value);
             		fireTableRowsUpdated(row,row);
-        		} else super.setValueAt(value, row, col);
+                        }
+                        if (col==LASTREPORTCOL) {
+                            // do nothing
+                        } else {
+                            super.setValueAt(value, row, col);
+                        }
     		}
+                public int getColumnCount() {
+                    return LASTREPORTCOL + 1;
+                }
     		public String getColumnName(int col) {
         		if (col==VALUECOL) return "Report";
+                        if (col==LASTREPORTCOL) return "Last Report";
         		return super.getColumnName(col);
         	}
     		public Class<?> getColumnClass(int col) {
     			if (col==VALUECOL) return String.class;
-    			else return super.getColumnClass(col);
+                        if (col==LASTREPORTCOL) return String.class;
+    			return super.getColumnClass(col);
 		    }
+                public boolean isCellEditable(int row, int col) {
+                    if (col==LASTREPORTCOL) return false;
+                    return super.isCellEditable(row, col);
+                }
+                public Object getValueAt(int row, int col) {
+                    if (col==LASTREPORTCOL) {
+                        Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
+                        return t.getLastReport();
+                    }
+                    return super.getValueAt(row, col);
+                }
+                public int getPreferredWidth(int col) {
+                    if (col==LASTREPORTCOL)
+                        return super.getPreferredWidth(VALUECOL);
+                    return super.getPreferredWidth(col);
+                }
     		public void configValueColumn(JTable table) {
         		// value column isn't button, so config is null
 		    }
