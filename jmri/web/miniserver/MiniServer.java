@@ -30,7 +30,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -48,7 +48,7 @@ public class MiniServer extends NetworkServer {
      */
     
     public static void main(String[] args) {
-        int port = Integer.parseInt(MiniServerManager.MiniServerPreferencesInstance().getPort());
+        int port = Integer.parseInt(MiniServerManager.miniServerPreferencesInstance().getPort());
 
         if (args.length > 0) {
             try {

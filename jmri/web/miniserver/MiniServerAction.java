@@ -20,11 +20,11 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class MiniServerAction extends AbstractAction {
 
-    int port = Integer.parseInt(MiniServerManager.MiniServerPreferencesInstance().getPort());
+    int port = Integer.parseInt(MiniServerManager.miniServerPreferencesInstance().getPort());
     ResourceBundle htmlStrings;
     ResourceBundle serviceStrings;
     
@@ -35,7 +35,7 @@ public class MiniServerAction extends AbstractAction {
         ensureIndexPage();
         
         //get port from preferences
-        port = Integer.parseInt(MiniServerManager.MiniServerPreferencesInstance().getPort());
+        port = Integer.parseInt(MiniServerManager.miniServerPreferencesInstance().getPort());
         
         // start server
         startServer();
@@ -52,7 +52,7 @@ public class MiniServerAction extends AbstractAction {
         String name = jmri.jmrit.XmlFile.prefsDir()+"index.html";
         File file = new File(name);
         //build file if not found OR if rebuild set in preferences
-        if (!file.exists() || MiniServerManager.MiniServerPreferencesInstance().isRebuildIndex()) {
+        if (!file.exists() || MiniServerManager.miniServerPreferencesInstance().isRebuildIndex()) {
             PrintStream out = null;
             try {
                 // create it

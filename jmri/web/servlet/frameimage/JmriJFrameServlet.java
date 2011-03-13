@@ -39,13 +39,13 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class JmriJFrameServlet implements Servlet {
 
-    String clickRetryTime = ((Integer)MiniServerManager.MiniServerPreferencesInstance().getClickDelay()).toString();
-    String noclickRetryTime = ((Integer)MiniServerManager.MiniServerPreferencesInstance().getRefreshDelay()).toString();
+    String clickRetryTime = ((Integer)MiniServerManager.miniServerPreferencesInstance().getClickDelay()).toString();
+    String noclickRetryTime = ((Integer)MiniServerManager.miniServerPreferencesInstance().getRefreshDelay()).toString();
 
     protected int maxRequestLines = 50;
     protected String serverName = "JMRI-JFrameServer";

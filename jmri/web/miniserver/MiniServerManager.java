@@ -5,7 +5,7 @@ import jmri.jmrit.XmlFile;
 
 /**
  *	@author Modifications by Steve Todd   Copyright (C) 2011
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 public class MiniServerManager {
@@ -23,7 +23,7 @@ public class MiniServerManager {
         return root;
     }
     
-    static public MiniServerPreferences MiniServerPreferencesInstance(){
+    static public MiniServerPreferences miniServerPreferencesInstance(){
         return instance().MiniServerPreferences;
     }
 

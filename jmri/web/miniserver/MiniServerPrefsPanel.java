@@ -2,7 +2,7 @@ package jmri.web.miniserver;
 
 /**
  *	@author Modifications by Steve Todd   Copyright (C) 2011
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 import java.awt.Color;
@@ -43,7 +43,7 @@ public class MiniServerPrefsPanel extends JPanel{
 
     public MiniServerPrefsPanel(){
         //  set local prefs to match instance prefs
-        localPrefs.apply(MiniServerManager.MiniServerPreferencesInstance());
+        localPrefs.apply(MiniServerManager.miniServerPreferencesInstance());
         initGUI();
         setGUI();
     }
@@ -108,8 +108,8 @@ public class MiniServerPrefsPanel extends JPanel{
 
     public void storeValues() {
         if (setValues()){
-            MiniServerManager.MiniServerPreferencesInstance().apply(localPrefs);
-            MiniServerManager.MiniServerPreferencesInstance().save();
+            MiniServerManager.miniServerPreferencesInstance().apply(localPrefs);
+            MiniServerManager.miniServerPreferencesInstance().save();
             
             if (parentFrame != null){
                 parentFrame.dispose();
@@ -125,8 +125,8 @@ public class MiniServerPrefsPanel extends JPanel{
  */
     protected void applyValues(){
         if (setValues()){
-            MiniServerManager.MiniServerPreferencesInstance().apply(localPrefs);
-            MiniServerManager.MiniServerPreferencesInstance().setIsDirty(true); //  mark to save later
+            MiniServerManager.miniServerPreferencesInstance().apply(localPrefs);
+            MiniServerManager.miniServerPreferencesInstance().setIsDirty(true); //  mark to save later
         }
     }
 
