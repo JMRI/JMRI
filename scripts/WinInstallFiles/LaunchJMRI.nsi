@@ -25,6 +25,14 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.13.0
+; - Modification to enable the process name in Windows Task Manager to
+; - match the JMRI application being launched
+; - Improve command line option processing
+; - Restore environment variable usage (see notes below for 0.1.9.0)
+; - Ensure user.home is correctly set - see Sun Java bug:
+; -   http://bugs.sun.com/view_bug.do?bug_id=4787931
+; -------------------------------------------------------------------------
 ; - Version 0.1.12.0
 ; - Change to use javaw.exe when not 'noisy' and remove window minimising
 ; - Re-introduced jinput.plugins option
@@ -96,8 +104,8 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "© 1997-2010 JMRI Community"   ; Copyright string
-!define VER        "0.1.12.0"                     ; Launcher version
+!define COPYRIGHT  "© 1997-2011 JMRI Community"   ; Copyright string
+!define VER        "0.1.13.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -113,13 +121,17 @@
 ; - Variable declarations
 ; -------------------------------------------------------------------------
 Var JAVAPATH   ; holds the path to the location where JAVA files can be found
+Var JAVAEXE    ; holds the name of the JAVA exe to use
+Var JEXEPATH   ; holds the path to the temporary JAVA exe used
 Var CLASSPATH  ; holds the class path for JMRI .jars
+Var CLASS      ; holds the class to launch
+Var APPNAME    ; holds the application name
 #Var EXESTRING  ; holds the whole exe string
 Var OPTIONS    ; holds the JRE options
-#Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
-#Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
-#Var JMRIHOME   ; holds the path to JMRI program files (read from JMRI_HOME)
-#Var JMRIUSERHOME ; holds the path to user files (read from JMRI_USERHOME)
+Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
+Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
+Var JMRIHOME   ; holds the path to JMRI program files (read from JMRI_HOME)
+Var JMRIUSERHOME ; holds the path to user files (read from JMRI_USERHOME)
 Var CALCMAXMEM ; holds the calculated maximum memory
 Var PARAMETERS ; holds the commandline parameters (class and config file)
 Var NOISY      ; used to determine if console should be visible or not
@@ -179,7 +191,10 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "OriginalFilename" "${PNAME}.exe"
 ; -------------------------------------------------------------------------
 Section "Main"
 
-  DetailPrint "CommandLine: $PARAMETERS"
+  DetailPrint "CommandLine: $CMDLINE"
+  DetailPrint "AppName: $APPNAME"
+  DetailPrint "Class: $CLASS"
+  DetailPrint "Parameters: $PARAMETERS"
 
   ; -- First determine if we're running on x64
   DetailPrint "Testing for x64..."
@@ -193,6 +208,13 @@ Section "Main"
   ; -- Initialise JRE architecture variable
   StrCpy $x64JRE 0
   
+  ; -- Determine which JAVA exe to use
+  StrCpy $R0 "java"
+  StrCmp $NOISY SW_NORMAL IsNoisy
+  StrCpy $R0 "$R0w"
+  IsNoisy:
+  StrCpy $JAVAEXE "$R0.exe"
+  
   ; -- If we're running x64, first check for 64-bit JRE
   StrCmp 0 $x64 JRESearch
     DetailPrint "Setting x64 registry view..."
@@ -204,11 +226,7 @@ Section "Main"
     ClearErrors
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
-    StrCpy $R0 "$R0\bin\java"
-    StrCmp $NOISY SW_NORMAL IsNoisy
-    StrCpy $R0 "$R0w"
-    IsNoisy:
-    StrCpy $R0 "$R0.exe"
+    StrCpy $R0 "$R0\bin\$JAVAEXE"
 
   ; -- Not found
   IfErrors 0 JreFound
@@ -225,8 +243,31 @@ Section "Main"
     Goto Exit
 
   JreFound:
-  StrCpy $JAVAPATH '"$R0"'
+  StrCpy $JAVAPATH $R0
   DetailPrint "JavaPath: $JAVAPATH"
+  
+  ; -- Now we've found Java, copy the file to a temporary location
+  ; -- and rename it
+  
+  ; -- First try to remove any old temporary launchers
+  RMDir /r $TEMP\LaunchJMRI
+  
+  ; -- Now create temporary directory and copy JAVA launcher across
+  CreateDirectory `$TEMP\LaunchJMRI`
+  StrCpy $JEXEPATH `$TEMP\LaunchJMRI\$APPNAME.exe`
+  DetailPrint `CopyFiles: $JAVAPATH $JEXEPATH`
+  System::Call "kernel32::CopyFile(t `$JAVAPATH`, t `$JEXEPATH`, b `0`) ?e"
+  Pop $0
+  DetailPrint "Result: $0"
+  
+  ; -- Check that the temporary launcher file exists
+  ClearErrors
+  FindFirst $0 $1 $JEXEPATH
+  IfErrors 0 ExeRenameDone
+    ; -- Wasn't found so use regular launcher
+    StrCpy $JEXEPATH $JAVAPATH
+  ExeRenameDone:
+  DetailPrint "JExePath: $JEXEPATH"
 
   ; -- Get the memory status
   StrCmp 0 $x64 Notx64
@@ -259,13 +300,13 @@ Section "Main"
   ; -- Build options string
   ; -- JVM and RMI options
 
-#  ; -- Read environment variable
-#  ; -- JMRI_OPTIONS - additional JMRI options
-#  ; -- If not defined, it returns an empty value
-#  ReadEnvStr $JMRIOPTIONS "JMRI_OPTIONS"
+  ; -- Read environment variable
+  ; -- JMRI_OPTIONS - additional JMRI options
+  ; -- If not defined, it returns an empty value
+  ReadEnvStr $JMRIOPTIONS "JMRI_OPTIONS"
 
-#  StrCpy $OPTIONS "$JMRIOPTIONS -noverify"
-  StrCpy $OPTIONS "$OPTIONS -noverify"
+  StrCpy $OPTIONS "$JMRIOPTIONS -noverify"
+#  StrCpy $OPTIONS "$OPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
@@ -285,64 +326,75 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Xms${MINMEM}m"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
   
-#  ; -- Read environment variable
-#  ; -- JMRI_USERHOME - user files location
-#  ClearErrors
-#  ReadEnvStr $JMRIUSERHOME "JMRI_USERHOME"
-#  ; -- If defined, set user.home property
-#  IfErrors ReadPrefsDir
-#    StrCpy $OPTIONS `$OPTIONS -Duser.home="$JMRIUSERHOME"`
-#
-#  ReadPrefsDir:
-#  ; -- Read environment variable
-#  ; -- JMRI_PREFSDIR - user preferences location
-#  ClearErrors
-#  ReadEnvStr $JMRIPREFS "JMRI_PREFSDIR"
-#  ; -- If defined, set jmri.prefsdir property
-#  IfErrors 0 SetPrefsDir
-#
-#    StrCmp $PROFILE "" Prefs98
-#      StrCpy $JMRIPREFS "$PROFILE\JMRI"
-#      Goto PathOptions
-#    Prefs98:
-#      StrCpy $JMRIPREFS "$WINDIR\JMRI"
-#      Goto PathOptions
-#
-#    SetPrefsDir:
-#      StrCpy $OPTIONS `$OPTIONS -Djmri.prefsdir="$JMRIPREFS"`
-#
-#  PathOptions:
+  ; -- Read environment variable
+  ; -- JMRI_USERHOME - user files location
+  ClearErrors
+  ReadEnvStr $JMRIUSERHOME "JMRI_USERHOME"
+  ; -- If defined, set user.home property
+  IfErrors CheckUserHome #ReadPrefsDir
+    DetailPrint "Set user.home to JMRI_USERHOME: $JMRIUSERHOME"
+    StrCpy $OPTIONS `$OPTIONS -Duser.home="$JMRIUSERHOME"`
+    Goto ReadPrefsDir
+    
+  CheckUserHome:
+  ; -- If not defined, check user home is consistent
+  Call CheckUserHome
+  Pop $0
+  StrCmp $0 0 ReadPrefsDir
+    ; -- Not consistent - set to Profile
+    DetailPrint "Set user.home to %USERPROFILE%: $PROFILE"
+    StrCpy $OPTIONS `$OPTIONS -Duser.home="$PROFILE"`
+
+  ReadPrefsDir:
+  ; -- Read environment variable
+  ; -- JMRI_PREFSDIR - user preferences location
+  ClearErrors
+  ReadEnvStr $JMRIPREFS "JMRI_PREFSDIR"
+  ; -- If defined, set jmri.prefsdir property
+  IfErrors 0 SetPrefsDir
+
+    StrCmp $PROFILE "" Prefs98
+      StrCpy $JMRIPREFS "$PROFILE\JMRI"
+      Goto PathOptions
+    Prefs98:
+      StrCpy $JMRIPREFS "$WINDIR\JMRI"
+      Goto PathOptions
+
+    SetPrefsDir:
+      StrCpy $OPTIONS `$OPTIONS -Djmri.prefsdir="$JMRIPREFS"`
+
+  PathOptions:
   ; -- set paths for Jython and message log
   ; -- Creates the necessary directory if not existing
   ; -- User Profile is only valid for Win2K and later
   ; -- so skip on earlier versions
   StrCmp $PROFILE "" OptionsDone
-#    IfFileExists "$JMRIPREFS\systemfiles\*.*" SetPaths
-#      CreateDirectory "$JMRIPREFS\systemfiles"
-    IfFileExists "$PROFILE\JMRI\systemfiles\*.*" SetPaths
-      CreateDirectory "$PROFILE\JMRI\systemfiles"
+    IfFileExists "$JMRIPREFS\systemfiles\*.*" SetPaths
+      CreateDirectory "$JMRIPREFS\systemfiles"
+#    IfFileExists "$PROFILE\JMRI\systemfiles\*.*" SetPaths
+#      CreateDirectory "$PROFILE\JMRI\systemfiles"
     SetPaths:
-#    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$JMRIPREFS\systemfiles"'
-#    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$JMRIPREFS\systemfiles\\"'
-    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$PROFILE\JMRI\systemfiles"'
-    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$PROFILE\JMRI\systemfiles\\"'
+    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$JMRIPREFS\systemfiles"'
+    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$JMRIPREFS\systemfiles\\"'
+#    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$PROFILE\JMRI\systemfiles"'
+#    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$PROFILE\JMRI\systemfiles\\"'
     ; -- jmri.log.path needs a double trailing backslash to ensure a valid command-line
   OptionsDone:
   DetailPrint "Options: $OPTIONS"
 
-#  ; -- Read environment variable
-#  ; -- JMRI_HOME - location of JMRI program files
-#  ClearErrors
-#  ReadEnvStr $JMRIHOME "JMRI_HOME"
-#  IfErrors 0 EnvJmriHomeDone
-#    ; -- If not defined, use the launcher location
-#    StrCpy $JMRIHOME $EXEDIR
-#  EnvJmriHomeDone:
+  ; -- Read environment variable
+  ; -- JMRI_HOME - location of JMRI program files
+  ClearErrors
+  ReadEnvStr $JMRIHOME "JMRI_HOME"
+  IfErrors 0 EnvJmriHomeDone
+    ; -- If not defined, use the launcher location
+    StrCpy $JMRIHOME $EXEDIR
+  EnvJmriHomeDone:
 
   ; -- Build the ClassPath
   StrCpy $CLASSPATH ".;classes"
-#  StrCpy $0 "$JMRIHOME" ; normally 'C:\Program Files\JMRI'
-  StrCpy $0 "$EXEDIR" ; normally 'C:\Program Files\JMRI'
+  StrCpy $0 "$JMRIHOME" ; normally 'C:\Program Files\JMRI'
+#  StrCpy $0 "$EXEDIR" ; normally 'C:\Program Files\JMRI'
   StrCpy $3 "jmri.jar" ; set to jmri.jar to skip jmri.jar
   StrCpy $4 "" ; no prefix required
   Call GetClassPath
@@ -351,8 +403,8 @@ Section "Main"
   StrCpy $CLASSPATH "$CLASSPATH;jmri.jar"
   StrCpy $3 "" ; set to blank to include all .jar files
   StrCpy $4 "lib\" ; lib prefix
-#  StrCpy $0 "$JMRIHOME\lib" ; normally 'C:\Program Files\JMRI\lib'
-  StrCpy $0 "$EXEDIR\lib" ; normally 'C:\Program Files\JMRI\lib'
+  StrCpy $0 "$JMRIHOME\lib" ; normally 'C:\Program Files\JMRI\lib'
+#  StrCpy $0 "$EXEDIR\lib" ; normally 'C:\Program Files\JMRI\lib'
   Call GetClassPath
   StrCmp $9 "" +2 0
   StrCpy $CLASSPATH "$CLASSPATH;$9"
@@ -361,11 +413,11 @@ Section "Main"
 #  StrCpy $EXESTRING '$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS'
 #  DetailPrint "Exestring: $EXESTRING"
   DetailPrint "MaxLen: ${NSIS_MAX_STRLEN}"
-  DetailPrint `ExeString: $JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS`
+  DetailPrint `ExeString: "$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS`
 
   ; -- Finally get ready to run the application
-#  SetOutPath $JMRIHOME
-  SetOutPath $EXEDIR
+  SetOutPath $JMRIHOME
+#  SetOutPath $EXEDIR
   ; -- Launch the Java class.
 #  Exec `$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS`
   
@@ -380,7 +432,7 @@ Section "Main"
   ; -- create PROCESS_INFORMATION structure
   System::Call /NOUNLOAD '*(i, i, i, i)i .r6'
   ; -- create the process
-  System::Call /NOUNLOAD `kernel32::CreateProcess(i, t $\`$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS$\`, i, i, i 0, i 0, i, i, i r5, i r6)i .r7`
+  System::Call /NOUNLOAD `kernel32::CreateProcess(i, t $\`"$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS$\`, i, i, i 0, i 0, i, i, i r5, i r6)i .r7`
   System::Call /NOUNLOAD '*$6(i,i,i .r7,i)'
   DetailPrint "ProcessID: $7"
   System::Free /NOUNLOAD $5
@@ -433,43 +485,65 @@ Function .onInit
   SetSilent silent
   StrCpy $NOISY SW_MINIMIZE
   ; -- Start reading commandline parameters
-  cmdloop:
+  cmdLoop:
   Push $0
   Call GetParameters
   Pop $0
-  StrCmp $0 "" 0 cmdlineok
+  StrCmp $0 "" 0 cmdlineOk
     MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] class [config]'"
     Abort
 
-  cmdlineok:
+  cmdlineOk:
   ; -- Check if the first parameter is an option
-  StrCpy $1 $0 1
-  StrCmp $1 "/" cmdlineoptsget cmdlineoptsdone
-  cmdlineoptsget:
+  Push $0
+  Call GetWord
+  Pop $1
+  StrCpy $2 $1 1
+  StrCmp $2 "/" cmdlineOptsGet cmdlineOptsDone
+  cmdlineOptsGet:
   ; -- Process the possible commandline options
   ; -- At the moment this is implemented in a rather lazy way
   ;    to work with 5 character options only
   ; -- It would need updating to handle different option lengths
   ;    in the future if so required
-  StrCpy $1 $0 6
-  StrCmp $1 "/debug" optsdebug
-  StrCmp $1 "/noisy" optsnoisy
+;  StrCpy $1 $0 6
+  StrCmp $1 "/debug" optsDebug
+  StrCmp $1 "/noisy" optsNoisy
   ; -- If we've got here, the commandline option is not known so give an error.
     MessageBox MB_OK|MB_ICONSTOP "Command line option '$1' not known."
     Abort
 
   ; -- Processing block for each option
-  optsdebug:
+  optsDebug:
   SetSilent normal
-  Goto cmdloop
+  Goto cmdLoop
   
-  optsnoisy:
+  optsNoisy:
   StrCpy $NOISY SW_NORMAL
-  Goto cmdloop
+  Goto cmdLoop
 
-  cmdlineoptsdone:
+  cmdlineOptsDone:
+  ; -- Read the class name
+  Push $0
+  Call GetWord
+  Pop $CLASS
+  
+  ; -- Determine the application name (last part of class name)
+  StrLen $1 $CLASS
+  appNameLoop:
+    IntOp $1 $1 - 1
+    StrCpy $3 $CLASS 1 $1
+    StrCmp $3 "." appNameGot
+    StrCmp $1 "0" appNameDone appNameLoop
+  appNameGot:
+    IntOp $1 $1 + 1
+  appNameDone:
+    StrCpy $APPNAME $CLASS "" $1
+  
   ; -- Copy any remaining commandline parameters to $PARAMETERS
-  StrCpy $PARAMETERS $0
+  Push $0
+  Call GetParameters
+  Pop $PARAMETERS
 FunctionEnd
 
 
@@ -629,5 +703,139 @@ Function GetParameters
   Pop $R2
   Pop $R1
   Exch $R0
+
+FunctionEnd
+
+Function GetWord
+; -------------------------------------------------------------------------
+; - Gets first word from a string
+; - input:  top of stack
+; - output: top of stack
+; - modifies no other variables
+; -------------------------------------------------------------------------
+
+  Exch $R0
+  Push $R1
+  Push $R2
+  Push $R3
+  Push $R4
+
+  StrCpy $R4 $R0
+  StrCpy $R2 1
+  StrLen $R3 $R4
+
+  ; -- Check for quote or space
+  StrCpy $R0 $R4 $R2
+  StrCmp $R0 '"' 0 +3
+    StrCpy $R1 '"'
+    Goto loop
+  StrCpy $R1 " "
+
+  loop:
+    IntOp $R2 $R2 + 1
+    StrCpy $R0 $R4 1 $R2
+    StrCmp $R0 $R1 get
+    StrCmp $R2 $R3 get
+    Goto loop
+
+  get:
+    StrCpy $R0 $R4 $R2
+
+  Pop $R4
+  Pop $R3
+  Pop $R2
+  Pop $R1
+  Exch $R0
+
+FunctionEnd
+
+Function CheckUserHome
+; -------------------------------------------------------------------------
+; - Check if the value of the registry key that Java uses to detemine
+; - user.home points to the user profile directory.
+; - For non NT-based systems, always return 0
+; - input:  none
+; - output: result on top of stack (0 if OK; 1 if not)
+; -------------------------------------------------------------------------
+
+  ; -- Save variables to the stack
+  Push $0
+
+  DetailPrint "Checking user.home..."
+  ; -- Check if we're on Win2K or later
+  ; -- If not, return OK
+  StrCmp $PROFILE "" CheckUserHomeOK
+
+  ; -- Read the registry key Java uses to determine user.home
+  DetailPrint "Reading Desktop Shell Folder registry key..."
+  ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" "Desktop"
+  DetailPrint "...read: $0"
+
+  ; -- Check if path is equal to user profile
+  DetailPrint "Checking if equal to %USERPROFILE%..."
+  ; -- Retrieve parent directory
+  Push $0
+  Call GetParent
+  Pop $0
+  DetailPrint "Comparing: $0"
+  DetailPrint "to: $PROFILE"
+  StrCmp $0 $PROFILE CheckUserHomeOK
+
+  ; -- Not equal
+  DetailPrint "user.home not OK"
+  StrCpy $0 1
+  Goto CheckUserHomeDone
+
+  CheckUserHomeOK:
+  DetailPrint "user.home OK"
+  StrCpy $0 0
+
+  CheckUserHomeDone:
+  ; -- Restore variables from the stack
+  Exch $0
+
+FunctionEnd
+
+Function GetParent
+; -------------------------------------------------------------------------
+; - Return the parent directory of specified file or folder
+; - input:  complete filename on top of stack
+; - output: parent directory on top of stack
+; -------------------------------------------------------------------------
+
+  ; -- Save variables to the stack
+  Exch $0
+  Push $1
+  Push $2
+  Push $3
+
+  ; -- Initialise character counter and string length
+  StrCpy $1 0
+  StrLen $2 $0
+
+  ; -- Loop through until right-most '\' found
+  ; -- or counter >= string length
+  GetParentLoop:
+    ; -- Increase character counter
+    IntOp $1 $1 + 1
+    ; -- Check if we're at the end of the string
+    IntCmp $1 $2 GetParentDir 0 GetParentDir
+    ; -- Grab the character at current counter position
+    ; -- working from right-hand end
+    StrCpy $3 $0 1 -$1
+    ; -- Check if the character is a path seperator
+    StrCmp $3 "\" GetParentDir
+    ; -- If not, back round again
+    Goto GetParentLoop
+
+  ; -- Strip characters from right-hand end of string
+  GetParentDir:
+    StrCpy $0 $0 -$1
+
+  ; -- Restore variables from the stack
+  Pop $3
+  Pop $2
+  Pop $1
+  Exch $0
 
 FunctionEnd
