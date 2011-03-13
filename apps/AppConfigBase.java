@@ -26,7 +26,7 @@ import javax.swing.*;
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -103,10 +103,12 @@ public class AppConfigBase extends JmriPanel {
         	if (e.getValue().size() > 1) {
         		/* dup port found */
         		ret = false;
-        		String instanceNames = "";
+        		StringBuilder nameB = new StringBuilder();
         		for (int n = 0; n < e.getValue().size(); n++) {
-        			instanceNames = instanceNames + getManufacturerName(e.getValue().get(n)) + "|";
+        			nameB.append(getManufacturerName(e.getValue().get(n)));
+        			nameB.append("|");
         		}
+        		String instanceNames = new String(nameB);
         		instanceNames = instanceNames.substring(0, instanceNames.lastIndexOf("|"));
         		instanceNames = instanceNames.replaceAll("[|]", ", ");
         		log.error("Duplicate ports found on: " + instanceNames + " for port: " + e.getKey());
