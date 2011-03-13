@@ -12,7 +12,7 @@ import jmri.*;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2010
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  */
 
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -59,17 +59,162 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the Programmer for this particular connection.
+     * NOTE: Programmer defaults to null
      */
     public ProgrammerManager getProgrammerManager() {
-        if (programmerManager == null)
-            programmerManager = new XNetProgrammerManager(new XNetProgrammer(xt),this);
         return programmerManager;
     }
     public void setProgrammerManager(ProgrammerManager p) {
         programmerManager = p;
     }
 
-    private ProgrammerManager programmerManager;
+    private ProgrammerManager programmerManager=null;
+
+    /*
+     * Provides access to the Throttle Manager for this particular connection.
+     */
+    public ThrottleManager getThrottleManager(){
+        if (throttleManager == null)
+            throttleManager = new XNetThrottleManager(this);
+        return throttleManager;
+
+    }
+    public void setThrottleManager(ThrottleManager t){
+         throttleManager = t;
+    }
+
+    private ThrottleManager throttleManager;
+
+    /*
+     * Provides access to the Power Manager for this particular connection.
+     */
+    public PowerManager getPowerManager(){
+        if (powerManager == null)
+            powerManager = new XNetPowerManager(this);
+        return powerManager;
+
+    }
+    public void setPowerManager(PowerManager p){
+         powerManager = p;
+    }
+
+    private PowerManager powerManager;
+
+    /*
+     * Provides access to the Sensor Manager for this particular connection.
+     * NOTE: Sensor manager defaults to NULL
+     */
+    public SensorManager getSensorManager(){
+        return sensorManager;
+
+    }
+    public void setSensorManager(SensorManager s){
+         sensorManager = s;
+    }
+
+    private SensorManager sensorManager=null;
+
+    /*
+     * Provides access to the Turnout Manager for this particular connection.
+     * NOTE: Turnout manager defaults to NULL
+     */
+    public TurnoutManager getTurnoutManager(){
+        return turnoutManager;
+
+    }
+    public void setTurnoutManager(TurnoutManager t){
+         turnoutManager = t;
+    }
+
+    private TurnoutManager turnoutManager=null;
+
+    /*
+     * Provides access to the Light Manager for this particular connection.
+     * NOTE: Light manager defaults to NULL
+     */
+    public LightManager getLightManager(){
+        return lightManager;
+
+    }
+    public void setLightManager(LightManager l){
+         lightManager = l;
+    }
+
+    private LightManager lightManager=null;
+    
+    /*
+     * Provides access to the Consist Manager for this particular connection.
+     * NOTE: Consist manager defaults to NULL
+     */
+    public ConsistManager getConsistManager(){
+        return consistManager;
+    }
+    public void setConsistManager(ConsistManager c){
+         consistManager = c;
+    }
+
+    private ConsistManager consistManager=null;
+
+    /*
+     * Provides access to the Command Station for this particular connection.
+     * NOTE: Command Station defaults to NULL
+     */
+    public CommandStation getCommandStation(){
+        return commandStation;
+    }
+    public void setCommandStation(CommandStation c){
+         commandStation = c;
+         ((LenzCommandStation) c).setTrafficController(xt);
+    }
+
+    private CommandStation commandStation=null;
+
+    public boolean provides(Class<?> type) {
+         if (getDisabled())
+             return false;
+         if (type.equals(jmri.ProgrammerManager.class))
+             return true;
+         if (type.equals(jmri.ThrottleManager.class))
+             return true;
+         if (type.equals(jmri.PowerManager.class))
+             return true;
+         if (type.equals(jmri.SensorManager.class))
+             return true;
+         if (type.equals(jmri.TurnoutManager.class))
+             return true;
+         if (type.equals(jmri.LightManager.class))
+             return true;
+         if (type.equals(jmri.ConsistManager.class))
+             return true;
+         if (type.equals(jmri.CommandStation.class))
+             return true;
+         return false; // nothing, by default
+     }
+
+     @SuppressWarnings("unchecked")
+     public <T> T get(Class<?> T) {
+         if (getDisabled())
+             return null;
+         if (T.equals(jmri.ProgrammerManager.class))
+             return (T)getProgrammerManager();
+         if (T.equals(jmri.ThrottleManager.class))
+             return (T)getThrottleManager();
+         if (T.equals(jmri.PowerManager.class))
+             return (T)getPowerManager();
+         if (T.equals(jmri.SensorManager.class))
+             return (T)getSensorManager();
+         if (T.equals(jmri.TurnoutManager.class))
+             return (T)getTurnoutManager();
+         if (T.equals(jmri.LightManager.class))
+             return (T)getLightManager();
+         if (T.equals(jmri.ConsistManager.class))
+             return (T)getConsistManager();
+         if (T.equals(jmri.CommandStation.class))
+             return (T)getCommandStation();
+         return null; // nothing, by default
+     }
+
+
 
     public void dispose() {
         xt = null;
@@ -78,6 +223,8 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         super.dispose();
     }
+
+
 
 
         static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSystemConnectionMemo.class.getName());

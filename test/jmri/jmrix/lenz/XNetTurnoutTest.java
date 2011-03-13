@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.9 $
+ * @version         $Revision: 2.10 $
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -160,7 +160,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 		// prepare an interface
 		lnis = new XNetInterfaceScaffold(new LenzCommandStation());
 
-		t = new XNetTurnout(21,lnis);
+		t = new XNetTurnout("XT",21,lnis);
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 

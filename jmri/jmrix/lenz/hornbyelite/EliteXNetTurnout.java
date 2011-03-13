@@ -6,7 +6,7 @@
  *                      See XNetTurnout for further documentation.
  * </P>
  * @author			Paul Bender Copyright (C) 2008 
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 package jmri.jmrix.lenz.hornbyelite;
@@ -15,8 +15,8 @@ import jmri.jmrix.lenz.XNetTrafficController;
 
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 
-    public EliteXNetTurnout(int pNumber,XNetTrafficController tc) {  // a human-readable turnout number must be specified!
-        super(pNumber,tc);
+    public EliteXNetTurnout(String prefix,int pNumber,XNetTrafficController tc) {  // a human-readable turnout number must be specified!
+        super(prefix,pNumber,tc);
         mNumber=pNumber+1;  // The Elite has an off by 1 error.  What the 
                             // protocol says should be address 2 is address 
                             // 1 on the Elite.

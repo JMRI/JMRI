@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class XNetLightManager extends AbstractLightManager {
 
@@ -42,7 +42,7 @@ public class XNetLightManager extends AbstractLightManager {
 		int bitNum = getBitFromSystemName(systemName);
 		if (bitNum == 0) return (null);
         // Normalize the systemName
-		String sName = prefix+"L"+bitNum;   // removes any leading zeros
+		String sName = prefix+typeLetter()+bitNum;   // removes any leading zeros
 		// make the new Light object
 		lgt = new XNetLight(tc,this,sName,userName); 
         return lgt;
@@ -53,7 +53,7 @@ public class XNetLightManager extends AbstractLightManager {
      */
 	public int getBitFromSystemName (String systemName) {
         // validate the system Name leader characters
-        if ( (!systemName.startsWith(getSystemPrefix()+"L")) ) {
+        if ( (!systemName.startsWith(getSystemPrefix()+typeLetter())) ) {
             // here if an illegal XPressNet light system name 
             log.error("illegal character in header field of XPressNet light system name: "+systemName);
             return (0);

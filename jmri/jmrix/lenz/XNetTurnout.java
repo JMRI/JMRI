@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.38 $
+ * @version			$Revision: 2.39 $
  */
 
 package jmri.jmrix.lenz;
@@ -124,11 +124,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
+    protected String _prefix = "X"; // default to "X"
     protected XNetTrafficController tc = null;
 
-    public XNetTurnout(int pNumber,XNetTrafficController controller) {  // a human-readable turnout number must be specified!
-        super("XT"+pNumber);
+    public XNetTurnout(String prefix,int pNumber,XNetTrafficController controller) {  // a human-readable turnout number must be specified!
+        super(prefix+"T"+pNumber);
         tc=controller;
+        _prefix=prefix;
         mNumber = pNumber;
 
         /* Add additiona feedback types information */
@@ -220,7 +222,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
     
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
-		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton XT"+mNumber);
+		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton "+_prefix+"T"+mNumber);
     }
 
     /**

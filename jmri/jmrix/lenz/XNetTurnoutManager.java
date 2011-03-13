@@ -11,7 +11,7 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.18 $
+ * @version			$Revision: 2.19 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -34,7 +34,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(prefix.length()+1)).intValue();
-        Turnout t = new XNetTurnout(addr,tc);
+        Turnout t = new XNetTurnout(prefix,addr,tc);
         t.setUserName(userName);
         return t;
     }
@@ -52,7 +52,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 			log.debug("message has address: "+addr);
         	   // reach here for switch command; make sure we know 
                    // about this one
-        	   String s = "XT"+addr;
+        	   String s = prefix+typeLetter()+addr;
                    if (null == getBySystemName(s)) {
                       // need to create a new one, and send the message on 
                       // to the newly created object.
@@ -69,7 +69,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                    if((a2 & 0x0c)!=0) {
                       // reach here for switch command; make sure we know 
                       // about this one
-                      s = "XT"+(addr+1);
+                      s = prefix+typeLetter()+(addr+1);
                       if (null == getBySystemName(s)) {
                          // need to create a new one, and send the message on 
                          // to the newly created object.

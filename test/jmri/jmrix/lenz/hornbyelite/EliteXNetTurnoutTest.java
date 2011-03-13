@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetReply;
 /**
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -102,7 +102,7 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
 		// prepare an interface
 		lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
 
-		t = new EliteXNetTurnout(21,lnis);
+		t = new EliteXNetTurnout("XT",21,lnis);
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
