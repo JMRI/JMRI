@@ -12,8 +12,8 @@ package jmri;
  * However, the value of the <code><a href="#check()">check</a></code> method does
  * change, because it's a function of the current bean setting(s).
  *
- * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.7 $
+ * @author	Bob Jacobsen  Copyright (C) 2006, 2008, 2010
+ * @version	$Revision: 1.8 $
  */
 @net.jcip.annotations.Immutable
 public class BeanSetting  {
@@ -32,10 +32,9 @@ public class BeanSetting  {
     
     public NamedBean getBean() { return _bean; }
     public int getSetting() { return _setting; }
-    public void setSetting(int setting) { _setting = setting; }
     
     private final NamedBean _bean;
-    private int _setting;
+    final private int _setting;
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanSetting.class.getName());
 }

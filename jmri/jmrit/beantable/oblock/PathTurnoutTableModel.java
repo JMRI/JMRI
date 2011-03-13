@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 import java.util.ResourceBundle;
@@ -184,13 +184,17 @@ public class PathTurnoutTableModel extends AbstractTableModel {
             case SETTINGCOLUMN:
                 String setting = (String)value;
                 if (setting.equals(closed)) {
-                    bs.setSetting(Turnout.CLOSED); 
+                    //bs.setSetting(Turnout.CLOSED);  - This was the form before BeanSetting was returned to Immutable
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.CLOSED));
                 } else if (setting.equals(thrown)) {
-                    bs.setSetting(Turnout.THROWN); 
+                    //bs.setSetting(Turnout.THROWN); 
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.THROWN));
                 } else if (setting.equals(unknown)) {
-                    bs.setSetting(Turnout.UNKNOWN);
+                    //bs.setSetting(Turnout.UNKNOWN);
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.UNKNOWN));
                 } else if (setting.equals(inconsistent)) {
-                    bs.setSetting(Turnout.INCONSISTENT);
+                    //bs.setSetting(Turnout.INCONSISTENT);
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.INCONSISTENT));
                 }
                 fireTableRowsUpdated(row,row);
                 break;
