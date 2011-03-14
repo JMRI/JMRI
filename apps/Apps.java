@@ -38,7 +38,8 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.132 $
+ * @author      Matthew Harris  Copyright (C) 2011
+ * @version     $Revision: 1.133 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -55,6 +56,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         splash(true, true);
         setButtonSpace();
         setJynstrumentSpace();
+
+        // Enable proper snapping of JSliders
+        jmri.util.swing.SliderSnap.init();
 
         // install shutdown manager
         InstanceManager.setShutDownManager(

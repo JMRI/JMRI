@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.123 2011-02-24 17:48:18 dan_boudreau Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.124 2011-03-14 15:49:52 matthewharris Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -266,6 +266,9 @@
     <LI>Georg Kautzsch, who provided a decoder definition for the Uhlenbrock 67800 servo decoder.
     <LI>Scott Kitts, who helped debug the new communications library for 
     MacOS X
+    <LI>Michael Kneebone, who gave permission to allow us to use his SliderSnap
+        class that corrects the behavior of JSliders, making them snap whilst
+        sliding rather than afterwards.
 	<LI>Tony Koester, who helped with signalling
 	<LI>James Koretsky, who contributed the Burlington Northern 1989 signal definition
     <LI>Matjaz Krajnc, who provided better code and icons for the web throttle
