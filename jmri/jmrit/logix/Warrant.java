@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -554,7 +554,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_allocated) {
             return null;
         }
-        boolean allocated = true;
         String msg = null;
         for (int i=0; i<_orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
@@ -577,7 +576,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
         }
         boolean old = _allocated; 
-        _allocated = allocated;
+        _allocated = true;
         firePropertyChange("allocate", Boolean.valueOf(old), Boolean.valueOf(_allocated));
         return msg;
     }
