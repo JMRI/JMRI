@@ -52,7 +52,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -425,8 +425,8 @@ public class OBlock extends jmri.Block {
     /**
     * Set Turnouts for the path
     * Called by warrants to set turnouts for a train it is able to run.  The warrant parameter
-    * is verifies that the blosk is indeed allocated to the warrant,  If the block is unwarranted
-    * the the block is allocated to the calling warrant.  A logix conditional may also call this 
+    * is verifies that the block is indeed allocated to the warrant,  If the block is unwarranted
+    * then the block is allocated to the calling warrant.  A logix conditional may also call this 
     * method with a null warrant parameter for manual logix control.  However, if the block is 
     * under a warrant the call will be rejected.
     * @param pathName name of the path
@@ -448,7 +448,6 @@ public class OBlock extends jmri.Block {
             log.error(msg);
             return msg; 
         } else {
-            boolean occupied = ((getState() & OCCUPIED) != 0);
             if (_warrant!=null) {
                 if (!pathName.equals(warrant.getRoutePathInBlock(this))) {
                     msg = java.text.MessageFormat.format(rb.getString("PathNotFound"), pathName, getDisplayName()); 

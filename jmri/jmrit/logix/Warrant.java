@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -606,7 +606,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public String setRoute(int delay, List <BlockOrder> orders) {
         // we assume our train is occupying the first block
         boolean routeSet = true;
-        boolean allocated = true;
         if (orders==null) {
             _orders = _savedOrders;
         } else {
