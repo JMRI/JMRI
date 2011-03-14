@@ -52,7 +52,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -78,21 +78,21 @@ public class OBlock extends jmri.Block {
     static final Hashtable<String, Integer> _statusMap = new Hashtable<String, Integer>();
     static final Hashtable<String, String> _statusNameMap = new Hashtable<String, String>();
     {
-        _oldstatusMap.put(rb.getString("unoccupied"), new Integer(UNOCCUPIED));
-        _oldstatusMap.put(rb.getString("occupied"), new Integer(OCCUPIED));
-        _oldstatusMap.put(rb.getString("allocated"), new Integer(ALLOCATED));
-        _oldstatusMap.put(rb.getString("running"), new Integer(RUNNING));
-        _oldstatusMap.put(rb.getString("outOfService"), new Integer(OUT_OF_SERVICE));
-        _oldstatusMap.put(rb.getString("dark"), new Integer(DARK));
-        _oldstatusMap.put(rb.getString("powerError"), new Integer(TRACK_ERROR));
+        _oldstatusMap.put(rb.getString("unoccupied"), Integer.valueOf(UNOCCUPIED));
+        _oldstatusMap.put(rb.getString("occupied"), Integer.valueOf(OCCUPIED));
+        _oldstatusMap.put(rb.getString("allocated"), Integer.valueOf(ALLOCATED));
+        _oldstatusMap.put(rb.getString("running"), Integer.valueOf(RUNNING));
+        _oldstatusMap.put(rb.getString("outOfService"), Integer.valueOf(OUT_OF_SERVICE));
+        _oldstatusMap.put(rb.getString("dark"), Integer.valueOf(DARK));
+        _oldstatusMap.put(rb.getString("powerError"), Integer.valueOf(TRACK_ERROR));
 
-        _statusMap.put("unoccupied", new Integer(UNOCCUPIED));
-        _statusMap.put("occupied", new Integer(OCCUPIED));
-        _statusMap.put("allocated", new Integer(ALLOCATED));
-        _statusMap.put("running", new Integer(RUNNING));
-        _statusMap.put("outOfService", new Integer(OUT_OF_SERVICE));
-        _statusMap.put("dark", new Integer(DARK));
-        _statusMap.put("powerError", new Integer(TRACK_ERROR));
+        _statusMap.put("unoccupied", Integer.valueOf(UNOCCUPIED));
+        _statusMap.put("occupied", Integer.valueOf(OCCUPIED));
+        _statusMap.put("allocated", Integer.valueOf(ALLOCATED));
+        _statusMap.put("running", Integer.valueOf(RUNNING));
+        _statusMap.put("outOfService", Integer.valueOf(OUT_OF_SERVICE));
+        _statusMap.put("dark", Integer.valueOf(DARK));
+        _statusMap.put("powerError", Integer.valueOf(TRACK_ERROR));
 
         _statusNameMap.put(rb.getString("unoccupied"), "unoccupied");
         _statusNameMap.put(rb.getString("occupied"), "occupied");
