@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.131 $
+ * @version     $Revision: 1.132 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -55,7 +55,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         splash(true, true);
         setButtonSpace();
         setJynstrumentSpace();
-        
+
         // install shutdown manager
         InstanceManager.setShutDownManager(
                 new jmri.managers.DefaultShutDownManager());
@@ -91,7 +91,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // Install a user preferences manager
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-        
+
         // install preference manager
         InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
         // find preference file and set location in configuration manager
@@ -840,7 +840,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     // GUI members
     private JMenuBar menuBar;
 
-	static public String startupInfo(String program) {
+    static public String startupInfo(String program) {
+        setApplication(program);
         nameString = (program+" version "+jmri.Version.name()
                 +" starts under Java "+System.getProperty("java.version","<unknown>")
                 +" at "+(new java.util.Date()));
@@ -848,7 +849,26 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     
     static String nameString = "JMRI program";
-    
+
+    protected static void setApplication(String name) {
+        try {
+            // Enable access to name field
+            java.lang.reflect.Field f = jmri.Application.class.getDeclaredField("name");
+            f.setAccessible(true);
+
+            // Set to new value
+            f.set(f, name);
+        } catch (IllegalArgumentException ex) {
+            log.warn("Unable to set application name " + ex);
+        } catch (IllegalAccessException ex) {
+            log.warn("Unable to set application name " + ex);
+        } catch (NoSuchFieldException ex) {
+            log.warn("Unable to set application name " + ex);
+        } catch (SecurityException ex) {
+            log.warn("Unable to set application name " + ex);
+        }
+    }
+
     public void propertyChange(PropertyChangeEvent ev){
         if(log.isDebugEnabled())   	
            log.debug("property change: comm port status update");

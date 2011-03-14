@@ -21,7 +21,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008, 2009
  *
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class ReportContext {
 
@@ -36,7 +36,7 @@ public class ReportContext {
             addString("JMRI main window name: "
                     +jmri.util.JmriJFrame.getFrameList().get(0).getTitle()+"  ");	 
 
-
+        addString("JMRI Application: "+jmri.Application.getApplicationName()+"  ");
         addString("Connection one: "+Apps.getConnection1()+"  ");
         addString("Connection two: "+Apps.getConnection2()+"  ");
         addString("Connection three: "+Apps.getConnection3()+"  ");
