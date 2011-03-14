@@ -13,9 +13,11 @@ import java.io.InputStream;
  * Extends the serialdriver.SimDriverAdapter class to
  * act as simulated connection.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.6 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2008, 2011
+ * @version			$Revision: 1.7 $
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                                                  justification="Access to 'self' OK until multiple instance pattern installed")
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
     public String openPort(String portName, String appName)  {
