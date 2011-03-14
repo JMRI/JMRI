@@ -16,7 +16,7 @@ import java.io.DataOutputStream;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 abstract public class AbstractPortController implements PortAdapter {
 
@@ -99,6 +99,6 @@ abstract public class AbstractPortController implements PortAdapter {
     
     abstract public SystemConnectionMemo getSystemConnectionMemo();
 
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());
 
 }
