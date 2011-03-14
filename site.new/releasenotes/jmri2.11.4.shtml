@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.12 2011-03-14 14:29:53 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.13 2011-03-14 15:50:16 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -133,6 +133,8 @@ It now will log an error message on the console with the port and conflicting in
 <li>Allowed the use of environment variables to modify launcher behaviour.</li>
 <li>Enabled the process name displayed in Task Manager to match the JMRI application being launched.</li>
 <li>Added a new object and test case that holds the current JMRI application name.</li>
+<li>Corrected the behavior of snapping JSliders by making them snap whilst dragging
+rather than after dragging by using the SliderSnap class provided by Michael Kneebone.</li>
 </ul>
 
 <!--#include virtual="/Footer" -->
