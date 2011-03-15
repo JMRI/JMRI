@@ -14,14 +14,15 @@
 <!ELEMENT throttles-preferences (throttlePreferences)>
 
 <!ATTLIST throttlesPreferences isUsingExThrottle CDATA #REQUIRED>
-<!ATTLIST throttlesPreferences isOneWindowForAll CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isUsingToolBar CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isUsingFunctionIcons CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isResizingWindow CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences windowDimensionWidth CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences windowDimensionHeight CDATA #REQUIRED>
-<!ATTLIST throttlesPreferences isUsingAdvTransition CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isSavingThrottleOnLayoutSave CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isUsingRosterImage CDATA #REQUIRED>
-<!ATTLIST throttlesPreferences isUsingTransparentCtl CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isEnablingRosterSearch CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isAutoLoading CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isHidingUndefinedFunctionButtons CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isIgnoringThrottlePosition CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isCleaningOnClose CDATA #REQUIRED>

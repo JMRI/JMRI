@@ -14,6 +14,7 @@ import jmri.jmrit.XmlFile;
 public class ThrottlesPreferences {
     private boolean _useExThrottle = true;	
     private boolean _useToolBar = true;
+    private boolean _useFunctionIcon = true;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
@@ -80,6 +81,7 @@ public class ThrottlesPreferences {
     	org.jdom.Element e = new org.jdom.Element("throttlesPreferences");
     	e.setAttribute("isUsingExThrottle", ""+isUsingExThrottle());
     	e.setAttribute("isUsingToolBar", ""+isUsingToolBar() );
+    	e.setAttribute("isUsingFunctionIcon", ""+isUsingFunctionIcon() );
     	e.setAttribute("isResizingWindow", ""+isResizingWindow() );
     	e.setAttribute("windowDimensionWidth", ""+(int)getWindowDimension().getWidth() );
     	e.setAttribute("windowDimensionHeight", ""+(int)getWindowDimension().getHeight() );
@@ -99,6 +101,7 @@ public class ThrottlesPreferences {
     	setWindowDimension (tp.getWindowDimension() );
     	setUseExThrottle (tp.isUsingExThrottle() );
     	setUsingToolBar(tp.isUsingToolBar() );
+    	setUsingFunctionIcon(tp.isUsingFunctionIcon() );
     	setResizeWindow(tp.isResizingWindow());
     	setSaveThrottleOnLayoutSave(tp.isSavingThrottleOnLayoutSave());
     	setUseRosterImage(tp.isUsingRosterImage());
@@ -121,6 +124,7 @@ public class ThrottlesPreferences {
     	return( getWindowDimension() != tp.getWindowDimension() ||
     			isUsingExThrottle() != tp.isUsingExThrottle() ||
     			isUsingToolBar() != tp.isUsingToolBar() ||
+    			isUsingFunctionIcon() != tp.isUsingFunctionIcon() ||
     			isResizingWindow() != tp.isResizingWindow()||
     			isSavingThrottleOnLayoutSave() != tp.isSavingThrottleOnLayoutSave()||
     			isUsingRosterImage() != tp.isUsingRosterImage()||
@@ -184,6 +188,12 @@ public class ThrottlesPreferences {
 	public void setUsingToolBar(boolean win4all) {
 		_useToolBar = win4all;
 	}
+	public boolean isUsingFunctionIcon() {
+		return _useFunctionIcon;
+	}
+	public void setUsingFunctionIcon(boolean useFunctionIcon) {
+		_useFunctionIcon = useFunctionIcon;
+	}	
 	public boolean isResizingWindow() {
 		return _resizeWinImg;
 	}

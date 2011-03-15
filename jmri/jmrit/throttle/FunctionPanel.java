@@ -81,7 +81,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		}
 	}
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
 	public FunctionButton[] getFunctionButtons() { return functionButton; }
 
 	/**
@@ -294,26 +294,29 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 				functionButton[i].setButtonLabel(rb.getString("F"+String.valueOf(i)));
 			else
 				functionButton[i].setButtonLabel("F"+String.valueOf(i));
-			
+
 			functionButton[i].setDisplay(true);
-			switch (i) {
-				case 0:
-					functionButton[i].setIconPath("resources/icons/throttles/Light.png");
-					functionButton[i].setSelectedIconPath("resources/icons/throttles/LightOn.png");
-					break;
-				case 1:
-					functionButton[i].setIconPath("resources/icons/throttles/Bell.png");
-					functionButton[i].setSelectedIconPath("resources/icons/throttles/BellOn.png");
-					break;
-				case 2:
-					functionButton[i].setIconPath("resources/icons/throttles/Horn.png");
-					functionButton[i].setSelectedIconPath("resources/icons/throttles/HornOn.png");
-					//functionButton[i].setSelectedIconPath(null);
-					break;
-				default:
-					functionButton[i].setIconPath(null);
-					functionButton[i].setSelectedIconPath(null);
-			}
+			if ((i<3)
+				&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+				&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
+				switch (i) {
+					case 0:
+						functionButton[i].setIconPath("resources/icons/throttles/Light.png");
+						functionButton[i].setSelectedIconPath("resources/icons/throttles/LightOn.png");
+						break;
+					case 1:
+						functionButton[i].setIconPath("resources/icons/throttles/Bell.png");
+						functionButton[i].setSelectedIconPath("resources/icons/throttles/BellOn.png");
+						break;
+					case 2:
+						functionButton[i].setIconPath("resources/icons/throttles/Horn.png");
+						functionButton[i].setSelectedIconPath("resources/icons/throttles/HornOn.png");
+						break;
+				}
+			else {
+				functionButton[i].setIconPath(null);
+				functionButton[i].setSelectedIconPath(null);
+			}						
 			functionButton[i].updateLnF();			
 
 			// always display f0, F1 and F2
@@ -387,8 +390,15 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 					if (text != null) {
 						functionButton[i].setDisplay(true);
 						functionButton[i].setButtonLabel(text);
-						functionButton[i].setIconPath(rosterEntry.getFunctionImage(i));							
-						functionButton[i].setSelectedIconPath(rosterEntry.setFunctionSelectedImage(i));							
+						if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
+								&& (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())) {
+							functionButton[i].setIconPath(rosterEntry.getFunctionImage(i));							
+							functionButton[i].setSelectedIconPath(rosterEntry.setFunctionSelectedImage(i));
+						}
+						else {
+							functionButton[i].setIconPath(null);							
+							functionButton[i].setSelectedIconPath(null);
+						}
 						functionButton[i].setIsLockable(rosterEntry.getFunctionLockable(i));
 						functionButton[i].updateLnF();
 						if (maxi < NUM_FUNC_BUTTONS_INIT)
@@ -420,7 +430,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.68 $
+	 * @version $Revision: 1.69 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;
@@ -451,19 +461,19 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
 	// update the state of this panel if any of the properties change
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-                for(int i=0;i<=28;i++) {
-		  if (e.getPropertyName().equals("F"+i)) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[i].setState(function);
-                        break; // stop the loop, only one function property 
-                               // will be matched.
-		  } else if (e.getPropertyName().equals("F"+i+"Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[i].setIsLockable(lockable);
-                        break; // stop the loop, only one function property 
-                               // will be matched.
-		  }
-                }
+		for(int i=0;i<=28;i++) {
+			if (e.getPropertyName().equals("F"+i)) {
+				boolean function=((Boolean) e.getNewValue()).booleanValue();
+				functionButton[i].setState(function);
+				break; // stop the loop, only one function property 
+				// will be matched.
+			} else if (e.getPropertyName().equals("F"+i+"Momentary")) {
+				boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
+				functionButton[i].setIsLockable(lockable);
+				break; // stop the loop, only one function property 
+				// will be matched.
+			}
+		}
 	}
 
 	/**

@@ -28,6 +28,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
 	
 	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
     private javax.swing.JCheckBox cbUseToolBar;
+    private javax.swing.JCheckBox cbUseFunctionIcon;
     private javax.swing.JCheckBox cbResizeWinImg;
     private javax.swing.JCheckBox cbUseExThrottle;
     private javax.swing.JCheckBox cbUseRosterImage;
@@ -69,14 +70,20 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     	gridBagConstraints14.gridx = 0;
         gridBagConstraints14.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints14.anchor = GridBagConstraints.WEST;
-        gridBagConstraints14.gridy = 9;   	
+        gridBagConstraints14.gridy = 10;   	
        
     	GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
     	gridBagConstraints12.gridx = 0;
         gridBagConstraints12.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints12.anchor = GridBagConstraints.WEST;
-        gridBagConstraints12.gridy = 8;
-    	
+        gridBagConstraints12.gridy = 9;
+        
+        GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
+    	gridBagConstraints15.gridx = 0;
+        gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
+        gridBagConstraints15.anchor = GridBagConstraints.WEST;
+        gridBagConstraints15.gridy = 8;
+        
     	GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
         gridBagConstraints11.gridx = 0;
         gridBagConstraints11.insets = new Insets(2, 23, 2, 2);
@@ -88,6 +95,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         gridBagConstraints6.gridy = 5;
         gridBagConstraints6.anchor = GridBagConstraints.WEST;
         gridBagConstraints6.gridx = 0;
+        
         GridBagConstraints gridBagConstraints10 = new GridBagConstraints();
         gridBagConstraints10.insets = new Insets(2, 43, 2, 2);
         gridBagConstraints10.gridy = 6;
@@ -140,6 +148,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         
         cbUseExThrottle = new javax.swing.JCheckBox();
         cbUseToolBar = new javax.swing.JCheckBox();
+        cbUseFunctionIcon = new javax.swing.JCheckBox();
         cbUseRosterImage = new javax.swing.JCheckBox();
         cbResizeWinImg = new javax.swing.JCheckBox();
         cbEnableRosterSearch = new javax.swing.JCheckBox();
@@ -154,6 +163,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbUseExThrottle.setText(throttleBundle.getString("UseExThrottle"));
         cbResizeWinImg.setText(throttleBundle.getString("ExThrottleForceResize"));
         cbUseToolBar.setText(throttleBundle.getString("ExThrottleUseToolBar"));
+        cbUseFunctionIcon.setText(throttleBundle.getString("ExThrottleUseFunctionIcons"));
         cbUseRosterImage.setText(throttleBundle.getString("ExThrottleUseRosterImageBkg"));
         cbEnableRosterSearch.setText(throttleBundle.getString("ExThrottleEnableRosterSearch"));
         cbEnableAutoLoad.setText(throttleBundle.getString("ExThrottleEnableAutoSave"));
@@ -209,6 +219,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         this.add(cbHideUndefinedButtons, gridBagConstraints11);
         this.add(cbIgnoreThrottlePosition, gridBagConstraints10);
         this.add(cbUseToolBar, gridBagConstraints12);
+        this.add(cbUseFunctionIcon, gridBagConstraints15);
         this.add(cbCleanOnDispose, gridBagConstraints14);
         this.add(labelApplyWarning, gridBagConstraints13);
     }
@@ -218,6 +229,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     	cbSaveThrottleOnLayoutSave.setSelected( tp.isSavingThrottleOnLayoutSave() );
         cbResizeWinImg.setSelected( tp.isResizingWindow() );
         cbUseToolBar.setSelected( tp.isUsingToolBar() );
+        cbUseFunctionIcon.setSelected( tp.isUsingFunctionIcon() );
         cbUseRosterImage.setSelected( tp.isUsingRosterImage() );
         cbUseExThrottle.setSelected( tp.isUsingExThrottle() );
         cbEnableRosterSearch.setSelected( tp.isEnablingRosterSearch() );
@@ -232,6 +244,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     	ThrottlesPreferences tp = new ThrottlesPreferences();
     	tp.setUseExThrottle (cbUseExThrottle.isSelected() );
     	tp.setUsingToolBar(cbUseToolBar.isSelected() );
+    	tp.setUsingFunctionIcon(cbUseFunctionIcon.isSelected() );
     	tp.setResizeWindow(cbResizeWinImg.isSelected());
     	tp.setUseRosterImage(cbUseRosterImage.isSelected());
     	tp.setSaveThrottleOnLayoutSave( cbSaveThrottleOnLayoutSave.isSelected() ); 
@@ -247,6 +260,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     {
     	cbSaveThrottleOnLayoutSave.setEnabled( cbUseExThrottle.isSelected() );
         cbUseToolBar.setEnabled( cbUseExThrottle.isSelected() );
+        cbUseFunctionIcon.setEnabled( cbUseExThrottle.isSelected() );
         cbEnableRosterSearch.setEnabled( cbUseExThrottle.isSelected() );
         cbEnableAutoLoad.setEnabled( cbUseExThrottle.isSelected() );
         cbUseRosterImage.setEnabled( cbUseExThrottle.isSelected() );
