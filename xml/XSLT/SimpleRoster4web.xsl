@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SimpleRoster4web.xsl,v 1.5 2011-03-15 02:18:11 hebbos Exp $ -->
+<!-- $Id: SimpleRoster4web.xsl,v 1.6 2011-03-15 02:23:30 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -62,7 +62,5 @@
 		<xsl:for-each select="functionlabel">f<xsl:value-of select="@num" />label=<xsl:value-of select="." />&amp;<xsl:if test="@functionImage != ''">f<xsl:value-of select="@num" />image=/prefs/resources/<xsl:value-of select="@functionImage" />&amp;</xsl:if><xsl:if test="@lockable = 'true'">f<xsl:value-of select="@num" />imagepressed=<xsl:if test="@functionImageSelected != ''">/prefs/resources/<xsl:value-of select="@functionImageSelected" /></xsl:if><xsl:if test="@functionImageSelected = ''">x</xsl:if>&amp;</xsl:if></xsl:for-each>
 	</xsl:template>
 </xsl:stylesheet>
-<!--
-		<xsl:for-each select="functionlabel">f<xsl:value-of select="@num" />label=<xsl:value-of select="." />&amp;<xsl:if test="@lockable = 'true'">f<xsl:value-of select="@num" />imagepressed=x&amp;</xsl:if></xsl:for-each>
--->
+
 
