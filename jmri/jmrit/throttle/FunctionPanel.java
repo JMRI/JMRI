@@ -296,9 +296,26 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 				functionButton[i].setButtonLabel("F"+String.valueOf(i));
 			
 			functionButton[i].setDisplay(true);
-			functionButton[i].setIconPath(null);
-			functionButton[i].setSelectedIconPath(null);
-			functionButton[i].updateLnF();
+			switch (i) {
+				case 0:
+					functionButton[i].setIconPath("resources/icons/throttles/Light.png");
+					functionButton[i].setSelectedIconPath("resources/icons/throttles/LightOn.png");
+					break;
+				case 1:
+					functionButton[i].setIconPath("resources/icons/throttles/Bell.png");
+					functionButton[i].setSelectedIconPath("resources/icons/throttles/BellOn.png");
+					break;
+				case 2:
+					functionButton[i].setIconPath("resources/icons/throttles/Horn.png");
+					functionButton[i].setSelectedIconPath("resources/icons/throttles/HornOn.png");
+					//functionButton[i].setSelectedIconPath(null);
+					break;
+				default:
+					functionButton[i].setIconPath(null);
+					functionButton[i].setSelectedIconPath(null);
+			}
+			functionButton[i].updateLnF();			
+
 			// always display f0, F1 and F2
 			if (i<3)
 				functionButton[i].setVisible(true);
@@ -403,7 +420,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.67 $
+	 * @version $Revision: 1.68 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;
@@ -513,7 +530,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
 	public void notifyAddressReleased(int address, boolean isLong)
 	{
-		mainPanel.setEnabled(false);
+		if (log.isDebugEnabled()) log.debug("Throttle released");
+		setEnabled(false);
 		if (mThrottle != null)
 			mThrottle.removePropertyChangeListener(this);
 		mThrottle = null;

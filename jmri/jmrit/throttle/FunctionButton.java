@@ -481,11 +481,14 @@ public class FunctionButton extends JToggleButton implements ActionListener
 			}
 		}
 		if ((fnSelectedImage != null) && (fnSelectedImage.getScaledImage()!=null)) {
-			setSelectedIcon(new ImageIcon(fnSelectedImage.getScaledImage()));			
+			ImageIcon icon = new ImageIcon(fnSelectedImage.getScaledImage());
+			setSelectedIcon(icon);			
+			setPressedIcon(icon);			
 			isSelectedImageOK = true;
 		}
 		else {
 			setSelectedIcon(null);
+			setPressedIcon(null);	
 			isSelectedImageOK = false;
 		}
 	}

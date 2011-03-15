@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.57 $
+ * @version	$Revision: 1.58 $
  */
 public abstract class XmlFile {
 
@@ -181,7 +181,7 @@ public abstract class XmlFile {
     /**
      * Specify a standard prefix for DTDs in new XML documents
      */
-    static public final String dtdLocation = "";
+    static public final String dtdLocation = "/xml/DTD/";
     
     // made members for overriding in tests
     protected void reportError1(String name, Exception e) {
@@ -538,7 +538,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.57 2010-10-15 04:13:38 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.58 2011-03-15 17:03:29 hebbos Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
