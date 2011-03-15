@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
@@ -34,16 +34,6 @@ public class ThrottleFramePropertyEditor extends JDialog
     		rb.getString("SelectTitleTypeADDRESSTEXT"),
     		rb.getString("SelectTitleTypeROSTERID")
     };
-	
-    /**
-     * Constructor. Create it and pack it.
-     */
-    public ThrottleFramePropertyEditor()
-    {
-//        initGUI();
-//		//this.setModal(true);
-//        pack();
-    }
 
     /**
      * Create, initialize, and place the GUI objects.

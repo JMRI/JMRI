@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.22 2010-01-31 20:51:10 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.23 2011-03-15 02:18:12 hebbos Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -32,6 +32,12 @@
 <!ATTLIST locomotive model	    CDATA #IMPLIED>
 <!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- long or short address -->
 <!ATTLIST locomotive comment	  CDATA #IMPLIED>
+
+<!ATTLIST locomotive maxSpeed CDATA #IMPLIED>
+
+<!ATTLIST locomotive imageFilePath CDATA #IMPLIED>
+<!ATTLIST locomotive iconFilePath  CDATA #IMPLIED>
+<!ATTLIST locomotive URL  CDATA #IMPLIED>
 
 <!ELEMENT dateupdated (#PCDATA) >
 
@@ -80,6 +86,8 @@
 <!ELEMENT functionlabel (#PCDATA) >
 <!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
 <!ATTLIST functionlabel	lockable (true | false) "true">   
+<!ATTLIST functionlabel functionImage CDATA #IMPLIED>
+<!ATTLIST functionlabel functionImagePressed  CDATA #IMPLIED>
 
 <!ELEMENT attributepairs (keyvaluepair*) >
 <!ELEMENT keyvaluepair (key, value) >

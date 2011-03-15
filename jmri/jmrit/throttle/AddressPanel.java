@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -124,7 +124,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			this.disableRosterBoxActions = false;
 		}
 		if ((backgroundPanel != null) && (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem))) {
-			backgroundPanel.unsetImage();
+			backgroundPanel.setImagePath(null);
 			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
 			RosterEntry re = Roster.instance().entryFromTitle(rosterEntryTitle);
 			if ((re != null) && (re.getImagePath()!=null)){
@@ -155,6 +155,16 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 *            requested.
 	 */
 	public void notifyThrottleFound(DccThrottle t) {
+		log.warn("Asked for "+currentAddress.getNumber()+" got "+ t.getLocoAddress() );
+		if ( ((DccLocoAddress)t.getLocoAddress()).getNumber() != currentAddress.getNumber()) {
+			log.warn("Not correct address, asked for "+currentAddress.getNumber()+" got "+ t.getLocoAddress()+", requesting again..." );
+	    	boolean requestOK =
+	    		InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
+	    	if (!requestOK)
+	    		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
+	    	return;
+		}
+		
 		throttle = t;
 		releaseButton.setEnabled(true);
 		currentAddress = (DccLocoAddress) t.getLocoAddress();

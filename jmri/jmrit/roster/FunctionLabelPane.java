@@ -2,19 +2,31 @@
 
 package jmri.jmrit.roster;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-
-import java.awt.*;
-import javax.swing.*;
-import java.util.ResourceBundle;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import jmri.jmrit.XmlFile;
+import jmri.util.ResizableImagePanel;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 
 /**
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -23,7 +35,12 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     JTextField[] labels;
     JCheckBox[] lockable;
-    
+    ResizableImagePanel[] _imageFilePath;
+    ResizableImagePanel[] _imagePressedFilePath;
+	JButton[] jbRemoveImage;
+	JButton[] jbRemoveImagePressed;
+    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
+
     // we're doing a manual allocation of position for
     // now, based on 28 labels
     private int maxfunction = 28;
@@ -38,7 +55,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
         labels = new JTextField[maxfunction+1];
         lockable = new JCheckBox[maxfunction+1];
-        
+        _imageFilePath = new ResizableImagePanel[maxfunction+1];
+        _imagePressedFilePath = new ResizableImagePanel[maxfunction+1];
+    	
         cL.gridx = 0;
         cL.gridy = 0;
         cL.ipadx = 3;
@@ -54,12 +73,21 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         cL.gridx++;
         add(new JLabel("lock"), cL);
         cL.gridx++;
+        add(new JLabel("off"), cL);
+        cL.gridx++;
+        add(new JLabel("on"), cL);
+        cL.gridx++;
         add(new JLabel("fn"), cL);
         cL.gridx++;
         add(new JLabel("label"), cL);
         cL.gridx++;
         add(new JLabel("lock"), cL);
         cL.gridx++;
+        add(new JLabel("off"), cL);
+        cL.gridx++;
+        add(new JLabel("on"), cL);
+        cL.gridx++;
+
         
         cL.gridx = 0;
         cL.gridy = 1;
@@ -79,12 +107,31 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             lockable[i].setSelected(r.getFunctionLockable(i));
             add(lockable[i], cL);
             cL.gridx++;
+            
+            // add the function buttons
+    		_imageFilePath[i] = new ResizableImagePanel(r.getFunctionImage(i), 20, 20);
+    		_imageFilePath[i].setDnd(true);
+    		_imageFilePath[i].setDropFolder(_resourcesBasePath);
+    		_imageFilePath[i].setBackground(new Color(0,0,0,0));
+    		_imageFilePath[i].setToolTipText(rb.getString("FunctionButtonRosterImageToolTip"));
+    		_imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+            add(_imageFilePath[i], cL);
+            cL.gridx++;
+            
+    		_imagePressedFilePath[i] = new ResizableImagePanel(r.setFunctionSelectedImage(i), 20, 20);
+    		_imagePressedFilePath[i].setDnd(true);
+    		_imagePressedFilePath[i].setDropFolder(_resourcesBasePath);
+    		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
+    		_imagePressedFilePath[i].setToolTipText(rb.getString("FunctionButtonPressedRosterImageToolTip"));
+    		_imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+    		add(_imagePressedFilePath[i], cL);    		
+            cL.gridx++;
 
             // advance position
             cL.gridy++;
             if (cL.gridy-1 == ((maxfunction+1)/2)+1) {
                 cL.gridy = 1;  // skip titles
-                nextx = nextx+3;
+                nextx = nextx+5;
             }
             cL.gridx = nextx;
         }
@@ -112,6 +159,25 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                         return true;
                 }
         }
+        if (_imageFilePath!=null) {
+            for (int i = 0; i<_imageFilePath.length; i++) 
+                if (_imageFilePath[i]!=null) {
+                    if (r.getFunctionImage(i)==null && !_imageFilePath[i].getImagePath().equals(""))
+                        return true;
+                    if (r.getFunctionImage(i)!=null && !r.getFunctionImage(i).equals(_imageFilePath[i].getImagePath()))
+                        return true;
+                }
+        }
+        if (_imagePressedFilePath!=null) {
+            for (int i = 0; i<_imagePressedFilePath.length; i++) 
+                if (_imagePressedFilePath[i]!=null) {
+                    if (r.setFunctionSelectedImage(i)==null && !_imagePressedFilePath[i].getImagePath().equals(""))
+                        return true;
+                    if (r.setFunctionSelectedImage(i)!=null && !r.setFunctionSelectedImage(i).equals(_imagePressedFilePath[i].getImagePath()))
+                        return true;
+                }
+        }        
+        
         return false;        
     }
         
@@ -124,9 +190,13 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                 if (labels[i]!=null && !labels[i].getText().equals("")) {
                     r.setFunctionLabel(i, labels[i].getText());
                     r.setFunctionLockable(i, lockable[i].isSelected());
+                   	r.setFunctionImage(i, _imageFilePath[i].getImagePath());
+                   	r.setFunctionSelectedImage(i, _imagePressedFilePath[i].getImagePath());
                 } else if (labels[i]!=null && labels[i].getText().equals("")) {
                     if (r.getFunctionLabel(i) != null) {
                         r.setFunctionLabel(i, null);
+                    	r.setFunctionImage(i, null);
+                    	r.setFunctionSelectedImage(i, null);
                     }
                 }
         }

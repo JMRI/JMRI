@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -46,11 +47,48 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.54 $
+ * @version   $Revision: 1.55 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
 public class RosterEntry {
+    // members to remember all the info
+    protected String _fileName = null;
+
+    protected String _id = "";
+    protected String _roadName = "";
+    protected String _roadNumber = "";
+    protected String _mfg = "";
+    protected String _owner = _defaultOwner;
+    protected String _model = "";
+    protected String _dccAddress = "";
+    protected boolean _isLongAddress = false;
+    protected String _comment = "";
+    protected String _decoderModel = "";
+    protected String _decoderFamily = "";
+    protected String _decoderComment = "";
+    protected String _dateUpdated = "";
+    protected int _maxSpeedPCT = 100;
+    
+    public static String getDefaultOwner() { return _defaultOwner; }
+    public static void setDefaultOwner(String n) { _defaultOwner = n; }
+    static private String _defaultOwner = "";
+    
+    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
+    
+    final static int MAXFNNUM = 28;
+    public int getMAXFNNUM() { return MAXFNNUM; }
+    protected String[] functionLabels;
+    protected String[] functionSelectedImages;
+    protected String[] functionImages;
+    boolean[] functionLockables;
+    
+    java.util.TreeMap<String,String> attributePairs;
+    
+    protected String _imageFilePath = _resourcesBasePath ; // at DndImagePanel init will
+    protected String _iconFilePath = _resourcesBasePath ;  // force image copy to that folder
+    protected String _URL = "";
+    
 	/**
      * Construct a blank object.
      *
@@ -343,11 +381,16 @@ public class RosterEntry {
                 if (this.getFunctionLabel(num)==null) {
                     this.setFunctionLabel(num, val);
                     this.setFunctionLockable(num, lock.equals("true"));
+                    Attribute a;
+                    if ((a = fn.getAttribute("functionImage")) != null)
+                    	this.setFunctionImage(num, _resourcesBasePath+a.getValue());
+                    if ((a = fn.getAttribute("functionImageSelected")) != null)
+                    	this.setFunctionSelectedImage(num, _resourcesBasePath+a.getValue());              
                 }
             }
         }
     }
-    
+
     /**
      * Loads attribute key/value pairs from a 
      * JDOM element.
@@ -386,6 +429,29 @@ public class RosterEntry {
         return functionLabels[fn];
     }
     
+    public void setFunctionImage(int fn, String s) {
+        if (functionImages == null) functionImages = new String[MAXFNNUM+1]; // counts zero
+        String old = functionImages[fn];
+        functionImages[fn] = s;
+        firePropertyChange("functionImage"+fn, old, s);
+    }
+    public String getFunctionImage(int fn) {
+    	if ((functionImages != null) && (functionImages[fn] != null))
+    		return functionImages[fn];
+    	return _resourcesBasePath ; 
+    }
+    
+    public void setFunctionSelectedImage(int fn, String s) {
+    	if (functionSelectedImages == null) functionSelectedImages = new String[MAXFNNUM+1]; // counts zero
+    	String old = functionSelectedImages[fn];
+    	functionSelectedImages[fn] = s;
+    	firePropertyChange("functionSelectedImage"+fn, old, s);
+    }
+    public String setFunctionSelectedImage(int fn) {
+    	if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null))
+    		return functionSelectedImages[fn];
+    	return _resourcesBasePath ; 
+    }
     /**
      * Define whether a specific function is lockable.
      * @param fn function number, starting with 0
@@ -398,6 +464,7 @@ public class RosterEntry {
         functionLockables[fn] = lockable;
     }
     
+    
     /**
      * Return the lockable state of a specific function. Defaults to true.
      * @param fn function number, starting with 0
@@ -408,14 +475,7 @@ public class RosterEntry {
             throw new IllegalArgumentException("number out of range: "+fn);
         return functionLockables[fn];
     }
-    
-    final static int MAXFNNUM = 28;
-    public int getMAXFNNUM() { return MAXFNNUM; }
-    String[] functionLabels;
-    boolean[] functionLockables;
-    
-    java.util.TreeMap<String,String> attributePairs;
-    
+
     public void putAttribute(String key, String value) {
         if (attributePairs == null) attributePairs = new java.util.TreeMap<String,String>();
         attributePairs.put(key, value);
@@ -481,12 +541,12 @@ public class RosterEntry {
         try {
         	e.setAttribute("imageFilePath", getImagePath().substring( _resourcesBasePath.length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
-        	e.setAttribute("imageFilePath","");
+        	e.setAttribute("imageFilePath", "");
         }
         try {
         e.setAttribute("iconFilePath", getIconPath().substring( _resourcesBasePath.length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
-        	e.setAttribute("iconFilePath","");
+        	e.setAttribute("iconFilePath", "");
         }
         e.setAttribute("URL", getURL());
 
@@ -516,6 +576,20 @@ public class RosterEntry {
                         boolean lockable = false;
                         if (functionLockables!=null) lockable = functionLockables[i];
                         fne.setAttribute("lockable", lockable ? "true" : "false");
+                        if ((functionImages!=null) && (functionImages[i]!=null)) {
+                        	try {
+                        		fne.setAttribute("functionImage", functionImages[i].substring( _resourcesBasePath.length() ));
+                        	} catch (StringIndexOutOfBoundsException eob) {
+                        		fne.setAttribute("functionImage", "");
+                        	} 
+                        }
+                        if ((functionSelectedImages!=null) && (functionSelectedImages[i]!=null)) {
+                        	try {
+                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( _resourcesBasePath.length() ));
+                        	} catch (StringIndexOutOfBoundsException eob) {
+                        		fne.setAttribute("functionImageSelected", "");
+                        	} 
+                        }
                         fne.addContent(functionLabels[i]);
                         d.addContent(fne); 
                 }
@@ -655,7 +729,7 @@ public class RosterEntry {
     }
 
     public void printEntry(HardcopyWriter w){
-        if((getIconPath()!=null)&&(!getIconPath().contains("__noIcon.jpg"))){
+        if (getIconPath()!=null) {
             ImageIcon icon = new ImageIcon(getIconPath());
             // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
             //we set the imagesize to 150x150 pixels
@@ -943,34 +1017,6 @@ public class RosterEntry {
             mRootElement = lf.rootFromName(LocoFile.getFileLocation()+getFileName());
         } catch (Exception e) { log.error("Exception while loading loco XML file: "+getFileName()+" exception: "+e); }
     }
-
-    // members to remember all the info
-    protected String _fileName = null;
-
-    protected String _id = "";
-    protected String _roadName = "";
-    protected String _roadNumber = "";
-    protected String _mfg = "";
-    protected String _owner = _defaultOwner;
-    protected String _model = "";
-    protected String _dccAddress = "";
-    protected boolean _isLongAddress = false;
-    protected String _comment = "";
-    protected String _decoderModel = "";
-    protected String _decoderFamily = "";
-    protected String _decoderComment = "";
-    protected String _dateUpdated = "";
-    protected int _maxSpeedPCT = 100;
-    
-    public static String getDefaultOwner() { return _defaultOwner; }
-    public static void setDefaultOwner(String n) { _defaultOwner = n; }
-    static private String _defaultOwner = "";
-    
-    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
-
-    protected String _imageFilePath = _resourcesBasePath + "__noImage.jpg" ; // at DndImagePanel init will
-    protected String _iconFilePath = _resourcesBasePath + "__noIcon.jpg" ;   // force image copy to correct folder
-    protected String _URL = "";
 
     java.beans.PropertyChangeSupport pcs;
 

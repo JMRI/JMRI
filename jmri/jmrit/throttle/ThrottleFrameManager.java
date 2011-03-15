@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 
@@ -15,10 +16,12 @@ import jmri.util.JmriJFrame;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.22 $
+ * @version    $Revision: 1.23 $
  */
 public class ThrottleFrameManager
 {
+	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
+	
     /** record the single instance of Roster **/
     private static ThrottleFrameManager instance = null;
 
@@ -29,9 +32,6 @@ public class ThrottleFrameManager
 	private ThrottleCyclingKeyListener throttleCycler;
 
 	private ArrayList<ThrottleWindow> throttleWindows;
-
-	private FunctionButtonPropertyEditor functionButtonEditor;
-	private ThrottleFramePropertyEditor throttleFramePropertyEditor;
 	
 	private ThrottlesPreferences throttlesPref;
 	private JmriJFrame throttlePreferencesFrame;
@@ -132,32 +132,6 @@ public class ThrottleFrameManager
 	{
 		return throttleWindows.iterator();
 	}
-
-	/**
-	 *  Get a reference to the Function Editor Allows us to have one editor without
-	 *  disposing and creating each time.
-	 */
-	public FunctionButtonPropertyEditor getFunctionButtonEditor()
-	{
-		if (functionButtonEditor == null)
-		{
-			functionButtonEditor = new FunctionButtonPropertyEditor();
-		}
-		return functionButtonEditor;
-	}
-
-	/**
-	 *  Get a reference to the ThrottleFrame Editor. Allows us to have one editor without
-	 *  disposing and creating each time.
-	 */
-	public ThrottleFramePropertyEditor getThrottleFrameEditor()
-	{
-		if (throttleFramePropertyEditor == null)
-		{
-			throttleFramePropertyEditor = new ThrottleFramePropertyEditor();
-		}
-		return throttleFramePropertyEditor;
-	}
 	
 	public int getNumberThrottleWindows(){
 		return throttleWindows.size();
@@ -217,7 +191,7 @@ public class ThrottleFrameManager
 	}
 	
 	private void buildThrottlePreferencesFrame() {
-		throttlePreferencesFrame = new JmriJFrame("Throttles preferences");
+		throttlePreferencesFrame = new JmriJFrame(throttleBundle.getString("ThrottlePreferencesFrameTitle"));
 		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane(throttlesPref);
 		throttlePreferencesFrame.add(tpP);
 		tpP.setContainer(throttlePreferencesFrame);
@@ -226,7 +200,7 @@ public class ThrottleFrameManager
 	}
 	
 	private void buildThrottleListFrame() {
-		throttlesListFrame = new JmriJFrame("Throttles list");
+		throttlesListFrame = new JmriJFrame(throttleBundle.getString("ThrottleListFrameTile"));
 		throttlesListPanel = new ThrottlesListPanel();
 		throttlesListFrame.setContentPane(throttlesListPanel);
 		throttlesListFrame.pack();

@@ -5,14 +5,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
+import jmri.jmrit.XmlFile;
 import jmri.util.ResizableImagePanel;
 
 /*
@@ -58,21 +57,22 @@ public class RosterMediaPane extends javax.swing.JPanel {
 	ResizableImagePanel _iconFilePath;
 	JLabel _URLlabel = new JLabel();
 	JTextField _URL = new JTextField(30);
-	JButton jbRemoveIcon = new JButton();
-	JButton jbRemoveImage = new JButton();
 	RosterAttributesTableModel rosterAttributesModel;
 
 	final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
 
 	public RosterMediaPane(RosterEntry r) {
 		_imageFilePath = new ResizableImagePanel(r.getImagePath(), 320, 240);
 		_imageFilePath.setDnd(true);
+		_imageFilePath.setDropFolder(_resourcesBasePath);
 		_imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
 		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
 		_imageFPlabel.setText(rb.getString("MediaRosterImageLabel"));
 
 		_iconFilePath = new ResizableImagePanel(r.getIconPath(), 160, 120);
 		_iconFilePath.setDnd(true);
+		_iconFilePath.setDropFolder(_resourcesBasePath);
 		_iconFilePath.setToolTipText(rb.getString("MediaRosterIconToolTip"));
 		_iconFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
 		_iconFPlabel.setText(rb.getString("MediaRosterIconLabel"));
@@ -80,21 +80,6 @@ public class RosterMediaPane extends javax.swing.JPanel {
 		_URL.setText(r.getURL());
 		_URL.setToolTipText(rb.getString("MediaRosterURLToolTip"));
 		_URLlabel.setText(rb.getString("MediaRosterURLLabel"));
-
-		jbRemoveImage.setText(rb.getString("MediaRosterIconRemove"));
-		jbRemoveIcon.setText(rb.getString("MediaRosterImageRemove"));
-
-		jbRemoveImage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				_imageFilePath.setImagePath(null);
-			}
-		});
-		jbRemoveIcon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				_iconFilePath.setImagePath(null);
-			}
-		});
-
 
 		rosterAttributesModel = new RosterAttributesTableModel(r); //t, columnNames);
 		JTable jtAttributes = new JTable();
@@ -124,13 +109,7 @@ public class RosterMediaPane extends javax.swing.JPanel {
 		_imageFilePath.setMaximumSize(imageFieldDim);
 		_imageFilePath.setPreferredSize(imageFieldDim);
 		gbLayout.setConstraints( _imageFilePath,gbc);
-		mediap.add( _imageFilePath);
-
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		gbLayout.setConstraints( jbRemoveImage,gbc);
-		mediap.add( jbRemoveImage);    
-
+		mediap.add( _imageFilePath);   
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -143,12 +122,7 @@ public class RosterMediaPane extends javax.swing.JPanel {
 		_iconFilePath.setMaximumSize(iconFieldDim);		
 		_iconFilePath.setPreferredSize(iconFieldDim);
 		gbLayout.setConstraints( _iconFilePath,gbc);
-		mediap.add( _iconFilePath);
-
-		gbc.gridx = 2;
-		gbc.gridy = 2;
-		gbLayout.setConstraints( jbRemoveIcon,gbc);
-		mediap.add( jbRemoveIcon);    
+		mediap.add( _iconFilePath); 
 
 		gbc.gridx = 0;
 		gbc.gridy = 4;

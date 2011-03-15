@@ -136,7 +136,7 @@ public class FunctionButtonPropertyEditor extends JDialog
     public void setFunctionButton(FunctionButton button)
     {
         this.button = button;
-        textField.setText(button.getText());
+        textField.setText(button.getButtonLabel());
         lockableCheckBox.setSelected(button.getIsLockable());
         idField.setText(String.valueOf(button.getIdentity()));
         fontField.setText(String.valueOf(button.getFont().getSize()));
@@ -151,7 +151,7 @@ public class FunctionButtonPropertyEditor extends JDialog
     {
         if (isDataValid())
         {
-            button.setText(textField.getText());
+            button.setButtonLabel(textField.getText());
             button.setIsLockable(lockableCheckBox.isSelected());
             button.setIdentity(Integer.parseInt(idField.getText()));
             String name = button.getFont().getName();
@@ -160,11 +160,8 @@ public class FunctionButtonPropertyEditor extends JDialog
                                     Integer.parseInt(fontField.getText())));
             button.setVisible(visibleCheckBox.isSelected());
             button.setDisplay(visibleCheckBox.isSelected());
-            int butWidth = button.getFontMetrics(button.getFont()).stringWidth(button.getText());
-            butWidth = butWidth + 20;	// pad out the width a bit
-            if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
-            button.setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
             button.setDirty(true);
+            button.updateLnF();
             finishEdit();
         }
     }

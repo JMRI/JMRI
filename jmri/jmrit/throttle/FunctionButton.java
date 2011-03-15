@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
@@ -11,10 +12,13 @@ import java.awt.event.MouseListener;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
+
+import jmri.util.ResizableImagePanel;
 
 import org.jdom.Element;
 
@@ -25,7 +29,7 @@ import org.jdom.Element;
  * <ul>
  * <li> Set the text
  * <li> Set the locking state
- * <li> Set visibilty
+ * <li> Set visibility
  * <li> Set Font
  * <li> Set function number identity
  * </ul>
@@ -42,21 +46,23 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private boolean isLockable = true;
     private boolean isDisplayed = true;
     private boolean dirty = false;
+    private boolean isImageOK = false;
+    private boolean isSelectedImageOK = false;
 	private int actionKey;
+	private String buttonLabel;
+    private JPopupMenu popup;
 	
 	static int BUT_HGHT = 30;
 	static int BUT_WDTH = 56;
-
-    static {
+	static int BUT_IMG_SIZE = 45;
+	static {
         JButton sample = new JButton(" Light ");
         BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, BUT_HGHT);
         BUT_WDTH = java.lang.Math.max(sample.getPreferredSize().width, BUT_WDTH);
     }
-    
     public static int getButtonHeight() { return BUT_HGHT; }
-    public static int getButtonWidth() { return BUT_WDTH; }
-    
-    private JPopupMenu popup;
+    public static int getButtonWidth() { return BUT_WDTH; }   
+	
     /**
      * Construct the FunctionButton.
      */
@@ -72,14 +78,10 @@ public class FunctionButton extends JToggleButton implements ActionListener
         MouseListener popupListener = new PopupListener();
         addMouseListener(popupListener);
         setFont(new Font("Monospaced",Font.PLAIN, 12));
-        setPreferredSize(new Dimension(BUT_WDTH,BUT_HGHT));
         setMargin(new Insets(2,2,2,2));
+        setRolloverEnabled(false);
+        updateLnF();
     }
-    
-    public void setEnabled(boolean b) {
-    	super.setEnabled(b);
-    }
-
 
     /**
      * Set the function number this button will operate
@@ -206,14 +208,67 @@ public class FunctionButton extends JToggleButton implements ActionListener
     	return dirty;
     }
 
+    public String getButtonLabel() {
+		return buttonLabel;
+	}
+
+    public void setButtonLabel(String label) {
+		buttonLabel = label;
+	}
+	
+	public void setText(String s) {
+		if (s != null )	{
+			buttonLabel = s;
+			if (isImageOK) {
+				setToolTipText(buttonLabel);
+				super.setText(null);
+			}
+			else
+				super.setText(s);
+			return;
+		}
+		super.setText(null);
+		if (buttonLabel != null) {
+			setToolTipText(buttonLabel);
+			return;
+		}
+	}
+	
+	/**
+	 * Decide if it should show the label or an image with text as tooltip
+	 * Button UI updated according to above result.
+	 */
+	public void updateLnF() {
+		if (isImageOK() ) { // adjust button for image
+			setBorderPainted(false);
+		    setContentAreaFilled(false);
+			setText(null);
+			setPreferredSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+		}
+		else // adjust button for text
+		{ 	
+		    setBorderPainted(true);
+		    setContentAreaFilled(true);
+		    setText(getButtonLabel());
+			if (getButtonLabel() != null) {
+				int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel());
+				butWidth = butWidth + 20; // pad out the width a bit
+				if (butWidth < FunctionButton.BUT_WDTH)
+					butWidth = FunctionButton.BUT_WDTH;
+				setPreferredSize(new Dimension(butWidth, FunctionButton.BUT_HGHT));
+			}
+			else
+		        setPreferredSize(new Dimension(BUT_WDTH,BUT_HGHT));
+		}
+	}
+	
     /**
      * Handle the selection from the popup menu.
      * @param e The ActionEvent causing the action.
      */
     public void actionPerformed(ActionEvent e)
     {
-        FunctionButtonPropertyEditor editor =
-                ThrottleFrameManager.instance().getFunctionButtonEditor();
+        FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
         editor.setFunctionButton(this);
         editor.setLocation(this.getLocationOnScreen());
         editor.setVisible(true);
@@ -227,12 +282,11 @@ public class FunctionButton extends JToggleButton implements ActionListener
     {
         if (log.isDebugEnabled()) {
         	log.debug("Change state to "+newState);
-//        	new Exception().printStackTrace();
         }
         isOn = newState;
 		this.setSelected(isOn);
 		for (int i=0; i<listeners.size();i++)
-            listeners.get(i).notifyFunctionStateChanged(identity, isOn);       
+            listeners.get(i).notifyFunctionStateChanged(identity, isOn);  
     }
 
 
@@ -263,6 +317,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     	if (listeners.contains(l))
     		listeners.remove(l);
     }
+    
     /**
      * A PopupListener to handle mouse clicks and releases. Handles
      * the popup menu.
@@ -337,7 +392,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
         }
     }
 
-
     /**
      * Collect the prefs of this object into XML Element
      * <ul>
@@ -351,7 +405,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     {
         Element me = new Element("FunctionButton");
         me.setAttribute("id", String.valueOf(this.getIdentity()));
-        me.setAttribute("text", this.getText());
+        me.setAttribute("text", this.getButtonLabel());
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
         me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
@@ -382,16 +436,68 @@ public class FunctionButton extends JToggleButton implements ActionListener
             else
             	this.setVisible(false);
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
-            int butWidth = this.getFontMetrics(this.getFont()).stringWidth(this.getText());
-            butWidth = butWidth + 20;	// pad out the width a bit
-            if (butWidth < BUT_WDTH) butWidth = BUT_WDTH;
-            this.setPreferredSize(new Dimension(butWidth,BUT_HGHT));
-
+            updateLnF();
         }
         catch (org.jdom.DataConversionException ex)
         {
             log.error("DataConverstionException in setXml: "+ex);
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionButton.class.getName());
+
+	public void setIconPath(String fnImg) {
+		ResizableImagePanel fnImage = null;
+		if (fnImg != null) {
+			fnImage = new ResizableImagePanel();
+			if (fnImage != null) {
+				fnImage.setBackground(new Color(0,0,0,0));
+				fnImage.setRespectAspectRatio(true);
+				fnImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+				fnImage.setImagePath(fnImg);
+			}
+		}
+		if ((fnImage != null) && (fnImage.getScaledImage()!=null)) {
+			setIcon(new ImageIcon(fnImage.getScaledImage()));
+			isImageOK = true;
+		}
+		else {
+			setIcon(null);
+			isImageOK = false;			
+		}	
+	}
+	
+	public void setSelectedIconPath(String fnImg) {
+		ResizableImagePanel fnSelectedImage = null;
+		if (fnSelectedImage != null) {
+			removeComponentListener(fnSelectedImage);
+			fnSelectedImage = null;
+		}
+		if (fnImg != null) {
+			fnSelectedImage = new ResizableImagePanel();
+			if (fnSelectedImage != null) {
+				fnSelectedImage.setBackground(new Color(0,0,0,0));
+				fnSelectedImage.setRespectAspectRatio(true);
+				fnSelectedImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
+				fnSelectedImage.setImagePath(fnImg);
+			}
+		}
+		if ((fnSelectedImage != null) && (fnSelectedImage.getScaledImage()!=null)) {
+			setSelectedIcon(new ImageIcon(fnSelectedImage.getScaledImage()));			
+			isSelectedImageOK = true;
+		}
+		else {
+			setSelectedIcon(null);
+			isSelectedImageOK = false;
+		}
+	}
+
+	public boolean isImageOK() {
+		return isImageOK;
+	}
+
+	public boolean isSelectedImageOK() {
+		return isSelectedImageOK;
+	}
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionButton.class.getName());
+
 }

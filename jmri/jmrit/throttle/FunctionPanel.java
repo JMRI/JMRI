@@ -8,8 +8,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
 
 import jmri.DccThrottle;
 import jmri.jmrit.roster.Roster;
@@ -204,7 +204,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 			return;
 		for (int i=0; i < NUM_FUNCTION_BUTTONS; i++){
 			int functionNumber = functionButton[i].getIdentity();
-			String text = functionButton[i].getText();
+			String text = functionButton[i].getButtonLabel();
 			boolean lockable = functionButton[i].getIsLockable();
 			if (functionButton[i].isDirty() && !text.equals(rosterEntry.getFunctionLabel(functionNumber))){
 				functionButton[i].setDirty(false);
@@ -283,19 +283,22 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
 	/**
 	 * Make sure that all function buttons are being displayed
+	 * if buttons label loaded from a roster entry, update buttons accordingly
 	 */
 	public void resetFnButtons() {
 		// Buttons names, ids, 
 		for (int i=0; i < NUM_FUNCTION_BUTTONS; i++) {
-			functionButton[i].setPreferredSize(new Dimension(FunctionButton.BUT_WDTH,FunctionButton.BUT_HGHT));
 			functionButton[i].setIdentity(i);
 			functionButton[i].setFunctionListener(this);
 			if(i < 3)
-				functionButton[i].setText(rb.getString("F"+String.valueOf(i)));
+				functionButton[i].setButtonLabel(rb.getString("F"+String.valueOf(i)));
 			else
-				functionButton[i].setText("F"+String.valueOf(i));
-
+				functionButton[i].setButtonLabel("F"+String.valueOf(i));
+			
 			functionButton[i].setDisplay(true);
+			functionButton[i].setIconPath(null);
+			functionButton[i].setSelectedIconPath(null);
+			functionButton[i].updateLnF();
 			// always display f0, F1 and F2
 			if (i<3)
 				functionButton[i].setVisible(true);
@@ -355,32 +358,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 					Boolean state = (Boolean) getter.invoke(mThrottle,
 							(Object[]) null);
 					functionButton[i].setState(state.booleanValue()); // reset button state
-					if (rosterEntry!=null) { // from here, update button text with roster data
-						String text = rosterEntry.getFunctionLabel(i);
-						if (text != null) {
-							functionButton[i].setDisplay(true);
-							functionButton[i].setText(text);
-							if (maxi < NUM_FUNC_BUTTONS_INIT)
-								functionButton[i].setVisible(true);
-							// adjust button width for text
-							int butWidth = functionButton[i].getFontMetrics(
-									functionButton[i].getFont()).stringWidth(text);
-							butWidth = butWidth + 20; // pad out the width a bit
-							if (butWidth < FunctionButton.BUT_WDTH)
-								butWidth = FunctionButton.BUT_WDTH;
-							functionButton[i].setPreferredSize(new Dimension(
-									butWidth, FunctionButton.BUT_HGHT));
-							functionButton[i].setIsLockable(rosterEntry
-									.getFunctionLockable(i));
-							maxi++; // bump number of buttons shown
-						} else if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences()
-								.isUsingExThrottle()
-								&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences()
-								.isHidingUndefinedFuncButt()) {
-							functionButton[i].setDisplay(false);
-							functionButton[i].setVisible(false);
-						}
-					}
 				} catch (java.lang.NoSuchMethodException ex1) {
 					log.warn("Exception in notifyThrottleFound: " + ex1);
 				} catch (java.lang.IllegalAccessException ex2) {
@@ -388,8 +365,28 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 				} catch (java.lang.reflect.InvocationTargetException ex3) {
 					log.warn("Exception in notifyThrottleFound: " + ex3);
 				}
+				if (rosterEntry!=null) { // from here, update button text with roster data
+					String text = rosterEntry.getFunctionLabel(i);
+					if (text != null) {
+						functionButton[i].setDisplay(true);
+						functionButton[i].setButtonLabel(text);
+						functionButton[i].setIconPath(rosterEntry.getFunctionImage(i));							
+						functionButton[i].setSelectedIconPath(rosterEntry.setFunctionSelectedImage(i));							
+						functionButton[i].setIsLockable(rosterEntry.getFunctionLockable(i));
+						functionButton[i].updateLnF();
+						if (maxi < NUM_FUNC_BUTTONS_INIT)
+							functionButton[i].setVisible(true);
+						maxi++; // bump number of buttons shown
+					} else if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences()
+							.isUsingExThrottle()
+							&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences()
+							.isHidingUndefinedFuncButt()) {
+						functionButton[i].setDisplay(false);
+						functionButton[i].setVisible(false);
+					}
+				}
 			}
-			// hide undefined buttons if applicable
+			// hide alt buttons if not required
 			if ((rosterEntry!=null) && (maxi < NUM_FUNC_BUTTONS_INIT
 					&& jmri.jmrit.throttle.ThrottleFrameManager.instance()
 					.getThrottlesPreferences().isUsingExThrottle()
@@ -406,7 +403,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.66 $
+	 * @version $Revision: 1.67 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;

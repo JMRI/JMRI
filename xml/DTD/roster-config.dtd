@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
-<!-- $Id: roster-config.dtd,v 1.14 2010-01-31 20:51:10 jacobsen Exp $ -->
+<!-- $Id: roster-config.dtd,v 1.15 2011-03-15 02:18:12 hebbos Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007.                  -->
 <!--                                                                        -->
@@ -43,6 +43,12 @@
 <!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- DCC address, obsolete form -->
 <!ATTLIST locomotive comment		CDATA #IMPLIED>
 
+<!ATTLIST locomotive maxSpeed CDATA #IMPLIED>
+
+<!ATTLIST locomotive imageFilePath CDATA #IMPLIED>
+<!ATTLIST locomotive iconFilePath  CDATA #IMPLIED>
+<!ATTLIST locomotive URL  CDATA #IMPLIED>
+
 <!-- The decoder optional section identifies the installed decoder -->
 <!ELEMENT decoder EMPTY >
 <!ATTLIST decoder family			CDATA #REQUIRED>
@@ -61,7 +67,9 @@
 
 <!ELEMENT functionlabel (#PCDATA) >
 <!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
-<!ATTLIST functionlabel	lockable (true | false) "true">   
+<!ATTLIST functionlabel	lockable (true | false) "true">
+<!ATTLIST functionlabel functionImage CDATA #IMPLIED>
+<!ATTLIST functionlabel functionImageSelected  CDATA #IMPLIED>
 
 <!ELEMENT attributepairs (keyvaluepair*) >
 <!ELEMENT keyvaluepair (key, value) >

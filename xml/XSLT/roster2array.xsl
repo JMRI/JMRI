@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: roster2array.xsl,v 1.4 2010-12-11 14:59:20 hebbos Exp $ -->
+<!-- $Id: roster2array.xsl,v 1.5 2011-03-15 02:18:12 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -76,18 +76,29 @@
 <tr>
 <td><xsl:value-of select="@id"/></td>
 <td>
-	<xsl:element name="img">
-	    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>
-  		<xsl:attribute name="height">30</xsl:attribute>
-  		<xsl:attribute name="alt">No icon.</xsl:attribute>
-	</xsl:element>
+	<xsl:if test="(@iconFilePath != '__noIcon.jpg') and (@iconFilePath != '')">
+		<a>
+			<xsl:attribute name="href">/prefs/resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>
+			<xsl:element name="img">
+				<xsl:attribute name="href">/prefs/resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>			
+			    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>
+		  		<xsl:attribute name="height">30</xsl:attribute>
+		  		<xsl:attribute name="alt">No icon.</xsl:attribute>
+			</xsl:element>
+		</a>
+	</xsl:if>
 </td>
 <td>
-	<xsl:element name="img">
-	    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@imageFilePath"/></xsl:attribute>
-  		<xsl:attribute name="height">30</xsl:attribute>
-  		<xsl:attribute name="alt">No image.</xsl:attribute>
-	</xsl:element>
+		<xsl:if test="(@imageFilePath != '__noIcon.jpg') and (@imageFilePath != '')">
+			<a>	
+				<xsl:attribute name="href">/prefs/resources/<xsl:value-of select="@imageFilePath"/></xsl:attribute>
+				<xsl:element name="img">				
+				    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@imageFilePath"/></xsl:attribute>
+			  		<xsl:attribute name="height">30</xsl:attribute>
+			  		<xsl:attribute name="alt">No image.</xsl:attribute>
+				</xsl:element>
+			</a>
+		</xsl:if>
 </td>
 <td><xsl:value-of select="@roadNumber"/></td>
 <td><xsl:value-of select="@roadName"/></td>
@@ -98,13 +109,13 @@
 <td>
 <xsl:element name="a">
   <xsl:attribute name="href">roster/<xsl:value-of select="@fileName"/></xsl:attribute>
-  <xsl:value-of select="@fileName"/>
+  	<xsl:value-of select="@fileName"/>
 </xsl:element>
 </td>
 <td>
 <xsl:element name="a">
   <xsl:attribute name="href">throttle/<xsl:value-of select="@id"/>.xml</xsl:attribute>
-  <xsl:value-of select="@id"/>
+  	<xsl:value-of select="@id"/>.xml
 </xsl:element>
 </td>
 <td>

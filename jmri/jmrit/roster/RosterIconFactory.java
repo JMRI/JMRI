@@ -42,11 +42,13 @@ public class RosterIconFactory {
 	}
 
 	public ImageIcon getIcon(RosterEntry re) {
-		if (re==null) return null;
+		if ((re==null) || (re.getIconPath()==null)) return null;
 
 		ImageIcon icon = icons.get(re.getIconPath());
 		if (icon == null) {
 			icon = new ImageIcon( re.getIconPath(), re.getId());
+			if (icon==null)
+				return null;
 			icon.setImage( icon.getImage().getScaledInstance( -1, iconHeight, java.awt.Image.SCALE_FAST ));
 			icons.put(re.getIconPath(), icon);
 		}
