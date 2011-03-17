@@ -488,6 +488,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         for (int i=0; i<clipGroup.size(); i++) {
                             //pos = clipGroup.get(i).deepClone();
                             pos = clipGroup.get(i);
+                            // make positionable belong to this editor
+                            pos.setEditor(this);
                             pos.setLocation(pos.getLocation().x+pt.x-minX, pos.getLocation().y+pt.y-minY);
                             // now set display level in the pane.
                             pos.setDisplayLevel(pos.getDisplayLevel());
@@ -495,7 +497,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             pos.updateSize();
                             pos.setVisible(true);
                             _selectionGroup.add(pos);
-                            if (_debug) log.debug("Paste Add "+pos.getNameString());
+                            if (_debug) log.debug("Paste Added at ("+pos.getLocation().x+", "+pos.getLocation().y+")");
                         }
                     }
                     return;
@@ -508,6 +510,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
+    /*
+    * The editor instance is dragged.  When dropped this editor will reference
+    * the list of positionables (_clipGroup) for pasting 
+    */
     private void copyToClipboard() {
         if (_selectionGroup!=null) {
             ArrayList <Positionable> dragGroup = new ArrayList <Positionable>();
@@ -523,6 +529,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(new PositionableListDnD(this), this);
+            // workaround to recognize CCP
             getPanelScrollPane().getUI().installUI(getPanelScrollPane());
 //            clipboard.setContents(new PositionableListDnD(dragGroup), null);
             if (_debug) log.debug("copyToClipboard: setContents _selectionGroup, size= "+_selectionGroup.size());
@@ -791,6 +798,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void mousePressed(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
+                            //  " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
         _anchorX = event.getX();
         _anchorY = event.getY();
         _lastX = _anchorX;
@@ -827,13 +835,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             _selectionGroup = null;
         }
+        //if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+//") _dragging="+_dragging);
+        //                      " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
         _targetPanel.repaint(); // needed for ToolTip
     }
 
     public void mouseReleased(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
-                              +" pastePending= "+_pastePending+" selectRect is "+(_selectRect==null? "null":"not null"));
+                              +" pastePending= "+_pastePending+" selectRect "+(_selectRect==null?"=":"!")+"= null");
+        //" _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
         if (_dragging) {
             mouseDragged(event);
         }
@@ -875,6 +886,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         delayedPopupTrigger = false;
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
+//        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+
+//        " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
     }
 
     long _clickTime;
@@ -1265,11 +1278,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     static protected class PositionableListDnD implements Transferable {
-        ControlPanelEditor _dragGroup;
+        ControlPanelEditor _sourceEditor;
         DataFlavor _dataFlavor;
 
-        PositionableListDnD(ControlPanelEditor dragGroup) {
-            _dragGroup = dragGroup;
+        PositionableListDnD(ControlPanelEditor source) {
+            _sourceEditor = source;
             try {
                 _dataFlavor = new DataFlavor(POSITIONABLE_LIST_FLAVOR);
             } catch (ClassNotFoundException cnfe) {
@@ -1280,7 +1293,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
             if (log.isDebugEnabled()) log.debug("PositionableListDnD.getTransferData:");
             if (flavor.equals(_dataFlavor)) {
-                return _dragGroup;
+                return _sourceEditor;
             }
             throw new UnsupportedFlavorException(flavor);
         }
