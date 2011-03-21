@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -1080,6 +1080,7 @@ public class Setup {
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("pickupCarFormat: "+setting);
         		String[] format = setting.split(",");
+        		replaceOldFormat(format);
         		setPickupCarMessageFormat(format);
         	}
         }
@@ -1088,6 +1089,7 @@ public class Setup {
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("dropCarFormat: "+setting);
         		String[] format = setting.split(",");
+        		replaceOldFormat(format);
         		setDropCarMessageFormat(format);
         	}
         }
@@ -1253,6 +1255,17 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
         	}
         }
+    }
+    
+    // replace old pickup and drop message format
+    // Change happened from 2.11.3 to 2.11.4
+    private static void replaceOldFormat(String[] format){
+    	for (int i=0; i<format.length; i++){
+    		if (format[i].equals("Pickup Msg"))
+    			format[i] = PICKUP_COMMENT;
+    		if (format[i].equals("Drop Msg"))
+    			format[i] = DROP_COMMENT;   			
+    	}
     }
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Setup.class.getName());

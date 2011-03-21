@@ -26,7 +26,7 @@ import java.util.List;
  * Logs rolling stock movements by writing their locations to a file.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class RollingStockLogger extends XmlFile implements java.beans.PropertyChangeListener{
 	
@@ -123,6 +123,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			String header = rb.getString("Number") +del+ rb.getString("Road") 
 			+del+ rb.getString("Type") +del+ rb.getString("Load") 
 			+del+ rb.getString("Location") +del+ rb.getString("Track") 
+			//+del+ rb.getString("Destination") +del+ rb.getString("Track")
+			+del+ rb.getString("FinalDestination") +del+ rb.getString("Track")
 			+del+ rb.getString("Train") +del+ rb.getString("Moves") 
 			+del+ rb.getString("DateAndTime");
 			fileOut.println(header);
@@ -145,6 +147,10 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     		rsTrackName = "\""+rs.getTrackName()+"\"";
     	}
     	String carLoad = " ";
+    	//String carDestination = " ";
+    	//String carDestTrack = " ";
+    	String carFinalDest = " ";
+    	String carFinalDestTrack = " ";
     	if (rs.getClass().equals(Car.class)){
     		Car car = (Car)rs;
     		carLoad = car.getLoad();
@@ -152,11 +158,35 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     			log.debug("RS ("+rs.toString()+") has delimiter in car load field: "+carLoad);
     			carLoad = "\""+car.getLoad()+"\"";
     		}
+    		/*
+    		carDestination = car.getDestinationName();
+       		if (carDestination.contains(del)){
+    			log.debug("RS ("+rs.toString()+") has delimiter in car destination field: "+carDestination);
+    			carDestination = "\""+car.getDestinationName()+"\"";
+    		}
+    		carDestTrack = car.getDestinationTrackName();
+       		if (carDestTrack.contains(del)){
+    			log.debug("RS ("+rs.toString()+") has delimiter in car destination track field: "+carDestTrack);
+    			carDestTrack = "\""+car.getDestinationTrackName()+"\"";
+    		}
+    		*/
+    		carFinalDest = car.getNextDestinationName();
+       		if (carFinalDest.contains(del)){
+    			log.debug("RS ("+rs.toString()+") has delimiter in car final destination field: "+carFinalDest);
+    			carFinalDest = "\""+car.getNextDestinationName()+"\"";
+    		}
+    		carFinalDestTrack = car.getNextDestTrackName();
+       		if (carFinalDestTrack.contains(del)){
+    			log.debug("RS ("+rs.toString()+") has delimiter in car final destination track field: "+carFinalDestTrack);
+    			carFinalDestTrack = "\""+car.getNextDestTrackName()+"\"";
+    		}
     	}
 
 		String line = rs.getNumber() +del+ rs.getRoad() +del+ rsType
-		+del+ carLoad +del+ rsLocationName +del+ rsTrackName +del+ rs.getTrainName() 
-		+del+ rs.getMoves() +del+ getTime();
+		+del+ carLoad +del+ rsLocationName +del+ rsTrackName 
+		//+del+ carDestination +del+ carDestTrack 
+		+del+ carFinalDest +del+ carFinalDestTrack
+		+del+ rs.getTrainName() +del+ rs.getMoves() +del+ getTime();
 		
 		log.debug("Log: "+line);
 
