@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -48,6 +48,7 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox localSidingCheckBox = new JCheckBox(rb.getString("AllowLocalSiding"));
 	JCheckBox localYardCheckBox = new JCheckBox(rb.getString("AllowLocalYard"));
 	JCheckBox trainIntoStagingCheckBox = new JCheckBox(rb.getString("TrainIntoStaging"));
+	JCheckBox promptTrackStagingCheckBox = new JCheckBox(rb.getString("PromptFromStaging"));
 	
 	// text field
 	
@@ -70,6 +71,7 @@ public class OptionFrame extends OperationsFrame{
 		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
 		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
+		promptTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
@@ -92,6 +94,7 @@ public class OptionFrame extends OperationsFrame{
 		addItemLeft(pBuild, localSidingCheckBox, 1,2);
 		addItemLeft(pBuild, localYardCheckBox, 1,3);
 		addItemLeft(pBuild, trainIntoStagingCheckBox, 1,4);
+		addItemLeft(pBuild, promptTrackStagingCheckBox, 1,5);
 		
 		// Router panel
 		JPanel pRouter = new JPanel();
@@ -138,7 +141,8 @@ public class OptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true);
 
 		pack();
-		//setSize(getWidth(), getHeight()+25);	// pad out a bit
+		if (getHeight()<450)		
+			setSize(getWidth(), 450);
 		setVisible(true);
 	}
 	
@@ -169,6 +173,7 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
 			// Staging restriction?
 			Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
+			Setup.setPromptFromStagingEnabled(promptTrackStagingCheckBox.isSelected());
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// RFID enabled?

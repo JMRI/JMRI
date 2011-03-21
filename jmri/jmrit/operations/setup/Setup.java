@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -182,6 +182,7 @@ public class Setup {
 	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
 	private static boolean allowLocalSidingMoves = false;	// when true local siding to siding moves are allowed
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
+	private static boolean promptFromStaging = false;		// when true prompt user to specify which staging track to use
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
@@ -275,6 +276,14 @@ public class Setup {
 	
 	public static void setTrainIntoStagingCheckEnabled(boolean enabled){
 		trainIntoStagingCheck = enabled;
+	}
+	
+	public static boolean isPromptFromStagingEnabled(){
+		return promptFromStaging;
+	}
+	
+	public static void setPromptFromStagingEnabled(boolean enabled){
+		promptFromStaging = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -920,6 +929,7 @@ public class Setup {
     	values.setAttribute("allowLocalSiding", isLocalSidingMovesEnabled()?"true":"false");
     	values.setAttribute("allowLocalYard", isLocalYardMovesEnabled()?"true":"false");
     	values.setAttribute("stagingRestrictionEnabled", isTrainIntoStagingCheckEnabled()?"true":"false");
+    	values.setAttribute("promptStagingEnabled", isPromptFromStagingEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
@@ -1180,6 +1190,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("stagingRestrictionEnabled: "+enable);
         		setTrainIntoStagingCheckEnabled(enable.equals("true"));
+        	}
+           	if((a = operations.getChild("buildOptions").getAttribute("promptStagingEnabled")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("promptStagingEnabled: "+enable);
+        		setPromptFromStagingEnabled(enable.equals("true"));
         	}
         }
         if (operations.getChild("buildReport") != null){

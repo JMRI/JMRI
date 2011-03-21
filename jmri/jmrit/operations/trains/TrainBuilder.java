@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.141 $
+ * @version             $Revision: 1.142 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -327,13 +327,15 @@ public class TrainBuilder extends TrainCommon{
 		List<String> stagingTracks = departLocation.getTracksByMovesList(Track.STAGING);
 		if (stagingTracks.size()>0){
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildDepartStaging"),new Object[]{departLocation.getName(), Integer.toString(stagingTracks.size())}));
-			for (int i=0; i<stagingTracks.size(); i++ ){
+			if (stagingTracks.size()>1 && Setup.isPromptFromStagingEnabled())
+				departStageTrack = PromptFromStagingDialog();
+			else for (int i=0; i<stagingTracks.size(); i++ ){
 				departStageTrack = departLocation.getTrackById(stagingTracks.get(i));
 				addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
 						departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
 						Integer.toString(departStageTrack.getNumberCars())}));
 				// is the departure track available?
-				if (!checkDepartureStagingTrack()){
+				if (!checkDepartureStagingTrack(departStageTrack)){
 					departStageTrack = null;
 					continue;
 				}	
@@ -433,6 +435,27 @@ public class TrainBuilder extends TrainCommon{
 		// now create and place train icon
 		train.moveTrainIcon(train.getTrainDepartsRouteLocation());
 		log.debug("Done building train "+train.getName());
+	}
+	
+	private Track PromptFromStagingDialog() {		
+		List<String> trackIds = departLocation.getTracksByNameList(null);
+		List<String> validTrackIds = new ArrayList<String>();
+		// only show valid tracks
+		for (int i=0; i<trackIds.size(); i++){
+			Track track = departLocation.getTrackById(trackIds.get(i));
+			if (checkDepartureStagingTrack(track))
+				validTrackIds.add(trackIds.get(i));
+		}
+		Object[] tracks = new Object[validTrackIds.size()];
+		for (int i=0; i<validTrackIds.size(); i++)
+			tracks[i] = departLocation.getTrackById(validTrackIds.get(i));
+		if (validTrackIds.size()>1){
+			Track selected = (Track)JOptionPane.showInputDialog(null, rb.getString("SelectDepartureTrack"), rb.getString("TrainDepartingStaging"), 
+					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+			return selected;
+		} else if (validTrackIds.size() == 1)
+			return (Track)tracks[0];
+		return null;	// no tracks available
 	}
 	
 	/**
@@ -1339,7 +1362,7 @@ public class TrainBuilder extends TrainCommon{
 	 * 
 	 * @return true is there are engines and cars available.
 	 */
-	private boolean checkDepartureStagingTrack(){
+	private boolean checkDepartureStagingTrack(Track departStageTrack){
 		if (departStageTrack.getNumberRS()==0)
 			return false;
 		// is the staging track direction correct for this train?
