@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -49,6 +49,7 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox localYardCheckBox = new JCheckBox(rb.getString("AllowLocalYard"));
 	JCheckBox trainIntoStagingCheckBox = new JCheckBox(rb.getString("TrainIntoStaging"));
 	JCheckBox promptTrackStagingCheckBox = new JCheckBox(rb.getString("PromptFromStaging"));
+	JCheckBox generateCvsManifestCheckBox = new JCheckBox(rb.getString("GenerateCsvManifest"));
 	
 	// text field
 	
@@ -72,6 +73,7 @@ public class OptionFrame extends OperationsFrame{
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
 		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
 		promptTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
+		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
@@ -111,8 +113,9 @@ public class OptionFrame extends OperationsFrame{
 		
 		JPanel pOption = new JPanel();
 		pOption.setLayout(new GridBagLayout());
-		pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));		
-		addItemLeft (pOption, rfidCheckBox, 1,0);
+		pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
+		addItemLeft (pOption, generateCvsManifestCheckBox, 1,0);
+		addItemLeft (pOption, rfidCheckBox, 1,1);
 		
 		// row 11
 		JPanel pControl = new JPanel();
@@ -176,7 +179,8 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setPromptFromStagingEnabled(promptTrackStagingCheckBox.isSelected());
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
-			// RFID enabled?
+			// Options
+			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			Setup.setRfidEnabled(rfidCheckBox.isSelected());
 			// Logging enabled?		
 			Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());

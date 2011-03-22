@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class TrainManagerXml extends OperationsXml {
 	
@@ -166,7 +166,9 @@ public class TrainManagerXml extends OperationsXml {
     }
     public void setBuildReportName(String name) { BuildReportFileName = name; }
     private String BuildReportFileName = "train (";
+    private String ManifestFileName = "train (";
     private String fileType =").txt";
+    private String fileTypeCsv =").csv";
     
 	/**
      * Store the train's manifest
@@ -183,8 +185,15 @@ public class TrainManagerXml extends OperationsXml {
     public String defaultManifestFilename(String name) { 
     	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"manifests"+File.separator+ManifestFileName+name+fileType;
     }
-    public void setManifestName(String name) { ManifestFileName = name; }
-    private String ManifestFileName = "train (";
+    
+    public File createTrainCsvManifestFile(String name) {
+    	return createFile(defaultCsvManifestFilename(name), false);	// don't backup
+    }
+    
+    public String defaultCsvManifestFilename(String name) { 
+    	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"csvManifests"+File.separator+ManifestFileName+name+fileTypeCsv;
+    }
+
  
     
 	/**

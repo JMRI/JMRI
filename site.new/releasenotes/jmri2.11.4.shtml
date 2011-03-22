@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.14 2011-03-21 17:16:50 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.15 2011-03-22 18:45:11 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -111,6 +111,7 @@ New operations features and bug fixes:
 <li>New car sort in the cars window, by car's final destination.</li>
 <li>Users can now decide to not modify the car's load status when using the Set Cars Tool.</li>
 <li>New build option, user can now optionally select the departure track from staging.</li>
+<Li>New operations feature.  You can now optionally create a csv manifest file.  Now you can use Excel to create a custom manifest to your liking.</Li>
 </ul>
 
 <p>

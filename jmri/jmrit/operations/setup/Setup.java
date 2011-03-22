@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -183,6 +183,7 @@ public class Setup {
 	private static boolean allowLocalSidingMoves = false;	// when true local siding to siding moves are allowed
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
 	private static boolean promptFromStaging = false;		// when true prompt user to specify which staging track to use
+	private static boolean generateCsvManifest = false;		// when true generate csv manifest
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
@@ -284,6 +285,14 @@ public class Setup {
 	
 	public static void setPromptFromStagingEnabled(boolean enabled){
 		promptFromStaging = enabled;
+	}
+	
+	public static boolean isGenerateCsvManifestEnabled(){
+		return generateCsvManifest;
+	}
+	
+	public static void setGenerateCsvManifestEnabled(boolean enabled){
+		generateCsvManifest = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -930,6 +939,7 @@ public class Setup {
     	values.setAttribute("allowLocalYard", isLocalYardMovesEnabled()?"true":"false");
     	values.setAttribute("stagingRestrictionEnabled", isTrainIntoStagingCheckEnabled()?"true":"false");
     	values.setAttribute("promptStagingEnabled", isPromptFromStagingEnabled()?"true":"false");
+    	values.setAttribute("generateCsvManifest", isGenerateCsvManifestEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
@@ -1042,16 +1052,6 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
         		setCarRoutingViaStagingEnabled(enable.equals("true"));
-        	}
-          	if ((a = operations.getChild("settings").getAttribute("carLogger"))!= null){
-        		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("carLogger: "+enable);
-        		setCarLoggerEnabled(enable.equals("true"));
-        	}
-           	if ((a = operations.getChild("settings").getAttribute("engineLogger"))!= null){
-        		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("engineLogger: "+enable);
-        		setEngineLoggerEnabled(enable.equals("true"));
         	}
           	if ((a = operations.getChild("settings").getAttribute("printLocComments"))!= null){
         		String enable = a.getValue();
@@ -1196,6 +1196,11 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("promptStagingEnabled: "+enable);
         		setPromptFromStagingEnabled(enable.equals("true"));
         	}
+          	if((a = operations.getChild("buildOptions").getAttribute("generateCsvManifest")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("generateCvsManifest: "+enable);
+        		setGenerateCsvManifestEnabled(enable.equals("true"));
+        	}
         }
         if (operations.getChild("buildReport") != null){
         	if ((a = operations.getChild("buildReport").getAttribute("level")) != null) {
@@ -1268,6 +1273,19 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
         	} catch ( NullPointerException ne) {
         		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
+        	}
+        }
+        // logging has to be last, causes cars and engines to load
+        if (operations.getChild("settings") != null){
+        	if ((a = operations.getChild("settings").getAttribute("carLogger"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carLogger: "+enable);
+        		setCarLoggerEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("engineLogger"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("engineLogger: "+enable);
+        		setEngineLoggerEnabled(enable.equals("true"));
         	}
         }
     }
