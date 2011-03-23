@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -60,6 +60,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String LENGTH = rb.getString("length");
 	public static final String TYPE = rb.getString("type");
 	public static final String ROAD = rb.getString("road");
+	public static final String CAPACITY = rb.getString("capacity");
 	public static final String SCHEDULE = rb.getString("schedule");
 	public static final String LOAD = rb.getString("load");
 	public static final String ERROR_TRACK = "ERROR wrong track for location";
@@ -536,6 +537,13 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				track.getUsedLength() + track.getReserved()+ length > track.getLength()){
 			log.debug("Can't set (" + toString() + ") length ("+length+") at destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH+ " ("+length+")";	
+		}
+		// a siding with a schedule can overload in aggressive mode, check track capacity
+		if (Setup.isBuildAggressive() && track != null && !track.getScheduleId().equals("")){
+			if (track.getUsedLength() > track.getLength()){
+				log.debug("Can't set ("+toString()+") due to maximum set out capacity to this track ("+track.getName()+")");
+				return CAPACITY;
+			}
 		}
 		if (destination != null && !destination.isTrackAtLocation(track))
 			return ERROR_TRACK;
