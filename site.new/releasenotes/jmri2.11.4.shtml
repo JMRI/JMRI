@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.15 2011-03-22 18:45:11 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.16 2011-03-23 13:53:36 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -102,16 +102,30 @@ None at the time of this release.
 <p>
 New operations features and bug fixes:
 <ul>
-<li>Cars with a final destination will no longer wander if the destination track doesn't have space for the car.</li>
-<li>The edit schedule destination track menu now shows only valid tracks.  Staging tracks are no longer shown.</li>
-<li>The program will now check the entire schedule in match mode when generating custom loads from staging.</li>
-<li>Fixed a minor bug with switch lists, the location status wouldn't become "Changed" when there were only car pick ups.</li>
-<li>The switch list "Print Switch List Changes" now only shows new trains since the last printing.</li>
-<li>New "Set Cars" tool.  Now you can set the location, destinations, and load for a group of cars.</li>
-<li>New car sort in the cars window, by car's final destination.</li>
-<li>Users can now decide to not modify the car's load status when using the Set Cars Tool.</li>
-<li>New build option, user can now optionally select the departure track from staging.</li>
-<Li>New operations feature.  You can now optionally create a csv manifest file.  Now you can use Excel to create a custom manifest to your liking.</Li>
+	<li>Cars with a final destination will no longer wander if the
+	destination track doesn't have space for the car.</li>
+	<li>The edit schedule destination track menu now shows only valid
+	tracks. Staging tracks are no longer shown.</li>
+	<li>The program will now check the entire schedule in match mode
+	when generating custom loads from staging.</li>
+	<li>Fixed a minor bug with switch lists, the location status
+	wouldn't become "Changed" when there were only car pick ups.</li>
+	<li>The switch list "Print Switch List Changes" now only shows new
+	trains since the last printing.</li>
+	<li>New "Set Cars" tool. Now you can set the location,
+	destinations, and load for a group of cars.</li>
+	<li>New car sort in the cars window, by car's final destination.</li>
+	<li>Users can now decide to not modify the car's load status when
+	using the Set Cars Tool.</li>
+	<li>New build option, user can now optionally select the departure
+	track from staging.</li>
+	<Li>New operations feature. You can now optionally create a Comma Separated Values (csv)
+	manifest file. Now you can use Excel to create a custom manifest to
+	your liking. Files can be found in operations-&gt;csvManifests</Li>
+	<li>A new capacity check has been added to limit overloading of
+	a siding with a schedule in aggressive mode. Overloading a siding can
+	still happen when using aggressive mode, but the overloading is now
+	limited.</li>
 </ul>
 
 <p>
