@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class LocoIcon extends PositionableLabel {
@@ -89,6 +89,9 @@ public class LocoIcon extends PositionableLabel {
         if (isEditable()) {
             getEditor().setShowCoordinatesMenu(this, popup);
         } else {
+            if (entry==null) {
+                setTextEditMenu(popup);
+            }
             getPopupUtility().setTextFontMenu(popup);
             getEditor().setRemoveMenu(this, popup);
         }
