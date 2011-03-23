@@ -22,7 +22,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  * @since 2.7.2
  */
 
@@ -228,9 +228,11 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         if (memory!=null) {
             memory.removePropertyChangeListener(this);
         }
-        spinner.removeChangeListener(this);
-        ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().removeMouseMotionListener(this);
-        ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().removeMouseListener(this);
+        if (spinner!=null) {
+            spinner.removeChangeListener(this);
+            ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().removeMouseMotionListener(this);
+            ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().removeMouseListener(this);
+        }
         spinner = null;
         memory = null;
     }

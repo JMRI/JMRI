@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  * @since 2.7.2
  */
 
@@ -215,9 +215,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         if (memory!=null) {
             memory.removePropertyChangeListener(this);
         }
-        _textBox.removeMouseMotionListener(this);
-        _textBox.removeMouseListener(this);
-        _textBox = null;
+        if (_textBox!=null) {
+            _textBox.removeMouseMotionListener(this);
+            _textBox.removeMouseListener(this);
+            _textBox = null;
+        }
         memory = null;
     }
 
