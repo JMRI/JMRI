@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SimpleRoster4web.xsl,v 1.6 2011-03-15 02:23:30 hebbos Exp $ -->
+<!-- $Id: SimpleRoster4web.xsl,v 1.7 2011-03-24 14:16:30 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -54,6 +54,10 @@
 				<xsl:value-of select="@id" />
 			</td>
 		</tr>
+	</xsl:template>
+	
+	<!-- Do nothing with groups -->
+	<xsl:template match='rosterGroup'>
 	</xsl:template>
 
 	<!-- Generates URL parameters for inControl function buttons-->

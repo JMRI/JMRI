@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
-<!-- $Id: roster-config.dtd,v 1.15 2011-03-15 02:18:12 hebbos Exp $ -->
+<!-- $Id: roster-config.dtd,v 1.16 2011-03-24 14:16:31 hebbos Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007.                  -->
 <!--                                                                        -->
@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT roster-config (roster*)>
+<!ELEMENT roster-config (roster*, rosterGroup*)>
 
 <!ELEMENT roster (locomotive*)>
 
