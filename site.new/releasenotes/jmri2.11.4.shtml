@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.16 2011-03-23 13:53:36 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.17 2011-03-24 16:15:37 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -126,6 +126,9 @@ New operations features and bug fixes:
 	a siding with a schedule in aggressive mode. Overloading a siding can
 	still happen when using aggressive mode, but the overloading is now
 	limited.</li>
+	<Li>Bug fix. A car in a kernel with FRED must be the lead (*) car.
+	When editing car with FRED and in kernel, the program will
+	automatically make the car the lead.</Li>
 </ul>
 
 <p>
