@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.42 $
+ * @version	$Revision: 1.43 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -188,6 +188,14 @@ public class CarManager extends RollingStockManager{
         jmri.util.StringUtil.sort(arr);
         for (i=0; i<arr.length; i++) out.add(arr[i]);
     	return out;
+    }
+    
+    /**
+     * Sort by rolling stock location
+     * @return list of RollingStock ids ordered by RollingStock location
+     */
+    public List<String> getByLocationList() {
+    	return getByList(getByKernelList(), BY_LOCATION);
     }
     
     /**

@@ -22,7 +22,7 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class RollingStockManager {
 	
@@ -431,19 +431,19 @@ public class RollingStockManager {
     }
     
     // The various sort options for RollingStock
-    private static final int BY_NUMBER = 0;
-    private static final int BY_ROAD = 1;
-    private static final int BY_TYPE = 2;
-    private static final int BY_COLOR = 3;
+    protected static final int BY_NUMBER = 0;
+    protected static final int BY_ROAD = 1;
+    protected static final int BY_TYPE = 2;
+    protected static final int BY_COLOR = 3;
     // BY_LOAD = 4 BY_MODEL = 4
     // BY_KERNEL = 5 BY_CONSIST = 5
-    private static final int BY_LOCATION = 6;
-    private static final int BY_DESTINATION = 7;
-    private static final int BY_TRAIN = 8;
-    private static final int BY_MOVES = 9;
-    private static final int BY_BUILT = 10;
-    private static final int BY_OWNER = 11;
-    private static final int BY_RFID = 12;
+    protected static final int BY_LOCATION = 6;
+    protected static final int BY_DESTINATION = 7;
+    protected static final int BY_TRAIN = 8;
+    protected static final int BY_MOVES = 9;
+    protected static final int BY_BUILT = 10;
+    protected static final int BY_OWNER = 11;
+    protected static final int BY_RFID = 12;
     // BY_RWE = 13
     // BY_FINAL_DEST = 14
     

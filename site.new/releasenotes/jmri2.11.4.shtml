@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.17 2011-03-24 16:15:37 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.18 2011-03-24 16:43:38 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -119,16 +119,21 @@ New operations features and bug fixes:
 	using the Set Cars Tool.</li>
 	<li>New build option, user can now optionally select the departure
 	track from staging.</li>
-	<Li>New operations feature. You can now optionally create a Comma Separated Values (csv)
-	manifest file. Now you can use Excel to create a custom manifest to
-	your liking. Files can be found in operations-&gt;csvManifests</Li>
-	<li>A new capacity check has been added to limit overloading of
-	a siding with a schedule in aggressive mode. Overloading a siding can
+	<Li>New operations feature. You can now optionally create a Comma
+	Separated Values (csv) manifest file. Now you can use Excel to create a
+	custom manifest to your liking. Files can be found in
+	operations-&gt;csvManifests</Li>
+	<li>A new capacity check has been added to limit overloading of a
+	siding with a schedule in aggressive mode. Overloading a siding can
 	still happen when using aggressive mode, but the overloading is now
 	limited.</li>
 	<Li>Bug fix. A car in a kernel with FRED must be the lead (*) car.
 	When editing car with FRED and in kernel, the program will
 	automatically make the car the lead.</Li>
+	<li>Manifests and switch lists now block
+	cars by kernel. The new blocking order is: first by road, then number,
+	kernel, location and finally destination.  This should keep cars in a
+	kernel together on the manifest and switch lists.</li>
 </ul>
 
 <p>
