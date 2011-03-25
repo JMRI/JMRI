@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -70,8 +70,10 @@ public class RouteCopyFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true);
     	
     	pack();
-    	if (getWidth()<300)
-    		setSize(getWidth()+20, getHeight()+20);
+      	if (getWidth()<300) 
+    		setSize(300, getHeight());
+    	if (getHeight()<150)
+    		setSize(getWidth(), 150);
     	
     	// setup buttons
 		addButtonAction(copyButton);

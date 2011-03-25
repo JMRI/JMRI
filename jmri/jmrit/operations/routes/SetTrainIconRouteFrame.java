@@ -31,7 +31,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -135,8 +135,10 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 		addSpinnerChangeListerner(spinTrainIconY);
 		
     	pack();
-       	if (getWidth()<300)
-       		setSize(getWidth()+50, getHeight()+20);
+     	if (getWidth()<300) 
+    		setSize(300, getHeight());
+    	if (getHeight()<250)
+    		setSize(getWidth(), 250);
        	setVisible(true);
     }
      
