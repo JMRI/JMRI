@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -192,7 +192,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         } else {
             _iconEditor = new IconAdder(name);
         }
-        _iconEditor = new IconAdder(name);
         _iconEditorFrame = _editor.makeAddIconFrame(name, false, table, _iconEditor);
         _iconEditorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {

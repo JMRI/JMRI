@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  * @since 2.7.2
  */
 
@@ -159,7 +159,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     */
     SpinnerNumberModel _spinModel = new SpinnerNumberModel(3,1,100,1);
     protected void edit() {
-        IconAdder iconEditor = new IconAdder("Memory") {
+        _iconEditor = new IconAdder("Memory") {
                 JSpinner spinner = new JSpinner(_spinModel);
                 protected void addAdditionalButtons(JPanel p) {
                     ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
@@ -171,16 +171,18 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                     p2.add(new JLabel(rb.getString("NumColsLabel")));
                     p2.add(spinner);
                     p.add(p2);
+                    p.setVisible(true);
                 }
         };
 
-        makeIconEditorFrame(this, "Memory", true, iconEditor);
+        makeIconEditorFrame(this, "Memory", true, _iconEditor);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
         };
+        _iconEditor.makeIconPanel();
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(memory);
     }
