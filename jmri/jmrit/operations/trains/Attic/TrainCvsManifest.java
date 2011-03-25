@@ -25,7 +25,35 @@ public class TrainCvsManifest extends TrainCommon {
 	CarManager carManager = CarManager.instance();
 	LocationManager locationManager = LocationManager.instance();
 	
-	private String del = ","; 	// delimiter
+	private final String del = ","; 	// delimiter
+	
+	private final String HEADER = "Operator"+del+"Description"+del+"Parameters";
+	
+	private final String AH = "AH"+del+"Add Helpers";
+	private final String AT = "AT"+del+"Arrival Time"+del;
+	private final String CC = "CC"+del+"Change Locos and Caboose";
+	private final String CL = "CL"+del+"Change Locos";
+	private final String DT = "DT"+del+"Departure Time"+del;
+	private final String DTR = "DTR"+del+"Departure Time Route"+del;
+	private final String LC = "LC"+del+"Location Comment"+del;
+	private final String LN = "LN"+del+"Location Name"+del;
+	private final String NW = "NW"+del+"No Work";
+	private final String PC = "PC"+del+"Pick up car";
+	private final String PL = "PL"+del+"Pick up loco";
+	private final String RC = "RC"+del+"Route Comment"+del;
+	private final String RH = "RH"+del+"Remove Helpers";
+	private final String RN = "RN"+del+"Railroad Name"+del;
+	private final String SC = "SC"+del+"Set out car";
+	private final String SL = "SL"+del+"Set out loco";
+	private final String TC = "TC"+del+"Train Comment"+del;
+	private final String TD = "TD"+del+"Train Departs"+del;
+	private final String TL = "TL"+del+"Train Length"+del;
+	private final String TM = "TM"+del+"Train Manifest Description"+del;
+	private final String TN = "TN"+del+"Train Name"+del;
+	private final String TW = "TW"+del+"Train Weight"+del;
+	private final String TT = "TT"+del+"Train Terminates"+del;
+	private final String VT = "VT"+del+"Valid"+del;
+	
 	public TrainCvsManifest(Train train){
 			// create comma separated value manifest file
 			File file = TrainManagerXml.instance().createTrainCsvManifestFile(
@@ -40,16 +68,16 @@ public class TrainCvsManifest extends TrainCommon {
 				return;
 			}
 			// build header
-			addLine(fileOut, "Operator"+del+"Description"+del+"Parameters");
+			addLine(fileOut, HEADER);
 			if (!train.getRailroadName().equals(""))
-				addLine(fileOut, "RN"+del+"Railroad Name"+del+train.getRailroadName());
+				addLine(fileOut, RN+train.getRailroadName());
 			else
-				addLine(fileOut, "RN"+del+"Railroad Name"+del+Setup.getRailroadName());
-			addLine(fileOut, "TN"+del+"Train Name"+del+train.getName());
-			addLine(fileOut, "TD"+del+"Train Description"+del+train.getDescription());		
-			addLine(fileOut, "VT"+del+"Valid"+del+getDate());
+				addLine(fileOut, RN+Setup.getRailroadName());
+			addLine(fileOut, TN+train.getName());
+			addLine(fileOut, TM+train.getDescription());		
+			addLine(fileOut, VT+getDate());
 			if (!train.getComment().equals("")){
-				addLine(fileOut, "TC"+del+"Train Comment"+del+train.getComment());
+				addLine(fileOut, TC+train.getComment());
 			}
 			
 			// get engine and car lists
@@ -72,16 +100,16 @@ public class TrainCvsManifest extends TrainCommon {
 	        		locationName = "\""+routeLocationName+"\"";
 	        	}
 				if (!routeLocationName.equals(previousRouteLocationName)){
-					addLine(fileOut, "LN"+del+"Location Name"+del+ locationName);
-					if (r == 0){addLine(fileOut, "DT"+del+"Departure Time"+del+train.getDepartureTime());
+					addLine(fileOut, LN+locationName);
+					if (r == 0){addLine(fileOut, DT+train.getDepartureTime());
 					} else if (!rl.getDepartureTime().equals("")){
-						addLine(fileOut, "DTR"+del+"Departure Time Route"+del+rl.getDepartureTime());
+						addLine(fileOut, DTR+rl.getDepartureTime());
 					} else {
-						addLine(fileOut, "AT"+del+"Arrival Time"+del+train.getExpectedArrivalTime(rl));
+						addLine(fileOut, AT+train.getExpectedArrivalTime(rl));
 					}
 					if (!work){
 						// no work at location
-						addLine(fileOut, "NW"+del+"No Work");
+						addLine(fileOut, NW);
 					}
 					// add location comment
 					if (Setup.isPrintLocationCommentsEnabled()){
@@ -92,7 +120,7 @@ public class TrainCvsManifest extends TrainCommon {
 				        		log.debug("comment has delimiter: "+comment);
 				        		comment = "\""+comment+"\"";
 				        	}
-							addLine(fileOut, "LC"+del+"Location Comment"+del+comment);
+							addLine(fileOut, LC+comment);
 						}
 					}
 				}
@@ -103,7 +131,7 @@ public class TrainCvsManifest extends TrainCommon {
 		        		log.debug("route comment has delimiter: "+comment);
 		        		comment = "\""+comment+"\"";
 		        	}
-					addLine(fileOut, "RC"+del+"Route Comment"+del+comment);
+					addLine(fileOut, RC+comment);
 				}			
 				// engine change or helper service?
 				if (train.getSecondLegOptions() != Train.NONE){
@@ -111,25 +139,25 @@ public class TrainCvsManifest extends TrainCommon {
 						engineCsvChange(fileOut, rl, train.getSecondLegOptions());
 					}
 					if (rl == train.getSecondLegEndLocation())
-						addLine(fileOut, "RH"+del+"Remove Helpers");
+						addLine(fileOut, RH);
 				}
 				if (train.getThirdLegOptions() != Train.NONE){
 					if (rl == train.getThirdLegStartLocation()){
 						engineCsvChange(fileOut, rl, train.getThirdLegOptions());
 					}
 					if (rl == train.getThirdLegEndLocation())
-						addLine(fileOut, "RH"+del+"Remove Helpers");
+						addLine(fileOut, RH);
 				}
 				
 				for (int i =0; i < engineList.size(); i++){
 					Engine engine = engineManager.getById(engineList.get(i));
 					if (engine.getRouteLocation() == rl)
-						fileOutCsvEngine(fileOut, engine, "PL"+del+"Pick up loco");
+						fileOutCsvEngine(fileOut, engine, PL);
 				}	
 				for (int i =0; i < engineList.size(); i++){
 					Engine engine = engineManager.getById(engineList.get(i));
 					if (engine.getRouteDestination() == rl)
-						fileOutCsvEngine(fileOut, engine, "SL"+del+"Set out loco");
+						fileOutCsvEngine(fileOut, engine, SL);
 				}	
 
 				// block cars by destination
@@ -139,7 +167,7 @@ public class TrainCvsManifest extends TrainCommon {
 						Car car = carManager.getById(carList.get(k));
 						if (car.getRouteLocation() == rl
 								&& car.getRouteDestination() == rld) {
-							fileOutCsvCar(fileOut, car, "PC"+del+"Pick up car");
+							fileOutCsvCar(fileOut, car, PC);
 							cars++;
 							if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
 								emptyCars++;
@@ -150,7 +178,7 @@ public class TrainCvsManifest extends TrainCommon {
 				for (int j = 0; j < carList.size(); j++) {
 					Car car = carManager.getById(carList.get(j));
 					if (car.getRouteDestination() == rl) {
-						fileOutCsvCar(fileOut, car, "SC"+del+"Set out car");
+						fileOutCsvCar(fileOut, car, SC);
 						cars--;
 						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
 							emptyCars--;
@@ -161,12 +189,12 @@ public class TrainCvsManifest extends TrainCommon {
 					RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
 					String nextRouteLocationName = splitString(rlNext.getName());
 					if (!routeLocationName.equals(nextRouteLocationName) && work){
-						addLine(fileOut, "TD"+del+"Train Departs"+del+locationName+del+rl.getTrainDirectionString());
-						addLine(fileOut, "TL"+del+"Train Length"+del+rl.getTrainLength()+del+emptyCars+del+cars);
-						addLine(fileOut, "TW"+del+"Train Weight"+del+rl.getTrainWeight());
+						addLine(fileOut, TD+locationName+del+rl.getTrainDirectionString());
+						addLine(fileOut, TL+rl.getTrainLength()+del+emptyCars+del+cars);
+						addLine(fileOut, TW+rl.getTrainWeight());
 					}
 				} else {
-					addLine(fileOut, "TT"+del+"Train Terminates"+del+ locationName);
+					addLine(fileOut, TT+locationName);
 				}
 				previousRouteLocationName = routeLocationName;
 			}
@@ -277,11 +305,11 @@ public class TrainCvsManifest extends TrainCommon {
 	
 	private void engineCsvChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
-			addLine(fileOut, "AH"+del+"Add Helpers");
+			addLine(fileOut, AH);
 		else if ((legOptions & Train.CHANGE_CABOOSE) == Train.CHANGE_CABOOSE)
-			addLine(fileOut, "CC"+del+"Change Locos and Caboose");
+			addLine(fileOut, CC);
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
-			addLine(fileOut, "CL"+del+"Change Locos");
+			addLine(fileOut, CL);
 	}
 }
 
