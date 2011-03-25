@@ -25,34 +25,34 @@ public class TrainCvsManifest extends TrainCommon {
 	CarManager carManager = CarManager.instance();
 	LocationManager locationManager = LocationManager.instance();
 	
-	private final String del = ","; 	// delimiter
+	private final static String del = ","; 	// delimiter
 	
-	private final String HEADER = "Operator"+del+"Description"+del+"Parameters";
+	private final static String HEADER = "Operator"+del+"Description"+del+"Parameters";
 	
-	private final String AH = "AH"+del+"Add Helpers";
-	private final String AT = "AT"+del+"Arrival Time"+del;
-	private final String CC = "CC"+del+"Change Locos and Caboose";
-	private final String CL = "CL"+del+"Change Locos";
-	private final String DT = "DT"+del+"Departure Time"+del;
-	private final String DTR = "DTR"+del+"Departure Time Route"+del;
-	private final String LC = "LC"+del+"Location Comment"+del;
-	private final String LN = "LN"+del+"Location Name"+del;
-	private final String NW = "NW"+del+"No Work";
-	private final String PC = "PC"+del+"Pick up car";
-	private final String PL = "PL"+del+"Pick up loco";
-	private final String RC = "RC"+del+"Route Comment"+del;
-	private final String RH = "RH"+del+"Remove Helpers";
-	private final String RN = "RN"+del+"Railroad Name"+del;
-	private final String SC = "SC"+del+"Set out car";
-	private final String SL = "SL"+del+"Set out loco";
-	private final String TC = "TC"+del+"Train Comment"+del;
-	private final String TD = "TD"+del+"Train Departs"+del;
-	private final String TL = "TL"+del+"Train Length"+del;
-	private final String TM = "TM"+del+"Train Manifest Description"+del;
-	private final String TN = "TN"+del+"Train Name"+del;
-	private final String TW = "TW"+del+"Train Weight"+del;
-	private final String TT = "TT"+del+"Train Terminates"+del;
-	private final String VT = "VT"+del+"Valid"+del;
+	private final static String AH = "AH"+del+"Add Helpers";
+	private final static String AT = "AT"+del+"Arrival Time"+del;
+	private final static String CC = "CC"+del+"Change Locos and Caboose";
+	private final static String CL = "CL"+del+"Change Locos";
+	private final static String DT = "DT"+del+"Departure Time"+del;
+	private final static String DTR = "DTR"+del+"Departure Time Route"+del;
+	private final static String LC = "LC"+del+"Location Comment"+del;
+	private final static String LN = "LN"+del+"Location Name"+del;
+	private final static String NW = "NW"+del+"No Work";
+	private final static String PC = "PC"+del+"Pick up car";
+	private final static String PL = "PL"+del+"Pick up loco";
+	private final static String RC = "RC"+del+"Route Comment"+del;
+	private final static String RH = "RH"+del+"Remove Helpers";
+	private final static String RN = "RN"+del+"Railroad Name"+del;
+	private final static String SC = "SC"+del+"Set out car";
+	private final static String SL = "SL"+del+"Set out loco";
+	private final static String TC = "TC"+del+"Train Comment"+del;
+	private final static String TD = "TD"+del+"Train Departs"+del;
+	private final static String TL = "TL"+del+"Train Length"+del;
+	private final static String TM = "TM"+del+"Train Manifest Description"+del;
+	private final static String TN = "TN"+del+"Train Name"+del;
+	private final static String TW = "TW"+del+"Train Weight"+del;
+	private final static String TT = "TT"+del+"Train Terminates"+del;
+	private final static String VT = "VT"+del+"Valid"+del;
 	
 	public TrainCvsManifest(Train train){
 			// create comma separated value manifest file
