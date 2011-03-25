@@ -20,7 +20,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000 - 2011
- * @version $Revision: 1.154 $
+ * @version $Revision: 1.155 $
  */
 
 public class Version {
@@ -47,7 +47,7 @@ public class Version {
      * It should be the empty string "" for released versions.
      */
      static final boolean released = false;
-     static final public String modifier = " Build 201103241245 Daniel Boudreau"; // automatically inserted by mark target in ant build
+     static final public String modifier = released?"."+test:"."+test+"+dev";
 
     /**
      * Provide the current version string in I.J.Kmod format.
