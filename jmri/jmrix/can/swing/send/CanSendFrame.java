@@ -26,7 +26,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
@@ -96,6 +96,7 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
             mUseField[i]=new JCheckBox();
             mPacketField[i]=new JTextField(10);
             mDelayField[i]=new JTextField(10);
+            mDelayField[i].setText("1");
             pane2.add(mUseField[i]);
             pane2.add(mPacketField[i]);
             pane2.add(mDelayField[i]);
