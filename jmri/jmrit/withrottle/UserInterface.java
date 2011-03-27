@@ -7,16 +7,16 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
- *	@version $Revision: 1.23 $
+ *	@version $Revision: 1.24 $
  */
 
-import java.awt.event.*;
-import javax.swing.*;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ResourceBundle;
@@ -26,6 +26,18 @@ import java.net.NetworkInterface;
 import java.net.InetAddress;
 
 import javax.jmdns.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.WindowConstants;
 
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfUtil;
@@ -64,6 +76,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
 
         try{
                 jmdns = JmDNS.create();
+                if (log.isDebugEnabled()) log.debug("JmDNS v:"+JmDNS.VERSION);
         }catch (IOException e){
                 log.error("JmDNS creation failed.");
         }
