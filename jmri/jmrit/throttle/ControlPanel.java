@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -40,7 +42,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.91 $
+ * @version    $Revision: 1.92 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -71,6 +73,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /* Constants for speed selection method */
     final public static int SLIDERDISPLAY = 0;
     final public static int STEPDISPLAY = 1;
+    
+    final public static int BUTTON_SIZE = 32;
+    final public static int ESTOP_BUTTON_SIZE = 48;
     
     private int _displaySlider = SLIDERDISPLAY;
     
@@ -141,8 +146,31 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
         SpeedStep14Button= new JRadioButton(rb.getString("Button14SS"));
         
-        forwardButton = new JRadioButton(rb.getString("ButtonForward"));
-        reverseButton = new JRadioButton(rb.getString("ButtonReverse"));
+        forwardButton = new JRadioButton();
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+        	forwardButton.setBorderPainted(false);
+        	forwardButton.setContentAreaFilled(false);
+        	forwardButton.setText(null);
+        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/RightRed.png"));
+        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/RightGreen.png"));
+        	forwardButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+        	forwardButton.setToolTipText(rb.getString("ButtonForward"));
+        } else
+        	forwardButton.setText(rb.getString("ButtonForward"));
+        
+        reverseButton = new JRadioButton();
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+        	reverseButton.setBorderPainted(false);
+        	reverseButton.setContentAreaFilled(false);
+        	reverseButton.setText(null);
+        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/LeftRed.png"));
+        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/LeftGreen.png"));
+        	reverseButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+        	reverseButton.setToolTipText(rb.getString("ButtonReverse"));
+        } else
+        	reverseButton.setText(rb.getString("ButtonReverse"));
         
         propertiesPopup = new JPopupMenu();
         initGUI();
@@ -544,7 +572,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                  }
                                              });
         
-        buttonPanel = new JPanel();
+        buttonPanel = new JPanel();        
         buttonPanel.setLayout(new GridBagLayout());
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         
@@ -552,11 +580,23 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         directionButtons.add(forwardButton);
         directionButtons.add(reverseButton);
         constraints.fill = GridBagConstraints.NONE;
-        constraints.gridy = 1;
+        
+    	constraints.gridy = 1;
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
+        	constraints.gridx = 3;
         buttonPanel.add(forwardButton, constraints);
-        constraints.gridy = 2;
+        
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
+        	constraints.gridx = 1;
+        else
+        	constraints.gridy = 2;
         buttonPanel.add(reverseButton, constraints);
         
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
+        	constraints.gridx = 2;
         forwardButton.addActionListener(
                                         new ActionListener()
                                         {
@@ -575,8 +615,20 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                             }
                                         });
         
-        stopButton = new JButton("STOP!");
-        constraints.gridy = 3;
+        
+        stopButton = new JButton();
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+        	stopButton.setBorderPainted(false);
+        	stopButton.setContentAreaFilled(false);
+        	stopButton.setText(null);
+        	stopButton.setIcon(new ImageIcon("resources/icons/throttles/Stop48.png"));
+        	stopButton.setPressedIcon(new ImageIcon("resources/icons/throttles/Stop40.png"));
+        	stopButton.setPreferredSize(new Dimension(ESTOP_BUTTON_SIZE, ESTOP_BUTTON_SIZE));
+        	stopButton.setToolTipText(rb.getString("ButtonEStop"));
+        } else
+        	stopButton.setText(rb.getString("ButtonEStop"));
+        constraints.gridy = 4;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         buttonPanel.add(stopButton, constraints);
         stopButton.addActionListener(
@@ -600,9 +652,24 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                         public void mouseReleased(MouseEvent e) {}
                                         public void mouseClicked(MouseEvent e) {}
                                     });
+        idleButton = new JButton();
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+        	idleButton.setBorderPainted(false);
+        	idleButton.setContentAreaFilled(false);
+        	idleButton.setText(null);
+        	idleButton.setIcon(new ImageIcon("resources/icons/throttles/RoundRedCircle24.png"));
+        	idleButton.setPressedIcon(new ImageIcon("resources/icons/throttles/RoundRedCircle20.png"));
+        	idleButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+        	idleButton.setToolTipText(rb.getString("ButtonIdle"));
+        } else
+        	idleButton.setText(rb.getString("ButtonIdle"));
         
-        idleButton = new JButton(rb.getString("ButtonIdle"));
-        constraints.gridy = 4;
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
+        	constraints.gridy = 1;
+        else
+        	constraints.gridy = 3;
         buttonPanel.add(idleButton, constraints);
         idleButton.addActionListener(
                                      new ActionListener()
@@ -616,7 +683,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                          }
                                      });
         
-        this.addComponentListener(
+        addComponentListener(
                                   new ComponentAdapter()
                                   {
                                       public void componentResized(ComponentEvent e)
@@ -746,7 +813,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.91 $
+     * @version    $Revision: 1.92 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
