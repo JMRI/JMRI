@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see jmri.GuiLafConfigPane
  * @since 2.9.5
  */
@@ -44,6 +44,9 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         e.setAttribute("LocaleLanguage",l.getLanguage());
         e.setAttribute("LocaleCountry",l.getCountry());
         e.setAttribute("LocaleVariant",l.getVariant());
+        
+        if (GuiLafConfigPane.getFontSize() != 0)
+        	e.setAttribute("fontsize", Integer.toString(GuiLafConfigPane.getFontSize()));
         
         e.setAttribute("nonStandardMouseEvent", 
                 (g.mouseEvent.isSelected() ?"yes":"no"));
@@ -88,7 +91,15 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute clickAttr = e.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null)
             jmri.util.swing.SwingSettings.setNonStandardMouseEvent(clickAttr.getValue().equals("yes"));
-        jmri.InstanceManager.configureManagerInstance().registerPref(new GuiLafConfigPane());
+        GuiLafConfigPane g = new GuiLafConfigPane();
+        jmri.InstanceManager.configureManagerInstance().registerPref(g);
+        
+        Attribute fontsize = e.getAttribute("fontsize");
+        if (fontsize != null){
+        	int size = Integer.parseInt(fontsize.getValue());
+        	GuiLafConfigPane.setFontSize(size);
+           	jmri.InstanceManager.tabbedPreferencesInstance().setUIFontSize(size);
+        }
         return result;
     }
 

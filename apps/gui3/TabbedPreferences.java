@@ -35,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -204,11 +204,11 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     void invokeSaveOptions(){
-        Enumeration keys = saveHook.keys();
+        Enumeration<Class<?>> keys = saveHook.keys();
         while ( keys.hasMoreElements() )
            {
             
-            Class<?> strClass = (Class<?>)keys.nextElement();
+            Class<?> strClass = keys.nextElement();
             String strMethod = saveMethod.get(strClass);
             boolean booMethod = false;
             boolean errorInMethod = false;
@@ -304,9 +304,9 @@ public class TabbedPreferences extends AppConfigBase {
           Object value = UIManager.get (key);
           
           if (value instanceof javax.swing.plaf.FontUIResource){
-            System.out.println(key);
+            //System.out.println(key);
             f = UIManager.getFont(key).deriveFont(Font.PLAIN, size);
-            System.out.println(f.getName() + " " + f.getFontName() + " " + f.getFamily());
+            //System.out.println(f.getName() + " " + f.getFontName() + " " + f.getFamily());
             UIManager.put (key, f);
           }
         }

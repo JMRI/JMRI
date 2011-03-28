@@ -3,10 +3,12 @@
 package apps;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -14,7 +16,7 @@ import javax.swing.*;
  * Provide GUI to configure Swing GUI LAF defaults
  * <P>
  * Provides GUI configuration for SWING LAF by
- * displaying radiobuttons for each LAF implementation available.
+ * displaying radio buttons for each LAF implementation available.
  * This information is then persisted separately
  * (e.g. by {@link jmri.configurexml.GuiLafConfigPaneXml})
  * <P>
@@ -22,10 +24,12 @@ import javax.swing.*;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @since 2.9.5  (Previously in jmri package)
  */
 public class GuiLafConfigPane extends JPanel {
+	
+	 private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     java.util.Hashtable<String, String> installedLAFs;
     ButtonGroup LAFGroup;
@@ -35,6 +39,8 @@ public class GuiLafConfigPane extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p;
         doLAF(p = new JPanel());
+        add(p);
+        doFontSize(p = new JPanel());
         add(p);
         doClickSelection(p = new JPanel());
         add(p);
@@ -75,9 +81,7 @@ public class GuiLafConfigPane extends JPanel {
                 jmi.setSelected(true);
                 selectedLAF = name;
             }
-        }
-
-        
+        }       
     }
 
     /**
@@ -135,10 +139,73 @@ public class GuiLafConfigPane extends JPanel {
         }
         return null;
     }
+    
+    static int fontSize = 0;
+    
+    public static void setFontSize(int size) {
+        fontSize = size<9?9:size>18?18:size;
+        //fontSizeComboBox.setSelectedItem(fontSize);
+    }
+    
+    public static int getFontSize(){
+    	return fontSize;
+    }
+    
+    private int getDefaultFontSize(){
+    	if (getFontSize() == 0){
+    		java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+    		while (keys.hasMoreElements()) {
+    			Object key = keys.nextElement();
+    			Object value = UIManager.get (key);
+
+    			if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")){
+    				Font f = UIManager.getFont(key);
+    				log.debug("Key:"+key.toString()+" Font: "+f.getName()+" size: "+f.getSize());
+    				return f.getSize();
+    			}
+    		}
+    	}
+		return 11;	// couldn't find the default return a reasonable font size
+    }
+    
+    private static final Integer fontSizes[] = {
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18 };
+    
+    static JComboBox fontSizeComboBox = new JComboBox(fontSizes);
+    static java.awt.event.ActionListener listener;
+    
+    public void doFontSize(JPanel panel){
+    	
+    	JLabel fontSizeLabel = new JLabel(rb.getString("ConsoleFontSize"));
+    	fontSizeComboBox.removeActionListener(listener);
+        fontSizeComboBox.setSelectedItem(getDefaultFontSize());
+        JLabel fontSizeUoM = new JLabel(rb.getString("ConsoleFontSizeUoM"));
+       	
+        panel.add(fontSizeLabel);
+    	panel.add(fontSizeComboBox);
+       	panel.add(fontSizeUoM);
+       	
+       	fontSizeComboBox.addActionListener(listener = new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				setFontSize((Integer)fontSizeComboBox.getSelectedItem());
+			}
+		});
+    }
 
     public String getClassName() {
         return LAFGroup.getSelection().getActionCommand();
 
     }
+    // initialize logging
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiLafConfigPane.class.getName());
 }
 
