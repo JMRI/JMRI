@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.20 2011-03-27 23:16:55 bhoffman351 Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.21 2011-03-28 01:28:55 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -170,9 +170,6 @@ Pete Cressman:
 <li>Fixed bug when removing Memory Input and Memory Spinner icons.</li>
 <li>Fixed bug for Memory Input popup menu to change column width.</li>
 </ul>
-
-<p>
-Brett Hoffman updated JmDNS (ZeroConf) to the latest version, 3.4.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
