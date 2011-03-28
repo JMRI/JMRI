@@ -24,7 +24,7 @@ import javax.swing.*;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @since 2.9.5  (Previously in jmri package)
  */
 public class GuiLafConfigPane extends JPanel {
@@ -164,8 +164,9 @@ public class GuiLafConfigPane extends JPanel {
     				return f.getSize();
     			}
     		}
+    		return 11;	// couldn't find the default return a reasonable font size
     	}
-		return 11;	// couldn't find the default return a reasonable font size
+		return getFontSize();
     }
     
     private static final Integer fontSizes[] = {
