@@ -30,7 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.79 $
+ * @version $Revision: 1.80 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -181,9 +181,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public Sensor getSensor() {
-        if (debug) log.debug("getSensor: namedSensor= "+
-                             ((namedSensor==null)?"null": getNameString())+
-                             " isIcon= "+isIcon()+", isText= "+isText()+", activeText= "+activeText);
         if (namedSensor==null) {
             return null;
         }
@@ -212,8 +209,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     * That is, by its localized bean state name
     */
     public void setIcon(String name, NamedIcon icon) {
-        if (log.isDebugEnabled()) log.debug("setIcon for name \""+name+
-                                            "\" state= "+_name2stateMap.get(name));
+        if (log.isDebugEnabled()) log.debug("setIcon for name \""+name+"\"");
         if (_iconMap==null) {
             makeIconMap();
         }
@@ -540,36 +536,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         _iconEditor = null;
         invalidate();
     }
-/*
-    protected void edit() {
-        makeIconEditorFrame(this, "Sensor", true, null);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
-        _iconEditor.setIcon(3, "SensorStateActive", getActiveIcon());
-        _iconEditor.setIcon(2, "SensorStateInactive", getInactiveIcon());
-        _iconEditor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
-        _iconEditor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
-        _iconEditor.makeIconPanel();
-
-        ActionListener addIconAction = new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                updateSensor();
-            }
-        };
-        _iconEditor.complete(addIconAction, true, true, true);
-        _iconEditor.setSelection(getSensor());
-    }
-    void updateSensor() {
-        setActiveIcon(_iconEditor.getIcon("SensorStateActive"));
-        setInactiveIcon(_iconEditor.getIcon("SensorStateInactive"));
-        setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
-        setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
-        setSensor(_iconEditor.getTableSelection().getDisplayName());
-        _iconEditorFrame.dispose();
-        _iconEditorFrame = null;
-        _iconEditor = null;
-        invalidate();
-    }
-*/
+    
     // Original text is used when changing between icon and text, this allows for a undo when reverting back. 
     String originalText;
     public void setOriginalText(String s) {
