@@ -56,7 +56,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -499,9 +499,9 @@ public class LayoutBlock extends AbstractNamedBean
 					p.setToBlockDirection(lc.getReverseDirection());
 					p.setFromBlockDirection(lc.getDirection());
 				}
-				java.util.List beans = p.getSettings();
+				java.util.List<jmri.BeanSetting> beans = p.getSettings();
 				for (int j=0;j<beans.size();j++) {	
-					p.removeSetting((jmri.BeanSetting)beans.get(j));
+					p.removeSetting(beans.get(j));
 				}
 				auxTools.addBeanSettings(p,lc,_instance);
 			}

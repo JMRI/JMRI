@@ -47,8 +47,10 @@ public class RosterIconFactory {
 		ImageIcon icon = icons.get(re.getIconPath());
 		if (icon == null) {
 			icon = new ImageIcon( re.getIconPath(), re.getId());
+			/* icon can not be null
 			if (icon==null)
 				return null;
+			*/
 			icon.setImage( icon.getImage().getScaledInstance( -1, iconHeight, java.awt.Image.SCALE_FAST ));
 			icons.put(re.getIconPath(), icon);
 		}

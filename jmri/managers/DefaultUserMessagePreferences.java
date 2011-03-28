@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -599,10 +599,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     public ArrayList<String> getWindowList(){
         ArrayList<String> list = new ArrayList<String>();
-        Enumeration keys = windowDetails.keys();
+        Enumeration<String> keys = windowDetails.keys();
         while ( keys.hasMoreElements() )
            {
-           String key = (String)keys.nextElement();
+           String key = keys.nextElement();
            list.add(key);
            } // end while
         return list;
@@ -630,10 +630,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     */
     public ArrayList<String> getPreferencesClasses(){
         ArrayList<String> list = new ArrayList<String>();
-        Enumeration keys = classPreferenceList.keys();
+        Enumeration<String> keys = classPreferenceList.keys();
         while ( keys.hasMoreElements() )
            {
-           String key = (String)keys.nextElement();
+           String key = keys.nextElement();
            list.add(key);
            } // end while
         return list;

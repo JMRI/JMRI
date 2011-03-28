@@ -1198,7 +1198,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("Editor DropTargetListener dropActionChanged ");
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    @SuppressWarnings("unchecked")
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void drop(DropTargetDropEvent evt) {
@@ -1256,10 +1257,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 putItem(l);
                 evt.dropComplete(true);
             } else if (tr.isDataFlavorSupported(_positionableListDataFlavor)) {
-                ArrayList dragGroup = 
-                        (ArrayList)tr.getTransferData(_positionableListDataFlavor);
+                ArrayList<Positionable> dragGroup = 
+                        (ArrayList<Positionable>)tr.getTransferData(_positionableListDataFlavor);
                 for (int i=0; i<dragGroup.size(); i++) {
-                    Positionable pos = (Positionable)dragGroup.get(i);
+                    Positionable pos = dragGroup.get(i);
                     putItem(pos);
                     pos.updateSize();
                     if (_debug) log.debug("DnD Add "+pos.getNameString());

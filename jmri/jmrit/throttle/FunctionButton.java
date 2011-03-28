@@ -1,6 +1,5 @@
 package jmri.jmrit.throttle;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
@@ -448,12 +447,14 @@ public class FunctionButton extends JToggleButton implements ActionListener
 		ResizableImagePanel fnImage = null;
 		if (fnImg != null) {
 			fnImage = new ResizableImagePanel();
+			/* fnImage can not be null
 			if (fnImage != null) {
 				fnImage.setBackground(new Color(0,0,0,0));
 				fnImage.setRespectAspectRatio(true);
 				fnImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
 				fnImage.setImagePath(fnImg);
 			}
+			*/
 		}
 		if ((fnImage != null) && (fnImage.getScaledImage()!=null)) {
 			setIcon(new ImageIcon(fnImage.getScaledImage()));
@@ -467,18 +468,22 @@ public class FunctionButton extends JToggleButton implements ActionListener
 	
 	public void setSelectedIconPath(String fnImg) {
 		ResizableImagePanel fnSelectedImage = null;
+		/* fnSlectedImage has to be null
 		if (fnSelectedImage != null) {
 			removeComponentListener(fnSelectedImage);
 			fnSelectedImage = null;
 		}
+		*/
 		if (fnImg != null) {
 			fnSelectedImage = new ResizableImagePanel();
+			/* fnSelecedImage can not be null
 			if (fnSelectedImage != null) {
 				fnSelectedImage.setBackground(new Color(0,0,0,0));
 				fnSelectedImage.setRespectAspectRatio(true);
 				fnSelectedImage.setSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
 				fnSelectedImage.setImagePath(fnImg);
 			}
+			*/
 		}
 		if ((fnSelectedImage != null) && (fnSelectedImage.getScaledImage()!=null)) {
 			ImageIcon icon = new ImageIcon(fnSelectedImage.getScaledImage());

@@ -7,7 +7,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import jmri.jmrit.withrottle.WiThrottleManager;
 import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
 
 /** A simple HTTP server that generates a Web page showing all
@@ -30,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class MiniServer extends NetworkServer {
