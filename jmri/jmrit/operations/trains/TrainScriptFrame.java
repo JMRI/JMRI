@@ -27,7 +27,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TrainScriptFrame extends OperationsFrame {
@@ -349,10 +349,10 @@ public class TrainScriptFrame extends OperationsFrame {
     private void packFrame(){
     	setPreferredSize(null);
  		pack();
- 		if(getWidth()<500)
- 			setSize(550, getHeight()+50);
- 		if (getHeight()<300)
- 			setSize(getWidth(), 350);
+ 		if(getWidth()<600)
+ 			setSize(600, getHeight());
+ 		if (getHeight()<500)
+ 			setSize(getWidth(), 500);
 		setVisible(true);
     }
 	

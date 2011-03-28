@@ -25,7 +25,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class PrintRouteAction  extends AbstractAction {
 	
@@ -65,12 +65,12 @@ public class PrintRouteAction  extends AbstractAction {
     	}
     	try {
         	String s = rb.getString("Location") 
-        	+ "\t     " + rb.getString("Direction") 
-        	+ "\t" + rb.getString("MaxMoves") 
-        	+ "  " + rb.getString("Pickups")
-        	+ "\t" + rb.getString("Drops")
-        	+ "\t" + rb.getString("Length")
-        	+ "\t" + rb.getString("Wait")
+        	+ "\t    " + rb.getString("Direction") 
+        	+ " " + rb.getString("MaxMoves") 
+        	+ " " + rb.getString("Pickups")
+        	+ " " + rb.getString("Drops")
+        	+ " " + rb.getString("Length")
+        	+ " " + rb.getString("Wait")
         	+ "\t" + rb.getString("Grade")
         	+ "\t" + rb.getString("X")
         	+ "    " + rb.getString("Y")

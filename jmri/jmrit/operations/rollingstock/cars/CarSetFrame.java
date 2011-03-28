@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -300,8 +300,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	
 	protected void packFrame(){
 		super.packFrame();
-		if (getHeight()<600)
-			setSize(getWidth(), 600);
+		if (getHeight()<650)
+			setSize(getWidth(), 650);
 	}
 	
 	public void dispose(){

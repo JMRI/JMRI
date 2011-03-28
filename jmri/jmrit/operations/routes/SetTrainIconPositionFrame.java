@@ -33,7 +33,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 	
@@ -172,10 +172,11 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 		addSpinnerChangeListerner(spinTrainIconSouthY);
 		
     	pack();
-     	if (getWidth()<325) 
-    		setSize(325, getHeight());
-    	if (getHeight()<250)
-    		setSize(getWidth(), 250);
+     	if (getWidth()<350) 
+    		setSize(350, getHeight());
+     	// height has to be tall enough for four train directions
+    	if (getHeight()<400)
+    		setSize(getWidth(), 400);
        	setVisible(true);
     }
      
