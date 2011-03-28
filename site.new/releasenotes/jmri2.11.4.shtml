@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.21 2011-03-28 01:28:55 bhoffman351 Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.22 2011-03-28 14:44:36 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -166,10 +166,15 @@ Pete Cressman:
 <ul>
 <li>Fixed a bug where groups of icons copied and pasted into another panel had their attributes incorrectly modified.</li>
 <li>Updated Control Panel documentation.</li>
-<li>Added edit text menu item to Loco Marker popup when in opreations mode.</li>
+<li>Added edit text menu item to Loco Marker popup when in operations mode.</li>
 <li>Fixed bug when removing Memory Input and Memory Spinner icons.</li>
 <li>Fixed bug for Memory Input popup menu to change column width.</li>
 </ul>
+<P>Dan Boudreau:</P>
+<ul>
+<LI>Users can now adjust font size.  See Edit Preferences, Display GUI.</LI>
+</ul>
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
