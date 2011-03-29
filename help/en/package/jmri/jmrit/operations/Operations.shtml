@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.102 2011-03-11 02:30:04 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.103 2011-03-29 02:04:11 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -355,8 +355,22 @@ staging tracks based on the train's rolling stock restrictions. However,
 if you want certain car types, car loads, or road names to be transported by a train,
 but not delivered to staging, deselect this feature.</P>
 
-<P>The next option is Car Routing, and it is recommended that you
-leave this enabled. With car routing enabled, you can use a <A
+<A NAME="PromptDepartureTrack"></A>
+<H3>Prompt for Departure Track from Staging</H3>
+
+If you would like the program to ask you which track a train should
+depart from staging during the train build, select this option. Normally
+during the train build the program would selected the least
+recently used track when determining the track to depart from. Note that the
+program will only prompt you if there are two or more trains available
+in staging that meet the train's requirements. 
+
+<A NAME="CarRouting"></A>
+<H3>Car Routing</H3>
+
+<P>When car routing is enabled, the program will use multiple trains
+to deliver a car to it final destination. It is recommended that you
+leave this option enabled. With car routing enabled, you can use a <A
 	HREF="#Schedules">Schedule</A> to deliver a car to a specific location.
 The car routing algorithm will search for the most efficient route for
 the car to travel. The algorithm will attempt to use interchanges and
@@ -373,6 +387,60 @@ If you want the operations program to log your locomotive and or car movements t
 a file, select the appropriate checkboxes.  The program will create a new
 directory called "logger" in the operations directory.  For each day's session
 the program will create a new file using the day's date.
+
+<A NAME="ManifestOptions"></A>
+<H3>Options</H3>
+
+If you want to create your own manifest using a comma separated value (.csv) file, select
+this option.  You can use a program like Excel to create a custom manifest to your liking.
+You can find the manifest files in the operations directory in a directory called "csvManifests".
+Each line of the file starts with a two or three letter code, followed by the code's description,
+and then any parameters associated with the code. 
+Here's a list of the current codes and descriptions:
+<P></P>
+<table>
+<tr><td>Code</td><td>Description</td><td>Parameters</td></tr>
+<tr><td>AH</td><td>Add Helpers</td></tr>
+<tr><td>AT</td><td>Arrival Time</td><td>Time</td></tr>
+<tr><td>CC</td><td>Change Locos and Caboose</td></tr>
+<tr><td>CL</td><td>Change Locos</td></tr>
+<tr><td>DT</td><td>Departure Time</td><td>Time</td></tr>
+<tr><td>DTR</td><td>Departure Time Route</td><td>Time</td></tr>
+<tr><td>LC</td><td>Location Comment</td><td>Comment</td></tr>
+<tr><td>LN</td><td>Location Name</td><td>Name</td></tr>
+<tr><td>NW</td><td>No Work</td></tr>
+<tr><td>PC</td><td>Pick up car</td><td>See below</td></tr>
+<tr><td>PL</td><td>Pick up loco</td><td>See below</td></tr>
+<tr><td>RC</td><td>Route Comment</td><td>Comment</td></tr>
+<tr><td>RH</td><td>Remove Helpers</td></tr>
+<tr><td>RN</td><td>Railroad Name</td><td>Name</td></tr>
+<tr><td>SC</td><td>Set out car</td><td>See below</td></tr>
+<tr><td>SL</td><td>Set out loco</td><td>See below</td></tr>
+<tr><td>TC</td><td>Train Comment</td><td>Comment</td></tr>
+<tr><td>TD</td><td>Train Departs</td><td>Name</td></tr>
+<tr><td>TL</td><td>Train Length</td><td>Length</td></tr>
+<tr><td>TM</td><td>Train Manifest Description</td><td>Description</td></tr>
+<tr><td>TN</td><td>Train Name</td><td>Name</td></tr>
+<tr><td>TW</td><td>Train Weight</td><td>Weight</td></tr>
+<tr><td>TT</td><td>Train Terminates</td><td>Name</td></tr>
+<tr><td>VT</td><td>Valid</td><td>Month/Day, Year Time</td></tr>
+</table>
+
+<P>Time uses the format Hour:Minute.</P>  
+<P>The car parameters for pick up car (PC) and set out car (SC) are: road,
+number, type, length, load, color, location name, track name,
+destination name, destination track name, owner name, kernel name, car
+comment, pick up comment, set out comment,C,F,H, RFID. Where C =
+Caboose, F = FRED, and H = Hazardous</P>
+<P>The loco parameters for pick up loco (PL) and set out loco (SL) are: road,
+number, model, length, type, hp, location name, track name, destination
+name, destination track name, owner name, consist name, car comment,
+RFID.</P>
+
+
+
+
+
 
 <A NAME="PrintOptions"></A>
 <H2>Print Options</H2>
@@ -684,13 +752,13 @@ aspects of a schedule. In match mode, the program will search the entire
 schedule to find a car type and load that matches the car that the
 program is trying to place. In match mode the pointer shows the last car
 that the program found acceptable for the siding. To change the schedule
-to match mode, select in the edit schedule window "Tools-&gt;Options",
-select "Match" and press "Save". Match mode is useful when the order
+to match mode, select "Match" in the edit schedule window
+and press "Save". Match mode is useful when the order
 cars arrive isn't important, but you still want to ship cars with a
 specific load, provide the car's next destination, or have the car wait
 for a specific number of trains at the siding. In match mode the
 schedule item count is ignored as it isn't used. All of the other fields
-will work, and you can have the same type of car several times, with
+are available, and you can have the same type of car several times, with
 each item in the schedule looking for a specific receive load. Also in
 match mode the car type selection box advances automatically to the next
 car type when adding a car type. This makes it easy to quickly add car
