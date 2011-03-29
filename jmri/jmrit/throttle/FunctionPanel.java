@@ -78,6 +78,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 			mThrottle.setF26(false);
 			mThrottle.setF27(false);
 			mThrottle.setF28(false);
+            mThrottle.removePropertyChangeListener(this);
+            mThrottle=null;
 		}
 	}
 
@@ -430,7 +432,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.69 $
+	 * @version $Revision: 1.70 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;
