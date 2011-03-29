@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FindBugs.shtml,v 1.5 2011-03-28 16:54:40 jacobsen Exp $ -->
+<!-- $Id: FindBugs.shtml,v 1.6 2011-03-29 16:19:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -82,17 +82,19 @@ For more on this, see the
 It can be useful to mark classes with one of the following annotations
 so that FindBugs does a good job of reasoning about it:
 <ul>
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">CheckForNull</a> -
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
     a variable or parameter may have a null value, so all uses should appropriately handle that.
-<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">Immutable</a> -
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
+    this method has no side-effects, so there's no point in calling it without checking it's return value
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">net.jcip.annotations.Immutable</a> -
     An object of this class can't be changed after it's created.  This allows both better checking
     of logic, and also simplifies use by your colleagues, so it's good to tag classes with this 
     property.
-<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html">NotThreadSafe</a> - 
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html">net.jcip.annotations.NotThreadSafe</a> - 
     a class that isn't thread-safe, so shouldn't be checked for concurrency issues. Often used
     for Swing-based classes, but note that some Swing components (e.g. monitor windows,
     classes with listeners) do have to accept input from other threads.
-<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">ThreadSafe</a> -
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">net.jcip.annotations.ThreadSafe</a> -
     classes that do have to be usable for multiple threads.  FindBugs generally assumes this,
     but it's good to put it on a class that's intended to be thread-safe as a reminder to 
     future developers.
