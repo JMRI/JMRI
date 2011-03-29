@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.93 $
+ * @version         $Revision: 1.94 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -233,6 +233,7 @@ abstract public class AbstractMRTrafficController {
         log.debug("transmitLoop starts");
         
         // loop forever
+        xmtLoop:
         while(true) {
             AbstractMRMessage m = null;
             AbstractMRListener l = null;
@@ -260,7 +261,7 @@ abstract public class AbstractMRTrafficController {
             			mCurrentState = WAITREPLYINPROGMODESTATE;
             			log.debug("Enter Programming Mode");
             			if(modeMsg!=null) {
-            				forwardToPort(modeMsg, null);
+                                            forwardToPort(modeMsg, null);
             				// wait for reply
             				transmitWait(m.getTimeout(), WAITREPLYINPROGMODESTATE, "enter programming mode interrupted");
             			}
@@ -270,7 +271,7 @@ abstract public class AbstractMRTrafficController {
             			mCurrentState = WAITREPLYINNORMMODESTATE;
             			log.debug("Enter Normal Mode");
             			if(modeMsg!=null) {
-            				forwardToPort(modeMsg, null);
+                                            forwardToPort(modeMsg, null);
             				// wait for reply
             				transmitWait(m.getTimeout(), WAITREPLYINNORMMODESTATE, "enter normal mode interrupted");
             			}
@@ -283,7 +284,7 @@ abstract public class AbstractMRTrafficController {
         				mCurrentState = WAITMSGREPLYSTATE;
             		}
             	}
-            	forwardToPort(m, l);
+                    forwardToPort(m, l);
             	// reply expected?
                 if (m.replyExpected()) {
                 	// wait for a reply, or eventually timeout
@@ -357,7 +358,7 @@ abstract public class AbstractMRTrafficController {
                 		// yes, send that
                 		log.debug("Sending poll, wait time "+Long.toString(waitTimePoll));
                 		mCurrentState = WAITMSGREPLYSTATE;
-                		forwardToPort(msg, pollReplyHandler());
+                                    forwardToPort(msg, pollReplyHandler());
                 		// wait for reply
                 		transmitWait(msg.getTimeout(), WAITMSGREPLYSTATE, "interrupted while waiting poll reply");
                 		checkReplyInDispatch();
@@ -549,7 +550,7 @@ abstract public class AbstractMRTrafficController {
                             synchronized(xmtRunnable) {
                                 xmtRunnable.wait(m.getTimeout());
                             }
-                        } catch (InterruptedException e) { 
+                        } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("retry wait interupted");
                         }
@@ -559,7 +560,7 @@ abstract public class AbstractMRTrafficController {
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+     } catch (Exception e) {
         	// TODO Currently there's no port recovery if an exception occurs
         	// must restart JMRI to clear xmtException.
         	xmtException = true;
@@ -573,9 +574,12 @@ abstract public class AbstractMRTrafficController {
     }
     
     protected void portWarn(Exception e) {
-        log.warn("sendMessage: Exception: "+e.toString());
+        log.warn("sendMessage: Exception: port warn "+e.toString());
     }
-    
+
+    protected void portWarnTCP(Exception e) {
+        log.warn("Exception java net: "+e.toString());
+    }
     // methods to connect/disconnect to a source of data in a AbstractPortController
     public AbstractPortController controller = null;
     
@@ -649,7 +653,7 @@ abstract public class AbstractMRTrafficController {
      * May throw an Exception.
      */
     public boolean portReadyToSend(AbstractPortController p) throws Exception {
-    	if(p!=null && !xmtException) return true;
+    	if(p!=null && !xmtException && !rcvException) return true;
     	else return false;
     }
 
@@ -657,7 +661,8 @@ abstract public class AbstractMRTrafficController {
     protected DataInputStream istream = null;
     protected OutputStream ostream = null;
 
-
+    protected boolean rcvException = false;
+    
     /**
      * Handle incoming characters.  This is a permanent loop,
      * looking for input messages in character form on the
@@ -671,6 +676,7 @@ abstract public class AbstractMRTrafficController {
                 handleOneIncomingReply();
             }
             catch (java.io.IOException e) {
+                rcvException = true;
                 reportReceiveLoopException(e);
                 break;
             }
@@ -679,6 +685,7 @@ abstract public class AbstractMRTrafficController {
                 e1.printStackTrace();
             }
         }
+        log.error("Exit from rcv loop");
     }
     
     
@@ -689,6 +696,8 @@ abstract public class AbstractMRTrafficController {
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: "+e.toString());
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        if (controller instanceof AbstractNetworkPortController)
+            portWarnTCP(e);
     }
     abstract protected AbstractMRReply newReply();
     abstract protected boolean endOfMessage(AbstractMRReply r);
@@ -713,6 +722,10 @@ abstract public class AbstractMRTrafficController {
         while (true) { // loop will repeat until character found
             int nchars;
             nchars = istream.read(rcvBuffer, 0, 1);
+            if (nchars== -1) {
+                // No more bytes can be read from the channel 
+                throw new java.io.IOException("Connection not terminated normally");
+            }
             if (nchars>0) return rcvBuffer[0];
         }
     }
@@ -910,7 +923,7 @@ abstract public class AbstractMRTrafficController {
             modeMsg.setRetries(100); // set the number of retries  
             // high, just in case the interface
             // is busy when we try to send
-            forwardToPort(modeMsg, null);
+                forwardToPort(modeMsg, null);
             // wait for reply
             try {
                  if (xmtRunnable!=null)
