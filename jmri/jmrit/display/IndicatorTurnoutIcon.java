@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -145,13 +145,12 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         }
         namedOccSensor = sen;
         if (namedOccSensor != null) {
-            if (_iconMaps==null) {
-                initMaps();
-            }
             Sensor sensor = getOccSensor();
             sensor.addPropertyChangeListener(this);
             setStatus(sensor.getKnownState());
-            displayState(turnoutState());
+            if (_iconMaps!=null) {
+                displayState(turnoutState());
+            }
         } 
     }
 
@@ -185,13 +184,12 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         }
         namedOccBlock = blockHandle;
         if (namedOccBlock != null) {
-            if (_iconMaps==null) {
-                initMaps();
-            }
             OBlock block = getOccBlock();
             block.addPropertyChangeListener(this);
             setStatus(block, block.getState());
-            displayState(turnoutState());
+            if (_iconMaps!=null) {
+                displayState(turnoutState());
+            }
         } 
     }
     public OBlock getOccBlock() { 
@@ -230,12 +228,11 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         }
         namedErrSensor = sen;
         if (namedErrSensor != null) {
-            if (_iconMaps==null) {
-                initMaps();
-            }
             getErrSensor().addPropertyChangeListener(this);
             setErrorStatus(getErrSensor().getKnownState());
-            displayState(turnoutState());
+            if (_iconMaps!=null) {
+                displayState(turnoutState());
+            }
         }
     }
     

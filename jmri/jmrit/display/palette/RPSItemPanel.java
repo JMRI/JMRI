@@ -74,8 +74,8 @@ public class RPSItemPanel extends FamilyItemPanel {
             }
             if (log.isDebugEnabled()) log.debug("IconDragJLabel.getTransferData");
             RpsPositionIcon r = new RpsPositionIcon(_editor);
-            r.setActiveIcon(iconMap.get("active"));
-            r.setErrorIcon(iconMap.get("error"));
+            r.setActiveIcon(new NamedIcon(iconMap.get("active")));
+            r.setErrorIcon(new NamedIcon(iconMap.get("error")));
             r.setSize(r.getPreferredSize().width, r.getPreferredSize().height);
             r.setLevel(Editor.SENSORS);
             return r;

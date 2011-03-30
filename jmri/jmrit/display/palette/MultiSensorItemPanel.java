@@ -271,9 +271,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
             _selectionModel.getPositions();
             
             MultiSensorIcon ms = new MultiSensorIcon(_editor);
-            ms.setInactiveIcon(iconMap.get("SensorStateInactive"));
-            ms.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
-            ms.setUnknownIcon(iconMap.get("BeanStateUnknown"));
+            ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
+            ms.setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
+            ms.setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
             ArrayList<NamedBean> selections = _selectionModel.getSelections();
             if (selections==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
@@ -283,7 +283,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 return null;
             }
             for (int i=0; i<selections.size(); i++) {
-                ms.addEntry(selections.get(i).getDisplayName(), iconMap.get(POSITION[i]));
+                ms.addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(POSITION[i])));
             }
             _selectionModel.clearSelection();
             ms.setUpDown(_upDown);

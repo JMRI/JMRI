@@ -10,8 +10,9 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -247,10 +248,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             if (_itemType.equals("Turnout")) {
                 TurnoutIcon t = new TurnoutIcon(_editor);
                 t.setTurnout(bean.getDisplayName());
-                Enumeration <String> e = iconMap.keys();
-                while (e.hasMoreElements()) {
-                    String key = e.nextElement();
-                    t.setIcon(key, iconMap.get(key));
+                Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Entry<String, NamedIcon> ent = iter.next();
+                    t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
                 }
                 t.setFamily(_family);
                 t.setLevel(Editor.TURNOUTS);
@@ -258,10 +259,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             } else if (_itemType.equals("Sensor")) {
                 SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                             "resources/icons/smallschematics/tracksegments/circuit-error.gif"), _editor);
-                Enumeration <String> e = iconMap.keys();
-                while (e.hasMoreElements()) {
-                    String key = e.nextElement();
-                    s.setIcon(key, iconMap.get(key));
+                Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Entry<String, NamedIcon> ent = iter.next();
+                    s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
                 }
                 s.setSensor(bean.getDisplayName());
                 s.setFamily(_family);

@@ -1,7 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.util.Hashtable;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -187,10 +186,10 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
 
             SignalHeadIcon sh = new SignalHeadIcon(_editor);
             sh.setSignalHead(bean.getDisplayName());
-            Enumeration <String> e = iconMap.keys();
-            while (e.hasMoreElements()) {
-                String key = e.nextElement();
-                sh.setIcon(ItemPalette.rbean.getString(key), iconMap.get(key));
+            Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
+            while (iter.hasNext()) {
+                Entry<String, NamedIcon> ent = iter.next();
+                sh.setIcon(ItemPalette.rbean.getString(ent.getKey()), new NamedIcon(ent.getValue()));
             }
             sh.setFamily(_family);
             sh.setLevel(Editor.SIGNALS);
