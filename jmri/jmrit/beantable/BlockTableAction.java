@@ -8,12 +8,16 @@ import jmri.NamedBean;
 import jmri.Block;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 
 import javax.swing.BoxLayout;
+import java.awt.GridLayout;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -21,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JFrame;
 
 import jmri.util.JmriJFrame;
 
@@ -29,7 +34,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -42,7 +47,7 @@ public class BlockTableAction extends AbstractTableAction {
      * @param actionName
      */
     public BlockTableAction(String actionName) {
-	super(actionName);
+        super(actionName);
 
         // disable ourself if there is no primary Block manager available
         if (jmri.InstanceManager.blockManagerInstance()==null) {
@@ -50,6 +55,15 @@ public class BlockTableAction extends AbstractTableAction {
         }
 		inchBox.setSelected(true);
 		centimeterBox.setSelected(false);
+        
+        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
+        speedList.add(defaultBlockSpeedText);
+        java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
+        for(int i = 0; i<_speedMap.size(); i++){
+            if (!speedList.contains(_speedMap.get(i))){
+                speedList.add(_speedMap.get(i));
+            }
+        }
     }
 
     public BlockTableAction() { this("Block Table");}
@@ -59,8 +73,10 @@ public class BlockTableAction extends AbstractTableAction {
 	private String tightText = rb.getString("BlockTight");
 	private String severeText = rb.getString("BlockSevere");
 	private String[] curveOptions = {noneText, gradualText, tightText, severeText};
+    private java.util.Vector<String> speedList = new java.util.Vector<String>();
 	private DecimalFormat twoDigit = new DecimalFormat("0.00");
-
+    String defaultBlockSpeedText;
+    
     /**
      * Create the JTable DataModel, along with the changes
      * for the specific case of Block objects
@@ -71,7 +87,10 @@ public class BlockTableAction extends AbstractTableAction {
         	static public final int DIRECTIONCOL = NUMCOLUMN;
 			static public final int LENGTHCOL = DIRECTIONCOL+1;
 			static public final int CURVECOL = LENGTHCOL+1;
-
+            static public final int STATECOL = CURVECOL+1;
+            static public final int PERMISCOL = STATECOL+1;
+            static public final int SPEEDCOL = PERMISCOL+1;
+            
         	public String getValue(String name) {
         		if (name == null) {
         			BeanTableDataModel.log.warn("requested getValue(null)");
@@ -91,8 +110,6 @@ public class BlockTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.blockManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.blockManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.blockManagerInstance().getByUserName(name);}
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
             protected String getMasterClassName() { return getClassName(); }
 
             public void clickOn(NamedBean t) {
@@ -100,8 +117,9 @@ public class BlockTableAction extends AbstractTableAction {
             	// we override setValueAt
             }
 
+            //Permissive and speed columns are temp disabled
     		public int getColumnCount(){ 
-    		    return CURVECOL+1;
+    		    return SPEEDCOL+1;
      		}
 
     		public Object getValueAt(int row, int col) {
@@ -134,6 +152,31 @@ public class BlockTableAction extends AbstractTableAction {
 						len = b.getLengthCm();
 					return (twoDigit.format(len));
 				}
+                else if (col==PERMISCOL){
+                    boolean val = b.getPermissiveWorking();
+                    return Boolean.valueOf(val);
+                }
+                /*else if (col==SPEEDCOL){
+                    return b.getSpeedLimit();
+                }*/
+                else if (col==SPEEDCOL){
+                    String speed = b.getBlockSpeed();
+                    if(!speedList.contains(speed)){
+                        speedList.add(speed);
+                    }
+                    JComboBox c = new JComboBox(speedList);
+                    c.setEditable(true);
+                    c.setSelectedItem(speed);
+                    return c;
+                }
+                else if (col==STATECOL){
+                    switch(b.getState()){
+                        case (Block.OCCUPIED) : return rb.getString("BlockOccupied");
+                        case (Block.UNOCCUPIED) : return rb.getString("BlockUnOccupied");
+                        case (Block.UNKNOWN) : return rb.getString("BlockUnknown");
+                        default : return rb.getString("BlockInconsistent");
+                    }
+                }
     			else return super.getValueAt(row, col);
 			}    		
 
@@ -152,13 +195,28 @@ public class BlockTableAction extends AbstractTableAction {
             		fireTableRowsUpdated(row,row);
 				}
 				else if (col==CURVECOL) {
+                    
 					String cName = (String)((JComboBox)value).getSelectedItem();
-					if (cName.equals(noneText)) b.setCurvature(Block.NONE);
+                    if (cName.equals(noneText)) b.setCurvature(Block.NONE);
 					else if (cName.equals(gradualText)) b.setCurvature(Block.GRADUAL);
 					else if (cName.equals(tightText)) b.setCurvature(Block.TIGHT);
 					else if (cName.equals(severeText)) b.setCurvature(Block.SEVERE);
             		fireTableRowsUpdated(row,row);
 				}
+                else if (col==PERMISCOL){
+                    boolean boo = ((Boolean) value).booleanValue();
+                    b.setPermissiveWorking(boo);
+                    fireTableRowsUpdated(row,row);
+                }
+                else if (col==SPEEDCOL){
+                    String speed = (String)((JComboBox)value).getSelectedItem();
+                    if (!speedList.contains(speed) && !speed.contains("Global")){
+                        speedList.add(speed);
+                    }
+                    
+                    b.setBlockSpeed(speed);
+                    fireTableRowsUpdated(row,row);
+                }
 				else super.setValueAt(value, row, col);					
     		}
 
@@ -167,6 +225,9 @@ public class BlockTableAction extends AbstractTableAction {
         		if (col==VALUECOL) return "Value";
 				if (col==CURVECOL) return rb.getString("BlockCurveColName");
 				if (col==LENGTHCOL) return rb.getString("BlockLengthColName");
+                if (col==PERMISCOL) return rb.getString("BlockPermColName");
+                if (col==SPEEDCOL) return rb.getString("BlockSpeedColName");
+                if (col==STATECOL) return rb.getString("BlockState");
         		return super.getColumnName(col);
         	}
 
@@ -175,6 +236,10 @@ public class BlockTableAction extends AbstractTableAction {
     			if (col==VALUECOL) return String.class;  // not a button
 				if (col==CURVECOL) return JComboBox.class;
 				if (col==LENGTHCOL) return String.class;
+                if (col==PERMISCOL) return Boolean.class;
+                //if (col==SPEEDCOL) return String.class;
+                if (col==SPEEDCOL) return JComboBox.class;
+                if (col==STATECOL) return String.class;
     			else return super.getColumnClass(col);
 		    }
 
@@ -182,6 +247,9 @@ public class BlockTableAction extends AbstractTableAction {
     			if (col==DIRECTIONCOL) return new JTextField(7).getPreferredSize().width;
     			if (col==CURVECOL) return new JTextField(8).getPreferredSize().width;
     			if (col==LENGTHCOL) return new JTextField(7).getPreferredSize().width;
+                if (col==PERMISCOL) return new JTextField(7).getPreferredSize().width;
+                if (col==SPEEDCOL) return new JTextField(7).getPreferredSize().width;
+                if (col==STATECOL) return new JTextField(8).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
 
@@ -192,12 +260,16 @@ public class BlockTableAction extends AbstractTableAction {
 			public boolean isCellEditable(int row, int col) {
 				if (col==CURVECOL) return true;
 				else if (col==LENGTHCOL) return true;
+                else if (col==PERMISCOL) return true;
+                else if (col==SPEEDCOL) return true;
+                else if (col==STATECOL) return false;
 				else return super.isCellEditable(row,col);
 			}
 			
 			public void configureTable(JTable table) {
 				table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
 				table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+                table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 				super.configureTable(table);
 			}
 			
@@ -210,9 +282,24 @@ public class BlockTableAction extends AbstractTableAction {
 				BeanTableDataModel.log.error("configureButton should not have been called");
 				return null;
 			}
+            
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("DefaultBlockSpeedChange")){
+                    updateSpeedList();
+                } else {
+                    super.propertyChange(e);
+                }
+            }
         };
     }
 
+    private void updateSpeedList(){
+        speedList.remove(defaultBlockSpeedText);
+        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
+        speedList.add(0, defaultBlockSpeedText);
+        m.fireTableDataChanged();
+    }
+    
     protected void setTitle() {
         f.setTitle(f.rb.getString("TitleBlockTable"));
     }
@@ -253,7 +340,44 @@ public class BlockTableAction extends AbstractTableAction {
                     deletePaths(finalF);
         	}
             });
+            
+        
+        JMenu speedMenu = new JMenu("Speeds");
+        item = new JMenuItem("Defaults...");
+        speedMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    setDefaultSpeeds(finalF);
+        	}
+            });
+        menuBar.add(speedMenu);
     
+    }
+    
+    protected void setDefaultSpeeds(JFrame _who){
+        JComboBox blockSpeedCombo = new JComboBox(speedList);
+        blockSpeedCombo.setEditable(true);
+        
+        JPanel block = new JPanel();
+        block.add(new JLabel("Block Speed"));
+        block.add(blockSpeedCombo);
+        
+        blockSpeedCombo.removeItem(defaultBlockSpeedText);
+        
+        blockSpeedCombo.setSelectedItem(InstanceManager.blockManagerInstance().getDefaultSpeed());
+        
+        int retval = JOptionPane.showOptionDialog(_who,
+                                          "Select the default values for the speeds through the blocks\n" , "Block Speeds",
+                                          0, JOptionPane.INFORMATION_MESSAGE, null,
+                                          new Object[]{"Cancel", "OK", block}, null );
+        if (retval != 1) {
+            return;
+        }
+        
+        String speedValue = (String) blockSpeedCombo.getSelectedItem();
+        //We will allow the turnout manager to handle checking if the values have changed
+        InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
+        
     }
     
 	private void inchBoxChanged() {
@@ -275,6 +399,11 @@ public class BlockTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
     
+    JComboBox cur = new JComboBox(curveOptions);
+    JTextField lengthField = new JTextField(7);
+    JTextField blockSpeed = new JTextField(7);
+    JCheckBox checkPerm = new JCheckBox(rb.getString("BlockPermColName"));
+    
     JTextField numberToAdd = new JTextField(10);
     JCheckBox range = new JCheckBox(rb.getString("LabelNumberToAdd"));
     JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
@@ -283,29 +412,15 @@ public class BlockTableAction extends AbstractTableAction {
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddBlock"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddBlock"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true);
-            /*addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            JPanel p;
-            p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(sysNameLabel);
-            p.add(sysName);
-            addFrame.getContentPane().add(p);
-
-            p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(userNameLabel);
-            p.add(userName);
-            addFrame.getContentPane().add(p);
-
-            JButton ok;
-            addFrame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));*/
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener listener = new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         okPressed(e);
                     }
                 };
-             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", listener));
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", listener));
         }
         if(pref.getSimplePreferenceState(systemNameAuto))
             _autoSystemName.setSelected(true);
@@ -313,8 +428,63 @@ public class BlockTableAction extends AbstractTableAction {
         addFrame.setVisible(true);
     }
     
+    JComboBox speeds = new JComboBox();
+    
+    JPanel additionalAddOption(){
+        
+        GridLayout additionLayout = new GridLayout(0,2);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(additionLayout);
+        mainPanel.add(new JLabel(rb.getString("BlockLengthColName")));
+        mainPanel.add(lengthField);
+        
+        mainPanel.add(new JLabel(rb.getString("BlockCurveColName")));
+        mainPanel.add(cur);
+        
+        mainPanel.add(new JLabel("  "));
+        mainPanel.add(checkPerm);
+        
+        speeds = new JComboBox();
+        speeds.setEditable(true);
+        for (int i=0; i<speedList.size(); i++) {
+            speeds.addItem(speedList.get(i));
+        }
+        
+        mainPanel.add(new JLabel("blockSpeed"));
+        mainPanel.add(speeds);
+        
+        //return displayList;
+        lengthField.addKeyListener( new KeyListener() {
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+            public void keyReleased(KeyEvent keyEvent) {
+                String text = lengthField.getText();
+                if (!validateNumericalInput(text)){
+                    String msg = java.text.MessageFormat.format(rb
+                        .getString("ShouldBeNumber"), new Object[] { rb.getString("BlockLengthColName") });
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(rb.getString("ErrorTitle"), msg, getClassName(), "length", false, false, org.apache.log4j.Level.WARN);
+                }
+            }
+            public void keyTyped(KeyEvent keyEvent) {
+            }
+        });
+        
+        return mainPanel;
+    }
+    
     String systemNameAuto = this.getClass().getName()+".AutoSystemName";
 
+    boolean validateNumericalInput(String text){
+        if (text.length()!=0){
+           try{
+                Integer.parseInt(text);
+            } catch (java.lang.NumberFormatException ex) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     void okPressed(ActionEvent e) {
         int intNumberToAdd = 1;
         if (range.isSelected()){
@@ -322,14 +492,18 @@ public class BlockTableAction extends AbstractTableAction {
                 intNumberToAdd = Integer.parseInt(numberToAdd.getText());
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
+                String msg = java.text.MessageFormat.format(rb
+                    .getString("ShouldBeNumber"), new Object[] { rb.getString("LabelNumberToAdd") });
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to blocks items to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage(rb.getString("ErrorTitle"),msg,""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return;
             }
         }
         if (intNumberToAdd>=65){
+            String msg = java.text.MessageFormat.format(rb
+                    .getString("WarnExcessBeans"), new Object[] { intNumberToAdd, AbstractTableAction.rbean.getString("BeanNameBlock") });
             if(JOptionPane.showConfirmDialog(addFrame,
-                                                 "You are about to add " + intNumberToAdd + " Block Objects into the configuration\nAre you sure?","Warning",
+                                                 msg,rb.getString("WarningTitle"),
                                                  JOptionPane.YES_NO_OPTION)==1)
                 return;
         }
@@ -337,6 +511,7 @@ public class BlockTableAction extends AbstractTableAction {
         if (user.equals("")) user=null;
         String sName = sysName.getText().toUpperCase();
         StringBuilder b;
+        
         for (int x = 0; x< intNumberToAdd; x++){    
             if (x!=0){
                 if (user!=null){
@@ -352,15 +527,30 @@ public class BlockTableAction extends AbstractTableAction {
                     sName=b.toString();
                 }
             }
+            Block blk;
             try {
                 if (_autoSystemName.isSelected())
-                    InstanceManager.blockManagerInstance().createNewBlock(user);
+                    blk = InstanceManager.blockManagerInstance().createNewBlock(user);
                 else
-                    InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+                    blk = InstanceManager.blockManagerInstance().createNewBlock(sName, user);
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
                 return; // without creating       
+            }
+            if (blk!=null){
+                if (lengthField.getText().length()!=0)
+                    blk.setLength(Integer.parseInt(lengthField.getText()));
+                /*if (blockSpeed.getText().length()!=0)
+                    blk.setSpeedLimit(Integer.parseInt(blockSpeed.getText()));*/
+                blk.setBlockSpeed((String)speeds.getSelectedItem());
+                if(checkPerm.isSelected())
+                    blk.setPermissiveWorking(true);
+                String cName = (String)cur.getSelectedItem();
+                if (cName.equals(noneText)) blk.setCurvature(Block.NONE);
+                else if (cName.equals(gradualText)) blk.setCurvature(Block.GRADUAL);
+                else if (cName.equals(tightText)) blk.setCurvature(Block.TIGHT);
+                else if (cName.equals(severeText)) blk.setCurvature(Block.SEVERE);
             }
         }
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
@@ -369,7 +559,7 @@ public class BlockTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                    rb.getString("ErrorMemoryAddFailed"),  
+                    rb.getString("ErrorBlockAddFailed"),  
                     new Object[] {sysName}),
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);

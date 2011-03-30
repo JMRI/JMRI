@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -88,7 +88,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
         // save in the maps if successful
         register(s);
-
+        s.setStraightSpeed("Global");
+        s.setDivergingSpeed("Global");
         return s;
     }
     	
@@ -199,6 +200,35 @@ public abstract class AbstractTurnoutManager extends AbstractManager
             return Integer.toString(iName);
         }
     }
+    
+    
+    String defaultClosedSpeed = "Normal";
+    String defaultThrownSpeed = "Restricted";
+    
+    public void setDefaultClosedSpeed(String speed){
+        if((speed!=null) && (defaultClosedSpeed.equals(speed)))
+            return;
+        String oldSpeed = defaultClosedSpeed;
+        defaultClosedSpeed = speed;
+        firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
+    }
+    
+    public void setDefaultThrownSpeed(String speed){
+        if((speed!=null) && (defaultThrownSpeed.equals(speed)))
+            return;
+        String oldSpeed = defaultThrownSpeed;
+        defaultThrownSpeed = speed;
+        firePropertyChange("DefaultTurnoutThrownSpeedChange", oldSpeed, speed);
+    }
+
+    public String getDefaultThrownSpeed(){
+        return defaultThrownSpeed;
+    }
+    
+    public String getDefaultClosedSpeed(){
+        return defaultClosedSpeed;
+    }
+
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManager.class.getName());
 }

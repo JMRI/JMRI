@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -51,7 +51,10 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
             // don't return an element if there are not turnouts to include
             if (!iter.hasNext()) return null;
-            
+            String defaultclosed = tm.getDefaultClosedSpeed();
+            String defaultthrown = tm.getDefaultThrownSpeed();
+            turnouts.addContent(new Element("defaultclosedspeed").addContent(defaultclosed));
+            turnouts.addContent(new Element("defaultthrownspeed").addContent(defaultthrown));
             // store the turnouts
             while (iter.hasNext()) {
                 String sname = iter.next();
@@ -94,7 +97,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 	// include turnout decoder
                 	elem.setAttribute("decoder", t.getDecoderName());
                 }
-
                 
 				// include number of control bits, if different from one
 				int iNum = t.getNumberOutputBits();
@@ -124,6 +126,12 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 }
                 if (opstr != null) {
                 	elem.setAttribute("automate", opstr);
+                }
+                if((t.getDivergingSpeed()!=null) && (!t.getDivergingSpeed().equals("")) && !t.getDivergingSpeed().contains("Global")){
+                    elem.addContent(new Element("divergingSpeed").addContent(t.getDivergingSpeed()));
+                }
+                if((t.getStraightSpeed()!=null) && (!t.getStraightSpeed().equals("")) && !t.getStraightSpeed().contains("Global")){
+                    elem.addContent(new Element("straightSpeed").addContent(t.getStraightSpeed()));
                 }
                 
                 // add element
@@ -171,6 +179,20 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
     	List<Element> turnoutList = turnouts.getChildren("turnout");
     	if (log.isDebugEnabled()) log.debug("Found "+turnoutList.size()+" turnouts");
     	TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+        
+        if (turnouts.getChild("defaultclosedspeed")!=null){
+            String closedSpeed = turnouts.getChild("defaultclosedspeed").getText();
+            if (closedSpeed!=null && !closedSpeed.equals("")){
+                tm.setDefaultClosedSpeed(closedSpeed);
+            }
+        }
+        
+        if (turnouts.getChild("defaultthrownspeed")!=null){
+            String thrownSpeed = turnouts.getChild("defaultthrownspeed").getText();
+            if (thrownSpeed!=null && !thrownSpeed.equals("")){
+                tm.setDefaultThrownSpeed(thrownSpeed);
+            }
+        }
 
         for (int i=0; i<turnoutList.size(); i++) {
             Element elem = turnoutList.get(i);
@@ -316,6 +338,20 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 			
 			//  set initial state from sensor feedback if appropriate
 			t.setInitialKnownStateFromFeedback();
+            t.setDivergingSpeed("Global");
+            if (elem.getChild("divergingSpeed")!=null){
+                String speed = elem.getChild("divergingSpeed").getText();
+                if (speed!=null && !speed.equals("") && !speed.contains("Global")){
+                    t.setDivergingSpeed(speed);
+                }
+            }
+            t.setStraightSpeed("Global");
+            if (elem.getChild("straightSpeed")!=null){
+                String speed = elem.getChild("straightSpeed").getText();
+                if (speed!=null && !speed.equals("") && !speed.contains("Global")){
+                    t.setStraightSpeed(speed);
+                }
+            }
         }
        return result;
     }

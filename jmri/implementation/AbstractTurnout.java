@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -660,9 +660,98 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		super.dispose();
 	}
 
+    String _divergeSpeed = "";
+    String _straightSpeed = "";
+    //boolean useBlockSpeed = true;
+    
+    //float speedThroughTurnout = 0;
+
+    public float getDivergingLimit() {
+        if ((_divergeSpeed==null) || (_divergeSpeed==""))
+            return -1;
+        
+        String speed = _divergeSpeed;
+        if(_divergeSpeed.equals("Global")){
+            speed = InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed();
+        }
+        try {
+            return new Float(speed);
+            //return Integer.parseInt(_blockSpeed);
+        }catch (NumberFormatException nx) {
+            //considered normal if the speed is not a number.
+        }
+        try{
+            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+        } catch (Exception ex){
+            return -1;
+        }
+    }
+    
+    public String getDivergingSpeed() { 
+        if(_divergeSpeed.equals("Global")){
+            return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+        }
+        return _divergeSpeed;
+    }
+    public void setDivergingSpeed(String s) { 
+        if((s==null) || (_divergeSpeed.equals(s)))
+            return;
+        if (s.contains("Global"))
+            s = "Global";
+        String oldSpeed = _divergeSpeed;
+        _divergeSpeed=s;
+        firePropertyChange("TurnoutDivergingSpeedChange", oldSpeed, s);
+    }
+    
+    public float getStraightLimit() {
+        if ((_straightSpeed==null) || (_straightSpeed==""))
+            return -1;
+
+        String speed = _straightSpeed;
+        if(_straightSpeed.equals("Global")){
+            speed = InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed();
+        }
+        
+        try {
+            return new Float(speed);
+            //return Integer.parseInt(_blockSpeed);
+        }catch (NumberFormatException nx) {
+            //considered normal if the speed is not a number.
+        }
+        try{
+            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+        } catch (Exception ex){
+            return -1;
+        }
+    }
+    
+    public String getStraightSpeed() { 
+        if(_straightSpeed.equals("Global"))
+            return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+        return _straightSpeed;
+    }
+    
+    public void setStraightSpeed(String s) { 
+        if((s==null) || (_straightSpeed.equals(s)))
+            return;
+        if (s.contains("Global"))
+            s = "Global";
+        String oldSpeed = _straightSpeed;
+        _straightSpeed=s;
+        firePropertyChange("TurnoutStraightSpeedChange", oldSpeed, s);
+    }
+    
+    /*public float getSpeedThroughTurnout(){
+        return speedThroughTurnout;
+    }
+
+    public void setSpeedThroughTurnout(float speed){
+        speedThroughTurnout = speed;
+    }*/
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(AbstractTurnout.class.getName());
 }
 
 /* @(#)AbstractTurnout.java */
+
 

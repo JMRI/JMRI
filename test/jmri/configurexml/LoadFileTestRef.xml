@@ -13,6 +13,8 @@
       <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
       <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
     </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
     <turnout systemName="IT1" userName="User 1" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT1</systemName>
       <userName>User 1</userName>
@@ -102,6 +104,7 @@
     </logix>
   </logixs>
   <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
     <block systemName="IB1">
       <systemName>IB1</systemName>
     </block>
@@ -109,6 +112,7 @@
       <systemName>IB1</systemName>
       <userName>Block 1</userName>
       <comment>Length 1</comment>
+      <permissive>no</permissive>
     </block>
   </blocks>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
@@ -147,6 +151,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTestRef.xml,v 1.18 2011-01-20 01:21:46 pete_cressman Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTestRef.xml,v 1.19 2011-03-30 20:07:00 kevin-dickerson Exp $-->
 </layout-config>
 

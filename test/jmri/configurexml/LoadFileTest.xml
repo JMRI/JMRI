@@ -109,6 +109,7 @@
       <systemName>IB1</systemName>
       <userName>Block 1</userName>
       <comment>Length 1</comment>
+      <permissive>no</permissive>
     </block>
   </blocks>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
@@ -147,6 +148,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTest.xml,v 1.26 2011-01-20 01:21:46 pete_cressman Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTest.xml,v 1.27 2011-03-30 20:07:00 kevin-dickerson Exp $-->
 </layout-config>
 

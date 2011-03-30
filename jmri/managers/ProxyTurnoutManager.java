@@ -19,7 +19,7 @@ import jmri.Manager;
  * for multiple system-specific implementations. 
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -213,6 +213,26 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             }
         }
         return null;
+    }
+    
+    public void setDefaultClosedSpeed(String speed){
+        for (int i=0; i<nMgrs(); i++) {
+            ((TurnoutManager)getMgr(i)).setDefaultClosedSpeed(speed);
+        }
+    }
+    
+    public void setDefaultThrownSpeed(String speed){
+        for (int i=0; i<nMgrs(); i++) {
+            ((TurnoutManager)getMgr(i)).setDefaultThrownSpeed(speed);
+        }
+    }
+    
+    public String getDefaultThrownSpeed(){
+        return ((TurnoutManager)getMgr(0)).getDefaultThrownSpeed();
+    }
+    
+    public String getDefaultClosedSpeed(){
+        return ((TurnoutManager)getMgr(0)).getDefaultClosedSpeed();
     }
 
     // initialize logging

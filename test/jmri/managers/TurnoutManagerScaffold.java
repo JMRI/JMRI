@@ -21,7 +21,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
@@ -73,6 +73,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public boolean isNumControlBitsSupported(String systemName) {return false;}
 
     public boolean allowMultipleAdditions(String systemName) {return false;}
+
+    public void setDefaultClosedSpeed(String speed) {}
+
+    public void setDefaultThrownSpeed(String speed) {}
+
+    public String getDefaultThrownSpeed() { return null;}
+
+    public String getDefaultClosedSpeed() {return null; }
 
 }
 
