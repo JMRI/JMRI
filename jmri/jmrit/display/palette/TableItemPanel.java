@@ -191,6 +191,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             _updateButton.setEnabled(false);
             _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
         }
+        hideIcons();
     }
 
     protected NamedBean getNamedBean() {

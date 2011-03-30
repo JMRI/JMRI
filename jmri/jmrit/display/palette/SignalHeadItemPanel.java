@@ -19,8 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
+//import javax.swing.event.ListSelectionListener;
+//import javax.swing.event.ListSelectionEvent;
 
 import jmri.util.JmriJFrame;
 import jmri.jmrit.display.Editor;
@@ -32,7 +32,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.display.SignalHeadIcon;
 
-public class SignalHeadItemPanel extends TableItemPanel implements ListSelectionListener {
+public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelectionListener {
 
     int _selectedRow = 0;
 
@@ -48,7 +48,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
-        _table.getSelectionModel().addListSelectionListener(this);
+        //_table.getSelectionModel().addListSelectionListener(this);
         _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
@@ -68,33 +68,43 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
     protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
     }
-
+/*
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
         }
         _selectedRow = _table.getSelectedRow();
         if (log.isDebugEnabled()) log.debug("Table valueChanged: row= "+_selectedRow);
-        remove(_iconFamilyPanel);
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel, 1);
+//        remove(_iconFamilyPanel);
+//        initIconFamiliesPanel();
+//        add(_iconFamilyPanel, 1);
         if (_selectedRow >= 0) {
             if (_updateButton!=null) {
                 _updateButton.setEnabled(true);
                 _updateButton.setToolTipText(null);
             }
-            _showIconsButton.setEnabled(true);
-            _showIconsButton.setToolTipText(null);
+//            _showIconsButton.setEnabled(true);
+//            _showIconsButton.setToolTipText(null);
         } else {
             if (_updateButton!=null) {
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
             }
-            _showIconsButton.setEnabled(false);
-            _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickRowToShowIcon"));
+//            _showIconsButton.setEnabled(false);
+//            _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickRowToShowIcon"));
         }
+//        hideIcons();
     }
-
+*/
+    protected void showIcons() {
+        updateFamiliesPanel();
+        _iconPanel.setVisible(true);
+        if (!_update) {
+            _dragIconPanel.setVisible(false);
+        }
+        _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
+    }
+   
     protected void addIconsToPanel(Hashtable<String, NamedIcon> allIconsMap) {
         Hashtable<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap==null) {
