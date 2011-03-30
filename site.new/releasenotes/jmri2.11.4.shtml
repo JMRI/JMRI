@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.22 2011-03-28 14:44:36 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.23 2011-03-30 01:20:50 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -105,7 +105,7 @@ New operations features and bug fixes:
 	<li>Cars with a final destination will no longer wander if the
 	destination track doesn't have space for the car.</li>
 	<li>The edit schedule destination track menu now shows only valid
-	tracks. Staging tracks are no longer shown.</li>
+	tracks. Staging tracks are no longer shown in the edit schedule window.</li>
 	<li>The program will now check the entire schedule in match mode
 	when generating custom loads from staging.</li>
 	<li>Fixed a minor bug with switch lists, the location status
@@ -114,10 +114,10 @@ New operations features and bug fixes:
 	trains since the last printing.</li>
 	<li>New "Set Cars" tool. Now you can set the location,
 	destinations, and load for a group of cars.</li>
-	<li>New car sort in the cars window, by car's final destination.</li>
-	<li>Users can now decide to not modify the car's load status when
+	<li>You can also decide to not modify the car's load status when
 	using the Set Cars Tool.</li>
-	<li>New build option, user can now optionally select the departure
+	<li>New car sort in the cars window, by car's final destination.</li>	
+	<li>New build option, you can now optionally select the departure
 	track from staging.</li>
 	<Li>New operations feature. You can now optionally create a Comma
 	Separated Values (csv) manifest file. Now you can use Excel to create a
