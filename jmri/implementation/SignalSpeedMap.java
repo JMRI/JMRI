@@ -17,13 +17,13 @@ import org.jdom.JDOMException;
  * A singleton class for use by all SignalHeads and SignalMasts
  *
  * @author	Pete Cressman Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SignalSpeedMap {
 
     static private SignalSpeedMap _map;
-    static private Hashtable<String, Float> _table = new Hashtable<String, Float>();
-    static private Hashtable<String, String> _headTable = new Hashtable<String, String>();
+    static private Hashtable<String, Float> _table = new jmri.util.OrderedHashtable<String, Float>();
+    static private Hashtable<String, String> _headTable = new jmri.util.OrderedHashtable<String, String>();
     static private boolean _percentNormal;
     static private int _sStepDelay;
     static private int _numSteps;
@@ -158,6 +158,18 @@ public class SignalSpeedMap {
             throw new IllegalArgumentException("attempting to get speed from invalid name: "+name);
         }
         return _table.get(name);
+    }
+    
+    public String getNamedSpeed(float speed){
+        java.util.Enumeration<String> e = _table.keys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            System.out.println(key);
+            if(_table.get(key)==speed){
+                return key;
+            }
+        }
+        return null;
     }
 
     public boolean isRatioOfNormalSpeed() {
