@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  * @since 2.1.2
  *
  */
@@ -85,7 +85,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 Element elem = new Element("block")
                             .setAttribute("systemName", sname);
                 elem.addContent(new Element("systemName").addContent(sname));
-
                 if (log.isDebugEnabled()) log.debug("second store Block "+sname+":"+uname);
 				// store length and curvature attributes
 				elem.setAttribute("length", Float.toString(b.getLengthMm()));
@@ -93,13 +92,12 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 if((b.getBlockSpeed()!=null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")){
                     elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
                 }
+                // store common parts
+                storeCommon(b, elem);
                 String perm = "no";
                 if (b.getPermissiveWorking())
                     perm = "yes";
                 elem.addContent(new Element("permissive").addContent(perm));
-                // store common parts
-                storeCommon(b, elem);
-                
                 // Add content. First, the sensor.
                 Sensor s = b.getSensor();
                 if (s!=null) {

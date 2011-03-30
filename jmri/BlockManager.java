@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -78,6 +78,7 @@ public class BlockManager extends AbstractManager
                 log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
             }
         }
+        r.setBlockSpeed("Global");
         return r;
     }
     
