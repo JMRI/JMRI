@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -140,7 +140,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
 				j = i;
 		}
 		if (j>-1) paths.remove(j);
-    }
+        }
     
     /**
      * Get a copy of the list of Paths
@@ -182,6 +182,51 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         firePropertyChange("direction", Integer.valueOf(oldDirection), Integer.valueOf(direction));
     }
     public int getDirection() { return _direction; }
+    
+    public int getWorkingDirection() { return _workingDirection; }
+    public void setWorkingDirection(int w) { _workingDirection=w; }
+    private int _workingDirection=0x00;
+    public boolean getPermissiveWorking() { return _permissiveWorking; }
+    public void setPermissiveWorking(boolean w) { _permissiveWorking=w; }
+    private boolean _permissiveWorking=false;
+
+    //private int _speedLimit=0;
+    public float getSpeedLimit() { 
+        if ((_blockSpeed==null) || (_blockSpeed==""))
+            return -1;
+        String speed = _blockSpeed;
+        if(_blockSpeed.equals("Global")){
+            speed = InstanceManager.blockManagerInstance().getDefaultSpeed();
+        }
+        
+        try {
+            return new Float(_blockSpeed);
+            //return Integer.parseInt(_blockSpeed);
+        }catch (NumberFormatException nx) {
+            //considered normal if the speed is not a number.
+        }
+        try{
+            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(_blockSpeed);
+        } catch (Exception ex){
+            return -1;
+        }
+    }
+    
+    private String _blockSpeed = "";
+    public String getBlockSpeed() { 
+        if(_blockSpeed.equals("Global"))
+            return ("Use Global " + InstanceManager.blockManagerInstance().getDefaultSpeed());
+        return _blockSpeed;
+    }
+    public void setBlockSpeed(String s) { 
+        if((s==null) || (_blockSpeed.equals(s)))
+            return;
+        if(s.contains("Global"))
+            s = "Global";
+        String oldSpeed = _blockSpeed;
+        _blockSpeed=s;
+        firePropertyChange("BlockSpeedChange", oldSpeed, s);
+    }
 	
 	public void setCurvature(int c) { _curvature = c; }
 	public int getCurvature() { return _curvature; }

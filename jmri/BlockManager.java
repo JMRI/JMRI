@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -119,6 +119,20 @@ public class BlockManager extends AbstractManager
             _instance = new BlockManager();
         }
         return (_instance);
+    }
+    
+    String defaultSpeed = "Normal";
+    
+    public void setDefaultSpeed(String speed){
+        if((speed!=null) && (defaultSpeed.equals(speed)))
+            return;
+        String oldSpeed = defaultSpeed;
+        defaultSpeed = speed;
+        firePropertyChange("DefaultBlockSpeedChange", oldSpeed, speed);
+    }
+    
+    public String getDefaultSpeed(){
+        return defaultSpeed;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManager.class.getName());

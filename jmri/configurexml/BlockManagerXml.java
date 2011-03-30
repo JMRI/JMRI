@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  * @since 2.1.2
  *
  */
@@ -60,7 +60,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
             // don't return an element if there are not blocks to include
             if (!iter.hasNext()) return null;
-            
+            blocks.addContent(new Element("defaultspeed").addContent(tm.getDefaultSpeed()));
             // write out first set of blocks without contents
              while (iter.hasNext()) {
                 String sname = iter.next();
@@ -88,9 +88,15 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
                 if (log.isDebugEnabled()) log.debug("second store Block "+sname+":"+uname);
 				// store length and curvature attributes
-				elem.setAttribute("length", ""+b.getLengthMm());
-				elem.setAttribute("curve", ""+b.getCurvature());
-                
+				elem.setAttribute("length", Float.toString(b.getLengthMm()));
+				elem.setAttribute("curve", Integer.toString(b.getCurvature()));
+                if((b.getBlockSpeed()!=null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")){
+                    elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
+                }
+                String perm = "no";
+                if (b.getPermissiveWorking())
+                    perm = "yes";
+                elem.addContent(new Element("permissive").addContent(perm));
                 // store common parts
                 storeCommon(b, elem);
                 
@@ -156,6 +162,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     @SuppressWarnings("unchecked")
 	public boolean load(Element blocks) throws jmri.configurexml.JmriConfigureXmlException {
     	boolean result = true;
+        
+        if (blocks.getChild("defaultspeed")!=null){
+            String speed = blocks.getChild("defaultspeed").getText();
+            if (speed!=null && !speed.equals("")){
+                InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
+            }
+        }
+        
         List<Element> list = blocks.getChildren("block");
         if (log.isDebugEnabled()) log.debug("Found "+list.size()+" objects");
         //BlockManager tm = InstanceManager.blockManagerInstance();
@@ -196,7 +210,19 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 				// load curve attribute
 				block.setCurvature(Integer.parseInt((element.getAttribute("curve")).getValue()));
 			}
-            
+            block.setBlockSpeed("Global");
+            if (element.getChild("speed")!=null){
+                String speed = element.getChild("speed").getText();
+                if (speed!=null && !speed.equals("") && !speed.contains("Global")){
+                    block.setBlockSpeed(speed);
+                }
+            }
+            if(element.getChild("permissive")!=null){
+                boolean permissive = false;
+                if (element.getChild("permissive").getText().equals("yes"))
+                    permissive = true;
+                block.setPermissiveWorking(permissive);
+            }
             // load common parts
             loadCommon(block, element);
             
