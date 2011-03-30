@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -190,9 +190,8 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     public void setPermissiveWorking(boolean w) { _permissiveWorking=w; }
     private boolean _permissiveWorking=false;
 
-    //private int _speedLimit=0;
     public float getSpeedLimit() { 
-        if ((_blockSpeed==null) || (_blockSpeed==""))
+        if ((_blockSpeed==null) || (_blockSpeed.equals("")))
             return -1;
         String speed = _blockSpeed;
         if(_blockSpeed.equals("Global")){
@@ -200,13 +199,13 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         }
         
         try {
-            return new Float(_blockSpeed);
+            return new Float(speed);
             //return Integer.parseInt(_blockSpeed);
         }catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
         try{
-            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(_blockSpeed);
+            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
         } catch (Exception ex){
             return -1;
         }
@@ -249,7 +248,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
      * Defers real work to goingActive, goingInactive methods
      */
     void handleSensorChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName() == "KnownState") {
+        if (e.getPropertyName().equals("KnownState")) {
             int state = _sensor.getState();
             if (state == Sensor.ACTIVE) goingActive();
             else if (state == Sensor.INACTIVE) goingInactive();
