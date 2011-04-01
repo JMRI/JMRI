@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.94 $
+ * @version         $Revision: 1.95 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -233,7 +233,6 @@ abstract public class AbstractMRTrafficController {
         log.debug("transmitLoop starts");
         
         // loop forever
-        xmtLoop:
         while(true) {
             AbstractMRMessage m = null;
             AbstractMRListener l = null;
@@ -1004,5 +1003,3 @@ abstract public class AbstractMRTrafficController {
 
 
 /* @(#)AbstractMRTrafficController.java */
-
-
