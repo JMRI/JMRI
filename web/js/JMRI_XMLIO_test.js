@@ -1,22 +1,23 @@
 $(document).ready(
 		function() {
-			
+
 			//attach code to Send button
 			$('button#btnSend').click(
 					function() {
 						var $commandstr = '<XMLIO>' + $('textarea#txtData').val() + '</XMLIO>';
-//						if ($commandstr != "") {
-						$('div#result').empty();
-						$('div#formatted').text("sent '"+$commandstr+"'...");
+						$('textarea#result').empty();
+						$('div#formatted').text($commandstr);
+						$('div#formattedLabel').text("Waiting....  Sent:");
+						
 						var $outputstr = "";
 						var $headers = [];
 
 
-						$.get(
+						$.post(
 								'/xmlio', //<--url
 								$commandstr, //<--data
 								function($xml) { //<--success
-									$('div#result').text((new XMLSerializer()).serializeToString($xml));  //output raw result    				
+									$('textarea#result').text((new XMLSerializer()).serializeToString($xml));  //output raw result    				
 									$xml = $($xml);  //jQuery-ize returned data for easier access
 									$xml.find('item').each( //find and process all "item" entries (list)
 											function() {
@@ -33,7 +34,7 @@ $(document).ready(
 									if ($outputstr == "") { //no "items" found
 										$outputstr = "&nbsp;";
 
-									} else {  //generate a table for results
+									} else {  //generate a table for "items" results
 										var $headerstr = "";  //populate table header
 										for (var $i=0; $i < $headers.length; $i++) {
 											if ($headers[$i] != null) {  //skip the undefined ones
@@ -43,6 +44,7 @@ $(document).ready(
 										$outputstr = "<table>" +$headerstr + $outputstr + '</table>'; //put the parts together
 									}
 									$('div#formatted').html($outputstr);  //output results as table
+									$('div#formattedLabel').text("Formatted results:");
 
 								},
 								'xml' //<--dataType
@@ -63,10 +65,25 @@ $(document).ready(
 					}
 			);
 
-			//copy value and go ahead and send it
+			//copy double-clicked value from list and go ahead and send it
 			$('table#samples td').dblclick(
 					function() {
 						$('textarea#txtData').val($(this).text());  //set value of send box to sample clicked
+						$('button#btnSend').click(); //process the button press
+					}
+			);
+
+			//copy response value to send box and go ahead and send it
+			$('button#btnReSend').click(
+					function() {
+						$('textarea#txtData').val($('textarea#result').text().replace('<?xml version="1.0" encoding="UTF-8"?>',"").replace("</XMLIO>","").replace("<XMLIO>",""));  //set value of send box to returned value
+					}
+			);
+
+			//copy response value to send box and go ahead and send it
+			$('button#btnReSend').dblclick(
+					function() {
+						$('textarea#txtData').val($('textarea#result').text().replace('<?xml version="1.0" encoding="UTF-8"?>',"").replace("</XMLIO>","").replace("<XMLIO>",""));  //set value of send box to returned value
 						$('button#btnSend').click(); //process the button press
 					}
 			);
