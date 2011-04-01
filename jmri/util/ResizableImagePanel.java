@@ -302,8 +302,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     
     /**
      * Get curent scaled Image 
-     * 
-     * @return
      */
     public BufferedImage getScaledImage() {
     	return scaledImage;
@@ -371,8 +369,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     
     /**
      * Callback for the dnd listener
-     * 
-     * @return
      */
     public void filesDropped(File[] files) {
         if (files == null) {
