@@ -5,6 +5,7 @@ package jmri.web.xmlio;
 import jmri.*;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JmriJFrame;
 
 import org.jdom.*;
 
@@ -29,7 +30,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -37,6 +38,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
     public Element immediateRequest(Element e) throws JmriException {
     
         // first, process any "list" elements
+    	//  roster and panel are immediate only
+    	//  power, turnout, sensor and route can be monitored for changes, pass current values to begin
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList(e.getChildren("list"));
         for (Element list : lists) {
@@ -48,9 +51,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Turnout t = m.getTurnout(name);
-// always use system name for name (added username as separate element)
-//                    if (t.getUserName() != null && !t.getUserName().equals(""))
-//                        name = t.getUserName();
                     Element n = new Element("item");
                     n.addContent(new Element("type").addContent("turnout"));
                     n.addContent(new Element("name").addContent(name));
@@ -59,15 +59,25 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
                     e.addContent(n);
                 }
+            } else if (type.equals("route")) {
+                // add an element for each route
+                RouteManager m = InstanceManager.routeManagerInstance();
+                List<String> names = m.getSystemNameList();
+                for (String name : names) {
+                    Route t = m.getRoute(name);
+                    Element n = new Element("item");
+                    n.addContent(new Element("type").addContent("route"));
+                    n.addContent(new Element("name").addContent(name));
+                    n.addContent(new Element("userName").addContent(t.getUserName()));
+                    n.addContent(new Element("comment").addContent(t.getComment()));
+                    e.addContent(n);
+                }
             } else if (type.equals("sensor")) {
                 // add an element for each sensor
                 SensorManager m = InstanceManager.sensorManagerInstance();
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Sensor t = m.getSensor(name);
-// always use system name for name (added username as separate element)
-//                    if (t.getUserName() != null && !t.getUserName().equals(""))
-//                        name = t.getUserName();
                     Element n = new Element("item");
                     n.addContent(new Element("type").addContent("sensor"));
                     n.addContent(new Element("name").addContent(name));
@@ -108,8 +118,26 @@ public class DefaultXmlIOServer implements XmlIOServer {
         			n.addContent(g);
         			e.addContent(n);
             	}
+
+            } else if (type.equals("panel")) {
+            	// list panels, (open JMRI windows)
+            	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
+            	int framesNumber = framesList.size();
+            	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
+            		JmriJFrame iFrame = framesList.get(i);
+            		String frameTitle = iFrame.getTitle();
+            		if (!frameTitle.equals("")) {
+            			Element n = new Element("item");
+                        n.addContent(new Element("type").addContent("panel"));
+                        //get rid of spaces in name
+            			n.addContent(new Element("name").addContent(new String(frameTitle).replaceAll(" ","%20")));
+            			n.addContent(new Element("userName").addContent(frameTitle)); 
+            			e.addContent(n);
+            		}
+            	}
+
             } else if (type.equals("power")) {
-                // add a power element
+            	// add a power element
                 Element n = new Element("item");
                 n.addContent(new Element("type").addContent("power"));
                 n.addContent(new Element("name").addContent("power"));
@@ -133,9 +161,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             //check for "set" values and process them
             if (type.equals("turnout")) immediateWriteTurnout(name, item);
+            else if (type.equals("route")) immediateWriteRoute(name, item);
             else if (type.equals("sensor")) immediateWriteSensor(name, item);
             else if (type.equals("power")) immediateWritePower(name, item);
             else if (type.equals("roster")) immediateWriteRoster(name, item);
+            else if (type.equals("panel")) immediateWritePanel(name, item);
             else log.warn("Unexpected type in item: "+type);
         }
         
@@ -144,6 +174,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             String name = item.getChild("name").getText();
             
             if (type.equals("turnout")) immediateReadTurnout(name, item);
+            else if (type.equals("route")) immediateReadRoute(name, item);
             else if (type.equals("sensor")) immediateReadSensor(name, item);
             else if (type.equals("power")) immediateReadPower(name, item);
         }
@@ -173,6 +204,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             String name = item.getChild("name").getText();
             
             if (type.equals("turnout")) addListenerToTurnout(name, item, dr);
+            else if (type.equals("route")) addListenerToRoute(name, item, dr);
             else if (type.equals("sensor")) addListenerToSensor(name, item, dr);
             else if (type.equals("power")) addListenerToPower(name, item, dr);
             else log.warn("Unexpected type: "+type);
@@ -194,6 +226,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             try {
                 if (type.equals("turnout")) immediateReadTurnout(name, item);
                 else if (type.equals("sensor")) immediateReadSensor(name, item);
+                else if (type.equals("route")) immediateReadRoute(name, item);
                 else if (type.equals("power")) immediateReadPower(name, item);
             } catch (JmriException j) {
                 log.warn("exception handling "+type+" "+name, j);
@@ -217,6 +250,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             try {
                 if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
                 else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
+                else if (type.equals("route")) changed |= monitorProcessRoute(name, item);
                 else if (type.equals("power")) changed |= monitorProcessPower(name, item);
                 else log.warn("Unexpected type: "+type);
             } catch (JmriException j) {
@@ -228,6 +262,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     void addListenerToTurnout(String name, Element item, DeferredRead dr) {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+        b.addPropertyChangeListener(dr);
+    }
+    
+    void addListenerToRoute(String name, Element item, DeferredRead dr) {
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.addPropertyChangeListener(dr);
     }
     
@@ -243,6 +282,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     void removeListenerFromTurnout(String name, Element item, DeferredRead dr) {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+        b.removePropertyChangeListener(dr);
+    }
+    
+    void removeListenerFromRoute(String name, Element item, DeferredRead dr) {
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.removePropertyChangeListener(dr);
     }
     
@@ -267,6 +311,21 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             return  (b.getKnownState() != state);
+        }
+        return false;  // no difference
+    }
+    
+    /**
+     * Return true if there is a difference
+     */
+    boolean monitorProcessRoute(String name, Element item) {
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+
+        // check for value element, which means compare
+        Element v = item.getChild("value");
+        if (v!=null) {
+            int state = Integer.parseInt(v.getText());
+            return  (b.getState() != state);
         }
         return false;  // no difference
     }
@@ -328,6 +387,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
         }
     }
     
+    void immediateWriteRoute(String name, Element item) throws JmriException {
+        // get route
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+
+        // check for set element, which means write
+        Element v = item.getChild("set");
+        if (v!=null) {
+            int state = Integer.parseInt(v.getText());
+            b.setState(state);
+            item.removeContent(v);
+        }
+    }
+    
     void immediateWritePower(String name, Element item) throws JmriException {
         // get power manager
         PowerManager b = InstanceManager.powerManagerInstance();
@@ -351,6 +423,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
         log.error("no immediate write for roster element");
     }
     
+    void immediateWritePanel(String name, Element item) throws JmriException {
+        log.error("no immediate write for panel element");
+    }
+    
     void immediateReadTurnout(String name, Element item) {
         // get turnout
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
@@ -362,6 +438,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
         
         // set result
         v.setText(""+b.getKnownState());
+    }
+    
+    void immediateReadRoute(String name, Element item) {
+        // get route
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+
+        Element v = item.getChild("value");
+
+        // Start read: ensure value element
+        if (v == null) item.addContent(v = new Element("value"));
+        
+        // set result
+        v.setText(""+b.getState());
     }
     
     void immediateReadSensor(String name, Element item) {
