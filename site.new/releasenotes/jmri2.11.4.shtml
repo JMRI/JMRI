@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.23 2011-03-30 01:20:50 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.24 2011-04-01 15:58:15 ken_c Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -145,6 +145,9 @@ Ken Cameron:
 <li>Fixed Powerline interfaces for CP290 and Insteon.</li>
 <li>Improved the testing of the ports used for interfaces when saving the preferences.
 It now will log an error message on the console with the port and conflicting interfaces.</li>
+<li>With testing by Walt Thompson, found and fixed a significant timing bug that was causing
+a train to stop due to it tripping its own signals. Seven trains running for over 4 hours with
+no issues!!</li>
 </ul>
 
 <p>Matthew Harris:
