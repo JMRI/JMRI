@@ -15,7 +15,7 @@ import javax.swing.*;
  * Extended to cover SPROG 3 which uses the same bootloader protocol
  * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -148,7 +148,7 @@ public class SprogIIUpdateFrame
         // Enable the file chooser button
         setSprogModeButton.setEnabled(true);
         openFileChooserButton.setEnabled(true);
-        if (bootVer.indexOf("12") > 0) {
+        if (bootVer.indexOf("11.0") >= 0) {
           sprogTypeString = "SPROG II";
           sprogTypeInt = 2;
           blockLen = 8;
