@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
  * @author  Dennis Miller  Copyright (C) 2005
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -96,10 +96,6 @@ public class RosterMenu extends JMenu {
         AbstractAction rosterExportAction = new FullBackupExportAction(rb.getString("MenuFullExport"), pWho);
         rosterExportAction.setEnabled(false);
 
-        AbstractAction rosterImportAction = new FullBackupImportAction(rb.getString("MenuFullImport"), pWho);
-        rosterImportAction.setEnabled(false);
-
-
         // Need a frame here, but are not passed one
         Frame newFrame = new Frame();
         AbstractAction printAction = new PrintRosterAction(rb.getString("MenuItemPrint"), newFrame, false);
@@ -128,7 +124,6 @@ public class RosterMenu extends JMenu {
         add(groupMenu);
         addSeparator();
         add(rosterExportAction);
-        add(rosterImportAction);
 
         // activate the right items
         switch (pMenuType) {
@@ -147,7 +142,6 @@ public class RosterMenu extends JMenu {
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);
                 rosterGroupTableAction.setEnabled(true);
-                rosterImportAction.setEnabled(true);
                 rosterExportAction.setEnabled(true);
                 break;
             case SELECTMENU:
