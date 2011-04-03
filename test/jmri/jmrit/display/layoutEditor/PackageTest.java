@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.display.layoutEditor package
  * @author			Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class PackageTest extends TestCase {
 
@@ -26,6 +26,7 @@ public class PackageTest extends TestCase {
 	public static Test suite() {
 		TestSuite suite = new TestSuite(PackageTest.class.getName());  
 		suite.addTest(LayoutEditorWindowTest.suite());
+		suite.addTest(LEConnectivityTest.suite());
 		return suite;
 	}
 
