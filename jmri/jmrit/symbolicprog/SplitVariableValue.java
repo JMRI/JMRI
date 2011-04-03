@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -229,8 +229,18 @@ public class SplitVariableValue extends VariableValue
         if (getReadOnly() || getInfoOnly()) {
             value.setEditable(false);
         }
+        reps.add(value);
         return updateRepresentation(value);
     }
+
+    public void setAvailable(boolean a) {
+        _value.setVisible(a);
+        for (Component c : reps) c.setVisible(a);
+        super.setAvailable(a);
+    }
+
+    java.util.List<Component> reps = new java.util.ArrayList<Component>();
+    
     private int _progState = 0;
     private static final int IDLE = 0;
     private static final int READING_FIRST = 1;
@@ -375,7 +385,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.27 $
+     * @version     $Revision: 1.28 $
      */
     public class VarTextField extends JTextField {
 

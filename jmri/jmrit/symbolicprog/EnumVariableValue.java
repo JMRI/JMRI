@@ -16,7 +16,7 @@ import java.util.Vector;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -98,6 +98,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     int _maxVal;
     int _minVal;
     Color _defaultColor;
+
+    public void setAvailable(boolean a) {
+        _value.setVisible(a);
+        for (ComboCheckBox c : comboCBs) c.setVisible(a);
+        for (VarComboBox c : comboVars) c.setVisible(a);
+        for (ComboRadioButtons c : comboRBs) c.setVisible(a);
+        super.setAvailable(a);
+    }
 
     public Object rangeVal() {
         return "enum: "+_minVal+" - "+_maxVal;
@@ -310,7 +318,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.28 $
+     * @version         $Revision: 1.29 $
      */
     public class VarComboBox extends JComboBox {
 
