@@ -30,7 +30,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -130,7 +130,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             			Element n = new Element("item");
                         n.addContent(new Element("type").addContent("panel"));
                         //get rid of spaces in name
-            			n.addContent(new Element("name").addContent(new String(frameTitle).replaceAll(" ","%20")));
+            			n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ","%20")));
             			n.addContent(new Element("userName").addContent(frameTitle)); 
             			e.addContent(n);
             		}
