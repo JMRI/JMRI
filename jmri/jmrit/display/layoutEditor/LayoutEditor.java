@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -4261,7 +4261,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	 * Validates that the supplied occupancy sensor name corresponds to an existing sensor
 	 *   and is unique among all blocks.  If valid, returns true and sets the block sensor
 	 *   name in the block.  Else returns false, and does nothing to the block.
-	 * This method also converts the sensor name to upper case if it is a system name.
 	 */
 	public boolean validateSensor(String sensorName, LayoutBlock blk, Component openFrame) {
 		// check if anything entered	
@@ -4274,12 +4273,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		if (s==null) {
 			// There is no sensor corresponding to this name
 			return false;
-		}
-		else {
-			// Have sensor, check if name should be upper case
-			if (sensorName.toUpperCase().equals(s.getSystemName())) {
-				sensorName = sensorName.toUpperCase();
-			}
 		}
 		return true;
 	}
