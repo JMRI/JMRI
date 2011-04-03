@@ -38,7 +38,7 @@ import jmri.TransitSection;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AutoTrainAction {
 	
@@ -304,6 +304,8 @@ public class AutoTrainAction {
 	
 	// this method is called to execute the action, when the "When" event has happened.
 	// it is "public" because it may be called from a TransitSectionAction.
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",
+                justification="used only by thread that can be stopped, no conflict with other threads expected")	
 	public synchronized void executeAction(TransitSectionAction tsa) {
 		if (tsa==null) {
 			log.error("executeAction called with null TransitSectionAction");
@@ -337,6 +339,8 @@ public class AutoTrainAction {
 					_autoActiveTrain.setCurrentRampRate(AutoActiveTrain.RAMP_NONE);
 					while ( (_autoActiveTrain.getAutoEngineer()!=null) &&  
 							(!_autoActiveTrain.getAutoEngineer().isAtSpeed()) ) {
+                        if (Thread.currentThread().getName().startsWith("AWT-EventQueue"))
+                            log.error("executeAction will be calling Thread.sleep on AWT Event Queue");
 						try {
 							Thread.sleep(51);
 						} catch (InterruptedException e) {

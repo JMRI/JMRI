@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2008-2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class AllocatedSection {
 
@@ -171,7 +171,10 @@ public class AllocatedSection {
 		}			
 	}
 	boolean handlingBlockChange = false; 
-	private synchronized void handleBlockChange(int index, java.beans.PropertyChangeEvent e) {
+	
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",
+                justification="used only by thread that can be stopped, no conflict with other threads expected")	
+    private synchronized void handleBlockChange(int index, java.beans.PropertyChangeEvent e) {
 		if (e.getPropertyName().equals("state")) {
 			if (mBlockList == null) mBlockList = mSection.getBlockList();
 			if (mBlockList!=null) {
@@ -180,6 +183,8 @@ public class AllocatedSection {
 					// filter to insure that change is not a short spike
 					int occ = b.getState();
 					handlingBlockChange = true;
+					if (Thread.currentThread().getName().startsWith("AWT-EventQueue"))
+					    log.error("handleBlockChange will be calling Thread.sleep on AWT Event Queue");
 					try {
 						Thread.sleep(250);
 					} catch (InterruptedException exc) {
