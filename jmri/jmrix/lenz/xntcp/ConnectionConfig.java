@@ -23,7 +23,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -32,15 +32,23 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         javax.swing.JComboBox portBox = new javax.swing.JComboBox();
 
 	protected JTextField ipField = new JTextField(XnTcpAdapter.DEFAULT_IP_ADDRESS);
-	protected JTextField portField = new JTextField(String.valueOf(XnTcpAdapter.DEFAULT_TCP_PORT));
 	protected boolean manualInput = false;
 	private boolean init = false;
+
+
+    /**
+     * Local initialization of defaults, to be called from all constructors
+     */
+    private void initDefaults() {
+	portField = new JTextField(String.valueOf(XnTcpAdapter.DEFAULT_TCP_PORT));
+    }
 
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
+        initDefaults();
         adapter = p;
 		String h = adapter.getCurrentOption1Setting();
 		if(h != null && !h.equals("")) ipField = new JTextField(h);
@@ -51,6 +59,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
+        initDefaults();
     }
 
     public String name() { return "XnTcp"; }
