@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -6568,7 +6568,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		while (pix<maxY) {
 			startPt.setLocation(0.0,pix);
 			stopPt.setLocation(maxX,pix);
-			if ( (pix-((int)pix/100)*100.0) < 5.0) {
+			if ( (((int)pix) % 100) < 5.0) {
 				g2.setStroke(wide);
 				g2.draw(new Line2D.Double(startPt,stopPt));
 				g2.setStroke(narrow);
@@ -6583,7 +6583,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		while (pix<maxX) {
 			startPt.setLocation(pix,0.0);
 			stopPt.setLocation(pix,maxY);
-			if ( (pix-((int)pix/100)*100.0) < 5.0) {
+			if ( (((int)pix) % 100) < 5.0) {
 				g2.setStroke(wide);
 				g2.draw(new Line2D.Double(startPt,stopPt));
 				g2.setStroke(narrow);
