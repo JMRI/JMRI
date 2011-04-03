@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.15 2010-05-28 06:05:47 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.16 2011-04-03 18:26:29 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -411,6 +411,12 @@
             </xs:element>
             <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+              Qualifies whether this variable will appear in the interface, depending
+              on the value in other variables.
+              </xs:documentation></xs:annotation>
             </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
