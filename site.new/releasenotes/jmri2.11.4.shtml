@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.24 2011-04-01 15:58:15 ken_c Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.25 2011-04-04 16:51:49 hebbos Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -173,11 +173,23 @@ Pete Cressman:
 <li>Fixed bug when removing Memory Input and Memory Spinner icons.</li>
 <li>Fixed bug for Memory Input popup menu to change column width.</li>
 </ul>
-<P>Dan Boudreau:</P>
+
+<P>Dan Boudreau:
 <ul>
 <LI>Users can now adjust font size.  See Edit Preferences, Display GUI.</LI>
 </ul>
 
+<p>
+Lionel Jeanson:
+<ul>
+<li>Improved roster xslt files, roster.xml now better rendered in web browser when accessed through JMRI MiniWebServer.</li>
+<li>Added possibility to have function icons for throttles (defined via DecoderPro function labels pane).</li>
+<li>Function icons usage implemented in JMRI native throttles and inControl web throttles</li>
+<li>Added icons on buttons for JMRI native throttles control panel.</li>
+<li>Option available in throttles preferences to disable buttons icons for JMRI native throttles.</li>
+<li>Improved drag'n drop component for images, remove now on contextual menu.</li>
+<li>Improved Jynstrument on throttle window toolbar, Jynstruments now saved when window layout saved, and restored on load.</li>
+</ul>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
