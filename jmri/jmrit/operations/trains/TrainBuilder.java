@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.143 $
+ * @version             $Revision: 1.144 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -256,6 +256,7 @@ public class TrainBuilder extends TrainCommon{
 		else
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTrainReqEngine"),new Object[]{train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad()}));
 		
+		// allow up to two engine and caboose swaps in the train's route
 		RouteLocation engineTerminatesFirstLeg = train.getTrainTerminatesRouteLocation();
 		RouteLocation cabooseOrFredTerminatesFirstLeg = train.getTrainTerminatesRouteLocation();
 		RouteLocation engineTerminatesSecondLeg = train.getTrainTerminatesRouteLocation();
@@ -356,7 +357,7 @@ public class TrainBuilder extends TrainCommon{
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{reqNumEngines, train.getTrainDepartsName(), engineTerminatesFirstLeg.getName()}));
 			}
 		}
-		// Engine change in route?
+		// First engine change in route?
 		if ((train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES){
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrainEngineChange"),new Object[]{train.getSecondLegStartLocationName(), 
 				train.getSecondLegNumberEngines(), train.getSecondLegEngineModel(), train.getSecondLegEngineRoad()}));
@@ -365,7 +366,7 @@ public class TrainBuilder extends TrainCommon{
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{Integer.parseInt(train.getSecondLegNumberEngines()), train.getSecondLegStartLocation(), engineTerminatesSecondLeg}));
 			}
 		}
-		// Engine change in route?
+		// Second engine change in route?
 		if ((train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES){
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrainEngineChange"),new Object[]{train.getThirdLegStartLocationName(), 
 				train.getThirdLegNumberEngines(), train.getThirdLegEngineModel(), train.getThirdLegEngineRoad()}));
@@ -400,10 +401,11 @@ public class TrainBuilder extends TrainCommon{
 		getCaboose(train.getCabooseRoad(), train.getLeadEngine(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
 		getCarWithFred(train.getCabooseRoad(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
 		
-		// caboose change?
+		// first caboose change?
 		if ((train.getSecondLegOptions() & Train.CHANGE_CABOOSE) > 0){
 			getCaboose(train.getSecondLegCabooseRoad(), null, train.getSecondLegStartLocation(), cabooseOrFredTerminatesSecondLeg);
 		}
+		// second caboose change?
 		if ((train.getThirdLegOptions() & Train.CHANGE_CABOOSE) > 0){
 			getCaboose(train.getThirdLegCabooseRoad(), null, train.getThirdLegStartLocation(), cabooseOrFredTerminatesThirdLeg);
 		}
@@ -1093,12 +1095,12 @@ public class TrainBuilder extends TrainCommon{
 							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 							&& car.getDestination() == null && car.getNextDestination() == null){
 						searchForCarLoad(car);
-							}
+					}
 					// does car have a custom load without a destination?
 					if (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
 							&& car.getDestination() == null && car.getNextDestination() == null){
-						findDestinationForCarLoad(car);
+						findNextDestinationForCarLoad(car);
 					}
 					// does car have a next destination, but no destination
 					if (car.getNextDestination() != null && car.getDestination() == null){
@@ -1578,12 +1580,13 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	/**
-	 * Find a destination and track for a car with a schedule load.
+	 * Find a next destination and track for a car with a schedule load.
 	 * @param car the car with the load
 	 * @throws BuildFailedException 
 	 */
-	private void findDestinationForCarLoad(Car car) throws BuildFailedException{
-		log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
+	private void findNextDestinationForCarLoad(Car car) throws BuildFailedException{
+		//log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForSiding"),new Object[]{car.toString(), car.getLoad()}));
 		// don't find a next destination for cars departing staging
 		//if (departStageTrack != null)
 		//	return;
@@ -1613,11 +1616,12 @@ public class TrainBuilder extends TrainCommon{
 						// is car part of kernel?
 						car.updateKernel();
 						track.bumpSchedule();
-						break;	//done
+						return;	//done
 					}
 				}
 			}
 		}
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCouldNotFindSiding"),new Object[]{car.toString(), car.getLoad()}));
 	}
 	
 	/**
@@ -2075,6 +2079,11 @@ public class TrainBuilder extends TrainCommon{
 				}
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarCanDropMoves"),new Object[]{car.toString(), (destinationTemp.getName()+ ", " +trackTemp.getName()), 
 					+rld.getCarMoves(), rld.getMaxCarMoves()}));
+				if (rldSave == null && multiplePickup){
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), rld.getName()}));
+					trackSave = null;
+					break; 	//done
+				}
 				// if there's more than one available destination use the one with the least moves
 				if (rldSave != null){
 					double saveCarMoves = rldSave.getCarMoves();
