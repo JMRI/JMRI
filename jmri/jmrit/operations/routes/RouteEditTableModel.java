@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -103,19 +103,19 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(45);
+		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(45);
-		table.getColumnModel().getColumn(PICKUPCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(DROPCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(55);
+		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(PICKUPCOLUMN).setPreferredWidth(65);
+		table.getColumnModel().getColumn(DROPCOLUMN).setPreferredWidth(65);
+		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
-		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(40);
-		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(40);
+		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(35);
+		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(35);
 		table.getColumnModel().getColumn(COMMENTCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
         updateList();
