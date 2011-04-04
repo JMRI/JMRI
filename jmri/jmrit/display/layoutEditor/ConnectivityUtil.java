@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class ConnectivityUtil 
@@ -1822,10 +1822,10 @@ public class ConnectivityUtil
 					else if (((PositionablePoint)conObj).getType() == PositionablePoint.ANCHOR) {
 						// proceed to next track segment if within the same Block
 						if (((PositionablePoint)conObj).getConnect1() == curTS) {
-							curTS = (TrackSegment)(((PositionablePoint)conObj).getConnect2());
+							curTS = (((PositionablePoint)conObj).getConnect2());
 						}
 						else {
-							curTS = (TrackSegment)(((PositionablePoint)conObj).getConnect1());
+							curTS = (((PositionablePoint)conObj).getConnect1());
 						}
 						curObj = conObj;
 					}
