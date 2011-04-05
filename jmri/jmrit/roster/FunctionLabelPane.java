@@ -26,7 +26,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -118,7 +118,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             add(_imageFilePath[i], cL);
             cL.gridx++;
             
-    		_imagePressedFilePath[i] = new ResizableImagePanel(r.setFunctionSelectedImage(i), 20, 20);
+    		_imagePressedFilePath[i] = new ResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
     		_imagePressedFilePath[i].setDnd(true);
     		_imagePressedFilePath[i].setDropFolder(_resourcesBasePath);
     		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
@@ -171,9 +171,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         if (_imagePressedFilePath!=null) {
             for (int i = 0; i<_imagePressedFilePath.length; i++) 
                 if (_imagePressedFilePath[i]!=null) {
-                    if (r.setFunctionSelectedImage(i)==null && !_imagePressedFilePath[i].getImagePath().equals(""))
+                    if (r.getFunctionSelectedImage(i)==null && !_imagePressedFilePath[i].getImagePath().equals(""))
                         return true;
-                    if (r.setFunctionSelectedImage(i)!=null && !r.setFunctionSelectedImage(i).equals(_imagePressedFilePath[i].getImagePath()))
+                    if (r.getFunctionSelectedImage(i)!=null && !r.getFunctionSelectedImage(i).equals(_imagePressedFilePath[i].getImagePath()))
                         return true;
                 }
         }        

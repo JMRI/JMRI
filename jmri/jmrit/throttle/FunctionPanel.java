@@ -395,7 +395,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 						if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
 								&& (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())) {
 							functionButton[i].setIconPath(rosterEntry.getFunctionImage(i));							
-							functionButton[i].setSelectedIconPath(rosterEntry.setFunctionSelectedImage(i));
+							functionButton[i].setSelectedIconPath(rosterEntry.getFunctionSelectedImage(i));
 						}
 						else {
 							functionButton[i].setIconPath(null);							
@@ -432,7 +432,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.70 $
+	 * @version $Revision: 1.71 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;

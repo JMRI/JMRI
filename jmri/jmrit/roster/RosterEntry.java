@@ -47,7 +47,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.55 $
+ * @version   $Revision: 1.56 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -447,7 +447,7 @@ public class RosterEntry {
     	functionSelectedImages[fn] = s;
     	firePropertyChange("functionSelectedImage"+fn, old, s);
     }
-    public String setFunctionSelectedImage(int fn) {
+    public String getFunctionSelectedImage(int fn) {
     	if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null))
     		return functionSelectedImages[fn];
     	return _resourcesBasePath ; 
