@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.144 $
+ * @version             $Revision: 1.145 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1797,7 +1797,7 @@ public class TrainBuilder extends TrainCommon{
 						&& !rld.getName().equals(terminateLocation.getName())
 						&& (rld.getMaxCarMoves()-rld.getCarMoves()>0) 
 						&& rld.canPickup() && checkPickUpTrainDirection(car, rld)){
-					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), rld.getName()}));
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), car.getLocationName()}));
 					break;
 				}
 				if (rld.getName().equals(car.getDestinationName())){
@@ -1913,12 +1913,6 @@ public class TrainBuilder extends TrainCommon{
 			start++;		//yes!, no car drops at departure
 		for (int k = start; k<routeEnd; k++){
 			rld = train.getRoute().getLocationById(routeList.get(k));
-			if (rld.canDrop() || car.hasFred() || car.isCaboose()){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchingLocation"),new Object[]{rld.getName(),}));
-			} else {
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
-				continue;
-			}
 			// if car can be picked up later at same location, set flag	
 			if (rl != rld && rld.getName().equals(car.getLocationName())
 					&& !rld.getName().equals(terminateLocation.getName())
@@ -1926,6 +1920,12 @@ public class TrainBuilder extends TrainCommon{
 					&& rld.canPickup() && checkPickUpTrainDirection(car, rld)){
 				log.debug("Car ("+car.toString()+") can be picked up later!");
 				multiplePickup = true;
+			}
+			if (rld.canDrop() || car.hasFred() || car.isCaboose()){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchingLocation"),new Object[]{rld.getName(),}));
+			} else {
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
+				continue;
 			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger, caboose or car with FRED
 			if (rl.getName().equals(rld.getName()) && routeList.size() != 1 && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
@@ -2080,7 +2080,7 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarCanDropMoves"),new Object[]{car.toString(), (destinationTemp.getName()+ ", " +trackTemp.getName()), 
 					+rld.getCarMoves(), rld.getMaxCarMoves()}));
 				if (rldSave == null && multiplePickup){
-					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), rld.getName()}));
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), car.getLocationName()}));
 					trackSave = null;
 					break; 	//done
 				}
@@ -2111,7 +2111,7 @@ public class TrainBuilder extends TrainCommon{
 						rld = rldSave;					// the saved is better than the last found
 						trackTemp = trackSave;
 					} else if (multiplePickup){
-						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), rld.getName()}));
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), car.getLocationName()}));
 						trackSave = null;
 						break; 	//done
 					}
