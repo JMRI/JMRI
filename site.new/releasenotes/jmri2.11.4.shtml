@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.25 2011-04-04 16:51:49 hebbos Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.26 2011-04-05 16:48:03 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -189,6 +189,12 @@ Lionel Jeanson:
 <li>Option available in throttles preferences to disable buttons icons for JMRI native throttles.</li>
 <li>Improved drag'n drop component for images, remove now on contextual menu.</li>
 <li>Improved Jynstrument on throttle window toolbar, Jynstruments now saved when window layout saved, and restored on load.</li>
+</ul>
+<p>
+Kevin Dickerson:
+<ul>
+<li>Add the ability to set speeds to Blocks and Turnouts for use with automation tools</li>
+<li>Catched an error that causes a High CPU Utilisation when an unexpected/abnormal termination occurs in a TCP connection.</li>
 </ul>
 
 <!--#include virtual="/Footer" -->
