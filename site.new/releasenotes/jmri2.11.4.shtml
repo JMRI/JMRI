@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.26 2011-04-05 16:48:03 kevin-dickerson Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.27 2011-04-06 19:33:34 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -134,6 +134,8 @@ New operations features and bug fixes:
 	cars by kernel. The new blocking order is: first by road, then number,
 	kernel, location and finally destination.  This should keep cars in a
 	kernel together on the manifest and switch lists.</li>
+	<li>You can now change the loco and car manifest and switch list pick up
+	and set out prefixes, i.e. " [ ] Pick up".  See Setting-&gt;Tools Print Options.</li>
 </ul>
 
 <p>
