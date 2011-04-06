@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JMRI Mobile</title>
+<link rel='stylesheet' href='css/jquery.mobile-1.0a4.min.css' />
+<link rel='stylesheet' href='css/JMRIMobile.css' />
+<script type='text/javascript' src='js/jquery-1.5.min.js'></script>
+<script type='text/javascript' src='js/jquery.mobile-1.0a4.min.js'></script>
+<script type='text/javascript' src='js/JMRIMobile.js'></script>
+<script type='text/javascript' src='js/jquery.tmpl.min.js'></script>
+<!-- Generic jquery template for list items -->
+<script id='genItemTemplate' type='text/html'>
+    <li id='name-${name}' onClick="$sendChange('${type}','${name}','${nextValue}')"><div><div>${name} ${userName}</div><div id='valueText'>${valueText}</div></div></li>
+</script>
+<script id='panelItemTemplate' type='text/html'>
+    <li id='name-${name}'><a href='/panel/${name}.html' target='${name}'>${userName}</a></li>
+</script>
+<script id='rosterItemTemplate' type='text/html'>
+    <li id='name-${name}'><a href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${name}'>${name}</a></li>
+</script>
+<script id='genPageTemplate' type='text/html'>
+  <div id='type-${type}' data-url='type-${type}' data-role='page' data-theme='b'>
+    <div data-role='header' data-id='header' data-backbtn='false'>
+      <h1>JMRI Mobile - ${type}</h1>
+      <a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
+    </div>
+    <div data-role='content'>
+      <ul class='listview' data-role='listview'></ul>
+    </div>
+    <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true'>
+      <a data-role='button' href='#debug' data-theme='b'>Debug</a>
+      <a data-role='button' href='#settings' data-theme='b'>Settings</a>
+    </div>
+  </div>
+</script>
+
+</head>
+<body>
+
+	<div data-role='page' id='settings' data-theme='b'>
+		<div data-role='header' id='header'  data-id='header' data-position='fixed' data-backbtn='false'>
+			<h1>Settings</h1>
+			<a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
+		</div>
+		<div data-role='content' data-theme='b'>
+		This is an early alpha version of a browser-based UI for operating a layout with JMRI.  Currently includes:
+		<ul>
+		</ul><li>turnout, route and power control,</li> 
+		<li>links to open InControl throttles for each roster entry</li>
+		<li>clickable panels for each open JMRI window</li>
+		</ul> 
+		</div>
+		<div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true'>
+			<a data-role='button' href='#settings' data-theme='b'>Settings</a>
+		</div>
+	</div>
+
+</body>
+
+</html>
