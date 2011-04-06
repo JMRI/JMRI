@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -124,6 +124,7 @@ public class Setup {
 	public static final String PICKUP_COMMENT = rb.getString("PickupComment");
 	public static final String HAZARDOUS = rb.getString("Hazardous");
 	public static final String NONE = " ";				// none has be a character or a space
+	public static final String BOX = " [ ] ";
 	
 	public static final String BLACK = rb.getString("Black");	// the supported pick up and set out colors
 	public static final String BLUE = rb.getString("Blue");
@@ -150,7 +151,11 @@ public class Setup {
 	private static String[] dropEngineMessageFormat = {ROAD, NUMBER, NONE, MODEL, NONE, NONE, DESTINATION, COMMENT};
 	private static String[] pickupCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, COMMENT, PICKUP_COMMENT};
 	private static String[] dropCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION, COMMENT, DROP_COMMENT};
-	private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};	
+	private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
+	private static String pickupEnginePrefix = BOX + rb.getString("PickUpPrefix");
+	private static String dropEnginePrefix = BOX + rb.getString("SetOutPrefix");
+	private static String pickupCarPrefix = BOX + rb.getString("PickUpPrefix");
+	private static String dropCarPrefix = BOX + rb.getString("SetOutPrefix");
 	private static boolean tab = false;
 	private static String miaComment = rb.getString("misplacedCars");
 	private static String logoURL ="";
@@ -521,6 +526,38 @@ public class Setup {
 		RollingStockLogger.instance().enableEngineLogging(enable);
 	}
 	
+	public static String getPickupEnginePrefix(){
+		return pickupEnginePrefix;
+	}
+	
+	public static void setPickupEnginePrefix(String prefix){
+		pickupEnginePrefix = prefix;
+	}
+	
+	public static String getDropEnginePrefix(){
+		return dropEnginePrefix;
+	}
+	
+	public static void setDropEnginePrefix(String prefix){
+		dropEnginePrefix = prefix;
+	}
+	
+	public static String getPickupCarPrefix(){
+		return pickupCarPrefix;
+	}
+	
+	public static void setPickupCarPrefix(String prefix){
+		pickupCarPrefix = prefix;
+	}
+	
+	public static String getDropCarPrefix(){
+		return dropCarPrefix;
+	}
+	
+	public static void setDropCarPrefix(String prefix){
+		dropCarPrefix = prefix;
+	}
+	
 	public static String[] getPickupEngineMessageFormat(){
 		return pickupEngineMessageFormat.clone();
 	}
@@ -874,6 +911,7 @@ public class Setup {
        	values.setAttribute("yearModeled", getYearModeled());
        	
        	e.addContent(values = new Element("pickupEngFormat"));
+       	values.setAttribute("prefix", getPickupEnginePrefix());
         StringBuffer buf = new StringBuffer();
        	for (int i=0; i<pickupEngineMessageFormat.length; i++){
        		buf.append(pickupEngineMessageFormat[i]+",");
@@ -881,6 +919,7 @@ public class Setup {
        	values.setAttribute("setting", buf.toString());
     	
       	e.addContent(values = new Element("dropEngFormat"));
+      	values.setAttribute("prefix", getDropEnginePrefix());
         buf = new StringBuffer();
        	for (int i=0; i<dropEngineMessageFormat.length; i++){
        		buf.append(dropEngineMessageFormat[i]+",");
@@ -888,6 +927,7 @@ public class Setup {
        	values.setAttribute("setting", buf.toString());
     	
       	e.addContent(values = new Element("pickupCarFormat"));
+      	values.setAttribute("prefix", getPickupCarPrefix());
         buf = new StringBuffer();
        	for (int i=0; i<pickupCarMessageFormat.length; i++){
        		buf.append(pickupCarMessageFormat[i]+",");
@@ -895,6 +935,7 @@ public class Setup {
        	values.setAttribute("setting", buf.toString());
        	
       	e.addContent(values = new Element("dropCarFormat"));
+      	values.setAttribute("prefix", getDropCarPrefix());
         buf = new StringBuffer();
        	for (int i=0; i<dropCarMessageFormat.length; i++){
        		buf.append(dropCarMessageFormat[i]+",");
@@ -1070,6 +1111,8 @@ public class Setup {
         	}
         }
         if (operations.getChild("pickupEngFormat") != null){
+        	if ((a = operations.getChild("pickupEngFormat").getAttribute("prefix"))!= null)
+        		setPickupEnginePrefix(a.getValue());
         	if ((a = operations.getChild("pickupEngFormat").getAttribute("setting"))!= null){
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("pickupEngFormat: "+setting);
@@ -1078,6 +1121,8 @@ public class Setup {
         	}
         }
         if (operations.getChild("dropEngFormat") != null){
+        	if ((a = operations.getChild("dropEngFormat").getAttribute("prefix"))!= null)
+        		setDropEnginePrefix(a.getValue());
         	if ((a = operations.getChild("dropEngFormat").getAttribute("setting"))!= null){
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("dropEngFormat: "+setting);
@@ -1086,6 +1131,8 @@ public class Setup {
         	}
         }
         if (operations.getChild("pickupCarFormat") != null){
+        	if ((a = operations.getChild("pickupCarFormat").getAttribute("prefix"))!= null)
+        		setPickupCarPrefix(a.getValue());
         	if ((a = operations.getChild("pickupCarFormat").getAttribute("setting"))!= null){
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("pickupCarFormat: "+setting);
@@ -1095,6 +1142,8 @@ public class Setup {
         	}
         }
         if (operations.getChild("dropCarFormat") != null){
+        	if ((a = operations.getChild("dropCarFormat").getAttribute("prefix"))!= null)
+        		setDropCarPrefix(a.getValue());
         	if ((a = operations.getChild("dropCarFormat").getAttribute("setting"))!= null){
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("dropCarFormat: "+setting);

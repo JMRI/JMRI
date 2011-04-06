@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -30,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -60,11 +61,17 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
 	
 	// text field
+	JTextField pickupEngPrefix = new JTextField(10);
+	JTextField dropEngPrefix = new JTextField(10);
+	JTextField pickupCarPrefix = new JTextField(10);
+	JTextField dropCarPrefix = new JTextField(10);
 	
 	// text area
 	JTextArea commentTextArea	= new JTextArea(2,90);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	Dimension minScrollerDim = new Dimension(700,60);
+	
+
 	
 	// combo boxes
 	JComboBox fontComboBox = Setup.getFontComboBox();
@@ -138,6 +145,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		// engine message format
 		JPanel pEngPickup = new JPanel();
 		pEngPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupEngine")));
+		pEngPickup.add(pickupEngPrefix);
+		pickupEngPrefix.setText(Setup.getPickupEnginePrefix());
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			JComboBox b = Setup.getEngineMessageComboBox();
@@ -148,6 +157,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		JPanel pEngDrop = new JPanel();
 		pEngDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropEngine")));
+		pEngDrop.add(dropEngPrefix);
+		dropEngPrefix.setText(Setup.getDropEnginePrefix());
 		format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			JComboBox b = Setup.getEngineMessageComboBox();
@@ -159,6 +170,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		// car pickup message format
 		JPanel pPickup = new JPanel();
 		pPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupCar")));
+		pPickup.add(pickupCarPrefix);
+		pickupCarPrefix.setText(Setup.getPickupCarPrefix());
 		String[] pickFormat = Setup.getPickupCarMessageFormat();
 		for (int i=0; i<pickFormat.length; i++){
 			JComboBox b = Setup.getCarMessageComboBox();
@@ -170,6 +183,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		// car drop message format
 		JPanel pDrop = new JPanel();
 		pDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropCar")));
+		pDrop.add(dropCarPrefix);
+		dropCarPrefix.setText(Setup.getDropCarPrefix());
 		String[] dropFormat = Setup.getDropCarMessageFormat();
 		for (int i=0; i<dropFormat.length; i++){
 			JComboBox b = Setup.getCarMessageComboBox();
@@ -294,6 +309,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setDropTextColor((String)dropComboBox.getSelectedItem());
 			Setup.setPickupTextColor((String)pickupComboBox.getSelectedItem());
 			// save engine message format
+			Setup.setPickupEnginePrefix(pickupEngPrefix.getText());
+			Setup.setDropEnginePrefix(dropEngPrefix.getText());
 			String[] format = new String[enginePickupMessageList.size()];
 			for (int i=0; i<enginePickupMessageList.size(); i++){
 				JComboBox b = enginePickupMessageList.get(i);
@@ -307,6 +324,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			}
 			Setup.setDropEngineMessageFormat(format);
 			// save car pick up message format
+			Setup.setPickupCarPrefix(pickupCarPrefix.getText());
+			Setup.setDropCarPrefix(dropCarPrefix.getText());
 			format = new String[carPickupMessageList.size()];
 			for (int i=0; i<carPickupMessageList.size(); i++){
 				JComboBox b = carPickupMessageList.get(i);

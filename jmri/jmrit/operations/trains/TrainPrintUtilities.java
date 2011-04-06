@@ -24,7 +24,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
 /**
  * Train print utilities
  * @author Daniel Boudreau (C) 2010
- * @version	$Revision: 1.12 $
+ * @version $Revision: 1.13 $
  *
  */
 public class TrainPrintUtilities {
@@ -101,12 +101,13 @@ public class TrainPrintUtilities {
 			// printing the train manifest
 			}else{
 				// determine if line is a pickup or drop
-				if(line.startsWith(TrainCommon.BOX + rb.getString("Pickup")) ||
-						line.startsWith(TrainCommon.BOX + rb.getString("Engine"))){
+				if((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup.getPickupEnginePrefix()))
+						|| (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup.getPickupCarPrefix()))){
 					//log.debug("found a pickup line");
 					c = Setup.getPickupColor();
 				}
-				else if(line.startsWith(TrainCommon.BOX + rb.getString("Drop"))){
+				else if((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup.getDropEnginePrefix()))
+						|| (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup.getDropCarPrefix()))){
 					//log.debug("found a drop line");
 					c = Setup.getDropColor();
 				}

@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.74 $
+ * @version             $Revision: 1.75 $
  */
 public class Car extends RollingStock {
 	
@@ -565,8 +565,6 @@ public class Car extends RollingStock {
 	
 	private void setLoadEmpty(){
 		setLoad(carLoads.getDefaultEmptyName());
-		setNextDestination(null);
-		setNextDestTrack(null);
 		if (getReturnWhenEmptyDestination() != null){
 			setNextDestination(getReturnWhenEmptyDestination());
 			if (getReturnWhenEmptyDestTrack() != null){

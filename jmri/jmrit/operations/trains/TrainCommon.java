@@ -34,7 +34,6 @@ public class TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	private static final String LENGTHABV = Setup.LENGTHABV;
-	protected static final String BOX = " [ ] ";
 	protected static final String TAB = "    ";
 	EngineManager engineManager = EngineManager.instance();
 	
@@ -56,7 +55,7 @@ public class TrainCommon {
 	
 	
 	protected void pickupEngine(PrintWriter file, Engine engine){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup"));
+		StringBuffer buf = new StringBuffer(Setup.getPickupEnginePrefix());
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			buf.append(getEngineAttribute(engine, format[i], true));
@@ -65,7 +64,7 @@ public class TrainCommon {
 	}
 	
 	protected void dropEngine(PrintWriter file, Engine engine){
-		StringBuffer buf = new StringBuffer(tabString((BOX + rb.getString("SetOut")), 11));
+		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			buf.append(getEngineAttribute(engine, format[i], false));
@@ -74,7 +73,7 @@ public class TrainCommon {
 	}
 	
 	protected void pickupCar(PrintWriter file, Car car){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup"));
+		StringBuffer buf = new StringBuffer(Setup.getPickupCarPrefix());
 		String[] format = Setup.getPickupCarMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], true);
@@ -88,7 +87,7 @@ public class TrainCommon {
 	}
 	
 	protected void dropCar(PrintWriter file, Car car){
-		StringBuffer buf = new StringBuffer(tabString((BOX + rb.getString("SetOut")), 11));
+		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
 		String[] format = Setup.getDropCarMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], false);
