@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -321,9 +321,11 @@ public class HardcopyWriter extends Writer {
      * @throws IOException
      */
     public void write(Color c, String s)throws IOException{
-    	page.setColor(c);
-    	write(s);
-    	page.setColor(color);	// reset color
+    	if (page != null){
+    		page.setColor(c);
+    		write(s);
+    		page.setColor(color);	// reset color
+    	}
     }
 
     public void flush() {}
