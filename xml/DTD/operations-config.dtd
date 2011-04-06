@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.32 2011-03-22 18:43:43 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.33 2011-04-06 19:26:55 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -67,6 +67,10 @@
 <!ATTLIST panel trainIconAppend		(true | false ) "false"> 
 <!ATTLIST fontName name				CDATA #IMPLIED> 
 <!ATTLIST fontSize size				CDATA #IMPLIED>  
+<!ATTLIST pickupEngFormat prefix	CDATA #IMPLIED>
+<!ATTLIST dropEngFormat prefix		CDATA #IMPLIED>
+<!ATTLIST pickupCarFormat prefix	CDATA #IMPLIED>
+<!ATTLIST dropCarFormat prefix		CDATA #IMPLIED>
 <!ATTLIST pickupEngFormat setting	CDATA #IMPLIED>
 <!ATTLIST dropEngFormat setting		CDATA #IMPLIED>
 <!ATTLIST pickupCarFormat setting	CDATA #IMPLIED>
