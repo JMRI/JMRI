@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class ConnectivityUtil 
@@ -1876,7 +1876,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlockB()==lb) {
 									curTS = (TrackSegment)lt.getConnectB();
 									if ( (tType!=LayoutTurnout.LH_XOVER) && (lt.getLayoutBlockC()==lb) ) {
-										posTS.add((TrackSegment)lt.getConnectC());
+										if (posTS != null) {
+											posTS.add((TrackSegment)lt.getConnectC());
+										}
 										posOB.add(conObj);
 									}
 								}
@@ -1896,7 +1898,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlock()==lb) {
 									curTS = (TrackSegment)lt.getConnectA();
 									if ( (tType!=LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockD()==lb) ) {
-										posTS.add((TrackSegment)lt.getConnectD());
+										if (posTS != null) {
+											posTS.add((TrackSegment)lt.getConnectD());
+										}
 										posOB.add(conObj);
 									}
 								}
@@ -1916,7 +1920,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlockD()==lb) {
 									curTS = (TrackSegment)lt.getConnectD();
 									if ( (tType!=LayoutTurnout.LH_XOVER) && (lt.getLayoutBlock()==lb) ) {
-										posTS.add((TrackSegment)lt.getConnectA());
+										if (posTS != null) {
+											posTS.add((TrackSegment)lt.getConnectA());
+										}
 										posOB.add(conObj);
 									}
 								}
@@ -1936,7 +1942,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlockC()==lb) {
 									curTS = (TrackSegment)lt.getConnectC();
 									if ( (tType!=LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockB()==lb) ) {
-										posTS.add((TrackSegment)lt.getConnectB());
+										if (posTS != null) {
+											posTS.add((TrackSegment)lt.getConnectB());
+										}
 										posOB.add(conObj);
 									}
 								}
@@ -1962,7 +1970,9 @@ public class ConnectivityUtil
 								else if (((TrackSegment)lt.getConnectB()).getLayoutBlock()==lb) {
 									curTS = (TrackSegment)lt.getConnectB();
 									if (((TrackSegment)lt.getConnectC()).getLayoutBlock()==lb) {
-										posTS.add((TrackSegment)lt.getConnectC());
+										if (posTS != null) {
+											posTS.add((TrackSegment)lt.getConnectC());
+										}
 										posOB.add(conObj);
 									}
 								}
