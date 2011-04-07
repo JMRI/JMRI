@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  * @since 2.1.2
  *
  */
@@ -160,12 +160,15 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     @SuppressWarnings("unchecked")
 	public boolean load(Element blocks) throws jmri.configurexml.JmriConfigureXmlException {
     	boolean result = true;
-        
-        if (blocks.getChild("defaultspeed")!=null){
-            String speed = blocks.getChild("defaultspeed").getText();
-            if (speed!=null && !speed.equals("")){
-                InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
+        try {
+            if (blocks.getChild("defaultspeed")!=null){
+                String speed = blocks.getChild("defaultspeed").getText();
+                if (speed!=null && !speed.equals("")){
+                    InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
+                }
             }
+        } catch (jmri.JmriException ex) {
+            log.error(ex.toString());
         }
         
         List<Element> list = blocks.getChildren("block");
@@ -208,12 +211,16 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 				// load curve attribute
 				block.setCurvature(Integer.parseInt((element.getAttribute("curve")).getValue()));
 			}
-            block.setBlockSpeed("Global");
-            if (element.getChild("speed")!=null){
-                String speed = element.getChild("speed").getText();
-                if (speed!=null && !speed.equals("") && !speed.contains("Global")){
-                    block.setBlockSpeed(speed);
+            try {
+                block.setBlockSpeed("Global");
+                if (element.getChild("speed")!=null){
+                    String speed = element.getChild("speed").getText();
+                    if (speed!=null && !speed.equals("") && !speed.contains("Global")){
+                        block.setBlockSpeed(speed);
+                    }
                 }
+            } catch (jmri.JmriException ex) {
+                log.error(ex.toString());
             }
             if(element.getChild("permissive")!=null){
                 boolean permissive = false;

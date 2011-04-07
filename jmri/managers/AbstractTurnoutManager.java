@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -88,8 +88,17 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
         // save in the maps if successful
         register(s);
-        s.setStraightSpeed("Global");
-        s.setDivergingSpeed("Global");
+        try {
+            s.setStraightSpeed("Global");
+        } catch (jmri.JmriException ex){
+            log.error(ex.toString());
+        }
+        
+        try {
+            s.setDivergingSpeed("Global");
+        } catch (jmri.JmriException ex){
+            log.error(ex.toString());
+        }
         return s;
     }
     	
@@ -201,21 +210,41 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         }
     }
     
-    
+   
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
-    
-    public void setDefaultClosedSpeed(String speed){
+
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    public void setDefaultClosedSpeed(String speed) throws JmriException {
         if((speed!=null) && (defaultClosedSpeed.equals(speed)))
             return;
+        try {
+            new Float(speed);
+        } catch (NumberFormatException nx) {
+            try{
+                jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            } catch (Exception ex){
+                throw new JmriException("Value of requested turnout default closed speed is not valid");
+            }
+        }
         String oldSpeed = defaultClosedSpeed;
         defaultClosedSpeed = speed;
         firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
     }
-    
-    public void setDefaultThrownSpeed(String speed){
+
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    public void setDefaultThrownSpeed(String speed) throws JmriException{
         if((speed!=null) && (defaultThrownSpeed.equals(speed)))
             return;
+        try {
+            new Float(speed);
+        } catch (NumberFormatException nx) {
+            try{
+                jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            } catch (Exception ex){
+                throw new JmriException("Value of requested turnout default thrown speed is not valid");
+            }
+        }
         String oldSpeed = defaultThrownSpeed;
         defaultThrownSpeed = speed;
         firePropertyChange("DefaultTurnoutThrownSpeedChange", oldSpeed, speed);
@@ -229,7 +258,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return defaultClosedSpeed;
     }
 
-    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManager.class.getName());
 }
 

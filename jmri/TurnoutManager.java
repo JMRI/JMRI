@@ -40,7 +40,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  * @see             jmri.Turnout
  * @see             jmri.InstanceManager
  * @see             jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -194,9 +194,9 @@ public interface TurnoutManager extends Manager {
      
     public String getNextValidAddress(String curAddress, String prefix);
 
-    public void setDefaultClosedSpeed(String speed);
+    public void setDefaultClosedSpeed(String speed) throws JmriException;
     
-    public void setDefaultThrownSpeed(String speed);
+    public void setDefaultThrownSpeed(String speed) throws JmriException;
     
     public String getDefaultThrownSpeed();
     

@@ -34,7 +34,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -210,11 +210,15 @@ public class BlockTableAction extends AbstractTableAction {
                 }
                 else if (col==SPEEDCOL){
                     String speed = (String)((JComboBox)value).getSelectedItem();
+                    try {
+                        b.setBlockSpeed(speed);
+                    } catch (jmri.JmriException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                        return;
+                    }
                     if (!speedList.contains(speed) && !speed.contains("Global")){
                         speedList.add(speed);
                     }
-                    
-                    b.setBlockSpeed(speed);
                     fireTableRowsUpdated(row,row);
                 }
 				else super.setValueAt(value, row, col);					
@@ -376,8 +380,12 @@ public class BlockTableAction extends AbstractTableAction {
         
         String speedValue = (String) blockSpeedCombo.getSelectedItem();
         //We will allow the turnout manager to handle checking if the values have changed
-        InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
-        
+        try {
+            InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
+        } catch (jmri.JmriException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speedValue);
+            return;
+        }
     }
     
 	private void inchBoxChanged() {
@@ -543,7 +551,11 @@ public class BlockTableAction extends AbstractTableAction {
                     blk.setLength(Integer.parseInt(lengthField.getText()));
                 /*if (blockSpeed.getText().length()!=0)
                     blk.setSpeedLimit(Integer.parseInt(blockSpeed.getText()));*/
-                blk.setBlockSpeed((String)speeds.getSelectedItem());
+                try {
+                    blk.setBlockSpeed((String)speeds.getSelectedItem());
+                } catch (jmri.JmriException ex){
+                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + (String)speeds.getSelectedItem());
+                }
                 if(checkPerm.isSelected())
                     blk.setPermissiveWorking(true);
                 String cName = (String)cur.getSelectedItem();

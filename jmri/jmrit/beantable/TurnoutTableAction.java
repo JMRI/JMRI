@@ -43,7 +43,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.96 $
+ * @version     $Revision: 1.97 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -93,6 +93,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
+
     public void setManager(Manager man) { 
         turnManager = (TurnoutManager) man;
     }
@@ -368,17 +369,27 @@ public class TurnoutTableAction extends AbstractTableAction {
                         t.setDecoderName(decoderName);
                     } else if ((col==STRAIGHTCOL || col==xSTRAIGHTCOL || col==ySTRAIGHTCOL || col==zSTRAIGHTCOL) && showTurnoutSpeed){
                         String speed = (String)((JComboBox)value).getSelectedItem();
+                        try {
+                            t.setStraightSpeed(speed);
+                        } catch (jmri.JmriException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                            return;
+                        }
                         if ((!speedListClosed.contains(speed)) && !speed.contains("Global")){
                             speedListClosed.add(speed);
                         }
-                        t.setStraightSpeed(speed);
                         fireTableRowsUpdated(row,row);
                     } else if ((col==DIVERGCOL || col==xDIVERGCOL || col==yDIVERGCOL || col==zDIVERGCOL)&& showTurnoutSpeed){
                         String speed = (String)((JComboBox)value).getSelectedItem();
+                        try {
+                            t.setDivergingSpeed(speed);
+                        } catch (jmri.JmriException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                            return;
+                        }
                         if ((!speedListThrown.contains(speed)) && !speed.contains("Global")){
                             speedListThrown.add(speed);
                         }
-                        t.setDivergingSpeed(speed);
                         fireTableRowsUpdated(row,row);                    
                     } else super.setValueAt(value, row, col);
     		}
@@ -797,8 +808,17 @@ public class TurnoutTableAction extends AbstractTableAction {
         String closedValue = (String) closedCombo.getSelectedItem();
         String thrownValue = (String) thrownCombo.getSelectedItem();
         //We will allow the turnout manager to handle checking if the values have changed
-        turnManager.setDefaultThrownSpeed(thrownValue);
-        turnManager.setDefaultClosedSpeed(closedValue);
+        try {
+            turnManager.setDefaultThrownSpeed(thrownValue);
+        } catch (jmri.JmriException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + thrownValue);
+        }
+        
+        try {
+            turnManager.setDefaultClosedSpeed(closedValue);
+        } catch (jmri.JmriException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + closedValue);
+        }
         
     }
     

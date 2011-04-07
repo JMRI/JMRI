@@ -68,7 +68,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -412,12 +412,12 @@ public interface Turnout extends NamedBean {
     public float getDivergingLimit();
     
     public String getDivergingSpeed();
-    public void setDivergingSpeed(String s);
+    public void setDivergingSpeed(String s) throws JmriException;
     
     public float getStraightLimit();
     
     public String getStraightSpeed();
-    public void setStraightSpeed(String s);
+    public void setStraightSpeed(String s) throws JmriException;
     
 }
 

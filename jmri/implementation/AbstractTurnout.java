@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -693,11 +693,22 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
         return _divergeSpeed;
     }
-    public void setDivergingSpeed(String s) { 
+    public void setDivergingSpeed(String s) throws JmriException { 
         if((s==null) || (_divergeSpeed.equals(s)))
             return;
         if (s.contains("Global"))
             s = "Global";
+        else {
+            try {
+                new Float(s);
+            } catch (NumberFormatException nx) {
+                try{
+                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
+                } catch (Exception ex){
+                    throw new JmriException("Value of requested block speed is not valid");
+                }
+            }
+        }
         String oldSpeed = _divergeSpeed;
         _divergeSpeed=s;
         firePropertyChange("TurnoutDivergingSpeedChange", oldSpeed, s);
@@ -731,23 +742,27 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _straightSpeed;
     }
     
-    public void setStraightSpeed(String s) { 
+    public void setStraightSpeed(String s) throws JmriException { 
         if((s==null) || (_straightSpeed.equals(s)))
             return;
         if (s.contains("Global"))
             s = "Global";
+        else {
+            try {
+                new Float(s);
+            } catch (NumberFormatException nx) {
+                try{
+                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
+                } catch (Exception ex){
+                    throw new JmriException("Value of requested turnout straight speed is not valid");
+                }
+            }
+        }
         String oldSpeed = _straightSpeed;
         _straightSpeed=s;
         firePropertyChange("TurnoutStraightSpeedChange", oldSpeed, s);
     }
     
-    /*public float getSpeedThroughTurnout(){
-        return speedThroughTurnout;
-    }
-
-    public void setSpeedThroughTurnout(float speed){
-        speedThroughTurnout = speed;
-    }*/
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(AbstractTurnout.class.getName());
 }

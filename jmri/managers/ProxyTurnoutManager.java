@@ -19,7 +19,7 @@ import jmri.Manager;
  * for multiple system-specific implementations. 
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -215,15 +215,25 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         return null;
     }
     
-    public void setDefaultClosedSpeed(String speed){
+    public void setDefaultClosedSpeed(String speed) throws jmri.JmriException {
         for (int i=0; i<nMgrs(); i++) {
-            ((TurnoutManager)getMgr(i)).setDefaultClosedSpeed(speed);
+            try {
+                ((TurnoutManager)getMgr(i)).setDefaultClosedSpeed(speed);
+            } catch (jmri.JmriException ex) {
+                log.error(ex.toString());
+                throw ex;
+            }
         }
     }
     
-    public void setDefaultThrownSpeed(String speed){
+    public void setDefaultThrownSpeed(String speed) throws jmri.JmriException{
         for (int i=0; i<nMgrs(); i++) {
-            ((TurnoutManager)getMgr(i)).setDefaultThrownSpeed(speed);
+            try {
+                ((TurnoutManager)getMgr(i)).setDefaultThrownSpeed(speed);
+            } catch (jmri.JmriException ex) {
+                log.error(ex.toString());
+                throw ex;
+            }
         }
     }
     
@@ -234,7 +244,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     public String getDefaultClosedSpeed(){
         return ((TurnoutManager)getMgr(0)).getDefaultClosedSpeed();
     }
-
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyTurnoutManager.class.getName());
 }

@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -77,8 +77,11 @@ public class BlockManager extends AbstractManager
             } catch (NumberFormatException e){
                 log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
             }
+        } try {
+            r.setBlockSpeed("Global");
+        } catch (jmri.JmriException ex){
+            log.error(ex.toString());
         }
-        r.setBlockSpeed("Global");
         return r;
     }
     
@@ -124,9 +127,20 @@ public class BlockManager extends AbstractManager
     
     String defaultSpeed = "Normal";
     
-    public void setDefaultSpeed(String speed){
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    public void setDefaultSpeed(String speed) throws JmriException {
         if((speed!=null) && (defaultSpeed.equals(speed)))
             return;
+            
+        try {
+            new Float(speed);
+        } catch (NumberFormatException nx) {
+            try{
+                jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            } catch (Exception ex){
+                throw new JmriException("Value of requested default block speed is not valid");
+            }
+        }
         String oldSpeed = defaultSpeed;
         defaultSpeed = speed;
         firePropertyChange("DefaultBlockSpeedChange", oldSpeed, speed);

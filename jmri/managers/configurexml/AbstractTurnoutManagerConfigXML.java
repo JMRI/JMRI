@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -51,10 +51,12 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
             // don't return an element if there are not turnouts to include
             if (!iter.hasNext()) return null;
+
             String defaultclosed = tm.getDefaultClosedSpeed();
             String defaultthrown = tm.getDefaultThrownSpeed();
             turnouts.addContent(new Element("defaultclosedspeed").addContent(defaultclosed));
             turnouts.addContent(new Element("defaultthrownspeed").addContent(defaultthrown));
+
             // store the turnouts
             while (iter.hasNext()) {
                 String sname = iter.next();
@@ -180,18 +182,26 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
     	if (log.isDebugEnabled()) log.debug("Found "+turnoutList.size()+" turnouts");
     	TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         
-        if (turnouts.getChild("defaultclosedspeed")!=null){
-            String closedSpeed = turnouts.getChild("defaultclosedspeed").getText();
-            if (closedSpeed!=null && !closedSpeed.equals("")){
-                tm.setDefaultClosedSpeed(closedSpeed);
+        try {
+            if (turnouts.getChild("defaultclosedspeed")!=null){
+                String closedSpeed = turnouts.getChild("defaultclosedspeed").getText();
+                if (closedSpeed!=null && !closedSpeed.equals("")){
+                    tm.setDefaultClosedSpeed(closedSpeed);
+                }
             }
+        } catch (jmri.JmriException ex) {
+            log.error(ex.toString());
         }
         
-        if (turnouts.getChild("defaultthrownspeed")!=null){
-            String thrownSpeed = turnouts.getChild("defaultthrownspeed").getText();
-            if (thrownSpeed!=null && !thrownSpeed.equals("")){
-                tm.setDefaultThrownSpeed(thrownSpeed);
+        try {
+            if (turnouts.getChild("defaultthrownspeed")!=null){
+                String thrownSpeed = turnouts.getChild("defaultthrownspeed").getText();
+                if (thrownSpeed!=null && !thrownSpeed.equals("")){
+                    tm.setDefaultThrownSpeed(thrownSpeed);
+                }
             }
+        } catch (jmri.JmriException ex) {
+            log.error(ex.toString());
         }
 
         for (int i=0; i<turnoutList.size(); i++) {
@@ -338,19 +348,28 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 			
 			//  set initial state from sensor feedback if appropriate
 			t.setInitialKnownStateFromFeedback();
-            t.setDivergingSpeed("Global");
-            if (elem.getChild("divergingSpeed")!=null){
-                String speed = elem.getChild("divergingSpeed").getText();
-                if (speed!=null && !speed.equals("") && !speed.contains("Global")){
-                    t.setDivergingSpeed(speed);
+            try {
+                t.setDivergingSpeed("Global");
+                if (elem.getChild("divergingSpeed")!=null){
+                    String speed = elem.getChild("divergingSpeed").getText();
+                    if (speed!=null && !speed.equals("") && !speed.contains("Global")){
+                        t.setDivergingSpeed(speed);
+                    }
                 }
+            } catch (jmri.JmriException ex) {
+                log.error(ex.toString());
             }
-            t.setStraightSpeed("Global");
-            if (elem.getChild("straightSpeed")!=null){
-                String speed = elem.getChild("straightSpeed").getText();
-                if (speed!=null && !speed.equals("") && !speed.contains("Global")){
-                    t.setStraightSpeed(speed);
+
+            try {
+                t.setStraightSpeed("Global");
+                if (elem.getChild("straightSpeed")!=null){
+                    String speed = elem.getChild("straightSpeed").getText();
+                    if (speed!=null && !speed.equals("") && !speed.contains("Global")){
+                        t.setStraightSpeed(speed);
+                    }
                 }
+            } catch (jmri.JmriException ex) {
+                log.error(ex.toString());
             }
         }
        return result;
