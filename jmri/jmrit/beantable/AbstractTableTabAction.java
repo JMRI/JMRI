@@ -94,11 +94,19 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
     }
     
     public void addToFrame(BeanTableFrame f){
-        tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().addToFrame(f);
+        try {
+            tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().addToFrame(f);
+        } catch (ArrayIndexOutOfBoundsException ex){
+            log.error(ex.toString() + " in add to Frame "  + dataTabs.getSelectedIndex() + " " + dataTabs.getSelectedComponent());
+        }
     }
     
     public void setMenuBar(BeanTableFrame f){
-        tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
+        try {
+            tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
+        } catch (ArrayIndexOutOfBoundsException ex){
+            log.error(ex.toString()  + " in add to Menu " + dataTabs.getSelectedIndex() + " " + dataTabs.getSelectedComponent());
+        }
     }
     
     public void addToBottomBox(JComponent c, String str){
