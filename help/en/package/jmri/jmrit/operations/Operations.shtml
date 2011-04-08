@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.103 2011-03-29 02:04:11 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.104 2011-04-08 13:24:13 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -940,12 +940,13 @@ loads with the default empty.
 
 <P>The program provides two options for placing custom loads into
 cars when they depart staging. The first option is called "Generate
-custom loads for trains departing this track". If the first option is
+custom loads for sidings serviced by this train". If the first option is
 selected, the program will only check sidings with schedules along the
 departure train's route.</P>
 
 <P>If the second option is selected, "Generate custom loads for any
-siding", the program will check all sidings with a schedule for a request.</P>
+siding (multiple trains)", the program will check all sidings with a
+schedule for a request.</P>
 
 <P>Both options work the same with regards to placing custom car
 loads into cars, only the number of sidings considered by the program
