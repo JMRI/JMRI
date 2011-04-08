@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: kevin-dickerson $) 2009 -->
-<!-- $Id: index.shtml,v 1.4 2010-11-24 23:44:27 kevin-dickerson Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2011-04-08 16:32:16 kevin-dickerson Exp $ -->
 <title>JMRI: BR 2003 Signaling Definition</title>
 
 <!-- Style -->
@@ -42,6 +42,7 @@ will depend upon whether all the "flash" aspects are available.
 <p>
 Colour Light Signal Mast definitions:
 <ul>
+<li><a href="appearance-buffer-stop.xml">Buffer Stop</a>
 <li><a href="appearance-2-d.xml">2 Aspect Distant Signal</a>
 <li><a href="appearance-2-h.xml">2 Aspect Home Signal</a>
 <li><a href="appearance-2-h-c.xml">2 Aspect Home Signal With Call On</a>

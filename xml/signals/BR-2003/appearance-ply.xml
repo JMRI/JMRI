@@ -28,6 +28,12 @@
         <date>2010-02-02</date>
         <authorinitials>KD</authorinitials>
         <revremark>Change Stop Aspect to On &amp; proceed at Caution to Off</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2011-08-04</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Addition of Specific Appearances and aspect mapping</revremark>
     </revision> 
   </revhistory>
   
@@ -61,4 +67,9 @@
     </appearance>
 
   </appearances>
+  <specificappearances>
+    <danger>On</danger>
+    <permissive>Off</permissive>
+    <held>On</held>
+  </specificappearances>
 </appearancetable>  

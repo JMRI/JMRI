@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- $Id: appearancetable.xsd,v 1.17 2010-02-02 04:28:43 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.18 2011-04-08 16:30:52 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -82,7 +82,44 @@
 
         <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="description" minOccurs="0" maxOccurs="unbounded" />
-
+        
+      <xs:element name="specificappearances" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+        These are the appearences that the jmri code will specifically look for,
+        given that the appearance/aspect name is free form and can vary from
+        different signal masts.
+        </xs:documentation></xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="danger" minOccurs="0" maxOccurs="1" />
+            <xs:element name="permissive" minOccurs="0" maxOccurs="1" />
+            <xs:element name="held" minOccurs="0" maxOccurs="1" />
+            <xs:element name="dark" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+      
+      <xs:element name="aspectMappings" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+        Provides a mapping between the appearance of any advanced signal mast and
+        the valid aspects that the current signal mast can display.  The advanced 
+        aspect can be any valid aspect/appearance in the aspect file, but our aspect
+        must be valid on the current signal mast.
+        </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="aspectMapping" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="advancedAspect" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="ourAspect" minOccurs="1" maxOccurs="unbounded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        
         <xs:element name="appearances" minOccurs="1" maxOccurs="1">
           <xs:complexType>
             <xs:sequence>
@@ -131,9 +168,9 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-
-        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
-
+        
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+      
       </xs:sequence>
     </xs:complexType>
   </xs:element>

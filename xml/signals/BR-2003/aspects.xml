@@ -80,6 +80,7 @@
       <description>On all Main Signals this is a Red Aspect Showing, on Semaphore the home signal arm is Horizontal.  Position Light Signals, will either display two red or yellow lights, a red or yellow and a white light.  Where a red lights are used, this indicates stop.  Where a yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
       <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
+      <speed>0</speed>
     </aspect>
     
     <aspect>
@@ -96,6 +97,7 @@
       <description>Position Light Signal, will either display two red or yellow lights, a red or yellow and a white light.  Where red lights are used, this indicates stop.  Where yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
       <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
+      <speed>0</speed>
     </aspect>
 
   </aspects>
@@ -122,6 +124,7 @@
     <appearancefile href="appearance-4-c.xml"/>
     <appearancefile href="appearance-4-i.xml"/>
     <appearancefile href="appearance-4-i-c.xml"/>
+    <appearancefile href="appearance-buffer-stop.xml"/>
   </appearancefiles>
 </aspecttable>
   
