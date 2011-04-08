@@ -1,9 +1,6 @@
 // SignalMast.java
-
 package jmri;
-
 import java.util.Vector;
-
 /**
  * Represent a signal mast.  A signal mast is one or more signal heads
  * that are treated as a single signal.  (Imagine several heads 
@@ -54,10 +51,9 @@ import java.util.Vector;
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
  * @author			Pete Cressman Copyright (C) 2009
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface SignalMast extends NamedBean {
-
     /**
      * Set aspect to a valid name in the current 
      * signal system definition.
@@ -77,7 +73,8 @@ public interface SignalMast extends NamedBean {
     public SignalSystem getSignalSystem();
     
     public SignalAppearanceMap getAppearanceMap();
-
+    public String getSpecificAppearance(int appearance);
+    public String[] getAspect(String advancedAspect);
     /**
      * Lit is a bound parameter. It controls
      * whether the signal head's lamps are lit or left dark.
@@ -93,7 +90,4 @@ public interface SignalMast extends NamedBean {
     public boolean getHeld();
     public void setHeld(boolean newHeld);
 }
-
-
 /* @(#)SignalMast.java */
-
