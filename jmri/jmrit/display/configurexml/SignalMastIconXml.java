@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -35,9 +35,13 @@ public class SignalMastIconXml extends PositionableLabelXml {
         
         element.setAttribute("signalmast", ""+p.getPName());
         storeCommonAttributes(p, element);
-        element.setAttribute("rotation", ""+p.getRotation());
+        element.setAttribute("clickmode", ""+p.getClickMode());
+        element.setAttribute("litmode", ""+p.getLitMode());
+        element.setAttribute("degrees", ""+p.getDegrees());
         element.setAttribute("scale", String.valueOf(p.getScale()));
+        element.setAttribute("imageset", p.useIconSet());
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalMastIconXml");
+        //storeIconInfo(p, element);
         return element;
     }
 
@@ -59,13 +63,16 @@ public class SignalMastIconXml extends PositionableLabelXml {
         String name;
         
         Attribute attr;
+        attr=element.getAttribute("imageset");
+        if(attr!=null)
+            l.useIconSet(attr.getValue());
         /*
          * We need to set the rotation and scaling first, prior to setting the
          * signalmast, otherwise we end up in a situation where by the icons do
          * not get rotated or scaled correctly.
          **/
         try {
-            attr = element.getAttribute("rotation");
+            attr = element.getAttribute("degrees");
             int rotation = attr.getIntValue();
             l.rotate(rotation);
             attr = element.getAttribute("scale");
@@ -93,8 +100,27 @@ public class SignalMastIconXml extends PositionableLabelXml {
             ed.loadFailed();
         //    return;
         }
+        
+        try {
+            attr = element.getAttribute("clickmode");
+            if (attr!=null) {
+                l.setClickMode(attr.getIntValue());
+            }
+        } catch (org.jdom.DataConversionException e) {
+            log.error("Failed on clickmode attribute: "+e);
+        }
+        
+        try {
+            attr = element.getAttribute("litmode");
+            if (attr!=null) {
+                l.setLitMode(attr.getBooleanValue());
+            }
+        } catch (org.jdom.DataConversionException e) {
+            log.error("Failed on litmode attribute: "+e);
+        }
                         
         ed.putItem(l);
+
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }

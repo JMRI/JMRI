@@ -8,10 +8,12 @@ import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.NamedBeanHandle;
+import jmri.implementation.DefaultSignalAppearanceMap;
 
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
 
 /**
  * An icon to display a status of a SignalMast.
@@ -21,7 +23,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -50,6 +52,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         SignalMastIcon pos = (SignalMastIcon)p;
         pos.setSignalMast(getPName());        
         pos._iconMap = cloneMap(_iconMap, pos);
+        pos.setClickMode(getClickMode());
+        pos.setLitMode(getLitMode());
+        pos.useIconSet(useIconSet());
         return super.finishClone(pos);
     }
 
@@ -91,17 +96,30 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     private void getIcons() {
         _iconMap = new java.util.Hashtable<String, NamedIcon>();
         java.util.Enumeration<String> e = mMast.getAppearanceMap().getAspects();
+        boolean error = false;
         while (e.hasMoreElements()) {
-            String s = mMast.getAppearanceMap().getProperty(e.nextElement(), "imagelink");
-            s = s.substring(s.indexOf("resources"));
-            NamedIcon n = new NamedIcon(s,s);
-            _iconMap.put(s, n);
-            if(_rotate!=0){
-                n.rotate(_rotate, this);
+            String aspect = e.nextElement();
+            String s = mMast.getAppearanceMap().getImageLink(aspect, useIconSet);
+            if(s.equals("")){
+                log.error("No icon found for appearance " + aspect);
+                error=true;
+            } else {
+                s = s.substring(s.indexOf("resources"));
+                NamedIcon n = new NamedIcon(s,s);
+                _iconMap.put(s, n);
+                if(_rotate!=0){
+                    n.rotate(_rotate, this);
+                }
+                if (_scale!=1.0) {
+                    n.scale(_scale, this);
+                }
             }
-            if (_scale!=1.0) {
-                n.scale(_scale, this);
-            }
+        }
+        if(error){
+            JOptionPane.showMessageDialog(_editor.getTargetFrame(), 
+                java.text.MessageFormat.format(rb.getString("SignalMastIconLoadError"),
+				new Object[]{mMast.getDisplayName()}), 
+                rb.getString("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -151,20 +169,57 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      */
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
-            popup.add(new AbstractAction(rb.getString("EditLogic")) {
-                public void actionPerformed(ActionEvent e) {
-                    jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
-                    String name;
-                    if (mMast.getUserName()==null || mMast.getUserName().equals(""))
-                        name = mMast.getSystemName();
-                    else
-                        name = mMast.getUserName();
-                    f.setTitle(java.text.MessageFormat.format(rb.getString("SignalLogic"), name));
-                    f.setSignal(name);
-                    f.setVisible(true);
-                }
+            
+            JMenu clickMenu = new JMenu(rb.getString("WhenClicked"));
+            ButtonGroup clickButtonGroup = new ButtonGroup();
+            JRadioButtonMenuItem r;
+            r = new JRadioButtonMenuItem(rb.getString("ChangeAspect"));
+            r.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) { setClickMode(0); }
             });
-            JMenu aspect = new JMenu("Set Aspect");
+            clickButtonGroup.add(r);
+            if (clickMode == 0)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+                        
+            r = new JRadioButtonMenuItem(rb.getString("AlternateLit"));
+            r.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) { setClickMode(1); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 1)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            r = new JRadioButtonMenuItem(rb.getString("AlternateHeld"));
+            r.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) { setClickMode(2); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 2)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            popup.add(clickMenu);
+            
+            java.util.Vector<String> iconTypes = mMast.getAppearanceMap().getImageTypes(mastState());
+            if(iconTypes.size()>1){
+                JMenu iconSetMenu = new JMenu(rb.getString("SignalMastIconSet"));
+                ButtonGroup iconTypeGroup = new ButtonGroup();
+                JRadioButtonMenuItem im;
+                for(int i = 0; i<iconTypes.size(); i++){
+                    final String icon = iconTypes.get(i);
+                    im = new JRadioButtonMenuItem(icon);
+                    im.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) { useIconSet(icon); }
+                    });
+                    iconTypeGroup.add(r);
+                    if (useIconSet.equals(icon)) im.setSelected(true);
+                    else im.setSelected(false);
+                    iconSetMenu.add(im);
+                }
+                popup.add(iconSetMenu);
+            }
+            //popup.add(new jmri.jmrit.signalling.SignallingSourceAction("Signalling Pairs", mMast));
+            JMenu aspect = new JMenu(rb.getString("ChangeAspect"));
             final java.util.Vector <String> aspects = mMast.getValidAspects();
             for (int i=0; i<aspects.size(); i++){
                 final int index = i;
@@ -188,6 +243,10 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             }
         }
         return true;
+    }
+    
+    public boolean setRotateOrthogonalMenu(JPopupMenu popup){
+        return false;
     }
 
     SignalMastItemPanel _itemPanel;
@@ -234,16 +293,57 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
-        if (e.isMetaDown() || e.isAltDown() ) return;
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
-        java.util.Vector <String> aspects = mMast.getValidAspects();
-        int idx = aspects.indexOf(mMast.getAspect()) + 1;
-        if (idx >= aspects.size()) {
-            idx = 0;
-        }
-        mMast.setAspect(aspects.elementAt(idx));
+        performMouseClicked(e);
     }
     
+        /** 
+     * This was added in so that the layout editor can handle the mouseclicked when zoomed in
+    */
+    public void performMouseClicked(java.awt.event.MouseEvent e){
+        if (e.isMetaDown() || e.isAltDown() ) return;
+        if (getSignalMast()==null) {
+            log.error("No turnout connection, can't process click");
+            return;
+        }
+        switch (clickMode) {
+            case 0 :
+                java.util.Vector <String> aspects = mMast.getValidAspects();
+                int idx = aspects.indexOf(mMast.getAspect()) + 1;
+                if (idx >= aspects.size()) {
+                    idx = 0;
+                }
+                mMast.setAspect(aspects.elementAt(idx));
+                return;
+            case 1 :
+                getSignalMast().setLit(!getSignalMast().getLit());
+                return;
+            case 2 : 
+                getSignalMast().setHeld(!getSignalMast().getHeld());
+                return;
+            default:
+                log.error("Click in mode "+clickMode);
+        }
+    }
+    
+    String useIconSet = "default";
+    
+    public void useIconSet(String icon){
+        if(useIconSet.equals(icon)){
+            return;
+        }
+        if (useIconSet==null){
+            icon = "default";
+        }
+        //clear the old icon map out.
+        _iconMap=null;
+        useIconSet = icon;
+        getIcons();
+        displayState(mastState());
+        _editor.getTargetPanel().repaint(); 
+    }
+    
+    public String useIconSet() { return useIconSet; }
     
     /**
      * Drive the current state of the display from the state of the
@@ -258,19 +358,33 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 log.debug("Display state "+state+" for "+mMast.getSystemName());
             }
         }
-        
-        if (isText())
+        if (isText()){
+            if (mMast.getHeld()) {
+                if (isText()) super.setText(rb.getString("Held"));
+                return;
+            }
+            else if (getLitMode() && !getSignalMast().getLit()){
+                super.setText(rb.getString("Dark"));
+                return;
+            }
             super.setText(state);
-            
+        }
         if (isIcon()) {
             if (state !=null ) {
-                String s = mMast.getAppearanceMap().getProperty(state, "imagelink");
+                String s = mMast.getAppearanceMap().getImageLink(state, useIconSet);
+                if ((mMast.getHeld()) && (mMast.getSpecificAppearance(DefaultSignalAppearanceMap.HELD)!=null)) {
+                    s = mMast.getAppearanceMap().getImageLink(mMast.getSpecificAppearance(DefaultSignalAppearanceMap.HELD), useIconSet);
+                }
+                else if((mMast.getLit()) && (mMast.getSpecificAppearance(DefaultSignalAppearanceMap.DARK)!=null)) {
+                    s = mMast.getAppearanceMap().getImageLink(mMast.getSpecificAppearance(DefaultSignalAppearanceMap.DARK), useIconSet);
+                }
                 s = s.substring(s.indexOf("resources"));
                 
                 // tiny global cache, due to number of icons
                 if (_iconMap==null) getIcons();
                 NamedIcon n = _iconMap.get(s);
                 super.setIcon(n);
+                updateSize();
                 setSize(n.getIconWidth(), n.getIconHeight());
             }
         } else {
@@ -284,8 +398,11 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         return false;
     }
     
-    public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
-        return false;
+    protected void rotateOrthogonal() {
+        super.rotateOrthogonal();
+        // bug fix, must repaint icons that have same width and height
+        displayState(mastState());
+        repaint();
     }
 
     public void rotate(int deg){
@@ -296,6 +413,39 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     public void setScale(double s) {
         super.setScale(s);
         displayState(mastState());
+    }
+    
+    /**
+     * What to do on click? 0 means 
+     * sequence through aspects; 1 means 
+     * alternate the "lit" aspect; 2 means
+     * alternate the DefaultSignalAppearanceMap.HELD aspect.
+     */
+    protected int clickMode = 0;
+    
+    public void setClickMode(int mode) {
+        clickMode = mode;
+    }
+    public int getClickMode() {
+        return clickMode;
+    }
+    
+    /**
+     * How to handle lit vs not lit?
+     * <P>
+     * False means ignore (always show R/Y/G/etc appearance on screen);
+     * True means show DefaultSignalAppearanceMap.DARK if lit is set false.
+     * <P>
+     * Note that setting the appearance "DefaultSignalAppearanceMap.DARK" explicitly
+     * will show the dark icon regardless of how this is set.
+     */
+    protected boolean litMode = false;
+    
+    public void setLitMode(boolean mode) {
+        litMode = mode;
+    }
+    public boolean getLitMode() {
+        return litMode;
     }
 
     public void dispose() {
