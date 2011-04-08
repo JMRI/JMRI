@@ -23,7 +23,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -62,7 +62,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         if (log.isDebugEnabled()) {
             log.debug("buffer contains:");
             for (int j = 0; j<i; j++) 
-                log.debug(" "+j+":"+inputLines[j]);
+                log.debug(" "+j+":"+new String(inputLines[j]).replaceAll("\\n"," ").replaceAll("\\r"," "));
             log.debug("end buffer");
         }
         
@@ -71,6 +71,9 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         
         // parse request
         String request = parseRequest(inputLines, i);
+        if (request == null) {
+        	return;  //get out if request not parsed
+        }
         
         if (builder == null) builder = jmri.jmrit.XmlFile.getBuilder(false);
 
@@ -120,7 +123,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
                 log.debug("Interrupted");
             }
             log.debug("thread resumes after reply");
-            sendReply(doc);
+           sendReply(doc);  //TODO: this seems wrong, since it sends old data on interrupt.  send empty instead?
         } catch (jmri.JmriException e1) {
             log.error("JmriException while creating reply: "+e1, e1);
         }
@@ -150,7 +153,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         
         try {
             fmt.output(doc, out);  // new element is within existing document
-        	if (log.isDebugEnabled()) { log.debug("Returned: " + fmt.outputString(doc).replaceAll("\\r\\n"," ")); }
+        	if (log.isDebugEnabled()) { log.debug("Returned: " + fmt.outputString(doc).replaceAll("\\n","").replaceAll("\\r","")); }
         } catch (IOException e) {
             log.error("IOException while in fmt.output: "+e,e);
         }
@@ -187,7 +190,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
 			} catch (UnsupportedEncodingException e) {
 				request = "<error/>";
 			}
-            if (log.isDebugEnabled()) log.debug("xml request is ["+request+"]");
+            if (log.isDebugEnabled()) log.debug("xml request is ["+request.replaceAll("\\n"," ").replaceAll("\\r"," ")+"]");
             
             return request;
         
@@ -209,7 +212,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
                 i++;
             }
 
-            if (log.isDebugEnabled()) log.debug("xml request is ["+request+"]");
+            if (log.isDebugEnabled()) log.debug("xml request is ["+new String(request).replaceAll("\\n","").replaceAll("\\r","")+"]");
             
             return new String(request);
         } else {
@@ -234,8 +237,16 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         throws IOException {
         int contentLength = contentLength(inputs);
         char[] postData = new char[contentLength];
-        int length = in.read(postData, 0, contentLength);
-        inputs[++i] = new String(postData, 0, length);
+
+        //handle reads larger than default block size
+        int readLength = -1;
+        int totalLength = 0;
+        while (totalLength < contentLength && readLength != 0) {
+            readLength = in.read(postData, totalLength, contentLength - totalLength);
+            totalLength += readLength;
+        }
+      
+        inputs[++i] = new String(postData, 0, totalLength);
     }
     
     // Given a line that starts with Content-Length,

@@ -30,7 +30,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -164,8 +164,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             else if (type.equals("route")) immediateWriteRoute(name, item);
             else if (type.equals("sensor")) immediateWriteSensor(name, item);
             else if (type.equals("power")) immediateWritePower(name, item);
-            else if (type.equals("roster")) immediateWriteRoster(name, item);
-            else if (type.equals("panel")) immediateWritePanel(name, item);
+            else if (type.equals("roster")) {}
+            else if (type.equals("panel")) {}
             else log.warn("Unexpected type in item: "+type);
         }
         
@@ -395,7 +395,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         Element v = item.getChild("set");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
-            b.setState(state);
+            b.setState(state);  //TODO: this is not correct, fix next time
             item.removeContent(v);
         }
     }
@@ -659,6 +659,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 
                 if (type.equals("turnout")) removeListenerFromTurnout(name, item, this);
                 else if (type.equals("sensor")) removeListenerFromSensor(name, item, this);
+                else if (type.equals("route")) removeListenerFromRoute(name, item, this);
+                else if (type.equals("power")) removeListenerFromPower(name, item, this);
                 else log.warn("Unexpected type: "+type);
             }
             
