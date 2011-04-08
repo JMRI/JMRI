@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 import java.util.List;
 
 import java.io.File;
+import java.util.Hashtable;
+import java.util.Vector;
+import java.util.Enumeration;
 
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -21,9 +24,8 @@ import jmri.SignalSystem;
  * The default contents are taken from the NamedBeanBundle properties file.
  * This makes creation a little more heavy-weight, but speeds operation.
  *
- *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -94,9 +96,23 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                 }
                 map.addAspect(name, appearances);
 
+                java.util.Hashtable<String, String> images = new java.util.Hashtable<String, String>();
+                
+                @SuppressWarnings("unchecked")
+                List<Element> img = l.get(i).getChildren("imagelink");
+                for (int j = 0; j < img.size(); j++) {
+                    String key = "default";
+                    if((img.get(j).getAttribute("type"))!=null)
+                        key = img.get(j).getAttribute("type").getValue();
+                    String value = img.get(j).getText();
+                    images.put(key, value);
+                }
+                
+                map.aspectImageMap.put(name, images);
+                
                 // now add the rest of the attributes
                 java.util.Hashtable<String, String> hm = new java.util.Hashtable<String, String>();
-
+                
                 @SuppressWarnings("unchecked")
                 List<Element> a = l.get(i).getChildren();
 
@@ -104,7 +120,8 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                     String key = a.get(j).getName();
                     String value = a.get(j).getText();
                     hm.put(key, value);
-                }                
+                }
+                
                 map.aspectAttributeMap.put(name, hm);
             }
         } catch (java.io.IOException e) {
@@ -117,18 +134,165 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return map;
     }
 
+    public final static int HELD = 0;
+    public final static int PERMISSIVE = 1;
+    public final static int DANGER = 2;
+    public final static int DARK = 3;
+    public final static int NUMSPECIFIC = 4;
+    
+    static public Hashtable<Integer, String> getSpecificMap(String signalSystemName, String aspectMapName){
+        if (log.isDebugEnabled()) log.debug("getSpecificMap signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");
+        Hashtable<Integer,String> map = specificMaps.get("map:"+signalSystemName+":"+aspectMapName);
+        if (map==null){
+            map = loadSpecificMap(signalSystemName, aspectMapName);
+        }
+        return map;
+    }
+
+    static Hashtable<Integer, String> loadSpecificMap(String signalSystemName, String aspectMapName){
+        if (log.isDebugEnabled()) log.debug("load specific signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");
+        Hashtable<Integer, String> map =  new Hashtable<Integer, String>();
+        specificMaps.put("map:"+signalSystemName+":"+aspectMapName, map);
+        for (int i = 0; i<NUMSPECIFIC; i++){
+            String aspect = loadSpecificAspect(signalSystemName, aspectMapName, i);
+            if (aspect!=null)
+                map.put(i, aspect);
+        }
+        return map;
+    }
+
+    static String loadSpecificAspect(String signalSystemName, String aspectMapName, int aspectType) {
+        String appearance;
+        File file = new File("xml"+File.separator
+                                +"signals"+File.separator
+                                +signalSystemName+File.separator
+                                +"appearance-"+aspectMapName+".xml");
+        if (!file.exists()) {
+            log.error("appearance file doesn't exist: "+file.getPath());
+            throw new IllegalArgumentException("appearance file doesn't exist: "+file.getPath());
+        }
+        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
+        Element root;
+        try {
+            root = xf.rootFromFile(file);
+            // get appearances
+            String child;
+            switch (aspectType){
+                case HELD:  child = "held";
+                            break;
+                case DANGER: child = "danger";
+                            break;
+                case PERMISSIVE: child = "permissive";
+                        break;
+                case DARK: child = "dark";
+                        break;
+                default: child = "danger";
+            }
+            appearance = root.getChild("specificappearances").getChild(child).getText();
+        } catch (java.lang.NullPointerException e){
+            log.debug("appearance not configured");
+            return null;
+        } catch (java.io.IOException e) {
+            log.error("error reading file \""+file.getName(), e);
+            return null;
+        } catch (org.jdom.JDOMException e) {
+            log.error("error parsing file \""+file.getName(), e);
+            return null;
+        }
+        return appearance;
+    }
+
+    static public Hashtable<String, String[]> getAspectRelationMap(String signalSystemName, String aspectMapName){
+        if (log.isDebugEnabled()) log.debug("getAspectRelationMap signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");
+        Hashtable<String,String[]> map = aspectRelationshipMap.get("map:"+signalSystemName+":"+aspectMapName);
+        if (map==null){
+            map = loadAspectRelationMap(signalSystemName, aspectMapName);
+        }
+        return map;
+
+    }
+
+    static Hashtable<String, String[]> loadAspectRelationMap(String signalSystemName, String aspectMapName) {
+        if (log.isDebugEnabled()) log.debug("load aspect relation map signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");
+        Hashtable<String, String[]> map =  new Hashtable<String, String[]>();
+        aspectRelationshipMap.put("map:"+signalSystemName+":"+aspectMapName, map);
+
+        File file = new File("xml"+File.separator
+                                +"signals"+File.separator
+                                +signalSystemName+File.separator
+                                +"appearance-"+aspectMapName+".xml");
+        if (!file.exists()) {
+            log.error("appearance file doesn't exist: "+file.getPath());
+            throw new IllegalArgumentException("appearance file doesn't exist: "+file.getPath());
+        }
+        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
+        Element root;
+        try {
+            root = xf.rootFromFile(file);
+            List<Element> l = root.getChild("aspectMappings").getChildren("aspectMapping");
+            for (int i = 0; i < l.size(); i++) {
+                String advanced = l.get(i).getChild("advancedAspect").getText();
+                List<Element> o = l.get(i).getChildren("ourAspect");
+                String[] appearances = new String[o.size()];
+                for (int j = 0; j < o.size(); j++) {
+                    appearances[j] = o.get(j).getText();
+                }
+                map.put(advanced, appearances);
+            }
+
+        } catch (java.lang.NullPointerException e){
+            log.debug("appearance not configured");
+            return null;
+        } catch (java.io.IOException e) {
+            log.error("error reading file \""+file.getName(), e);
+            return null;
+        } catch (org.jdom.JDOMException e) {
+            log.error("error parsing file \""+file.getName(), e);
+            return null;
+        }
+        return map;
+    }
     /**
      * Get a property associated with a specific aspect
      */
     public String getProperty(String aspect, String key) {
         return aspectAttributeMap.get(aspect).get(key);
     }
+    
+    public String getImageLink(String aspect, String type){
+        if(type==null|| type.equals(""))
+            type = "default";
+        String value = aspectImageMap.get(aspect).get(type);
+        //if we don't return a valid image set, then we will use which ever set is loaded in teh getProperty
+        if(value==null){
+            return getProperty(aspect, "imagelink");
+        }
+        return value;
+    }
+    
+    public Vector<String> getImageTypes(String aspect) {
+        java.util.Enumeration<String> e = aspectImageMap.get(aspect).keys();
+        Vector<String> v = new Vector<String>();
+        while (e.hasMoreElements()) {
+            v.add(e.nextElement());
+        }
+        return v;
+    }
 
     protected java.util.Hashtable<String, java.util.Hashtable<String, String>> aspectAttributeMap 
+            = new java.util.Hashtable<String, java.util.Hashtable<String, String>>();
+            
+    protected java.util.Hashtable<String, java.util.Hashtable<String, String>> aspectImageMap 
             = new java.util.Hashtable<String, java.util.Hashtable<String, String>>();
 
     static java.util.Hashtable<String, DefaultSignalAppearanceMap> maps
             = new jmri.util.OrderedHashtable<String, DefaultSignalAppearanceMap>();
+
+    static java.util.Hashtable<String, java.util.Hashtable<Integer, String>> specificMaps
+            = new java.util.Hashtable<String, java.util.Hashtable<Integer, String>>(); 
+
+    static java.util.Hashtable<String, java.util.Hashtable<String, String[]>> aspectRelationshipMap
+            = new java.util.Hashtable<String, java.util.Hashtable<String, String[]>>();
 
     public void loadDefaults() {
         
@@ -165,15 +329,24 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
         for (int i = 0; i < heads.size(); i++) {
             // some extensive checking
-            if (heads.get(i) == null)
+            boolean error = false;
+            if (heads.get(i) == null){
                 log.error("Null head "+i+" in setAppearances");
-            if (heads.get(i).getBean() == null)
+                error = true;
+            }
+            if (heads.get(i).getBean() == null){
                 log.error("Could not get bean for head "+i+" in setAppearances");
-            if (table.get(aspect) == null)
+                error = true;
+            }
+            if (table.get(aspect) == null){
                 log.error("Couldn't get table array for aspect \""+aspect+"\" in setAppearances");
-
-            heads.get(i).getBean().setAppearance(table.get(aspect)[i]);
-
+                error = true;
+            }
+            
+            if(!error)
+                heads.get(i).getBean().setAppearance(table.get(aspect)[i]);
+            else 
+                log.error("head appearance not set due to an error");
             if (log.isDebugEnabled()) log.debug("Setting "+heads.get(i).getBean().getSystemName()+" to "+
                                                 heads.get(i).getBean().getAppearanceName(table.get(aspect)[i]));
         }
@@ -181,7 +354,8 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
     
     public boolean checkAspect(String aspect) {
-        return table.get(aspect) != null;
+        if (aspect==null) return false;
+        return table.containsKey(aspect);// != null;
     }
 
     public void addAspect(String aspect, int[] appearances) {
@@ -209,7 +383,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
     static private java.lang.ref.SoftReference<ResourceBundle> rbr;
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAppearanceMap.class.getName());
 }
 
