@@ -31,7 +31,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -64,6 +64,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             // old style
             configureSignalSystemDefinition(system);
             configureAspectTable(system, mast);
+            configureSpecificAppearance(system, mast);
+            configureAspectRelationMapTable(system, mast);
             configureHeads(parts, 3);
         } else {
             // new style
@@ -73,6 +75,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             java.util.List<String> parens = jmri.util.StringUtil.splitParens(parenstring);
             configureSignalSystemDefinition(system);
             configureAspectTable(system, mast);
+            configureSpecificAppearance(system, mast);
+            configureAspectRelationMapTable(system, mast);
             String[] heads = new String[parens.size()];
             int i=0;
             for (String p : parens) {
@@ -106,6 +110,45 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         }
     }   
 
+    void configureAspectRelationMapTable(String signalSystemName, String aspectMapName) {
+        aspectRelationMap = DefaultSignalAppearanceMap.getAspectRelationMap(signalSystemName, aspectMapName);
+    }
+
+    /**
+    * Returns a list of postential aspects that we could set the signalmast to
+    * given the state of the advanced signal mast.
+    */
+    public String[] getAspect(String advancedAspect){
+        if (aspectRelationMap==null){
+            log.error("aspect relationships have not been defined or loaded");
+            throw new IllegalArgumentException("aspect relationships have not been defined or loaded");
+        }
+        if (advancedAspect==null){
+            String[] danger = new String[1];
+            danger[0] = getSpecificAppearance(jmri.implementation.DefaultSignalAppearanceMap.DANGER);
+            return danger;
+        }
+        if(aspectRelationMap.containsKey(advancedAspect)){
+            //String[] validAspects = aspectRelationMap.get(advancedAspect);
+            return aspectRelationMap.get(advancedAspect);
+        }
+        return null;
+    }
+
+    void configureSpecificAppearance(String signalSystemName, String aspectMapName){
+        specialMap = DefaultSignalAppearanceMap.getSpecificMap(signalSystemName, aspectMapName);
+    }
+
+    /**
+    * Get the aspest to be displayed by this signalmast for a given appearance
+    * @param HELD = 0, PERMISSIVE = 1, DANGER = 2, DARK = 3;
+    */
+    public String getSpecificAppearance(int appearance){
+        if (specialMap.containsKey(appearance)){
+            return specialMap.get(appearance);
+        }
+        return null;
+    }
     @Override
     public void setAspect(String aspect) { 
         // check it's a choice
@@ -159,6 +202,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     
     List<NamedBeanHandle<SignalHead>> heads;
     DefaultSignalAppearanceMap map;
+    Hashtable<Integer, String> specialMap;
+    Hashtable<String, String[]> aspectRelationMap;
     SignalSystem systemDefn;
     
     static final protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());
