@@ -3,6 +3,7 @@
 package jmri;
 
 import jmri.util.NamedBeanHandle;
+import java.util.Vector;
 
  /**
  * Access to signal apperance information.
@@ -12,7 +13,7 @@ import jmri.util.NamedBeanHandle;
  * This interface does not provide any methods to change the map.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public interface SignalAppearanceMap  {
 
@@ -44,6 +45,17 @@ public interface SignalAppearanceMap  {
      * Get a property associated with a specific aspect
      */
     public String getProperty(String aspect, String key);
+    
+    /**
+     * Get an Image Link associated with a specific aspect and type
+     */
+    public String getImageLink(String aspect, String key);
+    
+    /**
+     * Return a list of valid icon sets
+     */
+
+    public Vector<String> getImageTypes(String aspect);
 
 }
 
