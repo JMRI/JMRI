@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.28 2011-04-08 16:14:30 mstevetodd Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.29 2011-04-08 16:36:05 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -197,6 +197,14 @@ Kevin Dickerson:
 <ul>
 <li>Add the ability to set speeds to Blocks and Turnouts for use with automation tools</li>
 <li>Catched an error that causes a High CPU Utilisation when an unexpected/abnormal termination occurs in a TCP connection.</li>
+<li>Add the ability to identify which signal mast appearance should be used for the following states in the signal mast appearance file<br>
+<ul><li>Danger</li>
+<li>Permissive,</li>
+<li>Held,</li>
+<li>Dark.</li></ul></li>
+<li>SignalMast appearance files expanded to include mapping of advanced signal mast appearance to multiple potential local appearances.  See BR-2003\appearances-3.xml for an example.</li>
+<li>Added a set action in a signal mast icon, so that when it is clicked the appearance will change aspect, alternate held, alternate dark.  In the same manor as the existing Signalhead Icon.</li>
+<li>It is now possible to select which set of icons are used for a signal mast in the editors where more than one set has been provided for.</li>
 </ul>
 
 <p>
