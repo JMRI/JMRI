@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ItemPalette.shtml,v 1.1 2011-04-08 23:56:16 pete_cressman Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Item Palette Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Item Palette">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>The Item Palette</H1>
+
+<b>The Item Palette</b> is used to place icons and text onto <b>Control Panel Editor</b>  
+panels.  The palette is a tabbed window with tabs for each item type.  The common method 
+all items use to add an item to a panel is "Drag and Drop".  Each tab has a bordered 
+panel labeled <b>Drag to Panel</b>.  Drag the item inside the border to the panel.  It some
+cases, you may have to make a selection before dragging - e.g. select a row from a table
+or enter text into a field and press the enter key.</p>
+
+<H2>Iconic Items</H2>
+For those items using icons, multiple sets of icons are offered by the Item Palette.
+In each of these cases several icon sets are provided by default.  Radio buttons
+are used to select an icon set. The <b>Show Icons</b>
+button displays all the icons in the set.  The <b>Edit Icons</b> button opens a dialog
+where the icons may be changed by dragging new icons from the icon catalog.</p>
+   
+<H3>New Icon Sets</H3>
+Icon sets may 
+be added or deleted.  There is no limit on the number of additional icon sets that
+can be added to an item tab.  When the Item Palette is customized with other icon
+sets, the Item Palette is stored in the CatalogTrees.xml file in the preferences 
+directory.<\p>
+<p>
+The <b>Edit Icons</b> dialog
+is used to delete the icon set or to add an additional icon set.  When the
+<b>Add New Icon Set</b> button is pressed, the currently selected icon set is saved and 
+an icon set with "unknown" icons is displayed.  Change these icons by dragging icons from 
+the icon catalog and be sure to name the new icon set in the text field at the top of the 
+dialog.  Finally, press the <b>Create Icon Set</b> button and the dialog is closed with 
+the new icon set added to radio button list.</p>
+
+
+<H2>Tabled Items</H2>
+The items associated with a table have an <b>Add New Table Item</b> button.
+   
+<H2>Item Palette Tabs</H2>
+
+<ul>
+        <li> <b>Turnout</b> Both left and right turnout icon sets.  Select a turnout from the table.</li>
+        <li> <b>Sensor</b> Select a sensor from the table.</li>
+        <li> <b>SignalHead</b> When a signal head is slected in the table, only the icons for
+                        the valid appearances of the signal are shown.  When no row is selected
+                        all possible appearance icons are shown.</li>
+        <li> <b>SignalMast</b>  A signal mast must be selected from the table to display the
+                        icon it used for its aspects.</li>
+        <li> <b>Memory</b> Select a memory location from the table.  The three memory types each
+                        have a "Drag to Panel".  <b>Input</b> and <b>Spinner</b> types can only
+                        be dragged from the edges of their text boxes.</li>
+        <li> <b>Reporter</b> Select a reporter from the table.</li>
+        <li> <b>Light</b> Select a light from the table.</li>
+        <li> <b>Multisensor</b> The default icon set has three lever positions.  The table displays
+                        the Sensor Table.  Three rows must be slected from the table to place
+                        the default icon in a panel.  The table selections are labeled "first",
+                        "second", etc. and these labels correspond to the labels shown when 
+                        the full icon set is displayed.  When editing an icon set, level positions 
+                        can be added and deleted.</li>
+        <li> <b>Icon</b> The bordered icons displayed  (labeled with their names) can be dragged
+                        directly to a panel.  Icons can also be dragged directly from the Icon
+                        Catalog.</li>
+        <li> <b>Background</b> Background icons are placed in a panel just as regular icons.
+                        However, they are place at the lowest display level and cannot be
+                        selected with a simple mouse click.  Use "Control Click" to select
+                        a background icon.  A custom background color can be chosen with the
+                        <b>Background Color</b> button.</li>
+        <li> <b>Text</b> The Text tab displays the same dialog as the "Edit Text Attributtes.."
+                        popup menu item with the addition of a text field to enter the text.
+                        Font sizes styles, etc and border attributes can be chosen and a color 
+                        palette can supply custom colors.  The "Enter key" must be pressed to 
+                        display the text with its attributes in the Preview Panel.  Drag the
+                        item in the Preview Panel to the panel.</li>
+        <li> <b>RPSReporter</b> Drag the "Drag to Panel" icon to the panel and setup the 
+                        RPSReporter from its popop menu.</li>
+        <li> <b>FastClock</b> Drag the clock to the panel.</li>
+        <li> <b>Indicator Track</b> .</li>
+        <li> <b>Indicator Turnout</b> .</li>
+</ul>
+
+
+<H2>More About Indicator Track</H2>
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
