@@ -30,7 +30,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -319,13 +319,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
      * Return true if there is a difference
      */
     boolean monitorProcessRoute(String name, Element item) {
-        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
 
         // check for value element, which means compare
         Element v = item.getChild("value");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
-            return  (b.getState() != state);
+            Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+            Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
+            int newState = 0;  //default to unknown
+            if (routeAligned != null){
+            	newState = routeAligned.getKnownState();
+            }
+            return  (newState != state);
         }
         return false;  // no difference
     }
@@ -388,14 +393,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
     
     void immediateWriteRoute(String name, Element item) throws JmriException {
-        // get route
-        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
 
         // check for set element, which means write
         Element v = item.getChild("set");
         if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            b.setState(state);  //TODO: this is not correct, fix next time
+            // get route
+            Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+//            int state = Integer.parseInt(v.getText());
+            b.setRoute(); 
             item.removeContent(v);
         }
     }
@@ -441,16 +446,20 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
     
     void immediateReadRoute(String name, Element item) {
-        // get route
-        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
 
         Element v = item.getChild("value");
 
         // Start read: ensure value element
         if (v == null) item.addContent(v = new Element("value"));
         
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+        Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
+        int state = 0;  //default to unknown
+        if (routeAligned != null){
+        	state = routeAligned.getKnownState();
+        }
         // set result
-        v.setText(""+b.getState());
+        v.setText(""+state);
     }
     
     void immediateReadSensor(String name, Element item) {
