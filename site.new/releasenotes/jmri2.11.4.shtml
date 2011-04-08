@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.27 2011-04-06 19:33:34 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.28 2011-04-08 16:14:30 mstevetodd Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -197,6 +197,13 @@ Kevin Dickerson:
 <ul>
 <li>Add the ability to set speeds to Blocks and Turnouts for use with automation tools</li>
 <li>Catched an error that causes a High CPU Utilisation when an unexpected/abnormal termination occurs in a TCP connection.</li>
+</ul>
+
+<p>
+Steve Todd:
+<ul>
+<li>add handling for "route" and "panel" to xmlio server.</li>
+<li>xmlio server: handle read larger than default block size, minor error trapping/prevention</li>
 </ul>
 
 <!--#include virtual="/Footer" -->
