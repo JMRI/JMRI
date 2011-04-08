@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.75 $
+ * @version             $Revision: 1.76 $
  */
 public class Car extends RollingStock {
 	
@@ -533,7 +533,7 @@ public class Car extends RollingStock {
 				setLoad(getNextLoad());
 				setNextLoad("");
 				// is the next load default empty?  Check for car return when empty
-				if (getLoad().equals(carLoads.getDefaultEmptyName()))
+				if (getLoad().equals(carLoads.getDefaultEmptyName()) && getNextDestination() == null)
 					setLoadEmpty();
 				return;
 			}
