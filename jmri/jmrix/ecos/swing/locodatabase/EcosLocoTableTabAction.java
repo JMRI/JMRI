@@ -1,5 +1,4 @@
-package jmri.jmrix.ecos.swing.locodatabase;
-
+package jmri.jmrix.ecos.swing.locodatabase
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;

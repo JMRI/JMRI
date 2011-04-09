@@ -1,7 +1,5 @@
 // SignalHeadSignalMast.java
-
 package jmri.implementation;
-
 import java.util.*;
 
 import jmri.*;
@@ -31,7 +29,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
