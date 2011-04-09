@@ -1,12 +1,13 @@
 //TODO: send periodic request for refresh, to verify server connection
+//TODO: handle ajax errors
 //TODO: fix route setting (here and in DefaultXmlIOServer.java) and put routes back in here 
 
 var $globalXhr; //global variable to allow closing earlier connections  TODO:use array to support limited number of open requests
 
 //send request for immediate change, plus request for lists  TODO: allow user to turn off some of the lists
 var $sendChange = function($type, $name, $nextValue){
-	var $commandstr = '<xmlio><item><type>' + $type + '</type><name>' + $name + '</name><set>' + $nextValue + 
-	  '</set></item><list><type>power</type></list><list><type>turnout</type></list></xmlio>';
+	var $commandstr = '<xmlio><item><type>' + $type + '</type><name>' + $name + '</name><set>' + $nextValue +'</set></item>' +
+	'<list><type>turnout</type></list><list><type>route</type></list><list><type>power</type></list><list><type>sensor</type></list></xmlio>';
 	$sendXMLIO($commandstr);
 };
 
@@ -30,15 +31,16 @@ var $sendXMLIO = function($commandstr){
 };
 
 var $processResponse = function($returnedData, $success, $xhr) {
-	$xmlstr = (new XMLSerializer()).serializeToString($returnedData);
+	
+	$.mobile.pageLoading();  //show pageloading message
+
+	$xmlstr = xml2Str($returnedData);
 
 	$xml = $($returnedData);  //jQuery-ize returned data for easier access
 	$xml.xmlClean();  //remove whitespace 
 
 	$xml.find('item').each( //find and process all "item" entries (list)
 			function() {
-				//remove whitespace items
-				$(this).find('#text').remove();
 				//put data from current xml items into $currentItem object
 				var $currentItem = {};
 				for (var $i=0; $i < $(this)[0].childNodes.length; $i++) {
@@ -52,8 +54,8 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					$currentItem.nextValue = $getNextValue($currentItem.type, $currentItem.value); 
 					$currentItem.valueText = $getValueText($currentItem.type, $currentItem.value); 
 				}
-				//clean up the name by getting rid of colons TODO: other cleanup needed?
-				$currentItem.name = $currentItem.name.replace(/:/g, "_");
+				//include a "safe" version of name for use as ID   TODO: other cleanup needed?
+				$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/ /g, "_");
 
 				//remove non-monitorable from xml
 				if ($type == 'roster' || $type == 'panel') {
@@ -63,7 +65,8 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 				if (!$("div#type-" + $type).length) {
 					//add the new page, following the settings page  TODO: support specific page templates
-					$("div#settings").after($('#genPageTemplate').tmpl({type: $type}));
+					$templateID = $getTemplate('Page', $type);
+					$("div#settings").after($($templateID).tmpl({type: $type}));
 					//add the menu item _inside_ footer on each page
 					$("div# div#footer").append("<a data-role='button' href='#type-" + $type + "' data-theme='b'>" + $type +"</a>");
 					//make sure the buttons have correct mobile formatting
@@ -75,18 +78,11 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					
 					//copy footer from settings to all pages
 					$("div#footer").html($("div#settings div#footer").html());
-					
-				}
-
-				//use specific item template if found, generic if not  TODO: put this in a function
-				if ($('#' + $type + 'ItemTemplate').length) {
-					$templateID = '#' + $type + 'ItemTemplate'
-				} else {
-					$templateID = '#genItemTemplate';
 				}
 
 				//if a list item for this name, for this card, doesn't exist yet, add it or update existing item
-				$index = 'div#type-' + $type + ' ul.listview li#name-' + $currentItem.name;
+				$index = 'div#type-' + $type + ' ul.listview li#name-' + $currentItem.safeName;
+				$templateID = $getTemplate('Item', $type);
 				if (!$($index).length) {
 					$($templateID).tmpl($currentItem).appendTo("div#type-" + $type + " ul.listview");
 
@@ -97,16 +93,29 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				$("div#type-" + $type + " ul.listview").listview("refresh");
 			}
 	);
-
+	
 		//echo last command received back to server, (after removing unmonitorable items) which will cause server to monitor for changes
-		$xmlstr = (new XMLSerializer()).serializeToString($xml[0]);
+		$xmlstr = xml2Str($xml[0]);
 		$sendXMLIO($xmlstr);
+
+		$.mobile.pageLoading(true); //hide the pageloading message
 };    	
 
 //handle the toggling of the next value for buttons
 var $getNextValue = function($type, $value){
 	var $nextValue = ($value=='4' ? '2' : '4');
 	return $nextValue;
+};
+
+//get name for template (which exists on html page)
+var $getTemplate = function( $cat, $type){
+	//use specific item template if found, generic if not 
+	if ($('#' + $type + $cat + 'Template').length) {
+		$templateID = '#' + $type + $cat + 'Template'
+	} else {
+		$templateID = '#gen' + $cat + 'Template';
+	}
+	return $templateID;
 };
 
 //return the description for a value TODO: streamline this
@@ -123,7 +132,7 @@ var $getValueText = function($type, $value){
 		} else if ($value=='4') {
 			return 'Off';
 		}
-	} else if ($type == 'route') {
+	} else if ($type == 'route' || $type == 'sensor') {
 		if ($value=='2') {
 			return 'Active';
 		} else if ($value=='4') {
@@ -147,12 +156,31 @@ jQuery.fn.xmlClean = function() {
   }).remove();
 }
 
+//workaround for IE (from http://www.webdeveloper.com/forum/showthread.php?t=187378)
+function xml2Str(xmlNode)
+{
+	try {
+		// Gecko-based browsers, Safari, Opera.
+		return (new XMLSerializer()).serializeToString(xmlNode);
+	}
+	catch (e) {
+		try {
+			// Internet Explorer.
+			return xmlNode.xml;
+		}
+		catch (e)
+		{//Strange Browser ??
+			alert('Xmlserializer not supported');
+		}
+	}
+	return false;
+}
 
 //javascript processing starts here (main)
 $(document).ready(function() {
 
 	//ask for all list items
-	var $getAllLists = '<xmlio><list><type>power</type></list><list><type>turnout</type></list><list><type>roster</type></list><list><type>panel</type></list></xmlio>';
+	var $getAllLists = '<xmlio><list><type>turnout</type></list><list><type>route</type></list><list><type>roster</type></list><list><type>panel</type></list><list><type>power</type></list><list><type>sensor</type></list></xmlio>';
 	$sendXMLIO($getAllLists);
 
 });

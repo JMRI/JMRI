@@ -1,1 +1,22 @@
 /* Application-specific CSS for JMRIMobile */
+div.helpText {
+/*	  clear: both;*/
+}
+body {
+  max-width: 480px;	
+}
+.ui-mobile .ui-page {
+	  max-width: 480px;
+	}
+.ui-content .ui-listview {
+  margin-bottom: 15px;
+}
+
+div.valueText {
+	float: right;
+	margin-top: -15px;
+}
+
+.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+    padding-right: 25px;
+}
