@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -329,11 +329,11 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     String useIconSet = "default";
     
     public void useIconSet(String icon){
-        if(useIconSet.equals(icon)){
-            return;
-        }
         if (useIconSet==null){
             icon = "default";
+        }
+        if(useIconSet.equals(icon)){
+            return;
         }
         //clear the old icon map out.
         _iconMap=null;
