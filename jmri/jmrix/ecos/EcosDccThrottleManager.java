@@ -1,6 +1,7 @@
-package jmri.jmrix.ecos
+package jmri.jmrix.ecos;
 
-import jmri.DccThrottle;pimport jmri.LocoAddress;
+import jmri.DccThrottle;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
 import jmri.jmrix.AbstractThrottleManager;
@@ -12,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 
