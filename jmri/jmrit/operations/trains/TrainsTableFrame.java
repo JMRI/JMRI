@@ -4,10 +4,10 @@ package jmri.jmrit.operations.trains;
  
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -33,8 +33,8 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  * Frame for adding and editing the train roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.54 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
+ * @version             $Revision: 1.55 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -52,7 +52,8 @@ public class TrainsTableFrame extends OperationsFrame {
 	public static final String ID = rb.getString("Id");
 	
 	public static final String MOVE = rb.getString("Move");
-	public static final String TERMINATE =rb.getString("Terminate");
+	public static final String TERMINATE = rb.getString("Terminate");
+	public static final String RESET = rb.getString("Reset");
 
 	CarManagerXml carManagerXml = CarManagerXml.instance();	// load cars
 	EngineManagerXml engineManagerXml = EngineManagerXml.instance(); // load engines
@@ -64,8 +65,8 @@ public class TrainsTableFrame extends OperationsFrame {
 	JScrollPane trainsPane;
 	
 	// labels
-	JLabel textSort = new JLabel(rb.getString("SortBy"));
-	JLabel textSep1 = new JLabel("          ");
+	//JLabel textSort = new JLabel(rb.getString("SortBy"));
+	//JLabel textSep1 = new JLabel("          ");
 	JLabel textSep2 = new JLabel("          ");
 	
 	// radio buttons
@@ -79,6 +80,7 @@ public class TrainsTableFrame extends OperationsFrame {
     
     JRadioButton moveRB = new JRadioButton(MOVE);
     JRadioButton terminateRB = new JRadioButton(TERMINATE);
+    JRadioButton resetRB = new JRadioButton(RESET);
         
 	// major buttons
 	JButton addButton = new JButton(rb.getString("Add"));
@@ -105,32 +107,43 @@ public class TrainsTableFrame extends OperationsFrame {
 
     	// Set up the jtable in a Scroll Pane..
     	trainsPane = new JScrollPane(trainsTable);
-    	trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	trainsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
        	trainsModel.initTable(trainsTable, this);
      	
     	// Set up the control panel
     	
     	//row 1
     	JPanel cp1 = new JPanel();
-    	cp1.add(textSort);
-    	cp1.add(sortByTime);
-    	cp1.add(sortByName);
-    	cp1.add(sortByRoute);
-    	cp1.add(sortByDeparts);
-    	cp1.add(sortByTerminates);
-    	cp1.add(sortByStatus);
-    	cp1.add(sortById);
-    	cp1.add(textSep1);
+    	//cp1.setLayout(new BoxLayout(cp1,BoxLayout.X_AXIS));
+    	JPanel sortBy = new JPanel();
+    	sortBy.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+    	//cp1.add(textSort);
+    	sortBy.add(sortByTime);
+    	sortBy.add(sortByName);
+    	sortBy.add(sortByRoute);
+    	sortBy.add(sortByDeparts);
+    	sortBy.add(sortByTerminates);
+    	sortBy.add(sortByStatus);
+    	sortBy.add(sortById);
+    	//sortBy.add(textSep1);
     	
-       	cp1.add(showAllBox);
-    	cp1.add(buildMsgBox);
-    	cp1.add(buildReportBox);
-    	cp1.add(printPreviewBox);
-    	cp1.add(textSep2);
+       	JPanel messages = new JPanel();
+       	messages.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));
     	
-    	cp1.add(moveRB);
-    	cp1.add(terminateRB);
+       	messages.add(showAllBox);
+       	messages.add(buildMsgBox);
+       	messages.add(buildReportBox);
+       	messages.add(printPreviewBox);
+    	//cp1.add(textSep2);
+    	
+    	JPanel action = new JPanel();
+    	action.setBorder(BorderFactory.createTitledBorder(rb.getString("Action")));
+    	action.add(moveRB);
+    	action.add(terminateRB);
+    	action.add(resetRB);
+    	
+    	cp1.add(sortBy);
+    	cp1.add(messages);
+    	cp1.add(action);
     	
     	//row 2
     	//tool tips, see setPrintButtonText() for more tool tips
@@ -146,8 +159,10 @@ public class TrainsTableFrame extends OperationsFrame {
 		
 		moveRB.setToolTipText(rb.getString("MoveTip"));
 		terminateRB.setToolTipText(rb.getString("TerminateTip"));
+		resetRB.setToolTipText(rb.getString("ResetTip"));
 		
     	JPanel cp2 = new JPanel();
+    	cp2.setBorder(BorderFactory.createTitledBorder(""));
 		cp2.add(addButton);
 		cp2.add(buildButton);
 		cp2.add(printButton);
@@ -157,13 +172,16 @@ public class TrainsTableFrame extends OperationsFrame {
 		
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridBagLayout());
-		addItem(controlPanel, cp1, 0, 0 );
-		addItem(controlPanel, cp2, 0, 1);
+		controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.Y_AXIS));
+		controlPanel.add(cp1);
+		controlPanel.add(cp2);
+		//addItem(controlPanel, cp1, 0, 0 );
+		//addItem(controlPanel, cp2, 0, 1);
 		
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
 	    // make sure panel doesn't get too short
-	    controlPane.setMinimumSize(new Dimension(50,90));
+	    controlPane.setMinimumSize(new Dimension(500,130));
+	    controlPane.setMaximumSize(new Dimension(2000,200));
 	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
     	getContentPane().add(trainsPane);
@@ -190,6 +208,7 @@ public class TrainsTableFrame extends OperationsFrame {
     	ButtonGroup actionGroup = new ButtonGroup();
     	actionGroup.add(moveRB);
     	actionGroup.add(terminateRB);
+    	actionGroup.add(resetRB);
     	
     	addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortByName);
@@ -200,7 +219,8 @@ public class TrainsTableFrame extends OperationsFrame {
 		addRadioButtonAction(sortById);
 		
 		addRadioButtonAction(moveRB);
-		addRadioButtonAction(terminateRB);	
+		addRadioButtonAction(terminateRB);
+		addRadioButtonAction(resetRB);
 		
 		buildMsgBox.setSelected(trainManager.isBuildMessagesEnabled());
     	buildReportBox.setSelected(trainManager.isBuildReportEnabled());
@@ -267,6 +287,9 @@ public class TrainsTableFrame extends OperationsFrame {
 		}
 		if (ae.getSource() == terminateRB){
 			trainManager.setTrainsFrameTrainAction(TERMINATE);
+		}
+		if (ae.getSource() == resetRB){
+			trainManager.setTrainsFrameTrainAction(RESET);
 		}
 	}
 	
@@ -408,6 +431,7 @@ public class TrainsTableFrame extends OperationsFrame {
 	private void setTrainActionButton(){
 			moveRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE));
 			terminateRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE));
+			resetRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET));
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {

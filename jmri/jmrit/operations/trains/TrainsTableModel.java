@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.38 $
+ * @version   $Revision: 1.39 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -303,16 +303,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	// move button become report if failure
     	if (train.getBuildFailed()){
     		train.printBuildReport();
-    	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+    	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
        		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
      		train.move();
-    	} else if (train.isBuilt()){
+    	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)){
        		if (log.isDebugEnabled()) log.debug("Terminate train ("+train.getName()+")");
 			int status = JOptionPane.showConfirmDialog(null,
 					"Terminate Train ("+train.getName()+") "+train.getDescription()+"?",
 					"Do you want to terminate train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION)
 				train.terminate();
+    	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)){
+       		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
+       		train.reset();
     	}
     }
 
