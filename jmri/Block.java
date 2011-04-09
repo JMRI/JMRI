@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -217,7 +217,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
             return ("Use Global " + InstanceManager.blockManagerInstance().getDefaultSpeed());
         return _blockSpeed;
     }
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+
     public void setBlockSpeed(String s) throws JmriException {
         if((s==null) || (_blockSpeed.equals(s)))
             return;
@@ -225,7 +225,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
             s = "Global";
         else {
             try {
-                new Float(s);
+                Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try{
                     jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
@@ -368,44 +368,6 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         // in any case, go OCCUPIED
         setState(OCCUPIED);
     }
-    
-    public void printPaths(){
-        System.out.println("=== " + this.getDisplayName() + "===");
-        for (int i = 0; i<paths.size(); i++) {
-            System.out.println(Path.decodeDirection(paths.get(i).getToBlockDirection()) + " to " + Path.decodeDirection(paths.get(i).getFromBlockDirection()));
-        }
-    }
-    
-    //If we only have one path, then we can not allow the block to uni-directional
-    public void printWorkingDirections(){
-        if (paths.size()<=1){
-            System.out.println("We either have no paths or only one, therefore the block has to be bi-directional");
-            return;
-        }
-        if (paths.size()==2){
-            System.out.println("fairly simple case of the block having two connected partners");
-            if (paths.get(0).getFromBlockDirection()==paths.get(1).getToBlockDirection()){
-                System.out.println("path options should be");
-                System.out.println(Path.decodeDirection(paths.get(0).getToBlockDirection()) + " to " + Path.decodeDirection(paths.get(0).getFromBlockDirection()));
-                System.out.println(Path.decodeDirection(paths.get(1).getToBlockDirection()) + " to " + Path.decodeDirection(paths.get(1).getFromBlockDirection()));
-            } else if (paths.get(0).getFromBlockDirection()==paths.get(1).getFromBlockDirection()){
-                //Okay the block paths are not the same need to do a bit more work;
-                System.out.println("path options should be");
-                System.out.println(Path.decodeDirection(paths.get(0).getToBlockDirection()) + " to " + Path.decodeDirection(paths.get(0).getFromBlockDirection()));
-                System.out.println(Path.decodeDirection(paths.get(1).getFromBlockDirection()) + " to " + Path.decodeDirection(paths.get(1).getToBlockDirection()));
-            } else if ((paths.get(0).getFromBlockDirection()&paths.get(1).getToBlockDirection())!=0){
-                System.out.println("anding them together gets an answer "  + Path.decodeDirection(paths.get(0).getFromBlockDirection()&paths.get(1).getToBlockDirection()));
-            
-            } else if ((paths.get(1).getToBlockDirection()&paths.get(0).getFromBlockDirection())!=0){
-                System.out.println("the other anding them together gets an answer " + Path.decodeDirection(paths.get(0).getFromBlockDirection()&paths.get(1).getToBlockDirection()));
-            } 
-            else {
-                System.out.println("Didn't work out" + Path.decodeDirection(paths.get(0).getFromBlockDirection()&paths.get(1).getToBlockDirection()));
-                System.out.println("Didn't work out" + Path.decodeDirection(paths.get(1).getToBlockDirection()&paths.get(0).getFromBlockDirection()));
-            }
-        }
-            
-    }
-    
+       
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Block.class.getName());
 }

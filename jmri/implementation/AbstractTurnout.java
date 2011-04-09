@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -700,7 +700,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             s = "Global";
         else {
             try {
-                new Float(s);
+                Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try{
                     jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
@@ -749,7 +749,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             s = "Global";
         else {
             try {
-                new Float(s);
+                Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try{
                     jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);

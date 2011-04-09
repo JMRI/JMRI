@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -213,13 +213,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager
    
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
-
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    
     public void setDefaultClosedSpeed(String speed) throws JmriException {
         if((speed!=null) && (defaultClosedSpeed.equals(speed)))
             return;
         try {
-            new Float(speed);
+            Float.parseFloat(speed);
         } catch (NumberFormatException nx) {
             try{
                 jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
@@ -231,13 +230,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         defaultClosedSpeed = speed;
         firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
     }
-
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    
     public void setDefaultThrownSpeed(String speed) throws JmriException{
         if((speed!=null) && (defaultThrownSpeed.equals(speed)))
             return;
         try {
-            new Float(speed);
+            Float.parseFloat(speed);
         } catch (NumberFormatException nx) {
             try{
                 jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);

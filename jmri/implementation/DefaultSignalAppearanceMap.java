@@ -25,7 +25,7 @@ import jmri.SignalSystem;
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -229,9 +229,11 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         Element root;
         try {
             root = xf.rootFromFile(file);
+            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild("aspectMappings").getChildren("aspectMapping");
             for (int i = 0; i < l.size(); i++) {
                 String advanced = l.get(i).getChild("advancedAspect").getText();
+                @SuppressWarnings("unchecked")
                 List<Element> o = l.get(i).getChildren("ourAspect");
                 String[] appearances = new String[o.size()];
                 for (int j = 0; j < o.size(); j++) {
