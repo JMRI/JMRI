@@ -29,7 +29,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -139,7 +139,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
 
     /**
     * Get the aspest to be displayed by this signalmast for a given appearance
-    * @param HELD = 0, PERMISSIVE = 1, DANGER = 2, DARK = 3;
+    * @param appearance HELD = 0, PERMISSIVE = 1, DANGER = 2, DARK = 3;
     */
     public String getSpecificAppearance(int appearance){
         if (specialMap.containsKey(appearance)){
