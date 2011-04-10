@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
-<!-- $Id: CT_Elektronik_Sound_SL_v40.xml,v 1.4 2010-06-26 20:49:28 jacobsen Exp $ -->
+<!-- $Id: CT_Elektronik_Sound_SL_v40.xml,v 1.5 2011-04-10 03:17:02 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,7 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="ncliffe@btinternet.com" version="3.2" lastUpdated="2010/06/23"/>
+  <version author="ncliffe@btinternet.com" version="3.3" lastUpdated="2011/02/28"/>
+<!--  v3.3: -->
+<!--  Added "alternative" sound slots to function mapping, allowing access to slots 9-16,  -->
+<!--  also adjusted labelling of panes, and minor function changes associated with these changes -->
+<!--  Thanks to John Gymer for the clues to use of the "Alt" feature in CT Function Mapping -->
 <!--  v3.2: -->
 <!--  extended version numbering to 112.    --> 
 <!--  Volume control (CV121) appears to now be 64 step for some versions of firmware --> 
@@ -32,19 +36,27 @@
 <!--	version 2 - added new CVs: Auto Uncoupling and Light Effects - Peter -->
   <decoder>
     <family name="Sound Decoder SL (v.40 up)" mfg="CT Elektronik">
-      <model model="SL 51" numOuts="2" numFns="15" productID="SL51">
+      <model model="SL 51" numOuts="8" numFns="15" productID="SL51">
         <versionCV lowVersionID="40"/>
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+		<output name="3" label="Green"/>
+        <output name="4" label="Purple"/>
+        <output name="5" label="Pad 5"/>
+        <output name="6" label="Pad 6"/>
+        <output name="7" label="Pad 7"/>
+        <output name="8" label="Pad 8"/>
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
-<!-- <output name="Alt" label="obs" /> -->
-        <output name="G1" label="Snd Slot 1"/>
-        <output name="G2" label="Snd Slot 2"/>
-        <output name="G3" label="Snd Slot 3"/>
-        <output name="G4" label="Snd Slot 4"/>
-        <output name="G5" label="Snd Slot 5"/>
-        <output name="G6" label="Snd Slot 6"/>
-        <output name="G7" label="Snd Slot 7"/>
-        <output name="G8" label="Snd Slot 8"/>
+		<output name="Alt" label="Alt Snds" />  
+        <output name="G1" label="Snd Slot 1/9"/>
+        <output name="G2" label="Snd Slot 2/10"/>
+        <output name="G3" label="Snd Slot 3/11"/>
+        <output name="G4" label="Snd Slot 4/12"/>
+        <output name="G5" label="Snd Slot 5/13"/>
+        <output name="G6" label="Snd Slot 6/14"/>
+        <output name="G7" label="Snd Slot 7/15"/>
+        <output name="G8" label="Snd Slot 8/16"/>
       </model>
       <model model="SL 74" numOuts="4" numFns="15" productID="SL74">
         <versionCV lowVersionID="40"/>
@@ -52,15 +64,15 @@
         <output name="4" label="Purple"/>
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
-<!-- <output name="Alt" label="obs" />  -->
-        <output name="G1" label="Snd Slot 1"/>
-        <output name="G2" label="Snd Slot 2"/>
-        <output name="G3" label="Snd Slot 3"/>
-        <output name="G4" label="Snd Slot 4"/>
-        <output name="G5" label="Snd Slot 5"/>
-        <output name="G6" label="Snd Slot 6"/>
-        <output name="G7" label="Snd Slot 7"/>
-        <output name="G8" label="Snd Slot 8"/>
+		<output name="Alt" label="Alt Snds" />  
+       <output name="G1" label="Snd Slot 1/9"/>
+        <output name="G2" label="Snd Slot 2/10"/>
+        <output name="G3" label="Snd Slot 3/11"/>
+        <output name="G4" label="Snd Slot 4/12"/>
+        <output name="G5" label="Snd Slot 5/13"/>
+        <output name="G6" label="Snd Slot 6/14"/>
+        <output name="G7" label="Snd Slot 7/15"/>
+        <output name="G8" label="Snd Slot 8/16"/>
       </model>
       <model model="SL 75" numOuts="4" numFns="15" productID="SL75">
         <versionCV lowVersionID="40" highVersionID="112"/>
@@ -68,15 +80,15 @@
         <output name="4" label="Purple"/>
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
-<!-- <output name="Alt" label="obs" />  -->
-        <output name="G1" label="Snd Slot 1"/>
-        <output name="G2" label="Snd Slot 2"/>
-        <output name="G3" label="Snd Slot 3"/>
-        <output name="G4" label="Snd Slot 4"/>
-        <output name="G5" label="Snd Slot 5"/>
-        <output name="G6" label="Snd Slot 6"/>
-        <output name="G7" label="Snd Slot 7"/>
-        <output name="G8" label="Snd Slot 8"/>
+		<output name="Alt" label="Alt Snds" />  
+       <output name="G1" label="Snd Slot 1/9"/>
+        <output name="G2" label="Snd Slot 2/10"/>
+        <output name="G3" label="Snd Slot 3/11"/>
+        <output name="G4" label="Snd Slot 4/12"/>
+        <output name="G5" label="Snd Slot 5/13"/>
+        <output name="G6" label="Snd Slot 6/14"/>
+        <output name="G7" label="Snd Slot 7/15"/>
+        <output name="G8" label="Snd Slot 8/16"/>
       </model>
     </family>
     <programming direct="yes" paged="no" register="no" ops="yes"/>
@@ -4573,12 +4585,126 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
         </enumVal>
         <label>F10 controls output Z9</label>
       </variable>
-      <variable label="Acceleration Sound Trigger" CV="177" default="00" tooltip="CV177 rate of speed change to trigger accel noise slots 123-125">
+
+      <variable label="F11 controls output G4" CV="175" mask="XXXXXXXV" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F11 controls output G4</label>
+      </variable>
+      <variable label="F11 controls output G5" CV="175" mask="XXXXXXVX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F11 controls output G5</label>
+      </variable>
+      <variable label="F11 controls output G6" CV="175" mask="XXXXXVXX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F11 controls output G6</label>
+      </variable>
+      <variable label="F11 controls output G7" CV="175" mask="XXXXVXXX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F11 controls output G7</label>
+      </variable>
+      <variable label="F11 controls output G8" CV="175" mask="XXXVXXXX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F11 controls output G8</label>
+      </variable>
+	  
+      <variable label="F12 controls output G4" CV="176" mask="XXXXXXXV" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F12 controls output G4</label>
+      </variable>
+      <variable label="F12 controls output G5" CV="176" mask="XXXXXXVX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F12 controls output G5</label>
+      </variable>
+      <variable label="F12 controls output G6" CV="176" mask="XXXXXVXX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F12 controls output G6</label>
+      </variable>
+      <variable label="F12 controls output G7" CV="176" mask="XXXXVXXX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F12 controls output G7</label>
+      </variable>
+      <variable label="F12 controls output G8" CV="176" mask="XXXVXXXX" minFn="12">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F12 controls output G8</label>
+      </variable>
+
+	  <variable label="Acceleration Sound Trigger" CV="177" default="00" tooltip="CV177 rate of speed change to trigger accel noise slots 123-125">
         <decVal max="255"/>
         <label>Acceleration Sound Trigger</label>
       </variable>
     </variables>
   </decoder>
+  
   <pane name="Sound Config">
     <column>
       <row>
@@ -4762,6 +4888,12 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <label label="is made of five components can be made to loop for continuous sounds (see CT manuals)">
             <label>is made of five components can be made to loop for continuous sounds (see CT manuals)</label>
           </label>
+		  <label label="The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16">
+            <label>The Alt key (see Function Map) acts as a 'shift'; when the Alt is active, sound slots 9-16</label>
+          </label>
+		  <label label="are played in place of slots 1-8, with the same key and repetition options for each bank of slots">
+            <label>are played in place of slots 1-8, with the same key and repetition options for each bank of slots</label>
+          </label>
           <label label="  ">
             <label>  </label>
           </label>
@@ -4775,8 +4907,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 1 volume" label="Sound slot 1 volume   ">
-            <label>Sound slot 1 volume   </label>
+          <display item="Sound slot 1 volume" label="Sound slot 1/  9 volume   ">
+            <label>Sound slot 1/  9 volume   </label>
           </display>
         </column>
         <column>
@@ -4807,8 +4939,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 2 volume" label="Sound slot 2 volume   ">
-            <label>Sound slot 2 volume   </label>
+          <display item="Sound slot 2 volume" label="Sound slot 2/10 volume   ">
+            <label>Sound slot 2/10 volume   </label>
           </display>
         </column>
         <column>
@@ -4839,8 +4971,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 3 volume" label="Sound slot 3 volume   ">
-            <label>Sound slot 3 volume   </label>
+          <display item="Sound slot 3 volume" label="Sound slot 3/11 volume   ">
+            <label>Sound slot 3/11 volume   </label>
           </display>
         </column>
         <column>
@@ -4871,8 +5003,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 4 volume" label="Sound slot 4 volume   ">
-            <label>Sound slot 4 volume   </label>
+          <display item="Sound slot 4 volume" label="Sound slot 4/12 volume   ">
+            <label>Sound slot 4/12 volume   </label>
           </display>
         </column>
         <column>
@@ -4903,8 +5035,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 5 volume" label="Sound slot 5 volume   ">
-            <label>Sound slot 5 volume   </label>
+          <display item="Sound slot 5 volume" label="Sound slot 5/13 volume   ">
+            <label>Sound slot 5/13 volume   </label>
           </display>
         </column>
         <column>
@@ -4935,8 +5067,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 6 volume" label="Sound slot 6 volume   ">
-            <label>Sound slot 6 volume   </label>
+          <display item="Sound slot 6 volume" label="Sound slot 6/14 volume   ">
+            <label>Sound slot 6/14 volume   </label>
           </display>
         </column>
         <column>
@@ -4967,8 +5099,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 7 volume" label="Sound slot 7 volume   ">
-            <label>Sound slot 7 volume   </label>
+          <display item="Sound slot 7 volume" label="Sound slot 7/15 volume   ">
+            <label>Sound slot 7/15 volume   </label>
           </display>
         </column>
         <column>
@@ -4999,8 +5131,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
       </row>
       <row>
         <column>
-          <display item="Sound slot 8 volume" label="Sound slot 8 volume   ">
-            <label>Sound slot 8 volume   </label>
+          <display item="Sound slot 8 volume" label="Sound slot 8/16 volume   ">
+            <label>Sound slot 8/16 volume   </label>
           </display>
         </column>
         <column>
