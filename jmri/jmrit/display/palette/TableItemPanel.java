@@ -81,6 +81,9 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        java.awt.Dimension dim = _table.getPreferredSize();
+        dim.height = ROW_HEIGHT*12;
+        _scrollPane.getViewport().setPreferredSize(dim);
 
         JPanel panel = new JPanel();
         _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
@@ -222,7 +225,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        Hashtable<String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {

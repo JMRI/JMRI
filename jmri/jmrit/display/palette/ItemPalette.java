@@ -405,7 +405,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
         findIcon.add(searchItem);
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.picker.PickTables", true);
+        addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }
 
     public void closePanels(java.awt.event.WindowEvent e) {
@@ -509,6 +509,14 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
             return true;
         }
         return false;
+    }
+
+    // add entire family
+    static protected void addLevel4FamilyMap(String type, String family,
+                                   String key, Hashtable<String, NamedIcon> iconMap) {
+        Hashtable<String, Hashtable<String, NamedIcon>> familyMap = getLevel4Family(type, family);
+        familyMap.put(key, iconMap);
+        ImageIndexEditor.indexChanged(true);
     }
 
     // Currently only needed for IndicatorTO type

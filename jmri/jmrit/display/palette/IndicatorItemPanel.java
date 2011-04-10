@@ -31,7 +31,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     * Constructor for plain icons and backgrounds
     */
     public IndicatorItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame,  type, family, editor);
+        super(parentFrame, type, family, editor);
     }
 
     /**
@@ -54,6 +54,13 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         add(_detectPanel, 0);
     }
 
+    /**
+    * Init for conversion of plain track to indicator track
+    */
+    public void init(ActionListener doneAction) {
+        super.init(doneAction, null);
+    }
+
     public void dispose() {
         if (_detectPanel!=null) {
             _detectPanel.dispose();
@@ -73,7 +80,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     public void setShowTrainName(boolean show) {
         _detectPanel.setShowTrainName(show);
     }
-
+/*
     public String getErrSensor() {
         return _detectPanel.getErrSensor();
     }
@@ -81,7 +88,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     public void setErrSensor(String name) {
         _detectPanel.setErrSensor(name);
     }
-
+*/
     public String getOccSensor() {
         return _detectPanel.getOccSensor();
     }
@@ -123,12 +130,15 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
+            if (iconMap==null) {
+                log.error("IconDragJLabel.getTransferData: iconMap is null!");
+                return null;
+            }
             if (log.isDebugEnabled()) log.debug("IndicatorDragJLabel.getTransferData");
             IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
 
             t.setOccBlock(_detectPanel.getOccBlock());
             t.setOccSensor(_detectPanel.getOccSensor());
-            t.setErrSensor(_detectPanel.getErrSensor());                
             t.setShowTrain(_detectPanel.getShowTrainName());
             t.setFamily(_family);
 

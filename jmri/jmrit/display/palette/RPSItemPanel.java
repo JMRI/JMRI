@@ -72,6 +72,7 @@ public class RPSItemPanel extends FamilyItemPanel {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
+
             if (log.isDebugEnabled()) log.debug("IconDragJLabel.getTransferData");
             RpsPositionIcon r = new RpsPositionIcon(_editor);
             r.setActiveIcon(new NamedIcon(iconMap.get("active")));

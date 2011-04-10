@@ -68,34 +68,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
     }
-/*
-    public void valueChanged(ListSelectionEvent e) {
-        if (_table == null) {
-            return;
-        }
-        _selectedRow = _table.getSelectedRow();
-        if (log.isDebugEnabled()) log.debug("Table valueChanged: row= "+_selectedRow);
-//        remove(_iconFamilyPanel);
-//        initIconFamiliesPanel();
-//        add(_iconFamilyPanel, 1);
-        if (_selectedRow >= 0) {
-            if (_updateButton!=null) {
-                _updateButton.setEnabled(true);
-                _updateButton.setToolTipText(null);
-            }
-//            _showIconsButton.setEnabled(true);
-//            _showIconsButton.setToolTipText(null);
-        } else {
-            if (_updateButton!=null) {
-                _updateButton.setEnabled(false);
-                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
-            }
-//            _showIconsButton.setEnabled(false);
-//            _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickRowToShowIcon"));
-        }
-//        hideIcons();
-    }
-*/
+    
     protected void showIcons() {
         updateFamiliesPanel();
         _iconPanel.setVisible(true);

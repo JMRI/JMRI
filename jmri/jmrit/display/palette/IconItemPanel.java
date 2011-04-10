@@ -57,6 +57,7 @@ public class IconItemPanel extends ItemPanel {
         add(_catalog);
        _catalog.setVisible(false);
         _catalog.setToolTipText(ItemPalette.rbp.getString("ToolTipDragCatalog"));
+        setSize(getPreferredSize());
     }
 
     protected JPanel instructions() {
@@ -123,6 +124,8 @@ public class IconItemPanel extends ItemPanel {
                label.setIcon(icon);
                label.setName(borderName);
                panel.add(label);
+               int width = Math.max(100, panel.getPreferredSize().width);
+               panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
            } catch (java.lang.ClassNotFoundException cnfe) {
                cnfe.printStackTrace();
            }

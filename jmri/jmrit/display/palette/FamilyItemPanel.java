@@ -71,6 +71,19 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (iconMap!=null) {
             checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
         }
+        makeBottomPanel(doneAction);
+        setSize(getPreferredSize());
+    }
+
+    /**
+    * Init for conversion of plain track to indicator track
+    * Skips init() in TableItemPanel
+    */
+    public void init(ActionListener doneAction) {
+        makeBottomPanel(doneAction);
+    }
+
+    protected void makeBottomPanel(ActionListener doneAction) {
         _update = true;     // no dragging of a new icon
         _bottom2Panel = makeBottom2Panel();
         _bottom1Panel = makeBottom3Panel(doneAction, makeBottom1Panel());
@@ -233,7 +246,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     
     protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
         if (iconMap==null) {
-            log.error("iconMap is null for type "+_itemType+" family "+_family);
+            log.warn("iconMap is null for type "+_itemType+" family "+_family);
             return;
         }
         GridBagLayout gridbag = new GridBagLayout();
@@ -361,6 +374,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _dragIconPanel.setVisible(true);
         }
         _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
+        setSize(getPreferredSize());
     }
 
     protected void showIcons() {
@@ -369,6 +383,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _dragIconPanel.setVisible(false);
         }
         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
+        setSize(getPreferredSize());
     }
    
     

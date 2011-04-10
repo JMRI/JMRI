@@ -11,18 +11,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +27,18 @@ import jmri.jmrit.logix.OPath;
 /**
 *  Panel for Occupancy and Error detection,  
 */
-public class DetectionPanel extends JPanel implements ListSelectionListener {
-
+public class DetectionPanel extends JPanel {
 
     private JTextField  _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
-    private JTextField  _errSensorName = new JTextField();
     private JFrame      _pickFrame;
     private JButton     _openPicklistButton;
     private JPanel      _trainIdPanel;
     private JCheckBox   _showTrainName;
     private OBlock      _block;
     private JPanel      _blockPathPanel;
-    private JList       _pathList;
     private ItemPanel   _parent;
+    private ArrayList<JCheckBox> _pathBoxes;
+    private JPanel      _checkBoxPanel;
 
     /**
     */
@@ -67,21 +55,10 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
                 checkDetection();
             }
         });
-        _errSensorName.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                checkErrorSensor();
-            }
-        });                        
-        _errSensorName.addFocusListener(new FocusAdapter() {
-            public void focusLost(FocusEvent e) {
-                checkErrorSensor();
-            }
-        });
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(makeSensorPanel(_occDetectorName, "OccupancySensor", "ToolTipOccupancySensor"));
-        panel.add(makeSensorPanel(_errSensorName, "ErrorSensor", "ToolTipErrorSensor"));
         _openPicklistButton = new JButton(ItemPalette.rbp.getString("OpenPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -107,18 +84,9 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
         p = new JPanel();
         p.add(new JLabel(ItemPalette.rbp.getString("SelectPathIcons")));
         _blockPathPanel.add(p);
-        _pathList = new JList();
-        _pathList.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        _pathList.addListSelectionListener(this);
-        _blockPathPanel.add(new JScrollPane(_pathList));
-        JButton clearButton = new JButton(ItemPalette.rbp.getString("ClearPathSelection"));
-        clearButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    clearListSelection();
-                }
-        });
-        clearButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
-        _blockPathPanel.add(clearButton);
+        _checkBoxPanel = new JPanel();
+        _blockPathPanel.add(_checkBoxPanel);
+        _blockPathPanel.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         _blockPathPanel.setVisible(false);
         _blockPathPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipSelectPathIcons"));
         add(_blockPathPanel);
@@ -209,24 +177,6 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
         _showTrainName.setSelected(show);
     }
 
-    public String getErrSensor() {
-        String name = _errSensorName.getText();
-        if (name!=null && name.trim().length()>0) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
-            if (sensor!= null) {
-                return name;                
-            } else {
-                JOptionPane.showMessageDialog(null, ItemPalette.rbp.getString("InvalidErrSensor"), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            }
-        }
-        return null;
-    }
-
-    public void setErrSensor(String name) {
-        _errSensorName.setText(name);
-    }
-
     public String getOccSensor() {
         String name = _occDetectorName.getText();
         if (name!=null && name.trim().length()>0) {
@@ -257,33 +207,28 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
 
     public ArrayList<String> getPaths() {
         ArrayList<String> paths = new ArrayList<String>();
-        Object[] p = _pathList.getSelectedValues();
-        if (log.isDebugEnabled()) log.debug("getPaths size="+p.length);
-        for (int i=0; i<p.length; i++) {
-            paths.add( ((OPath)p[i]).getName());
+        if (_pathBoxes!=null) {
+            for (int i=0; i<_pathBoxes.size(); i++) {
+                if ( _pathBoxes.get(i).isSelected()) {
+                    paths.add(_pathBoxes.get(i).getName());
+                }
+            }
         }
-        if (log.isDebugEnabled()) log.debug("getPaths length="+p.length+", size="+paths.size());
         return paths;
     }
 
     public void setPaths(ArrayList<String> iconPath) {
         if (iconPath==null || _block==null) {
+            _pathBoxes = null;
             return;
         }
-        List<Path> paths = _block.getPaths();
-        int[] indices = new int[iconPath.size()];
-        int lastIdx = 0;
         for (int k=0; k<iconPath.size(); k++) {
-            for (int i=0; i<paths.size(); i++) {
-                OPath p = (OPath) paths.get(i);
-                if (iconPath.get(k).equals(p.getName()) ) {
-                    indices[lastIdx++] = i;
-                    if (log.isDebugEnabled()) log.debug("setPaths index="+i);
+            for (int i=0; i<_pathBoxes.size(); i++) {
+                String name = _pathBoxes.get(i).getName();
+                if (iconPath.get(k).equals(name) ) {
+                    _pathBoxes.get(i).setSelected(true);
                 }
             }
-        }
-        if (lastIdx>0) {
-            _pathList.setSelectedIndices(indices);
         }
     }
 
@@ -316,64 +261,26 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
     }
 
     protected void makePathList(OBlock block) {
-        if (_blockPathPanel.getComponentCount()>1) {
-            _blockPathPanel.remove(1);
-            _pathList.removeListSelectionListener(this);
-        }
+        _blockPathPanel.remove(_checkBoxPanel);
+        _checkBoxPanel = new JPanel();
+        _checkBoxPanel.setLayout(new BoxLayout(_checkBoxPanel, BoxLayout.Y_AXIS));
+        _checkBoxPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.black), 
+                                                         ItemPalette.rbp.getString("circuitPaths")));
         _block = block;
-        _pathList = new JList(new PathListModel());
-        _pathList.addListSelectionListener(this);
-        _pathList.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        _pathList.setToolTipText(ItemPalette.rbp.getString("ToolTipSelectPathIcons"));
-        _blockPathPanel.add(new JScrollPane(_pathList), 1);
+        _pathBoxes = new ArrayList<JCheckBox>();
+        List<Path> paths = _block.getPaths();
+        for (int i=0; i<paths.size(); i++) {
+            String name = ((OPath)paths.get(i)).getName();
+            JCheckBox box = new JCheckBox(name);
+            box.setName(name);
+            _pathBoxes.add(box);
+            _checkBoxPanel.add(box);
+        }
+        int width = Math.max(200, _blockPathPanel.getPreferredSize().width);
+        _checkBoxPanel.setMinimumSize(new java.awt.Dimension(width, _checkBoxPanel.getPreferredSize().height));
+        _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
         _blockPathPanel.validate();
-    }
-
-    //@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SIC_INNER_SHOULD_BE_STATIC")
-    // passing just the path list instead of using _block saves a call 
-    class PathListModel extends DefaultListModel {
-        List<Path> _paths;
-        PathListModel() {
-            _paths = _block.getPaths();
-        }
-        public int getSize() {
-//            if (log.isDebugEnabled()) log.debug("PathListModel getSize()="+_paths.size());
-            return _paths.size();
-        }
-        public Object getElementAt(int index) {
-//            if (log.isDebugEnabled()) log.debug("PathListModel getElementAt("+index+")="+_paths.get(index));
-            return _paths.get(index);
-        }
-    }
-
-    private void clearListSelection() {
-        _pathList.clearSelection();
-    }
-
-    private void checkErrorSensor() { 
-        String name = _errSensorName.getText();
-        if (name!=null && name.trim().length()>0) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
-            if (sensor== null) {
-                JOptionPane.showMessageDialog(_parent._paletteFrame, java.text.MessageFormat.format(
-                    ItemPalette.rbp.getString("InvalidErrSensor"), name), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                _errSensorName.setText(null);
-                return;
-            }
-        }
-    }
-
-    public int getRowCount() {
-        return _block.getPaths().size() + 1;
-    }
-
-    /**
-    *  When a 
-    */
-    public void valueChanged(ListSelectionEvent e) {
-//        if (log.isDebugEnabled()) log.debug("valueChanged");
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DetectionPanel.class.getName());

@@ -2,11 +2,13 @@
 package jmri.jmrit.display.palette;
 
 import java.util.Hashtable;
-import jmri.util.JmriJFrame;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import jmri.util.JmriJFrame;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 
@@ -79,7 +81,17 @@ public abstract class ItemPanel extends JPanel {
         IconDialog dialog = new IconDialog(type, null, this);
         dialog.sizeLocate();
     }
-
+/*
+    static final Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
+        Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>();
+        Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            iconMap.put(entry.getKey(), new NamedIcon(entry.getValue()));
+        }
+        return iconMap;
+    }
+*/
     /******** Default family icon names ********/
     static final String[] TURNOUT = {"TurnoutStateClosed", "TurnoutStateThrown",
                                          "BeanStateInconsistent", "BeanStateUnknown"};

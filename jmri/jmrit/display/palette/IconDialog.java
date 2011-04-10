@@ -73,6 +73,7 @@ public class IconDialog extends ItemDialog {
         _catalog.setToolTipText(ItemPalette.rb.getString("ToolTipDragIcon"));
         panel.add(_catalog);
 
+//        setContentPane(panel);
         setContentPane(new javax.swing.JScrollPane(panel));
     }
 
@@ -133,6 +134,24 @@ public class IconDialog extends ItemDialog {
     
     public void dispose() {
         super.dispose();
+    }
+
+    /**
+    * NOT add a new family.  Create a family when all previous families are deleted
+    */
+    protected void createNewFamily() {
+        //check text
+        String family = _familyName.getText();
+        Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
+        if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
+            return;
+        }
+        if (addFamily(family, _iconMap)) {
+            checkIconSizes();
+            _parent.updateFamiliesPanel();
+            _parent.setFamily(family);
+            dispose();
+        }
     }
 
     /**
@@ -209,18 +228,7 @@ public class IconDialog extends ItemDialog {
         newFamilyButton.addActionListener(new ActionListener() {
                 //IconDialog dialog; never used?
                 public void actionPerformed(ActionEvent a) {
-                    //check text
-                    String family = _familyName.getText();
-                    Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
-                    if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
-                        return;
-                    }
-                    if (addFamily(family, _iconMap)) {
-                        checkIconSizes();
-                        _parent.updateFamiliesPanel();
-                        _parent.setFamily(family);
-                        dispose();
-                    }
+                    createNewFamily();
                 }
         });
         newFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
@@ -261,7 +269,7 @@ public class IconDialog extends ItemDialog {
        c.gridx = -gridwidth;
        c.gridy = 0;
 
-//       if (log.isDebugEnabled()) log.debug("makeIconPanel: for "+iconMap.size()+" icons. gridwidth= "+gridwidth);
+       if (log.isDebugEnabled()) log.debug("makeIconPanel: for "+iconMap.size()+" icons. gridwidth= "+gridwidth);
        int panelWidth = 0;
        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
        while (it.hasNext()) {
@@ -305,8 +313,8 @@ public class IconDialog extends ItemDialog {
     	   }
     	   cnt--;
 
-    	   //if (log.isDebugEnabled()) log.debug("makeIconPanel: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
-    	   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
+    	   if (log.isDebugEnabled()) log.debug("makeIconPanel: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
+    	   if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
     	   panel.add(iPanel);
     	   JLabel label = new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("scale"),
     			   new Object[] {CatalogPanel.printDbl(scale,2)}));
