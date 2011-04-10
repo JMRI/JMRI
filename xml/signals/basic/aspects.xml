@@ -63,13 +63,13 @@
     <aspect>
       <name>Diverging Clear</name>
       <indication>Proceed through diverging route</indication>
-      <speed>Limited</speed>
+      <speed>Medium</speed>
     </aspect>
 
     <aspect>
       <name>Diverging Approach</name>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
-      <speed>Slow</speed>
+      <speed>Limited</speed>
     </aspect>
 
   </aspects>

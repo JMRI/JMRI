@@ -60,13 +60,13 @@
 <!-- These speeds are emforced at the entrance to a block                             -->
   <appearanceSpeeds>
     <SignalHeadStateRed>Stop</SignalHeadStateRed>
-    <SignalHeadStateFlashingRed>Stop</SignalHeadStateFlashingRed>
+    <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>
     <SignalHeadStateGreen>Normal</SignalHeadStateGreen>
     <SignalHeadStateFlashingGreen>Limited</SignalHeadStateFlashingGreen>
     <SignalHeadStateYellow>Medium</SignalHeadStateYellow>
-    <SignalHeadStateFlashingYellow>Slow</SignalHeadStateFlashingYellow>
+    <SignalHeadStateFlashingYellow>Limited</SignalHeadStateFlashingYellow>
     <SignalHeadStateLunar>Restricted</SignalHeadStateLunar>
-    <SignalHeadStateFlashingLunar>Restricted</SignalHeadStateFlashingLunar>    
+    <SignalHeadStateFlashingLunar>slow</SignalHeadStateFlashingLunar>    
   </appearanceSpeeds>
 
 </speedtable>
