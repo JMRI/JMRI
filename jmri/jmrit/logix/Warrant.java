@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -904,19 +904,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 // actual playback total elapsed time is "ts.getTime()" before record time.
                 // current block at playback may also be before current block at record
                 synchronized(this) {
-                    _syncIdx = getIndexOfBlock(ts.getBlockName());
                     try {
                         if (time > 0) {
                             wait(time);
                         }
                         if (_abort) { break; }
-                        // Having waited, time=ts.getTime(), blocks should agree.  if not, wait.
-                        // blind runs cannot detect entrance
-                        if (!_tempRunBlind && _syncIdx > _idxCurrentOrder) {
-                            // commands are ahead of current train position 
-                            if (log.isDebugEnabled()) log.debug("Command Block "+ts.getBlockName()+
-                                                                " wait for train to enter.");
-                            wait();  //
+                        if (!command.equals("SENSOR")) {
+                            _syncIdx = getIndexOfBlock(ts.getBlockName());
+                            // Having waited, time=ts.getTime(), blocks should agree.  if not, wait.
+                            // blind runs cannot detect entrance
+                            if (!_tempRunBlind && _syncIdx > _idxCurrentOrder) {
+                                // commands are ahead of current train position 
+                                if (log.isDebugEnabled()) log.debug("Command Block "+ts.getBlockName()+
+                                                                    " wait for train to enter.");
+                                wait();  //
+                            }
                         }
                     } catch (InterruptedException ie) {
                         log.error("InterruptedException "+ie);
@@ -959,6 +961,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         int cmdNum = Integer.parseInt(command.substring(5));
                         boolean isTrue = Boolean.parseBoolean(ts.getValue());
                         setLockFunction(cmdNum, isTrue);
+                    } else if (command.equals("SENSOR")) {
+                        setSensor(ts.getBlockName(), ts.getValue());
                     }
                     firePropertyChange("Command", Integer.valueOf(_idxCurrentCommand-1), Integer.valueOf(_idxCurrentCommand));
                     et = System.currentTimeMillis()-et;
@@ -1202,6 +1206,24 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 case 26: _throttle.setF26Momentary(!isTrue); break;
                 case 27: _throttle.setF27Momentary(!isTrue); break;
                 case 28: _throttle.setF28Momentary(!isTrue); break;
+            }
+        }
+
+        private void setSensor(String sensorName, String action) {
+            action = action.toUpperCase();    
+            jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            if (s != null) {
+                try {
+                    if ("ACTIVE".equals(action)) {
+                        s.setKnownState(jmri.Sensor.ACTIVE);
+                    } else if ("INACTIVE".equals(action)) {
+                        s.setKnownState(jmri.Sensor.INACTIVE);
+                    }
+                } catch (jmri.JmriException e) {
+                    log.warn("Exception setting sensor "+sensorName+" in action");
+                }
+            } else {
+                log.warn("Sensor "+sensorName+" not found.");
             }
         }
 

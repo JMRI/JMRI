@@ -62,6 +62,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     private Warrant             _warrant;
     private RouteTableModel     _routeModel;
     private ThrottleTableModel  _commandModel;
+    private JTable      _commandTable;
     private JScrollPane _throttlePane;
     private boolean     _create;    
 
@@ -265,6 +266,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (text != null && text.length()>0) {
             setTitle(java.text.MessageFormat.format(rb.getString("TitleWarrant"), text));
         }
+        if (log.isDebugEnabled()) log.debug("userNameChange: text="+text+", warrant UserName= "+_warrant.getUserName());
         if (text != null && !text.equals(_warrant.getUserName())) {
             if (JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
                 rb.getString("makeCopy"), _warrant.getUserName(), text),
@@ -283,6 +285,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             } else {
                 _warrant.setUserName(text);
             }
+            WarrantTableAction.updateWarrantMenu(); 
         }
     }
 
@@ -640,6 +643,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 }
             }
         });
+        _throttleFactorBox.setToolTipText(rb.getString("TooltipThrottleFactor"));
         _runBlind.setSelected(_warrant.getRunBlind());
 
         panel = new JPanel(); 
@@ -763,25 +767,74 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     }
 
     private JPanel makeThrottleTablePanel() {
-        JTable commandTable = new JTable(_commandModel);
-        commandTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-        commandTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _commandTable = new JTable(_commandModel);
+        _commandTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+        _commandTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         for (int i=0; i<_commandModel.getColumnCount(); i++) {
             int width = _commandModel.getPreferredWidth(i);
-            commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+            _commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        _throttlePane = new JScrollPane(commandTable);
-        ROW_HEIGHT = commandTable.getRowHeight();
-        Dimension dim = commandTable.getPreferredSize();
+        _throttlePane = new JScrollPane(_commandTable);
+        ROW_HEIGHT = _commandTable.getRowHeight();
+        Dimension dim = _commandTable.getPreferredSize();
         dim.height = ROW_HEIGHT*8;
         _throttlePane.getViewport().setPreferredSize(dim);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.add(Box.createVerticalStrut(5*STRUT_SIZE));
+
+        JButton insertButton =  new JButton(rb.getString("buttonInsertRow"));
+        insertButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                insertRow();
+            }
+        });
+        buttonPanel.add(insertButton);
+        buttonPanel.add(Box.createVerticalStrut(5*STRUT_SIZE));
+
+        JButton deleteButton =  new JButton(rb.getString("buttonDeleteRow"));
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                deleteRow();
+            }
+        });
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(Box.createVerticalStrut(5*STRUT_SIZE));
 
         _commandPanel = new JPanel();
         _commandPanel.setLayout(new BoxLayout(_commandPanel, BoxLayout.Y_AXIS));
         JLabel title = new JLabel(rb.getString("CommandTableTitle"));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(_throttlePane);
+        panel.add(buttonPanel);
         _commandPanel.add(title, BorderLayout.NORTH);
-        _commandPanel.add(_throttlePane);
+        _commandPanel.add(panel);
         return _commandPanel;
+    }
+
+    private void insertRow() {
+        int row = _commandTable.getSelectedRow();
+        if (row<0) {
+            JOptionPane.showMessageDialog(null, rb.getString("selectRow"),
+            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        _throttleCommands.add(row, new ThrottleSetting(
+                    _throttleCommands.get(row).getTime(), "NoOp", null, null));
+        _commandModel.fireTableDataChanged();
+    }
+
+    private void deleteRow() {
+        int row = _commandTable.getSelectedRow();
+        if (row<0) {
+            JOptionPane.showMessageDialog(null, rb.getString("selectRow"),
+            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        _throttleCommands.remove(row);
+        _commandModel.fireTableDataChanged();
     }
 
     /**
@@ -1089,9 +1142,9 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         order.setPathName(pathName);
         OPath path = order.getPath();
         if (path != null) {
-            String name = path.getFromPortalName();
+            String name = path.getFromPortal().getName();
             if (name!=null) { portalBox.addItem(name); }
-            name = path.getToPortalName();
+            name = path.getToPortal().getName();
             if (name!=null) { portalBox.addItem(name); }
             if (log.isDebugEnabled()) log.debug("setPortalBox: Path "+path.getName()+
                          " set in block "+order.getBlock().getDisplayName());
@@ -1764,7 +1817,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
         for (int i=0; i<list.size(); i++) {
             OPath path = (OPath)list.get(i);
-            if (path.getFromPortalName()==null && path.getToPortalName()==null) {
+            if (path.getFromPortal()==null && path.getToPortal()==null) {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                         rb.getString("PathNeedsPortal"), path.getName(), block.getDisplayName()),
                         rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -1787,7 +1840,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 OPath path = (OPath)list.get(i);
                 //if (log.isDebugEnabled()) log.debug("pathIsValid: pathName= "+pathName+", i= "+i+", path is "+path.getName());  
                 if (pathName.equals(path.getName()) ){
-                    if (path.getFromPortalName()==null && path.getToPortalName()==null) {
+                    if (path.getFromPortal()==null && path.getToPortal()==null) {
                         JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                                 rb.getString("PathNeedsPortal"), pathName, block.getDisplayName()),
                                 rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -2042,6 +2095,10 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         } catch (Exception e) {
                             msg = rb.getString("badLockFNum");
                         }
+                    } else if ("NOOP".equals(cmd)) {
+                        ts.setCommand((String)value);
+                    } else if ("SENSOR".equals(cmd)) {
+                        ts.setCommand((String)value);
                     } else {
                         msg = rb.getString("badCommand");
                     }
@@ -2101,6 +2158,13 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             msg = rb.getString("invalidBoolean");
                         }
                         ts.setValue((String)value);
+                    } else if ("SENSOR".equals(cmd)) {
+                        String v = ((String)value).toUpperCase();
+                        if ("ACTIVE".equals(v) || "INACTIVE".equals(v)) {
+                            ts.setValue((String)value);
+                        } else {
+                            msg = rb.getString("badSensorCommand");
+                        }
                     } else {
                         msg = rb.getString("badCommand");
                     }
@@ -2110,12 +2174,23 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     }
                     break;
                 case BLOCK_COLUMN:
-                    OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
-                    if (block != null && getIndexOfBlock(block) >= 0) {
-                        ts.setBlockName((String)value);
+                    cmd = ts.getCommand().toUpperCase();
+                    if ("SENSOR".equals(cmd)) {
+                        jmri.Sensor s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
+                        if (s != null) {
+                            ts.setBlockName((String)value);
+                        } else {
+                            msg = java.text.MessageFormat.format(
+                                    rb.getString("BadSensor"), (String)value); 
+                        }
                     } else {
-                        msg = java.text.MessageFormat.format(
-                                rb.getString("BlockNotFound"), (String)value); 
+                        OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
+                        if (block != null && getIndexOfBlock(block) >= 0) {
+                            ts.setBlockName((String)value);
+                        } else {
+                            msg = java.text.MessageFormat.format(
+                                    rb.getString("BlockNotInRoute"), (String)value); 
+                        }
                     }
                     break;
             }
