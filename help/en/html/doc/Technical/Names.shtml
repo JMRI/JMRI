@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.21 2010-07-26 21:18:31 dan_boudreau Exp $ -->
+<!-- $Id: Names.shtml,v 1.22 2011-04-10 18:29:38 matthewharris Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -121,7 +121,7 @@ Note that some of these are placeholders, and have no underlying implementation.
 <LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
 <LI>D <a href="../../hardware/SRCP/index.shtml">SRCP</a>
 <LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
-<LI>F
+<LI>F <a href="../../hardware/rfid/index.shtml">RFID tag readers</a>
 <LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
 <LI>H
 <LI>I Internal, e.g. objects with no associated hardware
@@ -156,6 +156,12 @@ sample to be placed at a specific position in 3d space
 
 <li>B Block - A software object that keeps track of the contents of a specific block 
 of track
+
+<li>D iDentity - A software object that holds information about an identity tag
+that is, typically, attached to a piece of rolling stock.  These objects are not
+system-specific but are Internal objects, hence have system names commencing with
+ID.  The underlying hardware will use Reporter objects to communicate back to
+JMRI when a specific iDentity object has been seen.
 
 <LI>F signal mast (F is not particularly mnemonic; maybe a mast with two heads
 looks like an F from the side?  All the good letters were taken)
