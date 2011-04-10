@@ -2,17 +2,14 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.7 $
+ *	@version $Revision: 1.8 $
  */
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JSpinner;
@@ -27,8 +24,6 @@ import javax.swing.JTextField;
 public class WiThrottlePrefsPanel extends JPanel{
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
     
-    Border lineBorder;
-
     JCheckBox eStopCB;
     JSpinner delaySpinner;
     
@@ -62,7 +57,6 @@ public class WiThrottlePrefsPanel extends JPanel{
     }
 
     public void initGUI(){
-        lineBorder = BorderFactory.createLineBorder(Color.black);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(eStopDelayPanel());
         add(functionsPanel());
@@ -167,10 +161,10 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     private JPanel eStopDelayPanel(){
         JPanel panel = new JPanel();
-        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitleDelayPanel"), TitledBorder.CENTER, TitledBorder.TOP);
 
-        panel.setBorder(border);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                            BorderFactory.createTitledBorder(rb.getString("TitleDelayPanel")),
+                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         eStopCB = new JCheckBox(rb.getString("LabelUseEStop"));
         eStopCB.setToolTipText(rb.getString("ToolTipUseEStop"));
         SpinnerNumberModel spinMod = new SpinnerNumberModel(10,4,30,2);
@@ -184,10 +178,10 @@ public class WiThrottlePrefsPanel extends JPanel{
     
     private JPanel functionsPanel(){
         JPanel panel = new JPanel();
-        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitleFunctionsPanel"), TitledBorder.CENTER, TitledBorder.TOP);
 
-        panel.setBorder(border);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                            BorderFactory.createTitledBorder(rb.getString("TitleFunctionsPanel")),
+                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         momF2CB = new JCheckBox(rb.getString("LabelMomF2"));
         momF2CB.setToolTipText(rb.getString("ToolTipMomF2"));
         panel.add(momF2CB);
@@ -196,10 +190,10 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     private JPanel socketPortPanel(){
         JPanel SPPanel = new JPanel();
-        TitledBorder networkBorder = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitleNetworkPanel"), TitledBorder.CENTER, TitledBorder.TOP);
 
-        SPPanel.setBorder(networkBorder);
+        SPPanel.setBorder(BorderFactory.createCompoundBorder(
+                            BorderFactory.createTitledBorder(rb.getString("TitleNetworkPanel")),
+                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         portCB = new JCheckBox(rb.getString("LabelUseFixedPortNumber"));
         portCB.setToolTipText(rb.getString("ToolTipUseFixedPortNumber"));
         portCB.addActionListener(new ActionListener(){
@@ -217,10 +211,10 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     private JPanel allowedControllers(){
         JPanel panel = new JPanel();
-        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitleControllersPanel"), TitledBorder.CENTER, TitledBorder.TOP);
 
-        panel.setBorder(border);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                            BorderFactory.createTitledBorder(rb.getString("TitleControllersPanel")),
+                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         powerCB = new JCheckBox(rb.getString("LabelTrackPower"));
         powerCB.setToolTipText(rb.getString("ToolTipTrackPower"));
         panel.add(powerCB);
