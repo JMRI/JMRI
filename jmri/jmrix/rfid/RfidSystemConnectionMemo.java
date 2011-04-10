@@ -29,14 +29,13 @@ import jmri.jmrix.swing.ComponentFactory;
  *
  * @author      Bob Jacobsen    Copyright (C) 2010
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private RfidTrafficController rt;
     private RfidSensorManager sensorManager;
     private RfidReporterManager reporterManager;
-    private ComponentFactory componentFactory = null;
 
     public RfidSystemConnectionMemo(RfidTrafficController rt) {
         this();
@@ -49,7 +48,7 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(this, RfidSystemConnectionMemo.class); // also register as specific type
 
         // Create and register the ComponentFactory
-        InstanceManager.store(componentFactory = new RfidComponentFactory(this),
+        InstanceManager.store(new RfidComponentFactory(this),
                 ComponentFactory.class);
     }
 
@@ -113,9 +112,6 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             InstanceManager.deregister(sensorManager, RfidSensorManager.class);
         super.dispose();
     }
-
-
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RfidSystemConnectionMemo.class.getName());
 
 }
 

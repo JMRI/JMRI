@@ -21,7 +21,7 @@ import jmri.jmrix.rfid.RfidMessage;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SpecificMessage extends RfidMessage {
 
@@ -32,8 +32,6 @@ public class SpecificMessage extends RfidMessage {
     public SpecificMessage(String m, int l) {
         super(m, l);
     }
-
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificMessage.class.getName());
 
     @Override
     public String toMonitorString() {

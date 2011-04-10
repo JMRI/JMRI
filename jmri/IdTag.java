@@ -25,7 +25,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public interface IdTag extends NamedBean {
@@ -64,8 +64,8 @@ public interface IdTag extends NamedBean {
      * <p>
      * Also sets the Date/Time when last seen
      * @param reporter Reporter object where last seen
-     * @see getWhereLastSeen()
-     * @see getWhenLastSeen()
+     * @see #getWhereLastSeen()
+     * @see #getWhenLastSeen()
      */
     public void setWhereLastSeen(Reporter reporter);
 

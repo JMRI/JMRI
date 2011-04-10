@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author      Bob Jacobsen    Copyright (C) 2001
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see         jmri.IdTag
  * @see         jmri.InstanceManager
  * @since       2.11.4
@@ -139,7 +139,7 @@ public interface IdTagManager extends Manager {
     /**
      * Define if the manager should persist details of when and where
      * all known IdTags were seen
-     * @param store True to store; False to omit
+     * @param state True to store; False to omit
      */
     public void setStateStored(boolean state);
 

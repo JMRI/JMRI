@@ -22,7 +22,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
@@ -40,8 +40,6 @@ public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
             currentMenu = new RfidMenu(memo);
         return currentMenu;
     }
-
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RfidComponentFactory.class.getName());
 
 }
 

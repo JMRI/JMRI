@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
  * Frame to control and connect RFID
  * @author      Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 
@@ -39,7 +39,5 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
             JOptionPane.showMessageDialog(this, "Please select a port name first");
         }
     }
-
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverFrame.class.getName());
 
 }

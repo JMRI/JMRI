@@ -19,7 +19,7 @@ import org.jdom.Element;
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
@@ -107,8 +107,4 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
      
-
-    // initialize logging
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
-
 }

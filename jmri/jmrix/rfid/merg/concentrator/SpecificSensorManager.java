@@ -19,7 +19,7 @@ import jmri.jmrix.rfid.merg.MergRfidSensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2007
  * @author      Matthew Harris Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class SpecificSensorManager extends RfidSensorManager {
@@ -28,7 +28,7 @@ public class SpecificSensorManager extends RfidSensorManager {
     private String prefix;
 
     public SpecificSensorManager(RfidTrafficController tc, String prefix) {
-        super(tc, prefix);
+        super(prefix);
         this.tc = tc;
         this.prefix = prefix;
         attach();

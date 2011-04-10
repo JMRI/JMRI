@@ -9,7 +9,7 @@ package jmri.jmrix.rfid;
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
@@ -107,7 +107,7 @@ abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
      *          Must be a whole number of bytes
      *          (i.e. an even number of characters)
      *          and be formed only of digits 0..9, a..f or A..F
-     * @return
+     * @return corresponding unsigned byte array
      * @throws IllegalArgumentException when s is not a valid hex string
      */
     protected static byte[] convertHexString(String s) {

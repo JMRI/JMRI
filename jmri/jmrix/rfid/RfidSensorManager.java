@@ -2,8 +2,6 @@
 
 package jmri.jmrix.rfid;
 
-import jmri.Sensor;
-
 /**
  * Manage the Rfid-specific Sensor implementation.
  * <P>
@@ -12,17 +10,15 @@ import jmri.Sensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2007
  * @author      Matthew Harris Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 abstract public class RfidSensorManager extends jmri.managers.AbstractSensorManager implements RfidListener {
 
-    private RfidTrafficController tc;
     private String prefix;
 
-    public RfidSensorManager(RfidTrafficController tc, String prefix) {
+    public RfidSensorManager(String prefix) {
         super();
-        this.tc = tc;
         this.prefix = prefix;
     }
 
