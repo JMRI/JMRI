@@ -16,7 +16,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
@@ -34,7 +33,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.55 $
+ * @version             $Revision: 1.56 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -63,11 +62,6 @@ public class TrainsTableFrame extends OperationsFrame {
 	TrainsTableModel trainsModel = new TrainsTableModel();
 	javax.swing.JTable trainsTable = new javax.swing.JTable(trainsModel);
 	JScrollPane trainsPane;
-	
-	// labels
-	//JLabel textSort = new JLabel(rb.getString("SortBy"));
-	//JLabel textSep1 = new JLabel("          ");
-	JLabel textSep2 = new JLabel("          ");
 	
 	// radio buttons
     JRadioButton sortByName = new JRadioButton(NAME);
@@ -109,14 +103,13 @@ public class TrainsTableFrame extends OperationsFrame {
     	trainsPane = new JScrollPane(trainsTable);
        	trainsModel.initTable(trainsTable, this);
      	
-    	// Set up the control panel
-    	
+    	// Set up the control panel	
     	//row 1
     	JPanel cp1 = new JPanel();
-    	//cp1.setLayout(new BoxLayout(cp1,BoxLayout.X_AXIS));
+    	cp1.setLayout(new BoxLayout(cp1,BoxLayout.X_AXIS));
+    	
     	JPanel sortBy = new JPanel();
     	sortBy.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
-    	//cp1.add(textSort);
     	sortBy.add(sortByTime);
     	sortBy.add(sortByName);
     	sortBy.add(sortByRoute);
@@ -124,16 +117,13 @@ public class TrainsTableFrame extends OperationsFrame {
     	sortBy.add(sortByTerminates);
     	sortBy.add(sortByStatus);
     	sortBy.add(sortById);
-    	//sortBy.add(textSep1);
     	
        	JPanel messages = new JPanel();
-       	messages.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));
-    	
+       	messages.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));   	
        	messages.add(showAllBox);
        	messages.add(buildMsgBox);
        	messages.add(buildReportBox);
        	messages.add(printPreviewBox);
-    	//cp1.add(textSep2);
     	
     	JPanel action = new JPanel();
     	action.setBorder(BorderFactory.createTitledBorder(rb.getString("Action")));
@@ -145,7 +135,6 @@ public class TrainsTableFrame extends OperationsFrame {
     	cp1.add(messages);
     	cp1.add(action);
     	
-    	//row 2
     	//tool tips, see setPrintButtonText() for more tool tips
     	addButton.setToolTipText(rb.getString("AddTrain"));
 		buildButton.setToolTipText(rb.getString("BuildSelectedTip"));
@@ -161,6 +150,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		terminateRB.setToolTipText(rb.getString("TerminateTip"));
 		resetRB.setToolTipText(rb.getString("ResetTip"));
 		
+    	//row 2
     	JPanel cp2 = new JPanel();
     	cp2.setBorder(BorderFactory.createTitledBorder(""));
 		cp2.add(addButton);
@@ -175,11 +165,9 @@ public class TrainsTableFrame extends OperationsFrame {
 		controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.Y_AXIS));
 		controlPanel.add(cp1);
 		controlPanel.add(cp2);
-		//addItem(controlPanel, cp1, 0, 0 );
-		//addItem(controlPanel, cp2, 0, 1);
 		
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
-	    // make sure panel doesn't get too short
+	    // make sure control panel is the right size
 	    controlPane.setMinimumSize(new Dimension(500,130));
 	    controlPane.setMaximumSize(new Dimension(2000,200));
 	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
