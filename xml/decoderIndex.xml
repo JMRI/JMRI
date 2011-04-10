@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
-<!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
+<!DOCTYPE decoderIndex-config SYSTEM "/xml/DTD/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.11.3 on Mon Feb 21 19:31:55 PST 2011 $Id: decoderIndex.xml,v 1.167 2011-02-22 03:42:22 jacobsen Exp $-->
-  <decoderIndex version="206">
-    <mfgList nmraListDate="2011-01-18" updated="2011-02-03" lastadd="66">
+  <!--Written by JMRI version 2.11.4 on Sat Apr 09 20:38:31 PDT 2011 $Id: decoderIndex.xml,v 1.168 2011-04-10 03:41:44 jacobsen Exp $-->
+  <decoderIndex version="208">
+    <mfgList nmraListDate="2011-03-08" updated="2011-04-09" lastadd="69">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -15,9 +15,9 @@
       <manufacturer mfg="Arnold - Rivarossi" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
-      <manufacturer mfg="Bluecher-Electronic" mfgID="60" />
       <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
       <manufacturer mfg="Bachmann Trains" mfgID="101" />
+      <manufacturer mfg="Bluecher-Electronic" mfgID="60" />
       <manufacturer mfg="Brelec" mfgID="31" />
       <manufacturer mfg="Broadway Limited Imports, LLC" mfgID="38" />
       <manufacturer mfg="CML Systems" mfgID="1" />
@@ -34,6 +34,7 @@
       <manufacturer mfg="Digitrax" mfgID="129" />
       <manufacturer mfg="Digsight" mfgID="30" />
       <manufacturer mfg="Doehler and Haas" mfgID="97" />
+      <manufacturer mfg="E-Modell" mfgID="69" />
       <manufacturer mfg="ECCO GmbH" mfgID="121" />
       <manufacturer mfg="Educational Computer, Inc." mfgID="39" />
       <manufacturer mfg="Electric Railroad Company" mfgID="73" />
@@ -41,23 +42,24 @@
       <manufacturer mfg="Electronik and Model Produktion" mfgID="35" />
       <manufacturer mfg="Elproma Electronics Poland" mfgID="225" />
       <manufacturer mfg="Fleischmann" mfgID="155" />
-      <manufacturer mfg="Gaugemaster" mfgID="65" />
       <manufacturer mfg="GFB Designs" mfgID="46" />
+      <manufacturer mfg="Gaugemaster" mfgID="65" />
       <manufacturer mfg="Haber and Koenig Electronics GmbH" mfgID="111" />
       <manufacturer mfg="Heljan A/S" mfgID="28" />
+      <manufacturer mfg="Heller Modelbahn" mfgID="67" />
       <manufacturer mfg="Hornby" mfgID="48" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
       <manufacturer mfg="JMRI" mfgID="18" />
       <manufacturer mfg="Joka Electronic" mfgID="49" />
       <manufacturer mfg="KAM Industries" mfgID="22" />
       <manufacturer mfg="KATO Precision Models" mfgID="40" />
-      <manufacturer mfg="Kreischer Datatechnik" mfgID="21" />
       <manufacturer mfg="KRES GmbH" mfgID="58" />
+      <manufacturer mfg="Kreischer Datatechnik" mfgID="21" />
       <manufacturer mfg="Krois-Modell" mfgID="52" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
+      <manufacturer mfg="LDH" mfgID="56" />
       <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="Lahti Associates" mfgID="14" />
-      <manufacturer mfg="LDH" mfgID="56" />
       <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MBTronik - PiN GITmBH" mfgID="26" />
@@ -434,19 +436,27 @@
         </model>
       </family>
       <family name="Sound Decoder SL (v.40 up)" mfg="CT Elektronik" file="CT_Elektronik_Sound_SL_v40.xml">
-        <model model="SL 51" numOuts="2" numFns="15" productID="SL51">
+        <model model="SL 51" numOuts="8" numFns="15" productID="SL51">
           <versionCV lowVersionID="40" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Pad 5" />
+          <output name="6" label="Pad 6" />
+          <output name="7" label="Pad 7" />
+          <output name="8" label="Pad 8" />
           <output name="Ra" label="Yard Mode" />
           <output name="Se" label="Sound" />
-          <!-- <output name="Alt" label="obs" /> -->
-          <output name="G1" label="Snd Slot 1" />
-          <output name="G2" label="Snd Slot 2" />
-          <output name="G3" label="Snd Slot 3" />
-          <output name="G4" label="Snd Slot 4" />
-          <output name="G5" label="Snd Slot 5" />
-          <output name="G6" label="Snd Slot 6" />
-          <output name="G7" label="Snd Slot 7" />
-          <output name="G8" label="Snd Slot 8" />
+          <output name="Alt" label="Alt Snds" />
+          <output name="G1" label="Snd Slot 1/9" />
+          <output name="G2" label="Snd Slot 2/10" />
+          <output name="G3" label="Snd Slot 3/11" />
+          <output name="G4" label="Snd Slot 4/12" />
+          <output name="G5" label="Snd Slot 5/13" />
+          <output name="G6" label="Snd Slot 6/14" />
+          <output name="G7" label="Snd Slot 7/15" />
+          <output name="G8" label="Snd Slot 8/16" />
         </model>
         <model model="SL 74" numOuts="4" numFns="15" productID="SL74">
           <versionCV lowVersionID="40" />
@@ -454,15 +464,15 @@
           <output name="4" label="Purple" />
           <output name="Ra" label="Yard Mode" />
           <output name="Se" label="Sound" />
-          <!-- <output name="Alt" label="obs" />  -->
-          <output name="G1" label="Snd Slot 1" />
-          <output name="G2" label="Snd Slot 2" />
-          <output name="G3" label="Snd Slot 3" />
-          <output name="G4" label="Snd Slot 4" />
-          <output name="G5" label="Snd Slot 5" />
-          <output name="G6" label="Snd Slot 6" />
-          <output name="G7" label="Snd Slot 7" />
-          <output name="G8" label="Snd Slot 8" />
+          <output name="Alt" label="Alt Snds" />
+          <output name="G1" label="Snd Slot 1/9" />
+          <output name="G2" label="Snd Slot 2/10" />
+          <output name="G3" label="Snd Slot 3/11" />
+          <output name="G4" label="Snd Slot 4/12" />
+          <output name="G5" label="Snd Slot 5/13" />
+          <output name="G6" label="Snd Slot 6/14" />
+          <output name="G7" label="Snd Slot 7/15" />
+          <output name="G8" label="Snd Slot 8/16" />
         </model>
         <model model="SL 75" numOuts="4" numFns="15" productID="SL75">
           <versionCV lowVersionID="40" highVersionID="112" />
@@ -470,15 +480,15 @@
           <output name="4" label="Purple" />
           <output name="Ra" label="Yard Mode" />
           <output name="Se" label="Sound" />
-          <!-- <output name="Alt" label="obs" />  -->
-          <output name="G1" label="Snd Slot 1" />
-          <output name="G2" label="Snd Slot 2" />
-          <output name="G3" label="Snd Slot 3" />
-          <output name="G4" label="Snd Slot 4" />
-          <output name="G5" label="Snd Slot 5" />
-          <output name="G6" label="Snd Slot 6" />
-          <output name="G7" label="Snd Slot 7" />
-          <output name="G8" label="Snd Slot 8" />
+          <output name="Alt" label="Alt Snds" />
+          <output name="G1" label="Snd Slot 1/9" />
+          <output name="G2" label="Snd Slot 2/10" />
+          <output name="G3" label="Snd Slot 3/11" />
+          <output name="G4" label="Snd Slot 4/12" />
+          <output name="G5" label="Snd Slot 5/13" />
+          <output name="G6" label="Snd Slot 6/14" />
+          <output name="G7" label="Snd Slot 7/15" />
+          <output name="G8" label="Snd Slot 8/16" />
         </model>
       </family>
       <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml">
@@ -828,7 +838,64 @@
         </model>
       </family>
       <family name="SFX Sound Decoders" mfg="Digitrax" file="Digitrax_0SFX.xml">
-        <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="49" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104T1">
+        <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1442" comment="SDN144K0A">
+          <output name="1" label="F0F Pad" connection="LED installed" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" productID="1443" comment="SDN144K1E">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDN144PS" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1441" comment="SDN144PS">
+          <output name="1" label="F0F Pad" connection="plug" />
+          <output name="2" label="F0R Pad" connection="plug" />
+          <output name="3" label="F1 Pad" connection="plug" />
+          <output name="4" label="F2 Pad" connection="plug" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDH164D" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1641" comment="SDH164D">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1642" comment="SDH164K1A">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1643" comment="SDH164K1A">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1644" comment="SDH164K1A">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
           <output name="1" label="F0F Pad" connection="solder" />
           <output name="2" label="F0R Pad" connection="solder" />
           <output name="3" label="F1 Pad" connection="solder" />
@@ -843,19 +910,19 @@
           <output name="12" label="F10 Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="AC4400" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104K1A">
+        <model model="AC4400" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1042" comment="SDH104K1A">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
         </model>
-        <model model="SD38-2" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104K1B">
+        <model model="SD38-2" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1043" comment="SDH104K1B">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
         </model>
-        <model model="F40PH" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" comment="SDH104K1C">
+        <model model="F40PH" numOuts="4" numFns="8" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1044" comment="SDH104K1C">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="LED" connection="solder" />
           <output name="3" label="Pad" connection="solder" />
@@ -1771,6 +1838,22 @@
           <functionlabel num="20" lockable="false">Short Whistle</functionlabel>
         </functionlabels>
       </family>
+      <family name="ESU Roco 10745" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" type="locomotive" file="ESU_Roco_10745_old.xml">
+        <model model="Roco 10745 old" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="25.5" width="15.5" height="4.5" units="mm" />
+          <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
+          <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
+          <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
+        </model>
+      </family>
+      <family name="ESU Roco 10745" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" type="locomotive" file="ESU_Roco_10745_v56.xml">
+        <model model="Roco 10745 v56" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="25.5" width="15.5" height="4.5" units="mm" />
+          <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
+          <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
+          <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
+        </model>
+      </family>
       <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401" file="Fleischmann_Function.xml">
         <model model="686401" maxInputVolts="25 V" maxTotalCurrent="0.80 A" />
       </family>
@@ -2084,7 +2167,13 @@
         </model>
       </family>
       <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_UltraDrive.xml">
-        <model model="LE1035" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="200404">
+        <model model="LE1035" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="200404" productID="LE1035">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
+        </model>
+        <model model="LE1835" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="200407" productID="LE1835">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
           <output name="3" label="C - Green" />
@@ -4701,6 +4790,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-1000 EMD 710 G3C-T2" numOuts="4" numFns="14" connector="9pin" productID="827115" comment="Model 827115">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="9pin" productID="827108" comment="Model 827108">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -4717,6 +4821,21 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin" productID="827107" comment="Model 827107">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-1000 GE Gevo-12" numOuts="4" numFns="14" connector="9pin" productID="827116" comment="Model 827116">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.31 2011-04-10 02:23:17 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.32 2011-04-10 03:40:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -215,6 +215,46 @@ Steve Todd:
 <li>add handling for "route" and "panel" to xmlio server.</li>
 <li>xmlio server: handle read larger than default block size, minor error trapping/prevention</li>
 </ul>
+
+<p>
+Nigel Cliffe:
+<ul>
+<li>Changes to CT SL51/SL75 Decoder Definitions file:
+Added "alt" function key to function mapping, 
+which opens up access to sound slots 9-16. 
+Minor changes to labels and other function mapping details 
+associated with this new discovery.
+</ul>
+
+<p>
+Jack Shall added the EMD 710G3C-T2 and GE Gevo-12 to the Tsunami 
+decoder definitions.
+
+<p>
+Marc Fournier improved the wording in the reset section
+of the BLI Paragon decoder definitions.
+
+<p>
+Michael Greene updated the Lenz Ultradrive decoder definition.
+
+<p>
+Stephen Lowens provided an updated Digitrax SFX decoder definition that
+includes the most recent decoder definition coding techniques. 
+The file includes definition for new decoders: 
+SDN144PS, SDN144K0A, SDN144K1E, SDH164D &amp; SDH164K1A, B &amp; C, 
+as well as legacy decoders SDH104K1A, B &amp; C and SDH104T1. T
+he definition includes new CVs 60, 133, 134 &amp; 154 and 
+adds default values for all CVs where documented.
+He also compared the documented defaults with an actual decoder 
+and corrected errors where Digitrax documentation is incorrect. 
+
+<p>
+Alain Carasso add the latest version of Roco 10745 decoder, 
+more sophisticated than Lokpilot Basic, but less than full Lokpilot one,
+and also a 10745 Roco decoder file (no long address settings).
+
+<p>
+Updated the NMRA manufacturer code list with values to March 8, 2011.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
