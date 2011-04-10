@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010 All rights reserved -->
-<!-- $Id: Digitrax_0SFX.xml,v 1.9 2011-04-10 03:30:38 jacobsen Exp $ -->
+<!-- $Id: Digitrax_0SFX.xml,v 1.10 2011-04-10 03:50:33 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -31,7 +31,7 @@
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
       <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1442" comment="SDN144K0A">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="other" /> 
 	<output name="2" label="F0R Pad" connection="solder" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 			
