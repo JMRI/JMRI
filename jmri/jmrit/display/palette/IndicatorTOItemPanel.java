@@ -60,6 +60,14 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     /**
+    * Init for conversion of plain track to indicator track
+    */
+    public void init(ActionListener doneAction) {
+        super.init(doneAction);
+        add(_iconFamilyPanel, 0);
+    }
+
+    /**
     * Init for update of existing indicator turnout
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
@@ -166,6 +174,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         addIcons2Panel(_iconGroupsMap);
         _iconFamilyPanel.add(_iconPanel, 0);
         _iconPanel.setVisible(true);
+        setSize(getPreferredSize());
     }
     
     protected void resetFamiliesPanel() {
@@ -322,8 +331,12 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     protected void hideIcons() {
-        _tablePanel.setVisible(true);
-        _detectPanel.setVisible(true);
+        if (_tablePanel!=null) {
+            _tablePanel.setVisible(true);
+        }
+        if (_detectPanel!=null) {
+            _detectPanel.setVisible(true);
+        }
         super.hideIcons();
     }
 
@@ -332,9 +345,14 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (!_update) {
             _dragIconPanel.setVisible(false);
         }
-        _detectPanel.setVisible(false);
-        _tablePanel.setVisible(false);
+        if (_detectPanel!=null) {
+            _detectPanel.setVisible(false);
+        }
+        if (_tablePanel!=null) {
+            _tablePanel.setVisible(false);
+        }
         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
+        setSize(getPreferredSize());
     }
 
     void createNewFamily() {
@@ -385,7 +403,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         makeDndIconPanel(iconMaps.get("ClearTrack"), "TurnoutStateClosed");
         _updateWithSameMap = false;     // not using saved update map
         hideIcons();
-        _paletteFrame.pack();
+//        _paletteFrame.pack();
     }
 
     protected void openEditDialog(String key) {
@@ -401,14 +419,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     public void setShowTrainName(boolean show) {
         _detectPanel.setShowTrainName(show);
-    }
-
-    public String getErrSensor() {
-        return _detectPanel.getErrSensor();
-    }
-
-    public void setErrSensor(String name) {
-        _detectPanel.setErrSensor(name);
     }
 
     public String getOccSensor() {
@@ -479,7 +489,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
             t.setOccBlock(_detectPanel.getOccBlock());
             t.setOccSensor(_detectPanel.getOccSensor());
-            t.setErrSensor(_detectPanel.getErrSensor());                
             t.setShowTrain(_detectPanel.getShowTrainName());
             t.setTurnout(bean.getSystemName());
             t.setFamily(_family);

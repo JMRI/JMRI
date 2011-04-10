@@ -25,8 +25,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key) {
         super(type, family, parent);
-        log.debug("ctor type= \""+type+"\", family= \""+
-                  family+"\", key= \""+key+"\"");
+        log.debug("ctor type= \""+type+"\", family= \""+family+"\", key= \""+key+"\"");
         _key = key;
         if (_family!=null) {
             _familyName.setEditable(false);
@@ -50,16 +49,21 @@ public class IndicatorTOIconDialog extends IconDialog {
             }
         }
         _familyName.setText(_key);
-        _iconPanel = makeIconPanel(_iconMap); 
-        getContentPane().remove(1);
-        getContentPane().add(_iconPanel, 1);
+        java.awt.Container comp = getContentPane();
+        while (!(comp instanceof JPanel)) {
+            comp = (java.awt.Container)comp.getComponent(0);
+        }
+        ((JPanel)comp).remove(1);
+        _iconPanel = makeIconPanel(_iconMap);
+        _iconPanel.setVisible(true);
+        ((JPanel)comp).add(_iconPanel, 1);
         sizeLocate();
         log.debug("IndicatorTOIconDialog ctor done. type= \""+type+"\", family= \""+
                                         family+"\", key= \""+key+"\"");
     }
 
     // override IconDialog initMap. Make placeholder for _iconPanel
-    protected void initMap(String type, String family) {
+    protected void initMap(String type, String key) {
         _iconPanel = new JPanel(); 
     }
 
@@ -81,15 +85,31 @@ public class IndicatorTOIconDialog extends IconDialog {
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {
         super.makeAddSetButtonPanel(buttonPanel);
         _addFamilyButton.setText(ItemPalette.rbp.getString("addMissingStatus"));
-        _addFamilyButton.setText(ItemPalette.rbp.getString("ToolTipMissingStatus"));
+        _addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipMissingStatus"));
         _deleteButton.setText(ItemPalette.rbp.getString("deleteStatus"));
-        _deleteButton.setText(ItemPalette.rbp.getString("ToolTipDeleteStatus"));
+        _deleteButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteStatus"));
+    }
+
+    /**
+    * NOT add a new family.  Create a status family when previous status was deleted
+    */
+    protected void createNewFamily() {
+        log.debug("createNewFamily: type= \""+_type+"\", family= \""+_family+"\" key= "+_key);
+        //check text        
+        Hashtable<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
+        String key = _familyName.getText();
+        ItemPalette.addLevel4FamilyMap(_type, _parent._family, key, iconMap);
+    //    IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
+   //     Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
+        dispose();
     }
 
     /**
     * Action item for add new status set in makeAddSetButtonPanel
     */
     protected void addFamilySet() {
+        log.debug("addFamilySet: type= \""+_type+"\", family= \""+_family+"\" key= "+_key);
+        setVisible(false);
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
         if (parent._iconGroupsMap.size() < IndicatorTOItemPanel.STATUS_KEYS.length) {
             setVisible(false);
