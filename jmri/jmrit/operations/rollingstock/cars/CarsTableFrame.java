@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -304,6 +304,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
 			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
 			CarManagerXml.instance().writeOperationsFile();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 	

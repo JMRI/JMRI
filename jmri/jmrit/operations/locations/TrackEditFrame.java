@@ -24,8 +24,8 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of tracks
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.50 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @version $Revision: 1.51 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -297,6 +297,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			} else {
 				addNewTrack();
 			}
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 		if (ae.getSource() == deleteTrackButton){
 			log.debug("track delete button actived");

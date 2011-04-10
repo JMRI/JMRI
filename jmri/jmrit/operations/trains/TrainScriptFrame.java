@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
@@ -26,8 +27,8 @@ import jmri.jmrit.operations.OperationsFrame;
  * scripts when a train is built, moved or terminated.
  * 
  * @author Bob Jacobsen Copyright (C) 2004
- * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.8 $
+ * @author Dan Boudreau Copyright (C) 2010, 2011
+ * @version $Revision: 1.9 $
  */
 
 public class TrainScriptFrame extends OperationsFrame {
@@ -268,7 +269,9 @@ public class TrainScriptFrame extends OperationsFrame {
 			}
 			if (ae.getSource() == saveTrainButton){
 				log.debug("train save button actived");
-				saveTrain();
+				manager.save();
+				if (Setup.isCloseWindowOnSaveEnabled())
+					dispose();
 			}
 		}
 	}
@@ -334,10 +337,6 @@ public class TrainScriptFrame extends OperationsFrame {
         }
         return null;
     }
-	
-	private void saveTrain (){
-		manager.save();
-	}
 	
 	private void enableButtons(boolean enabled){
 		addBuildScriptButton.setEnabled(enabled);

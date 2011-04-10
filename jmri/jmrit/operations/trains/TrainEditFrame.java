@@ -49,8 +49,8 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Frame for user edit of a train
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.72 $
+ * @author Dan Boudreau Copyright (C) 2008, 2011
+ * @version $Revision: 1.73 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -418,6 +418,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				saveTrain();
 			}
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 		if (ae.getSource() == deleteTrainButton){
 			log.debug("train delete button actived");

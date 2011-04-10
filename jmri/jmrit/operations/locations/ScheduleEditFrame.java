@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 import java.awt.*;
 
@@ -17,8 +18,8 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of a schedule
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @author Dan Boudreau Copyright (C) 2008, 2011
+ * @version $Revision: 1.23 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -208,6 +209,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 				}
 				saveSchedule();
 			}
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 		if (ae.getSource() == deleteScheduleButton){
 			log.debug("schedule delete button actived");

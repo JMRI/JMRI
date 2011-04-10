@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.33 2011-04-06 19:26:55 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.34 2011-04-10 02:19:04 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -41,7 +41,8 @@
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
-<!ATTLIST settings mainMenu			(true | false ) "false">         
+<!ATTLIST settings mainMenu			(true | false ) "false">
+<!ATTLIST settings closeOnSave		(true | false ) "false">        
 <!ATTLIST settings trainDirection	CDATA #IMPLIED>
 <!ATTLIST settings trainLength		CDATA #IMPLIED>       
 <!ATTLIST settings maxEngines		CDATA #IMPLIED> 

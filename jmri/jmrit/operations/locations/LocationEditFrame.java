@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of location
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.22 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @version $Revision: 1.23 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -321,6 +321,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 					return;
 				}
 				saveLocation();
+				if (Setup.isCloseWindowOnSaveEnabled())
+					dispose();
 			}
 		}
 		if (ae.getSource() == deleteLocationButton){

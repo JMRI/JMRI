@@ -26,6 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -34,7 +35,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -268,6 +269,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			_disableComboBoxUpdate = true;	// need to stop property changes while we update
 			save();
 			_disableComboBoxUpdate = false;
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 	

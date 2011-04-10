@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.*;
@@ -18,8 +19,8 @@ import java.util.ResourceBundle;
 /**
  * Frame to display which locations service certain car types
  * 
- * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.10 $
+ * @author Dan Boudreau Copyright (C) 2009, 2011
+ * @version $Revision: 1.11 $
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -188,6 +189,8 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		}
 		LocationManagerXml.instance().writeOperationsFile();
 		updateLocations();
+		if (Setup.isCloseWindowOnSaveEnabled())
+			dispose();
 	}
 	
 	private void updateLocations(){

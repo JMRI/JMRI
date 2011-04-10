@@ -31,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -361,6 +361,8 @@ public class PrintOptionFrame extends OperationsFrame{
 						rb.getString("TabWorksBest"), rb.getString("ChangeFont"),
 						JOptionPane.WARNING_MESSAGE);				
 			}
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 

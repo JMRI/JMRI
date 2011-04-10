@@ -4,6 +4,7 @@ package jmri.jmrit.operations.routes;
 
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -208,6 +209,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				saveRoute();
 			}
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 		if (ae.getSource() == deleteRouteButton){
 			log.debug("route delete button actived");

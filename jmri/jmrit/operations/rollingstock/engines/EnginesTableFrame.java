@@ -32,8 +32,8 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2011
+ * @version             $Revision: 1.20 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -226,7 +226,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     
 	EngineEditFrame f = null;
 	
-	// add or find button
+	// add, save or find button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("engine button activated");
 		if (ae.getSource() == findButton){
@@ -255,6 +255,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
 			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
 			EngineManagerXml.instance().writeOperationsFile();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 	

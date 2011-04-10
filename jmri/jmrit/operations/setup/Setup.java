@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -176,6 +176,7 @@ public class Setup {
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
 		
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
+	private static boolean closeWindowOnSave = false;	//when true, close window when save button is activated
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
@@ -218,6 +219,14 @@ public class Setup {
 	
 	public static void setMainMenuEnabled(boolean enabled){
 		mainMenuEnabled = enabled;
+	}
+	
+	public static boolean isCloseWindowOnSaveEnabled(){
+		return closeWindowOnSave;
+	}
+	
+	public static void setCloseWindowOnSaveEnabled(boolean enabled){
+		closeWindowOnSave = enabled;
 	}
 	
 	public static boolean isRfidEnabled(){
@@ -894,6 +903,7 @@ public class Setup {
     	
     	e.addContent(values = new Element("settings"));
     	values.setAttribute("mainMenu", isMainMenuEnabled()?"true":"false");
+    	values.setAttribute("closeOnSave", isCloseWindowOnSaveEnabled()?"true":"false");
     	values.setAttribute("trainDirection", Integer.toString(getTrainDirection()));
     	values.setAttribute("trainLength", Integer.toString(getTrainLength()));
     	values.setAttribute("maxEngines", Integer.toString(getEngineSize()));
@@ -1043,6 +1053,11 @@ public class Setup {
         		String enabled = a.getValue();
         		if (log.isDebugEnabled()) log.debug("mainMenu: "+enabled);
         		setMainMenuEnabled(enabled.equals("true"));
+        	}
+           	if ((a = operations.getChild("settings").getAttribute("closeOnSave"))!= null){
+        		String enabled = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("closeOnSave: "+enabled);
+        		setCloseWindowOnSaveEnabled(enabled.equals("true"));
         	}
         	if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
         		String dir = a.getValue();

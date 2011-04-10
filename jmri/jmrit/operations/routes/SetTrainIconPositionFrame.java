@@ -33,7 +33,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 	
@@ -212,6 +212,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	   			saveSpinnerValues(l);
     		LocationManagerXml.instance().writeOperationsFile();
     		RouteManagerXml.instance().writeOperationsFile();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
     	}
     }
 	

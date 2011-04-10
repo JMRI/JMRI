@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.30 2011-04-09 02:48:43 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.31 2011-04-10 02:23:17 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -137,6 +137,7 @@ New operations features and bug fixes:
 	<li>You can now change the loco and car manifest and switch list pick up
 	and set out prefixes, i.e. " [ ] Pick up".  See Setting-&gt;Tools Print Options.</li>
 	<li>Users can now reset a train directly from the Trains window.</li>
+	<li>You can now have operations windows close on save.  See Settings Options.</li>
 </ul>
 
 <p>

@@ -31,8 +31,8 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Frame for user edit of operation parameters
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.50 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @version $Revision: 1.51 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -74,6 +74,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     JCheckBox eastCheckBox = new JCheckBox(rb.getString("eastwest"));
 	JCheckBox northCheckBox = new JCheckBox(rb.getString("northsouth"));
 	JCheckBox mainMenuCheckBox = new JCheckBox(rb.getString("MainMenu"));
+	JCheckBox closeOnSaveCheckBox = new JCheckBox(rb.getString("CloseOnSave"));
 	JCheckBox iconCheckBox = new JCheckBox(rb.getString("trainIcon"));
 	JCheckBox appendCheckBox = new JCheckBox(rb.getString("trainIconAppend"));
 	//JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
@@ -120,6 +121,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 		// load checkboxes
 		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
+		closeOnSaveCheckBox.setSelected(Setup.isCloseWindowOnSaveEnabled());
 		//rfidCheckBox.setSelected(Setup.isRfidEnabled());
 		iconCheckBox.setSelected(Setup.isTrainIconCordEnabled());
 		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());		
@@ -246,6 +248,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		options.setLayout(new GridBagLayout());
 		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
 		addItem (options, mainMenuCheckBox, 1,7);
+		addItem (options, closeOnSaveCheckBox, 1,8);
 		
 		//p9.add(options);
 		
@@ -440,6 +443,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			}				
 			// main menu enabled?
 			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
+			Setup.setCloseWindowOnSaveEnabled(closeOnSaveCheckBox.isSelected());
 			// RFID enabled?
 			// Setup.setRfidEnabled(rfidCheckBox.isSelected());
 			// add panel name to setup
@@ -497,6 +501,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			// save panel size and position
 			Setup.setOperationsSetupFrame(this);
 			OperationsSetupXml.instance().writeOperationsFile();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 	

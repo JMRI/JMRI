@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -427,6 +427,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			// save frame size and position
 			manager.setEditFrame(this);
 			writeFiles();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 		if (ae.getSource() == deleteButton){
 			log.debug("engine delete button actived");

@@ -41,7 +41,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -861,7 +861,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		packFrame();
 	}
 	
-	private void saveTrain (){
+	private void saveTrain(){
 		if (!checkInput())
 			return;
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
@@ -902,6 +902,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setThirdLegCabooseRoad((String)roadCaboose2Box.getSelectedItem());
 		
 		manager.save();
+		if (Setup.isCloseWindowOnSaveEnabled())
+			dispose();
 	}
 	
 	private boolean checkInput(){

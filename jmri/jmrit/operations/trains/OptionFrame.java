@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Setup;
 
 import java.io.File;
 
@@ -23,7 +24,7 @@ import java.io.File;
  * Frame for user edit of train options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -166,8 +167,9 @@ public class OptionFrame extends OperationsFrame{
 		if (ae.getSource() == saveButton){
 			if (_train != null)
 				_train.setRailroadName(railroadNameTextField.getText());
-
 			TrainManagerXml.instance().writeOperationsFile();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 
