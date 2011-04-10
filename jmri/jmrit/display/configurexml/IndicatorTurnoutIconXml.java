@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
@@ -54,10 +54,11 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         if (s!=null) {
             element.addContent(storeBean("occupancysensor", s));
         }
+        /*
         s = p.getErrSensor();
         if (s!=null) {
             element.addContent(storeBean("errorsensor", s));
-        }
+        }  */
 
         Element elem = new Element("showTrainName");
         String show = "no";
@@ -164,10 +165,10 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         if (name!=null) {
             l.setOccSensor(name.getText());
         }
-        name = element.getChild("errorsensor");
+/*        name = element.getChild("errorsensor");
         if (name!=null) {
             l.setErrSensor(name.getText());
-        }
+        }  */
         
         l.setShowTrain(false);
         name = element.getChild("showTrainName");
