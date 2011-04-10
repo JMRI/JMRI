@@ -66,7 +66,7 @@ public class Portal  {
                 return addPath(_toPaths, path);
             }
         } else {
-            log.error("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
+            log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
                 "\" is not in either of the blocks of Portal \""+_portalName+"\".");
         }
         // path already in one of the path lists
@@ -94,41 +94,6 @@ public class Portal  {
 
         String oldName = _portalName;
         _portalName = name;
-/*
-        changePathPortalName(_fromPaths, _portalName, oldName);
-        changePathPortalName(_toPaths, _portalName, oldName);
-        changeBlockPortalName(_fromBlock, _portalName, oldName);
-        changeBlockPortalName(_toBlock, _portalName, oldName);
-        */
-    }
-
-    /**
-    *  Utility for both path lists
-    *
-    private void changePathPortalName(List <OPath> pathList, 
-                                         String newName, String oldName) {
-        for (int i=0; i<pathList.size(); i++) {
-            OPath path = pathList.get(i);
-            if (oldName.equals(path.getFromPortalName())) {
-                path.setFromPortalName(newName);
-            }
-            if (oldName.equals(path.getToPortalName())) {
-                path.setToPortalName(newName);
-            }
-            changeBlockPortalName((OBlock)path.getBlock(), newName, oldName);
-        }
-    }  */
-
-    /**
-    * should not be necessary, but just in case portal
-    * has more than one object representing it
-    */
-    private void changeBlockPortalName(OBlock block, 
-                                       String newName, String oldName) {
-        if (block!=null) {
-            Portal portal = block.getPortalByName(oldName);
-            if (portal!=null) { portal.setName(newName); }            
-        }
     }
 
     public String getName() { return _portalName; }

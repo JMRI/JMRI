@@ -52,7 +52,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -457,7 +457,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (!getSystemName().equals(path.getBlock().getSystemName())) {
             return;
         }
-        if (log.isDebugEnabled()) log.debug("Path "+((OPath)path).getName()+" removed from "+getSystemName());
+//        if (log.isDebugEnabled()) log.debug("Path "+((OPath)path).getName()+" removed from "+getSystemName());
         path.clearSettings();
         int oldSize = getPaths().size();
         super.removePath(path);
@@ -512,12 +512,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public void pseudoPropertyChange(String propName, Object old, Object n) {
         if (log.isDebugEnabled()) log.debug("pseudoPropertyChange: Block \""+getSystemName()+" property \""+
                                             propName+"\" new value= "+n.toString());
-/*        String savePathName = _pathName;
-        if ("path".equals(propName)) {
-            _pathName = CircuitBuilder.TEST_PATH;
-        }  */
         firePropertyChange(propName, old, n);
-//        _pathName = savePathName;
     }
 
     /**

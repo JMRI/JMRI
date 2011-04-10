@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -622,6 +622,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         BlockOrder bo = _orders.get(0);
         // allocated to this, We assume the train of this warrant occupies the first block 
         // exit speed is determined by getPermissibleEntranceSpeed() into next block.
+        Warrant.getSpeedMap();      // initialize speedMap for getPermissibleEntranceSpeed() calls
         bo.setPath(this);
         for (int i=1; i<_orders.size(); i++) {
             bo = _orders.get(i);
@@ -968,7 +969,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     et = System.currentTimeMillis()-et;
                     if (log.isDebugEnabled()) log.debug("Cmd #"+_idxCurrentCommand+": "+
                                                         ts.toString()+" et= "+et);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                       log.error("Command failed! "+ts.toString()+" - "+e);
                 }
              }
