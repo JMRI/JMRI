@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
  * @author      Matthew Harris  Copyright (c) 2011
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -740,7 +740,6 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
         private static String fileLocation = XmlFile.prefsDir();
 
-        private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedometerFrame.SpeedometerXml.class.getName());
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedometerFrame.class.getName());
