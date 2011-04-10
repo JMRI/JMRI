@@ -26,7 +26,7 @@ import javax.swing.*;
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -178,7 +178,7 @@ public class AppConfigBase extends JmriPanel {
         	question.setAlignmentX(Component.CENTER_ALIGNMENT);
         	question.setIcon(icon);
         	container.add(question);
-        	final JCheckBox remember = new JCheckBox(rb.getString("MessageRemenberSetting"));
+        	final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
         	remember.setFont(remember.getFont().deriveFont(10.0F));
         	remember.setAlignmentX(Component.CENTER_ALIGNMENT);
         	JButton yesButton = new JButton(rb.getString("Yes"));

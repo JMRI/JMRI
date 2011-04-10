@@ -21,7 +21,7 @@ import jmri.jmrix.swing.ComponentFactory;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -126,6 +126,9 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.maple.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
+
+//        if (jmri.jmrix.rfid.ActiveFlag.isActive())
+//            m.add(getMenu("jmri.jmrix.rfid.RfidMenu"));
     }
 
     /** 
@@ -192,6 +195,9 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.maple.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
+
+//        if (jmri.jmrix.rfid.ActiveFlag.isActive())
+//            m.add(getMenu("jmri.jmrix.rfid.RfidMenu"));
     }
 
     static JMenu getMenu(String className) {

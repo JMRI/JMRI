@@ -28,7 +28,7 @@ import jmri.jmrit.roster.RosterIconFactory;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since           2.9.4
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
@@ -111,6 +111,10 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == RosterIconFactory.class) {
             return RosterIconFactory.instance();
+        }
+
+        if (type == IdTagManager.class) {
+            return new DefaultIdTagManager();
         }
 
         // this is an error!

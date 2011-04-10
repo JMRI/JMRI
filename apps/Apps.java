@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.133 $
+ * @version     $Revision: 1.134 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -95,6 +95,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // Install a user preferences manager
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
+
+        // Install an IdTag manager
+        jmri.InstanceManager.store(new jmri.managers.DefaultIdTagManager(), jmri.IdTagManager.class);
 
         // install preference manager
         InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
