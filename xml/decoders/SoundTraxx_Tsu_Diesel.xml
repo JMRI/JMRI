@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.9 2010-10-04 02:12:11 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.10 2011-04-10 03:20:33 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -22,6 +22,7 @@
   <version author="Jack Shall lcrr@bellsouth.net" version="6" lastUpdated="20100405"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="7" lastUpdated="20100512"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="8" lastUpdated="20100830"/>
+  <version author="Jack Shall lcrr@bellsouth.net" version="9" lastUpdated="20110303"/>
 
 <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
@@ -50,6 +51,7 @@
 <!--			lighting.  Added new lighting CVs 53, 54, 57 and 58.  Added Rule 17 mode to			-->
 <!--			FX5/FX6.  Moved custom Pane formats to external files.								-->
 <!--			Special thanks to Michael Mosher for his assistance.								-->
+<!-- version 9	Added new 1000 series decoders: EMD 710 G3C-T2 (828115), GE Gevo-12 (828116)		-->
 
 
 <!-- Decoder Model information follows -->
@@ -364,6 +366,22 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+	  <model model="TSU-1000 EMD 710 G3C-T2" numOuts="4" numFns="14" connector="9pin"
+		productID="827115" comment="Model 827115">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
       <model model="TSU-1000 Fairbanks-Morse H-12" numOuts="4" numFns="14" connector="9pin"
 		productID="827108" comment="Model 827108">
         <versionCV lowVersionID="64"/>
@@ -382,6 +400,22 @@
       </model>
       <model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin"
 		productID="827107" comment="Model 827107">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+	  <model model="TSU-1000 GE Gevo-12" numOuts="4" numFns="14" connector="9pin"
+		productID="827116" comment="Model 827116">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -4361,6 +4395,238 @@
         <comment>These are the horns for the Galloping Goose</comment>
       </variable>
 
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9"
+			comment="Show these horns for the models (productID) listed below"
+			include="827115"
+			tooltip="Selects which airhorn to use">
+        <enumVal>
+          <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5 (Early)">
+            <choice>Nathan P5 (Early)</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5A">
+            <choice>Nathan P5A</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3L">
+            <choice>Nathan K3L</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5HL">
+            <choice>Nathan K5HL</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LLA">
+            <choice>Nathan K5LLA</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S5T">
+            <choice>Leslie S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Holden M3H">
+            <choice>Holden M3H</choice>
+          </enumChoice>
+          <enumChoice choice="Holden K5H">
+            <choice>Holden K5H</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+        <comment>Show these horns for the models (productID) listed below</comment>
+      </variable>
+
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0"
+			comment="Show these horns for the models (productID) listed below"
+			include="827115"
+			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5 (Early)">
+            <choice>Nathan P5 (Early)</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5A">
+            <choice>Nathan P5A</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3L">
+            <choice>Nathan K3L</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5HL">
+            <choice>Nathan K5HL</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LLA">
+            <choice>Nathan K5LLA</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S5T">
+            <choice>Leslie S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Holden M3H">
+            <choice>Holden M3H</choice>
+          </enumChoice>
+          <enumChoice choice="Holden K5H">
+            <choice>Holden K5H</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+        <comment>Show these horns for the models (productID) listed below</comment>
+      </variable>
+
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9"
+			comment="Show these horns for the models (productID) listed below"
+			include="827116"
+			tooltip="Selects which airhorn to use">
+        <enumVal>
+          <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5 (Early)">
+            <choice>Nathan P5 (Early)</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5A">
+            <choice>Nathan P5A</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3L">
+            <choice>Nathan K3L</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LLA">
+            <choice>Nathan K5LLA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5HL">
+            <choice>Nathan K5HL</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S5T">
+            <choice>Leslie S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Holden M3H">
+            <choice>Holden M3H</choice>
+          </enumChoice>
+          <enumChoice choice="Holden K5H">
+            <choice>Holden K5H</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+        <comment>Show these horns for the models (productID) listed below</comment>
+      </variable>
+
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0"
+			comment="Show these horns for the models (productID) listed below"
+			include="827116"
+			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5 (Early)">
+            <choice>Nathan P5 (Early)</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5A">
+            <choice>Nathan P5A</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3L">
+            <choice>Nathan K3L</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LLA">
+            <choice>Nathan K5LLA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5HL">
+            <choice>Nathan K5HL</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S5T">
+            <choice>Leslie S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Holden M3H">
+            <choice>Holden M3H</choice>
+          </enumChoice>
+          <enumChoice choice="Holden K5H">
+            <choice>Holden K5H</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+        <comment>Show these horns for the models (productID) listed below</comment>
+      </variable>
+	  
 <!-- End Airhorn Selection -->
 
 
