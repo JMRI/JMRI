@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -290,7 +290,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("Getting throttle") #add text to scroll field
         id = int(self.locoAddress.text)
         if (self.throttleManager.addressTypeUnique() == True) :
-            #self.msgText("id values are not ambiguous")
+            if (self.debugLevel >= HighDebug) :
+                self.msgText("id values are not ambiguous")
             isLong = self.throttleManager.canBeLongAddress(id)
         else :
             if (self.debugLevel >= LowDebug) :
@@ -302,7 +303,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 if (self.locoLong.isSelected() == False) :
                     isLong = False
         if (self.debugLevel >= LowDebug) :
-            self.msgText("Getting " + id.toString() + " " + isLong.toString())
+            self.msgText("Getting throttle " + id.toString() + " " + isLong.toString())
         throttle = self.getThrottle(id, isLong)
         self.currentThrottle = throttle
         if (self.currentThrottle == None) :
@@ -362,16 +363,19 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     #   this makes dealing with multiple events simpler
     def callBackForDidWeMove(self, event) :
         self.didWeMoveCounter = self.didWeMoveCounter + 1
-        #self.msgText("callBackForDidWeMove(" + event.toString() + ")")
-        #self.msgText("counter = " + self.didWeMoveCounter.toString())
+        if (self.debugLevel >= HighDebug) :
+            self.msgText("callBackForDidWeMove(" + event.toString() + ")")
+            self.msgText("counter = " + self.didWeMoveCounter.toString())
         # the handle() will invoke the didWeMove() as needed
         return
          
     # figure out if we moved and where
     def didWeMove(self) :
-        #self.msgText("didWeMove start: " + self.giveBlockName(self.currentBlock) + ":" + self.giveBlockName(self.next1Block))
+        if (self.debugLevel >= HighDebug) :
+            self.msgText("didWeMove start: " + self.giveBlockName(self.currentBlock) + ":" + self.giveBlockName(self.next1Block))
         if (self.currentThrottle == None) :
-            #self.msgText("didWeMove called while currentThrottle was None")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("didWeMove called while currentThrottle was None")
             return
         # allow for a 2nd try. In case the id in block didn't move, but we hit the next signal
         # try reading the blocks one more time in case we now see that we did move.
@@ -380,8 +384,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         tryCountLimit = 2
         while (tryCount < tryCountLimit) :
             tryCount = tryCount + 1
-            #if (self.currentBlock != None) :
-                #self.msgText("Current block: " + self.giveBlockName(self.currentBlock))
+            if (self.debugLevel >= HighDebug) :
+                if (self.currentBlock != None) :
+                    self.msgText("Current block: " + self.giveBlockName(self.currentBlock))
             newCurrentBlocks = self.findCurrentBlocks()
             if (len(newCurrentBlocks) == 0) :
                 self.msgText("Can't find loco!! Doing halt!!")
@@ -413,7 +418,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     break
                 else :
                     tryBlock = newCurrent
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= MediumDebug) :
                 self.msgText("tryBlock: " + self.giveBlockName(tryBlock) + " oldCurrent: " + self.giveBlockName(oldCurrent) + " isStarting: " + self.isStarting.toString())
             if (tryBlock != oldCurrent or self.isStarting == True) :
                 # we did move somewhere
@@ -491,7 +496,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             else :
                 watchAspect = watchSignal.getAppearance()
             # if we moved or the signal head changed or the aspect changed
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= MediumDebug) :
                 self.msgText("test blocks: " + self.giveBlockName(oldCurrent) + ":" + self.giveBlockName(self.currentBlock) + ":" + self.giveBlockName(self.next1Block))
                 self.msgText("test signals: " + self.giveSignalName(oldSignal) + ":" + self.giveSignalName(watchSignal))
                 self.msgText("test aspects: " + self.textSignalAspect(oldAspect) + ":" + self.textSignalAspect(watchAspect))
@@ -507,7 +512,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     	self.msgText("Signal dropped in front of train. Halting!!")
                         if (tryCount < tryCountLimit) :
                             if (self.debugLevel >= LowDebug) :
-                                self.msgText("Doing try: " + tryCount.toString())
+                                self.msgText("Doing change retry: " + tryCount.toString())
                             continue
                         else :
                             self.doHalt()
@@ -516,7 +521,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         self.msgText("We moved, signal or aspect changed.")
                     self.findNewSpeed(self.currentBlock, self.next1Block, watchSignal)
             else :
-                if (self.debugLevel >= LowDebug) :
+                if (self.debugLevel >= MediumDebug) :
                     self.msgText("nothing changed to effect speed")
             # this is for display updates
             if (nearSignal != None) :
@@ -589,7 +594,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 testSignal = self.listenerSignals[numSignals]
                 #self.msgText("releaseExtraListeners() testing signal: " + self.giveSignalName(testSignal))
                 if (testSignal != self.currentSignal and testSignal != self.nearSignal and testSignal != self.next1Signal and testSignal != self.next2Signal) :
-                    if (self.debugLevel >= LowDebug) :
+                    if (self.debugLevel >= MediumDebug) :
                         self.msgText("releaseExtraListeners() releasing: " + self.giveSignalName(testSignal))
                     l = self.listenerSignalListeners[numSignals]
                     testSignal.removePropertyChangeListener(l)
@@ -626,7 +631,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             sig.addPropertyChangeListener(sl)
             self.listenerSignals.append(sig)
             self.listenerSignalListeners.append(sl)
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= MediumDebug) :
                 self.msgText("testAddSignalListener(" + self.giveSignalName(sig) + ")")
         return
     
@@ -635,7 +640,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         while(len(self.listenerSignals) > 0) :
             s = self.listenerSignals.pop(0)
             l = self.listenerSignalListeners.pop(0)
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= MediumDebug) :
                 self.msgText("releasing listener for signal " + self.giveSignalName(s))
             s.removePropertyChangeListener(l)
         return
@@ -671,10 +676,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def findNewCurrentBlock(self, cBlock, cList, cDir) :
         nBlock = None
         dMask = jmri.Path.EAST | jmri.Path.WEST
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= HighDebug) :
             self.msgText("dmask: " + dMask.toString() + " orig cDir: " + cDir.toString())
         cDir = cDir & dMask  # only looking for east/west
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= HighDebug) :
             self.msgText(" filtered cDir: " + cDir.toString() + " currentDirection: " + self.currentDirection.toString())
         if (cDir == jmri.Path.NONE) :
             if (self.blockDirection.isSelected() == True) :
@@ -763,19 +768,30 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     # return rate from signal aspect
     def rateFromSignalAspect(self, sigAspect) :
         ret = 0
-        if (sigAspect & RED != 0) :
-            ret = float(self.locoRateRed.text)
-        elif (sigAspect & FLASHRED != 0) :
-            ret = float(self.locoRateRedFlash.text)
-        elif (sigAspect & YELLOW != 0) :
-            ret = float(self.locoRateYellow.text)
-        elif (sigAspect & FLASHYELLOW != 0) :
-            ret = float(self.locoRateYellowFlash.text)
-        elif (sigAspect & GREEN != 0) :
-            ret = float(self.locoRateGreen.text)
-        elif (sigAspect & FLASHGREEN != 0) :
-            ret = float(self.locoRateGreenFlash.text)
-        if (self.debugLevel >= LowDebug) :
+        txt = "UNKNOWN"
+        try :
+            if (sigAspect & RED != 0) :
+                txt = "RED"
+                ret = float(self.locoRateRed.text)
+            elif (sigAspect & FLASHRED != 0) :
+                txt = "FLASHRED"
+                ret = float(self.locoRateRedFlash.text)
+            elif (sigAspect & YELLOW != 0) :
+                txt = "YELLOW"
+                ret = float(self.locoRateYellow.text)
+            elif (sigAspect & FLASHYELLOW != 0) :
+                txt = "FLASHYELLOW"
+                ret = float(self.locoRateYellowFlash.text)
+            elif (sigAspect & GREEN != 0) :
+                txt = "GREEN"
+                ret = float(self.locoRateGreen.text)
+            elif (sigAspect & FLASHGREEN != 0) :
+                txt = "FLASHGREEN"
+                ret = float(self.locoRateGreenFlash.text)
+        except ValueError :
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("rateFromSignalAspect: no value for aspect " + txt)
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("rateFromSignalAspect(" + self.textSignalAspect(sigAspect) + "): " + ret.toString())
         return ret
         
@@ -811,7 +827,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             ret = ret + float(self.locoDistGreen.text)
         if (rankOld >= 6 and rankNew <= 6) :
             ret = ret + float(self.locoDistGreenFlash.text)
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("rankSpeedChangeDistance(" + rankOld.toString() + ", " + rankNew.toString() + "): " + ret.toString())
         return ret
             
@@ -891,7 +907,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (distLimit >= 0) :
             stopDistance = stopDistance + next
             speedAspect = FLASHGREEN
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("speedFromStopDistance() " + stopDistance.toString() + " " + self.cvtAspectToText(speedAspect))
         self.stopDistanceForSpeed.text = stopDistance.toString()
         return speedAspect
@@ -1007,33 +1023,48 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.speedChangeTimer != None) :
             self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
-            i = int(self.locoSpeedGreenFlash.text) * 0.01
+            i = 0
+            try :
+                i = int(self.locoSpeedGreenFlash.text) * 0.01
+            except :
+                if (self.debugLevel >= NoneDebug) :
+                    self.msgText("doSpeedGreenFlash: Invalid value! " + self.locoSpeedGreenFlash.text)
             self.currentThrottle.setSpeedSetting(i)
             if (self.debugLevel >= LowDebug) :
                 self.msgText("doSpeedGreenFlash: " + i.toString())
-            self.locoSpeed.text = self.locoSpeedGreenFlash.text
+            self.locoSpeed.text = (100 * i).toString()
         return
         
     def doSpeedGreen(self):
         if (self.speedChangeTimer != None) :
             self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
-            i = int(self.locoSpeedGreen.text) * 0.01
+            i = 0
+            try :
+                i = int(self.locoSpeedGreen.text) * 0.01
+            except :
+                if (self.debugLevel >= NoneDebug) :
+                    self.msgText("doSpeedGreen: Invalid value! " + self.locoSpeedGreen.text)
             self.currentThrottle.setSpeedSetting(i)
             if (self.debugLevel >= LowDebug) :
                 self.msgText("doSpeedGreen: " + i.toString())
-            self.locoSpeed.text = self.locoSpeedGreen.text
+            self.locoSpeed.text = (100 * i).toString()
         return
         
     def doSpeedYellowFlash(self):
         if (self.speedChangeTimer != None) :
             self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
-            i = int(self.locoSpeedYellowFlash.text) * 0.01
+            i = 0
+            try :
+                i = int(self.locoSpeedYellowFlash.text) * 0.01
+            except :
+                if (self.debugLevel >= NoneDebug) :
+                    self.msgText("doSpeedYellowFlash: Invalid value! " + self.locoSpeedYellowFlash.text)
             self.currentThrottle.setSpeedSetting(i)
             if (self.debugLevel >= LowDebug) :
                 self.msgText("doSpeedYellowFlash: " + i.toString())
-            self.locoSpeed.text = self.locoSpeedYellowFlash.text
+            self.locoSpeed.text = (100 * i).toString()
         return
         
     def doSpeedYellow(self):
@@ -1070,31 +1101,46 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     if (self.debugLevel >= LowDebug) :
                         self.msgText("yellow delay less that 1 second")
             if (doYellowNow) :
-                i = int(self.locoSpeedYellow.text) * 0.01
+                i = 0
+                try :
+                    i = int(self.locoSpeedYellow.text) * 0.01
+                except :
+                    if (self.debugLevel >= NoneDebug) :
+                        self.msgText("doSpeedYellow: Invalid value! " + self.locoSpeedYellow.text)
                 self.currentThrottle.setSpeedSetting(i)
                 if (self.debugLevel >= LowDebug) :
                     self.msgText("doSpeedYellow: " + i.toString())
-                self.locoSpeed.text = self.locoSpeedYellow.text
+                self.locoSpeed.text = (100 * i).toString()
         return
         
     def doSpeedRedFlash(self):
         if (self.speedChangeTimer != None) :
             self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
-            i = int(self.locoSpeedRedFlash.text) * 0.01
+            i = 0
+            try :
+                i = int(self.locoSpeedRedFlash.text) * 0.01
+            except :
+                if (self.debugLevel >= NoneDebug) :
+                    self.msgText("doSpeedRedFlash: Invalid value! " + self.locoSpeedRedFlash.text)
             self.currentThrottle.setSpeedSetting(i)
             if (self.debugLevel >= LowDebug) :
                 self.msgText("doSpeedRedFlash: " + i.toString())
-            self.locoSpeed.text = self.locoSpeedRedFlash.text
+            self.locoSpeed.text = (100 * i).toString()
         return
         
     def doSpeedRed(self):
         if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.speedChangeTimer == None or self.speedChangeTimer.isRunning() == False)) :
             i = int(self.locoSpeedRed.text) * 0.01
-            self.currentThrottle.setSpeedSetting(i)
+            i = 0
+            try :
+                i = int(self.locoSpeedRed.text) * 0.01
+            except :
+                if (self.debugLevel >= NoneDebug) :
+                    self.msgText("doSpeedRed: Invalid value! " + self.locoSpeedRed.text)
             if (self.debugLevel >= LowDebug) :
                 self.msgText("doSpeedRed: " + i.toString())
-            self.locoSpeed.text = self.locoSpeedRed.text
+            self.locoSpeed.text = (100 * i).toString()
             # compute how long to delay stopping
             dist = self.currentBlock.getLengthIn()
             rate = float(self.locoRateRed.text)
@@ -1128,20 +1174,20 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         
     # handle the timeout for slowing to yellow
     def yellowDelayHandler(self, event) :
-        if (self.debugLevel >= LowDebug) :
-                self.msgText("yellowDelayHandler, slow to yellow now!")
+        if (self.debugLevel >= MediumDebug) :
+                self.msgText("yellowDelayHandler: slow to yellow now!")
         self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedYellow.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
-            if (self.debugLevel >= LowDebug) :
-                self.msgText("doSpeedYellow: " + i.toString())
+            if (self.debugLevel >= MediumDebug) :
+                self.msgText("yellowDelayHandler: " + i.toString())
             self.locoSpeed.text = self.locoSpeedYellow.text
         return
         
     # handle the timeout for stopping on red
     def redDelayHandler(self, event) :
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("redDelayHandler, stopping now!")
         self.speedChangeTimer.stop()
         self.doStop()
@@ -1193,8 +1239,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
 
     # validate loco values
     def whenLocoFieldChanged(self, event) :
+        isBad = False
         ptr = event.getSource()
-        msg = ptr.getName() + " - "
+        msg = "whenLocoFieldChanged: " + ptr.getName() + " - "
         try :
             i = int(ptr.text)
             if (i < 0 or i > 9999) :
@@ -1202,50 +1249,58 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             ptr.text = i.toString()
             msg = msg + ptr.text
         except :
+            isBad = True
             msg = msg + "Invalid loco value: " + ptr.text
             ptr.text = ""
-        if (self.debugLevel >= LowDebug) :
+        if (isBad) or (self.debugLevel >= MediumDebug) :
             self.msgText(msg)
         return
         
     # validate speed values
     def whenSpeedFieldChanged(self, event) :
+        isBad = False
         ptr = event.getSource()
-        msg = ptr.getName() + " - "
+        msg = "whenSpeedFieldChanged: " + ptr.getName() + " - "
         i = 0
         try :
             i = int(ptr.text)
             ptr.text = i.toString()
             msg = msg + ptr.text
         except ValueError :
+            isBad = True
             msg = msg + "Invalid speed value: " + ptr.text
             ptr.text = ""
         if (i < 0) :
+            isBad = True
             msg = msg + "Negitive value for speed: " + ptr.text
             ptr.text = ""
         if (i > 100) :
+            isBad = True
             msg = msg + "Too large value for speed: " + ptr.text
             ptr.text = ""
-        if (self.debugLevel >= LowDebug) :
+        if (isBad) or (self.debugLevel >= MediumDebug) :
             self.msgText(msg)
         return
         
     # validate distance values
     def whenDistanceFieldChanged(self, event) :
+        isBad = False
         ptr = event.getSource()
-        msg = ptr.getName() + " - "
+        msg = "whenDistanceFieldChanged: " + ptr.getName() + " - "
         f = 0
         try :
             f = float(round(float(ptr.text) * 100) / 100.00) 
             ptr.text = f.toString()
             msg = msg + ptr.text
         except ValueError :
+            isBad = True
             msg = msg + "Invalid distance value: " + ptr.text
             ptr.text = ""
         if (f < 0) :
+            isBad = True
             msg = msg + "Negitive value for distance: " + ptr.text
             ptr.text = ""
-        if (self.debugLevel >= LowDebug) :
+        if (isBad) or (self.debugLevel >= MediumDebug) :
             self.msgText(msg)
         return
         
@@ -1255,7 +1310,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.isRunning) :
             self.doStop()
             if (self.debugLevel >= LowDebug) :
-                self.msgText("whenLocoChanged, was running, now stopped")
+                self.msgText("whenLocoChanged: was running, now stopped")
         isOk = True
         startBlock = None
         self.locoAddress.text = self.locoAddress.text.strip()
@@ -1272,10 +1327,11 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     # take the loco id and try looking up values in roster
                     if (self.rosterInstance == None) :
                         self.rosterInstance = jmri.jmrit.roster.Roster.instance()
-                        if (self.debugLevel >= LowDebug) :
+                        if (self.debugLevel >= MediumDebug) :
                             self.msgText("got roster instance")
                     rosterEntries = self.rosterInstance.matchingList(None, None, self.locoAddress.text, None, None, None, None)
-                    self.msgText("found " + rosterEntries.size().toString() + " entries matching |" + id.toString() + "|")
+                    if (self.debugLevel >= MediumDebug) :
+                        self.msgText("found " + rosterEntries.size().toString() + " entries matching |" + id.toString() + "|")
                     for ent in rosterEntries :
                         if (self.debugLevel >= LowDebug) :
                             self.msgText("posible entries: " + ent.fileName)
@@ -1284,75 +1340,63 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         if (self.debugLevel >= LowDebug) :
                             self.msgText("Reading roster: " + ent.fileName)
                         v = ent.getAttribute('RT_locoSpeedGreenFlash')
-                        if (v != None and v != "") :
-                            self.locoSpeedGreenFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoSpeedGreenFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoRateGreenFlash')
-                        if (v != None and v != "") :
-                            self.locoRateGreenFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoRateGreenFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoDistGreenFlash')
-                        if (v != None and v != "") :
-                            self.locoDistGreenFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoDistGreenFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoSpeedGreen')
-                        if (v != None and v != "") :
-                            self.locoSpeedGreen.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoSpeedGreen.text = v.strip()
                         v = ent.getAttribute('RT_locoRateGreen')
-                        if (v != None and v != "") :
-                            self.locoRateGreen.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoRateGreen.text = v.strip()
                         v = ent.getAttribute('RT_locoDistGreen')
-                        if (v != None and v != "") :
-                            self.locoDistGreen.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoDistGreen.text = v.strip()
                         v = ent.getAttribute('RT_locoSpeedYellowFlash')
-                        if (v != None and v != "") :
-                            self.locoSpeedYellowFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoSpeedYellowFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoRateYellowFlash')
-                        if (v != None and v != "") :
-                            self.locoRateYellowFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoRateYellowFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoDistYellowFlash')
-                        if (v != None and v != "") :
-                            self.locoDistYellowFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoDistYellowFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoSpeedYellow')
-                        if (v != None and v != "") :
-                            self.locoSpeedYellow.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoSpeedYellow.text = v.strip()
                         v = ent.getAttribute('RT_locoRateYellow')
-                        if (v != None and v != "") :
-                            self.locoRateYellow.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoRateYellow.text = v.strip()
                         v = ent.getAttribute('RT_locoDistYellow')
-                        if (v != None and v != "") :
-                            self.locoDistYellow.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoDistYellow.text = v.strip()
                         v = ent.getAttribute('RT_locoSpeedRedFlash')
-                        if (v != None and v != "") :
-                            self.locoSpeedRedFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoSpeedRedFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoRateRedFlash')
-                        if (v != None and v != "") :
-                            self.locoRateRedFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoRateRedFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoDistRedFlash')
-                        if (v != None and v != "") :
-                            self.locoDistRedFlash.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoDistRedFlash.text = v.strip()
                         v = ent.getAttribute('RT_locoSpeedRed')
-                        if (v != None and v != "") :
-                            self.locoSpeedRed.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoSpeedRed.text = v.strip()
                         v = ent.getAttribute('RT_locoRateRed')
-                        if (v != None and v != "") :
-                            self.locoRateRed.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoRateRed.text = v.strip()
                         v = ent.getAttribute('RT_locoDistRed')
-                        if (v != None and v != "") :
-                            self.locoDistRed.text = v
+                        if (v != None and v.strip() != "") :
+                            self.locoDistRed.text = v.strip()
                         self.locoLong.setSelected(ent.isLongAddress())
                         if (self.debugLevel >= LowDebug) :
                             self.msgText("Read completed: " + ent.fileName)
                 self.oldLocoAddress = self.locoAddress.text
-        self.locoSpeedRed.text = self.locoSpeedRed.text.strip()
-        self.locoRateRed.text = self.locoRateRed.text.strip()
-        self.locoSpeedRedFlash.text = self.locoSpeedRedFlash.text.strip()
-        self.locoRateRedFlash.text = self.locoRateRedFlash.text.strip()
-        self.locoSpeedYellow.text = self.locoSpeedYellow.text.strip()
-        self.locoRateYellow.text = self.locoRateYellow.text.strip()
-        self.locoSpeedYellowFlash.text = self.locoSpeedYellowFlash.text.strip()
-        self.locoRateYellowFlash.text = self.locoRateYellowFlash.text.strip()
-        self.locoSpeedGreen.text = self.locoSpeedGreen.text.strip()
-        self.locoRateGreen.text = self.locoRateGreen.text.strip()
-        self.locoSpeedGreenFlash.text = self.locoSpeedGreenFlash.text.strip()
-        self.locoRateGreenFlash.text = self.locoRateGreenFlash.text.strip()
         if (self.locoSpeedRed.text == "") :
             isOk = False
         if (self.locoSpeedRedFlash.text == "") :
@@ -1420,7 +1464,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             wasState = self.currentThrottle.getSpeedSetting()
             self.currentThrottle.setSpeedSetting(state)
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= LowDebug) and (state != wasState) :
                 self.msgText("changed speed to: " + state.toString() + " was " + wasState.toString())
         return
     
@@ -1438,7 +1482,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             wasState = self.currentThrottle.getF2()
             self.currentThrottle.setF2(state)
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= HighDebug) :
                 self.msgText("changed horn to: " + state.toString() + " was " + wasState.toString())
         return
     
@@ -1480,7 +1524,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             wasState = self.currentThrottle.getF0()
             state = self.locoHeadlight.isSelected()
             self.currentThrottle.setF0(state)
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= HighDebug) :
                 self.msgText("changed light to: " + state.toString() + " was " + wasState.toString())
         return
     
@@ -1490,7 +1534,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             wasState = self.currentThrottle.getF1()
             state = self.locoBell.isSelected()
             self.currentThrottle.setF1(state)
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= HighDebug) :
                 self.msgText("changed bell to: " + state.toString() + " was " + wasState.toString())
         return
     
@@ -1528,13 +1572,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 # set flags so things get done from handle() routine
                 self.askChangeThrottle = True
                 self.askFinishStartButton = True
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("whenStartButtonClicked, done")     # add text
         return
         
     # split out so it can happen from the handle() routine
     def doFinishStartButton(self) :
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("Change button states")     # add text
         self.stopButton.setEnabled(True)
         self.haltButton.setEnabled(True)
@@ -1556,7 +1600,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
             
     def whenStopButtonClicked(self, event):   
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("Slow loco to stop")     # add text
         self.doStop()
         if (self.debugLevel >= LowDebug) :
@@ -1577,14 +1621,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
     
     def whenLocoDirectionButtonClicked(self, event) :
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("Button Loco Direction clicked")
         if (self.currentThrottle != None) :
             self.currentThrottle.setIsForward(self.locoForward.isSelected())
         return
         
     def whenBlockDirectionButtonClicked(self, event) :
-        if (self.debugLevel >= LowDebug) :
+        if (self.debugLevel >= MediumDebug) :
             self.msgText("Button Block Direction clicked")
         self.methodBlockDirection = self.blockDirection.isSelected()
         return
@@ -1611,11 +1655,11 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.locoAddress.text != "") :
             if (self.rosterInstance == None) :
                 self.rosterInstance = jmri.jmrit.roster.Roster.instance()
-                if (self.debugLevel >= LowDebug) :
+                if (self.debugLevel >= MediumDebug) :
                     self.msgText("got roster instance")
             id = int(self.locoAddress.text)
             rosterEntries = self.rosterInstance.matchingList(None, None, id.toString(), None, None, None, None)
-            if (self.debugLevel >= LowDebug) :
+            if (self.debugLevel >= HighDebug) :
                 self.msgText("found " + rosterEntries.size().toString() + " entries matching |" + id.toString() + "|")
             for ent in rosterEntries :
                 if (self.debugLevel >= LowDebug) :
@@ -1693,7 +1737,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             dirTest = p.getToBlockDirection()
             if (dirTest & dirFlag != 0) :
                 if (p.checkPathSet()) :
-                    if (self.debugLevel >= HighDebug) :
+                    if (self.debugLevel >= MediumDebug) :
                         self.msgText("findNextBlock path traversable: "  + self.giveBlockName(cB) + " to " + self.giveBlockName(blockTest) + " dirTest: " + jmri.Path.decodeDirection(dirTest) + ":" + dirTest.toString() + " dirFlag: " + jmri.Path.decodeDirection(dirFlag) + ":" + dirFlag.toString() + " result: " + (dirTest & dirFlag).toString())
                     bTrav = blockTest
                 else :
