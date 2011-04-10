@@ -580,6 +580,8 @@
 
 <mapID target="manual.Main_Window" url="manual/Main_Window.shtml"/>
 
+<mapID target="package.jmri.jmrit.display.CircuitBuilder" url="package/jmri/jmrit/display/CircuitBuilder.shtml"/>
+
 <mapID target="manual.Ops_ImportEngines" url="manual/Ops_ImportEngines.shtml"/>
 
 <mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
