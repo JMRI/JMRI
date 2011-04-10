@@ -61,7 +61,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class Maintenance
@@ -1289,16 +1289,6 @@ public class Maintenance
                             referenceCount++;
                         }
                     }
-                    sensor = ito.getErrSensor();
-                    if (sensor!=null) {
-                        name = sensor.getSystemName();
-                        line = MessageFormat.format(rbm.getString("PanelReference"),
-                                            new Object[] { "\t", rbm.getString("IndicatorTurnout")});
-                        if (testName(name, found, names, line1, null, line, tempText)) {
-                            found = true;
-                            referenceCount++;
-                        }
-                    }
                     jmri.jmrit.logix.OBlock block = ito.getOccBlock();
                     if (block!=null) {
                         sensor = block.getSensor();
@@ -1315,16 +1305,6 @@ public class Maintenance
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.IndicatorTrackIcon")) {
                     jmri.jmrit.display.IndicatorTrackIcon track = (jmri.jmrit.display.IndicatorTrackIcon)o;
                     Sensor sensor = track.getOccSensor();
-                    if (sensor!=null) {
-                        name = sensor.getSystemName();
-                        String line = MessageFormat.format(rbm.getString("PanelReference"),
-                                            new Object[] { "\t", rbm.getString("IndicatorTrack")});
-                        if (testName(name, found, names, line1, null, line, tempText)) {
-                            found = true;
-                            referenceCount++;
-                        }
-                    }
-                    sensor = track.getErrSensor();
                     if (sensor!=null) {
                         name = sensor.getSystemName();
                         String line = MessageFormat.format(rbm.getString("PanelReference"),
