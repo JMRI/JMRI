@@ -4,7 +4,7 @@ package jmri.jmrix.powerline.simulator;
 
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
-import jmri.jmrix.powerline.insteon2412s.Constants;
+import jmri.jmrix.powerline.simulator.Constants;
 import jmri.util.StringUtil;
 
 /**
@@ -24,7 +24,7 @@ import jmri.util.StringUtil;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -227,6 +227,17 @@ public class SpecificMessage extends SerialMessage {
         m.setElement(1, Constants.FUNCTION_REQ_X10);
         m.setElement(2,(X10Sequence.encode(housecode)<<4)+function);
         m.setElement(3,0x80);  //  0x80 means function
+        return m;
+    }
+    
+    static public SpecificMessage getExtCmd(int housecode, int devicecode, int function, int dimcode) {
+        SpecificMessage m = new SpecificMessage(5);
+        m.setInterlocked(true);
+        m.setElement(0, 0x07);
+        m.setElement(1, (X10Sequence.encode(housecode)<<4) + X10Sequence.FUNCTION_EXTENDED_CODE);
+        m.setElement(2, X10Sequence.encode(devicecode));
+        m.setElement(3, dimcode);
+        m.setElement(4, function);
         return m;
     }
 

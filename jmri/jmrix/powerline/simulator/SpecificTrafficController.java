@@ -13,7 +13,8 @@ import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.InsteonSequence;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
-import jmri.jmrix.powerline.insteon2412s.Constants;
+import jmri.jmrix.powerline.simulator.SpecificMessage;
+import jmri.jmrix.powerline.simulator.Constants;
 
 import java.io.DataInputStream;
 
@@ -33,7 +34,7 @@ import java.io.DataInputStream;
  * @author			Ken Cameron Copyright (C) 2010
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -61,14 +62,18 @@ public class SpecificTrafficController extends SerialTrafficController {
         X10Sequence.Command c;
         while ( (c = s.getCommand() ) !=null) {
             SpecificMessage m;
-            if (c.isAddress()) 
+            if (c.isAddress()) {
                 m = SpecificMessage.getX10Address(c.getHouseCode(), ((X10Sequence.Address)c).getAddress());
-            else {
+        	} else if (c.isFunction()) {
                 X10Sequence.Function f = (X10Sequence.Function)c;
                 if (f.getDimCount() > 0)
                     m = SpecificMessage.getX10FunctionDim(f.getHouseCode(), f.getFunction(), f.getDimCount());
                 else
                     m = SpecificMessage.getX10Function(f.getHouseCode(), f.getFunction());
+            } else {
+            	// isn't address or function
+            	X10Sequence.ExtData e = (X10Sequence.ExtData)c;
+            	m = SpecificMessage.getExtCmd(c.getHouseCode(), e.getAddress(), e.getExtCmd(), e.getExtData());
             }
             sendSerialMessage(m, l);
             // Someone help me improve this
