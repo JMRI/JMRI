@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 import java.util.ArrayList;
@@ -368,26 +368,9 @@ public class PortalTableModel extends AbstractTableModel {
         return -1;
     }
 
-    protected void deleteBlock(OBlock block) {
-        if (log.isDebugEnabled()) log.debug("deleteBlock: "+
-                               (block!=null ? block.getDisplayName() : null)+" and its portals.");
-        if (block==null) {
-            return;
-        }
-        List <Portal> list = block.getPortals();
-        for (int i=0; i<list.size(); i++) {
-            Portal portal = list.get(i);
-            OBlock opBlock = portal.getOpposingBlock(block);
-            // remove portal and stub paths through portal in opposing block
-            opBlock.removePortal(portal);
-        }
-        if (log.isDebugEnabled()) log.debug("deleteBlock: _portalList has "+
-                                            _portalList.size()+" rows.");
-        fireTableDataChanged();
-    }
-
-public void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
+        if (log.isDebugEnabled()) log.debug("PropertyChange = "+property);
         if (property.equals("length") || property.equals("portalCount")
                             || property.equals("UserName")) {
             makeList();

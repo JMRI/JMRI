@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 import java.awt.BorderLayout;
@@ -295,7 +295,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             });
         JMenuItem openSignal = new JMenuItem(rbo.getString("OpenSignalMenu"));
         _openMenu.add(openSignal);
-        openPortal.addActionListener(new ActionListener() {
+        openSignal.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     _signalTableFrame.setVisible(true);
                     try {

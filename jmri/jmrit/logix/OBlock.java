@@ -9,8 +9,8 @@ import java.util.List;
 
 import jmri.Path;
 import jmri.Sensor;
-//import jmri.SignalHead;
 
+//import jmri.jmrit.display.controlPanelEditor.CircuitBuilder;
 
 /**
  * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It is the smallest
@@ -52,10 +52,10 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  * @author	Pete Cressman (C) 2009
  */
-public class OBlock extends jmri.Block {
+public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
 
@@ -122,10 +122,11 @@ public class OBlock extends jmri.Block {
 
     ArrayList<Portal> _portals = new ArrayList <Portal>();     // portals to this block
 
-    private Warrant _warrant;       // when not null, block is allocateds to this warrant
+    private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String  _pathName;      // when not null, this is the allocated path
     private float _scaleRatio   = 87.1f;
     private boolean _metric     = false; // desired display mode
+    private Sensor _errSensor;      // optional sensor to indicate shorts or other power problems
     
     public OBlock(String systemName) {
         super(systemName);
@@ -143,6 +144,37 @@ public class OBlock extends jmri.Block {
             setState(getState() & ~DARK);
         }
         if (log.isDebugEnabled()) log.debug("setSensor block \""+getDisplayName()+"\" state= "+getState());
+    }
+
+    public void setErrorSensor(Sensor sensor) {
+        if (_errSensor != null) {
+            _errSensor.removePropertyChangeListener(this);
+        }
+        _errSensor = sensor;
+        if (_errSensor != null) {
+            _errSensor.addPropertyChangeListener(this);
+        }
+    }
+    public Sensor getErrorSensor() {
+        return _errSensor;
+    }
+
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+		if (log.isDebugEnabled())
+			log.debug("property change: " + getDisplayName() + " property " + evt.getPropertyName() + " is now "
+					+ evt.getNewValue()+" from "+evt.getSource().getClass().getName());
+        if (evt.getSource().equals(_errSensor)) {
+            if (evt.getPropertyName().equals("KnownState")) {
+                int errState = ((Integer)evt.getNewValue()).intValue();
+                int oldState = getState();
+                if (errState==Sensor.ACTIVE) {
+                    setState(oldState | TRACK_ERROR);
+                } else {
+                    setState(oldState & ~TRACK_ERROR);
+                }
+                firePropertyChange("path", Integer.valueOf(oldState), Integer.valueOf(getState()));
+            }
+        }
     }
 
     protected Warrant getWarrant() { return _warrant; }
@@ -312,9 +344,11 @@ public class OBlock extends jmri.Block {
                 }
             }
         }
+        int oldSize = _portals.size(); 
         _portals.add(portal);
         if (log.isDebugEnabled()) log.debug("addPortal: portal= \""+portal.getName()+
                                             "\", to Block= \""+getDisplayName()+"\"." ); 
+        firePropertyChange("portalCount", Integer.valueOf(oldSize), Integer.valueOf(_portals.size()));
     }
 
     /**
@@ -325,21 +359,21 @@ public class OBlock extends jmri.Block {
         int oldSize = _portals.size();
         int oldPathSize = getPaths().size();
         if (portal != null){
-            String name = portal.getName();
+            //String name = portal.getName();
             Iterator <Path> iter = getPaths().iterator();
             while (iter.hasNext()) {
                 OPath path = (OPath)iter.next();
-                if (name.equals(path.getFromPortalName())) {
-                    path.setFromPortalName(null);
-                    if (log.isDebugEnabled()) log.debug("removed Portal "+name+" from Path "+
+                if (portal.equals(path.getFromPortal())) {
+                    path.setFromPortal(null);
+                    if (log.isDebugEnabled()) log.debug("removed Portal "+portal.getName()+" from Path "+
                               path.getName()+" in block "+getSystemName());
                 }
-                if (name.equals(path.getToPortalName())) {
-                    path.setToPortalName(null);
-                    if (log.isDebugEnabled()) log.debug("removed Portal "+name+" from Path "+
+                if (portal.equals(path.getToPortal())) {
+                    path.setToPortal(null);
+                    if (log.isDebugEnabled()) log.debug("removed Portal "+portal.getName()+" from Path "+
                               path.getName()+" in block "+getSystemName());
                 }
-                if (path.getFromPortalName()==null && path.getToPortalName()==null) {
+                if (path.getFromPortal()==null && path.getToPortal()==null) {
                     removePath(path);
                     if (log.isDebugEnabled()) log.debug("removed Path "+
                                               path.getName()+" in block "+getSystemName());
@@ -347,9 +381,9 @@ public class OBlock extends jmri.Block {
             }
             //_portals.remove(portal);
             for (int i=0; i < _portals.size(); i++) {
-                if (name.equals(_portals.get(i).getName())) {
+                if (portal.equals(_portals.get(i))) {
                     _portals.remove(i);
-                    log.debug("removed portal "+name+" from block "+getSystemName());
+                    log.debug("removed portal "+portal.getName()+" from block "+getSystemName());
                     i--;
                 }
             }
@@ -357,7 +391,7 @@ public class OBlock extends jmri.Block {
         log.debug("removePortal: block "+getSystemName()+" portals decreased from "
                   +oldSize+" to "+_portals.size()+" - paths decreased from "+
                   oldPathSize+" to "+getPaths().size());
-        //firePropertyChange("portalCount", Integer.valueOf(oldSize), Integer.valueOf(_portals.size()));
+        firePropertyChange("portalCount", Integer.valueOf(oldSize), Integer.valueOf(_portals.size()));
     }
 
     public Portal getPortalByName(String name) {
@@ -394,17 +428,24 @@ public class OBlock extends jmri.Block {
         List <Path> list = getPaths();
         for (int i=0; i<list.size(); i++) {
             if (pName.equals(((OPath)list.get(i)).getName())) {
+                if (log.isDebugEnabled()) log.debug("\""+pName+"\" duplicated in OBlock "+getSystemName());
                 return false;
             }
         }
         path.setBlock(this);
-        Portal portal = getPortalByName(path.getFromPortalName());
+        Portal portal = path.getFromPortal();
         if (portal!=null) {
-            if (!portal.addPath(path)) { return false; }
+            if (!portal.addPath(path)) { 
+                if (log.isDebugEnabled()) log.debug("\""+pName+"\" rejected by portal  "+portal.getName());
+                return false; 
+            }
         }
-        portal = getPortalByName(path.getToPortalName());
+        portal = path.getToPortal();
         if (portal!=null) {
-            if (!portal.addPath(path)) { return false; }
+            if (!portal.addPath(path)) { 
+                if (log.isDebugEnabled()) log.debug("\""+pName+"\" rejected by portal  "+portal.getName());
+                return false;
+            }
         }
         int oldSize = list.size();
         super.addPath(path);
@@ -416,6 +457,7 @@ public class OBlock extends jmri.Block {
         if (!getSystemName().equals(path.getBlock().getSystemName())) {
             return;
         }
+        if (log.isDebugEnabled()) log.debug("Path "+((OPath)path).getName()+" removed from "+getSystemName());
         path.clearSettings();
         int oldSize = getPaths().size();
         super.removePath(path);
@@ -465,6 +507,20 @@ public class OBlock extends jmri.Block {
     }
 
     /**
+    * Call for Circuit Builder to make icon color changes for its GUI
+    */
+    public void pseudoPropertyChange(String propName, Object old, Object n) {
+        if (log.isDebugEnabled()) log.debug("pseudoPropertyChange: Block \""+getSystemName()+" property \""+
+                                            propName+"\" new value= "+n.toString());
+/*        String savePathName = _pathName;
+        if ("path".equals(propName)) {
+            _pathName = CircuitBuilder.TEST_PATH;
+        }  */
+        firePropertyChange(propName, old, n);
+//        _pathName = savePathName;
+    }
+
+    /**
      * (Override)  Handles Block sensor going INACTIVE: this block is empty.
      * Called by handleSensorChange
      */
@@ -495,6 +551,23 @@ public class OBlock extends jmri.Block {
         }
         if (log.isDebugEnabled()) log.debug("Block \""+getSystemName()+" went active, path= "+
                                             _pathName+", state= "+getState());
+    }
+
+    public void dispose() {
+
+        List <Portal> list = getPortals();
+        for (int i=0; i<list.size(); i++) {
+            Portal portal = list.get(i);
+            OBlock opBlock = portal.getOpposingBlock(this);
+            // remove portal and stub paths through portal in opposing block
+            opBlock.removePortal(portal);
+        }
+        List <Path> pathList = getPaths();
+        for (int i=0; i<pathList.size(); i++) {
+            removePath(pathList.get(i));
+        }
+        jmri.InstanceManager.oBlockManagerInstance().deregister(this);
+        super.dispose();
     }
    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlock.class.getName());

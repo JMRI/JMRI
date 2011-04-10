@@ -236,19 +236,19 @@ public class WarrantTableAction extends AbstractAction {
             }
             String msg = null;
             boolean hasPortal = false;
-            Portal portal = block.getPortalByName(path.getFromPortalName());
+            Portal portal = path.getFromPortal();
             if (portal!=null) {
                 if (!portal.isValid()){
-                    msg = path.getFromPortalName();
+                    msg = portal.getName();
                 }
                 hasPortal = true;
                 portalList.remove(portal.getName());
                 //portal.addPath(path);
             }
-            portal = block.getPortalByName(path.getToPortalName());
+            portal = path.getToPortal();
             if (portal!=null) {
                  if (!portal.isValid()) {
-                     msg = path.getToPortalName();
+                     msg = portal.getName();
                  }
                  hasPortal = true;
                  portalList.remove(portal.getName());

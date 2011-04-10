@@ -70,6 +70,12 @@ public class OBlockManagerXml // extends XmlFile
                 se.setAttribute("systemName", s.getSystemName());
                 elem.addContent(se);
             }
+            s = block.getErrorSensor();
+            if (s!=null) {
+                Element se = new Element("errorSensor");
+                se.setAttribute("systemName", s.getSystemName());
+                elem.addContent(se);
+            }
             List<Path> paths = block.getPaths();
             for (int j=0; j<paths.size(); j++) {
                 elem.addContent(storePath((OPath)paths.get(j)));
@@ -128,6 +134,13 @@ public class OBlockManagerXml // extends XmlFile
             toElem.setAttribute("signalDelay", ""+portal.getToSignalDelay());
             elem.addContent(toElem);
         }
+        java.awt.Point pt = portal.getIconPosition();
+        if (pt!=null) {
+            Element iconElem = new Element("iconPosition");
+            iconElem.setAttribute("X", ""+pt.x);
+            iconElem.setAttribute("Y", ""+""+pt.y);
+            elem.addContent(iconElem);
+        }
         return elem;
     }
 
@@ -146,13 +159,13 @@ public class OBlockManagerXml // extends XmlFile
         Element elem = new Element("path");
         elem.setAttribute("pathName", path.getName());
         elem.setAttribute("blockName", ""+path.getBlock().getSystemName());
-        String portal = path.getFromPortalName();
+        Portal portal = path.getFromPortal();
         if (portal != null) {
-            elem.setAttribute("fromPortal", portal);
+            elem.setAttribute("fromPortal", portal.getName());
         }
-        portal = path.getToPortalName();
+        portal = path.getToPortal();
         if (portal != null) {
-            elem.setAttribute("toPortal", portal);
+            elem.setAttribute("toPortal", portal.getName());
         }
         List <BeanSetting> list = path.getSettings();        
         for (int i=0; i<list.size(); i++) {
@@ -210,6 +223,13 @@ public class OBlockManagerXml // extends XmlFile
             portal = new Portal(fromBlock, name, toBlock);
             _portalMap.put(name, portal);
             if (log.isDebugEnabled()) log.debug("create Portal: ("+name+")");
+        } else {
+            if (fromBlock!=null) {
+                portal.setFromBlock(fromBlock, false);
+            }
+            if (toBlock!=null) {
+                portal.setToBlock(toBlock, false);
+            }
         }
         return portal;
     }
@@ -239,6 +259,7 @@ public class OBlockManagerXml // extends XmlFile
             String userName = null;
             if (elem.getAttribute("userName") != null)
                 userName = elem.getAttribute("userName").getValue();
+            if (log.isDebugEnabled()) log.debug("Load block sysName= "+sysName+" userName= "+userName);
             // Portal may have already created a skeleton of this block
             OBlock block = getBlock(sysName);
             if (block==null) {
@@ -264,9 +285,19 @@ public class OBlockManagerXml // extends XmlFile
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
                 block.setSensor(sensor);
             }
+            Element errSensor = elem.getChild("errorSensor");
+            if (errSensor!=null) {
+                // sensor
+                String name = errSensor.getAttribute("systemName").getValue();
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
+                block.setErrorSensor(sensor);
+            }
             List<Element> paths = elem.getChildren("path");
             for (int j=0; j<paths.size(); j++) {
-                block.addPath(loadPath(paths.get(j), block));
+                if (!block.addPath(loadPath(paths.get(j), block))) {
+                    log.error("load: block \""+sysName+"\" failed to add path \""+
+                              paths.get(j).getName()+"\" in block \""+block.getSystemName()+"\"");
+                }
             }
             List<Element> portals = elem.getChildren("portal");
             for (int k=0; k<portals.size(); k++) {
@@ -274,10 +305,10 @@ public class OBlockManagerXml // extends XmlFile
             }
         }
         // patch in Paths to Portals
-        addPathsToPortals();
+        //addPathsToPortals();
         return true;
     }
-
+/*
     private void addPathsToPortals() {
         Iterator <Portal> iter = _portalMap.values().iterator();
         while (iter.hasNext()) {
@@ -294,7 +325,7 @@ public class OBlockManagerXml // extends XmlFile
             	continue;
             }
             String toName = block.getSystemName();
-            String portalName = portal.getName();
+            //String portalName = portal.getName();
             // get paths from blocks and let Portal pick the ones that are missing
             Iterator <OBlock> it = _blockMap.values().iterator();
             while (it.hasNext()) {
@@ -305,8 +336,8 @@ public class OBlockManagerXml // extends XmlFile
                     List <Path> list = block.getPaths();
                     for (int i=0; i<list.size(); i++) {
                         OPath path = (OPath)list.get(i);
-                        if (portalName.equals(path.getToPortalName()) ||
-                                portalName.equals(path.getFromPortalName()) ) {
+                        if (portal.equals(path.getToPortal()) ||
+                                portal.equals(path.getFromPortal()) ) {
                             portal.addPath(path);
                         }
                     }
@@ -315,7 +346,7 @@ public class OBlockManagerXml // extends XmlFile
         }
 
     }
-	
+*/	
     public void load(Element element, Object o) throws Exception {
         log.error("load called. Invalid method.");
     }
@@ -323,78 +354,50 @@ public class OBlockManagerXml // extends XmlFile
     @SuppressWarnings("unchecked")
     Portal loadPortal(Element elem) {
         String portalName = elem.getAttribute("portalName").getValue();
-        OBlock fromBlock = null;
-        ArrayList <OPath> fromPaths = new ArrayList <OPath> ();
-        OBlock toBlock = null;
-        ArrayList <OPath> toPaths = new ArrayList <OPath> ();
-        
-        List<Element> eBlocks = elem.getChildren("fromBlock");
-        if (eBlocks.size()>1) log.error("More than one fromBlock present: "+eBlocks.size());
-        String fromBlockName = null;
-        if (eBlocks.size()>0) {
-            Element eBlk = eBlocks.get(0); 
-            fromBlockName = eBlk.getAttribute("blockName").getValue();
-            fromBlock = getBlock(fromBlockName);
-            List<Element> ePaths = eBlk.getChildren("path");
-            for (int i=0; i<ePaths.size(); i++) {
-                Element e = ePaths.get(i);
-                Attribute attr = e.getAttribute("fromPortal");
-                if (attr != null){
-                    if (portalName.equals(attr.getValue()) ) {
-                        fromPaths.add(loadPath(e, fromBlock));
-                    }
-                }
-                attr = e.getAttribute("toPortal");
-                if (attr != null){
-                    if (portalName.equals(attr.getValue()) ) {
-                        fromPaths.add(loadPath(e, fromBlock));
-                    }
-                }
-            }
-        }
-        eBlocks = elem.getChildren("toBlock");
-        if (eBlocks.size()>1) log.error("More than one toBlock present: "+eBlocks.size());
-        String toBlockName = null;
-        if (eBlocks.size()>0) {
-            Element eBlk = eBlocks.get(0); 
-            toBlockName = eBlk.getAttribute("blockName").getValue();
-            toBlock = getBlock(toBlockName);
-            List<Element> ePaths = eBlk.getChildren("path");
-            for (int i=0; i<ePaths.size(); i++) {
-                Element e = ePaths.get(i);
-                Attribute attr = e.getAttribute("fromPortal");
-                if (attr != null){
-                    if (portalName.equals(attr.getValue()) ) {
-                        toPaths.add(loadPath(e, fromBlock));
-                    }
-                }
-                attr = e.getAttribute("toPortal");
-                if (attr != null){
-                    if (portalName.equals(attr.getValue()) ) {
-                        toPaths.add(loadPath(e, fromBlock));
-                    }
-                }
-            }
-        }
+
+        Element eBlk = elem.getChild("fromBlock"); 
+        String blockName = eBlk.getAttribute("blockName").getValue();
+        OBlock fromBlock = getBlock(blockName);
+        List<Element> ePathsFromBlock = eBlk.getChildren("path");
+
+        eBlk = elem.getChild("toBlock"); 
+        blockName = eBlk.getAttribute("blockName").getValue();
+        OBlock toBlock = getBlock(blockName);
+        List<Element> ePathsToBlock = eBlk.getChildren("path");
+
         Portal portal = getPortal(fromBlock, portalName, toBlock);
-        if (fromBlock != null) {
+
+        if (fromBlock!=null) {
             fromBlock.addPortal(portal);
-            for (int i=0; i<fromPaths.size(); i++) {
-                if (!portal.addPath(fromPaths.get(i))) {
-                    log.error("loadPortal: portal \""+portal.getName()+"\" failed to add path \""+
-                              fromPaths.get(i).getName()+"\" in block \""+fromBlock.getSystemName()+"\"");
+            for (int i=0; i<ePathsFromBlock.size(); i++) {
+                Element e = ePathsFromBlock.get(i);
+                String pathName = e.getAttribute("pathName").getValue();
+                blockName= e.getAttribute("blockName").getValue();
+                if (log.isDebugEnabled()) log.debug("Load portal= "+portalName+" fromBlock= "+fromBlock.getSystemName()
+                                                    +" pathName= "+pathName+" blockName= "+blockName);
+                if (fromBlock.getSystemName().equals(blockName)) {
+                    // path is in the fromBlock
+                    OPath path = getPath(fromBlock, pathName);
+                    portal.addPath(path);
                 }
             }
         }
-        if (toBlock != null) {
+        if (toBlock!=null) {
             toBlock.addPortal(portal);
-            for (int i=0; i<toPaths.size(); i++) {
-                if (!portal.addPath(toPaths.get(i))) {
-                    log.error("loadPortal: portal \""+portal.getName()+"\" failed to add path \""+
-                              toPaths.get(i).getName()+"\" in block \""+toBlock.getSystemName()+"\"");
+            for (int i=0; i<ePathsToBlock.size(); i++) {
+                Element e = ePathsToBlock.get(i);
+                String pathName = e.getAttribute("pathName").getValue();
+                blockName= e.getAttribute("blockName").getValue();
+                if (log.isDebugEnabled()) log.debug("Load portal= "+portalName+" toBlock= "+toBlock.getSystemName()
+                                                    +" pathName= "+pathName+" blockName= "+blockName);
+                if (toBlock.getSystemName().equals(blockName)) {
+                    // path is in the toBlock
+                    OPath path = getPath(toBlock, pathName);
+                    portal.addPath(path);
                 }
             }
         }
+
         List<Element> eSignals = elem.getChildren("fromSignal");
         if (eSignals.size()>1) log.error("More than one fromSignal present: "+eSignals.size());
         if (eSignals.size()>0) {
@@ -427,7 +430,21 @@ public class OBlockManagerXml // extends XmlFile
             }
             portal.setProtectSignal(Portal.getSignal(name), time, fromBlock);
         }
-        if (log.isDebugEnabled()) log.debug("Load portal "+portalName);
+        Element ePt = elem.getChild("iconPosition");
+        if (ePt!=null) {
+            try {
+                int x = ePt.getAttribute("X").getIntValue();
+                int y = ePt.getAttribute("Y").getIntValue();
+                portal.setIconPosition(new java.awt.Point(x, y));
+                log.debug(portalName+ "load its icon at "+portal.getIconPosition().toString());
+            } catch ( org.jdom.DataConversionException e) {
+                log.error("failed to convert iconPosition attribute");
+            }
+        } else {
+            log.debug(portalName+" has no icon!");
+        }
+
+        if (log.isDebugEnabled()) log.debug("End Load portal "+portalName);
         return portal;
     }
 
@@ -447,16 +464,18 @@ public class OBlockManagerXml // extends XmlFile
         } catch (org.jdom.DataConversionException e) {
             log.error("Could not parse path ("+pName+") block ("+block.getSystemName()+") attribute");
         }
+
         Attribute attr = elem.getAttribute("fromPortal");
         if (attr != null){
-            path.setFromPortalName(attr.getValue());
+            path.setFromPortal(getPortal(null, attr.getValue(), null));
         }
         attr = elem.getAttribute("toPortal");
         if (attr != null){
-            path.setToPortalName(attr.getValue());
+            path.setToPortal(getPortal(null, attr.getValue(), null));
         }
+
         List<Element> settings = elem.getChildren("setting");
-        log.debug("Path ("+pName+") has "+settings.size()+" settings.");
+        if (log.isDebugEnabled()) log.debug("Path ("+pName+") has "+settings.size()+" settings.");
         for (int i=0; i<settings.size(); i++) {
             Element setElem = settings.get(i);
             int setting = 0;

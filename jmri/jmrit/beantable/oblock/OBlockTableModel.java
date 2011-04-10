@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 import java.util.List;
@@ -343,9 +343,9 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             String msg;
             if (count>0) { // warn of listeners attached before delete
                 msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt")+"\n"
-                        +AbstractTableAction.rb.getString("ReminderInUse"),
-                        new Object[]{bean.getSystemName(),""+count});
+                        AbstractTableAction.rb.getString("DeletePrompt"), bean.getSystemName())+"\n"+
+                      java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
+                        count);
             } else {
                 msg = java.text.MessageFormat.format(
                         AbstractTableAction.rb.getString("DeletePrompt"),
@@ -366,12 +366,6 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             }
         }
         // finally OK, do the actual delete
-        _parent.getPortalModel().deleteBlock(bean);
-        List <Path> list = bean.getPaths();
-        for (int i=0; i<list.size(); i++) {
-            bean.removePath(list.get(i));
-        }
-        getManager().deregister(bean);
         bean.dispose();
     }
 
@@ -410,6 +404,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         String property = e.getPropertyName();
+        if (log.isDebugEnabled()) log.debug("PropertyChange = "+property);
         _parent.getPortalModel().propertyChange(e);
         _parent.getXRefModel().propertyChange(e);
 

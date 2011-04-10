@@ -53,7 +53,7 @@ public class BlockOrder  {
 
     protected void setExitName(String name) { _exitName = name; }
     public String getExitName() { return _exitName; }
-
+/*
     static String getOppositePortalName(OPath path, String portalName) {
         if (portalName==null) {
             if (path.getFromPortalName() == null) {
@@ -71,7 +71,7 @@ public class BlockOrder  {
         }
         return null;
     }
-
+*/
     protected boolean validateOrder() {
         return true;
     }

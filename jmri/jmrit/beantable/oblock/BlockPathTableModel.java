@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 import java.util.ResourceBundle;
@@ -109,11 +109,21 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         OPath path = (OPath)_block.getPaths().get(rowIndex);
         switch(columnIndex) {
             case FROM_PORTAL_COLUMN:
-                return path.getFromPortalName();
+                Portal portal = path.getFromPortal();
+                if (portal==null) {
+                    return "";
+                } else {
+                    return portal.getName();
+                }
             case NAME_COLUMN:
                 return path.getName();
             case TO_PORTAL_COLUMN:
-                return path.getToPortalName();
+                portal = path.getToPortal();
+                if (portal==null) {
+                    return "";
+                } else {
+                    return portal.getName();
+                }
             case EDIT_COL:
                 return rbo.getString("ButtonEditTO");
             case DELETE_COL:
@@ -132,21 +142,14 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     tempRow[col] = (String)value;
                 } else {
                     Portal fromPortal = _block.getPortalByName(tempRow[FROM_PORTAL_COLUMN]);
-                    String fromName = null;
-                    if (fromPortal!=null) { fromName = fromPortal.getName(); }
-
                     Portal toPortal = _block.getPortalByName(tempRow[TO_PORTAL_COLUMN]);
-                    String toName = null;
-                    if (toPortal!=null) { toName = toPortal.getName(); }
+                    OPath path = new OPath((String)value, _block, fromPortal, 0, toPortal, 0);
 
-                    OPath path = new OPath((String)value, _block, fromName, 0, toName, 0);
                     if (!_block.addPath(path)) {
                         msg = java.text.MessageFormat.format(
                                 rbo.getString("AddPathFailed"), (String)value);
                         tempRow[col] = (String)value;
                     } else {
-                        //if (fromPortal!=null) { fromPortal.addPath(path); }
-                        //if (toPortal!=null) { toPortal.addPath(path); }
                         initTempRow();
                         _parent.updateOpenMenu();
                     }
@@ -194,7 +197,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                         _parent.getPortalModel().fireTableDataChanged();
                     }
                 }
-                path.setFromPortalName((String)value);
+                path.setFromPortal(portal);
                 if (!portal.addPath(path)) {
                     msg = java.text.MessageFormat.format(
                             rbo.getString("AddPathFailed"), (String)value);
@@ -238,7 +241,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                         _parent.getPortalModel().fireTableDataChanged();
                     }
                 }
-                path.setToPortalName((String)value);
+                path.setToPortal(portal);
                 fireTableRowsUpdated(row,row);
                 if (!portal.addPath(path)) {
                     msg = java.text.MessageFormat.format(

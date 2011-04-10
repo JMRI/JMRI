@@ -20,18 +20,16 @@ import jmri.SignalMast;
 public class Portal  {
 
     private ArrayList <OPath> _fromPaths = new ArrayList <OPath>();
-    private OBlock _fromBlock;
-    private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
-    private long    _fromSignalDelay;
+    private OBlock      _fromBlock;
+    private NamedBean   _fromSignal;          // may be either SignalHead or SignalMast
+    private long        _fromSignalDelay;
     private ArrayList <OPath> _toPaths = new ArrayList <OPath>();
-    private OBlock _toBlock;
-    private NamedBean _toSignal;          // may be either SignalHead or SignalMast
-    private long    _toSignalDelay;
-    private String _portalName;
-    /*
-    public Portal(String name) {
-        _portalName = name;
-    } */
+    private OBlock      _toBlock;
+    private NamedBean   _toSignal;          // may be either SignalHead or SignalMast
+    private long        _toSignalDelay;
+    private String      _portalName;
+    private java.awt.Point _iconPosition;
+    
     public Portal(OBlock fromBlock, String portalName, OBlock toBlock) {
         _fromBlock = fromBlock;
         _portalName = portalName;
@@ -53,9 +51,9 @@ public class Portal  {
             return false;
         }
         //if (log.isDebugEnabled()) log.debug("addPath: "+toString());
-        if (!_portalName.equals(path.getFromPortalName()) &&
-                !_portalName.equals(path.getToPortalName()) ){
-            log.error("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
+        if (!this.equals(path.getFromPortal()) &&
+                !this.equals(path.getToPortal()) ){
+            log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
                 "\" does not pass through Portal \""+_portalName+"\".");
             return false;
         }
@@ -71,7 +69,8 @@ public class Portal  {
             log.error("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
                 "\" is not in either of the blocks of Portal \""+_portalName+"\".");
         }
-        return false;
+        // path already in one of the path lists
+        return true;
     }
 
     /**
@@ -95,16 +94,17 @@ public class Portal  {
 
         String oldName = _portalName;
         _portalName = name;
-
+/*
         changePathPortalName(_fromPaths, _portalName, oldName);
         changePathPortalName(_toPaths, _portalName, oldName);
         changeBlockPortalName(_fromBlock, _portalName, oldName);
         changeBlockPortalName(_toBlock, _portalName, oldName);
+        */
     }
 
     /**
     *  Utility for both path lists
-    */
+    *
     private void changePathPortalName(List <OPath> pathList, 
                                          String newName, String oldName) {
         for (int i=0; i<pathList.size(); i++) {
@@ -117,7 +117,7 @@ public class Portal  {
             }
             changeBlockPortalName((OBlock)path.getBlock(), newName, oldName);
         }
-    }
+    }  */
 
     /**
     * should not be necessary, but just in case portal
@@ -402,9 +402,20 @@ public class Portal  {
         return (_fromBlock!=null && _toBlock!=null);
     }
 
+    public void setIconPosition(java.awt.Point pt) {
+        _iconPosition = pt;
+    }
+    public java.awt.Point getIconPosition() {
+        return _iconPosition;
+    }
+
     public void dispose() {
         if (_fromBlock!=null) _fromBlock.removePortal(this);
         if (_toBlock!=null) _toBlock.removePortal(this);
+    }
+
+    public String getDescription() {
+        return "\""+_portalName+"\" between block "+getFromBlockName()+" and block "+getToBlockName();
     }
     
     public String toString() {

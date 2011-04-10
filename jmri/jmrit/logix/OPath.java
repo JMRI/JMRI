@@ -21,8 +21,8 @@ import jmri.Turnout;
  */
 public class OPath extends jmri.Path  {
 
-    private String _fromPortalName;
-    private String _toPortalName;
+    private Portal _fromPortal;
+    private Portal _toPortal;
     private String _name;
     private Timer _timer;
     private boolean _timerActive = false; 
@@ -42,14 +42,15 @@ public class OPath extends jmri.Path  {
     public OPath(Block owner, int toBlockDirection, int fromBlockDirection, BeanSetting setting) {
         super(owner, toBlockDirection, fromBlockDirection, setting);
     }
-    public OPath(String name, OBlock owner, String entry, int fromBlockDirection,
-                         String exit, int toBlockDirection) {
+    public OPath(String name, OBlock owner, Portal entry, int fromBlockDirection,
+                         Portal exit, int toBlockDirection) {
         super(owner, toBlockDirection, fromBlockDirection);
         _name = name;
-        _fromPortalName = entry;
-        _toPortalName = exit;
+        _fromPortal = entry;
+        _toPortal = exit;
         if (log.isDebugEnabled()) log.debug("Ctor: name= "+name+", block= "+owner.getDisplayName()+
-                  ", fromPortal= "+_fromPortalName+", toPortal= "+_toPortalName);
+                                ", fromPortal= "+(_fromPortal==null?"null":_fromPortal.getName())+
+                                ", toPortal= "+(_toPortal==null?"null":_toPortal.getName()));
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
@@ -65,48 +66,38 @@ public class OPath extends jmri.Path  {
         super.setBlock(block);
     }
 
-    protected boolean isPortal(String name) {
-        if (_fromPortalName != null && _fromPortalName.equals(name)) { return true; }
-        if (_toPortalName != null && _toPortalName.equals(name)) { return true; }
-        return false;
-    }
-
     protected String getOppositePortalName(String name) {
-        if (_fromPortalName!=null && _fromPortalName.equals(name)) {
-            return _toPortalName;
+        if (_fromPortal!=null && _fromPortal.getName().equals(name)) {
+            return _toPortal.getName();
         }
-        if (_toPortalName!=null && _toPortalName.equals(name)) {
-            return _fromPortalName;
+        if (_toPortal!=null && _toPortal.getName().equals(name)) {
+            return _fromPortal.getName();
         }
         return null;
     }
 
     protected boolean validatePortals() {
-        if (!portalOK(_fromPortalName)) {
+        if (!_fromPortal.isValid()) {
             return false;
         }
-        return portalOK(_toPortalName);
-    }
-    private boolean portalOK(String name) {
-        Portal portal = ((OBlock)getBlock()).getPortalByName(name);
-        return portal.isValid();
+        return _toPortal.isValid();
     }
 
     public void setName(String n) { _name = n; }
     
     public String getName() { return _name; }
     
-    public void setFromPortalName(String p) {
-        if (p!=null && p.trim().equals("") ) { p = null; }
-        _fromPortalName = p;
+    public void setFromPortal(Portal p) {
+        if (log.isDebugEnabled() && p!=null) log.debug("OPath \""+_name+"\" setFromPortal= "+p.getName());
+        _fromPortal = p;
     }
-    public String getFromPortalName() { return _fromPortalName; }
+    public Portal getFromPortal() { return _fromPortal; }
     
-    public void setToPortalName(String p) {
-        if (p!=null && p.trim().equals("") ) { p = null; }
-        _toPortalName = p;
+    public void setToPortal(Portal p) {
+        if (log.isDebugEnabled() && p!=null) log.debug("OPath \""+_name+"\" setToPortal= "+p.getName());
+        _toPortal = p;
     }
-    public String getToPortalName() { return _toPortalName; }
+    public Portal getToPortal() { return _toPortal; }
 
     protected void setTurnouts(int delay) {
         if(delay>0) {
@@ -166,8 +157,15 @@ public class OPath extends jmri.Path  {
 		}
 	}
 
+    public String getDescription() {
+        return "\""+_name+"\""+(_fromPortal==null?"":" from portal "+_fromPortal.getName())+
+                    (_toPortal==null?"":" to portal "+ _toPortal.getName());
+    }
+    
     public String toString() {
-        return "Path \""+_name+"\"on block \""+(getBlock()!=null ? getBlock().getDisplayName(): "null")+"\" from portal "+getFromPortalName()+" to portal "+ getToPortalName();
+        return "OPath \""+_name+"\"on block "+(getBlock()!=null ? getBlock().getDisplayName(): "null")+
+            (_fromPortal==null?"":" from portal "+_fromPortal.getName())+
+            (_toPortal==null?"":" to portal "+ _toPortal.getName());
     }
        
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OPath.class.getName());
