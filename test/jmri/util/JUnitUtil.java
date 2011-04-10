@@ -38,7 +38,7 @@ import java.beans.PropertyChangeListener;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @since 2.5.3
  */
 
@@ -141,6 +141,11 @@ public class JUnitUtil {
             }; // end of anonymous PowerManager class new()
         // store dummy power manager object for retrieval
         InstanceManager.setPowerManager(manager);
+    }
+
+    public static void initIdTagManager() {
+        InstanceManager.reset(jmri.IdTagManager.class);
+        InstanceManager.store(new DefaultIdTagManager(), jmri.IdTagManager.class);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JUnitUtil.class.getName());

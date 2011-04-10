@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.implementation package
  * @author			Bob Jacobsen  2009
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 
 package jmri.implementation;
@@ -39,6 +39,7 @@ public class ImplementationTest extends TestCase {
 
         suite.addTest(jmri.implementation.swing.SwingShutDownTaskTest.suite());
         suite.addTest(ReporterTest.suite());
+        suite.addTest(DefaultIdTagTest.suite());
 
 		return suite;
 	}

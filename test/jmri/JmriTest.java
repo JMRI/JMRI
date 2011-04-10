@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the Jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version         $Revision: 1.27 $
+ * @version         $Revision: 1.28 $
  */
 public class JmriTest extends TestCase {
 
@@ -40,6 +40,8 @@ public class JmriTest extends TestCase {
 		suite.addTest(jmri.PushbuttonPacketTest.suite());
 		suite.addTest(jmri.TurnoutTest.suite());
                 suite.addTest(jmri.ApplicationTest.suite());
+                suite.addTest(jmri.AudioTest.suite());
+                suite.addTest(jmri.IdTagTest.suite());
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true"))
             suite.addTest(jmri.progdebugger.ProgDebuggerTest.suite());
