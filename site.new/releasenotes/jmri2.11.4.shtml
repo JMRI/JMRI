@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.33 2011-04-10 08:10:43 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.34 2011-04-10 14:39:38 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -166,6 +166,10 @@ no issues!!</li>
 <li>Added a new object and test case that holds the current JMRI application name.</li>
 <li>Corrected the behavior of snapping JSliders by making them snap whilst dragging
 rather than after dragging by using the SliderSnap class provided by Michael Kneebone.</li>
+<li>Added support for general ID Tags and specific implementations for MERG RFID readers in both stand-alone and concentrator configurations.</li>
+<li>Added test cases for Audio and ID Tag support.</li>
+<li>Enabled default Speedometer settings to be saved.</li>
+<li>Corrected a few UI anomalies.</li>
 </ul>
 
 <p>
