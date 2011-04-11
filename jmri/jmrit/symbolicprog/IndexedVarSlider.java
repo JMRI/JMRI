@@ -9,10 +9,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /* Extends a JSlider so that its color & value are consistent with
- * an underlying variable; we return one of these in IndexedVariableValue.getRep.
+ * an underlying variable; we return one of these in IndexedVariableValue.getNewRep.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class IndexedVarSlider extends JSlider implements ChangeListener {
 
@@ -52,7 +52,7 @@ public class IndexedVarSlider extends JSlider implements ChangeListener {
             setBackground(_iVar.getColor());
         }
         if (e.getPropertyName().equals("Value")) {
-            int newValue = Integer.valueOf(((JTextField)_iVar.getValue()).getText()).intValue();
+            int newValue = Integer.valueOf(((JTextField)_iVar.getCommonRep()).getText()).intValue();
             setValue(newValue);
         }
     }

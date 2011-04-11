@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -133,7 +133,11 @@ public class DecVariableValue extends VariableValue
         return Integer.valueOf(_value.getText()).intValue();
     }
     
-    public Component getValue()  {
+    public Object getValueObject() {
+        return Integer.valueOf(_value.getText());
+    }
+
+    public Component getCommonRep()  {
         if (getReadOnly())  {
             JLabel r = new JLabel(_value.getText());
             reps.add(r);
@@ -151,7 +155,7 @@ public class DecVariableValue extends VariableValue
 
     java.util.List<Component> reps = new java.util.ArrayList<Component>();
 
-    public Component getRep(String format)  {
+    public Component getNewRep(String format)  {
         if (format.equals("vslider")) {
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.VERTICAL);

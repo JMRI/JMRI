@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.80 $
+ * @version   $Revision: 1.81 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1532,7 +1532,7 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Get a GUI representation of a particular variable for display.
      * @param name Name used to look up the Variable object
-     * @param var XML Element which might contain a "format" attribute to be used in the {@link VariableValue#getRep} call
+     * @param var XML Element which might contain a "format" attribute to be used in the {@link VariableValue#getNewRep} call
      * from the Variable object; "tooltip" elements are also processed here.
      * @return JComponent representing this variable
      */

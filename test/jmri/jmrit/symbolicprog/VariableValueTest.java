@@ -13,7 +13,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -74,7 +74,7 @@ public abstract class VariableValueTest extends TestCase {
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertTrue("getValue not null ", variable.getValue() != null);
+        Assert.assertTrue("getValue not null ", variable.getCommonRep() != null);
         setValue(variable, "5");
         checkValue(variable, "variable value", "5");
 
@@ -92,7 +92,7 @@ public abstract class VariableValueTest extends TestCase {
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5
         VariableValue variable = makeVar("label", "comment", "", true, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertTrue( variable.getValue() != null);
+        Assert.assertTrue( variable.getCommonRep() != null);
         setReadOnlyValue(variable, "5");
         checkReadOnlyValue(variable, "value", "5");
     }
@@ -117,7 +117,7 @@ public abstract class VariableValueTest extends TestCase {
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getValue()+" state="+variable.getState());
+        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getCommonRep()+" state="+variable.getState());
 
         Assert.assertTrue("wait time for message",i<100);
         checkValue(variable, "text var value ", "14");
@@ -146,7 +146,7 @@ public abstract class VariableValueTest extends TestCase {
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getValue()+" state="+variable.getState());
+        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getCommonRep()+" state="+variable.getState());
 
         Assert.assertTrue("iterations ",i<100);
         checkValue(variable, "value ","5");
@@ -210,10 +210,10 @@ public abstract class VariableValueTest extends TestCase {
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertEquals("FROM_FILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
+        Assert.assertEquals("FROM_FILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground() );
     }
 
     // check the state <-> color connection for rep when var changes
@@ -225,19 +225,19 @@ public abstract class VariableValueTest extends TestCase {
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
-        JComponent rep = (JComponent)variable.getRep("");
+        JComponent rep = (JComponent)variable.getNewRep("");
 
-        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground() );
         Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
 
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground() );
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
 
         setValue(variable, "5");
 
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground() );
         Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
     }
 
@@ -250,13 +250,13 @@ public abstract class VariableValueTest extends TestCase {
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
-        JComponent rep = (JComponent)variable.getRep("");
+        JComponent rep = (JComponent)variable.getNewRep("");
 
-        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground() );
         Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground() );
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
 
         try {   // might be either of two reps?
@@ -264,7 +264,7 @@ public abstract class VariableValueTest extends TestCase {
         } catch ( java.lang.ClassCastException e) {
             ((JTextField)rep).setText("9");
             ((JTextField)rep).postActionEvent();
-            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground() );
             Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
         }
     }
@@ -281,20 +281,20 @@ public abstract class VariableValueTest extends TestCase {
 
         // now get value, check
         checkValue(variable, "first value check ", "5");
-        Component val1 = variable.getValue();
+        Component val1 = variable.getCommonRep();
         // now get rep, check
-        JTextField rep1 = (JTextField) variable.getRep("");
+        JTextField rep1 = (JTextField) variable.getNewRep("");
         Assert.assertEquals("initial rep ", "5", rep1.getText());
 
         // update via value
         setValue(variable, "2");
 
         // check again with existing reference
-        Assert.assertEquals("same value object ", val1, variable.getValue());
+        Assert.assertEquals("same value object ", val1, variable.getCommonRep());
         Assert.assertEquals("1 saved rep ", "2", rep1.getText());
         // pick up new references and check
         checkValue(variable, "1 new value ", "2");
-        Assert.assertEquals("1 new rep ", "2", ((JTextField) variable.getRep("")).getText());
+        Assert.assertEquals("1 new rep ", "2", ((JTextField) variable.getNewRep("")).getText());
 
         // update via rep
         rep1.setText("9");
@@ -305,7 +305,7 @@ public abstract class VariableValueTest extends TestCase {
         Assert.assertEquals("2 saved rep ", "9", rep1.getText());
         // pick up new references and check
         checkValue(variable, "2 new value ", "9");
-        Assert.assertEquals("2 new rep ", "9", ((JTextField) variable.getRep("")).getText());
+        Assert.assertEquals("2 new rep ", "9", ((JTextField) variable.getNewRep("")).getText());
     }
 
     // check synchronization of two vars during a write
@@ -329,7 +329,7 @@ public abstract class VariableValueTest extends TestCase {
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var1.getValue()+" state="+var1.getState());
+        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var1.getCommonRep()+" state="+var1.getState());
 
         Assert.assertTrue("Number of iterations ",i<100);
         checkValue(var1, "var 1 value","5");

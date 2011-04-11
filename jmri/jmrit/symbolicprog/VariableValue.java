@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.38 $
+ * @version  $Revision: 1.39 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -27,20 +27,24 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     protected JLabel _status = null;
 
     protected String _tooltipText = null;
+                                                // and thus can be called without limit
+    // and thus should be called a limited number of times
 
-    // The actual stored value is internal, not showing in the interface.
-    // Instead, you can get a (Object) representation for display in
+    // The actual stored value is not the most interesting thing
+    // Instead, you usually get a (Object) representation for display in
     // a table, etc. Modification of the state of that object then
     // gets reflected back, causing the underlying CV objects to change.
-    abstract public Component getValue();	// this one is returning a common value
-                                                // and thus can be called without limit
-    abstract public Component getRep(String format); // this one is returning a new object
-    // and thus should be called a limited number of times
+    abstract public Component getCommonRep();	// and thus should be called a limited number of times
+    abstract public Component getNewRep(String format); // this one is returning a new object
     
     /**
-     * @return String that can be interpreted as an integer
+     * @return String that can (usually) be interpreted as an integer
      */
     abstract public String getValueString();
+    /**
+     * @return Value as a native-form Object
+     */
+    abstract public Object getValueObject();
     /**
      * @return User-desired value, which may or may not be an integer
      */
@@ -169,11 +173,12 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
     /**
      * Add the proper tooltip text to a graphical rep
-     * before returning it
+     * before returning it, sets the visibility
      * @param c
      */
     protected JComponent updateRepresentation(JComponent c) {
         c.setToolTipText(_tooltipText);
+        c.setVisible(getAvailable());
         return c;
     }
 

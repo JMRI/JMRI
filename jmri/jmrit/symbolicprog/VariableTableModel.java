@@ -23,7 +23,7 @@ import jmri.util.jdom.LocaleSelector;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -124,7 +124,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     public Object getRep(int row, String format) {
         VariableValue v = rowVector.elementAt(row);
-        return v.getRep(format);
+        return v.getNewRep(format);
     }
 
     public Object getValueAt(int row, int col) {
@@ -139,7 +139,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         	return "Error value";
         }
         if (headers[col].equals("Value"))
-            return v.getValue();
+            return v.getCommonRep();
         else if (headers[col].equals("Read"))
             return _readButtons.elementAt(row);
         else if (headers[col].equals("Write"))

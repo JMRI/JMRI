@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -74,7 +74,11 @@ public class ConstantValue extends VariableValue {
         return _value.getSelectedIndex();
     }
 
-    public Component getValue()  { return _value; }
+    public Object getValueObject() {
+        return Integer.valueOf(_value.getSelectedIndex());
+    }
+
+    public Component getCommonRep()  { return _value; }
     public void setValue(int value) {
         int oldVal = _value.getSelectedIndex();
         _value.setSelectedIndex(value);
@@ -82,7 +86,7 @@ public class ConstantValue extends VariableValue {
             prop.firePropertyChange("Value", null, Integer.valueOf(value));
     }
 
-    public Component getRep(String format) {
+    public Component getNewRep(String format) {
         // sort on format type
         if (format.equals("checkbox")) {
             // this only makes sense if there are exactly two options

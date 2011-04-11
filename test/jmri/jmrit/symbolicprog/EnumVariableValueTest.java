@@ -14,7 +14,7 @@ import java.util.Vector;
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {
@@ -44,7 +44,7 @@ public class EnumVariableValueTest extends VariableValueTest {
 
 
     void setValue(VariableValue var, String val) {
-        ((JComboBox)var.getValue()).setSelectedItem(val);
+        ((JComboBox)var.getCommonRep()).setSelectedItem(val);
     }
 
     void setReadOnlyValue(VariableValue var, String val) {
@@ -77,20 +77,20 @@ public class EnumVariableValueTest extends VariableValueTest {
 
         // now get value, check
         checkValue(variable, "first value check ", "5");
-        Component val1 = variable.getValue();
+        Component val1 = variable.getCommonRep();
         // now get rep, check
-        JComboBox rep1 = (JComboBox) variable.getRep("");
+        JComboBox rep1 = (JComboBox) variable.getNewRep("");
         Assert.assertEquals("initial rep ", "5", (String)rep1.getSelectedItem());
 
         // update via value
         setValue(variable, "2");
 
         // check again with existing reference
-        Assert.assertEquals("same value object ", val1, variable.getValue());
+        Assert.assertEquals("same value object ", val1, variable.getCommonRep());
         Assert.assertEquals("1 saved rep ", "2", (String)rep1.getSelectedItem());
         // pick up new references and check
         checkValue(variable, "1 new value ", "2");
-        Assert.assertEquals("1 new rep ", "2", (String)((JComboBox)variable.getRep("")).getSelectedItem());
+        Assert.assertEquals("1 new rep ", "2", (String)((JComboBox)variable.getNewRep("")).getSelectedItem());
 
         // update via rep
         rep1.setSelectedItem("9");
@@ -100,7 +100,7 @@ public class EnumVariableValueTest extends VariableValueTest {
         Assert.assertEquals("2 saved rep ", "9", (String)rep1.getSelectedItem());
         // pick up new references and check
         checkValue(variable, "2 new value ", "9");
-        Assert.assertEquals("2 new rep ", "9", ((JComboBox)variable.getRep("")).getSelectedItem());
+        Assert.assertEquals("2 new rep ", "9", ((JComboBox)variable.getNewRep("")).getSelectedItem());
     }
 
 

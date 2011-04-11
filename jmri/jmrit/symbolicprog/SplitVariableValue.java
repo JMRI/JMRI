@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -192,7 +192,11 @@ public class SplitVariableValue extends VariableValue
         return ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
     }
     
-    public Component getValue()  {
+    public Object getValueObject() {
+        return Integer.valueOf(_value.getText());
+    }
+
+    public Component getCommonRep()  {
         if (getReadOnly())  {
             JLabel r = new JLabel(_value.getText());
             updateRepresentation(r);
@@ -224,7 +228,7 @@ public class SplitVariableValue extends VariableValue
         // prop.firePropertyChange("Value", null, null);
     }
 
-    public Component getRep(String format)  {
+    public Component getNewRep(String format)  {
         JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 5, this);
         if (getReadOnly() || getInfoOnly()) {
             value.setEditable(false);
@@ -385,7 +389,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.28 $
+     * @version     $Revision: 1.29 $
      */
     public class VarTextField extends JTextField {
 

@@ -13,7 +13,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 
@@ -38,8 +38,8 @@ public class SplitVariableValueTest extends VariableValueTest {
 
 
     void setValue(VariableValue var, String val) {
-        ((JTextField)var.getValue()).setText(val);
-        ((JTextField)var.getValue()).postActionEvent();
+        ((JTextField)var.getCommonRep()).setText(val);
+        ((JTextField)var.getCommonRep()).postActionEvent();
     }
 
     void setReadOnlyValue(VariableValue var, String val) {
@@ -47,11 +47,11 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     void checkValue(VariableValue var, String comment, String val) {
-        Assert.assertEquals(comment, val, ((JTextField)var.getValue()).getText() );
+        Assert.assertEquals(comment, val, ((JTextField)var.getCommonRep()).getText() );
     }
 
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
-        Assert.assertEquals(comment, val, ((JLabel)var.getValue()).getText() );
+        Assert.assertEquals(comment, val, ((JLabel)var.getCommonRep()).getText() );
     }
 
     // end of abstract members
@@ -79,9 +79,9 @@ public class SplitVariableValueTest extends VariableValueTest {
                                                         "VVVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "VVVVVVVV");
 
-        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
+        ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 5, cv1.getValue());
         Assert.assertEquals("set var high bits", 4, cv2.getValue());
 
@@ -89,7 +89,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         cv1.setValue(21);
         cv2.setValue(189);
         Assert.assertEquals("set cv low bits", 21, cv1.getValue());
-        Assert.assertEquals("set cv full value", ""+(189*256+21), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv full value", ""+(189*256+21), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
 
@@ -106,9 +106,9 @@ public class SplitVariableValueTest extends VariableValueTest {
                                                         "XXXXVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "VVVVVVVV");
 
-        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
+        ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 0xF5, cv1.getValue());
         Assert.assertEquals("set var high bits", 4*16, cv2.getValue());
 
@@ -116,7 +116,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         cv1.setValue(21);
         cv2.setValue(189);
         Assert.assertEquals("set cv low bits", 21, cv1.getValue());
-        Assert.assertEquals("set cv full value", ""+(189*16+(21&0xF)), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv full value", ""+(189*16+(21&0xF)), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
 
@@ -133,9 +133,9 @@ public class SplitVariableValueTest extends VariableValueTest {
                                                         "VVVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "XXVVVVXX");
 
-        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
+        ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 5, cv1.getValue());
         Assert.assertEquals("set var high bits", 0xC3+4*4, cv2.getValue());
 
@@ -143,7 +143,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         cv1.setValue(21);
         cv2.setValue(189);
         Assert.assertEquals("set cv low bits", 21, cv1.getValue());
-        Assert.assertEquals("set cv full value", ""+((189&0x3C)/4*256+(21)), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv full value", ""+((189&0x3C)/4*256+(21)), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
 
@@ -160,9 +160,9 @@ public class SplitVariableValueTest extends VariableValueTest {
                                                         "XVVVVVVX", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "XVVVVVXX");
 
-        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
+        ((JTextField)var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 5*2+0x81, cv1.getValue());
         Assert.assertEquals("set var high bits", 0x83+0x40, cv2.getValue());
 
@@ -170,7 +170,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         cv1.setValue(21);
         cv2.setValue(189);
         Assert.assertEquals("set cv low bits", 21, cv1.getValue());
-        Assert.assertEquals("set cv full value", ""+((189&0x3C)/4*64+(10)), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv full value", ""+((189&0x3C)/4*64+(10)), ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
 
@@ -204,7 +204,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         var.addPropertyChangeListener(listen);
 
         // set to specific value
-        ((JTextField)var.getValue()).setText("5");
+        ((JTextField)var.getCommonRep()).setText("5");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
         // read should get 123, 123 from CVs
@@ -218,7 +218,7 @@ public class SplitVariableValueTest extends VariableValueTest {
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
+        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getCommonRep()).getText()+" state="+var.getState());
         Assert.assertTrue("wait satisfied ", i<100);
 
         int nBusyFalse = 0;
@@ -229,7 +229,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         }
         Assert.assertEquals("only one Busy -> false transition ", 1, nBusyFalse);
 
-        Assert.assertEquals("text value ", ""+((123&0x3f)+(123)*64), ((JTextField)var.getValue()).getText() );  // 15227 = (1230x3f)*256+123
+        Assert.assertEquals("text value ", ""+((123&0x3f)+(123)*64), ((JTextField)var.getCommonRep()).getText() );  // 15227 = (1230x3f)*256+123
         Assert.assertEquals("Var state", AbstractValue.READ, var.getState() );
         Assert.assertEquals("CV 1 value ", 123, cv1.getValue());  // 123 with 128 bit set
         Assert.assertEquals("CV 2 value ", 123, cv2.getValue());
@@ -247,7 +247,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
                                                         lowCV, "XXVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "VVVVVVVV");
-        ((JTextField)var.getValue()).setText("4797");
+        ((JTextField)var.getCommonRep()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
         var.writeAll();
@@ -259,7 +259,7 @@ public class SplitVariableValueTest extends VariableValueTest {
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()
+        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getCommonRep()).getText()
                                             +" state="+var.getState()
                                             +" last write: "+p.lastWrite());
 
@@ -267,7 +267,7 @@ public class SplitVariableValueTest extends VariableValueTest {
 
         Assert.assertEquals("CV 1 value ", 61, cv1.getValue());
         Assert.assertEquals("CV 2 value ", 74, cv2.getValue());
-        Assert.assertEquals("text ", "4797", ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("text ", "4797", ((JTextField)var.getCommonRep()).getText());
         Assert.assertEquals("Var state", AbstractValue.STORED, var.getState() );
         Assert.assertEquals("last write", 74,p.lastWrite());
         // how do you check separation of the two writes?  State model?

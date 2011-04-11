@@ -13,7 +13,7 @@ import java.util.Vector;
  * Test the HexVariableValue class
  *
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class HexVariableValueTest extends VariableValueTest {
 
@@ -27,8 +27,8 @@ public class HexVariableValueTest extends VariableValueTest {
 
 
     void setValue(VariableValue var, String val) {
-        ((JTextField)var.getValue()).setText(val);
-        ((JTextField)var.getValue()).postActionEvent();
+        ((JTextField)var.getCommonRep()).setText(val);
+        ((JTextField)var.getCommonRep()).postActionEvent();
     }
 
     void setReadOnlyValue(VariableValue var, String val) {
@@ -37,12 +37,12 @@ public class HexVariableValueTest extends VariableValueTest {
 
     void checkValue(VariableValue var, String comment, String val) {
         String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
-        Assert.assertEquals(comment, hexval, ((JTextField)var.getValue()).getText() );
+        Assert.assertEquals(comment, hexval, ((JTextField)var.getCommonRep()).getText() );
     }
 
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
         String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
-        Assert.assertEquals(comment, hexval, ((JLabel)var.getValue()).getText() );
+        Assert.assertEquals(comment, hexval, ((JLabel)var.getCommonRep()).getText() );
     }
 
     // end of abstract members

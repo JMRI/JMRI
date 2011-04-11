@@ -10,10 +10,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /* Extends a JSlider so that its color & value are consistent with
- * an underlying variable; we return one of these in DecValVariable.getRep.
+ * an underlying variable; we return one of these in DecValVariable.getNewRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 
@@ -53,7 +53,7 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 			setBackground(_var.getColor());
 		}
 		if (e.getPropertyName().equals("Value")) {
-			int newValue = Integer.valueOf(((JTextField)_var.getValue()).getText()).intValue();
+			int newValue = Integer.valueOf(((JTextField)_var.getCommonRep()).getText()).intValue();
 			setValue(newValue);
 		}
 	}

@@ -14,7 +14,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -127,7 +127,11 @@ public class LongAddrVariableValue extends VariableValue
         return Integer.valueOf(_value.getText()).intValue();
     }
 
-    public Component getValue()  {
+    public Object getValueObject() {
+        return Integer.valueOf(_value.getText());
+    }
+
+    public Component getCommonRep()  {
         if (getReadOnly())  {
             JLabel r = new JLabel(_value.getText());
             updateRepresentation(r);
@@ -154,7 +158,7 @@ public class LongAddrVariableValue extends VariableValue
         // prop.firePropertyChange("Value", null, null);
     }
 
-    public Component getRep(String format)  {
+    public Component getNewRep(String format)  {
         return updateRepresentation(new VarTextField(_value.getDocument(),_value.getText(), 5, this));
     }
     private int _progState = 0;

@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -189,7 +189,11 @@ public class IndexedEnumVariableValue extends VariableValue
         return _valueArray[_value.getSelectedIndex()];
     }
 
-    public Component getValue()  { return _value; }
+    public Object getValueObject() {
+        return Integer.valueOf(_value.getSelectedIndex());
+    }
+
+    public Component getCommonRep()  { return _value; }
 
     public void setValue(int value) {
         int oldVal = getIntValue();
@@ -199,7 +203,7 @@ public class IndexedEnumVariableValue extends VariableValue
             prop.firePropertyChange("Value", null, Integer.valueOf(value));
     }
 
-    public Component getRep(String format) {
+    public Component getNewRep(String format) {
         // sort on format type
         if (format.equals("checkbox")) {
             // this only makes sense if there are exactly two options
@@ -479,14 +483,14 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     /* Internal class extends a JComboBox so that its color is consistent with
-     * an underlying variable; we return one of these in getRep.
+     * an underlying variable; we return one of these in getNewRep.
      *<P>
      * Unlike similar cases elsewhere, this doesn't have to listen to
      * value changes.  Those are handled automagically since we're sharing the same
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.19 $
+     * @version $Revision: 1.20 $
      */
     public class IVarComboBox extends JComboBox {
 

@@ -63,7 +63,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.36 $
+ * @version	$Revision: 1.37 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -295,7 +295,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return 0;
     }
 
-    public Component getValue()  {
+    public Object getValueObject() {
+        return null;
+    }
+
+    public Component getCommonRep()  {
         log.warn("getValue not implemented yet");
         return new JLabel("speed table");
     }
@@ -310,7 +314,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // prop.firePropertyChange("Value", null, null);
     }
 
-    public Component getRep(String format)  {
+    public Component getNewRep(String format)  {
         final int GRID_Y_BUTTONS = 3;
         // put together a new panel in scroll pane
         JPanel j = new JPanel();
@@ -339,7 +343,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             decVal.setValue(currentValue);
             decVal.setState(currentState);
 
-            Component v = decVal.getValue();
+            Component v = decVal.getCommonRep();
             ((JTextField)v).setToolTipText("Step "+(i+1)+" CV "+(getCvNum()+i));
             ((JComponent)v).setBorder(null);  // pack tighter
             
@@ -711,7 +715,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     /* Internal class extends a JSlider so that its color is consistent with
-     * an underlying CV; we return one of these in getRep.
+     * an underlying CV; we return one of these in getNewRep.
      *<P>
      * Unlike similar cases elsewhere, this doesn't have to listen to
      * value changes.  Those are handled automagically since we're sharing the same

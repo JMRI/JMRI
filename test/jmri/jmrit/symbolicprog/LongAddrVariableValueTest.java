@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -38,8 +38,8 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 
 
     void setValue(VariableValue var, String val) {
-        ((JTextField)var.getValue()).setText(val);
-        ((JTextField)var.getValue()).postActionEvent();
+        ((JTextField)var.getCommonRep()).setText(val);
+        ((JTextField)var.getCommonRep()).postActionEvent();
     }
 
     void setReadOnlyValue(VariableValue var, String val) {
@@ -47,11 +47,11 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     }
 
     void checkValue(VariableValue var, String comment, String val) {
-        Assert.assertEquals(comment, val, ((JTextField)var.getValue()).getText() );
+        Assert.assertEquals(comment, val, ((JTextField)var.getCommonRep()).getText() );
     }
 
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
-        Assert.assertEquals(comment, val, ((JLabel)var.getValue()).getText() );
+        Assert.assertEquals(comment, val, ((JLabel)var.getCommonRep()).getText() );
     }
 
     // end of abstract members
@@ -77,8 +77,8 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", "", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
         Assert.assertTrue(var.label() == "label");
         // pretend you've edited the value, check its in same object
-        ((JTextField)var.getValue()).setText("4797");
-        Assert.assertTrue( ((JTextField)var.getValue()).getText().equals("4797") );
+        ((JTextField)var.getCommonRep()).setText("4797");
+        Assert.assertTrue( ((JTextField)var.getCommonRep()).getText().equals("4797") );
         // manually notify
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
         // see if the CV was updated
@@ -97,14 +97,14 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv18, 18);
         // create a variable pointed at CV 17 & 18
         LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
-        ((JTextField)var.getValue()).setText("1029");
+        ((JTextField)var.getCommonRep()).setText("1029");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
         // change the CV, expect to see a change in the variable value
         cv17.setValue(210);
         Assert.assertTrue(cv17.getValue() == 210);
         cv18.setValue(189);
-        Assert.assertTrue( ((JTextField)var.getValue()).getText().equals("4797") );
+        Assert.assertTrue( ((JTextField)var.getCommonRep()).getText().equals("4797") );
         Assert.assertTrue(cv18.getValue() == 189);
     }
 
@@ -134,7 +134,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         var.addPropertyChangeListener(listen);
 
         // set to specific value
-        ((JTextField)var.getValue()).setText("5");
+        ((JTextField)var.getCommonRep()).setText("5");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
         var.readAll();
@@ -146,7 +146,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
+        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getCommonRep()).getText()+" state="+var.getState());
         Assert.assertTrue("wait satisfied ", i<100);
 
         int nBusyFalse = 0;
@@ -157,7 +157,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         }
         Assert.assertEquals("only one Busy -> false transition ", 1, nBusyFalse);
 
-        Assert.assertEquals("text value ", "15227", ((JTextField)var.getValue()).getText() );  // 15227 = (1230x3f)*256+123
+        Assert.assertEquals("text value ", "15227", ((JTextField)var.getCommonRep()).getText() );  // 15227 = (1230x3f)*256+123
         Assert.assertEquals("Var state", AbstractValue.READ, var.getState() );
         Assert.assertEquals("CV 17 value ", 251, cv17.getValue());  // 123 with 128 bit set
         Assert.assertEquals("CV 18 value ", 123, cv18.getValue());
@@ -174,7 +174,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv18, 18);
 
         LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, 17, "XXVVVVXX", 0, 255, v, null, null);
-        ((JTextField)var.getValue()).setText("4797");
+        ((JTextField)var.getCommonRep()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
         var.writeAll();
@@ -186,14 +186,14 @@ public class LongAddrVariableValueTest extends VariableValueTest {
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()
+        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getCommonRep()).getText()
                                             +" state="+var.getState()
                                             +" last write: "+p.lastWrite());
         Assert.assertTrue("wait satisfied ", i<100);
 
         Assert.assertEquals("CV 17 value ", 210, cv17.getValue());
         Assert.assertEquals("CV 18 value ", 189, cv18.getValue());
-        Assert.assertTrue( ((JTextField)var.getValue()).getText().equals("4797") );
+        Assert.assertTrue( ((JTextField)var.getCommonRep()).getText().equals("4797") );
         Assert.assertEquals("Var state", AbstractValue.STORED, var.getState() );
         Assert.assertTrue(p.lastWrite() == 189);
         // how do you check separation of the two writes?  State model?

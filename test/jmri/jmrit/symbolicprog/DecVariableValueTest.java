@@ -25,8 +25,8 @@ public class DecVariableValueTest extends VariableValueTest {
 
 
     void setValue(VariableValue var, String val) {
-        ((JTextField)var.getValue()).setText(val);
-        ((JTextField)var.getValue()).postActionEvent();
+        ((JTextField)var.getCommonRep()).setText(val);
+        ((JTextField)var.getCommonRep()).postActionEvent();
     }
 
     void setReadOnlyValue(VariableValue var, String val) {
@@ -34,11 +34,11 @@ public class DecVariableValueTest extends VariableValueTest {
     }
 
     void checkValue(VariableValue var, String comment, String val) {
-        Assert.assertEquals(comment, val, ((JTextField)var.getValue()).getText() );
+        Assert.assertEquals(comment, val, ((JTextField)var.getCommonRep()).getText() );
     }
 
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
-        Assert.assertEquals(comment, val, ((JLabel)var.getValue()).getText() );
+        Assert.assertEquals(comment, val, ((JLabel)var.getCommonRep()).getText() );
     }
 
     // end of abstract members

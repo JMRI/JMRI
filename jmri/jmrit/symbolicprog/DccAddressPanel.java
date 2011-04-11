@@ -10,7 +10,7 @@ import javax.swing.*;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -55,7 +55,7 @@ public class DccAddressPanel extends JPanel {
 
         // show the selection
         if (addMode != null) {
-            add(addMode.getRep("radiobuttons"));
+            add(addMode.getNewRep("radiobuttons"));
         }
 
         // show address field
@@ -67,13 +67,13 @@ public class DccAddressPanel extends JPanel {
         if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
             if (primaryAddr!=null) {
                 // short address
-                val.setBackground(primaryAddr.getValue().getBackground());
-                val.setDocument( ((JTextField)primaryAddr.getValue()).getDocument());
+                val.setBackground(primaryAddr.getCommonRep().getBackground());
+                val.setDocument( ((JTextField)primaryAddr.getCommonRep()).getDocument());
             }
         } else {
             // long address
-            val.setBackground(extendAddr.getValue().getBackground());
-            val.setDocument( ((JTextField)extendAddr.getValue()).getDocument());
+            val.setBackground(extendAddr.getCommonRep().getBackground());
+            val.setDocument( ((JTextField)extendAddr.getCommonRep()).getDocument());
         }
 
         // start listening for changes to this value
@@ -83,15 +83,15 @@ public class DccAddressPanel extends JPanel {
                         if (primaryAddr!=null) {
                             // short address mode
                             primaryAddr.updatedTextField();
-                            val.setBackground(primaryAddr.getValue().getBackground());
-                            if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
+                            val.setBackground(primaryAddr.getCommonRep().getBackground());
+                            if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getCommonRep().getBackground());
                         }
                     }
                     else {
                         // long address
                         extendAddr.updatedTextField();
-                        val.setBackground(extendAddr.getValue().getBackground());
-                        if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
+                        val.setBackground(extendAddr.getCommonRep().getBackground());
+                        if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getCommonRep().getBackground());
                     }
                 }
             });
@@ -128,15 +128,15 @@ public class DccAddressPanel extends JPanel {
                 if (primaryAddr!=null) {
                     // short address mode
                     primaryAddr.updatedTextField();
-                    val.setBackground(primaryAddr.getValue().getBackground());
-                    if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
+                    val.setBackground(primaryAddr.getCommonRep().getBackground());
+                    if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getCommonRep().getBackground());
                 }
             }
             else {
                 // long address
                 extendAddr.updatedTextField();
-                val.setBackground(extendAddr.getValue().getBackground());
-                if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
+                val.setBackground(extendAddr.getCommonRep().getBackground());
+                if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getCommonRep().getBackground());
             }
         }
     }
@@ -155,16 +155,16 @@ public class DccAddressPanel extends JPanel {
         if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
             if (primaryAddr!=null) {
                 // short address mode
-                val.setDocument( ((JTextField)primaryAddr.getValue()).getDocument());
-                val.setBackground(primaryAddr.getValue().getBackground());
-                if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
+                val.setDocument( ((JTextField)primaryAddr.getCommonRep()).getDocument());
+                val.setBackground(primaryAddr.getCommonRep().getBackground());
+                if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getCommonRep().getBackground());
             }
         }
         else {
             // long address
-            val.setDocument( ((JTextField)extendAddr.getValue()).getDocument());
-            val.setBackground(extendAddr.getValue().getBackground());
-            if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
+            val.setDocument( ((JTextField)extendAddr.getCommonRep()).getDocument());
+            val.setBackground(extendAddr.getCommonRep().getBackground());
+            if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getCommonRep().getBackground());
         }
     }
 

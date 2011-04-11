@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.13 $
+ * @version  $Revision: 1.14 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -164,7 +164,11 @@ public class IndexedPairVariableValue extends VariableValue
         return ((Integer.valueOf(_value.getText()).intValue())-_Offset)/_Factor;
     }
 
-    public Component getValue()  {
+    public Object getValueObject() {
+        return Integer.valueOf(_value.getText());
+    }
+
+    public Component getCommonRep()  {
         if (getReadOnly())  {
             JLabel r = new JLabel(_value.getText());
             updateRepresentation(r);
@@ -195,7 +199,7 @@ public class IndexedPairVariableValue extends VariableValue
         else _value.setBackground(_defaultColor);
     }
 
-    public Component getRep(String format)  {
+    public Component getNewRep(String format)  {
         JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
         if (getReadOnly() || getInfoOnly()) {
             value.setEditable(false);
@@ -494,7 +498,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.13 $
+     * @version     $Revision: 1.14 $
      */
     public class VarTextField extends JTextField {
 
