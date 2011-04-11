@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -63,9 +63,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         String name;
         
         Attribute attr;
-        attr=element.getAttribute("imageset");
-        if(attr!=null)
-            l.useIconSet(attr.getValue());
         /*
          * We need to set the rotation and scaling first, prior to setting the
          * signalmast, otherwise we end up in a situation where by the icons do
@@ -100,6 +97,10 @@ public class SignalMastIconXml extends PositionableLabelXml {
             ed.loadFailed();
         //    return;
         }
+
+        attr=element.getAttribute("imageset");
+        if(attr!=null)
+            l.useIconSet(attr.getValue());
         
         try {
             attr = element.getAttribute("clickmode");
