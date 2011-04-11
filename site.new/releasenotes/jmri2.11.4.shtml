@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.35 2011-04-10 17:12:50 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.36 2011-04-11 22:37:44 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -100,6 +100,11 @@ None at the time of this release.
 <h3>Changes since production version 2.11.3</h3>
 
 <p>
+<P>Dan Boudreau:
+<ul>
+<LI>Users can now adjust font size.  See Edit Preferences, Display GUI.</LI>
+</ul>
+
 New operations features and bug fixes:
 <ul>
 	<li>Cars with a final destination will no longer wander if the
@@ -187,11 +192,6 @@ been replaced with checkboxes.  See the help page on the Item Palette.</li>
 <li>A help page has been added to the Item Palette.</li>
 <li>Warrant throttle command scripts editing improved. Commands may be added and deleted.  Scripts can trigger an external sensor.
 <li>Internal improvements to Portals and OPaths</li>
-</ul>
-
-<P>Dan Boudreau:
-<ul>
-<LI>Users can now adjust font size.  See Edit Preferences, Display GUI.</LI>
 </ul>
 
 <p>
