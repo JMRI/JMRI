@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -533,6 +533,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_runMode == MODE_LEARN) {
             _student.notifyThrottleFound(_throttle);
         } else {
+            getSpeedMap();      // initialize speedMap for getPermissibleEntranceSpeed() calls
             _engineer = new Engineer(_commands);
             new Thread(_engineer).start();
             _engineer.rampSpeedTo(getNextSpeed(), getSpeedChangeWait(1));
@@ -622,7 +623,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         BlockOrder bo = _orders.get(0);
         // allocated to this, We assume the train of this warrant occupies the first block 
         // exit speed is determined by getPermissibleEntranceSpeed() into next block.
-        Warrant.getSpeedMap();      // initialize speedMap for getPermissibleEntranceSpeed() calls
         bo.setPath(this);
         for (int i=1; i<_orders.size(); i++) {
             bo = _orders.get(i);
