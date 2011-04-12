@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.40 2011-04-12 14:21:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.41 2011-04-12 15:34:08 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -207,12 +207,15 @@ Pete Cressman:
 <li>Fixed bug when removing Memory Input and Memory Spinner icons.</li>
 <li>Fixed bug for Memory Input popup menu to change column width.</li>
 <li>fix bug of multiple additions of items from Item Palette duplicating the rotations of the first.</li>
-<li>fix bug unable to select family trype after selecting signal head row in Item Palette.</li>
+<li>fix bug unable to select family type after selecting signal head row in Item Palette.</li>
 <li>The Path list on the Indicator Track and Indicator Turnout tabs of the Item Palette have
 been replaced with checkboxes.  See the help page on the Item Palette.</li>
 <li>A help page has been added to the Item Palette.</li>
-<li>Warrant throttle command scripts editing improved. Commands may be added and deleted.  Scripts can trigger an external sensor.
+<li>Warrant throttle command scripts editing improved. Commands may be added and deleted.  
+Scripts can be edited to trigger an external sensor to operate additional animation.
 <li>Internal improvements to Portals and OPaths</li>
+<li>Fixed bug that would hang scipts if Speed Table was not initialized.</li>
+<li>Fixed bug #3209940 Logix StateVariable for SignalHead Apperance and Mast Aspect did not report user errors.</li> 
 </ul>
 
 <p>
