@@ -1,14 +1,14 @@
 // MergRfidReporter.java
 
-package jmri.jmrix.rfid.merg;
+package jmri.jmrix.rfid.coreid;
 
 import jmri.IdTag;
 import jmri.jmrix.rfid.RfidSensor;
 
 /**
- * MERG specific implementation of an RfidSensor.
+ * CORE-ID specific implementation of an RfidSensor.
  * <p>
- * The MERG RFID readers only send a message when an RFID tag is within
+ * The CORE-ID RFID readers only send a message when an RFID tag is within
  * the proximity of the reader - no message is sent when it leaves.
  * <p>
  * As a result, this implementation simulates this message using a timeout
@@ -29,10 +29,10 @@ import jmri.jmrix.rfid.RfidSensor;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.1 $
  * @since       2.11.4
  */
-public class MergRfidSensor extends RfidSensor {
+public class CoreIdRfidSensor extends RfidSensor {
     
     /**
      * Timeout in ms
@@ -51,11 +51,11 @@ public class MergRfidSensor extends RfidSensor {
 
     private boolean logDebug = log.isDebugEnabled();
 
-    public MergRfidSensor(String systemName) {
+    public CoreIdRfidSensor(String systemName) {
         super(systemName);
     }
 
-    public MergRfidSensor(String systemName, String userName) {
+    public CoreIdRfidSensor(String systemName, String userName) {
         super(systemName, userName);
     }
 
@@ -86,7 +86,7 @@ public class MergRfidSensor extends RfidSensor {
                     Thread.sleep(50);
                 } catch (InterruptedException ex) { }
             }
-            MergRfidSensor.super.notify(null);
+            CoreIdRfidSensor.super.notify(null);
             if (logDebug) log.debug("Timeout-"+mSystemName);
             cleanUpTimeout();
         }
@@ -94,9 +94,9 @@ public class MergRfidSensor extends RfidSensor {
     }
 
     static final long serialVersionUID = 5290531989069550265L;
-    
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergRfidSensor.class.getName());
+
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CoreIdRfidSensor.class.getName());
 
 }
 
-/* @(#)MergRfidSensor.java */
+/* @(#)CoreIdRfidSensor.java */

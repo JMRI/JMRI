@@ -1,10 +1,10 @@
 // SpecificReply.java
 
-package jmri.jmrix.rfid.merg.standalone;
+package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.merg.MergRfidReply;
+import jmri.jmrix.rfid.coreid.CoreIdRfidReply;
 
 /**
  * Contains the data payload of a serial reply
@@ -12,11 +12,12 @@ import jmri.jmrix.rfid.merg.MergRfidReply;
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.1 $
  * @since       2.11.4
  */
-public class SpecificReply extends MergRfidReply {
+public class SpecificReply extends CoreIdRfidReply {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD", justification="Kept to conform with common RFID framework")
     RfidTrafficController tc = null;
 
     // create a new one

@@ -1,12 +1,13 @@
-// MergRfidReply.java
+// CoreIdRfidReply.java
 
-package jmri.jmrix.rfid.merg;
+package jmri.jmrix.rfid.coreid;
 
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidTrafficController;
 
 /**
- *
+ * Common routines to extract the Tag information and validate checksum for
+ * implementations that use the CORE-ID / ID-Innovations protocol.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -24,26 +25,26 @@ import jmri.jmrix.rfid.RfidTrafficController;
  * @author      Matthew Harris  Copyright (C) 2011
  * @version     $Revision: 1.1 $
  */
-abstract public class MergRfidReply extends RfidReply {
+abstract public class CoreIdRfidReply extends RfidReply {
 
     public static final int SPECIFICMAXSIZE = 16;
 
     RfidTrafficController tc = null;
 
     // create a new one
-    public MergRfidReply(RfidTrafficController tc) {
+    public CoreIdRfidReply(RfidTrafficController tc) {
         super(tc);
         this.tc = tc;
         setBinary(true);
         setUnsolicited();
     }
-    public MergRfidReply(RfidTrafficController tc, String s) {
+    public CoreIdRfidReply(RfidTrafficController tc, String s) {
         super(tc, s);
         this.tc = tc;
         setBinary(true);
         setUnsolicited();
     }
-    public MergRfidReply(RfidTrafficController tc, RfidReply l) {
+    public CoreIdRfidReply(RfidTrafficController tc, RfidReply l) {
         super(tc, l);
         this.tc = tc;
         setBinary(true);
@@ -82,8 +83,8 @@ abstract public class MergRfidReply extends RfidReply {
         return checksum == convertHexString(getCheckSum())[0];
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergRfidReply.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CoreIdRfidReply.class.getName());
 
 }
 
-/* @(#)MergRfidReply.java */
+/* @(#)CoreIdRfidReply.java */

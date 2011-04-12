@@ -21,7 +21,7 @@ import jmri.jmrix.rfid.RfidTrafficController;
  * Derived from the oaktree code.
  * @author      Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {
@@ -33,6 +33,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 //        adapterMemo = new RfidSystemConnectionMemo();
     }
 
+    @Override
     public RfidSystemConnectionMemo getSystemConnectionMemo() {
         return adapterMemo;
     }
@@ -186,11 +187,11 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         RfidTrafficController control = null;
         // set up the system connection first
         String opt1 = getCurrentOption1Setting();
-        if (opt1.equals("MERG Stand-alone")) {
-            // create a MERG Stand-alone port controller
-            log.debug("Create MERG Standalone SpecificTrafficController");
-            adapterMemo = new jmri.jmrix.rfid.merg.standalone.SpecificSystemConnectionMemo();
-            control = new jmri.jmrix.rfid.merg.standalone.SpecificTrafficController(adapterMemo);
+        if (opt1.equals("Generic Stand-alone")) {
+            // create a Generic Stand-alone port controller
+            log.debug("Create Generic Standalone SpecificTrafficController");
+            adapterMemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
+            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(adapterMemo);
         } else if (opt1.equals("MERG Concentrator")) {
             // create a MERG Concentrator port controller
             log.debug("Create MERG Concentrator SpecificTrafficController");
@@ -198,10 +199,10 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             control = new jmri.jmrix.rfid.merg.concentrator.SpecificTrafficController(adapterMemo, getCurrentOption2Setting());
         } else {
             // no connection at all - warn
-            log.warn("protocol option "+opt1+" defaults to MERG Stand-alone");
-            // create a MERG Stand-alone port controller
-            adapterMemo = new jmri.jmrix.rfid.merg.standalone.SpecificSystemConnectionMemo();
-            control = new jmri.jmrix.rfid.merg.standalone.SpecificTrafficController(adapterMemo);
+            log.warn("protocol option "+opt1+" defaults to Generic Stand-alone");
+            // create a Generic Stand-alone port controller
+            adapterMemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
+            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(adapterMemo);
         }    
 
         // connect to the traffic controller
@@ -244,17 +245,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
         
         // check for specific port type
-//        String opt1 = getCurrentOption1Setting();
-//        if (opt1.equals("CM11")) {
-//            // leave as 4800 baud
-//        } else if (opt1.equals("CP290")) {
-//            // set to 600 baud
-//            baud = 600;
-//        } else if (opt1.equals("Insteon 2412S")) {
-//            // set to 19200 baud
-//            baud = 19200;
-//        }
-        
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -285,7 +275,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         super.configureBaudRate(rate);
     }
 
-    String[] stdOption1Values = new String[]{"MERG Stand-alone", "MERG Concentrator"};
+    String[] stdOption1Values = new String[]{"Generic Stand-alone", "MERG Concentrator"};
 
     /**
      * Option 1 is not used for anything

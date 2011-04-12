@@ -1,14 +1,14 @@
-// MergRfidReporter.java
+// CoreIdRfidReporter.java
 
-package jmri.jmrix.rfid.merg;
+package jmri.jmrix.rfid.coreid;
 
 import jmri.IdTag;
 import jmri.jmrix.rfid.RfidReporter;
 
 /**
- * MERG specific implementation of an RfidReporter.
+ * CORE-ID specific implementation of an RfidReporter.
  * <p>
- * The MERG RFID readers only send a message when an RFID tag is within
+ * The CORE-ID RFID readers only send a message when an RFID tag is within
  * the proximity of the reader - no message is sent when it leaves.
  * <p>
  * As a result, this implementation simulates this message using a timeout
@@ -29,10 +29,10 @@ import jmri.jmrix.rfid.RfidReporter;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.1 $
  * @since       2.11.4
  */
-public class MergRfidReporter extends RfidReporter {
+public class CoreIdRfidReporter extends RfidReporter {
     
     /**
      * Timeout in ms
@@ -51,11 +51,11 @@ public class MergRfidReporter extends RfidReporter {
 
     private boolean logDebug = log.isDebugEnabled();
 
-    public MergRfidReporter(String systemName) {
+    public CoreIdRfidReporter(String systemName) {
         super(systemName);
     }
 
-    public MergRfidReporter(String systemName, String userName) {
+    public CoreIdRfidReporter(String systemName, String userName) {
         super(systemName, userName);
     }
 
@@ -86,7 +86,7 @@ public class MergRfidReporter extends RfidReporter {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) { }
             }
-            MergRfidReporter.super.notify(null);
+            CoreIdRfidReporter.super.notify(null);
             if (logDebug) log.debug("Timeout-"+mSystemName);
             cleanUpTimeout();
         }
@@ -94,8 +94,8 @@ public class MergRfidReporter extends RfidReporter {
 
     static final long serialVersionUID = 929511727191807608L;
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergRfidReporter.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CoreIdRfidReporter.class.getName());
 
 }
 
-/* @(#)MergRfidReporter.java */
+/* @(#)CoreIdRfidReporter.java */

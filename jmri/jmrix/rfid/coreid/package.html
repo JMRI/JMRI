@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.2 2011-04-12 21:42:15 matthewharris Exp $
+  $Id: package.html,v 1.1 2011-04-12 21:42:16 matthewharris Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -14,7 +14,11 @@
 </head>
 <body bgcolor="white">
 
-This package handles communications for MERG RFID Concentrators.
+This package holds objects specific to the Generic RFID stand-alone readers that
+use the CORE-ID / ID-Innovations protocol.
+<p>
+As this protocol is uni-directional, the specific Reporters and Sensors incorporate
+a time-out technique as opposed to being explicitly de-activated.
 
 <!-- Put @see and @since tags down here. -->
 <!-- @see jmri.InstanceManager -->

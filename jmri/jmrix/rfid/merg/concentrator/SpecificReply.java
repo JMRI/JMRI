@@ -4,8 +4,7 @@ package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.merg.MergRfidReply;
-import jmri.util.StringUtil;
+import jmri.jmrix.rfid.coreid.CoreIdRfidReply;
 
 /**
  * Contains the data payload of a serial reply
@@ -13,10 +12,10 @@ import jmri.util.StringUtil;
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @since       2.11.4
  */
-public class SpecificReply extends MergRfidReply {
+public class SpecificReply extends CoreIdRfidReply {
 
     RfidTrafficController tc = null;
 
@@ -77,7 +76,6 @@ public class SpecificReply extends MergRfidReply {
             return sb.toString();
         }
     }
-
 }
 
 /* @(#)SpecificReply.java */

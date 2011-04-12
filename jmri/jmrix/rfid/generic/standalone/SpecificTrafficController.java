@@ -1,6 +1,6 @@
 // SpecificTrafficController.java
 
-package jmri.jmrix.rfid.merg.standalone;
+package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;

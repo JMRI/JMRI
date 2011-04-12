@@ -9,7 +9,7 @@ import jmri.Reporter;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidReporterManager;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.merg.MergRfidReporter;
+import jmri.jmrix.rfid.coreid.CoreIdRfidReporter;
 
 /**
  * Rfid implementation of a ReporterManager.
@@ -19,7 +19,7 @@ import jmri.jmrix.rfid.merg.MergRfidReporter;
  * <P>
  * @author      Bob Jacobsen    Copyright (C) 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class SpecificReporterManager extends RfidReporterManager {
@@ -38,6 +38,18 @@ public class SpecificReporterManager extends RfidReporterManager {
         tc.addRfidListener(this);
     }
 
+    protected Reporter createNewReporter(String systemName, String userName) {
+        log.debug("Create new Reporter: "+systemName);
+        if (!systemName.matches(prefix+typeLetter()+"["+tc.getRange()+"]")) {
+            log.warn("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
+            throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
+        }
+        CoreIdRfidReporter r;
+        r = new CoreIdRfidReporter(systemName, userName);
+        r.addPropertyChangeListener(this);
+        return r;
+    }
+
     public synchronized void reply(RfidReply r) {
         if (r instanceof SpecificReply)
             processReply((SpecificReply) r);
@@ -53,7 +65,7 @@ public class SpecificReporterManager extends RfidReporterManager {
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(r.getTag());
-        MergRfidReporter report = (MergRfidReporter) provideReporter(prefix+typeLetter()+r.getReaderPort());
+        CoreIdRfidReporter report = (CoreIdRfidReporter) provideReporter(prefix+typeLetter()+r.getReaderPort());
         report.notify(idTag);
     }
 

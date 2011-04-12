@@ -9,7 +9,7 @@ import jmri.Sensor;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidSensorManager;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.merg.MergRfidSensor;
+import jmri.jmrix.rfid.coreid.CoreIdRfidSensor;
 
 /**
  * Manage the Rfid-specific Sensor implementation.
@@ -19,7 +19,7 @@ import jmri.jmrix.rfid.merg.MergRfidSensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2007
  * @author      Matthew Harris Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @since       2.11.4
  */
 public class SpecificSensorManager extends RfidSensorManager {
@@ -40,8 +40,8 @@ public class SpecificSensorManager extends RfidSensorManager {
 
     protected Sensor createNewSensor(String systemName, String userName) {
         log.debug("Create new Sensor");
-        MergRfidSensor s;
-        s = new MergRfidSensor(systemName, userName);
+        CoreIdRfidSensor s;
+        s = new CoreIdRfidSensor(systemName, userName);
         s.addPropertyChangeListener(this);
         return s;
     }
@@ -61,7 +61,7 @@ public class SpecificSensorManager extends RfidSensorManager {
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(r.getTag());
-        MergRfidSensor sensor = (MergRfidSensor) provideSensor(prefix+typeLetter()+r.getReaderPort());
+        CoreIdRfidSensor sensor = (CoreIdRfidSensor) provideSensor(prefix+typeLetter()+r.getReaderPort());
         sensor.notify(idTag);
     }
 

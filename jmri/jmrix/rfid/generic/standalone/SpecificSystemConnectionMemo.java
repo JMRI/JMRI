@@ -1,6 +1,6 @@
 // SpecificSystemConnectionMemo.java
 
-package jmri.jmrix.rfid.merg.standalone;
+package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.InstanceManager;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
@@ -28,7 +28,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.1 $
  * @since       2.11.4
  */
 public class SpecificSystemConnectionMemo extends RfidSystemConnectionMemo {

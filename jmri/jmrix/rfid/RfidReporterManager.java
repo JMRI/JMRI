@@ -3,7 +3,6 @@
 package jmri.jmrix.rfid;
 
 import jmri.Reporter;
-import jmri.jmrix.rfid.merg.MergRfidReporter;
 import jmri.managers.AbstractReporterManager;
 
 /**
@@ -14,7 +13,7 @@ import jmri.managers.AbstractReporterManager;
  * <P>
  * @author      Bob Jacobsen    Copyright (C) 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 abstract public class RfidReporterManager extends AbstractReporterManager implements RfidListener {
@@ -30,18 +29,6 @@ abstract public class RfidReporterManager extends AbstractReporterManager implem
 
     public String getSystemPrefix() {
         return prefix;
-    }
-
-    protected Reporter createNewReporter(String systemName, String userName) {
-        log.debug("Create new Reporter: "+systemName);
-        if (!systemName.matches(prefix+typeLetter()+"["+tc.getRange()+"]")) {
-            log.warn("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
-            throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
-        }
-        MergRfidReporter r;
-        r = new MergRfidReporter(systemName, userName);
-        r.addPropertyChangeListener(this);
-        return r;
     }
 
     public void message(RfidMessage m) {
