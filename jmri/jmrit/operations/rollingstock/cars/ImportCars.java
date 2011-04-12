@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010 2011
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class ImportCars extends Thread {
 	
@@ -128,7 +128,7 @@ public class ImportCars extends Thread {
 			else
 				inputLine = line.split("\\s+");
 			
-			if (inputLine.length < 1){
+			if (inputLine.length < 1 || line.equals("")){
 				log.debug("Skipping blank line");
 				continue;
 			}
@@ -423,8 +423,13 @@ public class ImportCars extends Thread {
 //						log.debug("No location for car ("+carRoad+" "+carNumber+")");
 					}
 				}
-			}else{
-				log.info("Import line number " + lineNum + " missing one of six required car attributes");
+			}else if (!line.equals("")){
+				log.info("Car import line "+lineNum+" missing attributes: "+line);
+				JOptionPane.showMessageDialog(null, 
+						MessageFormat.format(rb.getString("ImportMissingAttributes"),new Object[]{lineNum}),
+						rb.getString("CarAttributeMissing"),
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			}
 		}
 		try {

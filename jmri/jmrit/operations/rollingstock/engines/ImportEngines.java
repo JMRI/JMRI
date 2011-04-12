@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class ImportEngines extends Thread {
 	
@@ -123,7 +123,7 @@ public class ImportEngines extends Thread {
 			else
 				inputLine = line.split("\\s+");
 			
-			if (inputLine.length < 1){
+			if (inputLine.length < 1 || line.equals("")){
 				log.debug("Skipping blank line");
 				continue;
 			}
@@ -354,8 +354,13 @@ public class ImportEngines extends Thread {
 //						log.debug("No location for engine ("+engineRoad+" "+engineNumber+")");
 					}
 				}
-			}else{
-				log.info("Import line number " + lineNum + " missing one of four required engine attributes");
+			} else if (!line.equals("")){
+				log.info("Engine import line "+lineNum+" missing attributes: "+line);
+				JOptionPane.showMessageDialog(null, 
+						MessageFormat.format(rb.getString("ImportMissingAttributes"),new Object[]{lineNum}),
+						rb.getString("EngineAttributeMissing"),
+						JOptionPane.ERROR_MESSAGE);
+				break;
 			}
 		}
 		try {
