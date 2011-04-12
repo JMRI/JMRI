@@ -62,7 +62,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.94 $
+ * @version $Revision: 1.95 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3700,10 +3700,14 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_OBLOCK:
                 testType =Conditional.TYPE_BLOCK_STATUS_EQUALS;
                 break;
+            default:
+                javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                        rbx.getString("ErrorVariableType"), rbx.getString("ErrorTitle"), 
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                return false;
         }
         _curVariable.setType(testType);
         if (log.isDebugEnabled()) log.debug("validateVariable: itemType= "+itemType+", testType= "+testType);
-		boolean result = false;
 		switch ( itemType ) {
             case Conditional.ITEM_TYPE_SENSOR:
                 name = validateSensorReference(name);
@@ -3723,7 +3727,6 @@ public class LogixTableAction extends AbstractTableAction {
                     return false;
                 }
                 _curVariable.setName(name);
-                result = _curVariable.evaluate();
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
                 name = validateLightReference(name);
@@ -3769,7 +3772,14 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 if (testType==Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     String appStr = (String)_variableSignalBox.getSelectedItem();
-                    _curVariable.setType(ConditionalVariable.stringToVariableTest(appStr));
+                    int type = ConditionalVariable.stringToVariableTest(appStr);
+                    if (type<0) {
+                        javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                                rbx.getString("ErrorAppearance"), rbx.getString("ErrorTitle"), 
+                                javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                    _curVariable.setType(type);
                     _curVariable.setDataString(appStr);
                     if (log.isDebugEnabled()) log.debug("SignalHead \""+name+"\"of type '"+testType+
                                                         "' _variableSignalBox.getSelectedItem()= "+
@@ -3782,6 +3792,12 @@ public class LogixTableAction extends AbstractTableAction {
                     return false;
                 }
                 if (testType==Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
+                    if (_variableSignalBox.getSelectedIndex()<=0) {
+                        javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                                rbx.getString("ErrorAspect"), rbx.getString("ErrorTitle"), 
+                                javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
                     // save the selected aspect for comparison
                     _curVariable.setDataString((String)_variableSignalBox.getSelectedItem());
   //                _curVariable.setType(ConditionalVariable.stringToVariableTest(appStr));
@@ -3804,12 +3820,23 @@ public class LogixTableAction extends AbstractTableAction {
                                                     "' _variableStateBox.getSelectedItem()= "+
                                                     _variableStateBox.getSelectedItem()); 
                 break;
+            default:
+                javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                        rbx.getString("ErrorVariableType"), rbx.getString("ErrorTitle"), 
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                return false;
 		}
         _curVariable.setName(name);
-        result = _curVariable.evaluate();
+        boolean result = _curVariable.evaluate();
         if (log.isDebugEnabled()) log.debug("State Variable \""+name+"\"of type '"+
                                             ConditionalVariable.getTestTypeString(testType)+
-                                            "' state= "+ result);
+                                            "' state= "+ result+" type= "+_curVariable.getType());
+        if (_curVariable.getType()==Conditional.TYPE_NONE) {
+            javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                    rbx.getString("ErrorVariableState"), rbx.getString("ErrorTitle"), 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 		return (true);
 	}   /* validateVariable */
 
