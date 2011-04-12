@@ -49,8 +49,13 @@
 # 2.30 beta - Modified "import" statements to reflect package structure of JMRI 2.9.x
 # 2.31 beta - Unified versions for JMRI 2.8 and 2.9.x and initialized block tracking at startup
 # 2.32 beta - Implementd "train start actions" and "AutoStart trains" option.
-# 2.33 beta - Enabled pause/resume buttons while script being stopped
-# 2.34 beta - Updated blinkSignals as previous methods were deprecated (Greg)
+# 2.33 beta - Enabled pause/resume buttons while script being stopped.
+# 2.34 beta - Updated blinkSignals as previous methods were deprecated (Greg).
+# 2.35 - Added $IFH (if held) command in schedule.
+# 2.35 - Added $TC and $TT (set turnout or accessory) commands in schedule.
+# 2.35 - Added $ST (Start at fast clock time) command in schedule.
+# 2.35 - Released throttle when train is in manual section.
+# 2.35 - Added custom section RGB colors.
 
 # JAVA imports
 
@@ -90,6 +95,10 @@ from javax.swing import JScrollPane
 from javax.swing import JTextArea
 from javax.swing import JTextField
 from javax.swing import JToggleButton
+from javax.swing import JSpinner
+from javax.swing import SpinnerNumberModel
+
+from javax.swing.event import ChangeListener
 
 from javax.swing.filechooser import FileFilter
 
@@ -135,6 +144,14 @@ class ADstaticMethod :
     def __init__(self, anycallable):
         self.__call__ = anycallable
 
+# Fast Clock Listener
+class FastListener(java.beans.PropertyChangeListener):
+  fastTime = 0
+
+  def propertyChange(self, event):
+    time = InstanceManager.timebaseInstance().getTime()
+    FastListener.fastTime = time.getHours() * 60 + time.getMinutes()
+    return
 
 # MAIN CLASS ==============
 
@@ -142,7 +159,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
 
 # CONSTANTS ==========================
 
-    version = "2.34"
+    version = "2.35"
     
     
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
@@ -182,6 +199,10 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     # Power monitor instance
     powerMonitor = None
     
+    # Fast Clock
+    fastBase = InstanceManager.timebaseInstance()
+    fastListener = FastListener()
+
     # Status variables
     error = False
     loop = False
@@ -725,7 +746,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         ADgridGroup.create()
 
         # Set manual indicator sensors to INACTIVE, otherwise they can be
-        # confused with signals (owing to the red apect)
+        # confused with signals (owing to the red aspect)
         for section in ADsection.getList() :
             if not section.isManual() :
                 section.setManual(False)
@@ -881,6 +902,8 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     # Start - Performed each time "Start" button is clicked
         # Clear number of running trains
         AutoDispatcher.runningTrains = 0
+        # Start fast clock listener
+        AutoDispatcher.fastBase.addMinuteChangeListener(AutoDispatcher.fastListener)
         # Set block occupancy listeners
         ADblock.setListeners()
         # Set sections manual control sensors listeners
@@ -948,8 +971,6 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         # Exit if there was an error or user clicked "STOP" button
         if AutoDispatcher.error or not AutoDispatcher.loop :
             # Cleanup before exiting
- #           ADmainMenu.pauseButton.enabled = False
- #           ADmainMenu.resumeButton.enabled = False
             # Wait for all trains to stop
             self.waitForStop()
             # Release engineers and throttles (if any)
@@ -964,6 +985,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
             # Remove listeners
             ADblock.removeListeners()
             ADsection.removeListeners()
+            AutoDispatcher.fastBase.removeMinuteChangeListener(AutoDispatcher.fastListener)
             # Restore original block colors and track width
             for block in ADblock.getList() :
                 block.restore()
@@ -990,7 +1012,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         if AutoDispatcher.repaint :
             AutoDispatcher.repaint = False
             self.layoutEditor.redrawPanel()
-        # Start trains that are eligeable (unless script is paused)
+        # Start trains that are eligible (unless script is paused)
         if not AutoDispatcher.paused :
             # At each iteration we try and start one train
             if len(ADtrain.trains) > 0 :
@@ -1505,7 +1527,8 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                 if (action == ADschedule.WAIT_FOR or
                    action == ADschedule.MANUAL_OTHER or
                    action == ADschedule.HELD or
-                   action == ADschedule.RELEASE) :
+                   action == ADschedule.RELEASE or
+                   action == ADschedule.IFH) :
                     value = value.getName()
                 pendingCommands.append([section, action, value, message])
             # Get name of last section on the route
@@ -3203,7 +3226,8 @@ class ADtrain :
                         if scheduleItem.value == None :
                             continue
                     elif (scheduleItem.action == ADschedule.HELD or
-                       scheduleItem.action == ADschedule.RELEASE) :
+                       scheduleItem.action == ADschedule.RELEASE or
+                       scheduleItem.action == ADschedule.IFH) :
                         scheduleItem.value = ADsignalMast.getByName(
                           scheduleItem.value)
                         if scheduleItem.value == None :
@@ -3248,6 +3272,8 @@ class ADtrain :
         self.trainSpeed = []
         # Train departure time (-1L = immediate)
         self.departureTime = -1L
+        # Departure time based on fast clock
+        self.fastClock = False
         # Indicator that train is waiting for a section to become free
         # (None = no wait)
         self.waitFor = None
@@ -3908,7 +3934,7 @@ class ADtrain :
                     continue
                 if useFastClock :
                     value = (value * 60.
-                  / InstanceManager.timebaseInstance().getRate())
+                  / AutoDispatcher.fastBase.getRate())
                 sleep(value)
             # Play AudioClip
             elif s.startswith("S:") :
@@ -3916,6 +3942,19 @@ class ADtrain :
                     value = ADsettings.soundDic.get(sl[2:], None)
                     if value != None :
                         value.play()
+                except :
+                    continue
+            # Set turnout
+            elif s.startswith("TC:") or s.startswith("TT:") :
+                try :
+                    value = sl[3:]
+                    t = InstanceManager.turnoutManagerInstance().getTurnout(value)
+                    if s.startswith("TC:") :
+                        t.setState(Turnout.CLOSED)
+                        AutoDispatcher.message("Closed turnout " + value)
+                    else :
+                        t.setState(Turnout.THROWN)
+                        AutoDispatcher.message("Thrown turnout " + value)                   
                 except :
                     continue
 
@@ -4183,26 +4222,38 @@ class ADtrain :
         # If the train is nowhere, exit!
         if self.section == None :
             return
-        # Assign engineer, if not yet done
         loco = self.locomotive
-        if not self.engineerAssigned :
-            self.assignEngineer()
+        # Is train in a manually controlled section?
+        if self.section.isManual() :
+            # Manual section, release throttle if train stopped
+            if (not self.running and 
+               self.locomotive != None and self.locomotive.throttle != None and
+               self.locomotive.getThrottleSpeed() <= 0) :
+                self.locomotive.releaseThrottle()
+        else:
+            # Not manual section - Assign engineer, if not yet done
+            if not self.engineerAssigned :
+                self.assignEngineer()
+                if loco != None :
+                    if self.engineerSetLocomotive != None :
+                        self.callEngineer(self.engineerSetLocomotive, loco)
+                    else :
+                        self.callEngineer(self.engineerSetLocoName, loco.getName())
+            # Does train have a locomotive?
             if loco != None :
-                if self.callEngineer != None :
-                    self.callEngineer(self.engineerSetLocomotive, loco)
-                else :
-                     self.callEngineer(self.engineerSetLocoName, loco.getName())
-        # Does train have a locomotive?
-        if loco != None :
-            # Assign throttle, if not yet done
-            # (only if engineer implements setLocomotive method, otherwise
-            # having a locomotive is useless)
-            if (not loco.throttleAssigned and
-               self.engineerSetLocomotive != None) :
-                loco.assignThrottle()
+                # Assign throttle, if not yet done
+                # (only if engineer implements setLocomotive method, otherwise
+                # having a locomotive is useless)
+                if (not loco.throttleAssigned and
+                   self.engineerSetLocomotive != None) :
+                    loco.assignThrottle()
+                    return
         # If train is paused, check if time has expired
         if self.departureTime > -1L :
-            if self.departureTime > System.currentTimeMillis() :
+            if self.fastClock :
+                if self.departureTime > FastListener.fastTime :
+                    return
+            elif self.departureTime > System.currentTimeMillis() :
                 return
             self.departureTime = -1L
             self.outputSpeed(self.speedLevel)
@@ -4235,7 +4286,7 @@ class ADtrain :
             if scheduleItem.action != ADschedule.GOTO :
                 # Take care of possible $IF commands
                 scheduleItem = self.schedule.testCondition(scheduleItem,
-                  self.destination)
+                  self.destination, self.direction)
                 # Now execute this command
                 self.processCommands(scheduleItem)
                 # and pick up the next one
@@ -4523,6 +4574,7 @@ class ADtrain :
             # Delay next commands
             delay = int(scheduleItem.value * 1000.)
             if delay > 0 :
+                self.fastClock = False
                 self.departureTime = (System.currentTimeMillis() + delay)
             return
         if scheduleItem.action == ADschedule.MANUAL_PRESENT :
@@ -4589,15 +4641,51 @@ class ADtrain :
             delay = int(scheduleItem.value * 1000.)
             if delay > 0 :
                 # Pause - Compute departure time
+                self.fastClock = False
                 self.departureTime = (System.currentTimeMillis() + delay)
                 self.destinationSwing.setText("$P"+str(scheduleItem.value))
+                self.updateSwing()
+            return
+        if scheduleItem.action == ADschedule.START_AT :
+            if scheduleItem.value > FastListener.fastTime :
+                self.fastClock = True
+                self.departureTime = scheduleItem.value
+                hours = int(scheduleItem.value/60)
+                minutes = scheduleItem.value - hours * 60
+                if minutes > 9 :
+                    hours = str(hours) + ":" + str(minutes)
+                else :
+                    hours = str(hours) + ":0" + str(minutes)
+                AutoDispatcher.message("Train " + self.name + " waiting until " + hours)
+                self.destinationSwing.setText("$ST "+ hours)
                 self.updateSwing()
             return
         if scheduleItem.action == ADschedule.SOUND :
             # Play sound
             scheduleItem.value.play()
             return
-
+        if (scheduleItem.action == ADschedule.TC or
+           scheduleItem.action == ADschedule.TT) :
+            # Set turnout (or other accessory)
+            try :
+                t = InstanceManager.turnoutManagerInstance().getTurnout(scheduleItem.value)
+            except :
+                t = None
+            if t == None :
+                AutoDispatcher.log("Error in schedule of train \"" + self.name + "\":")
+                AutoDispatcher.chimeLog("  Unknown turnout \"" + scheduleItem.value + "\"")
+                self.status = ADtrain.ERROR
+                return
+            if scheduleItem.action == ADschedule.TC :
+                t.setState(Turnout.CLOSED)
+                AutoDispatcher.message("Train " + self.name + " : closed turnout "
+                 + scheduleItem.value)
+            else :
+                t.setState(Turnout.THROWN)
+                AutoDispatcher.message("Train " + self.name + " : thrown turnout "
+                 + scheduleItem.value)
+            return            
+             
     def switchToManual(self, section) :
         # Try switching the section to Manual control
         section.setManual(True)
@@ -4971,7 +5059,7 @@ class ADlocomotive :
         if not AutoDispatcher.paused and not AutoDispatcher.stopped :
             AutoDispatcher.message("Locomotive " + self.name + " at speed "
               + str(self.targetSpeed))
-
+    
     def updateMeter(self) :
         # Updates locomotive's operation time
         # Called when the locomotive is stopped
@@ -5957,11 +6045,38 @@ class ADsettings :
         return ADsettings.units 
     getUnits = ADstaticMethod(getUnits)
 
+    def stringToColor(c) :
+        # Convert a string into a color
+        if c.startswith("R:") :
+            # Custom RGB color
+            r = int(c[2:5])
+            g = int(c[7:10])
+            b = int(c[12:])
+            return Color(r, g, b) 
+        # Standard Java color
+        return ADsettings.colors[c]
+    stringToColor = ADstaticMethod(stringToColor)
+
+    def rgbToString(rgb) :
+        # Build a color string "R:rrrG:gggB:bbb"
+        lab = ["R:", "G:", "B:"]
+        out = ""
+        for j in range(3) :
+            out += lab[j]
+            c = rgb[j]
+            if c < 100 :
+                out += "0"
+                if c < 10 :
+                    out += "0"
+            out += str(c)
+        return out
+    rgbToString = ADstaticMethod(rgbToString)
+ 
     def initColors() :
         # Convert colors from strings to JAVA constants
         ADsettings.sectionColor = []
         for c in ADsettings.colorTable :
-            ADsettings.sectionColor.append(ADsettings.colors[c])
+            ADsettings.sectionColor.append(ADsettings.stringToColor(c))
     initColors = ADstaticMethod(initColors)
 
     def save(file, sections, blocks) :
@@ -6133,23 +6248,27 @@ class ADschedule :
     END_ALTERNATIVE = -1
     STOP = 0
     PAUSE = 1
-    CCW = 2
-    CW = 3
-    WAIT_FOR = 4
-    IFE = 5
-    IFAT = 6
-    MANUAL_PRESENT = 7
+    START_AT = 2
+    CCW = 3
+    CW = 4
+    WAIT_FOR = 5
+    IFE = 6
+    IFAT = 7
+    IFH = 8
+    MANUAL_PRESENT = 9
     # Actions that can be executed while train is running
-    GOTO = 8
-    SWON = 9
-    SWOFF = 10
-    HELD = 11
-    RELEASE = 12
-    SET_F_ON = 13
-    SET_F_OFF = 14
-    DELAY = 15
-    MANUAL_OTHER = 16
-    SOUND = 17
+    GOTO = 10
+    SWON = 11
+    SWOFF = 12
+    HELD = 13
+    RELEASE = 14
+    SET_F_ON = 15
+    SET_F_OFF = 16
+    DELAY = 17
+    MANUAL_OTHER = 18
+    SOUND = 19
+    TC = 20
+    TT = 21
     
     def __init__(self, text) :
         # Save original text
@@ -6312,16 +6431,35 @@ class ADschedule :
         # Test for $ prefixed commands
         if s.startswith("$IF") :
            # Start of test
+            self.push()
+            self.test = True
+            self.alternative = False
+            self.repeating = False
             i=s.find(":")
+            if s.startswith("$IFH") :
+                newItem.action = ADschedule.IFH
+                if s == "$IFH" :
+                    newItem.value = None
+                    self.condition = True
+                    self.ifStart = True
+                    return newItem
+                if i < 0 :
+                    self.error = True
+                    newItem.action = ADschedule.ERROR
+                    newItem.message = "Wrong format \"" + sl +"\""
+                    return newItem
+                self.__getSignal(sl, newItem)
+                if newItem.action == ADschedule.ERROR :
+                    self.error = True
+                else :
+                    self.condition = True
+                    self.ifStart = True
+                return newItem
             if i < 0 :
                 self.error = True
                 newItem.action = ADschedule.ERROR
                 newItem.message = "Wrong format \"" + sl +"\""
                 return newItem
-            self.push()
-            self.test = True
-            self.alternative = False
-            self.repeating = False
             newItem.value = self.__getArgs(sl[i+1:])
             if len(newItem.value) == 0 :
                 self.error = True
@@ -6419,7 +6557,7 @@ class ADschedule :
                 return newItem
             if useFastClock :
                 newItem.value = (newItem.value * 60.
-                  / InstanceManager.timebaseInstance().getRate())
+                  / AutoDispatcher.fastBase.getRate())
             if s.startswith("$P") :         
                 newItem.action = ADschedule.PAUSE
             else :
@@ -6448,23 +6586,14 @@ class ADschedule :
         if s.startswith("$H:") :
             # $H:signalName sets a signal to "Held" state
             newItem.action = ADschedule.HELD
+            self.__getSignal(sl, newItem)
+            self.error = newItem.action == ADschedule.ERROR
+            return newItem
         elif s.startswith("$R:") :
             # $R:signalName removes the "Held" state
             newItem.action = ADschedule.RELEASE
-        if newItem.action != ADschedule.ERROR :
-            try :
-                signalName = sl[3:]
-            except :
-                self.error = True
-                newItem.action = ADschedule.ERROR
-                newItem.message = "Missing signal name \"" + sl + "\""
-                return newItem
-            # retrieve signal
-            newItem.value = ADsignalMast.getByName(signalName)
-            if newItem.value == None :
-                self.error = True
-                newItem.action = ADschedule.ERROR
-                newItem.message = "Unknown signal \"" + sl + "\""
+            self.__getSignal(sl, newItem)
+            self.error = newItem.action == ADschedule.ERROR
             return newItem
         # Decoder functions (F0-F28)
         if s.startswith("$ON:F") :
@@ -6535,6 +6664,43 @@ class ADschedule :
                 return newItem
             newItem.action = ADschedule.SOUND
             return newItem
+        # Set turnout
+        if s.startswith("$TC:") or s.startswith("$TT:") :
+            try :
+                newItem.value = sl[4:]
+            except :
+                newItem.value = None
+            if newItem.value == None or newItem.value == "" :
+                self.error = True
+                newItem.action = ADschedule.ERROR
+                newItem.message = "Missing turnout name \"" + sl + "\""
+                return newItem
+            if s.startswith("$TC:") :
+                newItem.action = ADschedule.TC
+            else :
+                newItem.action = ADschedule.TT
+            return newItem
+        # Start time (using Fast Clock)
+        if s.startswith("$ST:") :
+            try:
+                minutes = hours = 0
+                time = sl[4:]
+                i=time.find(":")
+                if i < 0 :
+                    hours = int(time)
+                else :
+                    hours = time[0:i]
+                    hours = int (hours)
+                    minutes = time[i+1:]
+                    minutes = int (minutes)
+                newItem.value = hours * 60 + minutes
+            except :
+                self.error = True
+                newItem.action = ADschedule.ERROR
+                newItem.message = "Wrong time value \"" + sl + "\""
+                return newItem
+            newItem.action = ADschedule.START_AT
+            return newItem
         #If no command prefixed by $ was found
         # argument should be a section name
         newItem.value = ADsection.getByName(sl)
@@ -6564,8 +6730,26 @@ class ADschedule :
             while newItem.action == ADschedule.GOTO :
                 argList.append(newItem.value)
                 newItem = self.__getNextItem()
+            self.next()
+            self.pointer -=1
             self.alternative = False
         return argList
+
+    def __getSignal(self, arg, newItem) :
+        # Get argument for commands expecting a signal name
+            i=arg.find(":")
+            try :
+                signalName = arg[i+1:]
+            except :
+                newItem.action = ADschedule.ERROR
+                newItem.message = "Missing signal name \"" + arg + "\""
+                return
+            # retrieve signal
+            newItem.value = ADsignalMast.getByName(signalName)
+            if newItem.value == None :
+                newItem.action = ADschedule.ERROR
+                newItem.message = "Unknown signal \"" + arg + "\""
+            return
 
     def getNextAlternative(self) :
         # Loop among alternative destinations
@@ -6609,7 +6793,7 @@ class ADschedule :
             self.firstCall = True
         return self.getNextAlternative()
         
-    def testCondition(self, item, section) :
+    def testCondition(self, item, section, direction) :
         # Set test results for $IFAT and $IFE
         condition = False
         if item.action == ADschedule.IFAT :
@@ -6624,6 +6808,12 @@ class ADschedule :
                 if arg.isAvailable() :
                     condition = True
                     break
+        # Set test results for $IFH
+        elif item.action == ADschedule.IFH :
+            signal = item.value
+            if signal == None :
+                signal = section.getSignal(direction)
+            condition = signal.isHeld()
         else :
             # No $IF command - return present item
             return item
@@ -6631,9 +6821,11 @@ class ADschedule :
         if self.ifStart :
             # Apply test results
             self.condition = condition
-            self.next()
+
         # Return next schedule item
-        return self.getFirstAlternative()
+        item.action = ADschedule.END_ALTERNATIVE
+#        return self.getFirstAlternative()
+        return item
 
     def push(self) :
         # Internal method - pushes status into the internal stack
@@ -6668,7 +6860,7 @@ class ADschedule :
             if self.looping :
                 break
             item = self.getFirstAlternative()
-            item = self.testCondition(item, section)
+            item = self.testCondition(item, section, direction)
             while item.action == ADschedule.GOTO :
                 if item.value == section :
                     # Move to next destination
@@ -7480,25 +7672,64 @@ class ADpanelFrame (AdFrame) :
         
         temppane1 = JPanel()
         temppane1.setBorder(ADmainMenu.spacing)
+
         temppane2 = JPanel()
         temppane2.setBorder(ADmainMenu.blackline)
-        temppane2.setLayout(GridLayout(len(ADsettings.colorTable)+1, 2))
-        
+        temppane2.setLayout(GridLayout(len(ADsettings.colorTable)+1, 3))
         temppane2.add(JLabel(" Section"))
-        temppane2.add(JLabel("Color"))
+        temppane2.add(AutoDispatcher.centerLabel("Color"))
+
+        temppane3 = JPanel()
+        temppane3.setLayout(GridLayout(1, 4))
+        temppane3.add(AutoDispatcher.centerLabel("R"))
+        temppane3.add(AutoDispatcher.centerLabel("G"))
+        temppane3.add(AutoDispatcher.centerLabel("B"))
+        temppane3.add(JLabel(""))
+        temppane2.add(temppane3)
 
         self.colorLabels = []
         self.colorSwing = []
+        self.colorPanes = []
+        self.rgb = []
         colorList = ADsettings.colors.keys()
-        
+        colorList.append("CUSTOM")
+ 
+        self.colorListener = ADcolorListener()
+
         for i in range(len(ADsettings.colorTable)) :
             self.colorLabels.append(JLabel(""))
             temppane2.add(self.colorLabels[i])
             self.colorSwing.append(JComboBox(colorList))
-            self.colorSwing[i].setSelectedItem(ADsettings.colorTable[i])
+            c = ADsettings.colorTable[i]
+            isCustom = c.startswith("R:")
+            if isCustom :
+                self.colorSwing[i].setSelectedItem("CUSTOM")
+                rgbValues = [int(c[2:5]), int(c[7:10]), int(c[12:])]
+            else :
+                self.colorSwing[i].setSelectedItem(c)
+                rgbValues = [0,0,0]
+            self.colorSwing[i].setActionCommand(str(i))
+            self.colorSwing[i].addActionListener(self.colorListener)
             self.colorSwing[i].enabled = ADsettings.useCustomColors
             temppane2.add(self.colorSwing[i])
-        
+            colorPane = JPanel()
+            colorPane.setBorder(ADmainMenu.blackline)
+            colorPane.setBackground(ADsettings.sectionColor[i])
+            self.colorPanes.append(colorPane)
+            rgbItem = []
+            rgbPane = JPanel()
+            rgbPane.setLayout(GridLayout(1, 4))
+            rgbListener = ADrgbListener(i)
+            for j in range(3) :
+                rgbItem.append(JSpinner(SpinnerNumberModel(rgbValues[j],0,255,1)))
+                tf = rgbItem[j].getEditor().getTextField()
+                tf.setColumns(2)
+                rgbItem[j].setEnabled(isCustom)
+                rgbItem[j].addChangeListener(rgbListener)
+                rgbPane.add(rgbItem[j])
+            self.rgb.append(rgbItem)
+            rgbPane.add(self.colorPanes[i])
+            temppane2.add(rgbPane)        
         self.setColorLabels()
         temppane1.add(temppane2)
         temppane.add(temppane1, BorderLayout.CENTER);
@@ -7553,6 +7784,14 @@ class ADpanelFrame (AdFrame) :
         for i in range(len(self.colorLabels)) :
             self.colorLabels[i].setText(sectionType[i])
 
+    # Get input RGB values and convert them to string
+    def getRGBinput(self,i) :
+        c = []
+        for j in range(3) :
+            c.append(self.rgb[i][j].getValue())
+        return ADsettings.rgbToString(c)
+       
+    
     # Buttons of Panel window =================
 
     # define what Standard Colors button in Panel Window does when clicked
@@ -7575,14 +7814,41 @@ class ADpanelFrame (AdFrame) :
     # define what Apply button in Panel Window does when clicked
     def whenApplyClicked(self,event) :
         for i in range(len(self.colorLabels)) :
-            ADsettings.colorTable[i] = (
-              self.colorSwing[i].getSelectedItem())
+            c = self.colorSwing[i].getSelectedItem()
+            if c == "CUSTOM" :
+                c = AutoDispatcher.panelFrame.getRGBinput(i)
+            ADsettings.colorTable[i] = c
         ADsettings.initColors()
         ADsettings.useCustomColors = self.customColorButton.selected
         ADsettings.useCustomWidth = self.customWidthButton.selected
         AutoDispatcher.setPreferencesDirty()
         AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND,
           "Panel changes applied")
+
+    # Listener for the color ComboBox =================       
+class ADcolorListener(ActionListener) :
+    def actionPerformed(self, event) :
+        i = int(event.getActionCommand())
+        c = AutoDispatcher.panelFrame.colorSwing[i].getSelectedItem()
+        isCustom = c == "CUSTOM"
+        for j in range(3) :
+            AutoDispatcher.panelFrame.rgb[i][j].setEnabled(isCustom)
+        if isCustom :
+            c = AutoDispatcher.panelFrame.getRGBinput(i)
+        AutoDispatcher.panelFrame.colorPanes[i].setBackground(ADsettings.stringToColor(c))
+
+    # Listener for the rgb text fields =================       
+class ADrgbListener(ChangeListener) :
+    def __init__(self, ind) :
+        self.i = ind
+        
+    def stateChanged(self, event) :
+        c = AutoDispatcher.panelFrame.colorSwing[self.i].getSelectedItem()
+        if c != "CUSTOM" :
+            return
+        c = AutoDispatcher.panelFrame.getRGBinput(self.i)
+        p = AutoDispatcher.panelFrame.colorPanes[self.i]
+        p.setBackground(ADsettings.stringToColor(c))
 
     # Our Abstract frame with a scroll pane =================
 
@@ -7631,7 +7897,7 @@ class AdScrollFrame (AdFrame) :
         if self.header != None :
             #Get panel size
             headerSize = self.header.getPreferredSize()
-            # Make sure header and scrollarea have the save width
+            # Make sure header and scrollarea have the same width
             if headerSize.width < self.scrollSize.width :
                 headerSize.width = self.scrollSize.width
                 self.header.setPreferredSize(headerSize)
