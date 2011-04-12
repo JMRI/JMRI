@@ -23,7 +23,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -62,7 +62,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         if (log.isDebugEnabled()) {
             log.debug("buffer contains:");
             for (int j = 0; j<i; j++) 
-                log.debug(" "+j+":"+new String(inputLines[j]).replaceAll("\\n"," ").replaceAll("\\r"," "));
+                log.debug(" "+j+":"+inputLines[j].replaceAll("\\n"," ").replaceAll("\\r"," "));
             log.debug("end buffer");
         }
         
