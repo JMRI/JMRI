@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.39 2011-04-12 13:23:57 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.40 2011-04-12 14:21:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,12 +49,27 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
-<li>
-<li>
-<li>
-<li>
+<li>The release notes are arranged by contributor now. 
+    This not only gives credit to the hard work behind each individual contribution, 
+    but also helps provide a bit more organization, 
+    as each developer tends to have a particular part of the code they focus on
+<li>Big news for those who find the standard JMRI font too big or too small. 
+    You can now change it via Preferences &gt; Display
+<li>Numerous improvements to Operations
+<li>The LocoNet monitor translates additional commands into plain English
+<li>Fixes glitches in the CP290 and Insteon powerline interfaces
+<li>Improvements to the JMRI installer allows the Windows Task Manager to properly display 
+    the names of the various JMRI applications
+<li>Assorted bug fixes and improvements to the Layout, Panel and Control Panel editors
+<li>JMRI throttles now feature icons for the throttle and function buttons 
+    (you can turn them off if you don't like them)
+<li>The 1st pieces of the Aspect Signaling system are coming into place. 
+    With this release you can assign speeds in the block and turnout tables. 
+    These speeds are also available to the various automation tools such as the Robot Throttle and AutoDispatcher
+<li>Cleared out a couple big bottlenecks in the Mini-Web Server. 
+    Web based throttles and panels should should now have a lot more "snap" to them
+<li>Various additions and corrections to the decoder files, 
+    with an especially large contribution of definitions for the newer Digitrax sound decoders
 </ul>
 along with other changes.  See the complete list below.
 
@@ -277,6 +292,11 @@ and also a 10745 Roco decoder file (no long address settings).
 
 <p>
 Updated the NMRA manufacturer code list with values to March 8, 2011.
+
+<p>
+Giorgio Terdina released a new version of AutoDispatcher, 
+supporting user-defined track colors and including new schedule commands to 
+test the held state of signal heads and to operate turnouts and accessories like level crossings.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
