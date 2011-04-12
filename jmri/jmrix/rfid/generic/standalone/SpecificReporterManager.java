@@ -19,7 +19,7 @@ import jmri.jmrix.rfid.coreid.CoreIdRfidReporter;
  * <P>
  * @author      Bob Jacobsen    Copyright (C) 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class SpecificReporterManager extends RfidReporterManager {
@@ -28,7 +28,7 @@ public class SpecificReporterManager extends RfidReporterManager {
     private String prefix;
 
     public SpecificReporterManager(RfidTrafficController tc, String prefix) {
-        super(tc, prefix);
+        super(prefix);
         this.tc = tc;
         this.prefix = prefix;
         attach();
