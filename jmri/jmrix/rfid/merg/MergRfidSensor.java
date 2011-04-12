@@ -29,7 +29,7 @@ import jmri.jmrix.rfid.RfidSensor;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class MergRfidSensor extends RfidSensor {
@@ -93,6 +93,8 @@ public class MergRfidSensor extends RfidSensor {
 
     }
 
+    static final long serialVersionUID = 5290531989069550265L;
+    
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergRfidSensor.class.getName());
 
 }
