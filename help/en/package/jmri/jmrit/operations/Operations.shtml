@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.104 2011-04-08 13:24:13 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.105 2011-04-12 15:31:29 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1018,15 +1018,16 @@ and the adjacent text window can be used to find a car by its number.
 
 If you already have a list of cars in a database, you can import the
 cars into the program. The import function requires an ACSII text file,
-with one line for each car. The import order is car number, car road
-name, car type, car length, car weight, car color. The following shows
-two examples of the correct format:
+with one line for each car. The car import requires six attributes and
+the order is car number, road name, type, length, weight, and color. All six
+car attributes are required for the import to work correctly. The
+following shows two examples of the correct format:
 
 <P>336 GCR Flat 40 3.8 Black
  <BR>655578 UP Boxcar 40 3.8 Yellow</P>
 
 <P>Each line can start with a space and multiple spaces between
-fields is okay. Optionally you can include additional information in the
+fields is okay. Optionally you can include additional attributes in the
 following order, owner name, date built, and location. The location can
 have two fields, the location name followed by the location's siding or
 yard name separated by a hyphen. The following shows two examples of the
@@ -1330,14 +1331,15 @@ correctly calculate your train lengths.
 <H3>Import Locomotives from a File</H3>
 
 The import from file function requires an ACSII text file, with one line
-for each locomotive. The import order is locomotive number, road name,
-model, and length. The following shows two examples of the
-correct format:
+for each locomotive. The locomotive import requires four attributes and
+order is locomotive number, road name, model, and length. All four attributes
+are required for the import to work correctly. The following
+shows two examples of the correct format:
 
 <P>236 UP RS4 40 <BR>
 5578 SP SW1200 42</P>
 <P>Each line can start with a space and multiple spaces between
-fields is okay. Optionally you can include additional information in the
+fields is okay. Optionally you can include additional attributes in the
 following order, owner name, date built, and location. The location can
 have two fields, the location name followed by the location's siding or
 yard name separated by a hyphen. The following shows two examples of the
