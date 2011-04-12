@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.145 $
+ * @version             $Revision: 1.146 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -2189,21 +2189,23 @@ public class TrainBuilder extends TrainCommon{
 		int cars = 0;
 		int emptyCars = 0;
 		boolean work = false;
+		boolean newWork = false;
 		String previousRouteLocationName = null;
 		List<String> routeList = train.getRoute().getLocationsBySequenceList();
 		for (int r = 0; r < routeList.size(); r++) {
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
-			// add line break between locations with work
+			// add line break between locations without work and ones with work
 			boolean oldWork = work;
 			work = isThereWorkAtLocation(carList, rl);
-			if (oldWork == true && work == false)
-				newLine(fileOut);
+			if (oldWork == false && work == true)
+				newLine(fileOut);		
 			
 			// print info only if new location
 			String routeLocationName = splitString(rl.getName());
-			if (!routeLocationName.equals(previousRouteLocationName)){
+			if (!routeLocationName.equals(previousRouteLocationName) ||
+					(routeLocationName.equals(previousRouteLocationName) && oldWork == false && work == true && newWork == false)){
 				if (work){
-					newLine(fileOut);	// add space between locations with work
+					newWork = true;
 					if (r == 0){
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
@@ -2216,6 +2218,7 @@ public class TrainBuilder extends TrainCommon{
 					}
 				// no work at location
 				} else {
+					newWork = false;
 					if (r == 0){
 						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName})
 								+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
@@ -2285,7 +2288,7 @@ public class TrainBuilder extends TrainCommon{
 				// Is the next location the same as the previous?
 				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
 				String nextRouteLocationName = splitString(rlNext.getName());
-				if (!routeLocationName.equals(nextRouteLocationName) && work){
+				if (!routeLocationName.equals(nextRouteLocationName) && newWork){
 					if (Setup.isPrintLoadsAndEmptiesEnabled()){
 						addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
 								+ rb.getString("boundWith") +" " + (cars-emptyCars) + " " +rb.getString("Loads")
@@ -2296,6 +2299,7 @@ public class TrainBuilder extends TrainCommon{
 								+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
 								+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 					}
+					newLine(fileOut);
 				}
 			} else {
 				dropEngines(fileOut, engineList, rl);
