@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Sensors.shtml,v 1.6 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: Sensors.shtml,v 1.7 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -84,30 +84,33 @@ the Sensor Table, and click the
 <a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><b>Add...</b></a>
 button at the bottom of the 
 table to bring up the Add/Edit Sensor window.</p>
-	<li><p>Enter a system name, according to the 
-<a href="../doc/Technical/Names.shtml">JMRI convention</a>. 
-The first letter 
-<a href="../doc/Technical/Names.shtml#hardware">designates your hardware system</a>
- ('L' for loconet, 'C" for C/MRI,
-etc.), and the second letter must be 'S' for Sensor. 
-These are followed by
-a number that gives the 
-<a href="../doc/Technical/Names.shtml#systeminfo">hardware address of the input connection</a> 
-being referenced.  
-Examples of valid system addresses are: CS1004, and LS401, 
-assuming you have C/MRI or Loconet hardware respectively; there are 
-<a href="../hardware/index.shtml">lots of other systems supported.</a></p>
+	<li><p>From the <b>System</b> drop down list select the system to which the 
+    sensor is connected to.  In the <b>Hardware Address</b> enter in the
+    <a href="../doc/Technical/Names.shtml#systeminfo">hardware address of the input connection</a> 
+    being referenced.<br>The format of the Hardware Address can often be made in 
+    the format of "board:channel" or "Cab Address:Pin", you will need to confirm 
+    the specifics of each system using the following <a href="../doc/Technical/Names.shtml#systeminfo">link</a>
+    
 	</li>
 	<li><p>Enter a user name. Any string of characters that is different 
 from the user name of other Sensors will be accepted, but it's 
 wise to use a string that describes the intended use of the Sensor.
 You can leave this blank if you'd like.</p>
 	</li>
-	<li><p>Click the <b>Create</b> button at the bottom of the window.  
+    
+    <li><p>If you wish to add a number of sensors at once, click on the 
+    <b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
+    in the number of sensors that you wish to add.  If you have entered a user
+    name, then this will be appended with a number to ensure that each user name
+    is unique.  If a hardware address already exists in the block that is being
+    added, then the system will skip that address and will carry on.
+    </li>
+
+	<li><p>Click the <b>OK</b> button at the bottom of the window.  
 If everything is fine, a message stating "New Sensor added ... " will be 
 displayed in the notes area. If there is trouble with anything, an error or 
 warning message will be displayed in the notes area; you should then
-correct the error and click <b>Create</b> again.</p>
+correct the error and click <b>OK</b> again.</p>
     </li>
     <LI><P>Back in the main Sensor Table, you can then see the current
     status of the Sensor.

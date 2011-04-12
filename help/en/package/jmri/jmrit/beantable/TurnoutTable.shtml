@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.14 2010-03-07 08:15:37 kevin-dickerson Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.15 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -133,6 +133,20 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.
 	need to specify the number of pushbuttons for NCE. Unfortunately, NCE
 	revisions A and B accessory decoders do not support pushbutton lockout.</P>
 	</DD>
+    <DT><a name="speeds">Closed and Thrown Speed</A></DT>
+    <DD>The closed and thrown speed is used with certain automation tools and logic, 
+    to help determine the speed at which a train can be set through the turnout 
+    when it is set to different states.  It is also used by the signal mast logic for
+    determining which aspect should be displayed on a signal mast.
+    <P>In the drop down list, you are presented a set of named fixed speeds that
+    have been predefined in the signalSpeed.xml file, in addition to a global and
+    use block speed options.<br>In addition it is also possible to enter in a 
+    numerical value to represent a speed.
+    <p>The global value is set via the <b>Speeds</b> menu option.
+    <p>When "Use Block Speed" is selected this in effect tells any automation
+    tool to ignore the speed setting through this turnout, the tool should then
+    only consider speeds that are set on blocks.
+    </DD>
 </DL>
 
 <H3>Turnout Table Controls</H3>

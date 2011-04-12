@@ -1,7 +1,7 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
-<!-- $Id: XNetAddressing.shtml,v 1.2 2010-01-08 19:37:00 pbender Exp $ -->
+<!-- $Id: XNetAddressing.shtml,v 1.3 2011-04-12 16:17:59 kevin-dickerson Exp $ -->
    <title>Lenz Feedback Bus Addressing</title>
 
 <!-- Style -->
@@ -98,6 +98,10 @@ For Example, if you are using contact 3 on a Feedback Encoder with address
 99, 99 - 1 = 98.  98*8=784.  784+3=787.  The feedback address you will use 
 is 787.
 </p>
+
+<p>In the hardware address field of the Add Sensor window you can enter in the 
+encoder address, followed by the contact seperated by a ":"<br>
+So for a sensor on feedback encoder address 99, contact 3 you would enter <b>99:3</b></p>
 <p>
 In JMRI's tools, you can prefix the address with XS to tell system the 
 Sensor is accessed via an XPressNet based system.  If you only have an 

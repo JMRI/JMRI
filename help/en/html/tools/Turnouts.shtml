@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Turnouts.shtml,v 1.3 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: Turnouts.shtml,v 1.4 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -71,23 +71,27 @@ in the <b>Panel</b> menu.
 	<li><p>Click <b>Turnout Table</b> in the <b>Tools</b> menu to bring up
 the Turnout Table, and click the <b>Add...</b> button at the bottom of the 
 table to bring up the Add/Edit Turnout window.</p>
-	<li><p>Enter a system name, according to the JMRI convention. The first
-letter designates your hardware system ('L' for loconet, 'C" for C/MRI,
-etc.), and the second letter must be 'T' for Turnout. These are followed by
-a number that gives the hardware address of the digital output bit being
-referenced.  Examples of valid system addresses are: CT1004, and LT401, 
-assuming you have the hardware for the addressed digital output bits.</p>
+	<li><p>From the <b>System</b> drop down list select the system to which the 
+    turnout address is connected to.  In the <b>Hardware Address</b> enter in the
+    dcc accessory address of the turnout</p>
 	</li>
 	<li><p>Enter a user name. Any string of characters that is different 
 from the user name of other Turnouts will be accepted, but it's 
 wise to use a string that describes the intended use of the Turnout.
 You can leave this blank if you'd like.</p>
 	</li>
-	<li><p>Click the <b>Create</b> button at the bottom of the window.  
+    <li><p>If you wish to add a number of turnouts at once, click on the 
+    <b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
+    in the number of turnouts that you wish to add.  If you have entered a user
+    name, then this will be appended with a number to ensure that each user name
+    is unique.  If a hardware address already exists in the block that is being
+    added, then the system will skip that address and will carry on.
+    </li>
+	<li><p>Click the <b>OK</b> button at the bottom of the window.  
 If everything is fine, a message stating "New Turnout added ... " will be 
 displayed in the notes area. If there is trouble with anything, an error or 
 warning message will be displayed in the notes area; you should then
-correct the error and click <b>Create</b> again.</p>
+correct the error and click <b>OK</b> again.</p>
     </li>
     <LI><P>Back in the main Turnout Table, you can then select
 options for the Turnout and control it by clicking on the state button.

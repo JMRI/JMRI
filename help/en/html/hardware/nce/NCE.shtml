@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.27 2010-09-04 16:17:26 ken_c Exp $ -->
+<!-- $Id: NCE.shtml,v 1.28 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -147,6 +147,10 @@ of a specific sensor input.
 BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = (50 - 1) * 16 + (2) -1</P>
 <P>Sensor ID = 785</P>
+
+<p>In the hardware address field of the Add Sensor window you can enter in the 
+AIU Cab Address followed by the Pin Number seperated by a ":"<br>
+So for a sensor on AIU Cab Address 50, pin 2 you would enter the following : <b>50:2</b></p>
 
 <h3>Turnout Numbering</h3>
 JMRI can access accessory decoders as NCE Turnouts and Lights.

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.shtml,v 1.9 2011-03-28 02:57:07 jacobsen Exp $ -->
+<!-- $Id: CMRI.shtml,v 1.10 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -155,7 +155,7 @@ bit on that node. It is this polling action that keeps the LED's on your
 SMINI flashing at a high rate.</p>
 
 
-<a name=iobits><H2>C/MRI Input and Output Bits</H2></a>                                                                                          
+<a name=iobits><H2>C/MRI Input and Output Bits</H2></a>
 
 JMRI refers to C/MRI input bits as sensors. Sensors provide input to JMRI 
 about conditions on the layout--a button is pushed, a block is occupied, 
@@ -300,7 +300,7 @@ assignments for its bits.)
     more nodes, by returning to the Configure C/MRI Nodes dialog 
     (<a href="#nodes">see below</a>).
 
-<a name="susic"><H2>Getting Started with a USIC or SUSIC</H2></a>
+<H2>Getting Started with a USIC or SUSIC</H2></a>
 
 After you have physically connected your SUSIC (or USIC) to your computer, 
 follow the procedure below to configure your SUSIC (or USIC) as a C/MRI 
@@ -494,6 +494,12 @@ cards, their addresses will be:
     </UL>
 
 </UL>
+
+<p>When entering Hardware information into the Add sensor window you can 
+Enter in the Node Id, followed by the Sensor Id, seperated by a ":".  
+This method can also be used for the alternative/extended addressing.<br>
+So for a sensor on Node 2, pin 3 you would enter the following into the hardware
+address field : <b>2:3</b></p>
 
 <P>To summarize, input and output pins are labeled sequentially
 within each C/MRI node.  To complete the bit address, add 1000 times the

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Addressing.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: Addressing.shtml,v 1.2 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -66,6 +66,11 @@ something like this:
 </PRE>
 The contact number, 161 in this case, is the address of the sensor.
 Prefix that with LS that to get the sensor name, e.g. LS161 in this case.
+<P>
+If you wish to manually enter in the hardware address to the system you can do it
+by enter in the board number, followed by the channel number seperated by a ":"<br>
+So for a sensor on board 11, channel 1 you would enter into the Hardware Address field : 
+<b>11:1</b>
 <P>
 If you want to calculate the address of a BDL168 input, you can use
 <CODE>

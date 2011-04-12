@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: BlockTable.shtml,v 1.5 2009-02-26 20:16:19 djduchamp Exp $ -->
+<!-- $Id: BlockTable.shtml,v 1.6 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -87,6 +87,21 @@ that it should slow the train as it runs through the Block. If <b>None</b> or
 should be selected if the train should slow down some; <b>Severe </b>should be selected 
 if the train should slow by a maximum amount. If the Block has variable curvature, your 
 selection should be made according to the most limiting part of the Block.</p></li>
+<li><p><b>Block Speed</b>
+The speed is used with certain automation tools and logic, to help
+determine the speed at which a train can be set through the block.
+It is also used by the signal mast logic for determining which aspect should
+be displayed in a signal path.
+<P>In the drop down list, you are presented a set of named fixed speeds that
+have been predefined in the signalSpeed.xml file, in addition to a global option.  
+<br>It is also possible to enter in a numerical value to represent a speed.
+<p>The global value is set via the <b>Speeds</b> menu option.</p></li>
+<li><p><b>Permissive</b>
+The permissive option is used to identify blocks that can be entered while the 
+block is occupied.  It is used with certain automation tools and logic, to help
+determine if a train can enter an occupied block and what aspect should be displayed
+on a signal mast.</li>
+
 </ul>
 
 <p>
