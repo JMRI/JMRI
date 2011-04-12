@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.37 2011-04-12 02:32:59 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.38 2011-04-12 03:26:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,11 @@
       Release Notes for JMRI 2.11.4 release
       </h2>
 
-	<p>Date: MMM DD, 2010</p>
+	<p>Date: April DD, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.11.4 of JMRI/DecoderPro is available for download.
  
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b>  -->
 
 <h3>Notes:</h3>
 
@@ -49,6 +49,11 @@ It contains
 many new features, including:
 
 <ul>
+<li>
+<li>
+<li>
+<li>
+<li>
 <li>
 </ul>
 along with other changes.  See the complete list below.
@@ -146,7 +151,8 @@ New operations features and bug fixes:
 </ul>
 
 <p>
-Bob Milhaupt improved the LocoNet monitor to show system and user names, decode many more types of messages, and fixed some aspects of function and transponder messages.
+Bob Milhaupt improved the LocoNet monitor to show system and user names, 
+decode many more types of messages, and fixed some aspects of function and transponder messages.
 
 <p>
 Ken Cameron:
@@ -205,6 +211,7 @@ Lionel Jeanson:
 <li>Improved drag'n drop component for images, remove now on contextual menu.</li>
 <li>Improved Jynstrument on throttle window toolbar, Jynstruments now saved when window layout saved, and restored on load.</li>
 </ul>
+
 <p>
 Kevin Dickerson:
 <ul>
@@ -215,9 +222,13 @@ Kevin Dickerson:
 <li>Permissive,</li>
 <li>Held,</li>
 <li>Dark.</li></ul></li>
-<li>SignalMast appearance files expanded to include mapping of advanced signal mast appearance to multiple potential local appearances.  See BR-2003\appearances-3.xml for an example.</li>
-<li>Added a set action in a signal mast icon, so that when it is clicked the appearance will change aspect, alternate held, alternate dark.  In the same manor as the existing Signalhead Icon.</li>
-<li>It is now possible to select which set of icons are used for a signal mast in the editors where more than one set has been provided for.</li>
+<li>SignalMast appearance files expanded to include mapping of advanced signal mast appearance 
+    to multiple potential local appearances.  
+    See <a href="http://jmri.org/xml/signals/BR-2003/appearance-3.xml">BR-2003/appearance-3.xml</a> for an example.</li>
+<li>Added a set action in a signal mast icon, so that when it is clicked the appearance will change aspect,
+alternate held, alternate dark.  In the same manner as the existing Signalhead Icon.</li>
+<li>It is now possible to select which set of icons are used for a signal mast in the editors 
+where more than one set has been provided for.</li>
 </ul>
 
 <p>
