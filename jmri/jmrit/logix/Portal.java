@@ -92,7 +92,6 @@ public class Portal  {
         if (name == null || name.length()==0) { return; }
         if (_portalName.equals(name)) { return; }
 
-        String oldName = _portalName;
         _portalName = name;
     }
 
