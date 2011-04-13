@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -79,9 +79,9 @@ public class PrintLocationsAction  extends AbstractAction {
 					+ rb.getString("Length") + " " + rb.getString("Used")
 					+ "\t" + rb.getString("RS") 
 					+ "\t" + rb.getString("Cars")
-					+ "\t" + rb.getString("Engines").substring(0, 7)
+					+ "\t" + rb.getString("Engines")
 					+ "\t" + rb.getString("Pickup")
-					+ "\t" + rb.getString("Drop") + newLine;
+					+ " " + rb.getString("Drop") + newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<locations.size(); i++){
         		Location location = manager.getLocationById(locations.get(i));
