@@ -86,12 +86,11 @@ public class TrainCvsManifest extends TrainCommon {
 			
 			int cars = 0;
 			int emptyCars = 0;
-			boolean work = false;
+			boolean newWork = false;
 			String previousRouteLocationName = null;
 			List<String> routeList = train.getRoute().getLocationsBySequenceList();
 			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
-				work = isThereWorkAtLocation(carList, rl);			
+				RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));		
 				// print info only if new location
 				String routeLocationName = splitString(rl.getName());
 		       	String locationName = routeLocationName;
@@ -106,10 +105,6 @@ public class TrainCvsManifest extends TrainCommon {
 						addLine(fileOut, DTR+rl.getDepartureTime());
 					} else {
 						addLine(fileOut, AT+train.getExpectedArrivalTime(rl));
-					}
-					if (!work){
-						// no work at location
-						addLine(fileOut, NW);
 					}
 					// add location comment
 					if (Setup.isPrintLocationCommentsEnabled()){
@@ -169,6 +164,7 @@ public class TrainCvsManifest extends TrainCommon {
 								&& car.getRouteDestination() == rld) {
 							fileOutCsvCar(fileOut, car, PC);
 							cars++;
+							newWork = true;
 							if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
 								emptyCars++;
 						}
@@ -180,6 +176,7 @@ public class TrainCvsManifest extends TrainCommon {
 					if (car.getRouteDestination() == rl) {
 						fileOutCsvCar(fileOut, car, SC);
 						cars--;
+						newWork = true;
 						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
 							emptyCars--;
 					}
@@ -188,10 +185,15 @@ public class TrainCvsManifest extends TrainCommon {
 					// Is the next location the same as the previous?
 					RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
 					String nextRouteLocationName = splitString(rlNext.getName());
-					if (!routeLocationName.equals(nextRouteLocationName) && work){
-						addLine(fileOut, TD+locationName+del+rl.getTrainDirectionString());
-						addLine(fileOut, TL+rl.getTrainLength()+del+emptyCars+del+cars);
-						addLine(fileOut, TW+rl.getTrainWeight());
+					if (!routeLocationName.equals(nextRouteLocationName) && newWork){
+						if (newWork){
+							addLine(fileOut, TD+locationName+del+rl.getTrainDirectionString());
+							addLine(fileOut, TL+rl.getTrainLength()+del+emptyCars+del+cars);
+							addLine(fileOut, TW+rl.getTrainWeight());
+							newWork = false;
+						} else {
+							addLine(fileOut, NW);
+						}
 					}
 				} else {
 					addLine(fileOut, TT+locationName);
@@ -204,16 +206,6 @@ public class TrainCvsManifest extends TrainCommon {
 			fileOut.flush();
 			fileOut.close();
 		}
-
-	// returns true if there's work at location
-	private boolean isThereWorkAtLocation(List<String> carList, RouteLocation rl){
-		for (int i = 0; i < carList.size(); i++) {
-			Car car = carManager.getById(carList.get(i));
-			if (car.getRouteLocation() == rl || car.getRouteDestination() == rl)
-				return true;
-		}
-		return false;
-	}
 	
 	private void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
 		// check for delimiter in names

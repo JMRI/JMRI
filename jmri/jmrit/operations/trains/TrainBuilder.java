@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.146 $
+ * @version             $Revision: 1.147 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -2216,20 +2216,7 @@ public class TrainBuilder extends TrainCommon{
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
 					}
-				// no work at location
-				} else {
-					newWork = false;
-					if (r == 0){
-						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName})
-								+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
-					} else if (!rl.getDepartureTime().equals("")){
-						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}) 
-								+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
-					} else {
-						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}));
-					}
-					
-				}
+				} 
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled()){
 					Location l = locationManager.getLocationByName(rl.getName());
@@ -2270,6 +2257,7 @@ public class TrainBuilder extends TrainCommon{
 							&& car.getRouteDestination() == rld) {
 						pickupCar(fileOut, car);
 						cars++;
+						newWork = true;
 						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
 							emptyCars++;
 					}
@@ -2280,6 +2268,7 @@ public class TrainBuilder extends TrainCommon{
 				if (car.getRouteDestination() == rl) {
 					dropCar(fileOut, car);
 					cars--;
+					newWork = true;
 					if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
 						emptyCars--;
 				}
@@ -2288,18 +2277,31 @@ public class TrainBuilder extends TrainCommon{
 				// Is the next location the same as the previous?
 				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
 				String nextRouteLocationName = splitString(rlNext.getName());
-				if (!routeLocationName.equals(nextRouteLocationName) && newWork){
-					if (Setup.isPrintLoadsAndEmptiesEnabled()){
-						addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
-								+ rb.getString("boundWith") +" " + (cars-emptyCars) + " " +rb.getString("Loads")
-								+", " + emptyCars + " " + rb.getString("Empties")+ ", " +rl.getTrainLength()
-								+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+				if (!routeLocationName.equals(nextRouteLocationName)){
+					if (newWork){
+						if (Setup.isPrintLoadsAndEmptiesEnabled()){
+							addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
+									+ rb.getString("boundWith") +" " + (cars-emptyCars) + " " +rb.getString("Loads")
+									+", " + emptyCars + " " + rb.getString("Empties")+ ", " +rl.getTrainLength()
+									+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+						} else {
+							addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
+									+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
+									+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+						}
+						newWork = false;
+						newLine(fileOut);
 					} else {
-						addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
-								+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
-								+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+						if (r == 0){
+							addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName})
+									+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
+						} else if (!rl.getDepartureTime().equals("")){
+							addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}) 
+									+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
+						} else {
+							addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}));
+						}
 					}
-					newLine(fileOut);
 				}
 			} else {
 				dropEngines(fileOut, engineList, rl);
