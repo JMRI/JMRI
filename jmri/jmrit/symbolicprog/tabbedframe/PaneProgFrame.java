@@ -17,6 +17,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Enumeration;
 
 import javax.swing.*;
 
@@ -36,7 +38,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.91 $
+ * @version   $Revision: 1.92 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener, PaneContainer  {
@@ -854,7 +856,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) log.debug("newPane with enableEmpty "+enableEmpty+" getShowEmptyPanes() "+getShowEmptyPanes());
         // create a panel to hold columns
         PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem);
-
+        p.setOpaque(true);
         // how to handle the tab depends on whether it has contents and option setting
         if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0 || (p.indexedCvList.size()!=0)) ) {
             tabPane.addTab(name, p);  // always add if not empty
@@ -1151,7 +1153,6 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
     
     public void printPanes(final boolean preview) {
-    //public void choosePrintItems(){
         final JFrame frame = new JFrame("Select Items to Print");
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
@@ -1160,7 +1161,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         l1 = new JLabel("wish to appear in the print out");
         p1.add(l1);
         JPanel select = new JPanel();
-        final List<JCheckBox> printItems = new ArrayList<JCheckBox>();
+        final Hashtable<JCheckBox, PaneProgPane> printList = new Hashtable<JCheckBox, PaneProgPane>();
         select.setLayout(new BoxLayout(select, BoxLayout.PAGE_AXIS));
         final JCheckBox funct = new JCheckBox("Function List");
         funct.addActionListener(new java.awt.event.ActionListener() {
@@ -1168,17 +1169,15 @@ abstract public class PaneProgFrame extends JmriJFrame
                 _flPane.includeInPrint(funct.isSelected());
             }
         });
-         _flPane.includeInPrint(false);
-        printItems.add(funct);
+        _flPane.includeInPrint(false);
         select.add(funct);
         for (int i=0; i<paneList.size(); i++){
             final PaneProgPane pane = (PaneProgPane) paneList.get(i);
             pane.includeInPrint(false);
             final JCheckBox item = new JCheckBox(paneList.get(i).getName());
-            printItems.add(item);
+            printList.put(item, pane);
             item.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                   //(PaneProgPane pane = (PaneProgPane) paneList.get(x);
                     pane.includeInPrint(item.isSelected());
                 }
             });
@@ -1187,8 +1186,13 @@ abstract public class PaneProgFrame extends JmriJFrame
         final JCheckBox selectAll = new JCheckBox("Select All");
         selectAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                for (int i = 0; i<printItems.size(); i++){
-                    printItems.get(i).setSelected(selectAll.isSelected());
+                _flPane.includeInPrint(selectAll.isSelected());
+                funct.setSelected(selectAll.isSelected());
+                Enumeration<JCheckBox> en = printList.keys();
+                while (en.hasMoreElements()) {
+                    JCheckBox check = en.nextElement();
+                    printList.get(check).includeInPrint(selectAll.isSelected());
+                    check.setSelected(selectAll.isSelected());
                 }
             }
         });
