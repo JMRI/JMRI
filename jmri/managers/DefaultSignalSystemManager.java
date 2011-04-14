@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -124,11 +124,12 @@ public class DefaultSignalSystemManager extends AbstractManager
                 s.setProperty(name, c.get(j).getName(), c.get(j).getText());
             }
         }
-        //@SuppressWarnings("unchecked")
+        
         if(root.getChild("imagetypes")!=null){
-            l = root.getChild("imagetypes").getChildren("imagetype");
-            for(int i = 0;i<l.size();i++){
-                String type = l.get(i).getAttribute("type").getValue();
+            @SuppressWarnings("unchecked")
+            List<Element> t = root.getChild("imagetypes").getChildren("imagetype");
+            for(int i = 0;i<t.size();i++){
+                String type = t.get(i).getAttribute("type").getValue();
                 s.setImageType(type);
             }
         }
