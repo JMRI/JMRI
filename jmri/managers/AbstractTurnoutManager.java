@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -214,9 +214,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
     
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF", justification="We are validating user input however the value is stored in its original format")
     public void setDefaultClosedSpeed(String speed) throws JmriException {
-        if((speed!=null) && (defaultClosedSpeed.equals(speed)))
+        if(speed==null)
+            throw new JmriException("Value of requested turnout default closed speed can not be null");
+        if(defaultClosedSpeed.equals(speed))
             return;
         if (speed.contains("Block")){
             speed="Block";
@@ -238,9 +239,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         defaultClosedSpeed = speed;
         firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
     }
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF", justification="We are validating user input however the value is stored in its original format")
+
     public void setDefaultThrownSpeed(String speed) throws JmriException{
-        if((speed!=null) && (defaultThrownSpeed.equals(speed)))
+        if(speed==null)
+            throw new JmriException("Value of requested turnout default thrown speed can not be null");
+        if (defaultThrownSpeed.equals(speed))
             return;
         if (speed.contains("Block")){
             speed="Block";
