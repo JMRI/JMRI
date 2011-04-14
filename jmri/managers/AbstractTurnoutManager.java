@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -214,33 +214,49 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF", justification="We are validating user input however the value is stored in its original format")
     public void setDefaultClosedSpeed(String speed) throws JmriException {
         if((speed!=null) && (defaultClosedSpeed.equals(speed)))
             return;
-        try {
-            Float.parseFloat(speed);
-        } catch (NumberFormatException nx) {
-            try{
-                jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
-            } catch (Exception ex){
-                throw new JmriException("Value of requested turnout default closed speed is not valid");
+        if (speed.contains("Block")){
+            speed="Block";
+            if(defaultClosedSpeed.equals(speed))
+                return;
+        }
+        else {
+            try {
+                Float.parseFloat(speed);
+            } catch (NumberFormatException nx) {
+                try{
+                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                } catch (Exception ex){
+                    throw new JmriException("Value of requested turnout default closed speed is not valid");
+                }
             }
         }
         String oldSpeed = defaultClosedSpeed;
         defaultClosedSpeed = speed;
         firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
     }
-    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF", justification="We are validating user input however the value is stored in its original format")
     public void setDefaultThrownSpeed(String speed) throws JmriException{
         if((speed!=null) && (defaultThrownSpeed.equals(speed)))
             return;
-        try {
-            Float.parseFloat(speed);
-        } catch (NumberFormatException nx) {
-            try{
-                jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
-            } catch (Exception ex){
-                throw new JmriException("Value of requested turnout default thrown speed is not valid");
+        if (speed.contains("Block")){
+            speed="Block";
+            if(defaultThrownSpeed.equals(speed))
+                return;
+            
+        }
+        else {
+            try {
+                Float.parseFloat(speed);
+            } catch (NumberFormatException nx) {
+                try{
+                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                } catch (Exception ex){
+                    throw new JmriException("Value of requested turnout default thrown speed is not valid");
+                }
             }
         }
         String oldSpeed = defaultThrownSpeed;

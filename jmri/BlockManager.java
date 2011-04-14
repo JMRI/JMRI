@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -127,6 +127,7 @@ public class BlockManager extends AbstractManager
     
     String defaultSpeed = "Normal";
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF", justification="We are validating user input however the value is stored in its original format")
     public void setDefaultSpeed(String speed) throws JmriException {
         if((speed!=null) && (defaultSpeed.equals(speed)))
             return;
