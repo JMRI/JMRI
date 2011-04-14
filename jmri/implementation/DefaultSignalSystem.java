@@ -16,7 +16,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem  {
 
@@ -38,6 +38,29 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
             return null;
         }
         return getTable(aspect).get(key);
+    }
+    
+    public void setImageType(String type) {
+        if (! imageTypes.contains(type)) imageTypes.add(type);
+    }
+    
+    public Enumeration<String> getImageTypeList() {
+        return imageTypes.elements();
+    }
+
+    public String getAspect(Object obj, String key){
+        if (obj==null)
+            return null;
+        Enumeration aspectKeys = aspects.keys();
+        while ( aspectKeys.hasMoreElements() )
+           {
+           String aspect = (String)aspectKeys.nextElement();
+           if(getTable(aspect).containsKey(key)){
+               if (getTable(aspect).get(key).equals(obj))
+                   return aspect;
+           }
+        }
+        return null;
     }
 
     protected Hashtable<String, Object> getTable(String aspect) {
@@ -98,6 +121,8 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
             = new jmri.util.OrderedHashtable<String, Hashtable<String, Object>>();
 
     protected java.util.Vector<String> keys = new java.util.Vector<String>();
+    
+    protected java.util.Vector<String> imageTypes = new java.util.Vector<String>();
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
     // Only used occasionally, so inefficient String processing not really a problem

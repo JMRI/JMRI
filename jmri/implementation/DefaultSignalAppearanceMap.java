@@ -25,7 +25,7 @@ import jmri.SignalSystem;
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -254,6 +254,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         }
         return map;
     }
+
     /**
      * Get a property associated with a specific aspect
      */
@@ -273,6 +274,8 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
     
     public Vector<String> getImageTypes(String aspect) {
+        if(!checkAspect(aspect))
+            return new Vector<String>();
         java.util.Enumeration<String> e = aspectImageMap.get(aspect).keys();
         Vector<String> v = new Vector<String>();
         while (e.hasMoreElements()) {

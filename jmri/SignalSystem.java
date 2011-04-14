@@ -33,12 +33,24 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public interface SignalSystem extends NamedBean {
 
     public void setProperty(String aspect, String key, Object value);
     public Object getProperty(String aspect, String key);
+    
+    /**
+    * Add an image or icon type available for use with this signalling system
+    */
+    public void setImageType(String type);
+    
+    /**
+    * Returns a list of the image/icon sets available for use with this signalling
+    * system.  If no specific image types are provided for then an empty list is
+    * returned.
+    */
+    public java.util.Enumeration<String> getImageTypeList();
   
     /** 
      * Get all aspects currently defined.
@@ -60,6 +72,8 @@ public interface SignalSystem extends NamedBean {
      * Is this aspect known?
      */
     public boolean checkAspect(String aspect);
+
+    public String getAspect(Object obj, String key);
         
 }
 

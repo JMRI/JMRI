@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -200,13 +200,13 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             clickMenu.add(r);
             popup.add(clickMenu);
             
-            java.util.Vector<String> iconTypes = mMast.getAppearanceMap().getImageTypes(mastState());
-            if(iconTypes.size()>1){
+            java.util.Enumeration<String> en = mMast.getSignalSystem().getImageTypeList();
+            if(en.hasMoreElements()){
                 JMenu iconSetMenu = new JMenu(rb.getString("SignalMastIconSet"));
                 ButtonGroup iconTypeGroup = new ButtonGroup();
                 JRadioButtonMenuItem im;
-                for(int i = 0; i<iconTypes.size(); i++){
-                    final String icon = iconTypes.get(i);
+                while (en.hasMoreElements()){
+                    final String icon = en.nextElement();
                     im = new JRadioButtonMenuItem(icon);
                     im.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) { useIconSet(icon); }
@@ -329,7 +329,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     String useIconSet = "default";
     
     public void useIconSet(String icon){
-        if (useIconSet==null){
+        if (icon==null){
             icon = "default";
         }
         if(useIconSet.equals(icon)){
@@ -390,7 +390,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         } else {
             super.setIcon(null);
         }
-        
         return;
     }
     
