@@ -16,7 +16,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem  {
 
@@ -51,10 +51,10 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     public String getAspect(Object obj, String key){
         if (obj==null)
             return null;
-        Enumeration aspectKeys = aspects.keys();
+        Enumeration<String> aspectKeys = aspects.keys();
         while ( aspectKeys.hasMoreElements() )
            {
-           String aspect = (String)aspectKeys.nextElement();
+           String aspect = aspectKeys.nextElement();
            if(getTable(aspect).containsKey(key)){
                if (getTable(aspect).get(key).equals(obj))
                    return aspect;
