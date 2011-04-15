@@ -36,8 +36,6 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	
 	$.mobile.pageLoading();  //show pageloading message
 
-	$xmlstr = xml2Str($returnedData);
-
 	$xml = $($returnedData);  //jQuery-ize returned data for easier access
 	$xml.xmlClean();  //remove whitespace 
 
@@ -45,9 +43,14 @@ var $processResponse = function($returnedData, $success, $xhr) {
 			function() {
 				//put data from current xml items into $currentItem object
 				var $currentItem = {};
-				for (var $i=0; $i < $(this)[0].childNodes.length; $i++) {
-					if ($(this)[0].childNodes[$i].nodeName != "#text") { //skip empty elements (whitespace, etc.)
-						$currentItem[$(this)[0].childNodes[$i].nodeName] = $(this)[0].childNodes[$i].textContent;
+
+				for (var $i=0; $i < this.childNodes.length; $i++) {
+					if (this.childNodes[$i].nodeName != "#text") { //skip empty elements (whitespace, etc.)
+						if (this.childNodes[$i].textContent) {
+							$currentItem[this.childNodes[$i].nodeName] = this.childNodes[$i].textContent;
+						} else {
+							$currentItem[this.childNodes[$i].nodeName] = this.childNodes[$i].text;  //another IE workaround
+						}
 					}
 				}
 				var $type = $currentItem.type;  //shortcut since this is used so many times
@@ -163,19 +166,15 @@ jQuery.fn.xmlClean = function() {
 }
 
 //workaround for IE (from http://www.webdeveloper.com/forum/showthread.php?t=187378)
-function xml2Str(xmlNode)
-{
-	try {
-		// Gecko-based browsers, Safari, Opera.
+function xml2Str(xmlNode) {
+	try {  // Gecko-based browsers, Safari, Opera.
 		return (new XMLSerializer()).serializeToString(xmlNode);
 	}
 	catch (e) {
-		try {
-			// Internet Explorer.
+		try {	// Internet Explorer.
 			return xmlNode.xml;
 		}
-		catch (e)
-		{//Strange Browser ??
+		catch (e)	{  //Strange Browser ??
 			alert('Xmlserializer not supported');
 		}
 	}
