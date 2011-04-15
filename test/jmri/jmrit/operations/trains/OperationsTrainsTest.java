@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.79 $
+ * @version $Revision: 1.80 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3442,7 +3442,7 @@ public class OperationsTrainsTest extends TestCase {
 	
 		train1.build();
 		
-		// Schedule sch1 should cause c2 to be delivered to Chelmsford Freight 1
+		// Schedule sch1 should cause c2 to be delivered to Chelmsford Freight 2
 		Assert.assertEquals("c2 destination", "Chelmsford Freight 2", c2.getDestinationTrackName());
 		Assert.assertEquals("c2 next load", "", c2.getNextLoad());
 		// Schedule sch1 and sch2 should reject c3, to be delivered to Chelmsford Yard 3

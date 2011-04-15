@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.147 $
+ * @version             $Revision: 1.148 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1612,11 +1612,20 @@ public class TrainBuilder extends TrainCommon{
 						// send car to this destination
 						car.setNextDestination(track.getLocation());
 						car.setNextDestTrack(track);
-						car.setScheduleId(track.getCurrentScheduleItem().getId());
-						// is car part of kernel?
-						car.updateKernel();
-						track.bumpSchedule();
-						return;	//done
+						// test to see if destination is reachable
+						if (Router.instance().setDestination(car, train)){
+							car.setScheduleId(track.getCurrentScheduleItem().getId());
+							// is car part of kernel?
+							car.updateKernel();
+							if (car.getDestination() != track.getLocation())
+								track.bumpSchedule();
+							return;	//done
+						} else {
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
+							car.setNextDestination(null);
+							car.setNextDestTrack(null);
+							car.setDestination(null, null);
+						}
 					}
 				}
 			}
