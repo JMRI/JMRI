@@ -24,7 +24,7 @@ import jmri.IdTag;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @since       2.11.4
  */
 public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
@@ -52,7 +52,8 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
     }
 
     public Date getWhenLastSeen() {
-        return (Date)this._whenLastSeen.clone();  // Date is mutable, so return copy
+        if (this._whenLastSeen == null) return null;
+        else return (Date)this._whenLastSeen.clone();  // Date is mutable, so return copy
     }
 
     @Override
