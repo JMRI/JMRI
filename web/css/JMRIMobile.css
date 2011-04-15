@@ -1,7 +1,8 @@
 /* Application-specific CSS for JMRIMobile */
-div.helpText {
-/*	  clear: both;*/
-}
+.float-right {  float: right; }
+.float-left {  float: left; }
+.float-clear {  clear: both; }
+
 body {
   max-width: 480px;	
 }
@@ -12,11 +13,15 @@ body {
   margin-bottom: 15px;
 }
 
-div.valueText {
-	float: right;
-	margin-top: -15px;
-}
-
 .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
     padding-right: 25px;
+}
+a.ui-link-inherit.two-line-item {
+    padding-top: 0.2em !important; 
+    padding-bottom: 0.2em !important; 
+}
+
+.valueText {
+  margin-top: auto;
+  margin-bottom: auto;	
 }

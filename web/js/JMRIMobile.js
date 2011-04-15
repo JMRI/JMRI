@@ -1,13 +1,15 @@
-//TODO: send periodic request for refresh, to verify server connection
+//TODO: send periodic request for refresh, to verify server connection (maybe do on server side as well?)
 //TODO: handle ajax errors
-//TODO: fix route setting (here and in DefaultXmlIOServer.java) and put routes back in here 
+//TODO: preserve filter on update
 
 var $globalXhr; //global variable to allow closing earlier connections  TODO:use array to support limited number of open requests
 
-//send request for immediate change, plus request for lists  TODO: allow user to turn off some of the lists
+//handle button press, send request for immediate change, plus request for lists  TODO: allow user to turn off some of the lists
 var $sendChange = function($type, $name, $nextValue){
+	$.mobile.pageLoading();  //show pageloading message
 	var $commandstr = '<xmlio><item><type>' + $type + '</type><name>' + $name + '</name><set>' + $nextValue +'</set></item>' +
 	'<list><type>turnout</type></list><list><type>route</type></list><list><type>power</type></list><list><type>sensor</type></list></xmlio>';
+//	'<list><type>power</type></list></xmlio>';
 	$sendXMLIO($commandstr);
 };
 
@@ -75,7 +77,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					//render the changes to settings page, and then the new page
 					$("div#settings").page();
 					$("div#type-" + $type).page();
-					
+
 					//copy footer from settings to all pages
 					$("div#footer").html($("div#settings div#footer").html());
 				}
@@ -93,12 +95,14 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				$("div#type-" + $type + " ul.listview").listview("refresh");
 			}
 	);
-	
-		//echo last command received back to server, (after removing unmonitorable items) which will cause server to monitor for changes
-		$xmlstr = xml2Str($xml[0]);
-		$sendXMLIO($xmlstr);
 
-		$.mobile.pageLoading(true); //hide the pageloading message
+	//update the string with any changes and cleanup		
+	$xmlstr = xml2Str($xml[0]);
+
+	//echo last command received back to server, which will cause server to monitor for changes
+	$sendXMLIO($xmlstr);
+
+	$.mobile.pageLoading(true); //hide the pageloading message
 };    	
 
 //handle the toggling of the next value for buttons
@@ -128,9 +132,11 @@ var $getValueText = function($type, $value){
 		}
 	} else if ($type == 'power') {
 		if ($value=='2') {
-			return 'On';
+			return '<img src="/web/InControl/PowerGreen24.png">';
 		} else if ($value=='4') {
-			return 'Off';
+			return '<img src="/web/InControl/PowerRed24.png">';
+		} else {
+			return '<img src="/web/InControl/PowerGrey24.png">';
 		}
 	} else if ($type == 'route' || $type == 'sensor') {
 		if ($value=='2') {
@@ -181,6 +187,7 @@ $(document).ready(function() {
 
 	//ask for all list items
 	var $getAllLists = '<xmlio><list><type>turnout</type></list><list><type>route</type></list><list><type>roster</type></list><list><type>panel</type></list><list><type>power</type></list><list><type>sensor</type></list></xmlio>';
+//	var $getAllLists = '<xmlio><list><type>power</type></list></xmlio>';
 	$sendXMLIO($getAllLists);
 
 });

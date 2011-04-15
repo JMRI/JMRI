@@ -11,7 +11,10 @@
 
 <!-- Generic jquery templates for list items -------------------------------------------->
 <script id='genItemTemplate' type='text/html'>
-    <li id='name-${safeName}' onClick="$sendChange('${type}','${name}','${nextValue}')"><div><div>${name} ${userName}</div><div class='valueText'>${valueText}</div></div></li>
+    <li id='name-${safeName}' data-icon='false' onClick="$sendChange('${type}','${name}','${nextValue}')">
+        <a class='ui-link-inherit two-line-item' href='#'><div class='userName float-left'><small><em>${name}</em></small><br /> ${userName}</div>
+            <div class='valueText float-right'>{{html valueText}}</div></a>
+    </li>
 </script>
 <script id='panelItemTemplate' type='text/html'>
     <li id='name-${safeName}'><a href='/panel/${name}.html' target='${safeName}'>${userName}</a></li>
@@ -30,7 +33,7 @@
     <div data-role='content'>
       <ul class='listview' data-role='listview' data-filter='true'></ul>
     </div>
-    <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true'>
+    <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true' data-scroll='true'>
       <a data-role='button' href='#debug' data-theme='b'>Debug</a>
       <a data-role='button' href='#settings' data-theme='b'>Settings</a>
     </div>
