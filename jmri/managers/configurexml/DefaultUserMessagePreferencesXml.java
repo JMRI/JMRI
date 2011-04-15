@@ -154,19 +154,16 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setLoading();
                 
-       
-        @SuppressWarnings("unchecked")
         List<Element> settingList = messages.getChildren("setting");
         
         for (int i = 0; i < settingList.size(); i++) {
             String name = settingList.get(i).getText();
             p.setSimplePreferenceState(name, true);
         }
-        @SuppressWarnings("unchecked")
+        
         List<Element> comboList = messages.getChildren("comboBoxLastValue");
         
         for (int i = 0; i < comboList.size(); i++) {    
-            @SuppressWarnings("unchecked")
             List<Element> comboItem = comboList.get(i).getChildren("comboBox");
             for (int x = 0; x<comboItem.size(); x++){
                 String combo = comboItem.get(x).getAttribute("name").getValue();
@@ -175,7 +172,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }
         
-        @SuppressWarnings("unchecked")
         List<Element> classList = messages.getChildren("classPreferences");
         for (int k = 0; k < classList.size(); k++) {
             List<Element> multipleList = classList.get(k).getChildren("multipleChoice");
