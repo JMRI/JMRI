@@ -4,10 +4,6 @@ package jmri.jmrit.display.palette;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.ListSelectionModel;
-
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 

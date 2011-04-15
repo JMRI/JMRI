@@ -18,10 +18,8 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
-
-import java.util.List;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -37,7 +35,6 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.Path;
 import jmri.Sensor;
 
 import jmri.jmrit.beantable.AbstractTableAction;

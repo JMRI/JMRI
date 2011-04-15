@@ -2,9 +2,6 @@
 package jmri.jmrit.display.palette;
 
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 

@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.configurexml;
 
-import jmri.jmrix.rfid.RfidReporterManager;
 import org.jdom.Element;
 
 /**
@@ -12,7 +11,7 @@ import org.jdom.Element;
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class RfidReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
