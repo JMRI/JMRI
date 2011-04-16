@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.4.shtml,v 1.44 2011-04-16 22:26:31 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.4.shtml,v 1.45 2011-04-16 23:30:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -101,10 +101,24 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None yet)
+Development Version 2.11.4 contains significant improvements to the Powerline Interfaces. 
+Some of these improvements involved a complete restructuring of the underlying code. 
+As a result, previously working Preferences may now show no connections for some of the Powerline Interfaces. 
+If this occurs, go to Preferences and setup the Powerline Layout Connections again. 
+Then save the Preferences and restart JMRI.
 
 <h3>Older warnings</h3>
 
+In Development Version 2.11.3 JMRI instituted a more robust and transparent system for handling missing panel icon files. 
+If missing icon files are discovered during the panel loading process 
+this system presents a dialog box that allows the user to either delete the offending reference 
+or use the file browser to find the proper location. 
+Older versions of JMRI didn't always fully remove the references to deleted panel icons. 
+Panels which contain these stray references will present the dialog box during the first panel load. 
+If the panel worked fine before, simply choose the delete option for each "missing" icon presented 
+to remove the stray references. Once the panel has finished loading, save/store the panel file, quit JMRI and then reload. As a precaution, we recommend either making a backup copy of your panel file before diving in or saving the modified file under a different name
+
+<p>
 There have been extensive changes to the throttle code.
 If you have written scripts that use throttles, particularly
 multiple throttles, please check to make sure they still work.
