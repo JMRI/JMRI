@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import jmri.DccThrottle;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.util.ResizableImagePanel;
+import jmri.util.swing.ResizableImagePanel;
 
 public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
 

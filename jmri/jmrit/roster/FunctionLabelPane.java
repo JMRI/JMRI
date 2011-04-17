@@ -18,15 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import jmri.jmrit.XmlFile;
-import jmri.util.ResizableImagePanel;
 import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.swing.EditableResizableImagePanel;
 
 
 /**
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -35,8 +35,8 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     JTextField[] labels;
     JCheckBox[] lockable;
-    ResizableImagePanel[] _imageFilePath;
-    ResizableImagePanel[] _imagePressedFilePath;
+    EditableResizableImagePanel[] _imageFilePath;
+    EditableResizableImagePanel[] _imagePressedFilePath;
 	JButton[] jbRemoveImage;
 	JButton[] jbRemoveImagePressed;
     protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
@@ -55,8 +55,8 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
         labels = new JTextField[maxfunction+1];
         lockable = new JCheckBox[maxfunction+1];
-        _imageFilePath = new ResizableImagePanel[maxfunction+1];
-        _imagePressedFilePath = new ResizableImagePanel[maxfunction+1];
+        _imageFilePath = new EditableResizableImagePanel[maxfunction+1];
+        _imagePressedFilePath = new EditableResizableImagePanel[maxfunction+1];
     	
         cL.gridx = 0;
         cL.gridy = 0;
@@ -109,8 +109,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridx++;
             
             // add the function buttons
-    		_imageFilePath[i] = new ResizableImagePanel(r.getFunctionImage(i), 20, 20);
-    		_imageFilePath[i].setDnd(true);
+    		_imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
     		_imageFilePath[i].setDropFolder(_resourcesBasePath);
     		_imageFilePath[i].setBackground(new Color(0,0,0,0));
     		_imageFilePath[i].setToolTipText(rb.getString("FunctionButtonRosterImageToolTip"));
@@ -118,8 +117,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             add(_imageFilePath[i], cL);
             cL.gridx++;
             
-    		_imagePressedFilePath[i] = new ResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
-    		_imagePressedFilePath[i].setDnd(true);
+    		_imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
     		_imagePressedFilePath[i].setDropFolder(_resourcesBasePath);
     		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
     		_imagePressedFilePath[i].setToolTipText(rb.getString("FunctionButtonPressedRosterImageToolTip"));

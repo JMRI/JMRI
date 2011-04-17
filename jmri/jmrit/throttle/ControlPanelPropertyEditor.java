@@ -10,16 +10,18 @@ import java.util.ResourceBundle;
  * object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
 	static final ResourceBundle rb = ThrottleBundle.bundle();
 	private ControlPanel control;
 
-	private JRadioButton displaySlider;
+	private JRadioButton displaySlider; // display slider from 0 to 100
+	private JRadioButton displaySliderContinuous; // display slider from -100 to 0 to 100
 	private JRadioButton displaySteps;
 	private JCheckBox trackBox;
+	private JTextField functionSwitchSlider;
 
 	private int _displaySlider;
 
@@ -63,29 +65,43 @@ public class ControlPanelPropertyEditor extends JDialog
 		ButtonGroup modeSelectionButtons = new ButtonGroup();
 
 		displaySlider=new JRadioButton(rb.getString("ButtonDisplaySpeedSlider"));
+		displaySliderContinuous=new JRadioButton(rb.getString("ButtonDisplaySpeedSliderContinuous"));
 		displaySteps=new JRadioButton(rb.getString("ButtonDisplaySpeedSteps"));
 
 		modeSelectionButtons.add(displaySlider);
 		modeSelectionButtons.add(displaySteps);
-
+		modeSelectionButtons.add(displaySliderContinuous);
+		
 		_displaySlider = control.getDisplaySlider();
 
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridy = 1;
 		propertyPanel.add(displaySlider, constraints);
 
-		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridy = 2;
 		propertyPanel.add(displaySteps, constraints);
 
+		constraints.gridy = 3;
+		propertyPanel.add(displaySliderContinuous, constraints);
 
 		trackBox = new JCheckBox(rb.getString("CheckBoxTrackSliderInRealTime"));
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		trackBox.setSelected( control.getTrackSlider() );
 		propertyPanel.add(trackBox, constraints);
+		
+		JLabel functionSwitchLabel = new JLabel(rb.getString("SwitchSliderOnFunction"));
+		functionSwitchSlider = new JTextField(4);
+		functionSwitchSlider.setText(control.getSwitchSliderFunction());
+		constraints.gridy = 5;
+		constraints.gridx = 0;
+		propertyPanel.add(functionSwitchLabel, constraints);
+		constraints.gridx = 1;
+		propertyPanel.add(functionSwitchSlider, constraints);
+
 		displaySlider.setSelected(_displaySlider==ControlPanel.SLIDERDISPLAY);
 		displaySteps.setSelected(_displaySlider==ControlPanel.STEPDISPLAY);
-
+		displaySliderContinuous.setSelected(_displaySlider==ControlPanel.SLIDERDISPLAYCONTINUOUS);
+		
 		displaySlider.addActionListener(
 				new ActionListener()
 				{
@@ -93,6 +109,7 @@ public class ControlPanelPropertyEditor extends JDialog
 					{
 						displaySlider.setSelected(true);
 						displaySteps.setSelected(false);
+						displaySliderContinuous.setSelected(false);
 						_displaySlider=ControlPanel.SLIDERDISPLAY;
 					}
 				});
@@ -104,7 +121,20 @@ public class ControlPanelPropertyEditor extends JDialog
 					{
 						displaySlider.setSelected(false);
 						displaySteps.setSelected(true);
+						displaySliderContinuous.setSelected(false);
 						_displaySlider=ControlPanel.STEPDISPLAY;
+					}
+				});
+		
+		displaySliderContinuous.addActionListener(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						displaySlider.setSelected(false);
+						displaySteps.setSelected(false);
+						displaySliderContinuous.setSelected(true);
+						_displaySlider=ControlPanel.SLIDERDISPLAYCONTINUOUS;
 					}
 				});
 
@@ -114,7 +144,9 @@ public class ControlPanelPropertyEditor extends JDialog
 				isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAY));
 		displaySteps.setEnabled(control.
 				isSpeedControllerAvailable(ControlPanel.STEPDISPLAY));
-
+		displaySliderContinuous.setEnabled(control.
+				isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAYCONTINUOUS));
+				
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
@@ -153,6 +185,7 @@ public class ControlPanelPropertyEditor extends JDialog
 		{
 			control.setSpeedController(_displaySlider);
 			control.setTrackSlider(trackBox.isSelected());
+			control.setSwitchSliderFunction(functionSwitchSlider.getText());
 			finishEdit();
 		}
 	}

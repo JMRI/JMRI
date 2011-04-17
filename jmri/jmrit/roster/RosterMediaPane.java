@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrit.XmlFile;
-import jmri.util.ResizableImagePanel;
+import jmri.util.swing.EditableResizableImagePanel;
 
 /*
 * <hr>
@@ -52,9 +52,9 @@ public class RosterMediaPane extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 2420617780437463773L;
 	JLabel _imageFPlabel = new JLabel();
-	ResizableImagePanel _imageFilePath;
+	EditableResizableImagePanel _imageFilePath;
 	JLabel _iconFPlabel = new JLabel();
-	ResizableImagePanel _iconFilePath;
+	EditableResizableImagePanel _iconFilePath;
 	JLabel _URLlabel = new JLabel();
 	JTextField _URL = new JTextField(30);
 	RosterAttributesTableModel rosterAttributesModel;
@@ -63,15 +63,13 @@ public class RosterMediaPane extends javax.swing.JPanel {
     protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
 
 	public RosterMediaPane(RosterEntry r) {
-		_imageFilePath = new ResizableImagePanel(r.getImagePath(), 320, 240);
-		_imageFilePath.setDnd(true);
+		_imageFilePath = new EditableResizableImagePanel(r.getImagePath(), 320, 240);
 		_imageFilePath.setDropFolder(_resourcesBasePath);
 		_imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
 		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
 		_imageFPlabel.setText(rb.getString("MediaRosterImageLabel"));
 
-		_iconFilePath = new ResizableImagePanel(r.getIconPath(), 160, 120);
-		_iconFilePath.setDnd(true);
+		_iconFilePath = new EditableResizableImagePanel(r.getIconPath(), 160, 120);
 		_iconFilePath.setDropFolder(_resourcesBasePath);
 		_iconFilePath.setToolTipText(rb.getString("MediaRosterIconToolTip"));
 		_iconFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));

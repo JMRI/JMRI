@@ -18,7 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
-import jmri.util.ResizableImagePanel;
+import jmri.util.swing.ResizableImagePanel;
 
 import org.jdom.Element;
 
