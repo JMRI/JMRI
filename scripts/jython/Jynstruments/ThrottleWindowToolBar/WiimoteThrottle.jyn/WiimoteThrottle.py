@@ -39,7 +39,7 @@ delay4double = 500 # delay for double tap on button (ms)
 
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout
-import jmri.util.ResizableImagePanel as ResizableImagePanel
+import jmri.util.swing.ResizableImagePanel as ResizableImagePanel
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.Timer as Timer
