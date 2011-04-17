@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.54 $
+ * @version	$Revision: 1.55 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -553,6 +553,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < trains.size(); i++){
 			Train train = getTrainById(trains.get(i));
 			box.addItem(train);
+		}
+    }
+    
+    /**
+     * Update combo box with trains that will service this car
+     * @param box the combo box to update
+     * @param car the car to be serviced
+     */
+    public void updateComboBox(JComboBox box, Car car) {
+    	box.removeAllItems();
+    	box.addItem("");
+		List<String> trains = getTrainsByNameList();
+		for (int i = 0; i < trains.size(); i++){
+			Train train = getTrainById(trains.get(i));
+			if (train.servicesCar(car))
+				box.addItem(train);
 		}
     }
     

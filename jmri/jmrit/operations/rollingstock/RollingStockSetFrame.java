@@ -34,8 +34,8 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Frame for user to place RollingStock on the layout
  * 
- * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.13 $
+ * @author Dan Boudreau Copyright (C) 2010, 2011
+ * @version $Revision: 1.14 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -81,8 +81,17 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected JCheckBox autoDestinationTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 	protected JCheckBox autoFinalDestTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 	protected JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(rb.getString("Auto"));
+	protected JCheckBox autoTrainCheckBox = new JCheckBox(rb.getString("Auto"));
+	
 	protected JCheckBox locationUnknownCheckBox = new JCheckBox(rb.getString("LocationUnknown"));
 	protected JCheckBox outOfServiceCheckBox = new JCheckBox(rb.getString("OutOfService"));
+	
+	protected JCheckBox ignoreStatusCheckBox = new JCheckBox(rb.getString("Ignore"));
+	protected JCheckBox ignoreLocationCheckBox = new JCheckBox(rb.getString("Ignore"));
+	protected JCheckBox ignoreRWECheckBox = new JCheckBox(rb.getString("Ignore"));	
+	protected JCheckBox ignoreDestinationCheckBox = new JCheckBox(rb.getString("Ignore"));
+	protected JCheckBox ignoreFinalDestinationCheckBox = new JCheckBox(rb.getString("Ignore"));
+	protected JCheckBox ignoreTrainCheckBox = new JCheckBox(rb.getString("Ignore"));
 	
 	// optional panels
 	protected JPanel pOptional = new JPanel();
@@ -93,6 +102,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	private static boolean autoDestinationTrackCheckBoxSelected = false;
 	private static boolean autoFinalDestTrackCheckBoxSelected = false;
 	private static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
+	private static boolean autoTrainCheckBoxSelected = false;
 		
 	public RollingStockSetFrame() {
 		super();
@@ -126,8 +136,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		JPanel pStatus = new JPanel();
 		pStatus.setLayout(new GridBagLayout());
 		pStatus.setBorder(BorderFactory.createTitledBorder(rb.getString("Status")));
-		addItem(pStatus, locationUnknownCheckBox, 1, 0);
-		addItem(pStatus, outOfServiceCheckBox, 1, 1);
+		addItem(pStatus, ignoreStatusCheckBox, 1, 0);
+		addItem(pStatus, locationUnknownCheckBox, 1, 1);
+		addItem(pStatus, outOfServiceCheckBox, 1, 2);
 		pRow1.add(pStatus);
 		
 		pPanel.add(pRow1);
@@ -138,6 +149,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
 		addItem(pLocation, textName, 1, 0);
 		addItem(pLocation, textTrack, 2, 0);
+		addItem(pLocation, ignoreLocationCheckBox, 0, 1);
 		addItem(pLocation, locationBox, 1, 1);
 		addItem(pLocation, trackLocationBox, 2, 1);
 		addItem(pLocation, autoTrackCheckBox, 3, 1);
@@ -153,6 +165,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		pReturnWhenEmpty.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReturnWhenEmpty")));
 		addItem(pReturnWhenEmpty, textName4, 1, 0);
 		addItem(pReturnWhenEmpty, textTrack4, 2, 0);
+		addItem(pReturnWhenEmpty, ignoreRWECheckBox, 0, 1);
 		addItem(pReturnWhenEmpty, destReturnWhenEmptyBox, 1, 1);
 		addItem(pReturnWhenEmpty, trackReturnWhenEmptyBox, 2, 1);
 		addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 3, 1);
@@ -169,6 +182,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		pDestination.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDestination")));
 		addItem(pDestination, textName2, 1, 0);
 		addItem(pDestination, textTrack2, 2, 0);
+		addItem(pDestination, ignoreDestinationCheckBox, 0, 1);
 		addItem(pDestination, destinationBox, 1, 1);
 		addItem(pDestination, trackDestinationBox, 2, 1);
 		addItem(pDestination, autoDestinationTrackCheckBox, 3, 1);
@@ -179,6 +193,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		pFinalDestination.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFinalDestination")));
 		addItem(pFinalDestination, textName3, 1, 0);
 		addItem(pFinalDestination, textTrack3, 2, 0);
+		addItem(pFinalDestination, ignoreFinalDestinationCheckBox, 0, 1);
 		addItem(pFinalDestination, finalDestinationBox, 1, 1);
 		addItem(pFinalDestination, finalDestTrackBox, 2, 1);
 		addItem(pFinalDestination, autoFinalDestTrackCheckBox, 3, 1);
@@ -188,7 +203,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		JPanel pTrain = new JPanel();
 		pTrain.setLayout(new GridBagLayout());
 		pTrain.setBorder(BorderFactory.createTitledBorder(rb.getString("Train")));
-		addItem(pTrain, trainBox, 0, 0);
+		addItem(pTrain, ignoreTrainCheckBox, 0, 0);
+		addItem(pTrain, trainBox, 1, 0);
+		addItem(pTrain, autoTrainCheckBox, 2, 0);
 		pOptional2.add(pTrain);
 
 		// button panel
@@ -202,6 +219,14 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		getContentPane().add(pOptional);
 		getContentPane().add(pOptional2);
 		getContentPane().add(pButtons);
+		
+		// Don't show ignore buttons
+		ignoreStatusCheckBox.setVisible(false);
+		ignoreLocationCheckBox.setVisible(false);
+		ignoreRWECheckBox.setVisible(false);
+		ignoreDestinationCheckBox.setVisible(false);
+		ignoreFinalDestinationCheckBox.setVisible(false);
+		ignoreTrainCheckBox.setVisible(false);
 				
 		// setup buttons
 		addButtonAction(saveButton);
@@ -219,18 +244,35 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		addCheckBoxAction(autoDestinationTrackCheckBox);
 		addCheckBoxAction(autoFinalDestTrackCheckBox);
 		addCheckBoxAction(autoReturnWhenEmptyTrackCheckBox);
+		addCheckBoxAction(autoTrainCheckBox);
+		
+		addCheckBoxAction(ignoreStatusCheckBox);
+		addCheckBoxAction(ignoreLocationCheckBox);
+		addCheckBoxAction(ignoreRWECheckBox);
+		addCheckBoxAction(ignoreDestinationCheckBox);
+		addCheckBoxAction(ignoreFinalDestinationCheckBox);
+		addCheckBoxAction(ignoreTrainCheckBox);
 		
 		// set auto check box selected
 		autoTrackCheckBox.setSelected(autoTrackCheckBoxSelected);
 		autoDestinationTrackCheckBox.setSelected(autoDestinationTrackCheckBoxSelected);
 		autoFinalDestTrackCheckBox.setSelected(autoFinalDestTrackCheckBoxSelected);
 		autoReturnWhenEmptyTrackCheckBox.setSelected(autoReturnWhenEmptyTrackCheckBoxSelected);
+		autoTrainCheckBox.setSelected(autoTrainCheckBoxSelected);
 		
 		// add tool tips
 		autoTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
 		autoDestinationTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
 		autoFinalDestTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
 		autoReturnWhenEmptyTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
+		autoTrainCheckBox.setToolTipText(rb.getString("TipAutoTrain"));
+		
+		ignoreStatusCheckBox.setToolTipText(getRb().getString("TipIgnore"));
+		ignoreLocationCheckBox.setToolTipText(getRb().getString("TipIgnore"));
+		ignoreRWECheckBox.setToolTipText(getRb().getString("TipIgnore"));
+		ignoreDestinationCheckBox.setToolTipText(getRb().getString("TipIgnore"));
+		ignoreFinalDestinationCheckBox.setToolTipText(getRb().getString("TipIgnore"));
+		ignoreTrainCheckBox.setToolTipText(getRb().getString("TipIgnore"));
 
 		//	 get notified if combo box gets modified
 		LocationManager.instance().addPropertyChangeListener(this);
@@ -283,149 +325,156 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	protected boolean change(RollingStock rs){
-		log.debug("Save button action");
+		log.debug("Change button action");
 		// save the auto buttons
 		autoTrackCheckBoxSelected = autoTrackCheckBox.isSelected();
 		autoDestinationTrackCheckBoxSelected = autoDestinationTrackCheckBox.isSelected();
 		autoFinalDestTrackCheckBoxSelected = autoFinalDestTrackCheckBox.isSelected();
 		autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
+		autoTrainCheckBoxSelected = autoTrainCheckBox.isSelected();
 		
 		// save the statuses
 		rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
 		rs.setOutOfService(outOfServiceCheckBox.isSelected());
 		
-		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
-			rs.setLocation(null, null);
-		} else {
-			if (trackLocationBox.getSelectedItem() == null
-					|| trackLocationBox.getSelectedItem().equals("")) {
-				JOptionPane.showMessageDialog(this,
-						getRb().getString("rsFullySelect"),	getRb().getString("rsCanNotLoc"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-			// update location only if it has changed
-			if (rs.getLocation() == null || !rs.getLocation().equals(locationBox.getSelectedItem()) 
-					|| rs.getTrack() == null || !rs.getTrack().equals(trackLocationBox.getSelectedItem())){
-				String status = rs.setLocation((Location) locationBox.getSelectedItem(),
-						(Track)trackLocationBox.getSelectedItem());
-				if (!status.equals(RollingStock.OKAY)){
-					log.debug ("Can't set rs's location because of "+ status);
+		if (!ignoreLocationCheckBox.isSelected()){
+			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+				rs.setLocation(null, null);
+			} else {
+				if (trackLocationBox.getSelectedItem() == null
+						|| trackLocationBox.getSelectedItem().equals("")) {
 					JOptionPane.showMessageDialog(this,
-							getRb().getString("rsCanNotLocMsg")+ status,
-							getRb().getString("rsCanNotLoc"),
+							getRb().getString("rsFullySelect"),	getRb().getString("rsCanNotLoc"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				// update location only if it has changed
+				if (rs.getLocation() == null || !rs.getLocation().equals(locationBox.getSelectedItem()) 
+						|| rs.getTrack() == null || !rs.getTrack().equals(trackLocationBox.getSelectedItem())){
+					String status = rs.setLocation((Location) locationBox.getSelectedItem(),
+							(Track)trackLocationBox.getSelectedItem());
+					if (!status.equals(RollingStock.OKAY)){
+						log.debug ("Can't set rs's location because of "+ status);
+						JOptionPane.showMessageDialog(this,
+								getRb().getString("rsCanNotLocMsg")+ status,
+								getRb().getString("rsCanNotLoc"),
+								JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+				}
+			}
+		}
+		if (!ignoreDestinationCheckBox.isSelected()){
+			if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
+				rs.setDestination(null, null);
+			} else {
+				Track destTrack = null;
+				if (trackDestinationBox.getSelectedItem() != null 
+						&& !trackDestinationBox.getSelectedItem().equals("")){
+					destTrack = (Track)trackDestinationBox.getSelectedItem();
+				}
+				Location destination = (Location) destinationBox.getSelectedItem();
+				String status = rs.setDestination(destination, destTrack);
+				if (!status.equals(RollingStock.OKAY)){
+					log.debug ("Can't set rs's destination because of "+ status);
+					JOptionPane.showMessageDialog(this,
+							getRb().getString("rsCanNotDestMsg")+ status,
+							getRb().getString("rsCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
 			}
 		}
-		if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
-			rs.setDestination(null, null);
-		} else {
-			Track destTrack = null;
-			if (trackDestinationBox.getSelectedItem() != null 
-					&& !trackDestinationBox.getSelectedItem().equals("")){
-				destTrack = (Track)trackDestinationBox.getSelectedItem();
-			}
-			Location destination = (Location) destinationBox.getSelectedItem();
-			String status = rs.setDestination(destination, destTrack);
-			if (!status.equals(RollingStock.OKAY)){
-				log.debug ("Can't set rs's destination because of "+ status);
-				JOptionPane.showMessageDialog(this,
-						getRb().getString("rsCanNotDestMsg")+ status,
-						getRb().getString("rsCanNotDest"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-		}
-		if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals(""))
-			rs.setTrain(null);
-		else {
-			rs.setTrain((Train)trainBox.getSelectedItem());
-			Train train = rs.getTrain();
-			// determine if train services this rs's type
-			if (train != null && !train.acceptsTypeName(rs.getType())){
-				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServType"), new Object[]{rs.getType(), train.getName()}),
-						getRb().getString("rsNotMove"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-			// determine if train services this rs's road
-			if (train != null && !train.acceptsRoadName(rs.getRoad())){
-				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServRoad"), new Object[]{rs.getRoad(), train.getName()}),
-						getRb().getString("rsNotMove"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-			// determine if train services this rs's built date
-			if (train != null && !train.acceptsBuiltDate(rs.getBuilt())){
-				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}),
-						getRb().getString("rsNotMove"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-			// determine if train services this rs's built date
-			if (train != null && !train.acceptsOwnerName(rs.getOwner())){
-				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}),
-						getRb().getString("rsNotMove"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-			// determine if train services the location and destination selected by user
-			RouteLocation rl = null;
-			RouteLocation rd = null;
-			Route route = null;
-			if (train != null){
-				route = train.getRoute();
-				if (route != null){
-					rl = route.getLastLocationByName(rs.getLocationName());
-					rd = route.getLastLocationByName(rs.getDestinationName());
-				}
-			} else {
-				log.error("Expected a train from combobox");
-				return false;
-			}
-			if (rl == null){
-				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsLocNotServ"), new Object[]{rs.getLocationName(), train.getName()}),
-						getRb().getString("rsNotMove"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-			if (rd == null && !rs.getDestinationName().equals("")){
-				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(getRb().getString("rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
-						getRb().getString("rsNotMove"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
-			} 
-			if (rd != null && route != null){
-				// now determine if destination is after location
-				List<String> routeSequence = route.getLocationsBySequenceList();
-				boolean foundLoc = false;	// when true, found the rs's location in the route
-				boolean foundDes = false;
-				for (int i=0; i<routeSequence.size(); i++){
-					String locId = routeSequence.get(i);
-					RouteLocation location = route.getLocationById(locId);
-					if (rl.getName().equals(location.getName())){
-						foundLoc = true;
-					}
-					if (rd.getName().equals(location.getName()) && foundLoc){
-						foundDes = true;
-						break;
-					}
-
-				}
-				if (!foundDes){
-					JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString("rsLocOrder"),
-							new Object[] {rs.getDestinationName(),	rs.getLocationName(),
-						train.getName() }), getRb().getString("rsNotMove"),
-						JOptionPane.ERROR_MESSAGE);
+		if (!ignoreTrainCheckBox.isSelected()){
+			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals(""))
+				rs.setTrain(null);
+			else {
+				rs.setTrain((Train)trainBox.getSelectedItem());
+				Train train = rs.getTrain();
+				// determine if train services this rs's type
+				if (train != null && !train.acceptsTypeName(rs.getType())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServType"), new Object[]{rs.getType(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
 					return false;
+				}
+				// determine if train services this rs's road
+				if (train != null && !train.acceptsRoadName(rs.getRoad())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServRoad"), new Object[]{rs.getRoad(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				// determine if train services this rs's built date
+				if (train != null && !train.acceptsBuiltDate(rs.getBuilt())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				// determine if train services this rs's built date
+				if (train != null && !train.acceptsOwnerName(rs.getOwner())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				// determine if train services the location and destination selected by user
+				RouteLocation rl = null;
+				RouteLocation rd = null;
+				Route route = null;
+				if (train != null){
+					route = train.getRoute();
+					if (route != null){
+						rl = route.getLastLocationByName(rs.getLocationName());
+						rd = route.getLastLocationByName(rs.getDestinationName());
+					}
+				} else {
+					log.error("Expected a train from combobox");
+					return false;
+				}
+				if (rl == null){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsLocNotServ"), new Object[]{rs.getLocationName(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				if (rd == null && !rs.getDestinationName().equals("")){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				} 
+				if (rd != null && route != null){
+					// now determine if destination is after location
+					List<String> routeSequence = route.getLocationsBySequenceList();
+					boolean foundLoc = false;	// when true, found the rs's location in the route
+					boolean foundDes = false;
+					for (int i=0; i<routeSequence.size(); i++){
+						String locId = routeSequence.get(i);
+						RouteLocation location = route.getLocationById(locId);
+						if (rl.getName().equals(location.getName())){
+							foundLoc = true;
+						}
+						if (rd.getName().equals(location.getName()) && foundLoc){
+							foundDes = true;
+							break;
+						}
+
+					}
+					if (!foundDes){
+						JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString("rsLocOrder"),
+								new Object[] {rs.getDestinationName(),	rs.getLocationName(),
+							train.getName() }), getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
 				}
 			}
 		}
@@ -460,44 +509,52 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			RollingStock rs = list.get(i);
 			if (rs == _rs)
 				continue;
-			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
-				rs.setLocation(null, null);
-			} else {
-				String status = rs.setLocation((Location) locationBox.getSelectedItem(),
-						(Track)trackLocationBox.getSelectedItem());
-				if (!status.equals(RollingStock.OKAY)){
-					log.debug ("Can't set the location for all of the rolling stock in the group because of "+ status);
-					JOptionPane.showMessageDialog(this,
-							getRb().getString("rsCanNotLocMsg")+ status,
-							getRb().getString("rsCanNotLoc"),
-							JOptionPane.ERROR_MESSAGE);
-					return false;
+			if (!ignoreLocationCheckBox.isSelected()){
+				if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+					rs.setLocation(null, null);
+				} else {
+					String status = rs.setLocation((Location) locationBox.getSelectedItem(),
+							(Track)trackLocationBox.getSelectedItem());
+					if (!status.equals(RollingStock.OKAY)){
+						log.debug ("Can't set the location for all of the rolling stock in the group because of "+ status);
+						JOptionPane.showMessageDialog(this,
+								getRb().getString("rsCanNotLocMsg")+ status,
+								getRb().getString("rsCanNotLoc"),
+								JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
 				}
 			}
-			if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
-				rs.setDestination(null, null);
-			} else {
-				Track track = null;
-				if (trackDestinationBox.getSelectedItem() != null && !trackDestinationBox.getSelectedItem().equals(""))
-					track = (Track)trackDestinationBox.getSelectedItem();
-				String status = rs.setDestination((Location)destinationBox.getSelectedItem(), track);
-				if (!status.equals(RollingStock.OKAY)){
-					log.debug ("Can't set the destination for all of the rolling stock in the group because of "+ status);
-					JOptionPane.showMessageDialog(this,
-							getRb().getString("rsCanNotDestMsg")+ status,
-							getRb().getString("rsCanNotDest"),
-							JOptionPane.ERROR_MESSAGE);
-					return false;
+			if (!ignoreDestinationCheckBox.isSelected()){
+				if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
+					rs.setDestination(null, null);
+				} else {
+					Track track = null;
+					if (trackDestinationBox.getSelectedItem() != null && !trackDestinationBox.getSelectedItem().equals(""))
+						track = (Track)trackDestinationBox.getSelectedItem();
+					String status = rs.setDestination((Location)destinationBox.getSelectedItem(), track);
+					if (!status.equals(RollingStock.OKAY)){
+						log.debug ("Can't set the destination for all of the rolling stock in the group because of "+ status);
+						JOptionPane.showMessageDialog(this,
+								getRb().getString("rsCanNotDestMsg")+ status,
+								getRb().getString("rsCanNotDest"),
+								JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
 				}
 			}
-			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")){
-				rs.setTrain(null);
-			} else {
-				rs.setTrain((Train)trainBox.getSelectedItem());
+			if (!ignoreTrainCheckBox.isSelected()){
+				if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")){
+					rs.setTrain(null);
+				} else {
+					rs.setTrain((Train)trainBox.getSelectedItem());
+				}
 			}
 			// Location status and out of service
-			rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
-			rs.setOutOfService(outOfServiceCheckBox.isSelected());
+			if (!ignoreStatusCheckBox.isSelected()){
+				rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
+				rs.setOutOfService(outOfServiceCheckBox.isSelected());
+			}
 			// remove rolling stock from being picked up and delivered
 			rs.setRouteLocation(null);
 			rs.setRouteDestination(null);
@@ -525,6 +582,33 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			updateLocation();
 		if (ae.getSource() == autoDestinationTrackCheckBox) 
 			updateDestination();
+		if (ae.getSource() == ignoreStatusCheckBox){
+			locationUnknownCheckBox.setEnabled(!ignoreStatusCheckBox.isSelected());
+			outOfServiceCheckBox.setEnabled(!ignoreStatusCheckBox.isSelected());
+		}
+		if (ae.getSource() == ignoreLocationCheckBox){
+			locationBox.setEnabled(!ignoreLocationCheckBox.isSelected());
+			trackLocationBox.setEnabled(!ignoreLocationCheckBox.isSelected());
+			autoTrackCheckBox.setEnabled(!ignoreLocationCheckBox.isSelected());
+		}
+		if (ae.getSource() == ignoreRWECheckBox){
+			destReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
+			trackReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected());
+			autoReturnWhenEmptyTrackCheckBox.setEnabled(!ignoreRWECheckBox.isSelected());
+		}
+		if (ae.getSource() == ignoreDestinationCheckBox){
+			destinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected());
+			trackDestinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected());
+			autoDestinationTrackCheckBox.setEnabled(!ignoreDestinationCheckBox.isSelected());
+		}
+		if (ae.getSource() == ignoreFinalDestinationCheckBox){
+			finalDestinationBox.setEnabled(!ignoreFinalDestinationCheckBox.isSelected());
+			finalDestTrackBox.setEnabled(!ignoreFinalDestinationCheckBox.isSelected());
+			autoFinalDestTrackCheckBox.setEnabled(!ignoreFinalDestinationCheckBox.isSelected());
+		}
+		if (ae.getSource() == ignoreTrainCheckBox){
+			trainBox.setEnabled(!ignoreTrainCheckBox.isSelected());
+		}
 	}
 	
 	protected void enableComponents(boolean enabled){
@@ -544,6 +628,13 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		autoFinalDestTrackCheckBox.setEnabled(enabled);
 		autoReturnWhenEmptyTrackCheckBox.setEnabled(enabled);
 		outOfServiceCheckBox.setEnabled(enabled);
+		
+		ignoreStatusCheckBox.setEnabled(enabled);
+		ignoreLocationCheckBox.setEnabled(enabled);
+		ignoreRWECheckBox.setEnabled(enabled);
+		ignoreDestinationCheckBox.setEnabled(enabled);
+		ignoreFinalDestinationCheckBox.setEnabled(enabled);
+		ignoreTrainCheckBox.setEnabled(enabled);
 	}
 	
 	protected void updateLocation(){

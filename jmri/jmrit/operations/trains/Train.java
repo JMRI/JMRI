@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.115 $
+ * @version $Revision: 1.116 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -1015,24 +1015,30 @@ public class Train implements java.beans.PropertyChangeListener {
     					if (debugFlag)
     						log.debug("Car ("+car.toString()+") can be picked up by train ("+getName()+") from ("
     								+car.getLocationName()+", "+car.getTrackName()+")");
-    					// now check car's destination
-    					for (int k=j; k<rLocations.size(); k++){
-    						rLoc = route.getLocationById(rLocations.get(k));
-    						if (rLoc.getName().equals(car.getDestinationName()) 
-    								&& rLoc.canDrop() 
-    								&& rLoc.getMaxCarMoves()>0
-    								&& !skipsLocation(rLoc.getId())
-    								&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0){
-    							if (car.getDestinationTrack() != null){
-    								if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
-    										|| !car.getDestinationTrack().acceptsDropTrain(this))
-    									continue;
-    							}	
-    							if (debugFlag)
-    								log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("
-    										+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
-    							return true;
+    					if (car.getDestination() != null){
+    						// now check car's destination
+    						for (int k=j; k<rLocations.size(); k++){
+    							rLoc = route.getLocationById(rLocations.get(k));
+    							if (rLoc.getName().equals(car.getDestinationName()) 
+    									&& rLoc.canDrop() 
+    									&& rLoc.getMaxCarMoves()>0
+    									&& !skipsLocation(rLoc.getId())
+    									&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0){
+    								if (car.getDestinationTrack() != null){
+    									if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
+    											|| !car.getDestinationTrack().acceptsDropTrain(this))
+    										continue;
+    								}	
+    								if (debugFlag)
+    									log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("
+    											+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
+    								return true;
+    							}
     						}
+    					} else {
+    						if (debugFlag)
+        						log.debug("Car ("+car.toString()+") does not have a destination");
+    						return true;
     					}
     				}
     			}
