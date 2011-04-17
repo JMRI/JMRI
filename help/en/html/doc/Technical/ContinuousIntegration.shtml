@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ContinuousIntegration.shtml,v 1.3 2010-09-07 02:30:13 jacobsen Exp $ -->
+<!-- $Id: ContinuousIntegration.shtml,v 1.4 2011-04-17 00:25:21 zoo Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
  	JMRI: Continuous Integration
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code Continuous Integration hudson CVS">
+    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins CVS">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -39,23 +39,23 @@ system every time it changes, so that you rapidly learn of
 new problems and are motivated to remove existing ones.
 <p>
 JMRI uses the 
-<a href="http://hudson-ci.org/">Hudson</a>
+<a href="http://jenkins-ci.org/">Jenkins</a>
 continuous integration engine for this.
 <p>
 
 Specific results of interest:
 <ul>
-<li><a href="http://builds.jmri.org/hudson/">Dashboard</a> page that gives one-line status
-<li><a href="http://builds.jmri.org/hudson/job/Development/">Development</a> page, 
+<li><a href="http://builds.jmri.org/jenkins/">Dashboard</a> page that gives one-line status
+<li><a href="http://builds.jmri.org/jenkins/job/Development/">Development</a> page, 
 showing status of the builds done after every series of commits.
 There are also pages of the 
-<a href="http://builds.jmri.org/hudson/job/Development/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/hudson/job/Development/lastBuild/">most results<a>.
-<li><a href="http://builds.jmri.org/hudson/job/FindBugs/">FindBugs</a> page, 
+<a href="http://builds.jmri.org/jenkins/job/Development/changes">most recent changes<a> and the
+<a href="http://builds.jmri.org/jenkins/job/Development/lastBuild/">most results<a>.
+<li><a href="http://builds.jmri.org/jenkins/job/FindBugs/">FindBugs</a> page, 
 showing status of the more-extensive tests done periodically.
 There are also pages of the 
-<a href="http://builds.jmri.org/hudson/job/FindBugs/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/hudson/job/FindBugs/lastBuild/">most recent results<a>.
+<a href="http://builds.jmri.org/jenkins/job/FindBugs/changes">most recent changes<a> and the
+<a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">most recent results<a>.
 <p>
 For more information on JMRI's use of FindBugs, see the
 <a href="FindBugs.shtml">separate FindBugs page</a>.
