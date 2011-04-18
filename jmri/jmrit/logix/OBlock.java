@@ -50,7 +50,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -447,7 +447,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         path.clearSettings();
         int oldSize = getPaths().size();
         super.removePath(path);
-        ((OPath)path).dispose();
+        if (path instanceof OPath) {
+            ((OPath)path).dispose();
+        }
         firePropertyChange("pathCount", Integer.valueOf(oldSize), Integer.valueOf(getPaths().size()));
     }
 

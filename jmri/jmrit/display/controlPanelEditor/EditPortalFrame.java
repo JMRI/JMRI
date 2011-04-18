@@ -220,7 +220,7 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
         return portalPanel;
     }
 
-    private class PortalCellRenderer extends JLabel implements ListCellRenderer {
+    private static class PortalCellRenderer extends JLabel implements ListCellRenderer {
      
         public Component getListCellRendererComponent(
            JList list,              // the list

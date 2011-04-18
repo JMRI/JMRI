@@ -36,7 +36,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
 
     static int STRUT_SIZE = 10;
 
-    public boolean _debug;
 	private boolean delayedPopupTrigger = false;
     private JMenuBar _menuBar;
     private JMenu _fileMenu;
@@ -98,8 +97,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
 
     public CircuitBuilder(String name) {
         super(name);
-        _debug = log.isDebugEnabled();
-        if (_debug) log.debug("CircuitBuilder ctor "+name);
+        if (log.isDebugEnabled()) log.debug("CircuitBuilder ctor "+name);
     }
 
     // Do the things needed by ChangeView
@@ -112,8 +110,8 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         makeDataFlavors();
 
         // set scrollbar initial state
-        setScroll(SCROLL_BOTH);
-        scrollBoth.setSelected(true);
+        //setScroll(SCROLL_BOTH);
+        //scrollBoth.setSelected(true);
         super.setDefaultToolTip(new ToolTip(null,0,0,new Font("Serif", Font.PLAIN, 12),
                                                      Color.black, new Color(255, 250, 210), Color.black));
         // register the resulting panel for later configuration
@@ -131,32 +129,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             OBlock block = manager.getBySystemName(sysNames[i]);
             _circuitMap.put(block, new ArrayList<Positionable>());
         }
-        /* sort icons 
-        Iterator<Positionable> it = getContents().iterator();
-        while (it.hasNext()) {
-            Positionable pos = it.next();
-            // if (_debug) log.debug("Positionable "+pos.getClass().getName());
-            if (pos instanceof IndicatorTrack) {
-                OBlock block = ((IndicatorTrack)pos).getOccBlock();
-                if (block!=null) {
-                    addIcon(block, pos);
-                } else {
-                    _darkTrack.add(pos);
-                }
-            } else if (isUnconvertedTrack(pos)) {
-                if (!_darkTrack.contains(pos)) {
-                    _darkTrack.add(pos);
-                }
-                if (!_unconvertedTrack.contains(pos)) {
-                    _unconvertedTrack.add(pos);
-                }
-            } else if (pos instanceof PortalIcon) {
-                ((PortalIcon)pos).setStatus(PortalIcon.BLOCK);
-                if (!_portalIcons.contains(pos)) {
-                    _portalIcons.add((PortalIcon)(pos);
-                }
-            }
-        } */
 
         checkCircuits();
 
@@ -729,7 +701,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         Iterator<Positionable> it = getContents().iterator();
         while (it.hasNext()) {
             Positionable pos = it.next();
-            // if (_debug) log.debug("Positionable "+pos.getClass().getName());
+            // if (log.isDebugEnabled()) log.debug("Positionable "+pos.getClass().getName());
             if (pos instanceof IndicatorTrack) {
                 OBlock block = ((IndicatorTrack)pos).getOccBlock();
                 if (block!=null) {
@@ -982,7 +954,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     Positionable pos = list.get(i);
                     if (!(pos instanceof IndicatorTrack)) {
                         convertIcon(pos);
-                        System.out.println("convertIcons: pos= "+pos.getClass().getName());
+                        if (log.isDebugEnabled()) log.debug("convertIcons: pos= "+pos.getClass().getName());
                         convert = true;
                         break;
                     }
@@ -1204,9 +1176,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                         // move icon from block to editBlock 
                         java.util.List ic = _circuitMap.get(block);
                         ic.remove(pos);
-                        if (pos instanceof IndicatorTrack) {
-                            ((IndicatorTrack)pos).setOccBlockHandle(new NamedBeanHandle<OBlock>(editBlock.getSystemName(), editBlock));
-                        }
+                        ((IndicatorTrack)pos).setOccBlockHandle(new NamedBeanHandle<OBlock>(editBlock.getSystemName(), editBlock));
                         return true;
                     } else {
                         return false;
@@ -1326,7 +1296,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         } else {
             super.makeSelectionGroup(event);
         }
-        System.out.println("makeSelectionGroup: "+(_selectionGroup==null?"0":_selectionGroup.size())+" selected.");
+        if (log.isDebugEnabled()) log.debug("makeSelectionGroup: "+(_selectionGroup==null?"0":_selectionGroup.size())+" selected.");
     }
 
     /*
@@ -1358,14 +1328,14 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                         } else {
                             //_selectionGroup.remove(selection);
                             ((IndicatorTrack)selection).removePath(EditCircuitPaths.TEST_PATH);
-                            System.out.println("removePath TEST_PATH");
+                            if (log.isDebugEnabled()) log.debug("removePath TEST_PATH");
                         }
                     } else if (okPath(selection, block)) {
                         pathGroup.add(selection);
                         if (selection instanceof IndicatorTrack) {
                             //_selectionGroup.add(selection);
                             ((IndicatorTrack)selection).addPath(EditCircuitPaths.TEST_PATH);
-                            System.out.println("addPath TEST_PATH");
+                            if (log.isDebugEnabled()) log.debug("addPath TEST_PATH");
                         }
                     } else {
                         return;
@@ -1379,7 +1349,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                 OBlock block = _editPortalFrame.getHomeBlock();
                 if (_circuit2Icons==null) {
                     OBlock selectBlock = _iconMap.get(selection);
-                    System.out.println("modifySelectionGroup: homeBlock= "+block.getDisplayName()+" selectBlock= "
+                    if (log.isDebugEnabled()) log.debug("modifySelectionGroup: homeBlock= "+block.getDisplayName()+" selectBlock= "
                                        +(selectBlock==null?"null":selectBlock.getDisplayName()));
                     if (selectBlock!=null) {
                         if (selectBlock.equals(block)) {
@@ -1400,7 +1370,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         } else {
             super.modifySelectionGroup(selection, event);
         }
-        System.out.println("modifySelectionGroup: "+(_selectionGroup==null?"0":_selectionGroup.size())+" selected.");
+        if (log.isDebugEnabled()) log.debug("modifySelectionGroup: "+(_selectionGroup==null?"0":_selectionGroup.size())+" selected.");
     }
 
     /**************************** static methods ************************/

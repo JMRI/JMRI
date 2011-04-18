@@ -167,7 +167,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         panel.add(pathPanel);
         return panel;
     }
-    private class PathCellRenderer extends JLabel implements ListCellRenderer {
+    private static class PathCellRenderer extends JLabel implements ListCellRenderer {
      
         public Component getListCellRendererComponent(
            JList list,              // the list
@@ -225,7 +225,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
     private void showPath(OPath path) {
         String name = path.getName();
         java.util.List<Positionable> list = _parent.getCircuitGroup2();
-        System.out.println("showPath for "+name+" CircuitGroup2 size= "+list.size());
+        if (log.isDebugEnabled()) log.debug("showPath for "+name+" CircuitGroup2 size= "+list.size());
         _pathGroup = new ArrayList<Positionable>();
         for (int i=0; i<list.size(); i++) {
             IndicatorTrack icon = (IndicatorTrack)list.get(i);
@@ -236,7 +236,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
                 }
             }
         }
-        System.out.println("showPath for "+name+" _pathGroup.size()= "+_pathGroup.size());
+        if (log.isDebugEnabled()) log.debug("showPath for "+name+" _pathGroup.size()= "+_pathGroup.size());
         for (int i=0; i<_pathGroup.size(); i++) {
             ((IndicatorTrack)_pathGroup.get(i)).addPath(TEST_PATH);
             Positionable p = _pathGroup.get(i);
@@ -261,7 +261,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
     }
 
     private void clearPath() {
-        System.out.println("clearPath");
+        if (log.isDebugEnabled()) log.debug("clearPath");
         java.util.List<Positionable> list = _parent.getCircuitGroup2();
         for (int i=0; i<list.size(); i++) {
             IndicatorTrack icon = (IndicatorTrack)list.get(i);

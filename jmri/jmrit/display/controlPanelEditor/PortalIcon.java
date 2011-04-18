@@ -10,14 +10,14 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.Portal;
 /**
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
 
-    public static String HIDDEN = "HIDDEN";
-    public static String BLOCK = "BLOCK";
-    public static String PATH = "PATH";
+    public static final String HIDDEN = "HIDDEN";
+    public static final String BLOCK = "BLOCK";
+    public static final String PATH = "PATH";
 
     private Portal _portal;
     private String _status;
@@ -62,7 +62,7 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
     }
 
     public void setStatus(String status) {
-        System.out.println("PortalIcon.setStatus("+status+")");
+        if (log.isDebugEnabled()) log.debug("PortalIcon.setStatus("+status+")");
         setIcon(_iconMap.get(status));
         updateSize();
     }
