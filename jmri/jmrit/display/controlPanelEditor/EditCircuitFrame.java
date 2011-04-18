@@ -23,7 +23,6 @@ public class EditCircuitFrame extends JFrame {
 
     private OBlock _block;
     private CircuitBuilder _parent;
-    private boolean _needConversion;
 
     private JTextField  _detectorSensorName = new JTextField();
     private JTextField  _errorSensorName = new JTextField();
@@ -167,7 +166,6 @@ public class EditCircuitFrame extends JFrame {
 
     private Sensor getDetectorSensor() {
         String sensorName = _detectorSensorName.getText();
-        Sensor sensor = null;
         if (sensorName!=null && sensorName.trim().length()>0) {
             return InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         }
@@ -247,7 +245,6 @@ public class EditCircuitFrame extends JFrame {
         //if (log.isDebugEnabled()) log.debug( 
         int segments = 0;
         int turnouts = 0;
-        _needConversion =false;
         if (icons!=null) {
             System.out.println("updateIconList: icons.size()= "+icons.size());
             for (int i=0; i<icons.size(); i++) {
@@ -258,10 +255,8 @@ public class EditCircuitFrame extends JFrame {
                     segments++;
                 } else if (pos instanceof TurnoutIcon) {
                     turnouts++;
-                    _needConversion = true;
                 } else {
                     segments++;
-                    _needConversion = true;
                 }
             }
         }

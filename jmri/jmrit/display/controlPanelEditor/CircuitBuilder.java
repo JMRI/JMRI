@@ -36,7 +36,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
 
     static int STRUT_SIZE = 10;
 
-	private boolean delayedPopupTrigger = false;
     private JMenuBar _menuBar;
     private JMenu _fileMenu;
     private JMenu _optionMenu;
@@ -69,8 +68,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     // list of PortalIcons
     private ArrayList<PortalIcon> _portalIcons;
     
-    private boolean _converting = false;    // highlight the icon being converted
-
     // "Editing Frames" - Called from menu in Main Frame
     private EditCircuitFrame _editCircuitFrame;
     private EditPortalFrame _editPortalFrame; 
@@ -85,7 +82,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     JDialog _dialog;
 
     public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
-    public final static Color _editGroupColor = new Color(0, 0, 255);;
+    public final static Color _editGroupColor = new Color(0, 0, 255);
     public final static Color _editGroup2Color = new Color(200, 200, 255);
     public final static Color _pathColor = Color.green;
     public final static Color _highlightColor = new Color(255, 0, 255);
@@ -964,7 +961,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     }
 
     protected void convertIcon(Positionable pos) {
-        _converting = true;
         _oldIcon = (PositionableLabel)pos;
         ((TargetPane)getTargetPanel()).setHighlightColor(_highlightColor);
 
@@ -1062,7 +1058,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         _convertDialog.dispose();
         _convertDialog = null;
         _highlightcomponent = null;
-        _converting = false;
         ((TargetPane)getTargetPanel()).setHighlightColor(_editGroupColor);
         repaint();
     }

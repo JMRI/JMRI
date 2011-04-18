@@ -200,7 +200,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
             return _block.getPaths().size();
         }
         public Object getElementAt(int index) {
-            return (OPath)_block.getPaths().get(index);
+            return _block.getPaths().get(index);
         }
         public void dataChange() {
             fireContentsChanged(this, 0, 0);
@@ -239,7 +239,6 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("showPath for "+name+" _pathGroup.size()= "+_pathGroup.size());
         for (int i=0; i<_pathGroup.size(); i++) {
             ((IndicatorTrack)_pathGroup.get(i)).addPath(TEST_PATH);
-            Positionable p = _pathGroup.get(i);
         }
         path.setTurnouts(0);
 

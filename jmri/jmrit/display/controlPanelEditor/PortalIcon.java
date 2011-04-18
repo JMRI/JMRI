@@ -10,7 +10,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.Portal;
 /**
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
@@ -20,7 +20,6 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
     public static final String PATH = "PATH";
 
     private Portal _portal;
-    private String _status;
 
     public PortalIcon(jmri.jmrit.display.Editor editor, Portal portal) {
         // super ctor call to make sure this is an icon label
