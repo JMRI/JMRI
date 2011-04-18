@@ -50,7 +50,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -292,7 +292,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (log.isDebugEnabled()) log.debug("deAllocate \""+_pathName+"\" in block \""
                                             +getSystemName());
         if (_warrant!=null && !_warrant.equals(warrant)) {
-            return msg = "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
+            return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
                 "\" owns block \""+getDisplayName()+"\"!";
         }
         removePropertyChangeListener(warrant);
