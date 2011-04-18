@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -321,6 +321,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     		msg = getBlockAt(0).allocate(this);
     	} else {
     		msg = allocateRoute();
+//    		msg = setRoute(0, _orders);
     	}
         if (msg!=null) {
             return msg;
@@ -400,10 +401,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             deAllocate();
             if (_throttle != null) {
                 try {
-                    //_throttle.removePropertyChangeListener(this);
+                    InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, this);
+                    /*_throttle.removePropertyChangeListener(this);
                     _throttle.release();
                     DccLocoAddress l = (DccLocoAddress) _throttle.getLocoAddress();
                     InstanceManager.throttleManagerInstance().cancelThrottleRequest(l.getNumber(), this);
+                    */
                 } catch (Exception e) {
                     // null pointer catch and maybe other such.
                     log.warn("Throttle release and cancel threw: "+e);
@@ -484,7 +487,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             OBlock b = bo.getBlock();
             bo.setPath(this);
             b.setValue(_trainId);
-//            b.setValue(_trainName);
+            b.setValue(_trainName);
             b.setState(b.getState() | OBlock.RUNNING);
         }
         _runMode = mode;
@@ -576,6 +579,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 return msg;
             }
         }
+        OBlock block = _orders.get(0).getBlock();
+        block.setValue(_trainName);
+        block.setState(block.getState() | OBlock.RUNNING);
         boolean old = _allocated; 
         _allocated = true;
         firePropertyChange("allocate", Boolean.valueOf(old), Boolean.valueOf(_allocated));
@@ -698,7 +704,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * Learn mode assumes route is set and clear
     */
     protected void goingActive(OBlock block) {
-        if (_runMode==MODE_NONE) { 
+        if (_runMode==MODE_NONE) {
+            if (log.isDebugEnabled()) log.debug("Block "+block.getDisplayName()+" goingActive. MODE_NONE");
             return;
         }
         int oldIndex = _idxCurrentOrder;
@@ -717,8 +724,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 // we assume it is our train entering the block - cannot guarantee it, but what else?
                 _idxCurrentOrder = activeIdx;
                 // set block state to show our train occupies the block
-                block.setValue(_trainId);
-//                block.setValue(_trainName);
+                block.setValue(_trainName);
                 block.setState(block.getState() | OBlock.RUNNING);
             }
         } else if (activeIdx > _idxCurrentOrder+1) {

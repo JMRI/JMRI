@@ -10,8 +10,6 @@ import java.util.List;
 import jmri.Path;
 import jmri.Sensor;
 
-//import jmri.jmrit.display.controlPanelEditor.CircuitBuilder;
-
 /**
  * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It is the smallest
  * piece of track that can have occupancy detection.  A better name would be Detection Circuit.
@@ -52,7 +50,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -234,6 +232,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * @return name of block if block is already allocated to another warrant
     */
     protected String allocate(Warrant warrant) {
+        if (log.isDebugEnabled()) log.debug("Allocate warrant \""+warrant.getDisplayName()+"\" in block \""
+                                            +getSystemName()+"\", state= "+getState());
         if (warrant==null) {
             return "ERROR! Allocate called with null warrant in block \""+getDisplayName()+"\"!";
         }
@@ -255,8 +255,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _pathName = path;
         // firePropertyChange signaled in super.setState()
         setState(getState() | ALLOCATED);
-        if (log.isDebugEnabled()) log.debug("Allocated OBlock path \""+_pathName+"\" in block \""
-                                            +getSystemName()+"\", state= "+getState());
         return null;
     }
 
@@ -266,6 +264,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * @return name of block if block is already allocated to another warrant
     */
     public String allocate(String pathName) {
+        if (log.isDebugEnabled()) log.debug("Allocate OBlock path \""+pathName+"\" in block \""
+                                            +getSystemName()+"\", state= "+getState());
         if (pathName==null) {
             log.error("allocate called with null pathName in block \""+getDisplayName()+"\"!");
             return null;
@@ -281,8 +281,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _pathName = pathName;
         // firePropertyChange signaled in super.setState()
         setState(getState() | ALLOCATED);
-        if (log.isDebugEnabled()) log.debug("Allocated OBlock path \""+pathName+"\" in block \""
-                                            +getSystemName()+"\", state= "+getState());
         return null;
     }
 
@@ -294,28 +292,16 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (log.isDebugEnabled()) log.debug("deAllocate \""+_pathName+"\" in block \""
                                             +getSystemName());
         String msg = null;
-        if (_warrant!=null) {
-            if (!_warrant.equals(warrant)) {
-                msg = "cannot deAllocate. warrant \""+_warrant.getDisplayName()+"\" owns block \""+getDisplayName()+"\"!";
-            } else {
-                removePropertyChangeListener(warrant);
-            }
-        } else if (warrant!=null && _pathName!=null) {
-            msg = "cannot deAllocate. path \""+_pathName+"\" is allocated in block \""+getDisplayName()+"\"!";
+        if (_warrant!=null && !_warrant.equals(warrant)) {
+            return msg = "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
+                "\" owns block \""+getDisplayName()+"\"!";
         }
-        if (msg!=null) {
-            log.warn(msg);
-            if (warrant==null) {
-                msg = null;
-            }
-        } else {
-            _warrant = null;
-            _pathName = null;
-            //setValue(null);
-            int state = getState();
-            setState(state & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
-        }
-        return msg;
+        removePropertyChangeListener(warrant);
+        _warrant = null;
+        _pathName = null;
+        setValue(null);
+        setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
+        return null;
     }
 
     public void setOutOfService(boolean set) {
@@ -461,6 +447,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         path.clearSettings();
         int oldSize = getPaths().size();
         super.removePath(path);
+        ((OPath)path).dispose();
         firePropertyChange("pathCount", Integer.valueOf(oldSize), Integer.valueOf(getPaths().size()));
     }
 
@@ -476,6 +463,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * @return error message if the call fails.  null if the call succeeds
     */
     public String setPath(String pathName, Warrant warrant) {
+        if (log.isDebugEnabled()) log.debug("setPath: OBlock \""+getSystemName()+" path to \""+
+                                            pathName+"\" by warrant "+warrant.getDisplayName());
         String msg = null;
         if (_warrant!=null && !_warrant.equals(warrant)) {
             msg = java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
@@ -501,8 +490,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             path.setTurnouts(0);
             firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));
         }
-        if (log.isDebugEnabled()) log.debug("setPath: Block \""+getSystemName()+" path set to \""+
-                                            _pathName+"\"");
         return msg;
     }
 
