@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 
@@ -43,9 +43,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     private NamedBeanHandle<OBlock> namedOccBlock = null;
 
     private String _status;     // is a key for _iconMap
-    private String _train;
-    private boolean _showTrain; // this track should display _train when occupied
-    LocoIcon _loco = null;
+    private boolean _showTrain; // this track should display _loco when occupied
+    private LocoIcon _loco = null;
 
 
     public IndicatorTrackIcon(Editor editor) {
@@ -177,13 +176,22 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
     public void setPaths(ArrayList<String>paths) {
         _paths = paths;
+        if (log.isDebugEnabled()) {
+            log.debug("setPaths");
+            for (int i=0; i<_paths.size(); i++) {
+                log.debug("pathName= "+_paths.get(i));
+            }
+        }
     }
 
     public void addPath(String path) {
         if (_paths==null) {
             _paths = new ArrayList<String>();
         }
-        _paths.add(path);
+        if (!_paths.contains(path)) {
+            _paths.add(path);
+        }
+        if (log.isDebugEnabled()) log.debug("addPath \""+path+"\" #paths= "+_paths.size());
     }
     public void removePath(String path) {
         if (_paths!=null) {
@@ -237,26 +245,34 @@ public class IndicatorTrackIcon extends PositionableIcon
                 _status = "DontUseTrack";
             }
         } else if ((state & OBlock.OCCUPIED)!=0) {
+            if (_showTrain) {
+                setLocoIcon((String)block.getValue());
+            }
             if ((state & OBlock.RUNNING)!=0) {
                 if (_paths!=null && _paths.contains(pathName)) {
                     _status = "PositionTrack";
-                    _train = (String)block.getValue();
                 } else {
                     _status = "ClearTrack";     // icon not on path
                 }
             } else {
                 _status = "OccupiedTrack";
             }
-        } else if ((state & OBlock.ALLOCATED)!=0) {
-            if (_paths!=null && _paths.contains(pathName)) {
-                _status = "AllocatedTrack";     // icon not on path
+        } else {
+            if (_loco!=null) {
+                _loco.remove();
+                _loco = null;
+            }
+            if ((state & OBlock.ALLOCATED)!=0) {
+                if (_paths!=null && _paths.contains(pathName)) {
+                    _status = "AllocatedTrack";     // icon on path
+                } else {
+                    _status = "ClearTrack";
+                }
+            } else if ((state & Sensor.UNKNOWN)!=0) {
+                _status = "DontUseTrack";
             } else {
                 _status = "ClearTrack";
             }
-        } else if ((state & Sensor.UNKNOWN)!=0) {
-            _status = "DontUseTrack";
-        } else {
-            _status = "ClearTrack";
         }
     }
 
@@ -269,6 +285,31 @@ public class IndicatorTrackIcon extends PositionableIcon
             _status = "DontUseTrack";
         } else {
             _status = "ErrorTrack";
+        }
+    }
+
+    private void setLocoIcon(String trainName) {
+        if (trainName==null) {
+            if (_loco!=null) {
+                _loco.remove();
+                _loco = null;
+            }
+            return;
+        }
+        if (_loco!=null) {
+            return;
+        }
+        trainName = trainName.trim();
+        _loco = _editor.selectLoco(trainName);
+        if (_loco==null) {
+            _loco = _editor.addLocoIcon(trainName);
+        }
+        if (_loco!=null) {
+            java.awt.Point pt = getLocation();
+            pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
+            pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
+            _loco.setLocation(pt);
+            log.debug("Display Loco \""+trainName+"\" ("+_status+") at ("+pt.x+", "+pt.y+")");
         }
     }
 
@@ -293,25 +334,7 @@ public class IndicatorTrackIcon extends PositionableIcon
 	 * Drive the current state of the display from the state of the turnout.
 	 */
     void displayState(String status) {
-        log.debug(getNameString() +" displayStatus "+_status+",  "+_loco);
-        if (_loco!=null) {
-            _loco.remove();
-        }
-        if (_train!=null) {
-            if (_showTrain && "PositionTrack".equals(_status)) {
-                _loco = _editor.selectLoco(_train);
-                if (_loco==null) {
-                    _loco = _editor.addLocoIcon(_train.trim());
-                }
-                if (_loco!=null) {
-                    java.awt.Point pt = getLocation();
-                    pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
-                    pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
-                    _loco.setLocation(pt);
-                    log.debug("Display state "+status+", at ("+pt.x+", "+pt.y+")");
-                }
-            }
-        }
+        log.debug(getNameString() +" displayStatus "+_status);
         NamedIcon icon = getIcon(status);
         if (icon!=null) {
             super.setIcon(icon);

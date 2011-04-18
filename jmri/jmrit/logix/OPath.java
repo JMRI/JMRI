@@ -68,10 +68,14 @@ public class OPath extends jmri.Path  {
 
     protected String getOppositePortalName(String name) {
         if (_fromPortal!=null && _fromPortal.getName().equals(name)) {
-            return _toPortal.getName();
+            if (_toPortal!=null) {
+                return _toPortal.getName();
+            }
         }
         if (_toPortal!=null && _toPortal.getName().equals(name)) {
-            return _fromPortal.getName();
+            if (_fromPortal!=null) {
+                return _fromPortal.getName();
+            }
         }
         return null;
     }
@@ -83,7 +87,11 @@ public class OPath extends jmri.Path  {
         return _toPortal.isValid();
     }
 
-    public void setName(String n) { _name = n; }
+    public void setName(String name) { 
+        if (name == null || name.length()==0) { return; }
+        if (_name.equals(name)) { return; }
+        _name = name; 
+    }
     
     public String getName() { return _name; }
     
@@ -99,7 +107,7 @@ public class OPath extends jmri.Path  {
     }
     public Portal getToPortal() { return _toPortal; }
 
-    protected void setTurnouts(int delay) {
+    public void setTurnouts(int delay) {
         if(delay>0) {
             if (!_timerActive) {
                 // Create a timer if one does not exist
@@ -129,6 +137,11 @@ public class OPath extends jmri.Path  {
                 t.setCommandedState(bs.getSetting());
             }
         }
+    }
+
+    public void dispose() {
+        if (_fromPortal!=null) { _fromPortal.removePath(this); }
+        if (_toPortal!=null) { _toPortal.removePath(this); }
     }
 
 

@@ -53,8 +53,8 @@ public class Portal  {
         //if (log.isDebugEnabled()) log.debug("addPath: "+toString());
         if (!this.equals(path.getFromPortal()) &&
                 !this.equals(path.getToPortal()) ){
-            log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
-                "\" does not pass through Portal \""+_portalName+"\".");
+        //    log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
+        //        "\" does not pass through Portal \""+_portalName+"\".");
             return false;
         }
         if (_fromBlock != null && _fromBlock.equals(block)) {
@@ -66,8 +66,8 @@ public class Portal  {
                 return addPath(_toPaths, path);
             }
         } else {
-            log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
-                "\" is not in either of the blocks of Portal \""+_portalName+"\".");
+        //    log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
+        //        "\" is not in either of the blocks of Portal \""+_portalName+"\".");
         }
         // path already in one of the path lists
         return true;
@@ -88,11 +88,52 @@ public class Portal  {
         return true;
     }
 
-    public void setName(String name) {
-        if (name == null || name.length()==0) { return; }
-        if (_portalName.equals(name)) { return; }
+    public void removePath(OPath path) {
+        Block block = path.getBlock();
+        if (block==null) {
+            log.error("Path \""+path.getName()+"\" has no block.");
+            return;
+        }
+        //if (log.isDebugEnabled()) log.debug("removePath: "+toString());
+        if (!this.equals(path.getFromPortal()) &&
+                !this.equals(path.getToPortal()) ){
+            return;
+        }
+        if (_fromBlock != null && _fromBlock.equals(block)) {
+            _fromPaths.remove(path);
+        } else if (_toBlock != null && _toBlock.equals(block)) {
+            _toPaths.remove(path);
+        }
+    }
 
-        _portalName = name;
+    /**
+    * Check for duplicate name in either block
+    * @return return error message, return null if name change is OK 
+    */
+    public String setName(String name) {
+        if (name == null || name.length()==0) { return null; }
+        if (_portalName.equals(name)) { return null; }
+
+        String msg = checkName(name, _fromBlock);
+        if (msg==null) {
+            msg = checkName(name, _toBlock);
+        }
+        if (msg==null) {
+            _portalName = name;
+        } else {
+            msg = java.text.MessageFormat.format(
+                  WarrantTableAction.rb.getString("DuplicatePortalName"), msg, name); 
+        }
+        return msg;
+    }
+    private String checkName(String name, OBlock block) {
+        List<Portal> list = block.getPortals();
+        for (int i=0; i<list.size(); i++) {
+            if (name.equals(list.get(i).getName())) {
+                return list.get(i).getName(); 
+            }
+        }
+        return null;
     }
 
     public String getName() { return _portalName; }
@@ -379,7 +420,8 @@ public class Portal  {
     }
 
     public String getDescription() {
-        return "\""+_portalName+"\" between block "+getFromBlockName()+" and block "+getToBlockName();
+        return java.text.MessageFormat.format(WarrantTableAction.rb.getString("PortalDescription"),
+                        _portalName, getFromBlockName(), getToBlockName());
     }
     
     public String toString() {

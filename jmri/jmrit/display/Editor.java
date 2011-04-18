@@ -112,7 +112,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 	
     // Option menu items 
 	protected int _scrollState = SCROLL_NONE;
-    private boolean _editable = true;
+    protected boolean _editable = true;
     private boolean _positionable = true;
     private boolean _controlLayout = true;
     private boolean _showHidden = true;
@@ -470,25 +470,35 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 setSize(wnew,hnew);
             }
         }
+
+        private Color _highlightColor = new Color(204, 207, 88);
+        private Color _selectGroupColor = new Color(204, 207, 88);
+        public void setHighlightColor(Color color) {
+             _highlightColor = color;
+        }
+        public void setSelectGroupColor(Color color) {
+            _selectGroupColor = color;
+        }
+        public void setDefaultColors() {
+            _highlightColor = new Color(204, 207, 88);
+            _selectGroupColor = new Color(204, 207, 88);
+        }
+
         public void paint(Graphics g) {
             Graphics2D g2d = (Graphics2D)g;
             g2d.scale(_paintScale, _paintScale);
             super.paint(g);
             paintTargetPanel(g);
+            java.awt.Stroke stroke = g2d.getStroke();
+            Color color = g2d.getColor();
             if (_selectRect != null) {
                 //Draw a rectangle on top of the image.
-                java.awt.Stroke stroke = g2d.getStroke();
-                Color color = g2d.getColor();
                 g2d.setStroke(DASHED_LINE);
                 g2d.setColor(Color.red);
                 g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
-                g2d.setStroke(stroke);
-                g2d.setColor(color);
             }
-            if (_highlightcomponent!=null || _selectionGroup!=null){
-                java.awt.Stroke stroke = g2d.getStroke();
-                Color color = g2d.getColor();
-                g2d.setColor(new Color(204, 207, 88));
+            if (_selectionGroup!=null){
+                g2d.setColor(_selectGroupColor);
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
                 if (_selectionGroup!=null){
                     for(int i=0; i<_selectionGroup.size();i++){
@@ -496,13 +506,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                                    _selectionGroup.get(i).maxWidth(), _selectionGroup.get(i).maxHeight());
                     }
                 }
-                if (_highlightcomponent!=null)
-                    g.drawRect(_highlightcomponent.x, _highlightcomponent.y, 
-                               _highlightcomponent.width, _highlightcomponent.height);
-                //Draws a border around the highlighted component
-                g2d.setColor(color);
-                g2d.setStroke(stroke);
             }
+            //Draws a border around the highlighted component
+            if (_highlightcomponent!=null) {
+                g2d.setColor(_highlightColor);
+                g2d.setStroke(new java.awt.BasicStroke(2.0f));
+                g.drawRect(_highlightcomponent.x, _highlightcomponent.y, 
+                           _highlightcomponent.width, _highlightcomponent.height);
+            }
+            g2d.setColor(color);
+            g2d.setStroke(stroke);
             if (_tooltip != null) {
                 _tooltip.paint(g2d, _paintScale);
             }
@@ -815,7 +828,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected void changeView(String className) {
+    protected Editor changeView(String className) {
 
         JFrame frame = getTargetFrame();
         Dimension size = frame.getSize();
@@ -847,6 +860,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.pack();
             ed.setVisible(true);
             jmri.jmrit.display.PanelMenu.instance().addEditorPanel(ed);
+            dispose(false);
+            return ed;
         } catch (ClassNotFoundException cnfe) {
             log.error("changeView exception "+cnfe.toString());
         } catch (InstantiationException ie) {
@@ -854,7 +869,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } catch (IllegalAccessException iae) {
             log.error("changeView exception "+iae.toString());
         }
-        dispose(false);
+        return null;
     }
 
     /************************* Popup Item Methods ***********************/
@@ -1042,6 +1057,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 			return null;
         LocoIcon l = null;
 		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
+        if (entry==null) {
+            return null;
+        }
 		// try getting road number, else use DCC address
 		String rn = entry.getRoadNumber();
 		if ((rn==null) || rn.equals("")) 
@@ -1180,7 +1198,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.invalidate();
         l.setPositionable(true);
         l.setVisible(true);
-        l.setTooltip(new ToolTip(_defaultToolTip, l));
+        if (l.getTooltip()==null) {
+            l.setTooltip(new ToolTip(_defaultToolTip, l));
+        }
         addToTarget(l);
         if (!_contents.add(l)) {
             log.error("Unable to add "+l.getNameString()+" to _contents");

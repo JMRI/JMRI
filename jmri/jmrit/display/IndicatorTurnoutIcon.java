@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
@@ -50,8 +50,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     private NamedBeanHandle<OBlock> namedOccBlock = null;
 
     private String _status;
-    private String _train;
-    private boolean _showTrain; // this track should display _train when occupied
+    private boolean _showTrain; // this track should display _loco when occupied
+    private LocoIcon _loco = null;
 
     public IndicatorTurnoutIcon(Editor editor) {
         super(editor);
@@ -331,8 +331,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         displayState(turnoutState());
     }
 
-    LocoIcon _loco = null;
-
     /**
 	 * Drive the current state of the display from the state of the turnout and status of track.
 	 */
@@ -344,22 +342,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             log.debug("Display state "+state+", disconnected");
         } else {
             if (_status!=null && _iconMaps!=null) {
-                //log.debug(getNameString()+" displayState "+_state2nameMap.get(state)+", status= "+_status+
-                //          ", isIcon()= "+isIcon());
-                if (_train!=null) {
-                    if (_showTrain && "PositionTrack".equals(_status)) {
-                        _loco = _editor.selectLoco(_train);
-                        if (_loco==null) {
-                            _loco = _editor.addLocoIcon(_train.trim());
-                        }
-                        if (_loco!=null) {
-                            java.awt.Point pt = getLocation();
-                            pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
-                            pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
-                            _loco.setLocation(pt);
-                        }
-                    }
-                }
                 NamedIcon icon = getIcon(_status, state);
                 if (icon!=null) {
                     super.setIcon(icon);
@@ -417,26 +399,34 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 _status = "DontUseTrack";
             }
         } else if ((state & OBlock.OCCUPIED)!=0) {
+            if (_showTrain) {
+                setLocoIcon((String)block.getValue());
+            }
             if ((state & OBlock.RUNNING)!=0) {
                 if (_paths!=null && _paths.contains(pathName)) {
                     _status = "PositionTrack";
-                    _train = (String)block.getValue();
                 } else {
                     _status = "ClearTrack";     // icon not on path
                 }
             } else {
                 _status = "OccupiedTrack";
             }
-        } else if ((state & OBlock.ALLOCATED)!=0) {
-            if (_paths!=null && _paths.contains(pathName)) {
-                _status = "AllocatedTrack";     // icon not on path
+        } else {
+            if (_loco!=null) {
+                _loco.remove();
+                _loco = null;
+            }
+            if ((state & OBlock.ALLOCATED)!=0) {
+                if (_paths!=null && _paths.contains(pathName)) {
+                    _status = "AllocatedTrack";     // icon on path
+                } else {
+                    _status = "ClearTrack";
+                }
+            } else if ((state & Sensor.UNKNOWN)!=0) {
+                _status = "DontUseTrack";
             } else {
                 _status = "ClearTrack";
             }
-        } else if ((state & Sensor.UNKNOWN)!=0) {
-            _status = "DontUseTrack";
-        } else {
-            _status = "ClearTrack";
         }
     }
 
@@ -449,6 +439,31 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             _status = "DontUseTrack";
         } else {
             _status = "ErrorTrack";
+        }
+    }
+
+    private void setLocoIcon(String trainName) {
+        if (trainName==null) {
+            if (_loco!=null) {
+                _loco.remove();
+                _loco = null;
+            }
+            return;
+        }
+        if (_loco!=null) {
+            return;
+        }
+        trainName = trainName.trim();
+        _loco = _editor.selectLoco(trainName);
+        if (_loco==null) {
+            _loco = _editor.addLocoIcon(trainName);
+        }
+        if (_loco!=null) {
+            java.awt.Point pt = getLocation();
+            pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
+            pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
+            _loco.setLocation(pt);
+            log.debug("Display Loco \""+trainName+"\" ("+_status+") at ("+pt.x+", "+pt.y+")");
         }
     }
     

@@ -5,7 +5,7 @@ package jmri.jmrit.display;
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 
 import jmri.jmrit.catalog.NamedIcon;
 
-public class PositionableIcon extends PositionableLabel{
+public class PositionableIcon extends PositionableLabel {
 
     protected Hashtable <String, NamedIcon> _iconMap;
     protected String  _iconFamily;
@@ -78,6 +78,7 @@ public class PositionableIcon extends PositionableLabel{
             Entry<String, NamedIcon> entry = it.next();
             entry.getValue().setRotation(entry.getValue().getRotation()+1, this);
         }
+        updateSize();
     }
 
     public void setScale(double s) {
@@ -87,6 +88,7 @@ public class PositionableIcon extends PositionableLabel{
             Entry<String, NamedIcon> entry = it.next();
             entry.getValue().scale(s, this);
         }
+        updateSize();
     }
 
     public void rotate(int deg) {
@@ -96,6 +98,7 @@ public class PositionableIcon extends PositionableLabel{
             Entry<String, NamedIcon> entry = it.next();
             entry.getValue().rotate(deg, this);
         }
+        updateSize();
     }
 
     public double getScale(){

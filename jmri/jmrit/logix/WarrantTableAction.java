@@ -82,7 +82,7 @@ import jmri.jmrit.catalog.NamedIcon;
  */
 public class WarrantTableAction extends AbstractAction {
 
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
+	public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
     private static HashMap <String, WarrantFrame> _frameMap = new HashMap <String, WarrantFrame> ();
@@ -236,23 +236,26 @@ public class WarrantTableAction extends AbstractAction {
             }
             String msg = null;
             boolean hasPortal = false;
-            Portal portal = path.getFromPortal();
-            if (portal!=null) {
-                if (!portal.isValid()){
-                    msg = portal.getName();
+            Portal fromPortal = path.getFromPortal();
+            if (fromPortal!=null) {
+                if (!fromPortal.isValid()){
+                    msg = fromPortal.getName();
                 }
                 hasPortal = true;
-                portalList.remove(portal.getName());
-                //portal.addPath(path);
+                portalList.remove(fromPortal.getName());
             }
-            portal = path.getToPortal();
-            if (portal!=null) {
-                 if (!portal.isValid()) {
-                     msg = portal.getName();
+            Portal toPortal = path.getToPortal();
+            if (toPortal!=null) {
+                 if (!toPortal.isValid()) {
+                     msg = toPortal.getName();
                  }
                  hasPortal = true;
-                 portalList.remove(portal.getName());
-                 //portal.addPath(path);
+                 portalList.remove(toPortal.getName());
+                 if (fromPortal!=null && fromPortal.equals(toPortal)) {
+                     _textArea.append(java.text.MessageFormat.format(
+                             rb.getString("PathWithDuplicatePortal"), path.getName(), b.getDisplayName()));
+                     _textArea.append("\n");
+                 }
             }
             if (msg != null ) {
                 _textArea.append(java.text.MessageFormat.format(

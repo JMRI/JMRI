@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
@@ -63,11 +64,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private jmri.jmrit.display.palette.ItemPalette _itemPalette;
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
-    // "CheckBoxEditable" is "show popups" (lame?)
     private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CloseEditor"));
     private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(rb.getString("CheckBoxControlling"));
-//    private JCheckBoxMenuItem showCoordinatesBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowCoordinates"));
     private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowTooltips"));
     private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(rb.getString("CheckBoxHidden"));
     private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(rb.getString("ScrollBoth"));
@@ -75,10 +74,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
 
-    /**************************** DnD **************************************/
+    public static final ResourceBundle rbcp = ResourceBundle.getBundle("jmri.jmrit.display.controlPanelEditor.ControlPanelBundle");
 
-//    public static final String POSITIONABLE_LIST_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
-//               ";class=java.util.ArrayList";
+    // DnD
     public static final String POSITIONABLE_LIST_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
                ";class=jmri.jmrit.display.controlPanelEditor.ControlPanelEditor";
 
@@ -133,9 +131,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
         makeDataFlavors();
-
-//        setMappings();
-//        _targetPanel.setTransferHandler(new PositionableListHandler(this));
 
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
@@ -238,16 +233,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             });                    
         hiddenBox.setSelected(showHidden());
 
-//        _optionMenu.add(showCoordinatesBox);
-        /*
-        showCoordinatesBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setShowCoordinates(showCoordinatesBox.isSelected());
-            }
-        });
-        showCoordinatesBox.setSelected(showCoordinates());
-        */
-
         _optionMenu.add(showTooltipBox);
         showTooltipBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -339,6 +324,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					changeView("jmri.jmrit.display.panelEditor.PanelEditor");
+                }
+            });
+
+        editItem = new JMenuItem(rb.getString("IMView"));
+        _fileMenu.add(editItem);
+        editItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					jmri.jmrit.display.controlPanelEditor.CircuitBuilder ed = (jmri.jmrit.display.controlPanelEditor.CircuitBuilder)changeView("jmri.jmrit.display.controlPanelEditor.CircuitBuilder");
+                    ed.init();
                 }
             });
 
@@ -720,7 +714,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _itemPalette.setVisible(false);
     }
 
-    // all content loaded from file.  Set putItem override.
+    // all content loaded from file.
     public void loadComplete() {
     }
     
@@ -908,7 +902,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (event.isPopupTrigger() || delayedPopupTrigger) {
             if (selection!=null) {
                 _highlightcomponent = null;
-                    showPopUp(selection, event);
+                showPopUp(selection, event);
             }
         } else {
             if (selection!=null) {
@@ -1004,6 +998,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
 
     /*************** implementation of Abstract Editor methods ***********/
+
     /**
      * The target window has been requested to close, don't delete it at this
 	 *   time.  Deletion must be accomplished via the Delete this panel menu item.
@@ -1167,7 +1162,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     /**************************** DnD **************************************/
 
-    private void makeDataFlavors() {
+    protected void makeDataFlavors() {
 //        _targetPanel.setTransferHandler(new DnDIconHandler(this));
         try {
             _positionableDataFlavor = new DataFlavor(POSITIONABLE_FLAVOR);
@@ -1224,6 +1219,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 item.setLocation(pt.x, pt.y);
                 // now set display level in the pane.
                 item.setDisplayLevel(item.getDisplayLevel());
+                item.setEditor(this);
                 putItem(item);
                 item.updateSize();
                 //if (_debug) log.debug("Drop positionable "+item.getNameString()+
@@ -1244,6 +1240,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                       ni.setDisplayLevel(ICONS);
                   }
                   ni.setLocation(pt.x, pt.y);
+                  ni.setEditor(this);
                   putItem(ni);
                   ni.updateSize();
                   evt.dropComplete(true);
@@ -1254,6 +1251,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
                 l.setDisplayLevel(LABELS);
                 l.setLocation(pt.x, pt.y);
+                l.setEditor(this);
                 putItem(l);
                 evt.dropComplete(true);
             } else if (tr.isDataFlavorSupported(_positionableListDataFlavor)) {
@@ -1261,6 +1259,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         (ArrayList<Positionable>)tr.getTransferData(_positionableListDataFlavor);
                 for (int i=0; i<dragGroup.size(); i++) {
                     Positionable pos = dragGroup.get(i);
+                    pos.setEditor(this);
                     putItem(pos);
                     pos.updateSize();
                     if (_debug) log.debug("DnD Add "+pos.getNameString());

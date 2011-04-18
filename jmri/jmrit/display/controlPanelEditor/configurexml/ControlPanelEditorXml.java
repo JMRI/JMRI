@@ -4,12 +4,18 @@ import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JFrame;
-import java.awt.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.jdom.*;
 
@@ -17,7 +23,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -62,6 +68,9 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         if (log.isDebugEnabled()) log.debug("N elements: "+contents.size());
         for (int i=0; i<contents.size(); i++) {
             Positionable sub = contents.get(i);
+            if (sub instanceof PortalIcon) {
+                continue;
+            }
             if (sub!=null && sub.storeItem()) {
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
@@ -197,6 +206,32 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
         panel.disposeLoadData();     // dispose of url correction data
 
+        // load Portal icons for Circuit Builder
+        ArrayList<Portal> portals = new ArrayList<Portal>();
+        OBlockManager manager = jmri.InstanceManager.oBlockManagerInstance();
+        String[] sysNames = manager.getSystemNameArray();
+        for (int i = 0; i < sysNames.length; i++) {
+            OBlock block = manager.getBySystemName(sysNames[i]);
+            List<Portal> list = block.getPortals();
+            for (int k=0; k<list.size(); k++) {
+                Portal portal = list.get(k);
+                if (!portals.contains(portal)) {
+                    portals.add(portal);
+                }
+            }
+        }
+        for (int j = 0; j<portals.size(); j++) {
+            Portal portal = portals.get(j);
+            if (portal.getIconPosition()!=null) {
+                PortalIcon icon = new PortalIcon(panel, portal);
+                panel.putItem(icon);
+                icon.setStatus(PortalIcon.HIDDEN);
+                icon.setLevel(ControlPanelEditor.MARKERS);
+                icon.setLocation(portal.getIconPosition());
+                log.debug("load PortalIcon at "+portal.getIconPosition().toString());
+            }
+        }
+
         // display the results, with the editor in back
         panel.pack();
         panel.setAllEditable(panel.isEditable());
@@ -213,7 +248,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);
         panel.setTitle();
-        // do last to set putItem override
+        // do last to set putItem override - unused.
         panel.loadComplete();
 
         return result;

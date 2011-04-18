@@ -12,9 +12,9 @@ import jmri.jmrit.logix.OBlock;
  * <P>
  *
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public interface IndicatorTrack  {
+public interface IndicatorTrack extends Positionable  {
 
     public void setOccSensor(String pName);
     public void setOccSensorHandle(NamedBeanHandle<Sensor> senHandle);
