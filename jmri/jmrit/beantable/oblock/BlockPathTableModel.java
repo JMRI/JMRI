@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 import java.util.ResourceBundle;
@@ -133,22 +133,26 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     }
 
     public void setValueAt(Object value, int row, int col) {
+        String strValue = (String)value;
+        if (strValue!=null && strValue.trim().length()==0) {
+            strValue =null;
+        }
         String msg = null;
         if (_block.getPaths().size() == row) {
             if (col==NAME_COLUMN) {
-                if (_block.getPathByName((String)value)!=null) {
+                if (_block.getPathByName(strValue)!=null) {
                     msg = java.text.MessageFormat.format(
-                            rbo.getString("DuplPathName"), (String)value);
-                    tempRow[col] = (String)value;
+                            rbo.getString("DuplPathName"), strValue);
+                    tempRow[col] = strValue;
                 } else {
                     Portal fromPortal = _block.getPortalByName(tempRow[FROM_PORTAL_COLUMN]);
                     Portal toPortal = _block.getPortalByName(tempRow[TO_PORTAL_COLUMN]);
-                    OPath path = new OPath((String)value, _block, fromPortal, 0, toPortal, 0);
+                    OPath path = new OPath(strValue, _block, fromPortal, 0, toPortal, 0);
 
                     if (!_block.addPath(path)) {
                         msg = java.text.MessageFormat.format(
-                                rbo.getString("AddPathFailed"), (String)value);
-                        tempRow[col] = (String)value;
+                                rbo.getString("AddPathFailed"), strValue);
+                        tempRow[col] = strValue;
                     } else {
                         initTempRow();
                         _parent.updateOpenMenu();
@@ -157,7 +161,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 fireTableDataChanged();
             }
             else {
-                tempRow[col] = (String)value;
+                tempRow[col] = strValue;
             }
             if (msg != null) {
                 JOptionPane.showMessageDialog(null, msg,
@@ -170,83 +174,93 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
         switch(col) {
             case FROM_PORTAL_COLUMN:
-                Portal portal = _block.getPortalByName((String)value);
-                if (portal == null || _parent.getPortalModel().getPortalByName((String)value)==null) {
-                    int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                        rbo.getString("BlockPortalConflict"), value, _block.getDisplayName()),
-                        rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
-                        JOptionPane.WARNING_MESSAGE);
-                    if (response==JOptionPane.NO_OPTION) {
-                        break;
-                    }
-                    portal = _parent.getPortalModel().getPortalByName((String)value);
-                    if (portal==null) {
-                        portal = new Portal(_block, (String)value, null);
-                    } else {
-                        if ( !portal.setFromBlock(_block, false)) {
-                            response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                                rbo.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
-                                rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
-                                JOptionPane.WARNING_MESSAGE);
-                            if (response==JOptionPane.NO_OPTION) {
-                                break;
-                            }
-
+                if (strValue!=null) {
+                    Portal portal = _block.getPortalByName(strValue);
+                    if (portal == null || _parent.getPortalModel().getPortalByName(strValue)==null) {
+                        int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
+                            rbo.getString("BlockPortalConflict"), value, _block.getDisplayName()),
+                            rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
+                            JOptionPane.WARNING_MESSAGE);
+                        if (response==JOptionPane.NO_OPTION) {
+                            break;
                         }
-                        portal.setFromBlock(_block, true);
-                        _parent.getPortalModel().fireTableDataChanged();
+                        portal = _parent.getPortalModel().getPortalByName(strValue);
+                        if (portal==null) {
+                            portal = new Portal(_block, strValue, null);
+                        } else {
+                            if ( !portal.setFromBlock(_block, false)) {
+                                response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
+                                    rbo.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
+                                    rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
+                                    JOptionPane.WARNING_MESSAGE);
+                                if (response==JOptionPane.NO_OPTION) {
+                                    break;
+                                }
+
+                            }
+                            portal.setFromBlock(_block, true);
+                            _parent.getPortalModel().fireTableDataChanged();
+                        }
                     }
-                }
-                path.setFromPortal(portal);
-                if (!portal.addPath(path)) {
-                    msg = java.text.MessageFormat.format(
-                            rbo.getString("AddPathFailed"), (String)value);
+                    path.setFromPortal(portal);
+                    if (!portal.addPath(path)) {
+                        msg = java.text.MessageFormat.format(
+                                rbo.getString("AddPathFailed"), strValue);
+                    }
+                } else {
+                    path.setFromPortal(null);
                 }
                 fireTableRowsUpdated(row,row);
                 break;
             case NAME_COLUMN:
-                if (_block.getPathByName((String)value)!=null) {
-                    msg = java.text.MessageFormat.format(
-                            rbo.getString("DuplPathName"), (String)value); 
-                } else {
-                    path.setName((String)value);
-                    fireTableRowsUpdated(row,row);
+                if (strValue!=null) {
+                    if (_block.getPathByName(strValue)==null) {
+                        msg = java.text.MessageFormat.format(
+                                rbo.getString("DuplPathName"), strValue); 
+                    } else {
+                        path.setName(strValue);
+                        fireTableRowsUpdated(row,row);
+                    }
                 }
                 break;
             case TO_PORTAL_COLUMN:
-                portal = _block.getPortalByName((String)value);
-                if (portal == null || _parent.getPortalModel().getPortalByName((String)value)==null) {
-                    int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                        rbo.getString("BlockPortalConflict"), value, _block.getDisplayName()),
-                        rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
-                        JOptionPane.WARNING_MESSAGE);
-                    if (response==JOptionPane.NO_OPTION) {
-                        break;
-                    }
-                    portal = _parent.getPortalModel().getPortalByName((String)value);
-                    if (portal==null) {
-                        portal = new Portal(null, (String)value, _block);
-                    } else {
-                        if ( !portal.setToBlock(_block, false)) {
-                            response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                                rbo.getString("BlockPathsConflict"), value, portal.getToBlockName()),
-                                rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
-                                JOptionPane.WARNING_MESSAGE);
-                            if (response==JOptionPane.NO_OPTION) {
-                                break;
-                            }
-
+                if (strValue!=null) {
+                    Portal portal = _block.getPortalByName(strValue);
+                    if (portal == null || _parent.getPortalModel().getPortalByName(strValue)==null) {
+                        int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
+                            rbo.getString("BlockPortalConflict"), value, _block.getDisplayName()),
+                            rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
+                            JOptionPane.WARNING_MESSAGE);
+                        if (response==JOptionPane.NO_OPTION) {
+                            break;
                         }
-                        portal.setToBlock(_block, true);
-                        _parent.getPortalModel().fireTableDataChanged();
+                        portal = _parent.getPortalModel().getPortalByName(strValue);
+                        if (portal==null) {
+                            portal = new Portal(null, strValue, _block);
+                        } else {
+                            if ( !portal.setToBlock(_block, false)) {
+                                response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
+                                    rbo.getString("BlockPathsConflict"), value, portal.getToBlockName()),
+                                    rbo.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
+                                    JOptionPane.WARNING_MESSAGE);
+                                if (response==JOptionPane.NO_OPTION) {
+                                    break;
+                                }
+
+                            }
+                            portal.setToBlock(_block, true);
+                            _parent.getPortalModel().fireTableDataChanged();
+                        }
                     }
+                    path.setToPortal(portal);
+                    if (!portal.addPath(path)) {
+                        msg = java.text.MessageFormat.format(
+                                rbo.getString("AddPathFailed"), strValue);
+                    }
+                } else {
+                    path.setToPortal(null);
                 }
-                path.setToPortal(portal);
                 fireTableRowsUpdated(row,row);
-                if (!portal.addPath(path)) {
-                    msg = java.text.MessageFormat.format(
-                            rbo.getString("AddPathFailed"), (String)value);
-                }
                 break;
             case EDIT_COL:
                 _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(
