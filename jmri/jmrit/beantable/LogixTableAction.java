@@ -62,7 +62,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.95 $
+ * @version $Revision: 1.96 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3406,6 +3406,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (itemType==Conditional.ITEM_TYPE_SIGNALHEAD || itemType==Conditional.ITEM_TYPE_SIGNALMAST) {
                 // index 1 is Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS or Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS
                 if (_variableStateBox.getSelectedIndex()==1) {
+                    loadJComboBoxWithMastAspects(_variableSignalBox,_variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
                 } else {
                     _variableSignalPanel.setVisible(false);
@@ -3587,7 +3588,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
-                if (testType==Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) { 
+                if (testType==Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
                     _variableSignalPanel.setVisible(true);
                 } else {
                     _variableSignalPanel.setVisible(false);
