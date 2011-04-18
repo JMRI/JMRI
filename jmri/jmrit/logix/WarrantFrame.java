@@ -1034,7 +1034,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 _train = Roster.instance().entryFromTitle(name);
             }
             if (_train !=null) {
-                _trainNameBox.setText(_train.getRoadName());
+                _trainNameBox.setText(_train.getRoadNumber());
                 _dccNumBox.setText(_train.getDccLocoAddress().toString());
                 _rosterBox.setSelectedItem(_train.getId());
             } else {
@@ -1142,10 +1142,16 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         order.setPathName(pathName);
         OPath path = order.getPath();
         if (path != null) {
-            String name = path.getFromPortal().getName();
-            if (name!=null) { portalBox.addItem(name); }
-            name = path.getToPortal().getName();
-            if (name!=null) { portalBox.addItem(name); }
+            Portal portal = path.getFromPortal();
+            if (portal!=null) {
+                String name = portal.getName();
+                if (name!=null) { portalBox.addItem(name); }
+            }
+            portal = path.getToPortal();
+            if (portal!=null) {
+                String name = portal.getName();
+                if (name!=null) { portalBox.addItem(name); }
+            }
             if (log.isDebugEnabled()) log.debug("setPortalBox: Path "+path.getName()+
                          " set in block "+order.getBlock().getDisplayName());
         } else {
