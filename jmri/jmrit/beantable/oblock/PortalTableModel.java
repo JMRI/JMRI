@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 import java.util.ArrayList;
@@ -87,13 +87,6 @@ public class PortalTableModel extends AbstractTableModel {
             for (int i=0; i<list.size(); i++) {
                 Portal portal = list.get(i);
                 String pName = portal.getName();
-                if (portal.getToBlock()==null || portal.getFromBlock()==null) { 
-                    // double load of config file will have the first creation of a Portal
-                    // with no blocks by the second file (it's just how things are loaded with
-                    // forward and backward references to each other.  These objects cannot
-                    // be created with complete specifications on their instantiation.
-                    msg = java.text.MessageFormat.format(rbo.getString("PortalNeedsBlock"), pName);
-                }
                 boolean skip = false;
                 for (int j=0; j<tempList.size(); j++) {
                     if (pName.equals(tempList.get(j).getName())) {
@@ -178,18 +171,18 @@ public class PortalTableModel extends AbstractTableModel {
             if (log.isDebugEnabled()) log.debug("setValueAt: col= "+col+", value= "+(String)value);
             if (col==NAME_COLUMN) {
                 String name = (String)value;
+                String msg = null;
+                // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Blocks.
+                OBlock fromBlock = InstanceManager.oBlockManagerInstance()
+                                            .getOBlock(tempRow[FROM_BLOCK_COLUMN]);
+                OBlock toBlock = InstanceManager.oBlockManagerInstance()
+                                            .getOBlock(tempRow[TO_BLOCK_COLUMN]);
                 if (getPortalByName(name)==null) {
                     _savePortalName = name;
-                    // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Block.
-                    OBlock fromBlock = InstanceManager.oBlockManagerInstance()
-                                                .getOBlock(tempRow[FROM_BLOCK_COLUMN]);
-                    OBlock toBlock = InstanceManager.oBlockManagerInstance()
-                                                .getOBlock(tempRow[TO_BLOCK_COLUMN]);
                     if (fromBlock != null && 
                             fromBlock.equals(toBlock)) {
-                        JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbo.getString("SametoFromBlock"), fromBlock.getDisplayName()),
-                                rbo.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        msg = java.text.MessageFormat.format(
+                                rbo.getString("SametoFromBlock"), fromBlock.getDisplayName());
                     } else if (name != null && name.length()>0) {
                         Portal portal = new Portal(fromBlock, name, toBlock);
                         _portalList.add(portal);
@@ -198,8 +191,18 @@ public class PortalTableModel extends AbstractTableModel {
                         fireTableDataChanged();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                        rbo.getString("DuplPortalName"), (String)value),
+                    msg = java.text.MessageFormat.format(
+                            rbo.getString("DuplPortalName"), (String)value);
+                }
+                if (fromBlock==null || toBlock==null) { 
+                    // double load of config file will have the first creation of a Portal
+                    // with no blocks by the second file (it's just how things are loaded with
+                    // forward and backward references to each other.  These objects cannot
+                    // be created with complete specifications on their instantiation.
+                    msg = java.text.MessageFormat.format(rbo.getString("PortalNeedsBlock"), name);
+                }
+                if (msg!=null) {
+                    JOptionPane.showMessageDialog(null, msg,
                             rbo.getString("WarningTitle"),  JOptionPane.WARNING_MESSAGE);
                 }
             }
