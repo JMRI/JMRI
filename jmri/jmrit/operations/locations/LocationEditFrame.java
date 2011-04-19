@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -166,13 +166,17 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
-	    //      Set up the panels
+		// Layout the panel by rows
+		// row 1
+    	JPanel p1 = new JPanel();
+    	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
+    	
+		// row 1a
     	JPanel pName = new JPanel();
+    	pName.setMinimumSize(new Dimension(180,1));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 				
-		// Layout the panel by rows
-		// row 1a
 		addItem(pName, locationNameTextField, 0, 0);
 
 		// row 1b
@@ -183,7 +187,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addItem(directionPanel, eastCheckBox, 3, 0);
 		addItem(directionPanel, westCheckBox, 4, 0);
 		
-		// row 4
+		p1.add(pName);
+		p1.add(directionPanel);
 
 		// row 5
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
@@ -212,8 +217,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addItem(pB, addLocationButton, 1, 0);
 		addItem(pB, saveLocationButton, 3, 0);
 		
-		getContentPane().add(pName);
-		getContentPane().add(directionPanel);
+		getContentPane().add(p1);
 		getContentPane().add(typePane);
 		getContentPane().add(pOp);
        	getContentPane().add(yardPane);
@@ -272,8 +276,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (manager.getLocationEditFrameSize()!= null){
 			setSize(manager.getLocationEditFrameSize());
 		} 
-		if (getWidth()<700)
-			setSize(700, getHeight());
+		if (getWidth()<750)
+			setSize(750, getHeight());
 		if (getHeight()<500)
 			setSize(getWidth(), 500);
 		if (manager.getLocationEditFramePosition()!= null){

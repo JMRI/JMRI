@@ -1,7 +1,6 @@
 // YardEditFrame.java
 
 package jmri.jmrit.operations.locations;
-import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 
@@ -9,12 +8,10 @@ import javax.swing.BorderFactory;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
 	public YardEditFrame() {
 		super();
@@ -34,6 +31,8 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		addTrackButton.setText(rb.getString("AddYard"));
 		saveTrackButton.setText(rb.getString("SaveYard"));
 		// finish
+		dropPanel.setVisible(false);	// don't show drop and pick up panel
+		pickupPanel.setVisible(false);
 		packFrame();
 		setVisible(true);
 	}

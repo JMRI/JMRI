@@ -36,8 +36,8 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Builds a train and creates the train's manifest. 
  * 
- * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.148 $
+ * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
+ * @version             $Revision: 1.149 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -48,12 +48,6 @@ public class TrainBuilder extends TrainCommon{
 	protected static final String THREE = Setup.BUILD_REPORT_NORMAL;
 	protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
-	
-	// build status
-	private static final String BUILDFAILED = rb.getString("BuildFailed");
-	private static final String BUILDING = rb.getString("Building");
-	private static final String BUILT = rb.getString("Built") + " ";
-	private static final String PARTIALBUILT = rb.getString("Partial") + " ";
 			
 	// build variables shared between local routines
 	Train train;				// the train being built
@@ -108,7 +102,7 @@ public class TrainBuilder extends TrainCommon{
 	private void build() throws BuildFailedException {
 		log.debug("Building train "+train.getName());
 		
-		train.setStatus(BUILDING);
+		train.setStatus(Train.BUILDING);
 		train.setBuilt(false);
 		train.setLeadEngine(null);
 		
@@ -422,11 +416,11 @@ public class TrainBuilder extends TrainCommon{
 
 		train.setCurrentLocation(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested){
-			train.setStatus(PARTIALBUILT + train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("cars"));
-			addLine(buildReport, ONE, PARTIALBUILT + train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("cars"));
+			train.setStatus(Train.PARTIALBUILT +" "+ train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("cars"));
+			addLine(buildReport, ONE, Train.PARTIALBUILT +" "+ train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("cars"));
 		}else{
-			train.setStatus(BUILT + train.getNumberCarsWorked() + " "+ rb.getString("cars"));
-			addLine(buildReport, ONE, BUILT + train.getNumberCarsWorked() + " "+ rb.getString("cars"));
+			train.setStatus(Train.BUILT +" "+ train.getNumberCarsWorked() +" "+ rb.getString("cars"));
+			addLine(buildReport, ONE, Train.BUILT +" "+ train.getNumberCarsWorked() +" "+ rb.getString("cars"));
 		}
 		train.setBuilt(true);
 		buildReport.flush();
@@ -935,6 +929,8 @@ public class TrainBuilder extends TrainCommon{
     				carIndex--;
     				continue;
     			}
+    		}
+    		if (c.getTrack().getLocType().equals(Track.INTERCHANGE) || c.getTrack().getLocType().equals(Track.SIDING)){
     			if (c.getTrack().getPickupOption().equals(Track.TRAINS)){
     				if (c.getTrack().acceptsPickupTrain(train)){
     					log.debug("Car ("+c.toString()+") can be picked up by this train");
@@ -2052,11 +2048,11 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoInterchangeToInterchangeMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
-					// drop to interchange?
-					if (testTrack.getLocType().equals(Track.INTERCHANGE)){
+					// drop to interchange or siding?
+					if (testTrack.getLocType().equals(Track.INTERCHANGE) || testTrack.getLocType().equals(Track.SIDING)){
 						if (testTrack.getDropOption().equals(Track.TRAINS)){
 							if (testTrack.acceptsDropTrain(train)){
-								log.debug("Car ("+car.toString()+") can be droped by train to interchange (" +testTrack.getName()+")");
+								log.debug("Car ("+car.toString()+") can be droped by train to this track (" +testTrack.getName()+")");
 							} else {
 								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarInterchange"),new Object[]{car.toString(), testTrack.getName()}));
 								continue;
@@ -2064,7 +2060,7 @@ public class TrainBuilder extends TrainCommon{
 						}
 						if (testTrack.getDropOption().equals(Track.ROUTES)){
 							if (testTrack.acceptsDropRoute(train.getRoute())){
-								log.debug("Car ("+car.toString()+") can be droped by route to interchange (" +testTrack.getName()+")");
+								log.debug("Car ("+car.toString()+") can be droped by route to this track (" +testTrack.getName()+")");
 							} else {
 								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarRoute"),new Object[]{car.toString(), testTrack.getName()}));
 								continue;
@@ -2145,7 +2141,7 @@ public class TrainBuilder extends TrainCommon{
 	}
 
 	private void buildFailed(String string){
-		train.setStatus(BUILDFAILED);
+		train.setStatus(Train.BUILDFAILED);
 		train.setBuildFailed(true);
 		if(log.isDebugEnabled())
 			log.debug(string);

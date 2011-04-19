@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.locations;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,13 +16,11 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Frame for user edit of a location sidings
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @author Dan Boudreau Copyright (C) 2008, 2011
+ * @version $Revision: 1.25 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
 	// labels, buttons, etc. for sidings
 	JLabel textSchedule = new JLabel(rb.getString("DeliverySchedule"));
@@ -31,7 +28,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 	JButton editScheduleButton = new JButton(rb.getString("Edit"));
 	JComboBox comboBoxSchedules = ScheduleManager.instance().getComboBox();
 	
-	JPanel panelSchedule = panelOpt1;
+	JPanel panelSchedule = panelOpt4;
 	
 	public SidingEditFrame() {
 		super();
@@ -101,6 +98,9 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 	
 	protected void enableButtons(boolean enabled){
 		editScheduleButton.setEnabled(enabled);
+		comboBoxSchedules.setEnabled(enabled);
+		if (!enabled)
+			comboBoxSchedules.setSelectedItem("");
 		super.enableButtons(enabled);
 	}
 	
@@ -133,7 +133,6 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		ScheduleManager.instance().removePropertyChangeListener(this);
 		super.dispose();
 	}
-
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 

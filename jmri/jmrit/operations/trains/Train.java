@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.116 $
+ * @version $Revision: 1.117 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -121,9 +121,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String TRAIN_ROUTE_CHANGED_PROPERTY = "TrainRoute";
 	
 	// Train status
+	public static final String BUILDFAILED = rb.getString("BuildFailed");
+	public static final String BUILDING = rb.getString("Building");
+	public static final String BUILT = rb.getString("Built");
+	public static final String PARTIALBUILT = rb.getString("Partial");
 	public static final String TERMINATED = rb.getString("Terminated");
 	public static final String TRAINRESET = rb.getString("TrainReset");
-	private static final String TRAININROUTE = rb.getString("TrainInRoute");
+	public static final String TRAININROUTE = rb.getString("TrainInRoute");
 	
 	public static final int NONE = 0;		// train requirements
 	public static final int CABOOSE = 1;
@@ -1000,6 +1004,7 @@ public class Train implements java.beans.PropertyChangeListener {
     					return true;
     				}
     			}
+    			// Multiple locations in the train's route
     			else for (int j=0; j<rLocations.size()-1; j++){
     				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
     				if (rLoc.getName().equals(car.getLocationName()) 
@@ -1028,7 +1033,15 @@ public class Train implements java.beans.PropertyChangeListener {
     									if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
     											|| !car.getDestinationTrack().acceptsDropTrain(this))
     										continue;
-    								}	
+    								}
+    		    					// check to see if moves are available
+    		    					if (getStatus().equals(BUILDING)){
+    		    						if (rLoc.getMaxCarMoves()-rLoc.getCarMoves() == 0){
+    		    							if (debugFlag)
+    		    								log.debug("No available moves for destination "+rLoc.getName());
+    		    							continue;
+    		    						}
+    		    					}
     								if (debugFlag)
     									log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("
     											+car.getDestinationName()+", "+car.getDestinationTrackName()+")");

@@ -7,9 +7,13 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 
 import java.awt.*;
 
@@ -25,15 +29,17 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
-	LocationManager manager;
-	LocationManagerXml managerXml;
+	// Managers
+	LocationManagerXml managerXml = LocationManagerXml.instance();
+	TrainManager trainManager = TrainManager.instance();
+	RouteManager routeManager = RouteManager.instance();
 
 	Location _location = null;
 	Track _track = null;
@@ -64,6 +70,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton deleteLoadButton = new JButton(rb.getString("DeleteLoad"));
 	JButton deleteAllLoadsButton = new JButton(rb.getString("DeleteAllLoads"));
 	
+	JButton deleteDropButton = new JButton(rb.getString("Delete"));
+	JButton addDropButton = new JButton(rb.getString("Add"));
+	JButton deletePickupButton = new JButton(rb.getString("Delete"));
+	JButton addPickupButton = new JButton(rb.getString("Add"));
+	
 	// check boxes
 	JCheckBox checkBox;
 	JCheckBox northCheckBox = new JCheckBox(rb.getString("North"));
@@ -75,18 +86,28 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JRadioButton roadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton roadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton roadNameExclude = new JRadioButton(rb.getString("Exclude"));
-    ButtonGroup roadGroup = new ButtonGroup();
-    
+      
     JRadioButton loadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton loadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton loadNameExclude = new JRadioButton(rb.getString("Exclude"));
-    ButtonGroup loadGroup = new ButtonGroup();
     
 	// car pick up order controls
 	JRadioButton orderNormal = new JRadioButton(rb.getString("Normal"));
 	JRadioButton orderFIFO = new JRadioButton(rb.getString("DescriptiveFIFO"));
 	JRadioButton orderLIFO = new JRadioButton(rb.getString("DescriptiveLIFO"));
-	ButtonGroup orderGroup = new ButtonGroup();   
+    
+	JRadioButton anyDrops = new JRadioButton(rb.getString("Any"));
+	JRadioButton trainDrop = new JRadioButton(rb.getString("Trains"));
+	JRadioButton routeDrop = new JRadioButton(rb.getString("Routes"));
+	
+	JRadioButton anyPickups = new JRadioButton(rb.getString("Any"));
+	JRadioButton trainPickup = new JRadioButton(rb.getString("Trains"));
+	JRadioButton routePickup = new JRadioButton(rb.getString("Routes"));
+
+	JComboBox comboBoxDropTrains = trainManager.getComboBox();
+	JComboBox comboBoxDropRoutes = routeManager.getComboBox();
+	JComboBox comboBoxPickupTrains = trainManager.getComboBox();
+	JComboBox comboBoxPickupRoutes = routeManager.getComboBox();
     
 	// text field
 	JTextField trackNameTextField = new JTextField(20);
@@ -97,19 +118,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	Dimension minScrollerDim = new Dimension(500,42);
 
-	// for padding out panels
-	JLabel space1 = new JLabel("     ");
-	JLabel space2 = new JLabel("     ");
-	JLabel space3 = new JLabel("     ");
-	
 	// combo box
 	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
 	JComboBox comboBoxLoads = CarLoads.instance().getComboBox(null);
 	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
 
 	// optional panel for sidings, staging, and interchanges
-	JPanel panelOpt1 = new JPanel();
-	JPanel panelOpt2 = new JPanel();
+	JPanel dropPanel = new JPanel();
+	JPanel pickupPanel = new JPanel();
 	JPanel panelOpt3 = new JPanel();		// not currently used
 	JPanel panelOpt4 = new JPanel();
 
@@ -130,9 +146,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		CarRoads.instance().addPropertyChangeListener(this);
 		CarLoads.instance().addPropertyChangeListener(this);
 		CarTypes.instance().addPropertyChangeListener(this);
-		
-		// load managers
-		managerXml = LocationManagerXml.instance();
+		trainManager.addPropertyChangeListener(this);
+		routeManager.addPropertyChangeListener(this);
 
 		// the following code sets the frame's initial state
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -147,20 +162,28 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
+    	pName.setMinimumSize(new Dimension(180,1));
     	addItem(pName, trackNameTextField, 0, 0);	
 
 		// row 1b
     	JPanel pLength = new JPanel();
     	pLength.setLayout(new GridBagLayout());
     	pLength.setBorder(BorderFactory.createTitledBorder(rb.getString("Length")));
+    	pLength.setMinimumSize(new Dimension(60,1));
 		addItem(pLength, trackLengthTextField, 0, 0);
-		
-		p1.add(pName);
-		p1.add(pLength);
-			
-		// row 3
+
+		// row 1c
 		panelTrainDir.setLayout(new GridBagLayout());
 		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainTrack")));
+		panelTrainDir.setPreferredSize(new Dimension(200,10));
+		addItem(panelTrainDir, northCheckBox, 1, 1);
+		addItem(panelTrainDir, southCheckBox, 2, 1);
+		addItem(panelTrainDir, eastCheckBox, 3, 1);
+		addItem(panelTrainDir, westCheckBox, 4, 1);
+				
+		p1.add(pName);
+		p1.add(pLength);
+		p1.add(panelTrainDir);
 
 		// row 4
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
@@ -168,6 +191,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 5
 		panelRoadNames.setLayout(new GridBagLayout());
 		paneRoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrack")));
+		ButtonGroup roadGroup = new ButtonGroup();
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
@@ -175,6 +199,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 8
 		panelLoadNames.setLayout(new GridBagLayout());
 		paneLoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("LoadsTrack")));
+	    ButtonGroup loadGroup = new ButtonGroup();
 		loadGroup.add(loadNameAll);
 		loadGroup.add(loadNameInclude);
 		loadGroup.add(loadNameExclude);
@@ -187,9 +212,24 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		panelOrder.add(orderFIFO);
 		panelOrder.add(orderLIFO);
 		
+		ButtonGroup orderGroup = new ButtonGroup();
 		orderGroup.add(orderNormal);
 		orderGroup.add(orderFIFO);
 		orderGroup.add(orderLIFO);
+		
+		// drop panel
+		dropPanel.setLayout(new GridBagLayout());
+		dropPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainsOrRoutesDrops")));
+		dropPanel.add(anyDrops);
+		dropPanel.add(trainDrop);
+		dropPanel.add(routeDrop);
+		
+		// pickup panel
+		pickupPanel.setLayout(new GridBagLayout());
+		pickupPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainsOrRoutesPickups")));
+		pickupPanel.add(anyPickups);
+		pickupPanel.add(trainPickup);
+		pickupPanel.add(routePickup);
 		
 		// row 11
     	JPanel panelComment = new JPanel();
@@ -210,16 +250,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesTrack")));
 		
 		getContentPane().add(p1);
-		getContentPane().add(panelTrainDir);
+		//getContentPane().add(panelTrainDir);
 		getContentPane().add(paneCheckBoxes);
 		getContentPane().add(paneRoadNames);
 		getContentPane().add(paneLoadNames);
 		getContentPane().add(paneLoadNames);
 		getContentPane().add(panelOrder);
+		getContentPane().add(dropPanel);
+		getContentPane().add(pickupPanel);
 		
 		// add optional panels
-		getContentPane().add(panelOpt1);
-		getContentPane().add(panelOpt2);
 		getContentPane().add(panelOpt3);
 		getContentPane().add(panelOpt4);
 		
@@ -240,6 +280,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addButtonAction(deleteAllLoadsButton);
 		addButtonAction(addLoadButton);
 		
+		addButtonAction(deleteDropButton);
+		addButtonAction(addDropButton);
+		addButtonAction(deletePickupButton);
+		addButtonAction(addPickupButton);
+		
 		addRadioButtonAction(roadNameAll);
 		addRadioButtonAction(roadNameInclude);
 		addRadioButtonAction(roadNameExclude);
@@ -251,6 +296,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(orderNormal);
 		addRadioButtonAction(orderFIFO);
 		addRadioButtonAction(orderLIFO);
+		
+		addRadioButtonAction(anyDrops);
+		addRadioButtonAction(trainDrop);
+		addRadioButtonAction(routeDrop);
+
+		addRadioButtonAction(anyPickups);
+		addRadioButtonAction(trainPickup);
+		addRadioButtonAction(routePickup);
 		
 		addComboBoxAction(comboBoxTypes);
 		
@@ -284,6 +337,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateLoadNames();
 		updateTrainDir();
 		updateCarOrder();
+		updateDropOptions();
+		updatePickupOptions();
 	}
 	
 	// Save, Delete, Add 
@@ -352,6 +407,92 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == clearButton){
 			selectCheckboxes(false);
 		}
+		if (ae.getSource() == addDropButton){
+			String id ="";
+			if (trainDrop.isSelected()){
+				if (comboBoxDropTrains.getSelectedItem().equals(""))
+					return;
+				Train train = ((Train) comboBoxDropTrains.getSelectedItem());
+				Route route = train.getRoute();
+				id = train.getId();
+				if (!checkRoute(route)){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("TrackNotByTrain"),new Object[]{train.getName()}), rb.getString("Error"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			} else {
+				if (comboBoxDropRoutes.getSelectedItem().equals(""))
+					return;
+				Route route = ((Route) comboBoxDropRoutes.getSelectedItem());
+				id = route.getId();
+				if (!checkRoute(route)){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("TrackNotByRoute"),new Object[]{route.getName()}), rb.getString("Error"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			_track.addDropId(id);
+			updateDropOptions();
+		}
+		if (ae.getSource() == deleteDropButton){
+			String id ="";
+			if (trainDrop.isSelected()){
+				if (comboBoxDropTrains.getSelectedItem().equals(""))
+					return;
+				id = ((Train) comboBoxDropTrains.getSelectedItem()).getId();
+			} else{
+				if (comboBoxDropRoutes.getSelectedItem().equals(""))
+					return;
+				id = ((Route) comboBoxDropRoutes.getSelectedItem()).getId();
+			}
+			_track.deleteDropId(id);
+			updateDropOptions();
+		}
+		if (ae.getSource() == addPickupButton){
+			String id ="";
+			if (trainPickup.isSelected()){
+				if (comboBoxPickupTrains.getSelectedItem().equals(""))
+					return;
+				Train train = ((Train) comboBoxPickupTrains.getSelectedItem());
+				Route route = train.getRoute();
+				id = train.getId();
+				if (!checkRoute(route)){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("TrackNotByTrain"),new Object[]{train.getName()}), rb.getString("Error"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			} else{
+				if (comboBoxPickupRoutes.getSelectedItem().equals(""))
+					return;
+				Route route = ((Route) comboBoxPickupRoutes.getSelectedItem());
+				id = route.getId();
+				if (!checkRoute(route)){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("TrackNotByRoute"),new Object[]{route.getName()}), rb.getString("Error"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			_track.addPickupId(id);
+			updatePickupOptions();
+		}
+		if (ae.getSource() == deletePickupButton){
+			String id ="";
+			if (trainPickup.isSelected()){
+				if (comboBoxPickupTrains.getSelectedItem().equals(""))
+					return;
+				id = ((Train) comboBoxPickupTrains.getSelectedItem()).getId();
+			} else{
+				if (comboBoxPickupRoutes.getSelectedItem().equals(""))
+					return;
+				id = ((Route) comboBoxPickupRoutes.getSelectedItem()).getId();
+			}
+			_track.deletePickupId(id);
+			updatePickupOptions();
+		}
 	}
 
 	private void addNewTrack(){
@@ -382,6 +523,17 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		enableButtons(true);
 		// save location file
 		managerXml.writeOperationsFile();
+	}
+	
+	// check to see if the route services this location
+	private boolean checkRoute (Route route){
+		if (route == null)
+			return false;
+		RouteLocation rl = null;
+		rl = route.getLastLocationByName(_location.getName());
+		if (rl == null)
+			return false;
+		return true;
 	}
 
 	protected void saveTrack (Track track){
@@ -424,7 +576,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			return false;
 		return true;
 	}
-	
 	
 	/**
 	 * 
@@ -534,6 +685,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		loadNameAll.setEnabled(enabled);
 		loadNameInclude.setEnabled(enabled);
 		loadNameExclude.setEnabled(enabled);
+		anyDrops.setEnabled(enabled);
+		trainDrop.setEnabled(enabled);
+		routeDrop.setEnabled(enabled);
+		anyPickups.setEnabled(enabled);
+		trainPickup.setEnabled(enabled);
+		routePickup.setEnabled(enabled);
+		orderNormal.setEnabled(enabled);
+		orderFIFO.setEnabled(enabled);
+		orderLIFO.setEnabled(enabled);
 		enableCheckboxes(enabled);
 	}
 	
@@ -572,7 +732,176 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == orderLIFO){
 			_track.setServiceOrder(Track.LIFO);			
 		}
+		if (ae.getSource() == anyDrops){
+			_track.setDropOption(Track.ANY);
+			updateDropOptions();
+		}
+		if (ae.getSource() == trainDrop){
+			_track.setDropOption(Track.TRAINS);
+			updateDropOptions();
+		}
+		if (ae.getSource() == routeDrop){
+			_track.setDropOption(Track.ROUTES);
+			updateDropOptions();
+		}
+		if (ae.getSource() == anyPickups){
+			_track.setPickupOption(Track.ANY);
+			updatePickupOptions();
+		}
+		if (ae.getSource() == trainPickup){
+			_track.setPickupOption(Track.TRAINS);
+			updatePickupOptions();
+		}
+		if (ae.getSource() == routePickup){
+			_track.setPickupOption(Track.ROUTES);
+			updatePickupOptions();
+		}
 	}
+	
+	//TODO only update comboBox when train or route list changes. 
+	private void updateDropOptions(){
+		dropPanel.removeAll();
+		
+    	JPanel p = new JPanel();
+    	p.setLayout(new GridBagLayout());
+    	p.add(anyDrops, 0);
+    	p.add(trainDrop, 1);
+    	p.add(routeDrop, 2);
+    	GridBagConstraints gc = new GridBagConstraints();
+    	gc.gridwidth = 6;
+    	dropPanel.add(p, gc);
+		
+		int y = 1;		// vertical position in panel
+
+		if(_track != null){
+			// set radio button
+			anyDrops.setSelected(_track.getDropOption().equals(Track.ANY));
+			trainDrop.setSelected(_track.getDropOption().equals(Track.TRAINS));
+			routeDrop.setSelected(_track.getDropOption().equals(Track.ROUTES));
+			
+			if (!anyDrops.isSelected()){
+		    	p = new JPanel();
+		    	p.setLayout(new FlowLayout());
+		    	if (trainDrop.isSelected()){
+		    		p.add(comboBoxDropTrains);
+		    	} else {
+		    		p.add(comboBoxDropRoutes);
+		    	}
+		    	p.add(addDropButton);
+		    	p.add(deleteDropButton);
+				gc.gridy = y++;
+				dropPanel.add(p, gc);
+		    	y++;
+
+		    	String[]dropIds = _track.getDropIds();
+		    	int x = 0;
+		    	for (int i =0; i<dropIds.length; i++){
+		    		JLabel names = new JLabel();
+		    		String name = "<deleted>";
+		    		if (trainDrop.isSelected()){
+		    			Train train = trainManager.getTrainById(dropIds[i]);
+		    			if(train != null)
+		    				name = train.getName();
+		    		} else {
+		    			Route route = routeManager.getRouteById(dropIds[i]);
+		    			if(route != null)
+		    				name = route.getName();
+		    		}
+		    		if (name.equals("<deleted>"))
+		    			_track.deleteDropId(dropIds[i]);
+		    		names.setText(name);
+		    		addItem(dropPanel, names, x++, y);
+		    		if (x > 5){
+		    			y++;
+		    			x = 0;
+		    		}
+		    	}
+			}
+		} else {
+			anyDrops.setSelected(true);
+		}
+		dropPanel.revalidate();
+		dropPanel.repaint();
+		packFrame();
+	}
+	
+	private void updatePickupOptions(){
+		log.debug("update pick up options");
+		pickupPanel.removeAll();
+		
+    	JPanel p = new JPanel();
+    	p.setLayout(new GridBagLayout());
+    	p.add(anyPickups, 0);
+    	p.add(trainPickup, 1);
+    	p.add(routePickup, 2);
+    	GridBagConstraints gc = new GridBagConstraints();
+    	gc.gridwidth = 6;
+    	pickupPanel.add(p, gc);
+		
+		int y = 1;		// vertical position in panel
+
+		if(_track != null){
+			// set radio button
+			anyPickups.setSelected(_track.getPickupOption().equals(Track.ANY));
+			trainPickup.setSelected(_track.getPickupOption().equals(Track.TRAINS));
+			routePickup.setSelected(_track.getPickupOption().equals(Track.ROUTES));
+			
+			if (!anyPickups.isSelected()){
+		    	p = new JPanel();
+		    	p.setLayout(new FlowLayout());
+		    	if (trainPickup.isSelected()){
+		    		p.add(comboBoxPickupTrains);
+		    	} else {
+		    		p.add(comboBoxPickupRoutes);
+		    	}
+		    	p.add(addPickupButton);
+		    	p.add(deletePickupButton);
+				gc.gridy = y++;
+				pickupPanel.add(p, gc);
+		    	y++;
+
+		    	String[]pickupIds = _track.getPickupIds();
+		    	int x = 0;
+		    	for (int i =0; i<pickupIds.length; i++){
+		    		JLabel names = new JLabel();
+		    		String name = "<deleted>";
+		    		if (trainPickup.isSelected()){
+		    			Train train = trainManager.getTrainById(pickupIds[i]);
+		    			if(train != null)
+		    				name = train.getName();
+		    		} else {
+		    			Route route = routeManager.getRouteById(pickupIds[i]);
+		    			if(route != null)
+		    				name = route.getName();
+		    		}
+		    		if (name.equals("<deleted>"))
+		    			_track.deletePickupId(pickupIds[i]);
+		    		names.setText(name);
+		    		addItem(pickupPanel, names, x++, y);
+		    		if (x > 5){
+		    			y++;
+		    			x = 0;
+		    		}
+		    	}
+			}
+		} else {
+			anyPickups.setSelected(true);
+		}
+		pickupPanel.revalidate();
+		pickupPanel.repaint();
+		packFrame();
+	}
+	
+	private void updateTrainComboBox(){
+		trainManager.updateComboBox(comboBoxPickupTrains);
+		trainManager.updateComboBox(comboBoxDropTrains);
+	}
+	
+	private void updateRouteComboBox(){
+		routeManager.updateComboBox(comboBoxPickupRoutes);
+		routeManager.updateComboBox(comboBoxDropRoutes);
+	}
+	
 	
 	// Car type combo box has been changed, show loads associated with this car type
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -752,13 +1081,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void updateTrainDir(){
-		panelTrainDir.removeAll();
-
-		addItem(panelTrainDir, northCheckBox, 1, 1);
-		addItem(panelTrainDir, southCheckBox, 2, 1);
-		addItem(panelTrainDir, eastCheckBox, 3, 1);
-		addItem(panelTrainDir, westCheckBox, 4, 1);
-		
 		northCheckBox.setVisible(((Setup.getTrainDirection() & Setup.NORTH) & (_location.getTrainDirections() & Location.NORTH))>0);
 		southCheckBox.setVisible(((Setup.getTrainDirection() & Setup.SOUTH) & (_location.getTrainDirections() & Location.SOUTH))>0);
 		eastCheckBox.setVisible(((Setup.getTrainDirection() & Setup.EAST) & (_location.getTrainDirections() & Location.EAST))>0);
@@ -769,10 +1091,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			southCheckBox.setSelected((_track.getTrainDirections() & Track.SOUTH) > 0);
 			eastCheckBox.setSelected((_track.getTrainDirections() & Track.EAST) > 0);
 			westCheckBox.setSelected((_track.getTrainDirections() & Track.WEST) > 0);
-		}
-		
+		}	
 		panelTrainDir.revalidate();
-
 		packFrame();
 	}
 
@@ -781,13 +1101,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		log.debug("checkbox change "+ b.getText());
 		if (_location == null)
 			return;
-		//_track.removePropertyChangeListener(this);
 		if (b.isSelected()){
 			_track.addTypeName(b.getText());
 		}else{
 			_track.deleteTypeName(b.getText());
 		}
-		//_track.addPropertyChangeListener(this);
 	}
 	
 	private void updateTypeComboBoxes(){
@@ -829,6 +1147,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			updateLoadComboBoxes();
 			updateLoadNames();
 		}
+		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)){
+			updateTrainComboBox();
+			updateDropOptions();
+			updatePickupOptions();
+		}
+		if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)){
+			updateRouteComboBox();
+			updateDropOptions();
+			updatePickupOptions();
+		}
 	}
 	
 	// set the service order
@@ -850,6 +1178,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	CarLoads.instance().removePropertyChangeListener(this);
     	CarTypes.instance().removePropertyChangeListener(this);
     	ScheduleManager.instance().removePropertyChangeListener(this);
+		trainManager.removePropertyChangeListener(this);
+		routeManager.removePropertyChangeListener(this);
         super.dispose();
     }
     

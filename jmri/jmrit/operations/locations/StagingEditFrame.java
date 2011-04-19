@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.locations;
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -14,12 +13,10 @@ import javax.swing.JPanel;
  * Frame for user edit of a staging track
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
-public class StagingEditFrame extends InterchangeEditFrame implements java.beans.PropertyChangeListener {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
+public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 	
 	// check boxes
 	JCheckBox swapLoadsCheckBox = new JCheckBox(rb.getString("SwapCarLoads"));
@@ -68,9 +65,7 @@ public class StagingEditFrame extends InterchangeEditFrame implements java.beans
 		deleteTrackButton.setText(rb.getString("DeleteStaging"));
 		addTrackButton.setText(rb.getString("AddStaging"));
 		saveTrackButton.setText(rb.getString("SaveStaging"));
-		
-		
-		
+				
 		// setup the check boxes
 		if (_track !=null){
 			swapLoadsCheckBox.setSelected(_track.isLoadSwapEnabled());
