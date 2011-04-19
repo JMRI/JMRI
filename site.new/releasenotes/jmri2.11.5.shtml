@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.7 2011-04-19 05:31:18 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.8 2011-04-19 16:34:44 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -121,6 +121,9 @@ None at the time of this release.
 <P>New operations features and bug fixes:</P>
 <UL>
 <LI>Enhancement to the "Set Cars" tool.  You can now ignore selected fields when changing a group of cars.</LI>
+<LI>You can now optionally select which trains can set out and pick up cars from a siding.</LI>
+<LI>Car routing enhancement, program now checks the number of available moves when determining if a
+train can service a car.</LI>
 </UL>
 
 <p>Pete Cressman</p>
