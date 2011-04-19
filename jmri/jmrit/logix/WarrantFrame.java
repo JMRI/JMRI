@@ -821,8 +821,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        _throttleCommands.add(row, new ThrottleSetting(
-                    _throttleCommands.get(row).getTime(), "NoOp", null, null));
+        _throttleCommands.add(row, new ThrottleSetting(0, "NoOp", null, null));
         _commandModel.fireTableDataChanged();
     }
 
@@ -832,6 +831,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             JOptionPane.showMessageDialog(null, rb.getString("selectRow"),
             rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
+        }
+        long time = _throttleCommands.get(row).getTime();
+        if ((row+1) < _throttleCommands.size()) {
+            time += _throttleCommands.get(row+1).getTime(); 
+            _throttleCommands.get(row+1).setTime(time);
         }
         _throttleCommands.remove(row);
         _commandModel.fireTableDataChanged();
@@ -2182,10 +2186,15 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 case BLOCK_COLUMN:
                     cmd = ts.getCommand().toUpperCase();
                     if ("SENSOR".equals(cmd)) {
-                        jmri.Sensor s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
-                        if (s != null) {
-                            ts.setBlockName((String)value);
-                        } else {
+                        try {
+                            jmri.Sensor s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
+                            if (s != null) {
+                                ts.setBlockName((String)value);
+                            } else {
+                                msg = java.text.MessageFormat.format(
+                                        rb.getString("BadSensor"), (String)value); 
+                            }
+                        } catch (NumberFormatException nfe) {
                             msg = java.text.MessageFormat.format(
                                     rb.getString("BadSensor"), (String)value); 
                         }
