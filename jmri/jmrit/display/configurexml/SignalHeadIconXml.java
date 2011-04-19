@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -176,43 +176,43 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             NamedIcon icon = loadSignalIcon("red", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateRed"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("yellow", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateYellow"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("green", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateGreen"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("lunar", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateLunar"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("held", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateHeld"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("dark", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateDark"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("flashred", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("flashyellow", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingYellow"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("flashgreen", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingGreen"), icon);
-            } else { return; }
+            }
             icon = loadSignalIcon("flashlunar", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), icon);
-            } else { return; }
+            }
         }      
         Element elem = element.getChild("iconmaps");
         if (elem!=null) {
