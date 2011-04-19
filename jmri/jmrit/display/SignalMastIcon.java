@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -406,12 +406,16 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     public void rotate(int deg){
         super.rotate(deg);
-        displayState(mastState());
+        if (mMast!=null) {
+            displayState(mastState());
+        }
     }
     
     public void setScale(double s) {
         super.setScale(s);
-        displayState(mastState());
+        if (mMast!=null) {
+            displayState(mastState());
+        }
     }
     
     /**

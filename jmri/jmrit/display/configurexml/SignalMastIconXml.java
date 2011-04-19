@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -69,14 +69,26 @@ public class SignalMastIconXml extends PositionableLabelXml {
          * not get rotated or scaled correctly.
          **/
         try {
+            int rotation = 0;
+            double scale = 1.0;
+            attr = element.getAttribute("rotation");    // former attribute name.
+            if (attr!=null) {
+                rotation = attr.getIntValue();
+            }
             attr = element.getAttribute("degrees");
-            int rotation = attr.getIntValue();
+            if (attr!=null) {
+                rotation = attr.getIntValue();
+            }
             l.rotate(rotation);
             attr = element.getAttribute("scale");
-            l.setScale(attr.getDoubleValue());
+            if (attr!=null) {
+                scale = attr.getDoubleValue();
+            }
+            l.setScale(scale);
+            if (log.isDebugEnabled()) log.debug("Load SignalMast rotation= "+rotation+
+                                                " scale= "+scale+" attr text="+attr.getValue());
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert rotation or scale attribute");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         attr = element.getAttribute("signalmast"); 
         if (attr == null) {
