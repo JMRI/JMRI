@@ -17,10 +17,10 @@
     </li>
 </script>
 <script id='panelItemTemplate' type='text/html'>
-    <li id='name-${safeName}'><a href='/panel/${name}.html' target='${safeName}'>${userName}</a></li>
+    <li id='name-${safeName}'><a  class='ui-link-inherit' href='/panel/${name}.html' target='${safeName}'>${userName}</a></li>
 </script>
 <script id='rosterItemTemplate' type='text/html'>
-    <li id='name-${safeName}'><a href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>${name}</a></li>
+    <li id='name-${safeName}'><a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>${name}</a></li>
 </script>
 
 <!-- Generic jquery templates for pages -------------------------------------------->
@@ -77,21 +77,35 @@
 <body>
 
 	<div data-role='page' id='settings' data-theme='b'>
-		<div data-role='header' id='header'  data-id='header' data-position='fixed' data-backbtn='false'>
+		<div data-role='header' id='header' data-id='header' data-position='fixed' data-backbtn='false'>
 			<h1>Settings</h1>
 			<a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
 		</div>
 		<div data-role='content' data-theme='b'>
-		<a href='/'><img src='/dist/resources/logo.gif' style='float:right;'></a>
-		<h2>JMRI Mobile</h2>
-		This is an early alpha version of a browser-based UI for operating a layout with JMRI.  Currently includes:
-		<ul>
-		<li>turnout, route, power and sensor control,</li> 
-		<li>links to open InControl throttles for each roster entry</li>
-		<li>clickable panels for each open JMRI window</li>
-		</ul> 
-		The screens are currently formatted for a mobile (phone-sized), but should work on any WebKit-capable web browser.  (Chrome, FireFox 4, Safari, IE 9, etc.)
+			<a href='/'><img src='/dist/resources/logo.gif' style='float: right;'> </a>
+			<h2>JMRI Mobile</h2>
+			This is an early alpha version of a browser-based UI for operating a layout with JMRI.  Includes:
+      <ul>
+        <li>turnout, route, power and sensor control,</li>
+        <li>links to open InControl throttles for each roster entry</li>
+        <li>clickable panels for each open JMRI window</li>
+      </ul>
+			<div id='includes' data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+					<legend>Include in app?:</legend>
+					<input type="checkbox" name="include-power" id="include-power" class="custom" /> <label for="include-power">Power</label>
+					<input type="checkbox" name="include-turnout" id="include-turnout" class="custom" /> <label for="include-turnout">Turnouts</label>
+					<input type="checkbox" name="include-route" id="include-route" class="custom" /> <label for="include-route">Routes</label>
+					<input type="checkbox" name="include-sensor" id="include-sensor" class="custom" /> <label for="include-sensor">Sensors</label>
+					<input type="checkbox" name="include-roster" id="include-roster" class="custom" /> <label for="include-roster">Roster</label>
+					<input type="checkbox" name="include-panel" id="include-panel" class="custom" /> <label for="include-panel">Panels</label>
+				</fieldset>
+			</div>
+			The screens are currently formatted for a mobile (phone-sized), but should work on any WebKit-capable web browser.
+			(Chrome, FireFox 4, Safari, IE 9, etc.)<br /> Use the Settings to include only those items you're interested in
+			controlling.
 		</div>
+
 		<div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true'>
 			<a data-role='button' href='#settings' data-theme='b'>Settings</a>
 		</div>

@@ -1,17 +1,19 @@
 //TODO: send periodic request for refresh, to verify server connection (maybe do on server side as well?)
 //TODO: handle ajax errors
 //TODO: preserve filter on update
+//TODO: remove "page" and button on checkbox update
+
 
 var $globalXhr; //global variable to allow closing earlier connections  TODO:use array to support limited number of open requests
 
 //handle button press, send request for immediate change, plus request for lists  TODO: allow user to turn off some of the lists
 var $sendChange = function($type, $name, $nextValue){
 	$.mobile.pageLoading();  //show pageloading message
-	var $commandstr = '<xmlio><item><type>' + $type + '</type><name>' + $name + '</name><set>' + $nextValue +'</set></item>' +
-	'<list><type>turnout</type></list><list><type>route</type></list><list><type>power</type></list><list><type>sensor</type></list></xmlio>';
-//	'<list><type>power</type></list></xmlio>';
+	var $commandstr = '<xmlio><item><type>' + $type + '</type><name>' + $name + '</name><set>' + $nextValue +'</set></item>' 
+	+  $getXMLListCommands(false) + '</xmlio>';
 	$sendXMLIO($commandstr);
 };
+
 
 var $sendXMLIO = function($commandstr){
 
@@ -33,7 +35,7 @@ var $sendXMLIO = function($commandstr){
 };
 
 var $processResponse = function($returnedData, $success, $xhr) {
-	
+
 	$.mobile.pageLoading();  //show pageloading message
 
 	$xml = $($returnedData);  //jQuery-ize returned data for easier access
@@ -133,36 +135,30 @@ var $getValueText = function($type, $value){
 		} else if ($value=='4') {
 			return 'Thrown';
 		}
-	} else if ($type == 'power') {
+	} else if ($type == 'power' || $type == 'route' || $type == 'sensor') {
 		if ($value=='2') {
-			return '<img src="/web/InControl/PowerGreen24.png">';
+			return '<img src="/web/inControl/PowerGreen24.png">';
 		} else if ($value=='4') {
-			return '<img src="/web/InControl/PowerRed24.png">';
+			return '<img src="/web/inControl/PowerRed24.png">';
 		} else {
-			return '<img src="/web/InControl/PowerGrey24.png">';
-		}
-	} else if ($type == 'route' || $type == 'sensor') {
-		if ($value=='2') {
-			return 'Active';
-		} else if ($value=='4') {
-			return 'Inactive';
+			return '<img src="/web/inControl/PowerGrey24.png">';
 		}
 	}
-	return 'unknown';
+	return '???';
 };
 
 //clear out whitespace from xml, function adapted from 
-// http://stackoverflow.com/questions/1539367/remove-whitespace-and-line-breaks-between-html-elements-using-jquery/3103269#3103269
+//http://stackoverflow.com/questions/1539367/remove-whitespace-and-line-breaks-between-html-elements-using-jquery/3103269#3103269
 jQuery.fn.xmlClean = function() {
-  this.contents().filter(function() {
-      if (this.nodeType != 3) {
-          $(this).xmlClean();
-          return false;
-      }
-      else {
-          return !/\S/.test(this.nodeValue);
-      }
-  }).remove();
+	this.contents().filter(function() {
+		if (this.nodeType != 3) {
+			$(this).xmlClean();
+			return false;
+		}
+		else {
+			return !/\S/.test(this.nodeValue);
+		}
+	}).remove();
 }
 
 //workaround for IE (from http://www.webdeveloper.com/forum/showthread.php?t=187378)
@@ -181,12 +177,53 @@ function xml2Str(xmlNode) {
 	return false;
 }
 
+//get xml for list elements of selected types
+function $getXMLListCommands($includeMonitorables) {
+	var $cmdStr = '';
+	$.each($('div#includes input:checkbox:checked'),function(i,e){
+		var $t = $(e).attr("id").substring(8);
+		if ($includeMonitorables || ($t != 'roster' && $t != 'panel' ))  {
+			// add each checked value to list
+			$cmdStr += '<list><type>' + $t  + '</type></list>';  //drop "include-" from string
+		}
+	});
+	return $cmdStr;
+}
+
+//get array of checked types for persistent local storage
+function $getSettingsArray() {
+	var $arrInputs = [];
+	$.each($('div#includes input:checkbox:checked'), function(i,e){
+		var $t = $(e).attr("id").substring(8);
+		$arrInputs.push($t); //append to list
+	});
+	return $arrInputs;
+}
+
 //javascript processing starts here (main)
 $(document).ready(function() {
 
-	//ask for all list items
-	var $getAllLists = '<xmlio><list><type>turnout</type></list><list><type>route</type></list><list><type>roster</type></list><list><type>panel</type></list><list><type>power</type></list><list><type>sensor</type></list></xmlio>';
-//	var $getAllLists = '<xmlio><list><type>power</type></list></xmlio>';
-	$sendXMLIO($getAllLists);
+	$.mobile.pageLoading();  //show pageloading message
+
+	//retrieve checked values from localstorage and set checkboxes to match
+	var $savedInputs = ["turnouts","panels"];  //default selections
+	if (localStorage['savedInputs']) {
+		var $savedInputs=JSON.parse(localStorage['savedInputs']);
+	}
+	$.each($savedInputs, function(key, value) {  //check the boxes 
+		$('div#includes input:checkbox#include-' + value).attr('checked', true).checkboxradio("refresh"); 
+	});
+
+	//listen for changes to checkboxes, and resend updated list command on each
+	$('div#includes input:checkbox').change(function() {
+		$sendXMLIO('<xmlio>' + $getXMLListCommands(true) + '</xmlio>');
+		//save current settings
+		localStorage['savedInputs']=JSON.stringify($getSettingsArray());
+	});
+
+	//setup pages based on selected items
+	$sendXMLIO('<xmlio>' + $getXMLListCommands(true) + '</xmlio>');
+
+	$.mobile.pageLoading(true);  //hide pageloading message
 
 });
