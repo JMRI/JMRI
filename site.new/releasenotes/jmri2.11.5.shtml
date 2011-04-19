@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.6 2011-04-19 01:10:12 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.7 2011-04-19 05:31:18 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -129,6 +129,7 @@ None at the time of this release.
 <li>Fix route finder and warrant recording bug introduced in ver 2.11.4</li>
 <li>Fix loco icon following warrant playback through all track citcuits.</li>
 <li>Fix bug that did not load ver 2.4 signalHead icons.</lii>
+<li>Fix bug that did not load rotated or scaled signalMastd icons.</lii>
 </ul>
 
 <!--#include virtual="/Footer" -->
