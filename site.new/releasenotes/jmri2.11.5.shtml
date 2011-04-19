@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.8 2011-04-19 16:34:44 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.9 2011-04-19 18:10:42 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -132,7 +132,10 @@ train can service a car.</LI>
 <li>Fix route finder and warrant recording bug introduced in ver 2.11.4</li>
 <li>Fix loco icon following warrant playback through all track citcuits.</li>
 <li>Fix bug that did not load ver 2.4 signalHead icons.</lii>
-<li>Fix bug that did not load rotated or scaled signalMastd icons.</lii>
+<li>Fix bug that did not load rotated or scaled signalMastd icons.</li>
+<li>Fix bug loading panel after Occupancy Block Table is open.</li>
+<li>Inserting or deleting rows of a Throttle Command recording now\n
+ keeps the elapsed time in a block constant.</li>
 </ul>
 
 <!--#include virtual="/Footer" -->
