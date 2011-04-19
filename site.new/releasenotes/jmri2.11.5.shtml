@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.9 2011-04-19 18:10:42 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.10 2011-04-19 18:53:20 hebbos Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -136,6 +136,12 @@ train can service a car.</LI>
 <li>Fix bug loading panel after Occupancy Block Table is open.</li>
 <li>Inserting or deleting rows of a Throttle Command recording now\n
  keeps the elapsed time in a block constant.</li>
+</ul>
+
+<p>Lionel Jeanson</p>
+<ul>
+<li>Added a new way to control locomotive speed in throttle control panel : the "continuous" speed slider going from -100 to +100 through 0 with automatic direction change at 0. (option accessible in throttle control panel property window)</li>
+<li>Added an option to have a trottle control panel automatically switch between regular and continuous speed slider when a decoder function is activated/deactivated (most decoders have a slow function for "shunting" mode where a continuous speed slider is more appropriate for speed control). (option accessible in throttle control panel property window)</li>
 </ul>
 
 <!--#include virtual="/Footer" -->

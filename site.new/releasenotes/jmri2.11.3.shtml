@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.35 2011-04-16 22:26:31 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.36 2011-04-19 18:53:20 hebbos Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -314,7 +314,7 @@ Kevin Dickerson has done some work on storing frame positions and sizes
 via the user preference manager.
 
 <p>
-Lionel Hebbos improved the Jynstrument throttle support:
+Lionel Jeanson improved the Jynstrument throttle support:
 <ul>
 <li>Added function control up to 28.
 <li>Removed filter on kind of acceptable devices so that any Jinput device 
