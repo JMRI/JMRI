@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.80 $
+ * @version $Revision: 1.81 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -707,9 +707,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Destination c3", "Acton", c3.getDestinationName());
 		Assert.assertEquals("Destination c4", "Nashua", c4.getDestinationName());	
 		Assert.assertEquals("Destination c5", "Acton", c5.getDestinationName());
-		Assert.assertEquals("Destination c6", "Acton", c6.getDestinationName());
-		Assert.assertEquals("Destination c7", "Nashua", c7.getDestinationName());
-		Assert.assertEquals("Destination c8", "Acton", c8.getDestinationName());		
+		Assert.assertEquals("Destination c6", "Nashua", c6.getDestinationName());
+		Assert.assertEquals("Destination c7", "Acton", c7.getDestinationName());
+		Assert.assertEquals("Destination c8", "Nashua", c8.getDestinationName());		
 		Assert.assertEquals("Destination c9", "", c9.getDestinationName());
 		Assert.assertEquals("Destination c10", "", c10.getDestinationName());
 		Assert.assertEquals("Destination e1", "", e1.getDestinationName());
@@ -807,12 +807,12 @@ public class OperationsTrainsTest extends TestCase {
 		// check car destinations
 		Assert.assertEquals("4 Destination c1", "Foxboro", c1.getDestinationName());
 		Assert.assertEquals("4 Destination c2", "", c2.getDestinationName());
-		Assert.assertEquals("4 Destination c3", "Foxboro", c3.getDestinationName());
+		Assert.assertEquals("4 Destination c3", "Acton", c3.getDestinationName());
 		Assert.assertEquals("4 Destination c4", "Nashua", c4.getDestinationName());	
 		Assert.assertEquals("4 Destination c5", "Nashua", c5.getDestinationName());
 		Assert.assertEquals("4 Destination c6", "Foxboro", c6.getDestinationName());
 		Assert.assertEquals("4 Destination c7", "Foxboro", c7.getDestinationName());
-		Assert.assertEquals("4 Destination c8", "Acton", c8.getDestinationName());		
+		Assert.assertEquals("4 Destination c8", "Foxboro", c8.getDestinationName());		
 		Assert.assertEquals("4 Destination c9", "", c9.getDestinationName());
 		Assert.assertEquals("4 Destination c10", "Acton", c10.getDestinationName());
 		
@@ -884,6 +884,7 @@ public class OperationsTrainsTest extends TestCase {
 		c8.setKernel(k1);	// lead car
 		c7.setKernel(k1);
 		c7.setTrain(t2);	// program should ignore
+		c3.setLocation(l1, l1s1);
 		c3.setKernel(k1);
 		c3.setDestination(l1, l1s1);	// program should ignore (produces debug warning)
 		
@@ -983,7 +984,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		t1.build();
 		Assert.assertTrue("next train!", t1.isBuilt());
-		Assert.assertEquals("CP 4000 destination Acton", "Acton", c4.getDestinationName());
+		Assert.assertEquals("CP 4000 destination", "Nashua", c4.getDestinationName());
 		
 		// test train and location direction controls
 		c8.setLocation(l2, l2s1);	// place led car of kernel in Action Siding 1
@@ -991,7 +992,7 @@ public class OperationsTrainsTest extends TestCase {
 		t1.build();
 		
 		Assert.assertTrue("Train direction test", t1.isBuilt());
-		Assert.assertEquals("CP 4000 destination is now Nashua", "Nashua", c4.getDestinationName());
+		Assert.assertEquals("CP 1000 destination is now Nashua", "Nashua", c10.getDestinationName());
 		Assert.assertEquals("CP 30 at Acton, not serviced", null, c3.getTrain());
 		Assert.assertEquals("CP 700 at Acton, not serviced", null, c7.getTrain());
 		Assert.assertEquals("CP 8000 at Acton, not serviced", null, c8.getTrain());
@@ -1000,7 +1001,7 @@ public class OperationsTrainsTest extends TestCase {
 		l2.setTrainDirections(Location.NORTH);	// train is north bound
 		t1.build();
 		
-		Assert.assertEquals("CP 4000 destination is now", "Acton", c4.getDestinationName());
+		Assert.assertEquals("CP 1000 destination is now", "Acton", c10.getDestinationName());
 		Assert.assertEquals("CP 30 at Acton", t1, c3.getTrain());
 		Assert.assertEquals("CP 700 at Acton", t1, c7.getTrain());
 		Assert.assertEquals("CP 8000 at Acton", t1, c8.getTrain());
@@ -1016,11 +1017,11 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("CP 1000 destination track", "Acton Siding 1", c1.getDestinationTrackName());
 		Assert.assertEquals("CP 200 at Foxboro Siding", t1, c2.getTrain());
 		Assert.assertEquals("CP 30 at Acton Siding 1", t1, c3.getTrain());
-		Assert.assertEquals("CP 30 destination track", "Foxboro Yard", c3.getDestinationTrackName());
+		Assert.assertEquals("CP 30 destination track", "Nashua Yard 2", c3.getDestinationTrackName());
 		Assert.assertEquals("CP 4000 at Foxboro Siding", t1, c4.getTrain());
-		Assert.assertEquals("CP 4000 destination", "Acton", c4.getDestinationName());
-		Assert.assertEquals("CP 4000 destination track", "Acton Siding 1", c4.getDestinationTrackName());
-		Assert.assertEquals("CP 60 destination track", "Foxboro Siding", c6.getDestinationTrackName());
+		Assert.assertEquals("CP 4000 destination", "Foxboro", c4.getDestinationName());
+		Assert.assertEquals("CP 4000 destination track", "Foxboro Yard", c4.getDestinationTrackName());
+		Assert.assertEquals("CP 60 destination track", "", c6.getDestinationTrackName());
 		Assert.assertEquals("CP 700 at Acton, not serviced, part of kernel CP 8000", null, c7.getTrain());
 		Assert.assertEquals("CP 8000 at Acton, Acton Siding 2 not serviced", null, c8.getTrain());
 		
@@ -1042,11 +1043,11 @@ public class OperationsTrainsTest extends TestCase {
 		t1.build();
 		Assert.assertTrue("Train length test, just enough length for engines and car with FRED", t1.isBuilt());
 		Assert.assertEquals("CP 200 at Foxboro Siding", t1, c2.getTrain());
-		Assert.assertEquals("CP 200 destination track", "Foxboro Yard", c2.getDestinationTrackName());
+		Assert.assertEquals("CP 200 destination track", "Foxboro Siding", c2.getDestinationTrackName());
 		Assert.assertEquals("CP 30 at Acton Siding 1", t1, c3.getTrain());
 		Assert.assertEquals("CP 30 destination track", "Nashua Yard 1", c3.getDestinationTrackName());
-		Assert.assertEquals("CP 4000 at Foxboro Siding", null, c4.getTrain());
-		Assert.assertEquals("CP 60 destination track", "Foxboro Siding", c6.getDestinationTrackName());
+		Assert.assertEquals("CP 4000 at Foxboro Siding", t1, c4.getTrain());
+		Assert.assertEquals("CP 60 destination track", "", c6.getDestinationTrackName());
 		Assert.assertEquals("CP 700 at Acton, not serviced, part of kernel CP 8000", null, c7.getTrain());
 		Assert.assertEquals("CP 8000 at Acton, Acton Siding 2 not serviced", null, c8.getTrain());
 		Assert.assertEquals("CP 1000 not part of train", null, c10.getTrain());
@@ -1057,12 +1058,12 @@ public class OperationsTrainsTest extends TestCase {
 		t1.build();
 		Assert.assertTrue("Train length test, just enough length for engines and car with FRED", t1.isBuilt());
 		Assert.assertEquals("CP 200 at Foxboro Siding", t1, c2.getTrain());
-		Assert.assertEquals("CP 200 destination track", "Foxboro Siding", c2.getDestinationTrackName());
+		Assert.assertEquals("CP 200 destination track", "Foxboro Yard", c2.getDestinationTrackName());
 		Assert.assertEquals("CP 30 at Acton Siding 1", t1, c3.getTrain());
-		Assert.assertEquals("CP 30 destination track", "Foxboro Siding", c3.getDestinationTrackName());
+		Assert.assertEquals("CP 30 destination track", "Foxboro Yard", c3.getDestinationTrackName());
 		Assert.assertEquals("CP 4000 at Foxboro Yard", t1, c4.getTrain());
-		Assert.assertEquals("CP 4000 destination track", "Acton Siding 1", c4.getDestinationTrackName());
-		Assert.assertEquals("CP 60 destination track", "Foxboro Yard", c6.getDestinationTrackName());
+		Assert.assertEquals("CP 4000 destination track", "Foxboro Siding", c4.getDestinationTrackName());
+		Assert.assertEquals("CP 60 destination track", "", c6.getDestinationTrackName());
 		Assert.assertEquals("CP 1000 part of train", t1, c10.getTrain());
 		Assert.assertEquals("CP 1000 destination track", "Acton Siding 1", c10.getDestinationTrackName());
 		

@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.149 $
+ * @version             $Revision: 1.150 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1351,7 +1351,7 @@ public class TrainBuilder extends TrainCommon{
 		return false;
 	}
 	
-	private boolean checkDropTrainDirection (RouteLocation rld, Location destination){
+	private boolean checkDropTrainDirection (RouteLocation rld){
 		return (checkDropTrainDirection (null, rld, null));
 	}
 	
@@ -1959,7 +1959,7 @@ public class TrainBuilder extends TrainCommon{
 				continue;
 			}
 			// can this location service this train's direction
-			if (!checkDropTrainDirection(rld, testDestination))
+			if (!checkDropTrainDirection(rld))
 				continue;
 			// is the train length okay?
 			if (!checkTrainLength(car, rl, rld)){
@@ -2105,11 +2105,18 @@ public class TrainBuilder extends TrainCommon{
 						log.debug("Track ("+trackTemp.getName()+") has schedule ("+trackTemp.getScheduleName()+") adjust nextRatio = "+Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;
 					}
-					// try and drop off to the first location if there's more than one
-					// TODO need to improve how the code detects and selects more than one drop location
-					if (rldSave.getName().equals(rld.getName()) && trackTemp.equals(trackSave)){
-						log.debug("Adjusting second location in route ratio to 1.0");
-						nextRatio = 1;
+					// check for an earlier drop in the route
+					for (int m = start; m<routeEnd; m++){
+						RouteLocation rle = train.getRoute().getLocationById(routeList.get(m));
+						if (rle != rld && rle.getName().equals(rld.getName()) 
+								&&(rle.getMaxCarMoves()-rle.getCarMoves()>0) 
+								&& rle.canDrop() && checkDropTrainDirection(car, rle, trackSave)){
+							log.debug("Found an earlier drop for car ("+car.toString()+") destination ("+rle.getName()+")");
+							nextCarMoves = rle.getCarMoves();
+							nextRatio = nextCarMoves/rle.getMaxCarMoves();
+							rld = rle;	// set car drop to first stop
+							break;
+						}
 					}
 					log.debug(rldSave.getName()+" = "+Double.toString(saveRatio)+ " " + rld.getName()+" = "+Double.toString(nextRatio));
 					if (saveRatio < nextRatio){

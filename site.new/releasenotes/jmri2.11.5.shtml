@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.10 2011-04-19 18:53:20 hebbos Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.11 2011-04-20 14:25:24 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -124,6 +124,8 @@ None at the time of this release.
 <LI>You can now optionally select which trains can set out and pick up cars from a siding.</LI>
 <LI>Car routing enhancement, program now checks the number of available moves when determining if a
 train can service a car.</LI>
+<LI>Improved how the program set outs cars when there's two or more stops at the same location.  There is
+now a bias to set out the cars at the earlier stop.</LI>
 </UL>
 
 <p>Pete Cressman</p>
