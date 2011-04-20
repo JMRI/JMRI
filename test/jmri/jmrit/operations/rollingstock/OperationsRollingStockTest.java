@@ -90,8 +90,6 @@ public class OperationsRollingStockTest extends TestCase {
 		Assert.assertEquals("RollingStock Constant LENGTH", "length", RollingStock.LENGTH);
 		Assert.assertEquals("RollingStock Constant TYPE", "type", RollingStock.TYPE);
 		Assert.assertEquals("RollingStock Constant ROAD", "road", RollingStock.ROAD);
-		Assert.assertEquals("RollingStock Constant SCHEDULE", "schedule", RollingStock.SCHEDULE);
-		Assert.assertEquals("RollingStock Constant LOAD", "load", RollingStock.LOAD);
                 
 		Assert.assertEquals("RollingStock Constant LOCATION_CHANGED_PROPERTY", "rolling stock location", RollingStock.LOCATION_CHANGED_PROPERTY);
 		Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);

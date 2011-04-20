@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.150 $
+ * @version             $Revision: 1.151 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1845,11 +1845,13 @@ public class TrainBuilder extends TrainCommon{
 									continue;
 								String status = car.testDestination(car.getDestination(), testTrack);
 								// is the testTrack a siding with a Schedule?
-								if (testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
+								/*
+								if (testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.CUSTOM) 
 										&& status.contains(Car.LOAD)){
 									addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
 									continue;
 								}
+								*/
 								if (!status.equals(Car.OKAY)){
 									addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
 									continue;
@@ -2027,10 +2029,7 @@ public class TrainBuilder extends TrainCommon{
 					}
 					// okay to drop car?
 					if(!status.equals(Car.OKAY)){
-						if (status.contains(Car.SCHEDULE))
-							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarLoad"),new Object[]{car.toString(), car.getLoad(), testTrack.getName(), status}));
-						else
-							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
 						continue;
 					}		
 					// No local moves from siding to siding

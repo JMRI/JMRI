@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
+import java.text.MessageFormat;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
@@ -10,12 +11,13 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.router.Router;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.76 $
+ * @version             $Revision: 1.77 $
  */
 public class Car extends RollingStock {
 	
@@ -47,6 +49,12 @@ public class Car extends RollingStock {
 	public static final String NEXT_DESTINATION_CHANGED_PROPERTY = "Next destination changed";
 	public static final String NEXT_DESTINATION_TRACK_CHANGED_PROPERTY = "Next destination track changed";
 	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Return when empty changed";
+	
+	// return status when placing cars at a location or destination
+	public static final String SCHEDULE = rb.getString("schedule");
+	public static final String CUSTOM = rb.getString("custom");
+	public static final String CAPACITY = rb.getString("capacity");
+	public static final String LOAD = rb.getString("load");
 	
 	public Car(){
 		
@@ -326,6 +334,13 @@ public class Car extends RollingStock {
 			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at destination ("+ destination.getName() + ", " + track.getName() + ") wrong load");
 			return LOAD+ " ("+getLoad()+")";
 		}
+		// a siding with a schedule can overload in aggressive mode, check track capacity
+		if (Setup.isBuildAggressive() && track != null && !track.getScheduleId().equals("")){
+			if (track.getUsedLength() > track.getLength()){
+				log.debug("Can't set ("+toString()+") due to exceeding maximum capacity for track ("+track.getName()+")");
+				return CAPACITY;
+			}
+		}
 		// now check to see if the track has a schedule
 		return testSchedule(track);
 	}
@@ -342,7 +357,7 @@ public class Car extends RollingStock {
 			else if (!track.getLocType().equals(Track.SIDING))
 				return OKAY;
 			else
-				return "Car has a " +SCHEDULE+ " " +LOAD+ " ("+getLoad()+")";
+				return MessageFormat.format(rb.getString("CarHasA"),new Object[]{CUSTOM, LOAD, getLoad()});
 		}
 		// only sidings can have a schedule
 		if (!track.getLocType().equals(Track.SIDING))
