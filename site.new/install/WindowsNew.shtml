@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.9 2010-11-12 09:52:06 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.10 2011-04-21 20:52:24 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -25,7 +25,17 @@
 <H1> 
 JMRI Install Guide: Windows
 </H1>
+<ul>
+<li><a href="#installation">Installation procedure</a></li>
+<li><a href="#offline">Offline installation details</a></li>
+<li><a href="#largewindow">Large Windows</a></li>
+<li><a href="#debugging">Debugging</a></li>
+<li><a href="#startupissues">Startup issues</a></li>
+<li><a href="#revert">Reverting to an earlier version</a></li>
+</ul>
 
+<a id="installation"/>
+<h2>Installation</h2>
 <OL>
   <LI>Determine if your hardware supports Java and JMRI</LI>
     <P>We have had a report that a 180MHz Pentium II is too slow to use, and another that a 330MHz Pentium II is fine, 
@@ -190,6 +200,41 @@ JMRI Install Guide: Windows
 </ul>
 
 <p>For further information on the JMRI shortcuts, see the <a href="/help/en/html/doc/Technical/StartUpScripts.shtml#windows">page outlining the start-up procedure on Windows</a>.</p>
+
+<a id="revert"/>
+<h2>Reverting to an earlier version</h2>
+<p>During installation, JMRI can do a number of things automatically that
+makes it easier to revert to a previous working setup if a major problem is
+encountered in a test release.</p>
+<p>Note: This procedure will not preserve work done since upgrading; it restores
+everything back to the state at the time of upgrade.</p>
+<p>A backup copy of all your user files (Panel files, Roster entries, Preferences etc.)
+is saved when a new revision of JMRI is installed.
+This is done by the installer when it asks to save a backup copy which, if
+selected, is saved in a folder named "JMRI_backup".</p>
+<p>When installing a newer version of JMRI than that already installed, backup
+creation is defaulted to "Yes"; when installing an older version, it is defaulted to "No".</p>
+<p>If problems occur with the new version and it is necessary to revert to the
+last version in use, you should install the older version right over the version
+currently installed. Then find the folder that holds the folder named "JMRI_backup".
+This will normally be located in your user-profile folder - a quick way to
+find this is to follow the "Preferences" link in "JMRI > Tools and Demos" from the Start menu.
+<br /><img src="images/WinDebugLog-01_StartMenuPreferences.png" height="358" width="531" alt="Preferences link in JMRI > Tools and Demos start menu"/>
+<br />Once opened, navigate up one level to your user-profile folder.
+<p>Depending on the version of Windows, this will typically be one of:</p>
+<dl>
+<dt>Windows 98 - ME
+<dd>C:\WINDOWS
+<dt>Windows 2000 - XP
+<dd>C:\Documents and Settings\[username]
+<dt>Windows Vista - 7
+<dd>C:\Users\[username]
+</dl>
+Within this folder, look for and delete the folder "JMRI" then rename
+folder "JMRI_backup" to "JMRI".
+<p>Restart JMRI and you should be back to where you were before installing the new version.</p>
+
+
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
