@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -31,8 +31,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private BlockOrder _viaOrder;
     private BlockOrder _avoidOrder;
     private ArrayList <ThrottleSetting> _throttleCommands = new ArrayList <ThrottleSetting>();
-    private String _trainName;
-    private String _trainId;
+    private String _trainName;      // User train name for icon
+    private String _trainId;        // Roster Id
     private DccLocoAddress _dccAddress;
     private boolean _runBlind;              // don't use block detection
     private float _throttleFactor = 1.0f;
@@ -235,14 +235,43 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     public String getTrainId() { return _trainId; }
+    /**
+    * @param id may be either Roster entry or DCC address
+    * @return id is valid
+    */
     public boolean setTrainId(String id) {
         _trainId = id; 
         RosterEntry train = Roster.instance().entryFromTitle(id);
         if (train != null) {
             _dccAddress = train.getDccLocoAddress();
-            return true;
+        } else {
+            int index = id.indexOf('(');
+            String numId;
+            if (index >= 0) {
+                numId = id.substring(0, index);
+            } else {
+                numId = id;
+            }
+            List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null );
+            if (l.size() > 0) {
+                _trainId = id;
+                _dccAddress = l.get(0).getDccLocoAddress();
+            } else {
+                boolean isLong = true;
+                if ((index+1)<id.length() &&
+                    (id.charAt(index+1)=='S' || id.charAt(index+1)=='s')) {
+                    isLong = false;
+                }
+                try {
+                    int num = Integer.parseInt(numId);
+                    _dccAddress = new DccLocoAddress(num, isLong);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+                return true;
+            }
         }
-        return false;
+        return true;
     }
 
     public DccLocoAddress getDccAddress() { return _dccAddress;  }
