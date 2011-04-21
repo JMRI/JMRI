@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 import java.util.ArrayList;
@@ -72,7 +72,6 @@ public class PortalTableModel extends AbstractTableModel {
     private void makeList() {
          ArrayList <Portal> tempList = new ArrayList <Portal>();
          // save portals that do not have all their blocks yet
-         String msg = null;
          for (int i=0; i<_portalList.size(); i++) {
              Portal portal = _portalList.get(i);
              if (portal.getToBlock()==null && portal.getFromBlock()==null) {
@@ -110,10 +109,6 @@ public class PortalTableModel extends AbstractTableModel {
             }
         }
         _portalList = tempList;
-        if (msg != null) {
-            JOptionPane.showMessageDialog(null, msg,
-                    rbo.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-        }
         if (log.isDebugEnabled()) log.debug("makeList exit: _portalList has "
                                             +_portalList.size()+" rows.");
     }
