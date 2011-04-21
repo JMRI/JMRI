@@ -831,8 +831,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected Editor changeView(String className) {
 
         JFrame frame = getTargetFrame();
-        Dimension size = frame.getSize();
+        Dimension targetSize = frame.getSize();
+        Dimension size = getSize();
         Point posn = frame.getLocation();
+        Color color = getBackgroundColor();
 
         try {
             Editor ed = (Editor)Class.forName(className).newInstance();
@@ -841,7 +843,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.init(getName());
             //ed.getTargetFrame().setTitle(frame.getTitle());
             ed.getTargetFrame().setLocation(posn.x,posn.y);
-            ed.getTargetFrame().setSize(size.width,size.height);
+            ed.getTargetFrame().setSize(targetSize.width, targetSize.height);
             ed.setAllEditable(isEditable());
             ed.setAllPositionable(allPositionable());
             //ed.setShowCoordinates(showCoordinates());
@@ -857,6 +859,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 p.setEditor(ed);
                 ed.addToTarget(p);
             }
+            ed.setSize(size);
+            ed.setBackgroundColor(color);
             ed.pack();
             ed.setVisible(true);
             jmri.jmrit.display.PanelMenu.instance().addEditorPanel(ed);
