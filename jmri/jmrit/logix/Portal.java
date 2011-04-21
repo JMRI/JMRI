@@ -28,7 +28,6 @@ public class Portal  {
     private NamedBean   _toSignal;          // may be either SignalHead or SignalMast
     private long        _toSignalDelay;
     private String      _portalName;
-    private java.awt.Point _iconPosition;
     
     public Portal(OBlock fromBlock, String portalName, OBlock toBlock) {
         _fromBlock = fromBlock;
@@ -405,13 +404,6 @@ public class Portal  {
 
     public boolean isValid() {
         return (_fromBlock!=null && _toBlock!=null);
-    }
-
-    public void setIconPosition(java.awt.Point pt) {
-        _iconPosition = pt;
-    }
-    public java.awt.Point getIconPosition() {
-        return _iconPosition;
     }
 
     public void dispose() {

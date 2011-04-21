@@ -133,13 +133,6 @@ public class OBlockManagerXml // extends XmlFile
             toElem.setAttribute("signalDelay", ""+portal.getToSignalDelay());
             elem.addContent(toElem);
         }
-        java.awt.Point pt = portal.getIconPosition();
-        if (pt!=null) {
-            Element iconElem = new Element("iconPosition");
-            iconElem.setAttribute("X", ""+pt.x);
-            iconElem.setAttribute("Y", ""+""+pt.y);
-            elem.addContent(iconElem);
-        }
         return elem;
     }
 
@@ -428,19 +421,6 @@ public class OBlockManagerXml // extends XmlFile
                 log.error("Could not parse signalDelay for signal ("+name+") in portal ("+portalName+")");
             }
             portal.setProtectSignal(Portal.getSignal(name), time, fromBlock);
-        }
-        Element ePt = elem.getChild("iconPosition");
-        if (ePt!=null) {
-            try {
-                int x = ePt.getAttribute("X").getIntValue();
-                int y = ePt.getAttribute("Y").getIntValue();
-                portal.setIconPosition(new java.awt.Point(x, y));
-                log.debug(portalName+ "load its icon at "+portal.getIconPosition().toString());
-            } catch ( org.jdom.DataConversionException e) {
-                log.error("failed to convert iconPosition attribute");
-            }
-        } else {
-            log.debug(portalName+" has no icon!");
         }
 
         if (log.isDebugEnabled()) log.debug("End Load portal "+portalName);

@@ -429,6 +429,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             if (sysName!=null) {
                 _selectionGroup = null;
                 _editCircuitFrame = new EditCircuitFrame(rbcp.getString("newCircuitItem"), this, sysName);
+                _editCircuitFrame.setLocationRelativeTo(this);
             }
         }
     }
@@ -438,6 +439,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             OBlock block = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
             setSelectionGroup(block);
             _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitMenu"), this, sysName);
+            _editCircuitFrame.setLocationRelativeTo(this);
         }
     }
 
@@ -460,6 +462,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                 }
             }
             _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalMenu"), this, sysName);
+            _editPortalFrame.setLocationRelativeTo(this);
 
         }
     }
@@ -485,6 +488,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             block.setState(OBlock.UNOCCUPIED);
             block.allocate(EditCircuitPaths.TEST_PATH);
             _editPathsFrame = new EditCircuitPaths(rbcp.getString("OpenPathMenu"), this, sysName);
+            _editPathsFrame.setLocationRelativeTo(this);
 
         }
     }
