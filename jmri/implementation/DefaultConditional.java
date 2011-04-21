@@ -43,7 +43,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -554,15 +554,10 @@ public class DefaultConditional extends AbstractNamedBean
                 int value = 0;
                 Timer timer = null;
                 int type = action.getType();
-                String devName = action.getDeviceName();
-                if (devName!=null && devName.length()>0 && devName.charAt(0)== '@') {
-                    String memName = devName.substring(1);
-                    Memory m = getMemory(memName);
-                    if (m == null) {
-                        errorList.add("invalid memory name in action - "+devName);
-                        continue;
-                    }
-                    devName = (String)m.getValue();
+                String devName = getDeviceName(action);
+                if (devName==null) {
+                    errorList.add("invalid memory name in action - "+devName);
+                    continue;
                 }
                 if (log.isDebugEnabled()) log.debug("getDeviceName()="+action.getDeviceName()+" devName= "+devName);
 				switch (type) {
@@ -896,18 +891,18 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_PLAY_SOUND:
-						if (!(action.getActionString().equals(""))) {
+						if (!(getActionString(action).equals(""))) {
                             Sound sound = action.getSound();
 							if (sound == null) {
-								sound = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(action.getActionString()));
+								sound = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(getActionString(action)));
 							}
 							sound.play();
                             actionCount++;
 						}
 						break;
 					case Conditional.ACTION_RUN_SCRIPT:
-						if (!(action.getActionString().equals(""))) {
-							jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(action.getActionString()));
+						if (!(getActionString(action).equals(""))) {
+							jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getActionString(action)));
                             actionCount++;
 						}
 						break;
@@ -973,10 +968,10 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                             break;
 					case Conditional.ACTION_JYTHON_COMMAND:
-						if (!(action.getActionString().equals(""))) {
+						if (!(getActionString(action).equals(""))) {
 					        PythonInterp.getPythonInterpreter();
 
-					        String cmd = action.getActionString() + "\n";
+					        String cmd = getActionString(action) + "\n";
 
 					        // The command must end with exactly one \n
 					        while ((cmd.length() > 1 ) && cmd.charAt(cmd.length() - 2) == '\n')
@@ -1036,7 +1031,7 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            String msg = w.setThrottleFactor(action.getActionString());
+                            String msg = w.setThrottleFactor(getActionString(action));
 							if (msg!=null) {
                                 errorList.add("Warrant "+action.getDeviceName()+" unable to Set Throttle Factor - "+msg);
                             }
@@ -1049,9 +1044,19 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            if (!w.setTrainId(action.getActionString())) {
+                            if (!w.setTrainId(getActionString(action))) {
                                 errorList.add("Unable to find train Id "+action.getActionString()+" in Roster  - "+action.getDeviceName());
                             }
+                            actionCount++;
+						}
+                        break;
+                    case Conditional.ACTION_SET_TRAIN_NAME:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+						if (w == null) {
+							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            w.setTrainName(getActionString(action));
                             actionCount++;
 						}
                         break;
@@ -1100,7 +1105,7 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid signal mast name in action - "+action.getDeviceName());
 						}
 						else {
-							f.setAspect(action.getActionString());
+							f.setAspect(getActionString(action));
                             actionCount++;
 						}
 						break;
@@ -1154,7 +1159,7 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = b.allocate(action.getActionString());
+                            String err = b.allocate(getActionString(action));
 							if (err!=null) {
                                 errorList.add("allocate error - "+err);
                             }
@@ -1167,7 +1172,7 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = b.setPath(action.getActionString(), null);
+                            String err = b.setPath(getActionString(action), null);
                             if (err!=null) {
                                 errorList.add("setPath error - "+err);
                             }
@@ -1275,9 +1280,8 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     private String getDeviceName(ConditionalAction action) {
-
         String devName = action.getDeviceName();
-        if (devName.charAt(0)== '@') {
+        if (devName!=null && devName.length()>0 && devName.charAt(0)== '@') {
             String memName = devName.substring(1);
             Memory m = getMemory(memName);
             if (m == null) {
@@ -1287,6 +1291,21 @@ public class DefaultConditional extends AbstractNamedBean
             devName = (String)m.getValue();
         }
         return devName;
+    }
+
+    private String getActionString(ConditionalAction action) {
+        String devAction = action.getActionString();
+        if (devAction!=null && devAction.length()>0 && devAction.charAt(0)== '@') {
+            String memName = devAction.substring(1);
+            Memory m = getMemory(memName);
+            if (m == null) {
+                log.error(getDisplayName()+" action \""+action.getDeviceName()+
+                          "\" has invalid memory name in actionString - "+action.getActionString());
+                return "";
+            }
+            devAction = (String)m.getValue();
+        }
+        return devAction;
     }
 
     /** for backward compatibility with config files having system names in lower case
@@ -1478,9 +1497,8 @@ public class DefaultConditional extends AbstractNamedBean
 			action.stopTimer();
 		}
 	}
-
 	
-static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditional.class.getName());
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditional.class.getName());
 }
 
 /* @(#)DefaultConditional.java */

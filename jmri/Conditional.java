@@ -181,7 +181,8 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
 	public static final int ACTION_SET_BLOCK_IN_SERVICE = 47;
 	public static final int ACTION_MANUAL_RUN_WARRANT = 48;
-    public static final int NUM_ACTION_TYPES = 48;
+    public static final int ACTION_SET_TRAIN_NAME = 49;
+    public static final int NUM_ACTION_TYPES = 49;
 
 /**************************************************************************************/
 /* New Variable and Action type scheme for Logix UI
@@ -382,7 +383,8 @@ public interface Conditional extends NamedBean {
                                         ITEM_TYPE_OBLOCK,       //  ACTION_DEALLOCATE_BLOCK = 45;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_IN_SERVICE = 47;
-                                        ITEM_TYPE_WARRANT       // ACTION_MANUAL_RUN_WARRANT 48
+                                        ITEM_TYPE_WARRANT,      // ACTION_MANUAL_RUN_WARRANT 48
+                                        ITEM_TYPE_WARRANT       // ACTION_SET_TRAIN_NAME 49
                                  };
 
     // Map Sensor Type comboBox items to Sensor action types
@@ -445,7 +447,8 @@ public interface Conditional extends NamedBean {
     																		// OF STATIC FINAL ELEMENTS??
     public final static int[] ITEM_TO_WARRANT_ACTION = {ACTION_ALLOCATE_WARRANT_ROUTE, 
                 ACTION_DEALLOCATE_WARRANT_ROUTE, ACTION_SET_ROUTE_TURNOUTS, ACTION_AUTO_RUN_WARRANT, 
-                ACTION_MANUAL_RUN_WARRANT, ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID, ACTION_THROTTLE_FACTOR };
+                ACTION_MANUAL_RUN_WARRANT, ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID, 
+                ACTION_SET_TRAIN_NAME, ACTION_THROTTLE_FACTOR };
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
     public final static int[] ITEM_TO_OBLOCK_ACTION = {ACTION_ALLOCATE_BLOCK_PATH, 

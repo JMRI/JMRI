@@ -62,7 +62,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.96 $
+ * @version $Revision: 1.97 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -970,7 +970,7 @@ public class LogixTableAction extends AbstractTableAction {
 		}
 		inEditMode = true;
 		if (editLogixFrame == null) {
-			editLogixFrame = new JmriJFrame(rbx.getString("TitleEditLogix"));
+			editLogixFrame = new JmriJFrame(rbx.getString("TitleEditLogix"), false, false);
 			editLogixFrame.addHelpMenu(
 					"package.jmri.jmrit.beantable.LogixAddEdit", true);
 			editLogixFrame.setLocation(100, 30);
@@ -1479,7 +1479,7 @@ public class LogixTableAction extends AbstractTableAction {
 		_curLogix.deActivateLogix();
 		conditionalUserName.setText(_curConditional.getUserName());
 		if (editConditionalFrame == null) {
-			editConditionalFrame = new JmriJFrame(rbx.getString("TitleEditConditional"));
+			editConditionalFrame = new JmriJFrame(rbx.getString("TitleEditConditional"), false, false);
 			editConditionalFrame.addHelpMenu(
 					"package.jmri.jmrit.beantable.ConditionalAddEdit", true);
 			Container contentPane = editConditionalFrame.getContentPane();
@@ -2217,7 +2217,7 @@ public class LogixTableAction extends AbstractTableAction {
 		}
         _curVariableRowNumber = row;
         _curVariable = _variableList.get(row);
-        _editVariableFrame = new JmriJFrame(rbx.getString("TitleEditVariable"));
+        _editVariableFrame = new JmriJFrame(rbx.getString("TitleEditVariable"), false, false);
         _editVariableFrame.setLocation(10, 100);
         JPanel topPanel = makeTopPanel(_editVariableFrame, "TitleAntecedentPhrase", 500, 160);
 
@@ -2350,7 +2350,7 @@ public class LogixTableAction extends AbstractTableAction {
 		}
         _curActionRowNumber = row;
         _curAction = _actionList.get(row);
-        _editActionFrame = new JmriJFrame(rbx.getString("TitleEditAction"));
+        _editActionFrame = new JmriJFrame(rbx.getString("TitleEditAction"), false, false);
         _editActionFrame.setLocation(10, 300);
         JPanel topPanel = makeTopPanel(_editActionFrame, "TitleConsequentPhrase", 600, 160);
 
@@ -2927,6 +2927,7 @@ public class LogixTableAction extends AbstractTableAction {
                         _actionBox.setSelectedIndex(2);
                     }
                 } else if (actionType==Conditional.ACTION_SET_TRAIN_ID ||
+                                actionType==Conditional.ACTION_SET_TRAIN_NAME ||
                                 actionType==Conditional.ACTION_THROTTLE_FACTOR) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
@@ -3276,12 +3277,16 @@ public class LogixTableAction extends AbstractTableAction {
                     l.setText(rbx.getString("LabelControlTrain"));
                    _actionPanel.setVisible(true);
                 } else if (actionType==Conditional.ACTION_SET_TRAIN_ID ||
+                                actionType==Conditional.ACTION_SET_TRAIN_NAME ||
                                 actionType==Conditional.ACTION_THROTTLE_FACTOR) {
                     p = (JPanel)_shortTextPanel.getComponent(0);
                     l = (JLabel)p.getComponent(0);
                     if (actionType==Conditional.ACTION_SET_TRAIN_ID) {
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainId"));
                         l.setText(rbx.getString("LabelTrainId"));
+                    } else if (actionType==Conditional.ACTION_SET_TRAIN_NAME) {
+                        _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainName"));
+                        l.setText(rbx.getString("LabelTrainName"));
                     } else if (actionType==Conditional.ACTION_THROTTLE_FACTOR) {
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintThrottleFactor"));
                         l.setText(rbx.getString("LabelThrottleFactor"));
@@ -3380,6 +3385,8 @@ public class LogixTableAction extends AbstractTableAction {
         _actionBox.setMaximumSize(_actionBox.getPreferredSize());
         _actionTypeListener.setItemType(itemType);
         _actionTypeBox.addActionListener(_actionTypeListener);
+        if (log.isDebugEnabled()) log.debug("Exit actionItemChanged size: "+_editActionFrame.getWidth()+
+                                            " X "+_editActionFrame.getHeight());
 	} /* actionItemChanged */
 
     private void compareTypeChanged(int selection) {
@@ -4087,6 +4094,7 @@ public class LogixTableAction extends AbstractTableAction {
                     else
                         _curAction.setActionData(Warrant.ABORT);
                 } else if (actionType==Conditional.ACTION_SET_TRAIN_ID ||
+                                actionType==Conditional.ACTION_SET_TRAIN_NAME ||
                                 actionType==Conditional.ACTION_THROTTLE_FACTOR ) {
                     _curAction.setActionString(actionString);
                 }
@@ -4192,6 +4200,7 @@ public class LogixTableAction extends AbstractTableAction {
         else {
             _curAction.setOption(0);
         }
+        _editActionFrame.pack();
  		return (true);
 	}
 
@@ -5346,7 +5355,6 @@ public class LogixTableAction extends AbstractTableAction {
     
     protected String getClassName() { return LogixTableAction.class.getName(); }
 
-	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
-			.getLogger(LogixTableAction.class.getName());
+	static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogixTableAction.class.getName());
 }
 /* @(#)LogixTableAction.java */

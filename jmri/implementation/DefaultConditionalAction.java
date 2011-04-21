@@ -20,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 
@@ -325,6 +325,8 @@ public class DefaultConditionalAction implements ConditionalAction {
     			return (rbx.getString("ActionControlTrain"));
             case Conditional.ACTION_SET_TRAIN_ID:
                return (rbx.getString("ActionSetTrainId"));
+            case Conditional.ACTION_SET_TRAIN_NAME:
+               return (rbx.getString("ActionSetTrainName"));
             case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
                return (rbx.getString("ActionSetSignalMastAspect"));                
             case Conditional.ACTION_THROTTLE_FACTOR:
@@ -569,8 +571,6 @@ public class DefaultConditionalAction implements ConditionalAction {
                     return (rbx.getString("WarrantResume"));
                 } else
                     return (rbx.getString("WarrantAbort"));
-            //case Conditional.ACTION_SET_TRAIN_ID:
-            //    return (rbx.getString("WarrantAbort"));
 		}
         return "";
     }
@@ -676,6 +676,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + " " + rbx.getString("ExecJythonCmd")+ " "+ _actionString+ ".";
                     break;
                 case Conditional.ACTION_SET_TRAIN_ID:
+                case Conditional.ACTION_SET_TRAIN_NAME:
                 case Conditional.ACTION_THROTTLE_FACTOR:
                     str = str + ", \""+_actionString+"\" "+rbx.getString("onWarrant")+
                         " \""+_deviceName+"\".";
@@ -696,6 +697,5 @@ public class DefaultConditionalAction implements ConditionalAction {
         return str;
     }
 
-	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
-			.getLogger(ConditionalAction.class.getName());
+	static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConditionalAction.class.getName());
 }
