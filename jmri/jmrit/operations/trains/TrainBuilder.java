@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.151 $
+ * @version             $Revision: 1.152 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -2107,13 +2107,15 @@ public class TrainBuilder extends TrainCommon{
 					// check for an earlier drop in the route
 					for (int m = start; m<routeEnd; m++){
 						RouteLocation rle = train.getRoute().getLocationById(routeList.get(m));
-						if (rle != rld && rle.getName().equals(rld.getName()) 
-								&&(rle.getMaxCarMoves()-rle.getCarMoves()>0) 
+						if (rle == rld)
+							break;	// done
+						if (rle.getName().equals(rld.getName()) 
+								&& (rle.getMaxCarMoves()-rle.getCarMoves()>0) 
 								&& rle.canDrop() && checkDropTrainDirection(car, rle, trackSave)){
 							log.debug("Found an earlier drop for car ("+car.toString()+") destination ("+rle.getName()+")");
 							nextCarMoves = rle.getCarMoves();
 							nextRatio = nextCarMoves/rle.getMaxCarMoves();
-							rld = rle;	// set car drop to first stop
+							rld = rle;	// set car drop to earlier stop
 							break;
 						}
 					}
