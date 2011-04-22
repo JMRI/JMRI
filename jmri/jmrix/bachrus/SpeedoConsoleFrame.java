@@ -28,7 +28,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -747,7 +747,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
         if (throttle.getSpeedStepMode() != DccThrottle.SpeedStepMode28) {
             log.error("Failed to set 28 step mode");
-            throttle.release();
+            InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
+            //throttle.release();
             return;
         }
         // turn on power
@@ -922,7 +923,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (throttle != null) {
             throttle.setSpeedSetting(0.0F);
             //jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
-            throttle.release();
+            InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
+            //throttle.release();
             throttle = null;
         }
         state = ProfileState.IDLE;
