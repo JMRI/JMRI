@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -320,7 +320,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * @param track (yard, siding, staging, or interchange track)
 	 * @param force when true place rolling stock ignore track length, type, & road
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
-	 * acceptable, or "length" if the rolling stock length didn't fit.
+	 * acceptable, "road" if rolling stock road isn't acceptable, 
+	 * or "length" if the rolling stock length didn't fit.
 	 */
 	public String setLocation(Location location, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new location
@@ -484,7 +485,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * Used to check destination track to see if it will accept rolling stock
 	 * @param destination
 	 * @param track
-	 * @return status
+	 * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
 	 */
 	public String testDestination(Location destination, Track track) {
 		return RsTestDestination(destination, track);

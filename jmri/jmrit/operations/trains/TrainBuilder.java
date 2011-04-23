@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.152 $
+ * @version             $Revision: 1.153 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -733,30 +733,32 @@ public class TrainBuilder extends TrainCommon{
 		Track departTrack = null;
 		if (rl == train.getTrainDepartsRouteLocation())
 			departTrack = departStageTrack;
-		boolean foundCar = false;
-		boolean requiresCar = false;
+		boolean cabooseTip = true;
+		boolean foundCaboose = false;
+		boolean requiresCaboose = false;
 		if ((train.getRequirements() & Train.CABOOSE) == 0){
 			addLine(buildReport, FIVE, rb.getString("buildTrainNoCaboose"));
 			if (departTrack == null)
 				return;
 		} else {		
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTrainReqCaboose"),new Object[]{train.getName(), roadCaboose, rl.getName(), rld.getName()}));
-			requiresCar = true;
+			requiresCaboose = true;
 		}
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car car = carManager.getById(carList.get(carIndex));
 			if (car.isCaboose()){
+				cabooseTip = false;
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarIsCaboose"),new Object[]{car.toString(), car.getRoad(), car.getLocationName()}));
 				// car departing staging must leave with train
 				if (car.getTrack() == departTrack){
-					foundCar = false;
+					foundCaboose = false;
 					if (checkCarForDestinationAndTrack(car, rl, rld)){
 						if (car.getTrain() == train)
-							foundCar = true;
+							foundCaboose = true;
 					} else if (findDestinationAndTrack(car, rl, rld)){
-						foundCar = true;
+						foundCaboose = true;
 					}
-					if (!foundCar)
+					if (!foundCaboose)
 						throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorCarStageDest"),
 								new Object[]{car.toString()}));
 				}
@@ -764,7 +766,7 @@ public class TrainBuilder extends TrainCommon{
 				else if (!roadCaboose.equals("") && !roadCaboose.equals(car.getRoad())){
 					continue;
 				}
-				else if (!foundCar && car.getLocationName().equals(rl.getName())){
+				else if (!foundCaboose && car.getLocationName().equals(rl.getName())){
 					// remove cars that can't be picked up due to train and track directions
 					if(!checkPickUpTrainDirection(car, rl)){
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{car.toString(), car.getType(), (car.getLocationName()+" "+car.getTrackName())}));
@@ -776,17 +778,17 @@ public class TrainBuilder extends TrainCommon{
 					if (leadEngine != null && car.getRoad().equals(leadEngine.getRoad())){
 						if (checkCarForDestinationAndTrack(car, rl, rld)){
 							if (car.getTrain() == train)
-								foundCar = true;
+								foundCaboose = true;
 						} else if (findDestinationAndTrack(car, rl, rld)){
-							foundCar = true;
+							foundCaboose = true;
 						}
 					}
-					if (foundCar && departTrack == null)
+					if (foundCaboose && departTrack == null)
 						break;
 				}
 			}
 		}
-		if (requiresCar && !foundCar){
+		if (requiresCaboose && !foundCaboose){
 			log.debug("Second pass looking for caboose");
 			// second pass, take any caboose available
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
@@ -798,19 +800,22 @@ public class TrainBuilder extends TrainCommon{
 					}
 					if (checkCarForDestinationAndTrack(car, rl, rld)){
 						if (car.getTrain() == train){
-							foundCar = true;
+							foundCaboose = true;
 							break;
 						}
 					} else if (findDestinationAndTrack(car, rl, rld)){
-						foundCar = true;
+						foundCaboose = true;
 						break;
 					}
 				}
 			}
 		}
-		if (requiresCar && !foundCar)
+		if (requiresCaboose && !foundCaboose){
+			if (cabooseTip)
+				addLine(buildReport, ONE, rb.getString("buildNoteCaboose"));
 			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRequirements"),
 					new Object[]{train.getName(), rb.getString("Caboose"), rl.getName(), rld.getName()}));
+		}
 	}
 	
 	private void removeCaboosesAndCarsWithFred(){
@@ -1036,7 +1041,7 @@ public class TrainBuilder extends TrainCommon{
 	 */
 	private void placeCars(int percent) throws BuildFailedException{
 		if (percent < 100){
-			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildMultiplePass"),new Object[]{percent}));
+			addLine(buildReport, THREE, rb.getString("buildMultiplePass"));
 			multipass = true;
 		}
 		if (percent == 100 && multipass)
