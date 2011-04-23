@@ -1,10 +1,11 @@
 //TODO: send periodic request for refresh, to verify server connection (maybe do on server side as well?)
 //TODO: handle ajax errors
 //TODO: preserve filter on update
-//TODO: remove "page" and button on checkbox update
+//TODO: remove "page" and button on uncheck
+//TODO: allow refresh of any page
+//TODO:use array for globalXhr to support limited number of open requests
 
-
-var $globalXhr; //global variable to allow closing earlier connections  TODO:use array to support limited number of open requests
+var $globalXhr; //global variable to allow closing earlier connections 
 
 //handle button press, send request for immediate change, plus request for lists  TODO: allow user to turn off some of the lists
 var $sendChange = function($type, $name, $nextValue){
@@ -206,7 +207,7 @@ $(document).ready(function() {
 	$.mobile.pageLoading();  //show pageloading message
 
 	//retrieve checked values from localstorage and set checkboxes to match
-	var $savedInputs = ["turnouts","panels"];  //default selections
+	var $savedInputs = ["turnout","panel"];  //default selections
 	if (localStorage['savedInputs']) {
 		var $savedInputs=JSON.parse(localStorage['savedInputs']);
 	}

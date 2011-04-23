@@ -20,7 +20,8 @@
     <li id='name-${safeName}'><a  class='ui-link-inherit' href='/panel/${name}.html' target='${safeName}'>${userName}</a></li>
 </script>
 <script id='rosterItemTemplate' type='text/html'>
-    <li id='name-${safeName}'><a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>${name}</a></li>
+    <li class='ui-li-has-thumb' id='name-${safeName}'><a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
+        <img class='ui-li-thumb' src='/prefs/resources/${imageIconName}'><h3 class='ui-li-heading'>${name}</h3></a></li>
 </script>
 
 <!-- Generic jquery templates for pages -------------------------------------------->
@@ -84,7 +85,7 @@
 		<div data-role='content' data-theme='b'>
 			<a href='/'><img src='/dist/resources/logo.gif' style='float: right;'> </a>
 			<h2>JMRI Mobile</h2>
-			This is an early alpha version of a browser-based UI for operating a layout with JMRI.  Includes:
+			This is an early alpha version of a browser-based UI for controlling a layout with JMRI.  Includes:
       <ul>
         <li>turnout, route, power and sensor control,</li>
         <li>links to open InControl throttles for each roster entry</li>
