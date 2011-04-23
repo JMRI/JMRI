@@ -1,9 +1,13 @@
 package jmri.jmrit.throttle;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ResourceBundle;
+
+import jmri.jmrit.XmlFile;
+import jmri.util.swing.EditableResizableImagePanel;
 
 /**
  * A very specific dialog for editing the properties of a FunctionButton
@@ -19,7 +23,10 @@ public class FunctionButtonPropertyEditor extends JDialog
     private JTextField idField;
     private JTextField fontField;
     private JCheckBox visibleCheckBox;
-
+    private EditableResizableImagePanel _imageFilePath;
+    private EditableResizableImagePanel _imagePressedFilePath;
+    final static int BUT_IMG_SIZE = 45;
+    
     /**
      * Constructor. Create it and pack it.
      */
@@ -98,6 +105,28 @@ public class FunctionButtonPropertyEditor extends JDialog
         constraints.gridy = 4;
         propertyPanel.add(visibleCheckBox, constraints);
 
+        constraints.gridy = 5;
+        constraints.gridx = 0;
+        propertyPanel.add(new JLabel("off icon:"), constraints);
+        
+        constraints.gridx = 1;
+        propertyPanel.add(new JLabel("on icon:"), constraints);
+        
+        constraints.gridy = 6;
+        constraints.gridx = 0;
+        _imageFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
+		_imageFilePath.setDropFolder(XmlFile.resourcesDir());
+		_imageFilePath.setBackground(new Color(0,0,0,0));
+		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+        propertyPanel.add(_imageFilePath, constraints);
+        
+        constraints.gridx = 1;
+        _imagePressedFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
+        _imagePressedFilePath.setDropFolder(XmlFile.resourcesDir());
+        _imagePressedFilePath.setBackground(new Color(0,0,0,0));
+        _imagePressedFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
+        propertyPanel.add(_imagePressedFilePath, constraints);
+              
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
 
@@ -141,6 +170,8 @@ public class FunctionButtonPropertyEditor extends JDialog
         idField.setText(String.valueOf(button.getIdentity()));
         fontField.setText(String.valueOf(button.getFont().getSize()));
         visibleCheckBox.setSelected(button.getDisplay());
+        _imageFilePath.setImagePath(button.getIconPath());
+        _imagePressedFilePath.setImagePath(button.getSelectedIconPath());
         textField.requestFocus();
     }
 
@@ -160,6 +191,8 @@ public class FunctionButtonPropertyEditor extends JDialog
                                     Integer.parseInt(fontField.getText())));
             button.setVisible(visibleCheckBox.isSelected());
             button.setDisplay(visibleCheckBox.isSelected());
+            button.setIconPath(_imageFilePath.getImagePath());
+            button.setSelectedIconPath(_imagePressedFilePath.getImagePath());
             button.setDirty(true);
             button.updateLnF();
             finishEdit();

@@ -47,7 +47,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.56 $
+ * @version   $Revision: 1.57 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -73,9 +73,7 @@ public class RosterEntry {
     public static String getDefaultOwner() { return _defaultOwner; }
     public static void setDefaultOwner(String n) { _defaultOwner = n; }
     static private String _defaultOwner = "";
-    
-    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
-    
+        
     final static int MAXFNNUM = 28;
     public int getMAXFNNUM() { return MAXFNNUM; }
     protected String[] functionLabels;
@@ -85,8 +83,8 @@ public class RosterEntry {
     
     java.util.TreeMap<String,String> attributePairs;
     
-    protected String _imageFilePath = _resourcesBasePath ; // at DndImagePanel init will
-    protected String _iconFilePath = _resourcesBasePath ;  // force image copy to that folder
+    protected String _imageFilePath = XmlFile.resourcesDir() ; // at DndImagePanel init will
+    protected String _iconFilePath = XmlFile.resourcesDir() ;  // force image copy to that folder
     protected String _URL = "";
     
 	/**
@@ -309,8 +307,8 @@ public class RosterEntry {
         if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
         // file path were saved without default xml config path 
-        if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = _resourcesBasePath+a.getValue();
-        if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = _resourcesBasePath+a.getValue();
+        if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = XmlFile.resourcesDir()+a.getValue();
+        if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = XmlFile.resourcesDir()+a.getValue();
         if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
         if ((a = e.getAttribute("maxSpeed")) != null )  
         	_maxSpeedPCT = Integer.parseInt(a.getValue());     
@@ -383,9 +381,9 @@ public class RosterEntry {
                     this.setFunctionLockable(num, lock.equals("true"));
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null)
-                    	this.setFunctionImage(num, _resourcesBasePath+a.getValue());
+                    	this.setFunctionImage(num, XmlFile.resourcesDir()+a.getValue());
                     if ((a = fn.getAttribute("functionImageSelected")) != null)
-                    	this.setFunctionSelectedImage(num, _resourcesBasePath+a.getValue());              
+                    	this.setFunctionSelectedImage(num, XmlFile.resourcesDir()+a.getValue());              
                 }
             }
         }
@@ -438,7 +436,7 @@ public class RosterEntry {
     public String getFunctionImage(int fn) {
     	if ((functionImages != null) && (functionImages[fn] != null))
     		return functionImages[fn];
-    	return _resourcesBasePath ; 
+    	return XmlFile.resourcesDir() ; 
     }
     
     public void setFunctionSelectedImage(int fn, String s) {
@@ -450,7 +448,7 @@ public class RosterEntry {
     public String getFunctionSelectedImage(int fn) {
     	if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null))
     		return functionSelectedImages[fn];
-    	return _resourcesBasePath ; 
+    	return XmlFile.resourcesDir() ; 
     }
     /**
      * Define whether a specific function is lockable.
@@ -539,12 +537,12 @@ public class RosterEntry {
         e.setAttribute("maxSpeed", (Integer.valueOf(getMaxSpeedPCT()).toString()));
         // file path are saved without default xml config path
         try {
-        	e.setAttribute("imageFilePath", getImagePath().substring( _resourcesBasePath.length() ));
+        	e.setAttribute("imageFilePath", getImagePath().substring( XmlFile.resourcesDir().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
         	e.setAttribute("imageFilePath", "");
         }
         try {
-        e.setAttribute("iconFilePath", getIconPath().substring( _resourcesBasePath.length() ));
+        e.setAttribute("iconFilePath", getIconPath().substring( XmlFile.resourcesDir().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
         	e.setAttribute("iconFilePath", "");
         }
@@ -578,14 +576,14 @@ public class RosterEntry {
                         fne.setAttribute("lockable", lockable ? "true" : "false");
                         if ((functionImages!=null) && (functionImages[i]!=null)) {
                         	try {
-                        		fne.setAttribute("functionImage", functionImages[i].substring( _resourcesBasePath.length() ));
+                        		fne.setAttribute("functionImage", functionImages[i].substring( XmlFile.resourcesDir().length() ));
                         	} catch (StringIndexOutOfBoundsException eob) {
                         		fne.setAttribute("functionImage", "");
                         	} 
                         }
                         if ((functionSelectedImages!=null) && (functionSelectedImages[i]!=null)) {
                         	try {
-                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( _resourcesBasePath.length() ));
+                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( XmlFile.resourcesDir().length() ));
                         	} catch (StringIndexOutOfBoundsException eob) {
                         		fne.setAttribute("functionImageSelected", "");
                         	} 

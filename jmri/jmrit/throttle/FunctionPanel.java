@@ -208,6 +208,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 			int functionNumber = functionButton[i].getIdentity();
 			String text = functionButton[i].getButtonLabel();
 			boolean lockable = functionButton[i].getIsLockable();
+			String imagePath = functionButton[i].getIconPath();
+			String imageSelectedPath = functionButton[i].getSelectedIconPath();
 			if (functionButton[i].isDirty() && !text.equals(rosterEntry.getFunctionLabel(functionNumber))){
 				functionButton[i].setDirty(false);
 				if (text.equals(""))
@@ -216,6 +218,12 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 			}
 			if (rosterEntry.getFunctionLabel(functionNumber) != null && lockable != rosterEntry.getFunctionLockable(functionNumber)){
 				rosterEntry.setFunctionLockable(functionNumber, lockable);
+			}
+			if (rosterEntry.getFunctionLabel(functionNumber) != null && imagePath!=null && imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber))!=0) {
+				rosterEntry.setFunctionImage(functionNumber, imagePath);
+			}
+			if (rosterEntry.getFunctionLabel(functionNumber) != null && imageSelectedPath!=null && imageSelectedPath.compareTo(rosterEntry.getFunctionSelectedImage(functionNumber))!=0) {
+				rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
 			}
 		}
 		Roster.writeRosterFile();
@@ -432,7 +440,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.71 $
+	 * @version $Revision: 1.72 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;

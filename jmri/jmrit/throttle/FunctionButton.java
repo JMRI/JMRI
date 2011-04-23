@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
+import jmri.jmrit.XmlFile;
 import jmri.util.swing.ResizableImagePanel;
 
 import org.jdom.Element;
@@ -51,10 +53,13 @@ public class FunctionButton extends JToggleButton implements ActionListener
 	private int actionKey;
 	private String buttonLabel;
     private JPopupMenu popup;
-	
+    private String iconPath;
+    private String selectedIconPath;
+
 	static int BUT_HGHT = 30;
 	static int BUT_WDTH = 56;
-	static int BUT_IMG_SIZE = 45;
+	final static int BUT_IMG_SIZE = 45;
+
 	static {
         JButton sample = new JButton(" Light ");
         BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, BUT_HGHT);
@@ -409,9 +414,23 @@ public class FunctionButton extends JToggleButton implements ActionListener
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
         me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        if ( this.getIconPath().startsWith(XmlFile.resourcesDir()))
+        	me.setAttribute("iconPath", this.getIconPath().substring( XmlFile.resourcesDir().length() ));
+        else
+        	me.setAttribute("iconPath", this.getIconPath());
+        if (this.getSelectedIconPath().startsWith(XmlFile.resourcesDir()))
+        	me.setAttribute("selectedIconPath", this.getSelectedIconPath().substring( XmlFile.resourcesDir().length() ));
+        else
+        	me.setAttribute("selectedIconPath", this.getSelectedIconPath());
         return me;
     }
 
+    private boolean checkFile(String name) {
+        File fp = new File(name);
+        if (fp.exists()) return true;
+        return false;
+    }
+    
     /**
      * Set the preferences based on the XML Element.
      * <ul>
@@ -436,6 +455,16 @@ public class FunctionButton extends JToggleButton implements ActionListener
             else
             	this.setVisible(false);
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+            if ((e.getAttribute("iconPath")!=null) && (e.getAttribute("iconPath").getValue().length()>0))
+            	if (checkFile(XmlFile.resourcesDir()+e.getAttribute("iconPath").getValue()) )
+            		this.setIconPath(XmlFile.resourcesDir()+e.getAttribute("iconPath").getValue());
+            	else
+            		this.setIconPath(e.getAttribute("iconPath").getValue());
+            if ((e.getAttribute("selectedIconPath")!=null) && (e.getAttribute("selectedIconPath").getValue().length()>0))
+            	if (checkFile(XmlFile.resourcesDir()+e.getAttribute("selectedIconPath").getValue()))
+            		this.setSelectedIconPath(XmlFile.resourcesDir()+e.getAttribute("selectedIconPath").getValue());
+            	else
+            		this.setSelectedIconPath(e.getAttribute("selectedIconPath").getValue());
             updateLnF();
         }
         catch (org.jdom.DataConversionException ex)
@@ -443,8 +472,9 @@ public class FunctionButton extends JToggleButton implements ActionListener
             log.error("DataConverstionException in setXml: "+ex);
         }
     }
-
+    
 	public void setIconPath(String fnImg) {
+		iconPath = fnImg;
 		ResizableImagePanel fnImage = new ResizableImagePanel();
 		fnImage.setBackground(new Color(0,0,0,0));
 		fnImage.setRespectAspectRatio(true);
@@ -460,7 +490,14 @@ public class FunctionButton extends JToggleButton implements ActionListener
 		}	
 	}
 	
+	public String getIconPath() {
+		if (iconPath == null)
+			return "";
+		return iconPath;
+	}
+	
 	public void setSelectedIconPath(String fnImg) {
+		selectedIconPath = fnImg;
 		ResizableImagePanel fnSelectedImage = null;
 		if (fnImg != null) {
 			fnSelectedImage = new ResizableImagePanel();
@@ -480,6 +517,12 @@ public class FunctionButton extends JToggleButton implements ActionListener
 			setPressedIcon(null);	
 			isSelectedImageOK = false;
 		}
+	}
+	
+	public String getSelectedIconPath() {
+		if (selectedIconPath == null)
+			return "";
+		return selectedIconPath;
 	}
 
 	public boolean isImageOK() {

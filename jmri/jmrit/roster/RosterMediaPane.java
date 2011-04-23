@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.File;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -60,17 +59,16 @@ public class RosterMediaPane extends javax.swing.JPanel {
 	RosterAttributesTableModel rosterAttributesModel;
 
 	final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
 
 	public RosterMediaPane(RosterEntry r) {
 		_imageFilePath = new EditableResizableImagePanel(r.getImagePath(), 320, 240);
-		_imageFilePath.setDropFolder(_resourcesBasePath);
+		_imageFilePath.setDropFolder(XmlFile.resourcesDir());
 		_imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
 		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
 		_imageFPlabel.setText(rb.getString("MediaRosterImageLabel"));
 
 		_iconFilePath = new EditableResizableImagePanel(r.getIconPath(), 160, 120);
-		_iconFilePath.setDropFolder(_resourcesBasePath);
+		_iconFilePath.setDropFolder(XmlFile.resourcesDir());
 		_iconFilePath.setToolTipText(rb.getString("MediaRosterIconToolTip"));
 		_iconFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
 		_iconFPlabel.setText(rb.getString("MediaRosterIconLabel"));

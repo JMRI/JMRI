@@ -17,6 +17,7 @@
 <!ATTLIST ControlPanel trackSlider CDATA #IMPLIED>
 <!ATTLIST ControlPanel trackSliderMinInterval CDATA #IMPLIED>
 <!ATTLIST ControlPanel speedMode CDATA #IMPLIED>
+<!ATTLIST ControlPanel switchSliderOnFunction CDATA #IMPLIED>
 
 <!ELEMENT FunctionPanel (window, FunctionButton*) >
 <!ELEMENT FunctionButton EMPTY >
@@ -25,6 +26,8 @@
 <!ATTLIST FunctionButton isLockable CDATA #REQUIRED>
 <!ATTLIST FunctionButton isVisible CDATA #REQUIRED>
 <!ATTLIST FunctionButton fontSize CDATA #REQUIRED>
+<!ATTLIST FunctionButton iconPath CDATA #REQUIRED>
+<!ATTLIST FunctionButton selectedIconPath CDATA #REQUIRED>
 
 <!ELEMENT AddressPanel (window, address*, locoaddress*) >
 

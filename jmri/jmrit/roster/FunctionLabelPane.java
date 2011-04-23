@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
@@ -26,7 +25,7 @@ import jmri.util.swing.EditableResizableImagePanel;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -39,7 +38,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     EditableResizableImagePanel[] _imagePressedFilePath;
 	JButton[] jbRemoveImage;
 	JButton[] jbRemoveImagePressed;
-    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
 
     // we're doing a manual allocation of position for
     // now, based on 28 labels
@@ -110,7 +108,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             
             // add the function buttons
     		_imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
-    		_imageFilePath[i].setDropFolder(_resourcesBasePath);
+    		_imageFilePath[i].setDropFolder(XmlFile.resourcesDir());
     		_imageFilePath[i].setBackground(new Color(0,0,0,0));
     		_imageFilePath[i].setToolTipText(rb.getString("FunctionButtonRosterImageToolTip"));
     		_imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
@@ -118,7 +116,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridx++;
             
     		_imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
-    		_imagePressedFilePath[i].setDropFolder(_resourcesBasePath);
+    		_imagePressedFilePath[i].setDropFolder(XmlFile.resourcesDir());
     		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
     		_imagePressedFilePath[i].setToolTipText(rb.getString("FunctionButtonPressedRosterImageToolTip"));
     		_imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
