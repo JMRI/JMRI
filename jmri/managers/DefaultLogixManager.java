@@ -5,6 +5,7 @@ package jmri.managers;
 import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultLogix;
+import jmri.jmrit.beantable.LRouteTableAction;
 import java.text.DecimalFormat;
 
 /**
@@ -19,7 +20,7 @@ import java.text.DecimalFormat;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -105,6 +106,11 @@ public class DefaultLogixManager extends AbstractManager
 	 * This method is called after a configuration file is loaded.
 	 */
 	public void activateAllLogixs() {
+        // Guarantee Initializer executes first.
+        Logix x = getBySystemName(LRouteTableAction.LOGIX_INITIALIZER);
+        if (x!=null) {
+            x.activateLogix();
+        }
 		// iterate thru all Logixs that exist
 		java.util.Iterator<String> iter =
                                     getSystemNameList().iterator();
@@ -115,7 +121,10 @@ public class DefaultLogixManager extends AbstractManager
 				log.error("System name null when activating Logixs");
 				break;
 			}
-			Logix x = getBySystemName(sysName);
+            if (sysName.equals(LRouteTableAction.LOGIX_INITIALIZER)) {
+                continue;
+            }
+			x = getBySystemName(sysName);
 			if (x==null) {
 				log.error("Error getting Logix *"+sysName+"* when activating Logixs");
 				break;

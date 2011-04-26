@@ -3,6 +3,7 @@ package jmri.implementation;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.beantable.LRouteTableAction;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -10,7 +11,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -404,9 +405,11 @@ public class DefaultLogix extends AbstractNamedBean
                                                                     varName, varType, conditional);
                                 break;
                             default:
-                                log.error("Unknown (new) Variable Listener type= "+varListenerType+", for varName= "
-                                          +varName+", varType= "+varType+" in Conditional, "+
-                                          _conditionalSystemNames.get(i));
+                                if (!LRouteTableAction.LOGIX_INITIALIZER.equals(varName)) {
+                                    log.error("Unknown (new) Variable Listener type= "+varListenerType+", for varName= "
+                                              +varName+", varType= "+varType+" in Conditional, "+
+                                              _conditionalSystemNames.get(i));
+                                }
                                 continue;
                         }
                         _listeners.add(listener);
