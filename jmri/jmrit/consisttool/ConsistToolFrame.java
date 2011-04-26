@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003-2008
- * @version              $Revision: 1.28 $
+ * @version              $Revision: 1.29 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -542,8 +542,13 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
 						"Selected Address not allowed in this consist");
 		return;
 	} else {
+            if(ConsistMan.getConsist(address).contains(locoaddress) ){
+           	javax.swing.JOptionPane.showMessageDialog(this,
+						"Address already in selected consist"); 
+            } else {
 	    ConsistMan.getConsist(address).add(locoaddress,
 					       locoDirectionNormal.isSelected());	    
+            }
    	    if(consistAdrBox.getSelectedItem()!=adrSelector.getAddress())
 		initializeConsistBox();
 	    consistModel.fireTableDataChanged();
