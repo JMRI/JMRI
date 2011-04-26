@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -240,7 +240,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * @return id is valid
     */
     public boolean setTrainId(String id) {
-        _trainId = id; 
+        _trainId = id;
+        if (id==null || id.trim().length()==0) {
+            return false;
+        }
         RosterEntry train = Roster.instance().entryFromTitle(id);
         if (train != null) {
             _dccAddress = train.getDccLocoAddress();
@@ -254,8 +257,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null );
             if (l.size() > 0) {
-                _trainId = id;
-                _dccAddress = l.get(0).getDccLocoAddress();
+                try {
+                    _dccAddress = l.get(0).getDccLocoAddress();
+                } catch (NumberFormatException e) {
+                    return false;
+                }
             } else {
                 boolean isLong = true;
                 if ((index+1)<id.length() &&
@@ -268,7 +274,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 } catch (NumberFormatException e) {
                     return false;
                 }
-                return true;
             }
         }
         return true;

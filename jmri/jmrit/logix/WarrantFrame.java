@@ -832,7 +832,13 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        long time = _throttleCommands.get(row).getTime();
+        ThrottleSetting cmd = _throttleCommands.get(row);
+        if (cmd.getCommand().trim().toUpperCase().equals("NOOP")) {
+            JOptionPane.showMessageDialog(null, rb.getString("cannotDeleteNoop"),
+            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        long time = cmd.getTime();
         if ((row+1) < _throttleCommands.size()) {
             time += _throttleCommands.get(row+1).getTime(); 
             _throttleCommands.get(row+1).setTime(time);
