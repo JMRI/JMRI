@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.15 2011-04-26 17:07:11 pbender Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.16 2011-04-26 22:06:40 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -130,16 +130,26 @@ now a bias to set out the cars at the earlier stop.</LI>
 
 <p>Pete Cressman</p>
 <ul>
-<li>Add Circuit Builder tool to Control Panel Editor.</li>
+<li>Added Circuit Builder tool to Control Panel Editor.  This tool is an
+ alternative to the Occupancy Tables that creates OBlocks,
+ Portals and OPaths through a "point and click" GUI.</li>
 <li>Fix route finder and warrant recording bug introduced in ver 2.11.4</li>
 <li>Fix loco icon following warrant playback through all track citcuits.</li>
 <li>Fix bug that did not load ver 2.4 signalHead icons.</lii>
 <li>Fix bug that did not load rotated or scaled signalMastd icons.</li>
 <li>Fix bug loading panel after Occupancy Block Table is open.</li>
-<li>Inserting or deleting rows of a Throttle Command recording now\n
- keeps the elapsed time in a block constant.</li>
-<li>Add set TrainID, set TrainName warrant actions to Logix</li>
-<li>Fix background color of panels when changing views</li> 
+<li>Inserting or deleting rows of a Throttle Command recording now
+ keeps the total elapsed time a train is in a block the same.</li>
+<li>Added set TrainID, set TrainName warrant actions to Logix</li>
+<li>Fix background color of panels when changing views between editors</li>
+<li>Add indirection to Logix actions for device names and action types.
+ The '@' symbol before a memory location will use the value in that memory for
+ the device name or its action string.</li>
+<li>Simplifird LRoute GUI</li> 
+<li>Added an LRoute "Initializer".  Creates a Logix guaranteed to execute first
+ for initializing sensors, turnouts and signals, avoiding thrashing of
+ enabling Logixes at panel load time.</li>
+<li>Help files updated for Warrants, ItemPalette, Control Panel Editor</li>   
 </ul>
 
 <p>Lionel Jeanson</p>
