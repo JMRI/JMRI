@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WarrantTable.shtml,v 1.5 2010-05-06 22:09:15 pete_cressman Exp $ -->
+<!-- $Id: WarrantTable.shtml,v 1.6 2011-04-26 15:54:43 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -35,8 +35,8 @@ bells or other sound effects.
         <b>NOTE:</b> Warrants can only be created if the PanelPro configuration 
         has at least two OBlocks defined.
 </ul>
-There are three steps in creating a warrant, define the route, select a 
-train and record the throttle commands.
+There are three steps in creating a warrant, 1. define the route; 2. select a 
+train; and 3. record the throttle commands.
 </p>
 <H2>Defining a Warrant Route</H2>
 Routes are created using the <b>Define Route</b> tab in the Edit Warrant window.</p> 
@@ -58,12 +58,13 @@ intermediate paths needed to make the trip.
         originating <b>Block Name</b>, a drop down menu to choose the starting
         <b>Path Name</b> and a drop down menu to select the <b>Exit Portal
         Name</b>.
-        <br>Note that the block may have several paths and the default path
+        <ul>
+        The block may have several paths and the default path
         showing may not be the one where you intend the train to start.
-        <br> 
-        Also, Since paths usually have two portals, the default portal
-        showing may not be the one the train should pass through.
-        <p>
+        Also, Since paths usually have two portals, the exit portal
+        showing may not be the one the train should pass through when
+        leaving the origin block.
+        </ul>
         Setting the Exit Portal determines the direction the train will
         take.  There is no further need to specify direction, since the 
         algorithm will provide the route.</li>
@@ -72,27 +73,29 @@ intermediate paths needed to make the trip.
         destination <b>Block Name</b> and a drop down menu for the terminating
         <b>Path Name</b> and a drop down menu to select the <b>Entry Portal
         Name</b>.
-        <br>Note that the block may have several paths and the default path
-        showing may not be the one where you intend the train to finish its run.
-        <br> 
-        Also, Since paths often have two portals, the default portal
-        showing may not be the one the train should pass through. Specifying 
-        an Entry portal for the destination is needed for layouts containing 
-        reversing loops.
-        Dog-bone layouts in particular typically have additional routes through
-        their reversing loops so specifying the Entry portal helps in reducing
-        the number of unwanted routes.  
-        <p>
+        <ul>
+        As above the block may have several paths and the  path
+        where you intend the train to finish its run needs to be specified.
+        Also, specifying the
+        Entry portal for the destination is needed since the layout may have 
+        a reversing loop allowing the path to be entered from either end.  
+        </ul>
         </li>
-        <li><b>Via Location</b>: - Consists of a text field for the
-        destination <b>Via Name</b> and a drop down menu for the terminating
+        <li><b>Via Location</b>: - Consists of a text field for a
+        block the <b>Via Name</b> and a drop down menu for the
         <b>Path Name</b>.
         <br>Typically, it is not necessary to enter any block name in this 
-        field, since it likely the algorithm will detect the route
-        you want.  This group of entries is used when there are multiple 
-        routes possible from origin to destination.   Entering a block and
-        path will make the computer contimue its search for a route that 
-        passes through the selected block and path.
+        field, since it is likely the algorithm will detect the route
+        you want.  This entry is used when there are many 
+        routes possible from origin to destination and you want only to 
+        consider routes passing through a particular path on this block. 
+        </li>
+        <li><b>Avoid Location</b>: - Consists of a text field for a
+        block the <b>Via Name</b> and a drop down menu for the
+        <b>Path Name</b>.
+        <br>This entry is used when there are many 
+        routes possible from origin to destination and you want only to 
+        consider routes that do not pass through a particular path on this block. 
         </li>
 </ul>
 More information about <b>OBlocks</b>, <b>Portals</b> and <b>OPaths</b>
@@ -158,10 +161,11 @@ Command Table.
 Pressing the <b>Stop</b> button will end the recording.
 </p><p>
 The learn script should be done with a completely clear route - All turnouts 
-set, all blocks unoccupied (except origin), all signals set for
+set should be set for the route, all blocks unoccupied (except origin), all 
+signals set for
 clear runing and no changes made during recording
-period.  When the train is run executing the script, any changes in these
-completely conditions will be taken into account and the train's speed and schedule
+period.  When the train is run executing the script, any changes to signal
+aspects will be taken into account and the train's speed and schedule
 will be altered accordingly.
 </p
 
@@ -218,7 +222,27 @@ to supply more or less power.
 </ul>
 </p>
 
-<H3>Running Trains on Dark Blocks.</H3>
+<H3>Editing Throttle Commands</H3>
+
+The values in the Throttle Command Table can be changed by typing new entries into cells
+of the table.  Rows may be inserted or deleted form the table using the buttons to the 
+right of the table.  Note that an inserted row has 0 elapsed time from the previous 
+command so you may want to adjust this by taking time away from either the previous
+row or the following row and entering it into the inserted row.  Also, when a row is
+deleted, its elapsed time is added to the time of the following row.  These default 
+elapsed times for inserting and deleting rows are entered to keep the total
+elapsed time in the block constant.
+</p>
+
+<H3>Triggering External Events From Scripts</H3>
+
+External animation or other events may be triggered by entering a "<i>Sensor</i>"
+command.  To do this, insert a row with the word "Sensor" in the Command column and
+a valid sensor name in the Block column.  The Value column should have the action 
+you want the sensor to take at its execution time - the words "active" or "inactive".
+</p>
+
+<H3>Running Trains on Dark Blocks</H3>
 The Learn mode and Run Mode functions can be used on blocks that do not have detection sensors.
 However, without detection, other than the initial setting of turnouts, the warrant
 cannot reset the turnouts or modify its speed while the train is enroute.  This means

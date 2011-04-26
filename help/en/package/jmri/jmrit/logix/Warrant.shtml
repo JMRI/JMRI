@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Warrant.shtml,v 1.4 2010-05-06 22:09:15 pete_cressman Exp $ -->
+<!-- $Id: Warrant.shtml,v 1.5 2011-04-26 15:54:43 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -39,6 +39,17 @@ the <b>Tools</b> menu in the PanelPro window.  Their definitions
 and how to use them are described in 
 <a href="OBlockTable.shtml">The Occupancy Block Tables</a>.
 <p>
+It may be easier to define <b>OBlocks</b>, <b>Portals</b> and <b>OPaths</b> using
+the <b>Circuit Builder</b> tool found in the Control Panel Editor.  The Circuit 
+Builder will also convert the track segments and turnout icons of your layout to 
+Indicator Track and Indicator Turnout icons.  These icons display by color the
+status of the OBlock they represent - whether the track circuit of the OBlock is
+occupied or unoccupied, whether a warrant has allocated it or whether a train 
+under warrant currently is proceeding over the circuit.  The <b>Circuit Builder</b>
+is accessed under the <b>File</b> menu of the Control Panel Editor.  Choose the 
+"Change View to Circuit Builder" menu item.  Instructions for use are found in 
+ <a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>.
+</p> 
 
 <H2>Creating a Warrant</H2>
 In order to create a <b>Warrant</b> you must first have created two or more OBlocks.
@@ -105,14 +116,28 @@ may find that you have forgotten to enter a path or miss-labeled the correct por
 to a path.  (or, heaven forbid! found a bug.)</b></p>
 <p>When you are satisfied with the route, select the <b>Record/Playback Script</b> tab.</p>
 
+<H3>Tables on the Record/Playback Script Tab</H3>
+Radio buttons on this tab allow you to select either the Route Table or the Throttle Command
+Table.  The Route Table shows the track circuits (OBlock, Portals and Paths) the warrant
+defines.  The Throttle Command Table shows each throttle command that is recorded
+in "Learn Mode".  After recording, the table can be edited - changing values, 
+inserting or deleting rows.  Also, a sensor can be added to the commands to trigger 
+an external event.
+</p>  
+
 <H3>Choosing a Train</H3>
 Inside the <b>Choose Engine Consist</b> box you will find 
 a drop dowm 'combo box' labeled <b>Engine Roster</b> that displays all the trains
 listed in the Roster.  Selecting one will assign a train to the warrant.
 <p>
-If you do not have a Roster defined then you may enter a locomotive's address in the
-<b>DCC address</b> text field and a train responding to this address can be 'taught',
-the commands it should issue, and later, 'run'. 
+If you do not have a Roster defined then you may enter a locomotive's DCC address in the
+<b>Address</b> text field and a train responding to this address can be 'taught',
+the commands it should issue, and later, 'run'.
+</p>
+<p>The <b>Train Name</b> test field is used to enter the name of train when the commands
+are played back.  This name will appear in a Loco Marker icon that is displayed in 
+indicator track as the train travels along the warrant route.
+</p> 
 <A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>.</li> has more
 information about this.</p>
 <p>
@@ -140,7 +165,7 @@ The recorded throttle commands can be played back to run the train.  When in
 automated train, restart it or stop the train and abort the remaining throttle commands.
 <p>
 Although there are separate operations to reserve a warrant route (Allocate) and
-set turnouts and signals (Set Route) these operation do not have to be done to run
+set turnouts and signals (Set Route) these operations do not have to be done to run
 an automated train.  A <b>Run</b> operation can begin without them.  The train will
 seek allocation and set turnouts and signals as it proceeds on the route.  When
 confronted with an occupied block, the train will stop and wait until the block clears.
@@ -152,20 +177,29 @@ information about this.</p>
 
 <H3>Editing Throttle Commands</H3>
 The recorded throttle commands execute according to the elapased time between commands.
-The elapsed time (ET column) may be modified and even the command may be changed. 
+The elapsed time (ET column) may be modified and even the command may be changed.
+Rows may be deleted and additional rows added.   
 <p>
 Changing the consist of a train or perhaps even a temperature change 
 between recording and playback, may result in the train not performing a throttle
-command at the same place on the layout each time.  If it is important to have the 
-command happen at a precise control point (e.g. a block boundary portal), then the
-throttle command can be synchronized to execute at that point. 
+command at the same place on the layout each time.  The <b>Throttle Adjustment</b>
+text field can be used to modify the throttle setting by a fixed ratio for all
+speed commands.  - or individual commands may have their throttle setting or elapsed
+time value changed.
+<p> 
+The "NOOP" commands with value "Enter Block" should not be removed.  These rows 
+are used to synchronize the automatic running of a train to the recorded elapsed
+time in the block, by either extending the elapsed time if the train has arrived
+too soon or shortening the elapsed time of the following commands if it arrived
+too late.  
 <p>
 The run protection discussed in the previous section and synchronizing commands
 depends on reliable occupancy detection.  If the layout is prone to have spurious 
 false detection signals, then automated running will be unsatisfactory - trains may wait
 indefinitely for phantom trains to release occupancy or run indefinitely by not
 receiving a synchronizing signal.  The train can be run using the elapsed times
-between commands only and skip the block protection mentioned above.
+between commands only and skip the block protection mentioned above i.e. "Run with
+Blocks Dark".
 
 <H2>Using the Warrant List</H2>
 The <b>Warrant List</b> menu item opens the <b>Warrant Table</b>.  Each row is a
@@ -199,6 +233,8 @@ can be done with Logix Conditionals.  You may design and implement a dispatcher'
 using the Warrant state variables and actions found in Logix.
 
 <H3>Warrant State Variables</H3>
+When a warrant has been allocated or is in effect, the following state variables can be tested
+in a Logix conditional.
 <ul>
         <li><b>Route is Free</b>: - True when all blocks in the warrant route are not allocated
         to anyone and are not occipied.  False otherwise.</li>
@@ -217,18 +253,20 @@ using the Warrant state variables and actions found in Logix.
 <ul>
         <li><b>Allocate</b>: - Allocates the route to this warrant.</li>
         <li><b>Deallocate</b>: - Deallocates the route of this warrant (only).  This will not
-        deallocate the route of a different warrant.</li>
+         deallocate the route of a different warrant.</li>
         <li><b>Set Route</b>: - Sets the signals and turnouts for the route as far along the
-        route that it can until it reaches an occupied block or a block allocated to another 
-        warrant.</li>
+         route that it can until it reaches an occupied block or a block allocated to another 
+         warrant.</li>
         <li><b>Run</b>: - Issue the throttle commands to the train in the warrant.  This
-        should only be done when the train occupies the Origin block.</li>
+         should only be done when the train occupies the Origin block.</li>
         <li><b>Set TrainId</b>: - Set the engine consist to be used in the warrant from a trainId 
-        in the Engine Roster.</li>
+        in the Engine Roster.  Alternatively, the DCC address can be used to identify the engine.</li>
+        <li><b>Set Train Name</b>: - Set the name of the train to display in the loco marker
+         indicating the current position of the train when running.</li> 
         <li><b>Control Train</b>: - Send a control command (<b>Halt</b>, <b>Resume</b> or 
         <b>Abort)</b> to a running train under warrant.</li>
         <li><b>Set Throttle Factor</b>: - Set a multiplier for the recorded throttle setting.
-        When the engine or consist of the train is changed, more or less power may be required.</li>
+         When the engine or consist of the train is changed, more or less power may be required.</li>
 </ul>        
 <br>
 

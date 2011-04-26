@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ControlPanelEditor.shtml,v 1.5 2011-04-10 08:03:04 pete_cressman Exp $ -->
+<!-- $Id: ControlPanelEditor.shtml,v 1.6 2011-04-26 15:54:22 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Control Panel Editor Help</TITLE>
@@ -52,6 +52,8 @@ does not.  Instead three new menus are introduced to the panel: <b>Edit</b>, <b>
 <b>Zoom</b>, <b>AddItems</b>.  When operating mode (non-edit) is selected these 
 three menus disappear.
 </p>
+
+<H3>Operating Mode</H3>
 
 <H2>Control Panel Editor Menus</H2>
 <H3>File Menu</H3>
