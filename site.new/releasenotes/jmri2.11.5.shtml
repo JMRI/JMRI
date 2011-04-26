@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.13 2011-04-23 15:19:47 hebbos Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.14 2011-04-26 17:06:21 pbender Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -149,6 +149,8 @@ now a bias to set out the cars at the earlier stop.</LI>
 <li>Added possibility to customize throttle function buttons with images in throttle function button property window</li>
 <li>Added ability to save customized throttle function buttons in regular throttle files</li>
 </ul>
+
+<p>Paul Bendeder updated the error checking in the JMRI consisting tool.</p>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
