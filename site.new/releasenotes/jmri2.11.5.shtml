@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.14 2011-04-26 17:06:21 pbender Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.15 2011-04-26 17:07:11 pbender Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -114,7 +114,7 @@ None at the time of this release.
 <p>Linux:
      <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.5.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.5.tgz/download</a>
 
-<h3>Changes since production version 2.11.4</h3>
+<h3>Changes since test release version  2.11.4</h3>
 
 <P>Dan Boudreau:</P>
 
