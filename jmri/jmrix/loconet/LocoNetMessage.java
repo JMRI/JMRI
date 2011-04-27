@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.LnConstants;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -209,8 +209,8 @@ public class LocoNetMessage implements Serializable {
         LocoNetMessage m = (LocoNetMessage) o;
         if (m._nDataBytes != this._nDataBytes) return false;
         for (int i = 0; i<_nDataBytes-1; i++)
-            if (m._dataBytes[i]!=this._dataBytes[i]) return false;
-	return true;
+            if ((m._dataBytes[i]&0xFF) != (this._dataBytes[i]&0xFF)) return false;
+	    return true;
     }
 
     public int hashCode() {
