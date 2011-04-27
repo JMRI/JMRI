@@ -4,6 +4,8 @@ package jmri.jmrit.operations.trains;
  
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +25,8 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
@@ -30,9 +34,9 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
-public class TrainsScheduleTableFrame extends OperationsFrame {
+public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
@@ -59,13 +63,16 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
     JRadioButton sortByTime = new JRadioButton(TIME);
     
     // radio button groups
-   	ButtonGroup schGroup = new ButtonGroup();
+   	ButtonGroup schGroup;
         
 	// major buttons
 	JButton applyButton = new JButton(rb.getString("Apply"));
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	// check boxes
+	
+	// panel
+	JPanel cp2 = new JPanel();
 	
 	// active schedule id
 	private String _activeId = "";
@@ -94,18 +101,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
     	cp1.add(sortByName);
     	
        	//row 2
-    	JPanel cp2 = new JPanel();
-    	List<String> l = scheduleManager.getSchedulesByIdList();
-    	for (int i=0; i<l.size(); i++){
-    		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
-    		JRadioButton b = new JRadioButton();
-    		b.setText(ts.getName());
-    		b.setName(l.get(i));
-    		cp2.add(b);
-    		schGroup.add(b);
-    		if (b.getName().equals(_activeId))
-    			b.setSelected(true);
-    	}
+    	updateControlPanel();
     	
     	//row 3
     	//tool tips, see setPrintButtonText() for more tool tips
@@ -158,6 +154,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
     	setSize(trainManager.getTrainScheduleFrameSize());
     	setLocation(trainManager.getTrainScheduleFramePosition());
     	setSortBy(trainManager.getTrainsFrameSortBy());
+    	
+    	scheduleManager.addPropertyChangeListener(this);
+    	addPropertyChangeTrainSchedules();
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -180,7 +179,26 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 		}
 		if (ae.getSource() == saveButton){
 			storeValues();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
+	}
+	
+	private void updateControlPanel(){
+	   	cp2.removeAll();
+	   	schGroup = new ButtonGroup();
+    	List<String> l = scheduleManager.getSchedulesByIdList();
+    	for (int i=0; i<l.size(); i++){
+    		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+    		JRadioButton b = new JRadioButton();
+    		b.setText(ts.getName());
+    		b.setName(l.get(i));
+    		cp2.add(b);
+    		schGroup.add(b);
+    		if (b.getName().equals(_activeId))
+    			b.setSelected(true);
+    	}
+    	cp2.revalidate();
 	}
 	
 	private void setSortBy(String sortBy){
@@ -195,6 +213,17 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 	}
 
 	private void applySchedule(){
+		setActiveId();
+		TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(_activeId);
+		List<String> trains = trainManager.getTrainsByIdList();
+		for (int j=0; j<trains.size(); j++){
+			log.debug("train id: "+trains.get(j));
+			Train train = trainManager.getTrainById(trains.get(j));
+			train.setBuildEnabled(ts.containsTrainId(trains.get(j)));
+		}
+	}
+	
+	private void setActiveId(){
 		AbstractButton b;
 		Enumeration<AbstractButton> en = schGroup.getElements();
 		for (int i=0; i<schGroup.getButtonCount(); i++){
@@ -202,18 +231,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 			if (b.isSelected()){
 				log.debug("schedule radio button "+b.getText());
 				_activeId = b.getName();
-				TrainSchedule ts = TrainScheduleManager.instance().getScheduleByName(b.getText());
-				List<String> trains = trainManager.getTrainsByIdList();
-				for (int j=0; j<trains.size(); j++){
-					log.debug("train id: "+trains.get(j));
-					Train train = trainManager.getTrainById(trains.get(j));
-					train.setBuildEnabled(ts.containsTrainId(trains.get(j)));
-				}
 			}
 		}
 	}
 	
 	protected void storeValues(){
+		setActiveId();
 		trainManager.setTrainScheduleFrame(this);
 		trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainSecheduleActiveId(_activeId);
@@ -229,8 +252,36 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 	}
 	
     public void dispose() {
+    	scheduleManager.removePropertyChangeListener(this);
+    	removePropertyChangeTrainSchedules();
     	trainsScheduleModel.dispose();
         super.dispose();
+    }
+    
+    private void addPropertyChangeTrainSchedules(){
+    	List<String> l = scheduleManager.getSchedulesByIdList();
+    	for (int i = 0; i < l.size(); i++){
+    		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+    		if (ts != null)
+    			ts.addPropertyChangeListener(this);
+    	}
+    }
+    
+    private void removePropertyChangeTrainSchedules(){
+    	List<String> l = scheduleManager.getSchedulesByIdList();
+    	for (int i = 0; i < l.size(); i++){
+    		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+    		if (ts != null)
+    			ts.removePropertyChangeListener(this);
+    	}
+    }
+    
+    public void propertyChange(PropertyChangeEvent e) {
+    	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+    	if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)){
+    		updateControlPanel();
+    	}
     }
       
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

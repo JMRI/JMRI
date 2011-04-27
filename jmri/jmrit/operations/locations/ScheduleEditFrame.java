@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -102,12 +102,14 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// row 1a name
 	   	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
+    	pName.setMinimumSize(new Dimension(180,1));
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 		addItem(pName, scheduleNameTextField, 0, 0);
 		
 		// row 1b comment
     	JPanel pC = new JPanel();
     	pC.setLayout(new GridBagLayout());
+    	pC.setMinimumSize(new Dimension(300,1));
     	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
 		addItem(pC, commentTextField, 0, 0);
 		
@@ -183,7 +185,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		
 		// set frame size and schedule for display
 		pack();
-		setSize(Control.panelWidth, Control.panelHeight);
+		if (getWidth() < Control.panelWidth)
+			setSize(Control.panelWidth, getHeight());
 		setVisible(true);
 	}
 	

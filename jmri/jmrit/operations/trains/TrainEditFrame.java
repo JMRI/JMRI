@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -176,12 +176,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// Layout the panel by rows
 		// row 1a
        	JPanel pName = new JPanel();
+       	pName.setMinimumSize(new Dimension(180,50));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 		addItem(pName, trainNameTextField, 0, 0);
 
 		// row 1b
        	JPanel pDesc = new JPanel();
+       	pDesc.setMinimumSize(new Dimension(300,50));
     	pDesc.setLayout(new GridBagLayout());
     	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
 		addItem(pDesc, trainDescriptionTextField, 0, 0);

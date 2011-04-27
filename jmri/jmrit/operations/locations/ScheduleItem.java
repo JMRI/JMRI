@@ -6,12 +6,13 @@ import jmri.jmrit.operations.setup.Control;
  * Represents one schedule item of a schedule
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected int _sequenceId = 0;			// used to determine order in schedule
+	protected String _trainScheduleId = "";	// which day of the weeks to service this item
 	protected String _type = "";			// the type of car
 	protected String _road = "";			// the car road
 	protected String _load ="";				// the car load requested
@@ -22,6 +23,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	protected int _wait = 0;				// how many trains this car must wait before being picked up
 	protected String _comment = "";
 			
+	public static final String TRAIN_SCHEDULE_CHANGED_PROPERTY = "trainScheduleId";
 	public static final String COUNT_CHANGED_PROPERTY = "count";
 	public static final String TYPE_CHANGED_PROPERTY = "type";
 	public static final String ROAD_CHANGED_PROPERTY = "road";
@@ -58,6 +60,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		String old = _type;
 		_type = type;
 		firePropertyChange (TYPE_CHANGED_PROPERTY, old, type);
+	}
+	
+	public String getTrainScheduleId() {
+		return _trainScheduleId;
+	}
+	
+	public void setTrainScheduleId(String id) {
+		String old = _trainScheduleId;
+		_trainScheduleId = id;
+		firePropertyChange (TRAIN_SCHEDULE_CHANGED_PROPERTY, old, id);
 	}
 	
 	public String getRoad() {
@@ -213,6 +225,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in Schedule Item element when reading operations");
         if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("trainScheduleId")) != null )  _trainScheduleId = a.getValue();
         if ((a = e.getAttribute("count")) != null )  _count = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("wait")) != null )  _wait = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("type")) != null )  _type = a.getValue();
@@ -235,6 +248,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     	org.jdom.Element e = new org.jdom.Element("item");
     	e.setAttribute("id", getId());
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
+    	e.setAttribute("trainScheduleId", getTrainScheduleId());
     	e.setAttribute("count", Integer.toString(getCount()));
     	e.setAttribute("wait", Integer.toString(getWait()));
     	e.setAttribute("type", getType());

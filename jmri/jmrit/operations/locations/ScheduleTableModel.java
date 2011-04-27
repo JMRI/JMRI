@@ -18,6 +18,8 @@ import jmri.util.table.ButtonRenderer;
 
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainSchedule;
+import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -28,7 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -37,8 +39,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     // Defines the columns
     private static final int IDCOLUMN = 0;
     private static final int CURRENTCOLUMN = IDCOLUMN +1;
-    private static final int TYPECOLUMN  = CURRENTCOLUMN +1;   
-    private static final int ROADCOLUMN  = TYPECOLUMN +1;
+    private static final int TYPECOLUMN  = CURRENTCOLUMN +1; 
+    private static final int DAYCOLUMN  = TYPECOLUMN +1;
+    private static final int ROADCOLUMN  = DAYCOLUMN +1;
     private static final int LOADCOLUMN  = ROADCOLUMN +1;
     private static final int SHIPCOLUMN  = LOADCOLUMN +1;
     private static final int DESTCOLUMN  = SHIPCOLUMN +1;
@@ -105,6 +108,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(35);
 		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(DAYCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(LOADCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(SHIPCOLUMN).setPreferredWidth(90);
@@ -129,6 +133,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case IDCOLUMN: return rb.getString("Id");
         case CURRENTCOLUMN: return rb.getString("Current");
         case TYPECOLUMN: return rb.getString("Type");
+        case DAYCOLUMN: return rb.getString("Timetable");
         case ROADCOLUMN: return rb.getString("Road");
         case LOADCOLUMN: return rb.getString("Receive");
         case SHIPCOLUMN: return rb.getString("Ship");
@@ -148,6 +153,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case IDCOLUMN: return String.class;
         case CURRENTCOLUMN: return String.class;
         case TYPECOLUMN: return String.class;
+        case DAYCOLUMN: return JComboBox.class;
         case ROADCOLUMN: return JComboBox.class;
         case LOADCOLUMN: return JComboBox.class;
         case SHIPCOLUMN: return JComboBox.class;
@@ -164,6 +170,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+        case DAYCOLUMN:
         case ROADCOLUMN:
         case LOADCOLUMN:
         case SHIPCOLUMN:
@@ -190,6 +197,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case IDCOLUMN: return si.getId();
         case CURRENTCOLUMN: return getCurrentPointer(si);
         case TYPECOLUMN: return getType(si);
+        case DAYCOLUMN: return getDayComboBox(si);
         case ROADCOLUMN: return getRoadComboBox(si);
         case LOADCOLUMN: return getLoadComboBox(si);
         case SHIPCOLUMN: return getShipComboBox(si);
@@ -210,6 +218,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		return;
     	}
         switch (col) {
+        case DAYCOLUMN: setDay(value, row);
+    		break;
         case ROADCOLUMN: setRoad(value, row);
         	break;
         case LOADCOLUMN: setLoad(value, row);
@@ -272,6 +282,20 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		notValidRoad = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
     		cb.addItem(notValidRoad);
     		cb.setSelectedItem(notValidRoad);
+    	}
+    	return cb;
+    }
+    
+    private JComboBox getDayComboBox(ScheduleItem si){
+    	JComboBox cb = TrainScheduleManager.instance().getSelectComboBox();
+    	TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+    	if (sch != null){
+    		cb.setSelectedItem(sch);
+    	}
+    	if (sch == null && !si.getTrainScheduleId().equals("")){
+    		String notValid = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getTrainScheduleId()});
+    		cb.addItem(notValid);
+    		cb.setSelectedItem(notValid);
     	}
     	return cb;
     }
@@ -360,6 +384,16 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	si.setWait(wait);
     }
     
+    private void setDay(Object value, int row){
+    	ScheduleItem si = _schedule.getItemById(list.get(row));
+    	Object obj = ((JComboBox)value).getSelectedItem();
+    	if (obj.equals("")){
+    		si.setTrainScheduleId("");
+    	} else if (obj.getClass().equals(TrainSchedule.class)){
+    		si.setTrainScheduleId(((TrainSchedule)obj).getId());
+    	}
+    }
+    
     // note this method looks for String "Not Valid <>"
     private void setRoad(Object value, int row){
     	ScheduleItem si = _schedule.getItemById(list.get(row));
@@ -388,6 +422,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		si.setLoad(load);
     }
     
+    // note this method looks for String "Not Valid <>"
     private void setShip(Object value, int row){
        	ScheduleItem si = _schedule.getItemById(list.get(row));
     	String load = (String)((JComboBox)value).getSelectedItem();

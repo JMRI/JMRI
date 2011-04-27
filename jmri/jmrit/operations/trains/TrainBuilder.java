@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.153 $
+ * @version             $Revision: 1.154 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1722,8 +1722,10 @@ public class TrainBuilder extends TrainCommon{
 	// checks a schedule item to see if the car type matches, and the train and staging track can service the schedule item's load
 	private ScheduleItem checkScheduleItem(ScheduleItem si, Car car, Track track){
 		if (!car.getType().equals(si.getType()) || si.getLoad().equals("") || si.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-				|| si.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
-			return null;					
+				|| si.getLoad().equals(CarLoads.instance().getDefaultLoadName())){
+			log.debug("Not using track ("+track.getName()+") schedule request type ("+si.getType()+") load ("+si.getLoad()+")");
+			return null;		
+		}
 		if (!train.acceptsLoadName(si.getLoad())){
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainNotNewLoad"),
 					new Object[]{train.getName(), si.getLoad(), track.getLocation().getName(), track.getName()}));
@@ -1732,6 +1734,22 @@ public class TrainBuilder extends TrainCommon{
 		if (!car.getTrack().acceptsLoadName(si.getLoad())){
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrackNotNewLoad"),
 					new Object[]{car.getTrackName(), si.getLoad(), track.getLocation().getName(), track.getName()}));
+			return null;
+		}
+		if (!si.getTrainScheduleId().equals("") 
+				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())){
+			log.debug("Schedule item isn't active");
+			TrainSchedule aSch = TrainScheduleManager.instance().getScheduleById(TrainManager.instance().getTrainScheduleActiveId());
+			TrainSchedule tSch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+			String aName = "";
+			String tName = "";
+			if (aSch != null)
+				aName = aSch.getName();
+			if (tSch != null)
+				tName = tSch.getName();	
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildScheduleNotActive"),
+					new Object[]{track.getName(), si.getId(), tName, aName}));
+
 			return null;
 		}
 		return si;

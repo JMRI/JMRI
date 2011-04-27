@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.16 2011-04-26 22:06:40 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.17 2011-04-27 00:39:48 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -126,6 +126,8 @@ None at the time of this release.
 train can service a car.</LI>
 <LI>Improved how the program set outs cars when there's two or more stops at the same location.  There is
 now a bias to set out the cars at the earlier stop.</LI>
+<LI>New schedules enhancement, uses can optionally control a schedule using the train timetables.  For example
+you can now deliver a car to a siding based on the day of the week.</LI>
 </UL>
 
 <p>Pete Cressman</p>

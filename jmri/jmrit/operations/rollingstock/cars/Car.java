@@ -12,12 +12,15 @@ import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.TrainSchedule;
+import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 /**
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.77 $
+ * @version             $Revision: 1.78 $
  */
 public class Car extends RollingStock {
 	
@@ -384,6 +387,12 @@ public class Car extends RollingStock {
 	}
 	
 	private String checkScheduleItem(Track track, ScheduleItem si){
+		if (!si.getTrainScheduleId().equals("") 
+				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())){
+			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+			if (sch != null)
+				return SCHEDULE + " (" +track.getScheduleName()+ ") requests car only on ("+sch.getName()+")";
+		}			
 		if (getType().equals(si.getType())) {
 			if (si.getRoad().equals("") || getRoad().equals(si.getRoad()))
 				if (si.getLoad().equals("") || getLoad().equals(si.getLoad()))
