@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Gallery.shtml,v 1.5 2008-12-11 20:29:13 jacobsen Exp $ -->
+<!-- $Id: Gallery.shtml,v 1.6 2011-04-27 14:18:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -46,15 +46,22 @@ with JMRI.
 
 <h3>OWNry</h3>
 
-<a href="http://www.ownry.com/assets/images/CTC_Panel_June2006_400.gif"/>
-<img src="http://www.ownry.com/assets/images/CTC_Panel_June2006_400.gif" align="right" width="200" height="135"/>
+<a href="http://ownry.squarespace.com/display/ShowImage?imageUrl=/storage/blog-photos/CTC_Panel_June2006.gif?__SQUARESPACE_CACHEVERSION=1302156072951"/>
+<img src="http://ownry.squarespace.com/storage/thumbnails/5519763-11612079-thumbnail.jpg" align="right" width="200" height="135"/>
 </a>
 
 Kent Williams' 
-<a href="http://www.ownry.com/index.html">Oregon Washington Navigation &amp; Railway</a>
+<a href="http://ownry.squarespace.com">Oregon Washington Navigation &amp; Railway</a>
 uses PanelPro
 for it's signal controls and 
-<A HREF="http://www.ownry.com/html/how_operations.html">dispatcher panel</a>.
+<A HREF="http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">dispatcher panel</a>.
+
+<h3>Jim Thompson's Cashaway Valley Railroad</h3>
+
+Jim Thompson is using PanelPro to make a dispatcher's panel for
+his <a href="http://www.cashawayvalleyrr.com">Cashaway Valley Railroad</a>.
+He has a series of pages that describe
+<a href="http://www.cashawayvalleyrr.com/jmri.html">how he operates his layout with JMRI</a>.
 
 <h3>Bob Bucklew's Quaker Valley</h3>
 <a href="http://www.quaker-valley.com/CTC/JMRI_QV_CTC.gif"/>
@@ -66,13 +73,6 @@ Quaker Valley Railroad.
 He's created a very nice series of web pages on 
 <a href="http://www.quaker-valley.com/CTC/QV_CTCnew.html">how it's done</a>.
 <p>
-
-<h3>Jim Thompson's Cashaway Valley Railroad</h3>
-
-Jim Thompson is using PanelPro to make a dispatcher's panel for
-his <a href="http://www.cashawayvalleyrr.com">Cashaway Valley Railroad</a>.
-He has a series of pages that describe
-<a href="http://www.cashawayvalleyrr.com/jmri.html">how he operates his layout with JMRI</a>.
 
 <h3>Alan Huberty's Bloomfield &amp; Oakland RR</h3>
 
