@@ -19,7 +19,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
                     implements LocoNetListener {
@@ -165,6 +165,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * @param m
      */
     public void message(LocoNetMessage m) {
+        log.debug("message");
         // are we running?
         if (!mRunButton.isSelected()) return;
         // yes, is this what we're looking for
@@ -177,6 +178,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Echo has been heard, start delay for next packet
      */
     void startSequenceDelay() {
+        log.debug("startSequenceDelay");
         // at the start, mNextSequenceElement contains index we're
         // working on
         int delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
@@ -191,6 +193,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * when a delay has elapsed.
      */
     void sendNextItem() {
+        log.debug("sendNextItem");
         // check if still running
         if (!mRunButton.isSelected()) return;
         // have we run off the end?
@@ -235,4 +238,6 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         super.dispose();
     }
 
+    // initialize logging
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoGenPanel.class.getName());
 }
