@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class LocoNetMessageTest extends TestCase {
 
@@ -88,6 +88,19 @@ public class LocoNetMessageTest extends TestCase {
             Assert.assertEquals("complicated value "+i, ""+test[i], ""+data[i]);
     }
 
+    public void testEquals() {
+        int[] t1 = new int[] {0x81,0x01,0x02,0x02};
+        int[] t2 = new int[] {0x81,0x01,0x02,0x02,0x03};
+        int[] t3 = new int[] {0x81,0x01,0x02,0x0F02};
+        int[] t4 = new int[] {0x81,0x01,0x03,0x02};
+        int[] t5 = new int[] {0x81,0x01,0x02,0x03};  // last byte not checked
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t1)));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t3)));
+        Assert.assertTrue(!(new LocoNetMessage(t1)).equals(new LocoNetMessage(t2)));
+        Assert.assertTrue(!(new LocoNetMessage(t1)).equals(new LocoNetMessage(t4)));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t5)));
+    }
+    
     // service routine to check the contents of a single message
     protected void checkPeerXfr(LocoNetMessage m, int src, int dst, int[] d, int code) {
         Assert.assertEquals("opcode ", 0xE5, m.getElement(0));
