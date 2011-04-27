@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.17 2011-04-27 00:39:48 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.18 2011-04-27 04:52:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -162,7 +162,11 @@ you can now deliver a car to a siding based on the day of the week.</LI>
 <li>Added ability to save customized throttle function buttons in regular throttle files</li>
 </ul>
 
-<p>Paul Bendeder updated the error checking in the JMRI consisting tool.</p>
+<p>Paul Bender updated the error checking in the JMRI consisting tool.</p>
+
+<p>Bob Jacobsen fixed a bug in LocoNet message processing that kept the "Send LocoNet Message" tool from 
+sending multiple messages.
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
