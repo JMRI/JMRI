@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: bhoffman351 $) 2009 -->
-<!-- $Id: UserInterface.shtml,v 1.11 2010-05-10 03:21:36 bhoffman351 Exp $ -->
+<!-- $Id: UserInterface.shtml,v 1.12 2011-04-27 01:50:06 bhoffman351 Exp $ -->
 <title>JMRI: WiFi Throttle</title>
 
 <!-- Style -->
@@ -26,7 +26,7 @@ JMRI: WiFi Throttle
 </h1>
 
 <a href="http://withrottle.com">
-  <img src="http://withrottle.com/WiThrottle/Home_files/TVC%20in%20iPhone.png" height="250" width="150" align="right">
+  <img src="images/WiT150x250.png" height="250" width="150" align="right">
 </a>
 This window controls the connection between WiFi throttles, 
 e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.  
@@ -34,9 +34,9 @@ e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.
 
 <p>
 It can be set to start automatically with the 
-"<a href="../../../apps/TabbedPreferences.shtml#actions">Action at Startup</a>" section in the 
-"<a href="../../../apps/TabbedPreferences.shtml">Show Advanced Preferences</a>"
-section of JMRI Preferences.
+"<a href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>" section in the
+"<a href="../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>"
+section of JMRI Preferences under the heading of "Actions".
 
 <p>
 <a href="../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
@@ -84,16 +84,29 @@ Function Labels
 </h3>
 Function labels can be customized for each roster entry through JMRI.
 These labels will then be displayed in place of the generic F1, F2... on the
-WiThrottle screen of the mobile device.
+screen of the mobile device.
 The labels can be added when a new roster entry is created,
 or by editing an existing roster entry under the Function Labels tab.
+To enter function labels, the programmer format has to be either "Advanced" or "Custom".
 
 
 <p>
 <h3>
 Routes & Turnouts
 </h3>
-Routes & Turnouts are not yet controllable by the app, but this feature will be coming soon!
+The app can control any turnouts (and routes) that JMRI has control of.
+If they are available in the JMRI turnout (or route) table,
+they are automatically available in WiFi throttles. 
+If there are no turnouts (or routes) on the table(s),
+then the control screen for them does not show in the app.
+It will do all of this by default.
+However, if JMRI cannot control them, WiFi throttles will not be able to either.
+
+<p>
+Additionally, you can limit what turnouts appear.
+In JMRI, with the WiThrottle window active, there is a menu named WiThrottle.
+It has an item titled "Filter Controls"
+that will let you pick which turnouts to display or hide.
 
 <p>
 This is the package/jmri/jmrit/withrottle/UserInterface help page

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TabbedPreferences.shtml,v 1.9 2010-10-11 21:27:15 matthewharris Exp $ -->
+<!-- $Id: TabbedPreferences.shtml,v 1.10 2011-04-27 01:49:59 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -269,9 +269,9 @@ This will let you to limit what users have the ability to control.
 <ul>
     <li>Track Power - Select whether mobile devices connected through
         this WiFi interface can control track power.
-    <li>Turnouts - 
-    <li>Routes - 
-    <li>Consists -
+    <li>Turnouts - Select whether mobile devices can control turnouts.
+    <li>Routes - Select whether mobile devices can control routes.
+    <li>Consists - If selected, mobile devices can build & break "Advanced Consists".
 </ul>
 </dl>
 
