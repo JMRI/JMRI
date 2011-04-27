@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.105 2011-04-12 15:31:29 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.106 2011-04-27 03:12:30 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -252,6 +252,10 @@ You can optionally enter the year you want printed on your train manifests.
 When selected, add the operations menu to the main menu bar. The
 operations menu will appear the next time you restart JMRI.
 
+<H3>Close on Save</H3>
+
+When selected, close operation windows when the "Save" button is pressed.
+
 <H3>Panel Options (Train Icons)</H3>
 
 If you want the operations program to place an icon representing the
@@ -438,10 +442,6 @@ name, destination track name, owner name, consist name, car comment,
 RFID.</P>
 
 
-
-
-
-
 <A NAME="PrintOptions"></A>
 <H2>Print Options</H2>
 
@@ -475,12 +475,14 @@ equally spaced characters like "Courier or Monospaced".
 
 You can customize the pick up and set out messages for your manifests and
 switch lists by selecting the appropriate drop down menus.  To remove an
-attribute select blank.
+attribute select blank.  You can also edit the "Set out" and "Pick up" prefixes.
+If you want to use the color options, the set out and pick up prefixes must be unique.
 
 <H3>Show Comments on Manifests</H3>
 
 Each location can have an optional comment.  You can print these comments on your manifest if
-the "Location" check box is selected.
+the "Location" check box is selected.  If you want the manifest to show how many car loads and
+empties are in the train, select the "Loads and Empties" checkbox.
 
 <H3>Add Logo</H3>
 
@@ -682,9 +684,14 @@ menu box found in the lower left corner of the window and pressing the
 "Add car type" button. A new item should appear in your schedule
 containing the type of car, a pull down menu for road names, and a count
 of 1. You can if you wish specify a particular road for the type of car
-you entered, or leave it blank if you don't care about the road name.  You
-can also specify the car load received and shipped.
-</P>
+you entered, or leave it blank if you don't care about the road name.
+You can also specify the car load received and shipped. You can also
+control if the car will be delivered during the session. Select from the
+"Timetable" pull down menu the train schedule you want. When a train schedule
+is selected, a car will only be delivered when that train schedule is active.
+See Trains-&gt;Tools-&gt;<A HREF="#Timetable">Timetable</A> to select
+the train schedule for your session.</P>
+
 <P> If you wanted more than one car type to be delivered consecutively,
 increase the count to the number that you wish. The maximum count is 10
 and the minimum is 1. The wait field allows you determine how many trains
