@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: FrameServlet.shtml,v 1.2 2008-08-03 04:07:51 jacobsen Exp $ -->
+<!-- $Id: FrameServlet.shtml,v 1.3 2011-04-28 02:00:00 mstevetodd Exp $ -->
 <title>JMRI: Frame Servlet</title>
 
 <!-- Style -->
@@ -32,6 +32,10 @@ to locate windows and create an image of their current appearance.
 The window does not have to be maximized, but it does have to be open;
 it's OK for the window to have been minimized to the Start Bar (Windows)
 or converted to an icon (MacOS X and Linux).
+
+<p>
+The MiniServer Preferences can be used to adjust the default delay after 
+a click and adjust the periodic refresh between clicks.
 
 <p>
 The jmri/web/servlet/frameimage/JmriJFrameServlet.properties
