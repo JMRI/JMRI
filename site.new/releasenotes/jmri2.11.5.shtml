@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.19 2011-04-29 18:22:09 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.20 2011-04-29 20:10:25 mstevetodd Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -167,6 +167,14 @@ you can now deliver a car to a siding based on the day of the week.</LI>
 
 <p>Bob Jacobsen fixed a bug in LocoNet message processing that kept the "Send LocoNet Message" tool from 
 sending multiple messages.
+
+<p>Steve Todd, changes to xmlio server: </p>
+<ul>
+<li>Added support for Memory Variables</li>
+<li>Reduced timeout on waiting threads from "forever" to 30 seconds</li>
+<li>Return "Content-Length" in reply header</li>
+<li>Added "Show Comm Info" to miniserver prefs, to promote key messages from debug to info when checked.  Default is off.</li>
+</ul>
 
 
 <!--#include virtual="/Footer" -->

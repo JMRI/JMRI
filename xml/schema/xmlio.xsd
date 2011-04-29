@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: xmlio.xsd,v 1.3 2011-04-28 02:00:26 mstevetodd Exp $ -->
+<!-- $Id: xmlio.xsd,v 1.4 2011-04-29 20:10:20 mstevetodd Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -97,6 +97,7 @@
                     <xs:enumeration value="route"/>
                     <xs:enumeration value="panel"/>
                     <xs:enumeration value="roster"/>
+                    <xs:enumeration value="memory"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

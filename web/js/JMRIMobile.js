@@ -2,8 +2,12 @@
 //TODO: handle ajax errors
 //TODO: preserve filter on update
 //TODO: remove "page" and button on uncheck
-//TODO: allow refresh of any page
-//TODO:use array for globalXhr to support limited number of open requests
+//TODO: allow refresh of any page (remove #anchors?)
+//TODO: use array for globalXhr to support limited number of open requests
+//TODO: (long-term) read panel xml and "draw" panels on page
+//TODO: "wide-screen" version that shows multiple "pages" at once, for use on wider browsers
+//TODO: add edit of memory variable values
+//TODO: support addition of memory variables, maybe turnouts?
 
 var $globalXhr; //global variable to allow closing earlier connections 
 
@@ -113,6 +117,9 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 //handle the toggling of the next value for buttons
 var $getNextValue = function($type, $value){
+	if ($type == 'memory') {
+		return $value;  //default to same value for memory, since will be prompted
+	}
 	var $nextValue = ($value=='4' ? '2' : '4');
 	return $nextValue;
 };
@@ -144,6 +151,8 @@ var $getValueText = function($type, $value){
 		} else {
 			return '<img src="/web/inControl/PowerGrey24.png">';
 		}
+	} else if ($type == 'memory') {
+		return $value;
 	}
 	return '???';
 };
@@ -200,6 +209,12 @@ function $getSettingsArray() {
 	});
 	return $arrInputs;
 }
+
+$(document).ajaxError(function(){
+    if (window.console && window.console.error) {
+        console.error(arguments);
+    }
+});
 
 //javascript processing starts here (main)
 $(document).ready(function() {

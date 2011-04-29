@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Modifications by Steve Todd   Copyright (C) 2011
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 public class MiniServerPreferences extends AbstractMiniServerPreferences{
     
@@ -17,6 +17,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     private int clickDelay = 1;
     private int refreshDelay = 5;
     private boolean rebuildIndex = false;
+    private boolean showComm = false;
     private String port = "12080";
     
     public MiniServerPreferences(String fileName){
@@ -42,6 +43,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         	}
         }
         if ((a = child.getAttribute("isRebuildIndex")) != null )  setRebuildIndex(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute("isShowComm")) != null )  setShowComm(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("getPort")) != null ) setPort(a.getValue());
     }
 
@@ -49,6 +51,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         if (getClickDelay() != prefs.getClickDelay()) return true;
         if (getRefreshDelay() != prefs.getRefreshDelay()) return true;
         if (isRebuildIndex() != prefs.isRebuildIndex()) return true;
+        if (isShowComm() != prefs.isShowComm()) return true;
         if (!(getPort().equals(prefs.getPort()))) return true;
         return false;
     }
@@ -57,6 +60,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         setClickDelay(prefs.getClickDelay());
         setRefreshDelay(prefs.getRefreshDelay());
         setRebuildIndex(prefs.isRebuildIndex());
+        setShowComm(prefs.isShowComm());
         setPort(prefs.getPort());
     }
 
@@ -65,6 +69,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         element.setAttribute("getClickDelay", "" + getClickDelay());
         element.setAttribute("getRefreshDelay", "" + getRefreshDelay());
         element.setAttribute("isRebuildIndex", "" + isRebuildIndex());
+        element.setAttribute("isShowComm", "" + isShowComm());
         element.setAttribute("getPort", "" + getPort());
         setIsDirty(false);  //  Resets only when stored
         return element;
@@ -96,6 +101,13 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     }
     public void setRebuildIndex(boolean value){
         rebuildIndex = value;
+    }
+
+    public boolean isShowComm(){
+        return showComm;
+    }
+    public void setShowComm(boolean value){
+        showComm = value;
     }
 
     public String getPort(){

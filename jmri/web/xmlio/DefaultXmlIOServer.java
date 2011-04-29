@@ -30,7 +30,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -39,7 +39,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
         // first, process any "list" elements
     	//  roster and panel are immediate only
-    	//  power, turnout, sensor and route can be monitored for changes, pass current values to begin
+    	//  power, turnout, sensor, memory and route can be monitored for changes, pass current values to begin
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList(e.getChildren("list"));
         for (Element list : lists) {
@@ -57,6 +57,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
                     n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                    e.addContent(n);
+                }
+            } else if (type.equals("memory")) {
+                // add an element for each memory
+            	MemoryManager m = InstanceManager.memoryManagerInstance();
+                List<String> names = m.getSystemNameList();
+                for (String name : names) {
+                    Memory t = m.getMemory(name);
+                    Element n = new Element("item");
+                    n.addContent(new Element("type").addContent("memory"));
+                    n.addContent(new Element("name").addContent(name));
+                    n.addContent(new Element("userName").addContent(t.getUserName()));
+                    n.addContent(new Element("comment").addContent(t.getComment()));
                     e.addContent(n);
                 }
             } else if (type.equals("route")) {
@@ -161,6 +174,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             //check for "set" values and process them
             if (type.equals("turnout")) immediateWriteTurnout(name, item);
+            else if (type.equals("memory")) immediateWriteMemory(name, item);
             else if (type.equals("route")) immediateWriteRoute(name, item);
             else if (type.equals("sensor")) immediateWriteSensor(name, item);
             else if (type.equals("power")) immediateWritePower(name, item);
@@ -174,6 +188,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             String name = item.getChild("name").getText();
             
             if (type.equals("turnout")) immediateReadTurnout(name, item);
+            else if (type.equals("memory")) immediateReadMemory(name, item);
             else if (type.equals("route")) immediateReadRoute(name, item);
             else if (type.equals("sensor")) immediateReadSensor(name, item);
             else if (type.equals("power")) immediateReadPower(name, item);
@@ -204,6 +219,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             String name = item.getChild("name").getText();
             
             if (type.equals("turnout")) addListenerToTurnout(name, item, dr);
+            else if (type.equals("memory")) addListenerToMemory(name, item, dr);
             else if (type.equals("route")) addListenerToRoute(name, item, dr);
             else if (type.equals("sensor")) addListenerToSensor(name, item, dr);
             else if (type.equals("power")) addListenerToPower(name, item, dr);
@@ -225,6 +241,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             try {
                 if (type.equals("turnout")) immediateReadTurnout(name, item);
+                else if (type.equals("memory")) immediateReadMemory(name, item);
                 else if (type.equals("sensor")) immediateReadSensor(name, item);
                 else if (type.equals("route")) immediateReadRoute(name, item);
                 else if (type.equals("power")) immediateReadPower(name, item);
@@ -249,6 +266,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
             try {
                 if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
+                else if (type.equals("memory")) changed |= monitorProcessMemory(name, item);
                 else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
                 else if (type.equals("route")) changed |= monitorProcessRoute(name, item);
                 else if (type.equals("power")) changed |= monitorProcessPower(name, item);
@@ -262,6 +280,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     void addListenerToTurnout(String name, Element item, DeferredRead dr) {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+        b.addPropertyChangeListener(dr);
+    }
+    
+    void addListenerToMemory(String name, Element item, DeferredRead dr) {
+        Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
         b.addPropertyChangeListener(dr);
     }
     
@@ -285,6 +308,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
         b.removePropertyChangeListener(dr);
     }
     
+    void removeListenerFromMemory(String name, Element item, DeferredRead dr) {
+        Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
+        b.removePropertyChangeListener(dr);
+    }
+    
     void removeListenerFromRoute(String name, Element item, DeferredRead dr) {
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.removePropertyChangeListener(dr);
@@ -300,9 +328,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         b.removePropertyChangeListener(dr);
     }
     
-    /**
-     * Return true if there is a difference
-     */
+    /** Return true if there is a difference   */
     boolean monitorProcessTurnout(String name, Element item) {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
 
@@ -315,9 +341,20 @@ public class DefaultXmlIOServer implements XmlIOServer {
         return false;  // no difference
     }
     
-    /**
-     * Return true if there is a difference
-     */
+    /** Return true if there is a difference   */
+    boolean monitorProcessMemory(String name, Element item) {
+        Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
+
+        // check for value element, which means compare
+        Element v = item.getChild("value");
+        if (v!=null) {
+            String state = v.getText();
+            return  (!b.getValue().equals(state));  //return true if strings are different
+        }
+        return false;  // no difference
+    }
+    
+    /*** Return true if there is a difference   */
     boolean monitorProcessRoute(String name, Element item) {
 
         // check for value element, which means compare
@@ -379,8 +416,21 @@ public class DefaultXmlIOServer implements XmlIOServer {
         }
     }
     
+    
+    void immediateWriteMemory(String name, Element item) throws JmriException {
+        // get memory
+        Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
+
+        // check for set element, which means write
+        Element v = item.getChild("set");
+        if (v!=null) {
+            String state = v.getText();
+            b.setValue(state);
+            item.removeContent(v);
+        }
+    }
     void immediateWriteSensor(String name, Element item) throws JmriException {
-        // get turnout
+        // get sensor
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
         // check for set element, which means write
@@ -445,6 +495,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
         v.setText(""+b.getKnownState());
     }
     
+    void immediateReadMemory(String name, Element item) {
+        // get memory
+        Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
+
+        Element v = item.getChild("value");
+
+        // Start read: ensure value element
+        if (v == null) item.addContent(v = new Element("value"));
+        
+        // set result
+        v.setText(""+b.getValue());
+    }
+    
     void immediateReadRoute(String name, Element item) {
 
         Element v = item.getChild("value");
@@ -463,7 +526,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
     
     void immediateReadSensor(String name, Element item) {
-        // get turnout
+        // get sensor
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
         Element v = item.getChild("value");
@@ -667,6 +730,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 String name = item.getChild("name").getText();
                 
                 if (type.equals("turnout")) removeListenerFromTurnout(name, item, this);
+                else if (type.equals("memory")) removeListenerFromMemory(name, item, this);
                 else if (type.equals("sensor")) removeListenerFromSensor(name, item, this);
                 else if (type.equals("route")) removeListenerFromRoute(name, item, this);
                 else if (type.equals("power")) removeListenerFromPower(name, item, this);

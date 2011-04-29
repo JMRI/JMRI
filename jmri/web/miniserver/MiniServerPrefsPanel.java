@@ -2,7 +2,7 @@ package jmri.web.miniserver;
 
 /**
  *	@author Modifications by Steve Todd   Copyright (C) 2011
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
 import java.awt.Color;
@@ -32,6 +32,7 @@ public class MiniServerPrefsPanel extends JPanel{
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;
     JCheckBox rebuildIndexCB;
+    JCheckBox showCommCB;
     JTextField port;
 
     JButton saveB;
@@ -59,6 +60,7 @@ public class MiniServerPrefsPanel extends JPanel{
         add(rebuildIndexPanel());
         add(portPanel());
         add(delaysPanel());
+        add(showCommPanel());
         add(cancelApplySave());
 
     }
@@ -67,6 +69,7 @@ public class MiniServerPrefsPanel extends JPanel{
         clickDelaySpinner.setValue(localPrefs.getClickDelay());
         refreshDelaySpinner.setValue(localPrefs.getRefreshDelay());
         rebuildIndexCB.setSelected(localPrefs.isRebuildIndex());
+        showCommCB.setSelected(localPrefs.isShowComm());
         port.setText(localPrefs.getPort());
     }
 
@@ -87,6 +90,7 @@ public class MiniServerPrefsPanel extends JPanel{
         localPrefs.setClickDelay((Integer)clickDelaySpinner.getValue());
         localPrefs.setRefreshDelay((Integer)refreshDelaySpinner.getValue());
         localPrefs.setRebuildIndex(rebuildIndexCB.isSelected());
+        localPrefs.setShowComm(showCommCB.isSelected());
         int portNum;
         try{
         	portNum = Integer.parseInt(port.getText());
@@ -166,6 +170,18 @@ public class MiniServerPrefsPanel extends JPanel{
         rebuildIndexCB = new JCheckBox(rb.getString("LabelRebuildIndex"));
         rebuildIndexCB.setToolTipText(rb.getString("ToolTipRebuildIndex"));
         panel.add(rebuildIndexCB);
+        return panel;
+    }
+
+    private JPanel showCommPanel(){
+        JPanel panel = new JPanel();
+        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
+                rb.getString("TitleShowCommPanel"), TitledBorder.CENTER, TitledBorder.TOP);
+
+        panel.setBorder(border);
+        showCommCB = new JCheckBox(rb.getString("LabelShowComm"));
+        showCommCB.setToolTipText(rb.getString("ToolTipShowComm"));
+        panel.add(showCommCB);
         return panel;
     }
 

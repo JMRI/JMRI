@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 import jmri.web.miniserver.AbstractServlet;
+import jmri.web.miniserver.MiniServerManager;
 
 import org.jdom.*;
 import org.jdom.input.*;
@@ -23,7 +24,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -100,7 +101,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
             }
         }
         if (immediate) {
-            log.debug("immediate reply");
+            logComm("immediate reply");
             try {
                 srv.immediateRequest(root);  // modifies 'doc' in place
             } catch (jmri.JmriException e1) {
@@ -115,15 +116,17 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
             // start processing the request
             thread = Thread.currentThread();
             srv.monitorRequest(root, this);
-            log.debug("stalling thread, waiting for reply");
+            logComm("stalling thread, waiting for reply");
             
             try {
                 Thread.sleep(10000000000000L);  // really long
+//                Thread.sleep(5000);  // not so long (30 secs)
+            	logComm("Thread sleep completed.");
             } catch (InterruptedException e) {
-                log.debug("Interrupted");
+            	logComm("Interrupted");
             }
-            log.debug("thread resumes after reply");
-           sendReply(doc);  //TODO: this seems wrong, since it sends old data on interrupt.  send empty instead?
+            logComm("thread resumes and replies");
+            sendReply(doc); 
         } catch (jmri.JmriException e1) {
             log.error("JmriException while creating reply: "+e1, e1);
         }
@@ -143,25 +146,26 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         out.print("Server: JMRI-XMLIOServlet\r\n");
         out.print("Content-Type: text/xml\r\n");
         out.print("Cache-Control: no-cache\r\n");
-        out.println();
         
-        // format and send reply
+        // format reply xml
         if (fmt == null) {
             fmt = new XMLOutputter();
             fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
         }
+        strDoc = fmt.outputString(doc);  //format xml doc to a string
+
+        //send length of string to expect
+        out.print("Content-Length: " + strDoc.length() + "\r\n");
+
+        //send blank line to indicate end of headers
+        out.println();  
         
-        try {
-            fmt.output(doc, out);  // new element is within existing document
-        	if (log.isDebugEnabled()) { log.debug("Returned: " + fmt.outputString(doc).replaceAll("\\n","").replaceAll("\\r","")); }
-        } catch (IOException e) {
-            log.error("IOException while in fmt.output: "+e,e);
-        }
+        out.println(strDoc);  //write out the xml string
+        if (log.isInfoEnabled()) { logComm("Returned:" + strDoc.replaceAll("\\n","").replaceAll("\\r","")); }
         
-        // send dummy reply
-        //out.println("<xmlio><item><type>sensor</type><name>IS1</name><value>3</value></item></xmlio>");
     }
     
+    String strDoc = null;
     SAXBuilder builder = null;
     XMLOutputter fmt = null;
     XmlIOFactory factory = null;
@@ -190,7 +194,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
 			} catch (UnsupportedEncodingException e) {
 				request = "<error/>";
 			}
-            if (log.isDebugEnabled()) log.debug("xml request is ["+request.replaceAll("\\n"," ").replaceAll("\\r"," ")+"]");
+            if (log.isInfoEnabled()) logComm("xml request is ["+request.replaceAll("\\n"," ").replaceAll("\\r"," ")+"]");
             
             return request;
         
@@ -212,7 +216,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
                 i++;
             }
 
-            if (log.isDebugEnabled()) log.debug("xml request is ["+new String(request).replaceAll("\\n","").replaceAll("\\r","")+"]");
+            if (log.isInfoEnabled()) logComm("xml request is ["+new String(request).replaceAll("\\n","").replaceAll("\\r","")+"]");
             
             return new String(request);
         } else {
@@ -269,5 +273,16 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         tok.nextToken();
         return(Integer.parseInt(tok.nextToken()));
     }
+    
+    private void logComm(String s) {
+    	if (MiniServerManager.miniServerPreferencesInstance().isShowComm()) {
+    		log.info(s);
+    	} else {
+    		log.debug(s);
+    	}
+    	return;
+    }
+    
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XMLIOServlet.class.getName());
 }
