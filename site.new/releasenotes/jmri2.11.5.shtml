@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.18 2011-04-27 04:52:21 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.19 2011-04-29 18:22:09 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -128,6 +128,7 @@ train can service a car.</LI>
 now a bias to set out the cars at the earlier stop.</LI>
 <LI>New schedules enhancement, uses can optionally control a schedule using the train timetables.  For example
 you can now deliver a car to a siding based on the day of the week.</LI>
+<LI>The trains window now shows which timetable is active.</LI>
 </UL>
 
 <p>Pete Cressman</p>
