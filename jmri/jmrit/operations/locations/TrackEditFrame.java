@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -421,6 +421,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				selectNextItemComboBox(comboBoxDropTrains);
 			} else {
 				if (comboBoxDropRoutes.getSelectedItem().equals(""))
 					return;
@@ -432,6 +433,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				selectNextItemComboBox(comboBoxDropRoutes);
 			}
 			_track.addDropId(id);
 			updateDropOptions();
@@ -442,10 +444,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				if (comboBoxDropTrains.getSelectedItem().equals(""))
 					return;
 				id = ((Train) comboBoxDropTrains.getSelectedItem()).getId();
+				selectNextItemComboBox(comboBoxDropTrains);
 			} else{
 				if (comboBoxDropRoutes.getSelectedItem().equals(""))
 					return;
 				id = ((Route) comboBoxDropRoutes.getSelectedItem()).getId();
+				selectNextItemComboBox(comboBoxDropRoutes);
 			}
 			_track.deleteDropId(id);
 			updateDropOptions();
@@ -464,6 +468,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				selectNextItemComboBox(comboBoxPickupTrains);
 			} else{
 				if (comboBoxPickupRoutes.getSelectedItem().equals(""))
 					return;
@@ -475,6 +480,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				selectNextItemComboBox(comboBoxPickupRoutes);
 			}
 			_track.addPickupId(id);
 			updatePickupOptions();
@@ -485,10 +491,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				if (comboBoxPickupTrains.getSelectedItem().equals(""))
 					return;
 				id = ((Train) comboBoxPickupTrains.getSelectedItem()).getId();
+				selectNextItemComboBox(comboBoxPickupTrains);
 			} else{
 				if (comboBoxPickupRoutes.getSelectedItem().equals(""))
 					return;
 				id = ((Route) comboBoxPickupRoutes.getSelectedItem()).getId();
+				selectNextItemComboBox(comboBoxPickupRoutes);
 			}
 			_track.deletePickupId(id);
 			updatePickupOptions();
@@ -768,7 +776,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(trainDrop, 1);
     	p.add(routeDrop, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = 6;
+    	gc.gridwidth = getNumberOfCheckboxes(getPreferredSize())+1;
     	dropPanel.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -811,7 +819,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    			_track.deleteDropId(dropIds[i]);
 		    		names.setText(name);
 		    		addItem(dropPanel, names, x++, y);
-		    		if (x > 5){
+		    		if (x > getNumberOfCheckboxes(getPreferredSize())){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -835,7 +843,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(trainPickup, 1);
     	p.add(routePickup, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = 6;
+    	gc.gridwidth = getNumberOfCheckboxes(getPreferredSize())+1;
     	pickupPanel.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -878,7 +886,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    			_track.deletePickupId(pickupIds[i]);
 		    		names.setText(name);
 		    		addItem(pickupPanel, names, x++, y);
-		    		if (x > 5){
+		    		if (x > getNumberOfCheckboxes(getPreferredSize())){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -962,7 +970,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				if(_track != null && _track.acceptsTypeName(types[i]))
 					checkBox.setSelected(true);
 			} 
-			if (x > 5){
+			if (x > getNumberOfCheckboxes(getPreferredSize())){
 				y++;
 				x = 0;
 			}
@@ -978,7 +986,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(roadNameInclude, 1);
     	p.add(roadNameExclude, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = 6;
+    	gc.gridwidth = getNumberOfCheckboxes(getPreferredSize())+1;
     	panelRoadNames.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -1005,7 +1013,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    		JLabel road = new JLabel();
 		    		road.setText(carRoads[i]);
 		    		addItem(panelRoadNames, road, x++, y);
-		    		if (x > 5){
+		    		if (x > getNumberOfCheckboxes(getPreferredSize())){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -1028,7 +1036,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(loadNameInclude, 1);
     	p.add(loadNameExclude, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = 6;
+    	gc.gridwidth = getNumberOfCheckboxes(getPreferredSize())+1;
     	panelLoadNames.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -1056,7 +1064,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    		JLabel load = new JLabel();
 		    		load.setText(carLoads[i]);
 		    		addItem(panelLoadNames, load, x++, y);
-		    		if (x > 5){
+		    		if (x > getNumberOfCheckboxes(getPreferredSize())){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -1185,20 +1193,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     
     private boolean packed = false;
     protected void packFrame(){
-    	setPreferredSize(null); 
 		validate();
     	if (!packed){
     		pack();
     		// make some room so rolling stock type scroll window doesn't always appear
-
-    		if (getWidth()+50 < Control.panelWidth)
-    			setSize (getWidth()+50, getHeight());
-    		if (getHeight()< Control.panelMaxHeight){
-    			int height = getHeight()+200;
-    			if (height>Control.panelMaxHeight)
-    				height = Control.panelMaxHeight;
-    			setSize (getWidth(), height);
-    		}
+    		if (getWidth()<750)
+    			setSize(750, getHeight());
+    		if (getHeight()<600)
+    			setSize(getWidth(), 600);
     	} 
     	packed = true;
     }

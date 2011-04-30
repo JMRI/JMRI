@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.55 $
+ * @version	$Revision: 1.56 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -67,6 +67,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
 	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview";
 	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction";
+	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId";
 	
 	public TrainManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
@@ -210,7 +211,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * @param id Selected schedule id
      */
     public void setTrainSecheduleActiveId(String id){
+    	String old = _trainScheduleActiveId;
     	_trainScheduleActiveId = id;
+    	firePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
     }
     
     public String getTrainScheduleActiveId(){

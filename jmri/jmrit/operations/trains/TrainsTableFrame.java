@@ -25,6 +25,7 @@ import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
 
@@ -33,9 +34,9 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.56 $
+ * @version             $Revision: 1.57 $
  */
-public class TrainsTableFrame extends OperationsFrame {
+public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
@@ -91,7 +92,9 @@ public class TrainsTableFrame extends OperationsFrame {
 	JCheckBox showAllBox = new JCheckBox(rb.getString("ShowAllTrains"));
 
     public TrainsTableFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle").getString("TitleTrainsTable"));
+        super();
+        
+        updateTitle();
         
         // create ShutDownTasks
         createShutDownTask();
@@ -244,6 +247,9 @@ public class TrainsTableFrame extends OperationsFrame {
     	setSize(trainManager.getTrainsFrameSize());
     	setLocation(trainManager.getTrainsFramePosition());
     	setSortBy(trainManager.getTrainsFrameSortBy());
+    	
+    	// listen for timetable changes
+    	trainManager.addPropertyChangeListener(this);
     	
     }
     
@@ -474,12 +480,28 @@ public class TrainsTableFrame extends OperationsFrame {
 		}
 	}
 	
+	private void updateTitle(){
+		String title = rb.getString("TitleTrainsTable");
+		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(trainManager.getTrainScheduleActiveId());
+		if (sch != null)
+			title = title + " ("+sch.getName()+")";
+		setTitle(title);
+	}
+	
     public void dispose() {
     	trainsModel.dispose();
     	trainManager.setTrainsFrame(null);
     	trainManager.runShutDownScripts();
+    	trainManager.removePropertyChangeListener(this);
         super.dispose();
     }
+    
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
+				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+		if (e.getPropertyName().equals(TrainManager.ACTIVE_TRAIN_SCHEDULE_ID))
+				updateTitle();
+	}
       
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(TrainsTableFrame.class.getName());
