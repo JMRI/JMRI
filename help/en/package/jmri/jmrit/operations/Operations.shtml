@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.106 2011-04-27 03:12:30 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.107 2011-04-30 00:04:58 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -29,25 +29,26 @@
 The operations program allows you to create computer generated train
 manifests for your railroad. A train manifest details the work that a
 train will perform during an operations session. The manifest provides a
-list of car pick up and set outs and shows where the car's are located and
-where they should be eventually positioned on the railroad. The program
-allows you to build a roster of cars, define locations on the railroad,
-and routes for trains to travel. The car roster includes information
-about the car, including road name, number, type of car, color, length,
-weight, date built, and owner. Trains are assigned routes that define
-locations where cars can be picked up or set out. Features include the
-ability to control what car types, road names, and car loads a location can
-service, the available track space for a location, and the maximum
-length the train can be between any two locations on the train's route.
-<P>
-Locations can have sidings, yards, staging and interchange tracks.
-Optionally, trains can be configured to require a caboose or car with
-FRED. The program generates manifests for each train and optionally a
-switch list for any location. A switch list for a location shows the
-work for all of the scheduled trains that will visit that location. The
-program can also place icons representing trains on a JMRI panel. The
-icon can be taught to move in the panel along with the train from
-location to location. </P>
+list of car pick up and set outs and shows where the car's are located
+and where they should be eventually positioned on the railroad. The
+program allows you to build a roster of cars, define locations on the
+railroad, and routes for trains to travel. The car roster includes
+information about the car, including road name, number, type of car,
+color, length, weight, date built, and owner. Trains are assigned routes
+that define locations where cars can be picked up or set out. Features
+include the ability to control what car types, road names, and car loads
+a location can service, the available track space for a location, and
+the maximum length the train can be between any two locations on the
+train's route.
+<P>Locations can have sidings, yards, staging and interchange
+tracks. Sidings are used to service industries, and can optionally have
+custom schedules assigned to them. Trains can be configured to require a
+caboose or car with Flashing Rear End Device (FRED). The program
+generates manifests for each train and switch lists for any
+location. A switch list for a location shows the work for all of the
+scheduled trains that will visit that location. The program can also
+place icons representing trains on a JMRI panel. The icon can be taught
+to move in the panel along with the train from location to location.</P>
 <P>
 The operations program is included in the JMRI/DecoderPro suite of tools 
 and can be found under the main menu heading "Tools-&gt;Operations".</P>
@@ -492,6 +493,7 @@ image you want to display. You can also have a different logo for every
 train in your roster, see <A HREF="#TrainOptions">Train Options</A> for
 details.
 
+<A NAME="MisplacedCarsComment"></A>
 <H3>Misplaced Cars Comment</H3>
 
 The program provides a comment for your operators to search for 
@@ -737,7 +739,7 @@ track, let the program determine which is the appropriate track in
 staging to use. Otherwise, if you did select a track, that track would
 become unavailable for other cars. To prevent overloading a siding with
 cars with custom loads from staging, the program will normally limit the
-number of cars in route to a schedule to the available track space. So
+number of cars in route to a track with a schedule to the available track space. So
 if you have space for three cars, the most the program would normally
 generate for you from staging is three cars. However, if you need to
 adjust the number of cars in route to a siding with a schedule, select
@@ -771,7 +773,7 @@ match mode the car type selection box advances automatically to the next
 car type when adding a car type. This makes it easy to quickly add car
 types to the table.</P>
 
-<P>You can also access your Schedules from the Locations Tools menu.
+<P>You can also access your schedules from the Locations Tools menu.
 The Schedules table provides status for each schedule. Since you can
 assign a schedule to multiple sidings, the table also provides
 additional status for each of the sidings that use that particular
@@ -1249,7 +1251,7 @@ force a car to a specific location using a specified train.
 things. First the program will ignore the car when building new trains.
 Second, on manifests and switch lists, the program will list all of the
 misplaced cars. Now your operators can help you find cars that have
-been misplaced. And finally, when this checkbox is selected, the other fields in
+been <A HREF="#MisplacedCarsComment">misplaced</A>. And finally, when this checkbox is selected, the other fields in
 the set car location window are disabled.</P>
 <P>The "Out of Service" checkbox when selected instructs the program to ignore
 the car when building new trains.  Many operators have a RIP (Repair In Place) track
@@ -1874,7 +1876,7 @@ force the car move. You can also disable this restriction see
 To build one train, press the "Build" button in the row for the desired
 train in the <A HREF="#Trains">Trains</A> window. The button will become
 "Print" or "Preview" after the train is built. If you want to review how
-the train was built, select the "Build Reports" before pressing the
+the train was built, select the "Build Reports" checkbox before pressing the
 "Print" or "Preview" button for the desired train. If the "Preview
 Manifest" checkbox is selected, the program will generate the build
 report and manifest and present them in preview windows. If you want to
@@ -1888,6 +1890,9 @@ to "Report". Pressing "Report" will print or preview the build report
 for this train. Whenever a train fails to build, a build failure message
 will appear. If you want to disable this feature deselect the checkbox
 "Build Messages".</P>
+<P>You can also control which trains are shown in the Trains window.
+When the "Show All" checkbox is unselected, only trains that have the
+"Build" checkbox selected are shown.</P>
 
 <A NAME="Timetable"></A>
 <H3>Timetable</H3>
