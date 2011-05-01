@@ -5,10 +5,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.StringUtil;
+
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LocoNetMessageTest extends TestCase {
 
@@ -88,7 +90,7 @@ public class LocoNetMessageTest extends TestCase {
             Assert.assertEquals("complicated value "+i, ""+test[i], ""+data[i]);
     }
 
-    public void testEquals() {
+    public void testEqualsFromInt() {
         int[] t1 = new int[] {0x81,0x01,0x02,0x02};
         int[] t2 = new int[] {0x81,0x01,0x02,0x02,0x03};
         int[] t3 = new int[] {0x81,0x01,0x02,0x0F02};
@@ -101,6 +103,45 @@ public class LocoNetMessageTest extends TestCase {
         Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t5)));
     }
     
+    public void testEqualsFromBytes() {
+        byte[] t1 = new byte[] {(byte)0x81,(byte)0x01,(byte)0x02,(byte)0x02};
+        byte[] t2 = new byte[] {(byte)0x81,(byte)0x01,(byte)0x02,(byte)0x02,(byte)0x03};
+        byte[] t3 = new byte[] {(byte)0x81,(byte)0x01,(byte)0x02,(byte)0x02};
+        byte[] t4 = new byte[] {(byte)0x81,(byte)0x01,(byte)0x03,(byte)0x02};
+        byte[] t5 = new byte[] {(byte)0x81,(byte)0x01,(byte)0x02,(byte)0x03};  // last byte not checked
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t1)));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t3)));
+        Assert.assertTrue(!(new LocoNetMessage(t1)).equals(new LocoNetMessage(t2)));
+        Assert.assertTrue(!(new LocoNetMessage(t1)).equals(new LocoNetMessage(t4)));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t5)));
+    }
+
+    public void testEqualsFromString() {
+        LocoNetMessage t1 = new LocoNetMessage(StringUtil.bytesFromHexString("81 01 02 02"));
+        LocoNetMessage t2 = new LocoNetMessage(StringUtil.bytesFromHexString("81 01 02 02 03"));
+        LocoNetMessage t3 = new LocoNetMessage(StringUtil.bytesFromHexString("81 01 02 02"));
+        LocoNetMessage t4 = new LocoNetMessage(StringUtil.bytesFromHexString("81 01 03 02"));
+        LocoNetMessage t5 = new LocoNetMessage(StringUtil.bytesFromHexString("81 01 02 03"));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(t1));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(t3));
+        Assert.assertTrue(!(new LocoNetMessage(t1)).equals(t2));
+        Assert.assertTrue(!(new LocoNetMessage(t1)).equals(t4));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(t5));
+    }
+
+    public void testEqualsSpecificCase() {
+        LocoNetMessage t1 = new LocoNetMessage(StringUtil.bytesFromHexString("D7 12 00 09 20 13"));
+        LocoNetMessage t2 = new LocoNetMessage(StringUtil.bytesFromHexString("D7 12 00 09 20 13"));
+        LocoNetMessage t3 = new LocoNetMessage(StringUtil.bytesFromHexString("D7 1F 00 01 00 36"));
+        LocoNetMessage t4 = new LocoNetMessage(StringUtil.bytesFromHexString("D7 1F 00 01 00 36"));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(t1));
+        Assert.assertTrue((new LocoNetMessage(t1)).equals(t2));
+        Assert.assertTrue((new LocoNetMessage(t3)).equals(t3));
+        Assert.assertTrue((new LocoNetMessage(t3)).equals(t4));
+        Assert.assertTrue(!(new LocoNetMessage(t1)).equals(t3));
+        Assert.assertTrue(!(new LocoNetMessage(t3)).equals(t1));
+    }
+
     // service routine to check the contents of a single message
     protected void checkPeerXfr(LocoNetMessage m, int src, int dst, int[] d, int code) {
         Assert.assertEquals("opcode ", 0xE5, m.getElement(0));
