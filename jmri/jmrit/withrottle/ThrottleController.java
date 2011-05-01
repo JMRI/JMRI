@@ -42,7 +42,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010, 2011
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.21 $
+ *	@version $Revision: 1.22 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -581,8 +581,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
 
     protected void setAddress(int number, boolean isLong){
-
-        boolean b = jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
+        jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
     }
 
     public void requestEntryFromID(String id){
