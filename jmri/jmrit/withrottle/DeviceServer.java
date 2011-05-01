@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.22 $
+ *	@version $Revision: 1.23 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -29,7 +29,18 @@ package jmri.jmrit.withrottle;
  *          'C' consists
  *      'Q'uit - device has quit, close its throttleWindow
  *      '*' - heartbeat from client device ('*+' starts, '*-' stops)
- * 
+ *
+ * Added in v2.0:
+ *      'M'ultiThrottle - forwards to MultiThrottle class, see notes there for use.
+ *          Followed by id character to create or control appropriate DccThrottle.
+ *          Stored as HashTable for access to 'T' and 'S' throttles.
+ *
+ *      'D'irect byte packet to rails
+ *          Followed by one digit for repeats,
+ *          then followed by hex pairs, (single spaced) including pair for error byte.
+ *          D200 90 90 - Send '00 90 90' twice, with error byte '90'
+ *
+ *
  *      Out to client, all newline terminated:
  *      
  *      Track power: 'PPA' + '0' (off), '1' (on), '2' (unknown)
@@ -55,7 +66,7 @@ package jmri.jmrit.withrottle;
  *
  *      RSF 'R'oster 'P'roperties 'F'unctions
  *
- * 
+ *
  *      Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of seconds until eStop
  *      This class sends initial to device, but does not start monitoring until it gets a response of '*+'
  *      Device should send heartbeat to server in shorter time than eStop
@@ -69,19 +80,22 @@ package jmri.jmrit.withrottle;
 import java.net.Socket;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
     //  Manually increment as features are added
-    private static final String versionNumber = "1.7";
+    private static final String versionNumber = "2.0";
 
     private Socket device;
+    private CommandStation cmdStation = jmri.InstanceManager.commandStationInstance();
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
@@ -91,11 +105,13 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     ThrottleController throttleController;
     ThrottleController secondThrottleController;
+    Hashtable <Character, MultiThrottle> multiThrottles;
     private boolean keepReading;
     private boolean isUsingHeartbeat = false;
     private boolean heartbeat = true;
     private int pulseInterval = 16; // seconds til disconnect
     private Timer ekg;
+    private int stopEKGCount;
 
     private TrackPowerController trackPower = null;
     final boolean isTrackPowerAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTrackPower();
@@ -114,11 +130,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         if (listeners == null){
             listeners = new ArrayList<DeviceListener>(2);
         }
-        throttleController = new ThrottleController();
-        throttleController.setWhichThrottle("T");
-        throttleController.addThrottleControllerListener(this);
-        throttleController.addControllerListener(this);
-
+        
         try{
             in = new BufferedReader(new InputStreamReader(device.getInputStream(),"UTF8"));
             out = new PrintStream(device.getOutputStream(),true, "UTF8");
@@ -155,18 +167,41 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     if (log.isDebugEnabled()) log.debug("Received: " + inPackage);
                     switch (inPackage.charAt(0)){
                         case 'T':{
+                            if (throttleController == null) {
+                                throttleController = new ThrottleController('T', this, this);
+                            }
                             keepReading = throttleController.sort(inPackage.substring(1));
                             break;
                         }
 
                         case 'S':{
                             if (secondThrottleController == null){
-                                secondThrottleController = new ThrottleController();
-                                secondThrottleController.setWhichThrottle("S");
-                                secondThrottleController.addThrottleControllerListener(this);
-                                secondThrottleController.addControllerListener(this);
+                                secondThrottleController = new ThrottleController('S', this, this);
                             }
                             keepReading = secondThrottleController.sort(inPackage.substring(1));
+                            break;
+                        }
+                        
+                        case 'M':{  //  MultiThrottle M(id character)('A'ction '+' or '-')(message)
+                            if (multiThrottles == null){
+                                multiThrottles = new Hashtable<Character, MultiThrottle>(1);
+                            }
+                            char id = inPackage.charAt(1);
+                            if (!multiThrottles.containsKey(id)){   //  Create a MT if this is a new id
+                                multiThrottles.put(id, new MultiThrottle(inPackage.charAt(1), this, this));
+                            }
+
+                            // Strips 'M' and id, forwards rest
+                            multiThrottles.get(id).handleMessage(inPackage.substring(2)); 
+                        
+                            break;
+                        }
+
+                        case 'D':{
+                            if (log.isDebugEnabled()) log.debug("Sending hex packet: "+inPackage.substring(2)+" to command station.");
+                            int repeats = Character.getNumericValue(inPackage.charAt(1));
+                            byte[] packet = jmri.util.StringUtil.bytesFromHexString(inPackage.substring(2));
+                            cmdStation.sendPacket(packet, repeats);
                             break;
                         }
 
@@ -280,10 +315,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         }   //  end roster block
 
                         case 'Q':{
-                            if (secondThrottleController != null){
-                                secondThrottleController.sort(inPackage);
-                            }
-                            keepReading = throttleController.sort(inPackage);
+                            keepReading = false;
                             break;
                         }
 
@@ -329,6 +361,14 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             secondThrottleController.removeThrottleControllerListener(this);
             secondThrottleController.removeControllerListener(this);
         }
+        if (multiThrottles != null){
+            for (char key : multiThrottles.keySet()){
+                if (log.isDebugEnabled()) log.debug("Closing throttles for key: "+key);
+                multiThrottles.get(key).dispose();
+            }
+            multiThrottles.clear();
+            multiThrottles = null;
+        }
 
         throttleController = null;
         secondThrottleController = null;
@@ -366,10 +406,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     
     public void startEKG(){
         isUsingHeartbeat = true;
+        stopEKGCount = 0;
         ekg = new Timer();
         TimerTask task = new TimerTask(){
             public void run(){  //  Drops on second pass
                 if (!heartbeat){
+                    stopEKGCount++;
                     //  Send eStop to each throttle
                     if (log.isDebugEnabled()) log.debug("Lost signal from: "+getName()+", sending eStop");
                     if (throttleController != null){
@@ -377,6 +419,18 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     }
                     if (secondThrottleController != null){
                         secondThrottleController.sort("X");
+                    }
+                    if (multiThrottles != null) {
+                        for (char key : multiThrottles.keySet()) {
+                            if (log.isDebugEnabled()) {
+                                log.debug("Sending eStop to MT key: " + key);
+                            }
+                            multiThrottles.get(key).eStop();
+                        }
+
+                    }
+                    if (stopEKGCount > 2) {
+                        closeThrottles();
                     }
                 }
                 heartbeat = false;
@@ -445,11 +499,24 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public String getCurrentAddressString(){
-        String s = throttleController.getCurrentAddressString();
-        if (secondThrottleController != null){
-            s = (s +", "+secondThrottleController.getCurrentAddressString());
+        StringBuilder s = new StringBuilder("");
+        if(throttleController != null){
+            s.append(throttleController.getCurrentAddressString());
+            s.append(" ");
         }
-        return s;
+        if (secondThrottleController != null){
+            s.append(secondThrottleController.getCurrentAddressString());
+            s.append(" ");
+        }
+        if (multiThrottles != null){
+            for (MultiThrottle mt : multiThrottles.values()){
+                for (MultiThrottleController mtc : mt.throttles.values()){
+                    s.append(mtc.getCurrentAddressString());
+                    s.append(" ");
+                }
+            }
+        }
+        return s.toString();
     }
 
     public static String getWiTVersion(){
@@ -542,8 +609,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
         return ("RL" + rosterList.size() + rosterString);
     }
-    
-    
+
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DeviceServer.class.getName());
 
 }
