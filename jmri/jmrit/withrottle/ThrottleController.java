@@ -42,7 +42,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010, 2011
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.22 $
+ *	@version $Revision: 1.23 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -334,17 +334,9 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         return ("RPF}|{" + whichThrottle);
     }
 
-    protected void sendCurrentSpeed(DccThrottle t){
-        for (ControllerInterface listener : controllerListeners){
-            listener.sendPacketToDevice(whichThrottle+"V"+((int)(throttle.getSpeedSetting()/speedMultiplier)));
-        }
-    }
+    protected void sendCurrentSpeed(DccThrottle t){}
 
-    protected void sendCurrentDirection(DccThrottle t){
-        for (ControllerInterface listener : controllerListeners){
-            listener.sendPacketToDevice(whichThrottle+"R"+(throttle.getIsForward() ? "1" : "0"));
-        }
-    }
+    protected void sendCurrentDirection(DccThrottle t){}
 
     protected void sendSpeedStepMode(DccThrottle t){}
 
