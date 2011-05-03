@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 	
@@ -490,7 +490,7 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
 	 * Sort ids by track location name. Returns a list of a given location type
 	 * if type is not null, otherwise all track locations are returned.
-	 * 
+	 * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
 	 * @return list of track location ids ordered by name
 	 */
     public List<String> getTracksByNameList(String type) {
@@ -526,8 +526,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
     
     /**
-     * Sort ids by track location moves.  Returns a list of a given location type
+     * Sort ids by track moves.  Returns a list of a given track type
      * if type is not null, otherwise all track locations are returned.  
+     * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
      * @return list of track location ids ordered by moves
      */
     public List<String> getTracksByMovesList(String type) {
