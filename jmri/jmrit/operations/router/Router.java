@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class Router {
@@ -100,6 +100,19 @@ public class Router {
 				if (!_status.equals(Car.OKAY)){
 					log.info("Can not deliver car ("+car.toString()+") to destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
 							+") due to "+_status);
+					// check to see if siding was full, if so, forward to yard if possible
+					if (Setup.isForwardToYardEnabled() && _status.contains(Car.LENGTH) && car.getLocation() != clone.getDestination()){
+						log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
+						Location dest = clone.getDestination();
+						List<String> yards = dest.getTracksByMovesList(Track.YARD);
+						log.debug("Found "+yards.size()+" yard(s) at destination ("+clone.getDestinationName()+")");
+						for (int i=0; i<yards.size(); i++){
+							Track track = dest.getTrackById(yards.get(i));
+							String status = car.setDestination(dest, track);
+							if (status.equals(Car.OKAY))
+								return true;
+						}
+					}
 					return false;
 				}
 				return true;

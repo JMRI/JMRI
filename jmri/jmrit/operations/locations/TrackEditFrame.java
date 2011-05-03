@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -1191,18 +1191,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         super.dispose();
     }
     
-    private boolean packed = false;
     protected void packFrame(){
 		validate();
     	pack();
-    	if (!packed){   		
-    		// make some room so rolling stock type scroll window doesn't always appear
-    		if (getWidth()<750)
-    			setSize(750, getHeight());
-    		if (getHeight()<Control.panelMaxHeight)
-    			setSize(getWidth(), Control.panelMaxHeight);
-    	} 
-    	packed = true;
+    	// make some room so rolling stock type scroll window doesn't always appear
+    	if (getWidth()<750)
+    		setSize(750, getHeight());
+    	if (getHeight()<Control.panelHeight)
+    		setSize(getWidth(), Control.panelHeight);
     }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class.getName());

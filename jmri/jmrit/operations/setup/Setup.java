@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -180,6 +180,7 @@ public class Setup {
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
+	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full
 	private static boolean carLogger = false;			//when true car logger is enabled
 	private static boolean engineLogger = false;		//when true engine logger is enabled
 	
@@ -251,6 +252,14 @@ public class Setup {
 	
 	public static void setCarRoutingViaStagingEnabled(boolean enabled){
 		carRoutingStaging = enabled;
+	}
+	
+	public static boolean isForwardToYardEnabled(){
+		return forwardToYardEnabled;
+	}
+	
+	public static void setForwardToYardEnabled(boolean enabled){
+		forwardToYardEnabled = enabled;
 	}
 	
 	public static boolean isBuildAggressive(){
@@ -915,6 +924,7 @@ public class Setup {
     	values.setAttribute("carRoutingEnabled", isCarRoutingEnabled()?"true":"false");
     	values.setAttribute("carRoutingViaStaging", isCarRoutingViaStagingEnabled()?"true":"false");
     	values.setAttribute("carLogger", isCarLoggerEnabled()?"true":"false");
+    	values.setAttribute("forwardToYard", isForwardToYardEnabled()?"true":"false");
        	values.setAttribute("engineLogger", isEngineLoggerEnabled()?"true":"false");
        	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
        	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
@@ -1108,6 +1118,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
         		setCarRoutingViaStagingEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("forwardToYard"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("forwardToYard: "+enable);
+        		setForwardToYardEnabled(enable.equals("true"));
         	}
           	if ((a = operations.getChild("settings").getAttribute("printLocComments"))!= null){
         		String enable = a.getValue();
