@@ -10,7 +10,6 @@ import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSchedule;
@@ -20,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.78 $
+ * @version             $Revision: 1.79 $
  */
 public class Car extends RollingStock {
 	
@@ -437,9 +436,6 @@ public class Car extends RollingStock {
 	 * Also changes the car load status when the car reaches its destination.
 	 */
 	public String setDestination(Location destination, Track track, boolean force) {
-		// String status = checkKernelLength(destination, track);
-		//if (!status.equals(OKAY))
-		//	return status;
 		// save destination name and track in case car has reached its destination
 		String destinationName = getDestinationName();
 		Track oldDestTrack = getDestinationTrack();
@@ -459,8 +455,8 @@ public class Car extends RollingStock {
 		// update load when car reaches a siding
 		loadNext(oldDestTrack);
 		// set destination and destination track if available
-		if (!Router.instance().setDestination(this, null))
-			super.setDestination(null, null);	// couldn't route car, maybe next time
+		//if (!Router.instance().setDestination(this, null))
+		//	super.setDestination(null, null);	// couldn't route car, maybe next time
 		return status;
 	}
 	
@@ -593,8 +589,8 @@ public class Car extends RollingStock {
 			setNextDestination(getReturnWhenEmptyDestination());
 			if (getReturnWhenEmptyDestTrack() != null){
 				setNextDestTrack(getReturnWhenEmptyDestTrack());
-				log.debug("Car ("+toString()+") has return when empty destination ("+getNextDestinationName()+", "+getNextDestTrackName()+")");
 			}
+			log.debug("Car ("+toString()+") has return when empty destination ("+getNextDestinationName()+", "+getNextDestTrackName()+")");
 		}
 	}
 	

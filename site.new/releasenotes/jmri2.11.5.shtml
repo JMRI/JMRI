@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.20 2011-04-29 20:10:25 mstevetodd Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.21 2011-05-04 15:59:03 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -120,15 +120,23 @@ None at the time of this release.
 
 <P>New operations features and bug fixes:</P>
 <UL>
-<LI>Enhancement to the "Set Cars" tool.  You can now ignore selected fields when changing a group of cars.</LI>
-<LI>You can now optionally select which trains can set out and pick up cars from a siding.</LI>
-<LI>Car routing enhancement, program now checks the number of available moves when determining if a
-train can service a car.</LI>
-<LI>Improved how the program set outs cars when there's two or more stops at the same location.  There is
-now a bias to set out the cars at the earlier stop.</LI>
-<LI>New schedules enhancement, uses can optionally control a schedule using the train timetables.  For example
-you can now deliver a car to a siding based on the day of the week.</LI>
-<LI>The trains window now shows which timetable is active.</LI>
+	<LI>Enhancement to the "Set Cars" tool. You can now ignore
+	selected fields when changing a group of cars.</LI>
+	<LI>You can now optionally select which trains can set out and
+	pick up cars from a siding.</LI>
+	<LI>Car routing enhancement, program now checks the number of
+	available moves when determining if a train can service a car.</LI>
+	<LI>Improved how the program set outs cars when there's two or
+	more stops at the same location. There is now a bias to set out the
+	cars at the earlier stop.</LI>
+	<LI>New schedules enhancement, uses can optionally control a
+	schedule using the train timetables. For example you can now deliver a
+	car to a siding based on the day of the week.</LI>
+	<LI>The trains window now shows which timetable is active.</LI>
+	<LI>Operations enhancement. When a car is placed at a siding with
+	a schedule the car's destination isn't immediately set, only the car's
+	final destination. This should improve overloading at sidings with
+	schedules when in aggressive mode.</LI>
 </UL>
 
 <p>Pete Cressman</p>
