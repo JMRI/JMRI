@@ -105,6 +105,8 @@ public class OBlockManagerXml // extends XmlFile
                 }
             }
             elem.addContent(fromElem);
+        } else {
+            log.error("Portal \""+portal.getName()+"\" has no fromBlock!"); 
         }
         NamedBean signal = portal.getFromSignal();
         if (signal!=null) {
@@ -125,6 +127,8 @@ public class OBlockManagerXml // extends XmlFile
                 }
             }
             elem.addContent(toElem);
+        } else {
+            log.error("Portal \""+portal.getName()+"\" has no toBlock!"); 
         }
         signal = portal.getToSignal();
         if (signal!=null) {
@@ -346,16 +350,29 @@ public class OBlockManagerXml // extends XmlFile
     @SuppressWarnings("unchecked")
     Portal loadPortal(Element elem) {
         String portalName = elem.getAttribute("portalName").getValue();
+        String blockName = null;
+        OBlock fromBlock = null;
+        OBlock toBlock = null;
+        List<Element> ePathsFromBlock = null;
+        List<Element> ePathsToBlock = null;
 
-        Element eBlk = elem.getChild("fromBlock"); 
-        String blockName = eBlk.getAttribute("blockName").getValue();
-        OBlock fromBlock = getBlock(blockName);
-        List<Element> ePathsFromBlock = eBlk.getChildren("path");
+        Element eBlk = elem.getChild("fromBlock");
+        if (eBlk!=null && eBlk.getAttribute("blockName")!=null) {
+            blockName = eBlk.getAttribute("blockName").getValue();
+            fromBlock = getBlock(blockName);
+            ePathsFromBlock = eBlk.getChildren("path");
+        } else {
+            log.error("Portal \""+portalName+"\" has no fromBlock!");
+        }
 
         eBlk = elem.getChild("toBlock"); 
-        blockName = eBlk.getAttribute("blockName").getValue();
-        OBlock toBlock = getBlock(blockName);
-        List<Element> ePathsToBlock = eBlk.getChildren("path");
+        if (eBlk!=null && eBlk.getAttribute("blockName")!=null) {
+            blockName = eBlk.getAttribute("blockName").getValue();
+            toBlock = getBlock(blockName);
+            ePathsToBlock = eBlk.getChildren("path");
+        } else {
+            log.error("Portal \""+portalName+"\" has no toBlock!");
+        }
 
         Portal portal = getPortal(fromBlock, portalName, toBlock);
 

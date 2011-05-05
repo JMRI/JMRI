@@ -228,7 +228,9 @@ public class WarrantManagerXml //extends XmlFile
             int address = 0;
             try {
                address = elem.getAttribute("dccAddress").getIntValue();
-            } catch (org.jdom.DataConversionException dce) {log.error("in loadTrain", dce);}
+            } catch (org.jdom.DataConversionException dce) {
+                log.error(dce.toString()+ " in Warrant "+warrant.getDisplayName());
+            }
             boolean isLong = true;
             if (elem.getAttribute("dccType") != null) {
                 isLong = elem.getAttribute("dccType").getValue().equals("L");
