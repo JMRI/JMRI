@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CircuitBuilder.shtml,v 1.2 2011-04-26 15:54:22 pete_cressman Exp $ -->
+<!-- $Id: CircuitBuilder.shtml,v 1.3 2011-05-05 19:03:47 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Item Palette Help</TITLE>
@@ -69,7 +69,81 @@ The only menu item returns the view to the Control Panel Editor</P>
 <H3>The Error Check Menu</H3>
 
 <H2>How to Make OBlocks, Portals and OPaths</H2>
+<H3>OBlocks</H3>
+<ul>
+ 1. From the <b>Add/Edit Circuits</b> menu select the <b>Add Circuit</b> menu item.
+ This opens a dialog for you to give the circuit OBlock its system and user names.  Creating
+ the OBlock opens the <b>Add Detector Circuit</b> window.
+<p>
+2. The Add Detector Circuit window has text fields to name the sensor that will detect
+occupancy and a sensor that can detect power problems.  Each of these sensors are optional
+and can be entered later.  If no occupancy detection sensor is named the circuit will 
+be a Dark Block.
+<p>
+ 3. The Add Detector Circuit window also has convenience fields that count the track icons
+ that are selected for the circuit.  
+<p>
+ 4. In the main window select icons that comprise the circuit (i.e. OBlock).  A mouse click
+ on an icon selects it and a second click will deselect it. 
+ The icons are highlighted in blue.   
+ 5. The <b>Convert Icons</b> button will convert the icons in the circuit to Track Indicator
+ icons if they are not already icons of this type.  This can be done later.
+<p>
+ 6. The <b>Done</b> button completes the creation of the track circuit and adds it as a
+ subitem to the menu itens in the Add/Edit Circuits menu. You can return to
+ the <b>Add Detector Circuit</b> window for this track circuit later by choosing the block's
+ sub item in the <b>Edit Circuit</b> menu item.
+<p>
+</ul>
+  
+<H3>Portals</H3>
+<ul>
+ 1. From the <b>Add/Edit Circuits</b> menu select a track circuit subitem from the
+ <b>Edit Portal</b> menu item.  The track circuit will be highlighted in blue and you will 
+ be prompted to select an adjacent block so the portal can have its required connections.
+ Selecting a second track circuit opens the <b>Edit Portal</b> window.  The second
+ connecting circuit is highlighted in a lighter shade of blue. 
+<p> 
+ 2. The Edit Portal window has a list of the the portals already defined for the
+ track circuit (OBlock) and a text field to name portals to be created. The window
+ also has a icon to represent portals as a red circle in the main window.
+<p>  
+ 3. Portals are created by naming them and dragging the red
+ circle icon to its position between the two track circuits it connects.  After dragging the
+ icon into position the portal is listed in the Portal List. 
+<p>
+ 4. Portals that were created in the <b>Occupancy Tables</b> do not have red circle icons.
+ For any portal in the Portal List that does not have an icon, select it from the list and
+ drag a red circle icon to its position between the blocks it connects.  
+ Portal icons are needed to create and display paths.  <i>Please be sure all portals are 
+ represented by icons before making paths.</i>
+ <p>
+ 5. To change the name of a portal, first select it from the list, then change the name in the
+ <b>Portal Name</b> text field and lastly, press the <b>Change Name</b> button.
+ <p>
+ 6. To delete a portal, select it from the list and press the <b>Delete Portal</b> button.
+</ul> 
 
+<H3>Paths</H3>
+<ul>
+ 1. From the <b>Add/Edit Circuits</b> menu select a block subitem from the 
+ <b>Edit Paths</b> menu item.  
+<p>
+ 2. The Edit Paths window has a list of the the paths already defined for the track circuit
+  and a text field to name patjs to be created.
+<p>
+ 3. Paths are created by selecting the icons that display the path. The selected icons are
+ displayed green.  A second mouse click deselects the icon.
+<p>
+ 4. When selecting a turnout icon for the path, it needs its point set correctly.  To keep
+ the icon selected gren when you throw the switch, hold the Shift Key down when clicking 
+ with the mouse.  
+<p>
+ 5. To change the name of a path, first select it from the list, then change the name in the
+ <b>Path Name</b> text field and lastly, press the <b>Change Name</b> button.
+<p>
+ 6. To delete a path, select it from the list and press the <b>Delete Path</b> button.
+</ul> 
 <!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
