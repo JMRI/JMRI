@@ -81,15 +81,6 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
-        JButton convertButton = new JButton(rbcp.getString("ButtonNextCircuit"));
-        convertButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    setIntroPanel();
-                }
-        });
-        convertButton.setToolTipText(rbcp.getString("ToolTipNextCircuit"));
-        panel.add(convertButton);
-
         JButton doneButton = new JButton(rbcp.getString("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -279,6 +270,8 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
         _introPanel.setVisible(true);
         _portalPanel.setVisible(false);
         _parent.clearAdjacentBlock();
+        setTitle(java.text.MessageFormat.format(rbcp.getString("OpenPortalTitle"),
+                                                _homeBlock.getDisplayName()));
         setSize(getPreferredSize());
     }
 
@@ -340,10 +333,12 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
     protected void setAdjacentBlock(OBlock block) {
         _adjacentBlock = block;
         _portalName.setToolTipText(java.text.MessageFormat.format(
-                            rbcp.getString("TooltipPortalName"), _homeBlock.getDisplayName(),
-                            _adjacentBlock.getDisplayName()));
+                            rbcp.getString("TooltipPortalName"),
+                             _homeBlock.getDisplayName(), block.getDisplayName()));
         _introPanel.setVisible(false);
         _portalPanel.setVisible(true);
+        setTitle(java.text.MessageFormat.format(rbcp.getString("OpenPortalTitle2"),
+                            _homeBlock.getDisplayName(), block.getDisplayName()));
         setSize(getPreferredSize());
         repaint();
     }
