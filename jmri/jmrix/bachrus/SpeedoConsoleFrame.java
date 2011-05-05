@@ -5,6 +5,8 @@ package jmri.jmrix.bachrus;
 import java.util.*;
 import java.text.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -28,7 +30,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -365,7 +367,31 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             readAddressButton.setEnabled(false);
             profileAddressField.setText(Integer.toString(0));
         }
-        
+
+        profileAddressField.addKeyListener( new KeyListener() {
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+            public void keyReleased(KeyEvent keyEvent) {
+                try {
+                    if(!profileAddressField.getText().equals("")){
+                        int userinput = Integer.parseInt(profileAddressField.getText());
+                        profileAddress = userinput;
+                        profileAddressField.setBackground(Color.WHITE);
+                    } else {
+                        profileAddress = 0;
+                    }
+                } catch (NumberFormatException ex) {
+                    log.error("Non numeric address entered " + ex);
+                    if(profileAddress==0){
+                        profileAddressField.setText("");
+                    } else {
+                        profileAddressField.setText(Integer.toString(profileAddress));
+                    }
+                }
+            }
+            public void keyTyped(KeyEvent keyEvent) {
+            }
+        });
         // Listen to text entry
         profileAddressField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
