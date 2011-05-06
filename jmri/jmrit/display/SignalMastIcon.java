@@ -8,7 +8,6 @@ import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.NamedBeanHandle;
-import jmri.implementation.DefaultSignalAppearanceMap;
 
 import java.awt.event.*;
 
@@ -23,7 +22,7 @@ import javax.swing.JOptionPane;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -99,21 +98,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         boolean error = false;
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
-            String s = mMast.getAppearanceMap().getImageLink(aspect, useIconSet);
-            if(s.equals("")){
-                log.error("No icon found for appearance " + aspect);
-                error=true;
-            } else {
-                s = s.substring(s.indexOf("resources"));
-                NamedIcon n = new NamedIcon(s,s);
-                _iconMap.put(s, n);
-                if(_rotate!=0){
-                    n.rotate(_rotate, this);
-                }
-                if (_scale!=1.0) {
-                    n.scale(_scale, this);
-                }
-            }
+            error = loadIcons(aspect);
         }
         if(error){
             JOptionPane.showMessageDialog(_editor.getTargetFrame(), 
@@ -121,6 +106,31 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 				new Object[]{mMast.getDisplayName()}), 
                 rb.getString("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
+        //Add in specific appearances for dark and held
+        loadIcons("$dark");
+        loadIcons("$held");
+    }
+    
+    private boolean loadIcons(String aspect){
+        String s = mMast.getAppearanceMap().getImageLink(aspect, useIconSet);
+        if(s.equals("")){
+            if(aspect.startsWith("$"))
+                log.debug("No icon found for specific appearance " + aspect);
+            else 
+                log.error("No icon found for appearance " + aspect);
+            return true;
+        } else {
+            s = s.substring(s.indexOf("resources"));
+            NamedIcon n = new NamedIcon(s,s);
+            _iconMap.put(s, n);
+            if(_rotate!=0){
+                n.rotate(_rotate, this);
+            }
+            if (_scale!=1.0) {
+                n.scale(_scale, this);
+            }
+        }
+        return false;
     }
 
     String pName;
@@ -218,7 +228,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 }
                 popup.add(iconSetMenu);
             }
-            //popup.add(new jmri.jmrit.signalling.SignallingSourceAction("Signalling Pairs", mMast));
+            popup.add(new jmri.jmrit.signalling.SignallingSourceAction("Signalling Pairs", mMast));
             JMenu aspect = new JMenu(rb.getString("ChangeAspect"));
             final java.util.Vector <String> aspects = mMast.getValidAspects();
             for (int i=0; i<aspects.size(); i++){
@@ -370,13 +380,13 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             super.setText(state);
         }
         if (isIcon()) {
-            if (state !=null ) {
+            if ((state !=null ) && (mMast!=null)) {
                 String s = mMast.getAppearanceMap().getImageLink(state, useIconSet);
-                if ((mMast.getHeld()) && (mMast.getSpecificAppearance(DefaultSignalAppearanceMap.HELD)!=null)) {
-                    s = mMast.getAppearanceMap().getImageLink(mMast.getSpecificAppearance(DefaultSignalAppearanceMap.HELD), useIconSet);
+                if ((mMast.getHeld()) && (mMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
+                    s = mMast.getAppearanceMap().getImageLink("$held", useIconSet);
                 }
-                else if((mMast.getLit()) && (mMast.getSpecificAppearance(DefaultSignalAppearanceMap.DARK)!=null)) {
-                    s = mMast.getAppearanceMap().getImageLink(mMast.getSpecificAppearance(DefaultSignalAppearanceMap.DARK), useIconSet);
+                else if((mMast.getLit()) && (mMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
+                    s = mMast.getAppearanceMap().getImageLink("$dark", useIconSet);
                 }
                 s = s.substring(s.indexOf("resources"));
                 
