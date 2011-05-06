@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: turnouts-2-9-6.xsd,v 1.4 2011-03-30 21:33:49 kevin-dickerson Exp $ -->
+<!-- $Id: turnouts-2-9-6.xsd,v 1.5 2011-05-06 20:09:11 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -60,6 +60,8 @@
       <xs:extension base="NamedBeanType" >
         <xs:sequence>
           <xs:element name="operation" type="OperationType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="divergingSpeed" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="straightSpeed" type="xs:string" minOccurs="0" maxOccurs="1" />
         </xs:sequence>
         <xs:attribute name="feedback" type="xs:string" />
         <xs:attribute name="sensor1" type="xs:string" />

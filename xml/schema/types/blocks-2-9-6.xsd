@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: blocks-2-9-6.xsd,v 1.2 2011-03-30 21:33:49 kevin-dickerson Exp $ -->
+<!-- $Id: blocks-2-9-6.xsd,v 1.3 2011-05-06 20:09:11 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -46,6 +46,7 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="speed" minOccurs="0" maxOccurs="1" />
               <xs:element name="permissive" minOccurs="0" maxOccurs="1" />
               <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
