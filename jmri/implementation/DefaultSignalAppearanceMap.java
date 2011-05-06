@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -195,7 +195,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             } else {
                 loadImageMaps(img, name, SMmap);
             }
-            String value = "";
         } catch (java.lang.NullPointerException e){
             //Considered Normal if held aspect uses default signal appearance
         }
