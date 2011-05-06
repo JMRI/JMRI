@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -228,7 +228,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 }
                 popup.add(iconSetMenu);
             }
-            popup.add(new jmri.jmrit.signalling.SignallingSourceAction("Signalling Pairs", mMast));
+//            popup.add(new jmri.jmrit.signalling.SignallingSourceAction("Signalling Pairs", mMast));
             JMenu aspect = new JMenu(rb.getString("ChangeAspect"));
             final java.util.Vector <String> aspects = mMast.getValidAspects();
             for (int i=0; i<aspects.size(); i++){
