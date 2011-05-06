@@ -29,7 +29,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -108,7 +108,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     public void setAspect(String aspect) { 
         // check it's a choice
         if ( !map.checkAspect(aspect)) {
-            // not a valid aspecta            log.warn("attempting to set invalid aspect: "+aspect);
+            // not a valid aspecta
+            log.warn("attempting to set invalid aspect: "+aspect);
             throw new IllegalArgumentException("attempting to set invalid aspect: "+aspect);
         }
         
