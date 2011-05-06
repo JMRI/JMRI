@@ -1,5 +1,4 @@
 // SignalAppearanceMap.java
-
 package jmri;
 
 import jmri.util.NamedBeanHandle;
@@ -13,7 +12,7 @@ import java.util.Vector;
  * This interface does not provide any methods to change the map.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public interface SignalAppearanceMap  {
 
@@ -54,9 +53,38 @@ public interface SignalAppearanceMap  {
     /**
      * Return a list of valid icon sets
      */
-
     public Vector<String> getImageTypes(String aspect);
+    
+    /**
+     * Return an aspect for a specific appearance
+     */
+    public String getSpecificAppearance(int appearance);
+    
+    /**
+     * Constant representing the "held" apsect for a signal
+     */
+    public final static int HELD = 0;
+    
+    /**
+     * Constant representing the "permissive" apsect for a signal
+     */
+    public final static int PERMISSIVE = 1;
+    
+    /**
+     * Constant representing the "danager" apsect for a signal
+     */
+    public final static int DANGER = 2;
+    
+    /**
+     * Constant representing the "dark" apsect for a signal
+     */
+    public final static int DARK = 3;
+    
+    /**
+    * Returns a list of postential aspects that we could set the signalmast to
+    * given the state of the advanced signal mast.
+    */
+    public String[] getValidAspectsForAdvancedAspect(String advancedAspect);
 
 }
-
 /* @(#)SignalAppearanceMap.java */
