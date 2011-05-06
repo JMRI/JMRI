@@ -1,13 +1,12 @@
 //TODO: send periodic request for refresh, to verify server connection (maybe do on server side as well?)
 //TODO: handle ajax errors
 //TODO: preserve filter on update
-//TODO: remove "page" and button on uncheck
-//TODO: allow refresh of any page (remove #anchors?)
 //TODO: use array for globalXhr to support limited number of open requests
 //TODO: (long-term) read panel xml and "draw" panels on page
 //TODO: "wide-screen" version that shows multiple "pages" at once, for use on wider browsers
 //TODO: add edit of memory variable values
 //TODO: support addition of memory variables, maybe turnouts?
+//TODO: remove "page" and button on uncheck (maybe just force refresh?)
 
 var $globalXhr; //global variable to allow closing earlier connections 
 
@@ -43,7 +42,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 	$.mobile.pageLoading();  //show pageloading message
 
-	$xml = $($returnedData);  //jQuery-ize returned data for easier access
+	var $xml = $($returnedData);  //jQuery-ize returned data for easier access
 	$xml.xmlClean();  //remove whitespace 
 
 	$xml.find('item').each( //find and process all "item" entries (list)
@@ -77,7 +76,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 				if (!$("div#type-" + $type).length) {
 					//add the new page, following the settings page  TODO: support specific page templates
-					$templateID = $getTemplate('Page', $type);
+					var $templateID = $getTemplate('Page', $type);
 					$("div#settings").after($($templateID).tmpl({type: $type}));
 					//add the menu item _inside_ footer on each page
 					$("div# div#footer").append("<a data-role='button' href='#type-" + $type + "' data-theme='b'>" + $type +"</a>");
@@ -93,8 +92,8 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				}
 
 				//if a list item for this name, for this card, doesn't exist yet, add it or update existing item
-				$index = 'div#type-' + $type + ' ul.listview li#name-' + $currentItem.safeName;
-				$templateID = $getTemplate('Item', $type);
+				var $index = 'div#type-' + $type + ' ul.listview li#name-' + $currentItem.safeName;
+				var $templateID = $getTemplate('Item', $type);
 				if (!$($index).length) {
 					$($templateID).tmpl($currentItem).appendTo("div#type-" + $type + " ul.listview");
 
@@ -107,7 +106,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	);
 
 	//update the string with any changes and cleanup		
-	$xmlstr = xml2Str($xml[0]);
+	var $xmlstr = xml2Str($xml[0]);
 
 	//echo last command received back to server, which will cause server to monitor for changes
 	$sendXMLIO($xmlstr);
@@ -118,7 +117,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 //handle the toggling of the next value for buttons
 var $getNextValue = function($type, $value){
 	if ($type == 'memory') {
-		return $value;  //default to same value for memory, since will be prompted
+		return $value + '.';  //default to appending a dot for testing, will add prompt/edit later
 	}
 	var $nextValue = ($value=='4' ? '2' : '4');
 	return $nextValue;
@@ -126,6 +125,7 @@ var $getNextValue = function($type, $value){
 
 //get name for template (which exists on html page)
 var $getTemplate = function( $cat, $type){
+    var $tempateID = '';
 	//use specific item template if found, generic if not 
 	if ($('#' + $type + $cat + 'Template').length) {
 		$templateID = '#' + $type + $cat + 'Template'
@@ -210,21 +210,28 @@ function $getSettingsArray() {
 	return $arrInputs;
 }
 
-$(document).ajaxError(function(){
-    if (window.console && window.console.error) {
-        console.error(arguments);
+$(document).ajaxError(function(e,xhr,opt){
+    if (window.console && window.console.log) {
+        window.console.log("AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText);
     }
 });
 
 //javascript processing starts here (main)
 $(document).ready(function() {
 
+	//if trying to load a page with a hash (#), remove it and reload
+	//  needed because hash is used by jQueryMobile
+	var $hashLoc = location.href.indexOf("#"); 
+	if ( $hashLoc > -1) {
+	    location.assign(location.href.substr(0, $hashLoc));
+	}
+	
 	$.mobile.pageLoading();  //show pageloading message
 
 	//retrieve checked values from localstorage and set checkboxes to match
 	var $savedInputs = ["turnout","panel"];  //default selections
 	if (localStorage['savedInputs']) {
-		var $savedInputs=JSON.parse(localStorage['savedInputs']);
+		$savedInputs=JSON.parse(localStorage['savedInputs']);
 	}
 	$.each($savedInputs, function(key, value) {  //check the boxes 
 		$('div#includes input:checkbox#include-' + value).attr('checked', true).checkboxradio("refresh"); 
