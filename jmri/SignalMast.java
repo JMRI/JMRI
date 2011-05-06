@@ -51,7 +51,7 @@ import java.util.Vector;
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
  * @author			Pete Cressman Copyright (C) 2009
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public interface SignalMast extends NamedBean {
     /**
@@ -73,8 +73,7 @@ public interface SignalMast extends NamedBean {
     public SignalSystem getSignalSystem();
     
     public SignalAppearanceMap getAppearanceMap();
-    public String getSpecificAppearance(int appearance);
-    public String[] getAspect(String advancedAspect);
+
     /**
      * Lit is a bound parameter. It controls
      * whether the signal head's lamps are lit or left dark.
