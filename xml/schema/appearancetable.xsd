@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- $Id: appearancetable.xsd,v 1.18 2011-04-08 16:30:52 kevin-dickerson Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.19 2011-05-06 20:08:30 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -91,10 +91,90 @@
         </xs:documentation></xs:annotation>
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="danger" minOccurs="0" maxOccurs="1" />
-            <xs:element name="permissive" minOccurs="0" maxOccurs="1" />
-            <xs:element name="held" minOccurs="0" maxOccurs="1" />
-            <xs:element name="dark" minOccurs="0" maxOccurs="1" />
+            <xs:element name="danger" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="permissive" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="held" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dark" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
             </xs:sequence>
           </xs:complexType>
       </xs:element>
@@ -174,4 +254,5 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  
 </xs:schema>
