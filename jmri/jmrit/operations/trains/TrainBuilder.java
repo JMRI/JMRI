@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.154 $
+ * @version             $Revision: 1.155 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1113,9 +1113,21 @@ public class TrainBuilder extends TrainCommon{
 							if (Router.instance().getStatus().contains(Car.LENGTH))
 								continue;
 						}
+						// did the router assign a destination?
+						if (checkCarForDestinationAndTrack(car, rl, routeIndex)){
+							// did the car get assigned to this train?
+							if (car.getTrain() != train && Setup.isBuildAggressive()){
+								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainNotAbleCar"),new Object[]{train.getName(), car.toString(), rl.getName(), car.getDestination()}));
+								car.setDestination(null,null);
+								continue;	// don't move this car
+							}
+						} else {
+							// routing failed, move this car to new location
+							findDestinationAndTrack(car, rl, routeIndex, routeList.size());
+						}
 					}
 					// does car have a destination?
-					if (checkCarForDestinationAndTrack(car, rl, routeIndex)){
+					else if (checkCarForDestinationAndTrack(car, rl, routeIndex)){
 					// car does not have a destination, search for the best one	
 					} else {
 						findDestinationAndTrack(car, rl, routeIndex, routeList.size());
@@ -1807,8 +1819,9 @@ public class TrainBuilder extends TrainCommon{
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasAssignedDest"),new Object[]{car.toString(), (car.getDestinationName()+", "+car.getDestinationTrackName())}));
 		RouteLocation rld = train.getRoute().getLastLocationByName(car.getDestinationName());
 		if (rld == null){
-			// The following code should not be executed, removeCars() is called before placeCars()
+			// car has a destination that isn't serviced by this train (destination loaded by router)
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarDestNotPartRoute"),new Object[]{car.toString(), car.getDestinationName(), train.getRoute().getName()}));
+			return true;	// done
 		} else {
 			if (car.getRouteLocation() != null){
 				// The following code should not be executed, this should not occur if train was reset before a build!
