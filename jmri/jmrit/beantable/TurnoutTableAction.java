@@ -43,7 +43,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.97 $
+ * @version     $Revision: 1.98 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -63,11 +63,16 @@ public class TurnoutTableAction extends AbstractTableAction {
             setEnabled(false);
         }
         
-        defaultThrownSpeedText = ("Use Global " + turnManager.getDefaultThrownSpeed());
+        //This following must contain the word Global for a correct match in the abstract turnout
+        defaultThrownSpeedText = ("Use Global " + turnManager.getDefaultThrownSpeed()); 
         defaultClosedSpeedText = ("Use Global " + turnManager.getDefaultClosedSpeed());
+        //This following must contain the word Block for a correct match in the abstract turnout
+        useBlockSpeed = "Use Block Speed";
         
         speedListClosed.add(defaultClosedSpeedText);
         speedListThrown.add(defaultThrownSpeedText);
+        speedListClosed.add(useBlockSpeed);
+        speedListThrown.add(useBlockSpeed);
         java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
         for(int i = 0; i<_speedMap.size(); i++){
             if (!speedListClosed.contains(_speedMap.get(i))){
@@ -85,6 +90,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String thrownText;
     String defaultThrownSpeedText;
     String defaultClosedSpeedText;
+    String useBlockSpeed = "Use Block Speed";
     String bothText = "Both";
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
@@ -798,7 +804,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         closedCombo.setSelectedItem(turnManager.getDefaultClosedSpeed());
         
         int retval = JOptionPane.showOptionDialog(_who,
-                                          "Select the default values for the speed through the turnou\n" , "Turnout Speeds",
+                                          rb.getString("TurnoutGlobalSpeedMessage") , rb.getString("TurnoutGlobalSpeedMessageTitle"),
                                           0, JOptionPane.INFORMATION_MESSAGE, null,
                                           new Object[]{"Cancel", "OK", thrown, closed}, null );
         if (retval != 1) {
@@ -827,14 +833,14 @@ public class TurnoutTableAction extends AbstractTableAction {
      */
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(showFeedbackBox, this.getClass().getName());
-        showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
+        showFeedbackBox.setToolTipText(rb.getString("TurnoutFeedbackToolTip"));
         showFeedbackBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showFeedbackChanged();
                 }
             });
         f.addToBottomBox(showLockBox, this.getClass().getName());
-        showLockBox.setToolTipText("Show extra columns for configuring turnout lock?");
+        showLockBox.setToolTipText(rb.getString("TurnoutLockToolTip"));
         showLockBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showLockChanged();
@@ -848,7 +854,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         	}
             });
         f.addToBottomBox(showTurnoutSpeedBox, this.getClass().getName());
-        showTurnoutSpeedBox.setToolTipText("Show extra columns for configuring turnout Speeds, when used with Signalling?");
+        showTurnoutSpeedBox.setToolTipText(rb.getString("TurnoutSpeedToolTip"));
         showTurnoutSpeedBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showTurnoutSpeedChanged();
@@ -862,14 +868,14 @@ public class TurnoutTableAction extends AbstractTableAction {
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager"))
             systemPrefix = "All";
         f.addToBottomBox(showFeedbackBox, systemPrefix);
-        showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
+        showFeedbackBox.setToolTipText(rb.getString("TurnoutFeedbackToolTip"));
         showFeedbackBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showFeedbackChanged();
                 }
             });
         f.addToBottomBox(showLockBox, systemPrefix);
-        showLockBox.setToolTipText("Show extra columns for configuring turnout lock?");
+        showLockBox.setToolTipText(rb.getString("TurnoutLockToolTip"));
         showLockBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showLockChanged();
@@ -884,7 +890,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         });
         
         f.addToBottomBox(showTurnoutSpeedBox, systemPrefix);
-        showTurnoutSpeedBox.setToolTipText("Show extra columns for configuring turnout lock?");
+        showTurnoutSpeedBox.setToolTipText(rb.getString("TurnoutSpeedToolTip"));
         showTurnoutSpeedBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showTurnoutSpeedChanged();

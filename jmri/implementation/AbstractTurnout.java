@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -674,6 +674,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if(_divergeSpeed.equals("Global")){
             speed = InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed();
         }
+        if(_divergeSpeed.equals("Block"))
+            return -1;
         try {
             return new Float(speed);
             //return Integer.parseInt(_blockSpeed);
@@ -691,13 +693,20 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if(_divergeSpeed.equals("Global")){
             return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
         }
+        if(_straightSpeed.equals("Block"))
+            return ("Use Block Speed");
         return _divergeSpeed;
     }
-    public void setDivergingSpeed(String s) throws JmriException { 
-        if((s==null) || (_divergeSpeed.equals(s)))
+    
+    public void setDivergingSpeed(String s) throws JmriException {
+        if(s==null)
+            throw new JmriException("Value of requested turnout thrown speed can not be null");
+        if(_divergeSpeed.equals(s))
             return;
         if (s.contains("Global"))
             s = "Global";
+        else if (s.contains("Block"))
+            s="Block";
         else {
             try {
                 Float.parseFloat(s);
@@ -717,15 +726,14 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public float getStraightLimit() {
         if ((_straightSpeed==null) || (_straightSpeed==""))
             return -1;
-
         String speed = _straightSpeed;
         if(_straightSpeed.equals("Global")){
             speed = InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed();
+        } else if (_straightSpeed.equals("Block")){
+            return -1;
         }
-        
         try {
             return new Float(speed);
-            //return Integer.parseInt(_blockSpeed);
         }catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
@@ -739,14 +747,20 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public String getStraightSpeed() { 
         if(_straightSpeed.equals("Global"))
             return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+        if(_straightSpeed.equals("Block"))
+            return ("Use Block Speed");
         return _straightSpeed;
     }
     
-    public void setStraightSpeed(String s) throws JmriException { 
-        if((s==null) || (_straightSpeed.equals(s)))
+    public void setStraightSpeed(String s) throws JmriException {
+        if(s==null)
+            throw new JmriException("Value of requested turnout straight speed can not be null");
+        if(_straightSpeed.equals(s))
             return;
         if (s.contains("Global"))
             s = "Global";
+        else if (s.contains("Block"))
+            s= "Block";
         else {
             try {
                 Float.parseFloat(s);
