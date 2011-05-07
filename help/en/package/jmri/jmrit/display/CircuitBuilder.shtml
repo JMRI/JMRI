@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CircuitBuilder.shtml,v 1.3 2011-05-05 19:03:47 pete_cressman Exp $ -->
+<!-- $Id: CircuitBuilder.shtml,v 1.4 2011-05-07 02:21:09 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Item Palette Help</TITLE>
@@ -65,8 +65,28 @@ The only menu item returns the view to the Control Panel Editor</P>
 <H3>The Options Menu</H3>
 
 <H3>The Add/Edit Circuits Menu</H3>
+Create and Edit OBlocks, Portals and OPaths and their display icons.
+<ul>
+ <li>Add New Circuit - Create an OBlock track circuit and assign the icons that represent it.</li>
+ <li>Edit Circuit - Has a submenu for each defined track circuit (OBlock) to modify the OBlock
+ or its icons.</li>
+ <li>Add/Edit Portal -  Create or edit Portals connecting two track circuits.</li>
+ <li>Add/Edit Path - Create or edit the paths (OPath) through a track circuit.</li>
+</ul>
 
 <H3>The Error Check Menu</H3>
+Verify OBlocks, Portals and OPaths are complete and without errors.
+<ul>
+ <li>Circuits without icons - Has a submenu for each track circuit OBlock that does not have an icon.</li>
+ <li>Circuit icons need conversion - Has a submenu for each track circuit OBlock whose track icons
+ are not Indicator Track icons.</li>
+ <li>Highlight track icons needing conversion - Highlight all track icons that are not 
+ Indicator Track icons.</li>
+ <li>Highlight track icons without circuits - Highlight all track icons that are not 
+ associated with a track circuit.</li>
+ <li>Check Portal and Path errors - Examines the Portal and OPath definitions looking
+ for errors or incomplete information.</li>
+</ul>
 
 <H2>How to Make OBlocks, Portals and OPaths</H2>
 <H3>OBlocks</H3>
