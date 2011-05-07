@@ -1340,7 +1340,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                         return;
                     }
                 }
-                int state = OBlock.UNOCCUPIED | OBlock.ALLOCATED;
+                int state = block.getState() | OBlock.ALLOCATED;
                 block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
             }
         } else if (_editPortalFrame!=null) {

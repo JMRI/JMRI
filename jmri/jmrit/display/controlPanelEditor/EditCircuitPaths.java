@@ -218,7 +218,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         } else {
             _pathName.setText(null);
         }
-        int state = OBlock.UNOCCUPIED | OBlock.ALLOCATED;
+        int state = _block.getState() | OBlock.ALLOCATED;
         _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
     }
 
@@ -270,12 +270,16 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         for (int i=0; i<pIcons.size(); i++) {
             pIcons.get(i).setStatus(PortalIcon.BLOCK);
         }
+        int state = _block.getState() & ~OBlock.ALLOCATED;
+        _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
     }
 
     /************************* end setup **************************/
     
     private void clearListSelection() {
         _pathList.clearSelection();
+        int state = _block.getState() & ~OBlock.ALLOCATED;
+        _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
     }
 
     private void addPath() {
@@ -312,6 +316,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
                     jmri.Turnout t = ((IndicatorTurnoutIcon)pos).getTurnout();
                     settings.add(new BeanSetting(t, t.getKnownState()));
                 }
+                ((IndicatorTrack)pos).addPath(name);
             }
         }
         if (toPortal==null && fromPortal==null) {
@@ -409,13 +414,9 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
     }
 
     private void ClosingEvent() {
-        boolean close = true;
-
-        if (close) {
-            clearPathGroup();
-            _parent.closePathFrame(_block);
-            dispose();
-        }
+        clearPathGroup();
+        _parent.closePathFrame(_block);
+        dispose();
     }
 
     private void clearPathGroup() {
@@ -427,6 +428,8 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
                 ((IndicatorTrack)pos).removePath(TEST_PATH);
             }
         }
+        int state = _block.getState() & ~OBlock.ALLOCATED;
+        _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
     }
 
     /************** callbacks from main frame *****************/
