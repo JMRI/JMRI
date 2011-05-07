@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.155 $
+ * @version             $Revision: 1.156 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1117,7 +1117,7 @@ public class TrainBuilder extends TrainCommon{
 						if (checkCarForDestinationAndTrack(car, rl, routeIndex)){
 							// did the car get assigned to this train?
 							if (car.getTrain() != train && Setup.isBuildAggressive()){
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainNotAbleCar"),new Object[]{train.getName(), car.toString(), rl.getName(), car.getDestination()}));
+								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarNotAssignedReset"),new Object[]{car.toString(), train.getName()}));
 								car.setDestination(null,null);
 								continue;	// don't move this car
 							}
@@ -1793,6 +1793,8 @@ public class TrainBuilder extends TrainCommon{
 					bestCar = testCar;
 			}
 		}
+		if (car != bestCar)
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrackModeCarPriority"),new Object[]{car.getTrack().getLocType(), car.getTrack().getName(), car.getTrack().getServiceOrder(), bestCar.toString(), car.toString() }));
 		return bestCar;
 	}
 	
