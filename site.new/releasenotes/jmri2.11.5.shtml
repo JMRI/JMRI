@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.23 2011-05-09 00:50:18 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.24 2011-05-09 03:32:39 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -142,7 +142,11 @@ None at the time of this release.
 	yard track at the destination is available, and deliver the car to the
 	yard track. The car will remain at the yard track until the siding
 	becomes available.</LI>
-	<LI>The program will now warn you if you haven't saved your files before doing a backup.</LI>
+	<LI>The program will now warn you if you haven't saved your files
+	before doing a backup.</LI>
+	<LI>You can now use the wild card "*" when using the Find in the
+	cars and locomotives windows. For example, if you wanted to find all
+	cars with road numbers that ended with 456, you would enter *456.</LI>
 
 </UL>
 

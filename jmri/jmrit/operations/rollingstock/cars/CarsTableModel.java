@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011
- * @version   $Revision: 1.40 $
+ * @version   $Revision: 1.41 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -156,19 +156,34 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
     
     private int getIndex (int start, String roadNumber){
-		for (int index = start; index < sysList.size(); index++) {
-			Car c = manager.getById(sysList.get(index));
-			if (c != null){
-				String[] number = c.getNumber().split("-");
-				if (c.getNumber().equals(roadNumber) || number[0].equals(roadNumber)){
-					_roadNumber = roadNumber;
-					_index = index + 1;
-					return index;
-				}
-			}
-		}
-		_roadNumber ="";
-		return -1;
+    	for (int index = start; index < sysList.size(); index++) {
+    		Car c = manager.getById(sysList.get(index));
+    		if (c != null){
+    			String[] number = c.getNumber().split("-");
+    			// check for wild card '*'
+    			if (roadNumber.startsWith("*")){
+    				String rN = roadNumber.substring(1);
+    				if (c.getNumber().endsWith(rN) || number[0].endsWith(rN)){
+    					_roadNumber = roadNumber;
+    					_index = index + 1;
+    					return index;
+    				}
+    			} else if (roadNumber.endsWith("*")){
+    				String rN = roadNumber.substring(0, roadNumber.length()-1);
+    				if (c.getNumber().startsWith(rN)){
+    					_roadNumber = roadNumber;
+    					_index = index + 1;
+    					return index;
+    				}
+    			} else if (c.getNumber().equals(roadNumber) || number[0].equals(roadNumber)){
+    				_roadNumber = roadNumber;
+    				_index = index + 1;
+    				return index;
+    			}
+    		}
+    	}
+    	_roadNumber ="";
+    	return -1;
     }
     
     public Car getCarAtIndex(int index){

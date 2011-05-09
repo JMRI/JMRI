@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.27 $
+ * @version   $Revision: 1.28 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -122,7 +122,22 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			Engine e = manager.getById(sysList.get(index));
 			if (e != null){
 				String[] number = e.getNumber().split("-");
-				if (e.getNumber().equals(roadNumber) || number[0].equals(roadNumber)){
+	   			// check for wild card '*'
+    			if (roadNumber.startsWith("*")){
+    				String rN = roadNumber.substring(1);
+    				if (e.getNumber().endsWith(rN) || number[0].endsWith(rN)){
+    					_roadNumber = roadNumber;
+    					_index = index + 1;
+    					return index;
+    				}
+    			} else if (roadNumber.endsWith("*")){
+    				String rN = roadNumber.substring(0, roadNumber.length()-1);
+    				if (e.getNumber().startsWith(rN)){
+    					_roadNumber = roadNumber;
+    					_index = index + 1;
+    					return index;
+    				}
+    			} else if (e.getNumber().equals(roadNumber) || number[0].equals(roadNumber)){
 					_roadNumber = roadNumber;
 					_index = index + 1;
 					return index;
