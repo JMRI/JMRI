@@ -4,9 +4,16 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 
 /**
@@ -14,9 +21,11 @@ import javax.swing.JFileChooser;
  * directory selected by the user.
  * 
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BackupFilesAction extends AbstractAction {
+	
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
     public BackupFilesAction(String s) {
     	super(s);
@@ -27,6 +36,14 @@ public class BackupFilesAction extends AbstractAction {
     }
     
     private void backUp(){
+		// check to see if files are dirty
+		if (CarManagerXml.instance().isDirty() || EngineManagerXml.instance().isDirty() 
+				|| TrainManagerXml.instance().isDirty()){
+			if(JOptionPane.showConfirmDialog(null, rb.getString("OperationsFilesModified"),
+					rb.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION)== JOptionPane.YES_OPTION) {
+				TrainManager.instance().save();
+			}
+		}	
         Backup backup = new Backup();
 		// get file to write to
 		JFileChooser fc = new JFileChooser(backup.getBackupDirectoryName());
@@ -58,7 +75,7 @@ public class BackupFilesAction extends AbstractAction {
 		}
 		
 		public String getDescription() {
-			return "Backup Folders";
+			return rb.getString("BackupFolders");
 		}
 	}
     

@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -10,41 +11,32 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 
 /**
  * Frame for backing up operation files
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @author Dan Boudreau Copyright (C) 2008, 2011
+ * @version $Revision: 1.8 $
  */
 
-public class BackupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class BackupFrame extends OperationsFrame {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-	
+
 	// labels
 	javax.swing.JLabel textBackup = new javax.swing.JLabel();
 
 	// major buttons
 	javax.swing.JButton backupButton = new javax.swing.JButton();
 
-
-	// radio buttons
-	
-
-    // check boxes
-	
 	// text field
 	javax.swing.JTextField backupTextField = new javax.swing.JTextField(20);
 
-	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
-	
-	// combo boxes
-	
 	Backup backup = new Backup() ;
 
 	public BackupFrame() {
@@ -52,12 +44,12 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 	}
 
 	public void initComponents() {
-		
+
 		// the following code sets the frame's initial state
 		textBackup.setText(rb.getString("BackupFiles"));
 		backupButton.setText(rb.getString("Backup"));
 		backupTextField.setText(backup.getDirectoryName());
- 
+
 		// Layout the panel by rows
 		// rows 1 - 3
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -66,7 +58,7 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 		addItem (panel, textBackup, 0, 1);
 		addItem (panel, backupTextField, 0, 2);
 		addItem (panel, backupButton, 0, 3);
-		
+
 		getContentPane().add(panel);
 
 		// setup buttons
@@ -81,16 +73,23 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 			setSize(300, getHeight()+50);
 		setVisible(true);
 	}
-		
+
 	// buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == backupButton){
 			log.debug("backup button activated");
+			// check to see if files are dirty
+			if (CarManagerXml.instance().isDirty() || EngineManagerXml.instance().isDirty() 
+					|| TrainManagerXml.instance().isDirty()){
+				if(JOptionPane.showConfirmDialog(this, rb.getString("OperationsFilesModified"),
+						rb.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION)== JOptionPane.YES_OPTION) {
+					TrainManager.instance().save();
+				}
+			}				
 			// check to see if directory already exists
 			if (backup.checkDirectoryExists(backupTextField.getText())){
-				if(JOptionPane.showConfirmDialog(this, "Directory "
-						+ backupTextField.getText() + " already exists, overwrite it?",
-						"Overwrite backup directory?", JOptionPane.OK_CANCEL_OPTION)!= JOptionPane.OK_OPTION) {
+				if(JOptionPane.showConfirmDialog(this, MessageFormat.format(rb.getString("DirectoryAreadyExists"),new Object[]{backupTextField.getText()}),
+						rb.getString("OverwriteBackupDirectory"), JOptionPane.OK_CANCEL_OPTION)!= JOptionPane.OK_OPTION) {
 					return;
 				}
 			}
@@ -105,11 +104,7 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 		}
 	}
 
-	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug ("BackupFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-
-	}
-
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(BackupFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BackupFrame.class.getName());
 }
+
+/* @(#)BackupFrame.java */
