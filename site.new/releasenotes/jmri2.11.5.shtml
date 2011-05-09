@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.22 2011-05-05 00:36:51 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.23 2011-05-09 00:50:18 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -142,6 +142,7 @@ None at the time of this release.
 	yard track at the destination is available, and deliver the car to the
 	yard track. The car will remain at the yard track until the siding
 	becomes available.</LI>
+	<LI>The program will now warn you if you haven't saved your files before doing a backup.</LI>
 
 </UL>
 
