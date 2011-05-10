@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.24 2011-05-09 03:32:39 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.25 2011-05-10 21:21:09 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -147,6 +147,13 @@ None at the time of this release.
 	<LI>You can now use the wild card "*" when using the Find in the
 	cars and locomotives windows. For example, if you wanted to find all
 	cars with road numbers that ended with 456, you would enter *456.</LI>
+	<LI>Fixed a problem when a siding has a schedule and a group of cars (kernel) was
+	placed at the siding.  Sometimes the car load wasn't updated properly.  Thank-you
+	Frank Wyatt for bring this to our attention.</LI>
+	<Li>Changed the order of the location comment when there's no work at a location.
+	The location and route comments now come after the "No work statement".</Li>
+	<LI>Added some additional comments in the build report with regards to car routing.
+	Messages are now in the build report.  Messages to the console have been removed.</LI>
 
 </UL>
 
