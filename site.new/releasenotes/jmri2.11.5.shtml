@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.25 2011-05-10 21:21:09 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.26 2011-05-10 21:26:17 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -154,6 +154,7 @@ None at the time of this release.
 	The location and route comments now come after the "No work statement".</Li>
 	<LI>Added some additional comments in the build report with regards to car routing.
 	Messages are now in the build report.  Messages to the console have been removed.</LI>
+	<LI>Fixed a problem with switch lists showing loco pickups when there wasn't.</LI>
 
 </UL>
 
