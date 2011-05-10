@@ -40,7 +40,7 @@ public class TrainCommon {
 	protected void pickupEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl){
 		for (int i =0; i < engineList.size(); i++){
 			Engine engine = engineManager.getById(engineList.get(i));
-			if (engine.getRouteLocation() == rl)
+			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
 				pickupEngine(fileOut, engine);
 		}
 	}

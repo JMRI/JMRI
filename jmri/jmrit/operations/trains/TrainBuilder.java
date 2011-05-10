@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.156 $
+ * @version             $Revision: 1.157 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1106,7 +1106,7 @@ public class TrainBuilder extends TrainCommon{
 					// does car have a next destination, but no destination
 					if (car.getNextDestination() != null && car.getDestination() == null){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{car.toString(),(car.getNextDestinationName()+", "+car.getNextDestTrackName())}));
-						if (!Router.instance().setDestination(car, train)){
+						if (!Router.instance().setDestination(car, train, buildReport)){
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
 							car.setDestination(null, null);
 							// don't move car if routing issue was track space
@@ -1170,6 +1170,14 @@ public class TrainBuilder extends TrainCommon{
 		int engineWeight = 0;
 		if (train.getLeadEngine() == null)
 			train.setLeadEngine(engine);	//load lead engine
+		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildEngineAssigned"),new Object[]{engine.toString(), rld.getName(), track.getName()}));
+		engine.setTrain(train);
+		engine.setRouteLocation(rl);
+		engine.setRouteDestination(rld);
+		engine.setDestination(destination, track);
+		numberEngines++;
+		engineLength = Integer.parseInt(engine.getLength());
+		engineWeight = engine.getAdjustedWeightTons();
 		// engine in consist?
 		if (engine.getConsist() != null){
 			List<Engine> cEngines = engine.getConsist().getEngines();
@@ -1178,22 +1186,14 @@ public class TrainBuilder extends TrainCommon{
 			numberEngines = numberEngines + cEngines.size();
 			for (int j=0; j<cEngines.size(); j++){
 				Engine cEngine = cEngines.get(j);
+				if (cEngine == engine)
+					continue;
 				addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildEngineAssigned"),new Object[]{cEngine.toString(), rld.getName(), track.getName()}));
 				cEngine.setTrain(train);
 				cEngine.setRouteLocation(rl);
 				cEngine.setRouteDestination(rld);
 				cEngine.setDestination(destination, track, true); // force destination
 			}
-		} else {
-			// engine isn't part of a consist
-			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildEngineAssigned"),new Object[]{engine.toString(), rld.getName(), track.getName()}));
-			engine.setTrain(train);
-			engine.setRouteLocation(rl);
-			engine.setRouteDestination(rld);
-			engine.setDestination(destination, track);
-			numberEngines++;
-			engineLength = Integer.parseInt(engine.getLength());
-			engineWeight = engine.getAdjustedWeightTons();
 		}
 		// TODO code doesn't check for engines being in train at all locations
 		// set the engine length and weight for locations
@@ -1222,27 +1222,27 @@ public class TrainBuilder extends TrainCommon{
 		location.setStatus();
 		Location destination = locationManager.getLocationByName(rld.getName());
 		destination.setStatus();
+		// add car to train
+		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{car.toString(), (destination.getName()+", "+track.getName())}));
+		car.setTrain(train);
+		car.setRouteLocation(rl);
+		car.setRouteDestination(rld);
+		car.setDestination(destination, track);
 		// car could be part of a kernel
 		if (car.getKernel()!=null){
 			List<Car> kCars = car.getKernel().getCars();
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{car.toString(), car.getKernelName(), kCars.size()}));
-			// log.debug("kernel length "+car.getKernel().getLength());
 			for(int i=0; i<kCars.size(); i++){
 				Car kCar = kCars.get(i);
+				if (kCar == car)
+					continue;
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{kCar.toString(), (destination.getName()+", "+track.getName())}));
 				kCar.setTrain(train);
 				kCar.setRouteLocation(rl);
 				kCar.setRouteDestination(rld);
 				kCar.setDestination(destination, track, true);	//force destination
 			}
-			// not part of kernel, add one car	
-		} else {
-			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{car.toString(), (destination.getName()+", "+track.getName())}));
-			car.setTrain(train);
-			car.setRouteLocation(rl);
-			car.setRouteDestination(rld);
-			car.setDestination(destination, track);
-		}
+		} 
 		numberCars++;		// bump number of cars moved by this train
 		moves++;			// bump number of car pick up moves for the location
 		reqNumOfMoves--; 	// decrement number of moves left for the location
@@ -1626,7 +1626,7 @@ public class TrainBuilder extends TrainCommon{
 						car.setNextDestination(track.getLocation());
 						car.setNextDestTrack(track);
 						// test to see if destination is reachable
-						if (Router.instance().setDestination(car, train)){
+						if (Router.instance().setDestination(car, train, buildReport)){
 							car.setScheduleId(track.getCurrentScheduleItem().getId());
 							// is car part of kernel?
 							car.updateKernel();
@@ -1684,7 +1684,7 @@ public class TrainBuilder extends TrainCommon{
 				car.setNextDestination(track.getLocation());
 				car.setNextDestTrack(track);
 				// try routing car
-				if (Router.instance().setDestination(car, train)){
+				if (Router.instance().setDestination(car, train, buildReport)){
 					// return car with this custom load and destination
 					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
 							new Object[]{car.toString(), si.getLoad(), track.getLocation().getName(), track.getName()}));
@@ -2267,7 +2267,17 @@ public class TrainBuilder extends TrainCommon{
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
 					}
-				} 
+				} else {
+					if (r == 0){
+						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName})
+								+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
+					} else if (!rl.getDepartureTime().equals("")){
+						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}) 
+								+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
+					} else {
+						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}));
+					}
+				}
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled()){
 					Location l = locationManager.getLocationByName(rl.getName());
@@ -2342,16 +2352,6 @@ public class TrainBuilder extends TrainCommon{
 						}
 						newWork = false;
 						newLine(fileOut);
-					} else {
-						if (r == 0){
-							addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName})
-									+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
-						} else if (!rl.getDepartureTime().equals("")){
-							addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}) 
-									+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
-						} else {
-							addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}));
-						}
 					}
 				}
 			} else {

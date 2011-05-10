@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Builds a switch list for a location on the railroad
- * @author Daniel Boudreau (C) Copyright 2008
+ * @author Daniel Boudreau (C) Copyright 2008, 2011
  *
  */
 public class TrainSwitchLists extends TrainCommon {
@@ -58,6 +58,7 @@ public class TrainSwitchLists extends TrainCommon {
 			int pickupCars = 0;
 			int dropCars = 0;
 			int stops = 1;
+			boolean trainDone = false;
 			Train train = manager.getTrainById(trains.get(i));
 			if (!train.isBuilt())
 				continue;	// train wasn't built so skip
@@ -78,18 +79,23 @@ public class TrainSwitchLists extends TrainCommon {
 						RouteLocation rlPrevious = route.getLocationById(routeList.get(r-1));
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))){
 							newLine(fileOut);
-							addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops}));
+							addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getName()}));
 						} else {
 							stops--;	// don't bump stop count, same location
 						}
 					} else {
 						newLine(fileOut);
-						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));
+						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));					
 						String expected = "";
+						String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 						if (r != 0)
-							expected = MessageFormat.format(rb.getString("expectedArrival"), new Object[]{train.getExpectedArrivalTime(rl)});
+							expected = MessageFormat.format(rb.getString("expectedArrival"), new Object[]{expectedArrivalTime});
 						if (train.isTrainInRoute()){
-							addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{train.getTrainDepartsName(), train.getExpectedArrivalTime(rl)}));
+							if (expectedArrivalTime.equals("-1")){
+								trainDone = true;	
+							} else {
+								addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{train.getTrainDepartsName(), expectedArrivalTime}));
+							}
 						} else {
 							addLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{train.getTrainDepartsName(), train.getDepartureTime(), expected}));
 						}
@@ -124,12 +130,16 @@ public class TrainSwitchLists extends TrainCommon {
 					stops++;
 				}
 			}
-			if (stops > 1 && pickupCars == 0){
-				addLine(fileOut, rb.getString("NoCarPickUps"));
-			}
-	
-			if (stops > 1 && dropCars == 0){
-				addLine(fileOut, rb.getString("NoCarDrops"));
+			if (trainDone && pickupCars == 0 && dropCars == 0){
+				addLine(fileOut, rb.getString("TrainDone"));
+			} else {
+				if (stops > 1 && pickupCars == 0){
+					addLine(fileOut, rb.getString("NoCarPickUps"));
+				}
+
+				if (stops > 1 && dropCars == 0){
+					addLine(fileOut, rb.getString("NoCarDrops"));
+				}
 			}
 		}
 		// Are there any cars that need to be found?

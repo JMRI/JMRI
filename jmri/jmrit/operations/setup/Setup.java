@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
+import jmri.jmrit.operations.trains.TrainLogger;
 
 import org.jdom.Element;
 
@@ -183,6 +184,7 @@ public class Setup {
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full
 	private static boolean carLogger = false;			//when true car logger is enabled
 	private static boolean engineLogger = false;		//when true engine logger is enabled
+	private static boolean trainLogger = false;			//when true train logger is enabled
 	
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length
 	private static boolean allowLocalInterchangeMoves = false;	// when true local interchange to interchange moves are allowed
@@ -542,6 +544,15 @@ public class Setup {
 	public static void setEngineLoggerEnabled(boolean enable){
 		engineLogger = enable;
 		RollingStockLogger.instance().enableEngineLogging(enable);
+	}
+	
+	public static boolean isTrainLoggerEnabled(){
+		return trainLogger;
+	}
+	
+	public static void setTrainLoggerEnabled(boolean enable){
+		trainLogger = enable;
+		TrainLogger.instance().enableTrainLogging(enable);
 	}
 	
 	public static String getPickupEnginePrefix(){
@@ -923,9 +934,10 @@ public class Setup {
     	values.setAttribute("showRfid", isRfidEnabled()?"true":"false");
     	values.setAttribute("carRoutingEnabled", isCarRoutingEnabled()?"true":"false");
     	values.setAttribute("carRoutingViaStaging", isCarRoutingViaStagingEnabled()?"true":"false");
-    	values.setAttribute("carLogger", isCarLoggerEnabled()?"true":"false");
     	values.setAttribute("forwardToYard", isForwardToYardEnabled()?"true":"false");
+    	values.setAttribute("carLogger", isCarLoggerEnabled()?"true":"false");    	
        	values.setAttribute("engineLogger", isEngineLoggerEnabled()?"true":"false");
+       	values.setAttribute("trainLogger", isTrainLoggerEnabled()?"true":"false");
        	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
        	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
        	values.setAttribute("yearModeled", getYearModeled());
@@ -1365,6 +1377,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("engineLogger: "+enable);
         		setEngineLoggerEnabled(enable.equals("true"));
+        	}
+           	if ((a = operations.getChild("settings").getAttribute("trainLogger"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("trainLogger: "+enable);
+        		setTrainLoggerEnabled(enable.equals("true"));
         	}
         }
     }

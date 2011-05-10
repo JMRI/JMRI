@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -43,6 +43,7 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
 	JCheckBox carLoggerCheckBox = new JCheckBox(rb.getString("EnableCarLogging"));
 	JCheckBox engineLoggerCheckBox = new JCheckBox(rb.getString("EnableEngineLogging"));
+	JCheckBox trainLoggerCheckBox = new JCheckBox(rb.getString("EnableTrainLogging"));
 	
 	JCheckBox localInterchangeCheckBox = new JCheckBox(rb.getString("AllowLocalInterchange"));
 	JCheckBox localSidingCheckBox = new JCheckBox(rb.getString("AllowLocalSiding"));
@@ -68,6 +69,7 @@ public class OptionFrame extends OperationsFrame{
 		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
 		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
 		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
+		trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());
 		localInterchangeCheckBox.setSelected(Setup.isLocalInterchangeMovesEnabled());
 		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
@@ -110,6 +112,7 @@ public class OptionFrame extends OperationsFrame{
 		pLogger.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLoggerOptions")));		
 		addItemLeft (pLogger, engineLoggerCheckBox, 1,0);
 		addItemLeft (pLogger, carLoggerCheckBox, 1,1);
+		addItemLeft (pLogger, trainLoggerCheckBox, 1,2);
 		
 		JPanel pOption = new JPanel();
 		pOption.setLayout(new GridBagLayout());
@@ -187,6 +190,7 @@ public class OptionFrame extends OperationsFrame{
 			// Logging enabled?		
 			Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
 			Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());
+			Setup.setTrainLoggerEnabled(trainLoggerCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 		}
 	}

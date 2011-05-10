@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.79 $
+ * @version             $Revision: 1.80 $
  */
 public class Car extends RollingStock {
 	
@@ -469,7 +469,8 @@ public class Car extends RollingStock {
 	 */
 	private void scheduleNext(Track track){
 		if (getDestination() != null && getDestination().equals(getNextDestination())
-				&& getDestinationTrack() != null && getDestinationTrack().equals(getNextDestTrack())){
+				&& getDestinationTrack() != null 
+				&& (getDestinationTrack().equals(getNextDestTrack()) ||	getNextDestTrack() == null)){
 			setNextDestination(null);
 			setNextDestTrack(null);
 		}

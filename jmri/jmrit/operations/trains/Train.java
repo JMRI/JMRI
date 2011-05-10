@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.117 $
+ * @version $Revision: 1.118 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -253,7 +253,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * the location rl.  Expected arrival time is based on the
 	 * number of car pick up and set outs for this train.
 	 * TODO Doesn't provide expected arrival time if train
-	 * is in route, instead provides relative time.
+	 * is in route, instead provides relative time.  If train
+	 * has passed the location return -1.
 	 * @return expected arrival time
 	 */
 	public String getExpectedArrivalTime(RouteLocation routeLocation){
@@ -261,16 +262,28 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!isTrainInRoute()){
 			minutes += _departureTime.get(Calendar.MINUTE); 
 			minutes += 60*_departureTime.get(Calendar.HOUR_OF_DAY);
+		} else {
+			minutes = -1;
 		}
 		//boolean trainAt = false;
 		CarManager carManager = CarManager.instance();
 		List<String> carList = carManager.getByTrainList(this);
+		boolean trainLocFound = false;
 		if (getRoute() != null){
 			List<String> routeList = getRoute().getLocationsBySequenceList();
 			for (int i=0; i<routeList.size(); i++){
 				RouteLocation rl = getRoute().getLocationById(routeList.get(i));
 				if (rl == routeLocation)
 					break; // done
+				// start recording time after finding where the train is
+				if (!trainLocFound && isTrainInRoute()){
+					if (rl == getCurrentLocation()){
+						trainLocFound = true;
+						// add travel time
+						minutes = Setup.getTravelTime();
+					}
+					continue;
+				}
 				// is there a departure time from this location?
 				if (!rl.getDepartureTime().equals("")){
 					String dt = rl.getDepartureTime();
@@ -297,6 +310,8 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 		}
+		if (minutes == -1)
+			return "-1";
 		log.debug("Calculate arrival time for train (" +getName()+ ") at ("+routeLocation.getName()+"), minutes from departure: "+minutes);
 		// TODO use fast clock to get current time vs departure time
 		// for now use relative
