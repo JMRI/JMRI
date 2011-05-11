@@ -918,7 +918,6 @@ public class PanelEditor extends Editor implements ItemListener {
     }
     
     protected void showAddItemPopUp(final MouseEvent event, JPopupMenu popup){
-        System.out.println(isEditable());
         if(!isEditable())
             return;
         JMenu _add = new JMenu("Add Item"/*rb.getString("FontBackgroundColor")*/);
