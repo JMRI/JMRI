@@ -107,10 +107,10 @@ public class FunctionButtonPropertyEditor extends JDialog
 
         constraints.gridy = 5;
         constraints.gridx = 0;
-        propertyPanel.add(new JLabel("off icon:"), constraints);
+        propertyPanel.add(new JLabel(rb.getString("OffIcon")), constraints);
         
         constraints.gridx = 1;
-        propertyPanel.add(new JLabel("on icon:"), constraints);
+        propertyPanel.add(new JLabel(rb.getString("OnIcon")), constraints);
         
         constraints.gridy = 6;
         constraints.gridx = 0;
