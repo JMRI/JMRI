@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -148,15 +148,18 @@ public class Setup {
 	private static int fontSize = 10;
 	private static String pickupColor = BLACK;
 	private static String dropColor = BLACK;
+	private static String localColor = BLACK;
 	private static String[] pickupEngineMessageFormat = {ROAD, NUMBER, NONE, MODEL, NONE, NONE, LOCATION, COMMENT};
 	private static String[] dropEngineMessageFormat = {ROAD, NUMBER, NONE, MODEL, NONE, NONE, DESTINATION, COMMENT};
 	private static String[] pickupCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, COMMENT, PICKUP_COMMENT};
 	private static String[] dropCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION, COMMENT, DROP_COMMENT};
+	private static String[] localMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, DESTINATION, COMMENT};
 	private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
 	private static String pickupEnginePrefix = BOX + rb.getString("PickUpPrefix");
 	private static String dropEnginePrefix = BOX + rb.getString("SetOutPrefix");
 	private static String pickupCarPrefix = BOX + rb.getString("PickUpPrefix");
 	private static String dropCarPrefix = BOX + rb.getString("SetOutPrefix");
+	private static String localPrefix = BOX + rb.getString("LocalCarPrefix");
 	private static boolean tab = false;
 	private static String miaComment = rb.getString("misplacedCars");
 	private static String logoURL ="";
@@ -587,6 +590,14 @@ public class Setup {
 		dropCarPrefix = prefix;
 	}
 	
+	public static String getLocalPrefix(){
+		return localPrefix;
+	}
+	
+	public static void setLocalPrefix(String prefix){
+		localPrefix = prefix;
+	}
+	
 	public static String[] getPickupEngineMessageFormat(){
 		return pickupEngineMessageFormat.clone();
 	}
@@ -623,6 +634,15 @@ public class Setup {
 		dropCarMessageFormat = format;
 	}
 	
+	public static String[] getLocalMessageFormat(){
+		return localMessageFormat.clone();
+	}
+	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	public static void setLocalMessageFormat(String[] format){
+		localMessageFormat = format;
+	}
+	
 	public static String[] getMissingCarMessageFormat(){
 		return missingCarMessageFormat.clone();
 	}
@@ -648,6 +668,14 @@ public class Setup {
 		pickupColor = color;
 	}
 	
+	public static String getLocalTextColor(){
+		return localColor;
+	}
+	
+	public static void setLocalTextColor(String color){
+		localColor = color;
+	}
+	
 	public static Color getPickupColor(){
 		if (pickupColor.equals(BLUE))
 			return Color.blue;
@@ -664,6 +692,16 @@ public class Setup {
 		if (dropColor.equals(GREEN))
 			return Color.green;
 		if (dropColor.equals(RED))
+			return Color.red;
+		return Color.black;	// default
+	}
+	
+	public static Color getLocalColor(){
+		if (localColor.equals(BLUE))
+			return Color.blue;
+		if (localColor.equals(GREEN))
+			return Color.green;
+		if (localColor.equals(RED))
 			return Color.red;
 		return Color.black;	// default
 	}
@@ -974,6 +1012,14 @@ public class Setup {
        	}
        	values.setAttribute("setting", buf.toString());
        	
+      	e.addContent(values = new Element("localFormat"));
+      	values.setAttribute("prefix", getLocalPrefix());
+        buf = new StringBuffer();
+       	for (int i=0; i<localMessageFormat.length; i++){
+       		buf.append(localMessageFormat[i]+",");
+       	}
+       	values.setAttribute("setting", buf.toString());
+       	
      	e.addContent(values = new Element("missingCarFormat"));
         buf = new StringBuffer();
        	for (int i=0; i<missingCarMessageFormat.length; i++){
@@ -995,6 +1041,7 @@ public class Setup {
       	e.addContent(values = new Element("manifestColors"));
     	values.setAttribute("dropColor", getDropTextColor());
     	values.setAttribute("pickupColor", getPickupTextColor());
+    	values.setAttribute("localColor", getLocalTextColor());
     	
     	e.addContent(values = new Element("tab"));
     	values.setAttribute("enabled", isTabEnabled()?"true":"false");
@@ -1194,6 +1241,16 @@ public class Setup {
         		setDropCarMessageFormat(format);
         	}
         }
+        if (operations.getChild("localFormat") != null){
+        	if ((a = operations.getChild("localFormat").getAttribute("prefix"))!= null)
+        		setLocalPrefix(a.getValue());
+        	if ((a = operations.getChild("localFormat").getAttribute("setting"))!= null){
+        		String setting = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("localFormat: "+setting);
+        		String[] format = setting.split(",");
+        		setLocalMessageFormat(format);
+        	}
+        }
         if (operations.getChild("missingCarFormat") != null){
         	if ((a = operations.getChild("missingCarFormat").getAttribute("setting"))!= null){
         		String setting = a.getValue();
@@ -1241,6 +1298,11 @@ public class Setup {
         		String pickupColor = a.getValue();
         		if (log.isDebugEnabled()) log.debug("pickupColor: "+pickupColor);
         		setPickupTextColor(pickupColor);
+        	}
+           	if((a = operations.getChild("manifestColors").getAttribute("localColor"))!= null){
+        		String localColor = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("localColor: "+localColor);
+        		setLocalTextColor(localColor);
         	}
         }
         if ((operations.getChild("tab") != null)){ 

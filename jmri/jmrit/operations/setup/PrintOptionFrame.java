@@ -30,8 +30,8 @@ import jmri.jmrit.operations.OperationsFrame;
 /**
  * Frame for user edit of print options
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.19 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @version $Revision: 1.20 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -65,25 +65,26 @@ public class PrintOptionFrame extends OperationsFrame{
 	JTextField dropEngPrefix = new JTextField(10);
 	JTextField pickupCarPrefix = new JTextField(10);
 	JTextField dropCarPrefix = new JTextField(10);
+	JTextField localPrefix = new JTextField(10);
 	
 	// text area
 	JTextArea commentTextArea	= new JTextArea(2,90);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	Dimension minScrollerDim = new Dimension(700,60);
 	
-
-	
 	// combo boxes
 	JComboBox fontComboBox = Setup.getFontComboBox();
 	JComboBox fontSizeComboBox = new JComboBox();
-	JComboBox pickupComboBox = Setup.getPrintColorComboBox();
+	JComboBox pickupComboBox = Setup.getPrintColorComboBox();	// colors
 	JComboBox dropComboBox = Setup.getPrintColorComboBox();
+	JComboBox localComboBox = Setup.getPrintColorComboBox();
 	
 	// message formats
 	List<JComboBox> enginePickupMessageList = new ArrayList<JComboBox>();
 	List<JComboBox> engineDropMessageList = new ArrayList<JComboBox>();
 	List<JComboBox> carPickupMessageList = new ArrayList<JComboBox>();
 	List<JComboBox> carDropMessageList = new ArrayList<JComboBox>();
+	List<JComboBox> localMessageList = new ArrayList<JComboBox>();
 
 	public PrintOptionFrame() {
 		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitlePrintOptions"));
@@ -128,9 +129,14 @@ public class PrintOptionFrame extends OperationsFrame{
 		JPanel pPickupColor = new JPanel();
 		pPickupColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupColor")));
 		pPickupColor.add( pickupComboBox);
+		
 		JPanel pDropColor = new JPanel();
 		pDropColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropColor")));
 		pDropColor.add(dropComboBox);
+		
+		JPanel pLocalColor = new JPanel();
+		pLocalColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocalColor")));
+		pLocalColor.add(localComboBox);
 		
 		JPanel pFormat = new JPanel();
 		pFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFormat")));
@@ -140,6 +146,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		p1.add(pFontSize);
 		p1.add(pPickupColor);
 		p1.add(pDropColor);
+		p1.add(pLocalColor);
 		p1.add(pFormat);
 		
 		// engine message format
@@ -193,6 +200,19 @@ public class PrintOptionFrame extends OperationsFrame{
 			carDropMessageList.add(b);
 		}
 		
+		// local car move message format
+		JPanel pLocal = new JPanel();
+		pLocal.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocal")));
+		pLocal.add(localPrefix);
+		localPrefix.setText(Setup.getLocalPrefix());
+		String[] localFormat = Setup.getLocalMessageFormat();
+		for (int i=0; i<localFormat.length; i++){
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(localFormat[i]);
+			pLocal.add(b);
+			localMessageList.add(b);
+		}
+		
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
 		
@@ -216,6 +236,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifest.add(pEngDrop);
 		pManifest.add(pPickup);
 		pManifest.add(pDrop);
+		pManifest.add(pLocal);
 		pManifest.add(p2);
 			
 		// build report options
@@ -252,7 +273,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		updateLogoButtons();
 		dropComboBox.setSelectedItem(Setup.getDropTextColor());
 		pickupComboBox.setSelectedItem(Setup.getPickupTextColor());		
-
+		localComboBox.setSelectedItem(Setup.getLocalTextColor());	
+		
 		commentTextArea.setText(Setup.getMiaComment());
 		
 		ButtonGroup buildReportGroup = new ButtonGroup();
@@ -308,15 +330,17 @@ public class PrintOptionFrame extends OperationsFrame{
 			// drop and pick up color option
 			Setup.setDropTextColor((String)dropComboBox.getSelectedItem());
 			Setup.setPickupTextColor((String)pickupComboBox.getSelectedItem());
-			// save engine message format
+			Setup.setLocalTextColor((String)localComboBox.getSelectedItem());
+			// save engine pick up message format
 			Setup.setPickupEnginePrefix(pickupEngPrefix.getText());
-			Setup.setDropEnginePrefix(dropEngPrefix.getText());
 			String[] format = new String[enginePickupMessageList.size()];
 			for (int i=0; i<enginePickupMessageList.size(); i++){
 				JComboBox b = enginePickupMessageList.get(i);
 				format[i] = (String)b.getSelectedItem();
 			}
 			Setup.setPickupEngineMessageFormat(format);
+			// save engine drop message format
+			Setup.setDropEnginePrefix(dropEngPrefix.getText());
 			format = new String[engineDropMessageList.size()];
 			for (int i=0; i<engineDropMessageList.size(); i++){
 				JComboBox b = engineDropMessageList.get(i);
@@ -325,7 +349,6 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setDropEngineMessageFormat(format);
 			// save car pick up message format
 			Setup.setPickupCarPrefix(pickupCarPrefix.getText());
-			Setup.setDropCarPrefix(dropCarPrefix.getText());
 			format = new String[carPickupMessageList.size()];
 			for (int i=0; i<carPickupMessageList.size(); i++){
 				JComboBox b = carPickupMessageList.get(i);
@@ -333,12 +356,21 @@ public class PrintOptionFrame extends OperationsFrame{
 			}
 			Setup.setPickupCarMessageFormat(format);
 			// save car drop message format
+			Setup.setDropCarPrefix(dropCarPrefix.getText());
 			format = new String[carDropMessageList.size()];
 			for (int i=0; i<carDropMessageList.size(); i++){
 				JComboBox b = carDropMessageList.get(i);
 				format[i] = (String)b.getSelectedItem();
 			}
 			Setup.setDropCarMessageFormat(format);
+			// save local message format
+			Setup.setLocalPrefix(localPrefix.getText());
+			format = new String[localMessageList.size()];
+			for (int i=0; i<localMessageList.size(); i++){
+				JComboBox b = localMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setLocalMessageFormat(format);
 			// misplaced car comment
 			Setup.setMiaComment(commentTextArea.getText());
 			// build report level

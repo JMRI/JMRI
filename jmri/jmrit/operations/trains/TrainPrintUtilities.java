@@ -24,7 +24,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
 /**
  * Train print utilities
  * @author Daniel Boudreau (C) 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  *
  */
 public class TrainPrintUtilities {
@@ -110,6 +110,10 @@ public class TrainPrintUtilities {
 						|| (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup.getDropCarPrefix()))){
 					//log.debug("found a drop line");
 					c = Setup.getDropColor();
+				}
+				else if(!Setup.getLocalPrefix().equals("") && line.startsWith(Setup.getLocalPrefix())){
+					//log.debug("found a drop line");
+					c = Setup.getLocalColor();
 				}
 				else if(!line.startsWith(TrainCommon.TAB)){
 					c = null;

@@ -35,6 +35,8 @@ public class TrainCommon {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String TAB = "    ";
+	private static final boolean pickup = true;
+	private static final boolean local = true;
 	EngineManager engineManager = EngineManager.instance();
 	
 	protected void pickupEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl){
@@ -58,7 +60,7 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer(Setup.getPickupEnginePrefix());
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
-			buf.append(getEngineAttribute(engine, format[i], true));
+			buf.append(getEngineAttribute(engine, format[i], pickup));
 		}
 		addLine(file, buf.toString());
 	}
@@ -67,16 +69,18 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
-			buf.append(getEngineAttribute(engine, format[i], false));
+			buf.append(getEngineAttribute(engine, format[i], !pickup));
 		}
 		addLine(file, buf.toString());
 	}
 	
 	protected void pickupCar(PrintWriter file, Car car){
 		StringBuffer buf = new StringBuffer(Setup.getPickupCarPrefix());
+		if (car.getRouteLocation().equals(car.getRouteDestination()))
+			return; // print nothing local move, see dropCar
 		String[] format = Setup.getPickupCarMessageFormat();
 		for (int i=0; i<format.length; i++){
-			String s = getCarAttribute(car, format[i], true);
+			String s = getCarAttribute(car, format[i], pickup, !local);
 			if (buf.length()+s.length()>lineLength()){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
@@ -89,8 +93,15 @@ public class TrainCommon {
 	protected void dropCar(PrintWriter file, Car car){
 		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
 		String[] format = Setup.getDropCarMessageFormat();
+		// local move?
+		boolean local = false;
+		if (car.getRouteLocation().equals(car.getRouteDestination())){
+			buf = new StringBuffer(Setup.getLocalPrefix());
+			format = Setup.getLocalMessageFormat();
+			local = true;
+		}
 		for (int i=0; i<format.length; i++){
-			String s = getCarAttribute(car, format[i], false);
+			String s = getCarAttribute(car, format[i], !pickup, local);
 			if (buf.length()+s.length()>lineLength()){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
@@ -159,7 +170,7 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getMissingCarMessageFormat();
 		for (int i=0; i<format.length; i++){
-			buf.append(getCarAttribute(car, format[i], false));
+			buf.append(getCarAttribute(car, format[i], false, false));
 		}
 		addLine(file, buf.toString());
 	}
@@ -169,10 +180,10 @@ public class TrainCommon {
 	protected String getEngineAttribute(Engine engine, String attribute, boolean pickup){
 		if (attribute.equals(Setup.MODEL))
 			return " "+ engine.getModel();
-		return getRollingStockAttribute(engine, attribute, pickup);
+		return getRollingStockAttribute(engine, attribute, pickup, false);
 	}
 	
-	protected String getCarAttribute(Car car, String attribute, boolean pickup){
+	protected String getCarAttribute(Car car, String attribute, boolean pickup, boolean local){
 		if (attribute.equals(Setup.LOAD))
 			return (car.isCaboose() || car.isPassenger())? tabString("", CarLoads.instance().getCurMaxNameLength()+1) 
 					: " "+tabString(car.getLoad(), CarLoads.instance().getCurMaxNameLength());
@@ -182,10 +193,10 @@ public class TrainCommon {
 			return " "+CarLoads.instance().getDropComment(car.getType(), car.getLoad());
 		else if (attribute.equals(Setup.PICKUP_COMMENT))
 			return " "+CarLoads.instance().getPickupComment(car.getType(), car.getLoad());
-		return getRollingStockAttribute(car, attribute, pickup);
+		return getRollingStockAttribute(car, attribute, pickup, local);
 	}
 
-	protected String getRollingStockAttribute(RollingStock rs, String attribute, boolean pickup){
+	protected String getRollingStockAttribute(RollingStock rs, String attribute, boolean pickup, boolean local){
 		if (attribute.equals(Setup.NUMBER))
 			return " "+tabString(splitString(rs.getNumber()), Control.MAX_LEN_STRING_ROAD_NUMBER-4);
 		else if (attribute.equals(Setup.ROAD))
@@ -198,9 +209,9 @@ public class TrainCommon {
 			return " "+tabString(rs.getLength()+ LENGTHABV, CarLengths.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COLOR))
 			return " "+tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
-		else if (attribute.equals(Setup.LOCATION) && pickup)
+		else if (attribute.equals(Setup.LOCATION) && (pickup || local))
 			return " "+rb.getString("from")+ " "+splitString(rs.getTrackName());
-		else if (attribute.equals(Setup.LOCATION) && !pickup)
+		else if (attribute.equals(Setup.LOCATION) && !pickup && !local)
 			return " "+rb.getString("from")+ " "+splitString(rs.getLocationName());
 		else if (attribute.equals(Setup.DESTINATION) && pickup){
 			if (Setup.isTabEnabled())
