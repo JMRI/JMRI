@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.107 2011-04-30 00:04:58 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.108 2011-05-11 21:23:04 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -388,10 +388,10 @@ will try and route the car after every move.</P>
 <A NAME="LoggingOptions"></A>
 <H3>Logging Options</H3>
 
-If you want the operations program to log your locomotive and or car movements to
+If you want the operations program to log your locomotive, car, or train movements to
 a file, select the appropriate checkboxes.  The program will create a new
 directory called "logger" in the operations directory.  For each day's session
-the program will create a new file using the day's date.
+the program will create a new file (.csv) using the day's date.
 
 <A NAME="ManifestOptions"></A>
 <H3>Options</H3>
@@ -453,18 +453,28 @@ the print option window.
 <img src="images/PrintOptions.png">
 </P>
 <H3>Manifest Printer Font</H3>
+
 The program supports several types of fonts for printing. Select the desired
-font and size using the pull down menus. 
+font and size using the pull down menus.
 
 <H3>Set Out Text Color</H3>
 
-You can select the text color of your manifest when the operation is to set out a car.
-Select the desired color from the drop down box.
+You can select the text color of your manifest when the operation is to
+set out a car or locomotive. Select the desired color from the drop down
+box.
 
 <H3>Pick Up Text Color</H3>
 
-You can select the text color of your manifest when the operation is to pick up a car.
-Select the desired color from the drop down box.
+You can select the text color of your manifest when the operation is to
+pick up a car or locomotive. Select the desired color from the drop down
+box.
+
+<H3>Local Move Text Color</H3>
+
+You can select the text color of your manifest when the operation is to
+move a car from one track to another at the same location. The car in
+this case in not added to the train. Select the desired color from the
+drop down box.
 
 <H3>Manifest Format</H3>
 
@@ -474,10 +484,11 @@ equally spaced characters like "Courier or Monospaced".
 
 <H3>Message Formats</H3>
 
-You can customize the pick up and set out messages for your manifests and
-switch lists by selecting the appropriate drop down menus.  To remove an
-attribute select blank.  You can also edit the "Set out" and "Pick up" prefixes.
-If you want to use the color options, the set out and pick up prefixes must be unique.
+You can customize the pick up, set out, and local move messages for your
+manifests and switch lists by selecting the appropriate drop down menus.
+To remove an attribute select blank. You can also edit the "Set out",
+"Pick up" and "Move" prefixes. If you want to use the text color
+options, the set out, pick up, and move prefixes must be unique.
 
 <H3>Show Comments on Manifests</H3>
 
@@ -659,6 +670,10 @@ so see above for more information. You can if you wish schedule the
 order that cars will be delivered to a siding, or demand cars with
 certain loads. See <A HREF="#Schedules">Schedules</A> below for more
 information. 
+<P>When a car is placed at a siding the car's load status is modified.  The program
+provides two load names for all cars, the default empty or "E", and the default load
+or "L".  If a car has one of these loads when it arrives at a siding, the load name
+will change to the other, i.e. "E" becomes "L" and "L" becomes "E".</P>
 
 <A NAME="Schedules"></A>
 <H3>Schedules</H3>
@@ -1018,7 +1033,11 @@ There are three buttons located at the bottom of the Cars window. The
 "Add" button allows you to add a car to your roster. The "Save" button
 stores the cars roster to disk. It also saves the Cars window position
 and size, and any changes you made to the table widths.  The "Find" button
-and the adjacent text window can be used to find a car by its number.
+and the adjacent text window can be used to find a car by its road number.  You
+can use the wild card "*" when entering a car number.  For example if you
+want to find all cars with numbers that ended with 345, enter *345, and press
+find.  Each time you press find, the next car with a road number ending with
+"345" will be highlighted.
 
 <P>
 <A NAME="ImportingCars"></A>
