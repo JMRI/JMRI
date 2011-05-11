@@ -263,18 +263,6 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
 
     /************************* end setup **************************/
 
-    private void setIntroPanel() {
-        if (_adjacentBlock==null) {
-            return;
-        }
-        _introPanel.setVisible(true);
-        _portalPanel.setVisible(false);
-        _parent.clearAdjacentBlock();
-        setTitle(java.text.MessageFormat.format(rbcp.getString("OpenPortalTitle"),
-                                                _homeBlock.getDisplayName()));
-        setSize(getPreferredSize());
-    }
-
     private void addPortal() {
         JOptionPane.showMessageDialog(this, rbcp.getString("AddPortal"), 
                         rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
