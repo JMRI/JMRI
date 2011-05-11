@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.27 2011-05-10 21:57:20 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.28 2011-05-11 15:30:08 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -157,6 +157,8 @@ None at the time of this release.
 	<LI>Fixed a problem with switch lists showing loco pickups when there wasn't.</LI>
 	<LI>New feature, train logging.  In addition to car and loco logging, the program
 	can now log train activity.</LI>
+	<LI>Operations manifest and switch lists enhancement, users can
+	now specify local car message format and color, see Print Options for details.</LI>
 
 </UL>
 

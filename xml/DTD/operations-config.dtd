@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.35 2011-05-03 12:13:18 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.36 2011-05-11 15:27:52 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -16,7 +16,7 @@
 <!ELEMENT operations-config (operations)*>
 <!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
- | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat 
+ | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | comments)*>
 
 <!ELEMENT railRoad EMPTY>
@@ -28,6 +28,7 @@
 <!ELEMENT dropEngFormat EMPTY>
 <!ELEMENT pickupCarFormat EMPTY>
 <!ELEMENT dropCarFormat EMPTY>
+<!ELEMENT localFormat EMPTY>
 <!ELEMENT missingCarFormat EMPTY>
 <!ELEMENT manifestColors EMPTY>
 <!ELEMENT manifestLogo EMPTY>
@@ -58,6 +59,7 @@
 <!ATTLIST settings forwardToYard 	(true | false ) "true">
 <!ATTLIST settings carLogger 		(true | false ) "false">  
 <!ATTLIST settings engineLogger 	(true | false ) "false"> 
+<!ATTLIST settings trainLogger 		(true | false ) "false"> 
 <!ATTLIST settings addCarComment	(true | false ) "false">
 <!ATTLIST settings printLocComments	(true | false ) "false"> 
 <!ATTLIST settings printLoadsEmpties (true | false ) "false"> 
@@ -73,13 +75,16 @@
 <!ATTLIST dropEngFormat prefix		CDATA #IMPLIED>
 <!ATTLIST pickupCarFormat prefix	CDATA #IMPLIED>
 <!ATTLIST dropCarFormat prefix		CDATA #IMPLIED>
+<!ATTLIST localFormat prefix		CDATA #IMPLIED>
 <!ATTLIST pickupEngFormat setting	CDATA #IMPLIED>
 <!ATTLIST dropEngFormat setting		CDATA #IMPLIED>
 <!ATTLIST pickupCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST dropCarFormat setting		CDATA #IMPLIED>
+<!ATTLIST localFormat setting		CDATA #IMPLIED>
 <!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
+<!ATTLIST manifestColors localColor	CDATA #IMPLIED>  
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>  
 <!ATTLIST buildOptions aggressive					(true | false ) "false">  
 <!ATTLIST buildOptions allowLocalInterchange		(true | false ) "false">
