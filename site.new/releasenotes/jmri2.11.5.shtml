@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.28 2011-05-11 15:30:08 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.29 2011-05-11 17:51:46 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -159,6 +159,8 @@ None at the time of this release.
 	can now log train activity.</LI>
 	<LI>Operations manifest and switch lists enhancement, users can
 	now specify local car message format and color, see Print Options for details.</LI>
+	<LI>Program now remembers a car's previous final destination when reseting a train. Now
+	when you reset a train the car destinations that were set by a schedule will remain.</LI>
 
 </UL>
 
