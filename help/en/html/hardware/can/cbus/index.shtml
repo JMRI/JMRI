@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.10 2011-02-15 22:32:01 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.11 2011-05-12 18:49:15 jacobsen Exp $ -->
 <title>JMRI: CBUS Support</title>
 
 <!-- Style -->
@@ -50,6 +50,13 @@ for CBUS connections is "M". Details of CBUS
 event and object names are 
 described below, with technical details on a
 <a href="Names.shtml">separate page</a>.
+
+<p>
+Note that there's a 
+<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
+that can help you create Turnouts and Sensor
+names without having to directly work out
+the system names.
 
 <p>
 JMRI associates CBUS events with individual
