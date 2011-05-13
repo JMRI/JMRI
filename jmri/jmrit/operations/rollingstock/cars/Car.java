@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.81 $
+ * @version             $Revision: 1.82 $
  */
 public class Car extends RollingStock {
 	
@@ -376,11 +376,16 @@ public class Car extends RollingStock {
 		if (track.getScheduleMode() == Track.SEQUENTIAL)
 			return checkScheduleItem(track, si);
 		// schedule in is match mode search entire schedule for a match
+		return searchSchedule(track);
+	}
+	
+	private String searchSchedule(Track track){
 		for (int i=0; i<track.getSchedule().getSize(); i++){
-			si = track.getNextScheduleItem();
+			ScheduleItem si = track.getNextScheduleItem();
 			if (checkScheduleItem(track, si).equals(OKAY)){
 				log.debug("Found schedule item ("+si.getId()+") match for car ("+toString()+") ship ("+si.getShip()+") " +
 						"destination ("+si.getDestinationName()+", "+si.getDestinationTrackName()+")");
+				setScheduleId(si.getId());
 				return OKAY;
 			}
 		}
@@ -496,12 +501,16 @@ public class Car extends RollingStock {
 					loadNext(si);
 					return;
 				}
+				log.debug("Schedule id not valid for track ("+track.getName()+")");
 			}
 		}
+		if (track.getScheduleMode() == Track.MATCH)
+			searchSchedule(track);
 		ScheduleItem currentSi = track.getCurrentScheduleItem();
-		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id: "+track.getScheduleItemId());
+		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id: "+track.getScheduleItemId()+" mode: "+track.getScheduleMode());
 		if (currentSi != null && getType().equals(currentSi.getType()) && (currentSi.getLoad().equals("") || getLoad().equals(currentSi.getLoad()))){
 			loadNext(currentSi);
+			setScheduleId("");
 			// bump schedule
 			track.bumpSchedule();
 		} else if (currentSi != null){

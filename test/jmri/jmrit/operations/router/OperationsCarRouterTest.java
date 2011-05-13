@@ -14,6 +14,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.Route;
@@ -30,7 +31,7 @@ import java.util.Locale;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -1428,6 +1429,7 @@ public class OperationsCarRouterTest extends TestCase {
 	/*
 	 * Using the setup from the previous tests, use trains and schedules to move
 	 * cars. This test creates 1 schedule in match mode with multiple items.
+	 * Test uses car loads to activate schedule.
 	 */
 	public void testRoutingWithSchedulesMatchMode() {
 		TrainManager tmanager = TrainManager.instance();
@@ -1436,8 +1438,6 @@ public class OperationsCarRouterTest extends TestCase {
 
 		List<String> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 6, trains.size());
-		
-		Train ActonTrain = tmanager.getTrainByName("Acton Local");
 		
 		Car c3 = cmanager.getByRoadAndNumber("BA", "3");
 		Car c4 = cmanager.getByRoadAndNumber("BB", "4");
@@ -1552,6 +1552,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Place car", Car.OKAY, c9.setLocation(Acton, AS1));
 		
 		// build train
+		Train ActonTrain = tmanager.getTrainByName("Acton Local");
 		ActonTrain.build();
 		Assert.assertTrue("Acton train built", ActonTrain.isBuilt());
 		
@@ -1583,6 +1584,380 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Car BC 9 schedule id", schAItem5.getId(), c9.getScheduleId());
 
 		ActonTrain.reset();
+	}
+	
+	/*
+	 * Using the setup from the previous tests, use trains and schedules to move
+	 * cars. This test creates 1 schedule in match mode with multiple items.
+	 * Cars use final destination to activate schedule
+	 */
+	public void testRoutingWithSchedulesMatchMode2() {
+		TrainManager tmanager = TrainManager.instance();
+		CarManager cmanager = CarManager.instance();
+		LocationManager lmanager = LocationManager.instance();
+
+		List<String> trains = tmanager.getTrainsByNameList();
+		Assert.assertEquals("confirm number of trains", 6, trains.size());
+		
+		Car c3 = cmanager.getByRoadAndNumber("BA", "3");
+		Car c4 = cmanager.getByRoadAndNumber("BB", "4");
+		Car c5 = cmanager.getByRoadAndNumber("BC", "5");
+		Car c6 = cmanager.getByRoadAndNumber("BD", "6");
+		Car c7 = cmanager.getByRoadAndNumber("BA", "7");
+		Car c8 = cmanager.getByRoadAndNumber("BB", "8");
+		Car c9 = cmanager.getByRoadAndNumber("BC", "9");
+		
+		Location Acton = lmanager.getLocationByName("Acton MA");
+		Location Bedford = lmanager.getLocationByName("Bedford MA");
+		Location Clinton = lmanager.getLocationByName("Clinton MA");
+		Location Danbury = lmanager.getLocationByName("Danbury MA");
+		Location Essex = lmanager.getLocationByName("Essex MA");
+		Location Foxboro = lmanager.getLocationByName("Foxboro MA");
+		
+		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SIDING);
+		Track BS1 = Bedford.getTrackByName("Bedford Siding 1", Track.SIDING);
+		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SIDING);
+		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SIDING);
+		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SIDING);
+		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SIDING);
+		//Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
+		Track FS1 = Foxboro.getTrackByName("Foxboro Siding 1", Track.SIDING);
+		
+		// create schedules
+		ScheduleManager scheduleManager = ScheduleManager.instance();
+		Schedule schA = scheduleManager.newSchedule("Schedule ABC");
+		ScheduleItem schAItem1 = schA.addItem("Boxcar");
+		//schAItem1.setLoad("Empty");
+		schAItem1.setShip("Metal");
+		schAItem1.setDestination(Acton);
+		schAItem1.setDestinationTrack(AS1);
+		ScheduleItem schAItem2 = schA.addItem("Flat");
+		//schAItem2.setLoad("Junk");
+		schAItem2.setShip("Metal");
+		schAItem2.setDestination(Danbury);
+		schAItem2.setDestinationTrack(DS2);
+		ScheduleItem schAItem3 = schA.addItem("Boxcar");
+		//schAItem3.setLoad("Boxes");
+		schAItem3.setShip("Screws");
+		schAItem3.setDestination(Bedford);
+		schAItem3.setDestinationTrack(BS1);
+		ScheduleItem schAItem4 = schA.addItem("Boxcar");
+		schAItem4.setLoad(CarLoads.instance().getDefaultEmptyName());
+		schAItem4.setShip("Bolts");
+		schAItem4.setDestination(Danbury);
+		schAItem4.setDestinationTrack(DS1);
+		ScheduleItem schAItem5 = schA.addItem("Boxcar");
+		schAItem5.setLoad(CarLoads.instance().getDefaultLoadName());
+		schAItem5.setShip("Nuts");
+		schAItem5.setDestination(Foxboro);
+		schAItem5.setDestinationTrack(FS1);
+		
+		// Add schedule to tracks
+		CS1.setScheduleId("");
+		ES1.setScheduleId(schA.getId());
+		ES1.setScheduleMode(Track.MATCH);	// set schedule into match mode
+		
+		// c3 (BA 3) is a Boxcar
+		c3.setLoad(CarLoads.instance().getDefaultEmptyName());
+		c3.setDestination(null, null);
+		c3.setNextDestination(Essex);
+		c3.setNextDestTrack(null);
+		
+		// c4 (BB 4) is a Flat
+		c4.setLoad(CarLoads.instance().getDefaultEmptyName());
+		c4.setDestination(null, null);
+		c4.setNextDestination(Essex);
+		c4.setNextDestTrack(ES1);
+		
+		// c5 (BC 5) is a Boxcar
+		c5.setDestination(null, null);
+		c5.setLoad(CarLoads.instance().getDefaultLoadName());
+		c5.setNextDestination(Essex);
+		c5.setNextDestTrack(null);
+		
+		// c6 (BD 6) is a Boxcar
+		c6.setDestination(null, null);
+		c6.setLoad(CarLoads.instance().getDefaultEmptyName());
+		c6.setNextDestination(Essex);
+		c6.setNextDestTrack(null);
+		
+		// c7 (BA 7) is a Boxcar
+		c7.setLoad(CarLoads.instance().getDefaultEmptyName());
+		c7.setNextDestination(Essex);
+		c7.setNextDestTrack(ES1);
+
+		// c8 (BB 8) is a Boxcar
+		c8.setLoad(CarLoads.instance().getDefaultEmptyName());
+		c8.setNextDestination(Essex);
+		c8.setNextDestTrack(ES1);
+		
+		// c9 (BC 9) is a Boxcar
+		c9.setLoad(CarLoads.instance().getDefaultEmptyName());
+		c9.setNextDestination(Essex);
+		c9.setNextDestTrack(null);
+		
+		// place cars
+		Assert.assertEquals("Place car", Car.OKAY, c3.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Car.OKAY, c4.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Car.OKAY, c5.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Car.OKAY, c6.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Car.OKAY, c7.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Car.OKAY, c8.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Car.OKAY, c9.setLocation(Acton, AS1));
+		
+		// build train
+		Train ActonTrain = tmanager.getTrainByName("Acton Local");
+		ActonTrain.build();
+		Assert.assertTrue("Acton train built", ActonTrain.isBuilt());
+		
+		// check car destinations
+		Assert.assertEquals("Car BA 3 destination","Acton MA", c3.getDestinationName());
+		Assert.assertEquals("Car BA 3 destination track","Acton Interchange", c3.getDestinationTrackName());
+		Assert.assertEquals("Car BA 3 next destination","Essex MA", c3.getNextDestinationName());
+		Assert.assertEquals("Car BA 3 next destination track","", c3.getNextDestTrackName());
+		Assert.assertEquals("Car BB 4 destination","Acton MA", c4.getDestinationName());
+		Assert.assertEquals("Car BB 4 destination track","Acton Interchange", c4.getDestinationTrackName());
+		Assert.assertEquals("Car BB 4 next destination","Essex MA", c4.getNextDestinationName());
+		Assert.assertEquals("Car BB 4 next destination track","Essex Siding 1", c4.getNextDestTrackName());
+		Assert.assertEquals("Car BC 5 destination","Acton MA", c5.getDestinationName());
+		Assert.assertEquals("Car BC 5 destination track","Acton Interchange", c5.getDestinationTrackName());
+		Assert.assertEquals("Car BC 5 next destination","Essex MA", c5.getNextDestinationName());
+		Assert.assertEquals("Car BC 5 next destination track","", c5.getNextDestTrackName());
+		Assert.assertEquals("Car BD 6 destination","Acton MA", c6.getDestinationName());
+		Assert.assertEquals("Car BD 6 destination track","Acton Interchange", c6.getDestinationTrackName());
+		Assert.assertEquals("Car BD 6 next destination","Essex MA", c6.getNextDestinationName());
+		Assert.assertEquals("Car BD 6 next destination track","", c6.getNextDestTrackName());
+		Assert.assertEquals("Car BA 7 destination","Acton MA", c7.getDestinationName());
+		Assert.assertEquals("Car BA 7 destination track","Acton Interchange", c7.getDestinationTrackName());
+		Assert.assertEquals("Car BA 7 next destination","Essex MA", c7.getNextDestinationName());
+		Assert.assertEquals("Car BA 7 next destination track","Essex Siding 1", c7.getNextDestTrackName());
+		Assert.assertEquals("Car BB 8 destination","Acton MA", c8.getDestinationName());
+		Assert.assertEquals("Car BB 8 destination track","Acton Interchange", c8.getDestinationTrackName());
+		Assert.assertEquals("Car BB 8 next destination","Essex MA", c8.getNextDestinationName());
+		Assert.assertEquals("Car BB 8 next destination track","Essex Siding 1", c8.getNextDestTrackName());
+		Assert.assertEquals("Car BC 9 destination","Acton MA", c9.getDestinationName());
+		Assert.assertEquals("Car BC 9 destination track","Acton Interchange", c9.getDestinationTrackName());
+		Assert.assertEquals("Car BC 9 next destination","Essex MA", c9.getNextDestinationName());
+		Assert.assertEquals("Car BC 9 next destination track","", c9.getNextDestTrackName());
+		
+		// check car schedule ids (Car are being routed by destination not by load so id should be "")
+		Assert.assertEquals("Car BA 3 schedule id", "", c3.getScheduleId());
+		Assert.assertEquals("Car BB 4 schedule id", "", c4.getScheduleId());
+		Assert.assertEquals("Car BC 5 schedule id", "", c5.getScheduleId());
+		Assert.assertEquals("Car BD 6 schedule id", "", c6.getScheduleId());
+		Assert.assertEquals("Car BA 7 schedule id", "", c7.getScheduleId());
+		Assert.assertEquals("Car BB 8 schedule id", "", c8.getScheduleId());
+		Assert.assertEquals("Car BC 9 schedule id", "", c9.getScheduleId());
+
+		ActonTrain.terminate();
+			
+		// move the cars to Bedford
+		Train ActonToBedfordTrain = tmanager.getTrainByName("Acton to Bedford");
+		ActonToBedfordTrain.build();
+		Assert.assertTrue("Acton train built", ActonToBedfordTrain.isBuilt());
+		ActonToBedfordTrain.terminate();
+		
+		// move the cars to Clinton
+		Train BedfordToClintonTrain = tmanager.getTrainByName("Bedford to Clinton");
+		BedfordToClintonTrain.build();
+		Assert.assertTrue("Bedford train built", BedfordToClintonTrain.isBuilt());
+		BedfordToClintonTrain.terminate();
+		
+		// move the cars to Danbury
+		Train ClintonToDanburyTrain = tmanager.getTrainByName("Clinton to Danbury");
+		ClintonToDanburyTrain.build();
+		Assert.assertTrue("Clinton train built", ClintonToDanburyTrain.isBuilt());
+		ClintonToDanburyTrain.terminate();
+		
+		// move the cars to Essex
+		Train DanburyToEssexTrain = tmanager.getTrainByName("Danbury to Essex");
+		DanburyToEssexTrain.build();
+		Assert.assertTrue("Bedford train built", DanburyToEssexTrain.isBuilt());
+
+		
+		// check car destinations
+		// BA 3 (Boxcar)
+		Assert.assertEquals("Car BA 3 destination","Essex MA", c3.getDestinationName());
+		Assert.assertEquals("Car BA 3 destination track","Essex Siding 1", c3.getDestinationTrackName());
+		// new final destination and load for car BA 3
+		Assert.assertEquals("Car BA 3 next destination","Bedford MA", c3.getNextDestinationName());
+		Assert.assertEquals("Car BA 3 next destination track","Bedford Siding 1", c3.getNextDestTrackName());
+		Assert.assertEquals("Car BA 3 next load","Screws", c3.getNextLoad());
+		Assert.assertEquals("Car BA 3 schedule id", "", c3.getScheduleId());
+		// BB 4 (Flat)
+		Assert.assertEquals("Car BB 4 destination","Essex MA", c4.getDestinationName());
+		Assert.assertEquals("Car BB 4 destination track","Essex Siding 1", c4.getDestinationTrackName());
+		// new final destination and load for car BB 4
+		Assert.assertEquals("Car BB 4 next destination","Danbury MA", c4.getNextDestinationName());
+		Assert.assertEquals("Car BB 4 next destination track","Danbury Siding 2", c4.getNextDestTrackName());
+		Assert.assertEquals("Car BB 4 next load","Metal", c4.getNextLoad());
+		Assert.assertEquals("Car BB 4 schedule id", "", c4.getScheduleId());
+		// BC 5 (Boxcar)
+		Assert.assertEquals("Car BC 5 destination","Essex MA", c5.getDestinationName());
+		Assert.assertEquals("Car BC 5 destination track","Essex Siding 1", c5.getDestinationTrackName());
+		// new final destination and load for car BC 5, same as BA 3
+		Assert.assertEquals("Car BC 5 next destination","Bedford MA", c5.getNextDestinationName());
+		Assert.assertEquals("Car BC 5 next destination track","Bedford Siding 1", c5.getNextDestTrackName());
+		Assert.assertEquals("Car BC 5 next load","Screws", c5.getNextLoad());
+		Assert.assertEquals("Car BC 5 schedule id", "", c5.getScheduleId());
+		// BD 6 (Boxcar) note second Boxcar
+		Assert.assertEquals("Car BD 6 destination","Essex MA", c6.getDestinationName());
+		Assert.assertEquals("Car BD 6 destination track","Essex Siding 1", c6.getDestinationTrackName());
+		// new final destination and load for car BD 6
+		Assert.assertEquals("Car BD 6 next destination","Danbury MA", c6.getNextDestinationName());
+		Assert.assertEquals("Car BD 6 next destination track","Danbury Siding 1", c6.getNextDestTrackName());
+		Assert.assertEquals("Car BC 6 next load", "Bolts", c6.getNextLoad());
+		Assert.assertEquals("Car BD 6 schedule id", "", c6.getScheduleId());
+		// BA 7 (Boxcar) note 3rd Boxcar
+		Assert.assertEquals("Car BA 7 destination","Essex MA", c7.getDestinationName());
+		Assert.assertEquals("Car BA 7 destination track","Essex Siding 1", c7.getDestinationTrackName());
+		// new final destination and load for car BA 7
+		Assert.assertEquals("Car BA 7 next destination","Acton MA", c7.getNextDestinationName());
+		Assert.assertEquals("Car BA 7 next destination track","Acton Siding 1", c7.getNextDestTrackName());
+		Assert.assertEquals("Car BA 7 next load", "Metal", c7.getNextLoad());
+		Assert.assertEquals("Car BA 7 schedule id", "", c7.getScheduleId());
+		/*
+		Assert.assertEquals("Car BB 8 destination","Essex MA", c8.getDestinationName());
+		Assert.assertEquals("Car BB 8 destination track","Essex Siding 1", c8.getDestinationTrackName());
+		Assert.assertEquals("Car BB 8 next destination","Essex MA", c8.getNextDestinationName());
+		Assert.assertEquals("Car BB 8 next destination track","Essex Siding 1", c8.getNextDestTrackName());
+		Assert.assertEquals("Car BC 9 destination","Essex MA", c9.getDestinationName());
+		Assert.assertEquals("Car BC 9 destination track","Essex Siding 1", c9.getDestinationTrackName());
+		Assert.assertEquals("Car BC 9 next destination","Essex MA", c9.getNextDestinationName());
+		Assert.assertEquals("Car BC 9 next destination track","", c9.getNextDestTrackName());
+		*/
+		
+		// test reset, car final destinations should revert.
+		DanburyToEssexTrain.reset();
+		
+		Assert.assertEquals("Car BA 3 destination","", c3.getDestinationName());
+		Assert.assertEquals("Car BA 3 destination track","", c3.getDestinationTrackName());
+		Assert.assertEquals("Car BA 3 next destination","Essex MA", c3.getNextDestinationName());
+		Assert.assertEquals("Car BA 3 next destination track","", c3.getNextDestTrackName());
+		Assert.assertEquals("Car BA 3 next load","", c3.getNextLoad());
+		Assert.assertEquals("Car BB 4 destination","", c4.getDestinationName());
+		Assert.assertEquals("Car BB 4 destination track","", c4.getDestinationTrackName());
+		Assert.assertEquals("Car BB 4 next destination","Essex MA", c4.getNextDestinationName());
+		Assert.assertEquals("Car BB 4 next destination track","Essex Siding 1", c4.getNextDestTrackName());
+		Assert.assertEquals("Car BC 5 destination","", c5.getDestinationName());
+		Assert.assertEquals("Car BC 5 destination track","", c5.getDestinationTrackName());
+		Assert.assertEquals("Car BC 5 next destination","Essex MA", c5.getNextDestinationName());
+		Assert.assertEquals("Car BC 5 next destination track","", c5.getNextDestTrackName());
+		Assert.assertEquals("Car BD 6 destination","", c6.getDestinationName());
+		Assert.assertEquals("Car BD 6 destination track","", c6.getDestinationTrackName());
+		Assert.assertEquals("Car BD 6 next destination","Essex MA", c6.getNextDestinationName());
+		Assert.assertEquals("Car BD 6 next destination track","", c6.getNextDestTrackName());
+		Assert.assertEquals("Car BA 7 destination","", c7.getDestinationName());
+		Assert.assertEquals("Car BA 7 destination track","", c7.getDestinationTrackName());
+		Assert.assertEquals("Car BA 7 next destination","Essex MA", c7.getNextDestinationName());
+		Assert.assertEquals("Car BA 7 next destination track","Essex Siding 1", c7.getNextDestTrackName());
+		/*
+		Assert.assertEquals("Car BB 8 destination","Essex MA", c8.getDestinationName());
+		Assert.assertEquals("Car BB 8 destination track","Essex Siding 1", c8.getDestinationTrackName());
+		Assert.assertEquals("Car BB 8 next destination","Essex MA", c8.getNextDestinationName());
+		Assert.assertEquals("Car BB 8 next destination track","Essex Siding 1", c8.getNextDestTrackName());
+		Assert.assertEquals("Car BC 9 destination","Essex MA", c9.getDestinationName());
+		Assert.assertEquals("Car BC 9 destination track","Essex Siding 1", c9.getDestinationTrackName());
+		Assert.assertEquals("Car BC 9 next destination","Essex MA", c9.getNextDestinationName());
+		Assert.assertEquals("Car BC 9 next destination track","", c9.getNextDestTrackName());
+		*/
+		
+		// try again
+		DanburyToEssexTrain.build();
+		Assert.assertTrue("Bedford train built", DanburyToEssexTrain.isBuilt());
+
+		
+		// check car destinations
+		// BA 3 (Boxcar)
+		Assert.assertEquals("Car BA 3 destination","Essex MA", c3.getDestinationName());
+		Assert.assertEquals("Car BA 3 destination track","Essex Siding 1", c3.getDestinationTrackName());
+		// new final destination and load for car BA 3
+		Assert.assertEquals("Car BA 3 next destination","Bedford MA", c3.getNextDestinationName());
+		Assert.assertEquals("Car BA 3 next destination track","Bedford Siding 1", c3.getNextDestTrackName());
+		Assert.assertEquals("Car BA 3 next load","Screws", c3.getNextLoad());
+		Assert.assertEquals("Car BA 3 schedule id", "", c3.getScheduleId());
+		// BB 4 (Flat)
+		Assert.assertEquals("Car BB 4 destination","Essex MA", c4.getDestinationName());
+		Assert.assertEquals("Car BB 4 destination track","Essex Siding 1", c4.getDestinationTrackName());
+		// new final destination and load for car BB 4
+		Assert.assertEquals("Car BB 4 next destination","Danbury MA", c4.getNextDestinationName());
+		Assert.assertEquals("Car BB 4 next destination track","Danbury Siding 2", c4.getNextDestTrackName());
+		Assert.assertEquals("Car BB 4 next load","Metal", c4.getNextLoad());
+		Assert.assertEquals("Car BB 4 schedule id", "", c4.getScheduleId());
+		// BC 5 (Boxcar)
+		Assert.assertEquals("Car BC 5 destination","Essex MA", c5.getDestinationName());
+		Assert.assertEquals("Car BC 5 destination track","Essex Siding 1", c5.getDestinationTrackName());
+		// new final destination and load for car BC 5, same as BA 3
+		Assert.assertEquals("Car BC 5 next destination","Bedford MA", c5.getNextDestinationName());
+		Assert.assertEquals("Car BC 5 next destination track","Bedford Siding 1", c5.getNextDestTrackName());
+		Assert.assertEquals("Car BC 5 next load","Screws", c5.getNextLoad());
+		Assert.assertEquals("Car BC 5 schedule id", "", c5.getScheduleId());
+		// BD 6 (Boxcar) note second Boxcar
+		Assert.assertEquals("Car BD 6 destination","Essex MA", c6.getDestinationName());
+		Assert.assertEquals("Car BD 6 destination track","Essex Siding 1", c6.getDestinationTrackName());
+		// new final destination and load for car BD 6
+		Assert.assertEquals("Car BD 6 next destination","Danbury MA", c6.getNextDestinationName());
+		Assert.assertEquals("Car BD 6 next destination track","Danbury Siding 1", c6.getNextDestTrackName());
+		Assert.assertEquals("Car BC 6 next load", "Bolts", c6.getNextLoad());
+		Assert.assertEquals("Car BD 6 schedule id", "", c6.getScheduleId());
+		// BA 7 (Boxcar) note 3rd Boxcar
+		Assert.assertEquals("Car BA 7 destination","Essex MA", c7.getDestinationName());
+		Assert.assertEquals("Car BA 7 destination track","Essex Siding 1", c7.getDestinationTrackName());
+		// new final destination and load for car BA 7
+		Assert.assertEquals("Car BA 7 next destination","Acton MA", c7.getNextDestinationName());
+		Assert.assertEquals("Car BA 7 next destination track","Acton Siding 1", c7.getNextDestTrackName());
+		Assert.assertEquals("Car BA 7 next load", "Metal", c7.getNextLoad());
+		Assert.assertEquals("Car BA 7 schedule id", "", c7.getScheduleId());
+		
+		DanburyToEssexTrain.terminate();
+		
+		// check car destinations
+		// BA 3 (Boxcar)
+		Assert.assertEquals("Car BA 3 destination","", c3.getDestinationName());
+		Assert.assertEquals("Car BA 3 destination track","", c3.getDestinationTrackName());
+		// new final destination and load for car BA 3
+		Assert.assertEquals("Car BA 3 next destination","Bedford MA", c3.getNextDestinationName());
+		Assert.assertEquals("Car BA 3 next destination track","Bedford Siding 1", c3.getNextDestTrackName());
+		Assert.assertEquals("Car BA 3 load","Screws", c3.getLoad());
+		Assert.assertEquals("Car BA 3 next load","", c3.getNextLoad());
+		Assert.assertEquals("Car BA 3 schedule id", "", c3.getScheduleId());
+		// BB 4 (Flat)
+		Assert.assertEquals("Car BB 4 destination","", c4.getDestinationName());
+		Assert.assertEquals("Car BB 4 destination track","", c4.getDestinationTrackName());
+		// new final destination and load for car BB 4
+		Assert.assertEquals("Car BB 4 next destination","Danbury MA", c4.getNextDestinationName());
+		Assert.assertEquals("Car BB 4 next destination track","Danbury Siding 2", c4.getNextDestTrackName());
+		Assert.assertEquals("Car BB 4 load","Metal", c4.getLoad());
+		Assert.assertEquals("Car BB 4 next load","", c4.getNextLoad());
+		Assert.assertEquals("Car BB 4 schedule id", "", c4.getScheduleId());
+		// BC 5 (Boxcar)
+		Assert.assertEquals("Car BC 5 destination","", c5.getDestinationName());
+		Assert.assertEquals("Car BC 5 destination track","", c5.getDestinationTrackName());
+		// new final destination and load for car BC 5, same as BA 3
+		Assert.assertEquals("Car BC 5 next destination","Bedford MA", c5.getNextDestinationName());
+		Assert.assertEquals("Car BC 5 next destination track","Bedford Siding 1", c5.getNextDestTrackName());
+		Assert.assertEquals("Car BC 5 load","Screws", c5.getLoad());
+		Assert.assertEquals("Car BC 5 next load","", c5.getNextLoad());
+		Assert.assertEquals("Car BC 5 schedule id", "", c5.getScheduleId());
+		// BD 6 (Boxcar) note second Boxcar
+		Assert.assertEquals("Car BD 6 destination","", c6.getDestinationName());
+		Assert.assertEquals("Car BD 6 destination track","", c6.getDestinationTrackName());
+		// new final destination and load for car BD 6
+		Assert.assertEquals("Car BD 6 next destination","Danbury MA", c6.getNextDestinationName());
+		Assert.assertEquals("Car BD 6 next destination track","Danbury Siding 1", c6.getNextDestTrackName());
+		Assert.assertEquals("Car BC 6 load", "Bolts", c6.getLoad());
+		Assert.assertEquals("Car BC 6 next load", "", c6.getNextLoad());
+		Assert.assertEquals("Car BD 6 schedule id", "", c6.getScheduleId());
+		// BA 7 (Boxcar) note 3rd Boxcar
+		Assert.assertEquals("Car BA 7 destination","", c7.getDestinationName());
+		Assert.assertEquals("Car BA 7 destination track","", c7.getDestinationTrackName());
+		// new final destination and load for car BA 7
+		Assert.assertEquals("Car BA 7 next destination","Acton MA", c7.getNextDestinationName());
+		Assert.assertEquals("Car BA 7 next destination track","Acton Siding 1", c7.getNextDestTrackName());
+		Assert.assertEquals("Car BA 7 load", "Metal", c7.getLoad());
+		Assert.assertEquals("Car BA 7 next load", "", c7.getNextLoad());
+		Assert.assertEquals("Car BA 7 schedule id", "", c7.getScheduleId());
+		
 	}
 	
 	// Ensure minimal setup for log4J
