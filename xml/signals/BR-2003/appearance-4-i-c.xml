@@ -133,9 +133,15 @@
   </appearances>
 
   <specificappearances>
-    <danger>Danger</danger>
-    <permissive>Off</permissive>
-    <held>Danger</held>
+    <danger>
+      <aspect>Danger</aspect>
+    </danger>
+    <permissive>
+      <aspect>Off</aspect>
+    </permissive>
+    <held>
+      <aspect>Danger</aspect>
+    </held>
   </specificappearances>
   
   <aspectMappings>

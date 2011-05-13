@@ -72,8 +72,12 @@
   </appearances>
   
   <specificappearances>
-    <danger>Danger</danger>
-    <held>Danger</held>
+    <danger>
+      <aspect>Danger</aspect>
+    </danger>
+    <held>
+      <aspect>Danger</aspect>
+    </held>
   </specificappearances>
   
   <aspectMappings>

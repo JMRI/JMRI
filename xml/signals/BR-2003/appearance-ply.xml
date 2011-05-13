@@ -68,8 +68,14 @@
 
   </appearances>
   <specificappearances>
-    <danger>On</danger>
-    <permissive>Off</permissive>
-    <held>On</held>
+    <danger>
+      <aspect>On</aspect>
+    </danger>
+    <permissive>
+      <aspect>Off</aspect>
+    </permissive>
+    <held>
+      <aspect>On</aspect>
+    </held>
   </specificappearances>
 </appearancetable>  

@@ -55,7 +55,12 @@
     </appearance>
     
   </appearances>
-  <heldappearance>
-    <appearance>Danger</appearance>
-  </heldappearance>
+  <specificappearances>
+    <danger>
+      <aspect>Danger</aspect>
+    </danger>
+    <held>
+      <aspect>Danger</aspect>
+    </held>
+  </specificappearances>
 </appearancetable>  
