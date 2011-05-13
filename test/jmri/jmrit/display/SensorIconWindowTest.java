@@ -3,6 +3,7 @@
 package jmri.jmrit.display;
 
 import jmri.Sensor;
+import jmri.jmrit.catalog.NamedIcon;
 
 import javax.swing.*;
 
@@ -16,7 +17,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SensorIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
@@ -33,7 +34,8 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
         Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
         icon.setSensor("IS1");
-        
+        icon.setIcon("BeanStateUnknown", new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
         icon.setDisplayLevel(Editor.SENSORS);	//daboudreau added this for Win7
         
         panel.setVisible(true);
@@ -106,7 +108,10 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
         Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
         icon.setSensor("IS1");
-        
+                
+        icon.setIcon("BeanStateUnknown", new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                    "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+                            
         icon.setDisplayLevel(Editor.SENSORS); //daboudreau added this for Win7
         
         panel.setVisible(true);

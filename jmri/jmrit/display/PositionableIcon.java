@@ -5,7 +5,7 @@ package jmri.jmrit.display;
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -24,6 +24,20 @@ public class PositionableIcon extends PositionableLabel {
     public PositionableIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif","resources/icons/misc/X-red.gif"), editor);
+        _control = true;
+        setPopupUtility(null);
+    }
+    
+    public PositionableIcon(NamedIcon s, Editor editor) {
+        // super ctor call to make sure this is an icon label
+        super(s, editor);
+        _control = true;
+        setPopupUtility(null);
+    }
+    
+    public PositionableIcon(String s, Editor editor) {
+        // super ctor call to make sure this is an icon label
+        super(s, editor);
         _control = true;
         setPopupUtility(null);
     }
@@ -51,7 +65,7 @@ public class PositionableIcon extends PositionableLabel {
         if (_iconMap==null) {
             return super.maxHeight();
         }
-        int max = 0;
+        int max = super.maxHeight();
         Iterator<NamedIcon> iter = _iconMap.values().iterator();
         while (iter.hasNext()) {
             max = Math.max(iter.next().getIconHeight(), max);
@@ -62,7 +76,7 @@ public class PositionableIcon extends PositionableLabel {
         if (_iconMap==null) {
             return super.maxWidth();
         }
-        int max = 0;
+        int max = super.maxWidth();
         Iterator<NamedIcon> iter = _iconMap.values().iterator();
         while (iter.hasNext()) {
             max = Math.max(iter.next().getIconWidth(), max);
