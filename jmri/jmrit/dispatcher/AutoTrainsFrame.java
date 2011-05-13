@@ -32,11 +32,12 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	
     public AutoTrainsFrame (DispatcherFrame disp) {
+		super(false,true);
 		_dispatcher = disp;
 		initializeAutoTrainsWindow();
 	}
@@ -234,12 +235,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 				ActiveTrain at = aat.getActiveTrain();
 				if (at.getStatus()==ActiveTrain.STOPPED) {
 					// resume
-					if (aat.getRunInReverse()) {
-						aat.setForward(false);
-					}
-					else {
-						aat.setForward(true);
-					}
+					aat.setEngineDirection();
 					aat.getAutoEngineer().setHalt(false);
 					aat.restoreSavedSpeed();
 					at.setStatus(aat.getSavedStatus());

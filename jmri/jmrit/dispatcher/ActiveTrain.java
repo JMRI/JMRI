@@ -61,11 +61,18 @@ import java.util.ResourceBundle;
  * The train source should be specified in the Dispatcher Options window prior to creating an 
  *       ActiveTrain.
  * <P>
- * A ActiveTrains are referenced via a list in DispatcherFrame, which serves as 
+ * ActiveTrains are referenced via a list in DispatcherFrame, which serves as 
  *		a manager for ActiveTrain objects.
  * <P>
  * ActiveTrains are transient, and are not saved to disk. Active Train information can be saved 
  *		to disk, making set up with the same options, etc very easy.
+ * <P>
+ * An ActiveTrain runs through its Transit in the FORWARD direction, until a Transit Action 
+ *		reverses the direction of travel in the Transit.  When running with its Transit 
+ *      reversed, the Active Train returns to its starting Section. Upon reaching and 
+ *		stopping in its starting Section, the Transit is automatically set back to the 
+ *      forward direction. If AutoRestart is set, the run is repeated.
+ * The direction of travel in the Transit is maintained here.
  *
  * <P>
  * This file is part of JMRI.
@@ -81,8 +88,8 @@ import java.util.ResourceBundle;
  * for more details.
  * <P>
  *
- * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @author	Dave Duchamp  Copyright (C) 2008-2011
+ * @version	$Revision: 1.9 $
  */
 public class ActiveTrain {
 
@@ -144,6 +151,8 @@ public class ActiveTrain {
 	private int mTrainSource = ROSTER;
 	private int mStatus = WAITING;
 	private int mMode = DISPATCHED;
+	private boolean mTransitReversed = false;  // true if Transit is running in reverse
+	private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
 	private AutoActiveTrain mAutoActiveTrain = null;
 	private ArrayList<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
 	private jmri.Section mLastAllocatedSection = null;
@@ -161,6 +170,7 @@ public class ActiveTrain {
 	private boolean mAutoRun = false;
 	private String mDccAddress = "";
 	private boolean mResetWhenDone = true;
+	private boolean mReverseAtEnd = false;
 	private boolean mDelayedStart = false;
 	private int mDepartureTimeHr = 8;
 	private int mDepartureTimeMin = 0;
@@ -229,6 +239,10 @@ public class ActiveTrain {
 			return rb.getString("DONE");
 		return ("");
 	}
+	public boolean IsTransitReversed() {return mTransitReversed;}
+	public void setTransitReversed(boolean set) {mTransitReversed = set;}
+	public boolean IsAllocationReversed() {return mAllocationReversed;}
+	public void setAllocationReversed(boolean set) {mAllocationReversed = set;}
 	public boolean getDelayedStart() {return mDelayedStart;}
 	public void setDelayedStart(boolean set) {mDelayedStart = set;}
 	public int getDepartureTimeHr() {return mDepartureTimeHr;}
@@ -276,6 +290,30 @@ public class ActiveTrain {
 	}
 	public void setAutoActiveTrain(AutoActiveTrain aat) {mAutoActiveTrain=aat;}
 	public AutoActiveTrain getAutoActiveTrain() {return mAutoActiveTrain;}
+	public int getRunningDirectionFromSectionAndSeq(jmri.Section s, int seqNo) {
+		int dir = mTransit.getDirectionFromSectionAndSeq(s,seqNo);
+		if (mTransitReversed) {
+			if (dir == jmri.Section.FORWARD) {
+				dir = jmri.Section.REVERSE;
+			}
+			else {
+				dir = jmri.Section.FORWARD;
+			}
+		}
+		return dir;
+	}	
+	public int getAllocationDirectionFromSectionAndSeq(jmri.Section s, int seqNo) {
+		int dir = mTransit.getDirectionFromSectionAndSeq(s,seqNo);
+		if (mAllocationReversed) {
+			if (dir == jmri.Section.FORWARD) {
+				dir = jmri.Section.REVERSE;
+			}
+			else {
+				dir = jmri.Section.FORWARD;
+			}
+		}
+		return dir;
+	}	
 	public void addAllocatedSection (AllocatedSection as) {
 		if (as!=null) {
 			mAllocatedSections.add(as);
@@ -284,7 +322,7 @@ public class ActiveTrain {
 				mLastAllocatedSection = as.getSection();
 				mNextSectionToAllocate = as.getNextSection();
 				mNextSectionSeqNumber = as.getNextSectionSequence();
-				mNextSectionDirection = mTransit.getDirectionFromSectionAndSeq(
+				mNextSectionDirection = getAllocationDirectionFromSectionAndSeq(
 										mNextSectionToAllocate,mNextSectionSeqNumber);
 				as.setAllocationNumber(mNextAllocationNumber);
 				mNextAllocationNumber ++;
@@ -392,6 +430,8 @@ public class ActiveTrain {
 	public void setDccAddress(String dccAddress) {mDccAddress = dccAddress;}
 	public boolean getResetWhenDone() {return mResetWhenDone;}
 	public void setResetWhenDone(boolean s) {mResetWhenDone = s;}
+	public boolean getReverseAtEnd() {return mReverseAtEnd;}
+	public void setReverseAtEnd(boolean s) {mReverseAtEnd = s;}
 	protected jmri.Section getSecondAllocatedSection() {return mSecondAllocatedSection;}
 		
 	/**
@@ -415,20 +455,46 @@ public class ActiveTrain {
 				}
 			}				
 			mNextSectionSeqNumber = mStartBlockSectionSequenceNumber;
-			mNextSectionDirection = mTransit.getDirectionFromSectionAndSeq(mNextSectionToAllocate, 
+			mNextSectionDirection = getAllocationDirectionFromSectionAndSeq(mNextSectionToAllocate, 
 						mNextSectionSeqNumber);
 		}
 		else {
 			log.error("ERROR - Insufficient information to initialize first allocation");
 			return null;
 		}
-		AllocationRequest ar = DispatcherFrame.instance().requestAllocation(this,
-				mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null);	
-		if (ar==null) log.error("Allocation request failed for first allocation of "+getActiveTrainName());
+		if (!DispatcherFrame.instance().requestAllocation(this,
+				mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null)) {	
+			log.error("Allocation request failed for first allocation of "+getActiveTrainName());
+		}
 		if (DispatcherFrame.instance().getShortNameInBlock()) {
 			mStartBlock.setValue(mTrainName);
 		}
+		AllocationRequest ar = DispatcherFrame.instance().findAllocationRequestInQueue(mNextSectionToAllocate,
+				mNextSectionSeqNumber, mNextSectionDirection, this);
 		return ar;
+	}
+	
+	protected void reverseAllAllocatedSections() {
+		for (int i = 0; i<mAllocatedSections.size(); i++) {
+			AllocatedSection aSec = mAllocatedSections.get(i);
+			int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(),aSec.getSequence());
+			if (dir == jmri.Section.FORWARD) {
+				aSec.getSection().setState(jmri.Section.REVERSE);
+				}
+			else {
+				aSec.getSection().setState(jmri.Section.FORWARD);
+			}
+			aSec.setStoppingSensors();
+		}			
+	}
+	
+	protected void resetAllAllocatedSections() {
+		for (int i = 0; i<mAllocatedSections.size(); i++) {
+			AllocatedSection aSec = mAllocatedSections.get(i);
+			int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(),aSec.getSequence());
+			aSec.getSection().setState(dir);
+			aSec.setStoppingSensors();			
+		}	
 	}
 	
 	public void terminate() {

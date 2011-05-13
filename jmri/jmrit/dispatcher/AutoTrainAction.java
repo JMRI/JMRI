@@ -37,8 +37,8 @@ import jmri.TransitSection;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @author	Dave Duchamp  Copyright (C) 2010-2011
+ * @version	$Revision: 1.5 $
  */
 public class AutoTrainAction {
 	
@@ -211,12 +211,11 @@ public class AutoTrainAction {
 			}
 		}
 	}
-	
 	// this method is called when an action has been completed
 	private synchronized void completedAction(TransitSectionAction tsa) {
 		// action has been performed, clear, and delete it from the active list
 		if (tsa.getWaitingForSensor()) {
-			tsa.dispose();
+			tsa.disposeSensorListener();
 		}
 		tsa.initialize();
 		// remove from active list if not continuous running
@@ -243,7 +242,7 @@ public class AutoTrainAction {
 			}
 			if (tsa.getWaitingForSensor()) {
 				// remove a sensor listener if one is present
-				tsa.dispose();
+				tsa.disposeSensorListener();
 			}
 			tsa.initialize();
 			_activeActionList.remove(i);
@@ -304,6 +303,8 @@ public class AutoTrainAction {
 	
 	// this method is called to execute the action, when the "When" event has happened.
 	// it is "public" because it may be called from a TransitSectionAction.
+
+// djd debugging - need to check this out - probably useless, but harmless
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",
                 justification="used only by thread that can be stopped, no conflict with other threads expected")	
 	public synchronized void executeAction(TransitSectionAction tsa) {
@@ -316,8 +317,11 @@ public class AutoTrainAction {
 		switch (tsa.getWhatCode()) {
 			case TransitSectionAction.PAUSE:
 				// pause for a number of fast minutes--e.g. station stop
-				Thread tPause = _autoActiveTrain.pauseTrain(tsa.getDataWhat1());
-				tsa.setWaitingThread(tPause);
+				if (_autoActiveTrain.getCurrentAllocatedSection().getNextSection()!=null) {
+					// pause train if this is not the last Section
+					Thread tPause = _autoActiveTrain.pauseTrain(tsa.getDataWhat1());
+					tsa.setWaitingThread(tPause);
+				}
 				break;
 			case TransitSectionAction.SETMAXSPEED:
 				// set maximum train speed to value
@@ -337,19 +341,13 @@ public class AutoTrainAction {
 									(_autoActiveTrain.getAutoEngineer()!=null) ) {
 					// temporarily turn ramping off
 					_autoActiveTrain.setCurrentRampRate(AutoActiveTrain.RAMP_NONE);
-					while ( (_autoActiveTrain.getAutoEngineer()!=null) &&  
-							(!_autoActiveTrain.getAutoEngineer().isAtSpeed()) ) {
-                        if (Thread.currentThread().getName().startsWith("AWT-EventQueue"))
-                            log.error("executeAction will be calling Thread.sleep on AWT Event Queue");
-						try {
-							Thread.sleep(51);
-						} catch (InterruptedException e) {
-							log.error("unexpected interruption of wait for speed");
-						}
-					}
-					_autoActiveTrain.setCurrentRampRate(_autoActiveTrain.getRampRate());
+					// wait for train to achieve speed in a separate thread which will complete action
+					Runnable monTrainSpeed = new MonitorTrainSpeed(tsa);
+					Thread tMonTrainSpeed = new Thread(monTrainSpeed);
+					tsa.setWaitingThread(tMonTrainSpeed);
+					tMonTrainSpeed.start();
 				}
-				completedAction(tsa);
+				else completedAction(tsa);
 				break;
 			case TransitSectionAction.RAMPTRAINSPEED:
 				// set current speed to target using specified ramp rate
@@ -389,8 +387,6 @@ public class AutoTrainAction {
 				// start bell (only works with sound decoder)
 				if ( _autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer()!=null) ) {
 					_autoActiveTrain.getAutoEngineer().setFunction(1,true);
-// djd debugging
-//  log.error("start bell");
 				}
 				completedAction(tsa);
 				break;
@@ -398,8 +394,6 @@ public class AutoTrainAction {
 				// stop bell (only works with sound decoder)
 				if ( _autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer()!=null) ) {
 					_autoActiveTrain.getAutoEngineer().setFunction(1,false);
-// djd debugging
-//  log.error("stop bell");
 				}
 				completedAction(tsa);
 				break;
@@ -591,41 +585,90 @@ public class AutoTrainAction {
 			_tsa = tsa;
 		}
 		public void run() {
-			boolean waitingOnTrain = true; 
-			if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTOP) {
-				try {
-					while (waitingOnTrain) {
-						if( (_autoActiveTrain.getAutoEngineer()!=null) && 
-								(_autoActiveTrain.getAutoEngineer().isStopped()) ) {
-							waitingOnTrain = false;
+			if (_tsa!=null) {
+				boolean waitingOnTrain = true; 
+				if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTOP) {
+					try {
+						while (waitingOnTrain) {
+							if( (_autoActiveTrain.getAutoEngineer()!=null) && 
+									(_autoActiveTrain.getAutoEngineer().isStopped()) ) {
+								waitingOnTrain = false;
+							}
+							else {
+								Thread.sleep(_delay);
+							}
 						}
-						else {
-							Thread.sleep(_delay);
-						}
+						executeAction(_tsa);
+					} catch (InterruptedException e) {
+						// interrupting will cause termination without executing the action						
+					}			
+				}
+				else if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTART) {
+					if ( (_autoActiveTrain.getAutoEngineer()!=null) && 
+							(!_autoActiveTrain.getAutoEngineer().isStopped()) ) {
+						// if train is not currently stopped, wait for it to stop
+						boolean waitingForStop = true;
+						try {
+							while (waitingForStop) {
+								if( (_autoActiveTrain.getAutoEngineer()!=null) && 
+										(_autoActiveTrain.getAutoEngineer().isStopped()) ) {
+									waitingForStop = false;
+								}
+								else {
+									Thread.sleep(_delay);
+								}
+							}
+						} catch (InterruptedException e) {
+						// interrupting will cause termination without executing the action						
+						}									
 					}
-					executeAction(_tsa);
-				} catch (InterruptedException e) {
-					// interrupting will cause termination without executing the action						
-				}			
-			}
-			else if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTART) {
-				try {
-					while (waitingOnTrain) {
-						if( (_autoActiveTrain.getAutoEngineer()!=null) && 
-								(!_autoActiveTrain.getAutoEngineer().isStopped()) ) {
-							waitingOnTrain = false;
+					// train is stopped, wait for it to start 
+					try {
+						while (waitingOnTrain) {
+							if( (_autoActiveTrain.getAutoEngineer()!=null) && 
+									(!_autoActiveTrain.getAutoEngineer().isStopped()) ) {
+								waitingOnTrain = false;
+							}
+							else {
+								Thread.sleep(_delay);
+							}
 						}
-						else {
-							Thread.sleep(_delay);
-						}
-					}
-					executeAction(_tsa);
-				} catch (InterruptedException e) {
-					// interrupting will cause termination without executing the action						
-				}						
+						executeAction(_tsa);
+					} catch (InterruptedException e) {
+						// interrupting will cause termination without executing the action						
+					}						
+				}
 			}
 		}
 		private int _delay = 50;
+		private TransitSectionAction _tsa = null;
+	}
+	
+	class MonitorTrainSpeed implements Runnable
+	{
+		/**
+		 * A runnable to monitor whether the autoActiveTrain is moving or stopped
+		 *  Note: If train stops to do work with a manual throttle, this thread will 
+		 *			continue to wait until auto operation is resumed.
+		 */
+		public MonitorTrainSpeed(TransitSectionAction tsa) {
+			_tsa = tsa;
+		}
+		public void run() {
+			while ( (_autoActiveTrain.getAutoEngineer()!=null) &&  
+					(!_autoActiveTrain.getAutoEngineer().isAtSpeed()) ) {
+				try {
+					Thread.sleep(_delay);
+				} catch (InterruptedException e) {
+					log.error("unexpected interruption of wait for speed");
+				}
+			}
+			_autoActiveTrain.setCurrentRampRate(_autoActiveTrain.getRampRate());
+			if (_tsa!=null) {
+				completedAction(_tsa);
+			}
+		}
+		private int _delay = 51;
 		private TransitSectionAction _tsa = null;
 	}
 	

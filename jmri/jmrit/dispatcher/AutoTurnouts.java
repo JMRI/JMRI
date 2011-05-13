@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008-2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class AutoTurnouts {
@@ -96,7 +96,7 @@ public class AutoTurnouts {
 			log.error ("Invalid argument when checking or setting turnouts in Section.");
 			return false;
 		}
-		int direction = tran.getDirectionFromSectionAndSeq(s,seqNum);
+		int direction = at.getAllocationDirectionFromSectionAndSeq(s,seqNum);
 		if (direction==0) {
 			log.error("Invalid Section/sequence arguments when checking or setting turnouts");
 			return false;

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -30,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2008-2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AllocationRequest {
 
@@ -59,6 +60,9 @@ public class AllocationRequest {
 	private int mSectionSeqNum = 0;
 	private int mSectionDirection = jmri.Section.UNKNOWN;
 	private java.beans.PropertyChangeListener mSectionListener = null;
+	// instance variables related to automatic allocation of Sections
+	private boolean mWaitingForTrain = false;
+	private ArrayList<ActiveTrain> mMeetingTrainList = new ArrayList<ActiveTrain>();
 	
 	/**
      * Access methods 
@@ -74,17 +78,29 @@ public class AllocationRequest {
 		}
 		return s;
 	}
-	public ActiveTrain getActiveTrain() { return mActiveTrain; }
-	public String getActiveTrainName() {
+	protected ActiveTrain getActiveTrain() { return mActiveTrain; }
+	protected String getActiveTrainName() {
 		return (mActiveTrain.getTrainName()+"/"+mActiveTrain.getTransitName());
 	}
-	public int getSectionSeqNumber(){return mSectionSeqNum;}
-	public int getSectionDirection(){return mSectionDirection;}
-	public String getSectionDirectionName() {
+	protected int getSectionSeqNumber(){return mSectionSeqNum;}
+	protected int getSectionDirection(){return mSectionDirection;}
+	protected String getSectionDirectionName() {
 		if (mSectionDirection==jmri.Section.FORWARD) return rb.getString("FORWARD");
 		if (mSectionDirection==jmri.Section.REVERSE) return rb.getString("REVERSE");
 		return rb.getString("UNKNOWN");
 	}
+	protected boolean getWaitingForTrain() {return mWaitingForTrain;}
+	protected void setWaitingForTrain(boolean set) {mWaitingForTrain = set;}
+	protected void addMeetingTrain(ActiveTrain at) {mMeetingTrainList.add(at);}
+	protected void removeMeetingTrain(ActiveTrain at) {
+		for (int i=0;i<mMeetingTrainList.size();i++) {
+			if (at == mMeetingTrainList.get(i)) {
+				mMeetingTrainList.remove(i);
+				return;
+			}
+		}
+	}
+	protected ArrayList<ActiveTrain> getMeetingTrainList() {return mMeetingTrainList;}
 	
 	/** 
 	 * Methods

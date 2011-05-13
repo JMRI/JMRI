@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -117,7 +117,7 @@ public class OptionsMenu extends JMenu {
 	
 	private void optionWindowRequested(ActionEvent e) {
 		if (optionsFrame == null) {
-			optionsFrame = new JmriJFrame(rb.getString("OptionsMenuTitle"));
+			optionsFrame = new JmriJFrame(rb.getString("OptionsMenuTitle"),false,true);
             optionsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.Options", true);
 			optionsPane = optionsFrame.getContentPane();
             optionsPane.setLayout(new BoxLayout(optionsFrame.getContentPane(), BoxLayout.Y_AXIS));

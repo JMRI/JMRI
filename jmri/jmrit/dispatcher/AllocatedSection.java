@@ -6,19 +6,21 @@ import java.util.ResourceBundle;
 import java.util.ArrayList;
 
 /**
- * This class holds information and options for an AllocatedSection. 
+ * This class holds information and options for an AllocatedSection, a Section 
+ *	that is currently allocated to an ActiveTrain. 
  * <P>
- * An AllocatedSection holds the following information about this allocation:
-  * <P>
- * A AllocatedSections is referenced via a list in DispatcherFrame, which serves as 
- *	a manager for AllocatedSection objects.
+ * AllocatedSections are referenced via a list in DispatcherFrame, which serves as 
+ *	a manager for AllocatedSection objects. Each ActiveTrain also maintains a list 
+ *	of AllocatedSections currently assigned to it.
  * <P>
  * AllocatedSections are transient, and are not saved to disk.
  * <P>
  * AllocatedSections keep track of whether they have been entered and exited.
  * <P>
- * If the Active Train this Section is assigned to is being run automatically, support is provided
- *   for monitoring Section changes and changes for Blocks within the Section.
+ * If the Active Train this Section is assigned to is being run automatically, 
+ *	support is provided for monitoring Section changes and changes for Blocks 
+ *	within the Section.
+ *
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -32,8 +34,8 @@ import java.util.ArrayList;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author	Dave Duchamp  Copyright (C) 2008-2010
- * @version	$Revision: 1.9 $
+ * @author	Dave Duchamp  Copyright (C) 2008-2011
+ * @version	$Revision: 1.10 $
  */
 public class AllocatedSection {
 
@@ -54,13 +56,19 @@ public class AllocatedSection {
         mSection.addPropertyChangeListener(mSectionListener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) { handleSectionChange(e); }
         });
-		if (mSection.getState()==jmri.Section.FORWARD) {
-			mForwardStoppingSensor = mSection.getForwardStoppingSensor();
-			mReverseStoppingSensor = mSection.getReverseStoppingSensor();
+		setStoppingSensors();
+		if (mActiveTrain.getAutoActiveTrain()==null) {
+			// for manual running, monitor block occupancy for selected Blocks only
+			if ( mActiveTrain.getReverseAtEnd() && 
+					( (mSequence==mActiveTrain.getEndBlockSectionSequenceNumber()) ||
+						( mActiveTrain.getResetWhenDone() && 
+						(mSequence==mActiveTrain.getStartBlockSectionSequenceNumber()) ) ) ) {
+				initializeMonitorBlockOccupancy();				
+			}
 		}
 		else {
-			mForwardStoppingSensor = mSection.getReverseStoppingSensor();
-			mReverseStoppingSensor = mSection.getForwardStoppingSensor();
+			// monitor block occupancy for all Sections of automatially running trains
+			initializeMonitorBlockOccupancy();
 		}		
 	}
 
@@ -114,6 +122,7 @@ public class AllocatedSection {
 	private ArrayList<java.beans.PropertyChangeListener> mBlockListeners = 
 													new ArrayList<java.beans.PropertyChangeListener>();
 	private ArrayList<jmri.Block> mBlockList = null;
+	private ArrayList<jmri.Block> mActiveBlockList = new ArrayList<jmri.Block>();
 	
 	/**
      * Access methods for automatic running instance variables
@@ -128,6 +137,16 @@ public class AllocatedSection {
 	/** 
 	 * Methods
 	 */
+	protected void setStoppingSensors() {
+		if (mSection.getState()==jmri.Section.FORWARD) {
+			mForwardStoppingSensor = mSection.getForwardStoppingSensor();
+			mReverseStoppingSensor = mSection.getReverseStoppingSensor();
+		}
+		else {
+			mForwardStoppingSensor = mSection.getReverseStoppingSensor();
+			mReverseStoppingSensor = mSection.getForwardStoppingSensor();
+		}
+	}
 	protected jmri.TransitSection getTransitSection() {
 		return (mActiveTrain.getTransit().getTransitSectionFromSectionAndSeq(mSection,mSequence));
 	}
@@ -135,6 +154,13 @@ public class AllocatedSection {
 	public int getLength() {
 		return mSection.getLengthI(DispatcherFrame.instance().getUseScaleMeters(),
 									DispatcherFrame.instance().getScale());
+	}
+	public void reset() {
+		mExited = false;
+		mEntered = false;
+		if (mSection.getOccupancy() == jmri.Section.OCCUPIED) {
+			mEntered = true;
+		}
 	}
 		
 	private synchronized void handleSectionChange(java.beans.PropertyChangeEvent e) {
@@ -170,32 +196,18 @@ public class AllocatedSection {
 			}
 		}			
 	}
-	boolean handlingBlockChange = false; 
-	
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SWL_SLEEP_WITH_LOCK_HELD",
-                justification="used only by thread that can be stopped, no conflict with other threads expected")	
     private synchronized void handleBlockChange(int index, java.beans.PropertyChangeEvent e) {
 		if (e.getPropertyName().equals("state")) {
 			if (mBlockList == null) mBlockList = mSection.getBlockList();
 			if (mBlockList!=null) {
 				jmri.Block b = mBlockList.get(index);
-				if ( (mActiveTrain.getAutoActiveTrain()!=null) && (!handlingBlockChange) ) {
-					// filter to insure that change is not a short spike
+				if (!isInActiveBlockList(b)) {
 					int occ = b.getState();
-					handlingBlockChange = true;
-					if (Thread.currentThread().getName().startsWith("AWT-EventQueue"))
-					    log.error("handleBlockChange will be calling Thread.sleep on AWT Event Queue");
-					try {
-						Thread.sleep(250);
-					} catch (InterruptedException exc) {
-						// ignore this exception
-					}
-					if (occ == b.getState()) {
-						// occupancy has not changed, must be OK
-						mActiveTrain.getAutoActiveTrain().handleBlockStateChange(this, b);
-					}
-					handlingBlockChange = false;
-				}
+					Runnable handleBlockChange = new RespondToBlockStateChange(b,occ,this);
+					Thread tBlockChange = new Thread(handleBlockChange);
+					tBlockChange.start();
+					addToActiveBlockList(b);
+				}				
 			}
 		}
 	}
@@ -217,6 +229,29 @@ public class AllocatedSection {
 		}
 		return null;
 	}
+	protected synchronized void addToActiveBlockList(jmri.Block b) {
+		if (b!=null) {
+			mActiveBlockList.add(b);
+		}
+	}
+	protected synchronized void removeFromActiveBlockList(jmri.Block b) {
+		if (b!=null) {
+			for (int i=0;i<mActiveBlockList.size();i++) {
+				if (b==mActiveBlockList.get(i)) {
+					mActiveBlockList.remove(i);
+					return;
+				}
+			}
+		}
+	}
+	protected synchronized boolean isInActiveBlockList(jmri.Block b) {
+		if (b!=null) {
+			for (int i=0;i<mActiveBlockList.size();i++) {
+				if (b==mActiveBlockList.get(i)) return true;
+			}
+		}
+		return false;
+	}				
 		
 	public synchronized void dispose() {
 		if ( (mSectionListener!=null) && (mSection!=null) ) {
@@ -227,9 +262,51 @@ public class AllocatedSection {
 			jmri.Block b = mBlockList.get(i-1);
 			b.removePropertyChangeListener(mBlockListeners.get(i-1));
 		}
-//		mSection = null;
-//		mActiveTrain = null;
     }
+
+// _________________________________________________________________________________________
+
+	// This class responds to Block state change in a separate thread
+	class RespondToBlockStateChange implements Runnable
+	{
+		public RespondToBlockStateChange (jmri.Block b, int occ, AllocatedSection as) {
+			_block = b;
+			_aSection = as;
+			_occ = occ;
+		}
+		public void run() {
+			// delay to insure that change is not a short spike
+			try {
+				Thread.sleep(_delay);
+			} catch (InterruptedException exc) {
+						// ignore this exception
+			}
+			if (_occ == _block.getState()) {
+				// occupancy has not changed, must be OK
+				if (mActiveTrain.getAutoActiveTrain()!=null) {
+					// automatically running train
+					mActiveTrain.getAutoActiveTrain().handleBlockStateChange(_aSection, _block);
+				}
+				else if (_occ==jmri.Block.OCCUPIED) {
+					// manual running train - block newly occupied
+					if ( (_block==mActiveTrain.getEndBlock()) && mActiveTrain.getReverseAtEnd() ) {
+						// reverse direction of Allocated Sections
+						mActiveTrain.reverseAllAllocatedSections();
+					}
+					else if ( (_block==mActiveTrain.getStartBlock()) && mActiveTrain.getResetWhenDone() ) {
+						// reset the direction of Allocated Sections 
+						mActiveTrain.resetAllAllocatedSections();
+					}
+				}
+			}
+			// remove from lists
+			removeFromActiveBlockList(_block);
+		}
+		private int _delay = 250;
+		private jmri.Block _block = null;
+		private int _occ = 0;
+		private AllocatedSection _aSection = null;
+	}
 			    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AllocatedSection.class.getName());
 }
