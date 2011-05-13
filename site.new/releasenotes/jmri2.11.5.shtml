@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.29 2011-05-11 17:51:46 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.30 2011-05-13 15:22:52 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -208,7 +208,10 @@ sending multiple messages.
 <li>Return "Content-Length" in reply header</li>
 <li>Added "Show Comm Info" to miniserver prefs, to promote key messages from debug to info when checked.  Default is off.</li>
 </ul>
-
+<p>Kevin Dickerson</p>
+<ul>
+<li>Updated so that the user selected preferences and the window size/position data is now saved in a seperate file and not in with the connection preferences.</li>
+</ul>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
