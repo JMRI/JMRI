@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Options.shtml,v 1.6 2010-04-26 18:20:46 djduchamp Exp $ -->
+<!-- $Id: Options.shtml,v 1.7 2011-05-13 12:10:20 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -77,10 +77,13 @@ trains.</p>
 </li>
 <li><p>Check <b>Automatically allocate Sections to Active Trains</b> to activate 
 automated allocation. Uncheck to deactivate automated allocation. 
-This item is equivalent to the <b>Auto Allocate</b> item in Dispatcher's 
-<b>Options</b> menu. <b>Note: Automated allocation of Sections is not implemented 
-in the current version of Dispatcher</b>. It is expected to be added in the 
-future.</p>
+This item is equivalent to the <b>Auto Allocate</b> option check box in Dispatcher's 
+window above the <b>Allocated Sections</b> table. It is also equivalent to <b>Auto 
+Allocate</b> in Dispatcher's <b>Options</b> menu. Checking it here, then saving 
+Dispatcher Options (see below) will select Auto Allocate and Auto Release 
+when Dispatcher is started. <b>Note: The current version of Dispatcher provides 
+limited support for automated allocation of Sections</b>. Support will be 
+enhanced in future versions.</p>
 </li>
 <li><p>Check <b>Automatically set turnouts when a Section is allocated</b> to 
 activate automatic setting of turnouts. Uncheck to deactivate automatic 
@@ -132,10 +135,12 @@ time Dispatcher is run.</p>
 Items in this menu and their use are explained below:
 <ul>
 <li><p><b>Auto Allocate</b> - This check box is used to turn automated 
-allocation functions on (checked) or off (unchecked). This item is equivalent 
-to an item in the Options Window. Automated dispatching may be turned on or off 
-at any time. The item is repeated here for convenience of the dispatcher. 
-<b>Note: Automated allocation of Sections is not implemented in the current 
+allocation functions on (checked) or off (unchecked). This item is equivalent to 
+the <b>Auto Allocate</b> option check box in Dispatcher's window above the 
+<b>Allocated Sections</b> table. It is also is equivalent 
+to an item in the <b>Options Window</b>. Automated dispatching may be turned on 
+or off at any time. The item is repeated here for convenience of the dispatcher. 
+<b>Note: Automated allocation of Sections has limited support in the current 
 version of Dispatcher.</b></p>
 </li>
 <li><p><b>Auto Set Turnouts</b> - This check box is used to turn on (checked) 
@@ -148,16 +153,16 @@ dispatcher.</p>
 <li><p><b>Options Window...</b> - Selecting this item brings up the Options 
 Window described above.</p>
 </li>
-<li><p><b>Save Options...</b> - Selecting this item saves Dispatcher options 
+<li><p><b>Save Options...</b> - Selecting this item saves Dispatcher Options 
 currently in effect into a small XML file (<i>dispatcheroptions.xml</i>) in the 
 user's preferences directory. This is the same location where JMRI preference 
 files are saved. When Dispatcher is started, if a file named 
 "<i>dispatcheroptions.xml</i>" is found in the user's preference directory, 
 that file is read, and Dispatcher options are set accordingly.  If the 
 file is not present when Dispatcher is started, default options are used. 
-<b>Note: Dispatcher options are not saved automatically.</b> Saving Dispatcher 
-options is optional. Selecting this menu item is the only way to save 
-Dispatcher options.<p>
+<b>Note: Dispatcher Options are not saved automatically.</b> Saving Dispatcher 
+Options is optional. Selecting this menu item is the only way to save 
+Dispatcher Options.<p>
 </li>
 
 

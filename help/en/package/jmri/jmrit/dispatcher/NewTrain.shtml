@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NewTrain.shtml,v 1.5 2010-04-26 18:20:46 djduchamp Exp $ -->
+<!-- $Id: NewTrain.shtml,v 1.6 2011-05-13 12:10:20 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -77,7 +77,10 @@ are set according to the saved train information if possible. If an item cannot
 be set, for example if the specified Transit is in use, a warning is displayed 
 and a default selection is made. After loading, you may change any option or 
 selection, then may save your new train information, before clicking the 
-<b>Add New Train</b> button.
+<b>Add New Train</b> button.</p>
+<p> To permanently remove an unneeded Train Info file from the <b>dispatcher</b> 
+folder in your user preferences area, click the <b>Delete Train Info</b> button, 
+then select the train information file to be deleted.</p>
 
 <H2>Using the Activate New Train Window</H2>
 
@@ -153,6 +156,14 @@ on setting up a Transit for continuous running see the
 <b><a href="../beantable/TransitTable.shtml">Transit Table</a></b>
 help file.</p>
 </li>
+<li><p>Check <b>Reverse At End</b> to set up the Active Train for back and forth 
+running. With <b>Reverse At End</b> selected, when an Active Train is has reached 
+the end of its Transit, the Transit direction is reversed, and the Train backs up 
+through the Transit to its starting point. For back and forth running, the Transit 
+should have at least three Sections, one at each end and at least one in the 
+middle, and the Active Train should fit into each of the end Sections. Continuous 
+back and forth running is accomplished by also checking <b>Reset When Done</b>.
+</p></li>
 <li>Enter a <b>Priority</b> for the Active Train relative to other Active 
 Trains. Larger numbers are higher priority. The priority is used by the dispatcher 
 and/or automated dispatching functions to arbitrate between Active Trains if 
@@ -168,9 +179,11 @@ reached the specified Departure Time of an Active Train, the scheduled
 departure time is displayed in that Active Train's entry of the Active 
 Train table in the Dispatcher window. If an Active Train is waiting for the 
 fast clock, Dispatcher will refuse to allocate Sections to it, however, the 
-dispatcher is given a chance to override this restriction. This option allows 
+dispatcher is given a chance to override this restriction. If an Active Train is 
+being run automatically by the computer (see below), the Active Train will 
+automatically start at the specified fast clock time. This option allows 
 the dispatcher to set up a number of Active Trains which will start at various 
-times during an operating session.</p>
+times during a session.</p>
 <li><p>Check <b>Run Train Automatically</b> to request that the Active Train 
 be run automatically by the computer. If the Active Train is to be run manually 
 by a human engineer, skip the next few steps; go directly to the third to last 
@@ -219,8 +232,8 @@ ringing the bell or sounding the horn will be skipped.</p?
 </li>
 <li><p>Check <b>Run in reverse</b> if the locomotive is to be run in reverse through 
 the Transit. This should not be confused with the direction through the Transit, 
-which is always FORWARD. Checking this item is equivalent to using the reverse 
-setting on a manual throttle.</p>
+which is always FORWARD when the Active Train starts up. Checking this item is 
+equivalent to using the reverse setting on a manual throttle.</p>
 <p>This option allows a locomotive to back up through the Transit. For 
 example, a local moves out of a yard automatically in the forward direction to 
 a siding, cars are switched manually, then the locomotive needs to back up 
@@ -264,10 +277,6 @@ appear in the Dispatcher window, and this window will be dismissed.</p>
 <li><p>Click <b>Cancel</b> to exit this window without creating a new Active 
 Train.</p>
 </li>
-</ol>
-<p><b>Note: Automated allocation of Sections is not implemented in the current 
-version of Dispatcher.</b> Automated allocation is 
-expected to be added in a later version of JMRI.</p>
 
 <!--#include virtual="/Footer" -->
 </body>
