@@ -11,15 +11,14 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 
-import jmri.managers.AbstractManager;
 import jmri.Manager;
 
 /**
  * Implementation of a TurnoutManager that can serves as a proxy
- * for multiple system-specific implementations. 
+ * for multiple system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -28,7 +27,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     public ProxyTurnoutManager() {
     	super();
     }
-    
+
     protected AbstractManager makeInternalManager() {
         return new InternalTurnoutManager();
     }
@@ -110,40 +109,40 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     public Turnout newTurnout(String systemName, String userName) {
         return (Turnout) newNamedBean(systemName, userName);
     }
-    	
+
 	/**
 	 * Get text to be used for the Turnout.CLOSED state in user communication.
-	 * Allows text other than "CLOSED" to be use with certain hardware system 
-	 * to represent the Turnout.CLOSED state.  
+	 * Allows text other than "CLOSED" to be use with certain hardware system
+	 * to represent the Turnout.CLOSED state.
 	 * Defaults to the primary manager.  This means that the primary manager sets the terminology
 	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
 	 * "CLOSED" is the desired terminology.
 	 */
-	public String getClosedText() { 
-		return ((TurnoutManager)getMgr(0)).getClosedText(); 
+	public String getClosedText() {
+		return ((TurnoutManager)getMgr(0)).getClosedText();
 	}
-	
+
 	/**
 	 * Get text to be used for the Turnout.THROWN state in user communication.
-	 * Allows text other than "THROWN" to be use with certain hardware system 
+	 * Allows text other than "THROWN" to be use with certain hardware system
 	 * to represent the Turnout.THROWN state.
 	 * Defaults to the primary manager.  This means that the primary manager sets the terminology
 	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
 	 * "THROWN" is the desired terminology.
 	 */
-	public String getThrownText() { 
-		return ((TurnoutManager)getMgr(0)).getThrownText(); 
+	public String getThrownText() {
+		return ((TurnoutManager)getMgr(0)).getThrownText();
 	}
 
 	/**
-	 * Get from the user, the number of addressed bits used to control a turnout. 
-	 * Normally this is 1, and the default routine returns 1 automatically.  
-	 * Turnout Managers for systems that can handle multiple control bits 
+	 * Get from the user, the number of addressed bits used to control a turnout.
+	 * Normally this is 1, and the default routine returns 1 automatically.
+	 * Turnout Managers for systems that can handle multiple control bits
 	 * should override this method with one which asks the user to specify the
 	 * number of control bits.
-	 * If the user specifies more than one control bit, this method should 
+	 * If the user specifies more than one control bit, this method should
 	 * check if the additional bits are available (not assigned to another object).
-	 * If the bits are not available, this method should return 0 for number of 
+	 * If the bits are not available, this method should return 0 for number of
 	 * control bits, after informing the user of the problem.
 	 */
 	 public int askNumControlBits(String systemName) {
@@ -154,14 +153,14 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     }
 
 	/**
-	 * Get from the user, the type of output to be used bits to control a turnout. 
-	 * Normally this is 0 for 'steady state' control, and the default routine 
-	 * returns 0 automatically.  
-	 * Turnout Managers for systems that can handle pulsed control as well as  
-	 * steady state control should override this method with one which asks 
-	 * the user to specify the type of control to be used.  The routine should 
+	 * Get from the user, the type of output to be used bits to control a turnout.
+	 * Normally this is 0 for 'steady state' control, and the default routine
+	 * returns 0 automatically.
+	 * Turnout Managers for systems that can handle pulsed control as well as
+	 * steady state control should override this method with one which asks
+	 * the user to specify the type of control to be used.  The routine should
 	 * return 0 for 'steady state' control, or n for 'pulsed' control, where n
-	 * specifies the duration of the pulse (normally in seconds).  
+	 * specifies the duration of the pulse (normally in seconds).
 	 */
 	 public int askControlType(String systemName) {
         int i = matchTentative(systemName);
@@ -169,19 +168,19 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             return ((TurnoutManager)getMgr(i)).askControlType(systemName);
         return ((TurnoutManager)getMgr(0)).askControlType(systemName);
     }
-    
-    public boolean isControlTypeSupported(String systemName) { 
+
+    public boolean isControlTypeSupported(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0)
             return ((TurnoutManager)getMgr(i)).isControlTypeSupported(systemName);
-        return ((TurnoutManager)getMgr(0)).isControlTypeSupported(systemName);    
+        return ((TurnoutManager)getMgr(0)).isControlTypeSupported(systemName);
     }
-    
+
     public boolean isNumControlBitsSupported(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0)
             return ((TurnoutManager)getMgr(i)).isNumControlBitsSupported(systemName);
-        return ((TurnoutManager)getMgr(0)).isNumControlBitsSupported(systemName);    
+        return ((TurnoutManager)getMgr(0)).isNumControlBitsSupported(systemName);
     }
 
 	/**
@@ -203,10 +202,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             return ((TurnoutManager)getMgr(i)).allowMultipleAdditions(systemName);
         return ((TurnoutManager)getMgr(0)).allowMultipleAdditions(systemName);
         }
-    
+
     public String getNextValidAddress(String curAddress, String prefix){
         for (int i=0; i<nMgrs(); i++) {
-            if ( prefix.equals( 
+            if ( prefix.equals(
                     ((TurnoutManager)getMgr(i)).getSystemPrefix()) ) {
                 //System.out.println((TurnoutManager)getMgr(i))
                 return ((TurnoutManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
@@ -214,7 +213,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         }
         return null;
     }
-    
+
     public void setDefaultClosedSpeed(String speed) throws jmri.JmriException {
         for (int i=0; i<nMgrs(); i++) {
             try {
@@ -225,7 +224,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             }
         }
     }
-    
+
     public void setDefaultThrownSpeed(String speed) throws jmri.JmriException{
         for (int i=0; i<nMgrs(); i++) {
             try {
@@ -236,15 +235,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             }
         }
     }
-    
+
     public String getDefaultThrownSpeed(){
         return ((TurnoutManager)getMgr(0)).getDefaultThrownSpeed();
     }
-    
+
     public String getDefaultClosedSpeed(){
         return ((TurnoutManager)getMgr(0)).getDefaultClosedSpeed();
     }
-    
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyTurnoutManager.class.getName());
 }

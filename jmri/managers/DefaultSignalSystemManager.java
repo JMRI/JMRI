@@ -4,7 +4,6 @@ package jmri.managers;
 
 import jmri.*;
 import jmri.jmrit.XmlFile;
-import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultSignalSystem;
 
 import java.io.*;
@@ -22,7 +21,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -117,7 +116,7 @@ public class DefaultSignalSystemManager extends AbstractManager
             if (log.isDebugEnabled()) log.debug("aspect name "+name);
  
             @SuppressWarnings("unchecked")
-            List<Element> c = l.get(i).getChildren();            
+            List<Element> c = l.get(i).getChildren();
 
             for (int j = 0; j < c.size(); j++) {
                 // note: includes setting name; redundant, but needed
