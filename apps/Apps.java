@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.134 $
+ * @version     $Revision: 1.135 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -81,7 +81,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                     return true;
                 }
             });
-            
+
         // Install configuration manager and Swing error handler
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
         InstanceManager.setConfigureManager(cm);
@@ -95,7 +95,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // Install a user preferences manager
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-
         // Install an IdTag manager
         jmri.InstanceManager.store(new jmri.managers.DefaultIdTagManager(), jmri.IdTagManager.class);
 
@@ -207,6 +206,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         add(buttonSpace());
         add(_jynstrumentSpace);
         log.debug("End constructor");
+        
     }
 
     private boolean doDeferredLoad(File file) {
@@ -353,6 +353,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // prefs
         prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
         editMenu.add(prefsAction);
+
     }
 
     protected void toolsMenu(JMenuBar menuBar, JFrame frame) {
@@ -672,6 +673,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 					java.awt.AWTEvent .KEY_EVENT_MASK
 				);
 		}
+
 		// bring up splash window for startup
         
         if (sp==null){
@@ -804,6 +806,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         } else{
             configFilename = def;
         }
+    }
+    
+    static public String getConfigFileName(){
+        return configFilename;
     }
     
     static protected void createFrame(Apps containedPane, JFrame frame) {

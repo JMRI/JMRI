@@ -26,7 +26,7 @@ import javax.swing.*;
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -134,7 +134,7 @@ public class AppConfigBase extends JmriPanel {
     public void dispose() {
         items.clear();
     }
-    
+
     protected void saveContents() {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
@@ -142,8 +142,6 @@ public class AppConfigBase extends JmriPanel {
         for (int i = 0; i < items.size(); i++) {
             InstanceManager.configureManagerInstance().registerPref(items.get(i));
         }
-        //Need to register the userpreferencesmanager, otherwise all the settings get lost.
-        InstanceManager.configureManagerInstance().registerPref(jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class));
         InstanceManager.configureManagerInstance().storePrefs();
     }
 
@@ -152,16 +150,15 @@ public class AppConfigBase extends JmriPanel {
      * what to do next.  To do that, the last step is to present a dialog
      * box prompting the user to end the program.
      */
+     
     public void savePressed() {
         // true if port name OK
         if (!checkPortNames())           
                 return;
-
         // true if there arn't any duplicates
         if (!checkDups())
         	if (!(JOptionPane.showConfirmDialog(null, rb.getString("MessageLongDupsWarning"), rb.getString("MessageShortDupsWarning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION))
         		return;
-
         saveContents();
         final UserPreferencesManager p;
         p = InstanceManager.getDefault(UserPreferencesManager.class);

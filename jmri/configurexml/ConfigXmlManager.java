@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.89 $
+ * @version $Revision: 1.90 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -39,7 +39,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public void registerPref(Object o) {
         // skip if already present, leaving in original order
         if (plist.contains(o)) return;
-
         confirmAdapterAvailable(o);
         
         // and add to list
@@ -83,6 +82,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         temp.addAll(clist);
         temp.addAll(tlist);
         temp.addAll(ulist);
+        temp.addAll(uplist);
         for (int i=0; i<temp.size(); i++) {
             if (c.isInstance(temp.get(i))) { 
                 if (index-- == 0) return temp.get(i);
@@ -97,6 +97,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         temp.addAll(clist);
         temp.addAll(tlist);
         temp.addAll(ulist);
+        temp.addAll(uplist);
         for (int i=0; i<temp.size(); i++) {
             if (c.isInstance(temp.get(i))) {
                 returnlist.add(temp.get(i));
@@ -142,18 +143,30 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         // and add to list
         ulist.add(o);
     }
+    
+    public void registerUserPrefs(Object o) {
+        // skip if already present, leaving in original order
+        if (uplist.contains(o)) return;
+
+        confirmAdapterAvailable(o);
+        
+        // and add to list
+        uplist.add(o);
+    }
 
     public void deregister(Object o) {
         plist.remove(o);
         clist.remove(o);
         tlist.remove(o);
         ulist.remove(o);
+        uplist.remove(o);
     }
 
     ArrayList<Object> plist = new ArrayList<Object>();
     ArrayList<Object> clist = new ArrayList<Object>();
     ArrayList<Object> tlist = new ArrayList<Object>();
     ArrayList<Object> ulist = new ArrayList<Object>();
+    ArrayList<Object> uplist = new ArrayList<Object>();
     ArrayList<Element> loadDeferredList = new ArrayList<Element>();
 
     /**
@@ -227,6 +240,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (e!=null) root.addContent(e);
         }
     }
+    protected void addUserPrefsStore(Element root) {
+        for (int i=0; i<uplist.size(); i++) {
+            Object o = uplist.get(i);
+            Element e = elementFromObject(o);
+            if (e!=null) root.addContent(e);
+        }
+    }
     protected void includeHistory(Element root) {
         // add history to end of document
         if (InstanceManager.getDefault(FileHistory.class) != null)
@@ -281,6 +301,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         addPrefsStore(root);
         finalStore(root, file);
     }
+    
+    public void storeUserPrefs(File file) {
+        Element root = initStore();
+        addUserPrefsStore(root);
+        finalStore(root, file);
+    }
 
     /**
      * Set location for preferences file. 
@@ -290,6 +316,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     public void setPrefsLocation(File prefsFile) { this.prefsFile = prefsFile; }
     File prefsFile;
+    
+    /**
+     * Set location for user preferences file. 
+     * <p>
+     * File need not exist,
+     * but location must be writable when storePrefs() called.
+     */
+    /*public void setUserPrefsLocation(File userPrefsFile) { this.userPrefsFile = userPrefsFile; }
+    File userPrefsFile;*/
     
     /**
      * Writes prefs to a file.
@@ -419,6 +454,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 String adapterName = item.getAttribute("class").getValue();
                 log.debug("load via "+adapterName);
                 XmlAdapter adapter = null;
+                
                 try {
                     adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
 

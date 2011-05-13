@@ -22,6 +22,12 @@ import java.util.HashMap;
 import java.util.Enumeration;
 import java.lang.reflect.Method;
 
+import java.io.File;
+import jmri.jmrit.XmlFile;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.Attribute;
 
 
 
@@ -32,7 +38,7 @@ import java.lang.reflect.Method;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -40,7 +46,7 @@ import java.lang.reflect.Method;
     value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
     justification="Class is single-threaded, and uses statics extensively")
 
-public class DefaultUserMessagePreferences implements UserPreferencesManager {
+public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implements UserPreferencesManager {
     
     private boolean allowSave = true;
 
@@ -48,7 +54,12 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     DefaultUserMessagePreferences(){
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.configureManagerInstance() != null)
-            jmri.InstanceManager.configureManagerInstance().registerPref(this);
+            jmri.InstanceManager.configureManagerInstance().registerUserPrefs(this);
+        if (jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)==null){
+            //We add this to the instanceManager so that other components can access the preferences
+            //We need to make sure that this is registered before we do the read
+            jmri.InstanceManager.store(this, jmri.UserPreferencesManager.class);
+        }
         // register a shutdown task to fore storing of preferences at shutdown
         if (userPreferencesShutDownTask==null) {
             userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") {
@@ -57,7 +68,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                     if (getChangeMade()){
                         log.info("Storing preferences as part of shutdown");
                         if (allowSave){
-                            jmri.InstanceManager.configureManagerInstance().storePrefs();
+                            jmri.InstanceManager.configureManagerInstance().storeUserPrefs(file);
                         } else {
                             log.info("Not allowing save of changes as the user has accessed the preferences and not performed a save");
                         }
@@ -72,9 +83,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                 log.warn("Won't protect preferences at shutdown without registered ShutDownManager");
             }
         }
-        //setClassDescription(jmri.jmrit.beantable.BlockTableAction.class.getName());
+
         preferenceItemDetails(getClassName(), "reminder", "Hide Reminder Location Message");
         classPreferenceList.get(getClassName()).setDescription("User Preferences");
+        readUserPreferences();
     }
     
     static class DefaultUserMessagePreferencesHolder {
@@ -611,8 +623,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     public boolean isWindowPositionSaved(String strClass){
         return windowDetails.containsKey(strClass);
     }
-    
-    
+
     Hashtable<String, ClassPreferences> classPreferenceList = new Hashtable<String, ClassPreferences>();
     
     /**
@@ -1133,5 +1144,31 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     
     }
+
+    File file;
+    public void readUserPreferences() {
+        String userprefsfilename = "UserPrefs"+apps.Apps.getConfigFileName();
+        
+        if (!new File(userprefsfilename).isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            file = new File(XmlFile.prefsDir()+userprefsfilename);
+        } else {
+            file = new File(userprefsfilename);
+        }
+        
+        if (file.exists()) {
+            log.debug("start load user pref file");
+            try {
+                jmri.InstanceManager.configureManagerInstance().load(file, true);
+            } catch (jmri.JmriException e) {
+                log.error("Unhandled problem loading configuration: "+e);
+            }
+        } else {
+            log.info("No saved user preferences file");
+        }
+
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferences.class.getName());
 }

@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -57,6 +57,7 @@ public interface ConfigureManager {
     public void registerConfig(Object o);
     public void registerTool(Object o);
     public void registerUser(Object o);
+    public void registerUserPrefs(Object o);
 
     public void deregister(Object o);
 
@@ -102,6 +103,11 @@ public interface ConfigureManager {
      * Stores just preferences information.
      */
     public void storePrefs(File file);
+    
+    /**
+     * Stores just user preferences information.
+     */
+    public void storeUserPrefs(File file);
 
     /**
      * Stores just configuration information.
