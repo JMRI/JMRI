@@ -33,7 +33,7 @@ package jmri;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2009, 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class TransitSectionAction {
 	/**
@@ -159,12 +159,16 @@ public class TransitSectionAction {
 	public java.beans.PropertyChangeListener getSensorListener() {return _sensorListener;}
 	public void setSensorListener(java.beans.PropertyChangeListener l) {_sensorListener = l;}
 
-	public void dispose() {
+	public void disposeSensorListener() {
 		// if this object has registered a listener, dispose of it
 		if (_sensorListener != null) {
 			_triggerSensor.removePropertyChangeListener(_sensorListener);
 			_sensorListener = null;
+			_waitingForSensor = false;
 		}
+	}
+	public void dispose() {
+		disposeSensorListener();
 	}
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitSectionAction.class.getName());

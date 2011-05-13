@@ -31,6 +31,15 @@ import jmri.implementation.AbstractNamedBean;
  * <P>
  * A Section may be in a Transit more than once, for example if a train is 
  *  to make two or more loops around before going elsewhere.
+ * <P>
+ * A Transit is normally traversed in the forward direction, i.e., the 
+ *  direction of increasing Section Numbers. When a Transit traversal is 
+ *  started up, it is always started in the forward direction.  However,
+ *  to accommodate point-to-point (back and forth) route designs, the 
+ *  direction of travel in a Transit may be "reversed".  While
+ *  the Transit direction is "reversed", the direction of travel is the 
+ *  direction of decreasing Section numbers.  Whether a Transit is in the 
+ *  "reversed" direction is kept in the ActiveTrain using the Transit.
  * <p>
  * Transit system names are always upper case.
  * <P>
@@ -47,9 +56,9 @@ import jmri.implementation.AbstractNamedBean;
  * for more details.
  * <P>
  *
- * @author			Dave Duchamp Copyright (C) 2008
+ * @author			Dave Duchamp Copyright (C) 2008-2011
  * 
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
