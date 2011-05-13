@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class ActivateTrainFrame {
 
@@ -86,16 +86,16 @@ public class ActivateTrainFrame {
 	private JButton addNewTrainButton = null;
 	private JButton loadButton = null;
 	private JButton saveButton = null;
+	private JButton deleteButton = null;
 	private JCheckBox autoRunBox = new JCheckBox(rb.getString("AutoRun"));
 	private JTextField priorityField = new JTextField(6);
 	private JCheckBox resetWhenDoneBox = new JCheckBox(rb.getString("ResetWhenDone"));
+	private JCheckBox reverseAtEndBox = new JCheckBox(rb.getString("ReverseAtEnd"));
 	private JCheckBox delayedStartBox = new JCheckBox(rb.getString("DelayedStart"));
 	private JTextField departureHrField = new JTextField(2);
 	private JTextField departureMinField = new JTextField(2);
-	private JComboBox trainTypeBox = new JComboBox();
-	
+	private JComboBox trainTypeBox = new JComboBox();	
 	// Note: See also items related to automatically running trains near the end of this module
-	
 	
 	/**
 	 * Displays a window that allows a new ActiveTrain to be activated
@@ -110,7 +110,7 @@ public class ActivateTrainFrame {
 		_ActiveTrainsList = _dispatcher.getActiveTrainsList();
 		// create window if needed
         if (initiateFrame==null) {
-            initiateFrame = new JmriJFrame(rb.getString("AddTrainTitle"));
+            initiateFrame = new JmriJFrame(rb.getString("AddTrainTitle"),false,true);
             initiateFrame.addHelpMenu("package.jmri.jmrit.dispatcher.NewTrain", true);
 			initiatePane = initiateFrame.getContentPane();
             initiatePane.setLayout(new BoxLayout(initiateFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -131,6 +131,13 @@ public class ActivateTrainFrame {
                 }
             });
 			saveButton.setToolTipText(rb.getString("SaveButtonHint"));
+			p0.add(deleteButton = new JButton(rb.getString("DeleteButton")));
+            deleteButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    deleteTrainInfo(e);
+                }
+            });
+			deleteButton.setToolTipText(rb.getString("DeleteButtonHint"));
 			initiatePane.add(p0);			
 			initiatePane.add(new JSeparator());
 			// add items relating to both manually run and automatic trains.
@@ -187,13 +194,13 @@ public class ActivateTrainFrame {
             JPanel p6 = new JPanel(); 
 			p6.setLayout(new FlowLayout());
 			p6.add(resetWhenDoneBox);
-            resetWhenDoneBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    handleResetWhenDoneClick(e);
-                }
-            });
 			resetWhenDoneBox.setToolTipText(rb.getString("ResetWhenDoneBoxHint"));
 			initiatePane.add(p6);
+            JPanel p10 = new JPanel(); 
+			p10.setLayout(new FlowLayout());
+			p10.add(reverseAtEndBox);
+			reverseAtEndBox.setToolTipText(rb.getString("ReverseAtEndBoxHint"));
+			initiatePane.add(p10);
             JPanel p8 = new JPanel(); 
 			p8.setLayout(new FlowLayout());
 			p8.add(new JLabel(rb.getString("PriorityLabel")+" :"));
@@ -306,13 +313,16 @@ public class ActivateTrainFrame {
 		initializeDestinationBlockCombo();
 		initiateFrame.pack();
 	}
-	private void handleResetWhenDoneClick(ActionEvent e) {
-		if (!selectedTransit.canBeResetWhenDone()) {
+	private boolean checkResetWhenDone() {
+		if ((!reverseAtEndBox.isSelected()) && resetWhenDoneBox.isSelected() && 
+					(!selectedTransit.canBeResetWhenDone())) {
 			resetWhenDoneBox.setSelected(false);
 			javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
 					.getString("NoResetMessage"), rb.getString("InformationTitle"),
 						javax.swing.JOptionPane.INFORMATION_MESSAGE);
-		}			
+			return false;
+		}
+		return true;			
 	}
 	private void handleAutoRunClick(ActionEvent e) {
 		if (autoRunBox.isSelected()) {
@@ -353,7 +363,9 @@ public class ActivateTrainFrame {
 		String endBlockName = destinationBlockBoxList.get(index).getSystemName();
 		int endBlockSeq = destinationBlockSeqList.get(index).intValue();
 		boolean autoRun = autoRunBox.isSelected();
+		if (!checkResetWhenDone()) return;
 		boolean resetWhenDone = resetWhenDoneBox.isSelected();
+		boolean reverseAtEnd = reverseAtEndBox.isSelected();
 		boolean delayedStart = delayedStartBox.isSelected();
 		int departureTimeHours = 8;
 		try {
@@ -469,10 +481,11 @@ public class ActivateTrainFrame {
 				return;
 			}
 		}
+		
 		// create a new Active Train
 		ActiveTrain at = _dispatcher.createActiveTrain ( transitName, trainName, tSource, startBlockName, 
 					startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority, 
-						resetWhenDone, true, initiateFrame);
+						resetWhenDone, reverseAtEnd, true, initiateFrame);
 		if (at==null) return;  // error message sent by createActiveTrain
 		at.setDelayedStart(delayedStart);
 		at.setDepartureTimeHr(departureTimeHours);
@@ -690,6 +703,17 @@ public class ActivateTrainFrame {
 			}   
 		}
 	}
+	private void deleteTrainInfo(ActionEvent e) {
+		String[] names = _tiFile.getTrainInfoFileNames();
+		TrainInfo info = null;
+		if (names.length > 0) {
+			Object selName = JOptionPane.showInputDialog(initiateFrame, 
+					rb.getString("DeleteTrainChoice"), rb.getString("DeleteTrainTitle"), 
+						JOptionPane.QUESTION_MESSAGE, null, names, names[0]);
+			if ( (selName == null) || (((String)selName).equals("")) ) return;
+			_tiFile.deleteTrainInfoFile((String)selName);
+		}
+	}
 	private void trainInfoToDialog(TrainInfo info) {
 		if(!setComboBox(transitSelectBox, info.getTransitName())) {
 			log.warn("Transit "+info.getTransitName()+" from file not in Transit menu");
@@ -722,6 +746,7 @@ public class ActivateTrainFrame {
 		setComboBox(destinationBlockBox, info.getDestinationBlockName());
 		priorityField.setText(info.getPriority());
 		resetWhenDoneBox.setSelected(info.getResetWhenDone());
+		reverseAtEndBox.setSelected(info.getReverseAtEnd());
 		delayedStartBox.setSelected(info.getDelayedStart());
 		departureHrField.setText(info.getDepartureTimeHr());
 		departureMinField.setText(info.getDepartureTimeMin());
@@ -748,6 +773,7 @@ public class ActivateTrainFrame {
 		info.setTrainFromUser(_TrainsFromUser);
 		info.setPriority(priorityField.getText());
 		info.setResetWhenDone(resetWhenDoneBox.isSelected());
+		info.setReverseAtEnd(reverseAtEndBox.isSelected());
 		info.setDelayedStart(delayedStartBox.isSelected());
 		info.setDepartureTimeHr(departureHrField.getText());
 		info.setDepartureTimeMin(departureMinField.getText());

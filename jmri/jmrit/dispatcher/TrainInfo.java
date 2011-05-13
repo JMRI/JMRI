@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  *		TrainInfoFile.java and dispatcher-traininfo.DTD as well as this module.
  *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class TrainInfo {
 
@@ -37,6 +37,7 @@ public class TrainInfo {
 	String priority = "";
 	boolean autoRun = false;
 	boolean resetWhenDone = false;
+	boolean reverseAtEnd = false;
 	boolean delayedStart = false;
 	String departureTimeHr = "08";
 	String departureTimeMin = "00";
@@ -80,6 +81,8 @@ public class TrainInfo {
 	protected boolean getRunAuto() {return autoRun;}
 	protected void setResetWhenDone(boolean b) {resetWhenDone = b;}
 	protected boolean getResetWhenDone() {return resetWhenDone;}
+	protected void setReverseAtEnd(boolean b) {reverseAtEnd = b;}
+	protected boolean getReverseAtEnd() {return reverseAtEnd;}
 	protected void setDelayedStart(boolean b) {delayedStart = b;}
 	protected boolean getDelayedStart() {return delayedStart;}
 	protected void setDepartureTimeHr(String s) {departureTimeHr = s;}

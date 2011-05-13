@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -140,6 +140,11 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 						if (traininfo.getAttribute("resetwhendone").getValue().equals("no"))
 							tInfo.setResetWhenDone(false);
 					}
+					if (traininfo.getAttribute("reverseatend")!=null) {
+						tInfo.setReverseAtEnd(true);
+						if (traininfo.getAttribute("reverseatend").getValue().equals("no"))
+							tInfo.setReverseAtEnd(false);
+					}
 					if (traininfo.getAttribute("delayedstart")!=null) {
 						tInfo.setDelayedStart(true);
 						if (traininfo.getAttribute("delayedstart").getValue().equals("no"))
@@ -221,6 +226,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 		traininfo.setAttribute("trainfromuser", ""+(tf.getTrainFromUser()?"yes":"no"));
 		traininfo.setAttribute("priority", tf.getPriority());
 		traininfo.setAttribute("resetwhendone", ""+(tf.getResetWhenDone()?"yes":"no"));
+		traininfo.setAttribute("reverseatend", ""+(tf.getReverseAtEnd()?"yes":"no"));
 		traininfo.setAttribute("delayedstart", ""+(tf.getDelayedStart()?"yes":"no"));
 		traininfo.setAttribute("departuretimehr", tf.getDepartureTimeHr());
 		traininfo.setAttribute("departuretimemin", tf.getDepartureTimeMin());
@@ -298,12 +304,19 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 //			log.error("   "+(j+1)+" "+sbox[j]);
 //        }
 // end djd debugging
-        return sbox;
-		
-		
+        return sbox;				
     }
+	
+	/**
+	 * Delete a specified TrainInfo file
+	 */
+	public void deleteTrainInfoFile(String name) { 
+		// locate the file and delete it if it exists
+		File f = new File(fileLocation+name);
+		if (!f.delete()) // delete file and check success
+			log.error("failed to delete TrainInfo file - "+name);
+	}
 
-   
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainInfoFile.class.getName());
 }
 
