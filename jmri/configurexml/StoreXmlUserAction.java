@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
@@ -30,13 +30,19 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
+        String oldButtonText=userFileChooser.getApproveButtonText();
+        userFileChooser.setApproveButtonText(java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MenuItemStore"));
         java.io.File file = getFileName(userFileChooser);
+ 
         if (file==null) return;
         
         // make a backup file
         InstanceManager.configureManagerInstance().makeBackup(file);
         // and finally store
         InstanceManager.configureManagerInstance().storeUser(file);
+
+        // The last thing we do is restore the Approve button text.
+        userFileChooser.setApproveButtonText(oldButtonText);
     }
 
     // initialize logging

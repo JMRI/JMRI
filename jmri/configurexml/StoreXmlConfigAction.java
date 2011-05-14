@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends LoadStoreBaseAction {
@@ -42,7 +42,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
      */
     public static File getFileName(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
-        int retVal = fileChooser.showSaveDialog(null);
+        int retVal = fileChooser.showDialog(null,null);
         if (retVal != JFileChooser.APPROVE_OPTION) return null;  // give up if no file selected
         
         File file = fileChooser.getSelectedFile();
