@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author Dan Boudreau Copyright (C) 2007 2008
  * Cloned from NceConsistEditFrame by
  * @author kcameron Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
@@ -261,15 +261,15 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		consistStatus.setText(rb.getString("UNKNOWN"));
 		consistStatus.setVisible(true);
 
-		previousButton.setText(rb.getString("PREVIOUS"));
+		previousButton.setText(rb.getString("KeyPREVIOUS"));
 		previousButton.setVisible(true);
 		previousButton.setToolTipText(rb.getString("ToolTipPrevious"));
 
-		nextButton.setText(rb.getString("NEXT"));
+		nextButton.setText(rb.getString("KeyNEXT"));
 		nextButton.setVisible(true);
 		nextButton.setToolTipText(rb.getString("ToolTipNext"));
 
-		getButton.setText(rb.getString("GET"));
+		getButton.setText(rb.getString("KeyGET"));
 		getButton.setVisible(true);
 		getButton.setToolTipText(rb.getString("ToolTipGet"));
 
@@ -304,39 +304,39 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		throttleButton.setEnabled(true);
 		throttleButton.setToolTipText(rb.getString("ToolTipThrottle"));
 
-		clearCancelButton.setText(rb.getString("CLEAR"));
+		clearCancelButton.setText(rb.getString("KeyCLEAR"));
 		clearCancelButton.setVisible(true);
 		clearCancelButton.setEnabled(false);
 		clearCancelButton.setToolTipText(rb.getString("ToolTipClear"));
 
-		saveLoadButton.setText(rb.getString("SAVE"));
+		saveLoadButton.setText(rb.getString("KeySAVE"));
 		saveLoadButton.setVisible(false);
 		saveLoadButton.setEnabled(false);
 		saveLoadButton.setToolTipText(rb.getString("ToolTipSave"));
 
-		deleteButton.setText(rb.getString("DELETE"));
+		deleteButton.setText(rb.getString("KeyDELETE"));
 		deleteButton.setVisible(false);
 		deleteButton.setEnabled(false);
 		deleteButton.setToolTipText(rb.getString("ToolTipDelete"));
 
-		backUpButton.setText(rb.getString("BACKUP"));
+		backUpButton.setText(rb.getString("KeyBACKUP"));
 		backUpButton.setVisible(true);
 		backUpButton.setToolTipText(rb.getString("ToolTipBackup"));
 
-		restoreButton.setText(rb.getString("RESTORE"));
+		restoreButton.setText(rb.getString("KeyRESTORE"));
 		restoreButton.setVisible(true);
 		restoreButton.setToolTipText(rb.getString("ToolTipRestore"));
 
-		checkBoxEmpty.setText(rb.getString("EMPTY"));
+		checkBoxEmpty.setText(rb.getString("KeyEMPTY"));
 		checkBoxEmpty.setVisible(true);
 		checkBoxEmpty.setToolTipText(rb.getString("ToolTipEmpty"));
 
-		checkBoxVerify.setText(rb.getString("VERIFY"));
+		checkBoxVerify.setText(rb.getString("KeyVERIFY"));
 		checkBoxVerify.setVisible(true);
 		checkBoxVerify.setSelected(true);
 		checkBoxVerify.setToolTipText(rb.getString("ToolTipVerify"));
 
-		checkBoxConsist.setText(rb.getString("CONSIST"));
+		checkBoxConsist.setText(rb.getString("KeyCONSIST"));
 		checkBoxConsist.setVisible(true);
 		checkBoxConsist.setSelected(true);
 		checkBoxConsist.setToolTipText(rb.getString("ToolTipConsist"));
@@ -438,7 +438,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			if (!validConsist())
 				return;
 			int locoAddr = validLocoAdr(locoTextField1.getText());
-			boolean isLong = (adrButton1.getText() == rb.getString("LONG"));
+			boolean isLong = (adrButton1.getText() == rb.getString("KeyLONG"));
 			if (locoAddr < 0)
 				return;
 			consistNum = validConsist(consistTextField.getText());
@@ -456,7 +456,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		// clear or cancel button
 		if (ae.getSource() == clearCancelButton) {
 			// button can be Clear or Cancel
-			if (clearCancelButton.getText().equals(rb.getString("CLEAR"))) {
+			if (clearCancelButton.getText().equals(rb.getString("KeyCLEAR"))) {
 				updateRoster(rb.getString("CLEARED"));
 				// set refresh flag to update panel
 				refresh = true;
@@ -482,7 +482,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 				return;
 			}
 			enableAllLocoRows(false);
-			if (saveLoadButton.getText().equals(rb.getString("LOAD"))){ 
+			if (saveLoadButton.getText().equals(rb.getString("KeyLOAD"))){ 
 				loadShift (); // get rid of empty mids!
 				updateRoster(consistTextField.getText());
 				consistNum = validConsist(consistTextField.getText());
@@ -590,12 +590,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					rb.getString("DIALOG_NceConsist"), JOptionPane.ERROR_MESSAGE);
 			return;
 		} else {
-			if (adrButton.getText() == rb.getString("LONG")) {
+			if (adrButton.getText() == rb.getString("KeyLONG")) {
 				if (Integer.parseInt(locoTextField.getText()) < 128) {
-					adrButton.setText(rb.getString("SHORT"));
+					adrButton.setText(rb.getString("KeySHORT"));
 				}
 			} else {
-				adrButton.setText(rb.getString("LONG"));
+				adrButton.setText(rb.getString("KeyLONG"));
 			}
 		}
 	}
@@ -633,10 +633,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			return;
 		}
 		cmdButton.setEnabled(true);
-		if (dirButton.getText() == rb.getString("FWD")) {
-			dirButton.setText(rb.getString("REV"));
+		if (dirButton.getText() == rb.getString("KeyFWD")) {
+			dirButton.setText(rb.getString("KeyREV"));
 		} else {
-			dirButton.setText(rb.getString("FWD"));
+			dirButton.setText(rb.getString("KeyFWD"));
 		}
 	}
 
@@ -666,9 +666,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		if (a != null) {
 			locoTextField.setText("" + a.getNumber());
 			if (a.isLongAddress())
-				adrButton.setText(rb.getString("LONG"));
+				adrButton.setText(rb.getString("KeyLONG"));
 			else
-				adrButton.setText(rb.getString("SHORT"));
+				adrButton.setText(rb.getString("KeySHORT"));
 			// if lead loco get road number and name
 			if (locoRosterBox == locoRosterBox1){
 				textConRoadName.setText(entry.getRoadName());
@@ -866,7 +866,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		
 		// load lead loco
 		locoTextField1.setText(cre.getLoco1DccAddress());
-		adrButton1.setText(cre.isLoco1LongAddress() ? rb.getString("LONG") : rb.getString("SHORT"));
+		adrButton1.setText(cre.isLoco1LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
 		dirButton1.setText(convertDTD(cre.getLoco1Direction()));
 		locoRosterBox1.setEnabled(true);
 		locoTextField1.setEnabled(true);
@@ -875,7 +875,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 		// load rear loco
 		locoTextField2.setText(cre.getLoco2DccAddress());
-		adrButton2.setText(cre.isLoco2LongAddress() ? rb.getString("LONG") : rb.getString("SHORT"));
+		adrButton2.setText(cre.isLoco2LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
 		dirButton2.setText(convertDTD(cre.getLoco2Direction()));
 		locoRosterBox2.setEnabled(true);
 		locoTextField2.setEnabled(true);
@@ -884,7 +884,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 		// load Mid1 loco
 		locoTextField3.setText(cre.getLoco3DccAddress());
-		adrButton3.setText(cre.isLoco3LongAddress() ? rb.getString("LONG") : rb.getString("SHORT"));
+		adrButton3.setText(cre.isLoco3LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
 		dirButton3.setText(convertDTD(cre.getLoco3Direction()));
 		locoRosterBox3.setEnabled(true);
 		locoTextField3.setEnabled(true);
@@ -893,7 +893,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 		// load Mid2 loco
 		locoTextField4.setText(cre.getLoco4DccAddress());
-		adrButton4.setText(cre.isLoco4LongAddress() ? rb.getString("LONG") : rb.getString("SHORT"));
+		adrButton4.setText(cre.isLoco4LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
 		dirButton4.setText(convertDTD(cre.getLoco4Direction()));
 		locoRosterBox4.setEnabled(true);
 		locoTextField4.setEnabled(true);
@@ -902,7 +902,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 		// load Mid3 loco
 		locoTextField5.setText(cre.getLoco5DccAddress());
-		adrButton5.setText(cre.isLoco5LongAddress() ? rb.getString("LONG") : rb.getString("SHORT"));
+		adrButton5.setText(cre.isLoco5LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
 		dirButton5.setText(convertDTD(cre.getLoco5Direction()));
 		locoRosterBox5.setEnabled(true);
 		locoTextField5.setEnabled(true);
@@ -911,7 +911,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 		// load Mid4 loco
 		locoTextField6.setText(cre.getLoco6DccAddress());
-		adrButton6.setText(cre.isLoco6LongAddress() ? rb.getString("LONG") : rb.getString("SHORT"));
+		adrButton6.setText(cre.isLoco6LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
 		dirButton6.setText(convertDTD(cre.getLoco6Direction()));
 		locoRosterBox6.setEnabled(true);
 		locoTextField6.setEnabled(true);
@@ -1051,27 +1051,27 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		cre.setModel(textConModel.getText());
 		// save lead loco
 		cre.setLoco1DccAddress(locoTextField1.getText());
-		cre.setLoco1LongAddress(adrButton1.getText().equals(rb.getString("LONG")));
+		cre.setLoco1LongAddress(adrButton1.getText().equals(rb.getString("KeyLONG")));
 		cre.setLoco1Direction(directionDTD(dirButton1));
 		// save rear loco
 		cre.setLoco2DccAddress(locoTextField2.getText());
-		cre.setLoco2LongAddress(adrButton2.getText().equals(rb.getString("LONG")));
+		cre.setLoco2LongAddress(adrButton2.getText().equals(rb.getString("KeyLONG")));
 		cre.setLoco2Direction(directionDTD(dirButton2));
 		// save Mid1 loco
 		cre.setLoco3DccAddress(locoTextField3.getText());
-		cre.setLoco3LongAddress(adrButton3.getText().equals(rb.getString("LONG")));
+		cre.setLoco3LongAddress(adrButton3.getText().equals(rb.getString("KeyLONG")));
 		cre.setLoco3Direction(directionDTD(dirButton3));
 		// save Mid2 loco
 		cre.setLoco4DccAddress(locoTextField4.getText());
-		cre.setLoco4LongAddress(adrButton4.getText().equals(rb.getString("LONG")));
+		cre.setLoco4LongAddress(adrButton4.getText().equals(rb.getString("KeyLONG")));
 		cre.setLoco4Direction(directionDTD(dirButton4));
 		// save Mid3 loco
 		cre.setLoco5DccAddress(locoTextField5.getText());
-		cre.setLoco5LongAddress(adrButton5.getText().equals(rb.getString("LONG")));
+		cre.setLoco5LongAddress(adrButton5.getText().equals(rb.getString("KeyLONG")));
 		cre.setLoco5Direction(directionDTD(dirButton5));
 		// save Mid4 loco
 		cre.setLoco6DccAddress(locoTextField6.getText());
-		cre.setLoco6LongAddress(adrButton6.getText().equals(rb.getString("LONG")));
+		cre.setLoco6LongAddress(adrButton6.getText().equals(rb.getString("KeyLONG")));
 		cre.setLoco6Direction(directionDTD(dirButton6));
 
 		writeRosterFile();
@@ -1083,9 +1083,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	 */
 	private String directionDTD(JButton dirButton) {
 		String formatDTD = rb.getString("DTD_UNKNOWN");
-		if (dirButton.getText().equals(rb.getString("FWD")))
+		if (dirButton.getText().equals(rb.getString("KeyFWD")))
 			formatDTD = rb.getString("DTD_NORMAL");
-		if (dirButton.getText().equals(rb.getString("REV")))
+		if (dirButton.getText().equals(rb.getString("KeyREV")))
 			formatDTD = rb.getString("DTD_REVERSE");
 		return formatDTD;
 	}
@@ -1095,9 +1095,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	private String convertDTD(String formatDTD) {
 		String word = rb.getString("QUESTION");
 		if (formatDTD.equals(rb.getString("DTD_NORMAL")))
-			word = rb.getString("FWD");
+			word = rb.getString("KeyFWD");
 		if (formatDTD.equals(rb.getString("DTD_REVERSE")))
-			word = rb.getString("REV");
+			word = rb.getString("KeyREV");
 		return word;
 	}
 	
@@ -1107,9 +1107,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	private String shortHandConvertDTD(String formatDTD) {
 		String word = "";
 		if (formatDTD.equals(rb.getString("DTD_NORMAL")))
-			word = rb.getString("FWD");
+			word = rb.getString("KeyFWD");
 		if (formatDTD.equals(rb.getString("DTD_REVERSE")))
-			word = rb.getString("REV");
+			word = rb.getString("KeyREV");
 		return word;
 	}
 
@@ -1136,34 +1136,34 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	private boolean canLoad() {
 		if (locoTextField1.getText().equals(""))
 			return false;
-		if (dirButton1.getText().equals(rb.getString("QUESTION")))
+		if (dirButton1.getText().equals(rb.getString("KeyQUESTION")))
 			return false;
 		if (locoTextField2.getText().equals(""))
 			return false;
-		if (dirButton2.getText().equals(rb.getString("QUESTION")))
+		if (dirButton2.getText().equals(rb.getString("KeyQUESTION")))
 			return false;
 		if (!locoTextField3.getText().equals("")
-				&& dirButton3.getText().equals(rb.getString("QUESTION")))
+				&& dirButton3.getText().equals(rb.getString("KeyQUESTION")))
 			return false;
 		if (!locoTextField4.getText().equals("")
-				&& dirButton4.getText().equals(rb.getString("QUESTION")))
+				&& dirButton4.getText().equals(rb.getString("KeyQUESTION")))
 			return false;
 		if (!locoTextField5.getText().equals("")
-				&& dirButton5.getText().equals(rb.getString("QUESTION")))
+				&& dirButton5.getText().equals(rb.getString("KeyQUESTION")))
 			return false;
 		if (!locoTextField6.getText().equals("")
-				&& dirButton6.getText().equals(rb.getString("QUESTION")))
+				&& dirButton6.getText().equals(rb.getString("KeyQUESTION")))
 			return false;
 		// okay to load, clean up empty loco fields
 		if (locoTextField3.getText().equals(""))
-			dirButton3.setText(rb.getString("QUESTION"));
+			dirButton3.setText(rb.getString("KeyQUESTION"));
 		if (locoTextField4.getText().equals(""))
-			dirButton4.setText(rb.getString("QUESTION"));
+			dirButton4.setText(rb.getString("KeyQUESTION"));
 		if (locoTextField5.getText().equals(""))
-			dirButton5.setText(rb.getString("QUESTION"));
+			dirButton5.setText(rb.getString("KeyQUESTION"));
 		if (locoTextField6.getText().equals(""))
-			dirButton6.setText(rb.getString("QUESTION"));
-		if (saveLoadButton.getText().equals(rb.getString("LOAD")))
+			dirButton6.setText(rb.getString("KeyQUESTION"));
+		if (saveLoadButton.getText().equals(rb.getString("KeyLOAD")))
 			return true;
 		else if (exactMatch)
 			// no need to save, exact match!
@@ -1193,7 +1193,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			locoTextFieldLow.setText(locoTextFieldHigh.getText());
 			adrButtonLow.setText(adrButtonHigh.getText());
 			dirButtonLow.setText(dirButtonHigh.getText());
-			dirButtonHigh.setText(rb.getString("QUESTION"));
+			dirButtonHigh.setText(rb.getString("KeyQUESTION"));
 			locoTextFieldHigh.setText("");
 		} else {
 			return;
@@ -1203,15 +1203,15 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// change button operation during load consist from roster
 	private void changeButtons(boolean rosterDisplay) {
 		if (rosterDisplay) {
-			clearCancelButton.setText(rb.getString("CANCEL"));
+			clearCancelButton.setText(rb.getString("KeyCANCEL"));
 			clearCancelButton.setToolTipText(rb.getString("ToolTipCancel"));
 			clearCancelButton.setEnabled(true);
-			saveLoadButton.setText(rb.getString("LOAD"));
+			saveLoadButton.setText(rb.getString("KeyLOAD"));
 			saveLoadButton.setToolTipText(rb.getString("ToolTipLoad"));
 		} else {
-			clearCancelButton.setText(rb.getString("CLEAR"));
+			clearCancelButton.setText(rb.getString("KeyCLEAR"));
 			clearCancelButton.setToolTipText(rb.getString("ToolTipClear"));
-			saveLoadButton.setText(rb.getString("SAVE"));
+			saveLoadButton.setText(rb.getString("KeySAVE"));
 			saveLoadButton.setToolTipText(rb.getString("ToolTipSave"));
 			clearCancelButton.setEnabled(!locoTextField1.getText().equals(""));
 		}
@@ -1463,7 +1463,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			if (locoNum == LEAD) {
 				boolean loco1exists = updateLocoFields(r, 0, locoRosterBox1,
 						locoTextField1, adrButton1, dirButton1, cmdButton1);
-				if (clearCancelButton.getText().equals(rb.getString("CLEAR")))
+				if (clearCancelButton.getText().equals(rb.getString("KeyCLEAR")))
 					clearCancelButton.setEnabled(loco1exists);
 
 				// load rear loco
@@ -1542,13 +1542,13 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		if (locoAddrText.equals("") || locoAddrText.equals(rb.getString("REPLACE_LOCO"))) {
 			locoRosterBox.setEnabled(true);
 			locoTextField.setEnabled(true);
-			cmdButton.setText(rb.getString("ADD"));
+			cmdButton.setText(rb.getString("KeyADD"));
 			cmdButton.setVisible(true);
 			cmdButton.setEnabled(false);
 			cmdButton.setToolTipText(rb.getString("ToolTipAdd"));
-			dirButton.setText(rb.getString("QUESTION"));
+			dirButton.setText(rb.getString("KeyQUESTION"));
 			dirButton.setEnabled(true);
-			adrButton.setText(rb.getString("LONG"));
+			adrButton.setText(rb.getString("KeyLONG"));
 			adrButton.setEnabled(true);
 			return false;
 		} else {
@@ -1558,15 +1558,15 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			cmdButton.setEnabled(true);
 			dirButton.setText(locoDirection);
 			dirButton.setEnabled(false);
-			adrButton.setText((locoType) ? rb.getString("LONG") : rb.getString("SHORT"));
+			adrButton.setText((locoType) ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
 			adrButton.setEnabled(false);
 			
 			// can not delete lead or rear locos, but can replace
 			if (locoTextField == locoTextField1 || locoTextField == locoTextField2) {
-				cmdButton.setText(rb.getString("REPLACE"));
+				cmdButton.setText(rb.getString("KeyREPLACE"));
 				cmdButton.setToolTipText("Press to delete and replace this loco");
 			} else {
-				cmdButton.setText(rb.getString("DELETE"));
+				cmdButton.setText(rb.getString("KeyDELETE"));
 				cmdButton.setToolTipText("Press to delete this loco from consist");
 			}
 			return true;
@@ -1592,11 +1592,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		refresh = true;
 		int locoAddr = getLocoAddr (locoTextField, adrButton);
 
-		if (cmdButton.getText().equals(rb.getString("DELETE"))) {
+		if (cmdButton.getText().equals(rb.getString("KeyDELETE"))) {
 			sendNceBinaryCommand(locoAddr,
 					NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 
-		} else if (cmdButton.getText().equals(rb.getString("REPLACE"))) {
+		} else if (cmdButton.getText().equals(rb.getString("KeyREPLACE"))) {
 
 			// Kill refresh flag, no update when replacing loco
 			refresh = false;
@@ -1606,11 +1606,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			locoRosterBox.setEnabled(true);
 			locoTextField.setText("");
 			locoTextField.setEnabled(true);
-			adrButton.setText(rb.getString("LONG"));
+			adrButton.setText(rb.getString("KeyLONG"));
 			adrButton.setEnabled(true);
-			dirButton.setText(rb.getString("QUESTION"));
+			dirButton.setText(rb.getString("KeyQUESTION"));
 			dirButton.setEnabled(true);
-			cmdButton.setText(rb.getString("ADD"));
+			cmdButton.setText(rb.getString("KeyADD"));
 			cmdButton.setToolTipText(rb.getString("ToolTipAdd"));
 
 			// now update CS memory in case user doesn't use the Add button
@@ -1631,7 +1631,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 		} else {
 			// ADD button has been pressed
-			if (dirButton.getText() == rb.getString("QUESTION")) {
+			if (dirButton.getText() == rb.getString("KeyQUESTION")) {
 				JOptionPane.showMessageDialog(this,
 						rb.getString("DIALOG_SetDirB4Consist"),
 						rb.getString("DIALOG_NceConsist"), JOptionPane.ERROR_MESSAGE);
@@ -1651,21 +1651,21 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			// now we need to determine if lead, rear, or mid loco
 			// lead loco?
 			if (locoTextField == locoTextField1) {
-				if (dirButton.getText().equals(rb.getString("FWD"))) {
+				if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
 					sendNceBinaryCommand(locoAddr,
 							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
 				}
-				if (dirButton.getText().equals(rb.getString("REV"))) {
+				if (dirButton.getText().equals(rb.getString("KeyREV"))) {
 					sendNceBinaryCommand(locoAddr,
 							NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
 				}
 			// rear loco?
 			} else if (locoTextField == locoTextField2) {
-				if (dirButton.getText().equals(rb.getString("FWD"))) {
+				if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
 					sendNceBinaryCommand(locoAddr,
 							NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
 				}
-				if (dirButton.getText().equals(rb.getString("REV"))) {
+				if (dirButton.getText().equals(rb.getString("KeyREV"))) {
 					sendNceBinaryCommand(locoAddr,
 							NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, cN);
 				}
@@ -1673,17 +1673,17 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			} else {
 				// wait for verify to complete before updating mid loco
 				if (locoSearch) {
-					if (dirButton.getText().equals(rb.getString("FWD")))
+					if (dirButton.getText().equals(rb.getString("KeyFWD")))
 						verifyType = VERIFY_MID_FWD;
 					else
 						verifyType = VERIFY_MID_REV;
 				// no verify, just load and go!
 				} else {
-					if (dirButton.getText().equals(rb.getString("FWD"))) {
+					if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
 						sendNceBinaryCommand(locoAddr,
 								NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, cN);
 					}
-					if (dirButton.getText().equals(rb.getString("REV"))) {
+					if (dirButton.getText().equals(rb.getString("KeyREV"))) {
 						sendNceBinaryCommand(locoAddr,
 								NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, cN);
 					}
@@ -1731,7 +1731,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		int locoAddr = getLocoAddr (locoTextField, adrButton);
 
 		// ADD loco to consist
-		if (dirButton.getText() == rb.getString("QUESTION")) {
+		if (dirButton.getText() == rb.getString("KeyQUESTION")) {
 			JOptionPane.showMessageDialog(this,
 					rb.getString("DIALOG_SetDirB4Consist"), rb.getString("DIALOG_NceConsist"),
 					JOptionPane.ERROR_MESSAGE);
@@ -1750,31 +1750,31 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			sendNceBinaryCommand(locoAddr, NceBinaryCommand.LOCO_CMD_KILL_CONSIST,
 				(byte) 0);
 			// now load
-			if (dirButton.getText().equals(rb.getString("FWD"))) {
+			if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
 				sendNceBinaryCommand(locoAddr,
 						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
 			}
-			if (dirButton.getText().equals(rb.getString("REV"))) {
+			if (dirButton.getText().equals(rb.getString("KeyREV"))) {
 				sendNceBinaryCommand(locoAddr,
 						NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
 			}
 			// rear loco?
 		} else if (locoTextField == locoTextField2) {
-			if (dirButton.getText().equals(rb.getString("FWD"))) {
+			if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
 				sendNceBinaryCommand(locoAddr,
 						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
 			}
-			if (dirButton.getText().equals(rb.getString("REV"))) {
+			if (dirButton.getText().equals(rb.getString("KeyREV"))) {
 				sendNceBinaryCommand(locoAddr,
 						NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, cN);
 			}
 			// must be mid loco
 		} else {
-			if (dirButton.getText().equals(rb.getString("FWD"))) {
+			if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
 				sendNceBinaryCommand(locoAddr,
 						NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, cN);
 			}
-			if (dirButton.getText().equals(rb.getString("REV"))) {
+			if (dirButton.getText().equals(rb.getString("KeyREV"))) {
 				sendNceBinaryCommand(locoAddr,
 						NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, cN);
 			}
@@ -1785,7 +1785,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		int locoAddr = Integer.parseInt(locoTextField.getText());
 		if (locoAddr >= 128)
 			locoAddr += 0xC000;
-		else if (adrButton.getText().equals(rb.getString("LONG")))
+		else if (adrButton.getText().equals(rb.getString("KeyLONG")))
 			locoAddr += 0xC000;
 		return locoAddr;
 	}
@@ -1824,7 +1824,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 	private String getLocoDirection(JButton dirButton) {
 		if (newConsist)
-			return rb.getString("QUESTION");
+			return rb.getString("KeyQUESTION");
 		else
 			return dirButton.getText();
 	}
@@ -1951,7 +1951,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		textLoco.setText(s);
 		textLoco.setVisible(true);
 
-		adrButton.setText(rb.getString("LONG"));
+		adrButton.setText(rb.getString("KeyLONG"));
 		adrButton.setVisible(true);
 		adrButton.setEnabled(false);
 		adrButton.setToolTipText("Press to change address type");
@@ -1972,7 +1972,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			}
 		});
 
-		dirButton.setText(rb.getString("QUESTION"));
+		dirButton.setText(rb.getString("KeyQUESTION"));
 		dirButton.setVisible(true);
 		dirButton.setEnabled(false);
 		dirButton.setToolTipText("Press to change loco direction");
@@ -1982,7 +1982,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			}
 		});
 
-		cmdButton.setText(rb.getString("ADD"));
+		cmdButton.setText(rb.getString("KeyADD"));
 		cmdButton.setVisible(true);
 		cmdButton.setEnabled(false);
 		cmdButton.setToolTipText(rb.getString("ToolTipAdd"));
