@@ -2,6 +2,7 @@
 
 package jmri;
 
+import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -37,7 +38,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.72 $
+ * @version			$Revision: 1.73 $
  */
 public class InstanceManager {
 
@@ -234,6 +235,14 @@ public class InstanceManager {
         if (instance().transitManager != null) return instance().transitManager;
         instance().transitManager = (TransitManager)initializer.getDefault(TransitManager.class);
         return instance().transitManager;
+    }
+
+    static public DefaultSignalMastLogicManager signalMastLogicManagerInstance()  {
+        DefaultSignalMastLogicManager r = getDefault(DefaultSignalMastLogicManager.class);
+        if (r != null) return r;
+        r = (DefaultSignalMastLogicManager)initializer.getDefault(DefaultSignalMastLogicManager.class);
+        store(r, DefaultSignalMastLogicManager.class);
+        return r;
     }
 
     static public RouteManager routeManagerInstance()  {
