@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -75,7 +76,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutTurnout
@@ -127,6 +128,16 @@ public class LayoutTurnout
 	public String signalC2Name = ""; // RH_Xover and double crossover only
 	public String signalD1Name = ""; // single or double crossover only
 	public String signalD2Name = ""; // LH_Xover and double crossover only
+	public String signalAMast = ""; // Throat
+	public String signalBMast = ""; // Continuing 
+	public String signalCMast = ""; // diverging
+	public String signalDMast = ""; // single or double crossover only
+    
+    public String sensorA = ""; // Throat
+	public String sensorB = ""; // Continuing 
+	public String sensorC = ""; // diverging
+	public String sensorD = ""; // single or double crossover only
+    
 	public int type = RH_TURNOUT;
 	public Object connectA = null;		// throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
 	public Object connectB = null;		// straight leg of LH and RH turnouts
@@ -140,6 +151,8 @@ public class LayoutTurnout
 	public Point2D dispC = new Point2D.Double(20.0,10.0);
 	public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
 	public int linkType = NO_LINK;
+    
+    private boolean useBlockSpeed = false;
 
 	/** 
 	 * constructor method
@@ -231,6 +244,7 @@ public class LayoutTurnout
 	 * Accessor methods
 	*/
 	public String getName() {return ident;}
+    public boolean useBlockSpeed() { return useBlockSpeed; }
 	public String getTurnoutName() {return turnoutName;}
 	public String getBlockName() {return blockName;}
 	public String getBlockBName() {return blockBName;}
@@ -254,6 +268,24 @@ public class LayoutTurnout
 	public void setSignalD1Name(String signalName) {signalD1Name = signalName;}
 	public String getSignalD2Name() {return signalD2Name;}
 	public void setSignalD2Name(String signalName) {signalD2Name = signalName;}
+    public String getSignalAMast() {return signalAMast;}
+	public void setSignalAMast(String signalMast) {signalAMast = signalMast;}
+	public String getSignalBMast() {return signalBMast;}
+	public void setSignalBMast(String signalMast) {signalBMast = signalMast;}
+	public String getSignalCMast() {return signalCMast;}
+	public void setSignalCMast(String signalMast) {signalCMast = signalMast;}
+	public String getSignalDMast() {return signalDMast;}
+	public void setSignalDMast(String signalMast) {signalDMast = signalMast;}
+    
+    public String getSensorA() {return sensorA;}
+	public void setSensorA(String sensor) {sensorA = sensor;}
+	public String getSensorB() {return sensorB;}
+	public void setSensorB(String sensor) {sensorB = sensor;}
+	public String getSensorC() {return sensorC;}
+	public void setSensorC(String sensor) {sensorC = sensor;}
+	public String getSensorD() {return sensorD;}
+	public void setSensorD(String sensor) {sensorD = sensor;}
+    
 	public String getLinkedTurnoutName() {return linkedTurnoutName;}
 	public void setLinkedTurnoutName(String s) {linkedTurnoutName = s;}
 	public int getLinkType() {return linkType;}
@@ -1078,10 +1110,155 @@ public class LayoutTurnout
 				}
 			});
 		}
+        /*if (!blockName.equals("")){
+
+            final String[] boundaryBetween = getBlockBoundaries();
+            boolean blockBoundaries = false;
+            for (int i = 0; i<4; i++){
+                if(boundaryBetween[i]!=null)
+                    blockBoundaries=true;
+            }
+            
+            if(blockBName.equals("") && blockCName.equals("") && blockDName.equals("")){
+                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                    public void actionPerformed(ActionEvent e) {
+                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                        routeTableAction.actionPerformed(e);
+                    }
+                });
+            } else {
+                JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+                viewRouting.add(new AbstractAction(blockName) {
+                    public void actionPerformed(ActionEvent e) {
+                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockName, getLayoutBlock());
+                        routeTableAction.actionPerformed(e);
+                    }
+                });
+                
+                if(!blockBName.equals("")){
+                    viewRouting.add(new AbstractAction(blockBName) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                }
+                if(!blockCName.equals("")){
+                    viewRouting.add(new AbstractAction(blockCName) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                }
+                if(!blockDName.equals("")){
+                    viewRouting.add(new AbstractAction(blockDName) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                }
+                popup.add(viewRouting);
+            }
+            
+            
+            if (blockBoundaries){
+                popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
+                        }
+                            
+                        tools.setSignalMastsAtTurnoutFromMenu(instance,
+                        boundaryBetween, layoutEditor.signalFrame);
+                    }
+                });
+                popup.add(new AbstractAction("Set Sensors") {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
+                        }
+                            
+                        tools.setSensorsAtTurnoutFromMenu(instance,
+                        boundaryBetween, layoutEditor.signalFrame);
+                    }
+                });
+            }
+        }*/
         layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
-	
+    
+    public String[] getBlockBoundaries(){
+        final String[] boundaryBetween = new String[4];
+        //ArrayList<String> boundaryBetween = new ArrayList<String>(4);
+        if ((type==WYE_TURNOUT) || (type ==RH_TURNOUT) || (type == LH_TURNOUT)){
+            //This should only be needed where we are looking at a single turnout.
+            if(block!=null){
+                if ((connectA instanceof TrackSegment) && (((TrackSegment)connectA).getLayoutBlock()!=block)){
+                    boundaryBetween[0]=(((TrackSegment)connectA).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                }
+                
+                if ((connectB instanceof TrackSegment) && (((TrackSegment)connectB).getLayoutBlock()!=block)){
+                    boundaryBetween[1]=(((TrackSegment)connectB).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                }
+                if ((connectC instanceof TrackSegment) && (((TrackSegment)connectC).getLayoutBlock()!=block)){
+                    boundaryBetween[2]=(((TrackSegment)connectC).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                }
+            }
+        }
+        
+        else {
+            int pos = 0;  //This should only be needed where we are looking at a single turnout.
+            if(block!=null){
+                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(block);
+                for (int i = 0; i<conn.size(); i++){
+                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
+                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName()));
+                            pos++;
+                        }
+                    }
+                }
+            }
+            if(blockB!=null){
+                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockB);
+                for (int i = 0; i<conn.size(); i++){
+                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
+                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockB.getDisplayName()));
+                            pos++;
+                        }
+                    }
+                }
+            }
+            if(blockC!=null){
+                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockC);
+                for (int i = 0; i<conn.size(); i++){
+                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
+                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockC.getDisplayName()));
+                            pos++;
+                        }
+                    }
+                }
+            }
+            if(blockD!=null){
+                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockD);
+                for (int i = 0; i<conn.size(); i++){
+                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
+                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockD.getDisplayName()));
+                            pos++;
+                        }
+                    }
+                }
+            }
+        }
+        return boundaryBetween;
+    }
+    
 	// variables for Edit Layout Turnout pane
 	private JmriJFrame editLayoutTurnoutFrame = null;
 	private JTextField turnoutNameField = new JTextField(16);

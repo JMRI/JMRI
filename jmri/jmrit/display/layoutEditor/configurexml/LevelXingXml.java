@@ -14,7 +14,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LevelXing objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LevelXingXml extends AbstractXmlAdapter {
 
@@ -73,8 +73,36 @@ public class LevelXingXml extends AbstractXmlAdapter {
 		element.setAttribute("ya", ""+coords.getY());
 		coords = p.getCoordsB();
 		element.setAttribute("xb", ""+coords.getX());
-		element.setAttribute("yb", ""+coords.getY());		
-
+		element.setAttribute("yb", ""+coords.getY());
+        
+        if(p.getSignalAMastName().length()>0){
+            element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
+        }
+        
+        if(p.getSignalBMastName().length()>0){
+            element.addContent(new Element("signalBMast").addContent(p.getSignalBMastName()));
+        }
+        if(p.getSignalCMastName().length()>0){
+            element.addContent(new Element("signalCMast").addContent(p.getSignalCMastName()));
+        }
+        if(p.getSignalDMastName().length()>0){
+            element.addContent(new Element("signalDMast").addContent(p.getSignalDMastName()));
+        }
+        
+        if(p.getSensorAName().length()>0){
+            element.addContent(new Element("sensorA").addContent(p.getSensorAName()));
+        }
+        
+        if(p.getSensorBName().length()>0){
+            element.addContent(new Element("sensorB").addContent(p.getSensorBName()));
+        }
+        if(p.getSensorCName().length()>0){
+            element.addContent(new Element("sensorC").addContent(p.getSensorCName()));
+        }
+        if(p.getSensorDName().length()>0){
+            element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
+        }
+        
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LevelXingXml");
         return element;
     }
@@ -163,6 +191,62 @@ public class LevelXingXml extends AbstractXmlAdapter {
             log.error("failed to convert levelxing b coords attribute");
         }
 		l.setCoordsB(new Point2D.Double(x,y));
+        
+        if (element.getChild("signalAMast")!=null){
+            String mast = element.getChild("signalAMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalAMastName(mast);
+            }
+        }
+        
+        if (element.getChild("signalBMast")!=null){
+            String mast = element.getChild("signalBMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalBMastName(mast);
+            }
+        }
+        
+        if (element.getChild("signalCMast")!=null){
+            String mast = element.getChild("signalCMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalCMastName(mast);
+            }
+        }
+
+        if (element.getChild("signalDMast")!=null){
+            String mast = element.getChild("signalDMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalDMastName(mast);
+            }
+        }
+        
+        if (element.getChild("sensorA")!=null){
+            String sensor = element.getChild("sensorA").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorAName(sensor);
+            }
+        }
+        
+        if (element.getChild("sensorB")!=null){
+            String sensor = element.getChild("sensorB").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorBName(sensor);
+            }
+        }
+        
+        if (element.getChild("sensorC")!=null){
+            String sensor = element.getChild("sensorC").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorCName(sensor);
+            }
+        }
+
+        if (element.getChild("sensorD")!=null){
+            String sensor = element.getChild("sensorD").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorDName(sensor);
+            }
+        }
 
 
 		p.xingList.add(l);

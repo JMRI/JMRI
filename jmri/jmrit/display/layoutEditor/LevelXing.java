@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JmriJFrame;
+//import jmri.SignalMast;
+//import jmri.SignalMastLogic;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -9,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import java.util.ResourceBundle;
+//import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -35,7 +38,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LevelXing 
@@ -60,6 +63,18 @@ public class LevelXing
 	private String signalBName = "";  // signal at B track junction
 	private String signalCName = "";  // signal at C track junction
 	private String signalDName = "";  // signal at D track junction
+    
+	private String signalAMastName = "";  // signal at A track junction
+	private String signalBMastName = "";  // signal at B track junction
+	private String signalCMastName = "";  // signal at C track junction
+	private String signalDMastName = "";  // signal at D track junction    
+    
+    private String sensorAName = "";  // sensor at A track junction
+	private String sensorBName = "";  // sensor at B track junction
+	private String sensorCName = "";  // sensor at C track junction
+	private String sensorDName = "";  // sensor at D track junction    
+    
+    
 	private Object connectA = null;
 	private Object connectB = null;
 	private Object connectC = null;
@@ -93,6 +108,25 @@ public class LevelXing
 	public void setSignalCName(String signalName) {signalCName = signalName;}
 	public String getSignalDName() {return signalDName;}
 	public void setSignalDName(String signalName) {signalDName = signalName;}
+    
+    public String getSignalAMastName() {return signalAMastName;}
+	public void setSignalAMastName(String signalName) {signalAMastName = signalName;}
+	public String getSignalBMastName() {return signalBMastName;}
+	public void setSignalBMastName(String signalName) {signalBMastName = signalName;}
+	public String getSignalCMastName() {return signalCMastName;}
+	public void setSignalCMastName(String signalName) {signalCMastName = signalName;}
+	public String getSignalDMastName() {return signalDMastName;}
+	public void setSignalDMastName(String signalName) {signalDMastName = signalName;}
+    
+    public String getSensorAName() {return sensorAName;}
+	public void setSensorAName(String sensorName) {sensorAName = sensorName;}
+	public String getSensorBName() {return sensorBName;}
+	public void setSensorBName(String sensorName) {sensorBName = sensorName;}
+	public String getSensorCName() {return sensorCName;}
+	public void setSensorCName(String sensorName) {sensorCName = sensorName;}
+	public String getSensorDName() {return sensorDName;}
+	public void setSensorDName(String sensorName) {sensorDName = sensorName;}
+    
 	public Object getConnectA() {return connectA;}
 	public Object getConnectB() {return connectB;}
 	public Object getConnectC() {return connectC;}
@@ -357,9 +391,83 @@ public class LevelXing
 						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 				}
 			});
-		}			
+		}
+/*        final String[] boundaryBetween = getBlockBoundaries();
+        boolean blockBoundaries = false;
+        
+        if(blockACAssigned && !blockBDAssigned){
+            popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                public void actionPerformed(ActionEvent e) {
+                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
+                    routeTableAction.actionPerformed(e);
+                }
+            });
+        } else if(!blockACAssigned && blockBDAssigned){
+            popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                public void actionPerformed(ActionEvent e) {
+                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
+                    routeTableAction.actionPerformed(e);
+                }
+            });
+        } else if(blockACAssigned && blockBDAssigned){
+            JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+            viewRouting.add(new AbstractAction( blockNameAC) {
+                public void actionPerformed(ActionEvent e) {
+                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction( blockNameAC, getLayoutBlockAC());
+                    routeTableAction.actionPerformed(e);
+                }
+            });
+            
+            viewRouting.add(new AbstractAction(blockNameBD) {
+                public void actionPerformed(ActionEvent e) {
+                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
+                    routeTableAction.actionPerformed(e);
+                }
+            });
+            
+            popup.add(viewRouting);
+        }
+        
+        
+        for (int i = 0; i<4; i++){
+            if(boundaryBetween[i]!=null)
+                blockBoundaries=true;
+        }
+        if (blockBoundaries){
+             popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                public void actionPerformed(ActionEvent e) {
+                    if (tools == null) {
+                        tools = new LayoutEditorTools(layoutEditor);
+                    }
+                        
+                    tools.setSignalMastsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.signalFrame);
+                }
+            });
+        }*/
         layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+    
+    public String[] getBlockBoundaries(){
+        final String[] boundaryBetween = new String[4];
+        
+        if ( (blockNameAC!=null) && (!blockNameAC.equals("")) && (blockAC!=null) ){
+            if ((connectA instanceof TrackSegment) && (((TrackSegment)connectA).getLayoutBlock()!=blockAC)){
+                boundaryBetween[0]=(((TrackSegment)connectA).getLayoutBlock().getDisplayName()+ " - " + blockAC.getDisplayName());
+            }        
+            if ((connectC instanceof TrackSegment) && (((TrackSegment)connectC).getLayoutBlock()!=blockAC)){
+                boundaryBetween[2]=(((TrackSegment)connectC).getLayoutBlock().getDisplayName()+ " - " + blockAC.getDisplayName());
+            }
+        }
+        if ( (blockNameBD!=null) && (!blockNameBD.equals("")) && (blockBD!=null) ){
+            if ((connectB instanceof TrackSegment) && (((TrackSegment)connectB).getLayoutBlock()!=blockBD)){
+                boundaryBetween[1]=(((TrackSegment)connectB).getLayoutBlock().getDisplayName()+ " - " + blockBD.getDisplayName());
+            }
+            if ((connectD instanceof TrackSegment) && (((TrackSegment)connectD).getLayoutBlock()!=blockBD)){
+                boundaryBetween[3]=(((TrackSegment)connectD).getLayoutBlock().getDisplayName()+ " - " + blockBD.getDisplayName());
+            }
+        }
+        return boundaryBetween;
     }
 
 	// variables for Edit Level Crossing pane
@@ -609,7 +717,7 @@ public class LevelXing
 			layoutEditor.setDirty();
 		}
 	}
-
+  
     /**
      * Clean up when this object is no longer needed.  Should not
      * be called while the object is still displayed; see remove()
@@ -634,6 +742,40 @@ public class LevelXing
     public boolean isActive() {
         return active;
     }
+    
+    /*ArrayList<SignalMast> sml = new ArrayList<SignalMast>();
+    
+    public void addSignalMastLogic(SignalMast sm){
+        if (sml.contains(sm))
+            return;
+        if(sml.isEmpty()){
+            sml.add(sm);
+            return;
+        }
+        SignalMastLogic sl = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+        for(int i = 0; i<sml.size(); i++){
+            SignalMastLogic s = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sml.get(i));
+            if (s!=null){
+                s.setConflictingLogic(sm, this);
+            }
+            sl.setConflictingLogic(sml.get(i), this);
+        }
+        sml.add(sm);
+    }
+    
+    public void removeSignalMastLogic(SignalMast sm){
+        if(!sml.contains(sm))
+            return;
+        sml.remove(sm);
+        if(sml.isEmpty()){
+            return;
+        }
+        for(int i = 0; i<sml.size(); i++){
+            SignalMastLogic s = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+            if (s!=null)
+                s.removeConflictingLogic(sm, this);
+        }
+    }*/
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LevelXing.class.getName());
 

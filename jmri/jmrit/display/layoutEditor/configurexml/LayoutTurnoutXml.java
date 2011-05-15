@@ -4,10 +4,8 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-// import jmri.jmrit.display.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
-// import jmri.Sensor;
 import jmri.Turnout;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -17,7 +15,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
@@ -97,7 +95,34 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 			element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
 			element.setAttribute("linktype", ""+p.getLinkType());
 		}
+        if(p.getSignalAMast().length()>0){
+            element.addContent(new Element("signalAMast").addContent(p.getSignalAMast()));
+        }
+        
+        if(p.getSignalBMast().length()>0){
+            element.addContent(new Element("signalBMast").addContent(p.getSignalBMast()));
+        }
+        if(p.getSignalCMast().length()>0){
+            element.addContent(new Element("signalCMast").addContent(p.getSignalCMast()));
+        }
+        if(p.getSignalDMast().length()>0){
+            element.addContent(new Element("signalDMast").addContent(p.getSignalDMast()));
 
+        }
+
+        if(p.getSensorA().length()>0){
+            element.addContent(new Element("sensorA").addContent(p.getSensorA()));
+        }
+        
+        if(p.getSensorB().length()>0){
+            element.addContent(new Element("sensorB").addContent(p.getSensorB()));
+        }
+        if(p.getSensorC().length()>0){
+            element.addContent(new Element("sensorC").addContent(p.getSensorC()));
+        }
+        if(p.getSensorD().length()>0){
+            element.addContent(new Element("sensorD").addContent(p.getSensorD()));
+        }
 		element.setAttribute("continuing", ""+p.getContinuingSense());		
         element.setAttribute("disabled", ""+(p.isDisabled()?"yes":"no"));
         element.setAttribute("disableWhenOccupied", ""+(p.isDisabledWhenOccupied()?"yes":"no"));
@@ -261,7 +286,63 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutturnout c coords attribute");
         }
 		l.setCoordsC(new Point2D.Double(x,y));
+        
+        if (element.getChild("signalAMast")!=null){
+            String mast = element.getChild("signalAMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalAMast(mast);
+            }
+        }
+        
+        if (element.getChild("signalBMast")!=null){
+            String mast = element.getChild("signalBMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalBMast(mast);
+            }
+        }
+        
+        if (element.getChild("signalCMast")!=null){
+            String mast = element.getChild("signalCMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalCMast(mast);
+            }
+        }
 
+        if (element.getChild("signalDMast")!=null){
+            String mast = element.getChild("signalDMast").getText();
+            if (mast!=null && !mast.equals("")){
+                l.setSignalDMast(mast);
+            }
+        }
+        
+        if (element.getChild("sensorA")!=null){
+            String sensor = element.getChild("sensorA").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorA(sensor);
+            }
+        }
+        
+        if (element.getChild("sensorB")!=null){
+            String sensor = element.getChild("sensorB").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorB(sensor);
+            }
+        }
+        
+        if (element.getChild("sensorC")!=null){
+            String sensor = element.getChild("sensorC").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorC(sensor);
+            }
+        }
+
+        if (element.getChild("sensorD")!=null){
+            String sensor = element.getChild("sensorD").getText();
+            if (sensor!=null && !sensor.equals("")){
+                l.setSensorD(sensor);
+            }
+        }
+        
 		p.turnoutList.add(l);
     }
 
