@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author Dan Boudreau Copyright (C) 2007 2008
  * Cloned from NceConsistEditFrame by
  * @author kcameron Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
@@ -339,7 +339,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		checkBoxConsist.setText(rb.getString("KeyCONSIST"));
 		checkBoxConsist.setVisible(true);
 		checkBoxConsist.setSelected(true);
-		checkBoxConsist.setToolTipText(rb.getString("ToolTipConsist"));
+		checkBoxConsist.setToolTipText(rb.getString("ToolTipConsistCkBox"));
 
 		initLocoFields();
 
