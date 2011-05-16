@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener
@@ -567,12 +567,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				}
 				//if (newp != null) 
 				block.addPath(newp);
-				if (newp != null){
-                    if(enableAddRouteLogging)
-                        System.out.println("From " + this.getDisplayName() + " updateBlock Paths");
-                    if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
-                        addAdjacency(newp);
-                }
+                if(enableAddRouteLogging)
+                    System.out.println("From " + this.getDisplayName() + " updateBlock Paths");
+                if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+                    addAdjacency(newp);
 				//else log.error("Trouble adding Path to block '"+blockName+"'.");
 				auxTools.addBeanSettings(newp,lc,_instance);
 			}				
@@ -2323,7 +2321,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     @Override
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     
-    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         LayoutBlock srcEvent = (LayoutBlock) e.getSource();
         if (e.getPropertyName().toString().equals("NewRoute")){
@@ -2442,10 +2439,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         boolean neighbour = false;
         if (updateBlock==srcblk){
             //Very likely that this update is from a neighbour about its own status.
-            if(adj!=null){
-                ro=getValidRoute(this.getBlock(), updateBlock);
-                neighbour=true;
-            }
+            ro=getValidRoute(this.getBlock(), updateBlock);
+            neighbour=true;
         } else {
             ro = getValidRoute(srcblk, updateBlock);
         }
@@ -2778,13 +2773,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         Hashtable<Block, Routes> adjDestRoutes = new Hashtable<Block, Routes>();
         ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>();
+        //don't think the positionable point bit is used.
         PositionablePoint point = null;
         boolean pointDirection = false;
         
-        Adjacencies(Block block, int dir){
+        /*Adjacencies(Block block, int dir){
             adjBlock = block;
             direction = dir;
-        }
+        }*/
         
         Adjacencies(Block block, int dir, int packetFlow){
             adjBlock = block;
@@ -2809,9 +2805,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         boolean isMutual() { return mutualAdjacency; }
         
-        LayoutBlock getLayoutBlock(){
+        /*LayoutBlock getLayoutBlock(){
             return adjLayoutBlock;
-        }
+        }*/
         
         int getPacketFlow() { return packetFlow; }
         
@@ -2842,9 +2838,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         PositionablePoint getPositionablePoint(){
             return point;
         }
-        
+
+        //Don't think the direction bit is read
         void setPositionablePointDirection(boolean boo){
             pointDirection = boo;
+        }
+
+        boolean getPositionablePointDirection(){
+            return pointDirection;
         }
 
         void removeRouteAdvertisedToNeighbour(Routes removeRoute){
@@ -2966,7 +2967,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         Block nextBlock;
         int hopCount;
         int routeMetric;
-        int state =-1;
+        //int state =-1;
         int miscflags =0x00;
         boolean validCurrentRoute=false;
         
@@ -3113,9 +3114,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
         }
         
-        public Hashtable<Turnout, Integer> getTurnoutList(){
+        /*public Hashtable<Turnout, Integer> getTurnoutList(){
             return _turnouts;
-        }
+        }*/
         
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState")) {

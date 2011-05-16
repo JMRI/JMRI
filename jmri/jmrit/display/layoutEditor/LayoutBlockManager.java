@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -1788,8 +1788,8 @@ public class LayoutBlockManager extends AbstractManager {
                      }
                     jmri.NamedBean signal = null;
                     switch(pathMethod){
-                        case MASTTOMAST : signal = (jmri.NamedBean) getFacingSignalMast(currentBlock, blocktoCheck); break;
-                        case HEADTOHEAD : signal = (jmri.NamedBean) getFacingSignalHead(currentBlock, blocktoCheck); break;
+                        case MASTTOMAST : signal = getFacingSignalMast(currentBlock, blocktoCheck); break;
+                        case HEADTOHEAD : signal = getFacingSignalHead(currentBlock, blocktoCheck); break;
                         case ANY : signal = (jmri.NamedBean) getFacingSignalObject(currentBlock, blocktoCheck); break;
                     }
                     if (signal==null){
@@ -1906,7 +1906,6 @@ public class LayoutBlockManager extends AbstractManager {
     private long lastRoutingChange;
     public void setLastRoutingChange(){
         lastRoutingChange = System.nanoTime();
-        boolean oldStablised = stablised;
         stablised = false;
         setRoutingStablised();
     }
