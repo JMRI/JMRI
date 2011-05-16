@@ -13,8 +13,8 @@ import jmri.Turnout;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-/*import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;*/
+import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
 /**
@@ -34,7 +34,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -217,14 +217,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if(log.isDebugEnabled())
                     log.debug(layout.get(i).getLayoutName());
                 if (facingBlock==null){
-                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(source.getUserName(), layout.get(i));
+                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getUserName(), layout.get(i));
                     if (facingBlock==null)
-                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(source.getSystemName(), layout.get(i));
+                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getSystemName(), layout.get(i));
                 }
                 if (protectingBlock==null){
-                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(source.getUserName(), layout.get(i));
+                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getUserName(), layout.get(i));
                     if (protectingBlock==null)
-                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(source.getSystemName(), layout.get(i));
+                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getSystemName(), layout.get(i));
                 }
             }
         }
@@ -685,12 +685,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         };
         
         thr = new Thread(r);
-        try{
+        /*try{
             thr.join();
         } catch (InterruptedException ex) {
             log.debug("interrupted at join " + ex);
             inWait=false;
-        }
+        }*/
         thr.start();
     }
     
@@ -703,24 +703,24 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return;
         }
         log.debug("Set Signal Appearances");
-        if(source.getHeld()){
+        if(getSourceMast().getHeld()){
             log.debug("Signal is at a held state so will set to danager");
-            source.setAspect(source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
+            getSourceMast().setAspect(getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
             return;
         }
         if (!checkStates()){
             log.debug("advanced routes not clear");
-            source.setAspect(stopAspect);
+            getSourceMast().setAspect(stopAspect);
             return;
         }
         String[] advancedAspect;
         if(destination.getHeld()){
-            advancedAspect = source.getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
+            advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
         } else {
-            advancedAspect = source.getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAspect());
+            advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAspect());
         }
         if(log.isDebugEnabled())
-            log.debug(advancedAspect + " distant aspect is " + destination.getAspect());
+            log.debug(advancedAspect.toString() + " distant aspect is " + destination.getAspect());
 
         if (advancedAspect!=null){
             String aspect = stopAspect;
@@ -733,7 +733,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 boolean divergFlagsAvailable = false;
                 if(divergRoute){
                     for(int i = 0; i<advancedAspect.length; i++){
-                        String div = (String) source.getSignalSystem().getProperty(advancedAspect[i], "diverging");
+                        String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "diverging");
                         if ((div!=null) && (div.equals("yes"))){
                             divergAspects.add(i);
                             divergFlagsAvailable = true;
@@ -743,7 +743,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
                 log.debug("path max speed : " + maxPathSpeed);
                 for (int i = 0; i<advancedAspect.length; i++){
-                    String strSpeed = (String) source.getSignalSystem().getProperty(advancedAspect[i], "speed");
+                    String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
                     if(log.isDebugEnabled())
                         log.debug("Aspect Speed = " + strSpeed + " for aspect " + advancedAspect[i]);
                     /*  if the diverg flags available is set and the diverg aspect 
@@ -800,12 +800,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
             if ((aspect!=null) && (!aspect.equals(""))){
-                source.setAspect(aspect);
+                getSourceMast().setAspect(aspect);
             }
             return;
         }
         log.debug("aspect returned is not valid");
-        source.setAspect(stopAspect);
+        getSourceMast().setAspect(stopAspect);
     }
     
     public void setConflictingLogic(SignalMast sm, LevelXing lx){
@@ -1108,9 +1108,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
             //kick off the process to add back in signalmasts at crossings.
-            /*for(int i = 0; i<blockInXings.size(); i++){
+            for(int i = 0; i<blockInXings.size(); i++){
                 blockInXings.get(i).addSignalMastLogic(source);
-            }*/
+            }
             
             firePropertyChange("automasts", null, this.destination);
         }
@@ -1334,7 +1334,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 log.error("checkStateDetails called while we are waiting for things to settle");
                 return;
             }
-            log.debug("From " + source.getDisplayName() + " to " + destination.getDisplayName() + " internal check state");
+            log.debug("From " + getSourceMast().getDisplayName() + " to " + destination.getDisplayName() + " internal check state");
             active=false;
             if((useLayoutEditor) && (autoTurnouts.size()==0) && (autoBlocks.size()==0)){
                 return;
@@ -1563,8 +1563,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         boolean routeclear = true;
         
         void useLayoutEditor(boolean boo) throws jmri.JmriException {
-            return;
-            /* not yet enabled
             if(log.isDebugEnabled())
                 log.debug(destination.getDisplayName() + " use called " + boo + " " + useLayoutEditor);
             if (useLayoutEditor == boo)
@@ -1583,12 +1581,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 protectingBlock = null;
                 setAutoBlocks(null);
                 setAutoTurnouts(null);
-            }*/
+            }
         }
         
         void useLayoutEditorDetails(boolean turnouts, boolean blocks) throws jmri.JmriException{
-            return;
-            /*  Not yet enabled
             if(log.isDebugEnabled())
                 log.debug(destination.getDisplayName() + " use layout editor details called " + useLayoutEditor);
             useLayoutEditorTurnouts=turnouts;
@@ -1600,12 +1596,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     throw e;
                     //Considered normal if there is no valid path using the layout editor.
                 }
-            }*/
+            }
         }
         
         void setupLayoutEditorDetails() throws jmri.JmriException{
-            return;
-            /* Not yet enabled
             if(log.isDebugEnabled())
                 log.debug(useLayoutEditor + " " + disposing);
             if((!useLayoutEditor)|| (disposing))
@@ -1621,14 +1615,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if(log.isDebugEnabled())
                     log.debug(destination.getDisplayName() + " Layout name " + layout.get(i).getLayoutName());
                 if (facingBlock==null){
-                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(source.getUserName(), layout.get(i));
+                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getUserName(), layout.get(i));
                     if (facingBlock==null)
-                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(source.getSystemName(), layout.get(i));
+                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getSystemName(), layout.get(i));
                 }
                 if (protectingBlock==null){
-                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(source.getUserName(), layout.get(i));
+                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getUserName(), layout.get(i));
                     if (protectingBlock==null)
-                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(source.getSystemName(), layout.get(i));
+                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getSystemName(), layout.get(i));
                 }
                 if(destinationBlock==null){
                     destinationBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(destination.getUserName(), layout.get(i));
@@ -1673,11 +1667,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     ConnectivityUtil connection = new ConnectivityUtil(facingBlock.getMaxConnectedPanel());
                     ArrayList<LayoutTurnout> turnoutlist;//=connection.getTurnoutList(protectingBlock.getBlock(), facingBlock.getBlock(), lblks.get(0).getBlock());
                     ArrayList<Integer> throwlist;//=connection.getTurnoutSettingList();
-                    //for (int x=0; x<turnoutlist.size(); x++){
-                    //    String t = turnoutlist.get(x).getTurnoutName();
-                    //    Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
-                    //    turnoutSettings.put(turnout, throwlist.get(x));
-                    //}
 
                     for (int i = 0; i<lblks.size(); i++){
                         if(log.isDebugEnabled())
@@ -1698,8 +1687,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             for (int x=0; x<turnoutlist.size(); x++){
                                 String t = turnoutlist.get(x).getTurnoutName();
                                 Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
-                                //Turnout turnout = InstanceManager..provideTurnout(t);
-                               // turnout.setCommandedState(throwlist.get(x));
+
                                 turnoutSettings.put(turnout, throwlist.get(x));
                             }
                         }
@@ -1739,7 +1727,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
                 setupAutoSignalMast(null, false);
             }
-            initialise();*/
+            initialise();
         }
         /*
          * The generation of auto signalmast, looks through all the other logics
@@ -1969,7 +1957,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     if (getSensorState(sen)!=now){
                         if(log.isDebugEnabled())
                             log.debug("Sensor " + sen.getDisplayName() + " caused the signalmast to be set to danger");
-                        //source.setAspect(stopAspect);
+                        //getSourceMast().setAspect(stopAspect);
                         if (active==true){
                             active=false;
                             setSignalAppearance();
@@ -1995,7 +1983,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         if (getTurnoutState(turn)!=now){
                             if(log.isDebugEnabled()){
                                 log.debug("Turnout " + turn.getDisplayName() + " caused the signalmast to be set");
-                                log.debug("From " + source.getDisplayName() + " to " + destination.getDisplayName() + " Turnout " + turn.getDisplayName() + " caused the signalmast to be set to danger");
+                                log.debug("From " + getSourceMast().getDisplayName() + " to " + destination.getDisplayName() + " Turnout " + turn.getDisplayName() + " caused the signalmast to be set to danger");
                             }
                             if (active==true){
                                 active=false;
@@ -2010,7 +1998,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         if (getAutoTurnoutState(turn)!=now){
                             if(log.isDebugEnabled()){
                                 log.debug("Turnout " + turn.getDisplayName() + " auto caused the signalmast to be set");
-                                log.debug("From " + source.getDisplayName() + " to" + destination.getDisplayName() + " Auto Turnout " + turn.getDisplayName() + " auto caused the signalmast to be set to danger");
+                                log.debug("From " + getSourceMast().getDisplayName() + " to" + destination.getDisplayName() + " Auto Turnout " + turn.getDisplayName() + " auto caused the signalmast to be set to danger");
                             }
                             if (active==true){
                                 active=false;
@@ -2018,7 +2006,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             }
                         } else {
                             if(log.isDebugEnabled())
-                                log.debug("From " + source.getDisplayName() + " to " + destination.getDisplayName() + " turnout " + turn.getDisplayName() + " triggers a calculation of change");
+                                log.debug("From " + getSourceMast().getDisplayName() + " to " + destination.getDisplayName() + " turnout " + turn.getDisplayName() + " triggers a calculation of change");
                             checkState();
                         }
                     } 
@@ -2188,7 +2176,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
 
     public void dispose(){
         disposing=true;
-        source.removePropertyChangeListener(propertySourceMastListener);
+        getSourceMast().removePropertyChangeListener(propertySourceMastListener);
         Enumeration<SignalMast> en = destList.keys();
         while (en.hasMoreElements()) {
             SignalMast dm = en.nextElement();

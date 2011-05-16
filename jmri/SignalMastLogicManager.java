@@ -21,11 +21,11 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public interface SignalMastLogicManager extends Manager {
 
-    void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
+    public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
 
     /**
      * Discover all possible valid source and destination signalmasts past pairs
@@ -33,7 +33,7 @@ public interface SignalMastLogicManager extends Manager {
      * @return A has Hashtable, of each source signalmast, with an arraylist of
      * all the valid destination signalmast.
      */
-    Hashtable<SignalMast, ArrayList<SignalMast>> automaticallyDiscoverSignallingPairs() throws JmriException;
+    public Hashtable<SignalMast, ArrayList<SignalMast>> automaticallyDiscoverSignallingPairs() throws JmriException;
 
     /**
      * This uses the layout editor to check if the destination signalmast is
@@ -43,7 +43,7 @@ public interface SignalMastLogicManager extends Manager {
      * @param destMast Destination SignalMast
      * @return true if valid, false if not valid.
      */
-    boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
+    public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
 
     /**
      * Discover valid destination signalmasts for a given source signal on a
@@ -51,46 +51,46 @@ public interface SignalMastLogicManager extends Manager {
      * @param source Source SignalMast
      * @param layout Layout Editor panel to check.
      */
-    void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException;
+    public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException;
 
-    void dispose();
+    public void dispose();
 
     /**
      * Gather a list of all the signal mast logics, by destination signal mast
      */
-    ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination);
+    public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination);
 
-    long getSignalLogicDelay();
+    public long getSignalLogicDelay();
 
-    SignalMastLogic getSignalMastLogic(SignalMast source);
+    public SignalMastLogic getSignalMastLogic(SignalMast source);
 
     /**
      * Returns an arraylist of signalmastlogic
-     * @return
+     * @return An ArrayList of SignalMast logics
      */
-    ArrayList<SignalMastLogic> getSignalMastLogicList();
+    public ArrayList<SignalMastLogic> getSignalMastLogicList();
 
     /**
      * Used to initialise all the signalmast logics. primarily used after loading.
      */
-    void initialise();
+    public void initialise();
 
-    SignalMastLogic newSignalMastLogic(SignalMast source);
+    public SignalMastLogic newSignalMastLogic(SignalMast source);
 
-    void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
+    public void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
 
     /**
      * Remove a destination mast from the signalmast logic
      * @param sml The signalmast logic of the source signal
      * @param dest The destination mast
      */
-    void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest);
+    public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest);
 
     /**
      * Completely remove the signalmast logic.
      */
-    void removeSignalMastLogic(SignalMastLogic sml);
+    public void removeSignalMastLogic(SignalMastLogic sml);
 
-    void setSignalLogicDelay(long l);
+    public void setSignalLogicDelay(long l);
 
 }
