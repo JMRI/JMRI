@@ -30,7 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.81 $
+ * @version $Revision: 1.82 $
  */
 
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -47,7 +47,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     protected Hashtable <String, Integer> _name2stateMap;       // name to state
     protected Hashtable <Integer, String> _state2nameMap;       // state to name
-    String  _iconFamily;
 
     public SensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
