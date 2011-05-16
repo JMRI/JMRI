@@ -1,8 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JmriJFrame;
-//import jmri.SignalMast;
-//import jmri.SignalMastLogic;
+import jmri.SignalMast;
+import jmri.SignalMastLogic;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -11,7 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import java.util.ResourceBundle;
-//import java.util.ArrayList;
+import java.util.ArrayList;
+
 
 import javax.swing.*;
 
@@ -38,7 +39,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LevelXing 
@@ -392,7 +393,8 @@ public class LevelXing
 				}
 			});
 		}
-/*        final String[] boundaryBetween = getBlockBoundaries();
+        /* Not yet supported
+        final String[] boundaryBetween = getBlockBoundaries();
         boolean blockBoundaries = false;
         
         if(blockACAssigned && !blockBDAssigned){
@@ -433,6 +435,7 @@ public class LevelXing
             if(boundaryBetween[i]!=null)
                 blockBoundaries=true;
         }
+        Not yet supported
         if (blockBoundaries){
              popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                 public void actionPerformed(ActionEvent e) {
@@ -743,7 +746,7 @@ public class LevelXing
         return active;
     }
     
-    /*ArrayList<SignalMast> sml = new ArrayList<SignalMast>();
+    ArrayList<SignalMast> sml = new ArrayList<SignalMast>();
     
     public void addSignalMastLogic(SignalMast sm){
         if (sml.contains(sm))
@@ -775,7 +778,7 @@ public class LevelXing
             if (s!=null)
                 s.removeConflictingLogic(sm, this);
         }
-    }*/
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LevelXing.class.getName());
 

@@ -15,7 +15,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
@@ -95,6 +95,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 			element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
 			element.setAttribute("linktype", ""+p.getLinkType());
 		}
+        
         if(p.getSignalAMast().length()>0){
             element.addContent(new Element("signalAMast").addContent(p.getSignalAMast()));
         }
@@ -123,6 +124,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if(p.getSensorD().length()>0){
             element.addContent(new Element("sensorD").addContent(p.getSensorD()));
         }
+
 		element.setAttribute("continuing", ""+p.getContinuingSense());		
         element.setAttribute("disabled", ""+(p.isDisabled()?"yes":"no"));
         element.setAttribute("disableWhenOccupied", ""+(p.isDisabledWhenOccupied()?"yes":"no"));

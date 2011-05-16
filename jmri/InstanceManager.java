@@ -2,7 +2,6 @@
 
 package jmri;
 
-import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -38,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.73 $
+ * @version			$Revision: 1.74 $
  */
 public class InstanceManager {
 
@@ -237,11 +236,11 @@ public class InstanceManager {
         return instance().transitManager;
     }
 
-    static public DefaultSignalMastLogicManager signalMastLogicManagerInstance()  {
-        DefaultSignalMastLogicManager r = getDefault(DefaultSignalMastLogicManager.class);
+    static public SignalMastLogicManager signalMastLogicManagerInstance()  {
+        SignalMastLogicManager r = getDefault(SignalMastLogicManager.class);
         if (r != null) return r;
-        r = (DefaultSignalMastLogicManager)initializer.getDefault(DefaultSignalMastLogicManager.class);
-        store(r, DefaultSignalMastLogicManager.class);
+        r = (SignalMastLogicManager)initializer.getDefault(SignalMastLogicManager.class);
+        store(r, SignalMastLogicManager.class);
         return r;
     }
 
@@ -335,8 +334,8 @@ public class InstanceManager {
                     justification="Only used during system initialization")
     protected void init() {
         managerLists = new  HashMap<Class<?>,ArrayList<Object>>();
-        turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
+        turnoutManager = new jmri.managers.ProxyTurnoutManager();
         lightManager = new jmri.managers.ProxyLightManager();
         reporterManager = new jmri.managers.ProxyReporterManager();
     }

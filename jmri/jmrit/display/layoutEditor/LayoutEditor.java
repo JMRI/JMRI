@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -325,7 +325,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         deleteItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					if (deletePanel()) {
-                        dispose(true);
+                        dispose();
                     }
                 }
             });
@@ -487,7 +487,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         signalIconEditor.setIcon(8, "Lunar","resources/icons/smallschematics/searchlights/left-lunar-short-marker.gif");
         signalIconEditor.setIcon(9, "Flash Lunar","resources/icons/smallschematics/searchlights/left-flashlunar-short-marker.gif");
         signalIconEditor.complete();
-        signalFrame = new JFrame(rb.getString("EditSignalIcons"));
+        signalFrame = new JmriJFrame(rb.getString("EditSignalIcons"), false, true);
 		signalFrame.getContentPane().add(new JLabel("  "+rb.getString("IconChangeInfo")+"  "),BorderLayout.NORTH);
         signalFrame.getContentPane().add(signalIconEditor);
         signalFrame.pack();
@@ -722,7 +722,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					tools.setSignalsAt3WayTurnout(signalIconEditor,signalFrame);
                 }
             });
-        
+        toolsMenu.addSeparator();
         JMenuItem signalMastBoundaryItem = new JMenuItem(rb.getString("SignalMastsAtBoundary")+"...");
         toolsMenu.add(signalMastBoundaryItem);
         signalMastBoundaryItem.addActionListener(new ActionListener() {
@@ -734,9 +734,42 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					tools.setSignalMastsAtBlockBoundary();
                 }
             });
-            
+        /* These tools not yet supported
+        JMenuItem turnoutSignalMastItem = new JMenuItem(rb.getString("SignalMastsAtTurnout")+"...");
+        toolsMenu.add(turnoutSignalMastItem);
+        turnoutSignalMastItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at turnout tool dialog
+					tools.setSignalMastsAtTurnouts(signalFrame);
+                }
+            });
+        JMenuItem xingMastItem = new JMenuItem(rb.getString("SignalMastsAtLevelXing")+"...");
+        toolsMenu.add(xingMastItem);
+        xingMastItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at level crossing tool dialog
+					tools.setSignalMastsAtLevelXing(signalFrame);
+                }
+            });*/
         JMenuItem sensorBoundaryItem = new JMenuItem(rb.getString("SensorsAtBoundary")+"...");
         toolsMenu.add(sensorBoundaryItem);
+        sensorBoundaryItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSensorsAtBlockBoundary(sensorIconEditor,sensorFrame);
+                }
+            });
+        JMenuItem sensorEndBumperItem = new JMenuItem(/*rb.getString("SensorsAtBoundary")*/"Sensor at End Bumper"+"...");
+        toolsMenu.add(sensorEndBumperItem);
         sensorBoundaryItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					if (tools == null) {
@@ -2760,7 +2793,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		return null;
 	}
 
-	private Point2D getEndCoords(Object o, int type) {
+	public Point2D getEndCoords(Object o, int type) {
 		switch (type) {
 			case POS_POINT:
 				return ((PositionablePoint)o).getCoords();
@@ -3023,7 +3056,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             }
 
             boolean popupSet =false;
-            popupSet = p.setRotateOrthogonalMenu(popup);        
+            popupSet = p.setRotateOrthogonalMenu(popup);
+            popupSet = p.setRotateMenu(popup);
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
@@ -3218,6 +3252,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         g.setColor(color);
         g.setStroke(stroke);
     }
+
  
     private void createSelectionGroups(){
         List <Positionable> contents = getContents();
@@ -5362,6 +5397,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		return null;
 	}
 
+    /**
+    * Returns an array list of track segments matching the block name.
+    */
+    public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
+		if (name.length()<=0) return null;
+        ArrayList<TrackSegment> ts = new ArrayList<TrackSegment>();
+		for (int i = 0; i<trackList.size(); i++) {
+			TrackSegment t = trackList.get(i);
+			if (t.getBlockName().equals(name)) {
+				ts.add(t);
+			}
+		}
+		return ts;
+	}
+    
     public PositionablePoint findPositionablePointByEastBoundSignal(String signalName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
@@ -5396,6 +5446,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             if (p.getWestBoundSignalMast().equals(signalMastName))
                 return p;
 
+        }
+        return null;
+    }
+    
+    public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName){
+        for(int i = 0; i<turnoutList.size(); i++){
+            LayoutTurnout t = turnoutList.get(i);
+            if((t.getSignalAMast().equals(signalMastName)) ||
+                (t.getSignalBMast().equals(signalMastName)) ||
+                (t.getSignalCMast().equals(signalMastName)) ||
+                (t.getSignalDMast().equals(signalMastName)))
+                return t;
+        }
+        return null;
+    }
+    
+    public LevelXing findLevelXingBySignalMast(String signalMastName){
+        for(int i = 0; i<xingList.size(); i++){
+            LevelXing l = xingList.get(i);
+            if((l.getSignalAMastName().equals(signalMastName)) ||
+                (l.getSignalBMastName().equals(signalMastName)) ||
+                (l.getSignalCMastName().equals(signalMastName)) ||
+                (l.getSignalDMastName().equals(signalMastName)))
+                return l;
         }
         return null;
     }

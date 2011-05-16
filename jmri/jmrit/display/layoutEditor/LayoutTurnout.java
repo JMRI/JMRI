@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -76,7 +77,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutTurnout
@@ -1110,8 +1111,8 @@ public class LayoutTurnout
 				}
 			});
 		}
-        /*if (!blockName.equals("")){
-
+        if (!blockName.equals("")){
+            /* not yet supported
             final String[] boundaryBetween = getBlockBoundaries();
             boolean blockBoundaries = false;
             for (int i = 0; i<4; i++){
@@ -1160,9 +1161,10 @@ public class LayoutTurnout
                     });
                 }
                 popup.add(viewRouting);
-            }
+            }*/
             
             
+            /* not yet supported
             if (blockBoundaries){
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     public void actionPerformed(ActionEvent e) {
@@ -1174,18 +1176,18 @@ public class LayoutTurnout
                         boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
-                popup.add(new AbstractAction("Set Sensors") {
+                popup.add(new AbstractAction("Set Sensors###") {
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
                         }
                             
                         tools.setSensorsAtTurnoutFromMenu(instance,
-                        boundaryBetween, layoutEditor.signalFrame);
+                        boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.signalFrame);
                     }
                 });
-            }
-        }*/
+            }*/
+        }
         layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
@@ -1214,7 +1216,7 @@ public class LayoutTurnout
             if(block!=null){
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(block);
                 for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                    if (conn.get(i).getConnectedObject()==(this)){
                         if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
                             boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName()));
                             pos++;
@@ -1225,7 +1227,7 @@ public class LayoutTurnout
             if(blockB!=null){
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockB);
                 for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                    if (conn.get(i).getConnectedObject()==(this)){
                         if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
                             boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockB.getDisplayName()));
                             pos++;
@@ -1236,7 +1238,7 @@ public class LayoutTurnout
             if(blockC!=null){
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockC);
                 for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                    if (conn.get(i).getConnectedObject()==(this)){
                         if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
                             boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockC.getDisplayName()));
                             pos++;
@@ -1247,7 +1249,7 @@ public class LayoutTurnout
             if(blockD!=null){
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockD);
                 for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==((Object)this)){
+                    if (conn.get(i).getConnectedObject()==(this)){
                         if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
                             boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockD.getDisplayName()));
                             pos++;
