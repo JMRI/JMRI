@@ -3,13 +3,13 @@ package jmri.managers;
 import jmri.*;
 import jmri.SignalMastLogic;
 import jmri.implementation.DefaultSignalMastLogic;
-/*import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;*/
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Hashtable;
-/*import java.util.Enumeration;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;*/
+import java.util.Enumeration;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
@@ -29,14 +29,14 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager {
 
     public DefaultSignalMastLogicManager(){
         registerSelf();
-//        InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
+        InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
     }
     
     private static jmri.implementation.SignalSpeedMap _speedMap;
@@ -110,7 +110,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     
     /**
      * Returns an arraylist of signalmastlogic
-     * @return
+     * @return An ArrayList of SignalMast logics
      */
     public ArrayList<SignalMastLogic> getSignalMastLogicList() {
         return signalMastLogic;
@@ -211,7 +211,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public long getSignalLogicDelay(){ return signalLogicDelay; }
     public void setSignalLogicDelay(long l){ signalLogicDelay=l; }
 
-    /*
+    
     protected PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener(){
         public void propertyChange(PropertyChangeEvent e) {
             if(e.getPropertyName().equals("topology")){
@@ -231,7 +231,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                 }
             }
         }
-    };*/
+    };
     
     boolean runWhenStablised = false;
     
@@ -246,8 +246,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     * @param layout Layout Editor panel to check.
     */
     public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException{
-        return;
-        /* Not yet enabled
         validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
@@ -283,10 +281,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                     throw e;
                 }
             }
-        }*/
+        }
     }
     
-    /*protected void discoverSignallingDest(SignalMast source, LayoutBlock lProtecting, LayoutBlock lFacing) throws JmriException{
+    protected void discoverSignallingDest(SignalMast source, LayoutBlock lProtecting, LayoutBlock lFacing) throws JmriException{
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
             //log.debug("advanced routing not enabled");
@@ -334,7 +332,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
     
     Hashtable<SignalMast, ArrayList<SignalMast>> validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
-*/
+
     /**
     * Discover all possible valid source and destination signalmasts past pairs 
     * on all layout editor panels.
@@ -343,8 +341,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     */
     
     public Hashtable<SignalMast, ArrayList<SignalMast>> automaticallyDiscoverSignallingPairs() throws JmriException{
-        return null;
-     /*validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
+        validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
         runWhenStablised=false;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
@@ -387,10 +384,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
         
         firePropertyChange("autoGenerateComplete", null, null);
-        return validPaths;*/
+        return validPaths;
     }
     
-    /*
+    
     private ArrayList<FacingProtecting> generateBlocksWithSignals(){
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         ArrayList<FacingProtecting> signalMastList = new ArrayList<FacingProtecting>();
@@ -408,7 +405,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                         FacingProtecting toadd = new FacingProtecting(curBlk, blk, sourceMast, curLblk.getNeighbourDirection(x));
                         if(!signalMastList.contains(toadd))
                             signalMastList.add(toadd);
-                        //signalMastList.add(new FacingProtecting(curBlk, blk, sourceMast, curLblk.getNeighbourDirection(x)));
                     }
                 }
             }
@@ -438,7 +434,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         
         int getDirection() { return direction; }
     
-    }*/
+    }
     
     /**
     * This uses the layout editor to check if the destination signalmast is 
@@ -450,8 +446,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     */
     
     public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException{
-        return true;
-     /* not yet implemented
         LayoutBlock facingBlock = null;
         LayoutBlock protectingBlock = null;
         LayoutBlock destFacingBlock = null;
@@ -491,7 +485,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                 log.debug("blocks not found");
             }
         }
-        throw new JmriException("Blocks Not Found");*/
+        throw new JmriException("Blocks Not Found");
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastLogicManager.class.getName());

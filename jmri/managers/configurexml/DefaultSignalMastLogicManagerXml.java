@@ -147,12 +147,6 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         log.error("Invalid method called");
     }
 
-    /**
-     * Create a TransitManager object of the correct class, then
-     * register and fill it.
-     * @param transits Top level Element to unpack.
-     * @return true if successful
-     */
     public boolean load(Element signalMastLogic) {
         // load individual Transits
         loadSignalMastLogic(signalMastLogic);
