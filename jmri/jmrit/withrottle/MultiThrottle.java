@@ -22,7 +22,7 @@ import java.util.List;
  * MT-L757<;>L757       On T throttle, remove loco L757. (Still has L1234)
  *
  *	@author Brett Hoffman   Copyright (C) 2011
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 public class MultiThrottle {
@@ -111,6 +111,10 @@ public class MultiThrottle {
     }
 
     public void passActionsToControllers(String key, String action){
+        if (throttles == null){
+            log.debug("No throttles in MultiThrottle to receive action.");
+            return;
+        }
         if (log.isDebugEnabled()){
             log.debug("MultiThrottle key: "+key+", action: "+action);
         }
@@ -128,12 +132,14 @@ public class MultiThrottle {
     }
 
     public void dispose(){
+        if (throttles == null) return;
         for (Enumeration<String> e = throttles.keys() ; e.hasMoreElements() ;){
             removeThrottleController(e.nextElement(), "r");
         }
     }
 
     public void eStop(){
+        if (throttles == null) return;
         for (Enumeration<String> e = throttles.keys() ; e.hasMoreElements() ;){
             passActionsToControllers(e.nextElement(), "X");
         }

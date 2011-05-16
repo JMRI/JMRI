@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.23 $
+ *	@version $Revision: 1.24 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -510,9 +510,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         if (multiThrottles != null){
             for (MultiThrottle mt : multiThrottles.values()){
-                for (MultiThrottleController mtc : mt.throttles.values()){
-                    s.append(mtc.getCurrentAddressString());
-                    s.append(" ");
+                if (mt.throttles != null){
+                    for (MultiThrottleController mtc : mt.throttles.values()) {
+                        s.append(mtc.getCurrentAddressString());
+                        s.append(" ");
+                    }
                 }
             }
         }
