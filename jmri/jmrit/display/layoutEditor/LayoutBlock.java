@@ -3,15 +3,16 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
+import jmri.Path;
+import jmri.Block;
+import jmri.Turnout;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.util.ResourceBundle;
-import java.util.ArrayList;
-
 import javax.swing.*;
+import java.util.*;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractNamedBean;
@@ -56,11 +57,25 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
-public class LayoutBlock extends AbstractNamedBean
+public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener
 {
+    public boolean enableAddRouteLogging = false;
+    public boolean enableUpdateRouteLogging = false;
+    public boolean enableDeleteRouteLogging = false;
+    public boolean enableSearchRouteLogging = false;
+    //public int routingMethod = HOPCOUNT;
+    //static boolean InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() = true;
+    
+    static ArrayList<Integer> updateReferences = new ArrayList<Integer>();
+    //might want to use the jmri ordered hashtable, so that we can add at the top
+    // and remove at the bottom.
+    ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>();
+    
+    public void enableDeleteRouteLog() { enableDeleteRouteLogging = false; }
+    public void disableDeleteRouteLog() { enableDeleteRouteLogging = false; }
 
 	// Defined text resource
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
@@ -111,6 +126,7 @@ public class LayoutBlock extends AbstractNamedBean
 	protected void initializeLayoutBlock() {
 		// get/create a jmri.Block object corresponding to this LayoutBlock
 		block = InstanceManager.blockManagerInstance().getByUserName(blockName);
+        //System.out.println("From " + this.getDisplayName()+ " block initialise called");
 		if (block==null) {
 			// not found, create a new jmri.Block
 			String s = "";
@@ -137,6 +153,12 @@ public class LayoutBlock extends AbstractNamedBean
 				block.setSensor(occupancySensor);
 			}
 		}
+            if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){                
+                setBlockMetric();
+                for (int i = 0; i<block.getPaths().size(); i++){
+                    addAdjacency(block.getPaths().get(i));
+                }
+            }
 	}
 	
 	/**
@@ -150,7 +172,13 @@ public class LayoutBlock extends AbstractNamedBean
 	public Color getBlockExtraColor() {return blockExtraColor;}
 	public void setBlockExtraColor(Color color) {blockExtraColor = color;}
 	public boolean getUseExtraColor() {return useExtraColor;}
-	public void setUseExtraColor(boolean b) {useExtraColor = b;}
+	public void setUseExtraColor(boolean b) {
+        useExtraColor = b;
+        if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            stateUpdate();
+            //System.out.println("Do something if an advanced route is used");
+        }
+    }
 	public void incrementUse() {useCount ++;}
 	public void decrementUse() {
 		useCount --;
@@ -378,12 +406,12 @@ public class LayoutBlock extends AbstractNamedBean
 	}
 	public int getState() {return getOccupancy();}
 	// dummy for completion of NamedBean interface
-	public void setState(int i) {}
+	public void setState(int i) { System.out.println("this one here which is a null");}
 	
 	/**
 	 * Get the Layout Editor panel with the highest connectivity to this Layout Block
 	 */
-	protected LayoutEditor getMaxConnectedPanel() {
+	public LayoutEditor getMaxConnectedPanel() {
 		LayoutEditor panel = null;
 		if ( (block!=null) && (panels.size()>0) ) {
 			// a block is attached and this LayoutBlock is used
@@ -411,6 +439,7 @@ public class LayoutBlock extends AbstractNamedBean
 	 *		the highest connectivity (most LayoutConnectivity objects);
 	 */
 	public void updatePaths() {
+    //Update paths is called by the panel, turnouts, xings, track segments etc
 		if ( (block!=null) && (panels.size()>0) ) {
 			// a block is attached and this LayoutBlock is used
 			// initialize connectivity as defined in first Layout Editor panel
@@ -447,22 +476,26 @@ public class LayoutBlock extends AbstractNamedBean
 			}
 			// update block Paths to reflect connectivity as needed
 			updateBlockPaths(c,panel);
-		}	
+		}
 	}			
 	/**
 	 * Check/Update Path objects for the attached jmri.Block using the 
 	 *		connectivity in the specified Layout Editor panel.
 	 */
+	@SuppressWarnings("null")
 	public void updatePathsUsingPanel(LayoutEditor panel) {
+		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 		if (panel==null) {
 			log.error("Null panel in call to updatePathsUsingPanel");
 		}
 		else {
-		    ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
 			updateBlockPaths(c, panel);
 		}
-	}		
+	}
+    
 	private void updateBlockPaths(ArrayList<LayoutConnectivity> c, LayoutEditor panel) {
+        if(enableAddRouteLogging)
+            System.out.println("From " + this.getDisplayName() + " updatePaths Called");
 		LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
 		java.util.List<jmri.Path> paths = block.getPaths();
 		boolean[] used = new boolean[c.size()];
@@ -508,8 +541,10 @@ public class LayoutBlock extends AbstractNamedBean
 		}	
 		// delete unneeded Paths
 		for (int i = 0;i<paths.size();i++) {
-			if (need[i]<0) {				
-				block.removePath(paths.get(i));
+			if (need[i]<0) {
+                block.removePath(paths.get(i));
+                if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+                    removeAdjacency(paths.get(i));
 			}
 		}	
 		// add Paths as required
@@ -518,20 +553,31 @@ public class LayoutBlock extends AbstractNamedBean
 				// there is no corresponding Path, add one.
 				LayoutConnectivity lc = c.get(j);
 				jmri.Path newp = null;
+//				LayoutBlock tmpblock;
 				if (lc.getBlock1()==_instance) {
 					newp = new jmri.Path(lc.getBlock2().getBlock(),lc.getDirection(),
 									lc.getReverseDirection());
+//					tmpblock = lc.getBlock2();
 				}
 				else {
 					newp = new jmri.Path(lc.getBlock1().getBlock(),lc.getReverseDirection(),
-									lc.getDirection());					
+									lc.getDirection());
+//					tmpblock = lc.getBlock1();
+
 				}
 				//if (newp != null) 
-				block.addPath(newp);				
+				block.addPath(newp);
+				if (newp != null){
+                    if(enableAddRouteLogging)
+                        System.out.println("From " + this.getDisplayName() + " updateBlock Paths");
+                    if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+                        addAdjacency(newp);
+                }
 				//else log.error("Trouble adding Path to block '"+blockName+"'.");
 				auxTools.addBeanSettings(newp,lc,_instance);
 			}				
 		}
+
 // djd debugging - lists results of automatic initialization of Paths and BeanSettings			
 /*		paths = block.getPaths();
 		for (int i = 0;i<paths.size();i++) {
@@ -583,6 +629,12 @@ public class LayoutBlock extends AbstractNamedBean
 		}				
 		// Redraw all Layout Editor panels using this Layout Block
 		redrawLayoutBlockPanels();
+        
+        if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            stateUpdate();
+            //System.out.println("Do something if an advanced route is used");
+        }
+
 	}
 			
 	/** 
@@ -608,12 +660,14 @@ public class LayoutBlock extends AbstractNamedBean
 	Component callingPane;
 	JTextField sensorNameField = new JTextField(16);
 	JTextField memoryNameField = new JTextField(16);
+    JTextField metricField = new JTextField(10);
     JComboBox senseBox = new JComboBox();
     int senseActiveIndex;
     int senseInactiveIndex;
     JComboBox trackColorBox = new JComboBox();
 	JComboBox occupiedColorBox = new JComboBox();
 	JComboBox extraColorBox = new JComboBox();
+    JComboBox blockSpeedBox = new JComboBox();
 	JLabel blockUseLabel= new JLabel( rb.getString("UseCount"));
 	JButton blockEditDone;
 	JButton blockEditCancel;
@@ -703,7 +757,16 @@ public class LayoutBlock extends AbstractNamedBean
             panel8.add(memoryLabel);
             panel8.add(memoryNameField);
             memoryNameField.setToolTipText( rb.getString("MemoryVariableTip") );
-            contentPane.add(panel8);			
+            contentPane.add(panel8);
+            
+            contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel19 = new JPanel();
+            panel19.setLayout(new FlowLayout());
+            JLabel metricLabel = new JLabel("Block Metric");
+            panel19.add(metricLabel);
+            panel19.add(metricField);
+            metricField.setToolTipText("set the cost for going over this block");
+            
 			// set up Done and Cancel buttons
 			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel5 = new JPanel();
@@ -724,7 +787,9 @@ public class LayoutBlock extends AbstractNamedBean
                 }
             });
             blockEditCancel.setToolTipText( rb.getString("CancelHint") );
-            contentPane.add(panel5);		
+            contentPane.add(panel5);
+
+            
 		}
 		// Set up for Edit
 		blockUseLabel.setText(rb.getString("UseCount")+": "+useCount );
@@ -739,6 +804,7 @@ public class LayoutBlock extends AbstractNamedBean
 		setColorCombo(occupiedColorBox,blockOccupiedColor);
 		setColorCombo(extraColorBox,blockExtraColor);
 		memoryNameField.setText(memoryName);
+        metricField.setText(Integer.toString(metric));
 		editLayoutBlockFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
 					blockEditCancelPressed(null);
@@ -799,6 +865,9 @@ public class LayoutBlock extends AbstractNamedBean
 				needsRedraw = true;
 			}
 		}
+        int m = Integer.parseInt(metricField.getText().trim());
+        if (m!=metric)
+            setBlockMetric(m);
 		// complete
 		editOpen = false;
 		editLayoutBlockFrame.setVisible(false);
@@ -897,7 +966,2275 @@ public class LayoutBlock extends AbstractNamedBean
     public boolean isActive() {
         return active;
     }
+    
+    /**
+     *  The code below relates to the layout block routing protocol
+     */
+    
+    /**
+    * Used to set the block metric based upon the track segment that the block is
+    * associated with if the (200 if Side, 50 if Main).  If the block is assigned
+    * against multiple track segments all with different types then the highest
+    * type will be used.
+    * In theory no reason why it couldn't be a compromise!
+    */
+    void setBlockMetric(){
+        if (!defaultMetric)
+            return;
+        if(enableUpdateRouteLogging){
+            log.info("From " + this.getDisplayName() + " default set block metric called");
+        }
+        LayoutEditor panel = getMaxConnectedPanel();
+        if (panel==null){
+            log.info("From " + this.getDisplayName() + " unable to set metric as we are not connected to a panel yet");
+            return;
+        }
+        ArrayList<TrackSegment> ts = panel.findTrackSegmentByBlock(blockName);
+        int mainline = 0;
+        int side = 0;
+        for (int i = 0; i< ts.size(); i++){
+            if (ts.get(i).getMainline())
+                mainline++;
+            else
+                side++;
+        }
+        if(mainline>side)
+            metric=50;
+        else if (mainline<side)
+            metric=200;
+        else{
+            //They must both be equal so will set as a mainline.
+            metric=50;
+        }
+        if(enableUpdateRouteLogging){
+            log.info("From " + this.getDisplayName() + " metric set to " + metric);
+        }
+        //What we need to do hear, is resend out our routing packets with the new metric.
+        RoutingPacket update = new RoutingPacket(UPDATE, this.getBlock(), -1, metric, -1, getNextPacketID());
+        firePropertyChange("routing", null, update);
+    }
+    
+    boolean defaultMetric = true;
+    
+    public boolean useDefaultMetric() { return defaultMetric; }
+    public void useDefaultMetric(boolean boo) {
+        if (boo==defaultMetric){
+            return;
+        }
+        defaultMetric = boo;
+        if (boo){
+            setBlockMetric();
+        }
+    }
+    
+    public void setBlockMetric(int m){
+        if (metric==m)
+            return;
+        metric = m;
+        defaultMetric = false;
+        RoutingPacket update = new RoutingPacket(UPDATE, this.getBlock(), -1, metric, -1, getNextPacketID());
+        firePropertyChange("routing", null, update);
+    }
+    
+    int getBlockMetric() { return metric; }
+    
+    //re work this so that is makes beter us of existing code.
+    //This is no longer required currently, but might be used at a later date.
+    public void addAllThroughPaths(){
+        if(enableAddRouteLogging)
+            log.info("Add all ThroughPaths " + this.getDisplayName());
+        if ( (block!=null) && (panels.size()>0) ) {
+			// a block is attached and this LayoutBlock is used
+			// initialize connectivity as defined in first Layout Editor panel
+			LayoutEditor panel = panels.get(0);
+			ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
+			// if more than one panel, find panel with the highest connectivity
+			if (panels.size()>1) {
+				for (int i = 1;i < panels.size();i++) {
+					if (c.size()<panels.get(i).auxTools.
+										getConnectivityList(_instance).size()) {
+						panel = panels.get(i);
+						c = panel.auxTools.getConnectivityList(_instance);
+					}
+				}
+				// check that this connectivity is compatible with that of other panels.
+				for (int j = 0;j < panels.size();j++) {
+					LayoutEditor tPanel = panels.get(j);
+					if ( (tPanel!=panel) && InstanceManager.layoutBlockManagerInstance().
+								warn() && ( !compareConnectivity(c,
+										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
+						// send user an error message
+						int response = JOptionPane.showOptionDialog(null,
+								java.text.MessageFormat.format(rb.getString("Warn1"),
+								new Object[]{blockName,tPanel.getLayoutName(),
+								panel.getLayoutName()}),rb.getString("WarningTitle"),
+								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,
+								null,new Object[] {rb.getString("ButtonOK"),
+								rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
+						if (response!=0)
+							// user elected to disable messages
+							InstanceManager.layoutBlockManagerInstance().turnOffWarning();
+					}
+				}
+			}
+            LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
+            ArrayList<LayoutConnectivity> d = auxTools.getConnectivityList(_instance);
+            ArrayList<LayoutBlock> attachedBlocks = new ArrayList<LayoutBlock>();
+            for (int i = 0; i<d.size(); i++){
+                if (d.get(i).getBlock1()!=_instance){
+                    attachedBlocks.add(d.get(i).getBlock1());
+                } else {
+                    attachedBlocks.add(d.get(i).getBlock2());
+                }
+            }
+            //Will need to re-look at this to cover both way and single way routes
+            ArrayList<LayoutBlock> attachedBlocks2 = attachedBlocks;
+            for (int i = 0;i<attachedBlocks.size(); i++){
+                if(enableAddRouteLogging)
+                    log.info("From " + this.getDisplayName() + " block is attached " + attachedBlocks.get(i).getDisplayName());
+                for (int x = 0;x<attachedBlocks2.size(); x++){
+                    addThroughPath(attachedBlocks.get(i).getBlock(), attachedBlocks2.get(x).getBlock(), panel);
+                }
+            }
+        }
+    }
+    
+    //TODO - if the block already exists, we still may want to re-work the the through paths
+    //With this bit we need to get our neighbour to send new routes.
+    void addNeighbour(Block addBlock, int direction, int workingDirection){
+    
+        boolean layoutConnectivityBefore = layoutConnectivity;
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " asked to add block " + addBlock.getDisplayName() + " as new neighbour " + decodePacketFlow(workingDirection));
+        if (getAdjacency(addBlock)!=null){
+            if(enableAddRouteLogging)
+                log.info("block is already registered");
+            addThroughPath(getAdjacency(addBlock));
+        } 
+        else {
+            Adjacencies adj = new Adjacencies(addBlock, direction, workingDirection);
+            neighbours.add(adj);
+            //Add the neighbor to our routing table.
+            LayoutBlock blk = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(addBlock);
+            LayoutEditor editor = getMaxConnectedPanel();
+            if((editor!=null) && (Connection==null)){
+                //We should be able to determine block metric now as the tracksegment should be valid
+                Connection = new ConnectivityUtil(editor);
+            }
+            //This will set the positionable point between us and our neighbour, it also sets which direction we need to look at 
+            //to get the correct signal heads/mast and sensors.
+            //This might be redundant.
+            if ((Connection!=null) && (blk!=null)){
+                ArrayList<PositionablePoint> points = Connection.getAnchorBoundariesThisBlock(this.getBlock());
+                for (int i = 0; i<points.size(); i++){
+                    if ((points.get(i).getConnect1().getLayoutBlock()==this) && (points.get(i).getConnect2().getLayoutBlock()==blk)){
+                        adj.setPositionablePoint(points.get(i));
+                        adj.setPositionablePointDirection(true);
+                    }
+                    else if ((points.get(i).getConnect2().getLayoutBlock()==this) && (points.get(i).getConnect1().getLayoutBlock()==blk)){
+                        adj.setPositionablePoint(points.get(i));
+                        adj.setPositionablePointDirection(false);
+                    }
+                }
+            }
+            //Need to inform our neighbors of our new addition
+            //We only add an entry into the routing table if we are able to reach the next working block.
+            //If we only transmit routes to it, then we can not route to it therefore it is not added
+            Routes route=null;
+            if (workingDirection==RXTX || workingDirection==RXONLY){
+                if (blk!=null)
+                    route = new Routes(addBlock, this.getBlock(), 1, direction, blk.getBlockMetric());
+                else
+                    route = new Routes(addBlock, this.getBlock(), 1, direction, 0);
+                routes.add(route);
+            }
+            if (blk!=null){
+                boolean mutual = blk.informNeighbourOfAttachment(this, this.getBlock(), workingDirection);
+                //The propertychange listener will have to be modified depending upon RX or TX selection.
+                //if we only transmit routes to this neighbour then we do not want to listen to thier broadcast messages
+                if (workingDirection==RXTX || workingDirection==RXONLY){
+                    blk.addPropertyChangeListener(this);
+                } else {
+                    blk.removePropertyChangeListener(this);
+                }
+                
+                int neighwork = blk.getAdjacencyPacketFlow(this.getBlock());
+                if (enableAddRouteLogging)
+                    log.info("From " + this.getDisplayName() + " " + decodePacketFlow(neighwork) + " " + neighwork);
+                
+                if (neighwork!=-1){
+                    if (enableAddRouteLogging)
+                        log.info("From " + this.getDisplayName() + " Updating flow direction to " + decodePacketFlow(determineAdjPacketFlow(workingDirection, neighwork)) + " for block " + blk.getDisplayName() + " choice of " + decodePacketFlow(workingDirection) + " " + decodePacketFlow(neighwork));
+                    int newPacketFlow = determineAdjPacketFlow(workingDirection, neighwork);
+                    adj.setPacketFlow(newPacketFlow);
+                    if(newPacketFlow==TXONLY){
+                        for(int j = routes.size()-1; j>-1; j--){
+                            if ((routes.get(j).getDestBlock()==addBlock) && (routes.get(j).getNextBlock()==this.getBlock())){
+                                adj.removeRouteAdvertisedToNeighbour(routes.get(j));
+                                routes.remove(j);
+                            }
+                        }
+                        RoutingPacket newUpdate = new RoutingPacket(REMOVAL, addBlock, -1, -1, -1, getNextPacketID());
+                        firePropertyChange("routing", null, newUpdate);
+                    }
+                }
+                else {
+                    if (enableAddRouteLogging)
+                        log.info("From " + this.getDisplayName() + " neighbour working direction is not valid " + addBlock.getDisplayName());
+                }
+                adj.setMutual(mutual);
 
+                if (route!=null){
+                    route.stateChange();
+                }
+                addThroughPath(getAdjacency(addBlock));
+            //We get our new neighbour to send us a list of valid routes that they have.
+            //This might have to be re-written as a property change event?
+            //Also only inform our neighbour if they have us down as a mutual, otherwise it will just reject the packet.
+                if ((workingDirection==RXTX || workingDirection==TXONLY) && mutual){
+                    blk.informNeighbourOfValidRoutes(getBlock());
+                }
+            } else if(enableAddRouteLogging){
+                log.info("From " + this.getDisplayName() + " neighbor " + addBlock.getDisplayName() + " has no layoutBlock associated, metric set to " + adj.getMetric());
+            }
+        }
+        /*If the connectivity before had not completed and produced an error with 
+        setting up through paths, we will cycle through them*/
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " layout connectivity before "+ layoutConnectivityBefore);
+        if (!layoutConnectivityBefore){
+            for (int i = 0; i<neighbours.size(); i++){
+                addThroughPath(neighbours.get(i));
+            }
+        }
+        /*We need to send our new neighbour our copy of the routing table however
+        we can only send valid routes that would be able to traverse as definded by 
+        through paths table*/
+    }
+    
+    boolean informNeighbourOfAttachment(LayoutBlock lBlock, Block block, int workingDirection){
+        Adjacencies adj = getAdjacency(block);
+        if (adj==null){
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " neighbour " + lBlock.getDisplayName() + " has informed us of its attachment to us however we do not yet have it registered");
+            return false;
+        }
+        if(!adj.isMutual()){
+            if (enableAddRouteLogging){
+                log.info("From " + this.getDisplayName() + " neighbour " + block.getDisplayName() + " wants us to " + decodePacketFlow(workingDirection));
+                log.info("From " + this.getDisplayName() + " we have neighbour " + block.getDisplayName() + " set as " + decodePacketFlow(adj.getPacketFlow()));
+            }
+            //Simply if both the neighbour and us both want to do the same thing with sending routing information,
+            //in one direction then no routes will be passed.#
+            
+            int newPacketFlow = determineAdjPacketFlow(adj.getPacketFlow(), workingDirection);
+            if (enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " neighbour " + block.getDisplayName() + " passed " + decodePacketFlow(workingDirection) + " we have " + decodePacketFlow(adj.getPacketFlow()) + " this will be updated to " + decodePacketFlow(newPacketFlow));
+            adj.setPacketFlow(newPacketFlow);
+
+            Routes neighRoute = getValidRoute(this.getBlock(), adj.getBlock());
+            if (neighRoute.getMetric()!=adj.getMetric()){
+                if(enableAddRouteLogging)
+                    log.info("From " + this.getDisplayName() + " The value of the metric we have for this route is not correct " + this.getBlock().getDisplayName() + ", stored " + neighRoute.getMetric() + " v " + adj.getMetric());
+                neighRoute.setMetric(adj.getMetric());
+                //This update might need to be more selective
+                RoutingPacket update = new RoutingPacket(UPDATE, adj.getBlock(), -1, (adj.getMetric()+metric), -1, getNextPacketID());
+                firePropertyChange("routing", null, update);
+            }
+            
+            getRouteByDestBlock(block).setMetric(lBlock.getBlockMetric());
+
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " We were not a mutual adjacency with " + lBlock.getDisplayName() + " but now are");
+            if (newPacketFlow==RXTX || newPacketFlow==RXONLY){
+                lBlock.addPropertyChangeListener(this);
+            } else {
+                lBlock.removePropertyChangeListener(this);
+            }
+            
+            if(newPacketFlow==TXONLY){
+                for(int j = routes.size()-1; j>-1; j--){
+                    if ((routes.get(j).getDestBlock()==block) && (routes.get(j).getNextBlock()==this.getBlock())){
+                        adj.removeRouteAdvertisedToNeighbour(routes.get(j));
+                        routes.remove(j);
+                    }
+                }
+
+                for(int j = throughPaths.size()-1; j>-1; j--){
+                    if ((throughPaths.get(j).getDestinationBlock()==block)){
+                        if(enableAddRouteLogging)
+                            log.info("From " + this.getDisplayName() + " removed throughpath " + throughPaths.get(j).getSourceBlock().getDisplayName() + " " + throughPaths.get(j).getDestinationBlock().getDisplayName());
+                        throughPaths.remove(j);
+                    }
+                }
+                RoutingPacket newUpdate = new RoutingPacket(REMOVAL, block, -1, -1, -1, getNextPacketID());
+                firePropertyChange("routing", null, newUpdate);
+            }
+            
+            adj.setMutual(true);
+            addThroughPath(adj);
+            //As we are now mutual we will send our neigh a list of valid routes.
+            if (newPacketFlow==RXTX || newPacketFlow==TXONLY){
+                informNeighbourOfValidRoutes(block);
+            }
+        }
+        return true;
+    }
+    
+    //determineAdjWorkingDirection
+    int determineAdjPacketFlow(int our, int neigh){
+        //Both are the same
+        if (enableUpdateRouteLogging)
+            log.info("From " + this.getDisplayName() + " values passed our " + decodePacketFlow(our) + " neigh " + decodePacketFlow(neigh));
+        if (neigh==our){
+            if((our==TXONLY) || (our==RXONLY))
+                return NONE;
+            return RXTX;
+        }
+        else if (our==RXTX){
+            if (neigh==RXONLY){
+                return TXONLY;
+            } else {
+                return RXONLY;
+            }
+        }
+        else if (neigh==RXTX){
+            if (our==RXONLY){
+                return RXONLY;
+            } else {
+                return TXONLY;
+            }
+        }
+        else if ((neigh==RXONLY) && (our==TXONLY)){
+            return TXONLY;
+        }
+        else if ((neigh==TXONLY) && (our==RXONLY)){
+            return RXONLY;
+        } 
+        else if ((neigh==TXONLY) && (our==RXONLY)){
+            return RXONLY;
+        }
+        else if ((neigh==RXONLY) && (our==TXONLY)){
+            return TXONLY;
+        }
+        return neigh;
+    }
+    
+    void informNeighbourOfValidRoutes(Block newblock){
+       // java.sql.Timestamp t1 = new java.sql.Timestamp(System.nanoTime());
+        ArrayList<Block> validFromPath = new ArrayList<Block>();
+        if(enableAddRouteLogging)
+           log.info("From " + this.getDisplayName() + " new block " + newblock.getDisplayName());
+            
+        for(int i= 0; i<throughPaths.size(); i++){
+            if(enableAddRouteLogging) 
+                log.info("From " + this.getDisplayName() + " B through routes " + throughPaths.get(i).getSourceBlock().getDisplayName() + " " + throughPaths.get(i).getDestinationBlock().getDisplayName());
+            if(throughPaths.get(i).getSourceBlock()==newblock){
+                validFromPath.add(throughPaths.get(i).getDestinationBlock());
+            } else if (throughPaths.get(i).getDestinationBlock()==newblock){
+                validFromPath.add(throughPaths.get(i).getSourceBlock());
+            }
+        }
+        if(enableAddRouteLogging){
+            log.info("From " + this.getDisplayName() + " ===== valid from size path " + validFromPath.size() + " ====");
+            log.info(newblock.getDisplayName());
+        }
+        //We only send packets on to our neighbor that are registered as being on a valid through path and are mutual.
+        LayoutBlock lBnewblock =null;
+        Adjacencies adj = getAdjacency(newblock);
+        if(adj.isMutual())
+            lBnewblock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(newblock);
+        if (lBnewblock==null){
+            return;
+        }
+        
+        for(int i = 0; i<routes.size(); i++){
+            Routes ro = routes.get(i);
+            if(enableAddRouteLogging)
+                log.info("source " + ro.getNextBlock().getDisplayName() + " Dest " + ro.getDestBlock().getDisplayName());
+            if(ro.getNextBlock()==getBlock()){
+                if(enableAddRouteLogging)
+                    log.info("From " + this.getDisplayName() + " ro next block is this");
+                if(validFromPath.contains(ro.getDestBlock())){
+                        if(enableAddRouteLogging){
+                            log.info("From " + this.getDisplayName() + " route to " + ro.getDestBlock().getDisplayName() + " we have it with a metric of " + ro.getMetric() + " we will add our metric of " + metric + " this will be sent to " + lBnewblock.getDisplayName() + " a");
+                        } //we added +1 to hop count and our metric.
+                        
+                        RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount()+1, (ro.getMetric()+metric), -1, getNextPacketID());
+                        lBnewblock.addRouteFromNeighbour(this, update);
+                }
+            } else {
+            //Don't know if this might need changing so that we only send out our best route to the neighbour, rather than cycling through them all.
+                if(validFromPath.contains(ro.getNextBlock())){
+                    if(enableAddRouteLogging){
+                        log.info("From " + this.getDisplayName() + " route to " + ro.getDestBlock().getDisplayName() + " we have it with a metric of " + ro.getMetric() + " we will add our metric of " + metric + " this will be sent to " + lBnewblock.getDisplayName() + " a");
+                    } //we added +1 to hop count and our metric.
+                    if(adj.advertiseRouteToNeighbour(ro)){
+                        //this should keep track of the routes we sent to our neighbour.
+                        adj.addRouteAdvertisedToNeighbour(ro);
+                        RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount()+1, (ro.getMetric()+metric), -1, getNextPacketID());
+                        lBnewblock.addRouteFromNeighbour(this, update);
+                    }
+                }
+            }
+        }
+    }
+    
+    static long time=0;
+    
+    //This works out our direction of route flow correctly
+    void addAdjacency(jmri.Path addPath){
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " path to be added " + addPath.getBlock().getDisplayName() + " " + Path.decodeDirection(addPath.getToBlockDirection()));    
+
+        int ourWorkingDirection = this.getBlock().getWorkingDirection();
+
+        if (ourWorkingDirection!=0){
+            if(ourWorkingDirection == addPath.getToBlockDirection()){
+                //As our direction is the same as the direction to the neighbour, then we can only be a route reciever.
+                ourWorkingDirection=RXONLY;
+            } else {
+                //As our direction is the opposite, then we can recieve routes from this neighbour.
+                ourWorkingDirection=TXONLY;
+            }
+        } else {
+            ourWorkingDirection=RXTX;
+        }
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " working direction " + Path.decodeDirection(this.getBlock().getWorkingDirection()) + " to block " + addPath.getBlock().getDisplayName() + " we should therefore be... " + decodePacketFlow(ourWorkingDirection));
+        
+        addNeighbour(addPath.getBlock(), addPath.getToBlockDirection(), ourWorkingDirection);
+        
+    }
+    
+    
+    //Might be possible to refactor the removal to use a bit of common code.
+    void removeAdjacency(jmri.Path removedPath){
+        if(enableDeleteRouteLogging)
+            log.info("From " + this.getDisplayName() + " Adjacency to be removed " + removedPath.getBlock().getDisplayName() + " " + Path.decodeDirection(removedPath.getToBlockDirection()));
+        LayoutBlock layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(removedPath.getBlock());
+        if(layoutBlock!=null)
+            removeAdjacency(layoutBlock);
+    }
+    
+    void removeAdjacency(LayoutBlock layoutBlock){
+        if(enableDeleteRouteLogging)
+            log.info("From " + this.getDisplayName() + " Adjacency to be removed " + layoutBlock.getDisplayName());
+        Block removedBlock = layoutBlock.getBlock();
+        ArrayList<Routes> tmpBlock = new ArrayList<Routes>();
+        //Work our way backward through the list of neighbours
+        //We need to work out which routes to remove first.
+
+        // here we simply remove the routes which are advertised from the removed neighbour
+        for(int j = routes.size()-1; j>-1; j--){
+            if(enableDeleteRouteLogging)
+                log.info("From " + this.getDisplayName()+  " route to check " + routes.get(j).getDestBlock().getDisplayName() + " from Block " + routes.get(j).getNextBlock().getDisplayName());
+            if(routes.get(j).getDestBlock()==removedBlock){
+                if(enableDeleteRouteLogging)
+                    log.info("From " + this.getDisplayName() + " route to " + routes.get(j).getDestBlock().getDisplayName() + " from block " + routes.get(j).getNextBlock().getDisplayName() + " to be removed triggered by adjancey removal as dest block has been removed");
+                if (!tmpBlock.contains(routes.get(j)))
+                    tmpBlock.add(routes.get(j));
+                routes.remove(j);
+                //This will need to be removed fromth directly connected 
+            } else if (routes.get(j).getNextBlock()==removedBlock){
+                if(enableDeleteRouteLogging)
+                    log.info("From " + this.getDisplayName() + " route to " + routes.get(j).getDestBlock().getDisplayName() + " from block " + routes.get(j).getNextBlock().getDisplayName() + " to be removed triggered by adjancey removal");
+                if (!tmpBlock.contains(routes.get(j)))
+                    tmpBlock.add(routes.get(j));
+                routes.remove(j);
+                //This will also need to be removed from the directly connected list as well.
+            }
+        }
+        
+        for (int i = neighbours.size()-1; i>-1; i--){
+            //Use to check against direction but don't now.
+            if ((neighbours.get(i).getBlock()==removedBlock)){
+                 //Was previously before the for loop.
+                //Pos move the remove list and remove thoughpath out of this for loop.
+                if (layoutBlock!=null)
+                    layoutBlock.removePropertyChangeListener(this);
+                if(enableDeleteRouteLogging)
+                    log.info("From " + this.getDisplayName() + " block " + removedBlock.getDisplayName() + " found and removed");
+                LayoutBlock layoutBlockToNotify = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(neighbours.get(i).getBlock());
+                getAdjacency(neighbours.get(i).getBlock()).dispose();
+                neighbours.remove(i);
+                layoutBlockToNotify.notifiedNeighbourNoLongerMutual(this);
+                
+            }
+        }
+        
+        for(int i = throughPaths.size()-1; i>-1; i--){
+            if (throughPaths.get(i).getSourceBlock()==removedBlock){
+                //only mark for removal if the source isn't in the adjcency table
+                if(getAdjacency(throughPaths.get(i).getSourceBlock())==null){
+                    if(enableDeleteRouteLogging)
+                        log.info("remove " + throughPaths.get(i).getSourceBlock().getDisplayName() + " to " + throughPaths.get(i).getDestinationBlock().getDisplayName());
+                    throughPaths.remove(i);
+                }
+            }
+            else if (throughPaths.get(i).getDestinationBlock()==removedBlock){
+                //only mark for removal if the destination isn't in the adjcency table
+                if(getAdjacency(throughPaths.get(i).getDestinationBlock())==null){
+                    if(enableDeleteRouteLogging)
+                        log.info("remove " + throughPaths.get(i).getSourceBlock().getDisplayName() + " to " + throughPaths.get(i).getDestinationBlock().getDisplayName());
+                    throughPaths.remove(i);
+                }
+            }
+        }
+        if(enableDeleteRouteLogging)
+            log.info("From " + this.getDisplayName() + " neighbour has been removed - Number of routes to this neighbour removed" + tmpBlock.size());
+        notifyNeighboursOfRemoval(tmpBlock, removedBlock);
+    }
+    
+    //This is used when a property event change is triggered for a removed route.  Not sure that bulk removals will be necessary
+    void removeRouteFromNeighbour(LayoutBlock src, RoutingPacket update){       
+        InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+        Block srcblk = src.getBlock();
+        Block destblk = update.getBlock();
+        String msgPrefix = "From " + this.getDisplayName() + " notify block " + srcblk.getDisplayName() + " ";
+        if(enableDeleteRouteLogging)
+            log.info(msgPrefix + " remove route from neighbour called");
+        
+        if (InstanceManager.layoutBlockManagerInstance().getLayoutBlock(srcblk)==this){
+            if(enableDeleteRouteLogging)
+                log.info("From " + this.getDisplayName() + " source block is the same as our block! " + destblk.getDisplayName());
+            return;
+        }
+        
+        if(enableDeleteRouteLogging){
+            log.info(msgPrefix+ " (Direct Notification) neighbour " + srcblk.getDisplayName() + " has removed route to " + destblk.getDisplayName());
+            log.info(msgPrefix+ " routes in table " + routes.size() + " Remove route from neighbour");
+        }
+        ArrayList<Routes> routesToRemove = new ArrayList<Routes>();
+        for (int i = routes.size()-1; i> -1; i--){
+            Routes ro = routes.get(i);
+            if((ro.getNextBlock()==srcblk) && ro.getDestBlock()==destblk){
+                routesToRemove.add(new Routes(routes.get(i).getDestBlock(), routes.get(i).getNextBlock(), 0,0,0));
+                if(enableDeleteRouteLogging)
+                    log.info(msgPrefix + " route to " + ro.getDestBlock().getDisplayName() + " from block " + ro.getNextBlock().getDisplayName() + " to be removed triggered by propertyChange");
+                routes.remove(i);
+                //We only fire off routing update the one
+            }
+        }
+
+        notifyNeighboursOfRemoval(routesToRemove, srcblk);
+    }
+    
+    void notifyNeighboursOfRemoval(ArrayList<Routes> routesToRemove, Block notifyingblk){
+        String msgPrefix = "From " + this.getDisplayName() + " notify block " + notifyingblk.getDisplayName() + " ";
+        if(enableDeleteRouteLogging)
+            log.info(msgPrefix + " notifyNeighboursOfRemoval called for routes from " + notifyingblk.getDisplayName() + " ===");
+        boolean notifyvalid=false;
+        for (int i = neighbours.size()-1; i>-1; i--){
+            if (neighbours.get(i).getBlock()==notifyingblk){
+                notifyvalid=true;
+            }
+        }
+        if(enableDeleteRouteLogging)
+            log.info(msgPrefix + " The notifying block is still valid? " + notifyvalid);
+        
+        for (int j = routesToRemove.size()-1; j> -1; j--){
+            boolean stillexist = false;
+            Block destBlock = routesToRemove.get(j).getDestBlock();
+            Block sourceBlock = routesToRemove.get(j).getNextBlock();
+            RoutingPacket newUpdate = new RoutingPacket(REMOVAL, destBlock, -1, -1, -1, getNextPacketID());
+            if(enableDeleteRouteLogging)
+                log.info("From " + this.getDisplayName() + " notify block " + notifyingblk.getDisplayName() + " checking " + destBlock.getDisplayName() + " from " + sourceBlock.getDisplayName());
+            ArrayList<Routes> validroute = new ArrayList<Routes>();
+            ArrayList<Routes> destRoutes = getDestRoutes(destBlock);
+            for(int i = 0; i<destRoutes.size(); i++){
+                //We now know that we still have a valid route to the dest
+                if(destRoutes.get(i).getNextBlock()==this.getBlock()){
+                    if(enableDeleteRouteLogging)
+                        log.info(msgPrefix + " The destBlock " + destBlock.getDisplayName() + " is our neighbour");
+                    validroute.add(new Routes(destRoutes.get(i).getDestBlock(), destRoutes.get(i).getNextBlock(), 0, 0, 0));
+                    stillexist=true;
+                } else {
+                //At this stage do we need to check if the valid route comes from a neighbour?
+                    if(enableDeleteRouteLogging)
+                        log.info(msgPrefix + " we still have a route to " + destBlock.getDisplayName() + " via " + destRoutes.get(i).getNextBlock().getDisplayName() + " in our list");
+                    validroute.add(new Routes(destBlock, destRoutes.get(i).getNextBlock(), 0, 0, 0));
+                    stillexist=true;
+                }
+            }
+            //We may need to find out who else we could of sent the route to by checking in the through paths
+
+            
+            if(stillexist){
+                if(enableDeleteRouteLogging) {
+                    log.info(msgPrefix + "A Route still exists");
+                    log.info(msgPrefix + " the number of routes installed to block " + destBlock.getDisplayName() + " is " + validroute.size());
+                }
+                if (validroute.size()==1){
+                //Specific routing update.
+                    Block nextHop = validroute.get(0).getNextBlock();
+                    LayoutBlock layoutBlock;
+                    if(validroute.get(0).getNextBlock()!=this.getBlock()){
+                        layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextHop);
+                        if(enableDeleteRouteLogging)
+                            log.info(msgPrefix + " We only have a single valid route left to " + destBlock.getDisplayName() + " So will tell " + layoutBlock.getDisplayName() + " we no longer have it");
+                        layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        getAdjacency(nextHop).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
+                    }
+                        
+                    //At this point we could probably do with checking for other valid paths from the notifyingblock
+                    //Have a feeling that this is pretty much the same as above!
+                    ArrayList<Block> validNeighboursToNotify = new ArrayList<Block>();
+                    //Problem we have here is that although we only have one valid route, one of our neighbours
+                    //could still hold a valid through path.
+                    for (int i = neighbours.size()-1; i>-1; i--){
+                        //Need to ignore if the dest block is our neighour in this instance
+                        if ((neighbours.get(i).getBlock()!=destBlock) && (neighbours.get(i).getBlock()!=nextHop)){
+                            if (validThroughPath(notifyingblk, neighbours.get(i).getBlock())){
+                                Block neighblock = neighbours.get(i).getBlock();
+                                if(enableDeleteRouteLogging)
+                                    log.info(msgPrefix + " we could of potentially send the route to " + neighblock.getDisplayName());
+                                validNeighboursToNotify.add(neighblock);
+                            }
+                        }
+                    }
+                    if(enableDeleteRouteLogging){
+                        log.info(msgPrefix + " the next block is our selves so we won't remove!");
+                        log.info(msgPrefix + " do we need to find out if we could of send the route to another neighbour such as?");
+                    }
+                    for(int i = 0; i<validNeighboursToNotify.size(); i++){
+                        //If the neighbour has a valid through path to the dest we will not notify the neighbour of our loss of route
+                        if(!validThroughPath(validNeighboursToNotify.get(i), destBlock)){
+                            layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(validNeighboursToNotify.get(i));
+                            if (layoutBlock!=null)
+                                layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                            getAdjacency(validNeighboursToNotify.get(i)).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
+                        } else {
+                            if(enableDeleteRouteLogging)
+                                log.info(msgPrefix + validNeighboursToNotify.get(i).getDisplayName() + " has a valid path to " + destBlock.getDisplayName());
+                        }
+                    }
+                }
+                else {
+                    //Need to deal with having multiple routes left.
+                    if(enableDeleteRouteLogging)
+                        log.info(msgPrefix + " routes left to block " + destBlock.getDisplayName());
+                    for(int i = 0; i<validroute.size(); i++){
+                        //We need to see if we have valid routes.
+                        if(validThroughPath(notifyingblk, validroute.get(i).getNextBlock())){
+                            if(enableDeleteRouteLogging)
+                                log.info(msgPrefix + " to " + validroute.get(i).getNextBlock().getDisplayName() + " Is a valid route");
+                            //Will mark the route for potential removal
+                            validroute.get(i).setMiscFlags(0x02);
+                        }
+                        else {
+                            if(enableDeleteRouteLogging)
+                                log.info(msgPrefix + " to " + validroute.get(i).getNextBlock().getDisplayName() + " Is not a valid route");
+                            //Mark the route to not be removed.
+                            validroute.get(i).setMiscFlags(0x01);
+                            //Given that the route to this is not valid, we do not want to be notifying this next block about the loss of route.
+                        }
+                    }
+                    //We have marked all the routes for either potential notification of route removal, or definate no removal;
+                    //Now need to get through the list and cross reference each one.
+                    for(int i = 0; i<validroute.size(); i++){
+                        if (validroute.get(i).getMiscFlags()==0x02){
+                            Block nextblk = validroute.get(i).getNextBlock();
+                            if(enableDeleteRouteLogging)
+                                log.info(msgPrefix + " route from " + nextblk.getDisplayName() + " has been flagged for removal");
+                            //Need to cross reference it with the routes that are left.
+                            boolean leaveroute=false;
+                            for(int k = 0; k<validroute.size();k++){
+                                if (validroute.get(k).getMiscFlags()==0x01){
+                                    if(validThroughPath(nextblk, validroute.get(k).getNextBlock())){
+                                        if(enableDeleteRouteLogging)
+                                            log.info(msgPrefix + " we have a valid path from " + nextblk.getDisplayName() + " to " + validroute.get(k).getNextBlock());
+                                        leaveroute=true;
+                                    }
+                                }
+                            }
+                            if (!leaveroute){
+                            LayoutBlock layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextblk);
+                            if(enableDeleteRouteLogging)
+                                log.info(msgPrefix + "############ We need to send notification to " + nextblk.getDisplayName() + " to remove route ########### haven't found an example of this yet!");
+                            layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                            getAdjacency(nextblk).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
+                            
+                            } else {
+                                if(enableDeleteRouteLogging)
+                                    log.info(msgPrefix + " a valid path through exists " + nextblk.getDisplayName() + " so we will not remove route.");
+                            }
+                        }
+                    }
+                }
+            } else {
+                if(enableDeleteRouteLogging)
+                    log.info(msgPrefix+ " We have no other routes to " + destBlock.getDisplayName() + " Therefore we will broadast this to our neighbours");
+                firePropertyChange("routing", null, newUpdate);
+            }
+        }
+        if(enableDeleteRouteLogging)
+            log.info(msgPrefix + " finshed check and notifying of removed routes from " + notifyingblk.getDisplayName() + " ===");
+        routesToRemove=null;
+    }
+    
+    void addThroughPath(Adjacencies adj){
+        Block newAdj = adj.getBlock();
+        int packetFlow = adj.getPacketFlow();
+        
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " addThroughPathCalled with adj " + adj.getBlock().getDisplayName());
+        for (int i = 0; i<neighbours.size(); i++){
+        //cycle through all the neighbours
+            if(neighbours.get(i).getBlock()!=newAdj){
+                int neighPacketFlow = neighbours.get(i).getPacketFlow();
+                if(enableAddRouteLogging)
+                    log.info("From " + this.getDisplayName() + " our direction = " +decodePacketFlow(packetFlow) + ", neighbour direction " + decodePacketFlow(neighPacketFlow));
+                if ((packetFlow==RXTX) && (neighPacketFlow==RXTX)){
+                    //if both are RXTX then add flow in both directions
+                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
+                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                } else if ((packetFlow==RXONLY) && (neighPacketFlow==TXONLY)){
+                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
+                } else if ((packetFlow==TXONLY) && (neighPacketFlow==RXONLY)){
+                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                } else if ((packetFlow==RXTX) && (neighPacketFlow==RXONLY)){
+                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
+                } else if ((packetFlow==RXTX) && (neighPacketFlow==TXONLY)){
+                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                } else if ((packetFlow==RXONLY) && (neighPacketFlow==RXTX)){
+                    addThroughPath(neighbours.get(i).getBlock(), newAdj);
+                } else if ((packetFlow==TXONLY) && (neighPacketFlow==RXTX)){
+                    addThroughPath(newAdj, neighbours.get(i).getBlock());
+                } else {
+                    if(enableAddRouteLogging)
+                        log.info("Invalid combination" + decodePacketFlow(packetFlow) + " " + decodePacketFlow(neighPacketFlow));
+                }
+            }
+        }
+        
+    }
+    
+    /*adds a path between two blocks, but without spec a panel*/
+    void addThroughPath(Block srcBlock, Block dstBlock){
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " Add ThroughPath " + srcBlock.getDisplayName() + " " + dstBlock.getDisplayName());
+		if ( (block!=null) && (panels.size()>0) ) {
+			// a block is attached and this LayoutBlock is used
+			// initialize connectivity as defined in first Layout Editor panel
+			LayoutEditor panel = panels.get(0);
+			ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
+			// if more than one panel, find panel with the highest connectivity
+			if (panels.size()>1) {
+				for (int i = 1;i < panels.size();i++) {
+					if (c.size()<panels.get(i).auxTools.
+										getConnectivityList(_instance).size()) {
+						panel = panels.get(i);
+						c = panel.auxTools.getConnectivityList(_instance);
+					}
+				}
+				// check that this connectivity is compatible with that of other panels.
+				for (int j = 0;j < panels.size();j++) {
+					LayoutEditor tPanel = panels.get(j);
+					if ( (tPanel!=panel) && InstanceManager.layoutBlockManagerInstance().
+								warn() && ( !compareConnectivity(c,
+										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
+						// send user an error message
+						int response = JOptionPane.showOptionDialog(null,
+								java.text.MessageFormat.format(rb.getString("Warn1"),
+								new Object[]{blockName,tPanel.getLayoutName(),
+								panel.getLayoutName()}),rb.getString("WarningTitle"),
+								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,
+								null,new Object[] {rb.getString("ButtonOK"),
+								rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
+						if (response!=0)
+							// user elected to disable messages
+							InstanceManager.layoutBlockManagerInstance().turnOffWarning();
+					}
+				}
+			}
+			// update block Paths to reflect connectivity as needed
+			addThroughPath(srcBlock,dstBlock,panel);
+		}	
+	}
+    
+    LayoutEditorAuxTools auxTool=null;
+    ConnectivityUtil Connection=null;
+    boolean layoutConnectivity = true;
+    
+    public void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel){
+        //Reset connectivity flag.
+        layoutConnectivity = true;
+        if (srcBlock==dstBlock){
+            //Do not do anything if the blocks are the same!
+            return;
+        }
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " Add ThroughPath with panel " +srcBlock.getDisplayName() + " " + dstBlock.getDisplayName());
+        //Initally check to make sure that the through path doesn't already exist.
+        //no point in going through the checks if the path already exists.
+
+        boolean add = true;
+        for (int i = 0; i<throughPaths.size(); i++){
+            if (throughPaths.get(i).getSourceBlock()==srcBlock){
+                if(throughPaths.get(i).getDestinationBlock()==dstBlock)
+                    add=false;
+            }
+        }
+        if(!add)
+            return;
+        if(enableAddRouteLogging)
+            log.info(block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
+        Connection = new ConnectivityUtil(panel);
+        
+        ArrayList<LayoutTurnout> stod = Connection.getTurnoutList(block, srcBlock, dstBlock);
+        ArrayList<Integer> stodSet = Connection.getTurnoutSettingList();
+        
+        if(!Connection.isTurnoutConnectivityComplete())
+            layoutConnectivity=false;
+        
+        ArrayList<LayoutTurnout> tmpdtos = Connection.getTurnoutList(block, dstBlock, srcBlock);
+        ArrayList<Integer> tmpdtosSet = Connection.getTurnoutSettingList();
+        
+        if(!Connection.isTurnoutConnectivityComplete())
+            layoutConnectivity=false;
+        
+        //Possibly need to change this so that it can check one smaller list against a larger
+        if ((stod.size()==tmpdtos.size()) && (stodSet.size()==tmpdtosSet.size())){
+            //Need to reorder the tmplist (dst-src) to be the same order as src-dst
+            ArrayList<LayoutTurnout> dtos = new ArrayList<LayoutTurnout>();
+            for (int i=tmpdtos.size();i>0;i--){
+                dtos.add(tmpdtos.get(i-1));
+            }
+            //check to make sure that we pass through the same turnouts
+            if(enableAddRouteLogging){
+                log.info("From " + this.getDisplayName() + " destination size " + dtos.size() + " v source size " + stod.size());
+                log.info("From " + this.getDisplayName() + " destination setting size " + tmpdtosSet.size() + " v source setting size " + stodSet.size());
+            }
+            for (int i=0;i<dtos.size();i++){
+                if(dtos.get(i)!=stod.get(i)){
+                    if(enableAddRouteLogging)
+                        log.info("not equal will quit " + dtos.get(i) + ", " + stod.get(i));
+                    return;
+                }
+            }
+            ArrayList<Integer> dtosSet = new ArrayList<Integer>();
+            for(int i=tmpdtosSet.size();i>0;i--){
+                //Need to reorder the tmplist (dst-src) to be the same order as src-dst
+                dtosSet.add(tmpdtosSet.get(i-1));
+            }
+            for (int i=0;i<dtosSet.size();i++){
+                int x = stodSet.get(i);
+                int y = dtosSet.get(i);
+                if(x!=y){
+                    if(enableAddRouteLogging)
+                        log.info(block.getDisplayName() + " not on setting equal will quit " + x + ", " + y);
+                    return;
+                }
+            }
+            HashSet<LayoutTurnout> set = new HashSet<LayoutTurnout>();
+            for (int i = 0; i<stod.size();i++){
+                boolean val = set.add(stod.get(i));
+                if(val == false) {
+                    //Duplicate found. will not add
+                    return;
+                }
+            }
+
+            java.util.List<jmri.Path> paths = block.getPaths();
+            jmri.Path srcPath = null;
+            for (int i = 0; i<paths.size(); i++){
+                if (paths.get(i).getBlock()==srcBlock)
+                    srcPath = paths.get(i);
+            }
+            jmri.Path dstPath =null;
+            for (int i = 0; i<paths.size(); i++){
+                if (paths.get(i).getBlock()==dstBlock)
+                    dstPath = paths.get(i);
+            }
+            ThroughPaths path = new ThroughPaths(srcBlock, srcPath, dstBlock, dstPath);
+            path.setTurnoutList(stod, stodSet);
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " added Throughpath " + path.getSourceBlock().getDisplayName() + " " + path.getDestinationBlock().getDisplayName());
+            throughPaths.add(path);
+            //update our neighbours of the new valid paths;
+            informNeighbourOfValidRoutes(srcBlock);
+            informNeighbourOfValidRoutes(dstBlock);
+        }
+        else if(enableAddRouteLogging){
+            log.info("sizes are not the same therefore not a valid path through");
+        }
+    }
+    
+    void notifiedNeighbourNoLongerMutual(LayoutBlock srcBlock){
+        if(enableDeleteRouteLogging)
+            log.info("From " + this.getDisplayName() + "Notification from neighbour that it is no longer our friend " + srcBlock.getDisplayName());
+        Block blk = srcBlock.getBlock();
+        for (int i = neighbours.size()-1; i>-1; i--){
+            //Need to check if the block we are being informed about has already been removed or not
+            if (neighbours.get(i).getBlock()==blk){
+                removeAdjacency(srcBlock);
+                break;
+            }
+        }
+    }
+    
+    public static final int RESERVED = 0x08;
+    
+    void stateUpdate(){
+        //Need to find a way to fire off updates to the various tables
+        if(enableUpdateRouteLogging){
+            log.info("this is our block state change" + getBlockStatus());
+            log.info("From " + this.getDisplayName() + " A block state change has occured");
+        }
+        RoutingPacket update = new RoutingPacket(UPDATE, this.getBlock(), -1, -1, getBlockStatus(), getNextPacketID());
+        firePropertyChange("routing", null, update);
+    }
+    
+    int getBlockStatus(){
+        if (getOccupancy() == OCCUPIED) {
+            useExtraColor=false;
+        //Our section of track is occupied
+            return OCCUPIED;
+		}
+		else if (useExtraColor) {
+            return RESERVED;
+		}
+		else if (getOccupancy() == EMPTY){
+            return EMPTY;
+		} else {
+            return UNKNOWN;
+        }
+    }
+    
+    public Integer getNextPacketID(){
+        Integer lastID;
+        if (updateReferences.isEmpty()){
+            lastID = 0;
+        } else {
+            int lastIDPos = updateReferences.size()-1;
+            lastID = updateReferences.get(lastIDPos) +1;
+        }
+        updateReferences.add(lastID);
+        /*As we are originating a packet, we will added to the acted upion list 
+        thus making sure if the packet gets back to us we do knowing with it.*/
+        actedUponUpdates.add(lastID);
+        return lastID;
+    }
+    
+    public boolean updatePacketActedUpon(Integer packetID){
+        return actedUponUpdates.contains(packetID);
+    }
+    
+    public ArrayList<Block> getActiveNextBlocks(Block source){
+        ArrayList<Block> currentPath = new ArrayList<Block>();
+        for(int i = 0; i<throughPaths.size(); i++){
+            ThroughPaths path = throughPaths.get(i);
+            if ((path.getSourceBlock()==source) && (path.isPathActive())){
+                currentPath.add(throughPaths.get(i).getDestinationBlock());
+            }
+        }
+        return currentPath;
+    }
+    /**
+    * Provides an output to the console with the anchor point details
+    */
+    
+    public void printAnchorPoints(){
+        if (Connection==null)
+            return;
+        log.info(Connection.getAnchorBoundariesThisBlock(this.getBlock()));
+        ArrayList<PositionablePoint> points = Connection.getAnchorBoundariesThisBlock(this.getBlock());
+        log.info("East Bound");
+        log.info("Sensor, Signal, Boundary With");
+        for (int i = 0; i<points.size(); i++){
+            String connectedBlock = points.get(i).getConnect1().getLayoutBlock().getDisplayName();
+            if (points.get(i).getConnect1().getLayoutBlock()==this)
+                connectedBlock = points.get(i).getConnect2().getLayoutBlock().getDisplayName();
+            log.info(points.get(i).getEastBoundSensor() + ", " + points.get(i).getEastBoundSignal() + ", " + connectedBlock);
+        }
+        
+        log.info("West Bound");
+        log.info("Sensor, Signal, Boundary With");
+        for (int i = 0; i<points.size(); i++){
+            String connectedBlock = points.get(i).getConnect1().getLayoutBlock().getDisplayName();
+            if (points.get(i).getConnect1().getLayoutBlock()==this)
+                connectedBlock = points.get(i).getConnect2().getLayoutBlock().getDisplayName();
+            log.info(points.get(i).getWestBoundSensor() + ", " + points.get(i).getWestBoundSignal()+ ", " + connectedBlock);
+        }
+    }
+    
+    /**
+    * Provides an output to the console of all the valid paths through this block
+    */
+    public void printValidThroughPaths(){
+        log.info("Through paths in this block");
+        log.info("Current Block, From Block, To Block");
+        for(int i = 0; i<throughPaths.size(); i++){
+            String activeStr= "";
+            if (throughPaths.get(i).isPathActive()) activeStr = ", *";
+            log.info("From " + this.getDisplayName() + ", " + (throughPaths.get(i).getSourceBlock()).getDisplayName() + ", " + (throughPaths.get(i).getDestinationBlock()).getDisplayName() + activeStr);
+        }
+    }
+    
+    public Path getThroughPathSourcePathAtIndex(int i){
+        return throughPaths.get(i).getSourcePath();
+    }
+    
+    public Path getThroughPathDestinationPathAtIndex(int i){
+        return throughPaths.get(i).getDestinationPath();
+    }
+    
+    public boolean validThroughPath(Block sourceBlock, Block destinationBlock){
+        for(int i = 0; i<throughPaths.size(); i++){
+            if ((throughPaths.get(i).getSourceBlock()==sourceBlock) && (throughPaths.get(i).getDestinationBlock()==destinationBlock)){
+                return true;
+            }else if ((throughPaths.get(i).getSourceBlock()==destinationBlock) && (throughPaths.get(i).getDestinationBlock()==sourceBlock)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public int getThroughPathIndex(Block sourceBlock, Block destinationBlock){
+        for(int i = 0; i<throughPaths.size(); i++){
+            if ((throughPaths.get(i).getSourceBlock()==sourceBlock) && (throughPaths.get(i).getDestinationBlock()==destinationBlock))
+                return i;
+            else if ((throughPaths.get(i).getSourceBlock()==destinationBlock) && (throughPaths.get(i).getDestinationBlock()==sourceBlock))
+                return i;
+        }
+        return -1;
+    }
+    
+    ArrayList<Adjacencies>neighbours = new ArrayList<Adjacencies>();
+    
+    ArrayList<ThroughPaths>throughPaths = new ArrayList<ThroughPaths>();
+    // A sub class that holds valid routes through the block.
+    //Possibly want to store the path direction in here as well.
+    // or we store the ref to the path, so we can get the directions.
+
+    
+    ArrayList<Routes>routes = new ArrayList<Routes>();
+    
+    /**
+    * Provides an output to the console of all our neighbouring blocks
+    */
+    public void printAdjacencies(){
+        log.info("");
+        log.info("Adjacencies for block " + this.getDisplayName());
+        log.info("Neighbour, Direction, mutual, relationship, metric");
+        for(int i = 0; i<neighbours.size(); i++){
+            log.info(neighbours.get(i).getBlock().getDisplayName() + ", " + Path.decodeDirection(neighbours.get(i).getDirection())+ ", " +neighbours.get(i).isMutual() + ", " + decodePacketFlow(neighbours.get(i).getPacketFlow()) + ", " +neighbours.get(i).getMetric());
+        }
+    }
+    
+    String decodePacketFlow(int value){
+        switch(value){
+            case RXTX : return "Bi-Direction Operation";
+            case RXONLY : return "Uni-Directional - Trains can only exit to this block";
+            case TXONLY : return "Uni-Directional - Trains can not be sent down this block";
+            case NONE : return "None routing updates will be passed";
+        }
+        return "Unknown";
+    }
+    
+    /**
+    * Provides an output to the console of all the remote blocks reachable from our block
+    */
+    public void printRoutes(){
+        log.info("");
+        log.info("Routes for block " + this.getDisplayName());
+        log.info("Destination, Next Block, Hop Count, Direction, State, Metric");
+        for(int i = 0; i<routes.size(); i++){
+            Routes r = routes.get(i);
+            String nexthop = r.getNextBlock().getDisplayName();
+            if (r.getNextBlock()==this.getBlock()){
+                nexthop = "Directly Connected";
+            }
+            String activeString = "";
+            if (r.isRouteCurrentlyValid())
+                activeString = ", *";
+            
+            log.info((r.getDestBlock()).getDisplayName() + ", " + nexthop + ", " + r.getHopCount() + ", " + Path.decodeDirection(r.getDirection()) + ", " + r.getState() + ", " + r.getMetric() + activeString);
+        }
+    }
+    
+    /**
+    * Provides an output to the console of how to reach a specific block from our block
+    */    
+    public void printRoutes(String blockName){
+        log.info("Routes for block " + this.getDisplayName());
+        log.info("Our Block, Destination, Next Block, Hop Count, Direction, Metric");
+        for(int i = 0; i<routes.size(); i++){
+            if(routes.get(i).getDestBlock().getDisplayName().equals(blockName))
+                log.info("From " + this.getDisplayName() + ", " + (routes.get(i).getDestBlock()).getDisplayName() + ", " + (routes.get(i).getNextBlock()).getDisplayName() + ", " + routes.get(i).getHopCount() + ", " + Path.decodeDirection(routes.get(i).getDirection()) + ", " + routes.get(i).getMetric());
+        }
+    }
+    
+    /**
+     *   @param destBlock - is the destination of the block we are following
+     *   @param direction - is the direction of travel from the previous block
+     */ 
+    public Block getNextBlock(Block destBlock, int direction){
+        int bestMetric=965000;
+        Block bestBlock=null;
+        for (int i = 0; i<routes.size(); i ++){
+            Routes r = routes.get(i);
+            if ((r.getDestBlock()==destBlock) && (r.getDirection()==direction)){
+                if (r.getMetric()<bestMetric){
+                    bestMetric=r.getMetric();
+                    bestBlock=r.getNextBlock();
+                    //bestBlock=r.getDestBlock();
+                }
+            }
+        }
+        return bestBlock;
+    }
+    
+    /**
+     *   Used if we already know the block prior to our block, and the destination block.
+     *   direction, is optional and is used where the previousBlock is equal to our block.
+     */
+    public Block getNextBlock(Block previousBlock, Block destBlock){
+        int bestMetric=965000;
+        Block bestBlock=null;
+        for (int i = 0; i<routes.size(); i ++){
+            Routes r = routes.get(i);
+            if (r.getDestBlock()==destBlock){
+                //Check that the route through from the previous block, to the next hop is valid
+                if(validThroughPath(previousBlock, r.getNextBlock())){
+                    if (r.getMetric()<bestMetric){
+                        bestMetric=r.getMetric();
+                        //bestBlock=r.getDestBlock();
+                        bestBlock=r.getNextBlock();
+                    }
+                }
+            }
+        }
+        return bestBlock;
+    }
+    
+    public int getConnectedBlockRouteIndex(Block destBlock, int direction){
+        for(int i = 0; i<routes.size(); i++){
+            if (routes.get(i).getNextBlock()==this.getBlock()){
+                log.info("Found a block that is directly connected");
+                if ((routes.get(i).getDestBlock()==destBlock)) {
+                    log.info((routes.get(i).getDirection()&direction));
+                    if ((routes.get(i).getDirection()&direction)!=0){
+                        return i;
+                    }
+                }
+            }
+            if(log.isDebugEnabled())
+                log.debug("From " + this.getDisplayName() + ", " +(routes.get(i).getDestBlock()).getDisplayName() + ", nexthop " + routes.get(i).getHopCount() + ", " + Path.decodeDirection(routes.get(i).getDirection()) + ", " + routes.get(i).getState() + ", " + routes.get(i).getMetric());
+        }
+        return -1;
+    }
+    
+    //Need to work on this to deal with the method of routing
+    public int getNextBlockByIndex(Block destBlock, int direction, int offSet){
+        for (int i = offSet; i<routes.size(); i++){
+            Routes r = routes.get(i);
+            if ((r.getDestBlock()==destBlock)) {
+                log.info((r.getDirection()&direction));
+                if ((r.getDirection()&direction)!=0){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+    
+    //Need to work on this to deal with the method of routing
+    public int getNextBlockByIndex(Block previousBlock, Block destBlock, int offSet){
+        for (int i = offSet; i<routes.size(); i ++){
+            Routes r = routes.get(i);
+            //log.info(r.getDestBlock().getDisplayName() + " vs " + destBlock.getDisplayName());
+            if (r.getDestBlock()==destBlock){
+                //Check that the route through from the previous block, to the next hop is valid
+                if(validThroughPath(previousBlock, r.getNextBlock())){
+                    log.debug("valid through path");
+                    return i;
+                }
+                if (r.getNextBlock()==this.getBlock()){
+                    log.debug("getNextBlock is this block therefore directly connected");
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+    
+    public PositionablePoint getNextBlockAnchor(Block nextBlock, int direction){
+        for (int i = 0; i<neighbours.size(); i++){
+            if (neighbours.get(i).getBlock()==nextBlock){
+                return neighbours.get(i).getPositionablePoint();
+            }
+        }
+        return null;
+    }
+    
+    /**
+    * last index - the index of the last block we returned ie we last returned 
+    * index 10, so we don't want to return it again.
+    * The block returned will have a hopcount or metric equal to or greater than
+    * the one of the last block returned.
+    * if last index is set to -1 this indicates that this is the first time.
+    * Caveat - if there are more than two blocks with the same hopcount and metric
+    * only the first two will be returned.  The third one will not be considered.
+    */
+    public int getNextBestBlock(Block previousBlock, Block destBlock, int lastIndex, int routingMethod){
+        if(enableSearchRouteLogging)
+            log.info("From " + this.getDisplayName() + " find best route from " + previousBlock.getDisplayName() + " to " + destBlock.getDisplayName() + " index " + lastIndex + " routingMethod " + routingMethod);
+        int bestCount = 965255; //set stupidly high
+        int bestIndex = -1;
+        int lastValue = 0;
+        if ((lastIndex!=-1) && (lastIndex<routes.size())) {
+            if (routingMethod==LayoutBlockManager.METRIC){
+                lastValue = routes.get(lastIndex).getMetric();
+            } else /* if (routingMethod==LayoutBlockManager.HOPCOUNT)*/{
+                lastValue = routes.get(lastIndex).getHopCount();
+            }
+            if(enableSearchRouteLogging)
+                log.info("last index is " + lastIndex + " " + routes.get(lastIndex).getDestBlock().getDisplayName());
+        }
+        for (int i = 0; i<routes.size(); i ++){
+//            log.info(routes.get(i).getDestBlock().getDisplayName() + " vs " + destBlock.getDisplayName());
+//            log.info("value of " + i + " lastIndex " + lastIndex);
+            if (i!=lastIndex){
+                Routes r = routes.get(i);
+                int currentValue;
+                if (routingMethod==LayoutBlockManager.METRIC){
+                    currentValue = routes.get(i).getMetric();
+                
+                } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
+                    currentValue = routes.get(i).getHopCount();  //was lastindex changed to i
+                }
+//                log.info("current value " + currentValue + " last value " + lastValue + " " + (currentValue>=lastValue));
+                if(currentValue>=lastValue){
+                    if (r.getDestBlock()==destBlock){
+                        if(enableSearchRouteLogging){
+                            log.info("Match on dest blocks");
+                        //Check that the route through from the previous block, to the next hop is valid
+                            log.info("Is valid through path previous block " + previousBlock.getDisplayName() + " to " + r.getNextBlock().getDisplayName());
+                        }
+                        if(validThroughPath(previousBlock, r.getNextBlock())){
+                            if(enableSearchRouteLogging)
+                                log.info("valid through path");
+                            if (routingMethod==LayoutBlockManager.METRIC){
+                                if (r.getMetric()<bestCount){
+                                    bestIndex = i;
+                                    bestCount = r.getMetric();
+                                }
+                            
+                            } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
+                                if (r.getHopCount()<bestCount){
+                                    bestIndex = i;
+                                    bestCount = r.getHopCount();
+                                }
+                            }
+                        }
+                        if (r.getNextBlock()==this.getBlock()){
+                            log.debug("getNextBlock is this block therefore directly connected");
+                            if(enableSearchRouteLogging)
+                                log.info("getNextBlock is this block therefore directly connected");
+                            return i;
+                        }
+                    }
+                }
+            }
+        }
+        if(enableSearchRouteLogging)
+            log.info("returning " + bestIndex + " best count " + bestCount) ;
+        return bestIndex;
+    }
+    
+    public Block getDestBlockAtIndex(int i){
+        return routes.get(i).getDestBlock();
+    }
+
+    public int getBlockCountAtIndex(int i){
+        return routes.get(i).getHopCount();
+    }
+
+    public Block getNextBlockAtIndex(int i){
+        return routes.get(i).getNextBlock();
+    }
+
+    public int getDirectionAtIndex(int i){
+        return routes.get(i).getDirection();
+    }
+
+    Routes getRouteByDestBlock(Block blk){
+        for (int i = routes.size()-1; i> -1; i--){
+            if(routes.get(i).getDestBlock()==blk)
+                return routes.get(i);
+        }
+        return null;
+    }
+    
+    ArrayList<Routes> getRouteByNeighbour(Block blk){
+        ArrayList<Routes> rtr = new ArrayList<Routes>();
+        for (int i = 0; i<routes.size(); i++){
+            if(routes.get(i).getNextBlock()==blk){
+                rtr.add(routes.get(i));
+            }
+        }
+        return rtr;
+    }
+    
+    int getAdjacencyPacketFlow(Block blk){
+        for(int i = 0; i<neighbours.size(); i++){
+            if(neighbours.get(i).getBlock()==blk)
+                return neighbours.get(i).getPacketFlow();
+        }
+        return -1;
+    }
+    
+    boolean isValidNeighbour(Block blk){
+        for(int i = 0; i<neighbours.size(); i++){
+            if(neighbours.get(i).getBlock()==blk)
+                return true;
+        }
+        return false;
+    }
+    
+    
+    //We keep this vector list so that we only keep one instance of a registered listener
+    protected Vector<java.beans.PropertyChangeListener> listeners = new Vector<java.beans.PropertyChangeListener>();
+    
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    @Override
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        if (l == null) throw new java.lang.NullPointerException();
+        if(l==this){
+            if(enableAddRouteLogging)
+                log.info("adding ourselves as a listener for some strange reason!");
+            return;
+        }
+        if (!listeners.contains(l)) {
+            listeners.addElement(l);
+            pcs.addPropertyChangeListener(l);
+        }
+    }
+    @Override
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        if (listeners.contains(l)) {
+            listeners.removeElement(l);
+            pcs.removePropertyChangeListener(l);
+        }
+    }
+    
+    @Override
+    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        LayoutBlock srcEvent = (LayoutBlock) e.getSource();
+        if (e.getPropertyName().toString().equals("NewRoute")){
+            LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
+            if(enableUpdateRouteLogging) log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());
+        } else if (e.getPropertyName().toString().equals("through-path-added")) {
+            if(enableUpdateRouteLogging) log.info("neighbour has new through path");
+        } else if (e.getPropertyName().toString().equals("routing")){
+            if(enableUpdateRouteLogging)
+                log.info("From " + this.getDisplayName() + " we have a routing packet update from neighbor "+ srcEvent.getDisplayName());
+            RoutingPacket update = (RoutingPacket) e.getNewValue();
+            int updateType = update.getPacketType();
+            switch (updateType) {
+                case ADDITION : if(enableUpdateRouteLogging) log.info("Addition");
+                                //InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+                                addRouteFromNeighbour(srcEvent, update);
+                                break;
+                case UPDATE :  if(enableUpdateRouteLogging) log.info("Update");
+                               updateRoutingInfo(srcEvent, update);
+                                break;
+                case REMOVAL : if(enableUpdateRouteLogging) log.info("Removal");
+                                InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+                                removeRouteFromNeighbour(srcEvent, update);
+                                break;
+            }
+        }
+    }
+    
+    /**
+    *   Returns a valid Routes, based upon the next block and destination block
+    */
+    Routes getValidRoute(Block nxtBlock, Block dstBlock){
+        ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
+        if (rtr==null){
+            return null;
+        }
+        for (int i = 0; i<rtr.size(); i++){
+            if (rtr.get(i).getDestBlock()==dstBlock){
+                return rtr.get(i);
+            }
+        }
+        return null;
+    }
+
+    public boolean isRouteToDestValid(Block protecting, Block destination){
+        if(protecting==destination){
+            log.debug("protecting and destination blocks are the same therefore we need to check if we have a valid neighbour");
+            //We are testing for a directly connected block.
+            if(getAdjacency(protecting)!=null)
+                return true;
+        } else if(getValidRoute(protecting, destination)!=null)
+            return true;
+        return false;
+    }
+    
+    /**
+    *   Returns a list of valid Routes to our destination block
+    */    
+    ArrayList<Routes> getDestRoutes(Block dstBlock){
+        ArrayList<Routes> rtr = new ArrayList<Routes>();
+        for (int i = 0; i<routes.size(); i++){
+            if(routes.get(i).getDestBlock()==dstBlock){
+                rtr.add(routes.get(i));
+            }
+        }
+        return rtr;
+    }
+    
+    /**
+    *   Returns a list of valid Routes via our next block
+    */
+    ArrayList<Routes> getNextRoutes(Block nxtBlock){
+        ArrayList<Routes> rtr = new ArrayList<Routes>();
+        for (int i = 0; i<routes.size(); i++){
+            if(routes.get(i).getNextBlock()==nxtBlock){
+                rtr.add(routes.get(i));
+            }
+        }
+        return rtr;
+    }
+
+    void updateRoutingInfo(LayoutBlock src, RoutingPacket update){
+        if(enableUpdateRouteLogging)
+            log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());
+        Block srcblk = src.getBlock();
+        Adjacencies adj = getAdjacency(srcblk);
+        
+        if(adj==null){
+            if(enableUpdateRouteLogging)
+                log.info("From " + this.getDisplayName() + " packet is from a src that is not registered " + srcblk.getDisplayName());
+            //If the packet is from a src that is not registered as a neighbor
+            //Then we will simply reject it.
+            return;
+        }
+        if (updatePacketActedUpon(update.getPacketId())){
+            if(adj.updatePacketActedUpon(update.getPacketId())){
+                if(enableUpdateRouteLogging)
+                    log.info("Reject packet update as we have already acted up on it from this neighbour");
+                return;
+            }
+        }
+        
+        if(enableUpdateRouteLogging)
+            log.info("From " + this.getDisplayName() + " an Update packet from neighbour " + src.getDisplayName());
+            
+        Block updateBlock = update.getBlock();
+        //Block srcblk = src.getBlock();
+        //Need to add in a check to make sure that we have a route registered from the source neighbour for the block that they are refering too.
+        if(updateBlock==this.getBlock()){
+            if(enableUpdateRouteLogging)
+                log.info("Reject packet update as it is a route advertised by our selves");
+            return;
+        }
+        
+        Routes ro=null;
+        boolean neighbour = false;
+        if (updateBlock==srcblk){
+            //Very likely that this update is from a neighbour about its own status.
+            if(adj!=null){
+                ro=getValidRoute(this.getBlock(), updateBlock);
+                neighbour=true;
+            }
+        } else {
+            ro = getValidRoute(srcblk, updateBlock);
+        }
+        
+        if (ro==null){
+            if(enableUpdateRouteLogging){
+                log.info("From " + this.getDisplayName() + " update is from a source that we do not have listed as a route to the destination");
+                log.info("From " + this.getDisplayName() + " update packet is for a block that we do not have route registered for " + updateBlock.getDisplayName());
+            }
+            //If the packet is for a dest that is not in the routing table
+            //Then we will simply reject it.
+            return;
+        }
+        
+        /*This prevents us from entering into an update loop.
+        We only add it to our list once it has passed through as being a valid
+        packet, otherwise we may get the same packet id back, but from a valid source
+        which would end up be rejected*/
+        
+        actedUponUpdates.add(update.getPacketId());
+        adj.addPacketRecievedFromNeighbour(update.getPacketId());
+        
+        int hopCount = update.getHopCount();
+        int packetmetric = update.getMetric();
+        int blockstate = update.getBlockState();
+        
+        //Need to add in a check for a block that is directly connected.
+        if (hopCount!=-1){
+              //Was increase hop count before setting it
+            if(ro.getHopCount()!=hopCount){
+                ro.setHopCount(hopCount);
+                hopCount++;
+            } else {
+                //No point in forwarding on the update if the hopcount hasn't changed
+                hopCount=-1;
+            }
+        }
+        
+        if (packetmetric!=-1){
+            //Metric is added at source
+            //Keep a reference of the old metric.
+            int oldmetric = ro.getMetric();
+            if (oldmetric!=packetmetric){
+                ro.setMetric(packetmetric);
+                if(enableUpdateRouteLogging)
+                    log.info("From " + this.getDisplayName() + " updating metric from " + oldmetric + " to " + packetmetric);
+                //if the metric update is for a neighbour then we will go directly to the neighbour for the value, rather than trust what is in the message at this stage.
+                if(neighbour){
+                    packetmetric = src.getBlockMetric();
+                    adj.setMetric(packetmetric);
+                    ro.setMetric(packetmetric);
+                    //Also if neighbour we need to update the cost of the routes via it to reflect the new metric 02/20/2011
+                    ArrayList<Routes> neighbourRoute = getNextRoutes(srcblk);
+                    //neighbourRoutes, contains all the routes that have been advertised by the neighbour that will need to have their metric updated to reflect the change.
+                    for(int i = 0; i<neighbourRoute.size(); i++){
+                        Routes nRo = neighbourRoute.get(i);
+                        //Need to remove old metric to the neigbour, then add the new one on
+                        int updatemet = nRo.getMetric();
+                        updatemet = (updatemet-oldmetric)+packetmetric;
+                        
+                        log.info("From " + this.getDisplayName() + " update metric for route " + nRo.getDestBlock().getDisplayName() + " from " + nRo.getMetric() + " to " + updatemet);
+                        nRo.setMetric(updatemet);
+                        ArrayList<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
+                        RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, updatemet+metric, -1, getNextPacketID());
+                        updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
+                        
+                    }
+                } else {
+                    //This can cause a loop, if the layout is in a loop, so we send out the same packetID.
+                    ArrayList<Block> messageRecipients = getThroughPathSourceByDestination(srcblk);
+                    RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, -1, packetmetric+metric, -1, update.getPacketId());
+                    updateRoutesToNeighbours(messageRecipients, ro, newUpdate);
+                }
+                packetmetric=packetmetric+metric;
+                //Think we need a list of routes that originate from this source neighbour
+            } else {
+                //No point in forwarding on the update if the metric hasn't changed
+                packetmetric = -1;
+            //Potentially when we do this we need to update all the routes that go via this block, not just this route.
+            }
+        }
+        if (blockstate!=-1){
+            //We will update all the destination blocks with the new state, it 
+            //saves re-firing off new updates block status
+            boolean stateUpdated= false;
+            ArrayList<Routes> rtr = getDestRoutes(updateBlock);
+            for (int i = 0; i<rtr.size(); i++){
+                if (rtr.get(i).getState()!=blockstate){
+                    stateUpdated = true;
+                    rtr.get(i).stateChange();
+                }
+            }
+            if (stateUpdated) {
+                log.info("block status change");
+                RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, -1, -1, blockstate, getNextPacketID());
+                firePropertyChange("routing", null, newUpdate);
+            }
+        }
+        
+        //We need to expand on this so that any update to routing metric is propergated correctly
+        if((packetmetric!=-1)||(hopCount!=-1)){
+            //We only want to send the update on to neighbours that we have advertised the route to.
+            ArrayList<Block> messageRecipients = getThroughPathSourceByDestination(srcblk);
+            RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, hopCount, packetmetric, blockstate, update.getPacketId());
+            updateRoutesToNeighbours(messageRecipients, ro, newUpdate);
+        }
+        //Was just pass on hop count
+    }
+    
+    void updateRoutesToNeighbours(ArrayList<Block> messageRecipients, Routes ro, RoutingPacket update){
+        for (int i = 0; i<messageRecipients.size(); i++){
+            Adjacencies adj = getAdjacency(messageRecipients.get(i));
+            if(adj.advertiseRouteToNeighbour(ro)){
+                adj.addRouteAdvertisedToNeighbour(ro);
+                LayoutBlock recipient = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(messageRecipients.get(i));
+                if (recipient!=null)
+                    recipient.updateRoutingInfo(this, update);
+            }
+        }    
+    }
+    
+    Routes getBestRoute(Block dest){
+        //int bestHopCount = 255;
+        int bestMetric = 965000;
+        int bestIndex = -1;
+        ArrayList<Routes> destRoutes = getDestRoutes(dest);
+        for (int i = 0; i<destRoutes.size(); i++){
+            if(destRoutes.get(i).getMetric()<bestMetric){
+                bestMetric = destRoutes.get(i).getMetric();
+                bestIndex=i;
+            }
+        }
+        if (bestIndex==-1)
+            return null;
+        return destRoutes.get(bestIndex);
+    }
+    
+    void addRouteToNeighbours(Routes ro){
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " Add route to neighbour ");
+        Block nextHop = ro.getNextBlock();
+        ArrayList<LayoutBlock> validFromPath = new ArrayList<LayoutBlock>();
+        if(enableAddRouteLogging)
+            log.info("From " + this.getDisplayName() + " new block " + nextHop.getDisplayName());
+        for(int i= 0; i<throughPaths.size(); i++){
+            LayoutBlock validBlock=null;
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " A through routes " + throughPaths.get(i).getSourceBlock().getDisplayName() + " " + throughPaths.get(i).getDestinationBlock().getDisplayName());
+            /*As the through paths include each possible path, ie 2 > 3 and 3 > 2 
+            as seperate entries then we only need to forward the new route to those 
+            source blocks that have a desination of the next hop*/
+            if (throughPaths.get(i).getDestinationBlock()==nextHop){
+                if (getAdjacency(throughPaths.get(i).getSourceBlock()).isMutual()){
+                    validBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(throughPaths.get(i).getSourceBlock());
+                }
+            }
+            //only need to add it the once.  Not sure if the contains is required.
+            if ((validBlock!=null) && (!validFromPath.contains(validBlock)))
+                validFromPath.add(validBlock);
+        }
+        if(enableAddRouteLogging){
+            log.info("From " + this.getDisplayName() + " ===== valid from size path " + validFromPath.size() + " ==== (addroutetoneigh)");
+            log.info(nextHop.getDisplayName());
+        }
+        RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount()+1, ro.getMetric()+metric, -1, getNextPacketID());
+        for(int i = 0; i<validFromPath.size(); i++){
+            Adjacencies adj = getAdjacency(validFromPath.get(i).getBlock());
+            if(adj.advertiseRouteToNeighbour(ro)){
+                if(enableAddRouteLogging)
+                    log.info("From " + this.getDisplayName() + " Sending update to " + validFromPath.get(i).getDisplayName() + " As this has a better hop count or metric");
+                adj.addRouteAdvertisedToNeighbour(ro);
+                validFromPath.get(i).addRouteFromNeighbour(this, update);
+            }
+        }
+    }
+    
+    void addRouteFromNeighbour(LayoutBlock src, RoutingPacket update){
+        if(enableAddRouteLogging){
+            log.info("From " + this.getDisplayName() + " packet to be added from neighbour " + src.getDisplayName());
+            log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());
+        }
+        InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+        Block destBlock = update.getBlock();
+        Block srcblk = src.getBlock();
+        if(destBlock==this.getBlock()){
+            if(enableAddRouteLogging)
+                log.info("Reject packet update as it is to a route advertised by our selves");
+            return;
+        }
+        
+        Adjacencies adj = getAdjacency(srcblk);
+        if(adj==null){
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " packet is from a src that is not registered " + srcblk.getDisplayName());
+            //If the packet is from a src that is not registered as a neighbor
+            //Then we will simply reject it.
+            return;
+        } else if (adj.getPacketFlow()==TXONLY){
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " packet is from a src " + src.getDisplayName() + " that is registered as one that we should be transmitting to only");
+            // we should only be transmitting routes to this neighbour not receiving them
+            return;
+        }
+        int hopCount = update.getHopCount();
+        int updatemetric = update.getMetric();
+
+        if (hopCount>255){
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + " hop count exceeded " + destBlock.getDisplayName());
+            return;
+        }
+        
+        for (int i = 0; i<routes.size(); i++){
+            Routes ro = routes.get(i);
+            if((ro.getNextBlock()==srcblk) && ro.getDestBlock()==destBlock){
+                if(enableAddRouteLogging)
+                    log.info("From " + this.getDisplayName() + " Route is already configured");
+                return;
+            }
+        }
+        if(enableAddRouteLogging)   
+            log.info("From " + this.getDisplayName() + " We should be adding route " + destBlock.getDisplayName());
+        //We need to propergate out the routes that we have added to our neighbour
+        int direction = adj.getDirection();
+        Routes route = new Routes(destBlock, srcblk, hopCount, direction, updatemetric);
+        routes.add(route); 
+        //Need to propergate the route down to our neighbours
+        addRouteToNeighbours(route);
+    }
+    /* this should look after removal of a specific next hop from our neighbour*/
+
+    public int getNeighbourDirection(LayoutBlock neigh){
+        Block neighbourBlock = neigh.getBlock();
+        for(int i = 0; i<neighbours.size(); i++){
+            if (neighbours.get(i).getBlock()==neighbourBlock)
+                return neighbours.get(i).getDirection();
+        }
+        return Path.NONE;
+    }
+    
+    Adjacencies getAdjacency(Block blk){
+        for(int i = 0; i<neighbours.size(); i++){
+            if(neighbours.get(i).getBlock() == blk){
+                return neighbours.get(i);
+            }
+        }
+        return null;
+    }
+    
+    final static int ADDITION = 0x00;
+    final static int UPDATE = 0x02;
+    final static int REMOVAL = 0x04;
+    
+    final static int RXTX = 0x00;
+    final static int RXONLY = 0x02;
+    final static int TXONLY = 0x04;
+    final static int NONE = 0x08;
+    int metric = 100;
+    
+    private class RoutingPacket{
+        int packetType;
+        Block block;
+        int hopCount = -1;
+        int packetMetric = -1;
+        int blockstate = -1;
+        Integer packetRef = -1;
+        
+        RoutingPacket(int packetType, Block blk, int hopCount, int packetMetric, int blockstate, Integer packetRef){
+            this.packetType = packetType;
+            this.block = blk;
+            this.hopCount = hopCount;
+            this.packetMetric = packetMetric;
+            this.blockstate = blockstate;
+            this.packetRef = packetRef;
+        }
+        
+        int getPacketType() { return packetType; }
+        
+        Block getBlock() { return block; }
+        
+        int getHopCount() { return hopCount; }
+        
+        int getMetric() { return packetMetric; }
+        
+        int getBlockState() { return blockstate; }
+        
+        Integer getPacketId() { return packetRef; }
+    
+    }
+    
+    public int getNumberOfNeighbours(){
+       return neighbours.size();
+    }
+    
+    public Block getNeighbourAtIndex(int i){
+        return neighbours.get(i).getBlock();
+    }
+    
+    public int getNeighbourDirection(int i){
+        return neighbours.get(i).getDirection();
+    }
+    
+    public int getNeighbourMetric(int i){
+        return neighbours.get(i).getMetric();
+    }
+    
+    public String getNeighbourPacketFlowAsString(int i){
+        return decodePacketFlow(neighbours.get(i).getPacketFlow());
+    }
+    
+    protected boolean isNeighbourMutual(int i){
+        return neighbours.get(i).isMutual();
+    }
+    
+    int getNeighbourIndex(Adjacencies adj){
+        for(int i =0; i<neighbours.size(); i++){
+            if (neighbours.get(i)==adj)
+                return i;
+        }
+        return -1;
+    }
+    
+    private class Adjacencies{
+        
+        Block adjBlock;
+        LayoutBlock adjLayoutBlock;
+        int direction;
+        int packetFlow = RXTX;
+        boolean mutualAdjacency=false;
+
+        Hashtable<Block, Routes> adjDestRoutes = new Hashtable<Block, Routes>();
+        ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>();
+        PositionablePoint point = null;
+        boolean pointDirection = false;
+        
+        Adjacencies(Block block, int dir){
+            adjBlock = block;
+            direction = dir;
+        }
+        
+        Adjacencies(Block block, int dir, int packetFlow){
+            adjBlock = block;
+            direction = dir;
+            this.packetFlow = packetFlow;
+        }
+        
+        Block getBlock() { return adjBlock; }
+        
+        int getDirection() { return direction; }
+        
+        //If a set true on mutual, then we could go through the list of what to send out to neighbour
+        void setMutual(boolean mut){ 
+            if (mut==mutualAdjacency)//No change will exit
+                return;
+            mutualAdjacency=mut;
+            if (mutualAdjacency){
+                if (adjLayoutBlock!=null)
+                    adjLayoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(adjBlock);
+            }
+        }
+        
+        boolean isMutual() { return mutualAdjacency; }
+        
+        LayoutBlock getLayoutBlock(){
+            return adjLayoutBlock;
+        }
+        
+        int getPacketFlow() { return packetFlow; }
+        
+        void setPacketFlow(int flow) { packetFlow=flow; }
+        
+        
+        //The metric could just be read directly from the neighbour as we have no need to specifically keep a copy of it here this is here just to fire off the change
+        void setMetric(int met) {
+            firePropertyChange("neighbourmetric", null, getNeighbourIndex(this)); 
+        }
+        
+        int getMetric() { 
+            if(adjLayoutBlock!=null)
+                return adjLayoutBlock.getBlockMetric();
+            adjLayoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(adjBlock);
+            if (adjLayoutBlock!=null)
+                return adjLayoutBlock.getBlockMetric();
+            if(log.isDebugEnabled())
+                log.debug("Layout Block " + adjBlock.getDisplayName() + " returned as null");
+            
+            return -1;
+        }
+        
+        void setPositionablePoint(PositionablePoint p){
+            point = p;
+        }
+        
+        PositionablePoint getPositionablePoint(){
+            return point;
+        }
+        
+        void setPositionablePointDirection(boolean boo){
+            pointDirection = boo;
+        }
+
+        void removeRouteAdvertisedToNeighbour(Routes removeRoute){
+            Block dest = removeRoute.getDestBlock();
+            //Only remove the dest / route pair if they match to what we have listed.
+            if(adjDestRoutes.get(dest)==removeRoute){
+                adjDestRoutes.remove(dest);
+            }
+        }
+        
+        void addRouteAdvertisedToNeighbour(Routes addedRoute){
+            adjDestRoutes.put(addedRoute.getDestBlock(), addedRoute);
+        }
+        
+        boolean advertiseRouteToNeighbour(Routes routeToAdd){
+        //Just wonder if this should forward on the new packet to the neighbour?
+            Block dest = routeToAdd.getDestBlock();
+            if(!adjDestRoutes.containsKey(dest)){
+                //log.info("We are not currently advertising a route to the destination to this neighbour");
+                return true;
+            }
+            if (routeToAdd.getHopCount()>255){
+                log.debug("Hop count is gereater than 255 we will therefore do nothing with this route");
+                return false;
+            }
+            Routes existingRoute = adjDestRoutes.get(dest);
+            if(existingRoute==routeToAdd){
+                //We return true as the metric might have changed
+                return true;
+            }
+            if(existingRoute.getMetric()>routeToAdd.getMetric()){
+                return true;
+            }
+            return false;
+        }
+        
+        boolean updatePacketActedUpon(Integer packetID){
+            return actedUponUpdates.contains(packetID);
+        }
+        
+        void addPacketRecievedFromNeighbour(Integer packetID){
+            actedUponUpdates.add(packetID);
+        }
+        
+        void dispose(){
+            adjBlock =null;
+            adjLayoutBlock = null;
+            mutualAdjacency=false;
+            adjDestRoutes = null;
+            actedUponUpdates = null;
+            point = null;
+        }
+    }
+    
+    public int getRouteDirection(int i){
+        return routes.get(i).getDirection();
+    }
+
+    public Block getRouteDestBlock(int i){
+        return routes.get(i).getDestBlock();
+    }
+
+    public Block getRouteNextBlock(int i){
+        return routes.get(i).getNextBlock();
+    }
+
+    public int getRouteHopCount(int i){
+        return routes.get(i).getHopCount();
+    }
+
+    public int getRouteMetric(int i){
+        return routes.get(i).getMetric();
+    }
+
+    public int getRouteState(int i){
+        return routes.get(i).getState();
+    }
+    
+    public boolean getRouteValid(int i){
+        return routes.get(i).isRouteCurrentlyValid();
+    }
+
+    public String getRouteStateAsString(int i){
+        int state=routes.get(i).getState();
+        switch (state){
+            case OCCUPIED: return "Occupied";
+            case RESERVED: return "Reserved";
+            case EMPTY: return "Free";
+            default: return "Unknown";
+        }
+    }
+    
+    int getRouteIndex(Routes r){
+        for(int i =0; i<routes.size(); i++){
+            if (routes.get(i)==r)
+                return i;
+        }
+        return -1;
+    }
+
+    public int getNumberOfRoutes(){
+       return routes.size();
+    }
+    
+    public int getBlockHopCount(Block destination, Block nextBlock){
+        for (int i = 0; i<routes.size();i++){
+            if (routes.get(i).getDestBlock()==destination){
+                if(routes.get(i).getNextBlock()==nextBlock)
+                    return routes.get(i).getHopCount();
+            }
+        }
+        return -1;
+    }
+
+    //This needs a propertychange listener adding
+    private class Routes implements java.beans.PropertyChangeListener{
+        int direction;
+        Block destBlock;
+        Block nextBlock;
+        int hopCount;
+        int routeMetric;
+        int state =-1;
+        int miscflags =0x00;
+        boolean validCurrentRoute=false;
+        
+        public Routes(Block dstBlock, Block nxtBlock, int hop, int dir, int met){
+            destBlock = dstBlock;
+            nextBlock = nxtBlock;
+            hopCount = hop;
+            direction = dir;
+            routeMetric = met;
+            validCurrentRoute = checkIsRouteOnValidThroughPath(this);
+            firePropertyChange("length", null, null);
+            destBlock.addPropertyChangeListener(this);
+        }
+        
+        public void propertyChange(java.beans.PropertyChangeEvent e) {
+            if (e.getPropertyName().equals("state")) {
+                stateChange();
+            }
+        }
+    
+        public Block getDestBlock(){ return destBlock; }
+        
+        public Block getNextBlock() { return nextBlock; }
+        
+        public int getHopCount() { return hopCount; }
+
+        public int getDirection() { return direction; }
+        public int getMetric() { return routeMetric; }
+        
+        public void setMetric(int met) { 
+            if(met==routeMetric)
+                return;
+            routeMetric=met;
+            firePropertyChange("metric", null, getRouteIndex(this)); 
+        }
+        public void setHopCount(int hop) { 
+            if(hopCount==hop)
+                return;
+            hopCount = hop;
+            firePropertyChange("hop", null, getRouteIndex(this));
+        }
+        
+        //This state change is only here for the routing table view
+        void stateChange() {
+            firePropertyChange("state", null, getRouteIndex(this));
+        }
+        
+        int getState() {
+            LayoutBlock destLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(destBlock);
+            if (destLBlock!=null)
+                return destLBlock.getBlockStatus();
+            if(log.isDebugEnabled())
+                log.debug("Layout Block " + destBlock.getDisplayName() + " returned as null");
+            return -1;
+        }
+        
+        void setValidCurrentRoute(boolean boo){
+            if (validCurrentRoute==boo)
+                return;
+            validCurrentRoute=boo;
+            firePropertyChange("valid", null, getRouteIndex(this));
+        }
+        
+        boolean isRouteCurrentlyValid() { return validCurrentRoute; }
+        
+                //Misc flags is not used in general routing, but is used for determining route removals
+        void setMiscFlags(int f) { miscflags = f; }
+        int getMiscFlags() { return miscflags; }
+        
+    }
+
+    public int getNumberOfThroughPaths(){
+            return throughPaths.size();
+    }
+
+    public Block getThroughPathSource(int i){
+        return throughPaths.get(i).getSourceBlock();
+    }
+
+    public Block getThroughPathDestination(int i){
+        return throughPaths.get(i).getDestinationBlock();
+    }
+
+    public Boolean isThroughPathActive(int i){
+        return throughPaths.get(i).isPathActive();
+    }
+
+    private class ThroughPaths implements java.beans.PropertyChangeListener{
+        Block sourceBlock;
+        Block destinationBlock;
+        jmri.Path sourcePath;
+        jmri.Path destinationPath;
+        
+        boolean pathActive = false;
+        
+        Hashtable <Turnout, Integer> _turnouts =new Hashtable<Turnout, Integer>();
+        
+        public ThroughPaths(Block srcBlock, jmri.Path srcPath, Block destBlock, jmri.Path dstPath){
+            sourceBlock = srcBlock;
+            destinationBlock = destBlock;
+            sourcePath = srcPath;
+            destinationPath=dstPath;
+        }
+        
+        public Block getSourceBlock(){
+            return sourceBlock;
+        }
+        
+        public Block getDestinationBlock(){
+            return destinationBlock;
+        }
+        
+        public jmri.Path getSourcePath(){
+            return sourcePath;
+        }
+        
+        public jmri.Path getDestinationPath(){
+            return destinationPath;
+        }
+        
+        public boolean isPathActive(){
+            return pathActive;
+        }
+        
+        public void setTurnoutList(ArrayList<LayoutTurnout> turnouts, ArrayList<Integer> turnoutSettings){
+            if (!_turnouts.isEmpty()){
+                Enumeration<Turnout> en = _turnouts.keys();
+                while (en.hasMoreElements()) {
+                    Turnout listTurnout = en.nextElement();
+                    listTurnout.removePropertyChangeListener(this);
+                }
+            }
+            //If we have no turnouts in this path, then this path is always active
+            if (turnouts.size()==0){
+                pathActive=true;
+                setRoutesValid(sourceBlock, true);
+                setRoutesValid(destinationBlock, true);
+                return;
+            }
+            _turnouts = new Hashtable<Turnout, Integer>(turnouts.size());
+            for(int i = 0; i<turnouts.size(); i++){
+                _turnouts.put(turnouts.get(i).getTurnout(), turnoutSettings.get(i));
+                turnouts.get(i).getTurnout().addPropertyChangeListener(this);
+            }
+        }
+        
+        public Hashtable<Turnout, Integer> getTurnoutList(){
+            return _turnouts;
+        }
+        
+        public void propertyChange(java.beans.PropertyChangeEvent e) {
+            if (e.getPropertyName().equals("KnownState")) {
+                Turnout srcTurnout = (Turnout) e.getSource();
+                int newVal = (Integer) e.getNewValue();
+                int values = _turnouts.get(srcTurnout);
+                boolean allset=false;
+                pathActive=false;
+                if (newVal==values){
+                    allset=true;
+                    if (_turnouts.size()>1){
+                        Enumeration<Turnout> en = _turnouts.keys();
+                        while (en.hasMoreElements()) {
+                            Turnout listTurnout = en.nextElement();
+                            if (srcTurnout!=listTurnout){
+                                int state = listTurnout.getState();
+                                int required = _turnouts.get(listTurnout);
+                                if (state!=required){
+                                    allset=false;
+                                }
+                            }
+                        }
+                    }
+                }
+                updateActiveThroughPaths(this, allset);
+                pathActive=allset;
+            }
+        }
+    }
+    
+    ArrayList<Block> getThroughPathSourceByDestination(Block dest){
+        ArrayList<Block> a = new ArrayList<Block>();
+        for(int i = 0; i<throughPaths.size(); i++){
+            if (throughPaths.get(i).getDestinationBlock()==dest)
+                a.add(throughPaths.get(i).getSourceBlock());
+        }
+        return a;
+    }
+    
+    ArrayList<Block> getThroughPathDestinationBySource(Block source){
+        ArrayList<Block> a = new ArrayList<Block>();
+        for(int i = 0; i<throughPaths.size(); i++){
+            if (throughPaths.get(i).getSourceBlock()==source)
+                a.add(throughPaths.get(i).getDestinationBlock());
+        }
+        return a;
+    }
+    //When a route is created this will check to see if the through path that this
+    //route relates to is active
+    boolean checkIsRouteOnValidThroughPath(Routes r){
+        for(int i = 0; i<throughPaths.size(); i++){
+            ThroughPaths t = throughPaths.get(i);
+            if (t.isPathActive()){
+                if(t.getDestinationBlock()==r.getNextBlock())
+                    return true;
+                if(t.getSourceBlock()==r.getNextBlock())
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    //A procedure that will go through all the routes and refresh the valid flag
+    public void refreshValidRoutes(){
+        for(int i= 0; i<throughPaths.size(); i++){
+            ThroughPaths t = throughPaths.get(i);
+            setRoutesValid(t.getDestinationBlock(), t.isPathActive());
+            setRoutesValid(t.getSourceBlock(), t.isPathActive());
+            firePropertyChange("path", null, i);
+        }
+    }
+    
+    //We keep a track of what is paths are active, only so that we can easily mark
+    //which routes are also potentially valid
+    ArrayList <ThroughPaths> activePaths;
+    
+    void updateActiveThroughPaths(ThroughPaths tp, boolean active){
+        if(enableUpdateRouteLogging)
+            log.info("We have been notified that a through path has changed state");
+        if (activePaths==null){
+            activePaths = new ArrayList<ThroughPaths>();
+        }
+        if (active){
+            activePaths.add(tp);
+            setRoutesValid(tp.getSourceBlock(), active);
+            setRoutesValid(tp.getDestinationBlock(), active);
+        } else {
+            //We need to check if either our source or des is in use by another path.
+            activePaths.remove(tp);
+            boolean SourceInUse = false;
+            boolean DestinationInUse = false;
+            for (int i = 0; i<activePaths.size(); i++){
+                Block testSour = activePaths.get(i).getSourceBlock();
+                Block testDest = activePaths.get(i).getDestinationBlock();
+                if((testSour==tp.getSourceBlock()) || (testDest==tp.getSourceBlock()))
+                    SourceInUse=true;
+                if((testSour==tp.getDestinationBlock()) || (testDest==tp.getDestinationBlock()))
+                    DestinationInUse = true;
+            }
+            if(!SourceInUse)
+                setRoutesValid(tp.getSourceBlock(), active);
+            if(!DestinationInUse)
+                setRoutesValid(tp.getDestinationBlock(), active);
+        }
+        for (int i = 0; i<throughPaths.size(); i++){
+            //This is processed simply for the throughpath table.
+            if (tp==throughPaths.get(i))
+                firePropertyChange("path", null, i);
+        }
+    }
+    
+    //Sets the valid flag for routes that are on a valid through path.
+    void setRoutesValid(Block nxtHopActive, boolean state){
+        ArrayList<Routes> rtr = getRouteByNeighbour(nxtHopActive);
+        for (int i = 0; i<rtr.size(); i++){
+            rtr.get(i).setValidCurrentRoute(state);
+        }
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlock.class.getName());
 
 }

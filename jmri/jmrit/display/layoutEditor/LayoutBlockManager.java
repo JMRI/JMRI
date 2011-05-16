@@ -8,6 +8,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.util.NamedBeanHandle;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -24,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -96,6 +97,22 @@ public class LayoutBlockManager extends AbstractManager {
         LayoutBlock block = getByUserName(name);
         if (block!=null) return block;
         return getBySystemName(name);
+    }
+
+    public LayoutBlock getLayoutBlock(Block block){
+        LayoutBlock lblock;
+        java.util.Iterator<String> iter = getSystemNameList().iterator();
+        while (iter.hasNext()) {
+            String sName = iter.next();
+            if (sName==null) {
+                log.error("System name null during scan of LayoutBlocks");
+            }
+            else {
+                    lblock = getBySystemName(sName);
+                    if (lblock.getBlock() == block) return lblock;
+            }
+        }
+        return null;
     }
 
     public LayoutBlock getBySystemName(String name) {
@@ -981,6 +998,45 @@ public class LayoutBlockManager extends AbstractManager {
 		}
 		return null;		
 	}
+    /**
+     * Method to return the LayoutBlock that a given signal is protecting.
+     */
+/*    public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
+        TrackSegment tr;
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            if (pp==null)
+                return null;
+            tr = pp.getConnect1();
+        } else {
+            tr = pp.getConnect2();
+        }
+        //tr = pp.getConnect2();
+        if (tr==null)
+            return null;
+        return tr.getLayoutBlock();
+    }*/
+    
+    /**
+     * Method to return the LayoutBlock that a given signal is facing.
+     */
+/*    public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
+        TrackSegment tr;
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            if (pp==null)
+                return null;
+            tr = pp.getConnect1();
+        } else {
+            tr = pp.getConnect2();
+        }
+        if (tr==null)
+            return null;
+        return tr.getLayoutBlock();
+    }*/
+    
 	private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
 		Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
 		if (t==null) return null;
@@ -994,8 +1050,6 @@ public class LayoutBlockManager extends AbstractManager {
 
 	/**
 	 * Method to return the Signal Mast facing into a specified Block from a specified protected Block.
-     * Signal Masts are only assigned at boundary points between two blocks and
-     * are not located at turnout throats, cross-overs etc.
 	 * <P>
      * @param facingBlock
      * @param protectedBlock
@@ -1008,7 +1062,7 @@ public class LayoutBlockManager extends AbstractManager {
 			log.error ("null block in call to getFacingSignalMast");
 			return null;
 		}
-        		// non-null - check if input corresponds to Blocks in a Layout Editor panel.
+        // non-null - check if input corresponds to Blocks in a Layout Editor panel.
 		LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
 		LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
 		if ( (fLayoutBlock==null) || (pLayoutBlock==null) ) {
@@ -1034,10 +1088,11 @@ public class LayoutBlockManager extends AbstractManager {
 			i ++;
 		}
 		if (lc==null) {
-			log.error("Block "+facingBlock.getSystemName()+"is not connected to Block "+protectedBlock.getSystemName());
+			log.error("Block "+facingBlock.getSystemName()+" is not connected to Block "+protectedBlock.getSystemName());
 			return null;
 		}
-		Object connected = lc.getConnectedObject();
+		LayoutTurnout lt = null;
+        Object connected = lc.getConnectedObject();
 		TrackSegment tr = lc.getTrackSegment();
         int cType = lc.getConnectedType();
 		if (cType==LayoutEditor.TRACK) {
@@ -1053,11 +1108,89 @@ public class LayoutBlockManager extends AbstractManager {
 				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
 			}
 		}
+        if (cType==LayoutEditor.TURNOUT_A) {
+            lt = (LayoutTurnout)connected;
+            if ((lt.getLinkType()==LayoutTurnout.NO_LINK) || (lt.getLinkType()==LayoutTurnout.FIRST_3_WAY)){
+                if (facingIsBlock1) {
+                    if ( (lt.getSignalAMast()!=null) || (!lt.getSignalAMast().equals("")) ){
+						return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalAMast()));
+                    }
+                }
+                // we only allow signal masts inbound to the turnout.
+                return null;
+            }
+            else {
+                return null;
+            }
+        }
+        
+        if (cType==LayoutEditor.TURNOUT_B) {
+            lt = (LayoutTurnout)connected;
+            if (facingIsBlock1) {
+                if ( (lt.getSignalBMast()!=null) || (!lt.getSignalBMast().equals("")) ){
+                    return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalBMast()));
+                }
+            }
+            return null;
+        }
+        if (cType==LayoutEditor.TURNOUT_C) {
+            lt = (LayoutTurnout)connected;
+            if (facingIsBlock1) {
+                if ( (lt.getSignalCMast()!=null) || (!lt.getSignalCMast().equals("")) ){
+                    return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalCMast()));
+                }
+            }
+            return null;
+        }
+        
+        if (cType==LayoutEditor.TURNOUT_D) {
+            lt = (LayoutTurnout)connected;
+            if (facingIsBlock1) {
+                if ( (lt.getSignalDMast()!=null) || (!lt.getSignalDMast().equals("")) ){
+                    return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalDMast()));
+                }
+            }
+            return null;
+        }
+        if ( (cType<LayoutEditor.LEVEL_XING_A) || (cType>LayoutEditor.LEVEL_XING_D) ) {
+			log.error("Block Boundary not identified correctly - Blocks "+facingBlock.getSystemName()+
+										", "+protectedBlock.getSystemName());
+			return null;
+		}
+		LevelXing xing = (LevelXing)connected;
+		if (cType==LayoutEditor.LEVEL_XING_A) {
+			// block boundary is at the A connection of a level crossing
+			if (facingIsBlock1) 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalAMastName()));
+			else 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalCMastName()));
+		}
+		if (cType==LayoutEditor.LEVEL_XING_B) {
+			// block boundary is at the B connection of a level crossing
+			if (facingIsBlock1) 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalBMastName()));
+			else 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalDMastName()));
+		}
+		if (cType==LayoutEditor.LEVEL_XING_C) {
+			// block boundary is at the C connection of a level crossing
+			if (facingIsBlock1) 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalCMastName()));
+			else 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalAMastName()));
+		}
+		if (cType==LayoutEditor.LEVEL_XING_D) {
+			// block boundary is at the D connection of a level crossing
+			if (facingIsBlock1) 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalDMastName()));
+			else 
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalBMastName()));
+		}
         return null;
     }
 
     /**
-     * Returns in the first instance a Signal Mast or if none exists a Aignal Head
+     * Returns in the first instance a Signal Mast or if none exists a Signal Head
      * for a given facing block and protected block combination.
      * see getFacingSignalMast and getFacingSignalHead as to how they deal with
      * what they each return.
@@ -1073,14 +1206,171 @@ public class LayoutBlockManager extends AbstractManager {
         sig = getFacingSignalHead(facingBlock, protectedBlock);
         return sig;
     }
+    
+    public LayoutBlock getProtectedBlockByMast(SignalMast signalMast, LayoutEditor panel){
+        LayoutBlock protect = getProtectedBlockByMast(signalMast.getUserName(), panel);
+        if(protect == null)
+            protect = getProtectedBlockByMast(signalMast.getSystemName(), panel);
+        return protect;
+    }
     /**
      * Method to return the LayoutBlock that a given signal is protecting.
      */
     public LayoutBlock getProtectedBlockByMast(String signalMastName, LayoutEditor panel){
         PositionablePoint pp = panel.findPositionablePointByEastBoundSignalMast(signalMastName);
+        TrackSegment tr = null;
+        boolean east = true;
+        //Don't think that the logic for this is the right way round
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);  // was east
+            east = false;
+        }
+        if(pp!=null){
+            LayoutEditorTools tools = new LayoutEditorTools(panel);
+            if(east){
+                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
+                    tr=pp.getConnect2();
+                }
+                else {
+                    tr=pp.getConnect1();
+                }
+            } else {
+                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
+                    tr=pp.getConnect1();
+                }
+                else {
+                    tr=pp.getConnect2();
+                }
+            }
+            
+            if (tr!=null){
+                return tr.getLayoutBlock();
+            }
+        }
+        
+        LayoutTurnout t = panel.findLayoutTurnoutBySignalMast(signalMastName);
+        if(t!=null){
+            if(t.getSignalAMast().equals(signalMastName)){
+                return t.getLayoutBlock();
+            } else if (t.getSignalBMast().equals(signalMastName)) {
+                return t.getLayoutBlockB();
+            } else if (t.getSignalCMast().equals(signalMastName)) {
+                return t.getLayoutBlockC();
+            } else {
+                return t.getLayoutBlockD();
+            }
+        }
+        
+        LevelXing l = panel.findLevelXingBySignalMast(signalMastName);
+        if(l!=null){
+            if(l.getSignalAMastName().equals(signalMastName)){
+                return l.getLayoutBlockAC();
+            } else if (l.getSignalBMastName().equals(signalMastName)) {
+                return l.getLayoutBlockBD();
+            } else if (l.getSignalCMastName().equals(signalMastName)) {
+                return l.getLayoutBlockAC();
+            } else {
+                return l.getLayoutBlockBD();
+            }
+            
+        }
+        return null;
+    }
+
+    public LayoutBlock getFacingBlockByMast(SignalMast signalMast, LayoutEditor panel){
+        LayoutBlock facing = getFacingBlockByMast(signalMast.getUserName(), panel);
+        if(facing == null)
+            facing = getFacingBlockByMast(signalMast.getSystemName(), panel);
+        return facing;
+    }
+    
+    /**
+     * Method to return the LayoutBlock that a given signal is facing.
+     */
+    public LayoutBlock getFacingBlockByMast(String signalMastName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByEastBoundSignalMast(signalMastName); //was west
+        TrackSegment tr = null;
+        boolean east = true;
+        //Don't think that the logic for this is the right way round
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);  // was east
+            east = false;
+        }
+        if(pp!=null){
+            LayoutEditorTools tools = new LayoutEditorTools(panel);
+            if(east){
+                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
+                    tr=pp.getConnect1();
+                }
+                else {
+                    tr=pp.getConnect2();
+                }
+            } else {
+                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
+                    System.out.println("connect 1 at west");
+                    tr=pp.getConnect2();
+                }
+                else {
+                    tr=pp.getConnect1();
+                }
+            }
+            
+            if (tr!=null){
+                log.debug("found facing block by positionable point");
+                return tr.getLayoutBlock();
+            }
+        }
+        LayoutTurnout t = panel.findLayoutTurnoutBySignalMast(signalMastName);
+        if(t!=null){
+            log.debug("found signalmast at turnout " + t.getTurnout().getDisplayName());
+            Object connect;
+            if(t.getSignalAMast().equals(signalMastName)){
+                connect = t.getConnectA();
+            } else if (t.getSignalBMast().equals(signalMastName)) {
+                connect = t.getConnectB();
+            } else if (t.getSignalCMast().equals(signalMastName)) {
+                connect = t.getConnectC();
+            } else {
+                connect = t.getConnectD();
+            }
+            if (connect instanceof TrackSegment){
+                tr = (TrackSegment) connect;
+                log.debug("return block " + tr.getLayoutBlock().getDisplayName());
+                return tr.getLayoutBlock();
+            
+            }
+        }
+        
+        LevelXing l = panel.findLevelXingBySignalMast(signalMastName);
+        if(l!=null){
+            Object connect;
+            if(l.getSignalAMastName().equals(signalMastName)){
+                connect = l.getConnectA();
+            } else if (l.getSignalBMastName().equals(signalMastName)) {
+                connect = l.getConnectB();
+            } else if (l.getSignalCMastName().equals(signalMastName)) {
+                connect = l.getConnectC();
+            } else {
+                connect = l.getConnectD();
+            }
+            
+            if (connect instanceof TrackSegment){
+                tr = (TrackSegment) connect;
+                log.debug("return block " + tr.getLayoutBlock().getDisplayName());
+                return tr.getLayoutBlock();
+            
+            }
+            
+        }
+        return null;
+    }
+
+    /* This needs to be expanded to cover turnouts and level crossings. */
+    public LayoutBlock getProtectedBlockBySensor(String sensorName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByEastBoundSensor(sensorName);
         TrackSegment tr;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);
+            pp = panel.findPositionablePointByWestBoundSensor(sensorName);
             if (pp==null)
                 return null;
             tr = pp.getConnect1();
@@ -1096,11 +1386,12 @@ public class LayoutBlockManager extends AbstractManager {
     /**
      * Method to return the LayoutBlock that a given signal is facing.
      */
-    public LayoutBlock getFacingBlockByMast(String signalMastName, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);
+    /* This needs to be expanded to cover turnouts and level crossings. */
+    public LayoutBlock getFacingBlockBySensor(String sensorName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByWestBoundSensor(sensorName);
         TrackSegment tr;
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);
+            pp = panel.findPositionablePointByWestBoundSensor(sensorName);
             if (pp==null)
                 return null;
             tr = pp.getConnect1();
@@ -1115,6 +1406,7 @@ public class LayoutBlockManager extends AbstractManager {
     /**
      * Method to return the LayoutBlock that a given signal is protecting.
      */
+     /* This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
         PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
         TrackSegment tr;
@@ -1135,6 +1427,7 @@ public class LayoutBlockManager extends AbstractManager {
     /**
      * Method to return the LayoutBlock that a given signal is facing.
      */
+     /* This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
         PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
         TrackSegment tr;
@@ -1151,6 +1444,441 @@ public class LayoutBlockManager extends AbstractManager {
         return tr.getLayoutBlock();
     }
 
+    public final static int MASTTOMAST = 0x01;
+    public final static int HEADTOHEAD = 0x02;
+    public final static int ANY = 0x04;
+    public final static int NONE = 0x00;
+    
+    private static int ttlSize = 50;
+
+    /*
+    Test method to try and workout a better way of handling going back through 
+    the paths if we reach a dead end as such.
+    */
+    /*public ArrayList<LayoutBlock> getAltLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException{
+        lastErrorMessage= "";
+        if (!isAdvancedRoutingEnabled()){
+            log.info("Advanced routing has not been enabled therefore we cannot use this function");
+            throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
+            //return null;
+        }
+        
+        int directionOfTravel = sourceLayoutBlock.getNeighbourDirection(protectingLayoutBlock);
+        Block currentBlock = sourceLayoutBlock.getBlock();
+
+        Block destBlock = destinationLayoutBlock.getBlock();
+        log.debug("Destination Block " + destinationLayoutBlock.getDisplayName() + " " + destBlock);
+        Block nextBlock = protectingLayoutBlock.getBlock();
+        log.debug("s:" + sourceLayoutBlock.getDisplayName() + " p:" + protectingLayoutBlock.getDisplayName() + " d:" + destinationLayoutBlock.getDisplayName());
+
+        ArrayList<Integer> blockIndex = new ArrayList<Integer>();
+        ArrayList<BlocksTested> blocksInRoute = new ArrayList<BlocksTested>();
+
+        blocksInRoute.add(new BlocksTested(sourceLayoutBlock));
+        
+        if(!validateOnly){
+            if (canLBlockBeUsed(protectingLayoutBlock)){
+                blocksInRoute.add(new BlocksTested(protectingLayoutBlock));
+
+            } else {
+                lastErrorMessage = "Block we are protecting is already occupied or reserved";
+                log.debug(lastErrorMessage);
+                JOptionPane.showMessageDialog(null, lastErrorMessage);
+                throw new jmri.JmriException(lastErrorMessage);
+            }
+        } else {
+            blocksInRoute.add(new BlocksTested(protectingLayoutBlock));
+        }
+        if (destinationLayoutBlock==protectingLayoutBlock){
+            ArrayList<LayoutBlock> returnBlocks = new ArrayList<LayoutBlock>();
+            for (int i =0; i<blocksInRoute.size(); i++){
+                returnBlocks.add(blocksInRoute.get(i).getBlock());
+            }
+            
+            return returnBlocks;
+        }
+        LayoutBlock currentLBlock = protectingLayoutBlock;
+
+        BlocksTested bt = blocksInRoute.get(blocksInRoute.size()-1);
+
+        int ttl=1;
+        int offSet=-1;
+        while (ttl <ttlSize){ //value should be higher but low for test!
+            log.debug("===== Ttl value = " + ttl + " ======");
+            log.debug("Looking for next block");
+            int nextBlockIndex = 0;
+            if(currentBlock==sourceLayoutBlock.getBlock() && nextBlock==protectingLayoutBlock.getBlock()){
+                //for the first block, the current block and protecting block are likely to contain a signal head or mast, therefore we will
+                //ignore checking for this.
+                nextBlockIndex = findBestHop(currentBlock, nextBlock, destBlock, directionOfTravel, offSet, validateOnly, NONE);
+            }
+            else {
+                nextBlockIndex = findBestHop(currentBlock, nextBlock, destBlock, directionOfTravel, offSet, validateOnly, pathMethod);
+            }
+            if (nextBlockIndex!=-1){
+                bt.addIndex(nextBlockIndex);
+                log.debug("block index returned " + nextBlockIndex + " Blocks in route size " + blocksInRoute.size());
+                //Sets the old next block to be our current block.
+                currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
+
+                offSet = -1;
+
+                directionOfTravel = currentLBlock.getDirectionAtIndex(nextBlockIndex);
+
+                currentBlock = nextBlock;
+                nextBlock = currentLBlock.getNextBlockAtIndex(nextBlockIndex);
+                LayoutBlock nextLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
+
+                log.debug("Blocks in route size " + blocksInRoute.size());
+                log.debug(nextBlock + " " + destBlock);
+                if (nextBlock==currentBlock){
+                    nextBlock = currentLBlock.getDestBlockAtIndex(nextBlockIndex);
+                    log.debug("the next block to our destination we are looking for is directly connected to this one");
+                } else if(protectingLayoutBlock!=nextLBlock){
+                    log.debug("Add block " + nextLBlock.getDisplayName());
+
+                    bt = new BlocksTested(nextLBlock);
+                }
+                if (nextBlock==destBlock){
+                    log.debug("Adding destination Block " + destinationLayoutBlock.getDisplayName());
+                    log.debug("arrived at destination block");
+                    
+                    ArrayList<LayoutBlock> returnBlocks = new ArrayList<LayoutBlock>();
+                    for (int i =0; i<blocksInRoute.size(); i++){
+                        returnBlocks.add(blocksInRoute.get(i).getBlock());
+                    }
+                    returnBlocks.add(destinationLayoutBlock);
+                    return returnBlocks;
+                }
+            } 
+            else {
+            //-1 is returned when there are no more valid besthop valids found
+                //Block index is -1, so we need to go back a block and find another way.
+
+                //So we have gone back as far as our starting block so we better return.
+                int birSize = blocksInRoute.size();
+                log.debug("block in route size " + birSize);
+                if (birSize<=2) {
+                    log.debug("drop out here with ttl");
+                    ttl=ttlSize+1;
+                }
+                else {
+                    for (int t = 0; t<blocksInRoute.size(); t++){
+                        log.debug("index " + t + " block " + blocksInRoute.get(t).getBlock().getDisplayName());
+                    }
+                    log.debug("To remove last block " + blocksInRoute.get(birSize-1).getBlock().getDisplayName() + " at index " + blockIndex.get(birSize-1));
+                    log.debug("Will set offSet at " + (blockIndex.get(birSize-1)));
+
+                    currentBlock = blocksInRoute.get(birSize-3).getBlock().getBlock();
+                    nextBlock = blocksInRoute.get(birSize-2).getBlock().getBlock();
+                    offSet = blocksInRoute.get(birSize-2).getLastIndex();
+                    blocksInRoute.remove(birSize-1);
+                    ttl--;
+                }
+            }
+            ttl++;
+        }
+        if(ttl==ttlSize){
+            lastErrorMessage = "ttlExpired";
+        }
+        //we exited the loop without either finding the destination or we had error.
+        throw new jmri.JmriException(lastErrorMessage);
+    }
+    
+    class BlocksTested {
+        
+        LayoutBlock block;
+        ArrayList<Integer> indexNumber = new ArrayList<Integer>();
+        
+        BlocksTested(LayoutBlock block){
+            this.block=block;
+        }
+        
+        void addIndex (int x){
+            indexNumber.add(x);
+        }
+        
+        int getLastIndex(){
+            return indexNumber.get(indexNumber.size()-1);
+        }
+        
+        LayoutBlock getBlock(){
+            return block;
+        }
+    }*/
+
+    
+    public ArrayList<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException{
+        lastErrorMessage= "";
+        if (!isAdvancedRoutingEnabled()){
+            log.info("Advanced routing has not been enabled therefore we cannot use this function");
+            throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
+            //return null;
+        }
+        
+        int directionOfTravel = sourceLayoutBlock.getNeighbourDirection(protectingLayoutBlock);
+        Block currentBlock = sourceLayoutBlock.getBlock();
+        //Block previousBlock = currentBlock;
+        Block destBlock = destinationLayoutBlock.getBlock();
+        log.debug("Destination Block " + destinationLayoutBlock.getDisplayName() /*+ destBlock.getDisplayName()*/ + " " + destBlock);
+        Block nextBlock = protectingLayoutBlock.getBlock();
+        if(log.isDebugEnabled()){
+            log.debug("s:" + sourceLayoutBlock.getDisplayName() + " p:" + protectingLayoutBlock.getDisplayName() + " d:" + destinationLayoutBlock.getDisplayName());
+        }
+
+        ArrayList<Integer> blockIndex = new ArrayList<Integer>();
+        ArrayList<LayoutBlock> blocksInRoute = new ArrayList<LayoutBlock>();
+        blocksInRoute.add(sourceLayoutBlock);
+        blockIndex.add(0);
+        
+        if(!validateOnly){
+            if (canLBlockBeUsed(protectingLayoutBlock)){
+                blocksInRoute.add(protectingLayoutBlock);
+                //Need a way to get the block index here.
+                blockIndex.add(0);
+            } else {
+                lastErrorMessage = "Block we are protecting is already occupied or reserved";
+                log.debug(lastErrorMessage);
+                JOptionPane.showMessageDialog(null, lastErrorMessage);
+                throw new jmri.JmriException(lastErrorMessage);
+            }
+        } else {
+            blocksInRoute.add(protectingLayoutBlock);
+            blockIndex.add(0);
+        }
+        if (destinationLayoutBlock==protectingLayoutBlock){
+            return blocksInRoute;
+        }
+        LayoutBlock currentLBlock = protectingLayoutBlock;
+
+        int ttl=1;
+        int offSet=-1;
+        while (ttl <ttlSize){ //value should be higher but low for test!
+            log.debug("===== Ttl value = " + ttl + " ======");
+            log.debug("Looking for next block");
+            int nextBlockIndex = 0;
+            if(currentBlock==sourceLayoutBlock.getBlock() && nextBlock==protectingLayoutBlock.getBlock()){
+                //for the first block, the current block and protecting block are likely to contain a signal head or mast, therefore we will
+                //ignore checking for this.
+                nextBlockIndex = findBestHop(currentBlock, nextBlock, destBlock, directionOfTravel, offSet, validateOnly, NONE);
+            }
+            else {
+                nextBlockIndex = findBestHop(currentBlock, nextBlock, destBlock, directionOfTravel, offSet, validateOnly, pathMethod);
+            }
+            if (nextBlockIndex!=-1){
+                if(log.isDebugEnabled()){
+                    log.debug("block index returned " + nextBlockIndex + " Blocks in route size " + blocksInRoute.size());
+                }
+                //Sets the old next block to be our current block.
+                currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
+
+                offSet = -1;
+                //int hopcountToNextBlock = currentLBlock.getBlockCountAtIndex(nextBlockIndex);
+                directionOfTravel =currentLBlock.getDirectionAtIndex(nextBlockIndex);
+//                previousBlock=currentBlock;
+                currentBlock = nextBlock;
+                nextBlock = currentLBlock.getNextBlockAtIndex(nextBlockIndex);
+                LayoutBlock nextLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
+
+                if(log.isDebugEnabled()){
+                    log.debug("Blocks in route size " + blocksInRoute.size());
+                    log.debug(nextBlock + " " + destBlock);
+                }
+                if (nextBlock==currentBlock){
+                    nextBlock = currentLBlock.getDestBlockAtIndex(nextBlockIndex);
+                    log.debug("the next block to our destination we are looking for is directly connected to this one");
+                } else if(protectingLayoutBlock!=nextLBlock){
+                    if(log.isDebugEnabled()){
+                        log.debug("Add block " + nextLBlock.getDisplayName());
+                    }
+                    blockIndex.add(nextBlockIndex);
+                    blocksInRoute.add(nextLBlock);
+                }
+                if (nextBlock==destBlock){
+                    if(log.isDebugEnabled()){
+                        log.debug("Adding destination Block " + destinationLayoutBlock.getDisplayName());
+                    }
+                    blocksInRoute.add(destinationLayoutBlock);
+                    log.debug("arrived at destination block");
+                    return blocksInRoute;
+                }
+            } 
+            else {
+                //Block index is -1, so we need to go back a block and find another way.
+
+                //So we have gone back as far as our starting block so we better return.
+                int birSize = blocksInRoute.size();
+                log.debug("block in route size " + birSize);
+                if (birSize<=2) {
+                    log.debug("drop out here with ttl");
+                    ttl=ttlSize+1;
+                }
+                else {
+                    if(log.isDebugEnabled()){
+                        for (int t = 0; t<blocksInRoute.size(); t++){
+                            log.debug("index " + t + " block " + blocksInRoute.get(t).getDisplayName() + " " +blockIndex.get(t));
+                        }
+                        log.debug("To remove last block " + blocksInRoute.get(birSize-1).getDisplayName() + " at index " + blockIndex.get(birSize-1));
+                        log.debug("Will set offSet at " + (blockIndex.get(birSize-1)));
+                    }
+                    offSet = blockIndex.get(birSize-1);
+                    currentBlock = blocksInRoute.get(birSize-3).getBlock();
+                    nextBlock = blocksInRoute.get(birSize-2).getBlock();
+                    blocksInRoute.remove(birSize-1);
+                    blockIndex.remove(birSize-1);
+                    ttl--;
+                }
+            }
+            ttl++;
+        }
+        if(ttl==ttlSize){
+            lastErrorMessage = "ttlExpired";
+        }
+        //we exited the loop without either finding the destination or we had error.
+        throw new jmri.JmriException(lastErrorMessage);
+    }
+
+    private boolean canLBlockBeUsed(LayoutBlock lBlock){
+        if (lBlock.getBlock().getPermissiveWorking())
+            return true;
+        if (lBlock.getState()==Block.OCCUPIED)
+            return false;
+        if (lBlock.getUseExtraColor())
+            return false;
+        return true;
+    }
+    
+    String lastErrorMessage = "";
+
+    //We need to take into account if the returned block has a signalmast attached.
+    int findBestHop(Block preBlock, Block currentBlock, Block destBlock, int direction, int offSet, boolean validateOnly, int pathMethod){
+        int blockindex = 0;
+        int lastReturnedBlockIndex = -1;
+        Block block;
+        LayoutBlock currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(currentBlock);
+        if(log.isDebugEnabled())
+            log.debug("In find best hop current " + currentLBlock.getDisplayName() + " previous " + preBlock.getDisplayName());
+        while(blockindex!=-1){
+            if (currentBlock==preBlock){
+                //Basically looking for the connected block, which there should only be one of!
+                blockindex = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
+            } else {
+                blockindex = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
+            }
+            if (blockindex!=-1){
+                if(lastReturnedBlockIndex==blockindex){
+                    lastErrorMessage = "Block already returned";
+                    return -1;
+                }
+                block = currentLBlock.getNextBlockAtIndex(blockindex);
+                LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(block);
+                if ((block == currentBlock) && (currentLBlock.getThroughPathIndex(preBlock, destBlock)==-1)){
+                    lastErrorMessage="block " + block.getDisplayName() + " is directly attached, however the route to the destination block " + destBlock.getDisplayName() + " can not be directly used";
+                    log.debug(lastErrorMessage);
+                }
+                else if ((validateOnly) || (canLBlockBeUsed(lBlock))){
+                    if(log.isDebugEnabled()){
+                        log.debug(block.getDisplayName() + " not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not");
+                        log.debug(currentBlock.getDisplayName() + " " + block.getDisplayName());
+                    }
+                    Block blocktoCheck = block;
+                    if (block == currentBlock){
+                        log.debug("current block matches returned block therefore the next block is directly connected");
+                        blocktoCheck=destBlock;
+                     }
+                    jmri.NamedBean signal = null;
+                    switch(pathMethod){
+                        case MASTTOMAST : signal = (jmri.NamedBean) getFacingSignalMast(currentBlock, blocktoCheck); break;
+                        case HEADTOHEAD : signal = (jmri.NamedBean) getFacingSignalHead(currentBlock, blocktoCheck); break;
+                        case ANY : signal = (jmri.NamedBean) getFacingSignalObject(currentBlock, blocktoCheck); break;
+                    }
+                    if (signal==null){
+                        log.debug("No object found so okay to return");
+                        return blockindex;
+                    } else {
+                        lastErrorMessage ="Signal " + signal.getDisplayName() + " already exists between blocks " + currentBlock.getDisplayName() + " and " + blocktoCheck.getDisplayName() + " in the same direction on this path";
+                        log.debug(lastErrorMessage);
+                    }
+                } else {
+                    lastErrorMessage="block " + block.getDisplayName() + " found not to be not usable";
+                    log.debug(lastErrorMessage);
+                }
+                lastReturnedBlockIndex = blockindex;
+                offSet = blockindex;
+            } else {
+                log.debug("At this point the getNextBextBlock() has returned a -1");
+            }
+        }
+        return -1;
+    }
+    
+    /**
+     * Determines if one set of blocks is reachable from another set of blocks
+     * based upon the directions of the set of blocks.
+     * <p>
+     * This is used to help with identifying items such as signalmasts located 
+     * at positionable points or turnouts are facing in the same direction as 
+     * other given signalmasts.
+     * <p>
+     * Given the current block and the next block we can work out the direction 
+     * of travel.
+     * Given the destBlock and the next block on, we can determine the whether 
+     * the destBlock comes before the destBlock+1.
+     * returns true if destBlock comes before destBlock+1
+     * returns false if destBlock comes after destBlock+1
+     * throws Jmri.Exception if any Block is null;
+     */
+    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1) throws jmri.JmriException {
+        if (!isAdvancedRoutingEnabled()){
+            log.info("Advanced routing has not been enabled therefore we cannot use this function");
+            throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
+        }
+        if(log.isDebugEnabled())
+            log.debug(currentBlock.getDisplayName() + ", " + nextBlock.getDisplayName() + ", " + destBlock.getDisplayName() + ", " + destBlockn1.getDisplayName());
+        if((destBlockn1!=null) && (destBlock!=null) && (currentBlock!=null) && (nextBlock!=null)){
+            if(!currentBlock.isRouteToDestValid(nextBlock.getBlock(), destBlock.getBlock())){
+                log.debug("Route to dest not valid");
+                return false;
+            }
+            if(log.isDebugEnabled()){
+                log.debug("dest " + destBlock.getDisplayName());
+                log.debug("remote prot " + destBlockn1.getDisplayName());
+            }
+            //Do a simple test to see if one is reachable from the other.
+            int desCount = currentBlock.getBlockHopCount(destBlock.getBlock(), nextBlock.getBlock());
+            int proCount = currentBlock.getBlockHopCount(destBlockn1.getBlock(), nextBlock.getBlock());
+            log.debug("dest " + desCount + " protecting " + proCount);
+            if(proCount<desCount){
+                /*Need to do a more advanced check in this case as the destBlockn1
+                could be reached via a different route and therefore have a smaller 
+                hop count we need to therefore step through each block until we reach
+                the end.*/
+                ArrayList<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, MASTTOMAST);
+                if(blockList.contains(destBlockn1)){
+                    log.debug("Signal mast in the wrong direction");
+                    return false;
+                }
+                /*Work on the basis that if you get the blocks from source to dest
+                then the dest+1 block should not be included*/
+                log.debug("Signal mast in the correct direction");
+                return true;
+            } else {
+                return true;
+            }
+        } else if (destBlockn1==null){
+            throw new jmri.JmriException("Block in Destination Protecting Field returns as invalid");
+        } else if (destBlock==null){
+            throw new jmri.JmriException("Block in Destination Field returns as invalid");
+        } else if (currentBlock==null){
+            throw new jmri.JmriException("Block in Facing Field returns as invalid");
+        }
+        else if (nextBlock==null){
+            throw new jmri.JmriException("Block in Protecting Field returns as invalid");
+        }
+        throw new jmri.JmriException("BlockIsNull");
+    }
+
+
 	private boolean warnConnectivity = true;
 	/**
 	 * Controls switching off incompatible block connectivity messages
@@ -1161,7 +1889,116 @@ public class LayoutBlockManager extends AbstractManager {
 	public boolean warn() {return warnConnectivity;}
 	public void turnOffWarning() {warnConnectivity = false;}
 	
+    protected boolean enableAdvancedRouting = false;
+    public boolean isAdvancedRoutingEnabled() { return enableAdvancedRouting; }
+    public void enableAdvancedRouting(boolean boo) { 
+        if (boo==enableAdvancedRouting)
+            return;
+        enableAdvancedRouting = boo;
+        if (boo)
+            initializeLayoutBlockPaths();
+    }
+    
+    public final static int HOPCOUNT = 0x00;
+    public final static int METRIC = 0x01;
 
+
+    private long lastRoutingChange;
+    public void setLastRoutingChange(){
+        lastRoutingChange = System.nanoTime();
+        boolean oldStablised = stablised;
+        stablised = false;
+        setRoutingStablised();
+    }
+
+    boolean checking = false;
+    boolean stablised = false;
+
+    private void setRoutingStablised(){
+        if (checking){
+            return;
+        }
+        log.debug("routing table change has been initiated");
+        checking=true;
+        if(namedStablisedIndicator!=null){
+            try {
+                namedStablisedIndicator.getBean().setState(Sensor.INACTIVE);
+            } catch (jmri.JmriException ex){
+                log.debug("Error setting stability indicator sensor");
+            }
+        }
+        Runnable r = new Runnable() {
+          public void run() {
+            try {
+              firePropertyChange("topology", true, false);
+              long oldvalue = lastRoutingChange;
+              while (!stablised) {
+                Thread.sleep(2000L);
+                if(oldvalue==lastRoutingChange){
+                    log.debug("routing table has now been stable for 2 seconds");
+                    checking=false;
+                    stablised=true;
+                    firePropertyChange("topology", false, true);
+                    if(namedStablisedIndicator!=null){
+                        namedStablisedIndicator.getBean().setState(Sensor.ACTIVE);
+                    }
+                }
+                oldvalue = lastRoutingChange;
+              }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                checking=false;
+            } catch (jmri.JmriException ex){
+                log.debug("Error setting stability indicator sensor");
+            }
+          }
+        };
+        thr = new Thread(r);
+        /*try{
+        thr.join();
+        } catch (InterruptedException ex) {
+//            System.out.println("interrupted at join " + ex);
+            checking=false;
+        }*/
+        thr.start();
+    }
+
+    Thread thr = null;
+    
+    private NamedBeanHandle<Sensor> namedStablisedIndicator;
+    
+    public void setStablisedSensor(String pName) throws jmri.JmriException {
+        if (InstanceManager.sensorManagerInstance()!=null) {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+            if (sensor != null) {
+                namedStablisedIndicator = new NamedBeanHandle<Sensor>(pName, sensor);
+            } else {
+                log.error("Sensor '"+pName+"' not available");
+                throw new jmri.JmriException("Sensor '"+pName+"' not available");
+            }
+        } else {
+            log.error("No SensorManager for this protocol");
+            throw new jmri.JmriException("No Sensor Manager Found");
+        }
+    }
+    
+    public Sensor getStablisedSensor(){
+        if(namedStablisedIndicator==null)
+            return null;
+        return namedStablisedIndicator.getBean();
+    }
+
+    public NamedBeanHandle <Sensor> getNamedStablisedSensor(){
+        return namedStablisedIndicator;
+    }
+    
+    public boolean routingStablised(){
+        return stablised;
+    }
+    public long getLastRoutingChange(){
+        return lastRoutingChange;
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManager.class.getName());
 }
 

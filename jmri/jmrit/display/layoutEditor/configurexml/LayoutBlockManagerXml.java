@@ -18,7 +18,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutBlockManagerXml extends AbstractXmlAdapter {
 
@@ -35,6 +35,13 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
         Element layoutblocks = new Element("layoutblocks");
         setStoreElementClass(layoutblocks);
         LayoutBlockManager tm = (LayoutBlockManager) o;
+        if (tm.isAdvancedRoutingEnabled()){
+            layoutblocks.setAttribute("blockrouting", "yes");
+        }
+        if(tm.getNamedStablisedSensor()!=null){
+            layoutblocks.setAttribute("routingStablisedSensor", tm.getNamedStablisedSensor().getName());
+        }
+        
         if (tm!=null) {
             java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
             
@@ -106,10 +113,22 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
      */
     @SuppressWarnings("unchecked")
 	public void loadLayoutBlocks(Element layoutblocks) {
-		List<Element> layoutblockList = layoutblocks.getChildren("layoutblock");
-        if (log.isDebugEnabled()) log.debug("Found "+layoutblockList.size()+" layoutblocks");
         LayoutBlockManager tm = InstanceManager.layoutBlockManagerInstance();
+        if (layoutblocks.getAttribute("blockrouting")!=null){
+            if (layoutblocks.getAttribute("blockrouting").getValue().equals("yes"))
+                tm.enableAdvancedRouting(true);
+        }
+        if (layoutblocks.getAttribute("routingStablisedSensor")!=null){
+            try {
+                tm.setStablisedSensor(layoutblocks.getAttribute("routingStablisedSensor").getValue());
+            } catch (jmri.JmriException e){
 
+            }
+        }
+        
+        List<Element> layoutblockList = layoutblocks.getChildren("layoutblock");
+        if (log.isDebugEnabled()) log.debug("Found "+layoutblockList.size()+" layoutblocks");
+        
         for (int i=0; i<layoutblockList.size(); i++) {
             if ( ((layoutblockList.get(i))).getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+
