@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.31 2011-05-16 01:50:11 bhoffman351 Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.32 2011-05-17 13:05:58 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -135,7 +135,7 @@ None at the time of this release.
 	<LI>The trains window now shows which timetable is active.</LI>
 	<LI>Siding/schedule enhancement. When a car is placed at a siding with
 	a schedule the car's destination isn't immediately set, only the car's
-	final destination. This should improve overloading at sidings with
+	final destination. This should eliminate overloading at sidings with
 	schedules when in aggressive mode.</LI>
 	<LI>Car forwarding enhancement when a car has a final destination.
 	Now when the destination track is full, the program will determine if a
@@ -144,7 +144,7 @@ None at the time of this release.
 	becomes available.</LI>
 	<LI>The program will now warn you if you haven't saved your files
 	before doing a backup.</LI>
-	<LI>You can now use the wild card "*" when using the Find in the
+	<LI>You can now use the wild card "*" when using the "Find" button in the
 	cars and locomotives windows. For example, if you wanted to find all
 	cars with road numbers that ended with 456, you would enter *456.</LI>
 	<LI>Fixed a problem when a siding has a schedule and a group of cars (kernel) was
@@ -154,13 +154,17 @@ None at the time of this release.
 	The location and route comments now come after the "No work statement".</Li>
 	<LI>Added some additional comments in the build report with regards to car routing.
 	Messages are now in the build report.  Messages to the console have been removed.</LI>
-	<LI>Fixed a problem with switch lists showing loco pickups when there wasn't.</LI>
+	<LI>Fixed a problem with switch lists showing loco pickups when there wasn't.  This
+	happened when the switch list was printed when the engines were at that location.</LI>
 	<LI>New feature, train logging.  In addition to car and loco logging, the program
 	can now log train activity.</LI>
 	<LI>Operations manifest and switch lists enhancement, users can
 	now specify local car message format and color, see Print Options for details.</LI>
 	<LI>Program now remembers a car's previous final destination when reseting a train. Now
-	when you reset a train the car destinations that were set by a schedule will remain.</LI>
+	when you reset a train and the car destinations that were set by a schedule will remain.</LI>
+	<LI>Improved how tracks with setting FIFO and LIFO behave.  Previously if the program couldn't
+	find a destination for a car, all cars behind that car were stuck.  Now the program will jump
+	over a car that can't move.</LI>
 
 </UL>
 
