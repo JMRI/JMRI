@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.83 $
+ * @version             $Revision: 1.84 $
  */
 public class Car extends RollingStock {
 	
@@ -148,7 +148,10 @@ public class Car extends RollingStock {
 	public String getPriority(){
 		return (carLoads.getPriority(_type, _load));
 	}
-	
+	/**
+	 * Returns a car's weight adjusted for load.  An empty car's
+	 * weight is 1/3 the car's loaded weight.
+	 */
 	public int getAdjustedWeightTons(){
 		int weightTons =0;
 		try {
@@ -174,6 +177,13 @@ public class Car extends RollingStock {
 		return _wait;
 	}
 	
+	/**
+	 * This car's service order when placed at a track that considers car order.
+	 * There are two track orders, FIFO and LIFO.  Car's with the lowest numbers
+	 * are serviced first when placed at a track in FIFO mode.  Car's with the highest
+	 * numbers are serviced first when place at a track in LIFO mode.
+	 * @param number The assigned service order for this car.
+	 */
 	public void setOrder(int number){
 		int old = _order;
 		_order = number;
@@ -196,6 +206,10 @@ public class Car extends RollingStock {
 		return _nextWait;
 	}
 	
+	/**
+	 * Sets the final destination for a car.
+	 * @param destination The final destination for this car.
+	 */
 	public void setNextDestination(Location destination){
 		//setPreviousNextDestination(_nextDestination);
 		Location old = _nextDestination;
@@ -345,6 +359,11 @@ public class Car extends RollingStock {
 		return "";
 	}
 	
+	/**
+	 * Used to determine if a car can be placed at a location and
+	 * track.  A return of Car.OKAY means the car can be placed at
+	 * the location and track.
+	 */
 	public String testLocation(Location location, Track track) {
 		String status = super.testLocation(location, track);
 		if (!status.equals(OKAY))
@@ -356,6 +375,11 @@ public class Car extends RollingStock {
 		return OKAY;
 	}
 	
+	/**
+	 * Used to determine if a car can be set out at a destination (location).
+	 * Track is optional.  In addition to all of the tests that testLocation
+	 * performs, sidings with schedules are also checked.
+	 */
 	public String testDestination(Location destination, Track track) {
 		String status = super.testDestination(destination, track);
 		if (!status.equals(OKAY))
@@ -405,14 +429,20 @@ public class Car extends RollingStock {
 		return searchSchedule(track);
 	}
 	
+	private static final boolean debugFlag = false;
 	private String searchSchedule(Track track){
 		for (int i=0; i<track.getSchedule().getSize(); i++){
 			ScheduleItem si = track.getNextScheduleItem();
-			if (checkScheduleItem(track, si).equals(OKAY)){
-				log.debug("Found schedule item ("+si.getId()+") match for car ("+toString()+") ship ("+si.getShip()+") " +
+			if (debugFlag)log.debug("Item id ("+si.getId()+") requesting type ("+si.getType()+") " +
+					"load ("+si.getLoad()+") next dest ("+si.getDestinationName()+") track ("+si.getDestinationTrackName()+")");
+			String status = checkScheduleItem(track, si);
+			if (status.equals(OKAY)){
+				log.debug("Found item match ("+si.getId()+") car ("+toString()+") load ("+si.getLoad()+") ship ("+si.getShip()+") " +
 						"destination ("+si.getDestinationName()+", "+si.getDestinationTrackName()+")");
 				setScheduleId(si.getId());
 				return OKAY;
+			} else {
+				if (debugFlag)log.debug("Item id ("+si.getId()+") status ("+status+")");
 			}
 		}
 		return SCHEDULE + " NO MATCH";

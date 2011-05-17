@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.56 $
+ * @version             $Revision: 1.57 $
  */
 public class Track {
 	
@@ -200,6 +200,11 @@ public class Track {
 			firePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
 	}
 
+	/**
+	 * Used to determine how much track space is going to be consumed by cars 
+	 * in route to this track.  See isSpaceAvailable().
+	 * @return The length of all cars in route to this track including couplers.
+	 */
 	public int getReservedInRoute() {
 		return _reservedInRoute;
 	}
@@ -208,6 +213,13 @@ public class Track {
 		return _numberCarsInRoute;
 	}
 	
+	/**
+	 * Set the reservation factor.  Default 100 (100%).  Used by the program
+	 * when generating car loads from staging.  A factor of 100% allows
+	 * the program to fill a track with car loads.  Numbers over 100% can
+	 * overload a track.
+	 * @param factor A number from 0 to 10000.
+	 */
 	public void setReservationFactor(int factor){
 		_reservationFactor = factor;
 	}
@@ -216,17 +228,35 @@ public class Track {
 		return _reservationFactor;
 	}
 	
+	/**
+	 * Sets the mode of operation for the schedule assigned to this
+	 * track.
+	 * @param mode Track.SEQUENTIAL or Track.MATCH
+	 */
 	public void setScheduleMode(int mode){
 		int old = _mode;
 		_mode = mode;
 		firePropertyChange("scheduleMode", old, mode);
 	}
 	
+	/**
+	 * Gets the mode of operation for the schedule assigned to this
+	 * track.
+	 * @return Mode of operation: Track.SEQUENTIAL or Track.MATCH
+	 */
 	public int getScheduleMode(){
 		return _mode;
 	}
 	
-	
+	/**
+	 * Used to determine if there's space available at this track for the car.
+	 * Considers cars currently placed on the track and cars in route to this
+	 * track.  Ignores car pick ups.  Used to prevent overloading the track.
+	 * 
+	 * @param car
+	 *            The car to be set out.
+	 * @return true if space available.
+	 */
 	public boolean isSpaceAvailable(Car car){
 			int length = Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
 		if (car.getKernel() != null)
