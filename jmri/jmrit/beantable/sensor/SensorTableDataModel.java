@@ -6,20 +6,27 @@ import jmri.*;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
 import javax.swing.*;
+
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+
 
 /**
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {
 
     static public final int INVERTCOL = NUMCOLUMN;
+    static public final int USEGLOBALDELAY = INVERTCOL+1;
+    static public final int ACTIVEDELAY = USEGLOBALDELAY+1;
+    static public final int INACTIVEDELAY = ACTIVEDELAY+1;
 
+    public static boolean showDebounce =false;
+    
     SensorManager senManager = InstanceManager.sensorManagerInstance();
     public SensorTableDataModel() {
         super();
@@ -56,8 +63,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
     protected NamedBean getBySystemName(String name) { return senManager.getBySystemName(name);}
     protected NamedBean getByUserName(String name) { return senManager.getByUserName(name);}
-    /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
-    public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUSe", boo); }*/
+
     protected String getMasterClassName() { return getClassName(); }
     protected void clickOn(NamedBean t) {
         try {
@@ -67,46 +73,104 @@ public class SensorTableDataModel extends BeanTableDataModel {
         } catch (JmriException e) { log.warn("Error setting state: "+e); }
     }
 
-    public int getColumnCount( ){ 
+    public int getColumnCount( ){
+        if(showDebounce)
+            return INACTIVEDELAY+1;
         return NUMCOLUMN+1;
     }
 
     public String getColumnName(int col) {
-        if (col==INVERTCOL) return "Inverted";
+        if(col==INVERTCOL) return rb.getString("Inverted");
+        if(col==USEGLOBALDELAY) return rb.getString("SensorUseGlobalDebounce");
+        if(col==ACTIVEDELAY) return rb.getString("SensorActiveDebounce");
+        if(col==INACTIVEDELAY) return rb.getString("SensorInActiveDebounce");
         else return super.getColumnName(col);
     }
     public Class<?> getColumnClass(int col) {
         if (col==INVERTCOL) return Boolean.class;
+        if(col==USEGLOBALDELAY) return Boolean.class;
+        if(col==ACTIVEDELAY) return String.class;
+        if(col==INACTIVEDELAY) return String.class;
         else return super.getColumnClass(col);
     }
     public int getPreferredWidth(int col) {
         if (col==INVERTCOL) return new JTextField(4).getPreferredSize().width;
+        if(col==USEGLOBALDELAY) return new JTextField(4).getPreferredSize().width;
+        if(col==ACTIVEDELAY) return new JTextField(4).getPreferredSize().width;
+        if(col==INACTIVEDELAY) return new JTextField(4).getPreferredSize().width;
         else return super.getPreferredWidth(col);
     }
     public boolean isCellEditable(int row, int col) {
         if (col==INVERTCOL) return true;
+        if(col==USEGLOBALDELAY) return true;
+        //Need to do something here to make it disable 
+        if(col==ACTIVEDELAY||col==INACTIVEDELAY){
+            String name = sysNameList.get(row);
+            if(senManager.getBySystemName(name).useDefaultTimerSettings())
+                return false;
+            else
+                return true;
+        }
         else return super.isCellEditable(row,col);
     }    		
 
     public Object getValueAt(int row, int col) {
+        if (row >= sysNameList.size()){
+            log.debug("row is greater than name list");
+            return "";
+        }
+        String name = sysNameList.get(row);
+        Sensor s = senManager.getBySystemName(name);
+        if (s == null){
+            log.debug("error null sensor!");
+            return "error";
+        }
         if (col==INVERTCOL) {
-            // some error checking
-            if (row >= sysNameList.size()){
-                log.debug("row is greater than name list");
-                return "";
-            }
-            String name = sysNameList.get(row);
-            boolean val = senManager.getBySystemName(name).getInverted();
+            boolean val = s.getInverted();
             return Boolean.valueOf(val);
-        } else return super.getValueAt(row, col);
+        } 
+        else if(col==USEGLOBALDELAY){
+            boolean val = s.useDefaultTimerSettings();
+            return Boolean.valueOf(val);
+        }
+        else if(col==ACTIVEDELAY){
+            return s.getSensorDebounceGoingActiveTimer();
+        }
+        else if(col==INACTIVEDELAY){
+            return s.getSensorDebounceGoingInActiveTimer();
+        }
+        else return super.getValueAt(row, col);
     }    		
     
     public void setValueAt(Object value, int row, int col) {
+        if (row >= sysNameList.size()){
+            log.debug("row is greater than name list");
+            return;
+        }
+        String name = sysNameList.get(row);
+        Sensor s = senManager.getBySystemName(name);
+        if (s == null){
+            log.debug("error null sensor!");
+            return;
+        }
         if (col==INVERTCOL) {
-            String name = sysNameList.get(row);
             boolean b = ((Boolean)value).booleanValue();
-            senManager.getBySystemName(name).setInverted(b);
-        } else super.setValueAt(value, row, col);
+            s.setInverted(b);
+        } else if(col==USEGLOBALDELAY){
+            boolean b = ((Boolean)value).booleanValue();
+            s.useDefaultTimerSettings(b);
+        }
+        else if(col==ACTIVEDELAY){
+            String val = (String)value;
+            long goingActive = Long.valueOf(val);
+            s.setSensorDebounceGoingActiveTimer(goingActive);
+        }
+        else if(col==INACTIVEDELAY){
+            String val = (String)value;
+            long goingInActive = Long.valueOf(val);
+            s.setSensorDebounceGoingInActiveTimer(goingInActive);
+        }
+        else super.setValueAt(value, row, col);
     }
     
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
