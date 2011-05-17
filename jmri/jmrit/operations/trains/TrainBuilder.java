@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.158 $
+ * @version             $Revision: 1.159 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -2177,8 +2177,14 @@ public class TrainBuilder extends TrainCommon{
 				log.error ("Couldn't add car "+car.toString()+" to train "+train.getName());
 			return carAdded;
 		} 
-		if (routeList.size()>1)
+		if (routeList.size()>1){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
+			if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildRemoveCarServiceOrder"),new Object[]{car.toString(), car.getTrack().getName(), car.getTrack().getServiceOrder()}));
+				carList.remove(car.getId());
+				carIndex--;  		// removed car from list, so backup pointer 
+			}
+		}
 		return false;	// no build errors, but car not given destination
 	}
 

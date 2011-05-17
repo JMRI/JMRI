@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.55 $
+ * @version             $Revision: 1.56 $
  */
 public class Track {
 	
@@ -752,6 +752,10 @@ public class Track {
     	LocationManagerXml.instance().setDirty(true);
     }
     
+    /**
+     * Get the service order for this track.
+     * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
+     */
     public String getServiceOrder(){
     	return _order;
     }
