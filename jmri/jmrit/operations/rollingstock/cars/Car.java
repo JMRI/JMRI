@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.82 $
+ * @version             $Revision: 1.83 $
  */
 public class Car extends RollingStock {
 	
@@ -197,15 +197,16 @@ public class Car extends RollingStock {
 	}
 	
 	public void setNextDestination(Location destination){
-		_previousNextDestination = _nextDestination;
-		if (_previousNextDestination != null)
-			_previousNextDestination.removePropertyChangeListener(this);
+		//setPreviousNextDestination(_nextDestination);
+		Location old = _nextDestination;
+		if (old != null)
+			old.removePropertyChangeListener(this);
 		_nextDestination = destination;
 		if (_nextDestination != null)
 			_nextDestination.addPropertyChangeListener(this);
-		log.debug("Next destination for car ("+toString()+") old: "+_previousNextDestination+" new: "+destination);
-		if ((_previousNextDestination != null && !_previousNextDestination.equals(destination)) || (destination != null && !destination.equals(_previousNextDestination)))
-			firePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, _previousNextDestination, destination);
+		log.debug("Next destination for car ("+toString()+") old: "+old+" new: "+destination);
+		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
+			firePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, old, destination);
 	}
 	
 	public Location getNextDestination(){
@@ -219,18 +220,19 @@ public class Car extends RollingStock {
 	}
 	
 	public void setNextDestTrack(Track track){
-		_previousNextDestTrack = _nextDestTrack;
-		if (_previousNextDestTrack != null){
-			_previousNextDestTrack.removePropertyChangeListener(this);
-			_previousNextDestTrack.deleteReservedInRoute(this);
+		//setPreviousNextDestTrack(_nextDestTrack);
+		Track old = _nextDestTrack;
+		if (old != null){
+			old.removePropertyChangeListener(this);
+			old.deleteReservedInRoute(this);
 		}
 		_nextDestTrack = track;
 		if (_nextDestTrack != null){
 			_nextDestTrack.addReservedInRoute(this);
 			_nextDestTrack.addPropertyChangeListener(this);
 		}
-		if ((_previousNextDestTrack != null && !_previousNextDestTrack.equals(track)) || (track != null && !track.equals(_previousNextDestTrack)))
-			firePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, _previousNextDestTrack, track);
+		if ((old!= null && !old.equals(track)) || (track != null && !track.equals(old)))
+			firePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
 	}
 	
 	public Track getNextDestTrack(){
@@ -241,6 +243,30 @@ public class Car extends RollingStock {
 		if (_nextDestTrack != null)
 			return _nextDestTrack.getName();
 		return "";			
+	}
+	
+	public void setPreviousNextDestination(Location location){
+		if (location != null)
+			log.debug("Car ("+toString()+") setPreviousNextDestination ("+location.getName()+")");
+		_previousNextDestination = location;
+	}
+	
+	public Location getPreviousNextDestination(){
+		if (_previousNextDestination != null)
+			log.debug("Car ("+toString()+") getPreviousNextDestination ("+ _previousNextDestination.getName()+")");
+		return _previousNextDestination;
+	}
+		
+	public void setPreviousNextDestTrack(Track track){
+		if (track != null)
+			log.debug("Car ("+toString()+") setPreviousNextDestTrack ("+track.getName()+")");
+		_previousNextDestTrack = track;
+	}
+	
+	public Track getPreviousNextDestTrack(){
+		if (_previousNextDestTrack != null)
+			log.debug("Car ("+toString()+") getPreviousNextDestTrack "+ _previousNextDestTrack.getName()+")");
+		return _previousNextDestTrack;
 	}
 	
 	public void setReturnWhenEmptyDestination(Location destination){
@@ -475,6 +501,7 @@ public class Car extends RollingStock {
 	 * @param track
 	 */
 	private void scheduleNext(Track track){
+		// save final destinations
 		if ((track != null && track.getScheduleId().equals("") || track == null) 
 				&& getDestination() != null 
 				&& getDestination().equals(getNextDestination())
@@ -613,8 +640,8 @@ public class Car extends RollingStock {
 		setScheduleId("");
 		setNextLoad("");
 		setNextWait(0);
-		setNextDestination(_previousNextDestination);	// revert to previous
-		setNextDestTrack(_previousNextDestTrack);		// revert to previous
+		setNextDestination(getPreviousNextDestination());	// revert to previous
+		setNextDestTrack(getPreviousNextDestTrack());		// revert to previous
 		if (isLoadGeneratedFromStaging()){
 			setLoadGeneratedFromStaging(false);
 			setLoad(CarLoads.instance().getDefaultEmptyName());
@@ -693,10 +720,10 @@ public class Car extends RollingStock {
 			setNextDestTrack(getNextDestination().getTrackById(a.getValue()));
 		}
 		if ((a = e.getAttribute("previousNextDestId")) != null){
-			_previousNextDestination = (LocationManager.instance().getLocationById(a.getValue()));
+			setPreviousNextDestination(LocationManager.instance().getLocationById(a.getValue()));
 		}
-		if (_previousNextDestination != null && (a = e.getAttribute("previousNextDestTrackId")) != null){
-			_previousNextDestTrack = (_previousNextDestination.getTrackById(a.getValue()));
+		if (getPreviousNextDestination() != null && (a = e.getAttribute("previousNextDestTrackId")) != null){
+			setPreviousNextDestTrack(getPreviousNextDestination().getTrackById(a.getValue()));
 		}
 		if ((a = e.getAttribute("rweDestId")) != null){
 			_rweDestination = LocationManager.instance().getLocationById(a.getValue());
@@ -758,10 +785,10 @@ public class Car extends RollingStock {
 			if (getNextDestTrack() != null)
 				e.setAttribute("nextDestTrackId", getNextDestTrack().getId());
 		}
-		if (_previousNextDestination != null){
-			e.setAttribute("previousNextDestId", _previousNextDestination.getId());
-			if (_previousNextDestTrack != null)
-				e.setAttribute("previousNextDestTrackId", _previousNextDestTrack.getId());
+		if (getPreviousNextDestination() != null){
+			e.setAttribute("previousNextDestId", getPreviousNextDestination().getId());
+			if (getPreviousNextDestTrack() != null)
+				e.setAttribute("previousNextDestTrackId", getPreviousNextDestTrack().getId());
 		}
 		if (getReturnWhenEmptyDestination() != null){
 			e.setAttribute("rweDestId", getReturnWhenEmptyDestination().getId());

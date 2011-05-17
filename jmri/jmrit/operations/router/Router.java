@@ -25,8 +25,8 @@ import jmri.jmrit.operations.trains.TrainManager;
  * three or more trains using any combination of interchanges and yards.
  * Currently the router is limited to five trains.
  * 
- * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.17 $
+ * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @version $Revision: 1.18 $
  */
 
 public class Router extends TrainCommon {
@@ -42,6 +42,7 @@ public class Router extends TrainCommon {
 	PrintWriter _buildReport = null;	// build report
 	
 	public boolean enable_staging = false; 	// using staging to route cars can be tricky, not recommended
+	private static boolean debugFlag = false;
 	
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 	
@@ -60,107 +61,119 @@ public class Router extends TrainCommon {
 	
 	/**
 	 * Attempts to set the car's destination if a next destination exists.
+	 * Only sets the car's destination if the train is part of the car's route.
 	 * @param car the car to route
 	 * @param train the first train to carry this car, can be null
-	 * @return true if successful.
+	 * @param buildReport PrintWriter for build report, and can be null
+	 * @return true if car can be routed.
 	 */
 	public boolean setDestination(Car car, Train train, PrintWriter buildReport){
-		if (car.getTrack() == null)
+		if (car.getTrack() == null || car.getNextDestination() == null)
 			return false;
 		_status = Car.OKAY;
 		_train = train;
 		_buildReport = buildReport;
 		// Only keep train if car is departing staging
+		/*
 		if (!car.getTrack().getLocType().equals(Track.STAGING))
 			_train = null;
-		if (car.getNextDestination() != null){
-			log.debug("Car ("+car.toString()+") at location ("+car.getLocationName()+", "+car.getTrackName()+") " +
-					"has next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+") car routing begins");
-			// Has the car arrived at the car's next destination?
-			if (car.getLocation() != null && car.getLocation().equals(car.getNextDestination()) 
-					&& (car.getTrack().equals(car.getNextDestTrack()) || car.getNextDestTrack() == null)){
-				log.debug("Car ("+car.toString()+") has arrieved at next destination");
-				car.setNextDestination(null);
-				car.setNextDestTrack(null);
-				return true;
-			}
-			// is car part of kernel?
-			if (car.getKernel() != null && !car.getKernel().isLead(car))
-				return false;
-			// note clone car has the car "next destination" as its destination
-			Car clone = clone(car);
-			//Note the following test doesn't check for car length which is what we want!
-			_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
-			if (!_status.equals(Car.OKAY)){
-				//log.info("Next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterNextDestFailed"),new Object[]{car.getNextDestinationName(),car.getNextDestTrackName(),car.toString(),_status}));
-				return false;
-			}
-			// check to see if car will move with new destination and a single train
-			Train testTrain = TrainManager.instance().getTrainForCar(clone);
-			// check to see if specific train can service car
+		 */
+
+		log.debug("Car ("+car.toString()+") at location ("+car.getLocationName()+", "+car.getTrackName()+") " +
+				"next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+") car routing begins");
+		if (_train != null)
+			log.debug("Routing using train ("+train.getName()+")");
+		// Has the car arrived at the car's next destination?
+		if (car.getLocation() != null && car.getLocation().equals(car.getNextDestination()) 
+				&& (car.getTrack().equals(car.getNextDestTrack()) || car.getNextDestTrack() == null)){
+			log.debug("Car ("+car.toString()+") has arrieved at next destination");
+			car.setNextDestination(null);
+			car.setNextDestTrack(null);
+			return true;
+		}
+		// is car part of kernel?
+		if (car.getKernel() != null && !car.getKernel().isLead(car))
+			return false;
+		// note clone car has the car "next destination" as its destination
+		Car clone = clone(car);
+		//Note the following test doesn't check for car length which is what we want!
+		_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
+		if (!_status.equals(Car.OKAY)){
+			//log.info("Next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterNextDestFailed"),new Object[]{car.getNextDestinationName(),car.getNextDestTrackName(),car.toString(),_status}));
+			return false;
+		}
+		// check to see if car will move with new destination and a single train
+		Train testTrain = TrainManager.instance().getTrainForCar(clone);
+		// check to see if specific train can service car out of staging
+		if (_train != null && !_train.servicesCar(clone) && car.getTrack().getLocType().equals(Track.STAGING)){
+			log.debug("Car ("+car.toString()+") destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
+					+") is not serviced by train ("+_train.getName()+") out of staging");
+			testTrain = null;
+		}
+		if (testTrain != null){
+			log.debug("Car ("+car.toString()+") destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
+					+") can be serviced by a single train ("+testTrain.getName()+")");
+			// now check to see if specific train can service car directly
 			if (_train != null && !_train.servicesCar(clone)){
-				log.debug("Car ("+car.toString()+") destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
-						+") is not serviced by train ("+_train.getName()+")");
-				testTrain = null;
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (clone.getDestinationName()+", "+clone.getDestinationTrackName())}));
+				return true;	// car can be routed, but not by this train!
 			}
-			if (testTrain != null){
-				log.debug("Car ("+car.toString()+") destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
-						+") can be serviced by a single train ("+testTrain.getName()+")");
-				_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
-				if (!_status.equals(Car.OKAY)){
-					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterCanNotDeliverCar"),new Object[]{car.toString(), clone.getDestinationName(), clone.getDestinationTrackName(), _status}));
-					//log.info("Can not deliver car ("+car.toString()+") to destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
-					//		+") due to "+_status);
-					// check to see if siding was full, if so, forward to yard if possible
-					if (Setup.isForwardToYardEnabled() && _status.contains(Car.LENGTH) && car.getLocation() != clone.getDestination()){
-						//log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
-						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSidingFull"),new Object[]{clone.getDestinationName()}));
-						Location dest = clone.getDestination();
-						List<String> yards = dest.getTracksByMovesList(Track.YARD);
-						log.debug("Found "+yards.size()+" yard(s) at destination ("+clone.getDestinationName()+")");
-						for (int i=0; i<yards.size(); i++){
-							Track track = dest.getTrackById(yards.get(i));
-							String status = car.setDestination(dest, track);
-							if (status.equals(Car.OKAY)){
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToYard"),new Object[]{car.toString(), track.getName(), dest.getName()}));
-								return true;
-							}
+			_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
+			if (!_status.equals(Car.OKAY)){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterCanNotDeliverCar"),new Object[]{car.toString(), clone.getDestinationName(), clone.getDestinationTrackName(), _status}));
+				//log.info("Can not deliver car ("+car.toString()+") to destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
+				//		+") due to "+_status);
+				// check to see if siding was full, if so, forward to yard if possible
+				if (Setup.isForwardToYardEnabled() && _status.contains(Car.LENGTH) && car.getLocation() != clone.getDestination()){
+					//log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSidingFull"),new Object[]{clone.getDestinationName()}));
+					Location dest = clone.getDestination();
+					List<String> yards = dest.getTracksByMovesList(Track.YARD);
+					log.debug("Found "+yards.size()+" yard(s) at destination ("+clone.getDestinationName()+")");
+					for (int i=0; i<yards.size(); i++){
+						Track track = dest.getTrackById(yards.get(i));
+						String status = car.setDestination(dest, track);
+						if (status.equals(Car.OKAY)){
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToYard"),new Object[]{car.toString(), track.getName(), dest.getName()}));
+							return true;
 						}
 					}
-					return false;
 				}
-				return true;
-			} else if (Setup.isCarRoutingEnabled()) {
-				log.debug("Car ("+car.toString()+") next destination ("+car.getNextDestinationName()+") is not served by a single train");
-				firstLocationTrackPairs.clear();
-				lastLocationTrackPairs.clear();
-				otherLocationTrackPairs.clear();
-				// first try using 2 trains and an interchange track to route the car
-				if (setCarDestinationInterchange(car)){
-					log.debug("Was able to set route via interchange ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
-				// now try 2 trains and a yard track
-				} else if (setCarDestinationYard(car)){
-					log.debug("Was able to set route via yard ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
-					// now try 2 trains and a staging track
-				} else if (setCarDestinationStaging(car)){
-					log.debug("Was able to set route via staging ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
-				// now try 3 or more trains to route car
-				} else if (setCarDestinationMultipleTrains(car)){
-					log.debug("Was able to set multiple train route for car ("+car.toString()+")");
-				} else {
-					log.debug("Wasn't able to set route for car ("+car.toString()+")");
-					_status = "Not able to route car";
-					return false;	// maybe next time
-				}
-			} else {
-				log.warn("Car ("+car.toString()+") next destination ("+car.getNextDestinationName()+") is not served directly by any train");
-				car.setNextDestination(null);
-				car.setNextDestTrack(null);
+				return false;
 			}
+			return true;
+		} else if (Setup.isCarRoutingEnabled()) {
+			log.debug("Car ("+car.toString()+") next destination ("+car.getNextDestinationName()+") is not served by a single train");
+			firstLocationTrackPairs.clear();
+			lastLocationTrackPairs.clear();
+			otherLocationTrackPairs.clear();
+			// first try using 2 trains and an interchange track to route the car
+			if (setCarDestinationInterchange(car)){
+				log.debug("Was able to find route via interchange ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
+				// now try 2 trains and a yard track
+			} else if (setCarDestinationYard(car)){
+				log.debug("Was able to find route via yard ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
+				// now try 2 trains and a staging track
+			} else if (setCarDestinationStaging(car)){
+				log.debug("Was able to find route via staging ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
+				// now try 3 or more trains to route car
+			} else if (setCarDestinationMultipleTrains(car)){
+				log.debug("Was able to find multiple train route for car ("+car.toString()+")");
+			} else {
+				log.debug("Wasn't able to set route for car ("+car.toString()+")");
+				_status = "not able to route car";
+				return false;	// maybe next time
+			}
+		} else {
+			log.warn("Car ("+car.toString()+") next destination ("+car.getNextDestinationName()+") is not served directly by any train");
+			car.setNextDestination(null);
+			car.setNextDestTrack(null);
+			return false;
 		}
 		return true; // car's destination has been set
 	}
+		
 	
 	public String getStatus(){
 		return _status;
@@ -208,8 +221,6 @@ public class Router extends TrainCommon {
 		return false;
 	}
 	
-	private static boolean debugFlag = false;
-	
 	private boolean setCarDestinationTwoTrains(Car car, String trackType){
 		if (!Setup.isCarRoutingEnabled()){
 			log.debug("Car routing is disabled");
@@ -255,27 +266,30 @@ public class Router extends TrainCommon {
 						// test to see if car can be transported from current location to this yard or interchange
 						Train firstTrain = TrainManager.instance().getTrainForCar(ts);
 						String status = ts.testDestination(location, track);
-						// Is there a "first" train for this car?
-						if (_train != null && !_train.servicesCar(ts))
+						// Is there a "first" train for this car out of staging?
+						if (_train != null && !_train.servicesCar(ts) && car.getTrack().getLocType().equals(Track.STAGING))
 							firstTrain = null;	// can't use this train
-						// restore car's destination
-						ts.setDestination(saveDestation);
-						ts.setDestinationTrack(saveDestTrack);
 						if (status.equals(Car.OKAY) && firstTrain != null){
+							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute2ForCar"),new Object[]{car.toString(),car.getLocationName(),ts.getDestinationName(),car.getNextDestinationName()}));
+							// only set car's destination if specific train can service car
+							if (_train != null && !_train.servicesCar(ts)){
+								addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (ts.getDestinationName()+", "+ts.getDestinationTrackName())}));
+								return true;
+							}
 							// check to see if intermediate track is staging
 							if (track.getLocType().equals(Track.STAGING))
 								track = null;	// don't specify which track in staging is to be used, decide later
 							car.setDestination(location, track);  // forward car to this intermediate destination and track.
 							if (debugFlag)
 								log.debug("Train ("+firstTrain.getName()+") can service car ("+car.toString()+") from current location ("+car.getLocationName()+", "+car.getTrackName()+") to "+trackType+" ("+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
-							//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+car.getNextDestinationName());
-							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute2ForCar"),new Object[]{car.toString(),car.getLocationName(),car.getDestinationName(),car.getNextDestinationName()}));
 							return true;
 						}
+						// restore car's destination
+						ts.setDestination(saveDestation);
+						ts.setDestinationTrack(saveDestTrack);
 					} else if (debugFlag){
 						log.debug("Could not find a train to service car from "+trackType+" ("+location.getName()+", "+track.getName()+") to destination ("+car.getNextDestinationName()+")");
 					}
-
 				}
 			}
 		}
@@ -320,8 +334,8 @@ public class Router extends TrainCommon {
 					ts.setDestination(location);
 					ts.setDestinationTrack(track);
 					Train firstTrain = TrainManager.instance().getTrainForCar(ts);
-					// Is there a train assigned to carry this car?
-					if (_train != null && !_train.servicesCar(ts))
+					// Is there a train assigned to carry this car out of staging?
+					if (_train != null && !_train.servicesCar(ts) && car.getTrack().getLocType().equals(Track.STAGING))
 						firstTrain = null;
 					if (firstTrain != null){
 						if (debugFlag)
@@ -376,14 +390,21 @@ public class Router extends TrainCommon {
 						// check to see if track is staging
 						if (ts.getTrack().getLocType().equals(Track.STAGING))
 							ts.setTrack(null);	// don't specify which track in staging is to be used, decide later
-						log.debug("Found 3 train route, setting car destination ("+ts.getLocationName()+", "+ts.getTrackName()+")");				
+						log.debug("Found 3 train route, setting car destination ("+ts.getLocationName()+", "+ts.getTrackName()+")");
+						addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute3ForCar"),new Object[]{car.toString(),car.getLocationName(),ts.getLocationName(),ts.getDestinationName(),car.getNextDestinationName()}));
+						// only set car's destination if specific train can service car
+						Car ts2 = clone(car);
+						ts2.setDestination(fltp.getLocation());
+						ts2.setDestinationTrack(fltp.getTrack());
+						if (_train != null && !_train.servicesCar(ts2)){
+							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getTrack().getName())}));
+							return true;
+						}
 						String status = car.setDestination(ts.getLocation(), ts.getTrack());
-						if (status.equals(Car.OKAY)){
-							//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+ts.getDestinationName()+"->"+car.getNextDestinationName());
-							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute3ForCar"),new Object[]{car.toString(),car.getLocationName(),car.getDestinationName(),ts.getDestinationName(),car.getNextDestinationName()}));
+						if (status.equals(Car.OKAY)){							
 							return true;	// done 3 train routing
 						} else {
-							log.debug("Could not set car ("+car.toString()+") destination");
+							log.debug("Could not set car ("+car.toString()+") destination ("+ts.getLocation()+", "+ts.getTrack()+") status "+status);
 						}
 					}
 				}
@@ -411,14 +432,23 @@ public class Router extends TrainCommon {
 							Train middleTrain3 = TrainManager.instance().getTrainForCar(ts);
 							if (middleTrain3 != null){
 								log.debug("Train 3 ("+middleTrain3.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());
-								String status = car.setDestination(fltp.getLocation(),fltp.getTrack());
+								addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute4ForCar"),new Object[]{car.toString(),car.getLocationName(),fltp.getLocation(),mltp.getLocation().getName(),lltp.getLocation().getName(),car.getNextDestinationName()}));
+								// only set car's destination if specific train can service car
+								Car ts2 = clone(car);
+								ts2.setDestination(fltp.getLocation());
+								ts2.setDestinationTrack(fltp.getTrack());
+								if (_train != null && !_train.servicesCar(ts2)){
+									addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getTrack().getName())}));
+									return true;
+								}
 								// check to see if track is staging
-								if (fltp.getTrack().getLocType().equals(Track.STAGING))
-									car.setDestination(fltp.getLocation(),null);	// don't specify which track in staging is to be used, decide later
+								Track track = fltp.getTrack();
+								if (track.getLocType().equals(Track.STAGING))
+									track = null;	// don't specify which track in staging is to be used, decide later
+								String status = car.setDestination(fltp.getLocation(), track);
 								log.debug("Found 4 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");					
 								if (status.equals(Car.OKAY)){
 									//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestinationName());
-									addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute4ForCar"),new Object[]{car.toString(),car.getLocationName(),car.getDestinationName(),mltp.getLocation().getName(),lltp.getLocation().getName(),car.getNextDestinationName()}));
 									return true;	// done 4 train routing
 								} else {
 									log.debug("Could not set car ("+car.toString()+") destination");
@@ -461,15 +491,24 @@ public class Router extends TrainCommon {
 									// does a train service these two locations?
 									Train middleTrain4 = TrainManager.instance().getTrainForCar(ts);
 									if (middleTrain4 != null){
-										log.debug("Train 4 ("+middleTrain4.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());										
-										String status = car.setDestination(fltp.getLocation(),fltp.getTrack());
+										log.debug("Train 4 ("+middleTrain4.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());	
+										addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute5ForCar"),new Object[]{car.toString(),car.getLocationName(),fltp.getLocation().getName(),mltp1.getLocation().getName(),mltp2.getLocation().getName(),lltp.getLocation().getName(),car.getNextDestinationName()}));
+										// only set car's destination if specific train can service car
+										Car ts2 = clone(car);
+										ts2.setDestination(fltp.getLocation());
+										ts2.setDestinationTrack(fltp.getTrack());
+										if (_train != null && !_train.servicesCar(ts2)){
+											addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getTrack().getName())}));
+											return true;
+										}
 										// check to see if track is staging
-										if (fltp.getTrack().getLocType().equals(Track.STAGING))
-											car.setDestination(fltp.getLocation(),null);	// don't specify which track in staging is to be used, decide later
+										Track track = fltp.getTrack();
+										if (track.getLocType().equals(Track.STAGING))
+											track = null;	// don't specify which track in staging is to be used, decide later
+										String status = car.setDestination(fltp.getLocation(), track);
 										log.debug("Found 5 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");			
 										if (status.equals(Car.OKAY)){
 											//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp1.getLocation().getName()+"->"+mltp2.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestinationName());
-											addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute5ForCar"),new Object[]{car.toString(),car.getLocationName(),car.getDestinationName(),mltp1.getLocation().getName(),mltp2.getLocation().getName(),lltp.getLocation().getName(),car.getNextDestinationName()}));
 											return true;	// done 5 train routing
 										} else {
 											log.debug("Could not set car ("+car.toString()+") destination");

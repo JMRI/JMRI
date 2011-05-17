@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.157 $
+ * @version             $Revision: 1.158 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1089,6 +1089,9 @@ public class TrainBuilder extends TrainCommon{
 					// can this car be picked up?
 					if(!checkPickUpTrainDirection(car, rl))
 						continue; // no
+					// save next destination and track values in case of train reset
+					car.setPreviousNextDestination(car.getNextDestination());
+					car.setPreviousNextDestTrack(car.getNextDestTrack());
 					// check for car order?
 					car = getCarOrder(car);
 					// is car departing staging and generate custom load?
@@ -1108,22 +1111,14 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{car.toString(),(car.getNextDestinationName()+", "+car.getNextDestTrackName())}));
 						if (!Router.instance().setDestination(car, train, buildReport)){
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
-							car.setDestination(null, null);
-							// don't move car if routing issue was track space
-							if (Router.instance().getStatus().contains(Car.LENGTH))
-								continue;
-						}
-						// did the router assign a destination?
-						if (checkCarForDestinationAndTrack(car, rl, routeIndex)){
-							// did the car get assigned to this train?
-							if (car.getTrain() != train && Setup.isBuildAggressive()){
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarNotAssignedReset"),new Object[]{car.toString(), train.getName()}));
-								car.setDestination(null,null);
-								continue;	// don't move this car
-							}
+							// don't move car if routing issue was track space but not departing staging
+							if (!Router.instance().getStatus().contains(Car.LENGTH) 
+									|| (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null))
+								// move this car, routing failed!
+								findDestinationAndTrack(car, rl, routeIndex, routeList.size());
 						} else {
-							// routing failed, move this car to new location
-							findDestinationAndTrack(car, rl, routeIndex, routeList.size());
+							// did the router assign a destination?
+							checkCarForDestinationAndTrack(car, rl, routeIndex);
 						}
 					}
 					// does car have a destination?
@@ -1627,11 +1622,12 @@ public class TrainBuilder extends TrainCommon{
 						car.setNextDestTrack(track);
 						// test to see if destination is reachable
 						if (Router.instance().setDestination(car, train, buildReport)){
-							car.setScheduleId(track.getCurrentScheduleItem().getId());
 							// is car part of kernel?
 							car.updateKernel();
-							if (car.getDestination() != track.getLocation())
+							if (car.getDestination() != track.getLocation()){
+								car.setScheduleId(track.getCurrentScheduleItem().getId());
 								track.bumpSchedule();
+							}
 							return;	//done
 						} else {
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
