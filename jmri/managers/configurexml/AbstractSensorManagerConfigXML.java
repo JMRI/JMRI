@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -36,13 +36,18 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         Element sensors = new Element("sensors");
         setStoreElementClass(sensors);
         SensorManager tm = (SensorManager) o;
+        if(tm.getDefaultSensorDebounceGoingActive()>0 || tm.getDefaultSensorDebounceGoingInActive()>0){
+            Element elem = new Element("globalDebounceTimers");
+            elem.addContent(new Element("goingActive").addContent(String.valueOf(tm.getDefaultSensorDebounceGoingActive())));
+            elem.addContent(new Element("goingInActive").addContent(String.valueOf(tm.getDefaultSensorDebounceGoingInActive())));
+            sensors.addContent(elem);
+        }
         if (tm!=null) {
             java.util.Iterator<String> iter =
                                     tm.getSystemNameList().iterator();
 
             // don't return an element if there are not sensors to include
             if (!iter.hasNext()) return null;
-            
             // store the sensors
             while (iter.hasNext()) {
                 String sname = iter.next();
@@ -57,7 +62,16 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                             .setAttribute("inverted", inverted);
                 elem.addContent(new Element("systemName").addContent(sname));
                 log.debug("store sensor "+sname);
-
+                if(s.useDefaultTimerSettings()){
+                    elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
+                } else {
+                    if(s.getSensorDebounceGoingActiveTimer()>0 || s.getSensorDebounceGoingInActiveTimer()>0){
+                        Element timer = new Element("debounceTimers");
+                        timer.addContent(new Element("goingActive").addContent(String.valueOf(s.getSensorDebounceGoingActiveTimer())));
+                        timer.addContent(new Element("goingInActive").addContent(String.valueOf(s.getSensorDebounceGoingInActiveTimer())));
+                        elem.addContent(timer);
+                    }
+                }
                 // store common part
                 storeCommon(s, elem);
                 
@@ -96,7 +110,32 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         List<Element> sensorList = sensors.getChildren("sensor");
         if (log.isDebugEnabled()) log.debug("Found "+sensorList.size()+" sensors");
         SensorManager tm = InstanceManager.sensorManagerInstance();
-
+        long goingActive = 0L;
+        long goingInActive = 0L;
+        if (sensors.getChild("globalDebounceTimers")!=null){
+            Element timer = sensors.getChild("debounceTimers");
+            try{
+                if(timer.getChild("goingActive")!=null){
+                    String active = timer.getChild("goingActive").getText();
+                    goingActive = Long.valueOf(active);
+                    tm.setDefaultSensorDebounceGoingActive(goingActive);
+                }
+            } catch (NumberFormatException ex) {
+                log.error(ex.toString());
+            }
+            
+            try{
+                if(timer.getChild("goingInActive")!=null){
+                    String inActive = timer.getChild("goingInActive").getText();
+                    goingInActive = Long.valueOf(inActive);
+                    tm.setDefaultSensorDebounceGoingInActive(goingInActive);
+                }
+            } catch (NumberFormatException ex) {
+                log.error(ex.toString());
+            }
+            
+        }
+    
         for (int i=0; i<sensorList.size(); i++) {
             String sysName = getSystemName(sensorList.get(i));
             if (sysName == null) {
@@ -128,6 +167,33 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             // load common parts
             loadCommon(s, sensorList.get(i));
             
+            if(sensorList.get(i).getChild("debounceTimers")!=null){
+                Element timer = sensorList.get(i).getChild("debounceTimers");
+                try{
+                    if(timer.getChild("goingActive")!=null){
+                        String active = timer.getChild("goingActive").getText();
+                        s.setSensorDebounceGoingActiveTimer(Long.valueOf(active));
+                    }
+                } catch (NumberFormatException ex) {
+                    log.error(ex.toString());
+                }
+                
+                try{
+                    if(timer.getChild("goingInActive")!=null){
+                        String inActive = timer.getChild("goingInActive").getText();
+                        s.setSensorDebounceGoingInActiveTimer(Long.valueOf(inActive));
+                    }
+                } catch (NumberFormatException ex) {
+                    log.error(ex.toString());
+                }
+            }
+            
+            if (sensorList.get(i).getChild("useGlobalDebounceTimer")!=null){
+                if(sensorList.get(i).getChild("useGlobalDebounceTimer").getText().equals("yes")){
+                    s.useDefaultTimerSettings(true);
+                }
+            }
+
             s.setInverted(inverted);
         }
         return result;

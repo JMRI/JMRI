@@ -9,6 +9,12 @@ import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,7 +32,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -61,7 +67,6 @@ public class SensorTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new jmri.jmrit.beantable.sensor.SensorTableDataModel(senManager);
-        //m.setManager(senManager);
     }
 
     protected void setTitle() {
@@ -220,6 +225,92 @@ public class SensorTableAction extends AbstractTableAction {
                     new Object[] {sysName}),
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
+    protected void setDefaultDebounce(JFrame _who){
+        JTextField activeField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingActive()),4);
+        JTextField inActiveField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingInActive()),4);
+        
+        JPanel active = new JPanel();
+        active.add(new JLabel(rb.getString("SensorActiveTimer")));
+        active.add(activeField);
+        
+        JPanel inActive = new JPanel();
+        inActive.add(new JLabel(rb.getString("SensorInactiveTimer")));
+        inActive.add(inActiveField);
+        
+        int retval = JOptionPane.showOptionDialog(_who,
+                                          rb.getString("SensorGlobalDebounceMessageBox") , rb.getString("SensorGlobalDebounceMessageTitle"),
+                                          0, JOptionPane.INFORMATION_MESSAGE, null,
+                                          new Object[]{"Cancel", "OK", active, inActive}, null );
+        if (retval != 1) {
+            return;
+        }
+        
+        //We will allow the turnout manager to handle checking if the values have changed
+        try {    
+            long goingActive = Long.valueOf(activeField.getText());
+            senManager.setDefaultSensorDebounceGoingActive(goingActive);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(_who, rb.getString("SensorDebounceActError")+"\n" + activeField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        try {    
+            long goingInActive = Long.valueOf(inActiveField.getText());
+            senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(_who, rb.getString("SensorDebounceActError")+"\n" + inActiveField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+        m.fireTableDataChanged();
+    }
+    
+    public void setMenuBar(BeanTableFrame f){
+        final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
+        JMenuBar menuBar = f.getJMenuBar();
+
+        JMenu debounceMenu = new JMenu(rb.getString("Debounce"));
+        JMenuItem item = new JMenuItem("Defaults...");
+        debounceMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    setDefaultDebounce(finalF);
+        	}
+            });
+        menuBar.add(debounceMenu);
+    }
+    
+    boolean showDebounce = false;
+    void showDebounceChanged() {
+        jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel)m;
+        a.showDebounce = showDebounceBox.isSelected();
+        m.fireTableStructureChanged(); // update view
+    }
+    
+    JCheckBox showDebounceBox = new JCheckBox(rb.getString("SensorDebounceCheckBox"));
+
+    public void addToFrame(BeanTableFrame f) {
+        f.addToBottomBox(showDebounceBox, this.getClass().getName());
+        showDebounceBox.setToolTipText(rb.getString("SensorDebounceToolTip"));
+        showDebounceBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    showDebounceChanged();
+                }
+            });
+    }
+    
+    public void addToPanel(AbstractTableTabAction f) {
+        String systemPrefix = ConnectionNameFromSystemName.getConnectionName(senManager.getSystemPrefix());
+        
+        if (senManager.getClass().getName().contains("ProxySensorManager"))
+            systemPrefix = "All";
+        f.addToBottomBox(showDebounceBox, systemPrefix);
+        showDebounceBox.setToolTipText(rb.getString("SensorDebounceToolTip"));
+        showDebounceBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    showDebounceChanged();
+                }
+            });
+    
     }
     
     public void setMessagePreferencesDetails(){

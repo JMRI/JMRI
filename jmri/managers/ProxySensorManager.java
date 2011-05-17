@@ -5,14 +5,12 @@ package jmri.managers;
 import jmri.Sensor;
 import jmri.SensorManager;
 
-import jmri.managers.AbstractManager;
-
 /**
  * Implementation of a SensorManager that can serves as a proxy
  * for multiple system-specific implementations. 
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -115,6 +113,25 @@ public class ProxySensorManager extends AbstractProxyManager
             }
         }
         return null;
+    }
+    
+    public long getDefaultSensorDebounceGoingActive(){
+        return ((SensorManager)getMgr(0)).getDefaultSensorDebounceGoingActive();
+    }
+    public long getDefaultSensorDebounceGoingInActive(){
+        return ((SensorManager)getMgr(0)).getDefaultSensorDebounceGoingInActive();
+    }
+    
+    public void setDefaultSensorDebounceGoingActive(long timer){
+        for (int i=0; i<nMgrs(); i++) {
+            ((SensorManager)getMgr(i)).setDefaultSensorDebounceGoingActive(timer);
+        }
+    }
+    
+    public void setDefaultSensorDebounceGoingInActive(long timer){
+        for (int i=0; i<nMgrs(); i++) {
+            ((SensorManager)getMgr(i)).setDefaultSensorDebounceGoingInActive(timer);
+        }
     }
 
     // initialize logging

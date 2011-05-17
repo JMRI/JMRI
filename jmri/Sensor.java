@@ -21,7 +21,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public interface Sensor extends NamedBean {
 
@@ -82,6 +82,15 @@ public interface Sensor extends NamedBean {
      * eventually be garbage-collected.
      */
     public void dispose();  // remove _all_ connections!
+    
+    public void setSensorDebounceGoingActiveTimer(long timer);
+    public long getSensorDebounceGoingActiveTimer();
+    
+    public void setSensorDebounceGoingInActiveTimer(long timer);
+    public long getSensorDebounceGoingInActiveTimer();
+    
+    public void useDefaultTimerSettings(boolean boo);
+    public boolean useDefaultTimerSettings();
 
 }
 

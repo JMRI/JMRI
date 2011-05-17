@@ -21,7 +21,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public interface SensorManager extends Manager {
 
@@ -113,6 +113,14 @@ public interface SensorManager extends Manager {
     */
      
     public String getNextValidAddress(String curAddress, String prefix);
+    
+    
+    public long getDefaultSensorDebounceGoingActive();
+    public long getDefaultSensorDebounceGoingInActive();
+    
+    public void setDefaultSensorDebounceGoingActive(long timer);
+    
+    public void setDefaultSensorDebounceGoingInActive(long timer);
 }
 
 

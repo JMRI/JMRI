@@ -3,12 +3,13 @@
 package jmri.managers;
 
 import jmri.*;
-import jmri.managers.AbstractManager;
+
+import java.util.Enumeration;
 
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -158,6 +159,36 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         }
     }
     
+    protected long sensorDebounceGoingActive = 0L;
+    protected long sensorDebounceGoingInActive = 0L;
+    
+    public long getDefaultSensorDebounceGoingActive() { return sensorDebounceGoingActive; }
+    public long getDefaultSensorDebounceGoingInActive() { return sensorDebounceGoingInActive; }
+    
+    public void setDefaultSensorDebounceGoingActive(long timer) {
+        if(timer == sensorDebounceGoingActive)
+            return;
+        sensorDebounceGoingActive=timer;
+        Enumeration<String> en = _tsys.keys();
+        while (en.hasMoreElements()) {
+            Sensor sen = (Sensor)_tsys.get(en.nextElement());
+            if(sen.useDefaultTimerSettings())
+                sen.setSensorDebounceGoingActiveTimer(timer);
+        }
+    }
+    
+    public void setDefaultSensorDebounceGoingInActive(long timer) {
+        if(timer == sensorDebounceGoingInActive)
+            return;
+        sensorDebounceGoingInActive=timer;
+        Enumeration<String> en = _tsys.keys();
+        while (en.hasMoreElements()) {
+            Sensor sen = (Sensor)_tsys.get(en.nextElement());
+            if(sen.useDefaultTimerSettings())
+                sen.setSensorDebounceGoingInActiveTimer(timer);
+        }
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManager.class.getName());
 }
 

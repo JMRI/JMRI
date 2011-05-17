@@ -10,7 +10,7 @@ import jmri.Sensor;
  * Sensor system names are always upper case.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2009
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -32,10 +32,100 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     public int getKnownState() {return _knownState;}
 
+    protected long sensorDebounceGoingActive = 0L;
+    protected long sensorDebounceGoingInActive = 0L;
+    protected boolean useDefaultTimerSettings = false;
+    
+    public void setSensorDebounceGoingActiveTimer(long time) { 
+        sensorDebounceGoingActive = time; 
+    }
+    public long getSensorDebounceGoingActiveTimer() { return sensorDebounceGoingActive; }
+    
+    public void setSensorDebounceGoingInActiveTimer(long time) { 
+        sensorDebounceGoingInActive = time;
+    }
+    public long getSensorDebounceGoingInActiveTimer() { return sensorDebounceGoingInActive; }
+    
+    public void useDefaultTimerSettings(boolean boo) {
+        if(boo==useDefaultTimerSettings)
+            return;
+        useDefaultTimerSettings = boo;
+        if(useDefaultTimerSettings){
+            sensorDebounceGoingActive = jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingActive();
+            sensorDebounceGoingInActive =  jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive();
+        }
+    }
+    
+    public boolean useDefaultTimerSettings() { return useDefaultTimerSettings; }
+    
+    protected Thread thr;
+    protected Runnable r;
+    /* 
+     * Before going active or inactive or checking that we can go active, we will wait 500ms
+     * for things to settle down to help prevent a race condition
+     */
+    protected void sensorDebounce(){
+        final int lastKnownState = _knownState;
+        r = new Runnable() {
+            public void run() {
+                try {
+                    long sensorDebounceTimer = sensorDebounceGoingInActive;
+                    if(_rawState==ACTIVE)
+                        sensorDebounceTimer = sensorDebounceGoingActive;
+                    Thread.sleep(sensorDebounceTimer);
+                    restartcount=0;
+                    _knownState=_rawState;
+                    firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));
+                    
+                } catch (InterruptedException ex) {
+                    restartcount ++;
+                    Thread.currentThread().interrupted();
+                }
+            }
+        };
+        
+        thr = new Thread(r);
+        thr.start();
+    }
+    
+    int restartcount = 0;
     // setKnownState() for implementations that can't
     // actually do it on the layout. Not intended for use by implementations
     // that can
     public void setKnownState(int s) throws jmri.JmriException {
+        if (_rawState != s){
+            if(((s==ACTIVE) && (sensorDebounceGoingActive>0)) || 
+                ((s==INACTIVE) && (sensorDebounceGoingInActive>0))){
+            
+                int oldRawState = _rawState;
+                _rawState = s;
+                if (thr!=null){
+                    try {
+                        thr.interrupt();
+                    } catch (Exception ie) {
+                    //Can be considered normal.
+                    }
+                }
+                System.out.println(restartcount);
+                if((restartcount!=0) && (restartcount % 10 ==0)){
+                    log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
+                }
+                firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
+                sensorDebounce();
+                return;
+            } else {
+                 //we shall try to stop the thread as one of the state changes 
+                 //might start the thread, while the other may not.
+                if(thr!=null){
+                    try {
+                        thr.interrupt();
+                    } catch (Exception ie) {
+                    //Can be considered normal.
+                    }
+                }
+                _rawState=s;
+            }
+        } 
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
@@ -44,14 +134,51 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     /**
-     * Set out internal state information, and notify bean listeners.
+     * Set our internal state information, and notify bean listeners.
      */
     public void setOwnState(int s) {
+        if (_rawState != s){
+            if(((s==ACTIVE) && (sensorDebounceGoingActive>0)) || 
+                ((s==INACTIVE) && (sensorDebounceGoingInActive>0))){
+            
+                int oldRawState = _rawState;
+                _rawState = s;
+                if (thr!=null){
+                    try {
+                        thr.interrupt();
+                    } catch (Exception ie) {
+                    //Can be considered normal.
+                    }
+                }
+
+                if((restartcount!=0) && (restartcount % 10 ==0)){
+                    log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
+                }
+                firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
+                sensorDebounce();
+                return;
+            } else {
+                 //we shall try to stop the thread as one of the state changes 
+                 //might start the thread, while the other may not.
+                if(thr!=null){
+                    try {
+                        thr.interrupt();
+                    } catch (Exception ie) {
+                    //Can be considered normal.
+                    }
+                }
+                _rawState=s;
+            }
+        } 
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
             firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
         }
+    }
+    
+    public int get_rawState(){
+        return _rawState;
     }
 
     /**
@@ -107,6 +234,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     
     // internal data members
     protected int _knownState     = UNKNOWN;
+    protected int _rawState       = UNKNOWN;
 
 }
 
