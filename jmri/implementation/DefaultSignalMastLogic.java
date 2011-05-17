@@ -11,6 +11,7 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
 
+
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
@@ -34,7 +35,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -720,7 +721,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAspect());
         }
         if(log.isDebugEnabled())
-            log.debug(advancedAspect.toString() + " distant aspect is " + destination.getAspect());
+            log.debug("distant aspect is " + destination.getAspect());
 
         if (advancedAspect!=null){
             String aspect = stopAspect;
@@ -1662,9 +1663,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
                 
                 try {
-                    ArrayList<LayoutBlock> lblks = InstanceManager.layoutBlockManagerInstance().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST);
-                    
-                    ConnectivityUtil connection = new ConnectivityUtil(facingBlock.getMaxConnectedPanel());
+                    ArrayList<LayoutBlock> lblks = InstanceManager.layoutBlockManagerInstance().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST);                    
+                    ConnectivityUtil connection;
                     ArrayList<LayoutTurnout> turnoutlist;//=connection.getTurnoutList(protectingBlock.getBlock(), facingBlock.getBlock(), lblks.get(0).getBlock());
                     ArrayList<Integer> throwlist;//=connection.getTurnoutSettingList();
 
