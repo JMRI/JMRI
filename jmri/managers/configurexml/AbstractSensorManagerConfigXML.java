@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -42,42 +42,40 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             elem.addContent(new Element("goingInActive").addContent(String.valueOf(tm.getDefaultSensorDebounceGoingInActive())));
             sensors.addContent(elem);
         }
-        if (tm!=null) {
-            java.util.Iterator<String> iter =
-                                    tm.getSystemNameList().iterator();
+        java.util.Iterator<String> iter =
+                                tm.getSystemNameList().iterator();
 
-            // don't return an element if there are not sensors to include
-            if (!iter.hasNext()) return null;
-            // store the sensors
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname==null) log.error("System name null during store");
-                log.debug("system name is "+sname);
-                Sensor s = tm.getBySystemName(sname);
+        // don't return an element if there are not sensors to include
+        if (!iter.hasNext()) return null;
+        // store the sensors
+        while (iter.hasNext()) {
+            String sname = iter.next();
+            if (sname==null) log.error("System name null during store");
+            log.debug("system name is "+sname);
+            Sensor s = tm.getBySystemName(sname);
 
-                String inverted = s.getInverted() ? "true" : "false";
+            String inverted = s.getInverted() ? "true" : "false";
 
-                Element elem = new Element("sensor")
-                            .setAttribute("systemName", sname) // deprecated for 2.9.* series
-                            .setAttribute("inverted", inverted);
-                elem.addContent(new Element("systemName").addContent(sname));
-                log.debug("store sensor "+sname);
-                if(s.useDefaultTimerSettings()){
-                    elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
-                } else {
-                    if(s.getSensorDebounceGoingActiveTimer()>0 || s.getSensorDebounceGoingInActiveTimer()>0){
-                        Element timer = new Element("debounceTimers");
-                        timer.addContent(new Element("goingActive").addContent(String.valueOf(s.getSensorDebounceGoingActiveTimer())));
-                        timer.addContent(new Element("goingInActive").addContent(String.valueOf(s.getSensorDebounceGoingInActiveTimer())));
-                        elem.addContent(timer);
-                    }
+            Element elem = new Element("sensor")
+                        .setAttribute("systemName", sname) // deprecated for 2.9.* series
+                        .setAttribute("inverted", inverted);
+            elem.addContent(new Element("systemName").addContent(sname));
+            log.debug("store sensor "+sname);
+            if(s.useDefaultTimerSettings()){
+                elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
+            } else {
+                if(s.getSensorDebounceGoingActiveTimer()>0 || s.getSensorDebounceGoingInActiveTimer()>0){
+                    Element timer = new Element("debounceTimers");
+                    timer.addContent(new Element("goingActive").addContent(String.valueOf(s.getSensorDebounceGoingActiveTimer())));
+                    timer.addContent(new Element("goingInActive").addContent(String.valueOf(s.getSensorDebounceGoingInActiveTimer())));
+                    elem.addContent(timer);
                 }
-                // store common part
-                storeCommon(s, elem);
-                
-                sensors.addContent(elem);
-
             }
+            // store common part
+            storeCommon(s, elem);
+
+            sensors.addContent(elem);
+
         }
         return sensors;
     }

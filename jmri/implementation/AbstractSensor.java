@@ -10,7 +10,7 @@ import jmri.Sensor;
  * Sensor system names are always upper case.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2009
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -79,7 +79,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                     
                 } catch (InterruptedException ex) {
                     restartcount ++;
-                    Thread.currentThread().interrupted();
                 }
             }
         };
@@ -106,7 +105,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                     //Can be considered normal.
                     }
                 }
-                System.out.println(restartcount);
                 if((restartcount!=0) && (restartcount % 10 ==0)){
                     log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
                 }
