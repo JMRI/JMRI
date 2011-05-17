@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener
@@ -484,13 +484,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 */
 	@SuppressWarnings("null")
 	public void updatePathsUsingPanel(LayoutEditor panel) {
+        if (panel==null) {
+            log.error("Null panel in call to updatePathsUsingPanel");
+		}
 		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
-		if (panel==null) {
-			log.error("Null panel in call to updatePathsUsingPanel");
-		}
-		else {
-			updateBlockPaths(c, panel);
-		}
+        updateBlockPaths(c, panel);
+
 	}
     
 	private void updateBlockPaths(ArrayList<LayoutConnectivity> c, LayoutEditor panel) {
@@ -565,7 +564,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 //					tmpblock = lc.getBlock1();
 
 				}
-				//if (newp != null) 
 				block.addPath(newp);
                 if(enableAddRouteLogging)
                     System.out.println("From " + this.getDisplayName() + " updateBlock Paths");
@@ -1449,8 +1447,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if ((neighbours.get(i).getBlock()==removedBlock)){
                  //Was previously before the for loop.
                 //Pos move the remove list and remove thoughpath out of this for loop.
-                if (layoutBlock!=null)
-                    layoutBlock.removePropertyChangeListener(this);
+                layoutBlock.removePropertyChangeListener(this);
                 if(enableDeleteRouteLogging)
                     log.info("From " + this.getDisplayName() + " block " + removedBlock.getDisplayName() + " found and removed");
                 LayoutBlock layoutBlockToNotify = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(neighbours.get(i).getBlock());
@@ -2700,7 +2697,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     final static int NONE = 0x08;
     int metric = 100;
     
-    private class RoutingPacket{
+    private static class RoutingPacket{
         int packetType;
         Block block;
         int hopCount = -1;
@@ -2751,7 +2748,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return decodePacketFlow(neighbours.get(i).getPacketFlow());
     }
     
-    protected boolean isNeighbourMutual(int i){
+    public boolean isNeighbourMutual(int i){
         return neighbours.get(i).isMutual();
     }
     
