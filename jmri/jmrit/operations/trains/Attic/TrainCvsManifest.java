@@ -185,7 +185,7 @@ public class TrainCvsManifest extends TrainCommon {
 					// Is the next location the same as the previous?
 					RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
 					String nextRouteLocationName = splitString(rlNext.getName());
-					if (!routeLocationName.equals(nextRouteLocationName) && newWork){
+					if (!routeLocationName.equals(nextRouteLocationName)){
 						if (newWork){
 							addLine(fileOut, TD+locationName+del+rl.getTrainDirectionString());
 							addLine(fileOut, TL+rl.getTrainLength()+del+emptyCars+del+cars);
