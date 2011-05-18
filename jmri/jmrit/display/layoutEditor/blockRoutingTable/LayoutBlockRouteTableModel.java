@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  * @since 2.7.5
  */
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
@@ -34,10 +34,6 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     static final int NUMCOL = 6+1;
     
     boolean editable = false;
-    
-    public LayoutBlockRouteTableModel() {
-        this(false, null);
-    }
     
     public LayoutBlockRouteTableModel(boolean editable, LayoutBlock lBlock) {
         this.editable = editable;

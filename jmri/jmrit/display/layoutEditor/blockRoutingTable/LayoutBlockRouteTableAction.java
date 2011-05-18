@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
      * Swing action to create and register a Block Routing Table.
      * <P>
      * @author	Kevin Dickerson   Copyright (C) 2011
-     * @version	$Revision: 1.1 $
+     * @version	$Revision: 1.2 $
      */
 
 public class LayoutBlockRouteTableAction extends AbstractAction {
@@ -32,7 +32,6 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     
    LayoutBlock lBlock;
-    public LayoutBlockRouteTableAction() { this(rb.getString("BlockRoutingTableTitleShort"), null);}
         
     LayoutBlockRouteTable m;
     //LayoutBlockNeighbourTable mn;

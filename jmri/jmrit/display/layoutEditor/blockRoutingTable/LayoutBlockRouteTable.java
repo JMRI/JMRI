@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * as a JmriJPanel
  * 
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
@@ -32,10 +32,6 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
     TableSorter         throughPathsSorter;
     JTable			    throughPathsDataTable;
     JScrollPane 		throughPathsDataScroll;
-
-    public LayoutBlockRouteTable() {
-        this(false, null);
-    }
     
     public LayoutBlockRouteTable(boolean editable, LayoutBlock block) {
         super();

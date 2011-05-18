@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author              Kevin Dickerson   Copyright (C) 2011
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -27,11 +27,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     static final int NUMCOL = 4+1;
     
     boolean editable = false;
-    
-    public LayoutBlockNeighbourTableModel() {
-        this(false, null);
-    }
-    
+        
     public LayoutBlockNeighbourTableModel(boolean editable, LayoutBlock lBlock) {
         this.editable = editable;
         this.lBlock = lBlock;

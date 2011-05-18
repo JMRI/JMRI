@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author              Kevin Dickerson   Copyright (C) 2011
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class LayoutBlockThroughPathsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -25,10 +25,6 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
     static final int NUMCOL = 2+1;
     
     boolean editable = false;
-    
-    public LayoutBlockThroughPathsTableModel() {
-        this(false, null);
-    }
     
     public LayoutBlockThroughPathsTableModel(boolean editable, LayoutBlock lBlock) {
         this.editable = editable;
