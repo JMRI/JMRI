@@ -28,7 +28,7 @@ import jmri.jmrit.roster.RosterIconFactory;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @since           2.9.4
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
@@ -90,7 +90,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new DefaultConditionalManager();
         }
 
-        if (type == DefaultSignalMastLogicManager.class) {
+        if (type == SignalMastLogicManager.class) {
             return new DefaultSignalMastLogicManager();
         }
 
