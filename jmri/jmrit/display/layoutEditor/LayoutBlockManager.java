@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -1307,7 +1307,6 @@ public class LayoutBlockManager extends AbstractManager {
                 }
             } else {
                 if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
-                    System.out.println("connect 1 at west");
                     tr=pp.getConnect2();
                 }
                 else {
@@ -1877,7 +1876,6 @@ public class LayoutBlockManager extends AbstractManager {
         }
         throw new jmri.JmriException("BlockIsNull");
     }
-
 
 	private boolean warnConnectivity = true;
 	/**
