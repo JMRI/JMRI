@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.32 2011-05-17 13:05:58 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.33 2011-05-18 15:57:02 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -165,6 +165,8 @@ None at the time of this release.
 	<LI>Improved how tracks with setting FIFO and LIFO behave.  Previously if the program couldn't
 	find a destination for a car, all cars behind that car were stuck.  Now the program will jump
 	over a car that can't move.</LI>
+	<LI>Train manifests now correctly show trains length and weight when there are engine changes
+	in route.</LI>
 
 </UL>
 

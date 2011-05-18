@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.159 $
+ * @version             $Revision: 1.160 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -51,7 +51,6 @@ public class TrainBuilder extends TrainCommon{
 			
 	// build variables shared between local routines
 	Train train;				// the train being built
-	int numberEngines = 0;		// number of engines assigned to this train
 	int numberCars = 0;			// how many cars are moved by this train
 	int reqNumEngines = 0; 		// the number of engines required for this train
 	List<String> engineList;	// list of engines available for this train
@@ -388,8 +387,17 @@ public class TrainBuilder extends TrainCommon{
         	sbuf.setLength(sbuf.length()-2);	
         	addLine(buildReport, FIVE, sbuf.toString());
         }
+        
+    	// get list of cars for this route
+		carList = carManager.getAvailableTrainList(train);
+		// TODO: DAB this needs to be controlled by each train
+		if (requested > carList.size() && Control.fullTrainOnly){
+			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNumReq"),new Object[]{Integer.toString(requested),
+				train.getName(), Integer.toString(carList.size())}));
+		}
+
 		// remove unwanted cars
-		removeCars(requested);
+		removeCars();
 
 		// get caboose or car with FRED if needed for train
 		getCaboose(train.getCabooseRoad(), train.getLeadEngine(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
@@ -404,6 +412,7 @@ public class TrainBuilder extends TrainCommon{
 			getCaboose(train.getThirdLegCabooseRoad(), null, train.getThirdLegStartLocation(), cabooseOrFredTerminatesThirdLeg);
 		}
 		
+		// done assigning cabooses and cars with FRED, remove the rest
 		removeCaboosesAndCarsWithFred();
 		
 		// now find destinations for cars 
@@ -435,6 +444,7 @@ public class TrainBuilder extends TrainCommon{
 		log.debug("Done building train "+train.getName());
 	}
 	
+	// ask which staging track the train is to depart on
 	private Track PromptFromStagingDialog() {		
 		List<String> trackIds = departLocation.getTracksByNameList(null);
 		List<String> validTrackIds = new ArrayList<String>();
@@ -665,6 +675,7 @@ public class TrainBuilder extends TrainCommon{
 		return nE;
 	}
 	
+	// find a car with FRED if needed at the correct location and add it to the train
 	private void getCarWithFred(String road, RouteLocation rl, RouteLocation rld) throws BuildFailedException{
 		// load departure track if staging
 		Track departTrack = null;
@@ -728,12 +739,13 @@ public class TrainBuilder extends TrainCommon{
 					new Object[]{train.getName(), rb.getString("FRED"), rl.getName(), rld.getName()}));
 	}
 	
+	// find a caboose if needed at the correct location and add it to the train
 	private void getCaboose(String roadCaboose, Engine leadEngine, RouteLocation rl, RouteLocation rld) throws BuildFailedException{
 		// load departure track if staging
 		Track departTrack = null;
 		if (rl == train.getTrainDepartsRouteLocation())
 			departTrack = departStageTrack;
-		boolean cabooseTip = true;
+		boolean cabooseTip = true;	// add a user tip to the build report about cabooses if none found
 		boolean foundCaboose = false;
 		boolean requiresCaboose = false;
 		if ((train.getRequirements() & Train.CABOOSE) == 0){
@@ -833,16 +845,8 @@ public class TrainBuilder extends TrainCommon{
 	 * Remove unwanted cars from the car list.
 	 *
 	 */
-	private void removeCars(int requested) throws BuildFailedException{
-		// get list of cars for this route
-		carList = carManager.getAvailableTrainList(train);
-		// TODO: DAB this needs to be controlled by each train
-		if (requested > carList.size() && Control.fullTrainOnly){
-			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNumReq"),new Object[]{Integer.toString(requested),
-				train.getName(), Integer.toString(carList.size())}));
-		}
-
-    	// remove cars that don't have a valid track, interchange, road, load, owner, or type for this train
+	private void removeCars() throws BuildFailedException{
+	    	// remove cars that don't have a valid track, interchange, road, load, owner, or type for this train
 		addLine(buildReport, SEVEN, rb.getString("buildRemoveCars"));
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getById(carList.get(carIndex));
@@ -1134,7 +1138,6 @@ public class TrainBuilder extends TrainCommon{
 					// build failure if car departing staging without a destination and a train
 					if (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
 							(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
-						//log.debug("car "+car.toString()+" at location ("+car.getLocationName()+") destination ("+car.getDestinationName()+") dest track ("+car.getDestinationTrackName()+")");
 						throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorCarStageDest"),
 								new Object[]{car.toString()}));
 					}
@@ -1161,8 +1164,6 @@ public class TrainBuilder extends TrainCommon{
 		location.setStatus();
 		Location destination = locationManager.getLocationByName(rld.getName());
 		destination.setStatus();
-		int engineLength = 0;
-		int engineWeight = 0;
 		if (train.getLeadEngine() == null)
 			train.setLeadEngine(engine);	//load lead engine
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildEngineAssigned"),new Object[]{engine.toString(), rld.getName(), track.getName()}));
@@ -1170,15 +1171,13 @@ public class TrainBuilder extends TrainCommon{
 		engine.setRouteLocation(rl);
 		engine.setRouteDestination(rld);
 		engine.setDestination(destination, track);
-		numberEngines++;
-		engineLength = Integer.parseInt(engine.getLength());
-		engineWeight = engine.getAdjustedWeightTons();
+		int engineLength = Integer.parseInt(engine.getLength()) + Engine.COUPLER;
+		int engineWeight = engine.getAdjustedWeightTons();
 		// engine in consist?
 		if (engine.getConsist() != null){
 			List<Engine> cEngines = engine.getConsist().getEngines();
 			engineLength = engine.getConsist().getLength();
 			engineWeight = engine.getConsist().getAdjustedWeightTons();
-			numberEngines = numberEngines + cEngines.size();
 			for (int j=0; j<cEngines.size(); j++){
 				Engine cEngine = cEngines.get(j);
 				if (cEngine == engine)
@@ -1190,12 +1189,20 @@ public class TrainBuilder extends TrainCommon{
 				cEngine.setDestination(destination, track, true); // force destination
 			}
 		}
-		// TODO code doesn't check for engines being in train at all locations
-		// set the engine length and weight for locations
+		// now adjust train length and weight for each location that engines are in the train
+		boolean engineInTrain = false;
 		for (int i=0; i<routeList.size(); i++){
-			RouteLocation r = train.getRoute().getLocationById(routeList.get(i));
-			r.setTrainLength(r.getTrainLength()+engineLength);		// load the engine(s) length
-			r.setTrainWeight(r.getTrainWeight()+engineWeight);		// load the engine(s) weight
+			RouteLocation r = train.getRoute().getLocationById(routeList.get(i));			
+			if (rl == r){
+				engineInTrain = true;
+			}
+			if (rld == r){
+				engineInTrain = false;
+			}
+			if (engineInTrain){
+				r.setTrainLength(r.getTrainLength()+engineLength);		// load the engine(s) length
+				r.setTrainWeight(r.getTrainWeight()+engineWeight);		// load the engine(s) weight
+			}
 		}
 		return true;
 	}
@@ -1223,8 +1230,12 @@ public class TrainBuilder extends TrainCommon{
 		car.setRouteLocation(rl);
 		car.setRouteDestination(rld);
 		car.setDestination(destination, track);
+		int length = Integer.parseInt(car.getLength())+ Car.COUPLER;
+		int weightTons = car.getAdjustedWeightTons();
 		// car could be part of a kernel
 		if (car.getKernel()!=null){
+			length = car.getKernel().getLength();	// includes couplers
+			weightTons = car.getKernel().getAdjustedWeightTons();
 			List<Car> kCars = car.getKernel().getCars();
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{car.toString(), car.getKernelName(), kCars.size()}));
 			for(int i=0; i<kCars.size(); i++){
@@ -1252,26 +1263,19 @@ public class TrainBuilder extends TrainCommon{
 		// now adjust train length and weight for each location that car is in the train
 		boolean carInTrain = false;
 		for (int i=0; i<routeList.size(); i++){
-			RouteLocation rlt = train.getRoute().getLocationById(routeList.get(i));
-			if (rl == rlt){
+			RouteLocation r = train.getRoute().getLocationById(routeList.get(i));
+			if (rl == r){
 				carInTrain = true;
 			}
-			if (rld == rlt){
+			if (rld == r){
 				carInTrain = false;
 			}
 			if (carInTrain){
-				int length = Integer.parseInt(car.getLength())+ Car.COUPLER;
-				int weightTons = car.getAdjustedWeightTons();
-				// car could be part of a kernel
-				if (car.getKernel() != null){
-					length = car.getKernel().getLength();
-					weightTons = car.getKernel().getAdjustedWeightTons();
-				}
-				rlt.setTrainLength(rlt.getTrainLength()+length);	// couplers are included
-				rlt.setTrainWeight(rlt.getTrainWeight()+weightTons);
+				r.setTrainLength(r.getTrainLength()+length);	// couplers are included
+				r.setTrainWeight(r.getTrainWeight()+weightTons);
 			}
-			if (rlt.getTrainWeight() > maxWeight){
-				maxWeight = rlt.getTrainWeight();		// used for AUTO engines
+			if (r.getTrainWeight() > maxWeight){
+				maxWeight = r.getTrainWeight();		// used for AUTO engines
 			}
 		}
 		return true;
