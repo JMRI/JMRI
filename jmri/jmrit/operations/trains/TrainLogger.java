@@ -22,7 +22,7 @@ import java.util.List;
  * Logs rolling stock movements by writing their locations to a file.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TrainLogger extends XmlFile implements java.beans.PropertyChangeListener{
 	
@@ -112,9 +112,9 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 			_newFile = false;
 		}
 		// Note that train status can contain a comma
-		String line = train.getName() +del+ train.getDescription()
-		+del+ train.getCurrentLocationName()
-		+del+ train.getNextLocationName()
+		String line = train.getName() +del+ "\""+train.getDescription()+"\""
+		+del+ "\""+train.getCurrentLocationName()+"\""
+		+del+ "\""+train.getNextLocationName()+"\""
 		+del+ "\""+ train.getStatus()+"\"" +del+ getTime();
 		
 		log.debug("Log: "+line);
