@@ -21,7 +21,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public interface Sensor extends NamedBean {
 
@@ -83,15 +83,45 @@ public interface Sensor extends NamedBean {
      */
     public void dispose();  // remove _all_ connections!
     
+    /**
+     * Used to return the Raw state of a sensor prior to the known state of a 
+     * sensor being set. The raw state value can be different when the sensor 
+     * debounce option is used.
+     * @return raw state value
+     */
+    public int getRawState();
+    
+    /**
+    * Set the Active debounce delay in milliSeconds.
+    * If a zero value is entered then debounce delay is de-activated.
+    */
     public void setSensorDebounceGoingActiveTimer(long timer);
+    
+    /**
+    * Get the Active debounce delay in milliSeconds.
+    */
     public long getSensorDebounceGoingActiveTimer();
     
+    /**
+    * Set the InActive debounce delay in milliSeconds.
+    * If a zero value is entered then debounce delay is de-activated.
+    */
     public void setSensorDebounceGoingInActiveTimer(long timer);
+    
+    /**
+    * Get the InActive debounce delay in milliSeconds.
+    */
     public long getSensorDebounceGoingInActiveTimer();
     
+    /**
+    * Use the timers specified in the Sensor manager, for the debounce delay
+    */
     public void useDefaultTimerSettings(boolean boo);
+    
+    /**
+    * Does this sensor use the default timers for 
+    */
     public boolean useDefaultTimerSettings();
-
 }
 
 
