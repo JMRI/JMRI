@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.17 2011-02-11 17:54:15 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.18 2011-05-18 15:41:23 kevin-dickerson Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -89,6 +89,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
     <!-- show the appearances -->
     <xsl:apply-templates select="appearances"/>
+	
+	<xsl:apply-templates select="aspectMappings"/>
+    
+    <xsl:apply-templates select="specificappearances"/>
 
     <!-- revision history -->
     <hr/>
@@ -121,6 +125,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- name is also a link -->
         <!-- create target for linking -->
     <xsl:element name="a"><xsl:attribute name="href">aspects.xml#<xsl:value-of select="aspectname"/></xsl:attribute>
+	<xsl:attribute name="name"><xsl:value-of select="aspectname"/></xsl:attribute>
     <xsl:value-of select="aspectname"/>
     </xsl:element>
 
@@ -175,6 +180,11 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
                 <br/>
             </xsl:for-each>
             
+            <xsl:for-each select="diverging">
+                <xsl:text>Diverging flag set</xsl:text>
+                <br/>
+            </xsl:for-each>
+            
             <p/>
     </xsl:for-each>
 
@@ -199,6 +209,150 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- show rest of element -->
     <xsl:apply-templates/>
     
+</xsl:template>
+
+<xsl:template match="aspectMappings">
+  <br/>
+  <b>Aspect Mapping</b>
+  <!-- display aspect mappings in a small table -->
+  <!-- header -->
+  <table border="2" cellpadding="5">
+    <tr>
+	  <td>Advanced Aspect</td>
+	  <td>Our Aspect</td>
+	</tr>
+  
+    <!-- iterate through items -->
+    <xsl:for-each select="aspectMapping">
+	  <tr>
+        <td>
+		  <xsl:element name="a">
+			<xsl:attribute name="href">#<xsl:value-of select="advancedAspect"/></xsl:attribute>
+			<xsl:value-of select="advancedAspect"/>
+		  </xsl:element>
+		</td>
+	    <td>
+        <xsl:for-each select="ourAspect">
+		  <xsl:element name="a">
+			<xsl:attribute name="href">#<xsl:value-of select="."/></xsl:attribute>
+			<xsl:value-of select="."/><br/>
+		  </xsl:element>
+        </xsl:for-each>
+		</td>
+
+      </tr>
+    </xsl:for-each>
+    <!-- close table -->
+    </table>
+    <br/>
+</xsl:template>
+
+<xsl:template match="specificappearances">
+  <b>Specific Apperance Mapping</b>
+  <!-- display aspect mappings in a small table -->
+  <!-- header -->
+  <table border="2" cellpadding="5">
+    <tr>
+	  <td>Appearance  </td>
+	  <td>Mapped To  </td>
+      <td>Alternative Image  </td>
+	</tr>
+  
+    <!-- iterate through items -->
+    <xsl:for-each select="danger">
+	  <tr>
+	    <td>
+            Danger
+		</td>
+	    <td>
+          <xsl:element name="a">
+			<xsl:attribute name="href">#<xsl:value-of select="aspect"/></xsl:attribute>
+			<xsl:value-of select="aspect"/>
+		  </xsl:element>
+          </td>
+          <td>
+            <xsl:for-each select="imagelink">
+                <xsl:element name="img">
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:for-each>
+		</td>
+      </tr>
+    </xsl:for-each>
+    
+    <xsl:for-each select="held">
+	  <tr>
+	    <td>
+            Held
+		</td>
+	    <td>
+          <xsl:element name="a">
+			<xsl:attribute name="href">#<xsl:value-of select="aspect"/></xsl:attribute>
+			<xsl:value-of select="aspect"/>
+		  </xsl:element>
+        </td>
+	    <td>
+            <xsl:for-each select="imagelink">
+                <xsl:element name="img">
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:for-each>
+		</td>
+      </tr>
+    </xsl:for-each>
+    
+    <xsl:for-each select="permissive">
+	  <tr>
+	    <td>
+            Permissive
+		</td>
+	    <td>
+          <xsl:element name="a">
+			<xsl:attribute name="href">#<xsl:value-of select="aspect"/></xsl:attribute>
+			<xsl:value-of select="aspect"/>
+		  </xsl:element>
+        </td>
+	    <td>
+            <xsl:for-each select="imagelink">
+                <xsl:element name="img">
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:for-each>
+		</td>
+      </tr>
+    </xsl:for-each>
+    
+    <xsl:for-each select="dark">
+	  <tr>
+	    <td>
+            Dark
+		</td>
+	    <td>
+          <xsl:element name="a">
+			<xsl:attribute name="href">#<xsl:value-of select="aspect"/></xsl:attribute>
+			<xsl:value-of select="aspect"/>
+		  </xsl:element>
+        </td>
+	    <td>
+            <xsl:for-each select="imagelink">
+                <xsl:element name="img">
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:for-each>
+		</td>
+      </tr>
+    </xsl:for-each>
+
+    <!-- close table -->
+    </table>
 </xsl:template>
 
 <!-- Ignore imagelink, already done -->
