@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2011
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -1165,10 +1165,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			}
 			else if ( (ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber()==ar.getSectionSeqNumber()) &&
 					( !((s==at.getEndBlockSection()) && (ar.getSectionSeqNumber()==at.getEndBlockSectionSequenceNumber())) ) &&
-					( !(at.IsAllocationReversed() && (ar.getSectionSeqNumber()==1)) ) ) {				
+					( !(at.isAllocationReversed() && (ar.getSectionSeqNumber()==1)) ) ) {				
 				// not at either end - determine the next section 
 				int seqNum = ar.getSectionSeqNumber();
-				if (at.IsAllocationReversed()) {
+				if (at.isAllocationReversed()) {
 					seqNum -= 1;
 				}
 				else {
@@ -1188,7 +1188,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				}
 				nextSectionSeqNo = seqNum;
 			}
-			else if (at.getReverseAtEnd() && (!at.IsAllocationReversed()) && (s==at.getEndBlockSection()) && 
+			else if (at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s==at.getEndBlockSection()) && 
 						(ar.getSectionSeqNumber()==at.getEndBlockSectionSequenceNumber()) ) {
 				// need to reverse Transit direction when train is in the last Section, set next section.
 				nextSectionSeqNo = at.getEndBlockSectionSequenceNumber()-1;
@@ -1206,9 +1206,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 					}
 				}
 			}
-			else if ( ( (!at.IsAllocationReversed()) && (s==at.getEndBlockSection()) && 
+			else if ( ( (!at.isAllocationReversed()) && (s==at.getEndBlockSection()) && 
 						(ar.getSectionSeqNumber()==at.getEndBlockSectionSequenceNumber()) ) || 
-						( at.IsAllocationReversed() && (ar.getSectionSeqNumber()==1) ) ) {
+						( at.isAllocationReversed() && (ar.getSectionSeqNumber()==1) ) ) {
 				// request to allocate the last block in the Transit, or the Transit is reversed and
 				//      has reached the beginning of the Transit--check for automatic restart
 				if (at.getResetWhenDone()) {

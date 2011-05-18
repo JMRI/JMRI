@@ -56,7 +56,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class AutoAllocate {
@@ -107,7 +107,7 @@ public class AutoAllocate {
 				// this train is in an active Allocation Plan, anything to do now?
 				ActiveTrain at = ar.getActiveTrain();
 				AllocationPlan ap = getPlanThisTrain(at);
-				if (!at.IsTransitReversed()) {
+				if (!at.isTransitReversed()) {
 					if (ap.getTargetSectionSequenceNum(cTrainNum)>=ar.getSectionSeqNumber()) {
 						if ( (ar.getSection().getState()==Section.FREE) && 
 								(ar.getSection().getOccupancy()!=Section.OCCUPIED) ) {
@@ -321,7 +321,7 @@ public class AutoAllocate {
 		if (aSectionList.size()>=4) {
 			int curSeq = ar.getSectionSeqNumber()-1;
 			if ( (curSeq == 1) && ar.getActiveTrain().getResetWhenDone() ) {
-				curSeq = curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
+				curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
 			}
 			AllocatedSection curAS = null;
 			for (int i = aSectionList.size()-1; i>=0; i--) {
@@ -332,7 +332,7 @@ public class AutoAllocate {
 				//last allocated section exists and is not occupied, test previous one
 				curSeq = curSeq-1;
 				if ( (curSeq == 1) && ar.getActiveTrain().getResetWhenDone() ) {
-					curSeq = curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
+					curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
 				}
 				curAS = null;
 				for (int i = aSectionList.size()-1; i>=0; i--) {
@@ -343,7 +343,7 @@ public class AutoAllocate {
 					//previous allocated section exists and is not occupied, test previous one
 					curSeq = curSeq-1;
 					if ( (curSeq == 1) && ar.getActiveTrain().getResetWhenDone() ) {
-						curSeq = curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
+						curSeq = ar.getActiveTrain().getTransit().getMaxSequence();
 					}
 					curAS = null;
 					for (int i = aSectionList.size()-1; i>=0; i--) {
@@ -388,7 +388,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 				if (aSec!=null) {
 					// found passing Section that should work out, push higher 
 					//     priority train one section further, if possible
-					if (!nt.IsTransitReversed()) {							
+					if (!nt.isTransitReversed()) {							
 						if (nSecSeq<nt.getTransit().getMaxSequence()) nSecSeq ++;
 					}
 					else {
@@ -425,7 +425,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 					
 					}
 					if (aSec!=null) {
-						if (!nt.IsTransitReversed()) {
+						if (!nt.isTransitReversed()) {
 								if (nSecSeq<nt.getTransit().getMaxSequence()) nSecSeq ++;
 						}
 						else {
@@ -452,10 +452,6 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		}
 		// set up allocation plan
 		AllocationPlan ap = new AllocationPlan(this, nextPlanNum);
-		if (ap==null) {
-			log.error("unexpected error when creating a PASSING_MEET allocation plan");
-			return false;
-		}
 		nextPlanNum ++;
 		ap.setPlanType(AllocationPlan.PASSING_MEET);
 		ap.setActiveTrain(at,1);
@@ -467,7 +463,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 	private int findPassingSection(ActiveTrain at,int aSeq) {
 		// returns the sequence number of first area having alternate sections
 		Transit t = at.getTransit();
-		if (!at.IsTransitReversed()) {
+		if (!at.isTransitReversed()) {
 			for (int i = aSeq; i<=t.getMaxSequence(); i++) {
 				if (t.getSectionListBySeq(i).size()>1) {
 					return i;
@@ -485,7 +481,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 	}
 	private int willTraverse(Section s, ActiveTrain at, int seq) {
 		Transit t = at.getTransit();
-		if (!at.IsTransitReversed()) {
+		if (!at.isTransitReversed()) {
 			for (int i = seq; i<=t.getMaxSequence(); i++) {
 				for (int j = 0; j<=t.getSectionListBySeq(i).size(); j++) {
 					if (t.getSectionListBySeq(i).get(j) == s) return i;
@@ -512,7 +508,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		// this train may need this Section, has it already passed this Section?
 		ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
 		int curSeq = getCurrentSequenceNumber (at);
-		if (!at.IsTransitReversed()) {
+		if (!at.isTransitReversed()) {
 			for (int i=0; i<tsList.size(); i++) {
 				if ( (tsList.get(i).getSequenceNumber()>curSeq) && 
 						(tsList.get(i).getSection()==ar.getSection()) ) {
@@ -541,7 +537,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
 		int dir = 0;
 		int curSeq = getCurrentSequenceNumber (at);
-		if (!at.IsTransitReversed()) {
+		if (!at.isTransitReversed()) {
 			for (int i=0; i<tsList.size(); i++) {
 				if ( (tsList.get(i).getSequenceNumber()>curSeq) && 
 						(tsList.get(i).getSection()==ar.getSection()) ) {
@@ -581,7 +577,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		}
 		Section temSection = null;
 		ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
-		if (!at.IsTransitReversed()) {
+		if (!at.isTransitReversed()) {
 			// find the highest numbered occupied section
 			for (int i = 0; i<tsList.size(); i++) {
 				if ( (tsList.get(i).getSection().getOccupancy()==Section.OCCUPIED) &&

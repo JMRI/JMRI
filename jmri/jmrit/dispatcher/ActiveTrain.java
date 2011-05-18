@@ -89,7 +89,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008-2011
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class ActiveTrain {
 
@@ -239,9 +239,9 @@ public class ActiveTrain {
 			return rb.getString("DONE");
 		return ("");
 	}
-	public boolean IsTransitReversed() {return mTransitReversed;}
+	public boolean isTransitReversed() {return mTransitReversed;}
 	public void setTransitReversed(boolean set) {mTransitReversed = set;}
-	public boolean IsAllocationReversed() {return mAllocationReversed;}
+	public boolean isAllocationReversed() {return mAllocationReversed;}
 	public void setAllocationReversed(boolean set) {mAllocationReversed = set;}
 	public boolean getDelayedStart() {return mDelayedStart;}
 	public void setDelayedStart(boolean set) {mDelayedStart = set;}

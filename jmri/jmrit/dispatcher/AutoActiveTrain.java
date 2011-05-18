@@ -41,7 +41,7 @@ import jmri.ThrottleListener;
  * The AutoEngineer sub class is based in part on code by Pete Cressman contained in Warrants.java
  *
  * @author	Dave Duchamp  Copyright (C) 2010-2011
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class AutoActiveTrain implements ThrottleListener {
 	
@@ -263,7 +263,7 @@ public class AutoActiveTrain implements ThrottleListener {
 						stopInCurrentSection(END_REVERSAL);						
 					}
 					else if ((_currentBlock==_activeTrain.getStartBlock()) && 
-							_activeTrain.getResetWhenDone() && _activeTrain.IsTransitReversed() &&
+							_activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() &&
 							(as.getSequence()==_activeTrain.getStartBlockSectionSequenceNumber()) ) {
 						// entered start block of Transit, must stop and reset for continuing
 						stopInCurrentSection(BEGINNING_RESET);						
@@ -308,11 +308,11 @@ public class AutoActiveTrain implements ThrottleListener {
 	 */
 	protected void setEngineDirection() {
 		if (_runInReverse) {
-			if (_activeTrain.IsTransitReversed()) _forward = true;
+			if (_activeTrain.isTransitReversed()) _forward = true;
 			else _forward = false;			
 		}
 		else {
-			if (_activeTrain.IsTransitReversed()) _forward = false;
+			if (_activeTrain.isTransitReversed()) _forward = false;
 			else _forward = true;			
 		}	 
 	}
@@ -433,7 +433,7 @@ public class AutoActiveTrain implements ThrottleListener {
 			return _previousBlock;
 		}
 		if ((_currentBlock==_activeTrain.getStartBlock()) && 
-				_activeTrain.getResetWhenDone() && _activeTrain.IsTransitReversed() &&
+				_activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() &&
 					(as.getSequence()==_activeTrain.getStartBlockSectionSequenceNumber()) ) {
 			return _previousBlock;
 		}
@@ -510,7 +510,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		}
 	}
 	// called to cancel a stopping action that is in progress
-	private void cancelStopInCurrentSection() {
+	private synchronized void cancelStopInCurrentSection() {
 		if (isStopping()) {
 			if (_stoppingBySensor) {
 				// cancel stopping by stop sensor

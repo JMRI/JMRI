@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class ActivateTrainFrame {
 
@@ -705,7 +705,6 @@ public class ActivateTrainFrame {
 	}
 	private void deleteTrainInfo(ActionEvent e) {
 		String[] names = _tiFile.getTrainInfoFileNames();
-		TrainInfo info = null;
 		if (names.length > 0) {
 			Object selName = JOptionPane.showInputDialog(initiateFrame, 
 					rb.getString("DeleteTrainChoice"), rb.getString("DeleteTrainTitle"), 
