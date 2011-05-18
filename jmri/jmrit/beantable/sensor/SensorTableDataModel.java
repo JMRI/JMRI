@@ -15,7 +15,7 @@ import jmri.InstanceManager;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {
@@ -25,7 +25,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int ACTIVEDELAY = USEGLOBALDELAY+1;
     static public final int INACTIVEDELAY = ACTIVEDELAY+1;
 
-    public static boolean showDebounce =false;
+    public boolean showDebounce = false;
     
     SensorManager senManager = InstanceManager.sensorManagerInstance();
     public SensorTableDataModel() {

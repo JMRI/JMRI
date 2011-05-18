@@ -29,7 +29,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager {
@@ -412,7 +412,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return signalMastList;
     }
     
-    class FacingProtecting{
+    static class FacingProtecting{
         
         Block facing;
         Block protecting;
