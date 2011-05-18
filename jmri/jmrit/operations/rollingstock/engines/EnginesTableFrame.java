@@ -13,12 +13,14 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
 
@@ -33,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -45,32 +47,33 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	EngineManager engineManager = EngineManager.instance();
 	
 	// labels
-	javax.swing.JLabel numEngines = new javax.swing.JLabel();
-	javax.swing.JLabel textEngines = new javax.swing.JLabel();
-	javax.swing.JLabel textSort = new javax.swing.JLabel(rb.getString("SortBy"));
-	javax.swing.JLabel textSep1 = new javax.swing.JLabel("          ");
-	javax.swing.JLabel textSep2 = new javax.swing.JLabel();
+	JLabel numEngines = new JLabel();
+	JLabel textEngines = new JLabel();
+	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSep1 = new JLabel("          ");
+	JLabel textSep2 = new JLabel();
 	
 	// radio buttons	
-    javax.swing.JRadioButton sortByNumber = new javax.swing.JRadioButton(rb.getString("Number"));
-    javax.swing.JRadioButton sortByRoad = new javax.swing.JRadioButton(rb.getString("Road"));
-    javax.swing.JRadioButton sortByModel = new javax.swing.JRadioButton(rb.getString("Model"));
-    javax.swing.JRadioButton sortByConsist = new javax.swing.JRadioButton(rb.getString("Consist"));
-    javax.swing.JRadioButton sortByLocation = new javax.swing.JRadioButton(rb.getString("Location"));
-    javax.swing.JRadioButton sortByDestination = new javax.swing.JRadioButton(rb.getString("Destination"));
-    javax.swing.JRadioButton sortByTrain = new javax.swing.JRadioButton(rb.getString("Train"));
-    javax.swing.JRadioButton sortByMoves = new javax.swing.JRadioButton(rb.getString("Moves"));
+    JRadioButton sortByNumber = new JRadioButton(rb.getString("Number"));
+    JRadioButton sortByRoad = new JRadioButton(rb.getString("Road"));
+    JRadioButton sortByModel = new JRadioButton(rb.getString("Model"));
+    JRadioButton sortByConsist = new JRadioButton(rb.getString("Consist"));
+    JRadioButton sortByLocation = new JRadioButton(rb.getString("Location"));
+    JRadioButton sortByDestination = new JRadioButton(rb.getString("Destination"));
+    JRadioButton sortByTrain = new JRadioButton(rb.getString("Train"));
+    JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));    
     JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
     JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
+    JRadioButton sortByValue = new JRadioButton(rb.getString("Value"));
     JRadioButton sortByRfid = new JRadioButton(rb.getString("Rfid"));
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons
-	javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("Add"));
-	javax.swing.JButton findButton = new javax.swing.JButton(rb.getString("Find"));
+	JButton addButton = new JButton(rb.getString("Add"));
+	JButton findButton = new JButton(rb.getString("Find"));
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
-	javax.swing.JTextField findEngineTextBox = new javax.swing.JTextField(6);
+	JTextField findEngineTextBox = new JTextField(6);
 
     public EnginesTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle").getString("TitleEnginesTable"));
@@ -104,9 +107,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	cp1.add(sortByMoves);
        	cp1.add(sortByBuilt);
     	cp1.add(sortByOwner);
-       	if(Setup.isRfidEnabled()){
+    	if(Setup.isValueEnabled())
+    		cp1.add(sortByValue);
+       	if(Setup.isRfidEnabled())
     		cp1.add(sortByRfid);
-    	}
 
        	// row 2
     	JPanel cp2 = new JPanel();
@@ -151,6 +155,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		addRadioButtonAction (sortByMoves);
 		addRadioButtonAction (sortByBuilt);
 		addRadioButtonAction (sortByOwner);
+		addRadioButtonAction (sortByValue);
 		addRadioButtonAction (sortByRfid);
 		
 		group.add(sortByNumber);
@@ -163,6 +168,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		group.add(sortByMoves);
 		group.add(sortByBuilt);
 		group.add(sortByOwner);
+		group.add(sortByValue);
 		group.add(sortByRfid);
     	
  		// build menu
@@ -214,6 +220,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		}
 		if (ae.getSource() == sortByOwner){
 			enginesModel.setSort(enginesModel.SORTBYOWNER);
+		}
+		if (ae.getSource() == sortByValue){
+			enginesModel.setSort(enginesModel.SORTBYVALUE);
 		}
 		if (ae.getSource() == sortByRfid){
 			enginesModel.setSort(enginesModel.SORTBYRFID);

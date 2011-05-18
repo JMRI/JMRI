@@ -31,8 +31,8 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 /**
  * Frame for user edit of engine
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @author Dan Boudreau Copyright (C) 2008, 2011
+ * @version $Revision: 1.19 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -72,6 +72,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	JTextField hpTextField = new JTextField(8);
 	JTextField weightTextField = new JTextField(4);
 	JTextField commentTextField = new JTextField(35);
+	JTextField valueTextField = new JTextField(8);
 	JTextField rfidTextField = new JTextField(16);
 
 	// combo boxes
@@ -199,6 +200,15 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		pOptional.add(pOwner);
 		
 		// row 18
+		if(Setup.isValueEnabled()){
+			JPanel pValue = new JPanel();
+			pValue.setLayout(new GridBagLayout());
+			pValue.setBorder(BorderFactory.createTitledBorder(rb.getString("Value")));
+			addItem(pValue, valueTextField, 1, 0);
+			pOptional.add(pValue);
+		}
+		
+		// row 20
 		if(Setup.isRfidEnabled()){
 			JPanel pRfid = new JPanel();
 			pRfid.setLayout(new GridBagLayout());
@@ -207,7 +217,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			pOptional.add(pRfid);
 		}
 
-		// row 20
+		// row 22
 		JPanel pComment = new JPanel();
 		pComment.setLayout(new GridBagLayout());
 		pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
@@ -349,6 +359,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		consistComboBox.setSelectedItem(engine.getConsistName());
 				
 		ownerComboBox.setSelectedItem(engine.getOwner());
+		valueTextField.setText(engine.getValue());
 		rfidTextField.setText(engine.getRfid());
 		commentTextField.setText(engine.getComment());
 	}
@@ -543,6 +554,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				}
 			}
 			_engine.setComment(commentTextField.getText());
+			_engine.setValue(valueTextField.getText());
 			_engine.setRfid(rfidTextField.getText());
 			return _engine;
 		}

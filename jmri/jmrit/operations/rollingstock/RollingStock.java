@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -42,6 +42,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	protected String _comment = "";
 	protected String _routeId = "";  		// saved route for interchange tracks
 	protected String _rfid = "";
+	protected String _value = "";
 	protected boolean _locationUnknown = false;
 	protected boolean _outOfService = false;
 	
@@ -666,6 +667,20 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		_routeId = id;
 	}
 	
+	public String getValue(){
+		return _value;
+	}
+	
+	/**
+	 * Sets the RFID for this rolling stock.
+	 * @param id 12 character RFID string.
+	 */
+	public void setValue(String value){
+		String old = _value;
+		_value = value;
+		if (!old.equals(value))
+			firePropertyChange("rolling stock value", old, value);
+	}
 	public String getRfid(){
 		return _rfid;
 	}
@@ -866,6 +881,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			_owner = a.getValue();
 		if ((a = e.getAttribute("comment")) != null)
 			_comment = a.getValue();
+		if ((a = e.getAttribute("value")) != null)
+			_value = a.getValue();
 		if ((a = e.getAttribute("rfid")) != null)
 			_rfid = a.getValue();
 		if ((a = e.getAttribute("outOfService")) != null)
@@ -920,6 +937,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			e.setAttribute("owner", getOwner());
 		if (!getComment().equals("") )
 			e.setAttribute("comment", getComment());
+		if (!getValue().equals("") )
+			e.setAttribute("value", getValue());
 		if (!getRfid().equals("") )
 			e.setAttribute("rfid", getRfid());
 		if (isLocationUnknown())

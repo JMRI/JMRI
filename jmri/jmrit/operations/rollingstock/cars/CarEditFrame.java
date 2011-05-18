@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -79,6 +79,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	JTextField weightTextField = new JTextField(4);
 	JTextField weightTonsTextField = new JTextField(4);
 	JTextField commentTextField = new JTextField(35);
+	JTextField valueTextField = new JTextField(8);
 	JTextField rfidTextField = new JTextField(16);
 
 	// combo boxes
@@ -118,6 +119,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		hazardousCheckBox.setToolTipText(rb.getString("TipCarHazardous"));
 		fillWeightButton.setToolTipText(rb.getString("TipCalculateCarWeight"));
 		builtTextField.setToolTipText(rb.getString("TipBuildDate"));
+		valueTextField.setToolTipText(rb.getString("TipValue"));
 		rfidTextField.setToolTipText(rb.getString("TipRfid"));
 		
 		// default check box selections
@@ -237,6 +239,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		pOptional.add(pOwner);
 
 		// row 20
+		if(Setup.isValueEnabled()){
+			JPanel pValue = new JPanel();
+			pValue.setLayout(new GridBagLayout());
+			pValue.setBorder(BorderFactory.createTitledBorder(rb.getString("Value")));
+			addItem(pValue, valueTextField, 1, 0);
+			pOptional.add(pValue);
+		}
+		
+		// row 22
 		if(Setup.isRfidEnabled()){
 			JPanel pRfid = new JPanel();
 			pRfid.setLayout(new GridBagLayout());
@@ -245,7 +256,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			pOptional.add(pRfid);
 		}
 		
-		// row 21
+		// row 24
 		JPanel pComment = new JPanel();
 		pComment.setLayout(new GridBagLayout());
 		pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
@@ -406,6 +417,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		kernelComboBox.setSelectedItem(car.getKernelName());	
 
 		commentTextField.setText(car.getComment());
+		valueTextField.setText(car.getValue());
 		rfidTextField.setText(car.getRfid());
 		autoTrackCheckBox.setEnabled(true);
 	}
@@ -672,6 +684,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			}
 		}
 		_car.setComment(commentTextField.getText());
+		_car.setValue(valueTextField.getText());
 		_car.setRfid(rfidTextField.getText());
 		autoTrackCheckBox.setEnabled(true);
 		if (locationBox.getSelectedItem() != null){

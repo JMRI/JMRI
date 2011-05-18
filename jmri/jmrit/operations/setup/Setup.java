@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -181,6 +181,7 @@ public class Setup {
 		
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean closeWindowOnSave = false;	//when true, close window when save button is activated
+	private static boolean enableValue = false;			//when true show value fields for rolling stock
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
@@ -233,6 +234,14 @@ public class Setup {
 	
 	public static void setCloseWindowOnSaveEnabled(boolean enabled){
 		closeWindowOnSave = enabled;
+	}
+	
+	public static boolean isValueEnabled(){
+		return enableValue;
+	}
+	
+	public static void setValueEnabled(boolean enabled){
+		enableValue = enabled;
 	}
 	
 	public static boolean isRfidEnabled(){
@@ -969,6 +978,7 @@ public class Setup {
     	values.setAttribute("carTypes", getCarTypes());
     	values.setAttribute("switchTime", Integer.toString(getSwitchTime()));
     	values.setAttribute("travelTime", Integer.toString(getTravelTime()));
+    	values.setAttribute("showValue", isValueEnabled()?"true":"false");
     	values.setAttribute("showRfid", isRfidEnabled()?"true":"false");
     	values.setAttribute("carRoutingEnabled", isCarRoutingEnabled()?"true":"false");
     	values.setAttribute("carRoutingViaStaging", isCarRoutingViaStagingEnabled()?"true":"false");
@@ -1163,7 +1173,12 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("travelTime: "+minutes);
         		setTravelTime(Integer.parseInt(minutes));
         	}
-        	if ((a = operations.getChild("settings").getAttribute("showRfid"))!= null){
+        	if ((a = operations.getChild("settings").getAttribute("showValue"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("showValue: "+enable);
+        		setValueEnabled(enable.equals("true"));
+        	}
+           	if ((a = operations.getChild("settings").getAttribute("showRfid"))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
         		setRfidEnabled(enable.equals("true"));

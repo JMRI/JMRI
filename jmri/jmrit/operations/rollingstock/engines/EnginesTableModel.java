@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.28 $
+ * @version   $Revision: 1.29 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -47,7 +47,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int SHOWMOVES = 0;
     private static final int SHOWBUILT = 1;
     private static final int SHOWOWNER = 2;
-    private static final int SHOWRFID = 3;
+    private static final int SHOWVALUE = 3;
+    private static final int SHOWRFID = 4;
     private int showMoveCol = SHOWMOVES;
 
     public EnginesTableModel() {
@@ -66,7 +67,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     public final int SORTBYCONSIST = 8;
     public final int SORTBYBUILT = 9;
     public final int SORTBYOWNER = 10;
-    public final int SORTBYRFID = 11;
+    public final int SORTBYVALUE = 11;
+    public final int SORTBYRFID = 12;
     
     private int _sort = SORTBYNUMBER;
     
@@ -85,6 +87,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     	}
     	else if (sort == SORTBYOWNER){
     		showMoveCol = SHOWOWNER;
+       		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+       	else if (sort == SORTBYVALUE){
+    		showMoveCol = SHOWVALUE;
        		fireTableStructureChanged();
     		initTable(_table);
     	}
@@ -178,6 +185,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			list = manager.getByOwnerList();
 		else if (_sort == SORTBYBUILT)
 			list = manager.getByBuiltList();
+		else if (_sort == SORTBYVALUE)
+			list = manager.getByValueList();
 		else if (_sort == SORTBYRFID)
 			list = manager.getByRfidList();
 		else
@@ -241,6 +250,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         		return rb.getString("Built");
         	else if (showMoveCol == SHOWOWNER)
         		return rb.getString("Owner");
+          	else if (showMoveCol == SHOWVALUE)
+        		return rb.getString("Value");
           	else if (showMoveCol == SHOWRFID)
         		return rb.getString("Rfid");
         	else
@@ -334,6 +345,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         		return engine.getBuilt();
         	else if (showMoveCol == SHOWOWNER)
         		return engine.getOwner();
+           	else if (showMoveCol == SHOWVALUE)
+        		return engine.getValue();
            	else if (showMoveCol == SHOWRFID)
         		return engine.getRfid();
         	else

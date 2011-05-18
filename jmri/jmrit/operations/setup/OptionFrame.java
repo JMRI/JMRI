@@ -21,8 +21,8 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Frame for user edit of setup options
  * 
- * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.13 $
+ * @author Dan Boudreau Copyright (C) 2010, 2011
+ * @version $Revision: 1.14 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -40,6 +40,7 @@ public class OptionFrame extends OperationsFrame{
  
     // check boxes
 	JCheckBox routerCheckBox = new JCheckBox(rb.getString("EnableCarRouting"));
+	JCheckBox valueCheckBox = new JCheckBox(rb.getString("EnableValue"));
 	JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
 	JCheckBox carLoggerCheckBox = new JCheckBox(rb.getString("EnableCarLogging"));
 	JCheckBox engineLoggerCheckBox = new JCheckBox(rb.getString("EnableEngineLogging"));
@@ -65,6 +66,7 @@ public class OptionFrame extends OperationsFrame{
 		// the following code sets the frame's initial state
 
 		// load checkboxes	
+		valueCheckBox.setSelected(Setup.isValueEnabled());
 		rfidCheckBox.setSelected(Setup.isRfidEnabled());
 		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
 		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
@@ -118,7 +120,8 @@ public class OptionFrame extends OperationsFrame{
 		pOption.setLayout(new GridBagLayout());
 		pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
 		addItemLeft (pOption, generateCvsManifestCheckBox, 1,0);
-		addItemLeft (pOption, rfidCheckBox, 1,1);
+		addItemLeft (pOption, valueCheckBox, 1,1);
+		addItemLeft (pOption, rfidCheckBox, 1,2);
 		
 		// row 11
 		JPanel pControl = new JPanel();
@@ -186,6 +189,7 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// Options
 			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
+			Setup.setValueEnabled(valueCheckBox.isSelected());
 			Setup.setRfidEnabled(rfidCheckBox.isSelected());
 			// Logging enabled?		
 			Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());

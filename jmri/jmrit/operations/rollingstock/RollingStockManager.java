@@ -21,8 +21,8 @@ import java.util.List;
 /**
  * Base class for rolling stock managers car and engine.
  *
- * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.9 $
+ * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @version	$Revision: 1.10 $
  */
 public class RollingStockManager {
 	
@@ -390,6 +390,14 @@ public class RollingStockManager {
     }
    
     /**
+     * Sort by rolling stock value
+     * @return list of RollingStock ids ordered by value
+     */
+    public List<String> getByValueList() {
+    	return getByList(getByIdList(), BY_VALUE);
+    }
+    
+    /**
      * Sort by rolling stock RFID
      * @return list of RollingStock ids ordered by RFIDs
      */
@@ -446,6 +454,7 @@ public class RollingStockManager {
     protected static final int BY_RFID = 12;
     // BY_RWE = 13
     // BY_FINAL_DEST = 14
+    protected static final int BY_VALUE = 15;
     
     protected Object getRsAttribute(RollingStock rs, int attribute){
     	switch (attribute){
@@ -460,6 +469,7 @@ public class RollingStockManager {
     	case BY_BUILT: return rs.getBuilt();
     	case BY_OWNER: return rs.getOwner();
     	case BY_RFID: return rs.getRfid();
+    	case BY_VALUE: return rs.getValue();
     	default: return "unknown";	
     	}
     }
