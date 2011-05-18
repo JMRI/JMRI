@@ -4,6 +4,7 @@ import java.applet.AudioClip;
 import java.net.URL;
 import java.net.MalformedURLException;
 
+import java.io.*;
 import javax.sound.sampled.*;
 
 /**
@@ -19,7 +20,8 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.10 $
+ * @author  Dave Duchamp  Copyright (C) 2011 - add streaming play of large files
+ * @version	$Revision: 1.11 $
  */
 public class Sound  {
 
@@ -28,33 +30,59 @@ public class Sound  {
      * causes the sound to be loaded
      */
      public Sound(String filename) {
-        loadingSound(filename);
+		 if (needStreaming(filename)) {
+			 streaming = true;
+			 Runnable streamSound = new StreamingSound(filename);
+			 Thread tStream = new Thread(streamSound);
+			 tStream.start();
+		 }		 
+         else loadingSound(filename);
      }
 
-    /**
+	/*
+	 * instance variables to support streaming extension
+	 */
+	public static long LARGE_SIZE = 100000; 
+	private boolean streaming = false;
+	private boolean streamingPlay = false;
+	private boolean streamingStop = false;
+			 
+	/**
      * Play the sound once
      */
     public void play() {
-        audioClip.play();
+		if (streaming) {
+			streamingPlay = true;
+		}
+		else audioClip.play();
     }
 
     /**
      * Play the sound as a loop
      */
     public void loop() {
-        audioClip.loop();
+		if (streaming) {
+			log.warn("Streaming this audio file, loop() not allowed");
+		}
+        else audioClip.loop();
     }
 
     /**
      * Stop playing as a loop
      */
     public void stop() {
-        audioClip.stop();
-    }
-
+		if (streaming) {
+			streamingStop = true;
+		}
+        else audioClip.stop();
+    }	
+	
+	private boolean needStreaming(String fileName) {
+		return (new File(fileName).length()>LARGE_SIZE);
+	}	
 
     /**
-     * Load the requested sound resource
+     * Load the requested sound resource, not streaming
      */
     void loadingSound(String filename) {
         try {
@@ -162,6 +190,116 @@ public class Sound  {
         boolean getBigEndian() {return false;}
         boolean getSigned() { return (getSampleSizeInBits()>8); }
     }
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Sound.class.getName());
+			 
+	public class StreamingSound implements Runnable
+	{
+		/**
+		 * A runnable to stream in sound and play it
+		 *  This method does not read in an entire large sound file at one time,
+		 *        but instead reads in smaller chunks as needed.
+		*/
+		public StreamingSound(String fileName) {
+			_file = fileName;
+		}
+		private String _file;
+		private AudioInputStream stream = null;
+		private AudioFormat format = null;
+		private SourceDataLine line = null;
+		
+		public void run() {
+			// Note: some of the following is based on code from 
+			//      "Killer Game Programming in Java" by A. Davidson.
+			// Set up the audio input stream from the sound file
+			try {
+				// link an audio stream to the sampled sound's file
+				stream = AudioSystem.getAudioInputStream( new File(_file) );
+				format = stream.getFormat();
+				log.debug("Audio format: " + format);					
+				// convert ULAW/ALAW formats to PCM format
+				if ( (format.getEncoding() == AudioFormat.Encoding.ULAW) ||
+						(format.getEncoding() == AudioFormat.Encoding.ALAW) ) {
+					AudioFormat newFormat = 
+					new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+								format.getSampleRate(),
+								format.getSampleSizeInBits()*2,
+								format.getChannels(),
+								format.getFrameSize()*2,
+								format.getFrameRate(), true);  // big endian
+					// update stream and format details
+					stream = AudioSystem.getAudioInputStream(newFormat, stream);
+					System.out.println("Converted Audio format: " + newFormat);
+					format = newFormat;
+					log.debug("new converted Audio format: " + format);					
+				}
+			}
+			catch (UnsupportedAudioFileException e) {
+				log.error("AudioFileException "+e.getMessage());
+				return;
+			}
+			catch (IOException e) {  
+				log.error("IOException "+e.getMessage()); 
+				return;
+			}
+			if (!streamingStop) {
+				// set up the SourceDataLine going to the JVM's mixer
+				try {
+					// gather information for line creation
+					DataLine.Info info =
+							new DataLine.Info(SourceDataLine.class, format);
+					if (!AudioSystem.isLineSupported(info)) {
+						log.error("Audio play() does not support: " + format);
+						return;
+					}
+					// get a line of the required format
+					line = (SourceDataLine) AudioSystem.getLine(info);
+					line.open(format); 
+				}
+				catch (Exception e) {
+					log.error("Exception while creating Audio out "+e.getMessage());  
+					return;
+				}
+			}
+			if (streamingStop) {
+				line.close();
+				return;
+			}
+			// wait until time to play
+			while (!streamingPlay) {
+				if (streamingStop) {
+					line.close();
+					return;
+				}
+				try {
+					Thread.sleep(200);
+				}
+				catch (InterruptedException eInt) {
+					log.warn("Interrupted Exception while waiting for play command");
+				}
+			}
+			// Read  the sound file in chunks of bytes into buffer, and
+			//			pass them on through the SourceDataLine 
+			int numRead = 0;
+			byte[] buffer = new byte[line.getBufferSize()];
+			log.debug("streaming sound buffer size = "+line.getBufferSize());
+			line.start();
+			// read and play chunks of the audio
+			try {
+				int offset;
+				while ((numRead = stream.read(buffer, 0, buffer.length)) >= 0) {
+					offset = 0;
+					while (offset < numRead)
+						offset += line.write(buffer, offset, numRead-offset);
+				}
+			}
+			catch (IOException e) {
+				log.error("IOException while reading sound file "+e.getMessage());
+			}
+			// wait until all data is played, then close the line
+			line.drain();
+			line.stop();
+			line.close();
+		}
+	}	
+	
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Sound.class.getName());
 }
