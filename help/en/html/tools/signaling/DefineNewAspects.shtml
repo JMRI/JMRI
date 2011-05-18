@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DefineNewAspects.shtml,v 1.4 2011-04-08 16:43:58 kevin-dickerson Exp $ -->
+<!-- $Id: DefineNewAspects.shtml,v 1.5 2011-05-18 15:40:34 kevin-dickerson Exp $ -->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -92,6 +92,8 @@ Most of the file is blocks that look like this:
       &lt;reference&gt;&lt;/reference&gt;
       &lt;comment&gt;&lt;/comment&gt;
       &lt;imagelink&gt;&lt;/imagelink&gt;
+      &lt;speed&gt;&lt;/speed&gt;
+      &lt;diverging&gt;&lt;/diverging&gt;
     &lt;/aspect&gt;
 </pre></code>
 
@@ -106,6 +108,18 @@ appearances looks like.  If you provide individual images
 in the appearance files (see below), they'll also be displayed
 here.  Individual images is a better solution, but it's also 
 more work.
+<p>
+The speed element, if present, should either be a numerical value or a string
+value that has been defined int eh signalSpeeds.xml file.  The speed element 
+relates to the maximum speed a train can pass the aspect at.  The signalmast logic 
+uses this speed to help determine which aspect should be displayed where there
+are multiple possible aspects.
+<p>
+The diverging element, if present, should simple be entered in as a 'yes'. 
+The diverging element indicates that this specific aspect is used when a 
+turnout has been thrown in the path ahead.  The signalmast logic uses this element
+to help determine which aspect should be displayed where there are multiple 
+possible aspects.
 <p>
 Below the aspect blocks, there's a block that names all the valid
 appearance files, e.g.:
@@ -135,13 +149,13 @@ Each aspect that the signal can show needs to be
 described with a block like this:
 
 <code><pre>
-    &lt;appearance&gt;
+    &lt;appearance&gt;<br>
       &lt;aspectname&gt;Clear&lt;/aspectname&gt;
       &lt;show&gt;green&lt;/show&gt;
       &lt;show&gt;red&lt;/show&gt;
       &lt;reference&gt;&lt;/reference&gt;
       &lt;imagelink&gt;&lt;/imagelink&gt;
-    &lt;/appearance&gt;
+    &lt;/appearance&gt;<br>
 </pre></code>
 
 The "aspectname" needs to be at the start, followed by zero or more
@@ -162,14 +176,26 @@ a image file (.gif, .png or .jpg) showing what this appearance looks like.
 <p>
 As the appearance names are all user defined and can be in any language, 
 it is necessary to identify some specifically used aspects that various 
-parts of JMRI will specifically ask for.  
+parts of JMRI will specifically ask for.<br>
+Each specific aspect can be given an alternative image to use other than that given
+in the main appearance definition.<br>
 This information can be entered at after the appearance information in the following form.
 <code><pre>
   &lt;specificappearances&gt;
-    &lt;danger&gt;Danger&lt;/danger&gt;
-    &lt;permissive&gt;Off&lt;/permissive&gt;
-    &lt;held&gt;Danger&lt;/held&gt;
-    &lt;dark&gt;Not lit&lt;/dark&gt;
+    &lt;danger&gt;
+        &lt;aspect&gt;Danger&lt;/aspect&gt;
+    &lt;/danger&gt;
+    &lt;permissive&gt;
+        &lt;aspect&gt;Off&lt;/aspect&gt;
+    &lt;/permissive&gt;
+    &lt;held&gt;
+        &lt;aspect&gt;Danger&lt;/aspect&gt;
+        &lt;imagelink&gt;held.gif&lt;/imagelink&lt;
+    &lt;/held&gt;
+    &lt;dark&gt;
+        &lt;aspect&gt;Not Lit&lt;/aspect&gt;
+        &lt;imagelink&gt;notlit.gif&lt;/imagelink&lt;
+    &lt;/dark&gt;
   &lt;/specificappearances&gt;
 </pre></code>
 The specific appearances entered in must match appearances that are valid 
@@ -180,13 +206,30 @@ Aspect Mapping.
 The aspect mapping is used to help determine the progression of signalling appearances.  
 The purpose of the map is to define which potential appearances are valid depending upon
  what appearance is being displayed on the signal mast that is ahead of us.  
- This mapping can be a simple one-to-one, E.g. Advanced signal mast is showing Danger, we should show Caution.  
+ This mapping can be a simple one-to-one, E.g. Advanced signal mast is showing Approach, we should show Clear.
  Or a more complex one-to-many map where there could be multiple appearances that we could display, 
- E.g. Advanced signal is showing Approach, but we could display either a 
- Clear or Diverging Clear depending upon other conditions.
+ E.g. Advanced signal is showing Stop, but we could display either a 
+ Approach or Diverging Approach depending upon other conditions.
+ <p>
+ The value of the Advanced Aspect can be any that is defined in the Aspect table
+ for that signalling system.<br>
+ The value of Our Aspect, must be one that is defined and supported by the 
+ defined in the appearance file.
 <p>
 All of the mappings, are contained within the &lt;aspectMappings&gt; tags, within their own &lt;aspectMapping&gt; tag
-
+<code><pre>
+&lt;aspectMappings&gt;
+    &lt;aspectMapping&gt;
+        &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
+        &lt;ourAspect&gt;Clear&lt;/ourAspect&gt;
+    &lt;/aspectMapping&gt;
+    &lt;aspectMapping&gt;
+        &lt;advancedAspect&gt;Stop&lt;/advancedAspect&gt;
+        &lt;ourAspect&gt;Approach&lt;/ourAspect&gt;
+        &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
+    &lt;/aspectMapping&gt;
+&lt;/aspectMappings&gt;
+</pre></code>
 
 <h3>Check Your Work</h3>
 
