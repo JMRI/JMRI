@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -672,8 +672,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	}
 	
 	/**
-	 * Sets the RFID for this rolling stock.
-	 * @param id 12 character RFID string.
+	 * Sets the value (cost, price) for this rolling stock.
+	 * Currently has nothing to do with operations.  But nice
+	 * to have.
+	 * @param value a string representing what
+	 * this item is worth.
 	 */
 	public void setValue(String value){
 		String old = _value;
