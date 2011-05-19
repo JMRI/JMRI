@@ -21,7 +21,7 @@ import javax.sound.sampled.*;
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
  * @author  Dave Duchamp  Copyright (C) 2011 - add streaming play of large files
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class Sound  {
 
@@ -32,9 +32,7 @@ public class Sound  {
      public Sound(String filename) {
 		 if (needStreaming(filename)) {
 			 streaming = true;
-			 Runnable streamSound = new StreamingSound(filename);
-			 Thread tStream = new Thread(streamSound);
-			 tStream.start();
+			 _fileName = filename;
 		 }		 
          else loadingSound(filename);
      }
@@ -42,9 +40,9 @@ public class Sound  {
 	/*
 	 * instance variables to support streaming extension
 	 */
-	public static long LARGE_SIZE = 100000; 
+	public static final long LARGE_SIZE = 100000;
+	private String _fileName = ""; 
 	private boolean streaming = false;
-	private boolean streamingPlay = false;
 	private boolean streamingStop = false;
 			 
 	/**
@@ -52,7 +50,9 @@ public class Sound  {
      */
     public void play() {
 		if (streaming) {
-			streamingPlay = true;
+			Runnable streamSound = new StreamingSound(_fileName);
+			Thread tStream = new Thread(streamSound);
+			tStream.start();
 		}
 		else audioClip.play();
     }
@@ -262,19 +262,6 @@ public class Sound  {
 			if (streamingStop) {
 				line.close();
 				return;
-			}
-			// wait until time to play
-			while (!streamingPlay) {
-				if (streamingStop) {
-					line.close();
-					return;
-				}
-				try {
-					Thread.sleep(200);
-				}
-				catch (InterruptedException eInt) {
-					log.warn("Interrupted Exception while waiting for play command");
-				}
 			}
 			// Read  the sound file in chunks of bytes into buffer, and
 			//			pass them on through the SourceDataLine 
