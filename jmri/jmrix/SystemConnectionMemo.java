@@ -2,6 +2,10 @@
 
 package jmri.jmrix;
 import java.util.ArrayList;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Vector;
 /**
  * Lightweight abstract class to denote that a system is active,
  * and provide general information.
@@ -11,7 +15,7 @@ import java.util.ArrayList;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 abstract public class SystemConnectionMemo {
 
@@ -61,7 +65,6 @@ abstract public class SystemConnectionMemo {
     private synchronized static boolean addSystemPrefix(String systemPrefix){
         if (sysPrefixes.contains(systemPrefix))
             return false;
-
         sysPrefixes.add(systemPrefix);
         return true;
     }
@@ -91,6 +94,7 @@ abstract public class SystemConnectionMemo {
      */
     public void register() {
         jmri.InstanceManager.store(this, SystemConnectionMemo.class);
+        notifyPropertyChangeListener("ConnectionAdded", null, null);
     }
     
     /**
@@ -150,12 +154,53 @@ abstract public class SystemConnectionMemo {
         removeUserName(userName);
         removeSystemPrefix(prefix);
         jmri.InstanceManager.deregister(this, SystemConnectionMemo.class);
+        notifyPropertyChangeListener("ConnectionRemoved", null, null);
     }
     
     private boolean mDisabled = false;
     public boolean getDisabled() { return mDisabled; }
-    public void setDisabled(boolean disabled) { mDisabled = disabled; }
+    public void setDisabled(boolean disabled) { 
+        if(disabled==mDisabled)
+            return;
+        boolean oldDisabled = mDisabled;
+        mDisabled = disabled;
+        notifyPropertyChangeListener("ConnectionDisabled", oldDisabled, disabled);
+    }
     
+    public static void removePropertyChangeListener(PropertyChangeListener l) {
+        if (listeners.contains(l)) {
+            listeners.removeElement(l);
+        }
+    }
+
+    public static void addPropertyChangeListener(PropertyChangeListener l) {
+        // add only if not already registered
+        if (!listeners.contains(l)) {
+            listeners.addElement(l);
+        }
+    }
+
+    /**
+     * Trigger the notification of all PropertyChangeListeners
+     */
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<PropertyChangeListener> v;
+        synchronized(this)
+            {
+                v = (Vector<PropertyChangeListener>) listeners.clone();
+            }
+        // forward to all listeners
+        int cnt = v.size();
+        for (int i=0; i < cnt; i++) {
+            PropertyChangeListener client = v.elementAt(i);
+            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+        }
+    }
+
+    // data members to hold contact with the property listeners
+    final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 }
 
 
