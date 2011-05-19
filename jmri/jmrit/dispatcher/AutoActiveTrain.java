@@ -41,7 +41,7 @@ import jmri.ThrottleListener;
  * The AutoEngineer sub class is based in part on code by Pete Cressman contained in Warrants.java
  *
  * @author	Dave Duchamp  Copyright (C) 2010-2011
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class AutoActiveTrain implements ThrottleListener {
 	
@@ -249,6 +249,8 @@ public class AutoActiveTrain implements ThrottleListener {
 			}
 		}			
 	}
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+								justification="OK to not sync here, no conflict expected") 
 	protected void handleBlockStateChange(AllocatedSection as, Block b) {
  		if (b.getState()==Block.OCCUPIED) {
 			// Block changed to OCCUPIED - train has entered this block
