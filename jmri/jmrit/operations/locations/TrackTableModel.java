@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -66,7 +66,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     	tracksList = _location.getTracksByNameList(_trackType);
     	// and add them back in
     	for (int i = 0; i < tracksList.size(); i++){
-    		log.debug("tracks ids: " + tracksList.get(i));
+    		//log.debug("tracks ids: " + tracksList.get(i));
     		_location.getTrackById(tracksList.get(i))
     		.addPropertyChangeListener(this);
     	}

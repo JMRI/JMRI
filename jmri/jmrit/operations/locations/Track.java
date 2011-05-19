@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.57 $
+ * @version             $Revision: 1.58 $
  */
 public class Track {
 	
@@ -822,6 +822,8 @@ public class Track {
     }
     
     public String getScheduleId(){
+    	if (!getLocType().equals(Track.SIDING))
+    		return "";
     	// old code only stored schedule name, so create id if needed.
     	if (_scheduleId.equals("") && !_scheduleName.equals("")){
     		Schedule schedule = ScheduleManager.instance().getScheduleByName(_scheduleName);

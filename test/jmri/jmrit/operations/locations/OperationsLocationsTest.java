@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -636,10 +636,10 @@ public class OperationsLocationsTest extends TestCase {
 	// test Track schedule support
 	public void testTrackScheduleSupport() {
 		Location l = new Location("Location Test id", "Location Test Name");
-		Track t = new Track("Test id", "Test Name", "Test Type", l);
+		Track t = new Track("Test id", "Test Name", Track.SIDING, l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track Car Type", Track.SIDING, t.getLocType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		t.setScheduleId("Test Schedule Id");
