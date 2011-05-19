@@ -17,7 +17,7 @@ import org.jdom.*;
  * Install decoder definition from URL
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends AbstractAction {
@@ -68,6 +68,8 @@ public class InstallDecoderURLAction extends AbstractAction {
 
         // get output name
         File temp = new File(from.getFile());
+
+        log.debug("["+temp.toString()+"]");
         
         // ensure directories exist
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"decoders");
@@ -80,8 +82,15 @@ public class InstallDecoderURLAction extends AbstractAction {
             );
         log.debug("["+toFile.toString()+"]");
                         
-        // first do the copy
-        if (!copyfile(from,toFile,_who)) return;
+        // first do the copy, but not if source and output files are the same
+        if (!temp.toString().equals(toFile.toString())) {
+            if (!copyfile(from,toFile,_who)) return;
+        } else {
+            // write a log entry
+            log.info("Source and destination files identical - file not copied");
+            log.info("  source file: " + temp.toString());
+            log.info("  destination: " + toFile.toString());
+        }
         
         // and rebuild index
         DecoderIndexFile.forceCreationOfNewIndex();
