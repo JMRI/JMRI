@@ -163,7 +163,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                     //if (log.isDebugEnabled()) log.debug("Update cell "+signalMastLogicList.indexOf(name)+","
                      //                                   +VALUECOL+" for "+name);
                     // since we can add columns, the entire row is marked as updated
-                        int row = signalMastLogicList.indexOf((SignalMastLogic)e.getSource());
+                        int row = signalMastLogicList.indexOf(logic);
                         fireTableRowsUpdated(row, row);
                     }
                 } else if (e.getSource() instanceof jmri.SignalMast){
@@ -289,9 +289,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(getLogicFromRow(row), getDestMastFromRow(row));
             }
             
-            public void refreshSelections(){
+            /*public void refreshSelections(){
                 fireTableRowsUpdated(0, getRowCount());
-            }
+            }*/
             
             public SignalMast getDestMastFromRow(int row){
                     // if object has been deleted, it's not here; ignore it
@@ -469,7 +469,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 frame.pack();
                 frame.setVisible(true);*/
                 
-                Hashtable<SignalMast, ArrayList<SignalMast>> result = InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
+                InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
                 
 
                 
@@ -513,7 +513,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
     }
     
     private ProgressMonitor progressMonitor;
-    private JButton startButton;
+//    private JButton startButton;
     private JTextArea taskOutput;
     //private Task task;
     int numberOfEvents = 0;
