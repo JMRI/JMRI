@@ -70,14 +70,17 @@ public class TrainCsvManifest extends TrainCommon {
 			// build header
 			addLine(fileOut, HEADER);
 			if (!train.getRailroadName().equals(""))
-				addLine(fileOut, RN+train.getRailroadName());
+				addLine(fileOut, RN+"\""+train.getRailroadName()+"\"");
 			else
-				addLine(fileOut, RN+Setup.getRailroadName());
+				addLine(fileOut, RN+"\""+Setup.getRailroadName()+"\"");
 			addLine(fileOut, TN+train.getName());
-			addLine(fileOut, TM+train.getDescription());		
+			addLine(fileOut, TM+"\""+train.getDescription()+"\"");		
 			addLine(fileOut, VT+getDate());
+			// train comment can have multiple lines
 			if (!train.getComment().equals("")){
-				addLine(fileOut, TC+train.getComment());
+				String[] comments = train.getComment().split("\n");
+				for (int i=0; i<comments.length; i++)
+					addLine(fileOut, TC+"\""+comments[i]+"\"");							
 			}
 			
 			// get engine and car lists
@@ -110,30 +113,16 @@ public class TrainCsvManifest extends TrainCommon {
 					if (Setup.isPrintLocationCommentsEnabled()){
 						Location l = locationManager.getLocationByName(rl.getName());
 						if (!l.getComment().equals("")){
-							String comment = l.getComment();
-							if (comment.contains("\n")){
-								log.debug("location comment has line feeds: "+comment);
-								String[] comments = comment.split("\n");
-								for (int i=0; i<comments.length; i++)
-									addLine(fileOut, LC+"\""+comments[i]+"\"");							
-							} else {							
-								if (comment.contains(del)){
-									log.debug("comment has delimiter: "+comment);
-									comment = "\""+comment+"\"";
-								}
-								addLine(fileOut, LC+comment);
-							}
+							// location comment can have multiple lines
+							String[] comments = l.getComment().split("\n");
+							for (int i=0; i<comments.length; i++)
+								addLine(fileOut, LC+"\""+comments[i]+"\"");							
 						}
 					}
 				}
 				// add route comment
 				if (!rl.getComment().equals("")){
-					String comment = rl.getComment();
-		        	if (comment.contains(del)){
-		        		log.debug("route comment has delimiter: "+comment);
-		        		comment = "\""+comment+"\"";
-		        	}
-					addLine(fileOut, RC+comment);
+					addLine(fileOut, RC+"\""+rl.getComment()+"\"");
 				}			
 				// engine change or helper service?
 				if (train.getSecondLegOptions() != Train.NONE){
