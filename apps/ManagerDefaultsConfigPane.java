@@ -5,6 +5,8 @@ package apps;
 import javax.swing.*;
 
 import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import jmri.managers.ManagerDefaultSelector;
 
@@ -13,7 +15,7 @@ import jmri.managers.ManagerDefaultSelector;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C)  2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @since 2.9.5
  */
 public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
@@ -24,9 +26,17 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
         
         matrix = new JPanel();
         add(matrix);
-        
+        jmri.jmrix.SystemConnectionMemo.addPropertyChangeListener(propertyConnectionUpdate);
         update();
     }
+    
+    protected PropertyChangeListener propertyConnectionUpdate = new PropertyChangeListener(){
+        public void propertyChange(PropertyChangeEvent e) {
+            if(e.getPropertyName().startsWith("Connection")){
+                update();
+            }
+        }
+    };
 
     JPanel matrix;
     
