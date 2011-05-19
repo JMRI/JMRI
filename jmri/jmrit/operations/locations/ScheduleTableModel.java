@@ -30,7 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.22 $
+ * @version   $Revision: 1.23 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -70,7 +70,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
  		list = _schedule.getItemsBySequenceList();
 		// and add them back in
 		for (int i = 0; i < list.size(); i++){
-			log.debug("schedule ids: " + list.get(i));
+			//log.debug("schedule ids: " + list.get(i));
 			_schedule.getItemById(list.get(i))
 					.addPropertyChangeListener(this);
 		}

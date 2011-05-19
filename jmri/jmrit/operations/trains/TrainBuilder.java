@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.160 $
+ * @version             $Revision: 1.161 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -438,7 +438,7 @@ public class TrainBuilder extends TrainCommon{
 		// now make manifest
 		makeManifest();
 		if (Setup.isGenerateCsvManifestEnabled())
-			new TrainCvsManifest(train);
+			new TrainCsvManifest(train);
 		// now create and place train icon
 		train.moveTrainIcon(train.getTrainDepartsRouteLocation());
 		log.debug("Done building train "+train.getName());

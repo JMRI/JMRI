@@ -1,4 +1,4 @@
-// TrainCvsManifest.java
+// TrainCsvManifest.java
 
 package jmri.jmrit.operations.trains;
 
@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
-public class TrainCvsManifest extends TrainCommon {
+public class TrainCsvManifest extends TrainCommon {
 	
 	EngineManager engineManager = EngineManager.instance();
 	CarManager carManager = CarManager.instance();
@@ -54,7 +54,7 @@ public class TrainCvsManifest extends TrainCommon {
 	private final static String TT = "TT"+del+"Train Terminates"+del;
 	private final static String VT = "VT"+del+"Valid"+del;
 	
-	public TrainCvsManifest(Train train){
+	public TrainCsvManifest(Train train){
 			// create comma separated value manifest file
 			File file = TrainManagerXml.instance().createTrainCsvManifestFile(
 					train.getName());
@@ -111,11 +111,18 @@ public class TrainCvsManifest extends TrainCommon {
 						Location l = locationManager.getLocationByName(rl.getName());
 						if (!l.getComment().equals("")){
 							String comment = l.getComment();
-				        	if (comment.contains(del)){
-				        		log.debug("comment has delimiter: "+comment);
-				        		comment = "\""+comment+"\"";
-				        	}
-							addLine(fileOut, LC+comment);
+							if (comment.contains("\n")){
+								log.debug("location comment has line feeds: "+comment);
+								String[] comments = comment.split("\n");
+								for (int i=0; i<comments.length; i++)
+									addLine(fileOut, LC+"\""+comments[i]+"\"");							
+							} else {							
+								if (comment.contains(del)){
+									log.debug("comment has delimiter: "+comment);
+									comment = "\""+comment+"\"";
+								}
+								addLine(fileOut, LC+comment);
+							}
 						}
 					}
 				}
