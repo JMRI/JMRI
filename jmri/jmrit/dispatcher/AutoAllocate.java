@@ -56,7 +56,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class AutoAllocate {
@@ -105,23 +105,8 @@ public class AutoAllocate {
 			}
 			if (getPlanThisTrain(ar.getActiveTrain())!=null) {
 				// this train is in an active Allocation Plan, anything to do now?
-				ActiveTrain at = ar.getActiveTrain();
-				AllocationPlan ap = getPlanThisTrain(at);
-				if (!at.isTransitReversed()) {
-					if (ap.getTargetSectionSequenceNum(cTrainNum)>=ar.getSectionSeqNumber()) {
-						if ( (ar.getSection().getState()==Section.FREE) && 
-								(ar.getSection().getOccupancy()!=Section.OCCUPIED) ) {
-							if (allocateIfLessThanThreeAhead(ar)) return;
-						}
-					}
-				}
-				else {
-					if (ap.getTargetSectionSequenceNum(cTrainNum)<=ar.getSectionSeqNumber()) {
-						if ( (ar.getSection().getState()==Section.FREE) && 
-								(ar.getSection().getOccupancy()!=Section.OCCUPIED) ) {
-							if (allocateIfLessThanThreeAhead(ar)) return;
-						}
-					}
+				if (willAllocatingFollowPlan(ar,getPlanThisTrain(ar.getActiveTrain()))) {
+					if (allocateIfLessThanThreeAhead(ar)) return;
 				}
 			}
 			else if (!waitingForStartTime(ar)) {
@@ -135,7 +120,7 @@ public class AutoAllocate {
 						if (allocateIfLessThanThreeAhead(ar)) return;
 					}  
 					else {
-						//check if any other ActiveTrain will need this Section
+						//check if any other ActiveTrain will need this Section or its alternates, if any
 						boolean okToAllocate = true;
 						ArrayList<ActiveTrain> neededByTrainList = new ArrayList<ActiveTrain>();
 						for (int j=0; j<activeTrainsList.size(); j++) {
@@ -160,27 +145,38 @@ public class AutoAllocate {
 							}
 						}
 						else {
-							// requested Section is needed by one or more other active Active Trains
+							// requested Section (or alternate) is needed by other active Active Train(s)
 							for (int k=0; k<neededByTrainList.size(); k++) {
 								// section is also needed by this active train
 								ActiveTrain nt = neededByTrainList.get(k);
 								// are trains moving in same direction through the requested Section?
 								if (sameDirection(ar,nt)) {					
 									// trains will move in the same direction thru requested section
-									if (nt.getPriority()>ar.getActiveTrain().getPriority()) {
+									if (firstTrainLeadsSecond(ar.getActiveTrain(),nt) && 
+										(nt.getPriority()>ar.getActiveTrain().getPriority())) {
 										// a higher priority train is trailing this train, can we let it pass?
 										if (checkForPassingPlan(ar,nt,neededByTrainList)) {
-											// can we respond to the current allocation request
-				
-
-											okToAllocate = false;
+											// PASSING_MEET plan created
+											if (!willAllocatingFollowPlan(ar,
+														getPlanThisTrain(ar.getActiveTrain()))) {
+												okToAllocate = false;
+											}
 										}
 									}
 								}
 								else {
 									// trains will move in opposite directions thru requested section
-									//   explore possibility of a meet to avoid gridlock							
-// djd debugging - need code here
+									//   explore possibility of an XING_MEET to avoid gridlock
+									if (willTrainsCross(ar.getActiveTrain(),nt)) {
+										if (checkForXingPlan(ar,nt,neededByTrainList)) {
+											// XING_MEET plan created
+											if (!willAllocatingFollowPlan(ar,
+														getPlanThisTrain(ar.getActiveTrain()))) {
+												okToAllocate = false;
+											}
+										}
+									}
+// djd debugging - add test for a CONTINUING plan here
 								}							
 							}
 						}
@@ -256,50 +252,46 @@ public class AutoAllocate {
 			AllocationPlan ap = _planList.get(i);
 			for (int j=1; j<3; j++) {
 				if (ap.getActiveTrain(j)==at) {
-					cTrainNum = j;
-					cPlanNum = ap.getPlanNum();
-					cAT = at;
 					return ap;
 				}
 			}
 		}
 		// train not in an AllocationPlan 
-		cAT = null;
-		cPlanNum = 0;
-		cTrainNum = 0;
 		return null;
 	}
-	private ActiveTrain cAT = null;
-	private int cPlanNum = 0;
-	private int cTrainNum = 0;
-	
-// djd debugging - may not need the following method
-/*	private AllocationPlan getNextPlanThisTrain(ActiveTrain at) {
-		if (at!=cAT) {
-			return getPlanThisTrain(at);
+	private boolean willAllocatingFollowPlan(AllocationRequest ar, AllocationPlan ap) {
+		// return 'true' if this AllocationRequest is consistent with specified plan,
+		//     returns 'false' otherwise
+		ActiveTrain at = ar.getActiveTrain();
+		int cTrainNum = 0;
+		if (ap.getActiveTrain(1)==at) {
+			cTrainNum = 1;
 		}
-		for (int i=0; i<_planList.size(); i++) {
-			AllocationPlan ap = _planList.get(i);
-			if (ap.getPlanNum()>cPlanNum) {
-				for (int j=1; j<3; j++) {
-					if (ap.getActiveTrain(j)==at) {
-						cTrainNum = j;
-						cPlanNum = ap.getPlanNum();
-						cAT = at;
-						return ap;
-					}
+		else if (ap.getActiveTrain(2)==at) {
+			cTrainNum = 2;
+		}
+		else {
+			log.error("Requesting train not in Allocation Plan");
+			return false;
+		}
+		if (!at.isAllocationReversed()) {
+			if (ap.getTargetSectionSequenceNum(cTrainNum)>=ar.getSectionSeqNumber()) {
+				if ( (ar.getSection().getState()==Section.FREE) && 
+								(ar.getSection().getOccupancy()!=Section.OCCUPIED) ) {
+					return true;
 				}
 			}
 		}
-		// train not in another AllocationPlan 
-		cAT = null;
-		cPlanNum = 0;
-		cTrainNum = 0;
-		return null;	
-	}  
-*/
-// end djd debugging
-
+		else {
+			if (ap.getTargetSectionSequenceNum(cTrainNum)<=ar.getSectionSeqNumber()) {
+				if ( (ar.getSection().getState()==Section.FREE) && 
+								(ar.getSection().getOccupancy()!=Section.OCCUPIED) ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}	
 	private void removeCompletePlans() {
 		boolean foundCompletePlan = true;
 		while (foundCompletePlan) {
@@ -313,8 +305,7 @@ public class AutoAllocate {
 				}
 			}
 		}
-	}
-			
+	}			
 	private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
 		// test how far ahead of occupied track this requested section is
 		ArrayList<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
@@ -357,98 +348,218 @@ public class AutoAllocate {
 				}
 			}
 		}
-// djd debugging
+// djd debugging 
 log.error("auto allocating Section "+ar.getSection().getUserName());
 		_dispatcher.allocateSection(ar,null);
+		return true;
+	}
+	private boolean checkForXingPlan(AllocationRequest ar, ActiveTrain nt,
+						  ArrayList<ActiveTrain> neededByTrainList) {
+		// returns 'true' if an AllocationPlan has been set up, returns 'false' otherwise
+		Section nSec = null;
+		Section aSec = null;
+		int nSecSeq = 0;
+		int aSecSeq = 0;
+		ActiveTrain at = ar.getActiveTrain();
+		AllocationPlan apx = getPlanThisTrain(nt);
+		if (apx!=null) {
+			if (apx.getPlanType() != AllocationPlan.XING_MEET) return false;
+			// already in a XING_MEET Allocation Plan - find target Section and sequence
+			Section oSection = null;
+			ActiveTrain oTrain = null;
+			if (apx.getActiveTrain(1)==nt) {
+				nSecSeq = apx.getTargetSectionSequenceNum(1);
+				nSec = apx.getTargetSection(1);
+				oSection = apx.getTargetSection(2);
+				oTrain = apx.getActiveTrain(2);
+			}
+			else {
+				nSecSeq = apx.getTargetSectionSequenceNum(2);
+				nSec = apx.getTargetSection(2);
+				oSection = apx.getTargetSection(1);
+				oTrain = apx.getActiveTrain(1);
+			}
+			int aCurrentSeq = getCurrentSequenceNumber(at);
+			ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+			if (nSections.size()<=1) return false;
+			// is a passing siding, find a suitable track
+			aSec = getBestOtherSection(nSections, nSec);
+			if (aSec==null) return false;
+			aSecSeq = willTraverse(aSec, at, getCurrentSequenceNumber(at));
+			if (aSecSeq==0) return false;
+		}
+		else {
+			// neither train is in an AllocationPlan currently, check for suitable passing siding
+			int aSeq = ar.getSectionSeqNumber();
+			// is an alternate Section available here or ahead
+			aSecSeq = findPassingSection(at,aSeq);
+			if (aSecSeq == 0) {
+				// none in at's Transit, is there one in nt's Transit
+				int nCurrentSeq = getCurrentSequenceNumber(nt);
+				nSecSeq = findPassingSection(nt,nCurrentSeq);
+				if (nSecSeq > 0) {
+					// has passing section ahead, will this train traverse a Section in it
+					ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+					for (int i = 0; (i<nSections.size()) && (aSec==null); i++) {
+						aSecSeq = willTraverse(nSections.get(i), at, aSeq);
+						if (aSecSeq>0) {
+							aSec = at.getTransit().getSectionListBySeq(aSecSeq).get(0);
+						}
+					}
+					if (aSec!=null) {
+						// found passing Section that should work out
+						nSec = getBestOtherSection(nSections, aSec);
+					}
+				}
+			}
+			else {
+				// will other train go through any of these alternate sections
+				ArrayList<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
+				int nCurrentSeq = getCurrentSequenceNumber(nt);
+				for (int i = 0; (i<aSections.size()) && (aSec==null); i++) {
+					nSecSeq = willTraverse(aSections.get(i), nt, nCurrentSeq);
+					if (nSecSeq>0) {
+						nSec = aSections.get(i);
+						aSec = getBestOtherSection(aSections, nSec);
+					}
+				}
+			}		
+			// if could not find a suitable siding for a crossing meet, return 
+			if ( (aSec==null) || (nSec==null) ) return false;
+		}
+		// check for conflicting plan that could cause gridlock
+		if (neededByTrainList.size()>2) {
+			if (isThereConflictingPlan(at, aSec, aSecSeq, nt, nSec, nSecSeq, 
+						AllocationPlan.XING_MEET)) return false;
+		}
+		// set up allocation plan
+		AllocationPlan ap = new AllocationPlan(this, nextPlanNum);
+		nextPlanNum ++;
+		ap.setPlanType(AllocationPlan.XING_MEET);
+		ap.setActiveTrain(at,1);
+		ap.setTargetSection(aSec,aSecSeq,1);
+		ap.setActiveTrain(nt,2);
+		ap.setTargetSection(nSec,nSecSeq,2);
+		_planList.add(ap);
 		return true;
 	}
 	private boolean checkForPassingPlan(AllocationRequest ar, ActiveTrain nt,
 						  ArrayList<ActiveTrain> neededByTrainList) {
 		// returns 'true' if an AllocationPlan has been set up, returns 'false' otherwise
-		ActiveTrain at = ar.getActiveTrain();
-		int aSeq = ar.getSectionSeqNumber();
-		// is an alternate Section available here or ahead
-		int aSecSeq = findPassingSection(at,aSeq);
-		Section aSec = null;
 		Section nSec = null;
+		Section aSec = null;
 		int nSecSeq = 0;
-		if (aSecSeq == 0) { 
-			// does higher priority train have a passing section ahead
-			int nCurrentSeq = getCurrentSequenceNumber(nt);
-			nSecSeq = findPassingSection(nt,nCurrentSeq);
-			if (nSecSeq > 0) {
-				// has passing section ahead, will this train traverse a Section in it
-				ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
-				for (int i = 0; (i<nSections.size()) && (aSec==null); i++) {
-					aSecSeq = willTraverse(nSections.get(i), at, aSeq);
-					if (aSecSeq>0) {
-						aSec = at.getTransit().getSectionListBySeq(aSecSeq).get(0);
-					}
+		int aSecSeq = 0;
+		ActiveTrain at = ar.getActiveTrain();
+		AllocationPlan apx = getPlanThisTrain(nt);
+		if (apx!=null) {
+			if (apx.getPlanType() != AllocationPlan.PASSING_MEET) return false;
+			// already in a PASSING_MEET Allocation Plan - find target Section and sequence
+			Section oSection = null;
+			ActiveTrain oTrain = null;
+			if (apx.getActiveTrain(1)==nt) {
+				nSecSeq = apx.getTargetSectionSequenceNum(1);
+				nSec = apx.getTargetSection(1);
+				oSection = apx.getTargetSection(2);
+				oTrain = apx.getActiveTrain(2);
+			}
+			else {
+				nSecSeq = apx.getTargetSectionSequenceNum(2);
+				nSec = apx.getTargetSection(2);
+				oSection = apx.getTargetSection(1);
+				oTrain = apx.getActiveTrain(1);
+			}
+			int aCurrentSeq = getCurrentSequenceNumber(at);
+			aSecSeq = willTraverse(nSec, at, aCurrentSeq);
+			if (aSecSeq==0) return false;
+			int tnSecSeq = nSecSeq;
+			if (nt.getPriority()>oTrain.getPriority()) {
+				if (!nt.isAllocationReversed()) {
+					tnSecSeq --;
+					if (tnSecSeq <=0) tnSecSeq = nSecSeq;
 				}
-				if (aSec!=null) {
-					// found passing Section that should work out, push higher 
-					//     priority train one section further, if possible
-					if (!nt.isTransitReversed()) {							
-						if (nSecSeq<nt.getTransit().getMaxSequence()) nSecSeq ++;
-					}
-					else {
-						if (nSecSeq>1) nSecSeq --;
-					}
-					nSec = nt.getTransit().getSectionListBySeq(nSecSeq).get(0);
-					if (nSec==aSec) {
-						if (nt.getTransit().getSectionListBySeq(nSecSeq).size()>1) {
-							nSec = nt.getTransit().getSectionListBySeq(nSecSeq).get(1);
-						}
-						else {
-							aSec = null;
-						}
-					}
+				else {
+					tnSecSeq ++;
+					if (tnSecSeq>nt.getTransit().getMaxSequence()) tnSecSeq = nSecSeq;
 				}
 			}
-		}
-		else {
-			// will the higher priority train go through any of these alternate sections
-			ArrayList<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
-			int nCurrentSeq = getCurrentSequenceNumber(nt);
-			for (int i = 0; (i<aSections.size()) && (aSec==null); i++) {
-				nSecSeq = willTraverse(aSections.get(i), nt, nCurrentSeq);
-				if (nSecSeq>0) {
-					// train will traverse one of these alternate sections
-					//     find free section, not this one
-					for (int j = aSections.size()-1; (j>=0) && (aSec==null); j--) {
-						if (aSections.get(j).getState()==Section.FREE) {
-							aSec = aSections.get(j);
-						}
+			ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+			if (nSections.size()<=1) return false;
+			// is a passing siding, find a suitable track
+			for (int i = 0; (i<nSections.size()) && (aSec==null); i++) {
+				if (nSections.get(i) == oSection) {
+					aSecSeq = willTraverse(nSections.get(i), at, aCurrentSeq);
+					if (aSecSeq>0) aSec = nSections.get(i);
+				}
+			}
+			if (aSec==null) {
+				for (int i = 0; (i<nSections.size()) && (aSec==null); i++) {
+					if (nSections.get(i) != nSec ) {
+						aSecSeq = willTraverse(nSections.get(i), at, aCurrentSeq);
+						if (aSecSeq>0) aSec = nSections.get(i);
 					}
-					if (aSec==null) {
-						// no free section, find one allocated in the same direction
-					
+				}			
+			}			
+			if (aSec == null) return false;
+		}		
+		else {
+			// both trains are not in Allocation plans
+			int aSeq = ar.getSectionSeqNumber();
+			// is an alternate Section available here or ahead
+			aSecSeq = findPassingSection(at,aSeq);
+			if (aSecSeq == 0) { 
+				// does higher priority train have a passing section ahead
+				int nCurrentSeq = getCurrentSequenceNumber(nt);
+				nSecSeq = findPassingSection(nt,nCurrentSeq);
+				if (nSecSeq > 0) {
+					// has passing section ahead, will this train traverse a Section in it
+					ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
+					for (int i = 0; (i<nSections.size()) && (aSec==null); i++) {
+						aSecSeq = willTraverse(nSections.get(i), at, aSeq);
+						if (aSecSeq>0) {
+							aSec = at.getTransit().getSectionListBySeq(aSecSeq).get(0);
+						}
 					}
 					if (aSec!=null) {
-						if (!nt.isTransitReversed()) {
-								if (nSecSeq<nt.getTransit().getMaxSequence()) nSecSeq ++;
-						}
-						else {
-							if (nSecSeq>1) nSecSeq --;
-						}
-						nSec = nt.getTransit().getSectionListBySeq(nSecSeq).get(0);
-						if (nSec==aSec) {
-							if (nt.getTransit().getSectionListBySeq(nSecSeq).size()>1) {
-								nSec = nt.getTransit().getSectionListBySeq(nSecSeq).get(1);
-							}
-							else {
-								aSec = null;
-							}
-						}
+						// found passing Section that should work out
+						nSec = getBestOtherSection(nSections, aSec);
 					}
 				}
 			}
+			else {
+				// will the higher priority train go through any of these alternate sections
+				ArrayList<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
+				int nCurrentSeq = getCurrentSequenceNumber(nt);
+				for (int i = 0; (i<aSections.size()) && (aSec==null); i++) {
+					nSecSeq = willTraverse(aSections.get(i), nt, nCurrentSeq);
+					if (nSecSeq>0) {
+						nSec = aSections.get(i);
+						aSec = getBestOtherSection(aSections, nSec);
+					}
+				}
+			}		
+			// if could not find a suitable passing siding, return 
+			if ( (aSec==null) || (nSec==null) ) return false;
+			//     push higher priority train one section further, if possible
+			if (!nt.isAllocationReversed()) {							
+				if (nSecSeq<nt.getTransit().getMaxSequence()) {
+					nSecSeq ++;
+					nSec = nt.getTransit().getSectionListBySeq(nSecSeq).get(0);
+				}
+			}
+			else {
+				if (nSecSeq>1) {
+					nSecSeq --;
+					nSec = nt.getTransit().getSectionListBySeq(nSecSeq).get(0);
+				}
+			}
 		}
-		// if could not find a suitable passing siding, return 
-		if ( (aSec==null) || (nSec==null) ) return false;
-		// is there another train between these two trains
+		// is there another train trying to let this high priority train pass
 		if (neededByTrainList.size()>2) {
-// djd debugging - need code here	
+			// Note: e.g. Two lower priority trains ahead of a high priority train could cause gridlock 
+			//    if both try to set up a PASSING_PLAN meet at the same place, so we exclude that case.
+			if (isThereConflictingPlan(at, aSec, aSecSeq, nt, nSec, nSecSeq, 
+						AllocationPlan.PASSING_MEET)) return false;
 		}
 		// set up allocation plan
 		AllocationPlan ap = new AllocationPlan(this, nextPlanNum);
@@ -458,8 +569,47 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		ap.setTargetSection(aSec,aSecSeq,1);
 		ap.setActiveTrain(nt,2);
 		ap.setTargetSection(nSec,nSecSeq,2);
+		_planList.add(ap);
 		return true;
 	}
+	private boolean isThereConflictingPlan(ActiveTrain at, Section aSec, int aSecSeq,
+							ActiveTrain nt, Section nSec, int nSecSeq, int type) {
+		// returns 'true' if there is a conflicting	plan that may result in gridlock 
+		//    if this plan is set up, return 'false' if not.
+		// Note: may have to add other tests to this method in the future to prevent gridlock 
+		//	  situations not currently tested for.
+		if (_planList.size()==0) return false; 
+		for (int i = 0; i<_planList.size(); i++) {
+			// check if this plan involves either train
+// djd debugging - need code here
+			// check if this plan uses the same Passing Section
+		}
+		// passes all tests
+		return false;
+	}	
+	private Section getBestOtherSection(ArrayList<Section> sList, Section aSec) {
+		// returns the best Section from the list that is not aSec, or else return null
+		for (int i = 0; i<sList.size(); i++) {
+			if ( (sList.get(i)!=aSec) && (sList.get(i).getState()==Section.FREE) && 
+							(sList.get(i).getOccupancy()!=Section.OCCUPIED) ) {
+				return sList.get(i);				
+			}
+		}
+		// no free other section, is there one allocated for travel in same direction
+// djd debugging - need code here
+		
+		for (int i = 0; i<sList.size(); i++) {
+			if ( (sList.get(i)!=aSec) && (sList.get(i).getOccupancy()!=Section.OCCUPIED) ) {
+				return sList.get(i);				
+			}
+		}
+		for (int i = 0; i<sList.size(); i++) {
+			if (sList.get(i)!=aSec) {
+				return sList.get(i);				
+			}
+		}
+		return null;
+	}		
 	private int findPassingSection(ActiveTrain at,int aSeq) {
 		// returns the sequence number of first area having alternate sections
 		Transit t = at.getTransit();
@@ -498,29 +648,42 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		return 0;
 	}
 	private boolean sectionNeeded (AllocationRequest ar, ActiveTrain at) {
-		// returns 'true' if request section may be needed by specified train
+		// returns 'true' if request section, or its alternates, will be needed by specified train
 		if ((ar==null) || (at==null)) {
 			log.error("null argument on entry to 'sectionNeeded'");
 			return false;
 		}
-		if (!(at.getTransit().containsSection(ar.getSection()))) return false;
-		else if (at.getResetWhenDone()) return true;
+		ArrayList<Section> aSectionList = ar.getActiveTrain().getTransit().getSectionListBySeq(
+						ar.getSectionSeqNumber());
+		boolean found = false;
+		for (int i = 0; i<aSectionList.size(); i++) {
+			if (!(at.getTransit().containsSection(aSectionList.get(i)))) found = true;
+		}				
+		if (!found) return false;		
+		else if ( (at.getResetWhenDone()) || (at.getReverseAtEnd() && 
+										(!at.isAllocationReversed()))) return true;
 		// this train may need this Section, has it already passed this Section?
 		ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
 		int curSeq = getCurrentSequenceNumber (at);
-		if (!at.isTransitReversed()) {
+		if (!at.isAllocationReversed()) {
 			for (int i=0; i<tsList.size(); i++) {
-				if ( (tsList.get(i).getSequenceNumber()>curSeq) && 
-						(tsList.get(i).getSection()==ar.getSection()) ) {
-					return true;
+				if (tsList.get(i).getSequenceNumber()>curSeq) {
+					for (int j=0; j<aSectionList.size(); j++) {
+						if (tsList.get(i).getSection()==aSectionList.get(j)) {
+							return true;
+						}
+					}
 				}
 			}
 		}
 		else {
 			for (int i=tsList.size(); i>0; i--) {
-				if ( (tsList.get(i).getSequenceNumber()<curSeq) && 
-						(tsList.get(i).getSection()==ar.getSection()) ) {
-					return true;
+				if (tsList.get(i).getSequenceNumber()<curSeq) {
+					for (int j=0; j<aSectionList.size(); j++) {
+						if (tsList.get(i).getSection()==aSectionList.get(j)) {
+							return true;
+						}
+					}
 				}
 			}
 		}		
@@ -528,44 +691,142 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 	}
 	private boolean sameDirection(AllocationRequest ar, ActiveTrain at) {
 		// returns 'true' if both trains will move thru the requested section in the same direction
-		// NOTE: on return, _conTransitSection = at's Transit Section with the same Section as ar
 		if ((ar==null) || (at==null)) {
 			log.error("null argument on entry to 'sameDirection'");
 			return false;
 		}
-		_conTransitSection = null;		
 		ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
+		ArrayList<TransitSection> rtsList = ar.getActiveTrain().getTransit().getTransitSectionListBySeq(
+						ar.getSectionSeqNumber());
 		int dir = 0;
 		int curSeq = getCurrentSequenceNumber (at);
-		if (!at.isTransitReversed()) {
+		if (!at.isAllocationReversed()) {
 			for (int i=0; i<tsList.size(); i++) {
-				if ( (tsList.get(i).getSequenceNumber()>curSeq) && 
-						(tsList.get(i).getSection()==ar.getSection()) ) {
-					dir = tsList.get(i).getDirection();
-					_conTransitSection = tsList.get(i);
+				if (tsList.get(i).getSequenceNumber()>curSeq) {
+					for (int k = 0; k<rtsList.size(); k++) {
+						if ( (tsList.get(i).getSection()==rtsList.get(k).getSection()) && 
+								(tsList.get(i).getDirection()==rtsList.get(k).getDirection()) ) {
+							return true;
+						}
+					}
 				}
 			}
 		}
 		else {
 			for (int i=tsList.size(); i>0; i--) {
-				if ( (tsList.get(i).getSequenceNumber()<curSeq) && 
-						(tsList.get(i).getSection()==ar.getSection()) ) {
-					dir = tsList.get(i).getDirection();
-					_conTransitSection = tsList.get(i);
+				if (tsList.get(i).getSequenceNumber()<curSeq) {
+					for (int k = 0; k<rtsList.size(); k++) {
+						if ( (tsList.get(i).getSection()==rtsList.get(k).getSection()) && 
+								(tsList.get(i).getDirection()==rtsList.get(k).getDirection()) ) {
+							return true;
+						}
+					}
 				}
 			}
-			if (dir==Section.FORWARD) dir = Section.REVERSE;
-			else if (dir==Section.REVERSE) dir = Section.FORWARD;
-			else {
-				log.error("unknown direction for Section "+_conTransitSection.getSection().getUserName()+
-									" in Transit "+at.getTransit().getUserName());
-				return false;
-			}
 		}		
-		if (dir==ar.getSectionDirection()) return true;		
 		return false;
 	}
-	private TransitSection _conTransitSection = null;
+	private boolean firstTrainLeadsSecond(ActiveTrain at, ActiveTrain nt) {
+		int aSeq = getCurrentSequenceNumber(at);
+		Section aSec = getCurSection();
+		int nSeq = getCurrentSequenceNumber(nt);
+		Section nSec = getCurSection();
+		ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();
+		if (!at.isTransitReversed()) {
+			for (int i = 0; i<atsList.size(); i++) {
+				if (atsList.get(i).getSequenceNumber()>aSeq) {
+					if (atsList.get(i).getSection()==nSec) {
+						// first train has not yet reached second train position
+						return false;
+					}
+				}
+			}
+		}
+		else {
+			for (int i = atsList.size()-1; i<=0; i--) {
+				if (atsList.get(i).getSequenceNumber()<aSeq) {
+					if (atsList.get(i).getSection()==nSec) {
+						// first train has not yet reached second train position
+						return false;
+					}
+				}
+			}
+		}
+		ArrayList<TransitSection> ntsList = nt.getTransit().getTransitSectionList();
+		if (!nt.isTransitReversed()) {
+			for (int i = 0; i<ntsList.size(); i++) {
+				if (ntsList.get(i).getSequenceNumber()>nSeq) {
+					if (ntsList.get(i).getSection()==aSec) {
+						// second train has found first train in its on coming Sections
+						return true;
+					}
+				}
+			}
+		}
+		else {
+			for (int i = ntsList.size()-1; i<=0; i--) {
+				if (ntsList.get(i).getSequenceNumber()<nSeq) {
+					if (ntsList.get(i).getSection()==aSec) {
+						// second train has found first train in its on coming Sections
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	private boolean willTrainsCross(ActiveTrain at, ActiveTrain nt) {
+		// returns true if both trains will eventually reach the others position
+		int aSeq = getCurrentSequenceNumber(at);
+		Section aSec = getCurSection();
+		int nSeq = getCurrentSequenceNumber(nt);
+		Section nSec = getCurSection();
+		ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();
+		boolean found = false;
+		if (!at.isTransitReversed()) {
+			for (int i = 0; (i<atsList.size()) && (!found); i++) {
+				if (atsList.get(i).getSequenceNumber()>aSeq) {
+					if (atsList.get(i).getSection()==nSec) {
+						// first train has reached second train position
+						found = true;
+					}
+				}
+			}
+		}
+		else {
+			for (int i = atsList.size()-1; (i<=0)  && (!found); i--) {
+				if (atsList.get(i).getSequenceNumber()<aSeq) {
+					if (atsList.get(i).getSection()==nSec) {
+						// first train has reached second train position
+						found = true;
+					}
+				}
+			}
+		}
+		if (!found) return false;
+		ArrayList<TransitSection> ntsList = nt.getTransit().getTransitSectionList();
+		if (!nt.isTransitReversed()) {
+			for (int i = 0; i<ntsList.size(); i++) {
+				if (ntsList.get(i).getSequenceNumber()>nSeq) {
+					if (ntsList.get(i).getSection()==aSec) {
+						// second train has found first train in its on coming Sections
+						return true;
+					}
+				}
+			}
+		}
+		else {
+			for (int i = ntsList.size()-1; i<=0; i--) {
+				if (ntsList.get(i).getSequenceNumber()<nSeq) {
+					if (ntsList.get(i).getSection()==aSec) {
+						// second train has found first train in its on coming Sections
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 	private int getCurrentSequenceNumber (ActiveTrain at) {
 		// finds the current position of the head of the ActiveTrain in its Transit
 		// returns sequence number of current position. getCurSection() returns Section.

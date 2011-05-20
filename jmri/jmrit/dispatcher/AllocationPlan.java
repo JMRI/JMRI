@@ -7,17 +7,19 @@ import jmri.Section;
 /**
  * Handle planning information for AutoAllocate
  * <P>
- * There can be more than one AllocationPlan objects
+ * An Allocation Plan involves a planned meet of two ActiveTrains in a specified 
+ * area of the layout.
  * <P>
  * AllocationPlan objects are transient (not saved between runs).
  * <P>
  * AllocationPlan objects are created and disposed by AutoAllocate as needed.
  * AutoAllocate serves as the manager of AllocationPlan objects.
  * <P>
- * An ActiveTrain may be in more than one AllocationPlan provided its target Section
- * in all active AllocationPlans is the same.
+ * An ActiveTrain may be in more than one AllocationPlan of the same type, 
+ * provided its target Section in all active AllocationPlans is the same.
  * <P>
- * An AllocationPlan is "complete" when both Active Trains have been allocated their target Sections.
+ * An AllocationPlan is "complete" when both Active Trains have been 
+ * allocated their target Sections.
  *
  * <P> 
  * This file is part of JMRI.
@@ -33,7 +35,7 @@ import jmri.Section;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class AllocationPlan {

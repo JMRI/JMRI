@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2011
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -61,9 +61,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		autoTurnouts = new AutoTurnouts(this);
 		if (autoTurnouts==null)
 			log.error("Failed to create AutoTurnouts object when constructing Dispatcher");
-		autoAllocate = new AutoAllocate(this);
-		if (autoAllocate==null)
-			log.error("Failed to create AutoAllocate object when constructing Dispatcher");
+		if (_LE!=null) {
+			autoAllocate = new AutoAllocate(this);
+			if (autoAllocate==null)
+				log.error("Failed to create AutoAllocate object when constructing Dispatcher");
+		}
 		InstanceManager.sectionManagerInstance().initializeBlockingSensors();
 		atFrame = new ActivateTrainFrame(this);
 		if (atFrame==null)
@@ -455,7 +457,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		extraFrame.setVisible(true);
 	}
 	private void handleAutoAllocateChanged(ActionEvent e) {
-		_AutoAllocate = autoAllocateBox.isSelected();
+		setAutoAllocate(autoAllocateBox.isSelected());
 		if (optionsMenu!=null) optionsMenu.initializeMenu();
 		if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests);
 	}
@@ -1490,6 +1492,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void setTrainsFromUser(boolean set) {_TrainsFromUser = set;}
 	protected boolean getAutoAllocate() {return _AutoAllocate;}
 	protected void setAutoAllocate(boolean set) {
+		if (set && (autoAllocate==null)) {
+			if (_LE!=null) {
+				autoAllocate = new AutoAllocate(this);
+			}
+			else {
+				JOptionPane.showMessageDialog(dispatcherFrame,rb.getString("Error39"), 
+							rb.getString("MessageTitle"),JOptionPane.INFORMATION_MESSAGE);
+				_AutoAllocate = false;
+				if (autoAllocateBox!=null) {
+					autoAllocateBox.setSelected(_AutoAllocate);	
+				}
+				return;
+			}
+		}
 		_AutoAllocate = set;
 		if (autoAllocateBox!=null) {
 			autoAllocateBox.setSelected(_AutoAllocate);				
