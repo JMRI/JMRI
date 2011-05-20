@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.36 2011-05-19 21:12:22 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.37 2011-05-20 00:50:58 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -169,6 +169,7 @@ None at the time of this release.
 	in route.</LI>
 	<LI>New feature, you can now enter a cost value for your cars and locos.  Nothing to do with
 	operations, but nice to have.</LI>
+	<LI>You can now delete a schedule directly from the schedules window.</LI>
 
 </UL>
 

@@ -20,8 +20,8 @@ import java.util.Hashtable;
 /**
  * Table Model for edit of schedules used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.11 $
+ * @author Daniel Boudreau Copyright (C) 2009, 2011
+ * @version   $Revision: 1.12 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -30,14 +30,15 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     ScheduleManager manager;						// There is only one manager
  
     // Defines the columns
-    private static final int IDCOLUMN   = 0;
-    private static final int NAMECOLUMN   = 1;
-    private static final int SCH_STATUSCOLUMN = 2;
-    private static final int SIDINGSCOLUMN = 3;
-    private static final int STATUSCOLUMN = 4;
-    private static final int EDITCOLUMN = 5;
+    private static final int IDCOLUMN = 0;
+    private static final int NAMECOLUMN = IDCOLUMN+1;
+    private static final int SCH_STATUSCOLUMN = NAMECOLUMN+1;
+    private static final int SIDINGSCOLUMN = SCH_STATUSCOLUMN+1;
+    private static final int STATUSCOLUMN = SIDINGSCOLUMN+1;
+    private static final int EDITCOLUMN = STATUSCOLUMN+1;
+    private static final int DELETECOLUMN = EDITCOLUMN+1;
     
-    private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
+    private static final int HIGHESTCOLUMN = DELETECOLUMN+1;
 
     public SchedulesTableModel() {
         super();
@@ -84,6 +85,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(DELETECOLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(DELETECOLUMN).setCellEditor(buttonEditor);
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
@@ -94,6 +97,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(SIDINGSCOLUMN).setPreferredWidth(300);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
@@ -110,6 +114,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case SIDINGSCOLUMN: return rb.getString("Sidings");
         case STATUSCOLUMN: return rb.getString("StatusSiding");
         case EDITCOLUMN: return "";		//edit column
+        case DELETECOLUMN: return "";	//delete column
         default: return "unknown";
         }
     }
@@ -122,6 +127,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case SIDINGSCOLUMN: return JComboBox.class;
         case STATUSCOLUMN: return String.class;
         case EDITCOLUMN: return JButton.class;
+        case DELETECOLUMN: return JButton.class;
         default: return null;
         }
     }
@@ -129,6 +135,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     public boolean isCellEditable(int row, int col) {
         switch (col) {
         case EDITCOLUMN: 
+        case DELETECOLUMN:
         case SIDINGSCOLUMN:
         	return true;
         default: 
@@ -165,6 +172,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
         case STATUSCOLUMN: return getSidingStatus(row);
         case EDITCOLUMN: return rb.getString("Edit");
+        case DELETECOLUMN: return rb.getString("Delete");
         default: return "unknown "+col;
         }
     }
@@ -173,6 +181,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
         case EDITCOLUMN: editSchedule(row);
         	break;
+        case DELETECOLUMN: deleteSchedule(row);
+    		break;
         case SIDINGSCOLUMN: selectJComboBox(value, row);
         	break;
         default:
@@ -200,6 +210,18 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	sef.setTitle(MessageFormat.format(rb.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
     	sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
     	focusSef = true;
+    }
+    
+    private void deleteSchedule (int row){
+    	log.debug("Delete schedule");
+    	Schedule s = manager.getScheduleById(sysList.get(row));
+    	if (JOptionPane.showConfirmDialog(null,
+    			MessageFormat.format(rb.getString("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
+    			rb.getString("DeleteSchedule"),
+    			JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+    		manager.deregister(s);
+    		LocationManagerXml.instance().writeOperationsFile();
+    	}
     }
 
     protected Hashtable<String, String> comboSelect = new Hashtable<String, String>();

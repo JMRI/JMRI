@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.58 $
+ * @version             $Revision: 1.59 $
  */
 public class Track {
 	
@@ -1193,7 +1193,7 @@ public class Track {
     		buf.append(pickupIds[i]+"%%");
     	}
     	e.setAttribute("pickupIds", buf.toString());
-    	if (!getScheduleId().equals("")){
+    	if (getSchedule() != null){
     		e.setAttribute("schedule", getScheduleName());
     		e.setAttribute("scheduleId", getScheduleId());
     		e.setAttribute("itemId", getScheduleItemId());

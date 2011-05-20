@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.85 $
+ * @version             $Revision: 1.86 $
  */
 public class Car extends RollingStock {
 	
@@ -540,7 +540,7 @@ public class Car extends RollingStock {
 			setNextDestTrack(null);
 		}
 		// check for schedule, only sidings can have a schedule
-		if (track == null || track.getScheduleId().equals("") || loading)
+		if (track == null || track.getScheduleId().equals("") || track.getSchedule() == null || loading)
 			return;
 		// is car part of a kernel?
 		if (getKernel()!=null && !getKernel().isLead(this)){
