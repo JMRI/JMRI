@@ -58,7 +58,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008-2011
  * 
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -158,6 +158,20 @@ public class Transit extends AbstractNamedBean
 			TransitSection ts = mTransitSectionList.get(i);
 			if (seq == ts.getSequenceNumber()) {
 				list.add(ts.getSection());
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * Get a List of Transit Sections with a given sequence number
+	 */
+	public ArrayList<TransitSection> getTransitSectionListBySeq(int seq) {
+		ArrayList<TransitSection> list = new ArrayList<TransitSection>();
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = mTransitSectionList.get(i);
+			if (seq == ts.getSequenceNumber()) {
+				list.add(ts);
 			}
 		}
 		return list;
