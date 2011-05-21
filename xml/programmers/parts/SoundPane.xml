@@ -137,4 +137,54 @@
             <display item="Sound Group 3 Option 8" layout="above" format="hslider"/>
         </row>
     </column>
+    <column>
+        <display item="Sound Group 4 Control" format="checkbox"/>
+        <row>
+            <display item="Sound Group 4 Option 1" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="Sound Group 4 Option 2" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="Sound Group 4 Option 3" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 3" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="Sound Group 4 Option 4" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 4" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="Sound Group 4 Option 5" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 5" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="Sound Group 4 Option 6" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 6" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="Sound Group 4 Option 7" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 7" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+            <display item="Sound Group 4 Option 8" layout="above" label=""/>
+            <label label=" "/>
+            <display item="Sound Group 4 Option 8" layout="above" format="hslider"/>
+        </row>
+    </column>
 </pane>
