@@ -5,7 +5,7 @@ package jmri.jmrit.display;
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -62,10 +62,10 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     public int maxHeight() {
-        if (_iconMap==null) {
+        if ((_iconMap==null) || (!_icon)) {
             return super.maxHeight();
         }
-        int max = super.maxHeight();
+        int max = 0;
         Iterator<NamedIcon> iter = _iconMap.values().iterator();
         while (iter.hasNext()) {
             max = Math.max(iter.next().getIconHeight(), max);
@@ -73,10 +73,10 @@ public class PositionableIcon extends PositionableLabel {
         return max;
     }
     public int maxWidth() {
-        if (_iconMap==null) {
+        if ((_iconMap==null) || (!_icon)) {
             return super.maxWidth();
         }
-        int max = super.maxWidth();
+        int max = 0;
         Iterator<NamedIcon> iter = _iconMap.values().iterator();
         while (iter.hasNext()) {
             max = Math.max(iter.next().getIconWidth(), max);
