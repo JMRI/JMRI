@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id: MRC_soundbrilliance1820.xml,v 1.5 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: MRC_soundbrilliance1820.xml,v 1.6 2011-05-21 20:33:20 jacobsen Exp $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -13,17 +13,50 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="John Crellin" version="3.1" lastUpdated="20110512"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20090904"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20090827"/>
 <!--   version 1 Based on MRC_soundbrilliance1806-->
 <!--   version 2 Modified CV6 to better match manual-->
 <!--   version 3 Modified MRC tab, added missing sound option and setting, corrected some defaults.-->
+<!--   version 3.1 Modified function lables so they are automatically inserted and corrected CV123-->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="60">
       <model model="Synch Diesel Sound 1820 - Athearn RS3" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
         <size length="90" width="17.2" height="8.2" units="mm"/>
       </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Air Release</functionlabel>
+        <functionlabel num="4" lockable="true">Coupling</functionlabel>
+        <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+        <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+        <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+        <functionlabel num="9" lockable="true">Cooling Fan/Notch Up</functionlabel>
+        <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+        <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+        <functionlabel num="12" lockable="true">Prime MoverType</functionlabel>
+        <functionlabel num="13" lockable="true">Air release</functionlabel>
+        <functionlabel num="14" lockable="true">Flange Noise</functionlabel>
+        <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+        <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="17" lockable="true">Flange Noise</functionlabel>
+        <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+        <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+        <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+        <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+        <functionlabel num="23" lockable="true">Prime Mover Volume</functionlabel>
+        <functionlabel num="24" lockable="true">Coupling</functionlabel>
+        <functionlabel num="25" lockable="true">Air Releease</functionlabel>
+        <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
+        <functionlabel num="27" lockable="true">Air Hose Firing</functionlabel>
+        <functionlabel num="28" lockable="true">Air Release</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -283,27 +316,25 @@
         </enumVal>
         <label>Diesel notch mode</label>
       </variable>
-      <variable label="Prime Mover" CV="123" item="Sound Option 7" tooltip="CV123 selects the Prime Mover Type         with traction air compressor cycling randomly" default="0">
+      <variable label="Prime Mover" CV="123" item="Sound Option 7" tooltip="CV123 selects the Prime Mover Type" default="0">
         <enumVal>
-          <enumChoice choice="SD60" value="0">
+          <enumChoice choice="Alco 244" value="0">
             <choice>SD60</choice>
           </enumChoice>
-          <enumChoice choice="SD70" value="1">
+          <enumChoice choice="SD60" value="1">
             <choice>SD70</choice>
           </enumChoice>
-          <enumChoice choice="AlCo 244" value="2">
+          <enumChoice choice="SD70" value="2">
             <choice>AlCo 244</choice>
           </enumChoice>
           <enumChoice choice="EMD 567B" value="3">
             <choice>EMD 567B</choice>
           </enumChoice>
-          <enumChoice choice="Off" value="4">
-            <choice>Off</choice>
-          </enumChoice>
         </enumVal>
         <label>Prime Mover</label>
       </variable>
 <!--   CV 123 order does not seem to be the same as what the manual states. Can someone else please confirm   -->
+<!--   CV 123 corrected confirmed settings   -->
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="125" default="1"/>
