@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2011
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -1507,6 +1507,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			}
 		}
 		_AutoAllocate = set;
+		if ((!_AutoAllocate) && (autoAllocate!=null)) {
+			autoAllocate.clearAllocationPlans();
+		}
 		if (autoAllocateBox!=null) {
 			autoAllocateBox.setSelected(_AutoAllocate);				
 		}

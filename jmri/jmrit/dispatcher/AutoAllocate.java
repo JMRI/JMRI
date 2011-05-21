@@ -35,12 +35,19 @@ import java.util.ResourceBundle;
  *	   A new AllocationRequest has been entered into the queue of AllocationRequests.
  *     A Section has been allocated, either by AutoAllocate or manually by the dispatcher.
  * <P>
- * AutoAllocate requires that AutoRelease is active.
+ * AutoAllocate requires that AutoRelease is active and that Dispatcher has a LayoutEditor panel.
  * <P>
  * AutoAllocate operates conservatively, that is, if there is any doubt that a Section should
  * be allocated, it will not allocate the Section.
  * <P>
+ * AutoAllocate develops plans for meets when multiple ActiveTrains are using the same 
+ *		Sections of track. These plans are automatically created and removed.  They are stored 
+ *      in AllocationPlan objects to avoid having to continually recreate them, since  the 
+ *		logic to create them is rather complicated.
+ * <P>
  * The dispatcher is free to switch AutoAllocate on or off at any tine in DispatcherFrame.
+ *		When AutoAllocate is switched off, all existing AllocationPlan objects are discarded.
+ * <P>
  *
  * <P> 
  * This file is part of JMRI.
@@ -56,7 +63,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class AutoAllocate {
@@ -305,7 +312,14 @@ public class AutoAllocate {
 				}
 			}
 		}
-	}			
+	}
+	protected void clearAllocationPlans() {
+		for (int i = _planList.size()-1; i>=0; i--) {
+			AllocationPlan ap = _planList.get(i);
+			_planList.remove(i);
+			ap.dispose();			
+		}
+	}
 	private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
 		// test how far ahead of occupied track this requested section is
 		ArrayList<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
@@ -365,21 +379,14 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		if (apx!=null) {
 			if (apx.getPlanType() != AllocationPlan.XING_MEET) return false;
 			// already in a XING_MEET Allocation Plan - find target Section and sequence
-			Section oSection = null;
-			ActiveTrain oTrain = null;
 			if (apx.getActiveTrain(1)==nt) {
 				nSecSeq = apx.getTargetSectionSequenceNum(1);
 				nSec = apx.getTargetSection(1);
-				oSection = apx.getTargetSection(2);
-				oTrain = apx.getActiveTrain(2);
 			}
 			else {
 				nSecSeq = apx.getTargetSectionSequenceNum(2);
 				nSec = apx.getTargetSection(2);
-				oSection = apx.getTargetSection(1);
-				oTrain = apx.getActiveTrain(1);
 			}
-			int aCurrentSeq = getCurrentSequenceNumber(at);
 			ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
 			if (nSections.size()<=1) return false;
 			// is a passing siding, find a suitable track
@@ -427,8 +434,10 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 			// if could not find a suitable siding for a crossing meet, return 
 			if ( (aSec==null) || (nSec==null) ) return false;
 		}
-		// check for conflicting plan that could cause gridlock
+		// check for conflicting train or conflicting plan that could cause gridlock
 		if (neededByTrainList.size()>2) {
+			// is there another train between these two
+			if (!areTrainsAdjacent(at,nt)) return false;
 			if (isThereConflictingPlan(at, aSec, aSecSeq, nt, nSec, nSecSeq, 
 						AllocationPlan.XING_MEET)) return false;
 		}
@@ -558,6 +567,8 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		if (neededByTrainList.size()>2) {
 			// Note: e.g. Two lower priority trains ahead of a high priority train could cause gridlock 
 			//    if both try to set up a PASSING_PLAN meet at the same place, so we exclude that case.
+			// is there another train between these two
+			if (!areTrainsAdjacent(at,nt)) return false;
 			if (isThereConflictingPlan(at, aSec, aSecSeq, nt, nSec, nSecSeq, 
 						AllocationPlan.PASSING_MEET)) return false;
 		}
@@ -580,9 +591,24 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		//	  situations not currently tested for.
 		if (_planList.size()==0) return false; 
 		for (int i = 0; i<_planList.size(); i++) {
-			// check if this plan involves either train
-// djd debugging - need code here
-			// check if this plan uses the same Passing Section
+			AllocationPlan ap = _planList.get(i);
+			// check if this plan involves the second train (it'll never involve the first)
+			int trainNum = 0;
+			if (ap.getActiveTrain(1)==nt) trainNum = 1;
+			else if (ap.getActiveTrain(2)==nt) trainNum = 2;
+			if (trainNum>0) {
+				// check consistency - same type, section, and sequence number
+				if ( (ap.getPlanType()!=type) || (ap.getTargetSection(trainNum)!=nSec) ||
+					(ap.getTargetSectionSequenceNum(trainNum)!=nSecSeq) ) return true;
+			}
+			else {
+				// different trains, does this plan use the same Passing Section?
+				ArrayList<Section> aSections = at.getTransit().getSectionListBySeq(aSecSeq);
+				for (int j=0; j<aSections.size(); j++) {
+					if ( (aSections.get(j)==ap.getTargetSection(1)) ||
+							(aSections.get(j)==ap.getTargetSection(2)) ) return true;
+				}
+			}
 		}
 		// passes all tests
 		return false;
@@ -595,9 +621,6 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 				return sList.get(i);				
 			}
 		}
-		// no free other section, is there one allocated for travel in same direction
-// djd debugging - need code here
-		
 		for (int i = 0; i<sList.size(); i++) {
 			if ( (sList.get(i)!=aSec) && (sList.get(i).getOccupancy()!=Section.OCCUPIED) ) {
 				return sList.get(i);				
@@ -698,7 +721,6 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		ArrayList<TransitSection> tsList = at.getTransit().getTransitSectionList();
 		ArrayList<TransitSection> rtsList = ar.getActiveTrain().getTransit().getTransitSectionListBySeq(
 						ar.getSectionSeqNumber());
-		int dir = 0;
 		int curSeq = getCurrentSequenceNumber (at);
 		if (!at.isAllocationReversed()) {
 			for (int i=0; i<tsList.size(); i++) {
@@ -827,6 +849,110 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		}
 		return false;
 	}
+	private boolean areTrainsAdjacent(ActiveTrain at, ActiveTrain nt) {
+		// returns 'false' if a different ActiveTrain has allocated track between the 
+		//      two trains, returns 'true' otherwise
+		ArrayList<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
+		ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();
+		int aSeq = getCurrentSequenceNumber(at);
+		int nSeq = getCurrentSequenceNumber(nt);
+		Section nSec = getCurSection();
+		if (willTraverse(nSec,at,aSeq)!=0) {
+			// at is moving toward nt
+			if (!at.isTransitReversed()) {
+				for (int i = 0; i<atsList.size(); i++) {
+					if (atsList.get(i).getSequenceNumber()>aSeq) {
+						Section tSec = atsList.get(i).getSection();
+						if (tSec==nSec) {
+							// reached second train position, no train in between
+							return true;						
+						}
+						else {
+							for (int j = 0; j<allocatedSections.size(); j++) {
+								if (allocatedSections.get(j).getSection()==tSec) {
+									if ( (allocatedSections.get(j).getActiveTrain()!=at) && 
+											(allocatedSections.get(j).getActiveTrain()!=nt)) {
+										// allocated to a third train, trains not adjacent
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else {
+				for (int i = atsList.size()-1; i<=0; i--) {
+					if (atsList.get(i).getSequenceNumber()<aSeq) {
+						Section tSec = atsList.get(i).getSection();
+						if (tSec==nSec) {
+							// reached second train position, no train in between
+							return true;						
+						}
+						else {
+							for (int j = 0; j<allocatedSections.size(); j++) {
+								if (allocatedSections.get(j).getSection()==tSec) {
+									if ( (allocatedSections.get(j).getActiveTrain()!=at) && 
+											(allocatedSections.get(j).getActiveTrain()!=nt)) {
+										// allocated to a third train, trains not adjacent
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			// at is moving away from nt, so backtrack
+			if (at.isTransitReversed()) {
+				for (int i = 0; i<atsList.size(); i++) {
+					if (atsList.get(i).getSequenceNumber()>aSeq) {
+						Section tSec = atsList.get(i).getSection();
+						if (tSec==nSec) {
+							// reached second train position, no train in between
+							return true;						
+						}
+						else {
+							for (int j = 0; j<allocatedSections.size(); j++) {
+								if (allocatedSections.get(j).getSection()==tSec) {
+									if ( (allocatedSections.get(j).getActiveTrain()!=at) && 
+											(allocatedSections.get(j).getActiveTrain()!=nt)) {
+										// allocated to a third train, trains not adjacent
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else {
+				for (int i = atsList.size()-1; i<=0; i--) {
+					if (atsList.get(i).getSequenceNumber()<aSeq) {
+						Section tSec = atsList.get(i).getSection();
+						if (tSec==nSec) {
+							// reached second train position, no train in between
+							return true;						
+						}
+						else {
+							for (int j = 0; j<allocatedSections.size(); j++) {
+								if (allocatedSections.get(j).getSection()==tSec) {
+									if ( (allocatedSections.get(j).getActiveTrain()!=at) && 
+											(allocatedSections.get(j).getActiveTrain()!=nt)) {
+										// allocated to a third train, trains not adjacent
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 	private int getCurrentSequenceNumber (ActiveTrain at) {
 		// finds the current position of the head of the ActiveTrain in its Transit
 		// returns sequence number of current position. getCurSection() returns Section.
@@ -882,7 +1008,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 	Section curSection = null;
 	// Returns the Section with the sequence number returned by last call to getCurrentSequenceNumber
 	private Section getCurSection() {return curSection;}
-	private boolean isSectionAllocatedToTrain (Section s, int seq, ActiveTrain at) {
+ 	private boolean isSectionAllocatedToTrain (Section s, int seq, ActiveTrain at) {
 		if ( (s==null) || (at==null) ) {
 			log.error("null argument to isSectionAllocatedToTrain");
 			return false;
@@ -894,7 +1020,7 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 			}
 		}
 		return false;
-	}		
+	}
 	private boolean waitingForStartTime (AllocationRequest ar) {
 		if (ar!=null) {
 			ActiveTrain at = ar.getActiveTrain();
