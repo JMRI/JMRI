@@ -35,7 +35,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -727,6 +727,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             String aspect = stopAspect;
             aspect = advancedAspect[0];
             ArrayList<Integer> divergAspects = new ArrayList<Integer>();
+            ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
             if (advancedAspect.length>1) {
                 float maxSigSpeed = -1;
                 float maxPathSpeed = destList.get(destination).getMinimumSpeed();
@@ -735,10 +736,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if(divergRoute){
                     for(int i = 0; i<advancedAspect.length; i++){
                         String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "diverging");
+                        System.out.println("value of div " + div);
                         if ((div!=null) && (div.equals("yes"))){
                             divergAspects.add(i);
                             divergFlagsAvailable = true;
                             log.debug("Using Diverging Flag");
+                        } else {
+                            nonDivergAspects.add(i);
                         }
                     }
                 }
@@ -752,7 +756,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         
                         If the diverg flag has not been set then we will check.
                     */
-                    if(((divergFlagsAvailable)  && (divergAspects.contains(i))) || (!divergFlagsAvailable)){
+                    if(((divergFlagsAvailable) && (divergAspects.contains(i))) || ((!divergFlagsAvailable) && nonDivergAspects.contains(i))){
                         if ((strSpeed!=null) && (!strSpeed.equals(""))){
                             float speed = 0.0f;
                             try {
@@ -854,6 +858,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         Hashtable<Turnout, Integer> turnouts = new Hashtable<Turnout, Integer>(0);
         Hashtable<Turnout, Integer> autoTurnouts = new Hashtable<Turnout, Integer>(0);
         Hashtable<SignalMast, String> masts = new Hashtable<SignalMast, String>(0);
+
         //Hashtable<SignalMast, autoSignalMast> autoMasts = new Hashtable<SignalMast, autoSignalMast>(0);
         Hashtable<SignalMast, String> autoMasts = new Hashtable<SignalMast, String>(0);
         Hashtable<Sensor, Integer> sensors = new Hashtable<Sensor, Integer>(0);
