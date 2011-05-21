@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.25 2011-02-22 03:26:45 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.26 2011-05-21 22:31:17 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall lcrr@bellsouth.net" 
 			version="11" lastUpdated="20100819"/>
@@ -699,6 +699,10 @@
 		<definition item="Advanced Group 1 Option 6" />
 		<definition item="Advanced Group 1 Option 7" />
 		<definition item="Advanced Group 1 Option 8" />
+		<definition item="Advanced Group 1 Option 9" />
+		<definition item="Advanced Group 1 Option 10" />
+		<definition item="Advanced Group 1 Option 11" />
+		<definition item="Advanced Group 1 Option 12" />
 
 		<!-- <definition item="Advanced Group 2 Control" /> -->
 		<definition item="Advanced Group 2 Option 1" />
@@ -709,6 +713,18 @@
 		<definition item="Advanced Group 2 Option 6" />
 		<definition item="Advanced Group 2 Option 7" />
 		<definition item="Advanced Group 2 Option 8" />
+		<definition item="Advanced Group 2 Option 9" />
+		<definition item="Advanced Group 2 Option 10" />
+		<definition item="Advanced Group 2 Option 11" />
+		<definition item="Advanced Group 2 Option 12" />
+		<definition item="Advanced Group 2 Option 13" />
+		<definition item="Advanced Group 2 Option 14" />
+		<definition item="Advanced Group 2 Option 15" />
+		<definition item="Advanced Group 2 Option 16" />
+		<definition item="Advanced Group 2 Option 17" />
+		<definition item="Advanced Group 2 Option 18" />
+		<definition item="Advanced Group 2 Option 19" />
+		<definition item="Advanced Group 2 Option 20" />
 		
 	</definitiongroup>
 
@@ -764,6 +780,17 @@
 		<definition item="Sound Group 3 Option 6" />
 		<definition item="Sound Group 3 Option 7" />
 		<definition item="Sound Group 3 Option 8" />
+		
+		<!-- Sound group 4  -->
+		<definition item="Sound Group 4 Control" />
+		<definition item="Sound Group 4 Option 1" />
+		<definition item="Sound Group 4 Option 2" />
+		<definition item="Sound Group 4 Option 3" />
+		<definition item="Sound Group 4 Option 4" />
+		<definition item="Sound Group 4 Option 5" />
+		<definition item="Sound Group 4 Option 6" />
+		<definition item="Sound Group 4 Option 7" />
+		<definition item="Sound Group 4 Option 8" />
 		
 		<!-- Volumes and other analog settings -->
 		<definition item="Sound Setting 1" />
