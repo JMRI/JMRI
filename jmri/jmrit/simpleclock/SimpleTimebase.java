@@ -26,7 +26,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
@@ -56,7 +56,14 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 					clockSensorChanged();
 				}
 			});
-		}		
+		}
+		// initialize rate factor-containing memory
+		factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMRATEFACTOR");
+		if (factorMemory==null) {
+			log.warn("Unable to create IMRATEFACTOR time memory variable");
+		} else {
+			factorMemory.setValue("--");
+		}
 	}
 	
     // methods for getting and setting the current Fast Clock time
@@ -195,6 +202,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 		}
         // make sure time is right with new rate
         setTime(now);
+		// update memory
+		updateMemory(factor);
         // notify listeners
     	firePropertyChange("rate", new Double(factor), new Double(oldFactor));
     	handleAlarm();
@@ -431,6 +440,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 	private Date pauseTime;   // null value indicates clock is running
 	private Sensor clockSensor = null;   // active when clock is running, inactive when stopped
 	private Memory clockMemory = null;   // contains current time on each tick
+	private Memory factorMemory = null;  // contains the rate factor for the fast clock
 	
 	private boolean internalMaster = true;     // false indicates a hardware clock is the master
 	private String masterName = "";		// name of hardware time source, if not internal master
@@ -501,6 +511,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         clockMemory.setValue(timeStorageFormat.format(date));
     }
     
+	void updateMemory(double factor) {
+		factorMemory.setValue(new Double(factor));
+	}
+
     /**
      * Request a call-back when the minutes place of the time changes.
      */
