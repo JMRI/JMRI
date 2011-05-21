@@ -26,7 +26,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
@@ -58,12 +58,16 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 			});
 		}
 		// initialize rate factor-containing memory
-		factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMRATEFACTOR");
-		if (factorMemory==null) {
-			log.warn("Unable to create IMRATEFACTOR time memory variable");
-		} else {
-			factorMemory.setValue("--");
-		}
+        if (jmri.InstanceManager.memoryManagerInstance() != null) {
+            // only try to create memory if memories are supported
+            factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMRATEFACTOR");
+            if (factorMemory==null) {
+                log.warn("Unable to create IMRATEFACTOR time memory variable");
+            } else {
+                factorMemory.setValue("--");
+            }
+        }
+        
 	}
 	
     // methods for getting and setting the current Fast Clock time
