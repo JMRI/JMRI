@@ -20,7 +20,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000 - 2011
- * @version $Revision: 1.157 $
+ * @version $Revision: 1.158 $
  */
 
 public class Version {
@@ -40,13 +40,13 @@ public class Version {
     /* Test number changes with individual releases,
      * general fastest for test releases.
      */
-     static final public int test = 4;
+     static final public int test = 5;
      
     /**
      * Modifier is used to denote specific builds.
      * It should be the empty string "" for released versions.
      */
-     static final boolean released = false;
+     static final boolean released = true;
      static final public String modifier = released?"."+test:"."+test+"+dev";
 
     /**

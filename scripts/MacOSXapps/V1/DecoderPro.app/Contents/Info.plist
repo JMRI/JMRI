@@ -11,11 +11,11 @@
 	<key>CFBundleSignature</key>
 	<string>JMRD</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.11.4</string>
+    <string>2.11.5</string>
     <key>CFBundleLongVersionString</key>
-    <string>2.11.4, Copyright 1998-2011 JMRI Project</string>
+    <string>2.11.5, Copyright 1998-2011 JMRI Project</string>
     <key>CFBundleGetInfoString</key>
-    <string>DecoderPro 2.11.4, Copyright 1998-2011 JMRI Project</string>
+    <string>DecoderPro 2.11.5, Copyright 1998-2011 JMRI Project</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleExecutable</key>
