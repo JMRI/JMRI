@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -674,7 +674,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if(_divergeSpeed.equals("Global")){
             speed = InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed();
         }
-        if(_divergeSpeed.equals("Block"))
+        if(speed.equals("Block"))
             return -1;
         try {
             return new Float(speed);
@@ -729,7 +729,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         String speed = _straightSpeed;
         if(_straightSpeed.equals("Global")){
             speed = InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed();
-        } else if (_straightSpeed.equals("Block")){
+        } else if (speed.equals("Block")){
             return -1;
         }
         try {
