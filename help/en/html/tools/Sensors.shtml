@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Sensors.shtml,v 1.7 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
+<!-- $Id: Sensors.shtml,v 1.8 2011-05-22 09:38:45 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -62,10 +62,23 @@ by clicking on a sensor icon on a panel (See the
 for more info on panels).
 
 <P>
-The change takes effect immediately, but only lasts until the next time you
-change it in the program, or the next time the input hardware on the layout changes
-the value.
-   
+The change takes effect immediately, unless a debounce timer is configured see below,
+but only lasts until the next time you change it in the program, or the next time the 
+input hardware on the layout changes the value.
+<H3><A NAME="Debounce"></A>Sensor Debounce</H2>
+<p>The Sensor Debounce facility is there to help prevent false triggers of a sensor
+being passed into the system and triggering other events in the system.<br>
+Such false triggers could be due to a dirty piece of track or electrical interferance.
+
+<p>The facility allows you to assign a period in miliseconds before the change
+is registered with the rest of the system.  If after that period the state has
+not changed then the sensor state will be passed onto the rest the of the system.<br>
+    
+However if the sensors state is different after the timer has finished, then the 
+system will restart the process, this time after the timer has finished it will
+check to see if the sensor state is in the same state as it was before it restarted 
+the process.  If not the process is re-started again until the state is the same
+before and after the timer is run.   
 <h3>Saving Sensor configuration to disk</h3>
 
 <p>Sensors are saved in your layout configuration file, along with turnouts, 

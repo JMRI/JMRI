@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorTable.shtml,v 1.4 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: SensorTable.shtml,v 1.5 2011-05-22 09:34:50 kevin-dickerson Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Sensor Table Help</TITLE>
@@ -54,7 +54,18 @@ panel.
 	<DD>When checked, the sensor command and status is inverted. For
 	example, an inverted sensor means that when the layout sends an
 	"active" sensor command, it becomes "inactive" to JMRI.</DD>
-
+    
+    <DT>Use Global Delay</DT>
+    <DD>When checked, the sensor will use the system values specified in the
+    "Debounce|Defaults.." menu option for the duration which the system waits for
+    before it registers the change of state.
+    <p><A HREF="#Debounce">See Sensor Debounce below</A>
+    </DD>
+    <DT>Active Delay/ InActive Delay</DT>
+    <DD>Specify the amount of time in milliSeconds that the system waits before 
+    registering the state change of a sensor.
+    <p><A HREF="#Debounce">See Sensor Debounce below</A></DD>
+    
 </DL>
 
 <H2>Sensor Table Controls</H2>
@@ -67,6 +78,23 @@ There is also a button at the bottom of the Sensor Table
 	<A HREF="SensorAddEdit.shtml">Adding/Editing Sensors</A>.</DD>
 </DL>
 
+<H2><A NAME="Debounce"></A>Sensor Debounce</H2>
+<p>The Sensor Debounce facility is there to help prevent false triggers of a sensor
+being passed into the system and triggering other events in the system.<br>
+Such false triggers could be due to a dirty piece of track or electrical interferance.
+
+<p>The facility allows you to assign a period in miliseconds before the change
+is registered with the rest of the system.  If after that period the state has
+not changed then the sensor state will be passed onto the rest the of the system.<br>
+    
+However if the sensors state is different after the timer has finished, then the 
+system will restart the process, this time after the timer has finished it will
+check to see if the sensor state is in the same state as it was before it restarted 
+the process.  If not the process is re-started again until the state is the same
+before and after the timer is run.
+    
+    
+    </DD>
 <!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
