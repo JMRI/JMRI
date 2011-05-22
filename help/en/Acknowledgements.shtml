@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.124 2011-03-14 15:49:52 matthewharris Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.125 2011-05-22 00:40:57 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -146,6 +146,8 @@
 	<LI>Glen Colbert, who contributed the MRC AD370 decoder definition
 	<LI>Bob Coleman added the CTI Acela support and did a huge
 	amount of work on the operations code tests.
+    <LI>John Crellin contributed a new and improved
+    decoder definitions for MRC decoders.
     <li>Peter Cressman provided a major improvement to Logix, improved
     Sensor Groups, fixed some problems in Routes,
     and provided the Warrant system for scripted running

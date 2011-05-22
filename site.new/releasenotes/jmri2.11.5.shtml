@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.37 2011-05-20 00:50:58 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.38 2011-05-22 00:40:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -233,6 +233,34 @@ sending multiple messages.
 <li>Updated Windows Installation documentation incorporating details of reversion procedure (thanks to Walter Thompson for the initial procedure)</li>
 <li>Fixed bug when importing decoder definition from user preference location (thanks to Greg Watkins for finding this)</li>
 </ul>
+
+<p>John Crellin</p>
+<ul>
+<li>Contributed a decoder definition for the MRC 1902 sound decoder.
+<li>Corrected and added function labels in the MRC 1806 decoder definition and added MRC 1805 to that definition file.
+<li>Corrected and added function labels in the MRC 1820 decoder definition.
+</ul>
+
+<p>Nigel Cliffe</p>
+<blockquote>
+Zimo sound decoders allow the end user to select the sounds played, and their volumes, from any of those stored on the decoder. As an example, this allows the user to change the horn, or brake noises, as well as set the sound levels for each element. This is done using a technique Zimo call "psuedo programming". An Ops-mode CV change to CV300 is made to enable pseudo programming, then function keys select various sounds. The throttle speed control acts as a volume control. Some function keys will end the programming (as will issuing a new Ops-Mode change of the CV). 
+The difficulty for end-users in this approach is that the initial selection of which ops-mode value to select is not obvious, the throttle function keys when mapped to the pseudo programming features are not intuitively laid out (may be OK on a Zimo handset) and pressing some functions can have unexpected consequences (turns sounds off for that aspect of the decoder!). 
+<p>
+The new &quot;Zimo_pseudo_programmer.py&quot; script is an attempt to make Zimo Pseudo Programming a bit easier for the end user. It can be seen as complimenting my earlier CV61 Zimo function mapping tool. (And perhaps one day, I will bring them together into a general Zimo programming aid tool !). 
+<p>
+Its been tested by a couple of Zimo sound users, and we found a bug in the Zimo decoder firmware which resulted in one feature being temporarily removed from the script pending a decoder update from Zimo. 
+</blockquote>
+
+<p>Randall Wood updated the fast clock support so that it maintains a memory variable IMRATEFACTOR
+with the rate information.
+
+<p>Michael Mosher</p>
+<ul>
+<li>Provided an ESU LokSound V4.0 decoder definition.
+<li>Updated the DecoderPro Advanced pane
+</ul>
+
+<p>Walt Thompson contributed an improved SE8cSignalExample XML file
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
