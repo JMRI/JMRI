@@ -50,7 +50,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -237,14 +237,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (warrant==null) {
             return "ERROR! Allocate called with null warrant in block \""+getDisplayName()+"\"!";
         }
-        if (_warrant!=null) {
-            if (_warrant.equals(warrant)) {
-                return null;
-            } else {
-                // allocated to another warrant
-                return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
-                                                      _warrant.getDisplayName(), getDisplayName()); 
-            }
+        if (_warrant!=null && !warrant.equals(_warrant)) {
+            // allocated to another warrant
+            return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
+                                                  _warrant.getDisplayName(), getDisplayName()); 
         }
         String path = warrant.getRoutePathInBlock(this);
         if (_pathName!=null && !_pathName.equals(path)) {
@@ -259,7 +255,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-    * Allocate (reserves) the block for the Warrant that is the 'value' object
+    * 
     * Note the block may be OCCUPIED by a non-warranted train, but the allocation is permitted.
     * @return name of block if block is already allocated to another warrant
     */
