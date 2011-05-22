@@ -30,7 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.83 $
+ * @version $Revision: 1.84 $
  */
 
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -571,7 +571,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         return clone;
     }
-    
+
     public int maxWidth() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
@@ -604,6 +604,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             }
         }
         if (debug) log.debug("maxWidth= "+max+" preferred width= "+getPreferredSize().width);
+        if (_iconMap!=null && _iconMap.size()>0) {
+            Iterator<NamedIcon> iter = _iconMap.values().iterator();
+            while (iter.hasNext()) {
+                max = Math.max(iter.next().getIconWidth(), max);
+            }
+        }
         return max;
     }
 
@@ -632,6 +638,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             }
         }
         if (debug) log.debug("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
+        if (_iconMap!=null && _iconMap.size()>0) {
+            Iterator<NamedIcon> iter = _iconMap.values().iterator();
+            while (iter.hasNext()) {
+                max = Math.max(iter.next().getIconHeight(), max);
+            }
+        }
         return max;
     }
 
