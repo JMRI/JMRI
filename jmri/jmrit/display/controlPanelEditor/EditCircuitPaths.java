@@ -230,9 +230,11 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         for (int i=0; i<list.size(); i++) {
             IndicatorTrack icon = (IndicatorTrack)list.get(i);
             Iterator<String> iter = icon.getPaths();
-            while (iter.hasNext()) {
-                if (name.equals(iter.next())) {
-                    _pathGroup.add(icon);
+            if (iter!=null) {
+                while (iter.hasNext()) {
+                    if (name.equals(iter.next())) {
+                        _pathGroup.add(icon);
+                    }
                 }
             }
         }

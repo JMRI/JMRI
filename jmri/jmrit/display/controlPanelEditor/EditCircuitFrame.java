@@ -246,7 +246,7 @@ public class EditCircuitFrame extends JFrame {
         int segments = 0;
         int turnouts = 0;
         if (icons!=null) {
-            System.out.println("updateIconList: icons.size()= "+icons.size());
+            if (log.isDebugEnabled()) log.debug("updateIconList: icons.size()= "+icons.size());
             for (int i=0; i<icons.size(); i++) {
                 Positionable pos = icons.get(i);
                 if (pos instanceof IndicatorTurnoutIcon) {
