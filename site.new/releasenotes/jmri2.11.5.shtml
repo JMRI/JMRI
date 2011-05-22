@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.39 2011-05-22 05:21:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.40 2011-05-22 12:03:19 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -220,6 +220,9 @@ sending multiple messages.
 <p>Kevin Dickerson</p>
 <ul>
 <li>Updated so that the user selected preferences and the window size/position data is now saved in a seperate file and not in with the connection preferences.</li>
+<li>Added a sensor debounce facility to individual sensors see <a href="http://www.jmri.org/help/en/html/tools/Sensors.shtml#Debounce">Sensors</a> for further information.<br>
+By default this new option is disabled</li>
+<li>It is now possible to view signal mast specific appearances, and aspect mapping on the JMRI website.</li>
 </ul>
 
 <p>Brett Hoffman, changes to WiFi throttles:</p>
