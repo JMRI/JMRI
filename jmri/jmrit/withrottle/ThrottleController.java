@@ -42,7 +42,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010, 2011
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.23 $
+ *	@version $Revision: 1.24 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -163,6 +163,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      */
 //    public void notifyAddressThrottleFound(DccThrottle throttle){
     public void notifyThrottleFound(DccThrottle t) {
+        if (isAddressSet){
+            log.debug("Throttle: "+getCurrentAddressString()+" is already set. (Found is: "+t.getLocoAddress().toString()+")");
+            return;
+        }
 	if (t != null) {
             throttle = t;
             setFunctionThrottle(throttle);
