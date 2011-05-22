@@ -35,7 +35,7 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.9 $
+ * @version    $Revision: 1.10 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -62,7 +62,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private DccThrottle _throttle;
     private boolean internalAdjust = false;
 
-    private long trackSliderMinInterval = 200;          // milliseconds
+    private long trackSliderMinInterval = 500;          // milliseconds
     private long lastTrackedSliderMovementTime = 0;
     
     // LocoNet really only has 126 speed steps i.e. 0..127 - 1 for em stop
@@ -325,7 +325,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                         boolean doIt = false;
                         if (!speedSlider.getValueIsAdjusting()) {
                             doIt = true;
-                            lastTrackedSliderMovementTime = System.currentTimeMillis() - trackSliderMinInterval;
                         } else if (System.currentTimeMillis() - lastTrackedSliderMovementTime >= trackSliderMinInterval) {
                             doIt = true;
                             lastTrackedSliderMovementTime = System.currentTimeMillis();
