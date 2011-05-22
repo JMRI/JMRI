@@ -492,8 +492,10 @@ public class WarrantTableAction extends AbstractAction {
             table.getColumnModel().getColumn(WarrantTableModel.DEALLOC_COLUMN).setCellRenderer(new ButtonRenderer());
             table.getColumnModel().getColumn(WarrantTableModel.SET_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
             table.getColumnModel().getColumn(WarrantTableModel.SET_COLUMN).setCellRenderer(new ButtonRenderer());
-            table.getColumnModel().getColumn(WarrantTableModel.RUN_TRAIN_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-            table.getColumnModel().getColumn(WarrantTableModel.RUN_TRAIN_COLUMN).setCellRenderer(new ButtonRenderer());
+            table.getColumnModel().getColumn(WarrantTableModel.AUTO_RUN_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
+            table.getColumnModel().getColumn(WarrantTableModel.AUTO_RUN_COLUMN).setCellRenderer(new ButtonRenderer());
+            table.getColumnModel().getColumn(WarrantTableModel.MANUAL_RUN_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
+            table.getColumnModel().getColumn(WarrantTableModel.MANUAL_RUN_COLUMN).setCellRenderer(new ButtonRenderer());
             table.getColumnModel().getColumn(WarrantTableModel.EDIT_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
             table.getColumnModel().getColumn(WarrantTableModel.EDIT_COLUMN).setCellRenderer(new ButtonRenderer());
             table.getColumnModel().getColumn(WarrantTableModel.DELETE_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
@@ -635,11 +637,12 @@ public class WarrantTableAction extends AbstractAction {
         public static final int ALLOCATE_COLUMN = 4;
         public static final int DEALLOC_COLUMN = 5;
         public static final int SET_COLUMN = 6;
-        public static final int RUN_TRAIN_COLUMN = 7;
-        public static final int CONTROL_COLUMN = 8;
-        public static final int EDIT_COLUMN = 9;
-        public static final int DELETE_COLUMN = 10;
-        public static final int NUMCOLS = 11;
+        public static final int AUTO_RUN_COLUMN = 7;
+        public static final int MANUAL_RUN_COLUMN = 8;
+        public static final int CONTROL_COLUMN = 9;
+        public static final int EDIT_COLUMN = 10;
+        public static final int DELETE_COLUMN = 11;
+        public static final int NUMCOLS = 12;
 
         WarrantManager _manager;
         protected ArrayList <Warrant>       _warList;
@@ -691,7 +694,8 @@ public class WarrantTableAction extends AbstractAction {
                 case ALLOCATE_COLUMN: return WarrantTableAction.rb.getString("Allocate");
                 case DEALLOC_COLUMN: return WarrantTableAction.rb.getString("Deallocate");
                 case SET_COLUMN: return WarrantTableAction.rb.getString("SetRoute");
-                case RUN_TRAIN_COLUMN: return WarrantTableAction.rb.getString("Run");
+                case AUTO_RUN_COLUMN: return WarrantTableAction.rb.getString("ARun");
+                case MANUAL_RUN_COLUMN: return WarrantTableAction.rb.getString("MRun");
                 case CONTROL_COLUMN: return WarrantTableAction.rb.getString("Control");
             }
             return "";
@@ -708,7 +712,8 @@ public class WarrantTableAction extends AbstractAction {
                 case ALLOCATE_COLUMN:
                 case DEALLOC_COLUMN:
                 case SET_COLUMN:
-                case RUN_TRAIN_COLUMN:
+                case AUTO_RUN_COLUMN:
+                case MANUAL_RUN_COLUMN:
                 case CONTROL_COLUMN:
                 case EDIT_COLUMN:
                 case DELETE_COLUMN:
@@ -726,7 +731,8 @@ public class WarrantTableAction extends AbstractAction {
                 case ALLOCATE_COLUMN: return JButton.class;
                 case DEALLOC_COLUMN:  return JButton.class;
                 case SET_COLUMN:    return JButton.class;
-                case RUN_TRAIN_COLUMN: return JButton.class;
+                case AUTO_RUN_COLUMN: return JButton.class;
+                case MANUAL_RUN_COLUMN: return JButton.class;
                 case CONTROL_COLUMN:  return String.class; // JComboBox.class;
                 case EDIT_COLUMN:     return JButton.class;
                 case DELETE_COLUMN:   return JButton.class;
@@ -745,7 +751,8 @@ public class WarrantTableAction extends AbstractAction {
                 case ALLOCATE_COLUMN:
                 case DEALLOC_COLUMN:
                 case SET_COLUMN:
-                case RUN_TRAIN_COLUMN:
+                case AUTO_RUN_COLUMN:
+                case MANUAL_RUN_COLUMN:
                     return new JButton("XX").getPreferredSize().width;
                 case CONTROL_COLUMN:
                     return new JTextField(25).getPreferredSize().width;
@@ -804,36 +811,20 @@ public class WarrantTableAction extends AbstractAction {
                     } else {
                         return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "occupied");
                     }
-                case RUN_TRAIN_COLUMN:
-                    if (w.getRunMode() == Warrant.MODE_NONE) {
-                        return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "red");
+                case AUTO_RUN_COLUMN:
+                    if (w.getRunMode() == Warrant.MODE_RUN) {
+                        return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "red");
                     } else {
-                        return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "off");
+                        return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "off");
+                    }
+                case MANUAL_RUN_COLUMN:
+                    if (w.getRunMode() == Warrant.MODE_MANUAL) {
+                        return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "red");
+                    } else {
+                        return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-empty.gif", "off");
                     }
                 case CONTROL_COLUMN:
-                    String msg = "Error";
-                    switch (w.getRunMode()) {
-                        case Warrant.MODE_NONE:
-                            if (w.getOrders().size()==0) {
-                                return WarrantTableAction.rb.getString("BlankWarrant");
-                            }
-                            if (w.getDccAddress()==null){
-                                return WarrantTableAction.rb.getString("NoLoco");
-                            }
-                            if (w.getThrottleCommands().size() == 0) {
-                                return java.text.MessageFormat.format(
-                                    WarrantTableAction.rb.getString("NoCommands"), w.getDisplayName());
-                            }
-                            msg = WarrantTableAction.rb.getString("Idle");
-                            break;
-                        case Warrant.MODE_LEARN:
-                            msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("Learning"),
-                                                       w.getCurrentBlockOrder().getBlock().getDisplayName());
-                            break;
-                        case Warrant.MODE_RUN:
-                            msg = w.getRunningMessage();
-                            break;
-                    }
+                    String msg = w.getRunningMessage();
                     WarrantFrame frame = getOpenWarrantFrame(w.getDisplayName());
                     if (frame !=null) {
                         frame._statusBox.setText(msg);
@@ -891,7 +882,7 @@ public class WarrantTableAction extends AbstractAction {
                 case SET_COLUMN:
                     msg = w.setRoute(0, null);
                     break;
-                case RUN_TRAIN_COLUMN:
+                case AUTO_RUN_COLUMN:
                     if (w.getRunMode() == Warrant.MODE_NONE) {
                         DccLocoAddress address = w.getDccAddress();
                         if (address == null) {
@@ -938,8 +929,45 @@ public class WarrantTableAction extends AbstractAction {
                                 WarrantTableAction.rb.getString("TrainRunning"), w.getDisplayName());
                     }
                     break;
+                case MANUAL_RUN_COLUMN:
+                    if (w.getRunMode() == Warrant.MODE_NONE) {
+                        if (w.getOrders().size() == 0) {
+                            msg = WarrantTableAction.rb.getString("EmptyRoute");
+                            break;
+                        }
+                        msg = w.setRoute(0, null);
+                        if (log.isDebugEnabled()) log.debug("w.setRoute= "+msg);
+                        if (msg!=null) {
+                            BlockOrder bo = w.getfirstOrder();
+                            OBlock block = bo.getBlock();
+                            String msg2 = block.allocate(w);
+                            if (msg2 == null) {
+                                if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(null,
+                                            java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
+                                            msg), WarrantTableAction.rb.getString("WarningTitle"), 
+                                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                                    w.deAllocate();
+                                    return;
+                                }
+                                block.setPath(bo.getPathName(), w);
+                                msg = null;
+                            } else {
+                                if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+msg2);
+                                msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
+                                        msg2);
+                                break;
+                            } 
+                        }
+                        msg = w.runAutoTrain(false);
+                        if (log.isDebugEnabled()) log.debug("w.runManualTrain= "+msg);
+                    } else {
+                        msg = java.text.MessageFormat.format(
+                                WarrantTableAction.rb.getString("TrainRunning"), w.getDisplayName());
+                    }
+                    break;
                 case CONTROL_COLUMN:
-                    if (w.getRunMode() == Warrant.MODE_RUN) {
+                    int mode = w.getRunMode();
+                    if (mode==Warrant.MODE_RUN || mode==Warrant.MODE_MANUAL) {
                         String setting = (String)value;
                         int s = -1;
                         if (setting.equals(halt)) {

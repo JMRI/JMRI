@@ -238,7 +238,9 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         contentPane.add(_tabbedPane, BorderLayout.CENTER);
         
         contentPane.add(makeEditableButtonPanel(), BorderLayout.SOUTH);
- 
+        if (_orders.size() > 0) {
+            _tabbedPane.setSelectedIndex(1);
+        } 
         addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     if (_debugFrame!=null) {
@@ -499,8 +501,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                                            _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
                 break;
             case Warrant.MODE_RUN:
-                status = java.text.MessageFormat.format(WarrantTableAction.rb.getString("Running"),
-                                           _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
+            case Warrant.MODE_MANUAL: 
+                status = _warrant.getRunningMessage();
                 break;
         }
 
@@ -651,7 +653,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         //panel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel bPanel = new JPanel();
         bPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JButton runButton = new JButton(rb.getString("Run"));
+        JButton runButton = new JButton(rb.getString("ARun"));
         runButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 runTrain(Warrant.MODE_RUN);
@@ -714,14 +716,15 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         tablePanel.add(makeRouteTablePanel());
         tablePanel.add(Box.createHorizontalStrut(5));
         tablePanel.add(makeThrottleTablePanel());
-        _routePanel.setVisible(true);
-        _commandPanel.setVisible(false);
+        boolean show = (_throttleCommands.size() > 0); 
+        _routePanel.setVisible(!show);
+        _commandPanel.setVisible(show);
         midPanel.add(tablePanel);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         ButtonGroup group = new ButtonGroup();
-        JRadioButton showRoute = new JRadioButton(rb.getString("showRoute"), true);
-        JRadioButton showScript = new JRadioButton(rb.getString("showScript"), false);
+        JRadioButton showRoute = new JRadioButton(rb.getString("showRoute"), !show);
+        JRadioButton showScript = new JRadioButton(rb.getString("showScript"), show);
         group.add(showRoute);
         group.add(showScript);
         buttonPanel.add(showRoute);
@@ -778,11 +781,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         ROW_HEIGHT = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
         dim.height = ROW_HEIGHT*8;
+        //_throttlePane.setPreferredSize(dim);
         _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.add(Box.createVerticalStrut(5*STRUT_SIZE));
+        buttonPanel.add(Box.createVerticalStrut(3*STRUT_SIZE));
 
         JButton insertButton =  new JButton(rb.getString("buttonInsertRow"));
         insertButton.addActionListener(new ActionListener() {
@@ -791,7 +795,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
         });
         buttonPanel.add(insertButton);
-        buttonPanel.add(Box.createVerticalStrut(5*STRUT_SIZE));
+        buttonPanel.add(Box.createVerticalStrut(2*STRUT_SIZE));
 
         JButton deleteButton =  new JButton(rb.getString("buttonDeleteRow"));
         deleteButton.addActionListener(new ActionListener() {
@@ -800,17 +804,22 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
         });
         buttonPanel.add(deleteButton);
-        buttonPanel.add(Box.createVerticalStrut(5*STRUT_SIZE));
+        //buttonPanel.add(Box.createVerticalStrut(3*STRUT_SIZE));
 
         _commandPanel = new JPanel();
         _commandPanel.setLayout(new BoxLayout(_commandPanel, BoxLayout.Y_AXIS));
         JLabel title = new JLabel(rb.getString("CommandTableTitle"));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(_throttlePane);
+        JPanel p = new JPanel();
+        p.add(_throttlePane);
+        panel.add(p);
+        buttonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(buttonPanel);
-        _commandPanel.add(title, BorderLayout.NORTH);
+        buttonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        _commandPanel.add(title);
         _commandPanel.add(panel);
+        _commandPanel.add(Box.createGlue());
         return _commandPanel;
     }
 
@@ -1652,11 +1661,14 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         _warrant.addPropertyChangeListener(this);
         msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());
         if (msg==null) {
+            String trainName = _trainNameBox.getText();
+            if (trainName!=null && trainName.length()>0) {
+                _warrant.setTrainName(trainName);
+            }
             msg = _warrant.setRunMode(mode, locoAddress, _learnThrottle, 
                                           _throttleCommands, _runBlind.isSelected());
         }
-        if (msg!=null) 
-        {
+        if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                                 rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             // learnThrottle will be disposed by _warrant.setRunMode(Warrant.MODE_NONE, null, null, null);
@@ -1707,6 +1719,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                                 _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
                     break;
                 case Warrant.MODE_RUN:
+                case Warrant.MODE_MANUAL: 
                     item = _warrant.getRunningMessage();
                     scrollCommandTable(_warrant.getCurrentCommandIndex());
                     break;
@@ -1733,8 +1746,10 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         scrollCommandTable(_commandModel.getRowCount());
     }
 
-    protected void scrollCommandTable(int row) {
-        _throttlePane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
+    private void scrollCommandTable(int row) {
+        JScrollBar bar = _throttlePane.getVerticalScrollBar();
+        bar.setValue(row*ROW_HEIGHT);
+//        bar.setValue(bar.getMaximum());
     }
 
     private DccLocoAddress getLocoAddress() {
