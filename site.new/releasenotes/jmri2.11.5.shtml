@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.40 2011-05-22 12:03:19 kevin-dickerson Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.41 2011-05-22 19:48:46 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -175,15 +175,15 @@ None at the time of this release.
 
 <p>Pete Cressman</p>
 <ul>
-<li>Added Circuit Builder tool to Control Panel Editor.  This tool is an
- alternative to the Occupancy Tables that creates OBlocks,
- Portals and OPaths through a "point and click" GUI.</li>
+<li>Added Circuit Builder tool to Control Panel Editor.  This is an 
+ alternative tool to the Occupancy Tables that creates OBlocks,
+ Portals and OPaths through a "point and click" GUI. (features still in progress)</li>
 <li>Fix route finder and warrant recording bug introduced in ver 2.11.4</li>
-<li>Fix loco icon following warrant playback through all track citcuits.</li>
+<li>Fix loco icon following warrant playback through all track circuits.</li>
 <li>Fix bug that did not load ver 2.4 signalHead icons.</lii>
 <li>Fix bug that did not load rotated or scaled signalMastd icons.</li>
 <li>Fix bug loading panel after Occupancy Block Table is open.</li>
-<li>Inserting or deleting rows of a Throttle Command recording now
+<li>Inserting or deleting rows of a Throttle Command warrant script now
  keeps the total elapsed time a train is in a block the same.</li>
 <li>Added set TrainID, set TrainName warrant actions to Logix</li>
 <li>Fix background color of panels when changing views between editors</li>
@@ -195,6 +195,12 @@ None at the time of this release.
  for initializing sensors, turnouts and signals, avoiding thrashing of
  enabling Logixes at panel load time.</li>
 <li>Help files updated for Warrants, ItemPalette, Control Panel Editor</li>   
+<li>All known problems with the Abort command to Auto or Manual warrants fixed.</li>   
+<li>Two or more warrants can be allocated when they have blocks in common as long as each
+ can acquire its first block.  (An allocated warrant must always have a starting block under its control.)</li>   
+<li>Dark blocks may used as starting and destination blocks.  They should be registered OBlocks without a sensor.</li>   
+<li>Speed sampling interval changed to 500ms instead of 200ms when recording auto train scripts</li>
+<li>Train name in loco icon follows progress on both record and playback of a warrant.<li>   
 </ul>
 
 <p>Lionel Jeanson</p>
