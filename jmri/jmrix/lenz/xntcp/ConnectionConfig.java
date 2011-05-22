@@ -3,7 +3,7 @@
 package jmri.jmrix.lenz.xntcp;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -22,25 +22,27 @@ import jmri.jmrix.JmrixConfigPane;
  * This uses the {@link XnTcpAdapter} class to do the actual
  * connection.
  *
- * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.13 $
+ * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
+ * @version	$Revision: 1.14 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
+ * GT - May 2011 - Fixed problems arising from recent refactoring
  *
  * @see XnTcpAdapter
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
-        javax.swing.JComboBox portBox = new javax.swing.JComboBox();
+	javax.swing.JComboBox choiceBox = new javax.swing.JComboBox();
 
-	protected JTextField ipField = new JTextField(XnTcpAdapter.DEFAULT_IP_ADDRESS);
-	protected boolean manualInput = false;
+	private boolean manualInput = false;
 	private boolean init = false;
+	private String oldName;
 
 
     /**
      * Local initialization of defaults, to be called from all constructors
      */
     private void initDefaults() {
-	portField = new JTextField(String.valueOf(XnTcpAdapter.DEFAULT_TCP_PORT));
+		hostNameField = new JTextField(XnTcpAdapter.DEFAULT_IP_ADDRESS);
+		portField = new JTextField(String.valueOf(XnTcpAdapter.DEFAULT_TCP_PORT));
     }
 
     /**
@@ -50,10 +52,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
         initDefaults();
         adapter = p;
-		String h = adapter.getCurrentOption1Setting();
-		if(h != null && !h.equals("")) ipField = new JTextField(h);
-		String t = adapter.getCurrentOption2Setting();
-		if(t != null && !t.equals("")) portField = new JTextField(t);
+		String h = adapter.getHostName();
+		if(h != null && !h.equals(JmrixConfigPane.NONE)) hostNameField = new JTextField(h);
+		String t = adapter.getCurrentPortName();
+		if(!t.equals("0")) portField = new JTextField(t);
+		oldName = adapter.getCurrentOption1Setting();
     }
     /**
      * Ctor for a functional Swing object with no prexisting adapter
@@ -62,43 +65,43 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         initDefaults();
     }
 
+		@Override
     public String name() { return "XnTcp"; }
 
 
+		@Override
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
-        portBox.addActionListener(new ActionListener() {
+        choiceBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				enableInput();
             }
         });
-        ipField.addActionListener(new ActionListener() {
+        hostNameField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(manualInput) adapter.configureOption1(ipField.getText());
+                if(manualInput) adapter.setHostName(hostNameField.getText());
             }
         });
-        ipField.addKeyListener( new KeyListener() {
+        hostNameField.addKeyListener( new KeyListener() {
              public void keyPressed(KeyEvent keyEvent) {
              }
              public void keyReleased(KeyEvent keyEvent) {
-                if(manualInput) adapter.configureOption1(ipField.getText());
+                if(manualInput) adapter.setHostName(hostNameField.getText());
              }
              public void keyTyped(KeyEvent keyEvent) {
              }
          });
-
-
-	portField.addActionListener(new ActionListener() {
+		portField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               if(manualInput) adapter.configureOption2(portField.getText());
+               if(manualInput) adapter.setPort(portField.getText());
              }
         });
         portField.addKeyListener( new KeyListener() {
              public void keyPressed(KeyEvent keyEvent) {
              }
              public void keyReleased(KeyEvent keyEvent) {
-                if(manualInput) adapter.configureOption2(portField.getText());
+                if(manualInput) adapter.setPort(portField.getText());
              }
              public void keyTyped(KeyEvent keyEvent) {
              }
@@ -111,50 +114,47 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
+		@Override
     protected void setInstance() { if(adapter==null) adapter = new XnTcpAdapter(); }
 
+		@Override
     public String getInfo() {
-        String t = (String)portBox.getSelectedItem();
-        if (t!=null) return t;
-        else return JmrixConfigPane.NONE;
+        String t = (String)choiceBox.getSelectedItem();
+        if (t==null) return JmrixConfigPane.NONE;
+		if (!t.equals("Manual") || adapter == null ) return t;
+		return adapter.getHostName();
+		
     }
 
+		@Override
     public void loadDetails(JPanel details) {
     	
         setInstance();
 
         Vector<String> v;
-        try {
-            v = ((XnTcpAdapter)adapter).getPortNames();
-    	    if (log.isDebugEnabled()) {
-    		    log.debug("loadDetails called in class "+this.getClass().getName());
-    		    log.debug("adapter class: "+adapter.getClass().getName());
-    		    log.debug("loadDetails called for "+name());
-        	    log.debug("Found "+v.size()+" ports");
-            }
-        } catch (java.lang.UnsatisfiedLinkError e1) {
-            log.error("UnsatisfiedLinkError - the gnu.io library has not been installed properly");
-            log.error("java.library.path="+System.getProperty("java.library.path","<unknown>"));
-            javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
-            return;
-        }
-        portBox.removeAllItems();
-		String oldName = adapter.getCurrentPortName();
+		v = ((XnTcpAdapter)adapter).getInterfaceNames();
+		if (log.isDebugEnabled()) {
+			log.debug("loadDetails called in class "+this.getClass().getName());
+			log.debug("adapter class: "+adapter.getClass().getName());
+			log.debug("loadDetails called for "+name());
+			log.debug("Found "+v.size()+" ports");
+		}
+        choiceBox.removeAllItems();
 		int indSel = -1;
 		if(oldName == null) oldName = JmrixConfigPane.NONE;
         for (int i=0; i<v.size(); i++) {
 			if(v.elementAt(i).equals(oldName)) indSel = i;
-			portBox.addItem(v.elementAt(i));
+			choiceBox.addItem(v.elementAt(i));
         }
-        portBox.addItem("Manual");
+        choiceBox.addItem("Manual");
 		if(indSel < 0) indSel = v.size();
-		portBox.setSelectedIndex(indSel);
+		choiceBox.setSelectedIndex(indSel);
 
 		details.setLayout(new GridLayout(3,2));
         details.add(new JLabel("XnTcp Interface: "));
-        details.add(portBox);
+        details.add(choiceBox);
         details.add(new JLabel("IP address: "));
-		details.add(ipField);
+		details.add(hostNameField);
 		details.add(new JLabel("Port number: "));
 		details.add(portField);
  
@@ -164,23 +164,20 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     }
 	
 	private void enableInput() {
-		String choice = (String)portBox.getSelectedItem();
+		String choice = (String)choiceBox.getSelectedItem();
 		manualInput = choice.equals("Manual");
-		ipField.setEnabled(manualInput);
+		hostNameField.setEnabled(manualInput);
 		portField.setEnabled(manualInput);
-		//adapter.setPort(choice);
-		if(manualInput) {
-			adapter.configureOption1(ipField.getText());
-			adapter.configureOption2(portField.getText());
-		} else {
-			adapter.configureOption1("");
-			adapter.configureOption2("");
-		}
+		adapter.configureOption1(choice);
+		adapter.setHostName(hostNameField.getText());
+		adapter.setPort(portField.getText());
 	}
 
     String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
 
+		@Override
     public String getManufacturer() { return manufacturerName; }
+		@Override
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
 
