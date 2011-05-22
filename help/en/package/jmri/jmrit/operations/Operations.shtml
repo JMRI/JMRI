@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.108 2011-05-11 21:23:04 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.109 2011-05-22 01:08:13 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -742,7 +742,7 @@ siding that has a schedule that also requests that particular load.
 However, cars with a custom load can still be placed at yards,
 staging, and interchanges.</P>
 
-<P>You can if you wish, specify the next destination for a car once
+<P>You can if you wish, specify the final destination for a car once
 it has been serviced by the siding. Only destination tracks that can
 accept the car type are shown in the track pull down menu.</P>
 
@@ -779,7 +779,7 @@ that the program found acceptable for the siding. To change the schedule
 to match mode, select "Match" in the edit schedule window
 and press "Save". Match mode is useful when the order
 cars arrive isn't important, but you still want to ship cars with a
-specific load, provide the car's next destination, or have the car wait
+specific load, provide the car's final destination, or have the car wait
 for a specific number of trains at the siding. In match mode the
 schedule item count is ignored as it isn't used. All of the other fields
 are available, and you can have the same type of car several times, with
@@ -1291,11 +1291,16 @@ be serviced.</P>
 
 <P>The next field is the "Final Destination" set of pull down boxes.
 You can select any destination or track, the program will figure out the
-best route to ship the car to this destination. The "route" can consist of
-several trains, interchanges, and yards.  When a car is delivered
-to a siding with a schedule, and the schedule has a shipping destination
-that requires more than one train, the program uses this set of fields to
-ship the car. The last field is the train assignment.</P>
+best route to ship the car to this destination. The "route" can consist
+of several trains, interchanges, and yards. When a car is delivered to a
+siding with a schedule, and the schedule has a shipping destination that
+requires more than one train, the program uses this set of fields to
+ship the car. If the track that the final destination specifies happens
+to be full, the program will search for a near by yard to place the car.
+When the track becomes available, the program will move the car from the
+yard to the track specified.</P>
+
+<P>The last field is the train assignment.</P>
 
 <P>When manually setting a destination, you don't have to specify a
 track. And when manually setting a destination that is staging, you
@@ -2128,21 +2133,9 @@ program you can build a new train.</P>
 
 <H2>Operation Windows</H2>
 
-Some of the operation windows can be resized and placed to your liking.
-Pressing the save button will store the size and location for the
-following operation windows:
-
-<ul>
-	<li>Settings</li>
-	<li>Edit Location</li>
-	<li>Cars</li>
-	<li>Edit Car</li>
-	<li>Locomotives</li>
-	<li>Edit Locomotive</li>
-	<li>Trains</li>
-	<li>Edit Train</li>
-	<li>Timetable</li>
-</ul>
+All of the operation windows can be resized and placed to your liking.
+When you close the window, the size and window location on your screen
+is saved.
 
 <P>The program also allows you to resize the Cars, Locomotives, Trains
 and Timetable table column widths. Adjust the column widths to your
