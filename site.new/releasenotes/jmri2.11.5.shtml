@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.38 2011-05-22 00:40:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.39 2011-05-22 05:21:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -261,6 +261,8 @@ with the rate information.
 </ul>
 
 <p>Walt Thompson contributed an improved SE8cSignalExample XML file
+
+<p>Giorgio Terdina fixed a problem with the XnTCP adapter code.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
