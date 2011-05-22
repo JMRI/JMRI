@@ -185,29 +185,6 @@ public class ConditionalVariable {
         return "";
     }
 
-    /**
-    * override Object methods to avoid redundancy in HashSet
-    *
-    public boolean equals(Object obj) {
-        ConditionalVariable v = (ConditionalVariable)obj;
-        if (_name.equals(v.getName()) && _type == v.getType() ) {
-            return true;
-        }
-        return false;
-    }
-
-    public int hashCode() {
-        char[] ch = _name.toCharArray();
-        int hCode= 0;
-        for (int i=0; i<ch.length; i++)
-        {
-            hCode += ch[i];
-        }
-        hCode += _type;
-        return hCode;
-    }
-    */
-
 	/**
 	*  Evaluates this State Variable
 	*  <P>
@@ -706,7 +683,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_SIGNAL_MAST_HELD:
                 return (rbx.getString("TypeSignalMastHeld"));
         }
-        return ("");
+        return ("None");
     }
 
     public static String getCompareOperationString(int index) {
@@ -841,9 +818,9 @@ public class ConditionalVariable {
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                              new Object[] {rbx.getString("OBlockStatus"), _name, _dataString} );
             case Conditional.TYPE_NONE:
-                return type;
+                return _name+" type "+type;
         }
-        return "";
+        return super.toString();
     }
 
 	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
