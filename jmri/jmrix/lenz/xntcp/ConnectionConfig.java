@@ -23,7 +23,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2011 - Fixed problems arising from recent refactoring
  *
@@ -65,7 +65,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         initDefaults();
     }
 
-		@Override
     public String name() { return "XnTcp"; }
 
 

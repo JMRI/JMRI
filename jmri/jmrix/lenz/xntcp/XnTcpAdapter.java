@@ -15,7 +15,7 @@ import jmri.jmrix.ConnectionStatus;
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
  * @author			Giorgio Terdina Copyright (C) 2008-2011, based on LI100 adapter by Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2008 - Added updating of connection status in the main menu panel (using ConnectionStatus by Daniel Boudreau)
  * PB - December 2010 - refactored to be based off of AbstractNetworkController.
@@ -223,7 +223,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 	/**
 	 * set up all of the other objects to operate with a XnTcp interface
 	 */
-		@Override
 	public void configure() {
             // connect to a packetizing traffic controller
             XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
