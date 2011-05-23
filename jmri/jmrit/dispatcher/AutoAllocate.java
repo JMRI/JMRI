@@ -63,7 +63,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class AutoAllocate {
@@ -855,7 +855,6 @@ log.error("auto allocating Section "+ar.getSection().getUserName());
 		ArrayList<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
 		ArrayList<TransitSection> atsList = at.getTransit().getTransitSectionList();
 		int aSeq = getCurrentSequenceNumber(at);
-		int nSeq = getCurrentSequenceNumber(nt);
 		Section nSec = getCurSection();
 		if (willTraverse(nSec,at,aSeq)!=0) {
 			// at is moving toward nt
