@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -51,8 +51,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 	
 	// operational variables
 	protected DispatcherFrame dispatcher = null;
-	private String defaultFileName = XmlFile.prefsDir()+"dispatcheroptions.xml";
-	public void setDefualtFileName(String testLocation){
+	private static String defaultFileName = XmlFile.prefsDir()+"dispatcheroptions.xml";
+	public static void setDefualtFileName(String testLocation){
 		defaultFileName = testLocation;
 	}
 	private Document doc = null;
@@ -117,9 +117,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 							dispatcher.setTrainsFromUser(false);
 					}
 					if (options.getAttribute("autoallocate")!=null) {
-						dispatcher.setAutoAllocate(true);
-						if (options.getAttribute("autoallocate").getValue().equals("no"))
-							dispatcher.setAutoAllocate(false);
+						dispatcher.setAutoAllocate(false);
+						if (options.getAttribute("autoallocate").getValue().equals("yes"))
+							dispatcher.setAutoAllocate(true);
 					}
 					if (options.getAttribute("autoturnouts")!=null) {
 						dispatcher.setAutoTurnouts(true);

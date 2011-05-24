@@ -11,7 +11,7 @@ import junit.extensions.jfcunit.*;
 /**
  * Swing jfcUnit tests for dispatcher options
  * @author			Dave Duchamp
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 
@@ -57,8 +57,6 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("NameInAllocatedBlock",d.getNameInAllocatedBlock());
 		Assert.assertEquals("Scale",Scale.HO,d.getScale());		
 		// check changing some options
-		d.setAutoAllocate(true);
-		Assert.assertTrue("New AutoAllocate",d.getAutoAllocate());
 		d.setAutoTurnouts(true);
 		Assert.assertTrue("New AutoTurnouts",d.getAutoTurnouts());
 		d.setHasOccupancyDetection(true);
