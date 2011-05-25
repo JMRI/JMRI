@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 /**
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
@@ -986,7 +986,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             displayList[i] = sm.getDisplayName();
         }
         java.util.Arrays.sort(displayList);
-        for(int i = 0; i<displayList.length-1; i++){
+        for(int i = 0; i<displayList.length; i++){
             box.addItem(displayList[i]);
             if ((select!=null) && (displayList[i].equals(select.getDisplayName()))){
                 box.setSelectedIndex(i);
