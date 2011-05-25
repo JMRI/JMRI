@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.41 2011-05-22 19:48:46 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.42 2011-05-25 21:40:31 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -229,6 +229,7 @@ sending multiple messages.
 <li>Added a sensor debounce facility to individual sensors see <a href="http://www.jmri.org/help/en/html/tools/Sensors.shtml#Debounce">Sensors</a> for further information.<br>
 By default this new option is disabled</li>
 <li>It is now possible to view signal mast specific appearances, and aspect mapping on the JMRI website.</li>
+<li>The Default tab in preferences is automatically updated when a connection is added, removed, enabled or disabled.  Thus allowing you to select your default system on the next reload for a newly added or enabled system</li>
 </ul>
 
 <p>Brett Hoffman, changes to WiFi throttles:</p>
