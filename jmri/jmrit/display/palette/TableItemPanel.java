@@ -130,14 +130,13 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     protected void addToTable() {
         String sysname = _sysNametext.getText();
         if (sysname != null && sysname.length() > 1) {
-            PickListModel model = (PickListModel)_table.getModel();
             String uname = _userNametext.getText();
             if (uname!=null && uname.trim().length()==0) {
                 uname = null;
             }
-            jmri.NamedBean bean = model.addBean(sysname, uname);
+            jmri.NamedBean bean = _model.addBean(sysname, uname);
             if (bean!=null) {
-                int setRow = model.getIndexOf(bean);
+                int setRow = _model.getIndexOf(bean);
                 if (log.isDebugEnabled()) log.debug("addToTable: row= "+setRow+", bean= "+bean.getDisplayName());
                 _table.setRowSelectionInterval(setRow, setRow);
                 _scrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
@@ -157,8 +156,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public NamedBean getTableSelection() {
         int row = _table.getSelectedRow();
         if (row >= 0) {
-            PickListModel model = (PickListModel)_table.getModel();
-            NamedBean b = model.getBeanAt(row);
+            NamedBean b = _model.getBeanAt(row);
             _table.clearSelection();
             if (log.isDebugEnabled()) log.debug("getTableSelection: row= "+row+", bean= "+b.getDisplayName());
             return b;
@@ -208,8 +206,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
-        PickListModel model = (PickListModel)_table.getModel();
-        return model.getBeanAt(row);
+        return _model.getBeanAt(row);
     }
 
     /**
