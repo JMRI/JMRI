@@ -76,6 +76,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     BlockOrder  _viaBlockOrder;
     BlockOrder  _avoidBlockOrder;
 
+    JTextField  _sysNameBox;
     JTextField  _userNameBox;
     JTextField  _originBlockBox = new JTextField();
     JTextField  _destBlockBox = new JTextField();
@@ -260,37 +261,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         pack();
     }
 
-    /**
-    * SysName will change if user wants to make a copy
-    */
-    private void userNameChange(JTextField sysNameBox) {
-        String text = _userNameBox.getText();
-        if (text != null && text.length()>0) {
-            setTitle(java.text.MessageFormat.format(rb.getString("TitleWarrant"), text));
-        }
-        if (log.isDebugEnabled()) log.debug("userNameChange: text="+text+", warrant UserName= "+_warrant.getUserName());
-        if (text != null && !text.equals(_warrant.getUserName())) {
-            if (JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
-                rb.getString("makeCopy"), _warrant.getUserName(), text),
-                    rb.getString("QuestionTitle"), JOptionPane.YES_NO_OPTION, 
-                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                save();
-                String sysName = _warrant.getSystemName();
-                _warrant = null;
-                _create = true;
-                int n = 0;
-                while (_warrant==null) {
-                    n++;
-                    _warrant = InstanceManager.warrantManagerInstance().createNewWarrant(sysName+n, text);
-                }
-                sysNameBox.setText(sysName+n);
-            } else {
-                _warrant.setUserName(text);
-            }
-            WarrantTableAction.updateWarrantMenu(); 
-        }
-    }
-
     private void doSize(JComponent comp, int max, int min) {
         Dimension dim = comp.getPreferredSize();
         dim.width = max;
@@ -308,25 +278,15 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
         panel.add(new JLabel(rb.getString("SystemName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        JTextField sysNameBox =  new JTextField(_warrant.getSystemName());
-        sysNameBox.setBackground(Color.white);        
-        sysNameBox.setEditable(false);
-        panel.add(sysNameBox);
+        _sysNameBox =  new JTextField(_warrant.getSystemName());
+        _sysNameBox.setBackground(Color.white);        
+        _sysNameBox.setEditable(false);
+        panel.add(_sysNameBox);
         panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(new JLabel(rb.getString("UserName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         _userNameBox =  new JTextField(_warrant.getUserName());
-        _userNameBox.addActionListener(new ActionListener() {
-            JTextField sysNameBox;
-            public void actionPerformed(ActionEvent e) {
-                userNameChange(sysNameBox);
-            }
-            ActionListener init(JTextField box) {
-                sysNameBox = box;
-                return this;
-            }
-        }.init(sysNameBox));  // SysName will change if user wants to make a copy                
         panel.add(_userNameBox);
         panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
         topPanel.add(panel);
@@ -873,6 +833,19 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
         });
         panel.add(saveButton);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        buttonPanel.add(panel);
+        buttonPanel.add(Box.createHorizontalStrut(3*STRUT_SIZE));
+
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JButton copyButton = new JButton(rb.getString("ButtonCopy"));
+        copyButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                copy();
+            }
+        });
+        panel.add(copyButton);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         buttonPanel.add(panel);
         buttonPanel.add(Box.createHorizontalStrut(3*STRUT_SIZE));
@@ -1714,6 +1687,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 case Warrant.MODE_LEARN:
                     if (e.getPropertyName().equals("blockChange")) {
                         setThrottleCommand("NoOp", rb.getString("Mark"));
+                    } else if (e.getPropertyName().equals("blockSkip")) {
+                        setThrottleCommand("NoOp", rb.getString("Skip"));
                     }
                     item = java.text.MessageFormat.format(rb.getString("Learning"),
                                 _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
@@ -1798,6 +1773,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _warrant.setDccAddress(getLocoAddress());
         }
         _warrant.setRunBlind(_runBlind.isSelected());
+        _warrant.setUserName(_userNameBox.getText());
+
         if (log.isDebugEnabled()) log.debug("warrant saved _train "+(_train != null)+", name= "+_trainNameBox.getText());
 
         if (_create) {
@@ -1805,6 +1782,25 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             WarrantTableAction.updateWarrantMenu(); 
         }
         //dispose();
+    }
+
+    private void copy() {
+        if (JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
+            rb.getString("makeCopy"), _warrant.getDisplayName()),
+                rb.getString("QuestionTitle"), JOptionPane.OK_CANCEL_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
+            String sysName = _warrant.getSystemName();
+            save();
+            _warrant = null;
+            _create = true;
+            int n = 0;
+            while (_warrant==null) {
+                n++;
+                _warrant = InstanceManager.warrantManagerInstance().createNewWarrant(sysName+n, sysName+n);
+            }
+            _userNameBox.setText("");
+            _sysNameBox.setText(sysName+n);
+        }
     }
 
     public void dispose() {
