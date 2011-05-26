@@ -34,7 +34,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.57 $
+ * @version             $Revision: 1.58 $
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 	
@@ -244,8 +244,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     		
     	pack();
+    	/* all JMRI window position and size are now saved
     	setSize(trainManager.getTrainsFrameSize());
     	setLocation(trainManager.getTrainsFramePosition());
+    	*/
     	setSortBy(trainManager.getTrainsFrameSortBy());
     	
     	// listen for timetable changes
@@ -447,7 +449,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 	
 	protected void storeValues(){
+		/* all JMRI window position and size are now saved
 		trainManager.setTrainsFrame(this);					//save frame size and location
+		*/
 		trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainsFrameSortBy(getSortBy());		//save how the table is sorted
 		trainManager.save();
@@ -489,8 +493,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 	
     public void dispose() {
+    	trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
     	trainsModel.dispose();
+    	/* all JMRI window position and size are now saved
     	trainManager.setTrainsFrame(null);
+    	*/
     	trainManager.runShutDownScripts();
     	trainManager.removePropertyChangeListener(this);
         super.dispose();

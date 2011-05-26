@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -273,16 +273,20 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		
 		// set frame size and location for display
 		pack();
+		/* all JMRI window position and size are now saved
 		if (manager.getLocationEditFrameSize()!= null){
 			setSize(manager.getLocationEditFrameSize());
 		} 
+		*/
 		if (getWidth()<750)
 			setSize(750, getHeight());
 		if (getHeight()<Control.panelHeight)
 			setSize(getWidth(), Control.panelHeight);
+		/* all JMRI window position and size are now saved
 		if (manager.getLocationEditFramePosition()!= null){
 			setLocation(manager.getLocationEditFramePosition());
 		}
+		*/
 		setVisible(true);
 	}
 	
@@ -419,8 +423,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (stageRadioButton.isSelected()){
 			_location.setLocationOps(Location.STAGING);
 		}
+		/* all JMRI window position and size are now saved
 		// save frame size and position
 		manager.setLocationEditFrame(this);
+		*/
 		// save location file
 		managerXml.writeOperationsFile();
 	}
@@ -576,7 +582,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	private int getNumberOfCheckboxes(){
-		return getNumberOfCheckboxes(manager.getLocationEditFrameSize());
+		return getNumberOfCheckboxes(getPreferredSize());
 	}
 	
 	/**

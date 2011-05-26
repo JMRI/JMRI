@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -181,8 +181,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
     	
     	pack();
+    	/* all JMRI window position and size are now saved
        	setSize(engineManager.getEnginesFrameSize());
     	setLocation(engineManager.getEnginesFramePosition());
+    	*/
     	setVisible(true);
     	
     	// also load the cars
@@ -260,7 +262,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			f.setVisible(true);
 		}
 		if (ae.getSource() == saveButton){
+			/* all JMRI window position and size are now saved
 			engineManager.setEnginesFrame(this);
+			*/
 			engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
 			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
 			EngineManagerXml.instance().writeOperationsFile();
@@ -278,6 +282,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	}
 
     public void dispose() {
+    	engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
     	engineManager.removePropertyChangeListener(this);
     	enginesModel.dispose();
     	if (f != null)

@@ -4,10 +4,10 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
-import java.awt.Dimension;
-import java.awt.Point;
+//import java.awt.Dimension;
+//import java.awt.Point;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -201,23 +201,27 @@ public class Setup {
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
 
-	
+	/* all JMRI window position and size are now saved
 	// Setup frame attributes
 	private static OperationsSetupFrame _operationsSetupFrame = null;
 	private static Dimension _operationsSetupFrameDimension = null;
 	private static Point _operationsSetupFramePosition = null;
 	
+	@Deprecated
 	public static void setOperationsSetupFrame(OperationsSetupFrame frame){
 		_operationsSetupFrame = frame;
 	}
 
+	@Deprecated
 	public static Dimension getOperationsSetupFrameSize(){
 		return _operationsSetupFrameDimension;
 	}
 
+	@Deprecated
 	public static Point getOperationsSetupFramePosition(){
 		return _operationsSetupFramePosition;
 	}
+	*/
 
 	public static boolean isMainMenuEnabled(){
 		OperationsSetupXml.instance(); // load file
@@ -1089,6 +1093,7 @@ public class Setup {
       	e.addContent(values = new Element("comments"));
     	values.setAttribute("misplacedCars", getMiaComment());
     	
+    	/* all JMRI window position and size are now saved
     	Element options;
     	e.addContent(options = new Element("options"));
     	options.addContent(values = new Element("setupFrameOptions"));
@@ -1108,6 +1113,7 @@ public class Setup {
         	values.setAttribute("height", ""+size.height);
         	values.setAttribute("width", ""+size.width); 
         }
+        */
     	return e;
     }
     
@@ -1427,6 +1433,7 @@ public class Setup {
         		setMiaComment(comment);
         	}
         }
+        /* all JMRI window position and size are now saved
         Element frameOptions;
         if ((operations.getChild("options")!= null)
         		&& (frameOptions = operations.getChild("options").getChild("setupFrameOptions"))!= null){
@@ -1443,6 +1450,7 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
         	}
         }
+        */
         // logging has to be last, causes cars and engines to load
         if (operations.getChild("settings") != null){
         	if ((a = operations.getChild("settings").getAttribute("carLogger"))!= null){

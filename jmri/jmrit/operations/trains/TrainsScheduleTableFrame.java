@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.trains;
  
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Enumeration;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -34,7 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 	
@@ -55,8 +55,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	
 	// labels
 	JLabel textSort = new JLabel(rb.getString("SortBy"));
-	JLabel textSep1 = new JLabel("          ");
-	JLabel textSep2 = new JLabel("          ");
 	
 	// radio buttons
     JRadioButton sortByName = new JRadioButton(NAME);
@@ -72,7 +70,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	// check boxes
 	
 	// panel
-	JPanel cp2 = new JPanel();
+	JPanel schedule = new JPanel();
 	
 	// active schedule id
 	private String _activeId = "";
@@ -92,32 +90,38 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     	trainsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
        	trainsScheduleModel.initTable(trainsScheduleTable, this);
      	
-    	// Set up the control panel
-    	
+    	// Set up the control panel	
     	//row 1
     	JPanel cp1 = new JPanel();
-    	cp1.add(textSort);
-    	cp1.add(sortByTime);
-    	cp1.add(sortByName);
+    	cp1.setLayout(new BoxLayout(cp1,BoxLayout.X_AXIS));
+    	
+    	//row 1
+    	JPanel sortBy = new JPanel();
+    	sortBy.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+    	sortBy.add(sortByTime);
+    	sortBy.add(sortByName);
     	
        	//row 2
+    	schedule.setBorder(BorderFactory.createTitledBorder(rb.getString("Active")));
     	updateControlPanel();
     	
-    	//row 3
-    	//tool tips, see setPrintButtonText() for more tool tips
-    	applyButton.setToolTipText(rb.getString("ApplyButtonTip"));
-		//saveButton.setToolTipText(rb.getString("SaveBuildsTip"));
+    	cp1.add(sortBy);
+    	cp1.add(schedule);
 			
     	JPanel cp3 = new JPanel();
+    	cp3.setBorder(BorderFactory.createTitledBorder(""));
 		cp3.add (applyButton);
 		cp3.add (saveButton);
 		
+    	//tool tips
+    	applyButton.setToolTipText(rb.getString("ApplyButtonTip"));
+    	saveButton.setToolTipText(rb.getString("SaveButtonTip"));
+		
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridBagLayout());
-		addItem(controlPanel, cp1, 0, 0 );
-		addItem(controlPanel, cp2, 0, 1);
-		addItem(controlPanel, cp3, 0, 2);
+		controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.Y_AXIS));
+		controlPanel.add(cp1);
+		controlPanel.add(cp3);
 		
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
 	    // make sure panel doesn't get too short
@@ -151,8 +155,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     		
     	pack();
     	
+    	/* all JMRI window position and size are now saved
     	setSize(trainManager.getTrainScheduleFrameSize());
     	setLocation(trainManager.getTrainScheduleFramePosition());
+    	*/
     	setSortBy(trainManager.getTrainsFrameSortBy());
     	
     	scheduleManager.addPropertyChangeListener(this);
@@ -185,7 +191,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	}
 	
 	private void updateControlPanel(){
-	   	cp2.removeAll();
+		schedule.removeAll();
 	   	schGroup = new ButtonGroup();
     	List<String> l = scheduleManager.getSchedulesByIdList();
     	for (int i=0; i<l.size(); i++){
@@ -193,12 +199,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     		JRadioButton b = new JRadioButton();
     		b.setText(ts.getName());
     		b.setName(l.get(i));
-    		cp2.add(b);
+    		schedule.add(b);
     		schGroup.add(b);
     		if (b.getName().equals(_activeId))
     			b.setSelected(true);
     	}
-    	cp2.revalidate();
+    	schedule.revalidate();
 	}
 	
 	private void setSortBy(String sortBy){
@@ -237,7 +243,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	
 	protected void storeValues(){
 		setActiveId();
+		/* all JMRI window position and size are now saved
 		trainManager.setTrainScheduleFrame(this);
+		*/
 		trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainSecheduleActiveId(_activeId);
 		trainManager.save();
@@ -252,6 +260,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	}
 	
     public void dispose() {
+    	trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
     	scheduleManager.removePropertyChangeListener(this);
     	removePropertyChangeTrainSchedules();
     	trainsScheduleModel.dispose();

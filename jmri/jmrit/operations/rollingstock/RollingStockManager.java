@@ -5,12 +5,9 @@ package jmri.jmrit.operations.rollingstock;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.OperationsFrame;
 
 import jmri.jmrit.operations.trains.Train;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -22,14 +19,16 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class RollingStockManager {
 	
+	/* all JMRI window position and size are now saved
 	// Edit RollingStock frame attributes
 	protected OperationsFrame _editFrame = null;
 	protected Dimension _editFrameDimension = null;
 	protected Point _editFramePosition = null;
+	*/
 
 	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); //RollingStock by id
 
@@ -38,6 +37,7 @@ public class RollingStockManager {
     public RollingStockManager() {
     }
     
+    /*
 	public void setEditFrame(OperationsFrame frame){
 		_editFrame = frame;
 	}
@@ -49,6 +49,7 @@ public class RollingStockManager {
 	public Point getEditFramePosition(){
 		return _editFramePosition;
 	}
+	*/
 
 	/**
 	 * Get the number of items in the roster

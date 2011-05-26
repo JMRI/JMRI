@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -349,10 +349,12 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
+		/* all JMRI window position and size are now saved
 		// set frame size and location for display
 		if (Setup.getOperationsSetupFramePosition()!= null){
 			setLocation(Setup.getOperationsSetupFramePosition());
 		}	
+		*/
 		packFrame();
 		setVisible(true);
 	}
@@ -498,8 +500,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				Setup.setScale(Setup.G_SCALE);
 			Setup.setRailroadName(railroadNameTextField.getText());
 			Setup.setYearModeled(yearTextField.getText());
+			/* all JMRI window position and size are now saved
 			// save panel size and position
 			Setup.setOperationsSetupFrame(this);
+			*/
 			OperationsSetupXml.instance().writeOperationsFile();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
@@ -596,6 +600,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
 	private void packFrame(){
 		pack();
+		/* all JMRI window position and size are now saved
 		if (Setup.getOperationsSetupFrameSize()!= null)
 			setSize(Setup.getOperationsSetupFrameSize());
 		/*

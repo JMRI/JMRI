@@ -9,8 +9,6 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 
 import jmri.jmrit.operations.trains.Train;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -26,14 +24,16 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.43 $
+ * @version	$Revision: 1.44 $
  */
 public class CarManager extends RollingStockManager{
 
+	/* all JMRI window position and size are now saved
 	// Cars frame attributes
 	private CarsTableFrame _carsFrame = null;
 	private Dimension _carsFrameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
 	private Point _carsFramePosition = new Point();
+	*/
 	// Cars frame table column widths (12), starts with Number column and ends with Edit
 	private int[] _carsTableColumnWidths = {60, 60, 65, 35, 75, 65, 190, 190, 65, 50, 65, 70};
 	
@@ -348,6 +348,7 @@ public class CarManager extends RollingStockManager{
 		return mias;
 	}
 	
+	/* all JMRI window position and size are now saved
 	public void setCarsFrame(CarsTableFrame frame){
 		_carsFrame = frame;
 	}
@@ -359,6 +360,7 @@ public class CarManager extends RollingStockManager{
 	public Point getCarsFramePosition(){
 		return _carsFramePosition;
 	}
+	*/
 
 	/**
     * 
@@ -378,6 +380,7 @@ public class CarManager extends RollingStockManager{
 		// get Cars Table Frame attributes
 		Element e = values.getChild("carsOptions");
 		if (e != null){
+			/* all JMRI window position and size are now saved
 			try {
 				int x = e.getAttribute("x").getIntValue();
 				int y = e.getAttribute("y").getIntValue();
@@ -390,6 +393,7 @@ public class CarManager extends RollingStockManager{
 			} catch ( NullPointerException ne) {
 				log.debug("Did not find car edit frame attributes");
 			}
+			*/
 			org.jdom.Attribute a;
 	  		if ((a = e.getAttribute("columnWidths")) != null){
              	String[] widths = a.getValue().split(" ");
@@ -403,6 +407,7 @@ public class CarManager extends RollingStockManager{
     		}
 		}
 		// get Car Edit attributes
+		/* all JMRI window position and size are now saved
 		e = values.getChild("carEditOptions");
 		if (e != null){
 			try {
@@ -418,6 +423,7 @@ public class CarManager extends RollingStockManager{
 				log.debug("Did not find car edit frame attributes");
 			}
 		}
+		*/
 	}
 
 	   /**
@@ -429,6 +435,7 @@ public class CarManager extends RollingStockManager{
     	Element values = new Element("options");
         // now save Cars frame size and position
         Element e = new Element("carsOptions");
+        /* all JMRI window position and size are now saved
         Dimension size = getCarsFrameSize();
         Point posn = getCarsFramePosition();
         if (_carsFrame != null){
@@ -445,12 +452,14 @@ public class CarManager extends RollingStockManager{
         	e.setAttribute("height", ""+size.height);
         	e.setAttribute("width", ""+size.width); 
         }
+        */
         StringBuffer buf = new StringBuffer();
         for (int i=0; i<_carsTableColumnWidths.length; i++){
         	buf.append(Integer.toString(_carsTableColumnWidths[i])+" ");
         }
         e.setAttribute("columnWidths", buf.toString());
         values.addContent(e);
+        /* all JMRI window position and size are now saved
         e = new Element("carEditOptions");
         size = getEditFrameSize();
         posn = getEditFramePosition();
@@ -469,6 +478,7 @@ public class CarManager extends RollingStockManager{
         	e.setAttribute("width", ""+size.width); 
         }
         values.addContent(e);
+        */
         return values;
     }
 

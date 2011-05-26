@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -23,14 +21,16 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class EngineManager extends RollingStockManager{
 	
+	/* all JMRI window position and size are now saved
 	// Engines frame attributes
 	private EnginesTableFrame _enginesFrame = null;
 	private Dimension _enginesFrameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
 	private Point _enginesFramePosition = new Point();
+	*/
 	// Engines frame table column widths (12), starts with Number column and ends with Edit
 	private int[] _enginesTableColumnWidths = {60, 60, 65, 65, 35, 75, 190, 190, 65, 50, 65, 70};
 
@@ -223,6 +223,7 @@ public class EngineManager extends RollingStockManager{
     	return sortList(names);
     }
     
+    /* all JMRI window position and size are now saved
 	public void setEnginesFrame(EnginesTableFrame frame){
 		_enginesFrame = frame;
 	}
@@ -234,6 +235,7 @@ public class EngineManager extends RollingStockManager{
 	public Point getEnginesFramePosition(){
 		return _enginesFramePosition;
 	}
+	*/
 
 	/**
     * 
@@ -253,6 +255,7 @@ public class EngineManager extends RollingStockManager{
 		// get Engines Table Frame attributes
 		Element e = values.getChild("enginesOptions");
 		if (e != null){
+			/* all JMRI window position and size are now saved
 			try {
 				int x = e.getAttribute("x").getIntValue();
 				int y = e.getAttribute("y").getIntValue();
@@ -265,6 +268,7 @@ public class EngineManager extends RollingStockManager{
 			} catch ( NullPointerException ne) {
 				log.debug("Did not find engines frame attributes");
 			}
+			*/
 			org.jdom.Attribute a;
 	  		if ((a = e.getAttribute("columnWidths")) != null){
              	String[] widths = a.getValue().split(" ");
@@ -277,6 +281,7 @@ public class EngineManager extends RollingStockManager{
              	}
     		}
 		}
+		/* all JMRI window position and size are now saved
 		// get Engine Edit attributes
 		e = values.getChild("engineEditOptions");
 		if (e != null){
@@ -293,6 +298,7 @@ public class EngineManager extends RollingStockManager{
 				log.debug("Did not find engine edit frame attributes");
 			}
 		}
+		*/
 	}
 
 	   /**
@@ -304,6 +310,7 @@ public class EngineManager extends RollingStockManager{
     	Element values = new Element("options");
         // now save Engines frame size and position
         Element e = new Element("enginesOptions");
+        /* all JMRI window position and size are now saved
         Dimension size = getEnginesFrameSize();
         Point posn = getEnginesFramePosition();
         if (_enginesFrame != null){
@@ -320,12 +327,14 @@ public class EngineManager extends RollingStockManager{
         	e.setAttribute("height", ""+size.height);
         	e.setAttribute("width", ""+size.width); 
         }
+        */
         StringBuffer buf = new StringBuffer();
         for (int i=0; i<_enginesTableColumnWidths.length; i++){
         	buf.append(Integer.toString(_enginesTableColumnWidths[i])+" ");
         }
         e.setAttribute("columnWidths", buf.toString());
         values.addContent(e);
+        /* all JMRI window position and size are now saved
         // now save Engine Edit frame size and position
         e = new org.jdom.Element("engineEditOptions");
         size = getEditFrameSize();
@@ -345,6 +354,7 @@ public class EngineManager extends RollingStockManager{
         	e.setAttribute("width", ""+size.width); 
         }
         values.addContent(e);
+        */
         return values;
     }
 

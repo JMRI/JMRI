@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Locale;
 import java.io.File;
 import javax.swing.JComboBox;
-import java.awt.Dimension;
-import java.awt.Point;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -39,7 +37,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1136,7 +1134,7 @@ public class OperationsLocationsTest extends TestCase {
 		LocationEditFrame frame = new LocationEditFrame();
 		frame.setSize(700, 720);
 		frame.setLocation(14, 16);
-		manager.setLocationEditFrame(frame);
+		//manager.setLocationEditFrame(frame);
 		
 		// now load locations
 		List<String> locationList = manager.getLocationsByIdList();
@@ -1319,12 +1317,14 @@ public class OperationsLocationsTest extends TestCase {
 		LocationManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 
 		// check options
+		/* all JMRI window position and size are now saved
 		Dimension frameDim = manager.getLocationEditFrameSize();
 		Point frameLoc = manager.getLocationEditFramePosition();
 		Assert.assertEquals("LocationEditFrame size X", 700.0, frameDim.getWidth());
 		Assert.assertEquals("LocationEditFrame size Y", 720.0, frameDim.getHeight());
 		Assert.assertEquals("LocationEditFrame Postion X", 14.0, frameLoc.getX());
 		Assert.assertEquals("LocationEditFrame Postion Y", 16.0, frameLoc.getY());
+		*/
 		
 		// check locations
 		locationList = manager.getLocationsByNameList();

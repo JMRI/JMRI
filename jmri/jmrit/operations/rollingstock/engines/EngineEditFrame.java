@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -276,17 +276,17 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
 		// set frame size and location for display
 		pack();
+		if (getWidth()<450)
+			setSize(450, getHeight());
+		if (getHeight()<500)
+			setSize(getWidth(), 500);
+		/* all JMRI window position and size are now saved
 		if (manager.getEditFrameSize()!= null)
 			setSize(manager.getEditFrameSize());
-		else if (getWidth()<400)
-			setSize(450, getHeight());
-		/*
-		else
-			setSize (getWidth()+50, getHeight());
-		*/
 		if (manager.getEditFramePosition()!= null){
 			setLocation(manager.getEditFramePosition());
 		}
+		*/
 		setVisible(true);	
 	}
 
@@ -435,8 +435,10 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				}
 			}
 			addEngine();
+			/* all JMRI window position and size are now saved
 			// save frame size and position
 			manager.setEditFrame(this);
+			*/
 			writeFiles();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();

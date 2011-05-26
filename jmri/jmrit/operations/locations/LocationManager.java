@@ -12,8 +12,6 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import org.jdom.Element;
-
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -26,7 +24,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -60,6 +58,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		return _instance;
 	}
 
+	/* all JMRI window position and size are now saved
 	public void setLocationEditFrame(LocationEditFrame frame){
 		_locationEditFrame = frame;
 	}
@@ -71,6 +70,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public Point getLocationEditFramePosition(){
 		return _editFramePosition;
 	}
+	*/
 
     public void dispose() {
         _locationHashTable.clear();
@@ -360,6 +360,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		}
     }
 
+    /* all JMRI window position and size are now saved
 	public void options (org.jdom.Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
 		// get Location Edit attributes
@@ -379,12 +380,15 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			}
 		}
 	}
+	*/
 
+	/* all JMRI window position and size are now saved
 	   /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
      * detailed DTD in operations-locations.dtd.
      * @return Contents in a JDOM Element
      */
+	/* all JMRI window position and size are now saved
     public org.jdom.Element store() {
     	Element values = new Element("options");
         // now save Location Edit frame size and position
@@ -408,6 +412,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         values.addContent(e);
         return values;
     }
+    */
     
 	/**
 	 * Check for car type and road name replacements. Also check for engine type

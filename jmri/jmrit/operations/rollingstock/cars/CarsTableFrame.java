@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.27 $
+ * @version             $Revision: 1.28 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -219,8 +219,10 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
     	
     	pack();
+    	/* all JMRI window position and size are now saved
     	setSize(carManager.getCarsFrameSize());
     	setLocation(carManager.getCarsFramePosition());
+    	*/
 		setVisible(true);
 		
     	// also load the engines
@@ -307,7 +309,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			f.setTitle(rb.getString("TitleCarAdd"));
 		}
 		if (ae.getSource() == saveButton){
+			/* all JMRI window position and size are now saved
 			carManager.setCarsFrame(this);
+			*/
 			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
 			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
 			CarManagerXml.instance().writeOperationsFile();
@@ -325,6 +329,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	}
 
     public void dispose() {
+    	carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
     	carsModel.removeTableModelListener(this);
     	carsModel.dispose();
     	if (f != null)

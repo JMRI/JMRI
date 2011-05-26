@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.74 $
+ * @version $Revision: 1.75 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -377,8 +377,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 
+		/* all JMRI window position and size are now saved
 		// place frame
-		setLocation(manager.getTrainEditFramePosition());	
+		setLocation(manager.getTrainEditFramePosition());
+		*/	
 		
 		// load route location checkboxes
 		updateLocationCheckboxes();
@@ -603,8 +605,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		_train.setName(trainNameTextField.getText().trim());
 		_train.setDescription(trainDescriptionTextField.getText());
 		_train.setComment(commentTextArea.getText());
+		/* all JMRI window position and size are now saved
 		// save frame size and location
 		manager.setTrainEditFrame(this);
+		*/
 
 		// save train file
 		manager.save();
@@ -839,7 +843,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private int getNumberOfCheckboxes(){
-		return getNumberOfCheckboxes(manager.getTrainEditFrameSize());
+		return getNumberOfCheckboxes(getPreferredSize());
 	}
 	
 	// there are three road combo boxes to update
@@ -984,13 +988,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     private void packFrame(){
     	setVisible(false);
  		pack();
+ 		/* all JMRI window position and size are now saved
 		if (manager.getTrainEditFrameSize()!= null){
 			setSize(manager.getTrainEditFrameSize());
 		}
-		if (getWidth()<500)
-			setSize(500, getHeight());
-		if (getHeight()<500)
-			setSize(getWidth(), 500);
+		*/
+		if (getWidth()<550)
+			setSize(550, getHeight());
+		if (getHeight()<Control.panelHeight)
+			setSize(getWidth(), Control.panelHeight);
 		setVisible(true);
     }
     

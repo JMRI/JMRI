@@ -6,7 +6,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.setup.Control;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -14,8 +14,6 @@ import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
 import jmri.util.JmriJFrame;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,7 +23,7 @@ import java.util.Locale;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -56,11 +54,13 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		// frame location can move just a bit on MacOS
-		Point p = f.getLocation();
+		//Point p = f.getLocation();
 				
 		Assert.assertEquals("sort by name", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
+		/* all JMRI window position and size are now saved
 		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("default size", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
+		*/
 		Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
 		Assert.assertFalse("Build Report", tmanager.isBuildReportEnabled());
 		Assert.assertFalse("Print Review", tmanager.isPrintPreviewEnabled());
@@ -73,21 +73,22 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		
 		// frame location can move just a bit on MacOS
-		p = f.getLocation();		
+		//p = f.getLocation();		
 		
-		f.setSize(1010,250);
-		f.setLocation(20,10);
-		f.validate();
+		//f.setSize(1010,250);
+		//f.setLocation(20,10);
+		//f.validate();
 		
 		Assert.assertEquals("sort by time", TrainsTableFrame.TIME, tmanager.getTrainsFrameSortBy());
 		Assert.assertFalse("Build Messages 2", tmanager.isBuildMessagesEnabled());
 		Assert.assertTrue("Build Report 2", tmanager.isBuildReportEnabled());
 		Assert.assertFalse("Print Review 2", tmanager.isPrintPreviewEnabled());
 
+		/* all JMRI window position and size are now saved
 		// frame location shouldn't have moved yet
 		Assert.assertEquals("location check", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size check", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
-		
+		*/
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortById ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.printPreviewBox ) );
@@ -95,11 +96,13 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		jmri.util.JUnitUtil.releaseThread(f, 1);	// compensate for race between GUI and test thread
 		
 		// frame location can move just a bit on MacOS
-		p = f.getLocation();
+		//p = f.getLocation();
 		
 		Assert.assertEquals("sort by id", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
+		/* all JMRI window position and size are now saved
 		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 3", new Dimension(1010,250), tmanager.getTrainsFrameSize());
+		*/
 		Assert.assertTrue("Build Messages 3", tmanager.isBuildMessagesEnabled());
 		Assert.assertTrue("Build Report 3", tmanager.isBuildReportEnabled());
 		Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
@@ -229,10 +232,12 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1);	// compensate for race between GUI and test thread
 
+		/* all JMRI window position and size are now saved
 		// frame location can move just a bit on MacOS
 		Point p = trainEditFrame.getLocation();
 		Assert.assertEquals("location 1", p, tmanager.getTrainEditFramePosition());
 		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
+		*/
 		
 		// test delete button
 		// the delete opens a dialog window to confirm the delete
@@ -341,9 +346,11 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("none selected", f.noneRadioButton.isSelected());
 		Assert.assertFalse("FRED selected", f.fredRadioButton.isSelected());
 		
+		/* all JMRI window position and size are now saved
 		// test frame size and location
 		//Assert.assertEquals("location 1", new Point(25,30), tmanager.getTrainEditFramePosition());
 		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
+		*/
 		
 		f.dispose();
 	}

@@ -17,7 +17,7 @@ import jmri.jmrit.operations.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class LocationManagerXml extends OperationsXml {
 	
@@ -55,10 +55,12 @@ public class LocationManagerXml extends OperationsXml {
 	        m.put("href", xsltLocation+"operations-locations.xsl");
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 	        doc.addContent(0,p);
-	
+		        
 	        LocationManager manager = LocationManager.instance();
+	        /* all JMRI window position and size are now saved
 	        // add top-level elements
 	        root.addContent(manager.store());
+	        */
 	        Element values;
 	        root.addContent(values = new Element("locations"));
 	        // add entries
@@ -119,10 +121,12 @@ public class LocationManagerXml extends OperationsXml {
     	}
 
     	LocationManager manager = LocationManager.instance();
+    	/* all JMRI window position and size are now saved
     	if (root.getChild("options") != null) {
     		Element e = root.getChild("options");
     		manager.options(e);
     	}
+    	*/
     	
     	// decode type, invoke proper processing routine if a decoder file
     	if (root.getChild("locations") != null) {
