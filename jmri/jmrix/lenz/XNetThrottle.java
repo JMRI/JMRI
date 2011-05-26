@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.44 $
+ * @version    $Revision: 2.45 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -434,7 +434,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public void message(XNetReply l) {
 	// First, we want to see if this throttle is waiting for a message 
         //or not.
-        if (log.isDebugEnabled()) { log.debug("Throttle - recieved message "); }
+        if (log.isDebugEnabled()) { log.debug("Throttle " + getDccAddress() + " - recieved message " + l.toString()); }
 	if (requestState==THROTTLEIDLE) {
 	    if (log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLEIDLE"); }
 	    // We haven't sent anything, but we might be told someone else 
