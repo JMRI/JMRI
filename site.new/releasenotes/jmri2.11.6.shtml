@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.1 2011-05-23 06:48:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.2 2011-05-26 23:53:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -116,6 +116,7 @@ None at the time of this release.
 
 <h3>Changes since test release version 2.11.5</h3>
 
+<p>Walt Thompson contributed an improved SE8cSignalExample XML file
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->

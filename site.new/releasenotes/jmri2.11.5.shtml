@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.5.shtml,v 1.42 2011-05-25 21:40:31 kevin-dickerson Exp $ -->
+<!-- $Id: jmri2.11.5.shtml,v 1.43 2011-05-26 23:53:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -269,8 +269,6 @@ with the rate information.
 <li>Provided an ESU LokSound V4.0 decoder definition.
 <li>Updated the DecoderPro Advanced pane
 </ul>
-
-<p>Walt Thompson contributed an improved SE8cSignalExample XML file
 
 <p>Giorgio Terdina fixed a problem with the XnTCP adapter code.
 
