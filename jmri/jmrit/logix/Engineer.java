@@ -9,7 +9,7 @@ import jmri.InstanceManager;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  
@@ -24,7 +24,7 @@ public class Engineer extends Thread implements Runnable {
     private boolean _abort = false;
     private boolean _halt = false;  // halt/resume from user's control
     private boolean _wait = false;  // waits for signals/occupancy/allocation to clear
-    //private boolean _waitForSync = false;  // waits for train to catch up to commands
+    private boolean _waitForSync = false;  // waits for train to catch up to commands
     private boolean _speedOverride = false; // speed changing due to signal or occupancy
     private int     _syncIdx;
     private DccThrottle _throttle;
@@ -64,7 +64,7 @@ public class Engineer extends Thread implements Runnable {
                             // commands are ahead of current train position 
                             if (log.isDebugEnabled()) log.debug("Command Block "+ts.getBlockName()+
                                                                 " wait for train to enter.");
-                            _wait = true;
+                           _waitForSync = true;
                             _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                             wait();  //
                         }
@@ -74,7 +74,7 @@ public class Engineer extends Thread implements Runnable {
                 } catch (java.lang.IllegalArgumentException iae) {
                     log.error("IllegalArgumentException "+iae);
                 }
-//                _wait = false;
+                _waitForSync = false;
             }
             if (_abort) { break; }
             _idxCurrentCommand++;
@@ -244,8 +244,10 @@ public class Engineer extends Thread implements Runnable {
 
     public int getRunState() {
         if (_wait) {
-            return Warrant.WAIT;
-        } else if (_halt) {
+            return Warrant.WAIT_FOR_CLEAR;
+        } else if (_waitForSync) {
+            return Warrant.WAIT_FOR_TRAIN;
+        } else  if (_halt) {
             return Warrant.HALT;
         } else if (_abort) {
             return Warrant.ABORT;

@@ -18,7 +18,7 @@ import jmri.jmrit.roster.RosterEntry;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -60,9 +60,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public static final int HALT = 1;
     public static final int RESUME = 2;
     public static final int ABORT = 3;
-    public static final int WAIT = 4;
+    public static final int WAIT_FOR_TRAIN = 4;
     public static final int RUNNING = 5;    
     public static final int SPEED_RESTRICTED = 6;    
+    public static final int WAIT_FOR_CLEAR = 7;
 
     private static jmri.implementation.SignalSpeedMap _speedMap;
 
@@ -391,8 +392,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         break;
                     case Warrant.ABORT:
                         return rb.getString("Aborted");
-                    case Warrant.WAIT:
-                        key = "Waiting";
+                    case Warrant.WAIT_FOR_CLEAR:
+                        key = "WaitForClear";
+                        break;
+                    case Warrant.WAIT_FOR_TRAIN:
+                        key = "WaitForTrain";
                         break;
                     case Warrant.SPEED_RESTRICTED:
                         key = "SpeedRestricted";
@@ -776,7 +780,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _idxCurrentOrder++;
         }
         if (activeIdx == _idxCurrentOrder+1) {
-            if (_engineer!=null && _engineer.getRunState()==WAIT) {
+            if (_engineer!=null && _engineer.getRunState()==WAIT_FOR_CLEAR) {
                 // Next block just occupied, but train is stopped - must be a rouge entry.
                 rougeEntry = true;
                 log.warn("Rouge entering next Block "+block.getDisplayName());
@@ -789,6 +793,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 block.setState(block.getState() | OBlock.RUNNING);
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
+            if (_runMode==MODE_LEARN) {
+                while (activeIdx > _idxCurrentOrder+1) {
+                    oldIndex = _idxCurrentOrder;
+                    _idxCurrentOrder++;
+                    firePropertyChange("blockSkip", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
+                }
+                _idxCurrentOrder = activeIdx;
+            } else {
+                // rouge train invaded route.
+                rougeEntry = true;
+            }
             // rouge train invaded route.
             rougeEntry = true;
         } else if (_idxCurrentOrder > 0) {
