@@ -7,6 +7,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Schedule;
+import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -24,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame to display by rolling stock, the locations serviced by this train
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -116,7 +118,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		log.debug("update locations served by train "+train.getName());
 		int x=0;
 		pLocations.removeAll();
-		String CarType = (String)typeComboBox.getSelectedItem();
+		String carType = (String)typeComboBox.getSelectedItem();
 		if (car != null)
 			car.removePropertyChangeListener(this);
 		car = null;
@@ -148,7 +150,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 				}			
 				JLabel op = new JLabel();			
 				addItemLeft(pLocations, op, 2, x++);
-				if (!train.acceptsTypeName(CarType))
+				if (!train.acceptsTypeName(carType))
 					op.setText(rb.getString("X(TrainType)"));
 				else if (car != null && !train.acceptsRoadName(car.getRoad()))
 					op.setText(rb.getString("X(TrainRoad)"));
@@ -166,9 +168,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(Route)"));
 				else if (rl.getMaxCarMoves() <= 0)
 					op.setText(rb.getString("X(RouteMoves)"));
-				else if (!location.acceptsTypeName(CarType))
+				else if (!location.acceptsTypeName(carType))
 					op.setText(rb.getString("X(LocationType)"));
-				else if (!track.acceptsTypeName(CarType))
+				else if (!track.acceptsTypeName(carType))
 					op.setText(rb.getString("X(TrackType)"));
 				else if (car != null && !track.acceptsRoadName(car.getRoad()))
 					op.setText(rb.getString("X(TrackRoad)"));
@@ -191,6 +193,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 						op.setText(rb.getString("PickupOnly"));
 					else
 						op.setText(rb.getString("X(TrainDrop)"));
+				else if (!checkScheduleForCarTypeAndLoad(carType, null, track))
+					op.setText(rb.getString("X(ScheduleType)"));
+				else if (!checkScheduleForCarTypeAndLoad(carType, car, track))
+					op.setText(rb.getString("X(ScheduleLoad)"));
 				else if (rl.canDrop() && rl.canPickup())
 					op.setText(rb.getString("OK"));
 				else if (rl.canDrop())
@@ -203,6 +209,26 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		}
 		pLocations.revalidate();
 		repaint();
+	}
+	
+	private boolean checkScheduleForCarTypeAndLoad(String carType, Car car, Track track){
+		Schedule schedule = track.getSchedule();
+		if (schedule == null)
+			return true;
+		// if car is already placed at track, don't check car type and load
+		if (car != null && car.getTrack() == track)
+			return true;
+		List<String> scheduleItems = schedule.getItemsBySequenceList();
+		for (int i=0; i<scheduleItems.size(); i++){
+			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
+			// check to see if schedule services car type
+			if (si.getType().equals(carType) && car == null)
+				return true;
+			// check to see if schedule services car type and load
+			if (si.getType().equals(carType) && car != null && si.getLoad().equals(car.getLoad()))
+				return true;
+		}
+		return false;
 	}
 	
 	private void updateComboBox(){
