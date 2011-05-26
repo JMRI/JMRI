@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -103,8 +103,12 @@ public class ListedTableFrame extends BeanTableFrame {
             tabbedTableItem itemModel = new tabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
             itemBeingAdded = itemModel;
             tabbedTableArray.add(itemModel);
-            detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
-            itemBeingAdded.getAAClass().addToFrame(this);
+            try {
+                detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
+                itemBeingAdded.getAAClass().addToFrame(this);
+            } catch (Exception ex){
+                log.error("Error when adding " + item.getClassAsString() + " to display\n" + ex);
+            }
         }
         
         list = new JList(new Vector<String>(getChoices()));
@@ -151,9 +155,13 @@ public class ListedTableFrame extends BeanTableFrame {
     
     public void gotoListItem(String selection){
         for(int x=0; x<tabbedTableArray.size(); x++){
-            if(tabbedTableArray.get(x).getClassAsString().equals(selection)){
-                actionList.selectListItem(x);
-                return;
+            try {
+                if(tabbedTableArray.get(x).getClassAsString().equals(selection)){
+                    actionList.selectListItem(x);
+                    return;
+                }
+            } catch (Exception ex){
+                log.error("An error occured in the goto list for " + selection);
             }
         }
     }
@@ -246,8 +254,12 @@ public class ListedTableFrame extends BeanTableFrame {
         
         
         this.setJMenuBar(menuBar);
-        item.getAAClass().setMenuBar(this);
-        this.addHelpMenu(item.getAAClass().helpTarget(),true);
+        try {
+            item.getAAClass().setMenuBar(this);
+            this.addHelpMenu(item.getAAClass().helpTarget(),true);
+        } catch (Exception ex){
+            log.error("Error when trying to set menu bar for " + item.getClassAsString()+"\n"+ex);
+        }
         this.validate();
     }
     
@@ -310,16 +322,16 @@ public class ListedTableFrame extends BeanTableFrame {
                 java.lang.reflect.Constructor<?> co = cl.getConstructor(new Class[] {String.class});
                 tableAction = (AbstractTableAction) co.newInstance(choice);
             } catch (ClassNotFoundException e1) {
-                log.error("Not a valid class");
+                log.error("Not a valid class : " + aaClass);
                 return;
             } catch (NoSuchMethodException e2) {
-                log.error("Not such method");
+                log.error("Not such method : " + aaClass);
                 return;
             } catch (InstantiationException e3) {
-                log.error("Not a valid class");
+                log.error("Not a valid class : " + aaClass);
                 return;
             } catch (ClassCastException e4){
-                log.error("Not part of the abstractTableActions");
+                log.error("Not part of the abstractTableActions : " + aaClass);
                 return;
             } catch (Exception e) {
                 log.error("Exception " + e.toString());
@@ -488,7 +500,7 @@ public class ListedTableFrame extends BeanTableFrame {
         }
 
         int clickDelay=500;
-        int currentItemSelected;
+        int currentItemSelected=-1;
 
         public void mousePressed(MouseEvent e){
             if (e.isPopupTrigger()){
@@ -557,8 +569,12 @@ public class ListedTableFrame extends BeanTableFrame {
             CardLayout cl = (CardLayout) (detailpanel.getLayout());
             cl.show(detailpanel, item.getClassAsString());
             frame.setTitle(item.getItemString());
-            item.getAAClass().setFrame(frame);
-            buildMenus(item);
+            try {
+                item.getAAClass().setFrame(frame);
+                buildMenus(item);
+            } catch (Exception ex){
+                log.error(ex);
+            }
             list.ensureIndexIsVisible(index);
             list.setSelectedIndex(index);
         }
