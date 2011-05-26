@@ -478,7 +478,16 @@ public class WarrantTableAction extends AbstractAction {
             setTitle(rb.getString("WarrantTable"));
             _model = new WarrantTableModel();
             _model.init();
-            JTable table = new JTable(_model);
+            JTable table;   // = new JTable(_model);
+            try {   // following might fail due to a missing method on Mac Classic
+                jmri.util.com.sun.TableSorter sorter = new jmri.util.com.sun.TableSorter(_model);
+                table = jmri.util.JTableUtil.sortableDataModel(sorter);
+                sorter.setTableHeader(table.getTableHeader());
+            } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+                log.error("WarrantTable: Unexpected error: "+e);
+                table = new JTable(_model);
+            }
+
             table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
             table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
             table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
