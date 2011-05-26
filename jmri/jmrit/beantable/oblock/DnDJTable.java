@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 import java.awt.Point;
@@ -33,11 +33,14 @@ import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.JInternalFrame;
 import javax.swing.table.TableModel;
+
+import jmri.util.com.sun.TableSorter;
 
 public class DnDJTable extends JTable implements DropTargetListener,  
                     DragGestureListener, DragSourceListener, Transferable {
@@ -53,6 +56,15 @@ public class DnDJTable extends JTable implements DropTargetListener,
 
      DnDJTable (TableModel model, int[] skipCols) {
          super (model);
+         try {   // following might fail due to a missing method on Mac Classic
+             TableSorter sorter;
+             sorter = new TableSorter(model);
+             setModel(sorter);
+             sorter.setTableHeader(getTableHeader());
+         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+             log.error("DnDJTable ctor: Unexpected error: "+e);
+         }
+
          this.setTransferHandler(new DnDHandler(this));
          _skipCols = skipCols;
          DragSource dragSource = DragSource.getDefaultDragSource();
@@ -61,10 +73,18 @@ public class DnDJTable extends JTable implements DropTargetListener,
          new DropTarget(this, DnDConstants.ACTION_COPY, this);
      }
 
+     public boolean editCellAt(int row, int column, java.util.EventObject e) {
+         boolean res = super.editCellAt(row, column, e);
+         java.awt.Component c = this.getEditorComponent();
+         if (c instanceof javax.swing.JTextField) {
+             ( (JTextField) c).selectAll();
+         }            
+         return res;
+     }
+
      Point getDropPoint() {
          return _dropPoint;
      }
-
 
      private boolean dropOK(DropTargetDragEvent evt) {
          Transferable tr = evt.getTransferable();
