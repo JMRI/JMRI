@@ -18,6 +18,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import jmri.util.com.sun.TableSorter;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
@@ -52,8 +54,9 @@ import javax.swing.ListSelectionModel;
 */
 public abstract class PickListModel extends AbstractTableModel implements PropertyChangeListener {
 
-    protected ArrayList <NamedBean>       _pickList;
-    protected String  _name;
+    protected ArrayList <NamedBean> _pickList;
+    protected String _name;
+    private JTable  _table;       // table using this model
 
     public static final int SNAME_COLUMN = 0;
     public static final int UNAME_COLUMN = 1;
@@ -212,14 +215,21 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     */
     public JTable makePickTable() {
         this.init();
-        JTable table = new JTable(this);
+        try {   // following might fail due to a missing method on Mac Classic
+            TableSorter sorter = new TableSorter(this);
+            _table = jmri.util.JTableUtil.sortableDataModel(sorter);
+            sorter.setTableHeader(_table.getTableHeader());
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            log.error("makePickTable: Unexpected error: "+e);
+            _table = new JTable(this);
+        }
 
-        table.setRowSelectionAllowed(true);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setPreferredScrollableViewportSize(new java.awt.Dimension(250,table.getRowHeight()*7));
-        table.setDragEnabled(true);
-        table.setTransferHandler(new jmri.util.DnDTableExportHandler());
-        TableColumnModel columnModel = table.getColumnModel();
+        _table.setRowSelectionAllowed(true);
+        _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        _table.setPreferredScrollableViewportSize(new java.awt.Dimension(250,_table.getRowHeight()*7));
+        _table.setDragEnabled(true);
+        _table.setTransferHandler(new jmri.util.DnDTableExportHandler());
+        TableColumnModel columnModel = _table.getColumnModel();
 
         TableColumn sNameColumnT = columnModel.getColumn(SNAME_COLUMN);
         sNameColumnT.setResizable(true);
@@ -231,7 +241,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         uNameColumnT.setMinWidth(100);
         //uNameColumnT.setMaxWidth(300);
 
-        return table;
+        return _table;
+    }
+
+    public JTable getTable() {
+        return _table;
     }
 
 
@@ -616,7 +630,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         public Object getValueAt (int r, int c) {
             if (c==POSITION_COL) {
                 jmri.Logix l = manager.getParentLogix(_pickList.get(r).getSystemName());
-                return l.getDisplayName();
+                if (l!=null) {
+                    return l.getDisplayName();
+                }
             }
             return super.getValueAt(r, c);
         }

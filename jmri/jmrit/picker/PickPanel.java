@@ -19,10 +19,9 @@ import javax.swing.event.ListSelectionEvent;
 
 public class PickPanel extends JPanel implements ListSelectionListener, ChangeListener {
 
-//    static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     private int ROW_HEIGHT;
 
-    JTable[]    _tables;
+    PickListModel[] _models;
     JTabbedPane _tabPane;
 
     JPanel      _addPanel;
@@ -32,16 +31,16 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
 
     public PickPanel(PickListModel[] models) {
         _tabPane = new JTabbedPane();
-        _tables =new JTable[models.length];
+        _models = models;
         for (int i=0; i<models.length; i++) {
-            _tables[i] = models[i].makePickTable();
+            JTable table = models[i].makePickTable();
             JPanel p = new JPanel();
             p.setLayout(new BorderLayout(5,5));
             p.add(new JLabel(models[i].getName(), SwingConstants.CENTER), BorderLayout.NORTH);
-            p.add(new JScrollPane(_tables[i]), BorderLayout.CENTER);
+            p.add(new JScrollPane(table), BorderLayout.CENTER);
             _tabPane.add(p, models[i].getName());
+            ROW_HEIGHT = table.getRowHeight();
         }
-        ROW_HEIGHT = _tables[0].getRowHeight();
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
         add(makeAddToTablePanel(), BorderLayout.SOUTH);
@@ -74,8 +73,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     void addToTable() {
         String sysname = _sysNametext.getText();
         if (sysname != null && sysname.length() > 1) {
-            JTable table = _tables[_tabPane.getSelectedIndex()];
-            PickListModel model = (PickListModel)table.getModel();
+            PickListModel model = _models[_tabPane.getSelectedIndex()];
             String uname = _userNametext.getText();
             if (uname!=null && uname.trim().length()==0) {
                 uname = null;
@@ -83,7 +81,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
             jmri.NamedBean bean = model.addBean(sysname, uname);
             if (bean!=null) {
                 int setRow = model.getIndexOf(bean);
-                table.setRowSelectionInterval(setRow, setRow);
+                model.getTable().setRowSelectionInterval(setRow, setRow);
                 JPanel p = (JPanel)_tabPane.getSelectedComponent();
                 ((JScrollPane)p.getComponent(1)).getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
                 _sysNametext.setText("");
@@ -92,8 +90,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     }
 
     public void stateChanged(ChangeEvent e) {
-        JTable table = _tables[_tabPane.getSelectedIndex()];
-        PickListModel model = (PickListModel)table.getModel();
+        PickListModel model = _models[_tabPane.getSelectedIndex()];
         if (model.canAddBean()) {
             _cantAddPanel.setVisible(false);
             _addPanel.setVisible(true);
