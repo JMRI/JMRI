@@ -15,7 +15,7 @@ import jmri.Reporter;
  * Description:		Abstract class providing the basic logic of the Reporter interface
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Matthew Harris  Copyright (C) 2011
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
 
@@ -36,8 +36,13 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
      */
     public void setReport(Object r) {
     	Object old = _currentReport;
+        Object oldLast = _lastReport;
     	_currentReport = r;
-    	if (r != null) _lastReport = r;
+    	if (r != null) {
+            _lastReport = r;
+            // notify
+            firePropertyChange("lastReport", oldLast, _lastReport);
+        }
     	// notify
     	firePropertyChange("currentReport", old, _currentReport);
     }
