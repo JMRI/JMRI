@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -107,6 +107,7 @@ public class ListedTableFrame extends BeanTableFrame {
                 detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
                 itemBeingAdded.getAAClass().addToFrame(this);
             } catch (Exception ex){
+                detailpanel.add(errorPanel(item.getItemString()), itemModel.getClassAsString());
                 log.error("Error when adding " + item.getClassAsString() + " to display\n" + ex);
             }
         }
@@ -149,6 +150,12 @@ public class ListedTableFrame extends BeanTableFrame {
         getContentPane().add(cardHolder);
         pack();
         actionList.selectListItem(0);
+    }
+    
+    JPanel errorPanel(String text){
+        JPanel error = new JPanel();
+        error.add(new JLabel(rbean.getString("ErrorAddingTable") + " " + text), BorderLayout.CENTER);
+        return error;
     }
     
     /* Method allows for the table to goto a specific list item */
@@ -317,6 +324,14 @@ public class ListedTableFrame extends BeanTableFrame {
         final JPanel dataPanel = new JPanel();
         
         tabbedTableItem(String aaClass, String choice, boolean stdModel){
+            className = aaClass;
+            itemText = choice;
+            standardModel=stdModel;
+            
+            bottomBox = Box.createHorizontalBox();
+            bottomBox.add(Box.createHorizontalGlue());
+            bottomBoxIndex = 0;
+            
             try{
                 Class<?> cl = Class.forName(aaClass);
                 java.lang.reflect.Constructor<?> co = cl.getConstructor(new Class[] {String.class});
@@ -338,14 +353,8 @@ public class ListedTableFrame extends BeanTableFrame {
                 return;
             }
             
-            className = aaClass;
-            itemText = choice;
-            standardModel=stdModel;
             //If a panel model is used, it should really add to the bottom box
             //but it can be done this way if required.
-            bottomBox = Box.createHorizontalBox();
-            bottomBox.add(Box.createHorizontalGlue());
-            bottomBoxIndex = 0;
             dataPanel.setLayout(new BorderLayout());
             if (stdModel)
                 createDataModel();
