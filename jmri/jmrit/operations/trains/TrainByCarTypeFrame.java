@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame to display by rolling stock, the locations serviced by this train
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -193,10 +193,16 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 						op.setText(rb.getString("PickupOnly"));
 					else
 						op.setText(rb.getString("X(TrainDrop)"));
-				else if (!checkScheduleForCarTypeAndLoad(carType, null, track))
+				else if (!checkScheduleAttribute(TYPE, carType, null, track))
 					op.setText(rb.getString("X(ScheduleType)"));
-				else if (!checkScheduleForCarTypeAndLoad(carType, car, track))
+				else if (!checkScheduleAttribute(LOAD, carType, car, track))
 					op.setText(rb.getString("X(ScheduleLoad)"));
+				else if (!checkScheduleAttribute(ROAD, carType, car, track))
+					op.setText(rb.getString("X(ScheduleRoad)"));
+				else if (!checkScheduleAttribute(TIMETABLE, carType, car, track))
+					op.setText(rb.getString("X(ScheduleTimeTable)"));
+				else if (!checkScheduleAttribute(ALL, carType, car, track))
+					op.setText(rb.getString("X(Schedule)"));
 				else if (rl.canDrop() && rl.canPickup())
 					op.setText(rb.getString("OK"));
 				else if (rl.canDrop())
@@ -211,7 +217,12 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		repaint();
 	}
 	
-	private boolean checkScheduleForCarTypeAndLoad(String carType, Car car, Track track){
+	private static final String ROAD = "road";
+	private static final String LOAD = "load";
+	private static final String TIMETABLE = "timetable";
+	private static final String TYPE = "type";
+	private static final String ALL = "all";
+	private boolean checkScheduleAttribute(String attribute, String carType, Car car, Track track){
 		Schedule schedule = track.getSchedule();
 		if (schedule == null)
 			return true;
@@ -222,10 +233,25 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		for (int i=0; i<scheduleItems.size(); i++){
 			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
 			// check to see if schedule services car type
-			if (si.getType().equals(carType) && car == null)
+			if (attribute.equals(TYPE) && si.getType().equals(carType)) 
 				return true;
 			// check to see if schedule services car type and load
-			if (si.getType().equals(carType) && car != null && si.getLoad().equals(car.getLoad()))
+			if (attribute.equals(LOAD) && si.getType().equals(carType) 
+					&& (si.getLoad().equals("") || car == null || si.getLoad().equals(car.getLoad())))
+				return true;
+			// check to see if schedule services car type and road
+			if (attribute.equals(ROAD) && si.getType().equals(carType) 
+					&& (si.getRoad().equals("") || car == null || si.getRoad().equals(car.getRoad())))
+				return true;
+			// check to see if schedule timetable allows delivery
+			if (attribute.equals(TIMETABLE) && si.getType().equals(carType)
+					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
+				return true;
+			// check to see if at least one schedule item can service car
+			if (attribute.equals(ALL) && si.getType().equals(carType)
+					&& (si.getLoad().equals("") || car == null || si.getLoad().equals(car.getLoad()))
+					&& (si.getRoad().equals("") || car == null || si.getRoad().equals(car.getRoad()))
+					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
 				return true;
 		}
 		return false;
@@ -259,8 +285,11 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			loc.addPropertyChangeListener(this);
 			List<String> tracks = loc.getTracksByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
-				Track trk = loc.getTrackById(tracks.get(j));
-				trk.addPropertyChangeListener(this);
+				Track track = loc.getTrackById(tracks.get(j));
+				track.addPropertyChangeListener(this);
+				Schedule schedule = track.getSchedule();
+				if (schedule != null)
+					schedule.addPropertyChangeListener(this);
 			}
 		}
 	}
@@ -276,9 +305,13 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 				loc.removePropertyChangeListener(this);
 				List<String> tracks = loc.getTracksByNameList(null);
 				for (int j=0; j<tracks.size(); j++){
-					Track trk = loc.getTrackById(tracks.get(j));
-					if (trk != null)
-						trk.removePropertyChangeListener(this);
+					Track track = loc.getTrackById(tracks.get(j));
+					if (track != null){
+						track.removePropertyChangeListener(this);
+						Schedule schedule = track.getSchedule();
+						if (schedule != null)
+							schedule.removePropertyChangeListener(this);
+					}
 				}
 			}
 		}
@@ -300,7 +333,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
 		if (e.getSource().equals(car) || e.getSource().equals(train))
 			updateRoute();
-		if (e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class))
+		if (e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class)
+				|| e.getSource().getClass().equals(Schedule.class))
 			updateRoute();
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY))

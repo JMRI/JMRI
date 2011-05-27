@@ -23,7 +23,7 @@ import java.util.Locale;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -437,6 +437,16 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertNotNull("train added", t);
 		
 		trainEditFrame.dispose();
+	}
+	
+	public void testTrainByCarTypeFrame(){
+		TrainManager tmanager = TrainManager.instance();
+		Train train = tmanager.getTrainByName("Test Train Name");
+		TrainByCarTypeFrame f = new TrainByCarTypeFrame();
+		f.initComponents(train);
+		
+		Assert.assertNotNull("frame exists", f);
+		f.dispose();
 	}
 	
 	@SuppressWarnings("unchecked")
