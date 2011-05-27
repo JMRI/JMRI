@@ -9,7 +9,7 @@ import jmri.InstanceManager;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  
@@ -289,9 +289,6 @@ public class Engineer extends Thread implements Runnable {
         }
         _abort = true;
         if (_throttle != null) {
-            synchronized(this) {
-                this.notify();
-            }
             _throttle.setSpeedSetting(-1.0f);
             _throttle.setSpeedSetting(0.0f);
             try {

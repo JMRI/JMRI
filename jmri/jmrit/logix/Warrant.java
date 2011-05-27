@@ -18,7 +18,7 @@ import jmri.jmrit.roster.RosterEntry;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -360,7 +360,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (msg!=null) {
             return msg;
         }
-        msg = allocateRoute();
+        allocateRoute();
         return setRunMode(run?MODE_RUN:MODE_MANUAL, _dccAddress, null, _throttleCommands, _runBlind);
     }
 
