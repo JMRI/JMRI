@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.74 $
+ * @version			$Revision: 1.75 $
  */
 public class InstanceManager {
 
@@ -156,7 +156,9 @@ public class InstanceManager {
 
     static public ConfigureManager configureManagerInstance()  { return instance().configureManager; }
 
-    static public ThrottleManager throttleManagerInstance()  { return instance().throttleManager; }
+    static public ThrottleManager throttleManagerInstance()  {
+        return getDefault(ThrottleManager.class);
+    }
 
     static public SignalHeadManager signalHeadManagerInstance()  {
         if (instance().signalHeadManager != null) return instance().signalHeadManager;
@@ -295,7 +297,9 @@ public class InstanceManager {
     
     static public ConsistManager consistManagerInstance() { return instance().consistManager; }
 
-    static public CommandStation commandStationInstance()  { return instance().commandStation; }
+    static public CommandStation commandStationInstance()  {
+        return getDefault(CommandStation.class);
+    }
 
     static public ReporterManager reporterManagerInstance()  { return instance().reporterManager; }
 
@@ -384,14 +388,8 @@ public class InstanceManager {
         configureManager = p;
     }
 
-    private ThrottleManager throttleManager = null;
     static public void setThrottleManager(ThrottleManager p) {
-        instance().addThrottleManager(p);
-    }
-    protected void addThrottleManager(ThrottleManager p) {
-        if (p!=throttleManager && throttleManager!=null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being replaced: "+p);
-        if (p!=throttleManager && throttleManager==null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being installed: "+p);
-        throttleManager = p;
+        store(p, ThrottleManager.class);
     }
 
     private SignalHeadManager signalHeadManager = null;
@@ -483,14 +481,8 @@ public class InstanceManager {
         consistManager = p;
     }
 
-    private CommandStation commandStation = null;
     static public void setCommandStation(CommandStation p) {
-        instance().addCommandStation(p);
-    }
-    protected void addCommandStation(CommandStation p) {
-        if (p!=commandStation && commandStation!=null && log.isDebugEnabled()) log.debug("CommandStation instance is being replaced: "+p);
-        if (p!=commandStation && commandStation==null && log.isDebugEnabled()) log.debug("CommandStation instance is being installed: "+p);
-        commandStation = p;
+         store(p, CommandStation.class);
     }
 
     private ReporterManager reporterManager = null;
