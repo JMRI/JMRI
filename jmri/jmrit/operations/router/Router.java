@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class Router extends TrainCommon {
@@ -127,8 +127,11 @@ public class Router extends TrainCommon {
 						&& clone.getDestinationTrack() != null && clone.getDestinationTrack().getAlternativeTrack() != null){
 					String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack().getAlternativeTrack());
 					if (status.equals(Car.OKAY)){
-						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToAlternative"),new Object[]{car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
-						return true;
+						if (_train == null || (_train != null && _train.servicesCar(car))){
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToAlternative"),new Object[]{car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
+							return true;
+						}
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterNotSendCarToAlternative"),new Object[]{_train.getName(), car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
 					}
 				}
 				// check to see if siding was full, if so, forward to yard if possible
@@ -142,11 +145,16 @@ public class Router extends TrainCommon {
 						Track track = dest.getTrackById(yards.get(i));
 						String status = car.setDestination(dest, track);
 						if (status.equals(Car.OKAY)){
+							if (_train != null && !_train.servicesCar(car)){
+								log.debug("Train ("+_train.getName()+") can not deliver car ("+car.toString()+") to yard ("+track.getName()+")");
+								continue;
+							}
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToYard"),new Object[]{car.toString(), track.getName(), dest.getName()}));
 							return true;
 						}
 					}
 				}
+				car.setDestination(null, null);
 				return false;
 			}
 			return true;
