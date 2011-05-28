@@ -14,8 +14,8 @@ import jmri.jmrit.operations.OperationsFrame;
 
 /**
  * Action to launch schedule options.
- * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.4 $
+ * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @version     $Revision: 1.5 $
  */
 public class ScheduleOptionsAction extends AbstractAction {
 		
@@ -41,9 +41,10 @@ class ScheduleOptionsFrame extends OperationsFrame{
 	// text field
 	JTextField factorTextField = new JTextField(5);
 	
+	// combo boxes
+	JComboBox trackBox = new JComboBox();
+	
 	// radio buttons
-	//JRadioButton sequentialRadioButton = new JRadioButton(rb.getString("Sequential"));
-	//JRadioButton matchRadioButton = new JRadioButton(rb.getString("Match"));
 	
     // major buttons
     JButton saveButton = new JButton(rb.getString("Save"));
@@ -69,23 +70,17 @@ class ScheduleOptionsFrame extends OperationsFrame{
 		factorTextField.setText(Integer.toString(_track.getReservationFactor()));
 		
 		// row 2
-		/*
-		JPanel pMode = new JPanel();
-		pMode.setLayout(new GridBagLayout());
-		pMode.setBorder(BorderFactory.createTitledBorder(rb.getString("ScheduleMode")));
-		addItem(pMode, sequentialRadioButton, 0, 0);
-		addItem(pMode, matchRadioButton, 1, 0);
+		JPanel pAlternate = new JPanel();
+		pAlternate.setLayout(new GridBagLayout());
+		pAlternate.setBorder(BorderFactory.createTitledBorder(rb.getString("AlternateTrack")));
+		addItem(pAlternate, trackBox, 0, 0);
 		
-		sequentialRadioButton.setToolTipText(rb.getString("TipSequential"));
-		matchRadioButton.setToolTipText(rb.getString("TipMatch"));
-		ButtonGroup group = new ButtonGroup();
-		group.add(sequentialRadioButton);
-		group.add(matchRadioButton);
-		
-		sequentialRadioButton.setSelected(_track.getScheduleMode() == Track.SEQUENTIAL);
-		matchRadioButton.setSelected(_track.getScheduleMode() == Track.MATCH);
-		*/
-		
+		if (_track != null){
+			_track.getLocation().updateComboBox(trackBox);
+			trackBox.removeItem(_track);	// remove this track from consideration
+			trackBox.setSelectedItem(_track.getAlternativeTrack());
+		}
+				
 		JPanel pControls = new JPanel();
 		pControls.add(saveButton);
   	
@@ -93,13 +88,13 @@ class ScheduleOptionsFrame extends OperationsFrame{
     	addButtonAction(saveButton);
     	
     	getContentPane().add(pFactor);
-    	//getContentPane().add(pMode);
+    	getContentPane().add(pAlternate);
     	getContentPane().add(pControls);
     	
     	setTitle(rb.getString("MenuItemScheduleOptions"));
     	pack();
-    	if (getWidth() < 300 || getHeight() < 150)
-    		setSize(300, 150);
+    	if (getWidth() < 300 || getHeight() < 200)
+    		setSize(300, 200);
     	setVisible(true); 	
 	}
 	
@@ -121,12 +116,10 @@ class ScheduleOptionsFrame extends OperationsFrame{
 				return;
 			}
 			_track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
-			/*
-			if (sequentialRadioButton.isSelected())
-				_track.setScheduleMode(Track.SEQUENTIAL);
-			else
-				_track.setScheduleMode(Track.MATCH);
-			*/
+			if (!trackBox.getSelectedItem().equals(""))
+				_track.setAlternativeTrack((Track)trackBox.getSelectedItem());
+			else 
+				_track.setAlternativeTrack(null);
 			LocationManagerXml.instance().writeOperationsFile();
 		}		
 	}

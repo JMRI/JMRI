@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.162 $
+ * @version             $Revision: 1.163 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1116,7 +1116,8 @@ public class TrainBuilder extends TrainCommon{
 						if (!Router.instance().setDestination(car, train, buildReport)){
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
 							// don't move car if routing issue was track space but not departing staging
-							if (!Router.instance().getStatus().contains(Car.LENGTH) 
+							if ((!Router.instance().getStatus().contains(Car.LENGTH) 
+									&& !Router.instance().getStatus().contains(Car.CAPACITY))
 									|| (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null))
 								// move this car, routing failed!
 								findDestinationAndTrack(car, rl, routeIndex, routeList.size());

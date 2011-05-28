@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.59 $
+ * @version             $Revision: 1.60 $
  */
 public class Track {
 	
@@ -30,6 +30,7 @@ public class Track {
 	protected String _name = "";
 	protected String _locType = "";					// yard, siding, interchange or staging
 	protected Location _location;					// the location for this track
+	protected Track _alternativeTrack = null;		// the alternative track
 	protected String _roadOption = ALLROADS;		// controls which car roads are accepted 
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this track
 	protected int _numberRS = 0;					// number of cars and engines
@@ -246,6 +247,16 @@ public class Track {
 	 */
 	public int getScheduleMode(){
 		return _mode;
+	}
+	
+	public void setAlternativeTrack(Track track){
+		Track old = _alternativeTrack;
+		_alternativeTrack = track;
+		firePropertyChange("alternativeTrack", old, track);
+	}
+	
+	public Track getAlternativeTrack(){
+		return _alternativeTrack;
 	}
 	
 	/**
@@ -841,8 +852,10 @@ public class Track {
     	_scheduleId = id;
     	if(!old.equals(id)){
     		Schedule schedule = ScheduleManager.instance().getScheduleById(id);
-    		if (schedule == null)
+    		if (schedule == null){
+    			_scheduleName = "";
     			return;
+    		}
     		// set the id to the first item in the list
     		if (schedule.getItemsBySequenceList().size()>0)
     			setScheduleItemId(schedule.getItemsBySequenceList().get(0));
@@ -1132,6 +1145,7 @@ public class Track {
         if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("factor")) != null ) _reservationFactor = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("scheduleMode")) != null ) _mode = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("alternative")) != null ) _alternativeTrack = _location.getTrackById(a.getValue());
         
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("order")) != null ) _order = a.getValue();
@@ -1200,6 +1214,8 @@ public class Track {
     		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));
     		e.setAttribute("factor", Integer.toString(getReservationFactor()));
     		e.setAttribute("scheduleMode", Integer.toString(getScheduleMode()));
+    		if (getAlternativeTrack() != null)
+    			e.setAttribute("alternative", getAlternativeTrack().getId());
     	}
     	if (_loadOptions != 0)
     		e.setAttribute("loadOptions", Integer.toString(_loadOptions));

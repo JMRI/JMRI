@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class Router extends TrainCommon {
@@ -122,8 +122,15 @@ public class Router extends TrainCommon {
 			_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
 			if (!_status.equals(Car.OKAY)){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterCanNotDeliverCar"),new Object[]{car.toString(), clone.getDestinationName(), clone.getDestinationTrackName(), _status}));
-				//log.info("Can not deliver car ("+car.toString()+") to destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
-				//		+") due to "+_status);
+				// check to see if an alternative track was specified
+				if (_status.contains(Car.LENGTH) && car.getLocation() != clone.getDestination() 
+						&& clone.getDestinationTrack() != null && clone.getDestinationTrack().getAlternativeTrack() != null){
+					String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack().getAlternativeTrack());
+					if (status.equals(Car.OKAY)){
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToAlternative"),new Object[]{car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
+						return true;
+					}
+				}
 				// check to see if siding was full, if so, forward to yard if possible
 				if (Setup.isForwardToYardEnabled() && _status.contains(Car.LENGTH) && car.getLocation() != clone.getDestination()){
 					//log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
