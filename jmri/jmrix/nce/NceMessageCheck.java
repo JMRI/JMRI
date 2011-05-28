@@ -10,44 +10,45 @@ import jmri.JmriException;
  * connection type.
  * <P>
  * @author      Dan Boudreau   Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  */
 public class NceMessageCheck {
 	
 	public static void checkMessage(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
-
-		switch(m.getOpCode()){
-		case NceBinaryCommand.ACC_CMD: checkACC_CMD(memo, m);
-		break;
-		case NceBinaryCommand.READ1_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.READ16_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.WRITEn_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.WRITE1_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.WRITE2_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.WRITE4_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.WRITE8_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.STOP_CLOCK_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.START_CLOCK_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.SET_CLOCK_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.CLOCK_1224_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.CLOCK_RATIO_CMD: checkAccessory_CMD(memo, m);
-		break;
-		case NceBinaryCommand.OPS_PROG_LOCO_CMD: checkOPS_PROG_CMD(memo, m);
-		break;
-		case NceBinaryCommand.OPS_PROG_ACCY_CMD: checkOPS_PROG_CMD(memo, m);
-		}
+        if(m!=null){
+            switch(m.getOpCode()){
+            case NceBinaryCommand.ACC_CMD: checkACC_CMD(memo, m);
+            break;
+            case NceBinaryCommand.READ1_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.READ16_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.WRITEn_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.WRITE1_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.WRITE2_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.WRITE4_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.WRITE8_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.STOP_CLOCK_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.START_CLOCK_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.SET_CLOCK_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.CLOCK_1224_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.CLOCK_RATIO_CMD: checkAccessory_CMD(memo, m);
+            break;
+            case NceBinaryCommand.OPS_PROG_LOCO_CMD: checkOPS_PROG_CMD(memo, m);
+            break;
+            case NceBinaryCommand.OPS_PROG_ACCY_CMD: checkOPS_PROG_CMD(memo, m);
+            }
+        }
 	}
 	
 	private static void checkACC_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{

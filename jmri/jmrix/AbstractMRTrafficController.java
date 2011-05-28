@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.95 $
+ * @version         $Revision: 1.96 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -223,7 +223,8 @@ abstract public class AbstractMRTrafficController {
                 xmtRunnable.notify();
             }
         }
-        log.debug("just notified transmit thread with message " +m.toString());
+        if(m!=null)
+            log.debug("just notified transmit thread with message " +m.toString());
     }
     
     /**
