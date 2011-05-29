@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.135 $
+ * @version     $Revision: 1.136 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -625,19 +625,19 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     static public String getConnection1() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0)});
+                                new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0), AppConfigBase.getManufacturerName(0)});
     }
     static public String getConnection2() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1)});
+                                new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1), AppConfigBase.getManufacturerName(1)});
     }
     static public String getConnection3() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2)});
+                            new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2), AppConfigBase.getManufacturerName(2)});
     }
     static public String getConnection4() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3)});
+                            new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3), AppConfigBase.getManufacturerName(3)});
     }
     
     static SplashWindow sp = null;
