@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.163 $
+ * @version             $Revision: 1.164 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -711,7 +711,7 @@ public class TrainBuilder extends TrainCommon{
 				// is there a specific road requirement for the car with FRED?
 				else if (!road.equals("") && !road.equals(car.getRoad())){
 					addLine(buildReport, SEVEN,  MessageFormat.format(rb.getString("buildExcludeCarWrongRoad"),new Object[]{car.toString(), car.getType(), car.getRoad()}));
-					carList.remove(carList.get(carIndex));		// remove this car from the list
+					carList.remove(car.getId());		// remove this car from the list
 					carIndex--;
 					continue;
 				}
@@ -719,7 +719,7 @@ public class TrainBuilder extends TrainCommon{
 					// remove cars that can't be picked up due to train and track directions
 					if(!checkPickUpTrainDirection(car, rl)){
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{car.toString(), car.getType(), (car.getLocationName()+" "+car.getTrackName())}));
-						carList.remove(carList.get(carIndex));		// remove this car from the list
+						carList.remove(car.getId());		// remove this car from the list
 						carIndex--;
 						continue;
 					}
@@ -782,7 +782,7 @@ public class TrainBuilder extends TrainCommon{
 					// remove cars that can't be picked up due to train and track directions
 					if(!checkPickUpTrainDirection(car, rl)){
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{car.toString(), car.getType(), (car.getLocationName()+" "+car.getTrackName())}));
-						carList.remove(carList.get(carIndex));		// remove this car from the list
+						carList.remove(car.getId());		// remove this car from the list
 						carIndex--;
 						continue;
 					}
@@ -835,7 +835,7 @@ public class TrainBuilder extends TrainCommon{
 			Car car = carManager.getById(carList.get(carIndex));
 			if (car.isCaboose() || car.hasFred()){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{car.toString(), car.getType(), (car.getLocationName()+", "+car.getTrackName())}));
-				carList.remove(carList.get(carIndex));		// remove this car from the list
+				carList.remove(car.getId());		// remove this car from the list
 				carIndex--;
 			}
 		}
@@ -853,21 +853,21 @@ public class TrainBuilder extends TrainCommon{
     		// remove cars that don't have a valid track
     		if (c.getTrack() == null){
     			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildErrorRsNoLoc"),new Object[]{c.toString(), c.getLocationName()}));
-				carList.remove(carList.get(carIndex));
+				carList.remove(c.getId());
 				carIndex--;
 				continue;
     		}
     		// remove cars that have been reported as missing
     		if (c.isLocationUnknown()){
        			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarLocUnknown"),new Object[]{c.toString()}));
-				carList.remove(carList.get(carIndex));
+				carList.remove(c.getId());
 				carIndex--;
 				continue;
     		}
     		// remove cars that are out of service
     		if (c.isOutOfService()){
        			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarOutOfService"),new Object[]{c.toString()}));
-				carList.remove(carList.get(carIndex));
+				carList.remove(c.getId());
 				carIndex--;
 				continue;
     		}
@@ -875,7 +875,7 @@ public class TrainBuilder extends TrainCommon{
     		// remove cabooses that have a destination that isn't the terminal
     		if ((c.isCaboose() || c.hasFred()) && c.getDestination() != null && c.getDestination() != terminateLocation){
    				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarWrongDest"),new Object[]{c.toString(), c.getType(), c.getDestinationName()}));
-				carList.remove(carList.get(carIndex));
+				carList.remove(c.getId());
 				carIndex--;
 				continue;
     		}
@@ -886,45 +886,45 @@ public class TrainBuilder extends TrainCommon{
     		if (departStageTrack == null || c.getTrack() != departStageTrack){
     			if (!train.acceptsRoadName(c.getRoad())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarWrongRoad"),new Object[]{c.toString(), c.getType(), c.getRoad()}));
-    				carList.remove(carList.get(carIndex));
+    				carList.remove(c.getId());
     				carIndex--;
     				continue;
     			}
     			if (!train.acceptsTypeName(c.getType())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(carList.get(carIndex));
+    				carList.remove(c.getId());
     				carIndex--;
     				continue;
     			}
     			if (!c.isCaboose() && !train.acceptsLoadName(c.getLoad())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarLoadAtLoc"),new Object[]{c.toString(), c.getLoad(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(carList.get(carIndex));
+    				carList.remove(c.getId());
     				carIndex--;
     				continue;
     			}
     			if (!train.acceptsOwnerName(c.getOwner())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarOwnerAtLoc"),new Object[]{c.toString(), c.getOwner(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(carList.get(carIndex));
+    				carList.remove(c.getId());
     				carIndex--;
     				continue;
     			}
        			if (!train.acceptsBuiltDate(c.getBuilt())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarBuiltAtLoc"),new Object[]{c.toString(), c.getBuilt(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(carList.get(carIndex));
+    				carList.remove(c.getId());
     				carIndex--;
     				continue;
     			}
         		// remove cabooses if not needed by train
         		if (c.isCaboose() && (train.getRequirements() & Train.CABOOSE) == 0){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCabooseAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(carList.get(carIndex));		// remove this car from the list
+    				carList.remove(c.getId());		// remove this car from the list
     				carIndex--;
     				continue;
         		}
         		// remove cars with FRED if not needed by train
         		if (c.hasFred() && (train.getRequirements() & Train.FRED) == 0){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarWithFredAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(carList.get(carIndex));		// remove this car from the list
+    				carList.remove(c.getId());		// remove this car from the list
     				carIndex--;
     				continue;
         		}
@@ -934,7 +934,7 @@ public class TrainBuilder extends TrainCommon{
     			// don't service a car at interchange and has been dropped of by this train
     			if (c.getTrack().getPickupOption().equals(Track.ANY) && c.getSavedRouteId().equals(train.getRoute().getId())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarDropByTrain"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(carList.get(carIndex));
+    				carList.remove(c.getId());
     				carIndex--;
     				continue;
     			}
@@ -945,7 +945,7 @@ public class TrainBuilder extends TrainCommon{
     					log.debug("Car ("+c.toString()+") can be picked up by this train");
     				} else {
     					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarByTrain"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
-    					carList.remove(carList.get(carIndex));
+    					carList.remove(c.getId());
     					carIndex--;
     					continue;
     				}
@@ -955,7 +955,7 @@ public class TrainBuilder extends TrainCommon{
     					log.debug("Car ("+c.toString()+") can be picked up by this route");
     				} else {
     					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarByRoute"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
-    					carList.remove(carList.get(carIndex));
+    					carList.remove(c.getId());
     					carIndex--;
     					continue;
     				}
@@ -965,7 +965,7 @@ public class TrainBuilder extends TrainCommon{
     		if (c.getWait() > 0){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarWait"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName()), c.getWait()}));
 				c.setWait(c.getWait()-1);	// decrement wait count
-				carList.remove(carList.get(carIndex));
+				carList.remove(c.getId());
 				carIndex--;
 				continue;
     		}
@@ -987,7 +987,7 @@ public class TrainBuilder extends TrainCommon{
 						numCarsFromStaging++;
 					} else {
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
-						carList.remove(carList.get(carIndex));
+						carList.remove(c.getId());
 						carIndex--;
 					}
 				}
@@ -1010,7 +1010,7 @@ public class TrainBuilder extends TrainCommon{
 			if (c.getKernel() != null){
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{c.toString(), c.getKernelName()}));
 				if (!c.getKernel().isLead(c)){
-					carList.remove(carList.get(carIndex));		// remove this car from the list
+					carList.remove(c.getId());		// remove this car from the list
 					carIndex--;
 					continue;
 				}
@@ -1030,7 +1030,7 @@ public class TrainBuilder extends TrainCommon{
 						throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorCarNotPartRoute"),
 								new Object[]{c.toString()}));
 					}
-					carList.remove(carList.get(carIndex));		// remove this car from the list
+					carList.remove(c.getId());		// remove this car from the list
 					carIndex--;
 				}
 			}
@@ -1109,6 +1109,13 @@ public class TrainBuilder extends TrainCommon{
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
 							&& car.getDestination() == null && car.getNextDestination() == null){
 						findNextDestinationForCarLoad(car);
+						// did the router set a destination? If not this train doesn't service this car.
+						if (car.getTrack() != departStageTrack && car.getNextDestination() != null && car.getDestination() == null){
+							log.debug("Removing car ("+car.toString()+") from list");
+			   				carList.remove(car.getId());
+		    				carIndex--;
+		    				continue;
+						}
 					}
 					// does car have a next destination, but no destination
 					if (car.getNextDestination() != null && car.getDestination() == null){
@@ -1123,7 +1130,12 @@ public class TrainBuilder extends TrainCommon{
 								findDestinationAndTrack(car, rl, routeIndex, routeList.size());
 						} else {
 							// did the router assign a destination?
-							checkCarForDestinationAndTrack(car, rl, routeIndex);
+							if (!checkCarForDestinationAndTrack(car, rl, routeIndex) && car.getTrack() != departStageTrack){
+								log.debug("Removing car ("+car.toString()+") from list, no car destination");
+								carList.remove(car.getId());
+								carIndex--;
+								continue;
+							}
 						}
 					}
 					// does car have a destination?
@@ -1600,9 +1612,6 @@ public class TrainBuilder extends TrainCommon{
 	private void findNextDestinationForCarLoad(Car car) throws BuildFailedException{
 		//log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForSiding"),new Object[]{car.toString(), car.getLoad()}));
-		// don't find a next destination for cars departing staging
-		//if (departStageTrack != null)
-		//	return;
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
 		log.debug("Found "+tracks.size()+" sidings");
 		for (int i=0; i<tracks.size(); i++){
