@@ -15,7 +15,7 @@ import jmri.jmrit.operations.OperationsFrame;
 /**
  * Action to launch schedule options.
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class ScheduleOptionsAction extends AbstractAction {
 		
@@ -74,13 +74,11 @@ class ScheduleOptionsFrame extends OperationsFrame{
 		pAlternate.setLayout(new GridBagLayout());
 		pAlternate.setBorder(BorderFactory.createTitledBorder(rb.getString("AlternateTrack")));
 		addItem(pAlternate, trackBox, 0, 0);
-		
-		if (_track != null){
-			_track.getLocation().updateComboBox(trackBox);
-			trackBox.removeItem(_track);	// remove this track from consideration
-			trackBox.setSelectedItem(_track.getAlternativeTrack());
-		}
-				
+
+		_track.getLocation().updateComboBox(trackBox);
+		trackBox.removeItem(_track);	// remove this track from consideration
+		trackBox.setSelectedItem(_track.getAlternativeTrack());
+
 		JPanel pControls = new JPanel();
 		pControls.add(saveButton);
   	
