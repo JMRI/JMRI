@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.96 $
+ * @version         $Revision: 1.97 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -907,6 +907,14 @@ abstract public class AbstractMRTrafficController {
         }
     }
     
+    /*
+     * for testing purposes, let us be able to find out
+     * what the last sender was
+     */
+    public AbstractMRListener getLastSender() {
+        return mLastSender;
+    }
+
     // Override the finalize method for this class
     // to request termination, which might have happened
     // before in any case
