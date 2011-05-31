@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.29 $
+ * @version             $Revision: 1.30 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -68,12 +68,18 @@ public class DecVariableValue extends VariableValue
         oldContents = _value.getText();
     }
     void exitField() {
-        // there may be a lost focus event left in the queue when disposed so protect
-        if (_value != null && !oldContents.equals(_value.getText())) {
-            int newVal = Integer.valueOf(_value.getText()).intValue();
-            int oldVal = Integer.valueOf(oldContents).intValue();
-            updatedTextField();
-            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
+        if(!_value.getText().equals("")){
+            // there may be a lost focus event left in the queue when disposed so protect
+            if (_value != null && !oldContents.equals(_value.getText())) {
+                int newVal = Integer.valueOf(_value.getText()).intValue();
+                int oldVal = Integer.valueOf(oldContents).intValue();
+                updatedTextField();
+                prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
+            }
+        } else {
+            //As the user has left the contents blank, we shall re-instate the old
+            // value as, when a write to decoder is performed, the cv remains the same value.
+            _value.setText(oldContents);
         }
     }
 
