@@ -8,7 +8,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.15 $
+ * @version $Revision: 2.16 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -50,16 +50,10 @@ public class XNetPacketizerTest extends TestCase {
         // connect to iostream via port controller
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
         c.connectPort(p);
-        //c.startThreads();
 
         // object to receive reply
         XNetListenerScaffold l = new XNetListenerScaffold();
         c.addXNetListener(~0, l);
-
-        // send a message
-        XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
-        // that's already tested, so don't do here.
-        Assert.assertNotNull("exists", m );
 
         // now send reply
         p.tistream.write(0x52);
@@ -69,18 +63,90 @@ public class XNetPacketizerTest extends TestCase {
 
         // check that the message was picked up by the read thread.
         Assert.assertTrue("reply received ", waitForReply(l));
-        Assert.assertEquals("first char of reply ", 0x52, XNetListenerScaffold.rcvdRply.getElement(0));
+        Assert.assertEquals("first char of reply ", 0x52, l.rcvdRply.getElement(0));
+    }
+
+    public void testInterference() throws Exception {
+	// This test checks to make sure that when two listeners register for events
+        // at the same time, the first listener is still the active listener until
+        // it receives a message.
+        LenzCommandStation lcs = new LenzCommandStation();
+        XNetPacketizer c = new XNetPacketizer(lcs){
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {} // don't care about timeout
+            protected void reportReceiveLoopException(Exception e) {}           
+            protected void portWarn(Exception e) {}
+        };
+
+        // connect to iostream via port controller
+        XNetPortControllerScaffold p = new XNetPortControllerScaffold();
+        c.connectPort(p);
+
+        // We need three objects to receive messages.
+        // The first one recieves broadcast messages. 
+        // The others only receive directed messages.
+
+        XNetListenerScaffold l = new XNetListenerScaffold();
+        XNetListenerScaffold l1 = new XNetListenerScaffold();
+        XNetListenerScaffold l2 = new XNetListenerScaffold();
+        c.addXNetListener(~0, l);
+
+        // we're going to loop through this, because we're trying to catch
+        // a threading/synchronization issue in AbstractMRTrafficController.
+	for(int i=0;i<5;i++){
+
+        // first, we send an unsolicited message
+        p.tistream.write(0x42);
+        p.tistream.write(0x12);
+        p.tistream.write(0x12);
+        p.tistream.write(0x42);
+
+        // now we need to send a message with both the second and third listeners 
+        // as reply receiver.
+        XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
+        c.sendXNetMessage(m, l1);
+        
+        XNetMessage m1 = XNetMessage.getTurnoutCommandMsg(23, true, false, true);
+        c.sendXNetMessage(m1, l2);
+	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
+
+        // and now we verify l1 is the last sender.
+	Assert.assertEquals("Last Sender l1",l1,c.getLastSender());
+
+        // Now we reply to the messages above
+        p.tistream.write(0x01);
+        p.tistream.write(0x04);
+        p.tistream.write(0x05);
+
+        // check that the message was picked up by the read thread.
+        Assert.assertTrue("reply received ", waitForReply(l1));
+        //Assert.assertEquals("first char of reply ", 0x01, l1.rcvdRply.getElement(0));
+
+	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
+        
+        // and now we verify l2 is the last sender.
+	Assert.assertEquals("Last Sender l2",l2,c.getLastSender());
+        
+        p.tistream.write(0x01);
+        p.tistream.write(0x04);
+        p.tistream.write(0x05);
+
+        // check that the message was picked up by the read thread.
+        Assert.assertTrue("reply received ", waitForReply(l2));
+        //Assert.assertEquals("first char of reply ", 0x01, l2.rcvdRply.getElement(0));
+        }
+
+
     }
 
 
     private boolean waitForReply(XNetListenerScaffold l) {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( XNetListenerScaffold.rcvdRply == null && i++ < 100  )  {
+        while ( l.rcvdRply == null && i++ < 100  )  {
             jmri.util.JUnitUtil.releaseThread(this, 10);
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i
-                                            +" reply="+XNetListenerScaffold.rcvdRply);
+                                            +" reply="+l.rcvdRply);
         if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
         return i<100;
     }

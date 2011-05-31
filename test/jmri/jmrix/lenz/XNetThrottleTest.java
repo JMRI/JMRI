@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetThrottle class
  * @author			Paul Bender
- * @version         $Revision: 2.5 $
+ * @version         $Revision: 2.6 $
  */
 public class XNetThrottleTest extends TestCase {
 
@@ -60,13 +60,14 @@ public class XNetThrottleTest extends TestCase {
         //The first thing on the outbound queue should be a request for status.
         Assert.assertEquals("Throttle Information Request Message","E3 07 00 03 E7",tc.outbound.elementAt(n).toString());
 
-        // And the response to this is a message with the status.
         m = new XNetReply();
         m.setElement(0,0x61);
         m.setElement(1,0x82);
         m.setElement(2,0xE3);
   
         t.message(m);
+	// Sending the not supported message should make the throttle change
+        // to the idle state.
 
 	// now we're going to wait and verify the throttle eventually has 
         // its status set to idle.
@@ -75,8 +76,10 @@ public class XNetThrottleTest extends TestCase {
         
         Assert.assertEquals("Throttle in THROTTLEIDLE state",t.THROTTLEIDLE,t.requestState);
 
-
     }
+
+    
+
 
 	// from here down is testing infrastructure
 
