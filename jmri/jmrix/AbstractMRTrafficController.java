@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.97 $
+ * @version         $Revision: 1.98 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -239,7 +239,7 @@ abstract public class AbstractMRTrafficController {
             AbstractMRListener l = null;
             // check for something to do
             synchronized(selfLock) {
-                if (msgQueue.size()!=0) {
+                if (msgQueue.size()!=0 && mCurrentState == IDLESTATE) {
                     // yes, something to do
                     m = msgQueue.getFirst();
                     msgQueue.removeFirst();
@@ -496,7 +496,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Actually transmits the next message to the port
      */
-     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
         // remember who sent this
         mLastSender = reply;
@@ -906,7 +906,7 @@ abstract public class AbstractMRTrafficController {
             replyInDispatch = false;
         }
     }
-    
+   
     /*
      * for testing purposes, let us be able to find out
      * what the last sender was
@@ -914,7 +914,7 @@ abstract public class AbstractMRTrafficController {
     public AbstractMRListener getLastSender() {
         return mLastSender;
     }
-
+ 
     // Override the finalize method for this class
     // to request termination, which might have happened
     // before in any case
