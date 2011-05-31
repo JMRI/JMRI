@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.4 2011-05-29 18:54:49 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.5 2011-05-31 18:12:03 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -131,6 +131,12 @@ window.</LI>
 <li>Update context report to also include system manufacturer
 </ul>
 
+<p>Kevin Dickerson:</p>
+<ul>
+<li>Fixed an error that would occur if a cv value is left blank.  If the user blanks out a value and doesn't enter in a new, then the old value is restored.</li>
+<li>Prevented an occuring from occuring when the power on command is issued to the NCE Power Cab via the usb interface.</li>
+<li>Fixed a bug with the default selector for the throttle manager</li>
+</ul>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
