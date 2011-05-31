@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetThrottle class
  * @author			Paul Bender
- * @version         $Revision: 2.4 $
+ * @version         $Revision: 2.5 $
  */
 public class XNetThrottleTest extends TestCase {
 
@@ -20,6 +20,62 @@ public class XNetThrottleTest extends TestCase {
 
         XNetThrottle t = new XNetThrottle(tc);
         Assert.assertNotNull(t);
+    }
+
+    // Test the constructor with an address specified.
+    public void testCtorWithArg() throws Exception {
+	XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        XNetThrottle t = new XNetThrottle(new jmri.DccLocoAddress(3,false),tc);
+        Assert.assertNotNull(t);
+    }
+  
+    // Test the initilization sequence.
+    public void testInitSequence() throws Exception {
+	XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new jmri.DccLocoAddress(3,false),tc);
+        Assert.assertNotNull(t);
+        while(n==tc.outbound.size()) {} // busy loop.  Wait for
+                                        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+	Assert.assertEquals("Throttle Information Request Message","E3 00 00 03 E0",tc.outbound.elementAt(n).toString());
+
+	// And the response to this is a message with the status.
+	XNetReply m = new XNetReply();
+	m.setElement(0,0xE4);
+	m.setElement(1,0x04);
+        m.setElement(2,0x00);
+        m.setElement(3,0x00);
+        m.setElement(4,0x00);
+        m.setElement(5,0xE0);
+        
+        n = tc.outbound.size();
+        t.message(m);
+
+
+	// which we're going to get a request for function momentary status in response to.
+	// We're just going to make sure this is there and respond with not supported.
+	while(n==tc.outbound.size()) {} // busy loop.  Wait for
+                                        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+        Assert.assertEquals("Throttle Information Request Message","E3 07 00 03 E7",tc.outbound.elementAt(n).toString());
+
+        // And the response to this is a message with the status.
+        m = new XNetReply();
+        m.setElement(0,0x61);
+        m.setElement(1,0x82);
+        m.setElement(2,0xE3);
+  
+        t.message(m);
+
+	// now we're going to wait and verify the throttle eventually has 
+        // its status set to idle.
+        jmri.util.JUnitUtil.releaseThread(this, 1000);  // give the messages
+                                                        // some time to process;
+        
+        Assert.assertEquals("Throttle in THROTTLEIDLE state",t.THROTTLEIDLE,t.requestState);
+
+
     }
 
 	// from here down is testing infrastructure
