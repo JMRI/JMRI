@@ -25,9 +25,6 @@ import java.lang.reflect.Method;
 import java.io.File;
 import jmri.jmrit.XmlFile;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Attribute;
 
 
 
@@ -38,7 +35,7 @@ import org.jdom.Attribute;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -590,7 +587,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
     }
     
     public void setWindowLocation(String strClass, Point location){
-        if(strClass.equals("jmri.util.JmriJFrame"))
+        if((strClass==null) || (strClass.equals("jmri.util.JmriJFrame")))
             return;
         if(!windowDetails.containsKey(strClass)){
             windowDetails.put(strClass, new WindowLocations());
@@ -1147,14 +1144,16 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
 
     File file;
     public void readUserPreferences() {
-        String userprefsfilename = "UserPrefs"+apps.Apps.getConfigFileName();
-        
-        if (!new File(userprefsfilename).isAbsolute()) {
+        File configFileName = new File(apps.Apps.getConfigFileName());
+        String userprefsfilename;
+        if (!configFileName.isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
+            userprefsfilename = "UserPrefs"+apps.Apps.getConfigFileName();
             file = new File(XmlFile.prefsDir()+userprefsfilename);
         } else {
-            file = new File(userprefsfilename);
+            userprefsfilename="UserPrefs"+configFileName.getName();
+            file = new File(configFileName.getParent()+File.separator+userprefsfilename);
         }
         
         if (file.exists()) {
