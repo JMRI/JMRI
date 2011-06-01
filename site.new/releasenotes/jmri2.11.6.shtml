@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.5 2011-05-31 18:12:03 kevin-dickerson Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.6 2011-06-01 02:52:23 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -124,6 +124,8 @@ None at the time of this release.
 <UL>
 <LI>You can now specify an alternative track for sidings with schedules.  See Tools-&gt;Options in the Schedule
 window.</LI>
+<LI>Fixed a couple of bugs that were introduced by using the change track type tool.  FIFO, LIFO, schedules, and train services
+are features that only certain track types support.  The program now only allows certain feature to work based on track type.
 </UL>
 
 <p>Matthew Harris:</p>
