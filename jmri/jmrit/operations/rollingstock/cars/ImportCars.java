@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010 2011
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class ImportCars extends Thread {
 	
@@ -121,6 +121,7 @@ public class ImportCars extends Thread {
 			if (line.equalsIgnoreCase("comma")){
 				log.info("Using comma as delimiter for import cars");
 				comma = true;
+				continue;
 			}
 			// use comma as delimiter if found otherwise use spaces
 			if (comma)
