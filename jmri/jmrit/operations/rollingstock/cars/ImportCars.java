@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010 2011
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class ImportCars extends Thread {
 	
@@ -40,6 +40,12 @@ public class ImportCars extends Thread {
 	
 	private int weightResults = JOptionPane.NO_OPTION;	// Automatically calculate weight for car if weight entry is not found
 	private boolean autoCalculate = true;
+	private boolean askAutoCreateLocations = true;
+	private boolean autoCreateLocations = false;
+	private boolean askAutoCreateTracks = true;
+	private boolean autoCreateTracks = false;
+	private boolean askAutoLocationType = true;
+	private boolean autoAdjustLocationType = false;
 	
 	// we use a thread so the status frame will work!
 	public void run() {
@@ -297,29 +303,36 @@ public class ImportCars extends Thread {
 					Location l = LocationManager.instance().getLocationByName(carLocation);
 					Track sl = null;
 					if (l == null && !carLocation.equals("")){
-						JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("CarLocationDoesNotExist"),new Object[]{(carRoad+" "+carNumber),carLocation}),
-								rb.getString("carLocation"),
-								JOptionPane.ERROR_MESSAGE);
-						int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateLoc"),new Object[]{carLocation}),
-								rb.getString("carLocation"),
-								JOptionPane.YES_NO_OPTION);
-						if (results == JOptionPane.YES_OPTION){
+						if (autoCreateLocations){
 							log.debug("Create location ("+carLocation+")");
 							l = LocationManager.instance().newLocation(carLocation);
 						} else {
-							break;
+							JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("CarLocationDoesNotExist"),new Object[]{(carRoad+" "+carNumber),carLocation}),
+									rb.getString("carLocation"),
+									JOptionPane.ERROR_MESSAGE);
+							int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateLoc"),new Object[]{carLocation}),
+									rb.getString("carLocation"),
+									JOptionPane.YES_NO_OPTION);
+							if (results == JOptionPane.YES_OPTION){
+								log.debug("Create location ("+carLocation+")");
+								l = LocationManager.instance().newLocation(carLocation);
+								if (askAutoCreateLocations){
+									results = JOptionPane.showConfirmDialog(null, rb.getString("DoYouWantToAutoCreateLoc"),
+											rb.getString("OnlyAskedOnce"),
+											JOptionPane.YES_NO_OPTION);
+									if (results == JOptionPane.YES_OPTION)
+										autoCreateLocations = true;
+								}
+								askAutoCreateLocations = false;
+							} else {
+								break;
+							}
 						}
 					}
 					if (l != null && !carTrack.equals("")){
 						sl = l.getTrackByName(carTrack, null);
 						if (sl == null){
-							JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("CarTrackDoesNotExist"),new Object[]{(carRoad+" "+carNumber), carTrack, carLocation}),
-									rb.getString("carTrack"),
-									JOptionPane.ERROR_MESSAGE);
-							int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateTrack"),new Object[]{carTrack, carLocation}),
-									rb.getString("carTrack"),
-									JOptionPane.YES_NO_OPTION);
-							if (results == JOptionPane.YES_OPTION){
+							if (autoCreateTracks){
 								if (l.getLocationOps() == Location.NORMAL){
 									log.debug("Create 1000 foot yard track ("+carTrack+")");
 									sl = l.addTrack(carTrack, Track.YARD);
@@ -329,7 +342,32 @@ public class ImportCars extends Thread {
 								}
 								sl.setLength(1000);
 							} else {
-								break;
+								JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("CarTrackDoesNotExist"),new Object[]{(carRoad+" "+carNumber), carTrack, carLocation}),
+										rb.getString("carTrack"),
+										JOptionPane.ERROR_MESSAGE);
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateTrack"),new Object[]{carTrack, carLocation}),
+										rb.getString("carTrack"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION){
+									if (l.getLocationOps() == Location.NORMAL){
+										log.debug("Create 1000 foot yard track ("+carTrack+")");
+										sl = l.addTrack(carTrack, Track.YARD);
+									} else {
+										log.debug("Create 1000 foot staging track ("+carTrack+")");
+										sl = l.addTrack(carTrack, Track.STAGING);	
+									}
+									sl.setLength(1000);
+									if (askAutoCreateTracks){
+										results = JOptionPane.showConfirmDialog(null, rb.getString("DoYouWantToAutoCreateTrack"),
+												rb.getString("OnlyAskedOnce"),
+												JOptionPane.YES_NO_OPTION);
+										if (results == JOptionPane.YES_OPTION)
+											autoCreateTracks = true;
+										askAutoCreateTracks = false;
+									}
+								} else {
+									break;
+								}
 							}
 						}
 					}
@@ -377,34 +415,51 @@ public class ImportCars extends Thread {
 							}
 						}
 					}
-
 					if (l != null && sl != null){
 						String status = car.setLocation(l,sl);
 						if (!status.equals(Car.OKAY)){
 							log.debug ("Can't set car's location because of "+ status);
-							JOptionPane.showMessageDialog(null,
-									MessageFormat.format(rb.getString("CanNotSetCarAtLocation"),new Object[]{(carRoad+" "+carNumber),carType,carLocation,carTrack,status}),
-									rb.getString("rsCanNotLoc"),
-									JOptionPane.ERROR_MESSAGE);
-							if (status.equals(Car.TYPE)){
-								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToAllowService"),new Object[]{carLocation, carTrack, (carRoad+" "+carNumber), carType}),
-										rb.getString("ServiceCarType"),
-										JOptionPane.YES_NO_OPTION);
-								if (results == JOptionPane.YES_OPTION){
+							if (!autoAdjustLocationType){
+								JOptionPane.showMessageDialog(null,
+										MessageFormat.format(rb.getString("CanNotSetCarAtLocation"),new Object[]{(carRoad+" "+carNumber),carType,carLocation,carTrack,status}),
+										rb.getString("rsCanNotLoc"),
+										JOptionPane.ERROR_MESSAGE);
+							}
+							if (status.contains(Car.TYPE)){
+								if (autoAdjustLocationType){
 									l.addTypeName(carType);
 									sl.addTypeName(carType);
 									status = car.setLocation(l,sl);
 								} else {
-									break;
-								}						
+									int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToAllowService"),new Object[]{carLocation, carTrack, (carRoad+" "+carNumber), carType}),
+											rb.getString("ServiceCarType"),
+											JOptionPane.YES_NO_OPTION);
+									if (results == JOptionPane.YES_OPTION){
+										l.addTypeName(carType);
+										sl.addTypeName(carType);
+										status = car.setLocation(l,sl);
+										log.debug ("Set car's location status: "+ status);
+										if (askAutoLocationType){
+											results = JOptionPane.showConfirmDialog(null, rb.getString("DoYouWantToAutoAdjustLocations"),
+													rb.getString("OnlyAskedOnce"),
+													JOptionPane.YES_NO_OPTION);
+											if (results == JOptionPane.YES_OPTION)
+												autoAdjustLocationType = true;
+											askAutoLocationType = false;
+										}
+									} else {
+										break;
+									}		
+								}
 							}
-							if (status.equals(Car.LENGTH)){
+							if (status.contains(Car.LENGTH)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantIncreaseLength"),new Object[]{carTrack}),
 										rb.getString("TrackLength"),
 										JOptionPane.YES_NO_OPTION);
 								if (results == JOptionPane.YES_OPTION){
 									sl.setLength(sl.getLength()+1000);
 									status = car.setLocation(l,sl);
+									log.debug ("Set track length status: "+ status);
 								} else {
 									break;
 								}						
