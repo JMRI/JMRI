@@ -17,7 +17,7 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
@@ -46,6 +46,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		fileChooser.setCurrentDirectory(new File( ThrottleFrame.getDefaultThrottleFolder()));
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
 		if (file == null)

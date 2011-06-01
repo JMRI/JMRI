@@ -47,7 +47,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.82 $
+ * @version $Revision: 1.83 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -195,6 +195,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     	if (sfile == null) {
     		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
     		fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
+		fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
     		java.io.File file = LoadXmlConfigAction.getFile(fileChooser);
     		if (file == null) return;
     		sfile = file.getAbsolutePath();
@@ -792,6 +793,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	public void saveThrottleAs() {
 		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
 		fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
+		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
 		if (file == null)
 			return;
