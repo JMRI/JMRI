@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.60 $
+ * @version             $Revision: 1.61 $
  */
 public class Track {
 	
@@ -703,6 +703,9 @@ public class Track {
     public boolean acceptsDropTrain(Train train){
     	if (_dropOption.equals(ANY))
     		return true;
+       	// yard tracks accept all trains
+    	if (getLocType().equals(YARD))
+    		return true;
     	if (_dropOption.equals(TRAINS))
     		return containsDropId(train.getId());
     	else if (train.getRoute() == null)
@@ -763,6 +766,9 @@ public class Track {
      */
     public boolean acceptsPickupTrain(Train train){
     	if (_pickupOption.equals(ANY))
+    		return true;
+       	// yard tracks accept all trains
+    	if (getLocType().equals(YARD))
     		return true;
     	if (_pickupOption.equals(TRAINS))
     		return containsPickupId(train.getId());
@@ -833,6 +839,7 @@ public class Track {
     }
     
     public String getScheduleId(){
+    	// Only sidings can have a schedule
     	if (!getLocType().equals(Track.SIDING))
     		return "";
     	// old code only stored schedule name, so create id if needed.
