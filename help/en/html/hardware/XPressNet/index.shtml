@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.14 2010-11-07 05:56:28 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.15 2011-06-02 11:57:52 matthewharris Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -39,7 +39,7 @@ JMRI: XPressNet
 	<a href="http://www.lenz.com">Lenz</a>,
     <a href="http://www.hornby.com">Hornby</a>,
         <a href="http://www.opendcc.org">OpenDCC (DIY)</a>,
-        <a href="http://www.opendcc.org">Paco Canada (DIY)</a>,
+        <a href="http://usuaris.tinet.cat/fmco/home_en.htm">Paco Canada (DIY)</a>,
 	<a href="http://www.ztccontrols.com">ZTC Controls</a>,
         <a href="http://www.viessmann-modell.com/">Viessmann</a>, and
 	<a href="http://www.roco.co.at">Roco</a>.
