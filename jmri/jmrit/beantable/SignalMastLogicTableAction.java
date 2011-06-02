@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -13,17 +12,17 @@ import jmri.InstanceManager;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.ArrayList;
+import jmri.util.JmriJFrame;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ProgressMonitor;
 import jmri.util.com.sun.TableSorter;
 
 public class SignalMastLogicTableAction extends AbstractTableAction implements PropertyChangeListener{
@@ -59,6 +58,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
         f.setVisible(true);
     }
     
+    @Override
     public void setMenuBar(BeanTableFrame f){
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
@@ -163,7 +163,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                     //if (log.isDebugEnabled()) log.debug("Update cell "+signalMastLogicList.indexOf(name)+","
                      //                                   +VALUECOL+" for "+name);
                     // since we can add columns, the entire row is marked as updated
-                        int row = signalMastLogicList.indexOf(logic);
+                        int row = signalMastLogicList.indexOf((SignalMastLogic)e.getSource());
                         fireTableRowsUpdated(row, row);
                     }
                 } else if (e.getSource() instanceof jmri.SignalMast){
@@ -179,13 +179,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                         }
                     }
                 }
-                else if (e.getPropertyName().equals("autoGenerateComplete")){
-                    JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
-                }
             }
-            
-
-    //}
 
             /**
              * Is this property event announcing a change this table should display?
@@ -289,9 +283,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(getLogicFromRow(row), getDestMastFromRow(row));
             }
             
-            /*public void refreshSelections(){
+            public void refreshSelections(){
                 fireTableRowsUpdated(0, getRowCount());
-            }*/
+            }
             
             public SignalMast getDestMastFromRow(int row){
                     // if object has been deleted, it's not here; ignore it
@@ -435,117 +429,44 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
     
     JPanel update;
     
+    JmriJFrame signalMastLogicFrame = null;
+    
     void autoCreatePairs(jmri.util.JmriJFrame f) {
-        
+        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs");
+        signalMastLogicFrame.setPreferredSize(null);
+        JPanel panel1 = new JPanel();
+        JLabel sourceLabel = new JLabel("Discovering Signalmasts");
+        panel1.add(sourceLabel);
+        signalMastLogicFrame.add(panel1);
+        signalMastLogicFrame.pack();
+        signalMastLogicFrame.setVisible(true);
         int retval = JOptionPane.showOptionDialog(f, rb.getString("AutoGenSignalMastLogicMessage"), rb.getString("AutoGenSignalMastLogicTitle"),
                                                   JOptionPane.YES_NO_OPTION,
                                                   JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (retval == 0) {
             try {
-            
-                /*update = new JPanel();
-                progressMonitor = new ProgressMonitor(update,
-                                  "Running a Long Task",
-                                  "", 0, 100);
-                progressMonitor.setProgress(0);
                 InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(this);
-                
-                JFrame frame = new JFrame("ProgressMonitorDemo");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
-                startButton = new JButton("Start");
-                startButton.setActionCommand("start");
-                startButton.addActionListener(this);
-
-                taskOutput = new JTextArea(5, 20);
-                taskOutput.setMargin(new Insets(5,5,5,5));
-                taskOutput.setEditable(false);
-                
-                update.add(startButton, BorderLayout.PAGE_START);
-                update.add(new JScrollPane(taskOutput), BorderLayout.CENTER);
-                update.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-                frame.setContentPane(update);
-                
-                frame.pack();
-                frame.setVisible(true);*/
-                
                 InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
-                
-
-                
-                
-                
+                    
             } catch (jmri.JmriException e){
                 JOptionPane.showMessageDialog(null, e.toString());
+                signalMastLogicFrame.setVisible(false);
             }
-            
+            InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
+        } else {
+            signalMastLogicFrame.setVisible(false);
         }
-        
-        
-        
-/*        JFrame frame = new JFrame("ProgressMonitorDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        JComponent newContentPane = new ProgressMonitorDemo();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        //newContentPane);
-
-        //Display the window.
-
-        
-        startButton = new JButton("Start");
-        startButton.setActionCommand("start");
-        startButton.addActionListener(this);
-
-        taskOutput = new JTextArea(5, 20);
-        taskOutput.setMargin(new Insets(5,5,5,5));
-        taskOutput.setEditable(false);
-        JPanel update = new JPanel();
-        update.add(startButton, BorderLayout.PAGE_START);
-        update.add(new JScrollPane(taskOutput), BorderLayout.CENTER);
-        update.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        frame.setContentPane(update);
-        
-        frame.pack();
-        frame.setVisible(true);*/
-        
     }
-    
-    private ProgressMonitor progressMonitor;
-//    private JButton startButton;
-    private JTextArea taskOutput;
-    //private Task task;
-    int numberOfEvents = 0;
     
     public void propertyChange(PropertyChangeEvent evt) {
-        if(evt.getPropertyName().equals("autoGenerateTotal")){
-            numberOfEvents = (Integer) evt.getNewValue();
+        if (evt.getPropertyName().equals("autoGenerateComplete")){
+            if (signalMastLogicFrame!=null)
+                signalMastLogicFrame.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
         }
-        if (evt.getPropertyName().equals("autoGenerateState") ) {
-            int progress = (Integer) evt.getNewValue();
-            progressMonitor.setProgress(progress);
-            String message =
-                String.format("Completed %d%%.\n", progress);
-            progressMonitor.setNote(message);
-            taskOutput.append(message);
-            if (progressMonitor.isCanceled()) {
-                Toolkit.getDefaultToolkit().beep();
-                /*if (progressMonitor.isCanceled()) {
-                    task.cancel(true);
-                    taskOutput.append("Task canceled.\n");
-                } else {
-                    taskOutput.append("Task completed.\n");
-                }
-                /*startButton.setEnabled(true);*/
-            }
-        }
-
     }
-
     
     jmri.jmrit.signalling.SignallingAction sigLog = new jmri.jmrit.signalling.SignallingAction();
-
     
     protected String getClassName() { return SignalMastLogicTableAction.class.getName(); }
     

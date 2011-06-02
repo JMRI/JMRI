@@ -35,7 +35,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -673,9 +673,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         Runnable r = new Runnable() {
             public void run() {
                 try {
-//                    log.debug("Wait started");
                     Thread.sleep(InstanceManager.signalMastLogicManagerInstance().getSignalLogicDelay());
-//                    log.debug("wait is over");
                     inWait=false;
                     setMastAppearance();
                 } catch (InterruptedException ex) {
@@ -686,12 +684,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         };
         
         thr = new Thread(r);
-        /*try{
-            thr.join();
-        } catch (InterruptedException ex) {
-            log.debug("interrupted at join " + ex);
-            inWait=false;
-        }*/
         thr.start();
     }
     
@@ -733,10 +725,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 float maxPathSpeed = destList.get(destination).getMinimumSpeed();
                 boolean divergRoute = destList.get(destination).turnoutThrown;
                 boolean divergFlagsAvailable = false;
-                if(divergRoute){
                     for(int i = 0; i<advancedAspect.length; i++){
                         String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "diverging");
-                        System.out.println("value of div " + div);
                         if ((div!=null) && (div.equals("yes"))){
                             divergAspects.add(i);
                             divergFlagsAvailable = true;
@@ -745,7 +735,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             nonDivergAspects.add(i);
                         }
                     }
-                }
                 log.debug("path max speed : " + maxPathSpeed);
                 for (int i = 0; i<advancedAspect.length; i++){
                     String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
@@ -756,7 +745,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         
                         If the diverg flag has not been set then we will check.
                     */
-                    if(((divergFlagsAvailable) && (divergAspects.contains(i))) || ((!divergFlagsAvailable) && nonDivergAspects.contains(i))){
+                    if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((!divergFlagsAvailable) && nonDivergAspects.contains(i))){
                         if ((strSpeed!=null) && (!strSpeed.equals(""))){
                             float speed = 0.0f;
                             try {
