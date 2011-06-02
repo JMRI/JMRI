@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener
@@ -1117,22 +1117,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 //We should be able to determine block metric now as the tracksegment should be valid
                 Connection = new ConnectivityUtil(editor);
             }
-            //This will set the positionable point between us and our neighbour, it also sets which direction we need to look at 
-            //to get the correct signal heads/mast and sensors.
-            //This might be redundant.
-            if ((Connection!=null) && (blk!=null)){
-                ArrayList<PositionablePoint> points = Connection.getAnchorBoundariesThisBlock(this.getBlock());
-                for (int i = 0; i<points.size(); i++){
-                    if ((points.get(i).getConnect1().getLayoutBlock()==this) && (points.get(i).getConnect2().getLayoutBlock()==blk)){
-                        adj.setPositionablePoint(points.get(i));
-                        adj.setPositionablePointDirection(true);
-                    }
-                    else if ((points.get(i).getConnect2().getLayoutBlock()==this) && (points.get(i).getConnect1().getLayoutBlock()==blk)){
-                        adj.setPositionablePoint(points.get(i));
-                        adj.setPositionablePointDirection(false);
-                    }
-                }
-            }
+
             //Need to inform our neighbors of our new addition
             //We only add an entry into the routing table if we are able to reach the next working block.
             //If we only transmit routes to it, then we can not route to it therefore it is not added
@@ -2154,16 +2139,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
         return -1;
     }
-    
-    public PositionablePoint getNextBlockAnchor(Block nextBlock, int direction){
-        for (int i = 0; i<neighbours.size(); i++){
-            if (neighbours.get(i).getBlock()==nextBlock){
-                return neighbours.get(i).getPositionablePoint();
-            }
-        }
-        return null;
-    }
-    
+        
     /**
     * last index - the index of the last block we returned ie we last returned 
     * index 10, so we don't want to return it again.
@@ -2189,8 +2165,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 log.info("last index is " + lastIndex + " " + routes.get(lastIndex).getDestBlock().getDisplayName());
         }
         for (int i = 0; i<routes.size(); i ++){
-//            log.info(routes.get(i).getDestBlock().getDisplayName() + " vs " + destBlock.getDisplayName());
-//            log.info("value of " + i + " lastIndex " + lastIndex);
             if (i!=lastIndex){
                 Routes r = routes.get(i);
                 int currentValue;
@@ -2200,7 +2174,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
                     currentValue = routes.get(i).getHopCount();  //was lastindex changed to i
                 }
-//                log.info("current value " + currentValue + " last value " + lastValue + " " + (currentValue>=lastValue));
                 if(currentValue>=lastValue){
                     if (r.getDestBlock()==destBlock){
                         if(enableSearchRouteLogging){
@@ -2770,14 +2743,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         Hashtable<Block, Routes> adjDestRoutes = new Hashtable<Block, Routes>();
         ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>();
-        //don't think the positionable point bit is used.
-        PositionablePoint point = null;
-        boolean pointDirection = false;
-        
-        /*Adjacencies(Block block, int dir){
-            adjBlock = block;
-            direction = dir;
-        }*/
         
         Adjacencies(Block block, int dir, int packetFlow){
             adjBlock = block;
@@ -2828,23 +2793,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             return -1;
         }
         
-        void setPositionablePoint(PositionablePoint p){
-            point = p;
-        }
-        
-        PositionablePoint getPositionablePoint(){
-            return point;
-        }
-
-        //Don't think the direction bit is read
-        void setPositionablePointDirection(boolean boo){
-            pointDirection = boo;
-        }
-
-        boolean getPositionablePointDirection(){
-            return pointDirection;
-        }
-
         void removeRouteAdvertisedToNeighbour(Routes removeRoute){
             Block dest = removeRoute.getDestBlock();
             //Only remove the dest / route pair if they match to what we have listed.
@@ -2893,7 +2841,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             mutualAdjacency=false;
             adjDestRoutes = null;
             actedUponUpdates = null;
-            point = null;
         }
     }
     
