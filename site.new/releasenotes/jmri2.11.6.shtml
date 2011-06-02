@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.8 2011-06-01 19:43:53 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.9 2011-06-02 22:31:25 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -129,6 +129,8 @@ are features that only certain track types support.  The program now only allows
 <lI>Fixed the car and loco import tools to work correctly when the "comma" attribute is part of the import file.</lI>
 <LI>Improved car import by allowing users the option of having the program automatically create new locations and tracks
 during the car import.</LI>
+<LI>Print car and loco roster can now show the value field.</LI>
+<LI>Export car and loco now exports the value field.</LI>
 </UL>
 
 <p>Matthew Harris:</p>
