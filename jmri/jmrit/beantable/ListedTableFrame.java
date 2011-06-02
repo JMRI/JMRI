@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -41,13 +41,6 @@ public class ListedTableFrame extends BeanTableFrame {
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     ActionJList actionList;
     
-    public String getTitle() {
-        if (list.getSelectedIndex()!=-1)
-            return tabbedTableArray.get(list.getSelectedIndex()).getItemString(); 
-        else
-            return tabbedTableArray.get(0).getItemString(); 
-    
-    }
     public boolean isMultipleInstances() { return true; }
 
     static ArrayList<tabbedTableItemList> tabbedTableItemListArray = new ArrayList<tabbedTableItemList>();
@@ -63,8 +56,12 @@ public class ListedTableFrame extends BeanTableFrame {
     tabbedTableItem itemBeingAdded = null;
     static int lastdivider;
     
-    public ListedTableFrame() {
-        super();
+    public ListedTableFrame(){
+        this(rbean.getString("TitleListedTable"));
+    }
+    
+    public ListedTableFrame(String s) {
+        super(s);
         if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
             //We add this to the instanceManager so that other components can add to the table
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
@@ -83,6 +80,7 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.SignalHeadTableAction", rbs.getString("MenuItemSignalTable"), true);
             addTable("jmri.jmrit.beantable.SignalMastTableAction", rbs.getString("MenuItemSignalMastTable"), true);
             addTable("jmri.jmrit.beantable.SignalGroupTableAction", rbs.getString("MenuItemSignalGroupTable"), true);
+//            addTable("jmri.jmrit.beantable.SignalMastLogicTableAction",  "Signal Mast Logic", true);
             addTable("jmri.jmrit.beantable.ReporterTableAction", rbs.getString("MenuItemReporterTable"), true);
             addTable("jmri.jmrit.beantable.MemoryTableAction", rbs.getString("MenuItemMemoryTable"), true);
             addTable("jmri.jmrit.beantable.RouteTableAction", rbs.getString("MenuItemRouteTable"), true);
@@ -568,8 +566,22 @@ public class ListedTableFrame extends BeanTableFrame {
             tabbedTableItem item = tabbedTableArray.get(index);
             int x = frame.getX()+frame.getInsets().top;
             int y = frame.getY()+frame.getInsets().top;
-            ListedTableAction tmp = new ListedTableAction(item.getItemString(), item.getClassAsString(), x, y, cardHolder.getDividerLocation());
-            tmp.actionPerformed();
+            class WindowMaker implements Runnable {
+                tabbedTableItem item;
+                int x;
+                int y;
+                WindowMaker(tabbedTableItem tItem, int tx, int ty){
+                    x = tx;
+                    y = ty;
+                    item = tItem;
+                }
+                public void run() {
+                    ListedTableAction tmp = new ListedTableAction(item.getItemString(), item.getClassAsString(), x, y, cardHolder.getDividerLocation());
+                    tmp.actionPerformed();
+                }
+            }
+            WindowMaker t = new WindowMaker(item, x, y);
+            javax.swing.SwingUtilities.invokeLater(t);
         }
 
         void selectListItem(int index){

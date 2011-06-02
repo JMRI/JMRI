@@ -28,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -44,6 +44,10 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     
     public BeanTableFrame(){
         super();
+    }
+
+    public BeanTableFrame(String s){
+        super(s);
     }
     
     public BeanTableFrame(BeanTableDataModel model, String helpTarget, JTable dataTab) {
