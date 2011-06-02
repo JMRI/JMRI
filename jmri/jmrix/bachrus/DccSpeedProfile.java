@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
  * Class to represent a dimensionless speed profile of a DCC decoder.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DccSpeedProfile {
 
@@ -91,8 +91,9 @@ public class DccSpeedProfile {
                 // for each profile
                 for (int j = 0; j < sp.length; j++) {
                     p.print(",");
-                    p.println(sp[j].getPoint(i));
+                    p.print(sp[j].getPoint(i));
                 }
+                p.println();
             }
         }
         closeExportFile();
