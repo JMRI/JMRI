@@ -288,6 +288,8 @@
     <tocitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
    </tocitem>
+   <tocitem text="Signal Mast Logic " target="package.jmri.jmrit.beantable.SignalMastLogicTable"/>
+
   </tocitem>
   <tocitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
 

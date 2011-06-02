@@ -28,6 +28,8 @@
 
 <mapID target="manual.Comp_Motor" url="manual/Comp_Motor.shtml"/>
 
+<mapID target="html.tools.Sensors_Debounce" url="html/tools/Sensors.shtml#Debounce"/>
+
 <mapID target="manual.Getting_Started_What is DCC" url="manual/Getting_Started.shtml#What is DCC"/>
 
 <mapID target="manual.Main_LocoNet_Sounds" url="manual/Main_LocoNet.shtml#Sounds"/>
@@ -188,6 +190,8 @@
 
 <mapID target="html.apps.DecoderPro.FAQ" url="html/apps/DecoderPro/FAQ.shtml"/>
 
+<mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
+
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_allocated" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#allocated"/>
 
 <mapID target="html.tools.throttle.BasicThrottleWindow" url="html/tools/throttle/BasicThrottleWindow.shtml"/>
@@ -319,6 +323,8 @@
 <mapID target="html.hardware.openlcb.Names" url="html/hardware/openlcb/Names.shtml"/>
 
 <mapID target="html.tools.signaling.Logic" url="html/tools/signaling/Logic.shtml"/>
+
+<mapID target="package.jmri.jmrit.display.marginSizeEdit" url="package/jmri/jmrit/display/marginSizeEdit.shtml"/>
 
 <mapID target="html.doc.Technical.AppStructure" url="html/doc/Technical/AppStructure.shtml"/>
 
@@ -922,6 +928,8 @@
 
 <mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
 
+<mapID target="package.jmri.jmrit.signalling.SignallingSourceFrame" url="package/jmri/jmrit/signalling/SignallingSourceFrame.shtml"/>
+
 <mapID target="html.hardware.rps.sensors" url="html/hardware/rps/sensors.shtml"/>
 
 <mapID target="html.hardware.XPressNet.LI101Configurationtool" url="html/hardware/XPressNet/LI101Configurationtool.shtml"/>
@@ -1110,6 +1118,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.MemoryTable" url="package/jmri/jmrit/beantable/MemoryTable.shtml"/>
 
+<mapID target="package.jmri.jmrix.ecos.swing.preferencesframe.PreferencesFrame" url="package/jmri/jmrix/ecos/swing/preferencesframe/PreferencesFrame.shtml"/>
+
 <mapID target="manual.Main_RPS_DebuggerWin" url="manual/Main_RPS.shtml#DebuggerWin"/>
 
 <mapID target="html.doc.Technical.XmlPersistance" url="html/doc/Technical/XmlPersistance.shtml"/>
@@ -1165,6 +1175,8 @@
 <mapID target="package.jmri.jmrit.automat.monitor.AutomatTableFrame" url="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.LogixAddEdit" url="package/jmri/jmrit/beantable/LogixAddEdit.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.SensorTable_Debounce" url="package/jmri/jmrit/beantable/SensorTable.shtml#Debounce"/>
 
 <mapID target="manual.Multi_Decoder_Control" url="manual/Multi_Decoder_Control.shtml"/>
 
@@ -1572,6 +1584,8 @@
 
 <mapID target="manual.Comp_SoundLevels_Top" url="manual/Comp_SoundLevels.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.roster.swing.RosterGroupAssociation" url="package/jmri/jmrit/roster/swing/RosterGroupAssociation.shtml"/>
+
 <mapID target="manual.Main_Roster_DeleteRoster" url="manual/Main_Roster.shtml#DeleteRoster"/>
 
 <mapID target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml"/>
@@ -1626,6 +1640,8 @@
 
 <mapID target="package.apps.AppConfigPanel" url="package/apps/AppConfigPanel.shtml"/>
 
+<mapID target="package.jmri.jmrit.signalling.AddEditSignallingLogic" url="package/jmri/jmrit/signalling/AddEditSignallingLogic.shtml"/>
+
 <mapID target="manual.Dcode_Testing" url="manual/Dcode_Testing.shtml"/>
 
 <mapID target="manual.Main_Help_Top" url="manual/Main_Help.shtml#Top"/>
@@ -1636,6 +1652,8 @@
 
 <mapID target="package.jmri.jmrit.display.SlipTurnoutIcon" url="package/jmri/jmrit/display/SlipTurnoutIcon.shtml"/>
 
+<mapID target="package.jmri.jmrit.display.fixedSizeEdit" url="package/jmri/jmrit/display/fixedSizeEdit.shtml"/>
+
 <mapID target="html.doc.Technical.XmlView" url="html/doc/Technical/XmlView.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml"/>
@@ -1643,6 +1661,8 @@
 <mapID target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame" url="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
+
+<mapID target="package.jmri.jmrit.display.textBorderSizeEdit" url="package/jmri/jmrit/display/textBorderSizeEdit.shtml"/>
 
 <mapID target="manual.Start_DecoderPro_Top" url="manual/Start_DecoderPro.shtml#Top"/>
 

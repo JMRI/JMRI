@@ -346,8 +346,10 @@
   <indexitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
  </indexitem>
- <indexitem text="Signaling " target="html.tools.signaling.index"/>
+ <indexitem text="Signaling " target="html.tools.signaling.index">
+  <indexitem text="Signal Mast Logic " target="package.jmri.jmrit.beantable.SignalMastLogicTable"/>
 
+ </indexitem>
  <indexitem text="SignalPro " target="html.apps.SignalPro.index"/>
 
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
