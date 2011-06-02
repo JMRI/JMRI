@@ -37,6 +37,7 @@
 		    <LI><dfn><a href="/help/en/html/tools/scripting/index.shtml">Scripting</a></dfn>
 		    <LI><dfn><a href="/help/en/html/hardware/PDA.shtml">PDA access</a></dfn>
 		    <LI><dfn><a href="/help/en/html/apps/LocoTools">LocoNet tools</a></dfn>
+		    <LI><dfn><a href="/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatching</a></dfn>
 		    </UL>
 		</dd>
 
