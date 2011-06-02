@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -734,6 +734,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					tools.setSignalMastsAtBlockBoundary();
                 }
             });
+
         /* These tools not yet supported
         JMenuItem turnoutSignalMastItem = new JMenuItem(rb.getString("SignalMastsAtTurnout")+"...");
         toolsMenu.add(turnoutSignalMastItem);
@@ -757,6 +758,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					tools.setSignalMastsAtLevelXing(signalFrame);
                 }
             });*/
+
         JMenuItem sensorBoundaryItem = new JMenuItem(rb.getString("SensorsAtBoundary")+"...");
         toolsMenu.add(sensorBoundaryItem);
         sensorBoundaryItem.addActionListener(new ActionListener() {
@@ -5462,6 +5464,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         return null;
     }
     
+    public LayoutTurnout findLayoutTurnoutBySensor(String sensorName){
+        for(int i = 0; i<turnoutList.size(); i++){
+            LayoutTurnout t = turnoutList.get(i);
+            if((t.getSensorA().equals(sensorName)) ||
+                (t.getSensorB().equals(sensorName)) ||
+                (t.getSensorC().equals(sensorName)) ||
+                (t.getSensorD().equals(sensorName)))
+                return t;
+        }
+        return null;
+    }
+
+    
     public LevelXing findLevelXingBySignalMast(String signalMastName){
         for(int i = 0; i<xingList.size(); i++){
             LevelXing l = xingList.get(i);
@@ -5469,6 +5484,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 (l.getSignalBMastName().equals(signalMastName)) ||
                 (l.getSignalCMastName().equals(signalMastName)) ||
                 (l.getSignalDMastName().equals(signalMastName)))
+                return l;
+        }
+        return null;
+    }
+    
+    public LevelXing findLevelXingBySensor(String sensorName){
+        for(int i = 0; i<xingList.size(); i++){
+            LevelXing l = xingList.get(i);
+            if((l.getSensorAName().equals(sensorName)) ||
+                (l.getSensorBName().equals(sensorName)) ||
+                (l.getSensorCName().equals(sensorName)) ||
+                (l.getSensorDName().equals(sensorName)))
                 return l;
         }
         return null;
