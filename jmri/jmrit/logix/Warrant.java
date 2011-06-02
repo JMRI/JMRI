@@ -18,7 +18,7 @@ import jmri.jmrit.roster.RosterEntry;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -621,25 +621,39 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (msg != null) {
             msg = java.text.MessageFormat.format(rb.getString("UnableToAllocate"), getDisplayName())+msg;
             return msg;
-        } else {
-            block.setValue(_trainName);
-            int state = block.getState();
-            if ((state & OBlock.OCCUPIED) > 0) {
-                block.setState(state | OBlock.RUNNING);
+        }
+        // Check route is in use
+        for (int i=1; i<_orders.size(); i++) {
+            BlockOrder bo = _orders.get(i);
+            block = bo.getBlock();
+            if ((block.getState() & OBlock.OUT_OF_SERVICE) !=0) {
+                _orders.get(0).getBlock().deAllocate(this);
+                return java.text.MessageFormat.format(rb.getString("UnableToAllocate"), getDisplayName()) +
+                    java.text.MessageFormat.format(rb.getString("BlockOutOfService"),block.getDisplayName()); 
             }
         }
+        // first block allocated and route is available - set name and state
+        block = _orders.get(0).getBlock();
+        block.setValue(_trainName);
+        int state = block.getState();
+        if ((state & OBlock.OCCUPIED) > 0) {
+            block.setState(state | OBlock.RUNNING);
+        }
+
         // continue and only allocate unoccupied blocks
         for (int i=1; i<_orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
             block = bo.getBlock();
-            int state = block.getState();
+            state = block.getState();
             if ((state & OBlock.OCCUPIED) > 0) {
-                msg = java.text.MessageFormat.format(rb.getString("ConditionalAllocation"), getDisplayName())+
-                      java.text.MessageFormat.format(rb.getString("BlockRougeOccupied"), block.getDisplayName());
+                if (msg==null) {
+                    msg = java.text.MessageFormat.format(rb.getString("ConditionalAllocation"), getDisplayName())+
+                          java.text.MessageFormat.format(rb.getString("BlockRougeOccupied"), block.getDisplayName());
+                }
             } else {
-                msg = block.allocate(this);
-                if (msg != null) {
-                    msg = java.text.MessageFormat.format(rb.getString("ConditionalAllocation"), getDisplayName())+msg;
+                String str = block.allocate(this);
+                if (str != null && msg==null) {
+                    msg = java.text.MessageFormat.format(rb.getString("ConditionalAllocation"), getDisplayName())+str;
                 }
             }
         }

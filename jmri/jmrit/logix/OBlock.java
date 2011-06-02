@@ -9,6 +9,7 @@ import java.util.List;
 
 import jmri.Path;
 import jmri.Sensor;
+import jmri.Turnout;
 
 /**
  * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It is the smallest
@@ -50,7 +51,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -242,6 +243,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
                                                   _warrant.getDisplayName(), getDisplayName()); 
         }
+        if ((getState() & OUT_OF_SERVICE) !=0) {
+            return java.text.MessageFormat.format(rb.getString("BlockOutOfService"),
+                                                    getDisplayName()); 
+        }
         String path = warrant.getRoutePathInBlock(this);
         if (_pathName!=null && !_pathName.equals(path)) {
             return java.text.MessageFormat.format(rb.getString("AllocatedToPath"),
@@ -290,6 +295,13 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (_warrant!=null && !_warrant.equals(warrant)) {
             return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
                 "\" owns block \""+getDisplayName()+"\"!";
+        }
+        if (_pathName!=null) {
+            OPath path = getPathByName(_pathName);
+            if (path!=null) {
+                int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT; 
+                path.setTurnouts(0, false, lockState, false);
+            }
         }
         removePropertyChangeListener(warrant);
         _warrant = null;
@@ -484,7 +496,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 }
             }
             _pathName = pathName;
-            path.setTurnouts(0);
+            int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT; 
+            path.setTurnouts(0, true, lockState, true);
             firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));
         }
         return msg;

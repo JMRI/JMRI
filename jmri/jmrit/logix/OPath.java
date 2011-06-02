@@ -107,7 +107,15 @@ public class OPath extends jmri.Path  {
     }
     public Portal getToPortal() { return _toPortal; }
 
-    public void setTurnouts(int delay) {
+    /**
+    * Set path turnout commanded state and lock state
+    * @param delay following actions in seconds
+    * @param set==true, command turnout to settings, false don't set coomand - just do lock setting
+    * @param lockState set when lock==true, lockState unset when lock==false
+    * @param lock
+    * If lockState==0 setLocked() is not called.  (lockState should be 1,2,3)  
+    */
+    public void setTurnouts(int delay, boolean set, int lockState, boolean lock) {
         if(delay>0) {
             if (!_timerActive) {
                 // Create a timer if one does not exist
@@ -117,6 +125,7 @@ public class OPath extends jmri.Path  {
                     _timer.setRepeats(false);
                 }
                 _listener.setList(getSettings());
+                _listener.setParams(set, lockState, lock);
                 _timer.setInitialDelay(delay*1000);
                 _timer.start();
                 _timerActive = true;
@@ -124,17 +133,22 @@ public class OPath extends jmri.Path  {
             else {
                 log.warn("timer already active for delayed turnout action on path "+toString());
             }
-        } else { fireTurnouts(getSettings()); }
+        } else { fireTurnouts(getSettings(), set, lockState, lock); }
     }
 
-    void fireTurnouts(List<BeanSetting> list) {
+    void fireTurnouts(List<BeanSetting> list, boolean set, int lockState, boolean lock) {
         for (int i=0; i<list.size(); i++)  {
             BeanSetting bs = list.get(i);
             Turnout t = (Turnout)bs.getBean();
             if (t==null) {
                 log.error("Invalid turnout on path "+toString());
             } else {
-                t.setCommandedState(bs.getSetting());
+                if (set) {
+                    t.setCommandedState(bs.getSetting());
+                }
+                if (lockState>0) {
+                    t.setLocked(lockState, lock);
+                }
             }
         }
     }
@@ -151,16 +165,24 @@ public class OPath extends jmri.Path  {
 	class TimeTurnout implements java.awt.event.ActionListener 
 	{
         private List<BeanSetting> list;
+        private int lockState;
+        boolean set;
+        boolean lock;
 		public TimeTurnout( ) {
 		}
 
         void setList(List<BeanSetting> l) {
 			list =  l;
         }
+        void setParams(boolean s, int ls, boolean l) {
+            set = s;
+            lockState = ls;
+            lock = l;
+        }
 		
 		public void actionPerformed(java.awt.event.ActionEvent event)
 		{
-            fireTurnouts(list);
+            fireTurnouts(list, set, lockState, lock);
 			// Turn Timer OFF
             if (_timer != null)
             {

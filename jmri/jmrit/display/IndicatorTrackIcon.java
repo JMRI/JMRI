@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 
@@ -239,12 +239,17 @@ public class IndicatorTrackIcon extends PositionableIcon
         if ((state & OBlock.TRACK_ERROR)!=0) {
             _status = "ErrorTrack";
         } else if ((state & OBlock.OUT_OF_SERVICE)!=0) {
+            setControlling(false);
+            /*
             if ((state & OBlock.OCCUPIED)!=0) {
                 _status = "OccupiedTrack";
             } else {
                 _status = "DontUseTrack";
             }
+            */
+            _status = "DontUseTrack";
         } else if ((state & OBlock.OCCUPIED)!=0) {
+            setControlling(true);
             if (_showTrain) {
                 setLocoIcon((String)block.getValue());
             }
@@ -258,6 +263,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 _status = "OccupiedTrack";
             }
         } else {
+            setControlling(true);
             if (_loco!=null) {
                 _loco.remove();
                 _loco = null;
