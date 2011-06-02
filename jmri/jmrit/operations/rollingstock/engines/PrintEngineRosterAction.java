@@ -22,8 +22,8 @@ import java.util.ResourceBundle;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2011
+ * @version     $Revision: 1.8 $
  */
 public class PrintEngineRosterAction  extends AbstractAction {
 	
@@ -71,7 +71,8 @@ public class PrintEngineRosterAction  extends AbstractAction {
         String type;
         String length;
         String owner;
-        String built;
+        String built = "";
+        String value = "";
  
         List<String> engines = panel.getSortByList();
         try {
@@ -79,7 +80,8 @@ public class PrintEngineRosterAction  extends AbstractAction {
 					+ "\t" + rb.getString("Model") + "\t     "
 					+ rb.getString("Type") + "      " + rb.getString("Length")
 					+ " " + rb.getString("Owner") + " "
-					+ rb.getString("Built") + " " + rb.getString("Location")
+					+ (panel.sortByValue.isSelected()?rb.getString("Value")+"        ":rb.getString("Built")+ " ")
+					+ rb.getString("Location")
 					+ newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<engines.size(); i++){
@@ -129,16 +131,26 @@ public class PrintEngineRosterAction  extends AbstractAction {
        				buf.append(" ");
     			owner = buf.toString();
          		
-       			built = engine.getBuilt().trim();
-    			if (built.length() > 4)
-    				built = built.substring(0, 4);
-    			buf = new StringBuffer(built);
-    			for (int j=built.length(); j<Control.MAX_LEN_STRING_BUILT_NAME+1; j++)
-     				buf.append(" ");
-    			built = buf.toString();
+    			if (panel.sortByValue.isSelected()){
+    				value = engine.getValue().trim();
+    				if (value.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
+    					value = built.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+    				buf = new StringBuffer(value);
+    				for (int j=value.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
+    					buf.append(" ");
+    				value = buf.toString();
+    			} else {
+    				built = engine.getBuilt().trim();
+    				if (built.length() > 4)
+    					built = built.substring(0, 4);
+    				buf = new StringBuffer(built);
+    				for (int j=built.length(); j<Control.MAX_LEN_STRING_BUILT_NAME+1; j++)
+    					buf.append(" ");
+    				built = buf.toString();
+    			}
          		
 				s = engine.getNumber() + "\t" + road + " " + model + type
-						+ length + owner + built + location + newLine;			
+						+ length + owner + value + built + location + newLine;			
         		writer.write(s, 0, s.length());
         	}
 

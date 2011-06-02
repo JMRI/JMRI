@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 /**
  * Exports the Engine roster into a comma delimitated file (CSV).
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  */
 public class ExportEngines extends XmlFile {
@@ -81,6 +81,8 @@ public class ExportEngines extends XmlFile {
         String engineModel;
         String engineLocationName;
         String engineTrackName;
+        // assume delimiter in the value field
+        String value;
         
         for (int i=0; i<engineList.size(); i++){
         	// store engine number, road, model, length, weight, owner, built date, location and track
@@ -100,10 +102,16 @@ public class ExportEngines extends XmlFile {
         		log.debug("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has delimiter in track field: "+engineTrackName);
         		engineTrackName = "\""+engine.getTrackName()+"\"";
         	}
+           	// only export value field if value has been set.
+        	value = "";
+        	if (!engine.getValue().equals("")){
+        		value = del + "\""+engine.getValue()+"\"";
+        	}
 			line = engine.getNumber() + del + engine.getRoad() + del
 					+ engineModel + del + engine.getLength() + del
 					+ engine.getOwner() + del + engine.getBuilt() + del
-					+ engineLocationName + ",-," + engineTrackName;
+					+ engineLocationName + ",-," + engineTrackName
+					+ value;
 			fileOut.println(line);
         }
 		fileOut.flush();

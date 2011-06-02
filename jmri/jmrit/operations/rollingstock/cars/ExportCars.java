@@ -16,8 +16,8 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
  * Exports the car roster into a comma delimitated file (CSV).
- * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @version	$Revision: 1.6 $
  *
  */
 public class ExportCars extends XmlFile {
@@ -81,6 +81,8 @@ public class ExportCars extends XmlFile {
         String carType;
         String carLocationName;
         String carTrackName;
+        // assume delimiter in the value field
+        String value;
         
         for (int i=0; i<carList.size(); i++){
         	// store car number, road, type, length, weight, color, owner, built date, location and track
@@ -100,10 +102,16 @@ public class ExportCars extends XmlFile {
         		log.debug("Car ("+car.getRoad()+" "+car.getNumber()+") has delimiter in track field: "+carTrackName);
         		carTrackName = "\""+car.getTrackName()+"\"";
         	}
+        	// only export value field if value has been set.
+        	value = "";
+        	if (!car.getValue().equals("")){
+        		value = del + "\""+car.getValue()+"\"";
+        	}
 			line = car.getNumber() + del + car.getRoad() + del + carType
 					+ del + car.getLength() + del + car.getWeight() + del
 					+ car.getColor() + del + car.getOwner() + del + car.getBuilt()
-					+ del + carLocationName + ",-," +carTrackName;
+					+ del + carLocationName + ",-," +carTrackName
+					+ value;
 			fileOut.println(line);
         }
 		fileOut.flush();

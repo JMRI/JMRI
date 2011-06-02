@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
@@ -23,8 +24,8 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version     $Revision: 1.15 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2010, 2011
+ * @version     $Revision: 1.16 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -85,21 +86,10 @@ public class PrintCarRosterAction  extends AbstractAction {
         String built = "";
         String load = "";
         String kernel = "";
+        String value = "";
         
-        boolean printOnly = printCarsWithLocation.isSelected();
-        boolean printLength = printCarLength.isSelected();
-        boolean printWeight = printCarWeight.isSelected();
-        boolean printColor = printCarColor.isSelected();
-        boolean printOwner = printCarOwner.isSelected();
-        boolean printBuilt = printCarBuilt.isSelected();
-        boolean printLoad = printCarLoad.isSelected();
-        boolean printKernel = printCarKernel.isSelected();
-        boolean space = printSpace.isSelected();
-        boolean page = printPage.isSelected();
-        
-
 		ownerMaxLen = 5;
-		if (!printLoad && !printKernel && !printColor)
+		if (!printCarLoad.isSelected() && !printCarKernel.isSelected() && !printCarColor.isSelected())
 			ownerMaxLen = Control.MAX_LEN_STRING_ATTRIBUTE;
         
         List<String> cars = panel.getSortByList();
@@ -112,16 +102,16 @@ public class PrintCarRosterAction  extends AbstractAction {
         		location = "";     		
         		if (!car.getLocationName().equals("")){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
-        		} else if (printOnly)
+        		} else if (printCarsWithLocation.isSelected())
         			continue;	// car doesn't have a location skip
         		
         		// Page break between locations?
-        		if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && page){
+        		if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && printPage.isSelected()){
         			writer.pageBreak();
         			printTitleLine(writer);
         		}
            		// Add a line between locations?
-        		else if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && space){
+        		else if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && printSpace.isSelected()){
         			writer.write(newLine);
         		}
         		previousLocation = car.getLocationName().trim();
@@ -133,24 +123,26 @@ public class PrintCarRosterAction  extends AbstractAction {
         		// car type
         		type = padAttribute(car.getType().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
  
-        		if (printLength)
+        		if (printCarLength.isSelected())
         			length = padAttribute(car.getLength().trim(), Control.MAX_LEN_STRING_LENGTH_NAME);
-        		if (printWeight)
+        		if (printCarWeight.isSelected())
         			weight = padAttribute(car.getWeight().trim(), Control.MAX_LEN_STRING_WEIGHT_NAME);
-        		if (printColor)
+        		if (printCarColor.isSelected())
         			color = padAttribute(car.getColor().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);        		
-           		if (printLoad)
+           		if (printCarLoad.isSelected())
            			load = padAttribute(car.getLoad().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);          		
-           		if (printKernel)
+           		if (printCarKernel.isSelected())
            			kernel = padAttribute(car.getKernelName().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
-        		if (printOwner)
+        		if (printCarOwner.isSelected())
         			owner = padAttribute(car.getOwner().trim(), ownerMaxLen);
-        		if (printBuilt)
+        		if (printCarBuilt.isSelected())
         			built = padAttribute(car.getBuilt().trim(), Control.MAX_LEN_STRING_BUILT_NAME);
+           		if (printCarValue.isSelected())
+           			value = padAttribute(car.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);          		
 
         		String s = number + road + type
         		+ length + weight + color + load + kernel
-        		+ owner + built
+        		+ owner + built + value
         		+ location;
     			if (s.length() > numberCharPerLine)
     				s = s.substring(0, numberCharPerLine);
@@ -174,6 +166,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     	+ (printCarKernel.isSelected()?rb.getString("Kernel")+ "       ":"")
     	+ (printCarOwner.isSelected()?padAttribute(rb.getString("Owner"),ownerMaxLen):"")
     	+ (printCarBuilt.isSelected()?rb.getString("Built")+" ":"")
+    	+ (printCarValue.isSelected()?rb.getString("Value")+"        ":"")
     	+ rb.getString("Location")
     	+ newLine;
     	writer.write(s);
@@ -196,6 +189,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     JCheckBox printCarBuilt = new JCheckBox(rb.getString("PrintCarBuilt"));
     JCheckBox printCarLoad = new JCheckBox(rb.getString("PrintCarLoad"));
     JCheckBox printCarKernel = new JCheckBox(rb.getString("PrintKernel"));
+    JCheckBox printCarValue = new JCheckBox(rb.getString("PrintValue"));
     JCheckBox printSpace = new JCheckBox(rb.getString("PrintSpace"));
     JCheckBox printPage = new JCheckBox(rb.getString("PrintPage"));
     
@@ -221,6 +215,8 @@ public class PrintCarRosterAction  extends AbstractAction {
     		pPanel.add(printCarKernel);
     		pPanel.add(printCarOwner);
     		pPanel.add(printCarBuilt);
+    		if (Setup.isValueEnabled())
+    			pPanel.add(printCarValue);
 			pPanel.add(printSpace);
 			pPanel.add(printPage);
     		    		
@@ -233,6 +229,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		printCarKernel.setSelected(false);
        		printCarOwner.setSelected(false);
     		printCarBuilt.setSelected(false);
+    		printCarValue.setSelected(false);
     		printSpace.setSelected(false);
     		printPage.setSelected(false);
     		
