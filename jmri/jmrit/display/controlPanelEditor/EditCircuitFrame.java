@@ -19,21 +19,22 @@ import jmri.jmrit.logix.*;
  * 
  */
 
-public class EditCircuitFrame extends JFrame {
+public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
     private OBlock _block;
     private CircuitBuilder _parent;
 
     private JTextField  _detectorSensorName = new JTextField();
     private JTextField  _errorSensorName = new JTextField();
+    private JTextField  _blockState  = new JTextField();
     private JTextField  _numTrackSeg = new JTextField();
     private JTextField  _numTurnouts = new JTextField();
 
     static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
 
-    public EditCircuitFrame(String title, CircuitBuilder parent, String sysName) {
-        _block = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
+    public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
+        _block = block;
         setTitle(java.text.MessageFormat.format(title, _block.getDisplayName()));
         _parent = parent;
         makeContentPanel();
@@ -47,7 +48,7 @@ public class EditCircuitFrame extends JFrame {
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                ClosingEvent();
+                closingEvent();
             }
         });
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -56,11 +57,17 @@ public class EditCircuitFrame extends JFrame {
         contentPane.add(p);
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        _blockState.setPreferredSize(new Dimension(50, _blockState.getPreferredSize().height));
+        panel.add(CircuitBuilder.makeTextBoxPanel(true, _blockState, "blockState", false, null));
+        contentPane.add(panel);
+
         p = new JPanel();
         p.add(new JLabel(rbcp.getString("numTrackElements")));
         contentPane.add(p);
 
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(Box.createHorizontalGlue());
         panel.add(CircuitBuilder.makeTextBoxPanel(
@@ -121,7 +128,7 @@ public class EditCircuitFrame extends JFrame {
         JButton doneButton = new JButton(rbcp.getString("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    ClosingEvent();
+                    closingEvent();
                 }
         });
         panel.add(doneButton);
@@ -147,46 +154,84 @@ public class EditCircuitFrame extends JFrame {
         dispose();
     }
 
-    private void updateContentPanel() {
+    protected void updateContentPanel() {
         updateIconList(_parent.getSelectionGroup());
         String name = "";
         Sensor sensor = _block.getSensor();
         if (sensor!=null) {
             name = sensor.getDisplayName();
         }
-        _detectorSensorName.setText(name);        
+        _detectorSensorName.setText(name);
+
         sensor = _block.getErrorSensor();
         if (sensor!=null) {
             name = sensor.getDisplayName();
         } else {
             name = "";
         }
-        _errorSensorName.setText(name);        
+        _errorSensorName.setText(name);
+
+        int state = _block.getState();
+        StringBuffer stateText = new StringBuffer();
+        if ((state & OBlock.UNKNOWN) > 0) {
+            stateText.append("Unknown ");
+        }
+        if ((state & OBlock.OCCUPIED) > 0) {
+            stateText.append("Occupied ");
+        }
+        if ((state & OBlock.UNOCCUPIED) > 0) {
+            stateText.append("Unoccupied ");
+        }
+        if ((state & OBlock.INCONSISTENT) > 0) {
+            stateText.append("Inconsistent ");
+        }
+        if ((state & OBlock.ALLOCATED) > 0) {
+            stateText.append("Allocated ");
+        }
+        if ((state & OBlock.RUNNING) > 0) {
+            stateText.append("Positioned ");
+        }
+        if ((state & OBlock.OUT_OF_SERVICE) > 0) {
+            stateText.append("OutOf Service ");
+        }
+        if ((state & OBlock.DARK) > 0) {
+            stateText.append("Dark ");
+        }
+        if ((state & OBlock.TRACK_ERROR) > 0) {
+            stateText.append("TrackError ");
+        }
+        if (state==0) {
+            stateText.append("Not Initialized");
+        }
+        if (log.isDebugEnabled()) log.debug("updateContentPanel: state= "+stateText.toString()); 
+        _blockState.setText(stateText.toString());
     }
 
-    private Sensor getDetectorSensor() {
-        String sensorName = _detectorSensorName.getText();
-        if (sensorName!=null && sensorName.trim().length()>0) {
-            return InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+    private Sensor getSensor(String sensorName) {
+        try {
+            if (sensorName!=null && sensorName.trim().length()>0) {
+                return InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            }
+        } catch (Throwable t) { 
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                            rbcp.getString("sensorFail"), sensorName, t.toString()),
+                            rbcp.getString("noSensor"), JOptionPane.INFORMATION_MESSAGE);
         }
         return null;
     }
 
-    private void ClosingEvent() {
+    protected void closingEvent() {
         // check Sensors
-        boolean close = true;
-        Sensor sensor = getDetectorSensor();
+        String sensorName = _detectorSensorName.getText();
+        Sensor sensor = getSensor(sensorName);
+        _block.setSensor(sensor);
         if (sensor==null) {
             JOptionPane.showMessageDialog(this, rbcp.getString("noDetecterSensor"), 
                             rbcp.getString("noSensor"), JOptionPane.INFORMATION_MESSAGE);
         }
-        _block.setSensor(sensor);
 
         String errorName = _errorSensorName.getText();
-        Sensor errSensor = null;
-        if (errorName!=null && errorName.trim().length()>0) {
-            errSensor =InstanceManager.sensorManagerInstance().provideSensor(errorName);
-        }
+        Sensor errSensor = getSensor(errorName);
         _block.setErrorSensor(errSensor);
         if (errSensor!=null && sensor==null) {
             int result = JOptionPane.showConfirmDialog(this, rbcp.getString("mixedSensors"), 
@@ -198,18 +243,9 @@ public class EditCircuitFrame extends JFrame {
                 _detectorSensorName.setText(errSensor.getDisplayName());
             }
         }
-
         // check icons to be indicator type
-        if (_parent.conversionNeeded(_parent.getSelectionGroup())) {
-            int result = JOptionPane.showConfirmDialog(this, rbcp.getString("notIndicatorIcon"), 
-                            rbcp.getString("incompleteCircuit"), JOptionPane.YES_NO_OPTION, 
-                            JOptionPane.QUESTION_MESSAGE);
-            if (result==JOptionPane.YES_OPTION) {
-                setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-                close = false;
-                _parent.convertIcons();
-            }
-        }
+        _parent.iconsConverted();
+        
         // set the sensors
         java.util.List<Positionable> list = _parent.getSelectionGroup();
         if (list!=null) {
@@ -219,22 +255,11 @@ public class EditCircuitFrame extends JFrame {
                 if (pos instanceof IndicatorTrack) {
                     ((IndicatorTrack)pos).setOccBlockHandle(handle);
                 }
-                /*
-                if (pos instanceof IndicatorTurnoutIcon) {
-                    IndicatorTurnoutIcon track = (IndicatorTurnoutIcon)pos;
-                    track.setOccBlockHandle(handle);
-                } else if (pos instanceof IndicatorTrackIcon) {
-                    IndicatorTrackIcon track = (IndicatorTrackIcon)pos;
-                    track.setOccBlockHandle(handle);
-                } */
             }
-        } else {
-            _parent.addBlock(_block);
         }
-        if (close) {
-            _parent.closeCircuitFrame(_block);
-            dispose();
-        }
+//        _parent.addBlock(_block);
+        _parent.closeCircuitFrame(_block);
+        dispose();
     }
 
     protected OBlock getBlock() {

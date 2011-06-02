@@ -53,10 +53,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     public boolean _debug;
 	private boolean delayedPopupTrigger = false;
-    private JMenuBar _menuBar;
+    protected JMenuBar _menuBar;
     private JMenu _editorMenu;
     private JMenu _editMenu;
-    private JMenu _fileMenu;
+    protected JMenu _fileMenu;
     private JMenu _optionMenu;
     private JMenu _iconMenu;
     private JMenu _zoomMenu;
@@ -64,7 +64,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private jmri.jmrit.display.palette.ItemPalette _itemPalette;
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
-    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CloseEditor"));
+//    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CloseEditor"));
     private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(rb.getString("CheckBoxControlling"));
     private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowTooltips"));
@@ -147,7 +147,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
     }
 
-    private void makeIconMenu() {
+    protected void makeIconMenu() {
         _iconMenu = new JMenu(rb.getString("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
         JMenuItem mi = new JMenuItem(rb.getString("MenuItemItemPallette"));
@@ -164,7 +164,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
     }
 
-    private void makeZoomMenu() {
+    protected void makeZoomMenu() {
         _zoomMenu = new JMenu(rb.getString("MenuZoom"));
         _menuBar.add(_zoomMenu, 0);
         JMenuItem addItem = new JMenuItem(rb.getString("NoZoom"));
@@ -189,17 +189,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             });
     }
-    private void makeOptionMenu() {
+    protected void makeOptionMenu() {
         _optionMenu = new JMenu(rb.getString("MenuOption"));
         _menuBar.add(_optionMenu, 0);
-        // Editable
-        _optionMenu.add(editableBox);
-        editableBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    setAllEditable(editableBox.isSelected());
-                }
-            });
-        editableBox.setSelected(isEditable());
         // use globals item
         _optionMenu.add(useGlobalFlagBox);
         useGlobalFlagBox.addActionListener(new ActionListener() {
@@ -331,8 +323,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-					jmri.jmrit.display.controlPanelEditor.CircuitBuilder ed = (jmri.jmrit.display.controlPanelEditor.CircuitBuilder)changeView("jmri.jmrit.display.controlPanelEditor.CircuitBuilder");
-                    ed.init();
+                    changeView("jmri.jmrit.display.controlPanelEditor.CircuitBuilder");
+                    /*
+					jmri.jmrit.display.controlPanelEditor.CircuitBuilder ed =
+                        (jmri.jmrit.display.controlPanelEditor.CircuitBuilder)changeView("jmri.jmrit.display.controlPanelEditor.CircuitBuilder");
+                    ed.init(); */
                 }
             });
 
@@ -376,7 +371,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      *    to get the data.
      *    See public ArrayList<Positionable> getClipGroup() {} below.
      */
-    private void makeEditMenu() {
+    protected void makeEditMenu() {
         _editMenu = new JMenu("Edit");
         _menuBar.add(_editMenu, 0);
         _editMenu.setMnemonic(KeyEvent.VK_E);
@@ -722,7 +717,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * After construction, initialize all the widgets to their saved config settings.
      */
     public void initView() {
-        editableBox.setSelected(isEditable());
+//        editableBox.setSelected(isEditable());
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());

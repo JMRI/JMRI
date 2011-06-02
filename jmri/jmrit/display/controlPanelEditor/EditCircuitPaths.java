@@ -23,7 +23,7 @@ import jmri.jmrit.logix.*;
  * 
  */
 
-public class EditCircuitPaths extends JFrame implements ListSelectionListener {
+public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelectionListener {
 
     private OBlock          _block;
     private CircuitBuilder  _parent;
@@ -39,14 +39,14 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
     static int STRUT_SIZE = 10;
     public static final String TEST_PATH = "TEST_PATH";
 
-    public EditCircuitPaths(String title, CircuitBuilder parent, String sysName) {
-        _block = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
+    public EditCircuitPaths(String title, CircuitBuilder parent, OBlock block) {
+        _block = block;
         setTitle(java.text.MessageFormat.format(title, _block.getDisplayName()));
         _parent = parent;
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                ClosingEvent();
+                closingEvent();
             }
         });
         _parent.setEditColors();
@@ -77,7 +77,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         JButton doneButton = new JButton(rbcp.getString("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    ClosingEvent();
+                    closingEvent();
                 }
         });
         panel.add(doneButton);
@@ -242,15 +242,15 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         for (int i=0; i<_pathGroup.size(); i++) {
             ((IndicatorTrack)_pathGroup.get(i)).addPath(TEST_PATH);
         }
-        path.setTurnouts(0);
+        path.setTurnouts(0, true, 0, false);
 
         Portal fromPortal = path.getFromPortal();
         Portal toPortal = path.getToPortal();
 
-        java.util.List<PortalIcon> pIcons = _parent.getPortalIcons();
-        for (int i=0; i<pIcons.size(); i++) {
-            PortalIcon icon = pIcons.get(i);
-            Portal portal = pIcons.get(i).getPortal();
+        Iterator<PortalIcon> iter = _parent.getPortalIconMap().values().iterator();
+        while (iter.hasNext()) {
+            PortalIcon icon = iter.next();
+            Portal portal = icon.getPortal();
             if (portal.equals(fromPortal)) {
                 icon.setStatus(PortalIcon.PATH);
                 _pathGroup.add(icon);
@@ -268,9 +268,9 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
             IndicatorTrack icon = (IndicatorTrack)list.get(i);
             icon.removePath(TEST_PATH);
         }
-        java.util.List<PortalIcon> pIcons = _parent.getPortalIcons();
-        for (int i=0; i<pIcons.size(); i++) {
-            pIcons.get(i).setStatus(PortalIcon.BLOCK);
+        Iterator<PortalIcon> iter = _parent.getPortalIconMap().values().iterator();
+        while (iter.hasNext()) {
+            iter.next().setStatus(PortalIcon.BLOCK);
         }
         int state = _block.getState() & ~OBlock.ALLOCATED;
         _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
@@ -415,7 +415,7 @@ public class EditCircuitPaths extends JFrame implements ListSelectionListener {
         clearPath();
     }
 
-    private void ClosingEvent() {
+    protected void closingEvent() {
         clearPathGroup();
         _parent.closePathFrame(_block);
         dispose();

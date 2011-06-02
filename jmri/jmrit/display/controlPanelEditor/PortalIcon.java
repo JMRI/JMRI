@@ -12,7 +12,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 /**
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
@@ -28,18 +28,17 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
         super(editor);
         _portal = portal;
         initMap();
-        setTooltip(new ToolTip(_portal.toString(), 0, 0));
-        setPopupUtility(null);        // no text 
     }
 
+    // Config file ctor
     public PortalIcon(String blockName, String portalName, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
         OBlock block = jmri.InstanceManager.oBlockManagerInstance().getOBlock(blockName);
         _portal = block.getPortalByName(portalName);
         initMap();
-        setPopupUtility(null);        // no text 
     }
+
 
     private void initMap() {
         _iconMap = new java.util.Hashtable<String, NamedIcon>();
@@ -54,6 +53,9 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
         icon = new NamedIcon(fileName, fileName);
         _iconMap.put(HIDDEN, icon);
 
+        setName(_portal.getName());
+        setTooltip(new ToolTip(_portal.getDescription(), 0, 0));
+        setPopupUtility(null);        // no text 
     }
 
     public Portal getPortal() {
@@ -78,7 +80,7 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
     }
     
     public String getNameString() {
-        return "Portal: "+_portal.getName();
+        return _portal.getDescription();
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PortalIcon.class.getName());

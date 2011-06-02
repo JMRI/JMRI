@@ -25,13 +25,11 @@ import jmri.jmrit.catalog.NamedIcon;
  * 
  */
 
-public class EditPortalFrame extends JFrame implements ListSelectionListener {
+public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelectionListener {
 
     private OBlock _homeBlock;
-    private OBlock _adjacentBlock;
     private CircuitBuilder _parent;
 
-    private JPanel _introPanel;
     private JPanel      _portalPanel;   
     private JList       _portalList;
     private PortalListModel _portalListModel; 
@@ -41,30 +39,25 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
     static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
 
-    public EditPortalFrame(String title, CircuitBuilder parent, String sysName) {
-        _homeBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
+    public EditPortalFrame(String title, CircuitBuilder parent, OBlock block) {
+        _homeBlock = block;
         _parent = parent;
         setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                ClosingEvent();
+                closingEvent();
             }
         });
         _parent.setEditColors();
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        _introPanel = makeIntroPanel();
         _portalPanel = makePortalPanel();
 
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-        contentPane.add(_introPanel);
         contentPane.add(_portalPanel);
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-
-        _introPanel.setVisible(true);
-        _portalPanel.setVisible(false);
 
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10,10));
@@ -84,7 +77,7 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
         JButton doneButton = new JButton(rbcp.getString("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    ClosingEvent();
+                    closingEvent();
                 }
         });
         panel.add(doneButton);
@@ -97,52 +90,23 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
         return panel;
     }
 
-    private JPanel makeIntroPanel() {
-        JPanel introPanel = new JPanel();
-        introPanel.setLayout(new BoxLayout(introPanel, BoxLayout.Y_AXIS));
-        introPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(java.text.MessageFormat.format(
-                             rbcp.getString("connectCircuits"),
-                             _homeBlock.getDisplayName())));
-        panel.add(new JLabel(java.text.MessageFormat.format(
-                             rbcp.getString("selectAdjacentCircuit"),
-                             _homeBlock.getDisplayName())));
-        JPanel p = new JPanel();
-        p.add(panel);
-        introPanel.add(p);
-        introPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-
-        panel = new JPanel();
-
-        JButton doneButton = new JButton(rbcp.getString("ButtonCancel"));
-        doneButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    ClosingEvent();
-                }
-        });
-        panel.add(doneButton);
-        introPanel.add(panel);
-        introPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        return introPanel;
-    }
-
     private JPanel makePortalPanel() {
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        portalPanel.add(new JLabel(java.text.MessageFormat.format(
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(java.text.MessageFormat.format(
                                     rbcp.getString("PortalTitle"), _homeBlock.getDisplayName())));
+        portalPanel.add(panel);
+
         _portalListModel =  new PortalListModel();
         _portalList = new JList();
         _portalList.setModel(_portalListModel);
         _portalList.setCellRenderer(new PortalCellRenderer());
-
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
+
         JButton clearButton = new JButton(rbcp.getString("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -150,7 +114,7 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
                 }
         });
         //clearButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.add(clearButton);
         portalPanel.add(panel);
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -159,18 +123,21 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
         panel.add(CircuitBuilder.makeTextBoxPanel(
                     false, _portalName, "portalName", true, null));
         _portalName.setPreferredSize(new Dimension(300, _portalName.getPreferredSize().height));
+        _portalName.setToolTipText(java.text.MessageFormat.format(
+                            rbcp.getString("TooltipPortalName"), _homeBlock.getDisplayName()));
         portalPanel.add(panel);
 
         panel = new JPanel();
+/*
         JButton addButton = new JButton(rbcp.getString("buttonAddPortal"));
         addButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addPortal();
                 }
         });
-        addButton.setToolTipText(rbcp.getString("ToolTipAddPath"));
+        addButton.setToolTipText(rbcp.getString("ToolTipAddPortal"));
         panel.add(addButton);
- 
+*/ 
         JButton changeButton = new JButton(rbcp.getString("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -193,16 +160,23 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel l = new JLabel(rbcp.getString("enterNameToDrag"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        portalPanel.add(panel);
-        
-        panel = new JPanel();
+        l = new JLabel(rbcp.getString("dragNewIcon"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
+        l = new JLabel(rbcp.getString("selectPortal"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
         l = new JLabel(rbcp.getString("dragIcon"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        portalPanel.add(panel);
+        JPanel p = new JPanel();
+        p.add(panel);
+        portalPanel.add(p);
 
         portalPanel.add(makeDndIconPanel());
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -262,10 +236,92 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
     }
 
     /************************* end setup **************************/
-
+/*
     private void addPortal() {
-        JOptionPane.showMessageDialog(this, rbcp.getString("AddPortal"), 
-                        rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+        if (_adjacentBlock==null) {
+            JOptionPane.showMessageDialog(this, rbcp.getString("selectAdjacentCircuit"), 
+                            rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            String name = _portalName.getText();
+            if (name==null || name.trim().length()==0) {
+                JOptionPane.showMessageDialog(this, rbcp.getString("needPortalName"), 
+                                rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                Portal portal = new Portal(_homeBlock, name, _adjacentBlock);
+                _portalListModel.dataChange();
+            }
+        }
+    }
+
+    /**
+    * Is location of icon reasonable? if so, add it
+    */
+    protected void checkPortalIcon(PortalIcon icon) {
+        if (log.isDebugEnabled()) log.debug("checkPortalIcon "+icon.getName());
+        java.util.List<Positionable> list = _parent.getCircuitIcons(_homeBlock);
+        if (list==null || list.size()==0) {
+            JOptionPane.showMessageDialog(this, rbcp.getString("needIcons"), 
+                            rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        boolean ok = false;
+        Rectangle iconRect = icon.getBounds(new Rectangle());
+        Rectangle homeRect = new Rectangle();
+        Rectangle adjRect = new Rectangle();
+        Positionable comp = null;
+        OBlock adjacentBlock = null;
+        for (int i=0; i<list.size(); i++) {
+            homeRect = list.get(i).getBounds(homeRect);
+            if (iconRect.intersects(homeRect)) {
+                ok = true;
+                break;
+            }
+        }
+        if (log.isDebugEnabled()) log.debug("checkPortalIcon: hit homeBlock= "+ok);
+        if (!ok) {
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                rbcp.getString("iconNotOnCircuit"), icon.getNameString(), _homeBlock.getDisplayName()), 
+                            rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        ok = false;
+        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        String[] sysNames = manager.getSystemNameArray();
+        for (int j = 0; j < sysNames.length; j++) {
+            OBlock block = manager.getBySystemName(sysNames[j]);
+            if (!block.equals(_homeBlock)) {
+                list = _parent.getCircuitIcons(block);
+                for (int i=0; i<list.size(); i++) {
+                    comp = list.get(i);
+                    if (_parent.isTrack(comp)) {
+                        adjRect = comp.getBounds(adjRect);
+                        if (iconRect.intersects(adjRect)) {
+                            ok = true;
+                            adjacentBlock = block;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if (log.isDebugEnabled()) log.debug("checkPortalIcon: hit adjacent lock= "+ok);
+        if (!ok) {
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                rbcp.getString("iconNotOnAdjacent"), icon.getNameString(), _homeBlock.getDisplayName()), 
+                            rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        Portal portal = icon.getPortal();
+        if (portal.getToBlock()!=null && !adjacentBlock.equals(portal.getToBlock())
+                         && !adjacentBlock.equals(portal.getFromBlock()) ) {
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                rbcp.getString("iconNotOnBlocks"), icon.getNameString(), portal.getFromBlockName(),
+                            adjacentBlock.getDisplayName()), rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        portal.setToBlock(adjacentBlock, false);
     }
 
     private void changePortalName() {
@@ -299,13 +355,15 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
                         rbcp.getString("makePortal"), JOptionPane.YES_NO_OPTION, 
                         JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.YES_OPTION) {
-            getPortalIcon(portal).remove();
+            if (getPortalIcon(portal)!=null) {
+                getPortalIcon(portal).remove();
+            }
             portal.dispose();
             _portalListModel.dataChange();
         }
     }
 
-    private void ClosingEvent() {
+    protected void closingEvent() {
         boolean close = true;
 
         if (close) {
@@ -317,23 +375,7 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
     protected OBlock getHomeBlock() {
         return _homeBlock;
     }
-
-    protected void setAdjacentBlock(OBlock block) {
-        _adjacentBlock = block;
-        _portalName.setToolTipText(java.text.MessageFormat.format(
-                            rbcp.getString("TooltipPortalName"),
-                             _homeBlock.getDisplayName(), block.getDisplayName()));
-        _introPanel.setVisible(false);
-        _portalPanel.setVisible(true);
-        setTitle(java.text.MessageFormat.format(rbcp.getString("OpenPortalTitle2"),
-                            _homeBlock.getDisplayName(), block.getDisplayName()));
-        setSize(getPreferredSize());
-        repaint();
-    }
-    protected OBlock getAdjacentBlock() {
-        return _adjacentBlock;
-    }
-
+    
     private PortalIcon getPortalIcon(Portal portal) {
         if (portal==null) {
             return null;
@@ -386,19 +428,21 @@ public class EditPortalFrame extends JFrame implements ListSelectionListener {
                 JOptionPane.showMessageDialog(this, rbcp.getString("needPortalName"), 
                                 rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             } else {
-                Portal portal = _homeBlock.getPortalByName(name);
-                if (portal==null) {
-                    portal = new Portal(_homeBlock, name, _adjacentBlock);
-                    _portalListModel.dataChange();
+                PortalIcon pi = _parent.getPortalIconMap().get(name);
+                if (pi != null) {
+                    JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                                    rbcp.getString("portalIconExists"), name), 
+                                    rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    Portal portal = _homeBlock.getPortalByName(name);
+                    if (portal==null) {
+                        portal = new Portal(_homeBlock, name, null);
+                    }
+                    pi = new PortalIcon(_parent, portal);
+                    pi.setLevel(Editor.MARKERS);
+                    pi.setStatus(PortalIcon.BLOCK);
                 }
-                PortalIcon ic = getPortalIcon(portal);
-                if (ic!=null) {
-                    _parent.highlight(ic);
-                }
-                PortalIcon pi = new PortalIcon(null, portal);
-
-                pi.setStatus(PortalIcon.BLOCK);
-                pi.setLevel(Editor.MARKERS);
+                _parent.highlight(pi);
                 return pi;
             }
             return null;
