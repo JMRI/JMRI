@@ -30,7 +30,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -169,7 +169,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected int profileAddress = 0;
     protected Programmer prog = null;
     protected CommandStation commandStation = null;
-    protected enum ProgState {IDLE, WAIT29, WAIT3, WAIT17, WAIT18}
+    protected enum ProgState {IDLE, WAIT29, WAIT1, WAIT17, WAIT18}
     protected ProgState readState = ProgState.IDLE;
 
     //Create the combo box, select item at index 4.
@@ -930,6 +930,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 profileStep += 1;
                 // adjust delay as we get faster and averaging is quicker
                 profileTimer.setDelay(7000 - range*1000);
+                //profileTimer.setDelay(20000);
                 //log.info("Step " + profileStep + " Set speed: "+profileSpeed);
             }
         } else {
@@ -980,9 +981,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 case WAIT29:
                     // Check extended address bit
                     if ((value & 0x20) == 0) {
-                        readState = ProgState.WAIT3;
+                        readState = ProgState.WAIT1;
                         statusLabel.setText(rb.getString("ProgRdShort"));
-                        startRead(3);
+                        startRead(1);
                     } else {
                         readState = ProgState.WAIT17;
                         statusLabel.setText(rb.getString("ProgRdExtended"));
@@ -990,8 +991,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     }
                     break;
 
-                case WAIT3:
+                case WAIT1:
                     profileAddress = value;
+                    profileAddressField.setText(Integer.toString(profileAddress));
                     profileAddressField.setBackground(Color.WHITE);
                     readState = ProgState.IDLE;
                     break;
@@ -1003,7 +1005,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     break;
 
                 case WAIT18:
-                    profileAddress = ((profileAddress<<8) + value) & 0x03FF;
+                    profileAddress = (profileAddress&0x3f)*256 + value;
                     profileAddressField.setText(Integer.toString(profileAddress));
                     profileAddressField.setBackground(Color.WHITE);
                     statusLabel.setText(rb.getString("ProgRdComplete"));
