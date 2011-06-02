@@ -7,13 +7,13 @@ import javax.swing.JButton;
 import java.util.ResourceBundle;
 
 /**
- * Frame for ECoS status
- * @author	Bob Jacobsen   Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * Frame for Signalling Logic Frames
+ * @author	Kevin Dickerson   Copyright (C) 2011
+ * @version $Revision: 1.2 $
 */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.signallingBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingFrame() {
         super(false, true);
@@ -35,7 +35,7 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
 
         getContentPane().add(sigPanel);
 
-		addHelpMenu("package.jmri.jmrit.signalling.SignallingFrame", true);
+        addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);
 
         // pack for display
         pack();

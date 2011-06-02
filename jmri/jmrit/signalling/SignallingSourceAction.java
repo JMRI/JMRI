@@ -10,13 +10,13 @@ import java.util.ResourceBundle;
  * Swing action to create and register a 
  *       			SignallingFrame object
  *
- * @author	    Bob Jacobsen    Copyright (C) 2008
- * @version		$Revision: 1.1 $	
+ * @author	    Kevin Dickerson    Copyright (C) 2011
+ * @version		$Revision: 1.2 $	
  */
 
 public class SignallingSourceAction extends AbstractAction {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.signallingBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
 	public SignallingSourceAction(String s) {
         super(s);

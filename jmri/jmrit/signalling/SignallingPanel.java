@@ -32,12 +32,12 @@ import java.util.ResourceBundle;
 
 /**
  *
- * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @author	Kevin Dickerson Copyright (C) 2011
+ * @version	$Revision: 1.4 $
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.signallingBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
     
     JComboBox sourceMastBox = new JComboBox();
     JComboBox destMastBox = new JComboBox();
@@ -954,8 +954,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JRadioButton includedButton = null;
     
     private boolean showAll = true;   // false indicates show only included items
-    
-//    private static String[] COLUMN_NAMES = {rb.getString("ColumnSystemName"), rb.getString("ColumnUserName"), rb.getString("ColumnInclude"),rb.getString("ColumnState")};
     
     private static String SET_TO_ACTIVE = rb.getString("SensorActive");
     private static String SET_TO_INACTIVE = rb.getString("SensorInactive");

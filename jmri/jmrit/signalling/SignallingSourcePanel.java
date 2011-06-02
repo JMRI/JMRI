@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.beans.PropertyChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import jmri.util.JmriJFrame;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,9 +26,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.util.ResourceBundle;
 
-public class SignallingSourcePanel extends jmri.util.swing.JmriPanel {
+/**
+ * Frame for Signal Mast Add / Edit Panel
+ * @author	Kevin Dickerson   Copyright (C) 2011
+ * @version $Revision: 1.2 $
+*/
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.signallingBundle");
+public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     SignalMastLogic sml;
     SignalMast sourceMast;
@@ -42,13 +50,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel {
     public SignallingSourcePanel(SignalMast sourceMast){
         super();
         sml = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sourceMast);
-
+        this.sourceMast = sourceMast;
+        fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
         if (sml!=null){
-            this.sourceMast = sml.getSourceMast();
-            fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
             _signalMastList = sml.getDestinationList();
-        }
-        
+        }        
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout());
         
@@ -103,16 +109,37 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel {
         add(containerPanel);
     }
     
-    void discoverPressed(ActionEvent e){
-        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        for(int i = 0; i<layout.size(); i++){
-        try{
-            jmri.InstanceManager.signalMastLogicManagerInstance().discoverSignallingDest(sourceMast, layout.get(i));
-        } catch (jmri.JmriException ex) {
-            JOptionPane.showMessageDialog(null, ex.toString());
-        }
-        }
+    JmriJFrame signalMastLogicFrame = null;
+    JLabel sourceLabel = new JLabel();
     
+    void discoverPressed(ActionEvent e){
+        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs");
+        signalMastLogicFrame.setPreferredSize(null);
+        Container theContentPane = signalMastLogicFrame.getContentPane();
+        theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+        sourceLabel = new JLabel("Discovering Signalmasts");
+        signalMastLogicFrame.pack();
+        signalMastLogicFrame.setVisible(true);
+        
+        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        jmri.InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(this);
+        for(int i = 0; i<layout.size(); i++){
+            try{
+                jmri.InstanceManager.signalMastLogicManagerInstance().discoverSignallingDest(sourceMast, layout.get(i));
+            } catch (jmri.JmriException ex) {
+                signalMastLogicFrame.setVisible(false);
+                JOptionPane.showMessageDialog(null, ex.toString());
+            }
+        }
+        jmri.InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
+    }
+    
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("autoSignalMastGenerateComplete")){
+            signalMastLogicFrame.setVisible(false);
+            //signalMastLogicFrame = null;
+            JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
+        } 
     }
     
     private ArrayList <SignalMast> _signalMastList;
