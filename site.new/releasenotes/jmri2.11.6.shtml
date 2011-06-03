@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.9 2011-06-02 22:31:25 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.10 2011-06-03 15:04:02 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -131,6 +131,7 @@ are features that only certain track types support.  The program now only allows
 during the car import.</LI>
 <LI>Print car and loco roster can now show the value field.</LI>
 <LI>Export car and loco now exports the value field.</LI>
+<LI>Switch lists now show the train's arrival and or departure direction.</LI>
 </UL>
 
 <p>Matthew Harris:</p>
