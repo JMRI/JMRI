@@ -95,7 +95,7 @@ public class TrainCommon {
 		String[] format = Setup.getDropCarMessageFormat();
 		// local move?
 		boolean local = false;
-		if (car.getRouteLocation().equals(car.getRouteDestination())){
+		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null){
 			buf = new StringBuffer(Setup.getLocalPrefix());
 			format = Setup.getLocalMessageFormat();
 			local = true;
