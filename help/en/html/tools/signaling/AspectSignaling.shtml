@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AspectSignaling.shtml,v 1.8 2010-01-20 15:09:52 jacobsen Exp $ -->
+<!-- $Id: AspectSignaling.shtml,v 1.9 2011-06-03 14:35:25 kevin-dickerson Exp $ -->
 <title>JMRI: Aspect Signaling</title>
 
 <!-- Style -->
@@ -94,6 +94,15 @@ You can also add a Signal Mast icon in the Panel Editor in the usual
 way.  The icon will display the images from the appearance definition 
 for that particular signal mast. 
 
+<h2>Signal Mast Logic</h2>
+Starting with JMRI 2.11.6 (mid 2011), JMRI contains a "<a href="SignalMastLogic.shtml">Signal Mast Logic</a>" tool, that
+allows the Signalling logic to be built up between Signal Masts on the layout.
+The signal mast logic will use the states of blocks, turnouts, sensors and other
+Signal Masts to determine what appearance a Signal Mast should be displaying.
+<p>
+If the layout has been drawn up on the layout editor and the SignalMasts have
+been placed on the panel using the various tools, then it is possible for all 
+the Signal Mast logic to be dynamically built, with little other user interaction.
 <h2>Available Signaling Systems</h2>
 
 JMRI users have provided a number of pre-defined signal systems:

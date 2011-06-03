@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Kevin Dickerson 2011 -->
+<!-- $Id: SignalMastLogic.shtml,v 1.1 2011-06-03 14:35:25 kevin-dickerson Exp $ -->
+<title>JMRI: Signal Mast Logic</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>JMRI: Signal Mast Logics</H1>
+<p class=subtitle>
+    Background information on JMRI Signal Masts Logic
+</p>
+
+<div class=para>
+
+
+The JMRI "SignalMastLogic" allows you to build up a set of creteria for a 
+signal mast as to what aspect it should be displaying for a specific route 
+through to a destination mast.
+<p>
+Each signal mast logic is built from a source and destination signal mast pair, 
+along with a series blocks, turnouts and sensors between the two masts and the
+state that they must be in for the source mast to be released from a Danager or 
+Stop Aspect.
+<p>
+Each signal mast pair must be directly reachable from the other, without any other
+other signal mast in-between that is in the same direction.
+<p>
+Which aspect our source mast displays after being released from Danger is firstly
+determined by the aspect mapping that has been defined in the signal mast appearance 
+file.  If there is only one aspect that could be displayed, then the signal mast 
+will be set to that aspect.  
+
+However if there are multiple aspects that could potentially be displayed then 
+the logic first looks at two areas to determine the resulting aspect to be displayed<br>
+<ul><li>Diverging route<br><ul>
+<li>If there are aspects for a diverging route and any of the turnouts on the path are set thrown 
+then it will use the aspect for a diverging route.</li>
+<li>If none of the turnouts on the route are set thrown, then the aspect that is not 
+designated as a diverging aspect will be used.</li>
+</ul></li>
+<li>Block/Signal Speed<br>
+<ul><li>
+If the diverging route is not available on the signal aspects, or it does not 
+return a single potential aspect, then the speed of the block and speed rating 
+of the aspect is used.
+<br>
+Each aspect and block can be configured with a Speed value, the logic will take 
+the lowest speed defined on the blocks in the route and choose the aspect with 
+the highest speed which is under the routes lowest speed.  ie if the routes 
+lowest speed is 65 mph, then it will choose the aspect that has a speed equal or
+less than 65mph.
+</li></ul>
+</li>
+</ul>
+<p>
+In addition to being able to specify the turnouts, blocks and sensors that make 
+up a logic, you can also specify which other signal masts must be set to a specific 
+aspect before the source mast can be released.  In general, there should be no 
+need to add extra signal masts as the route between all the different source mast 
+to the destination mast should have unique criteria.  However there are certain 
+situation such as where two tracks crossover on the same level where a conflicting 
+route could be set.  Therefore to get around this, the signalmast or masts that 
+are protecting the crossover should be part of each others criteria.
+<p>
+<H2>Manual and Auto Generated Information</H2>
+The signalling logic holds two sets of block and turnout information, the 
+first is user generated, the second is where a tool such as used with the layout 
+editor (See Below) has automatically built up a set of blocks or turnouts from 
+the panel layout as signalling criteria.<p>
+Both sets of information is used by the signalling logic to determine if a signal 
+can be released or not, however the manually created information has a higher 
+priority over the automatically generated information. Thus allowing the user to 
+over-ride what the system has determined.<p>
+The automatically generated information is not saved with the rest of the panel 
+information, however the manually generated user information is.  If the layout 
+editor is being used to base the signalling logic on (See below) then the signalling 
+logic will rediscover this information from the panel each time it is loaded, thus 
+if any changes have been made they will be discovered.  Please note, that this 
+re-generation of information is not done on the "fly" when the layout editor panel 
+is changed.
+<p>
+<H2>Logic to Un-Signalled Areas or Buffer Stops</H2>
+The signalling logic works only between a source and destination signal mast, 
+if you have a valid route to an End Bumper/Buffer Stop/Dark Area, then there is 
+no specific destination signal mast.  In this instance you would create a "dummy" 
+signal mast to act as your destination mast, it doesn't have to be a real signal 
+mast on the system or have real signal heads associated.  All that this dummy 
+signalmast has to do is display a Danger aspect.
+<p>
+<H2>Using The Layout Editor for Signal Mast Logic</H2>
+By using the layout block editor, it is possible to have the signal mast logic 
+determine the signalling pairs, along with the blocks and turnouts that make up 
+the criteria.  This can be done across all the signalmast on the a layout editor 
+or on a source signalmast basis.
+<p>It has the advantage that if the layout editor panel is changed, the 
+signalling logic will discover this change when the panel is reloaded and use the 
+new block and turnout information.
+Please be aware that the re-discover at load process will not discover any new 
+signalling pairs or remove invalid signalling pairs, it will simply update the 
+information between existing pairs.
+<p>
+<H3>Placing Signal Masts<H3>
+Signal masts can be placed by turnouts, anchor points and level crossings, 
+but only where there is a boundary between two different layout blocks.<p>
+To add the signal mast, right click on the turnout, level crossing or anchor point 
+and if a block boundary existing you will be given the option to "set Signal Mast.." 
+You will then be presented with a fresh window that allows you to enter in the 
+name of the signal mast that will protect a boundary between blocks.<br>
+For turnouts and crossings, you can only add a signal mast for the boundary going 
+into the turnout or crossing, it is not possible to add a signalmast for the 
+boundary going out from the turnout or crossing.  eg, If block A is the section 
+of track attached to the turnout and the turnout is in block B, you can only add 
+a signal mast that faces into block A that protects block B, you can not add a 
+signal mast that faces into block B to protect block A.
+
+Signal Mast Logics are configured through the
+<a href="../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table</a><br>
+You add new ones with the "Add..."  button
+on the table, which takes you to the
+<a href="../../../package/jmri/jmrit/signalling/AddEditSignallingLogic.shtml">"Add Edit Signal Mast Logics" window</a>.
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

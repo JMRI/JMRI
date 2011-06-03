@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: kevin-dickerson $) 2009 -->
-<!-- $Id: SignallingSourceFrame.shtml,v 1.1 2011-06-02 20:10:52 kevin-dickerson Exp $ -->
+<!-- $Id: SignallingSourceFrame.shtml,v 1.2 2011-06-03 14:36:46 kevin-dickerson Exp $ -->
 <title>JMRI: Signal Group Table</title>
 
 <!-- Style -->
@@ -19,11 +19,12 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
-<h1> 
-JMRI: Signal Logic Source Frame
-</h1>
-Signal Logic Source Frame
+ 
+<h1>JMRI: Signal Logic Source Frame</h1>
+From this window you can see all the signal logics that effect the appearance of 
+the Signal Mast, along with being able to edit each logic.<br>
+If the layout editor is being used, it is possible to automatically discover all 
+the signalmast logics based upon the panel.
 <!--#include virtual="/Footer" -->
 </body>
 </html>
