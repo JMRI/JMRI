@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layoutblocks-2-9-6.xsd,v 1.1 2010-05-02 19:35:19 jacobsen Exp $ -->
+<!-- $Id: layoutblocks-2-9-6.xsd,v 1.2 2011-06-03 14:42:00 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -58,6 +58,8 @@
             
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>
+      <xs:attribute name="blockrouting" type="yesNoType"/>
+      <xs:attribute name="routingStablisedSensor" type="xs:string" />
     </xs:complexType>
 
 </xs:schema>
