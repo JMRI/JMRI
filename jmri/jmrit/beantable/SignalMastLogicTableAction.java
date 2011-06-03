@@ -157,15 +157,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                             }
                         }
                     }
-                    else {
-                    // a value changed.  Find it, to avoid complete redraw
-                    //String object = ((SignalMastLogic)e.getSource());
-                    //if (log.isDebugEnabled()) log.debug("Update cell "+signalMastLogicList.indexOf(name)+","
-                     //                                   +VALUECOL+" for "+name);
-                    // since we can add columns, the entire row is marked as updated
-                        int row = signalMastLogicList.indexOf((SignalMastLogic)e.getSource());
-                        fireTableRowsUpdated(row, row);
-                    }
                 } else if (e.getSource() instanceof jmri.SignalMast){
                     jmri.SignalMast sigMast = (jmri.SignalMast)e.getSource();
                     for (int i = 0; i<signalMastLogicList.size(); i++){
@@ -180,7 +171,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                     }
                 }
             }
-
+            
             /**
              * Is this property event announcing a change this table should display?
              * <P>
@@ -283,10 +274,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(getLogicFromRow(row), getDestMastFromRow(row));
             }
             
-            public void refreshSelections(){
-                fireTableRowsUpdated(0, getRowCount());
-            }
-            
             public SignalMast getDestMastFromRow(int row){
                     // if object has been deleted, it's not here; ignore it
                 Hashtable<SignalMastLogic, SignalMast> b = signalMastLogicList.get(row);
@@ -352,7 +339,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
             }
             public NamedBean getBySystemName(String name) { return null;}
             public NamedBean getByUserName(String name) { return null;}
-
+            
             @Override
             synchronized public void dispose() {
 
@@ -364,7 +351,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                     }
                 }
             }
-
+            
             @Override
             public int getRowCount() {
                 return signalMastLogicList.size();

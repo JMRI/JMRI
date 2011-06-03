@@ -29,7 +29,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager {
@@ -248,7 +248,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException{
         firePropertyChange("autoSignalMastGenerateStart", null, source.getDisplayName());
 
-        validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
+        Hashtable<SignalMast, ArrayList<SignalMast>> validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
             //log.debug("advanced routing not enabled");
@@ -261,7 +261,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         LayoutBlock lFacing = lbm.getFacingBlockByMast(source, layout);
         LayoutBlock lProtecting = lbm.getProtectedBlockByMast(source, layout);
         try{
-            discoverSignallingDest(source, lProtecting, lFacing);
+            discoverSignallingDest(validPaths, source, lProtecting, lFacing);
         } catch (JmriException e){
             throw e;
         }
@@ -289,7 +289,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("autoSignalMastGenerateComplete", null, source.getDisplayName());
     }
     
-    protected void discoverSignallingDest(final SignalMast source, final LayoutBlock lProtecting, final LayoutBlock lFacing) throws JmriException{
+    protected void discoverSignallingDest(Hashtable<SignalMast, ArrayList<SignalMast>> validPaths, final SignalMast source, final LayoutBlock lProtecting, final LayoutBlock lFacing) throws JmriException{
         try {
             jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
             if(!lbm.isAdvancedRoutingEnabled()){
@@ -337,8 +337,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             log.debug("Error setting stability indicator sensor");
         }
     }
-    
-    Hashtable<SignalMast, ArrayList<SignalMast>> validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
 
     /**
     * Discover all possible valid source and destination signalmasts past pairs 
@@ -348,7 +346,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     */
     
     public Hashtable<SignalMast, ArrayList<SignalMast>> automaticallyDiscoverSignallingPairs() throws JmriException{
-        validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
+        Hashtable<SignalMast, ArrayList<SignalMast>> validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
         runWhenStablised=false;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
@@ -369,7 +367,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             Block protecting = signalMastList.get(i).getProtecting();
             LayoutBlock lProtecting = lbm.getLayoutBlock(protecting);
             SignalMast source = signalMastList.get(i).getMast();
-            discoverSignallingDest(source, lProtecting, lFacing);
+            discoverSignallingDest(validPaths, source, lProtecting, lFacing);
         }
         Enumeration<SignalMast> en = validPaths.keys();
         while (en.hasMoreElements()) {
