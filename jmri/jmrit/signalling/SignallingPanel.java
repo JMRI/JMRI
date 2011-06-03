@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 /**
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
@@ -828,27 +828,27 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(_includedManualBlockList.get(i).getSysName());
             hashBlocks.put(blk, _includedManualBlockList.get(i).getState());
         }
-        sml.setBlocks(hashBlocks, destMast);
+            sml.setBlocks(hashBlocks, destMast);
         
         Hashtable<Turnout, Integer> hashTurnouts = new Hashtable<Turnout, Integer>();
         for(int i = 0; i<_includedManualTurnoutList.size(); i++){
             Turnout blk = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_includedManualTurnoutList.get(i).getSysName());
             hashTurnouts.put(blk, _includedManualTurnoutList.get(i).getState());
         }
-        sml.setTurnouts(hashTurnouts, destMast);
+            sml.setTurnouts(hashTurnouts, destMast);
         
         Hashtable<Sensor, Integer> hashSensors = new Hashtable<Sensor, Integer>();
         for(int i = 0; i<_includedManualSensorList.size(); i++){
             Sensor blk = jmri.InstanceManager.sensorManagerInstance().getSensor(_includedManualSensorList.get(i).getSysName());
             hashSensors.put(blk, _includedManualSensorList.get(i).getState());
         }
-        sml.setSensors(hashSensors, destMast);
+            sml.setSensors(hashSensors, destMast);
 
         Hashtable<SignalMast, String> hashSignalMast = new Hashtable<SignalMast, String>();
         for(int i = 0; i<_includedManualSignalMastList.size(); i++){
             hashSignalMast.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
         }
-
+        
         sml.setMasts(hashSignalMast, destMast);
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
         sml.initialise(destMast);
@@ -1001,7 +1001,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Block blk = InstanceManager.blockManagerInstance().getBlock(tSysName);
             if (sml.isBlockIncluded(blk, destMast)) {
                 block.setIncluded(true);
-                block.setAutoMatic(true);
                 block.setState(sml.getBlockState(blk, destMast));
                 setRow = i;
             } else {
@@ -1023,7 +1022,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(tSysName);
             if (sml.isTurnoutIncluded(turn, destMast)) {
                 turnout.setIncluded(true);
-                turnout.setAutoMatic(true);
                 turnout.setState(sml.getTurnoutState(turn, destMast));
                 setRow = i;
             } else {
@@ -1091,7 +1089,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         String _userName;
         boolean _included;
         int _setToState;
-        boolean _autoMatic;
 
         SignalMastElement(){
         
@@ -1101,10 +1098,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             _sysName = sysName;
             _userName = userName;
             _included = false;
-            _autoMatic = false;
             _setToState = Sensor.INACTIVE;
         }
-                
+        
         String getSysName() {
             return _sysName;
         }
@@ -1113,14 +1109,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
         boolean isIncluded() {
             return _included;
-        }
-        
-/*        boolean isAutoMatic() {
-            return _autoMatic;
-        }*/
-        
-        void setAutoMatic(boolean auto) {
-            _autoMatic= auto;
         }
         
         void setIncluded(boolean include) {
@@ -1173,7 +1161,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 _setToState = Block.UNOCCUPIED;
             } else if (SET_TO_OCCUPIED.equals(state)) {
                 _setToState = Block.OCCUPIED;
-            } else _setToState = 0x00;
+            } else _setToState = 0x03;
         }
     }
     
@@ -1353,7 +1341,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(blockList.get(r).isIncluded());
+                    return Boolean.valueOf(blockList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return  blockList.get(r).getSysName();
                 case UNAME_COLUMN:  //
@@ -1428,7 +1416,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(turnoutList.get(r).isIncluded());
+                    return Boolean.valueOf(turnoutList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return turnoutList.get(r).getSysName();
                 case UNAME_COLUMN:  //
@@ -1440,7 +1428,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
-        @Override
         public void setValueAt(Object type,int r,int c) {
             ArrayList <ManualTurnoutList> turnoutList = null;
             if (showAll) {
@@ -1546,7 +1533,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(signalMastList.get(r).isIncluded());
+                    return Boolean.valueOf(signalMastList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return signalMastList.get(r).getSysName();
                 case UNAME_COLUMN:  //

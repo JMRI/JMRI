@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for Signal Mast Add / Edit Panel
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
 */
 
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
@@ -39,11 +39,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     SignalMastLogic sml;
     SignalMast sourceMast;
     JLabel fixedSourceMastLabel = new JLabel();
-    
-    public SignallingSourcePanel() {
-        this(null);
-    }
-    
+        
     SignalMastAppearanceModel _AppearanceModel;
     JScrollPane _SignalAppearanceScrollPane;
     
@@ -54,7 +50,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
         if (sml!=null){
             _signalMastList = sml.getDestinationList();
-        }        
+        }
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout());
         

@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for Signal Logic Source Mast status
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
 */
 public class SignallingSourceFrame extends jmri.util.JmriJFrame {
 
@@ -21,14 +21,10 @@ public class SignallingSourceFrame extends jmri.util.JmriJFrame {
     
     JButton sendButton;
     SignallingSourcePanel sigPanel;
-    protected boolean reuseFrameSavedSized = false;
 
     public void initComponents(jmri.SignalMast source) throws Exception {
         // the following code sets the frame's initial state
-        if (source==null)
-            sigPanel = new SignallingSourcePanel();
-        else
-            sigPanel = new SignallingSourcePanel(source);
+        sigPanel = new SignallingSourcePanel(source);
         
         setTitle(rb.getString("SignallingPairs"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

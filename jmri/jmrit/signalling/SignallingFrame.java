@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for Signalling Logic Frames
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
 */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
@@ -21,7 +21,6 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
     
     JButton sendButton;
     SignallingPanel sigPanel;
-    protected boolean reuseFrameSavedSized = false;
 
     public void initComponents(jmri.SignalMast source, jmri.SignalMast dest) throws Exception {
         // the following code sets the frame's initial state
