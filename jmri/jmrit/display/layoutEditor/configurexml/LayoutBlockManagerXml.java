@@ -3,7 +3,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.InstanceManager;
-import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.Sensor;
@@ -18,9 +17,9 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class LayoutBlockManagerXml extends AbstractXmlAdapter {
+public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public LayoutBlockManagerXml() {
     }
@@ -54,10 +53,10 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
             LayoutBlock b = tm.getBySystemName(sname);
             if (b.getUseCount()>0) {
                 // save only those LayoutBlocks that are in use--skip abandoned ones
-                String uname = b.getUserName();
                 Element elem = new Element("layoutblock")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
+                elem.addContent(new Element("systemName").addContent(sname));
+                storeCommon(b, elem);
                 if (b.getOccupancySensorName() != "") {
                     elem.setAttribute("occupancysensor", b.getOccupancySensorName());
                 }
@@ -128,20 +127,20 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
         if (log.isDebugEnabled()) log.debug("Found "+layoutblockList.size()+" layoutblocks");
         
         for (int i=0; i<layoutblockList.size(); i++) {
-            if ( ((layoutblockList.get(i))).getAttribute("systemName") == null) {
+            String sysName = getSystemName(layoutblockList.get(i)) ;
+            if(sysName == null){
                 log.warn("unexpected null in systemName "+
 							((layoutblockList.get(i)))+" "+
 									((layoutblockList.get(i))).getAttributes());
                 break;
             }
-            String sysName = ((layoutblockList.get(i))).
-												getAttribute("systemName").getValue();
-            String userName = null;
-            if ( ((layoutblockList.get(i))).getAttribute("userName") != null) {
-                userName = ((layoutblockList.get(i))).
-												getAttribute("userName").getValue();
-			}
+
+            String userName = getUserName(layoutblockList.get(i));
             LayoutBlock b = tm.createNewLayoutBlock(sysName, userName);
+            
+            // load common parts
+            loadCommon(b, layoutblockList.get(i));
+            
             if (b!=null) {
 				// set attributes
 				Color color = LayoutBlock.stringToColor(((layoutblockList.get(i))).
