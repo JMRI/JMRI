@@ -31,13 +31,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
     private boolean debug;
 
     public Element store(Object o) {
-        Element signalMastLogic = new Element("signalMastLogics");
+        Element signalMastLogic = new Element("signalmastlogics");
         setStoreElementClass(signalMastLogic);
         SignalMastLogicManager smlm = (SignalMastLogicManager) o;
         ArrayList<SignalMastLogic> sml = smlm.getSignalMastLogicList();
         for(int i = 0; i<sml.size(); i++){
             SignalMastLogic sm = sml.get(i);
-            Element source = new Element("signalMastLogic");
+            Element source = new Element("signalmastlogic");
             source.addContent(new Element("sourceSignalMast").addContent(sm.getSourceMast().getDisplayName()));
             ArrayList<SignalMast> destination = sm.getDestinationList();
             for (int k = 0; k<destination.size(); k++){
@@ -83,9 +83,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             for(int j = 0; j<blocks.size(); j++){
                                 Element bloc = new Element("block");
                                 bloc.addContent(new Element("blockName").addContent(blocks.get(j).getDisplayName()));
-                                String blkState = "unoccupied";
+                                String blkState = "anyState";
                                 if (sm.getBlockState(blocks.get(j), dest)==Block.OCCUPIED)
                                     blkState = "occupied";
+                                else if (sm.getBlockState(blocks.get(j), dest)==Block.UNOCCUPIED)
+                                    blkState = "unoccupied";
                                 bloc.addContent(new Element("blockState").addContent(blkState));
                                 blockElement.addContent(bloc);
                             }
@@ -140,7 +142,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
     }
 
     public void setStoreElementClass(Element signalMastLogic) {
-        signalMastLogic.setAttribute("class","jmri.configurexml.SignalMastLogicManagerXml");
+        signalMastLogic.setAttribute("class","jmri.managers.configurexml.DefaultSignalMastLogicManagerXml");
     }
 
     public void load(Element element, Object o) {
@@ -155,7 +157,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
     @SuppressWarnings({ "unchecked", "null" })
     public void loadSignalMastLogic(Element signalMastLogic) {
-        List<Element> logicList = signalMastLogic.getChildren("signalMastLogic");
+        List<Element> logicList = signalMastLogic.getChildren("signalmastlogic");
         if (log.isDebugEnabled()) log.debug("Found "+logicList.size()+" signal mast logics");
 
         SignalMastManager sm = InstanceManager.signalMastManagerInstance();
@@ -265,9 +267,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         for (Element b : blockList){
                             String block = b.getChild("blockName").getText();
                             String state = b.getChild("blockState").getText();
-                            int value = Block.UNOCCUPIED;
+                            int value = 0x03;
                             if (state.equals("occupied"))
                                 value = Block.OCCUPIED;
+                            else if (state.equals("unoccupied"))
+                                value = Block.UNOCCUPIED;
 
                             Block blk = InstanceManager.blockManagerInstance().getBlock(block);
                             if (blk!=null)

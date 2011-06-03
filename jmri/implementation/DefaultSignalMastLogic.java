@@ -35,7 +35,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -1413,8 +1413,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     log.debug(key.getDisplayName() + " " + key.getState() + " " + autoBlocks.get(key));
                if (key.getState()!=autoBlocks.get(key)){
                    if (blocks.containsKey(key)){
-                        if(key.getState()!=blocks.get(key)){
-                            state=false;
+                        if(blocks.get(key)!=0x03) {
+                            if(key.getState()!=blocks.get(key)){
+                                state=false;
+                            }
                         }
                     } else {
                        state = false;
@@ -1426,8 +1428,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             while ( blockKeys.hasMoreElements() )
             {
                Block key = blockKeys.nextElement();
-               if (key.getState()!=blocks.get(key))
-                   state=false;
+                if(blocks.get(key)!=0x03){
+                    if (key.getState()!=blocks.get(key))
+                        state=false;
+                }
             }
             if(!state)
                 turnoutThrown = false;
