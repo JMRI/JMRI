@@ -324,8 +324,6 @@
 
 <mapID target="html.tools.signaling.Logic" url="html/tools/signaling/Logic.shtml"/>
 
-<mapID target="package.jmri.jmrit.display.marginSizeEdit" url="package/jmri/jmrit/display/marginSizeEdit.shtml"/>
-
 <mapID target="html.doc.Technical.AppStructure" url="html/doc/Technical/AppStructure.shtml"/>
 
 <mapID target="glossary.index" url="glossary/index.shtml"/>
@@ -1122,6 +1120,8 @@
 
 <mapID target="manual.Main_RPS_DebuggerWin" url="manual/Main_RPS.shtml#DebuggerWin"/>
 
+<mapID target="html.tools.signaling.SignalMastLogic" url="html/tools/signaling/SignalMastLogic.shtml"/>
+
 <mapID target="html.doc.Technical.XmlPersistance" url="html/doc/Technical/XmlPersistance.shtml"/>
 
 <mapID target="package.jmri.jmrix.secsi.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame.shtml"/>
@@ -1584,8 +1584,6 @@
 
 <mapID target="manual.Comp_SoundLevels_Top" url="manual/Comp_SoundLevels.shtml#Top"/>
 
-<mapID target="package.jmri.jmrit.roster.swing.RosterGroupAssociation" url="package/jmri/jmrit/roster/swing/RosterGroupAssociation.shtml"/>
-
 <mapID target="manual.Main_Roster_DeleteRoster" url="manual/Main_Roster.shtml#DeleteRoster"/>
 
 <mapID target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml"/>
@@ -1652,8 +1650,6 @@
 
 <mapID target="package.jmri.jmrit.display.SlipTurnoutIcon" url="package/jmri/jmrit/display/SlipTurnoutIcon.shtml"/>
 
-<mapID target="package.jmri.jmrit.display.fixedSizeEdit" url="package/jmri/jmrit/display/fixedSizeEdit.shtml"/>
-
 <mapID target="html.doc.Technical.XmlView" url="html/doc/Technical/XmlView.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml"/>
@@ -1661,8 +1657,6 @@
 <mapID target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame" url="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
-
-<mapID target="package.jmri.jmrit.display.textBorderSizeEdit" url="package/jmri/jmrit/display/textBorderSizeEdit.shtml"/>
 
 <mapID target="manual.Start_DecoderPro_Top" url="manual/Start_DecoderPro.shtml#Top"/>
 
