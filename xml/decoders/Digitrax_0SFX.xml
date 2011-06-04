@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010 All rights reserved -->
-<!-- $Id: Digitrax_0SFX.xml,v 1.11 2011-06-04 21:31:56 jacobsen Exp $ -->
+<!-- $Id: Digitrax_0SFX.xml,v 1.12 2011-06-04 23:48:33 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -37,29 +37,29 @@
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
 <model model="SDN144A0" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1444" comment="SDN144A0">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
-	<output name="2" label="F0R Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="LED" /> 
+	<output name="2" label="F0R Pad" connection="LED" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 			
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
 <model model="SDN144A1" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1445" comment="SDN144A1">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
-	<output name="2" label="F0R Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="LED" /> 
+	<output name="2" label="F0R Pad" connection="LED" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 			
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>      
       <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1442" comment="SDN144K0A">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="LED" /> 
 	<output name="2" label="F0R Pad" connection="solder" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 			
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" productID="1443" comment="SDN144K1E">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
-	<output name="2" label="F0R Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="LED" /> 
+	<output name="2" label="F0R Pad" connection="LED" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 			
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
@@ -81,8 +81,8 @@
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1642" comment="SDH164K1A">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
-	<output name="2" label="F0R Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="LED" /> 
+	<output name="2" label="F0R Pad" connection="LED" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 
 	<output name="5" label="F3 Pad" connection="solder" /> 
@@ -90,7 +90,7 @@
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1643" comment="SDH164K1A">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="LED" /> 
 	<output name="2" label="F0R Pad" connection="solder" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 
@@ -99,8 +99,8 @@
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1644" comment="SDH164K1A">
-	<output name="1" label="F0F Pad" connection="LED installed" /> 
-	<output name="2" label="F0R Pad" connection="LED installed" /> 
+	<output name="1" label="F0F Pad" connection="LED" /> 
+	<output name="2" label="F0R Pad" connection="LED" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 
 	<output name="5" label="F3 Pad" connection="solder" /> 
