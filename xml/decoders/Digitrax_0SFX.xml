@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010 All rights reserved -->
-<!-- $Id: Digitrax_0SFX.xml,v 1.10 2011-04-10 03:50:33 jacobsen Exp $ -->
+<!-- $Id: Digitrax_0SFX.xml,v 1.11 2011-06-04 21:31:56 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Steve Lowens" version="4" lastUpdated="20101218"/>
+<version author="Steve Lowens" version="5" lastUpdated="20110326"/>
+<version author="Steve Lowens" version="4" lastUpdated="20101218"/>
   <version author="Bob Blackwell" version="3" lastUpdated="20070805"/>
   <version author="Michael Mosher" version="2" lastUpdated="20060918"/>
   <version author="Bob Jacobsen" version="1" lastUpdated="20060221"/>
@@ -21,25 +22,44 @@
 <!-- Ver 2, add CV152,3,5 & AC4400, SD38-2, F40PH decoders  -->
 <!-- Ver 3, add CV11 for AC4400, SD38-2, F40PH decoders  -->
 			
-<!-- In this version, I have added decoders SDN144PS, SDN144K0A, SDN144K1E & SDH164D. -->
-<!--   also, future SDH164K1A, B & C  per Tony's Train Exchange          -->
+<!-- In the version for CP2.11.4, I have added decoders SDN144A0, SDN144A1, SDN144PS, SDN144K0A, SDN144K1E & SDH164D. -->
+<!--   also, SDH164K1A, B & C                                            -->
 <!-- For these decoders, I added CVs 60,133, 134, 154 and                -->
 <!-- updated labels and defaults to match Digitrax documentation         -->
 <!-- as of June 24, 2010. I also sorted the CVs into numerical order.    -->
 <!--                                       Steve Lowens  06/24/2010      -->
+<!-- For version 2.11.5                                                  -->
+<!--    Added SDN144A0 and SDN144A1 decoders                             -->
+<!--    Corrected CV 134 max = 128                                       -->
+<!--                                       Steve Lowens  06/24/2010      -->
+<!--                                             -->
 
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
+<model model="SDN144A0" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1444" comment="SDN144A0">
+	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="2" label="F0R Pad" connection="LED installed" /> 
+	<output name="3" label="F1 Pad" connection="solder" /> 
+	<output name="4" label="F2 Pad" connection="solder" /> 			
+	<size length="1.05" width="0.67" height="0.25" units="inches" />
+      </model>
+<model model="SDN144A1" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1445" comment="SDN144A1">
+	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="2" label="F0R Pad" connection="LED installed" /> 
+	<output name="3" label="F1 Pad" connection="solder" /> 
+	<output name="4" label="F2 Pad" connection="solder" /> 			
+	<size length="1.05" width="0.67" height="0.25" units="inches" />
+      </model>      
       <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1442" comment="SDN144K0A">
-	<output name="1" label="F0F Pad" connection="other" /> 
+	<output name="1" label="F0F Pad" connection="LED installed" /> 
 	<output name="2" label="F0R Pad" connection="solder" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 			
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" productID="1443" comment="SDN144K1E">
-	<output name="1" label="F0F Pad" connection="solder" /> 
-	<output name="2" label="F0R Pad" connection="solder" /> 
+	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="2" label="F0R Pad" connection="LED installed" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 			
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
@@ -61,8 +81,8 @@
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1642" comment="SDH164K1A">
-	<output name="1" label="F0F Pad" connection="solder" /> 
-	<output name="2" label="F0R Pad" connection="solder" /> 
+	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="2" label="F0R Pad" connection="LED installed" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 
 	<output name="5" label="F3 Pad" connection="solder" /> 
@@ -70,7 +90,7 @@
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1643" comment="SDH164K1A">
-	<output name="1" label="F0F Pad" connection="solder" /> 
+	<output name="1" label="F0F Pad" connection="LED installed" /> 
 	<output name="2" label="F0R Pad" connection="solder" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 
@@ -79,8 +99,8 @@
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
       <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1644" comment="SDH164K1A">
-	<output name="1" label="F0F Pad" connection="solder" /> 
-	<output name="2" label="F0R Pad" connection="solder" /> 
+	<output name="1" label="F0F Pad" connection="LED installed" /> 
+	<output name="2" label="F0R Pad" connection="LED installed" /> 
 	<output name="3" label="F1 Pad" connection="solder" /> 
 	<output name="4" label="F2 Pad" connection="solder" /> 
 	<output name="5" label="F3 Pad" connection="solder" /> 
@@ -493,6 +513,20 @@
               </enumVal>
            <label>Locomotive Sound Option</label>           
    	</variable>
+   	<variable label="Locomotive Sound Option" CV="60" item="Sound Option 1" include="1444">
+              <enumVal>
+   		<enumChoice choice="GP38"/>
+   		<enumChoice choice="C420"/>
+              </enumVal>
+           <label>Locomotive Sound Option</label>           
+   	</variable>
+   	<variable label="Locomotive Sound Option" CV="60" item="Sound Option 1" include="1445">
+              <enumVal>
+   		<enumChoice choice="SD60"/>
+   		<enumChoice choice="SD40"/>
+              </enumVal>
+           <label>Locomotive Sound Option</label>           
+   	</variable>
       <variable label="Speed Compensation Control" CV="61" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="F5 has no effect on speed compensation">
@@ -630,7 +664,7 @@
         <label>Steam Chuff/CAM Config</label>			
       </variable>
       <variable label="Steam Gear Ratio Trim" CV="134" tooltip="CV 134" item="Sound Setting 15" default="32"  include="1441,1641">
-	<decVal max="32"/>
+	<decVal max="128"/>
         <label>Steam Gear Ratio Trim</label>			
       </variable>
       <variable label="Volume When Muted" CV="135"  tooltip="CV 135" item="Sound Setting 3">
@@ -658,12 +692,12 @@
         <label>Misc Volumes (reserved)</label>
       </variable>
       <variable label="Bell Ring Rate" CV="146" tooltip="CV 146" item="Sound Setting 9" comment="24msec counts" default="9">
-        <decVal/>
+        <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <comment>24msec counts</comment>
       </variable>
       <variable label="Air Drier Rate" CV="147"  tooltip="CV 147" item="Sound Setting 10" default="50">
-        <decVal/>
+        <decVal max="64"/>
         <label>Air Drier Rate</label>
       </variable>
       <variable label="Compressor Run/Popoff Rate" CV="148" tooltip="CV 148" item="Sound Setting 11" default="30">
@@ -691,6 +725,38 @@
         </enumVal>
         <label>Horn Selector</label>
       </variable>
+
+<variable label="Horn Selector" CV="150" item="Sound Option 2" include="1444,1445">
+        <enumVal>
+          <enumChoice choice="Default Horn">
+            <choice>Standard Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 1">
+            <choice>Alternate Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 2">
+            <choice>Alternate Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 3">
+            <choice>Alternate Horn 3</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 1" value = "128">
+            <choice>Alternate Horn 128</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 2">
+            <choice>Alternate Horn 129</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 3">
+            <choice>Alternate Horn 130</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 4">
+            <choice>Alternate Horn 131</choice>
+          </enumChoice>        </enumVal>
+        <label>Horn Selector</label>
+      </variable>
+
+
+
       <variable label="Horn Selector" CV="150" item="Sound Option 2" include="1041,1042,1043,1044,1441,1442,1641,1642,1643,1644">
         <enumVal>
           <enumChoice choice="Standard Horn">
@@ -706,7 +772,7 @@
         <label>Horn Selector</label>
       </variable>
       <variable label="Peak Speed for Auto coupler/brake on dir change" CV="151" item="Sound Option 3" default="48">
-        <decVal/>
+        <decVal max="64"/>
         <label>Peak Speed for Auto coupler/brake on dir change</label>
       </variable>
       <variable label="Sound Project Author ID" CV="152" default="221">
@@ -741,6 +807,14 @@
 	<decVal/>
         <label>Sound Project ID</label>			
       </variable>
+      <variable label="Sound Project ID" CV="153" default="21" include="1444">
+	<decVal/>
+        <label>Sound Project ID</label>			
+      </variable>
+      <variable label="Sound Project ID" CV="153" default="34" include="1445">
+	<decVal/>
+        <label>Sound Project ID</label>			
+      </variable>      
       <variable label="Steam Blowdown/Safety Volume" CV="154" tooltip="CV 154" item="Sound Setting 13" default="60" include="1441,1641">
 	<decVal max="64"/>
         <label>Steam Blowdown/Safety Volume</label>			
