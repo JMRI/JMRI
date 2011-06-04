@@ -47,8 +47,8 @@ import java.util.ArrayList;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.25 $
+ * @author	Dave Duchamp    Copyright (C) 2008, 2010, 2011
+ * @version     $Revision: 1.26 $
  */
 
 
@@ -233,6 +233,8 @@ public class TransitTableAction extends AbstractTableAction {
 	private int[] priSectionDirection = new int[150];
 	private ArrayList<Section> alternateSectionBoxList = new ArrayList<Section>();
 	private int[] altSectionDirection = new int[150];
+	private ArrayList<Section> insertAtBeginningBoxList = new ArrayList<Section>();
+	private int[] insertAtBeginningDirection = new int[150];
 	private Section curSection = null;
 	private int curSectionDirection = 0;
 	private Section prevSection = null;
@@ -251,6 +253,15 @@ public class TransitTableAction extends AbstractTableAction {
 	JButton deleteSections = null;
 	JComboBox primarySectionBox = new JComboBox();
 	JButton addNextSection = null;
+	JButton removeLastSection = null;
+	JButton removeFirstSection = null;
+	JButton insertAtBeginning = null;
+	JComboBox insertAtBeginningBox = new JComboBox();
+    JLabel seqNumLabel = new JLabel(rbx.getString("LabelSeqNum"));
+    JTextField seqNum = new JTextField(5);
+	JButton	replacePrimaryForSequence = null;
+	JButton deleteAlternateForSequence = null;
+	JButton addAlternateForSequence = null;
 	JComboBox alternateSectionBox = new JComboBox();
 	JButton addAlternateSection = null;
     JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
@@ -317,8 +328,6 @@ public class TransitTableAction extends AbstractTableAction {
 			p.add (new JLabel("     "));
             p.add(userNameLabel);
             p.add(userName);
-            
-
 			userName.setToolTipText(rbx.getString("TransitUserNameHint"));
             addFrame.getContentPane().add(p);
 			addFrame.getContentPane().add(new JSeparator());
@@ -362,14 +371,6 @@ public class TransitTableAction extends AbstractTableAction {
 			p1.add(p12);
 			JPanel p13 = new JPanel();
 			p13.setLayout(new FlowLayout());
-			p13.add (deleteSections = new JButton(rbx.getString("DeleteSectionsButton")));
-            deleteSections.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    deleteAllSections(e);
-                }
-            });
-			deleteSections.setToolTipText(rbx.getString("DeleteSectionsButtonHint"));
-			p13.add (new JLabel("     "));
 			p13.add (primarySectionBox);
 			primarySectionBox.setToolTipText(rbx.getString("PrimarySectionBoxHint"));
 			p13.add (addNextSection = new JButton(rbx.getString("AddPrimaryButton")));
@@ -391,7 +392,77 @@ public class TransitTableAction extends AbstractTableAction {
                 }
             });
 			addAlternateSection.setToolTipText(rbx.getString("AddAlternateButtonHint"));			
+			p14.add (new JLabel("        "));
+			p14.add (insertAtBeginningBox);
+			insertAtBeginningBox.setToolTipText(rbx.getString("InsertAtBeginningBoxHint"));
+			p14.add (insertAtBeginning = new JButton(rbx.getString("InsertAtBeginningButton")));
+            insertAtBeginning.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    insertAtBeginningPressed(e);
+                }
+            });
+			insertAtBeginning.setToolTipText(rbx.getString("InsertAtBeginningButtonHint"));			
 			p1.add(p14);
+			p1.add(new JSeparator());
+			JPanel p15 = new JPanel();
+			p15.setLayout(new FlowLayout());
+			p15.add (deleteSections = new JButton(rbx.getString("DeleteSectionsButton")));
+            deleteSections.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    deleteAllSections(e);
+                }
+            });
+			deleteSections.setToolTipText(rbx.getString("DeleteSectionsButtonHint"));
+			p15.add (new JLabel("     "));
+			p15.add (removeLastSection = new JButton(rbx.getString("RemoveLastButton")));
+            removeLastSection.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    removeLastSectionPressed(e);
+                }
+            });
+			removeLastSection.setToolTipText(rbx.getString("RemoveLastButtonHint"));
+			p15.add (new JLabel("     "));
+			p15.add (removeFirstSection = new JButton(rbx.getString("RemoveFirstButton")));
+            removeFirstSection.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    removeFirstSectionPressed(e);
+                }
+            });
+			removeFirstSection.setToolTipText(rbx.getString("RemoveFirstButtonHint"));
+			p1.add(p15);
+			JPanel p16 = new JPanel();
+			p16.setLayout(new FlowLayout());
+			p16.add (seqNumLabel);
+			p16.add (new JLabel("   "));
+			p16.add (seqNum);
+			seqNum.setToolTipText(rbx.getString("SeqNumHint"));
+			p1.add(p16);
+			JPanel p17 = new JPanel();
+			p17.setLayout(new FlowLayout());
+			p17.add (replacePrimaryForSequence = new JButton(rbx.getString("ReplacePrimaryForSeqButton")));
+            replacePrimaryForSequence.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    replacePrimaryForSeqPressed(e);
+                }
+            });
+			replacePrimaryForSequence.setToolTipText(rbx.getString("ReplacePrimaryForSeqButtonHint"));
+			p17.add (new JLabel("     "));
+			p17.add (deleteAlternateForSequence = new JButton(rbx.getString("DeleteAlternateForSeqButton")));
+            deleteAlternateForSequence.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    deleteAlternateForSeqPressed(e);
+                }
+            });
+			deleteAlternateForSequence.setToolTipText(rbx.getString("DeleteAlternateForSeqButtonHint"));
+			p17.add (new JLabel("     "));
+			p17.add (addAlternateForSequence = new JButton(rbx.getString("AddAlternateForSeqButton")));
+            addAlternateForSequence.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    addAlternateForSeqPressed(e);
+                }
+            });
+			addAlternateForSequence.setToolTipText(rbx.getString("AddAlternateForSeqButtonHint"));
+			p1.add(p17);			
 			addFrame.getContentPane().add(p1);
 			// set up bottom buttons
 			addFrame.getContentPane().add(new JSeparator());
@@ -544,6 +615,400 @@ public class TransitTableAction extends AbstractTableAction {
 		}	
 		sectionTableModel.fireTableDataChanged();
 	}
+	void removeLastSectionPressed(ActionEvent e) {
+		if (sectionList.size()<=1) {
+			deleteAllSections(e);
+		}
+		else {
+			int j = sectionList.size()-1;
+			if (!alternate[j]) {
+				curSequenceNum --;
+				curSection = sectionList.get(j-1);
+				curSectionDirection = direction[j-1];
+				int k = j-2;
+				while ( (k>=0) && alternate[k]) k --;
+				prevSection = sectionList.get(k);
+				prevSectionDirection = direction[k];
+			}
+			sectionList.remove(j);
+			initializeSectionCombos();
+		}
+		sectionTableModel.fireTableDataChanged();
+	}
+	void insertAtBeginningPressed(ActionEvent e) {
+		if (sectionList.size()>maxSections) {
+			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+					.getString("Message23"), rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if (insertAtBeginningBoxList.size()==0) {
+			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+					.getString("Message35"), rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);	
+			return;		
+		}
+		int index = insertAtBeginningBox.getSelectedIndex();
+		Section s = insertAtBeginningBoxList.get(index);
+		if (s!=null) {
+			sectionList.add(0,s);
+			for (int i = sectionList.size()-2; i>0; i--) {
+				direction[i+1] = direction[i];
+				alternate[i+1] = alternate[i];
+				action[i+1] = action[i];
+				sequence[i+1] = sequence[i] + 1;
+			}
+			direction[0] = insertAtBeginningDirection[index];
+			curSequenceNum ++;
+			sequence[0] = 1;
+			alternate[0] = false;
+			action[0] = new ArrayList<TransitSectionAction>();
+			if (curSequenceNum==2) {
+				prevSectionDirection = direction[0];
+				prevSection = s;
+			}
+			initializeSectionCombos();
+		}
+		sectionTableModel.fireTableDataChanged();
+	}
+	void removeFirstSectionPressed(ActionEvent e) {
+		if (curSequenceNum<=1) {
+			deleteAllSections(e);
+		}
+		else {
+			int keep = 1;
+			while (alternate[keep]) keep ++;
+			for (int i = keep, j=0; i<sectionList.size(); i++,j++) {
+				sequence[j] = sequence[i] - 1;
+				direction[j] = direction[i];
+				action[j] = action[i];
+				alternate[j] = alternate[i];
+			}
+			for (int k = 0; k<keep; k++) sectionList.remove(0);
+			curSequenceNum --;
+			initializeSectionCombos();
+		}
+		sectionTableModel.fireTableDataChanged();
+	}
+	void replacePrimaryForSeqPressed(ActionEvent e) {
+		int seq = getSeqNum();
+		if (seq==0) return;
+		Section sOld = null;
+		ArrayList<Section> altOldList = new ArrayList<Section>();
+		Section beforeSection = null;
+		int beforeSectionDirection = 0;
+		Section afterSection = null;
+		int afterSectionDirection = 0;
+		int index = -1;
+		for (int i = 0; i<sectionList.size(); i++) {
+			if ( (sequence[i]==seq) && (!alternate[i]) ) {
+				sOld = sectionList.get(i);
+				index = i;
+			}
+			if ((sequence[i]==seq) && alternate[i] ) {
+				altOldList.add(sectionList.get(i));
+			}
+			if ( (sequence[i]==(seq-1)) && (!alternate[i]) ) {
+				beforeSection = sectionList.get(i);
+				beforeSectionDirection = direction[i];
+			}
+			if ( (sequence[i]==(seq+1)) && (!alternate[i]) ) {
+				afterSection = sectionList.get(i);
+				afterSectionDirection = Section.FORWARD;
+				if (afterSectionDirection == direction[i]) 
+							afterSectionDirection = Section.REVERSE;
+			}
+		}
+		if (sOld==null) {
+			log.error("Missing primary Section for seq = "+seq);
+			return;
+		}
+		ArrayList<Section> possibles = new ArrayList<Section>();
+		int[] possiblesDirection = new int[150];
+		ArrayList<String> possibleNames = new ArrayList<String>();
+		ArrayList<String> allSections = (ArrayList<String>)sectionManager.getSystemNameList();
+		for (int i = 0; i<allSections.size(); i++) {
+			Section mayBeSection = null;
+			String mayBeName = allSections.get(i);;
+			int mayBeDirection = 0;
+			Section s = sectionManager.getBySystemName(mayBeName);
+			if ( (s!=null) && (s!=sOld) && (s!=beforeSection) && 
+						(s!=afterSection) && (!inSectionList(s,altOldList)) ) {
+				if (beforeSection!=null) {
+					if (forwardConnected(s,beforeSection,beforeSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.FORWARD;
+					}
+					else if (reverseConnected(s,beforeSection,beforeSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.REVERSE;
+					}
+					if ( (mayBeSection!=null) && (afterSection!=null) ) {
+						if (mayBeDirection == Section.REVERSE) {
+							if (!forwardConnected(s,afterSection,afterSectionDirection)) {
+								mayBeSection = null;
+							}
+						}
+						else {
+							if (!reverseConnected(s,afterSection,afterSectionDirection)) {
+								mayBeSection = null;
+							}
+						}
+					}
+				}
+				else if (afterSection!=null) {
+					if (forwardConnected(s,afterSection,afterSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+								mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.REVERSE;
+					}
+					else if (reverseConnected(s,afterSection,afterSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+								mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.FORWARD;
+					}					
+				}
+				else {
+					mayBeSection = s;
+					mayBeDirection = Section.FORWARD;
+				}
+				if (mayBeSection!=null) {
+					possibles.add(mayBeSection);
+					possiblesDirection[possibles.size()-1] = mayBeDirection;
+					possibleNames.add(mayBeName);
+				}
+			}
+		}
+		if (possibles.size()==0) {
+			javax.swing.JOptionPane.showMessageDialog(addFrame, 
+					java.text.MessageFormat.format(rbx.getString("Message36"),
+							new Object[]{""+seq}),rbx.getString("ErrorTitle"),
+								javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		int k = 0;
+		if (possibles.size()>1) {
+			Object  choices[] = new Object[possibles.size()];
+			for (int j=0; j<possibles.size(); j++) {
+				choices[j] = possibleNames.get(j);
+			}
+			Object selName = JOptionPane.showInputDialog(addFrame,
+					rbx.getString("ReplacePrimaryChoice"), 
+						rbx.getString("ReplacePrimaryTitle"),
+						JOptionPane.QUESTION_MESSAGE,null, choices, choices[0]);
+			if (selName == null) return;
+			for (int j=0; j<possibles.size(); j++) {
+				if (selName.equals(choices[j])) {
+					k = j;
+				}
+			}
+		}
+		sectionList.remove(index);
+		sectionList.add(index, possibles.get(k));
+		direction[index] = possiblesDirection[k];
+		if (index==(sectionList.size()-1)) {
+			curSection = sectionList.get(index);
+			curSectionDirection = direction[index];
+		}
+		else if (index==(sectionList.size()-2)) {
+			prevSection = sectionList.get(index);
+			prevSectionDirection = direction[index];
+		}				 
+		initializeSectionCombos();
+		sectionTableModel.fireTableDataChanged();
+	}
+	boolean inSectionList(Section s, ArrayList<Section> sList) {
+		for (int i = 0; i<sList.size(); i++) {
+			if (sList.get(i)==s) {
+				return true;
+			}
+		}
+		return false;
+	}
+	int getSeqNum() {
+		int n = 0;
+		try {
+			n = Integer.parseInt(seqNum.getText());
+		} catch (NumberFormatException ex) {
+			log.error("Unable to convert " + seqNum.getText() + " to a number");
+		}
+		if ( (n<1) || (n>curSequenceNum) ) {
+			javax.swing.JOptionPane.showMessageDialog(null, rbx
+					.getString("Message34"), rbx.getString("ErrorTitle"),
+								javax.swing.JOptionPane.ERROR_MESSAGE);
+			return 0;
+		}			
+		return n;
+	}
+	void deleteAlternateForSeqPressed(ActionEvent e) {
+		if (sectionList.size()<=1) {
+			deleteAllSections(e);
+		}
+		else {
+			int seq = getSeqNum();
+			if (seq==0) return;
+			for (int i = sectionList.size(); i>=seq; i--) {
+				if ( (sequence[i]==seq) && alternate[i] ) {
+					for (int j = i; j<sectionList.size()-1; j++) {
+						sequence[j] = sequence[j+1];
+						direction[j] = direction[j+1];
+						action[j] = action[j+1];
+						alternate[j] = alternate[j+1];
+					}
+					sectionList.remove(i);
+				}
+			}
+			initializeSectionCombos();
+		}
+		sectionTableModel.fireTableDataChanged();
+	}
+	void addAlternateForSeqPressed(ActionEvent e) {
+		if (sectionList.size()>maxSections) {
+			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
+					.getString("Message23"), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		int seq = getSeqNum();
+		if (seq==0) return;
+		Section primarySection = null;
+		ArrayList<Section> altOldList = new ArrayList<Section>();
+		Section beforeSection = null;
+		int beforeSectionDirection = 0;
+		Section afterSection = null;
+		int afterSectionDirection = 0;
+		int index = -1;
+		for (int i = 0; i<sectionList.size(); i++) {
+			if ( (sequence[i]==seq) && (!alternate[i]) ) {
+				primarySection = sectionList.get(i);
+				index = i;
+			}
+			if ((sequence[i]==seq) && alternate[i] ) {
+				altOldList.add(sectionList.get(i));
+			}
+			if ( (sequence[i]==(seq-1)) && (!alternate[i]) ) {
+				beforeSection = sectionList.get(i);
+				beforeSectionDirection = direction[i];
+			}
+			if ( (sequence[i]==(seq+1)) && (!alternate[i]) ) {
+				afterSection = sectionList.get(i);
+				afterSectionDirection = Section.FORWARD;
+				if (afterSectionDirection == direction[i]) 
+					afterSectionDirection = Section.REVERSE;
+			}
+		}
+		if (primarySection==null) {
+			log.error("Missing primary Section for seq = "+seq);
+			return;
+		}
+		ArrayList<Section> possibles = new ArrayList<Section>();
+		int[] possiblesDirection = new int[150];
+		ArrayList<String> possibleNames = new ArrayList<String>();
+		ArrayList<String> allSections = (ArrayList<String>)sectionManager.getSystemNameList();
+		for (int i = 0; i<allSections.size(); i++) {
+			Section mayBeSection = null;
+			String mayBeName = allSections.get(i);;
+			int mayBeDirection = 0;
+			Section s = sectionManager.getBySystemName(mayBeName);
+			if ( (s!=null) && (s!=primarySection) && (s!=beforeSection) && 
+				(s!=afterSection) && (!inSectionList(s,altOldList)) ) {
+				if (beforeSection!=null) {
+					if (forwardConnected(s,beforeSection,beforeSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.FORWARD;
+					}
+					else if (reverseConnected(s,beforeSection,beforeSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.REVERSE;
+					}
+					if ( (mayBeSection!=null) && (afterSection!=null) ) {
+						if (mayBeDirection == Section.REVERSE) {
+							if (!forwardConnected(s,afterSection,afterSectionDirection)) {
+								mayBeSection = null;
+							}
+						}
+						else {
+							if (!reverseConnected(s,afterSection,afterSectionDirection)) {
+								mayBeSection = null;
+							}
+						}
+					}
+				}
+				else if (afterSection!=null) {
+					if (forwardConnected(s,afterSection,afterSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.REVERSE;
+					}
+					else if (reverseConnected(s,afterSection,afterSectionDirection)) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							mayBeName = mayBeName+"( "+s.getUserName()+" )";
+						mayBeSection = s;
+						mayBeDirection = Section.FORWARD;
+					}					
+				}
+				else {
+					mayBeSection = s;
+					mayBeDirection = Section.FORWARD;
+				}
+				if (mayBeSection!=null) {
+					possibles.add(mayBeSection);
+					possiblesDirection[possibles.size()-1] = mayBeDirection;
+					possibleNames.add(mayBeName);
+				}
+			}
+		}
+		if (possibles.size()==0) {
+			javax.swing.JOptionPane.showMessageDialog(addFrame, 
+					java.text.MessageFormat.format(rbx.getString("Message37"),
+					new Object[]{""+seq}),rbx.getString("ErrorTitle"),
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		int k = 0;
+		if (possibles.size()>1) {
+			Object  choices[] = new Object[possibles.size()];
+			for (int j=0; j<possibles.size(); j++) {
+				choices[j] = possibleNames.get(j);
+			}
+			Object selName = JOptionPane.showInputDialog(addFrame,
+					rbx.getString("AddAlternateChoice"), 
+					rbx.getString("AddAlternateTitle"),
+					JOptionPane.QUESTION_MESSAGE,null, choices, choices[0]);
+			if (selName == null) return;
+			for (int j=0; j<possibles.size(); j++) {
+				if (selName.equals(choices[j])) {
+					k = j;
+				}
+			}
+		}
+		index = index + 1 + altOldList.size();
+		sectionList.add(index,possibles.get(k));
+		for (int i = sectionList.size()-2; i>=index; i--) {
+			direction[i+1] = direction[i];
+			alternate[i+1] = alternate[i];
+			action[i+1] = action[i];
+			sequence[i+1] = sequence[i];
+		}
+		direction[index] = possiblesDirection[k];
+		sequence[index] = sequence[index-1];
+		alternate[index] = true;
+		action[index] = new ArrayList<TransitSectionAction>();
+		initializeSectionCombos();
+
+		sectionTableModel.fireTableDataChanged();
+	}
 	void addAlternateSectionPressed(ActionEvent e) {
 		if (sectionList.size()>maxSections) {
 			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
@@ -661,8 +1126,10 @@ public class TransitTableAction extends AbstractTableAction {
 		ArrayList<String> allSections = (ArrayList<String>)sectionManager.getSystemNameList();
 		primarySectionBox.removeAllItems();
 		alternateSectionBox.removeAllItems();
+		insertAtBeginningBox.removeAllItems();
 		primarySectionBoxList.clear();
 		alternateSectionBoxList.clear();
+		insertAtBeginningBoxList.clear();
 		if (sectionList.size()==0) {
 			// no Sections currently in Transit - all Sections and all Directions OK
 			for (int i = 0; i<allSections.size(); i++) {
@@ -723,7 +1190,31 @@ public class TransitTableAction extends AbstractTableAction {
 						}
 					}
 				}
-			}							
+			}
+			// check if there are any Sections available to be inserted at beginning
+			Section firstSection = sectionList.get(0);
+			int testDirection = Section.FORWARD;
+			if (direction[0] == Section.FORWARD) testDirection = Section.REVERSE;
+			for (int i = 0; i<allSections.size(); i++) {
+				String sName = allSections.get(i);
+				Section s = sectionManager.getBySystemName(sName);
+				if (s!=null) {
+					if ( (s!=firstSection) && (forwardConnected(s,firstSection,testDirection)) ) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							sName = sName+"( "+s.getUserName()+" )";
+						insertAtBeginningBox.addItem(sName);
+						insertAtBeginningBoxList.add(s);
+						insertAtBeginningDirection[insertAtBeginningBoxList.size()-1] = Section.REVERSE;
+					}
+					else if ( (s!=firstSection) && (reverseConnected(s,firstSection,testDirection)) ) {
+						if ( (s.getUserName()!=null) && (!s.getUserName().equals("")) )
+							sName = sName+"( "+s.getUserName()+" )";
+						insertAtBeginningBox.addItem(sName);
+						insertAtBeginningBoxList.add(s);
+						insertAtBeginningDirection[insertAtBeginningBoxList.size()-1] = Section.FORWARD;
+					}
+				}
+			}
 		}
 	}
 	@SuppressWarnings("unused")
