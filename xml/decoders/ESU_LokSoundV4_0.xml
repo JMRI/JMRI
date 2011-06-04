@@ -14,7 +14,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <!-- made from the ESU_LokSound_Select.file -->
 <!-- ver1 new file -->
+<!-- ver2 Added CV16, fixed CV 474.3, fixed light effect type, moved some var to other panes -->
   <version author="Michael Mosher" version="1" lastUpdated="20110505"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20110523"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
@@ -451,6 +453,10 @@
         </enumVal>
         <label>Analog Mode Function Status - F12</label>
       </variable>
+      <variable label="Preset Lock ID number" CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 12" tooltip="CV16" default="0">
+        <decVal max="16"/>
+        <label>Preset Lock ID number</label>
+      </variable>
       <variable label="Extended Address" CV="17" item="Long Address">
         <longAddressVal/>
         <label>Extended Address</label>
@@ -713,7 +719,7 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Driving Direction when Shifting</label>
       </variable>
-      <variable label="Decoder Lock" CV="124" mask="XXXXXXVX" default="0" item="Advanced Group 2 Option 16">
+      <variable label="Decoder Lock" CV="124" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 10">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Decoder Lock</label>
       </variable>
@@ -725,7 +731,7 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Prime Mover Startup Delay</label>
       </variable>
-      <variable label="Adaptive Regulation Frequency" CV="124" mask="XXXVXXXX" default="1" item="Advanced Group 2 Option 18">
+      <variable label="Adaptive Regulation Frequency" CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Adaptive Regulation Frequency</label>
       </variable>
@@ -815,7 +821,7 @@
           <ienumChoice choice="Ditch light type 2">
             <choice>Ditch light type 2</choice>
           </ienumChoice>
-          <ienumChoice choice="Flash light">
+          <ienumChoice choice="Flash light" value="12">
             <choice>Flash light</choice>
           </ienumChoice>
           <ienumChoice choice="Mars light">
@@ -824,7 +830,7 @@
           <ienumChoice choice="Gyra light">
             <choice>Gyra light</choice>
           </ienumChoice>
-          <ienumChoice choice="Coupler function">
+          <ienumChoice choice="Coupler function" value="28">
             <choice>Coupler functiont</choice>
           </ienumChoice>
         </ienumVal>
@@ -895,7 +901,7 @@
           <ienumChoice choice="Ditch light type 2">
             <choice>Ditch light type 2</choice>
           </ienumChoice>
-          <ienumChoice choice="Flash light">
+          <ienumChoice choice="Flash light" value="12">
             <choice>Flash light</choice>
           </ienumChoice>
           <ienumChoice choice="Mars light">
@@ -904,7 +910,7 @@
           <ienumChoice choice="Gyra light">
             <choice>Gyra light</choice>
           </ienumChoice>
-          <ienumChoice choice="Coupler function">
+          <ienumChoice choice="Coupler function" value="28">
             <choice>Coupler functiont</choice>
           </ienumChoice>
         </ienumVal>
@@ -975,7 +981,7 @@
           <ienumChoice choice="Ditch light type 2">
             <choice>Ditch light type 2</choice>
           </ienumChoice>
-          <ienumChoice choice="Flash light">
+          <ienumChoice choice="Flash light" value="12">
             <choice>Flash light</choice>
           </ienumChoice>
           <ienumChoice choice="Mars light">
@@ -984,7 +990,7 @@
           <ienumChoice choice="Gyra light">
             <choice>Gyra light</choice>
           </ienumChoice>
-          <ienumChoice choice="Coupler function">
+          <ienumChoice choice="Coupler function" value="28">
             <choice>Coupler functiont</choice>
           </ienumChoice>
         </ienumVal>
@@ -1055,7 +1061,7 @@
           <ienumChoice choice="Ditch light type 2">
             <choice>Ditch light type 2</choice>
           </ienumChoice>
-          <ienumChoice choice="Flash light">
+          <ienumChoice choice="Flash light" value="12">
             <choice>Flash light</choice>
           </ienumChoice>
           <ienumChoice choice="Mars light">
@@ -1064,7 +1070,7 @@
           <ienumChoice choice="Gyra light">
             <choice>Gyra light</choice>
           </ienumChoice>
-          <ienumChoice choice="Coupler function">
+          <ienumChoice choice="Coupler function" value="28">
             <choice>Coupler functiont</choice>
           </ienumChoice>
         </ienumVal>
@@ -1135,7 +1141,7 @@
           <ienumChoice choice="Ditch light type 2">
             <choice>Ditch light type 2</choice>
           </ienumChoice>
-          <ienumChoice choice="Flash light">
+          <ienumChoice choice="Flash light" value="12">
             <choice>Flash light</choice>
           </ienumChoice>
           <ienumChoice choice="Mars light">
@@ -1144,7 +1150,7 @@
           <ienumChoice choice="Gyra light">
             <choice>Gyra light</choice>
           </ienumChoice>
-          <ienumChoice choice="Coupler function">
+          <ienumChoice choice="Coupler function" value="28">
             <choice>Coupler functiont</choice>
           </ienumChoice>
         </ienumVal>
@@ -1215,7 +1221,7 @@
           <ienumChoice choice="Ditch light type 2">
             <choice>Ditch light type 2</choice>
           </ienumChoice>
-          <ienumChoice choice="Flash light">
+          <ienumChoice choice="Flash light" value="12">
             <choice>Flash light</choice>
           </ienumChoice>
           <ienumChoice choice="Mars light">
@@ -1224,7 +1230,7 @@
           <ienumChoice choice="Gyra light">
             <choice>Gyra light</choice>
           </ienumChoice>
-          <ienumChoice choice="Coupler function">
+          <ienumChoice choice="Coupler function" value="28">
             <choice>Coupler functiont</choice>
           </ienumChoice>
         </ienumVal>
@@ -5015,10 +5021,10 @@
       <ivariable label="F24 controls output 6" CVname="474.3" CV="474" PI="3" mask="XXVXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="F24 controls output 7" CVname="474.3" CV="474" PI="3" mask="XXVXXXXX" default="0">
+      <ivariable label="F24 controls output 7" CVname="474.3" CV="474" PI="3" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="F24 controls output 8" CVname="474.3" CV="474" PI="3" mask="XXVXXXXX" default="0">
+      <ivariable label="F24 controls output 8" CVname="474.3" CV="474" PI="3" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
 	  
