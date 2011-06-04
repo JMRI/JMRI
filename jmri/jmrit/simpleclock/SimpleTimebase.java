@@ -26,7 +26,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
@@ -64,7 +64,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             if (factorMemory==null) {
                 log.warn("Unable to create IMRATEFACTOR time memory variable");
             } else {
-                factorMemory.setValue("--");
+                factorMemory.setValue(userGetRate());
             }
         }
         
