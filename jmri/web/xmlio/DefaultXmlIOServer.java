@@ -30,7 +30,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -38,7 +38,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     public Element immediateRequest(Element e) throws JmriException {
     
         // first, process any "list" elements
-    	//  roster and panel are immediate only
+    	//  roster, panel, and metadata are immediate only
     	//  power, turnout, sensor, memory and route can be monitored for changes, pass current values to begin
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList(e.getChildren("list"));
@@ -155,6 +155,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 n.addContent(new Element("type").addContent("power"));
                 n.addContent(new Element("name").addContent("power"));
                 e.addContent(n);
+            } else if (type.equals("metadata")) {
+                // list meta data elements
+                List<String> metaNames = Metadata.getSystemNameList();
+                for (String mn : metaNames) {
+                    Element n = new Element("item");
+                    n.addContent(new Element("type").addContent("metadata"));
+                    n.addContent(new Element("name").addContent("" + mn));
+                    e.addContent(n);
+                }
             } else log.warn("Unexpected type in list element: "+type);
         }
         
@@ -180,6 +189,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             else if (type.equals("power")) immediateWritePower(name, item);
             else if (type.equals("roster")) {}
             else if (type.equals("panel")) {}
+            else if (type.equals("metadata")) {}
             else log.warn("Unexpected type in item: "+type);
         }
         
@@ -192,6 +202,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             else if (type.equals("route")) immediateReadRoute(name, item);
             else if (type.equals("sensor")) immediateReadSensor(name, item);
             else if (type.equals("power")) immediateReadPower(name, item);
+            else if (type.equals("metadata")) immediateReadMetadata(name, item);
         }
         
         return e;
@@ -549,6 +560,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
         
         // set result
         v.setText(""+b.getPower());
+    }
+    
+    void immediateReadMetadata(String name, Element item) throws JmriException {
+        
+        Element v = item.getChild("value");
+        
+        // Start read: ensure value element
+        if (v == null) item.addContent(v = new Element("value"));
+        
+        // set result
+        v.setText("" + Metadata.getBySystemName(name));
     }
     
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();

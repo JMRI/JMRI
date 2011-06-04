@@ -24,7 +24,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -93,6 +93,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         // if list or throttle elements present, or item elements that do set, do immediate operation
         boolean immediate = false;
         if (root.getChild("list") != null) immediate = true;
+        if (root.getChild("metadata") != null) immediate = true;
         if (root.getChild("throttle") != null) immediate = true;
         for (Object e : root.getChildren("item")) {
             if (((Element)e).getChild("set") != null) {
