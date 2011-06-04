@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.17 2011-06-04 22:34:11 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.18 2011-06-04 23:47:06 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -176,6 +176,10 @@
                 <xs:enumeration value="NMRAmedium"/>
                 <xs:enumeration value="NMRAlarge"/>
                 <xs:enumeration value="9pin"/>
+                <xs:enumeration value="21MTC"/>
+                <xs:enumeration value="PluX8"/>
+                <xs:enumeration value="PluX16"/>
+                <xs:enumeration value="PluX22"/>
                 <xs:enumeration value="other"/>
               </xs:restriction>
             </xs:simpleType>
