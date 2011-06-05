@@ -26,6 +26,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JFrame;
+import jmri.Reporter;
 
 import jmri.util.JmriJFrame;
 
@@ -34,7 +35,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -88,7 +89,9 @@ public class BlockTableAction extends AbstractTableAction {
 			static public final int LENGTHCOL = DIRECTIONCOL+1;
 			static public final int CURVECOL = LENGTHCOL+1;
             static public final int STATECOL = CURVECOL+1;
-            static public final int PERMISCOL = STATECOL+1;
+            static public final int REPORTERCOL = STATECOL+1;
+            static public final int CURRENTREPCOL = REPORTERCOL+1;
+            static public final int PERMISCOL = CURRENTREPCOL+1;
             static public final int SPEEDCOL = PERMISCOL+1;
             
         	public String getValue(String name) {
@@ -177,6 +180,13 @@ public class BlockTableAction extends AbstractTableAction {
                         default : return rb.getString("BlockInconsistent");
                     }
                 }
+                else if (col==REPORTERCOL){
+                    Reporter r = b.getReporter();
+                    return (r!=null) ? r.getDisplayName() : null;
+                }
+                else if (col==CURRENTREPCOL){
+                    return Boolean.valueOf(b.isReportingCurrent());
+                }
     			else return super.getValueAt(row, col);
 			}    		
 
@@ -221,6 +231,19 @@ public class BlockTableAction extends AbstractTableAction {
                     }
                     fireTableRowsUpdated(row,row);
                 }
+                else if (col==REPORTERCOL){
+                    Reporter r = null;
+                    if (value!=null || value !="") {
+                        r = jmri.InstanceManager.reporterManagerInstance().provideReporter((String)value);
+                    }
+                    b.setReporter(r);
+                    fireTableRowsUpdated(row,row);
+                }
+                else if (col==CURRENTREPCOL){
+                    boolean boo = ((Boolean) value).booleanValue();
+                    b.setReportingCurrent(boo);
+                    fireTableRowsUpdated(row,row);
+                }
 				else super.setValueAt(value, row, col);					
     		}
 
@@ -232,6 +255,8 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==PERMISCOL) return rb.getString("BlockPermColName");
                 if (col==SPEEDCOL) return rb.getString("BlockSpeedColName");
                 if (col==STATECOL) return rb.getString("BlockState");
+                if (col==REPORTERCOL) return rb.getString("BlockReporter");
+                if (col==CURRENTREPCOL) return rb.getString("BlockReporterCurrent");
         		return super.getColumnName(col);
         	}
 
@@ -244,6 +269,8 @@ public class BlockTableAction extends AbstractTableAction {
                 //if (col==SPEEDCOL) return String.class;
                 if (col==SPEEDCOL) return JComboBox.class;
                 if (col==STATECOL) return String.class;
+                if (col==REPORTERCOL) return String.class;
+                if (col==CURRENTREPCOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
 
@@ -254,6 +281,8 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==PERMISCOL) return new JTextField(7).getPreferredSize().width;
                 if (col==SPEEDCOL) return new JTextField(7).getPreferredSize().width;
                 if (col==STATECOL) return new JTextField(8).getPreferredSize().width;
+                if (col==REPORTERCOL) return new JTextField(8).getPreferredSize().width;
+                if (col==CURRENTREPCOL) return new JTextField(7).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
 
@@ -267,6 +296,8 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==PERMISCOL) return true;
                 else if (col==SPEEDCOL) return true;
                 else if (col==STATECOL) return false;
+                else if (col==REPORTERCOL) return true;
+                else if (col==CURRENTREPCOL) return true;
 				else return super.isCellEditable(row,col);
 			}
 			

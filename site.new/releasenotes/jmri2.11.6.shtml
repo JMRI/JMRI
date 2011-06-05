@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.12 2011-06-05 19:36:07 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.13 2011-06-05 19:47:15 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -138,6 +138,7 @@ during the car import.</LI>
 <ul>
 <li>Update context report to also include system manufacturer
 <li>Updated the Windows documentation to help debug JMRI shutdown problems
+<li>Enabled Blocks data to be populated via Reporters
 </ul>
 
 <p>Kevin Dickerson:</p>

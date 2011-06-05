@@ -13,7 +13,13 @@ import java.util.List;
  * <P>
  * A Block (at least in this implementation) corresponds exactly to the
  * track covered by a single sensor. That should be generalized in the future.
- * 
+ *
+ * <p>
+ * Optionally, a Block can be associated with a Reporter. In this case, the
+ * Reporter will provide the Block with the "token" (value). This could be e.g
+ * an RFID reader reading an ID tag attached to a locomotive. Depending on the
+ * specific Reporter implementation, either the current reported value or the
+ * last reported value will be relevant - this can be configured
  *<p>
  * Objects of this class are Named Beans, so can be manipulated through tables,
  * have listeners, etc.
@@ -82,7 +88,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -125,6 +131,62 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         }
     }
     public Sensor getSensor() { return _sensor; }
+
+
+    /**
+     * Set the Reporter that should provide the data value for this block.
+     *
+     * @see Reporter
+     * @param reporter Reporter object to link, or null to clear
+     */
+    public void setReporter(Reporter reporter) {
+        if (_reporter != null) {
+            // remove reporter listener
+            if (_reporterListener != null) {
+                _reporter.removePropertyChangeListener(_reporterListener);
+                _reporterListener = null;
+            }
+        }
+        _reporter = reporter;
+        if (_reporter != null) {
+            // attach listener
+            _reporter.addPropertyChangeListener(_sensorListener = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) { handleReporterChange(e); }
+            });
+
+        }
+    }
+
+    /**
+     * Retrieve the Reporter that is linked to this Block
+     *
+     * @see Reporter
+     * @return linked Reporter object, or null if not linked
+     */
+    public Reporter getReporter() { return _reporter; }
+
+    /**
+     * Define if the Block's value should be populated from the
+     * {@link Reporter#getCurrentReport() current report}
+     * or from the {@link Reporter#getLastReport() last report}.
+     *
+     * @see Reporter
+     * @param reportingCurrent
+     */
+    public void setReportingCurrent(boolean reportingCurrent) {
+        _reportingCurrent = reportingCurrent;
+    }
+
+    /**
+     * Determine if the Block's value is being populated from the
+     * {@link Reporter#getCurrentReport() current report}
+     * or from the {@link Reporter#getLastReport() last report}.
+     *
+     * @see Reporter
+     * @return true if populated by {@link Reporter#getCurrentReport() current report};
+     * false if from {@link Reporter#getLastReport() last report}.
+     */
+    public boolean isReportingCurrent() { return _reportingCurrent; }
     
     public int getState() {return _current;}
     
@@ -254,6 +316,9 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     private int _direction;
 	private int _curvature = NONE;
 	private float _length = 0.0f;  // always stored in millimeters
+    private Reporter _reporter = null;
+    private java.beans.PropertyChangeListener _reporterListener = null;
+    private boolean _reportingCurrent = false;
     
     /** Handle change in sensor state.
      * <P>
@@ -271,6 +336,18 @@ public class Block extends jmri.implementation.AbstractNamedBean {
                 setValue(null);
                 setState(INCONSISTENT);
             }
+        }
+    }
+
+    /**
+     * Handle change in Reporter value.
+     * 
+     * @param e PropertyChangeEvent
+     */
+    void handleReporterChange(java.beans.PropertyChangeEvent e) {
+        if ((_reportingCurrent && e.getPropertyName().equals("currentReport"))
+                || (!_reportingCurrent && e.getPropertyName().equals("lastReport"))) {
+            setValue(e.getNewValue());
         }
     }
     

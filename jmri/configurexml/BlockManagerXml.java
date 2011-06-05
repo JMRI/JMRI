@@ -11,6 +11,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 
 import java.util.List;
+import jmri.Reporter;
 
 import org.jdom.Element;
 
@@ -25,7 +26,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  * @since 2.1.2
  *
  */
@@ -104,6 +105,15 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     Element se = new Element("sensor");
                     se.setAttribute("systemName", s.getSystemName());
                     elem.addContent(se);
+                }
+
+                // Now the Reporter
+                Reporter r = b.getReporter();
+                if (r!=null) {
+                    Element re = new Element("reporter");
+                    re.setAttribute("systemName", r.getSystemName());
+                    re.setAttribute("useCurrent", b.isReportingCurrent()?"yes":"no");
+                    elem.addContent(re);
                 }
                 
                 if(tm.savePathInfo()){
@@ -239,6 +249,17 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 String name = sensors.get(0).getAttribute("systemName").getValue();
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
                 block.setSensor(sensor);
+            }
+
+            // load Reporter if present
+            List<Element> reporters = element.getChildren("reporter");
+            if (reporters.size()>1) log.error("More than one reporter present: "+reporters.size());
+            if (reporters.size()==1) {
+                // Reporter
+                String name = reporters.get(0).getAttribute("systemName").getValue();
+                Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(name);
+                block.setReporter(reporter);
+                block.setReportingCurrent(reporters.get(0).getAttribute("useCurrent").getValue().equals("yes"));
             }
             
             // load paths if present

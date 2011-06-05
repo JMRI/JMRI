@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Block class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class BlockTest extends TestCase {
 
@@ -174,7 +174,70 @@ public class BlockTest extends TestCase {
   	    
 	}
 	
+	public void testReporterAdd() {
+	    ReporterManager rm = new jmri.managers.InternalReporterManager();
+	    Block b = new Block("SystemName");
+            b.setReporter(rm.provideReporter("IR22"));
+	}
+
+        public void testReporterInvokeAll() {
+            ReporterManager rm = new jmri.managers.InternalReporterManager();
+	    count = 0;
+	    Block b = new Block("SystemName"){
+                @Override
+                void handleReporterChange(java.beans.PropertyChangeEvent e) {
+                    count++;
+                }
+	    };
+	    b.setReporter(rm.provideReporter("IR22"));
+	    rm.provideReporter("IR22").setReport("report");
+            // For each report, there are two PropertyChangeEvents -
+            // "currentReport" and "lastReport"
+	    Assert.assertEquals("count of detected changes", 2, count);
+        }
+
+        public void testReporterInvokeCurrent() {
+            ReporterManager rm = new jmri.managers.InternalReporterManager();
+            count = 0;
+            Block b = new Block("SystemName"){
+                @Override
+                void handleReporterChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals("currentReport")) {
+                        count++;
+                    }
+                }
+            };
+            b.setReporter(rm.provideReporter("IR22"));
+            rm.provideReporter("IR22").setReport("report");
+            // Only detecting "currentReport" PropertyChangeEvent
+            Assert.assertEquals("count of detected changes", 1, count);
+
+            rm.provideReporter("IR22").setReport(null);
+            // Current report should change
+            Assert.assertEquals("count of detected changes", 2, count);
+        }
     
+        public void testReporterInvokeLast() {
+            ReporterManager rm = new jmri.managers.InternalReporterManager();
+            count = 0;
+            Block b = new Block("SystemName"){
+                @Override
+                void handleReporterChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals("lastReport")) {
+                        count++;
+                    }
+                }
+            };
+            b.setReporter(rm.provideReporter("IR22"));
+            rm.provideReporter("IR22").setReport("report");
+            // Only detecting "lastReport" PropertyChangeEvent
+            Assert.assertEquals("count of detected changes", 1, count);
+
+            rm.provideReporter("IR22").setReport(null);
+            // Last report should not change
+            Assert.assertEquals("count of detected changes", 1, count);
+        }
+
 	// from here down is testing infrastructure
 
 	public BlockTest(String s) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: blocks-2-9-6.xsd,v 1.3 2011-05-06 20:09:11 kevin-dickerson Exp $ -->
+<!-- $Id: blocks-2-9-6.xsd,v 1.4 2011-06-05 19:46:24 matthewharris Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -51,6 +51,12 @@
               <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                   <xs:attribute name="systemName" type="systemNameType" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="reporter" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="systemNameType" />
+                  <xs:attribute name="useCurrent" type="yesNoType" />
                 </xs:complexType>
               </xs:element>
               <xs:element name="path" minOccurs="0" maxOccurs="unbounded" >
