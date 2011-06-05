@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
-<!-- $Id: CML_Systems_DAC20.xml,v 1.1 2011-06-04 23:55:31 jacobsen Exp $ -->
+<!-- $Id: CML_Systems_DAC20.xml,v 1.2 2011-06-05 00:33:26 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -495,27 +495,27 @@
 	  </variable>
 
 	  
-	  <variable label="CDU Recharge Time" CV="19" default="8" Tooltip="CV19 in 0.1Sec units">
+	  <variable label="CDU Recharge Time" CV="19" default="8" tooltip="CV19 in 0.1Sec units">
 		<decVal min="1" max = "31"></decVal>
 	  </variable>
 	  
-	  <variable label="Brightness Simulation" CV="20" default="0" Tooltip="CV20">
+	  <variable label="Brightness Simulation" CV="20" default="0" tooltip="CV20">
 		</variable>
-	  <variable label="Output 1 Brightness Simulation" CV="20" mask="XXXXXXXV" Tooltip="CV20 bit 0">
+	  <variable label="Output 1 Brightness Simulation" CV="20" mask="XXXXXXXV" tooltip="CV20 bit 0">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
-	  <variable label="Output 2 Brightness Simulation" CV="20" mask="XXXXXXVX" Tooltip="CV20 bit 1">
+	  <variable label="Output 2 Brightness Simulation" CV="20" mask="XXXXXXVX" tooltip="CV20 bit 1">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
-	  <variable label="Output 3 Brightness Simulation" CV="20" mask="XXXXXVXX" Tooltip="CV20 bit 2">
+	  <variable label="Output 3 Brightness Simulation" CV="20" mask="XXXXXVXX" tooltip="CV20 bit 2">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
-	  <variable label="Output 4 Brightness Simulation" CV="20" mask="XXXXVXXX" Tooltip="CV20 bit 3">
+	  <variable label="Output 4 Brightness Simulation" CV="20" mask="XXXXVXXX" tooltip="CV20 bit 3">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
-	  <variable label="Output 5 Brightness Simulation" CV="20" mask="XXXVXXXX" Tooltip="CV20 bit 4">
+	  <variable label="Output 5 Brightness Simulation" CV="20" mask="XXXVXXXX" tooltip="CV20 bit 4">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
-	  <variable label="Output 6 Brightness Simulation" CV="20" mask="XXVXXXXX" Tooltip="CV20 bit 5">
+	  <variable label="Output 6 Brightness Simulation" CV="20" mask="XXVXXXXX" tooltip="CV20 bit 5">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
-	  <variable label="Output 7 Brightness Simulation" CV="20" mask="XVXXXXXX" Tooltip="CV20 bit 6">
+	  <variable label="Output 7 Brightness Simulation" CV="20" mask="XVXXXXXX" tooltip="CV20 bit 6">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
-	  <variable label="Output 8 Brightness Simulation" CV="20" mask="VXXXXXXX" Tooltip="CV20 bit 7">
+	  <variable label="Output 8 Brightness Simulation" CV="20" mask="VXXXXXXX" tooltip="CV20 bit 7">
 		<enumVal><enumChoice choice="off"/><enumChoice choice="on"/></enumVal></variable>
 
 	  <variable label="Output 1 following" CV="21" default="0" tooltip="CV21" >

@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "/xml/DTD/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.11.4 on Sat Apr 09 20:38:31 PDT 2011 $Id: decoderIndex.xml,v 1.168 2011-04-10 03:41:44 jacobsen Exp $-->
-  <decoderIndex version="208">
+  <!--Written by JMRI version 2.11.6 on Sat Jun 04 17:36:19 MST 2011 $Id: decoderIndex.xml,v 1.169 2011-06-05 00:37:57 jacobsen Exp $-->
+  <decoderIndex version="210">
     <mfgList nmraListDate="2011-03-08" updated="2011-04-09" lastadd="69">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -280,6 +280,9 @@
       <family name="DAC10" mfg="CML Systems" type="stationary" comment="DAC10 is a stationary decoder, but it can be programmed in the usual way" file="CML_Systems_DAC10.xml">
         <model model="DAC10" lowVersionID="1" />
       </family>
+      <family name="DAC20" mfg="CML Systems" type="stationary" comment="DAC20 is a stationary decoder with a lot of additional features" file="CML_Systems_DAC20.xml">
+        <model model="DAC20" lowVersionID="1" />
+      </family>
       <family name="Function Decoder" mfg="CT Elektronik" file="CT_Elektronik_DCX_30_V.xml">
         <model model="DCX30" numOuts="8" numFns="6" maxMotorCurrent="0.8 Amp per group" maxTotalCurrent="1.6 Amp">
           <versionCV lowVersionID="3" />
@@ -498,6 +501,26 @@
         <model model="AD4LC" />
         <model model="AD4MC" />
         <model model="AD4HC" />
+      </family>
+      <family name="DCC Concepts Loco Decoders" mfg="DCC Concepts" file="DCC_Concepts_Loco.xml">
+        <model model="Red Sleeve 2 Function" numOuts="2" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+        </model>
+        <model model="Blue Sleeve 4 Function" numOuts="4" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+        </model>
       </family>
       <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51" file="Digitrax_01x3.xml">
         <model model="DG383" numOuts="8" numFns="14" maxMotorCurrent="3A (peak=5A)" formFactor="O/G" connector="9pin">
@@ -838,16 +861,30 @@
         </model>
       </family>
       <family name="SFX Sound Decoders" mfg="Digitrax" file="Digitrax_0SFX.xml">
+        <model model="SDN144A0" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1444" comment="SDN144A0">
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDN144A1" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1445" comment="SDN144A1">
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
         <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1442" comment="SDN144K0A">
-          <output name="1" label="F0F Pad" connection="LED installed" />
+          <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="solder" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" productID="1443" comment="SDN144K1E">
-          <output name="1" label="F0F Pad" connection="solder" />
-          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
@@ -869,8 +906,8 @@
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1642" comment="SDH164K1A">
-          <output name="1" label="F0F Pad" connection="solder" />
-          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
           <output name="5" label="F3 Pad" connection="solder" />
@@ -878,7 +915,7 @@
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1643" comment="SDH164K1A">
-          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="solder" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
@@ -887,8 +924,8 @@
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1644" comment="SDH164K1A">
-          <output name="1" label="F0F Pad" connection="solder" />
-          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
           <output name="5" label="F3 Pad" connection="solder" />
@@ -1211,6 +1248,252 @@
           <functionlabel num="13" lockable="false">Rel Brk</functionlabel>
           <functionlabel num="14" lockable="false">Slack</functionlabel>
           <functionlabel num="15" lockable="false">Smash</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSoundV4_0.xml">
+        <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="AUX 5" maxcurrent="5mA" />
+          <output name="8" label="AUX 6" maxcurrent="5mA" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Dim" />
+          <output name="13" label="Cross" />
+          <output name="14" label="Notch" />
+          <output name="15" label="Dop" />
+          <output name="16" label="Shift" />
+          <output name="17" label="Snd" />
+          <output name="18" label="SS2" />
+          <output name="19" label="SS3" />
+          <output name="20" label="SS4" />
+          <output name="21" label="SS5" />
+          <output name="22" label="SS6" />
+          <output name="23" label="SS7" />
+          <output name="24" label="SS8" />
+          <output name="25" label="SS9" />
+          <output name="26" label="SS10" />
+          <output name="27" label="SS11" />
+          <output name="28" label="SS12" />
+          <output name="29" label="SS13" />
+          <output name="30" label="SS14" />
+          <output name="31" label="SS15" />
+          <output name="32" label="SS16" />
+          <output name="33" label="SS17" />
+          <output name="34" label="SS18" />
+          <output name="35" label="SS19" />
+          <output name="36" label="SS20" />
+          <output name="37" label="SS21" />
+          <output name="38" label="SS22" />
+          <output name="39" label="SS23" />
+          <output name="40" label="SS24" />
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokSound V4.0 21MTC" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54499">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="AUX 5" maxcurrent="5mA" />
+          <output name="8" label="AUX 6" maxcurrent="5mA" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Dim" />
+          <output name="13" label="Cross" />
+          <output name="14" label="Notch" />
+          <output name="15" label="Dop" />
+          <output name="16" label="Shift" />
+          <output name="17" label="Snd" />
+          <output name="18" label="SS2" />
+          <output name="19" label="SS3" />
+          <output name="20" label="SS4" />
+          <output name="21" label="SS5" />
+          <output name="22" label="SS6" />
+          <output name="23" label="SS7" />
+          <output name="24" label="SS8" />
+          <output name="25" label="SS9" />
+          <output name="26" label="SS10" />
+          <output name="27" label="SS11" />
+          <output name="28" label="SS12" />
+          <output name="29" label="SS13" />
+          <output name="30" label="SS14" />
+          <output name="31" label="SS15" />
+          <output name="32" label="SS16" />
+          <output name="33" label="SS17" />
+          <output name="34" label="SS18" />
+          <output name="35" label="SS19" />
+          <output name="36" label="SS20" />
+          <output name="37" label="SS21" />
+          <output name="38" label="SS22" />
+          <output name="39" label="SS23" />
+          <output name="40" label="SS24" />
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model model="LokSound Micro V4.0 NEM651" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54800">
+          <output name="1" label="Headlight" maxcurrent="150mA" />
+          <output name="2" label="Rear light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="150mA" />
+          <output name="4" label="AUX 2" maxcurrent="150mA" />
+          <output name="5" label="AUX 3" maxcurrent="5mA" />
+          <output name="6" label="AUX 4" maxcurrent="5mA" />
+          <output name="7" label="AUX 5" />
+          <output name="8" label="AUX 6" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Dim" />
+          <output name="13" label="Cross" />
+          <output name="14" label="Notch" />
+          <output name="15" label="Dop" />
+          <output name="16" label="Shift" />
+          <output name="17" label="Snd" />
+          <output name="18" label="SS2" />
+          <output name="19" label="SS3" />
+          <output name="20" label="SS4" />
+          <output name="21" label="SS5" />
+          <output name="22" label="SS6" />
+          <output name="23" label="SS7" />
+          <output name="24" label="SS8" />
+          <output name="25" label="SS9" />
+          <output name="26" label="SS10" />
+          <output name="27" label="SS11" />
+          <output name="28" label="SS12" />
+          <output name="29" label="SS13" />
+          <output name="30" label="SS14" />
+          <output name="31" label="SS15" />
+          <output name="32" label="SS16" />
+          <output name="33" label="SS17" />
+          <output name="34" label="SS18" />
+          <output name="35" label="SS19" />
+          <output name="36" label="SS20" />
+          <output name="37" label="SS21" />
+          <output name="38" label="SS22" />
+          <output name="39" label="SS23" />
+          <output name="40" label="SS24" />
+          <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <model model="LokSound Micro V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54899">
+          <output name="1" label="Headlight" maxcurrent="150mA" />
+          <output name="2" label="Rear light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="150mA" />
+          <output name="4" label="AUX 2" maxcurrent="150mA" />
+          <output name="5" label="AUX 3" maxcurrent="5mA" />
+          <output name="6" label="AUX 4" maxcurrent="5mA" />
+          <output name="7" label="AUX 5" />
+          <output name="8" label="AUX 6" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Dim" />
+          <output name="13" label="Cross" />
+          <output name="14" label="Notch" />
+          <output name="15" label="Dop" />
+          <output name="16" label="Shift" />
+          <output name="17" label="Snd" />
+          <output name="18" label="SS2" />
+          <output name="19" label="SS3" />
+          <output name="20" label="SS4" />
+          <output name="21" label="SS5" />
+          <output name="22" label="SS6" />
+          <output name="23" label="SS7" />
+          <output name="24" label="SS8" />
+          <output name="25" label="SS9" />
+          <output name="26" label="SS10" />
+          <output name="27" label="SS11" />
+          <output name="28" label="SS12" />
+          <output name="29" label="SS13" />
+          <output name="30" label="SS14" />
+          <output name="31" label="SS15" />
+          <output name="32" label="SS16" />
+          <output name="33" label="SS17" />
+          <output name="34" label="SS18" />
+          <output name="35" label="SS19" />
+          <output name="36" label="SS20" />
+          <output name="37" label="SS21" />
+          <output name="38" label="SS22" />
+          <output name="39" label="SS23" />
+          <output name="40" label="SS24" />
+          <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <model model="LokSound Micro V4.0 Next18" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54898">
+          <output name="1" label="Headlight" maxcurrent="150mA" />
+          <output name="2" label="Rear light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="150mA" />
+          <output name="4" label="AUX 2" maxcurrent="150mA" />
+          <output name="5" label="AUX 3" maxcurrent="5mA" />
+          <output name="6" label="AUX 4" maxcurrent="5mA" />
+          <output name="7" label="AUX 5" />
+          <output name="8" label="AUX 6" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Dim" />
+          <output name="13" label="Cross" />
+          <output name="14" label="Notch" />
+          <output name="15" label="Dop" />
+          <output name="16" label="Shift" />
+          <output name="17" label="Snd" />
+          <output name="18" label="SS2" />
+          <output name="19" label="SS3" />
+          <output name="20" label="SS4" />
+          <output name="21" label="SS5" />
+          <output name="22" label="SS6" />
+          <output name="23" label="SS7" />
+          <output name="24" label="SS8" />
+          <output name="25" label="SS9" />
+          <output name="26" label="SS10" />
+          <output name="27" label="SS11" />
+          <output name="28" label="SS12" />
+          <output name="29" label="SS13" />
+          <output name="30" label="SS14" />
+          <output name="31" label="SS15" />
+          <output name="32" label="SS16" />
+          <output name="33" label="SS17" />
+          <output name="34" label="SS18" />
+          <output name="35" label="SS19" />
+          <output name="36" label="SS20" />
+          <output name="37" label="SS21" />
+          <output name="38" label="SS22" />
+          <output name="39" label="SS23" />
+          <output name="40" label="SS24" />
+          <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Snd</functionlabel>
+          <functionlabel num="2" lockable="false">SS3</functionlabel>
+          <functionlabel num="3" lockable="true">SS4</functionlabel>
+          <functionlabel num="4" lockable="true">AUX2+SS5</functionlabel>
+          <functionlabel num="5" lockable="true">SS6</functionlabel>
+          <functionlabel num="6" lockable="true">Switching</functionlabel>
+          <functionlabel num="7" lockable="true">SS15</functionlabel>
+          <functionlabel num="8" lockable="true">AUX1</functionlabel>
+          <functionlabel num="9" lockable="true">SS9</functionlabel>
+          <functionlabel num="10" lockable="true">SS10</functionlabel>
+          <functionlabel num="11" lockable="true">SS8</functionlabel>
+          <functionlabel num="12" lockable="true">SS11</functionlabel>
+          <functionlabel num="13" lockable="true">SS13</functionlabel>
+          <functionlabel num="14" lockable="true">SS7</functionlabel>
+          <functionlabel num="15" lockable="true">SS16</functionlabel>
+          <functionlabel num="16" lockable="true">SS12</functionlabel>
+          <functionlabel num="17" lockable="true">SS17+SS18</functionlabel>
+          <functionlabel num="18" lockable="true">SS15</functionlabel>
+          <functionlabel num="19" lockable="true">SS19</functionlabel>
+          <functionlabel num="20" lockable="true">SS20</functionlabel>
+          <functionlabel num="21" lockable="true">SS21</functionlabel>
+          <functionlabel num="22" lockable="true" />
+          <functionlabel num="23" lockable="true" />
+          <functionlabel num="24" lockable="true" />
+          <functionlabel num="25" lockable="true" />
+          <functionlabel num="26" lockable="true" />
         </functionlabels>
       </family>
       <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59" file="ESU_LokSoundXLV3_5.xml">
@@ -2336,6 +2619,40 @@
           <size length="70" width="9.2" height="5.8" units="mm" />
         </model>
       </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" file="MRC_sound1902.xml">
+        <model model="E unit and PA Stereo Diesel Sound 1902" numOuts="7" numFns="30" maxTotalCurrent="1.5A" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Ditch Lights</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+          <functionlabel num="13" lockable="true">Volume Down by 1</functionlabel>
+          <functionlabel num="14" lockable="true">Volume Up by 1</functionlabel>
+          <functionlabel num="15" lockable="true">Air Compressor</functionlabel>
+          <functionlabel num="16" lockable="true">Flange Squeal</functionlabel>
+          <functionlabel num="17" lockable="true">Air Release</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Safety Valve Pop</functionlabel>
+          <functionlabel num="25" lockable="true">Air Release</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" file="MRC_sound1906.xml">
         <model model="Genset Diesel Sound 1906" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
           <size length="73" width="17.6" height="8.4" units="mm" />
@@ -2454,12 +2771,46 @@
         <model model="Synch Diesel Sound 1802 - HO Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
           <size length="83" width="16" height="7.5" units="mm" />
         </model>
+        <model model="Synch Diesel Sound 1805 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+          <size length="48" width="17" height="7.5" units="mm" />
+        </model>
         <model model="Synch Diesel Sound 1806 - N Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
           <size length="72" width="9.7" height="3.0" units="mm" />
         </model>
         <model model="Synch Diesel Sound 1811 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
           <size length="" width="" height="" units="mm" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Air Release/Acc1 on or off</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">loco Sound</functionlabel>
+          <functionlabel num="12" lockable="true">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="true">Air release/ Acc2 on or off</functionlabel>
+          <functionlabel num="14" lockable="true">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="true">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Air Release</functionlabel>
+          <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
+          <functionlabel num="26" lockable="true">Safety Valve Pop</functionlabel>
+          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
+        </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" file="MRC_soundbrilliance1808.xml">
         <model model="Synch Diesel Sound 1808 - N Scale KATO SD80 - SD90/43MAC" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -2486,6 +2837,37 @@
         <model model="Synch Diesel Sound 1820 - Athearn RS3" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
           <size length="90" width="17.2" height="8.2" units="mm" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Air Release</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Cooling Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="true">Air release</functionlabel>
+          <functionlabel num="14" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Coupling</functionlabel>
+          <functionlabel num="25" lockable="true">Air Releease</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="27" lockable="true">Air Hose Firing</functionlabel>
+          <functionlabel num="28" lockable="true">Air Release</functionlabel>
+        </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="27" highVersionID="45" file="MRC_soundbrilliance1827.xml">
         <model model="Synch Diesel Sound 1827 - N - KATO PA1" numOuts="2" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes">
@@ -8398,6 +8780,120 @@
           <size length="55" width="26" height="18" units="mm" />
         </model>
         <!-- End sound-only models -->
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX646v25.xml">
+        <model model="MX646 version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646R version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646F version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646N version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX646v27.xml">
+        <model model="MX646 version 27" lowVersionID="27" highVersionID="27" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646R version 27+" lowVersionID="27" highVersionID="27" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646F version 27+" lowVersionID="27" highVersionID="27" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646N version 27+" lowVersionID="27" highVersionID="27" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX646v28.xml">
+        <model model="MX646 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646R version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646F version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX646N version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
       </family>
     </familyList>
   </decoderIndex>
