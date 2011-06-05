@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.109 2011-05-22 01:08:13 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.110 2011-06-05 01:11:17 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -46,7 +46,7 @@ custom schedules assigned to them. Trains can be configured to require a
 caboose or car with Flashing Rear End Device (FRED). The program
 generates manifests for each train and switch lists for any
 location. A switch list for a location shows the work for all of the
-scheduled trains that will visit that location. The program can also
+trains that will visit that location. The program can also
 place icons representing trains on a JMRI panel. The icon can be taught
 to move in the panel along with the train from location to location.</P>
 <P>
@@ -328,7 +328,7 @@ by a train that there will be track space available for the car.
 <P>
 Aggressive builds makes the car's track space available as soon as a
 car is scheduled for a pick up. Therefore there can be instances where a
-train was to pick up a car to vacate the track, but a "later" scheduled
+train was to pick up a car to vacate the track, but a "later"
 train arrives early with a set out to that track and the car hasn't been
 picked up. However, more often than not the same train will perform the
 pick up and set out thus minimizing the number of conflicts. Aggressive also
@@ -396,8 +396,8 @@ the program will create a new file (.csv) using the day's date.
 <A NAME="ManifestOptions"></A>
 <H3>Options</H3>
 
-If you want to create your own manifest using a comma separated value (.csv) file, select
-this option.  You can use a program like Excel to create a custom manifest to your liking.
+If you want to create your own custom manifest using a comma separated value (.csv) file, select
+this option.  You can use a program like Excel to create a manifest to your liking.
 You can find the manifest files in the operations directory in a directory called "csvManifests".
 Each line of the file starts with a two or three letter code, followed by the code's description,
 and then any parameters associated with the code. 
@@ -441,6 +441,9 @@ Caboose, F = FRED, and H = Hazardous</P>
 number, model, length, type, hp, location name, track name, destination
 name, destination track name, owner name, consist name, car comment,
 RFID.</P>
+
+<P>You can find some examples of custom manifests at <A
+	HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>http://groups.yahoo.com/group/jmriusers/files/Operations.</A></P>
 
 
 <A NAME="PrintOptions"></A>
@@ -486,8 +489,8 @@ equally spaced characters like "Courier or Monospaced".
 
 You can customize the pick up, set out, and local move messages for your
 manifests and switch lists by selecting the appropriate drop down menus.
-To remove an attribute select blank. You can also edit the "Set out",
-"Pick up" and "Move" prefixes. If you want to use the text color
+To remove an attribute select blank. You can also edit the "[ ] Set out",
+"[ ] Pick up" and "[ ] Move" prefixes. If you want to use the text color
 options, the set out, pick up, and move prefixes must be unique.
 
 <H3>Show Comments on Manifests</H3>
@@ -578,8 +581,8 @@ cars and locomotives that will be delivered (Set outs) by trains.</P>
 <H3>Location Service Direction</H3>
 
 You can decide which train direction the location can service. For
-example, if only south bound trains can access the location select
-"South" and deselect the other directions. This can be useful if you
+example, if only east bound trains can access the location select
+"East" and deselect the other directions. This can be useful if you
 want to only support trailing point switching for a given location. If a
 location can support multiple directions then select the ones that are
 appropriate.
@@ -596,7 +599,7 @@ serviced by the various tracks.
 <A NAME="Yards"></A>
 <H3>Yards</H3>
 
-To add a yard, press the "Add Yard Track" button. 
+To add a yard, select the "Yards" radio button and then press the "Add Yard Track" button. 
 
 <P>
 <img src="images/AddYard.png">
@@ -704,10 +707,10 @@ of 1. You can if you wish specify a particular road for the type of car
 you entered, or leave it blank if you don't care about the road name.
 You can also specify the car load received and shipped. You can also
 control if the car will be delivered during the session. Select from the
-"Timetable" pull down menu the train schedule you want. When a train schedule
-is selected, a car will only be delivered when that train schedule is active.
+"Timetable" pull down menu the train timetable you want. When a train timetable
+is selected, a car will only be delivered when that train timetable is active.
 See Trains-&gt;Tools-&gt;<A HREF="#Timetable">Timetable</A> to select
-the train schedule for your session.</P>
+the train timetable for your session.</P>
 
 <P> If you wanted more than one car type to be delivered consecutively,
 increase the count to the number that you wish. The maximum count is 10
@@ -722,12 +725,12 @@ Note only car types and roads that are accepted by this siding
 are available. If a car type or road isn't available, check the car
 types and roads for this siding and location.
 </P>
-<P>The schedule controls what cars will be delivered and the car
+<P>The schedule controls when and what cars will be delivered and the car
 order. It makes the siding more restrictive, only cars demanded by the 
 schedule will be delivered to the siding. Looking at the schedule you
 will see a pointer in the table under the heading "Current", the pointer
 shows the
-next car type and load that the program wants to place at the siding. When
+next car type that the program wants to place at the siding. When
 the program finds that car and sets the car's destination to this
 siding, the pointer will move the next item in the schedule.  After servicing
 the last item in the schedule, the pointer will return to the first item
@@ -966,27 +969,35 @@ loads with the default empty.
 cars when they depart staging. The first option is called "Generate
 custom loads for sidings serviced by this train". If the first option is
 selected, the program will only check sidings with schedules along the
-departure train's route.</P>
+departure train's route. The program will only generate enough car loads
+to fill the siding's track. When only the first option is selected, the program
+ignores the schedule's "Percentage of custom loads generated by staging"
+and the "Alternate Track" optional features.</P>
 
 <P>If the second option is selected, "Generate custom loads for any
 siding (multiple trains)", the program will check all sidings with a
-schedule for a request.</P>
+schedule for a request. The program when determining now many car loads
+to generate, will consider the value in the "Percentage of custom loads
+generated by staging". Also, if the siding is full or becomes full, the
+program will send cars to the "Alternate Track", and then to any yard
+tracks at the siding's location.</P>
 
 <P>Both options work the same with regards to placing custom car
-loads into cars, only the number of sidings considered by the program
-changes. If a schedule demands a certain car type, and that car type is
-departing staging, and the car's load is default empty, the program will place the
-custom load into that car if the appropriate option is selected.</P>
+loads into cars, only the number of cars loaded and the number of
+sidings considered by the program changes. If a schedule demands a
+certain car type, and that car type is departing staging, and the car's
+load is default empty, the program will place the custom load into that
+car if the appropriate option is selected.</P>
 
 <P>For a siding to request a custom load, the siding must have a <A
 	HREF="#Schedules">schedule</A>.</P>
 
 <P>To restrict which loads the program will place into your cars,
 you can use the staging tracks load service control feature. See "Select
-loads service by this track" when editing the staging track. You can
+loads serviced by this track" when editing the staging track. You can
 also restrict which types of loads the program will place by restricting
 the types of loads the train departing from staging is allowed to
-service. See "Select loads service by this train" under Edit-&gt;Train,
+service. See "Select loads serviced by this train" under Edit-&gt;Train,
 then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
 
 <A NAME="ModifyLocationsByCarType"></A>
@@ -1254,13 +1265,16 @@ the type of car and load. The messages can be useful if you have visible
 car loads that need to be added or removed by your operators.</P> 
 
 <A NAME="CarsSet"></A>
-<H3>Set Car Location</H3>
+<H3>Set Car</H3>
 
 After creating a car, you can set the car's location, and optionally the
 car's destination and train by using the "Set" button found for each car
 in the <A HREF="#Cars">Cars</A> window. Normally the car's destination and assigned
 train are generated by the program, but you can use these fields to
-force a car to a specific location using a specified train. 
+force a car to a specific location using a specified train.
+
+<P>You can also remove a car that has been assigned to a train by
+simply pressing the "Save" button.</P>
 <P>
 <img src="images/SetCarLocation.png">
 </P>
@@ -1279,15 +1293,17 @@ and use this feature to hold the car there until repairs have been made.</P>
 <P>Use the "Location" set of field to place the car on the layout.
 You can also optionally enter the location and track that you want the
 car to return to when the car's load status becomes empty. Use the
-"Auto" checkbox to show valid tracks for a given location</P>
+"Auto" checkbox to show valid tracks for a given location.</P>
+
+<P>You can also change the car's load.</P>
 
 <P>The next three set of fields are normally set by the program when
-building trains. We'll explain how they work in case you're interested
-in how the program works or if you want to manually override the
-program. The first is the "Destination" set of pull down boxes. The
-"Destination" is the next location that the car will be delivered to.
-The destination must be reachable by only one train or the car will not
-be serviced.</P>
+building trains. We'll explain how they work in
+case you're interested in how the program works or if you want to
+manually override the program. The first is the "Destination" set of
+pull down boxes. The "Destination" is the next location that the car
+will be delivered to. The destination must be reachable by only one
+train or the car will not be serviced.</P>
 
 <P>The next field is the "Final Destination" set of pull down boxes.
 You can select any destination or track, the program will figure out the
@@ -1296,11 +1312,12 @@ of several trains, interchanges, and yards. When a car is delivered to a
 siding with a schedule, and the schedule has a shipping destination that
 requires more than one train, the program uses this set of fields to
 ship the car. If the track that the final destination specifies happens
-to be full, the program will search for a near by yard to place the car.
+to be full, the program will search for a yard to place the car.
 When the track becomes available, the program will move the car from the
 yard to the track specified.</P>
 
-<P>The last field is the train assignment.</P>
+<P>The last field is the train assignment. If you want to specify a
+car's destination or train, set them before you build your trains.</P>
 
 <P>When manually setting a destination, you don't have to specify a
 track. And when manually setting a destination that is staging, you
@@ -1441,7 +1458,7 @@ called "operations". A backup file with the last settings for all of
 your locomotives is also created each time the "Save" button is pressed. 
 
 <A	NAME="LocomotivesSet"></A>
-<H3>Locomotive Set Location Button</H3>
+<H3>Locomotive Set</H3>
 
 After creating a locomotive, you can set the locomotive's location, and
 optionally the locomotive's destination and train. Normally the locomotive's
