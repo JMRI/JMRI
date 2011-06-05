@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -233,7 +233,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
                 else if (col==REPORTERCOL){
                     Reporter r = null;
-                    if (value!=null || value !="") {
+                    if (value !="" || value!=null) {
                         r = jmri.InstanceManager.reporterManagerInstance().provideReporter((String)value);
                     }
                     b.setReporter(r);
