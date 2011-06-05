@@ -111,7 +111,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     set=true;
                 }
             } catch (NullPointerException ex){
-                //Considered normal if the window hasn't been closed or all of the information hasn°t been set
+                //Considered normal if the window hasn't been closed or all of the information hasn't been set
             }
             try {
                 double width=p.getWindowSize(strClass).getWidth();
