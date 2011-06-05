@@ -47,7 +47,7 @@ import java.awt.datatransfer.DataFlavor ;
  *  <li>Your patent rights, should you generate patents, are protected.</li>
  * </ul>
  * </p>
- * <p><em>Copyright •À? 2001 Robert Harder</em></p>
+ * <p><em>Copyright 2001 Robert Harder</em></p>
  *
  * @author  Robert.Harder copyright 2001
  * @version 1.1
