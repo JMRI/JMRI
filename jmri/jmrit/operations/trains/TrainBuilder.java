@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.164 $
+ * @version             $Revision: 1.165 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -412,8 +412,8 @@ public class TrainBuilder extends TrainCommon{
 			getCaboose(train.getThirdLegCabooseRoad(), null, train.getThirdLegStartLocation(), cabooseOrFredTerminatesThirdLeg);
 		}
 		
-		// done assigning cabooses and cars with FRED, remove the rest
-		removeCaboosesAndCarsWithFred();
+		// done assigning cabooses and cars with FRED, remove the rest, and save next destination
+		removeCaboosesAndCarsWithFredAndSaveNextDest();
 		
 		// now find destinations for cars 
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrain"),new Object[]{requested, train.getName(), carList.size()}));
@@ -830,7 +830,7 @@ public class TrainBuilder extends TrainCommon{
 		}
 	}
 	
-	private void removeCaboosesAndCarsWithFred(){
+	private void removeCaboosesAndCarsWithFredAndSaveNextDest(){
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car car = carManager.getById(carList.get(carIndex));
 			if (car.isCaboose() || car.hasFred()){
@@ -838,6 +838,9 @@ public class TrainBuilder extends TrainCommon{
 				carList.remove(car.getId());		// remove this car from the list
 				carIndex--;
 			}
+			// save next destination and track values in case of train reset
+			car.setPreviousNextDestination(car.getNextDestination());
+			car.setPreviousNextDestTrack(car.getNextDestTrack());
 		}
 	}
 	
@@ -1093,17 +1096,10 @@ public class TrainBuilder extends TrainCommon{
 					// can this car be picked up?
 					if(!checkPickUpTrainDirection(car, rl))
 						continue; // no
-					// save next destination and track values in case of train reset
-					car.setPreviousNextDestination(car.getNextDestination());
-					car.setPreviousNextDestTrack(car.getNextDestTrack());
 					// check for car order?
 					car = getCarOrder(car);
 					// is car departing staging and generate custom load?
-					if (car.getTrack() != null && car.getTrack().isAddLoadsEnabledAnySiding()
-							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-							&& car.getDestination() == null && car.getNextDestination() == null){
-						searchForCarLoad(car);
-					}
+					searchForCarLoad(car);
 					// does car have a custom load without a destination?
 					if (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
@@ -1662,6 +1658,10 @@ public class TrainBuilder extends TrainCommon{
 	 * @throws BuildFailedException 
 	 */
 	private void searchForCarLoad(Car car) throws BuildFailedException{
+		if (car.getTrack() == null || !car.getTrack().isAddLoadsEnabledAnySiding()
+				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+				|| car.getDestination() != null || car.getNextDestination() != null)
+			return;
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
 				new Object[]{car.toString(), car.getType(), car.getLoad()}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
@@ -2041,7 +2041,7 @@ public class TrainBuilder extends TrainCommon{
 					if (!checkDropTrainDirection(car, rld, testTrack))
 						continue;
 					String status = car.testDestination(testDestination, testTrack);
-					// is the testTack a siding with a schedule demanding this car's load?
+					// is the destination a siding with a schedule demanding this car's custom load?
 					if (status.equals(Car.OKAY) && !testTrack.getScheduleId().equals("") 
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())){
@@ -2053,7 +2053,7 @@ public class TrainBuilder extends TrainCommon{
 							log.error ("Couldn't add car "+car.toString()+" to train ("+train.getName()+"), location ("+rl.getName()+ ") destination (" +rld.getName()+")");
 						return carAdded;	// done, no build errors					
 					}					
-					// is the testTrack a siding with a Schedule?
+					// is the destination a siding with a Schedule?
 					if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
 							&& status.contains(Car.LOAD)){
 						log.debug("Siding ("+testTrack.getName()+") status: "+status);
@@ -2147,7 +2147,7 @@ public class TrainBuilder extends TrainCommon{
 						log.debug("Location "+rld.getName()+" is terminate location "+Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;
 					}
-					// bias cars to a track with a schedule
+					// bias cars with default loads to a track with a schedule
 					if (!trackTemp.getScheduleId().equals("")){
 						log.debug("Track ("+trackTemp.getName()+") has schedule ("+trackTemp.getScheduleName()+") adjust nextRatio = "+Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;
