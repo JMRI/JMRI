@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.10 2011-06-03 15:04:02 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.11 2011-06-05 00:33:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -145,6 +145,21 @@ during the car import.</LI>
 <li>Prevented an occuring from occuring when the power on command is issued to the NCE Power Cab via the usb interface.</li>
 <li>Fixed a bug with the default selector for the throttle manager</li>
 </ul>
+
+<p>Stephen Lowens updated the Digitrax SFX definition.</p>
+
+<p>Randall Wood updated the fast clock in memory variable support, and added some fixed memory 
+values to the XMLIO support so that web browsers can inquire about the JMRI version, etc.
+
+<p>Nigel Cliffe provided a new decoder definition for DCC Concepts loco decoder, developed using information from Richard Johnson of DCC Concepts.
+He also provided a new decoder definition for the CML Electronics DAC 20 decoder.
+
+<p>Michael Mosher improved the ESU LokSounds V4.0 decoder definition.
+
+<p>Gert Muller fixed some issues with international characters and improved the layout of the throttle address field when running Linux.
+
+<P>Mark Waters provided a large group of Zimo Unified decoder definitions.
+
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
