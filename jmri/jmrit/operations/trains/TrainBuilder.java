@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.165 $
+ * @version             $Revision: 1.166 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -2040,6 +2040,25 @@ public class TrainBuilder extends TrainCommon{
 					// Can the train service this track?
 					if (!checkDropTrainDirection(car, rld, testTrack))
 						continue;
+					// drop to interchange or siding?
+					if (testTrack.getLocType().equals(Track.INTERCHANGE) || testTrack.getLocType().equals(Track.SIDING)){
+						if (testTrack.getDropOption().equals(Track.TRAINS)){
+							if (testTrack.acceptsDropTrain(train)){
+								log.debug("Car ("+car.toString()+") can be droped by train to this track (" +testTrack.getName()+")");
+							} else {
+								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarTrain"),new Object[]{car.toString(), train.getName(), testTrack.getName()}));
+								continue;
+							}
+						}
+						if (testTrack.getDropOption().equals(Track.ROUTES)){
+							if (testTrack.acceptsDropRoute(train.getRoute())){
+								log.debug("Car ("+car.toString()+") can be droped by route to this track (" +testTrack.getName()+")");
+							} else {
+								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarRoute"),new Object[]{car.toString(), train.getRoute().getName(), testTrack.getName()}));
+								continue;
+							}
+						}
+					}
 					String status = car.testDestination(testDestination, testTrack);
 					// is the destination a siding with a schedule demanding this car's custom load?
 					if (status.equals(Car.OKAY) && !testTrack.getScheduleId().equals("") 
@@ -2095,25 +2114,7 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoInterchangeToInterchangeMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
-					// drop to interchange or siding?
-					if (testTrack.getLocType().equals(Track.INTERCHANGE) || testTrack.getLocType().equals(Track.SIDING)){
-						if (testTrack.getDropOption().equals(Track.TRAINS)){
-							if (testTrack.acceptsDropTrain(train)){
-								log.debug("Car ("+car.toString()+") can be droped by train to this track (" +testTrack.getName()+")");
-							} else {
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarInterchange"),new Object[]{car.toString(), testTrack.getName()}));
-								continue;
-							}
-						}
-						if (testTrack.getDropOption().equals(Track.ROUTES)){
-							if (testTrack.acceptsDropRoute(train.getRoute())){
-								log.debug("Car ("+car.toString()+") can be droped by route to this track (" +testTrack.getName()+")");
-							} else {
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarRoute"),new Object[]{car.toString(), testTrack.getName()}));
-								continue;
-							}
-						}
-					}
+
 					// not staging, then use
 					if (!testTrack.getLocType().equals(Track.STAGING)){
 						trackTemp = testTrack;
