@@ -326,6 +326,34 @@ public class DccConsist implements Consist, ProgListener{
         }
 
 	/*
+         * Reverse the order of locomotives in the consist and flip
+         * the direction bits of each locomotive.
+         */
+	public void reverse(){
+        // reverse the direction of the list 
+        java.util.Collections.reverse(ConsistList);
+        // and itterate through the list to reverse the directions of the 
+        // individual elements of the list.
+        java.util.Iterator i= ConsistList.iterator();
+        while(i.hasNext()){
+          DccLocoAddress locoaddress=(DccLocoAddress)i.next() ;
+	  add(locoaddress,getLocoDirection(locoaddress));  
+	  if(ConsistPosition.contains(locoaddress))
+	  {
+		if(getPosition(locoaddress)==Consist.POSITION_LEAD)
+		   setPosition(locoaddress,Consist.POSITION_TRAIL);
+		else if(getPosition(locoaddress)==Consist.POSITION_TRAIL)
+		   setPosition(locoaddress,Consist.POSITION_LEAD);
+		else 
+		   setPosition(locoaddress,
+                            ConsistList.size()-getPosition(locoaddress));
+	  }
+        }
+
+	}
+
+
+	/*
          * Notify all listener objects of a status change.
          * @param LocoAddress is the address of any specific locomotive the
          *       status refers to.

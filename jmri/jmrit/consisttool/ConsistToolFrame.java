@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003-2008
- * @version              $Revision: 1.29 $
+ * @version              $Revision: 1.30 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -32,6 +32,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
     javax.swing.JButton deleteButton = new javax.swing.JButton();
     javax.swing.JButton throttleButton = new javax.swing.JButton();
+    javax.swing.JButton reverseButton = new javax.swing.JButton();
 
     javax.swing.JLabel textLocoLabel = new javax.swing.JLabel();
     jmri.jmrit.DccLocoAddressSelector locoSelector = new jmri.jmrit.DccLocoAddressSelector();
@@ -135,6 +136,15 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                     throttleButtonActionPerformed(e);
                 }
             });
+        
+        reverseButton.setText("Reverse");
+        reverseButton.setVisible(true);
+        reverseButton.setToolTipText("Reverse consist order and flip consist direction bits");
+        reverseButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    reverseButtonActionPerformed(e);
+                }
+            });
 
         // Set up the controlls for the First Locomotive in the consist.
 
@@ -232,6 +242,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         controlPanel.add(deleteButton);
         controlPanel.add(throttleButton);
+        controlPanel.add(reverseButton);
 
 	getContentPane().add(controlPanel);
 
@@ -360,6 +371,21 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     	// Notify the throttle of the selected consist address
     	tf.getAddressPanel().setCurrentAddress(address);
     	tf.toFront();
+    }
+
+    public void reverseButtonActionPerformed(java.awt.event.ActionEvent e) {
+    	if(adrSelector.getAddress()==null) {
+    		javax.swing.JOptionPane.showMessageDialog(this,
+    				"No Consist Address Selected");
+    		return;
+    	}
+    	// make sure any new locomotives are added to the consist.
+    	addLocoButtonActionPerformed(e);
+
+        /* get the array list of the locomotives in the consist */
+    	DccLocoAddress address=adrSelector.getAddress();
+    	Consist tempConsist = ConsistMan.getConsist(address);
+	tempConsist.reverse();
     }
 
     public void consistSelected() {

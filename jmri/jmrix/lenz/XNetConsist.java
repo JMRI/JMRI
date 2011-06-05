@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004-2010
- * @version                     $Revision: 2.19 $
+ * @version                     $Revision: 2.20 $
  */
 
 package jmri.jmrix.lenz;
@@ -162,7 +162,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		if(ConsistList.size()<2) {
 		    // Lenz Double Headers require exactly 2 locomotives, so 
 		    // wait for the second locomotive to be added to start
-		    if(ConsistList.size()==1) {
+		    if(ConsistList.size()==1 && !ConsistList.contains(LocoAddress) ) {
 	         	addToCSConsist(LocoAddress, directionNormal);		
 		        // save the address for the check after we get a response 
 		        // from the command station
@@ -172,7 +172,13 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		       // we're going to just add this directly, since we 
 		       // can't form the consist yet.
 		       addToConsistList(LocoAddress,directionNormal);
-		    }
+		    } else {
+                        // we must have gotten here because we tried to add
+                        // a locomotive already in this consist.
+   			notifyConsistListeners(LocoAddress,
+				ConsistListener.CONSIST_ERROR | 
+				ConsistListener.ALREADY_CONSISTED);
+                    }
 		 } else {
                       // The only way it is valid for us to do something
                       // here is if the locomotive we're adding is
@@ -270,6 +276,10 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 			    }
 			}*/
 		}
+		// set the speed of the locomotive to zero, to make sure we have
+                // control over it.
+	        sendDirection(LocoAddress,directionNormal);
+		
 		// All we have to do here is create an apropriate XNetMessage, 
 		// and send it.
 		XNetMessage msg=XNetMessage.getAddLocoToConsistMsg(ConsistAddress.getNumber(),LocoAddress.getNumber(),directionNormal);
@@ -282,6 +292,9 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	 *  @param address is the Locomotive address to add to the locomotive
          */
 	public synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
+		// set the speed of the locomotive to zero, to make sure we 
+                // have control over it.
+	        sendDirection(LocoAddress,getLocoDirection(LocoAddress));
 		// All we have to do here is create an apropriate XNetMessage, 
 		// and send it.
 		XNetMessage msg=XNetMessage.getRemoveLocoFromConsistMsg(ConsistAddress.getNumber(),LocoAddress.getNumber());
@@ -296,6 +309,22 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
          *        the same direction as the consist, or false otherwise.
          */
 	private synchronized void addToCSConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
+
+           if(ConsistAddress.equals(LocoAddress)){
+		// Something went wrong here, we are trying to add a
+		// trailing locomotive to the consist with the same
+		// address as the lead locomotive.  This isn't supposed to 
+		// happen.
+		log.error("Attempted to add " + LocoAddress.toString() + 
+                          " to consist " + ConsistAddress.toString() );
+		_state=IDLESTATE;
+		notifyConsistListeners(_locoAddress,
+                                       ConsistListener.CONSIST_ERROR |
+				       ConsistListener.ALREADY_CONSISTED);
+		return;
+           }
+
+
 	   // If the consist already contains the locomotive in
            // question, we need to disolve the consist
            if(ConsistList.size()==2 &&
@@ -454,6 +483,27 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	private void sendDirection(XNetThrottle t,boolean isForward){
 	 XNetMessage msg=XNetMessage.getSpeedAndDirectionMsg(t.getDccAddress(),
                                                              t.getSpeedStepMode(),
+                                                             (float)0.0,
+                                                             isForward); 
+        // now, we send the message to the command station
+        tc.sendXNetMessage(msg,this);
+    }
+
+	/* 
+	 * <P>
+	 * Set the speed and direction of a locomotive; bypassing the 
+	 * commands in the throttle, since they don't work for this 
+	 * application
+	 * <P> 
+	 * For this application, we also set the speed setting to 0, which 
+	 * also establishes control over the locomotive in the consist.
+	 * @param t is an XPressNett throttle
+ 	 * @param isForward is the boolean value representing the desired 
+	 * direction
+	 */
+	private void sendDirection(DccLocoAddress address,boolean isForward){
+	 XNetMessage msg=XNetMessage.getSpeedAndDirectionMsg(address.getNumber(),
+                                                             jmri.DccThrottle.SpeedStepMode28,
                                                              (float)0.0,
                                                              isForward); 
         // now, we send the message to the command station

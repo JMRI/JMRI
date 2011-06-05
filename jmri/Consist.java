@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author              Paul Bender Copyright (C) 2003-2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public interface Consist {
 
@@ -146,6 +146,12 @@ public interface Consist {
 	 *	   consist address.
          */
 	public String getConsistID();
+
+	/*
+         * Reverse the order of the consist and the direction
+	 * the locomotives are traveling
+	 */
+	public void reverse();
 
 }
 
