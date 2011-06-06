@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.166 $
+ * @version             $Revision: 1.167 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -321,9 +321,14 @@ public class TrainBuilder extends TrainCommon{
 		List<String> stagingTracks = departLocation.getTracksByMovesList(Track.STAGING);
 		if (stagingTracks.size()>0){
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildDepartStaging"),new Object[]{departLocation.getName(), Integer.toString(stagingTracks.size())}));
-			if (stagingTracks.size()>1 && Setup.isPromptFromStagingEnabled())
+			if (stagingTracks.size()>1 && Setup.isPromptFromStagingEnabled()){
 				departStageTrack = PromptFromStagingDialog();
-			else for (int i=0; i<stagingTracks.size(); i++ ){
+				// load engines for this train
+				if (getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)){
+				} else {
+					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{reqNumEngines, train.getTrainDepartsName(), engineTerminatesFirstLeg.getName()}));
+				}
+			} else for (int i=0; i<stagingTracks.size(); i++ ){
 				departStageTrack = departLocation.getTrackById(stagingTracks.get(i));
 				addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
 						departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
