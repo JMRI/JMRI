@@ -35,7 +35,7 @@ import jmri.jmrit.XmlFile;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -586,6 +586,32 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         return null;
     }
     
+    public boolean getSaveWindowSize(String strClass){
+        if(windowDetails.containsKey(strClass)){
+            return windowDetails.get(strClass).getSaveSize();
+        }
+        return false;
+    }
+    
+    public boolean getSaveWindowLocation(String strClass){
+        if(windowDetails.containsKey(strClass)){
+            return windowDetails.get(strClass).getSaveLocation();
+        }
+        return false;
+    }
+    
+    public void setSaveWindowSize(String strClass, boolean b){
+        if(windowDetails.containsKey(strClass)){
+            windowDetails.get(strClass).setSaveSize(b);
+        }
+    }
+    
+    public void setSaveWindowLocation(String strClass, boolean b){
+        if(windowDetails.containsKey(strClass)){
+            windowDetails.get(strClass).setSaveLocation(b);
+        }
+    }
+    
     public void setWindowLocation(String strClass, Point location){
         if((strClass==null) || (strClass.equals("jmri.util.JmriJFrame")))
             return;
@@ -970,6 +996,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         return 0;
     }
     
+
+    
     /**
      * Holds details about the speific class.
      */
@@ -1123,6 +1151,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
     static class WindowLocations{
         Point xyLocation = new Point(0,0);
         Dimension size = new Dimension (0,0);
+        boolean saveSize = false;
+        boolean saveLocation = false;
         
         WindowLocations(){
         }
@@ -1132,12 +1162,30 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         
         Dimension getSize() { return size; }
         
+        void setSaveSize(boolean b){
+            saveSize = b;
+        }
+        
+        void setSaveLocation(boolean b){
+            saveLocation = b;
+        }
+        
+        boolean getSaveSize(){
+            return saveSize;
+        }
+        
+        boolean getSaveLocation(){
+            return saveLocation;
+        }
+        
         void setLocation(Point xyLocation) {
             this.xyLocation = xyLocation;
+            saveLocation = true;
         }
         
         void setSize(Dimension size) {
             this.size = size;
+            saveSize=true;
         }
     
     }

@@ -96,12 +96,10 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             Element windowElement = new Element("windowDetails");
             windowElement.setAttribute("class", strClass);
             boolean set = false;
-            try {
-                
-                double x = p.getWindowLocation(strClass).getX();
-                double y = p.getWindowLocation(strClass).getY();
-                //Simple case of not wanting to save if the window hasn't moved.
-                if (!(y==0.0 && x==0.0)){
+            if(p.getSaveWindowLocation(strClass)){
+                try {
+                    double x = p.getWindowLocation(strClass).getX();
+                    double y = p.getWindowLocation(strClass).getY();
                     Element loc = new Element("locX");
                     loc.addContent(Double.toString(x));
                     windowElement.addContent(loc);
@@ -109,24 +107,27 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     windowElement.addContent(loc);
                     loc.addContent(Double.toString(y));
                     set=true;
+                } catch (NullPointerException ex){
+                    //Considered normal if the window hasn't been closed or all of the information hasn't been set
                 }
-            } catch (NullPointerException ex){
-                //Considered normal if the window hasn't been closed or all of the information hasn't been set
             }
-            try {
-                double width=p.getWindowSize(strClass).getWidth();
-                double height=p.getWindowSize(strClass).getHeight();
-                if (!(width==0.0 && height==0.0)){
-                    Element size = new Element("width");
-                    size.addContent(Double.toString(width));
-                    windowElement.addContent(size);
-                    size = new Element("height");
-                    size.addContent(Double.toString(height));
-                    windowElement.addContent(size);
-                    set=true;
+            if(p.getSaveWindowSize(strClass)){
+                try {
+                    double width=p.getWindowSize(strClass).getWidth();
+                    double height=p.getWindowSize(strClass).getHeight();
+                    //We do not want to save the width or height if it is set to zero!
+                    if (!(width==0.0 && height==0.0)){
+                        Element size = new Element("width");
+                        size.addContent(Double.toString(width));
+                        windowElement.addContent(size);
+                        size = new Element("height");
+                        size.addContent(Double.toString(height));
+                        windowElement.addContent(size);
+                        set=true;
+                    }
+                } catch (NullPointerException ex){
+                    //Considered normal if the window hasn't been closed
                 }
-            } catch (NullPointerException ex){
-                //Considered normal if the window hasn't been closed
             }
             if (set)
                 messages.addContent(windowElement);
@@ -200,6 +201,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }
         
+
         List<Element> windowList = messages.getChildren("windowDetails");
         for (int k = 0; k < windowList.size(); k++) {
             String strClass = windowList.get(k).getAttribute("class").getValue();
@@ -248,6 +250,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         p.finishLoading();
         return true;
     }
+    
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferencesXml.class.getName());
 }

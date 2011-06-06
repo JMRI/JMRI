@@ -17,7 +17,7 @@ import java.awt.Point;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
  
 public interface UserPreferencesManager {
@@ -359,6 +359,15 @@ public interface UserPreferencesManager {
      * @return true if the window position details are stored, false if not.
      */
     public boolean isWindowPositionSaved(String strClass);
+    
+    public boolean getSaveWindowSize(String strClass);
+    
+    public boolean getSaveWindowLocation(String strClass);
+    
+    public void setSaveWindowSize(String strClass, boolean b);
+    
+    public void setSaveWindowLocation(String strClass, boolean b);
+    
     /*
         Example informational message dialog box.
         
