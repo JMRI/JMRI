@@ -27,7 +27,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -69,11 +69,20 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 		this.tc = t;
 	}
 
+	private long lastPollTime =0;
+
 	public NceMessage pollMessage() {
-    	
+   	
     	if (tc.getCommandOptions() < NceTrafficController.OPTION_2006 ) return null;	//Only 2007 CS EPROMs support polling
     	if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) return null;		//Can't poll USB!
     	if (NceTurnout.getNumNtTurnouts() == 0) return null;							//No work!
+
+	long currentTime=java.util.Calendar.getInstance().getTimeInMillis();
+	if(currentTime-lastPollTime<2*POLL_TIME){
+	   return null;
+	} else {
+	   lastPollTime=currentTime;
+	}
     	
     	// User can change a turnout's feedback to MONITORING, therefore we need to rescan
     	// also see if the number of turnouts now differs from the last scan
