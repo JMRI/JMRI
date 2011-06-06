@@ -3,7 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
-
+import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.ActionEvent;
@@ -39,7 +39,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LevelXing 
@@ -393,49 +393,48 @@ public class LevelXing
 				}
 			});
 		}
-        /* Not yet supported
+
         final String[] boundaryBetween = getBlockBoundaries();
         boolean blockBoundaries = false;
-        
-        if(blockACAssigned && !blockBDAssigned){
-            popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                public void actionPerformed(ActionEvent e) {
-                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
-                    routeTableAction.actionPerformed(e);
-                }
-            });
-        } else if(!blockACAssigned && blockBDAssigned){
-            popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                public void actionPerformed(ActionEvent e) {
-                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
-                    routeTableAction.actionPerformed(e);
-                }
-            });
-        } else if(blockACAssigned && blockBDAssigned){
-            JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
-            viewRouting.add(new AbstractAction( blockNameAC) {
-                public void actionPerformed(ActionEvent e) {
-                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction( blockNameAC, getLayoutBlockAC());
-                    routeTableAction.actionPerformed(e);
-                }
-            });
-            
-            viewRouting.add(new AbstractAction(blockNameBD) {
-                public void actionPerformed(ActionEvent e) {
-                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
-                    routeTableAction.actionPerformed(e);
-                }
-            });
-            
-            popup.add(viewRouting);
+        if (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            if(blockACAssigned && !blockBDAssigned){
+                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                    public void actionPerformed(ActionEvent e) {
+                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
+                        routeTableAction.actionPerformed(e);
+                    }
+                });
+            } else if(!blockACAssigned && blockBDAssigned){
+                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                    public void actionPerformed(ActionEvent e) {
+                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
+                        routeTableAction.actionPerformed(e);
+                    }
+                });
+            } else if(blockACAssigned && blockBDAssigned){
+                JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+                viewRouting.add(new AbstractAction( blockNameAC) {
+                    public void actionPerformed(ActionEvent e) {
+                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction( blockNameAC, getLayoutBlockAC());
+                        routeTableAction.actionPerformed(e);
+                    }
+                });
+                
+                viewRouting.add(new AbstractAction(blockNameBD) {
+                    public void actionPerformed(ActionEvent e) {
+                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
+                        routeTableAction.actionPerformed(e);
+                    }
+                });
+                
+                popup.add(viewRouting);
+            }
         }
-        
         
         for (int i = 0; i<4; i++){
             if(boundaryBetween[i]!=null)
                 blockBoundaries=true;
         }
-        Not yet supported
         if (blockBoundaries){
              popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                 public void actionPerformed(ActionEvent e) {
@@ -446,7 +445,17 @@ public class LevelXing
                     tools.setSignalMastsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.signalFrame);
                 }
             });
-        }*/
+             popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                public void actionPerformed(ActionEvent e) {
+                    if (tools == null) {
+                        tools = new LayoutEditorTools(layoutEditor);
+                    }
+                        
+                    tools.setSensorsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.signalFrame);
+                }
+            });
+        }
+        
         layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }

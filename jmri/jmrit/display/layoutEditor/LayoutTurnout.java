@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -77,7 +78,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutTurnout
@@ -1112,59 +1113,57 @@ public class LayoutTurnout
 			});
 		}
         if (!blockName.equals("")){
-            /* not yet supported
             final String[] boundaryBetween = getBlockBoundaries();
             boolean blockBoundaries = false;
             for (int i = 0; i<4; i++){
                 if(boundaryBetween[i]!=null)
                     blockBoundaries=true;
             }
-            
-            if(blockBName.equals("") && blockCName.equals("") && blockDName.equals("")){
-                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                    public void actionPerformed(ActionEvent e) {
-                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                        routeTableAction.actionPerformed(e);
+            if (InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                if(blockBName.equals("") && blockCName.equals("") && blockDName.equals("")){
+                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                } else {
+                    JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+                    viewRouting.add(new AbstractAction(blockName) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockName, getLayoutBlock());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                    
+                    if(!blockBName.equals("")){
+                        viewRouting.add(new AbstractAction(blockBName) {
+                            public void actionPerformed(ActionEvent e) {
+                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
+                                routeTableAction.actionPerformed(e);
+                            }
+                        });
                     }
-                });
-            } else {
-                JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
-                viewRouting.add(new AbstractAction(blockName) {
-                    public void actionPerformed(ActionEvent e) {
-                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockName, getLayoutBlock());
-                        routeTableAction.actionPerformed(e);
+                    if(!blockCName.equals("")){
+                        viewRouting.add(new AbstractAction(blockCName) {
+                            public void actionPerformed(ActionEvent e) {
+                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
+                                routeTableAction.actionPerformed(e);
+                            }
+                        });
                     }
-                });
-                
-                if(!blockBName.equals("")){
-                    viewRouting.add(new AbstractAction(blockBName) {
-                        public void actionPerformed(ActionEvent e) {
-                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
-                            routeTableAction.actionPerformed(e);
-                        }
-                    });
+                    if(!blockDName.equals("")){
+                        viewRouting.add(new AbstractAction(blockDName) {
+                            public void actionPerformed(ActionEvent e) {
+                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
+                                routeTableAction.actionPerformed(e);
+                            }
+                        });
+                    }
+                    popup.add(viewRouting);
                 }
-                if(!blockCName.equals("")){
-                    viewRouting.add(new AbstractAction(blockCName) {
-                        public void actionPerformed(ActionEvent e) {
-                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
-                            routeTableAction.actionPerformed(e);
-                        }
-                    });
-                }
-                if(!blockDName.equals("")){
-                    viewRouting.add(new AbstractAction(blockDName) {
-                        public void actionPerformed(ActionEvent e) {
-                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
-                            routeTableAction.actionPerformed(e);
-                        }
-                    });
-                }
-                popup.add(viewRouting);
-            }*/
+            }
             
-            
-            /* not yet supported
             if (blockBoundaries){
                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
                     public void actionPerformed(ActionEvent e) {
@@ -1176,7 +1175,7 @@ public class LayoutTurnout
                         boundaryBetween, layoutEditor.signalFrame);
                     }
                 });
-                popup.add(new AbstractAction("Set Sensors###") {
+                popup.add(new AbstractAction(rb.getString("SetSensors")) {
                     public void actionPerformed(ActionEvent e) {
                         if (tools == null) {
                             tools = new LayoutEditorTools(layoutEditor);
@@ -1186,7 +1185,8 @@ public class LayoutTurnout
                         boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.signalFrame);
                     }
                 });
-            }*/
+
+            }
         }
         layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());

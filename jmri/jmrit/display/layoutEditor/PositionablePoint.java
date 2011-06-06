@@ -27,7 +27,7 @@ import javax.swing.JSeparator;
  * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class PositionablePoint
@@ -123,6 +123,12 @@ public class PositionablePoint
 			}
 			else if ( (type!=END_BUMPER) && (connect2==null) ) {
 				connect2 = track;
+                if(connect1.getLayoutBlock()==connect2.getLayoutBlock()){
+                    setWestBoundSignalMast("");
+                    setEastBoundSignalMast("");
+                    setWestBoundSensor("");
+                    setEastBoundSensor("");
+                }
 			}
 			else {
 				log.error ("Attempt to assign more than allowed number of connections");
@@ -187,6 +193,7 @@ public class PositionablePoint
             popup = new JPopupMenu();
 		}
 		boolean blockBoundary = false;
+        boolean endBumper = false;
 		switch (getType()) {
 			case ANCHOR:
 				popup.add(rb.getString("Anchor"));
@@ -211,6 +218,7 @@ public class PositionablePoint
 				if (blockEnd!=null) {
 					popup.add(rb.getString("BlockID")+": "+blockEnd.getID());
 				}
+                endBumper = true;
 				break;
 		}
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -254,6 +262,27 @@ public class PositionablePoint
                 }
             });
 		}
+        if (endBumper){
+            popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(layoutEditor);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSensorsAtBlockBoundaryFromMenu(instance,
+                        layoutEditor.sensorIconEditor,layoutEditor.sensorFrame);
+                }
+            });
+            popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(layoutEditor);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
+                }
+            });
+        }
         layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
 	}

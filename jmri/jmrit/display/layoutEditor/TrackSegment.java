@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JmriJFrame;
+import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -30,7 +31,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrackSegment 
@@ -262,7 +263,6 @@ public class TrackSegment
 		else {
             popup = new JPopupMenu();
 		}
-		popup.add(rb.getString("TrackSegment"));
 		if (!dashed) popup.add(rb.getString("Style")+" - "+rb.getString("Solid"));
 		else popup.add(rb.getString("Style")+" - "+rb.getString("Dashed"));
 		if (!mainline) popup.add(rb.getString("NotMainline"));
@@ -308,7 +308,14 @@ public class TrackSegment
                     }
                 });
         }
-        
+        if ((!blockName.equals("")) && (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())){
+            popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                public void actionPerformed(ActionEvent e) {
+                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                    routeTableAction.actionPerformed(e);
+                }
+            });
+        }
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
