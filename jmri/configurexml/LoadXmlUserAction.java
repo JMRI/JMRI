@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlUserAction extends LoadXmlConfigAction {
@@ -34,7 +34,11 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
 
     public void actionPerformed(ActionEvent e) {
         String oldButtonText=userFileChooser.getApproveButtonText();
+        String oldDialogTitle=userFileChooser.getDialogTitle();
+        int oldDialogType=userFileChooser.getDialogType();
+	userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
+        userFileChooser.setDialogTitle(rb.getString("MenuItemLoad"));
 
         boolean results = loadFile(userFileChooser);
         log.debug(results?"load was successful":"load failed");
@@ -47,7 +51,9 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
         }
 
 	// The last thing we do is restore the Approve button text.
+	userFileChooser.setDialogType(oldDialogType);
         userFileChooser.setApproveButtonText(oldButtonText);
+        userFileChooser.setDialogTitle(oldDialogTitle);
 
 
     }
