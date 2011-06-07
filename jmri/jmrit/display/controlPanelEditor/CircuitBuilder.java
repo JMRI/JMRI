@@ -1094,10 +1094,11 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             for (int i=0; i<list.size(); i++) {
                 _selectionGroup.add(list.get(i));
             }
+            if (log.isDebugEnabled()) log.debug("setSelectionGroup: block "+block.getDisplayName()+" has "+ list.size() +" icons.");
         } else {
             _selectionGroup = null;
+            if (log.isDebugEnabled()) log.debug("setSelectionGroup: block "+block.getDisplayName()+" has 0 icons.");
         }
-        if (log.isDebugEnabled()) log.debug("setSelectionGroup: block "+block.getDisplayName()+" has "+list.size()+" icons.");
         repaint();
     }
 
