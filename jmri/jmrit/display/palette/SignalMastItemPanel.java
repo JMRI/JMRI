@@ -138,8 +138,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _family = null;
             return;
         }
-        PickListModel model = (PickListModel)_table.getModel();
-        NamedBean bean = model.getBeanAt(row);
+        NamedBean bean = _model.getBeanAt(row);
 
         if (bean==null) {
             if (log.isDebugEnabled()) log.debug("getIconMap: NamedBean is null at row "+row);
