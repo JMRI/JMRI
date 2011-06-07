@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -117,6 +117,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return true;
         if (type.equals(jmri.ReporterManager.class))
             return true;
+        if (type.equals(jmri.ConsistManager.class))
+            return true;
         if (type.equals(jmri.ClockControl.class))
             return true;
         return false; // nothing, by default
@@ -143,6 +145,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return (T)getClockControl();
         if (T.equals(jmri.ReporterManager.class))
             return (T)getReporterManager();
+        if (T.equals(jmri.ConsistManager.class))
+            return (T)getConsistManager();
         return null; // nothing, by default
     }
     
@@ -177,6 +181,9 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.setReporterManager(
             getReporterManager());
+
+        InstanceManager.setConsistManager(
+            getConsistManager());
 
         InstanceManager.addClockControl(
             getClockControl());
@@ -252,6 +259,16 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             lightManager = new jmri.jmrix.loconet.LnLightManager(getLnTrafficController(), getSystemPrefix());
         return lightManager;
     }
+
+    private LocoNetConsistManager consistManager;
+    
+    public LocoNetConsistManager getConsistManager() { 
+        if (getDisabled())
+            return null;
+        if (consistManager == null)
+            consistManager = new jmri.jmrix.loconet.LocoNetConsistManager(this);
+        return consistManager;
+    }
     
     
     
@@ -274,6 +291,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             InstanceManager.deregister(reporterManager, jmri.jmrix.loconet.LnReporterManager.class);
         if (throttleManager != null) 
             InstanceManager.deregister(throttleManager, jmri.jmrix.loconet.LnThrottleManager.class);
+        if (consistManager != null) 
+            InstanceManager.deregister(consistManager, jmri.jmrix.loconet.LocoNetConsistManager.class);
         if (clockControl != null) 
             InstanceManager.deregister(clockControl, jmri.jmrix.loconet.LnClockControl.class);
         super.dispose();
