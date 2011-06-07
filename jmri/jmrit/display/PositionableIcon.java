@@ -5,7 +5,7 @@ package jmri.jmrit.display;
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -125,7 +125,7 @@ public class PositionableIcon extends PositionableLabel {
         return _scale;
     }
 
-    public int getRotation(){
+    public int getDegrees(){
         return _rotate;
     }
     
