@@ -11,7 +11,7 @@ import jmri.jmrit.logix.Portal;
 
 /**
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
@@ -73,7 +73,7 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
     }
 
     public void setStatus(String status) {
-        if (log.isDebugEnabled()) log.debug("PortalIcon.setStatus("+status+")");
+        if (log.isDebugEnabled()) log.debug("\""+getName()+"\" setStatus("+status+")");
         setIcon(_iconMap.get(status));
         updateSize();
     }

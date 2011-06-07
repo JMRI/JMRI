@@ -93,7 +93,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel panel = new JPanel();
-        panel.add(new JLabel(rbcp.getString("AddRemovePaths")));
+        panel.add(new JLabel(java.text.MessageFormat.format(
+                                    rbcp.getString("PathTitle"), _block.getDisplayName())));
         pathPanel.add(panel);
 
         _pathListModel = new PathListModel();
@@ -157,6 +158,26 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
  
         pathPanel.add(panel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JLabel l = new JLabel(rbcp.getString("enterNewPath"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        l = new JLabel(rbcp.getString("selectPathIcons"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
+        l = new JLabel(rbcp.getString("selectPath"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
+        l = new JLabel(rbcp.getString("throwPathTO"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        JPanel p = new JPanel();
+        p.add(panel);
+        pathPanel.add(p);
 
         panel = new JPanel();
         panel.setLayout(new FlowLayout());

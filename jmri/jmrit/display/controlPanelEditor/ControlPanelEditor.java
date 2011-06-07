@@ -323,11 +323,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-                    changeView("jmri.jmrit.display.controlPanelEditor.CircuitBuilder");
-                    /*
 					jmri.jmrit.display.controlPanelEditor.CircuitBuilder ed =
                         (jmri.jmrit.display.controlPanelEditor.CircuitBuilder)changeView("jmri.jmrit.display.controlPanelEditor.CircuitBuilder");
-                    ed.init(); */
+                    ed.init();
                 }
             });
 

@@ -276,11 +276,11 @@ public class WarrantTableAction extends AbstractAction {
             _hasErrors = true;
         }            
     }
-    public static void showPathPortalErrors() {
-        if (!_hasErrors) { return; }
+    public static boolean showPathPortalErrors() {
+        if (!_hasErrors) { return false; }
         if (_textArea==null) {
             log.error("_textArea is null!.");
-            return;
+            return true;
         }
         JScrollPane scrollPane = new JScrollPane(_textArea);
         _errorDialog = new JDialog();
@@ -317,6 +317,7 @@ public class WarrantTableAction extends AbstractAction {
         _errorDialog.addWindowListener( new myListener());
         _errorDialog.pack();
         _errorDialog.setVisible(true);
+        return true;
     }
 
     /******************* CreateWarrant ***********************/

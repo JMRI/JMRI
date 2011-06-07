@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.PortalIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PortalIconXml extends PositionableLabelXml {
 
@@ -31,7 +31,7 @@ public class PortalIconXml extends PositionableLabelXml {
         PortalIcon p = (PortalIcon)o;
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
-        Element element = new Element("locoicon");
+        Element element = new Element("PortalIcon");
         storeCommonAttributes(p, element);
 
         // include contents
@@ -102,12 +102,13 @@ public class PortalIconXml extends PositionableLabelXml {
         PortalIcon l= new PortalIcon(toBlk, portalName, ed);
 
         try {
+            Element icons = element.getChild("icons");
             @SuppressWarnings("unchecked")
-            List<Element> icons = element.getChild("icons").getChildren();
-            for (int i=0; i<icons.size(); i++) {
-                Element iconElem = icons.get(i);
+            List<Element> iconList = icons.getChildren();
+            for (int i=0; i<iconList.size(); i++) {
+                Element iconElem = iconList.get(i);
                 String name = iconElem.getName();
-                NamedIcon icon = loadIcon(l, name, iconElem, "PortalIcon \""+portalName+"\": icon \""+name+"\" ", ed);
+                NamedIcon icon = loadIcon(l, name, icons, "PortalIcon \""+portalName+"\": icon \""+name+"\" ", ed);
                 if (icon!=null) {
                     l.setIcon(name, icon);
                 } else {

@@ -246,18 +246,6 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         // check icons to be indicator type
         _parent.iconsConverted();
         
-        // set the sensors
-        java.util.List<Positionable> list = _parent.getSelectionGroup();
-        if (list!=null) {
-            NamedBeanHandle<OBlock> handle = new NamedBeanHandle<OBlock>(_block.getSystemName(), _block);
-            for (int i=0; i<list.size(); i++) {
-                Positionable pos = list.get(i);
-                if (pos instanceof IndicatorTrack) {
-                    ((IndicatorTrack)pos).setOccBlockHandle(handle);
-                }
-            }
-        }
-//        _parent.addBlock(_block);
         _parent.closeCircuitFrame(_block);
         dispose();
     }
