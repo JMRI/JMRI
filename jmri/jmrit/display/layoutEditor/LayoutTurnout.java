@@ -77,7 +77,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutTurnout
@@ -1171,7 +1171,7 @@ public class LayoutTurnout
                         }
                             
                         tools.setSignalMastsAtTurnoutFromMenu(instance,
-                        boundaryBetween, layoutEditor.signalFrame);
+                        boundaryBetween);
                     }
                 });
                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
@@ -1181,7 +1181,7 @@ public class LayoutTurnout
                         }
                             
                         tools.setSensorsAtTurnoutFromMenu(instance,
-                        boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.signalFrame);
+                        boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
 

@@ -41,7 +41,7 @@ import jmri.jmrit.display.PositionableIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutEditorTools 
@@ -586,13 +586,13 @@ public class LayoutEditorTools
 			layoutTurnoutThroatUp = false;
 			layoutTurnoutBUp = false;
 			layoutTurnoutBLeft = false;
-			if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+			if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 				layoutTurnoutHorizontal = true;
 				if (delX < 0.0) layoutTurnoutThroatLeft = true;
 				if (t.getCoordsB().getY() < t.getCoordsC().getY())
 						layoutTurnoutBUp = true;
 			}
-			if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+			if (Math.abs(delY) > 2.0*Math.abs(delX)) { 
 				layoutTurnoutVertical = true;
 				if (delY <0.0) layoutTurnoutThroatUp = true;
 				if (t.getCoordsB().getX() < t.getCoordsC().getX())
@@ -1610,12 +1610,12 @@ public class LayoutEditorTools
         }
 		double delX = point1.getX() - point2.getX();
 		double delY = point1.getY() - point2.getY();
-		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+		if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 			// track is Horizontal
 			if (delX>0.0) return false;
 			else return true;
 		}
-		else if(java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) {
+		else if(Math.abs(delY) > 2.0*Math.abs(delX)) {
 			// track is Vertical
 			if (delY>0.0) return false;
 			else return true;
@@ -1980,7 +1980,7 @@ public class LayoutEditorTools
 		double delY = point1.getY() - point2.getY();
 		trackVertical = false;
 		trackHorizontal = false;
-		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+		if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 			trackHorizontal = true;
 			if (delX>0.0) {
 				eastTrack = track1;
@@ -1991,7 +1991,7 @@ public class LayoutEditorTools
 				westTrack = track1;
 			}
 		}
-		if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) {
+		if (Math.abs(delY) > 2.0*Math.abs(delX)) {
 			trackVertical = true;
 			if (delY>0.0) {
 				eastTrack = track1;		// south
@@ -3842,13 +3842,13 @@ public class LayoutEditorTools
 		levelXingAUp = false;
 		levelXingBUp = false;
 		levelXingBLeft = false;
-		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+		if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 			levelXingACHorizontal = true;
 			if (delX < 0.0) levelXingALeft = true;
 			if (levelXing.getCoordsB().getY() < levelXing.getCoordsD().getY())
 				levelXingBUp = true;
 		}
-		else if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+		else if (Math.abs(delY) > 2.0*Math.abs(delX)) { 
 			levelXingACVertical = true;
 			if (delY <0.0) levelXingAUp = true;
 			if (levelXing.getCoordsB().getX() < levelXing.getCoordsD().getX())
@@ -4581,13 +4581,13 @@ public class LayoutEditorTools
 		layoutTurnout2BLeft = false;
 		double delX = layoutTurnout1.getCoordsA().getX() - layoutTurnout1.getCoordsB().getX();
 		double delY = layoutTurnout1.getCoordsA().getY() - layoutTurnout1.getCoordsB().getY();
-		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+		if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 			layoutTurnout1Horizontal = true;
 			if (delX < 0.0) layoutTurnout1ThroatLeft = true;
 			if (layoutTurnout1.getCoordsB().getY() < layoutTurnout1.getCoordsC().getY())
 				layoutTurnout1BUp = true;
 		}
-		else if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+		else if (Math.abs(delY) > 2.0*Math.abs(delX)) { 
 			layoutTurnout1Vertical = true;
 			if (delY <0.0) layoutTurnout1ThroatUp = true;
 			if (layoutTurnout1.getCoordsB().getX() < layoutTurnout1.getCoordsC().getX())
@@ -4595,13 +4595,13 @@ public class LayoutEditorTools
 		}
 		delX = layoutTurnout2.getCoordsA().getX() - layoutTurnout2.getCoordsB().getX();
 		delY = layoutTurnout2.getCoordsA().getY() - layoutTurnout2.getCoordsB().getY();
-		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+		if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 			layoutTurnout2Horizontal = true;
 			if (delX < 0.0) layoutTurnout2ThroatLeft = true;
 			if (layoutTurnout2.getCoordsB().getY() < layoutTurnout2.getCoordsC().getY())
 				layoutTurnout2BUp = true;
 		}
-		else if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+		else if (Math.abs(delY) > 2.0*Math.abs(delX)) { 
 			layoutTurnout2Vertical = true;
 			if (delY <0.0) layoutTurnout2ThroatUp = true;
 			if (layoutTurnout2.getCoordsB().getX() < layoutTurnout2.getCoordsC().getX())
@@ -6119,13 +6119,13 @@ public class LayoutEditorTools
 		layoutTurnoutBBLeft = false;
 		double delX = layoutTurnoutA.getCoordsA().getX() - layoutTurnoutA.getCoordsB().getX();
 		double delY = layoutTurnoutA.getCoordsA().getY() - layoutTurnoutA.getCoordsB().getY();
-		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+		if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 			layoutTurnoutAHorizontal = true;
 			if (delX < 0.0) layoutTurnoutAThroatLeft = true;
 			if (layoutTurnoutA.getCoordsB().getY() < layoutTurnoutA.getCoordsC().getY())
 				layoutTurnoutABUp = true;
 		}
-		else if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+		else if (Math.abs(delY) > 2.0*Math.abs(delX)) { 
 			layoutTurnoutAVertical = true;
 			if (delY <0.0) layoutTurnoutAThroatUp = true;
 			if (layoutTurnoutA.getCoordsB().getX() < layoutTurnoutA.getCoordsC().getX())
@@ -6133,13 +6133,13 @@ public class LayoutEditorTools
 		}
 		delX = layoutTurnoutB.getCoordsA().getX() - layoutTurnoutB.getCoordsB().getX();
 		delY = layoutTurnoutB.getCoordsA().getY() - layoutTurnoutB.getCoordsB().getY();
-		if (java.lang.Math.abs(delX) > 2.0*java.lang.Math.abs(delY)) {
+		if (Math.abs(delX) > 2.0*Math.abs(delY)) {
 			layoutTurnoutBHorizontal = true;
 			if (delX < 0.0) layoutTurnoutBThroatLeft = true;
 			if (layoutTurnoutB.getCoordsB().getY() < layoutTurnoutB.getCoordsC().getY())
 				layoutTurnoutBBUp = true;
 		}
-		else if (java.lang.Math.abs(delY) > 2.0*java.lang.Math.abs(delX)) { 
+		else if (Math.abs(delY) > 2.0*Math.abs(delX)) { 
 			layoutTurnoutBVertical = true;
 			if (delY <0.0) layoutTurnoutBThroatUp = true;
 			if (layoutTurnoutB.getCoordsB().getX() < layoutTurnoutB.getCoordsC().getX())
@@ -7657,7 +7657,6 @@ public class LayoutEditorTools
 		}
 	}
     
-    //This needs to be redone.
     private void getSavedAnchorSignalMasts (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
 		eastSignalMast.setTextField(boundary.getEastBoundSignalMast());
@@ -7680,11 +7679,10 @@ public class LayoutEditorTools
             } else{
                 eastSignalMast.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
             }
-            //This bit specifically
-            //eastSignalMast.setBoundaryLabelText("End Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());  
         }
         setSignalMastsAtBoundaryFrame.setPreferredSize(null);
         setSignalMastsAtBoundaryFrame.pack();
+
 	}
     
     private void setSignalMastsAtBoundaryCancelPressed (ActionEvent a) {
@@ -7707,10 +7705,7 @@ public class LayoutEditorTools
             removeSignalMastAssignment(jmri.InstanceManager.signalMastManagerInstance().getSignalMast(boundary.getWestBoundSignalMast()));
             boundary.setWestBoundSignalMast("");
         }
-		// place or update signals as requested
-        /*if(boundary.getType()==PositionablePoint.END_BUMPER){
-            
-        }*/
+
 		if ( (block1BoundSignalMast!=null) && eastSignalMast.addToPanel() ) {
 			if (isSignalMastOnPanel(block1BoundSignalMast) && 
 					(block1BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast()))) { 
@@ -7965,7 +7960,7 @@ public class LayoutEditorTools
             // Compute arc's chord
             a = pt2x - pt1x;
             o = pt2y - pt1y;
-            double radius=java.lang.Math.sqrt(((a*a)+(o*o)));  //chord equates to radius of circle
+            double radius=Math.sqrt(((a*a)+(o*o)));  //chord equates to radius of circle
             
             double pt1xa;
             double pt1ya;
@@ -7975,7 +7970,7 @@ public class LayoutEditorTools
             double o1;
             a1 = pt2x - pt1xa;
             o1 = pt2y - pt1ya;
-            double chord=java.lang.Math.sqrt(((a1*a1)+(o1*o1)));
+            double chord=Math.sqrt(((a1*a1)+(o1*o1)));
             
             double rsq = Math.pow(radius,2);
             
@@ -7985,13 +7980,13 @@ public class LayoutEditorTools
             log.debug("Angle from datum line " + Math.toDegrees(anglefromdatum));
             double tanx = o / a;
             
-            double angletan = java.lang.Math.atan(tanx);
+            double angletan = Math.atan(tanx);
             
             int oldHeight = l.maxHeight();
             int oldWidth = l.maxWidth();
             
             int rotate = ((int) Math.toDegrees(anglefromdatum));
-            log.debug(java.lang.Math.toDegrees(angletan) + " " + a + " " + o + " " + java.lang.Math.toDegrees(tanx));
+            log.debug(Math.toDegrees(angletan) + " " + a + " " + o + " " + Math.toDegrees(tanx));
 
             
             //pt1 is always our boundary point
@@ -8371,7 +8366,6 @@ public class LayoutEditorTools
     boolean setSignalMastsOpen =false;
     boolean turnoutMastFromMenu = false;
     private JmriJFrame signalMastsJmriFrame = null;
-    private JFrame signalMastsFrame = null;
 
     private JTextField turnoutMastNameField = new JTextField(16);
     private JButton setSignalMastsDone;
@@ -8387,17 +8381,19 @@ public class LayoutEditorTools
     
     private String[] turnoutBlocks = new String[4];
     
-    public void setSignalMastsAtTurnoutFromMenu(LayoutTurnout to, String[] blocks, JFrame frame){
+    public void setSignalMastsAtTurnoutFromMenu(LayoutTurnout to, String[] blocks){
     	turnoutMastFromMenu = true;
 		layoutTurnout = to;
 		turnout = to.getTurnout();
 		turnoutMastNameField.setText(to.getTurnoutName());
-        turnoutBlocks=blocks;
-		setSignalMastsAtTurnouts(frame);
+        turnoutBlocks=new String[4];
+        for(int i = 0; i<blocks.length;i++){
+            turnoutBlocks[i]=blocks[i];
+        }
+		setSignalMastsAtTurnouts();
     }
     
-    public void setSignalMastsAtTurnouts(JFrame frame){
-		signalMastsFrame = frame;
+    public void setSignalMastsAtTurnouts(){
 		if (setSignalMastsOpen) {
             //We will do a refresh in case the block boundaries have changed.
             turnoutSignalMastsGetSaved(null);
@@ -8663,7 +8659,7 @@ public class LayoutEditorTools
 // need to figure out what to do in this case.			
 			}
 		}
-        else if (turnoutMast==null) {
+        else {
 			removeSignalMastFromPanel(layoutTurnout.getSignalAMast());
 			layoutTurnout.setSignalAMast("");
 		}
@@ -8707,7 +8703,7 @@ public class LayoutEditorTools
 // need to figure out what to do in this case.			
 			}
 		}
-		else if (turnoutMastB==null) {
+		else {
 			removeSignalMastFromPanel(layoutTurnout.getSignalBMast());
 			layoutTurnout.setSignalBMast("");
 		}
@@ -9542,6 +9538,7 @@ public class LayoutEditorTools
     private JButton setSensorsDone;
     private JButton getSavedSensors;
     private JButton setSensorsCancel;
+    private JButton changeSensorIcon = null;
 
     private String[] turnoutSenBlocks = new String[4];
     
@@ -9557,8 +9554,11 @@ public class LayoutEditorTools
         sensorIconEditor = theEditor;
 		layoutTurnout = to;
 		turnout = to.getTurnout();
-		turnoutSensorNameField.setText(to.getTurnoutName());
-        turnoutSenBlocks=blocks;
+		//turnoutSensorNameField.setText(to.getTurnoutName());
+        turnoutSenBlocks = new String[4];
+        for(int i = 0; i<blocks.length; i++){
+            turnoutSenBlocks[i]=blocks[i];
+        }
 		setSensorsAtTurnouts(frame);
     }
     
@@ -9642,6 +9642,14 @@ public class LayoutEditorTools
             
 			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSensorIcon = new JButton(rb.getString("ChangeSensorIcon")));
+            changeSensorIcon.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						turnoutSensorFrame.setVisible(true);
+					}
+				});
+            changeSensorIcon.setToolTipText( rb.getString("ChangeSensorIconHint") );
 			panel6.add(new JLabel("  "));
             panel6.add(setSensorsDone = new JButton(rb.getString("Done")));
             setSensorsDone.addActionListener(new ActionListener() {
@@ -9660,7 +9668,7 @@ public class LayoutEditorTools
             theContentPane.add(panel6);
 			setSensorsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
-//					setSensorsCancelPressed(null);
+					setSensorsCancelPressed(null);
 				}
 			});
 			if (turnoutFromMenu) turnoutSensorsGetSaved(null);
@@ -9833,7 +9841,7 @@ public class LayoutEditorTools
 // need to figure out what to do in this case.			
 			}
 		}
-        else if (sensorA==null) {
+        else {
 			removeSensorFromPanel(layoutTurnout.getSensorA());
 			layoutTurnout.setSensorA("");
 		}
@@ -9876,7 +9884,7 @@ public class LayoutEditorTools
 // need to figure out what to do in this case.			
 			}
 		}
-		else if (sensorB==null) {
+		else {
 			removeSensorFromPanel(layoutTurnout.getSensorB());
 			layoutTurnout.setSensorB("");
 		}
@@ -9921,7 +9929,7 @@ public class LayoutEditorTools
                 }
             }
         }
-        else{
+        else {
             removeSensorFromPanel(layoutTurnout.getSensorC());
 			layoutTurnout.setSensorC("");
         }
@@ -10039,6 +10047,8 @@ public class LayoutEditorTools
 	private JButton getSavedXingSensors = null;
 	private JButton setXingSensorsDone = null;
 	private JButton setXingSensorsCancel = null;
+    private JButton changeSensorXingIcon = null;
+    JFrame sensorXingFrame = null;
 
     private boolean xingSensorFromMenu = false;
     private String[] xingSensorBlocks = new String[4];
@@ -10064,7 +10074,7 @@ public class LayoutEditorTools
        
     public void setSensorsAtLevelXing(MultiIconEditor theEditor, JFrame theFrame) {
         sensorIconEditor = theEditor;
-		signalFrame = theFrame;
+		sensorXingFrame = theFrame;
 		if (setSensorsAtXingOpen) {
             xingSensorsGetSaved(null);
 			sensorsAtXingFrame.setVisible(true);
@@ -10160,7 +10170,14 @@ public class LayoutEditorTools
 			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel6 = new JPanel();
             panel6.setLayout(new FlowLayout());
-
+            panel6.add(changeSensorXingIcon = new JButton(rb.getString("ChangeSensorIcon")));
+            changeSensorXingIcon.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						sensorXingFrame.setVisible(true);
+					}
+				});
+            changeSensorXingIcon.setToolTipText( rb.getString("ChangeSensorIconHint") );
+            
 			panel6.add(new JLabel("  "));
             panel6.add(setXingSensorsDone = new JButton(rb.getString("Done")));
             setXingSensorsDone.addActionListener(new ActionListener() {
@@ -10560,7 +10577,7 @@ public class LayoutEditorTools
         return true;
     }
     
-    class BeanDetails {
+    static class BeanDetails {
         String beanType;
         String beanString;
         JLabel textLabel;
@@ -10582,7 +10599,7 @@ public class LayoutEditorTools
         BeanDetails(String beanType){
             beanString = rb.getString(beanType);
             textLabel = new JLabel(beanString);
-            beanType = this.beanType;
+            this.beanType = beanType;
             
             buttonGroup.add(addBeanCheck);
             buttonGroup.add(left);

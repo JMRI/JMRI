@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 /**
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
@@ -339,11 +339,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         blockPanel.setLayout(new BoxLayout(blockPanel, BoxLayout.Y_AXIS));
         
         jmri.BlockManager bm = jmri.InstanceManager.blockManagerInstance();
-        List systemNameList = bm.getSystemNameList();
+        List<String> systemNameList = bm.getSystemNameList();
         _manualBlockList = new ArrayList <ManualBlockList> (systemNameList.size());
-        Iterator iter = systemNameList.iterator();
+        Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             //String userName = bm.getBySystemName(systemName).getUserName();
             _manualBlockList.add(new ManualBlockList(bm.getBySystemName(systemName)));
         }
@@ -351,9 +351,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         if (sml!=null){
             ArrayList<Block> blkList = sml.getAutoBlocks(destMast);
             _automaticBlockList = new ArrayList <AutoBlockList> (blkList.size());
-            iter = blkList.iterator();
-            while (iter.hasNext()) {
-                Block blk = (Block)iter.next();
+            Iterator<Block> iterBlk = blkList.iterator();
+            while (iterBlk.hasNext()) {
+                Block blk = iterBlk.next();
                 
                 AutoBlockList blockitem = new AutoBlockList(blk);
                 blockitem.setState(sml.getAutoBlockState(blk, destMast));
@@ -471,11 +471,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         turnoutPanel.setLayout(new BoxLayout(turnoutPanel, BoxLayout.Y_AXIS));
         
         jmri.TurnoutManager bm = jmri.InstanceManager.turnoutManagerInstance();
-        List systemNameList = bm.getSystemNameList();
+        List<String> systemNameList = bm.getSystemNameList();
         _manualTurnoutList = new ArrayList <ManualTurnoutList> (systemNameList.size());
-        Iterator iter = systemNameList.iterator();
+        Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = bm.getBySystemName(systemName).getUserName();
             _manualTurnoutList.add(new ManualTurnoutList(systemName, userName));
         }
@@ -483,9 +483,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         if (sml!=null){
             ArrayList<Turnout> turnList = sml.getAutoTurnouts(destMast);
             _automaticTurnoutList = new ArrayList <AutoTurnoutList> (turnList.size());
-            iter = turnList.iterator();
-            while (iter.hasNext()) {
-                Turnout turn = (Turnout)iter.next();
+            Iterator<Turnout> iterTurn = turnList.iterator();
+            while (iterTurn.hasNext()) {
+                Turnout turn = iterTurn.next();
                 String systemName = turn.getSystemName();
                 String userName = turn.getUserName();
                 AutoTurnoutList turnitem = new AutoTurnoutList(systemName, userName);
@@ -602,11 +602,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         sensorPanel.setLayout(new BoxLayout(sensorPanel, BoxLayout.Y_AXIS));
         
         jmri.SensorManager bm = jmri.InstanceManager.sensorManagerInstance();
-        List systemNameList = bm.getSystemNameList();
+        List<String> systemNameList = bm.getSystemNameList();
         _manualSensorList = new ArrayList <ManualSensorList> (systemNameList.size());
-        Iterator iter = systemNameList.iterator();
+        Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             String userName = bm.getBySystemName(systemName).getUserName();
             _manualSensorList.add(new ManualSensorList(systemName, userName));
         }
@@ -674,11 +674,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         SignalMastPanel.setLayout(new BoxLayout(SignalMastPanel, BoxLayout.Y_AXIS));
         
         jmri.SignalMastManager bm = jmri.InstanceManager.signalMastManagerInstance();
-        List systemNameList = bm.getSystemNameList();
+        List<String> systemNameList = bm.getSystemNameList();
         _manualSignalMastList = new ArrayList <ManualSignalMastList> (systemNameList.size());
-        Iterator iter = systemNameList.iterator();
+        Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
-            String systemName = (String)iter.next();
+            String systemName = iter.next();
             _manualSignalMastList.add(new ManualSignalMastList(bm.getBySystemName(systemName)));
         }
         
@@ -828,27 +828,26 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(_includedManualBlockList.get(i).getSysName());
             hashBlocks.put(blk, _includedManualBlockList.get(i).getState());
         }
-            sml.setBlocks(hashBlocks, destMast);
+        sml.setBlocks(hashBlocks, destMast);
         
         Hashtable<Turnout, Integer> hashTurnouts = new Hashtable<Turnout, Integer>();
         for(int i = 0; i<_includedManualTurnoutList.size(); i++){
             Turnout blk = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_includedManualTurnoutList.get(i).getSysName());
             hashTurnouts.put(blk, _includedManualTurnoutList.get(i).getState());
         }
-            sml.setTurnouts(hashTurnouts, destMast);
+        sml.setTurnouts(hashTurnouts, destMast);
         
         Hashtable<Sensor, Integer> hashSensors = new Hashtable<Sensor, Integer>();
         for(int i = 0; i<_includedManualSensorList.size(); i++){
             Sensor blk = jmri.InstanceManager.sensorManagerInstance().getSensor(_includedManualSensorList.get(i).getSysName());
             hashSensors.put(blk, _includedManualSensorList.get(i).getState());
         }
-            sml.setSensors(hashSensors, destMast);
+        sml.setSensors(hashSensors, destMast);
 
         Hashtable<SignalMast, String> hashSignalMast = new Hashtable<SignalMast, String>();
         for(int i = 0; i<_includedManualSignalMastList.size(); i++){
             hashSignalMast.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
         }
-        
         sml.setMasts(hashSignalMast, destMast);
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
         sml.initialise(destMast);
@@ -888,9 +887,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         if (sml!=null){
             ArrayList<Block> blkList = sml.getAutoBlocks(destMast);
             _automaticBlockList = new ArrayList <AutoBlockList> (blkList.size());
-            Iterator iter = blkList.iterator();
+            Iterator<Block> iter = blkList.iterator();
             while (iter.hasNext()) {
-                Block blk = (Block) iter.next();
+                Block blk = iter.next();
                 AutoBlockList newABlk = new AutoBlockList(blk);
                 _automaticBlockList.add(newABlk);
                 newABlk.setState(sml.getAutoBlockState(blk, destMast));
@@ -907,9 +906,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         if (sml!=null){
             ArrayList<Turnout> turnList = sml.getAutoTurnouts(destMast);
             _automaticTurnoutList = new ArrayList <AutoTurnoutList> (turnList.size());
-            Iterator iter = turnList.iterator();
+            Iterator<Turnout> iter = turnList.iterator();
             while (iter.hasNext()) {
-                Turnout turn = (Turnout) iter.next();
+                Turnout turn = iter.next();
                 String systemName = turn.getSystemName();
                 String userName = turn.getUserName();
                 AutoTurnoutList newAturn = new AutoTurnoutList(systemName, userName);
@@ -935,9 +934,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         if (sml!=null){
             ArrayList<SignalMast> mastList = sml.getAutoMasts(destMast);
             _automaticSignalMastList = new ArrayList <AutoSignalMastList> (mastList.size());
-            Iterator iter = mastList.iterator();
+            Iterator<SignalMast> iter = mastList.iterator();
             while (iter.hasNext()) {
-                SignalMast mast = (SignalMast) iter.next();
+                SignalMast mast = iter.next();
                 AutoSignalMastList newAmast = new AutoSignalMastList(mast);
                 _automaticSignalMastList.add(newAmast);
                 newAmast.setState(sml.getAutoSignalMastState(mast, destMast));
@@ -1269,7 +1268,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
     abstract class TableModel extends AbstractTableModel implements PropertyChangeListener
     {
-        @Override
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -1328,7 +1326,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public static final int SPEED_COLUMN = 4;
         public static final int PERMISSIVE_COLUMN = 5;
         
-        @Override
         public int getColumnCount () {return 6;}
 
         public Object getValueAt (int r,int c) {
@@ -1356,7 +1353,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
         
-        @Override
         public Class<?> getColumnClass(int c) {
             if (c == PERMISSIVE_COLUMN) {
                 return Boolean.class;
@@ -1364,7 +1360,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return super.getColumnClass(c);
         }
         
-        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SPEED_COLUMN: return rb.getString("ColumnSpeed");
@@ -1373,7 +1368,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             return super.getColumnName(col);
         }
         
-        @Override
         public void setValueAt(Object type,int r,int c) {
             ArrayList <ManualBlockList> blockList = null;
             if (showAll) {
@@ -1652,7 +1646,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 sml.addPropertyChangeListener(this);
         }
         
-        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
@@ -1661,7 +1654,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             jmri.InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
         }
 
-        @Override
         public String getColumnName(int col) {
             switch (col) {
             case SNAME_COLUMN: return rb.getString("ColumnSystemName");
@@ -1674,7 +1666,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         public int getColumnCount () {return 3;}
 
-        @Override
         public boolean isCellEditable(int r,int c) {
             return false;
         }
@@ -1694,10 +1685,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public static final int SPEED_COLUMN = 3;
         public static final int PERMISSIVE_COLUMN = 4;
         
-        @Override
         public int getColumnCount () {return 5;}
         
-        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case SPEED_COLUMN: return rb.getString("ColumnSpeed");
@@ -1714,7 +1703,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
         
-        @Override
         public Class<?> getColumnClass(int c) {
             if (c == PERMISSIVE_COLUMN) {
                 return Boolean.class;
