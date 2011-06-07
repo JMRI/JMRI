@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -52,7 +52,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 	// operational variables
 	protected DispatcherFrame dispatcher = null;
 	private static String defaultFileName = XmlFile.prefsDir()+"dispatcheroptions.xml";
-	public static void setDefualtFileName(String testLocation){
+	public static void setDefaultFileName(String testLocation){
 		defaultFileName = testLocation;
 	}
 	private Document doc = null;
