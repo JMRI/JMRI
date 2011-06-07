@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.13 2011-06-05 19:47:15 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.14 2011-06-07 08:08:19 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -133,6 +133,15 @@ during the car import.</LI>
 <LI>Export car and loco now exports the value field.</LI>
 <LI>Switch lists now show the train's arrival and or departure direction.</LI>
 </UL>
+
+<p>Pete Cressman</p>
+<ul>
+<li>Occupany Block Tables, PickLists, Palette bean tables are sortable.</li>
+<li>Fix bug where auto trains waited indefinitely when resynchronizing block entry.</li>
+<li>Fix bug intoduced in 2.11.5 where rotated SignalMasts were not stored properly.</li>
+<li>Add copy warrant button to warrant list table.</li>
+<li>Panel grants local control of block with "Out Of Service" status.</li>
+</ul>
 
 <p>Matthew Harris:</p>
 <ul>
