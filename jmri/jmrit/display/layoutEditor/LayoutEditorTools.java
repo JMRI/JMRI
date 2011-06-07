@@ -42,7 +42,7 @@ import jmri.jmrit.display.PositionableIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutEditorTools 
@@ -8031,7 +8031,7 @@ public class LayoutEditorTools
     
     Point southToNorth(Point2D p, PositionableIcon l, boolean right, double fromPoint){
         int offsetx=0;
-        int offsety=(int)(p.getY()+offSetFromPoint+fromPoint);;
+        int offsety=(int)(p.getY()+offSetFromPoint+fromPoint);
         if (right){
             offsetx = (int)p.getX()+offSetFromPoint;
         } else {

@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010, 2011
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 
@@ -729,7 +729,7 @@ public class TransitTableAction extends AbstractTableAction {
 		ArrayList<String> allSections = (ArrayList<String>)sectionManager.getSystemNameList();
 		for (int i = 0; i<allSections.size(); i++) {
 			Section mayBeSection = null;
-			String mayBeName = allSections.get(i);;
+			String mayBeName = allSections.get(i);
 			int mayBeDirection = 0;
 			Section s = sectionManager.getBySystemName(mayBeName);
 			if ( (s!=null) && (s!=sOld) && (s!=beforeSection) && 
@@ -913,7 +913,7 @@ public class TransitTableAction extends AbstractTableAction {
 		ArrayList<String> allSections = (ArrayList<String>)sectionManager.getSystemNameList();
 		for (int i = 0; i<allSections.size(); i++) {
 			Section mayBeSection = null;
-			String mayBeName = allSections.get(i);;
+			String mayBeName = allSections.get(i);
 			int mayBeDirection = 0;
 			Section s = sectionManager.getBySystemName(mayBeName);
 			if ( (s!=null) && (s!=primarySection) && (s!=beforeSection) && 
