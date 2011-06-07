@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.PortalIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PortalIconXml extends PositionableLabelXml {
 
@@ -75,14 +75,6 @@ public class PortalIconXml extends PositionableLabelXml {
     public void load(Element element, Object o) {
 		Editor ed = (Editor) o;
         
-        String toBlk;
-        try {
-            toBlk=element.getAttribute("toBlockName").getValue();
-        } catch ( NullPointerException e) { 
-            log.error("incorrect information for portalIcon; must use toBlockName.");
-            ed.loadFailed();
-            return;
-        }
         String fromBlk;
         try {
             fromBlk=element.getAttribute("fromBlockName").getValue();
@@ -99,7 +91,7 @@ public class PortalIconXml extends PositionableLabelXml {
             ed.loadFailed();
             return;
         }
-        PortalIcon l= new PortalIcon(toBlk, portalName, ed);
+        PortalIcon l= new PortalIcon(fromBlk, portalName, ed);
 
         try {
             Element icons = element.getChild("icons");
