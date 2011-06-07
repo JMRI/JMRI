@@ -11,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JFrame;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.jdom.*;
 
@@ -19,7 +18,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 

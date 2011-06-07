@@ -1,9 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import jmri.InstanceManager;
-
 import jmri.BeanSetting;
-import jmri.Path;
 import jmri.jmrit.display.*;
 
 import java.awt.*;
@@ -13,7 +10,6 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.ListSelectionModel;
 
 import jmri.jmrit.logix.*;
 

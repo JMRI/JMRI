@@ -4,11 +4,9 @@ package jmri.jmrit.dispatcher;
 
 import jmri.Block;
 import jmri.Section;
-import jmri.EntryPoint;
 import jmri.Transit;
 import jmri.TransitSection;
 
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
@@ -63,7 +61,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class AutoAllocate {

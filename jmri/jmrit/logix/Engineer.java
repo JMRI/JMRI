@@ -1,7 +1,6 @@
 package jmri.jmrit.logix;
 
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.List;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -9,7 +8,7 @@ import jmri.InstanceManager;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  

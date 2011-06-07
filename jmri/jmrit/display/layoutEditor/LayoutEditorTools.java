@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.lang.Math.*;
 
 import jmri.Sensor;
 import jmri.Turnout;
@@ -42,7 +41,7 @@ import jmri.jmrit.display.PositionableIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LayoutEditorTools 

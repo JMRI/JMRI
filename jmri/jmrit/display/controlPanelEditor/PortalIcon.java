@@ -3,16 +3,15 @@
 
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.Point;
-
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
+
 /**
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class PortalIcon extends jmri.jmrit.display.PositionableIcon {

@@ -13,7 +13,6 @@ import java.awt.event.MouseEvent;
 
 import java.util.ResourceBundle;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -78,7 +77,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutTurnout
