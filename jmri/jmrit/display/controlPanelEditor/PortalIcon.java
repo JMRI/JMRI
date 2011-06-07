@@ -11,7 +11,7 @@ import jmri.jmrit.logix.Portal;
 
 /**
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
@@ -68,7 +68,7 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
     * Place icon by its bean state name
     */
     public void setIcon(String name, NamedIcon icon) {
-        if (log.isDebugEnabled()) log.debug("set \""+name+"\" icon= "+icon);
+        if (log.isDebugEnabled()) log.debug("\""+getName()+"\" setIcon \""+name+"\" icon= "+icon);
         _iconMap.put(name, icon);
     }
 

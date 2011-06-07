@@ -33,7 +33,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private CircuitBuilder _parent;
     private OBlock _adjacentBlock;
 
-    private JPanel      _portalPanel;   
     private JList       _portalList;
     private PortalListModel _portalListModel; 
 
@@ -56,10 +55,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        _portalPanel = makePortalPanel();
 
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-        contentPane.add(_portalPanel);
+        contentPane.add(makePortalPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel border = new JPanel();
@@ -354,10 +352,10 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         for (int i=0; i<list.size(); i++) {
             homeRect = list.get(i).getBounds(homeRect);
             if (iconIntersectsRect(icon, homeRect)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     static boolean iconIntersectsRect(Positionable icon, Rectangle rect) {
@@ -476,12 +474,14 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                                     rbcp.getString("portalIconExists"), name), 
                                     rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+                    _parent.highlight(pi);
+                    pi = null;
                 } else {
                     pi = new PortalIcon(_parent, portal);
                     pi.setLevel(Editor.MARKERS);
                     pi.setStatus(PortalIcon.BLOCK);
+                    _parent.highlight(pi);
                 }
-                _parent.highlight(pi);
                 return pi;
             }
             return null;

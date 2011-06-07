@@ -797,7 +797,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     if (!EditPortalFrame.portalIconOK(_circuitMap.get(block), pIcon)) {
                         if (!_portalMisplacedBlock.contains(block)) {
                             _portalMisplacedBlock.add(block);
-                            break;
                         }
                     }
                 } catch (NullPointerException npe) {

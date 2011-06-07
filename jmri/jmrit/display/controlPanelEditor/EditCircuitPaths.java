@@ -54,12 +54,14 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
         contentPane.add(MakeButtonPanel());
+        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10,10));
         border.add(contentPane);
         setContentPane(border);
-        setSize(getPreferredSize());
+        setSize(400,400);
+//        setSize(getPreferredSize());
         pack();
         setVisible(true);
     }
