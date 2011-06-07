@@ -843,6 +843,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 Positionable p = _contents.get(i);
                 p.setEditor(ed);
                 ed.addToTarget(p);
+                if (_debug) log.debug("changeView: "+p.getNameString()+" addToTarget class= "
+                                      +p.getClass().getName());
             }
             ed.setAllEditable(isEditable());
             ed.setAllPositionable(allPositionable());
@@ -1112,7 +1114,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Remove marker icons from panel
      */
     protected void removeMarkers() {
-		log.debug("Remove markers");
+		if (_debug) log.debug("Remove markers");
 		for (int i=_contents.size()-1; i>=0; i--) {
             Positionable il = _contents.get(i);
             if (il instanceof LocoIcon) {
@@ -1205,7 +1207,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (!_contents.add(l)) {
             log.error("Unable to add "+l.getNameString()+" to _contents");
         }
-        log.debug("putItem "+l.getNameString()+" to _contents. level= "+l.getDisplayLevel());
+        if (_debug) log.debug("putItem "+l.getNameString()+" to _contents. level= "+l.getDisplayLevel());
     }
     
     protected void addToTarget(Positionable l) {
@@ -1818,7 +1820,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         IconAdder iconEditor = getIconEditor("Icon");
         String url = iconEditor.getIcon("plainIcon").getURL();
         NamedIcon icon = NamedIcon.getIconByName(url);
-        if (log.isDebugEnabled()) log.debug("putIcon: "+(icon==null?"null":"icon")+" url= "+url);
+        if (_debug) log.debug("putIcon: "+(icon==null?"null":"icon")+" url= "+url);
         PositionableLabel l = new PositionableLabel(icon, this);
         l.setPopupUtility(null);        // no text 
         l.setDisplayLevel(ICONS);
@@ -2058,7 +2060,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void dispose(boolean clear) {		
-        if (_debug) log.debug("Editor delete and dispose done.");
+        if (_debug) log.debug("Editor delete and dispose done. clear= "+clear);
         Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
             JFrameItem frame = iter.next();
