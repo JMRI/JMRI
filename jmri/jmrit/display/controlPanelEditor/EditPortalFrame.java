@@ -314,7 +314,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             return;
         }
         Portal portal = icon.getPortal();
-        if (portal.getToBlock()!=null && !adjacentBlock.equals(portal.getToBlock())
+        if (portal.getToBlock()!=null && adjacentBlock != null && !adjacentBlock.equals(portal.getToBlock())
                          && !adjacentBlock.equals(portal.getFromBlock()) ) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                 rbcp.getString("iconNotOnBlocks"), icon.getNameString(), portal.getFromBlockName(),
