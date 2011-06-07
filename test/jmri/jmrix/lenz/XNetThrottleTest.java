@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetThrottle class
  * @author			Paul Bender
- * @version         $Revision: 2.6 $
+ * @version         $Revision: 2.7 $
  */
 public class XNetThrottleTest extends TestCase {
 
@@ -74,7 +74,7 @@ public class XNetThrottleTest extends TestCase {
         jmri.util.JUnitUtil.releaseThread(this, 1000);  // give the messages
                                                         // some time to process;
         
-        Assert.assertEquals("Throttle in THROTTLEIDLE state",t.THROTTLEIDLE,t.requestState);
+        Assert.assertEquals("Throttle in THROTTLEIDLE state",XNetThrottle.THROTTLEIDLE,t.requestState);
 
     }
 
