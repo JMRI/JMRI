@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.7.shtml,v 1.1 2011-05-28 13:55:19 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.7.shtml,v 1.2 2011-06-07 04:25:04 pbender Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -116,6 +116,15 @@ None at the time of this release.
 
 <h3>Changes since test release version 2.11.6</h3>
 
+Paul Bender added a Consist Manager for LocoNet with the following notes on it's current capabilities and known issues:
+
+Basic functionallity of adding and removing locomotives from consits is working, however there are several known issues with this release:
+1) The check boxes for changing the direction of a locomotive within a 
+consist are not working 
+2) The delete button at the bottom of the throttle does not work correctly.
+3) You cannot currently add an existing lead address (created with the tool)
+to another consist.  
+4) The consist manager does not currently examine the slots for consists
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
