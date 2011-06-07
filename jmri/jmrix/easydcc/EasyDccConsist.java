@@ -5,7 +5,7 @@
  * it uses the EasyDcc specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2006
- * @version                     $Revision: 1.7 $
+ * @version                     $Revision: 1.8 $
  */
 
 package jmri.jmrix.easydcc;
@@ -188,7 +188,8 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
 	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
-	private synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
+	@Override
+	protected synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
  		if (log.isDebugEnabled()) log.debug("Add Locomotive " +  
                                                     LocoAddress.toString() + 
                                                     " to advanced consist " +
@@ -220,7 +221,8 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
 	 *  Remove a Locomotive from an Advanced Consist
 	 *  @param address is the Locomotive address to add to the locomotive
          */
-	public synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
+	@Override
+	protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
  		if (log.isDebugEnabled()) log.debug(" Remove Locomotive " +  
                                                     LocoAddress.toString() + 
                                                     " from advanced consist " +

@@ -216,7 +216,7 @@ public class DccConsist implements Consist, ProgListener{
 	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
-	private void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
+	protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
 				    .getAddressedProgrammer(LocoAddress.isLongAddress(),
 							LocoAddress.getNumber());
@@ -242,7 +242,7 @@ public class DccConsist implements Consist, ProgListener{
 	 *  Remove a Locomotive from an Advanced Consist
 	 *  @param address is the Locomotive address to add to the locomotive
          */
-	public void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
+	protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
 				    .getAddressedProgrammer(LocoAddress.isLongAddress(),
 							LocoAddress.getNumber());

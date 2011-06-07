@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004-2010
- * @version                     $Revision: 2.20 $
+ * @version                     $Revision: 2.21 $
  */
 
 package jmri.jmrix.lenz;
@@ -259,7 +259,8 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	 *  @param directionNormal is True if the locomotive is traveling 
          *        the same direction as the consist, or false otherwise.
          */
-	private synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
+	@Override
+	protected synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
 		if(log.isDebugEnabled()) log.debug("Adding locomotive " +LocoAddress.getNumber() + " to consist " + ConsistAddress.getNumber());
 		// First, check to see if the locomotive is in the consist already
 		if(this.contains(LocoAddress)) {
@@ -291,7 +292,8 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	 *  Remove a Locomotive from an Advanced Consist
 	 *  @param address is the Locomotive address to add to the locomotive
          */
-	public synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
+	@Override
+	protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
 		// set the speed of the locomotive to zero, to make sure we 
                 // have control over it.
 	        sendDirection(LocoAddress,getLocoDirection(LocoAddress));
