@@ -41,7 +41,7 @@ import jmri.jmrit.display.PositionableIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LayoutEditorTools 
@@ -8974,7 +8974,10 @@ public class LayoutEditorTools
 		levelXing = xing;
 		blockANameMastField.setText(levelXing.getBlockNameAC());
 		blockCNameMastField.setText(levelXing.getBlockNameBD());
-		xingBlocks=blocks;
+		xingBlocks=new String[4];
+        for(int i = 0; i<blocks.length; i++){
+            xingBlocks[i]=blocks[i];
+        }
         setSignalMastsAtLevelXing(theFrame);
 		return;
 	}
@@ -9845,7 +9848,7 @@ public class LayoutEditorTools
 			removeSensorFromPanel(layoutTurnout.getSensorA());
 			layoutTurnout.setSensorA("");
 		}
-		if ( (turnoutSensorB.addToPanel()) && (turnoutSensorB!=null) ) {
+		if ( (turnoutSensorB!=null) && (turnoutSensorB.addToPanel())) {
 			if (isSensorOnPanel(sensorB) && 
 				(sensorB!=getSensorFromName(layoutTurnout.getSensorB()))) {
 				JOptionPane.showMessageDialog(setSensorsFrame,
@@ -10067,7 +10070,9 @@ public class LayoutEditorTools
 		levelXing = xing;
 		blockANameSensorField.setText(levelXing.getBlockNameAC());
 		blockCNameSensorField.setText(levelXing.getBlockNameBD());
-		xingSensorBlocks=blocks;
+        for(int i = 0; i<blocks.length; i++){
+            xingSensorBlocks[i]=blocks[i];
+        }
         setSensorsAtLevelXing(theEditor, theFrame);
 		return;
 	}
@@ -10578,7 +10583,7 @@ public class LayoutEditorTools
     }
     
     static class BeanDetails {
-        String beanType;
+        //String beanType;
         String beanString;
         JLabel textLabel;
         
@@ -10599,7 +10604,7 @@ public class LayoutEditorTools
         BeanDetails(String beanType){
             beanString = rb.getString(beanType);
             textLabel = new JLabel(beanString);
-            this.beanType = beanType;
+            //this.beanType = beanType;
             
             buttonGroup.add(addBeanCheck);
             buttonGroup.add(left);

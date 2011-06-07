@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -1731,7 +1731,7 @@ public class LayoutBlockManager extends AbstractManager {
         throw new jmri.JmriException(lastErrorMessage);
     }
     
-    class BlocksTested {
+    static class BlocksTested {
         
         LayoutBlock block;
         ArrayList<Integer> indexNumber = new ArrayList<Integer>();
