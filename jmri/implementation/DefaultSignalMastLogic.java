@@ -35,7 +35,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -64,6 +64,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         this.source = source;
         this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
         this.source.addPropertyChangeListener(propertySourceMastListener);
+        if(source.getAspect()==null)
+            source.setAspect(stopAspect);
     }
     
     public void setFacingBlock(LayoutBlock facing){
@@ -720,7 +722,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             aspect = advancedAspect[0];
             ArrayList<Integer> divergAspects = new ArrayList<Integer>();
             ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
-            if (advancedAspect.length>1) {
+            if (advancedAspect.length>1) {                
                 float maxSigSpeed = -1;
                 float maxPathSpeed = destList.get(destination).getMinimumSpeed();
                 boolean divergRoute = destList.get(destination).turnoutThrown;
@@ -745,7 +747,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         
                         If the diverg flag has not been set then we will check.
                     */
+                    log.debug(advancedAspect[i]);
                     if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((!divergFlagsAvailable) && nonDivergAspects.contains(i))){
+                        log.debug("In list");
                         if ((strSpeed!=null) && (!strSpeed.equals(""))){
                             float speed = 0.0f;
                             try {
@@ -763,7 +767,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                              * that is under the minimum block speed.
                              */
                             if(log.isDebugEnabled())
-                                log.debug(destination.getDisplayName() + " state speed " + speed + " maxSigSpeed " + maxSigSpeed + " max Path Speed " + maxPathSpeed);
+                                log.debug(destination.getDisplayName() + " signal state speed " + speed + " maxSigSpeed " + maxSigSpeed + " max Path Speed " + maxPathSpeed);
                             if(maxPathSpeed==0){
                                 if (maxSigSpeed ==-1){
                                     log.debug("min speed on this route is equal to 0 so will set this as our max speed");
@@ -777,14 +781,21 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                                     log.debug("Aspect to set is " + aspect);
                                 }
                             }
-                            else if (((maxSigSpeed==-1) || (speed>maxSigSpeed)) && (maxSigSpeed<maxPathSpeed) && (speed<maxPathSpeed)){
+                            else if ((speed>maxSigSpeed) && (maxSigSpeed<maxPathSpeed) && (speed<=maxPathSpeed)){
                                 //Only set the speed to the lowest if the max speed is greater than the path speed
                                 //and the new speed is less than the last max speed
                                 log.debug("our minimum speed on this route is less than our state speed, we will set this as our max speed");
                                 maxSigSpeed = speed;
                                 aspect = advancedAspect[i];
                                 log.debug("Aspect to set is " + aspect);
+                            } else if ((maxSigSpeed>maxPathSpeed) && (speed<maxSigSpeed)){
+                                log.debug("our max signal speed is greater than our path speed on this route, our speed is less that the maxSigSpeed");
+                                maxSigSpeed = speed;
+                                aspect = advancedAspect[i];
+                                log.debug("Aspect to set is " + aspect);
+                            
                             } else if (maxSigSpeed == -1){
+                                log.debug("maxSigSpeed returned as -1");
                                 maxSigSpeed = speed;
                                 aspect = advancedAspect[i];
                                 log.debug("Aspect to set is " + aspect);
@@ -871,6 +882,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         DestinationMast(SignalMast destination){
             this.destination=destination;
+            if(destination.getAspect()==null)
+                destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+                    
             //InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertySignalMastLogicManagerListener);
         }
         
@@ -2148,7 +2162,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
     };
     
-    //This is the listener on the destination signalMast
+    //This is the listener on the source signalMast
     protected PropertyChangeListener propertySourceMastListener = new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent e) {
                 SignalMast mast = (SignalMast) e.getSource();
