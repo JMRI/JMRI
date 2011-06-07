@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.30 $
+ * @version             $Revision: 1.31 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -68,9 +68,10 @@ public class DecVariableValue extends VariableValue
         oldContents = _value.getText();
     }
     void exitField() {
+        // what to do for the case where _value == null?
         if(!_value.getText().equals("")){
             // there may be a lost focus event left in the queue when disposed so protect
-            if (_value != null && !oldContents.equals(_value.getText())) {
+            if (!oldContents.equals(_value.getText())) {
                 int newVal = Integer.valueOf(_value.getText()).intValue();
                 int oldVal = Integer.valueOf(oldContents).intValue();
                 updatedTextField();
