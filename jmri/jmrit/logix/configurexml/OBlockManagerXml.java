@@ -304,45 +304,7 @@ public class OBlockManagerXml // extends XmlFile
         //addPathsToPortals();
         return true;
     }
-/*
-    private void addPathsToPortals() {
-        Iterator <Portal> iter = _portalMap.values().iterator();
-        while (iter.hasNext()) {
-            Portal portal = iter.next();
-            OBlock block = portal.getFromBlock();
-            if (block==null){
-            	log.warn("Portal "+portal.getName()+" has null FromBlock.");
-            	continue;
-            }
-            String fromName = block.getSystemName();
-            block = portal.getToBlock();
-            if (block==null){
-            	log.warn("Portal "+portal.getName()+" has null ToBlock.");
-            	continue;
-            }
-            String toName = block.getSystemName();
-            //String portalName = portal.getName();
-            // get paths from blocks and let Portal pick the ones that are missing
-            Iterator <OBlock> it = _blockMap.values().iterator();
-            while (it.hasNext()) {
-            	block = it.next();
-                String name = block.getSystemName();
-                // find blocks of this portal
-            	if(fromName.equals(name) || toName.equals(name)) {
-                    List <Path> list = block.getPaths();
-                    for (int i=0; i<list.size(); i++) {
-                        OPath path = (OPath)list.get(i);
-                        if (portal.equals(path.getToPortal()) ||
-                                portal.equals(path.getFromPortal()) ) {
-                            portal.addPath(path);
-                        }
-                    }
-            	}
-            }
-        }
-
-    }
-*/	
+    
     public void load(Element element, Object o) throws Exception {
         log.error("load called. Invalid method.");
     }
@@ -353,23 +315,19 @@ public class OBlockManagerXml // extends XmlFile
         String blockName = null;
         OBlock fromBlock = null;
         OBlock toBlock = null;
-        List<Element> ePathsFromBlock = null;
-        List<Element> ePathsToBlock = null;
 
-        Element eBlk = elem.getChild("fromBlock");
-        if (eBlk!=null && eBlk.getAttribute("blockName")!=null) {
-            blockName = eBlk.getAttribute("blockName").getValue();
+        Element eFromBlk = elem.getChild("fromBlock");
+        if (eFromBlk!=null && eFromBlk.getAttribute("blockName")!=null) {
+            blockName = eFromBlk.getAttribute("blockName").getValue();
             fromBlock = getBlock(blockName);
-            ePathsFromBlock = eBlk.getChildren("path");
         } else {
             log.error("Portal \""+portalName+"\" has no fromBlock!");
         }
 
-        eBlk = elem.getChild("toBlock"); 
-        if (eBlk!=null && eBlk.getAttribute("blockName")!=null) {
-            blockName = eBlk.getAttribute("blockName").getValue();
+        Element eToBlk = elem.getChild("toBlock"); 
+        if (eToBlk!=null && eToBlk.getAttribute("blockName")!=null) {
+            blockName = eToBlk.getAttribute("blockName").getValue();
             toBlock = getBlock(blockName);
-            ePathsToBlock = eBlk.getChildren("path");
         } else {
             log.error("Portal \""+portalName+"\" has no toBlock!");
         }
@@ -378,6 +336,7 @@ public class OBlockManagerXml // extends XmlFile
 
         if (fromBlock!=null) {
             fromBlock.addPortal(portal);
+            List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
             for (int i=0; i<ePathsFromBlock.size(); i++) {
                 Element e = ePathsFromBlock.get(i);
                 String pathName = e.getAttribute("pathName").getValue();
@@ -393,6 +352,7 @@ public class OBlockManagerXml // extends XmlFile
         }
         if (toBlock!=null) {
             toBlock.addPortal(portal);
+            List<Element> ePathsToBlock = eToBlk.getChildren("path");
             for (int i=0; i<ePathsToBlock.size(); i++) {
                 Element e = ePathsToBlock.get(i);
                 String pathName = e.getAttribute("pathName").getValue();
