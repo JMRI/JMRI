@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -2002,7 +2002,7 @@ public class LayoutBlockManager extends AbstractManager {
                 proCount = currentBlock.getBlockHopCount(destBlockn1.getBlock(), nextBlock.getBlock());
                 log.debug("dest " + desCount + " protecting " + proCount);
             }
-            if((proCount<desCount) || (destBlock==null)){
+            if(proCount<desCount){
                 /*Need to do a more advanced check in this case as the destBlockn1
                 could be reached via a different route and therefore have a smaller 
                 hop count we need to therefore step through each block until we reach
