@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
 	public final static float SPEED_STEP_14_INCREMENT=1.0f/14.0f;
@@ -387,16 +387,19 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
      */
+    @Deprecated
     public void dispose() {
         if (!active) log.error("Dispose called when not active");
         InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
     }
-
+    
+    @Deprecated
     public void dispatch() {
         if (!active) log.warn("dispatch called when not active");
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, null);
     }
-
+    
+    @Deprecated
     public void release() {
         if (!active) log.warn("release called when not active");
         InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
@@ -1049,7 +1052,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      public int getSpeedStepMode() {
 	    return speedStepMode;
      }
-
+   
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottle.class.getName());
 
