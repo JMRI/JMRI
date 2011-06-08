@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  
@@ -241,7 +241,7 @@ public class Engineer extends Thread implements Runnable {
                                             _speed+" _wait= "+_wait);
     }
 
-    public int getRunState() {
+    synchronized public int getRunState() {
         if (_wait) {
             return Warrant.WAIT_FOR_CLEAR;
         } else if (_waitForSync) {
