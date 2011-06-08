@@ -32,6 +32,9 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
     static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
+    static boolean _firstInstance = true;
+    static Point _loc = null;
+    static Dimension _dim = null;
 
     public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
         _block = block;
@@ -105,8 +108,14 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         border.setLayout(new java.awt.BorderLayout(10,10));
         border.add(contentPane);
         setContentPane(border);
-        setSize(500, 500);
         pack();
+        if (_firstInstance) {
+            setLocationRelativeTo(_parent);
+            _firstInstance = false;
+        } else {
+            setLocation(_loc);
+            setSize(_dim);
+        }
         setVisible(true);
     }
 
@@ -247,6 +256,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _parent.iconsConverted();
         
         _parent.closeCircuitFrame(_block);
+        _loc = getLocation(_loc);
+        _dim = getSize(_dim);
         dispose();
     }
 

@@ -40,6 +40,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
     static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
+    static boolean _firstInstance = true;
+    static Point _loc = null;
+    static Dimension _dim = null;
 
     public EditPortalFrame(String title, CircuitBuilder parent, OBlock block) {
         _homeBlock = block;
@@ -66,6 +69,14 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         setContentPane(border);
         setSize(500, 500);
         pack();
+        if (_firstInstance) {
+            setLocationRelativeTo(_parent);
+            setSize(500,500);
+            _firstInstance = false;
+        } else {
+            setLocation(_loc);
+            setSize(_dim);
+        }
         setVisible(true);
     }
 
@@ -129,16 +140,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         portalPanel.add(panel);
 
         panel = new JPanel();
-/*
-        JButton addButton = new JButton(rbcp.getString("buttonAddPortal"));
-        addButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addPortal();
-                }
-        });
-        addButton.setToolTipText(rbcp.getString("ToolTipAddPortal"));
-        panel.add(addButton);
-*/ 
         JButton changeButton = new JButton(rbcp.getString("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -405,6 +406,8 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     protected void closingEvent() {
         checkPortalIcons();
         _parent.closePortalFrame(_homeBlock);
+        _loc = getLocation(_loc);
+        _dim = getSize(_dim);
         dispose();
     }
 

@@ -33,6 +33,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
+    static boolean _firstInstance = true;
+    static Point _loc = null;
+    static Dimension _dim = null;
     public static final String TEST_PATH = "TEST_PATH";
 
     public EditCircuitPaths(String title, CircuitBuilder parent, OBlock block) {
@@ -46,23 +49,27 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             }
         });
         _parent.setEditColors();
-//        _parent.setMakePathMode();
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(makeContentPanel());
 
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-        contentPane.add(MakeButtonPanel());
+        contentPane.add(makeContentPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10,10));
         border.add(contentPane);
         setContentPane(border);
-        setSize(400,400);
-//        setSize(getPreferredSize());
         pack();
+        if (_firstInstance) {
+            setLocationRelativeTo(_parent);
+            setSize(500,500);
+            _firstInstance = false;
+        } else {
+            setLocation(_loc);
+            setSize(_dim);
+        }
         setVisible(true);
     }
 
@@ -120,13 +127,12 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         clearButton.setToolTipText(rbcp.getString("ToolTipClearList"));
         panel.add(clearButton);
         pathPanel.add(panel);
+        pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        _pathName.setPreferredSize(new Dimension(300, _pathName.getPreferredSize().height));
         panel.add(CircuitBuilder.makeTextBoxPanel(
                     false, _pathName, "pathName", true, "TooltipPathName"));
+        _pathName.setPreferredSize(new Dimension(300, _pathName.getPreferredSize().height));
         pathPanel.add(panel);
 
         panel = new JPanel();
@@ -173,18 +179,23 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         l = new JLabel(rbcp.getString("selectPath"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
+        l = new JLabel(rbcp.getString("editPathIcons"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
         panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
         l = new JLabel(rbcp.getString("throwPathTO"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        l = new JLabel(rbcp.getString("holdShiftDown"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         JPanel p = new JPanel();
         p.add(panel);
         pathPanel.add(p);
 
-        panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(pathPanel);
-        return panel;
+        pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        pathPanel.add(MakeButtonPanel());
+        return pathPanel;
     }
     private static class PathCellRenderer extends JLabel implements ListCellRenderer {
      
@@ -437,6 +448,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     protected void closingEvent() {
         clearPathGroup();
         _parent.closePathFrame(_block);
+        _loc = getLocation(_loc);
+        _dim = getSize(_dim);
         dispose();
     }
 

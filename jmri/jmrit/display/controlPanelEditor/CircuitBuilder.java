@@ -71,9 +71,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     private EditCircuitFrame _editCircuitFrame;
     private EditPortalFrame  _editPortalFrame; 
     private EditCircuitPaths _editPathsFrame;
-    private boolean _firstEditCircuitFrame = true;
-    private boolean _firstEditPortalFrame = true;
-    private boolean _firstEditCircuitPaths = true;
 
     // list of icons making a circuit - used by editing frames to indicate block(s) being worked on
     private ArrayList<Positionable> _circuitIcons;      // Dark Blue
@@ -395,10 +392,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     _currentSelection = null;
                     _editCircuitFrame = new EditCircuitFrame(rbcp.getString("newCircuitItem"), this, _currentBlock);
                 }
-                if (_firstEditCircuitFrame) {
-                    _editCircuitFrame.setLocationRelativeTo(this);
-                    _firstEditCircuitFrame = false;
-                }
             }
         }
     }
@@ -409,10 +402,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             if (_currentBlock!=null) {
                 setSelectionGroup(_currentBlock);
                 _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
-                if (_firstEditCircuitFrame) {
-                    _editCircuitFrame.setLocationRelativeTo(this);
-                    _firstEditCircuitFrame = false;
-                }
             }
         }
     }
@@ -423,10 +412,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             if (_currentBlock!=null) {
                 setSelectionGroup(_currentBlock);
                 _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
-                if (_firstEditCircuitFrame) {
-                    _editCircuitFrame.setLocationRelativeTo(this);
-                    _firstEditCircuitFrame = false;
-                }
             }
         }
     }
@@ -443,10 +428,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     _circuitIcons = null;
                 } else {
                     _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
-                    if (_firstEditPortalFrame) {
-                        _editPortalFrame.setLocationRelativeTo(this);
-                        _firstEditPortalFrame = false;
-                    }
                 }
             }
 
@@ -465,10 +446,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     _circuitIcons = null;
                 } else {
                     _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
-                    if (_firstEditPortalFrame) {
-                        _editPortalFrame.setLocationRelativeTo(this);
-                        _firstEditPortalFrame = false;
-                    }
                 }
             }
         }
@@ -489,10 +466,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     _currentBlock.setState(OBlock.UNOCCUPIED);
                     _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
                     _editPathsFrame = new EditCircuitPaths(rbcp.getString("OpenPathTitle"), this, _currentBlock);
-                    if (_firstEditCircuitPaths) {
-                        _editPathsFrame.setLocationRelativeTo(this);
-                        _firstEditCircuitPaths = false;
-                    }
                 }
             }
         }
