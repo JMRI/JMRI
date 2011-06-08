@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.14 2011-06-07 08:08:19 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.15 2011-06-08 18:00:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,11 @@
       Release Notes for JMRI 2.11.6 release
       </h2>
 
-	<p>Date: MMM DD, 2011</p>
+	<p>Date: June 8, 2011</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.11.6 of JMRI/DecoderPro is available for download.</p>
  
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -46,12 +46,7 @@ to end in a JMRI 2.12 or 3.0 production release in 2011. </p>
 
 <p>
 It contains 
-many new features, including:</p>
-
-<ul>
-<li>
-</ul>
-along with other changes.  See the complete list below.
+many new features. See the complete list below.
 
 <p>Some of the changes involved are quite extensive.
 They may require a certain amount of experience before they are working well.  
@@ -158,6 +153,13 @@ during the car import.</LI>
 </ul>
 
 <p>Stephen Lowens updated the Digitrax SFX definition.</p>
+
+<p>Bob Jacobsen:</p>
+<li>
+<li>Updated the OpenLCB support
+<li>Fixed problems with alternate CV selection
+<li>Updated a number of help files to make them consistent
+</ul>
 
 <p>Randall Wood updated the fast clock in memory variable support, and added some fixed memory 
 values to the XMLIO support so that web browsers can inquire about the JMRI version, etc.
