@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  
@@ -73,11 +73,11 @@ public class Engineer extends Thread implements Runnable {
                 } catch (java.lang.IllegalArgumentException iae) {
                     log.error("IllegalArgumentException "+iae);
                 }
+
                 _waitForSync = false;
-            }
-            if (_abort) { break; }
-            _idxCurrentCommand++;
-            synchronized(this) {
+                if (_abort) { break; }
+
+                _idxCurrentCommand++;
                 try {
                     if (_wait || _halt) {
                         wait();
@@ -85,8 +85,9 @@ public class Engineer extends Thread implements Runnable {
                 } catch (InterruptedException ie) {
                     log.error("InterruptedException "+ie);
                 }
+                if (_abort) { break; }
             }
-            if (_abort) { break; }
+
             try {
                 if (command.equals("SPEED")) {
                     float speed = Float.parseFloat(ts.getValue());
@@ -206,20 +207,6 @@ public class Engineer extends Thread implements Runnable {
         return speed;
     }
 
-    synchronized private void resetSpeed() {
-        _lock.lock();
-        try {
-            setSpeed(modifySpeed(getLastSpeedCommand(_idxCurrentCommand), _speedType));
-            if (!_wait && !_halt) {
-                this.notify();
-            }
-        } finally {
-            _lock.unlock();
-        }
-        if (log.isDebugEnabled()) log.debug("resetSpeed: throttle speed= "+
-                                            _throttle.getSpeedSetting()+" _wait= "+_wait);
-    }
-
     private float modifySpeed(float s, String sType) {
         jmri.implementation.SignalSpeedMap map = Warrant.getSpeedMap();
         float speed = map.getSpeed(sType)/100;
@@ -270,10 +257,20 @@ public class Engineer extends Thread implements Runnable {
     /**
     * Flag from user's control
     */
-    public void setHalt(boolean halt) {
+    synchronized public void setHalt(boolean halt) {
         _halt = halt;
         if (!_halt) { 
-            resetSpeed();
+            _lock.lock();
+            try {
+                setSpeed(modifySpeed(getLastSpeedCommand(_idxCurrentCommand), _speedType));
+                if (!_wait) {
+                    this.notify();
+                }
+            } finally {
+                _lock.unlock();
+            }
+            if (log.isDebugEnabled()) log.debug("resetSpeed: throttle speed= "+
+                                                _throttle.getSpeedSetting()+" _wait= "+_wait);
         } else {
             _throttle.setSpeedSetting(0.0f);
         }
@@ -282,7 +279,7 @@ public class Engineer extends Thread implements Runnable {
     /**
     * Flag from user to end run
     */
-    public void abort() {
+    synchronized public void abort() {
         if (_abort) {
             return;
         }
@@ -418,14 +415,15 @@ public class Engineer extends Thread implements Runnable {
                 _warrant.fireRunStatus("SpeedRestriction", old, 
                                    (endSpeed > speed ? "increasing" : "decreasing"));
 
-                if (!_speedType.equals("Stop")) {
-                    synchronized(this) {
+                synchronized(this) {
+                    if (!_speedType.equals("Stop")) {
                         notify();
                         _wait = false;
+                    } else {
+                        _wait = true;
                     }
-                } else {
-                    _wait = true;
                 }
+
                 float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
                 switch (_throttle.getSpeedStepMode()) {
                     case DccThrottle.SpeedStepMode14:
