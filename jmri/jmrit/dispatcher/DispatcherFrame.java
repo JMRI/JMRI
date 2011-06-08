@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2011
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -1072,15 +1072,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		AllocationRequest ar = findAllocationRequestInQueue(section, seqNumber, direction, activeTrain);
 		if (ar==null) {
 			ar = new AllocationRequest(section, seqNumber, direction, activeTrain);
-			if (ar==null) {
-				if (showErrorMessages) {
-					JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-						"Error20"),new Object[] { activeTrain.getActiveTrainName() }), rb.getString("ErrorTitle"),
-							JOptionPane.ERROR_MESSAGE);
-				}
-				log.error("Null return when creating new allocation request for "+activeTrain.getActiveTrainName());
-				return false;
-			}
 			allocationRequests.add(ar);
 			if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests);
 		}
@@ -1253,23 +1244,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			 
 			// allocate the section
 			as = new AllocatedSection(s,at,ar.getSectionSeqNumber(),nextSection,nextSectionSeqNo);
-			if (as!=null) {
-				s.setState(ar.getSectionDirection());
-				at.addAllocatedSection(as);
-				allocatedSections.add(as);
-				int ix = -1;
-				for (int i = 0; i<allocationRequests.size(); i++) {
-					if (ar==allocationRequests.get(i)) {
-						ix = i;
-					}
+
+			s.setState(ar.getSectionDirection());
+			at.addAllocatedSection(as);
+			allocatedSections.add(as);
+			int ix = -1;
+			for (int i = 0; i<allocationRequests.size(); i++) {
+				if (ar==allocationRequests.get(i)) {
+					ix = i;
 				}
-				allocationRequests.remove(ix);
-				ar.dispose();
-				allocationRequestTableModel.fireTableDataChanged();
-				activeTrainsTableModel.fireTableDataChanged();
-				if (allocatedSectionTableModel!=null) {
-					allocatedSectionTableModel.fireTableDataChanged();
-				}
+			}
+			allocationRequests.remove(ix);
+			ar.dispose();
+			allocationRequestTableModel.fireTableDataChanged();
+			activeTrainsTableModel.fireTableDataChanged();
+			if (allocatedSectionTableModel!=null) {
+				allocatedSectionTableModel.fireTableDataChanged();
 			}
 			if (extraFrame!=null) cancelExtraRequested(null);
 			if (_AutoAllocate) {
