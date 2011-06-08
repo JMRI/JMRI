@@ -309,7 +309,7 @@ public class OBlockManagerXml // extends XmlFile
         log.error("load called. Invalid method.");
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("null")
     Portal loadPortal(Element elem) {
         String portalName = elem.getAttribute("portalName").getValue();
         String blockName = null;
@@ -336,6 +336,7 @@ public class OBlockManagerXml // extends XmlFile
 
         if (fromBlock!=null) {
             fromBlock.addPortal(portal);
+            @SuppressWarnings("unchecked")
             List<Element> ePathsFromBlock = eFromBlk.getChildren("path");
             for (int i=0; i<ePathsFromBlock.size(); i++) {
                 Element e = ePathsFromBlock.get(i);
@@ -352,6 +353,7 @@ public class OBlockManagerXml // extends XmlFile
         }
         if (toBlock!=null) {
             toBlock.addPortal(portal);
+            @SuppressWarnings("unchecked")
             List<Element> ePathsToBlock = eToBlk.getChildren("path");
             for (int i=0; i<ePathsToBlock.size(); i++) {
                 Element e = ePathsToBlock.get(i);
@@ -367,14 +369,12 @@ public class OBlockManagerXml // extends XmlFile
             }
         }
 
-        List<Element> eSignals = elem.getChildren("fromSignal");
-        if (eSignals.size()>1) log.error("More than one fromSignal present: "+eSignals.size());
-        if (eSignals.size()>0) {
-            Element eSig = eSignals.get(0);
-            String name = eSig.getAttribute("signalName").getValue();
+        Element eSignal = elem.getChild("fromSignal");
+        if (eSignal!=null) {
+            String name = eSignal.getAttribute("signalName").getValue();
             long time = 0;
             try {
-                Attribute attr = eSig.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay");
                 if (attr != null){
                     time = attr.getLongValue();
                 }
@@ -383,14 +383,12 @@ public class OBlockManagerXml // extends XmlFile
             }
             portal.setProtectSignal(Portal.getSignal(name), time, toBlock);
         }
-        eSignals = elem.getChildren("toSignal");
-        if (eSignals.size()>1) log.error("More than one toSignal present: "+eSignals.size());
-        if (eSignals.size()>0) {
-            Element eSig = eSignals.get(0);
-            String name = eSig.getAttribute("signalName").getValue();
+        eSignal = elem.getChild("toSignal");
+        if (eSignal!=null) {
+            String name = eSignal.getAttribute("signalName").getValue();
             long time = 0;
             try {
-                Attribute attr = eSig.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay");
                 if (attr != null){
                     time = attr.getLongValue();
                 }
