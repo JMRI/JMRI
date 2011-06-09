@@ -34,109 +34,112 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         Element signalMastLogic = new Element("signalmastlogics");
         setStoreElementClass(signalMastLogic);
         SignalMastLogicManager smlm = (SignalMastLogicManager) o;
+        signalMastLogic.addContent(new Element("logicDelay").addContent(Long.toString(smlm.getSignalLogicDelay())));
         ArrayList<SignalMastLogic> sml = smlm.getSignalMastLogicList();
         for(int i = 0; i<sml.size(); i++){
             SignalMastLogic sm = sml.get(i);
             Element source = new Element("signalmastlogic");
             source.addContent(new Element("sourceSignalMast").addContent(sm.getSourceMast().getDisplayName()));
             ArrayList<SignalMast> destination = sm.getDestinationList();
-            for (int k = 0; k<destination.size(); k++){
-                SignalMast dest = destination.get(k);
-                if(sml.get(i).getStoreState(dest)!=SignalMastLogic.STORENONE){
-                    Element elem = new Element("destinationMast");
-                    elem.addContent(new Element("destinationSignalMast").addContent(dest.getDisplayName()));
-                    elem.addContent(new Element("comment").addContent(sm.getComment(dest)));
-                    if(sm.isEnabled(dest))
-                        elem.addContent(new Element("enabled").addContent("yes"));
-                    else
-                        elem.addContent(new Element("enabled").addContent("no"));
+            if(destination.size()!=0){
+                for (int k = 0; k<destination.size(); k++){
+                    SignalMast dest = destination.get(k);
+                    if(sml.get(i).getStoreState(dest)!=SignalMastLogic.STORENONE){
+                        Element elem = new Element("destinationMast");
+                        elem.addContent(new Element("destinationSignalMast").addContent(dest.getDisplayName()));
+                        elem.addContent(new Element("comment").addContent(sm.getComment(dest)));
+                        if(sm.isEnabled(dest))
+                            elem.addContent(new Element("enabled").addContent("yes"));
+                        else
+                            elem.addContent(new Element("enabled").addContent("no"));
+                            
+                        if(sm.allowAutoMaticSignalMastGeneration(dest))
+                            elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("yes"));
+                        else
+                            elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("no"));
+                            
+                        if(sm.useLayoutEditor(dest))
+                            elem.addContent(new Element("useLayoutEditor").addContent("yes"));
+                        else
+                            elem.addContent(new Element("useLayoutEditor").addContent("no"));
+                            
+                        if(sm.useLayoutEditorTurnouts(dest))
+                            elem.addContent(new Element("useLayoutEditorTurnouts").addContent("yes"));
+                        else
+                            elem.addContent(new Element("useLayoutEditorTurnouts").addContent("no"));
                         
-                    if(sm.allowAutoMaticSignalMastGeneration(dest))
-                        elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("yes"));
-                    else
-                        elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("no"));
+                        if(sm.useLayoutEditorBlocks(dest))
+                            elem.addContent(new Element("useLayoutEditorBlocks").addContent("yes"));
+                        else
+                            elem.addContent(new Element("useLayoutEditorBlocks").addContent("no"));
                         
-                    if(sm.useLayoutEditor(dest))
-                        elem.addContent(new Element("useLayoutEditor").addContent("yes"));
-                    else
-                        elem.addContent(new Element("useLayoutEditor").addContent("no"));
-                        
-                    if(sm.useLayoutEditorTurnouts(dest))
-                        elem.addContent(new Element("useLayoutEditorTurnouts").addContent("yes"));
-                    else
-                        elem.addContent(new Element("useLayoutEditorTurnouts").addContent("no"));
-                    
-                    if(sm.useLayoutEditorBlocks(dest))
-                        elem.addContent(new Element("useLayoutEditorBlocks").addContent("yes"));
-                    else
-                        elem.addContent(new Element("useLayoutEditorBlocks").addContent("no"));
-                    
-                    if(sm.isTurnoutLockAllowed(dest))
-                        elem.addContent(new Element("lockTurnouts").addContent("yes"));
-                    else
-                        elem.addContent(new Element("lockTurnouts").addContent("no"));
-                        
-                    if(sml.get(i).getStoreState(dest)==SignalMastLogic.STOREALL){
-                        ArrayList<Block> blocks = sm.getBlocks(dest);
-                        if (blocks.size()>0){
-                            Element blockElement = new Element("blocks");
-                            for(int j = 0; j<blocks.size(); j++){
-                                Element bloc = new Element("block");
-                                bloc.addContent(new Element("blockName").addContent(blocks.get(j).getDisplayName()));
-                                String blkState = "anyState";
-                                if (sm.getBlockState(blocks.get(j), dest)==Block.OCCUPIED)
-                                    blkState = "occupied";
-                                else if (sm.getBlockState(blocks.get(j), dest)==Block.UNOCCUPIED)
-                                    blkState = "unoccupied";
-                                bloc.addContent(new Element("blockState").addContent(blkState));
-                                blockElement.addContent(bloc);
+                        if(sm.isTurnoutLockAllowed(dest))
+                            elem.addContent(new Element("lockTurnouts").addContent("yes"));
+                        else
+                            elem.addContent(new Element("lockTurnouts").addContent("no"));
+                            
+                        if(sml.get(i).getStoreState(dest)==SignalMastLogic.STOREALL){
+                            ArrayList<Block> blocks = sm.getBlocks(dest);
+                            if (blocks.size()>0){
+                                Element blockElement = new Element("blocks");
+                                for(int j = 0; j<blocks.size(); j++){
+                                    Element bloc = new Element("block");
+                                    bloc.addContent(new Element("blockName").addContent(blocks.get(j).getDisplayName()));
+                                    String blkState = "anyState";
+                                    if (sm.getBlockState(blocks.get(j), dest)==Block.OCCUPIED)
+                                        blkState = "occupied";
+                                    else if (sm.getBlockState(blocks.get(j), dest)==Block.UNOCCUPIED)
+                                        blkState = "unoccupied";
+                                    bloc.addContent(new Element("blockState").addContent(blkState));
+                                    blockElement.addContent(bloc);
+                                }
+                                elem.addContent(blockElement);
                             }
-                            elem.addContent(blockElement);
-                        }
-                        ArrayList<Turnout> turnouts = sm.getTurnouts(dest);
-                        if (turnouts.size()>0){
-                            Element turnoutElement = new Element("turnouts");
-                            for(int j = 0; j<turnouts.size(); j++){
-                                Element turn = new Element("turnout");
-                                turn.addContent(new Element("turnoutName").addContent(turnouts.get(j).getDisplayName()));
-                                String turnState = "thrown";
-                                if (sm.getTurnoutState(turnouts.get(j),dest)==Turnout.CLOSED)
-                                    turnState = "closed";
-                                turn.addContent(new Element("turnoutState").addContent(turnState));
-                                turnoutElement.addContent(turn);
+                            ArrayList<Turnout> turnouts = sm.getTurnouts(dest);
+                            if (turnouts.size()>0){
+                                Element turnoutElement = new Element("turnouts");
+                                for(int j = 0; j<turnouts.size(); j++){
+                                    Element turn = new Element("turnout");
+                                    turn.addContent(new Element("turnoutName").addContent(turnouts.get(j).getDisplayName()));
+                                    String turnState = "thrown";
+                                    if (sm.getTurnoutState(turnouts.get(j),dest)==Turnout.CLOSED)
+                                        turnState = "closed";
+                                    turn.addContent(new Element("turnoutState").addContent(turnState));
+                                    turnoutElement.addContent(turn);
+                                }
+                                elem.addContent(turnoutElement);
                             }
-                            elem.addContent(turnoutElement);
-                        }
-                        ArrayList<Sensor> sensors = sm.getSensors(dest);
-                        if (sensors.size()>0){
-                            Element sensorElement = new Element("sensors");
-                            for(int j = 0; j<sensors.size(); j++){
-                                Element sensor= new Element("sensor");
-                                sensor.addContent(new Element("sensorName").addContent(sensors.get(j).getDisplayName()));
-                                String sensorState = "inActive";
-                                if (sm.getSensorState(sensors.get(j), dest)==Sensor.ACTIVE)
-                                    sensorState = "active";
-                                sensor.addContent(new Element("sensorState").addContent(sensorState));
-                                sensorElement.addContent(sensor);
+                            ArrayList<Sensor> sensors = sm.getSensors(dest);
+                            if (sensors.size()>0){
+                                Element sensorElement = new Element("sensors");
+                                for(int j = 0; j<sensors.size(); j++){
+                                    Element sensor= new Element("sensor");
+                                    sensor.addContent(new Element("sensorName").addContent(sensors.get(j).getDisplayName()));
+                                    String sensorState = "inActive";
+                                    if (sm.getSensorState(sensors.get(j), dest)==Sensor.ACTIVE)
+                                        sensorState = "active";
+                                    sensor.addContent(new Element("sensorState").addContent(sensorState));
+                                    sensorElement.addContent(sensor);
+                                }
+                                elem.addContent(sensorElement);
                             }
-                            elem.addContent(sensorElement);
-                        }
-                        ArrayList<SignalMast> masts = sm.getSignalMasts(dest);
-                        if (masts.size()>0){
-                            Element mastElement = new Element("masts");
-                            for(int j = 0; j<masts.size(); j++){
-                                Element mast= new Element("mast");
-                                mast.addContent(new Element("mastName").addContent(masts.get(j).getDisplayName()));
-                                mast.addContent(new Element("mastState").addContent(sm.getSignalMastState(masts.get(j), dest)));
-                                mastElement.addContent(mast);
+                            ArrayList<SignalMast> masts = sm.getSignalMasts(dest);
+                            if (masts.size()>0){
+                                Element mastElement = new Element("masts");
+                                for(int j = 0; j<masts.size(); j++){
+                                    Element mast= new Element("mast");
+                                    mast.addContent(new Element("mastName").addContent(masts.get(j).getDisplayName()));
+                                    mast.addContent(new Element("mastState").addContent(sm.getSignalMastState(masts.get(j), dest)));
+                                    mastElement.addContent(mast);
+                                }
+                                elem.addContent(mastElement);
                             }
-                            elem.addContent(mastElement);
                         }
+                        source.addContent(elem);
                     }
-                    source.addContent(elem);
                 }
+                signalMastLogic.addContent(source);
             }
-            signalMastLogic.addContent(source);
         }
         return signalMastLogic;
     }
@@ -155,14 +158,19 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return true;
     }
 
-    @SuppressWarnings({ "unchecked", "null" })
+    @SuppressWarnings("unchecked")
     public void loadSignalMastLogic(Element signalMastLogic) {
         List<Element> logicList = signalMastLogic.getChildren("signalmastlogic");
         if (log.isDebugEnabled()) log.debug("Found "+logicList.size()+" signal mast logics");
 
         SignalMastManager sm = InstanceManager.signalMastManagerInstance();
         SignalMastLogicManager sml = InstanceManager.signalMastLogicManagerInstance();
-
+        try {
+            String logicDelay = signalMastLogic.getChild("logicDelay").getText();
+            sml.setSignalLogicDelay(Long.parseLong(logicDelay));
+        } catch (java.lang.NullPointerException e){
+            //Considered normal if it doesn't exists
+        }
         for (Element so : logicList) {
             String source = so.getChild("sourceSignalMast").getText();
             SignalMastLogic logic = sml.newSignalMastLogic(sm.getSignalMast(source));

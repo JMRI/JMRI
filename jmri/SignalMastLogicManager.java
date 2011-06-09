@@ -1,7 +1,7 @@
 package jmri;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
@@ -21,7 +21,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public interface SignalMastLogicManager extends Manager {
 
@@ -33,7 +33,7 @@ public interface SignalMastLogicManager extends Manager {
      * @return A has Hashtable, of each source signalmast, with an arraylist of
      * all the valid destination signalmast.
      */
-    public Hashtable<SignalMast, ArrayList<SignalMast>> automaticallyDiscoverSignallingPairs() throws JmriException;
+    public void automaticallyDiscoverSignallingPairs() throws JmriException;
 
     /**
      * This uses the layout editor to check if the destination signalmast is

@@ -11,7 +11,6 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
 
-
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
@@ -35,7 +34,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -1304,7 +1303,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if (inWait){
                 return;
             }
-            log.info("check Signal Dest State called");
+            log.debug("check Signal Dest State called");
             inWait=true;
 
             Runnable r = new Runnable() {

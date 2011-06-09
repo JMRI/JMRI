@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener
@@ -2139,7 +2139,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
         return -1;
     }
-        
+
     /**
     * last index - the index of the last block we returned ie we last returned 
     * index 10, so we don't want to return it again.
@@ -2895,6 +2895,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
     
     public int getBlockHopCount(Block destination, Block nextBlock){
+        if((destination==nextBlock) && (isValidNeighbour(nextBlock)))
+            return 1;
         for (int i = 0; i<routes.size();i++){
             if (routes.get(i).getDestBlock()==destination){
                 if(routes.get(i).getNextBlock()==nextBlock)
