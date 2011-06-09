@@ -21,7 +21,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public interface SignalMastLogicManager extends Manager {
 
@@ -30,8 +30,6 @@ public interface SignalMastLogicManager extends Manager {
     /**
      * Discover all possible valid source and destination signalmasts past pairs
      * on all layout editor panels.
-     * @return A has Hashtable, of each source signalmast, with an arraylist of
-     * all the valid destination signalmast.
      */
     public void automaticallyDiscoverSignallingPairs() throws JmriException;
 
