@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.167 $
+ * @version             $Revision: 1.168 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1897,14 +1897,23 @@ public class TrainBuilder extends TrainCommon{
 								if (!checkDropTrainDirection(car, rld, testTrack))
 									continue;
 								String status = car.testDestination(car.getDestination(), testTrack);
-								// is the testTrack a siding with a Schedule?
-								/*
-								if (testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.CUSTOM) 
-										&& status.contains(Car.LOAD)){
-									addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
-									continue;
+								// is the testTrack a siding with a schedule and alternate track?
+								if (!status.equals(Car.OKAY) && status.contains(Car.LENGTH) && car.testSchedule(testTrack).equals(Car.OKAY) 
+										&& testTrack.getLocType().equals(Track.SIDING) && testTrack.getAlternativeTrack() != null){
+									addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrackHasAlternate"),new Object[]{testTrack.getName(), testTrack.getAlternativeTrack().getName()}));
+									String altStatus = car.testDestination(car.getDestination(), testTrack.getAlternativeTrack());
+									if (altStatus.equals(Car.OKAY) || (altStatus.contains(Car.CUSTOM)&& altStatus.contains(Car.LOAD))){
+										addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUseAlternateTrack"),new Object[]{car.toString(), testTrack.getAlternativeTrack().getName()}));
+										carAdded = addCarToTrain(car, rl, rld, testTrack.getAlternativeTrack());
+										car.setNextDestination(car.getDestination());
+										car.setNextDestTrack(testTrack);
+										car.setNextLoad(car.getLoad());
+										testTrack.setMoves(testTrack.getMoves()+1);	// bump the number of moves
+										break;
+									} else {
+										addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getAlternativeTrack().getName(), altStatus}));
+									}
 								}
-								*/
 								if (!status.equals(Car.OKAY)){
 									addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
 									continue;

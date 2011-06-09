@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.86 $
+ * @version             $Revision: 1.87 $
  */
 public class Car extends RollingStock {
 	
@@ -399,7 +399,7 @@ public class Car extends RollingStock {
 		return testSchedule(track);
 	}
 	
-	private String testSchedule(Track track){
+	public String testSchedule(Track track){
 		// does car already have this destination?
 		if (track == null || track == getDestinationTrack())
 			return OKAY;
@@ -583,6 +583,12 @@ public class Car extends RollingStock {
 		}
 		// set the car's next load
 		setNextLoad(scheduleItem.getShip());
+		/*
+		// if car has a custom load, and no new load specified, then use empty 
+		if (!getLoad().equals(carLoads.getDefaultEmptyName()) && !getLoad().equals(carLoads.getDefaultLoadName()) 
+				&& getNextLoad().equals(""))
+			setNextLoad(carLoads.getDefaultEmptyName());
+			*/
 		// set the car's next destination and track
 		setNextDestination(scheduleItem.getDestination());
 		setNextDestTrack(scheduleItem.getDestinationTrack());
@@ -603,12 +609,12 @@ public class Car extends RollingStock {
 				c.setNextDestTrack(getNextDestTrack());
 				c.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
 				if (c.getType().equals(getType())
-						|| getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-						|| getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+						|| getLoad().equals(carLoads.getDefaultEmptyName())
+						|| getLoad().equals(carLoads.getDefaultLoadName()))
 					c.setLoad(getLoad());
 				if (c.getType().equals(getType())
-						|| getNextLoad().equals(CarLoads.instance().getDefaultEmptyName())
-						|| getNextLoad().equals(CarLoads.instance().getDefaultLoadName()))
+						|| getNextLoad().equals(carLoads.getDefaultEmptyName())
+						|| getNextLoad().equals(carLoads.getDefaultLoadName()))
 					c.setNextLoad(getNextLoad());
 			}
 		}		
@@ -628,7 +634,7 @@ public class Car extends RollingStock {
 					setLoadEmpty();
 				return;
 			}
-			// car doesn't have a schedule load, flip load status
+			// if car doesn't have a schedule load, flip load status
 			if (getLoad().equals(carLoads.getDefaultEmptyName()))
 				setLoad(carLoads.getDefaultLoadName());
 			else

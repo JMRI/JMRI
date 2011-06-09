@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.62 $
+ * @version             $Revision: 1.63 $
  */
 public class Track {
 	
@@ -30,7 +30,7 @@ public class Track {
 	protected String _name = "";
 	protected String _locType = "";					// yard, siding, interchange or staging
 	protected Location _location;					// the location for this track
-	protected Track _alternativeTrack = null;		// the alternative track
+	protected String _alternativeTrackId = "";		// the alternative track id
 	protected String _roadOption = ALLROADS;		// controls which car roads are accepted 
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this track
 	protected int _numberRS = 0;					// number of cars and engines
@@ -250,13 +250,13 @@ public class Track {
 	}
 	
 	public void setAlternativeTrack(Track track){
-		Track old = _alternativeTrack;
-		_alternativeTrack = track;
+		Track old = _location.getTrackById(_alternativeTrackId);
+		_alternativeTrackId = track.getId();
 		firePropertyChange("alternativeTrack", old, track);
 	}
 	
 	public Track getAlternativeTrack(){
-		return _alternativeTrack;
+		return _location.getTrackById(_alternativeTrackId);
 	}
 	
 	/**
@@ -1155,7 +1155,7 @@ public class Track {
         if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("factor")) != null ) _reservationFactor = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("scheduleMode")) != null ) _mode = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute("alternative")) != null ) _alternativeTrack = _location.getTrackById(a.getValue());
+        if ((a = e.getAttribute("alternative")) != null ) _alternativeTrackId = a.getValue();
         
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("order")) != null ) _order = a.getValue();
