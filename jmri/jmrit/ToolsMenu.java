@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -55,9 +55,14 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableTabAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalTable"), "jmri.jmrit.beantable.SignalHeadTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalGroupTable"), "jmri.jmrit.beantable.SignalGroupTableAction"));
+        
+        JMenu signalMenu = new JMenu(rb.getString("MenuSignals"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalTable"), "jmri.jmrit.beantable.SignalHeadTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalGroupTable"), "jmri.jmrit.beantable.SignalGroupTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalMastLogicTable"), "jmri.jmrit.beantable.SignalMastLogicTableAction"));
+        
+        tableMenu.add(signalMenu);
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemReporterTable"), "jmri.jmrit.beantable.ReporterTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemMemoryTable"), "jmri.jmrit.beantable.MemoryTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));

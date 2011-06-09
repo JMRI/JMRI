@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -15,15 +16,20 @@ import java.util.ArrayList;
 import jmri.util.JmriJFrame;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ProgressMonitor;
 import jmri.util.com.sun.TableSorter;
+import javax.swing.*;
+import java.awt.*;
 
 public class SignalMastLogicTableAction extends AbstractTableAction implements PropertyChangeListener{
 
@@ -58,7 +64,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
         f.setVisible(true);
     }
     
-    @Override
     public void setMenuBar(BeanTableFrame f){
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
@@ -172,12 +177,14 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 }
             }
             
+
+    //}
+
             /**
              * Is this property event announcing a change this table should display?
              * <P>
              * Note that events will come both from the NamedBeans and also from the manager
              */
-            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return ((e.getPropertyName().indexOf("Comment")>=0) || (e.getPropertyName().indexOf("Enable")>=0));
             }
@@ -318,7 +325,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 }
             }
     
-            @Override
             public void configureTable(JTable table) {
                 setColumnToHoldButton(table, EDITLOGICCOL,
                         new JButton("Edit"));
@@ -340,7 +346,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
             public NamedBean getBySystemName(String name) { return null;}
             public NamedBean getByUserName(String name) { return null;}
             
-            @Override
             synchronized public void dispose() {
 
                 getManager().removePropertyChangeListener(this);
@@ -352,7 +357,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 }
             }
             
-            @Override
             public int getRowCount() {
                 return signalMastLogicList.size();
             }
@@ -389,7 +393,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 }
             }
 
-            @Override
             protected void configDeleteColumn(JTable table) {
             // have the delete column hold a button
                 setColumnToHoldButton(table, DELCOL,
@@ -417,12 +420,13 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
     JPanel update;
     
     JmriJFrame signalMastLogicFrame = null;
+    JLabel sourceLabel = new JLabel();
     
     void autoCreatePairs(jmri.util.JmriJFrame f) {
         signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs");
         signalMastLogicFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
-        JLabel sourceLabel = new JLabel("Discovering Signalmasts");
+        sourceLabel = new JLabel("Discovering Signalmasts");
         panel1.add(sourceLabel);
         signalMastLogicFrame.add(panel1);
         signalMastLogicFrame.pack();

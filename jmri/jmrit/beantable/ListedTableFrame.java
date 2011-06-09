@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -56,6 +56,7 @@ public class ListedTableFrame extends BeanTableFrame {
     tabbedTableItem itemBeingAdded = null;
     static int lastdivider;
     
+
     public ListedTableFrame(){
         this(rbean.getString("TitleListedTable"));
     }
@@ -80,7 +81,7 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.SignalHeadTableAction", rbs.getString("MenuItemSignalTable"), true);
             addTable("jmri.jmrit.beantable.SignalMastTableAction", rbs.getString("MenuItemSignalMastTable"), true);
             addTable("jmri.jmrit.beantable.SignalGroupTableAction", rbs.getString("MenuItemSignalGroupTable"), true);
-//            addTable("jmri.jmrit.beantable.SignalMastLogicTableAction",  "Signal Mast Logic", true);
+            addTable("jmri.jmrit.beantable.SignalMastLogicTableAction",  rbs.getString("MenuItemSignalMastLogicTable"), true);
             addTable("jmri.jmrit.beantable.ReporterTableAction", rbs.getString("MenuItemReporterTable"), true);
             addTable("jmri.jmrit.beantable.MemoryTableAction", rbs.getString("MenuItemMemoryTable"), true);
             addTable("jmri.jmrit.beantable.RouteTableAction", rbs.getString("MenuItemRouteTable"), true);
