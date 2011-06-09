@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: signalmastlogics.xsd,v 1.1 2011-06-03 14:42:00 kevin-dickerson Exp $ -->
+<!-- $Id: signalmastlogics.xsd,v 1.2 2011-06-09 21:45:35 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -34,6 +34,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
+        <xs:element name="logicDelay" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="signalmastlogic" type="SignalMastLogicType" minOccurs="0" maxOccurs="unbounded" />      
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
