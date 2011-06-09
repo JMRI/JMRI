@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for Signal Mast Add / Edit Panel
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
 */
 
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
@@ -39,11 +39,13 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     SignalMastLogic sml;
     SignalMast sourceMast;
     JLabel fixedSourceMastLabel = new JLabel();
-        
+    
+    JButton discoverPairs = new JButton(rb.getString("ButtonDiscover"));
+    
     SignalMastAppearanceModel _AppearanceModel;
     JScrollPane _SignalAppearanceScrollPane;
     
-    public SignallingSourcePanel(SignalMast sourceMast){
+    public SignallingSourcePanel(final SignalMast sourceMast){
         super();
         sml = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
@@ -51,6 +53,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         if (sml!=null){
             _signalMastList = sml.getDestinationList();
         }
+        
+        jmri.InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(this);
+        
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout());
         
@@ -69,10 +74,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         p3xsiSpace.add(new JLabel(" "));
         p3xsi.add(p3xsiSpace);
         
-        /*JPanel p31si = new JPanel();
-        p31si.setLayout(new BoxLayout(p31si, BoxLayout.Y_AXIS));
-        p31si.add(new JLabel("Destination."));
-        p3xsi.add(p31si);*/
         _AppearanceModel = new SignalMastAppearanceModel();
         JTable SignalAppearanceTable = jmri.util.JTableUtil.sortableDataModel(_AppearanceModel);
 
@@ -94,13 +95,25 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         containerPanel.add(p3xsi, BorderLayout.CENTER);
         
         JPanel footer = new JPanel();
-        JButton discoverPairs = new JButton(rb.getString("ButtonDiscover"));
+        
         footer.add(discoverPairs);
         discoverPairs.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 discoverPressed(e);
             }
         });
+        
+        JButton addLogic = new JButton(rb.getString("AddLogic"));
+        footer.add(addLogic);
+        addLogic.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                sigLog.setMast(sourceMast, null);
+                sigLog.actionPerformed(null);
+            }
+        });
+        
+        if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+            discoverPairs.setEnabled(false);
         containerPanel.add(footer, BorderLayout.SOUTH);
         add(containerPanel);
     }
@@ -135,10 +148,25 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             signalMastLogicFrame.setVisible(false);
             //signalMastLogicFrame = null;
             JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
-        } 
+            if(sml==null){
+                updateDetails();
+            }
+        }
+        if(e.getPropertyName().equals("advancedRoutingEnabled")){
+            boolean newValue = (Boolean) e.getNewValue();
+            discoverPairs.setEnabled(newValue);
+        }
     }
     
     private ArrayList <SignalMast> _signalMastList;
+    
+    private void updateDetails(){
+        sml = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sourceMast);
+        if (sml!=null){
+            _signalMastList = sml.getDestinationList();
+            _AppearanceModel.fireTableDataChanged();
+        }
+    }
     
     public class SignalMastAppearanceModel extends AbstractTableModel implements PropertyChangeListener
     {
@@ -147,7 +175,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             if(sml!=null)
                 sml.addPropertyChangeListener(this);
         }
-        
+
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c ==ACTIVE_COLUMN)
                 return Boolean.class;
@@ -194,6 +223,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         }
         
+        @Override
         public String getColumnName(int col) {
             if (col==USERNAME_COLUMN) return rb.getString("ColumnUserName");
             if (col==SYSNAME_COLUMN) return rb.getString("ColumnSystemName");
@@ -240,6 +270,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
         public int getColumnCount () {return 5;}
 
+        @Override
         public boolean isCellEditable(int r,int c) {
             if (c==EDIT_COLUMN)
                 return true;
@@ -288,6 +319,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         }
 
+        @Override
         public void setValueAt(Object type,int r,int c) {
             if (c==EDIT_COLUMN)
                 editPair(r);

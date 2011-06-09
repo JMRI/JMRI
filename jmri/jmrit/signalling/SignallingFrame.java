@@ -7,13 +7,13 @@ import javax.swing.JButton;
 import java.util.ResourceBundle;
 
 /**
- * Frame for Signalling Logic Frames
+ * Frame for the Signalling Logic
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
 */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.signallingBundle");
 
     public SignallingFrame() {
         super(false, true);
@@ -24,17 +24,14 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
 
     public void initComponents(jmri.SignalMast source, jmri.SignalMast dest) throws Exception {
         // the following code sets the frame's initial state
-        if ((source==null) ||  (dest==null))
-            sigPanel = new SignallingPanel(this);
-        else
-            sigPanel = new SignallingPanel(source, dest, this);
-        
+        sigPanel = new SignallingPanel(source, dest, this);
+
         setTitle(rb.getString("SignallingPairs"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(sigPanel);
 
-        addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);
+		addHelpMenu("package.jmri.jmrit.signalling.SignallingFrame", true);
 
         // pack for display
         pack();

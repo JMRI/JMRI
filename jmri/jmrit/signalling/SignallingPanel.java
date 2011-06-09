@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 /**
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
@@ -70,7 +70,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         super();
         jFrame = frame;
         JLabel mastSpeed = new JLabel();
-        //this.sml = sml;
+
         if (source!=null){
             this.sourceMast = source;
             this.sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(source);
@@ -271,10 +271,15 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         containerPanel.add(footer, BorderLayout.SOUTH);
         
         add(containerPanel);
-        if (sml!=null){
+        if(sourceMast!=null){
             fixedSourceMastLabel.setVisible(true);
-            fixedDestMastLabel.setVisible(true);
             sourceMastBox.setVisible(false);
+        } else {
+            fixedSourceMastLabel.setVisible(false);
+            sourceMastBox.setVisible(true);
+        }
+        if (sml!=null){
+            fixedDestMastLabel.setVisible(true);
             destMastBox.setVisible(false);
             useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
             useLayoutEditorTurnout.setVisible(useLayoutEditor.isSelected());
@@ -283,22 +288,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         } else {
             useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
             useLayoutEditorTurnout.setVisible(useLayoutEditor.isSelected());
-            fixedSourceMastLabel.setVisible(false);
             fixedDestMastLabel.setVisible(false);
-            sourceMastBox.setVisible(true);
             destMastBox.setVisible(true);
         }
-        
-        /*if((sml!=null)&&(sml.useLayoutEditor(destMast))){
-            p2xa.setVisible(true);
-            p2xb.setVisible(true);
-            p2xsm.setVisible(true);
-        }
-        else {
-            p2xa.setVisible(false);
-            p2xb.setVisible(false);
-            p2xsm.setVisible(false);
-        }*/
     }
     
     JScrollPane _manualBlockScrollPane;
