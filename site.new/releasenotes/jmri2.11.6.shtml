@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.17 2011-06-10 15:16:25 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.18 2011-06-10 15:19:57 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -150,7 +150,10 @@ during the car import.</LI>
 <ul>
 <li>Fixed an error that would occur if a cv value is left blank.  If the user blanks out a value and doesn't enter in a new, then the old value is restored.</li>
 <li>Prevented an occuring from occuring when the power on command is issued to the NCE Power Cab via the usb interface.</li>
-<li>Fixed a bug with the default selector for the throttle manager</li>
+<li>Fixed a bug with the default selector for the throttle manager.</li>
+<li>Fixed a bug in the Speedo Console read button, where the correct address isn't correct read.</li>
+<li>Updated the file export facility on the Speedo Console, so that the forward and reverse values for a given speed step are on the same row.</li>
+<li>Newly opened windows will now cascade down the screen rather than stacking up on top of each other.</li>
 </ul>
 
 <p>Stephen Lowens updated the Digitrax SFX definition.</p>
