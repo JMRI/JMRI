@@ -55,11 +55,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 	private boolean delayedPopupTrigger = false;
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
-    private JMenu _editMenu;
+    protected JMenu _editMenu;
     protected JMenu _fileMenu;
-    private JMenu _optionMenu;
-    private JMenu _iconMenu;
-    private JMenu _zoomMenu;
+    protected JMenu _optionMenu;
+    protected JMenu _iconMenu;
+    protected JMenu _zoomMenu;
     private JMenu _markerMenu;
     private jmri.jmrit.display.palette.ItemPalette _itemPalette;
 

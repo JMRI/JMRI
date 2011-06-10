@@ -254,7 +254,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private void showPath(OPath path) {
         String name = path.getName();
-        java.util.List<Positionable> list = _parent.getCircuitGroup2();
+        java.util.List<Positionable> list = _parent.getCircuitGroup();
         if (log.isDebugEnabled()) log.debug("showPath for "+name+" CircuitGroup2 size= "+list.size());
         _pathGroup = new ArrayList<Positionable>();
         for (int i=0; i<list.size(); i++) {
@@ -293,7 +293,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private void clearPath() {
         if (log.isDebugEnabled()) log.debug("clearPath");
-        java.util.List<Positionable> list = _parent.getCircuitGroup2();
+        java.util.List<Positionable> list = _parent.getCircuitGroup();
         for (int i=0; i<list.size(); i++) {
             IndicatorTrack icon = (IndicatorTrack)list.get(i);
             icon.removePath(TEST_PATH);
@@ -410,7 +410,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
         path.setName(name);
 
-        java.util.List<Positionable> list = _parent.getCircuitGroup2();
+        java.util.List<Positionable> list = _parent.getCircuitGroup();
         // cannot do remove/add path on the fly due to conncurrent access with Iterator
         ArrayList<IndicatorTrack> changeGroup = new ArrayList<IndicatorTrack>();
         for (int i=0; i<list.size(); i++) {
