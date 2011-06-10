@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author Dan Boudreau Copyright (C) 2007 2008
  * Cloned from NceConsistEditFrame by
  * @author kcameron Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
@@ -1093,7 +1093,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	 * @return converts DTD direction to FWD, REV, and ??
 	 */
 	private String convertDTD(String formatDTD) {
-		String word = rb.getString("QUESTION");
+		String word = rb.getString("KeyQUESTION");
 		if (formatDTD.equals(rb.getString("DTD_NORMAL")))
 			word = rb.getString("KeyFWD");
 		if (formatDTD.equals(rb.getString("DTD_REVERSE")))
