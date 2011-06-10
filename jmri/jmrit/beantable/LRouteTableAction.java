@@ -1450,19 +1450,21 @@ public class LRouteTableAction extends AbstractTableAction {
 
         /////// Construct 'AND' clause from 'VETO' controls ////////
         ArrayList <ConditionalVariable> vetoList = new ArrayList<ConditionalVariable>();
-        for (int i=0; i<_includedInputList.size(); i++) {
-            RouteInputElement elt = _includedInputList.get(i);
-            String name = elt.getUserName();
-            if (name == null || name.length() == 0) {
-                 name = elt.getSysName();
+        if (!_initialize) {
+            for (int i=0; i<_includedInputList.size(); i++) {
+                RouteInputElement elt = _includedInputList.get(i);
+                String name = elt.getUserName();
+                if (name == null || name.length() == 0) {
+                     name = elt.getSysName();
+                }
+                //int opern = newRouteType ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
+                int opern = Conditional.OPERATOR_AND;
+                if (i==0) {
+                    opern = Conditional.OPERATOR_NONE;
+                }
+                int state = elt.getState();
+                vetoList.add(new ConditionalVariable(true, opern, (state&~VETO), name, _newRouteType));
             }
-            //int opern = newRouteType ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
-            int opern = Conditional.OPERATOR_AND;
-            if (i==0) {
-                opern = Conditional.OPERATOR_NONE;
-            }
-            int state = elt.getState();
-            vetoList.add(new ConditionalVariable(true, opern, (state&~VETO), name, _newRouteType));
         }
 
         ///////////////// Make Trigger Conditional Controls /////////////////
@@ -1685,7 +1687,7 @@ public class LRouteTableAction extends AbstractTableAction {
                         }
                         break;
                 }
-                if (add) {
+                if (add && !_initialize) {
                     String eltName = elt.getUserName();
                     if (eltName == null || eltName.length() == 0) {
                          eltName = elt.getSysName();
@@ -1840,11 +1842,7 @@ public class LRouteTableAction extends AbstractTableAction {
         numConds++;
         return numConds;
     }
-/*
-    ConditionalVariable cloneVariable(ConditionalVariable v) {
-        return new ConditionalVariable(v.isNegated(), v.getOpern(), v.getType(), v.getName(), v.doTriggerActions());
-    }
-*/
+
     ArrayList<ConditionalAction> cloneActionList(ArrayList<ConditionalAction> actionList, int option) {
         ArrayList <ConditionalAction> list = new ArrayList <ConditionalAction> ();
         for (int i = 0; i<actionList.size(); i++) {
