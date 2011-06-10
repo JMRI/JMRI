@@ -49,7 +49,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  * GT 28-AUG-2008 Added window menu
  */
 
@@ -62,7 +62,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public JmriJFrame(boolean saveSize, boolean savePosition) {
 	    super();
-
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         reuseFrameSavedPosition=savePosition;
         reuseFrameSavedSized=saveSize;
@@ -75,7 +74,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         can over ride this */
         for(int i = 0; i<list.size();i++){
             JmriJFrame j = list.get(i);
-            if(j.getExtendedState()!=ICONIFIED){
+            if((j.getExtendedState()!=ICONIFIED) && (j.isVisible())){
                 if ((j.getX()==this.getX()) && (j.getY()==this.getY())){
                     offSetFrameOnScreen(j);
                 }
@@ -115,7 +114,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public JmriJFrame(String name, boolean saveSize, boolean savePosition) {
         this(saveSize, savePosition);
         setTitle(name);
-        
+        generateWindowRef();
         if (this.getClass().getName().equals(JmriJFrame.class.getName())){
             if ((this.getTitle()==null) || (this.getTitle().equals("")))
                 return;
@@ -143,7 +142,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             for(int i = 0; i<list.size();i++){
                 JmriJFrame j = list.get(i);
                 if(j.getClass().getName().equals(this.getClass().getName()) 
-                    && (j.getExtendedState()!=ICONIFIED)
+                    && (j.getExtendedState()!=ICONIFIED) && (j.isVisible())
                         && j.getTitle().equals(getTitle())) {
                     if ((j.getX()==this.getX()) && (j.getY()==this.getY())){
                         offSetFrameOnScreen(j);
@@ -153,7 +152,11 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
     }
     
-    void generateWindowRef(){
+    /**
+     * Regenerates the window frame ref that is used for saving and setting 
+     * frame size and position against.
+     */
+    public void generateWindowRef(){
         String initref = this.getClass().getName();
         if((this.getTitle()!=null) && (!this.getTitle().equals(""))){
             if (initref.equals(JmriJFrame.class.getName())){
@@ -224,15 +227,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     String windowFrameRef;
     
     String getWindowFrameRef(){ return windowFrameRef; }
-
-    @Override
-    public void setTitle(String t){
-        if(t.equals(getTitle()))
-            return;
-        super.setTitle(t);
-        generateWindowRef();
-    }
-    
     
     /**
      * By default, Swing components should be 
