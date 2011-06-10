@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -476,7 +476,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// signal icon
 		top4.add (new JLabel("    "));
         top4.add (signalBox);
-		signalBox.setToolTipText(rb.getString("SignalBoxToolTip"));
+		signalBox.setToolTipText(rb.getString("SignalMastBoxToolTip"));
         top4.add (nextSignalHead);
 		nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));
         signalIconEditor = new MultiIconEditor(10);
