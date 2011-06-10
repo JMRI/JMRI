@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -138,6 +138,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private JTextField nextSignalHead = new JTextField(5);
     public MultiIconEditor signalIconEditor = null;
     public JFrame signalFrame;
+    
+    private JCheckBox signalMastBox = new JCheckBox(rb.getString("SignalMastIcon"));
+    private JTextField nextSignalMast = new JTextField(5);
     
     private JCheckBox textLabelBox = new JCheckBox(rb.getString("TextLabel"));
     private JTextField textLabel = new JTextField(8);
@@ -356,6 +359,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		itemGroup.add(multiSensorBox);
         itemGroup.add(sensorBox);
         itemGroup.add(signalBox);
+        itemGroup.add(signalMastBox);
         itemGroup.add(textLabelBox);
         itemGroup.add(memoryBox);
         itemGroup.add(iconLabelBox);
@@ -474,7 +478,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         top4.add (signalBox);
 		signalBox.setToolTipText(rb.getString("SignalBoxToolTip"));
         top4.add (nextSignalHead);
-		nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));		
+		nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));
         signalIconEditor = new MultiIconEditor(10);
 		signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-short.gif");
 		signalIconEditor.setIcon(1, "Flash red:", "resources/icons/smallschematics/searchlights/left-flashred-short.gif");
@@ -492,6 +496,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         signalFrame.getContentPane().add(signalIconEditor);
         signalFrame.pack();
         
+        top4.add (new JLabel("    "));
+        top4.add (signalMastBox);
+        top4.add (nextSignalMast);
 		// icon label
 		top4.add (new JLabel("    "));
         top4.add (iconLabelBox);
@@ -2893,6 +2900,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 else if (iconLabelBox.isSelected()) {
                     addIcon();
                 }
+                else if (signalMastBox.isSelected()) {
+                    addSignalMast();
+                }
                 else {
                     log.warn("No item selected in panel edit mode");
                 }
@@ -4836,15 +4846,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         return sh;
     }
     
-    /*void addSignalMast() {
+    void addSignalMast() {
 		// check for valid signal head entry
 		String tName = nextSignalMast.getText().trim();
-        SignalMast mHead = null;
+        SignalMast mMast = null;
 		if ( (tName!=null) && (!tName.equals("")) ) {
-			mHead = InstanceManager.signalMastManagerInstance().getNamedSignalMast(tName);
+			mMast = InstanceManager.signalMastManagerInstance().getSignalMast(tName);
 			nextSignalMast.setText(tName);
 		}
-        if (mHead == null) {
+        if (mMast == null) {
 			// There is no signal head corresponding to this name
 			JOptionPane.showMessageDialog(thisPanel,
 					java.text.MessageFormat.format(rb.getString("Error9"),
@@ -4858,7 +4868,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         setNextLocation(l);
 		setDirty(true);
         putSignalMast(l);
-    }*/
+    }
     
     public void putSignalMast(SignalMastIcon l) {
         putItem(l);
@@ -5475,7 +5485,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
         return null;
     }
-
     
     public LevelXing findLevelXingBySignalMast(String signalMastName){
         for(int i = 0; i<xingList.size(); i++){
