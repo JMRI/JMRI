@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for Signal Mast Add / Edit Panel
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
 */
 
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
@@ -107,8 +107,19 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         footer.add(addLogic);
         addLogic.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                sigLog.setMast(sourceMast, null);
-                sigLog.actionPerformed(null);
+                //sigLog.setMast(sourceMast, null);
+                //sigLog.actionPerformed(null);
+                class WindowMaker implements Runnable {
+                WindowMaker(){
+                }
+                public void run() {
+                    SignallingAction sigLog = new SignallingAction();
+                    sigLog.setMast(sourceMast, null);
+                    sigLog.actionPerformed(null);  
+                }
+            }
+            WindowMaker t = new WindowMaker();
+            javax.swing.SwingUtilities.invokeLater(t);
             }
         });
         
@@ -175,7 +186,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             if(sml!=null)
                 sml.addPropertyChangeListener(this);
         }
-
+        
         @Override
         public Class<?> getColumnClass(int c) {
             if (c ==ACTIVE_COLUMN)
@@ -278,8 +289,20 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
         
         protected void editPair(int r){
-            sigLog.setMast(sourceMast, _signalMastList.get(r));
-            sigLog.actionPerformed(null);        
+            
+            class WindowMaker implements Runnable {
+                int row;
+                WindowMaker(int r){
+                    row = r;
+                }
+                public void run() {
+                    SignallingAction sigLog = new SignallingAction();
+                    sigLog.setMast(sourceMast, _signalMastList.get(row));
+                    sigLog.actionPerformed(null);  
+                }
+            }
+            WindowMaker t = new WindowMaker(r);
+            javax.swing.SwingUtilities.invokeLater(t);
         }
         
         public static final int SYSNAME_COLUMN = 0;
@@ -325,8 +348,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 editPair(r);
         }
     }
-    
-    jmri.jmrit.signalling.SignallingAction sigLog = new jmri.jmrit.signalling.SignallingAction();
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignallingSourcePanel.class.getName());
 
