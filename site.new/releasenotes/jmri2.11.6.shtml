@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.15 2011-06-08 18:00:25 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.16 2011-06-10 12:21:50 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -172,6 +172,8 @@ He also provided a new decoder definition for the CML Electronics DAC 20 decoder
 <p>Gert Muller fixed some issues with international characters and improved the layout of the throttle address field when running Linux.
 
 <P>Mark Waters provided a large group of Zimo Unified decoder definitions.
+
+<p>Steve Todd added protocol to send MiniWebServer port to Wi-Fi devices.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->

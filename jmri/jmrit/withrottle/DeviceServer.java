@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.24 $
+ *	@version $Revision: 1.25 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -58,6 +58,8 @@ package jmri.jmrit.withrottle;
  *      Format:  PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
  *      States:  1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
  *
+ *      Web server port: 'PW' + {port#}
+ *
  *      Roster is sent formatted: ]\[ separates roster entries, }|{ separates info in each entry
  *      e.g.  RL###]\[RVRR1201}|{1201}|{L]\[Limited}|{8165}|{L]\[
  * 
@@ -88,6 +90,7 @@ import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.web.miniserver.MiniServerManager;
 
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
@@ -142,6 +145,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         sendPacketToDevice("VN"+getWiTVersion());
         sendPacketToDevice(sendRoster());
         addControllers();
+        sendPacketToDevice("PW"+getWebServerPort()); 
         
     }
 
@@ -523,6 +527,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     public static String getWiTVersion(){
         return versionNumber;
+    }
+    
+    public static String getWebServerPort(){
+        String port = MiniServerManager.miniServerPreferencesInstance().getPort();
+        return port;
     }
     
 /**
