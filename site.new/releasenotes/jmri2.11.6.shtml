@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.16 2011-06-10 12:21:50 bhoffman351 Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.17 2011-06-10 15:16:25 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -94,7 +94,8 @@ in them, please recode them to use the symbolic values.
 </p>
 <h3>Known problems with this release</h3>
 
-None at the time of this release.
+NCE consist editor doesn't work properly.  Last version to work okay was 2.11.4, will
+be fixed in 2.11.7.
 
 <h3>Download links:</h3>
 
