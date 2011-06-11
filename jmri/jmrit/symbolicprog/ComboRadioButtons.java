@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class ComboRadioButtons extends JPanel {
 
@@ -22,41 +22,8 @@ public class ComboRadioButtons extends JPanel {
         _var = var;
         _value = var._value;
         _box = box;
-        l1 = new ActionListener[box.getItemCount()];
-        b1 = new JRadioButton[box.getItemCount()];
 
-        // create the buttons, include in group, listen for changes by name
-        for (int i=0; i<box.getItemCount(); i++) {
-            String name = ((String)(box.getItemAt(i)));
-            JRadioButton b = new JRadioButton( name );
-            b1[i] = b;
-            b.setActionCommand(name);
-            b.addActionListener(l1[i] = new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    thisActionPerformed(e);
-                }
-            });
-            v.addElement(b);
-            addToPanel(b, i);
-            g.add(b);
-        }
-        setColor();
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // listen for changes to original
-        _box.addActionListener(l2 = new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                originalActionPerformed(e);
-            }
-        });
-        // listen for changes to original state
-        _var.addPropertyChangeListener(p1 = new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                originalPropertyChanged(e);
-            }
-        });
-
-        // set initial value
-        v.elementAt(_box.getSelectedIndex()).setSelected(true);
+        init();
     }
 
     ComboRadioButtons(JComboBox box, IndexedEnumVariableValue var) {
@@ -64,12 +31,17 @@ public class ComboRadioButtons extends JPanel {
         _var = var;
         _value = var._value;
         _box = box;
-        l1 = new ActionListener[box.getItemCount()];
-        b1 = new JRadioButton[box.getItemCount()];
+
+        init();
+    }
+
+    void init() {
+        l1 = new ActionListener[_box.getItemCount()];
+        b1 = new JRadioButton[_box.getItemCount()];
 
         // create the buttons, include in group, listen for changes by name
-        for (int i=0; i<box.getItemCount(); i++) {
-            String name = ((String)(box.getItemAt(i)));
+        for (int i=0; i<_box.getItemCount(); i++) {
+            String name = ((String)(_box.getItemAt(i)));
             JRadioButton b = new JRadioButton( name );
             b1[i] = b;
             b.setActionCommand(name);
@@ -100,7 +72,7 @@ public class ComboRadioButtons extends JPanel {
         // set initial value
         v.elementAt(_box.getSelectedIndex()).setSelected(true);
     }
-
+    
     /**
      * Add a button to the panel if desired.  In this class,
      * its always added, but in the On and Off subclasses, its only
