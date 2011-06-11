@@ -47,7 +47,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.57 $
+ * @version   $Revision: 1.58 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -665,7 +665,7 @@ public class RosterEntry {
             df.writeFile(f, mRootElement, this.store());
 
         } catch (Exception e) {
-            log.error("error during locomotive file output: "+e);
+            log.error("error during locomotive file output", e);
         }
     }
      
@@ -697,7 +697,7 @@ public class RosterEntry {
             df.writeFile(f, cvModel, iCvModel, variableModel, this);
 
         } catch (Exception e) {
-            log.error("error during locomotive file output: "+e);
+            log.error("error during locomotive file output", e);
         }
     }
 
