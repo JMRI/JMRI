@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author Dan Boudreau Copyright (C) 2007 2008
  * Cloned from NceConsistEditFrame by
  * @author kcameron Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
@@ -499,7 +499,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			if (JOptionPane.showConfirmDialog(null,
 					rb.getString("DIALOG_ConfirmDel1") + " "
 					+ conRosterBox.getSelectedItem().toString()
-					+ " " + rb.getString("DIALOG_ConfrimDel2"), rb.getString("DIALOG_NceDelete"),
+					+ " " + rb.getString("DIALOG_ConfirmDel2"), rb.getString("DIALOG_NceDelete"),
 					JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
 				return;
 			}
