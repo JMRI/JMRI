@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.7.shtml,v 1.4 2011-06-09 01:53:32 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.7.shtml,v 1.5 2011-06-11 20:51:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -132,6 +132,14 @@ to another consist.
 <UL>
 <LI>Fixed a bug where a schedule's alternate track wasn't restored after restarting the program.</LI>
 </UL>
+
+<p>Bob Jacobsen fixed a problem with checkboxes and indexed variables in
+DecoderPro. No decoders were using it yet, but several are about to, so this
+will be needed for new decoder types. At the same time, an "issue"
+with sizing of indexed enum variables was fixed. Some decoder definitions
+may have been counting on the buggy behavior for their layouts, so 
+if you see any decoder definitions that look messy now, please mention 
+it in the jmriusers group.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
