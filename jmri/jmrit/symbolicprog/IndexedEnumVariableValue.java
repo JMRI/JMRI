@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -212,19 +212,37 @@ public class IndexedEnumVariableValue extends VariableValue
             updateRepresentation(b);
             if (!getAvailable()) b.setVisible(false);
             return b;
+        }
+        else if (format.equals("radiobuttons")) {
+            ComboRadioButtons b = new ComboRadioButtons(_value, this);
+            comboRBs.add(b);
+            updateRepresentation(b);
+            return b;
+        }
+        else if (format.equals("onradiobutton")) {
+            ComboRadioButtons b = new ComboOnRadioButton(_value, this);
+            comboRBs.add(b);
+            updateRepresentation(b);
+            return b;
+        }
+        else if (format.equals("offradiobutton")) {
+            ComboRadioButtons b = new ComboOffRadioButton(_value, this);
+            comboRBs.add(b);
+            updateRepresentation(b);
+            return b;
         } else {
             // return a new JComboBox representing the same model
             IVarComboBox b = new IVarComboBox(_value.getModel(), this);
             b.setPreferredSize(new Dimension(284, b.getPreferredSize().height));
             comboVars.add(b);
             updateRepresentation(b);
-            if (!getAvailable()) b.setVisible(false);
             return b;
         }
     }
 
     List<IndexedComboCheckBox> comboCBs = new ArrayList<IndexedComboCheckBox>();
     List<IVarComboBox> comboVars = new ArrayList<IVarComboBox>();
+    private List<ComboRadioButtons> comboRBs = new ArrayList<ComboRadioButtons>();
 
     // implement an abstract member to set colors
     void setColor(Color c) {
@@ -239,10 +257,8 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     public void setAvailable(boolean a) {
-        for (int i = 0; i<comboVars.size(); i++) 
-            comboVars.get(i).setVisible(a);
-        for (int i = 0; i<comboCBs.size(); i++) 
-            comboCBs.get(i).setVisible(a);
+        for (IVarComboBox c : comboVars) c.setVisible(a);
+        for (ComboRadioButtons c : comboRBs) c.setVisible(a);
         super.setAvailable(a);
     }
     
@@ -490,7 +506,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.20 $
+     * @version $Revision: 1.21 $
      */
     public class IVarComboBox extends JComboBox {
 
@@ -531,16 +547,16 @@ public class IndexedEnumVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("dispose");
         if (_value != null) _value.removeActionListener(this);
         (_cvVector.elementAt(_row)).removePropertyChangeListener(this);
+
         for (int i = 0; i<comboCBs.size(); i++) {
             comboCBs.get(i).dispose();
         }
-        comboCBs.clear();
-        comboCBs = null;
         for (int i = 0; i<comboVars.size(); i++) {
             comboVars.get(i).dispose();
         }
-        comboVars.clear();
-        comboVars = null;
+        for (int i = 0; i<comboRBs.size(); i++) {
+            comboRBs.get(i).dispose();
+        }
 
         _value = null;
     }

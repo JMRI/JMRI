@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class ComboRadioButtons extends JPanel {
 
@@ -20,6 +20,49 @@ public class ComboRadioButtons extends JPanel {
     ComboRadioButtons(JComboBox box, EnumVariableValue var) {
         super();
         _var = var;
+        _value = var._value;
+        _box = box;
+        l1 = new ActionListener[box.getItemCount()];
+        b1 = new JRadioButton[box.getItemCount()];
+
+        // create the buttons, include in group, listen for changes by name
+        for (int i=0; i<box.getItemCount(); i++) {
+            String name = ((String)(box.getItemAt(i)));
+            JRadioButton b = new JRadioButton( name );
+            b1[i] = b;
+            b.setActionCommand(name);
+            b.addActionListener(l1[i] = new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    thisActionPerformed(e);
+                }
+            });
+            v.addElement(b);
+            addToPanel(b, i);
+            g.add(b);
+        }
+        setColor();
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // listen for changes to original
+        _box.addActionListener(l2 = new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                originalActionPerformed(e);
+            }
+        });
+        // listen for changes to original state
+        _var.addPropertyChangeListener(p1 = new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                originalPropertyChanged(e);
+            }
+        });
+
+        // set initial value
+        v.elementAt(_box.getSelectedIndex()).setSelected(true);
+    }
+
+    ComboRadioButtons(JComboBox box, IndexedEnumVariableValue var) {
+        super();
+        _var = var;
+        _value = var._value;
         _box = box;
         l1 = new ActionListener[box.getItemCount()];
         b1 = new JRadioButton[box.getItemCount()];
@@ -94,7 +137,7 @@ public class ComboRadioButtons extends JPanel {
 
     protected void setColor() {
         for (int i = 0; i<v.size(); i++) {
-            v.elementAt(i).setBackground(_var._value.getBackground());
+            v.elementAt(i).setBackground(_value.getBackground());
         }
     }
 
@@ -115,8 +158,9 @@ public class ComboRadioButtons extends JPanel {
     transient ActionListener l2;
     transient PropertyChangeListener p1;
 
-    EnumVariableValue _var = null;
+    VariableValue _var = null;
     JComboBox _box = null;
+    JComboBox _value = null;
     Vector<JRadioButton> v = new Vector<JRadioButton>();
 
     public void dispose() {

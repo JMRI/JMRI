@@ -15,6 +15,10 @@ public class ComboOnRadioButton extends ComboRadioButtons {
 		super(box, var);
 	}		
 
+	ComboOnRadioButton(JComboBox box, IndexedEnumVariableValue var) {
+		super(box, var);
+	}		
+
 	/**
 	 * Make only the "on" button visible
 	 */
