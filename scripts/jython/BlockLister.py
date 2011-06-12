@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 #
 #
 
@@ -32,7 +32,7 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
         
     def handle(self):
         #self.msgText("handle begin:.\n")
-        self.waitMsec(100)
+        self.waitMsec(1000)
         if (self.askFinishLookupButton) :
             self.doFinishLookupButton()
             self.askFinishLookupButton = False
@@ -110,7 +110,7 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             ret = "FLASHGREEN"
         return ret
         
-    # convert block curvature to english
+    # convert block state to english
     def cvtBlockStateToText(self, state) :
         rep = ""
         if (state == jmri.Block.OCCUPIED) :
@@ -164,14 +164,18 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
         rep =  ""
         sys = mast.getSignalSystem()
         aspect = mast.getAspect()
-        #speed = Warrent.getAspectSpeed(aspect, sys)
+        validAspects = mast.getValidAspects()
         if (mast.getHeld()) :
             rep = rep + "Held "
         if (mast.getLit()) :
             rep = rep + "Lit "
         if (aspect != None) :
             rep = rep + aspect + " "
-        #self.msgText("cvtMastToText: " + self.giveMastName(mast) + " displaying: " + rep + "\n")
+        if (validAspects.size() > 0) :
+            rep = rep + "\nValid Aspects: " + validAspects.toString() + " "
+        else :
+            rep = rep + "No Valid Aspects! "
+        rep = rep + "System: " + sys.getUserName()
         return rep
         
     # test for block name
@@ -215,8 +219,18 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("Block Length: " + b.getLengthIn().toString() + "\n")
         if (b.getDirection() != None) :
             self.msgText("Block Direction: " + jmri.Path.decodeDirection(b.getDirection()) + "\n")
+        if (b.getWorkingDirection() != None) :
+            self.msgText("Block Working Direction: " + jmri.Path.decodeDirection(b.getWorkingDirection()) + "\n")
         if (b.getState() != None) :
             self.msgText("Block State: " + self.cvtBlockStateToText(b.getState()) + "\n")
+        if (b.getBlockSpeed() != "") :
+            self.msgText("Block Speed: " + b.getBlockSpeed() + "\n")
+        if (b.getSpeedLimit() != "") :
+            self.msgText("Block Speed Limit: " + b.getSpeedLimit().toString() + "\n")
+        if (b.getPermissiveWorking()) :
+            self.msgText("Block Permissive: True\n")
+        else :
+            self.msgText("Block Permissive: False\n")
         return
 
     def displayPathData(self, block) :
@@ -234,16 +248,11 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " signal: " + self.giveSignalName(sig) + " aspect: " + self.cvtSignalToText(sig) + "\n")
             else :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signa headsl!\n")
-            try :
-                mast = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(block, blockTest)
-                if (mast != None) :
-                    self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " mast: " + self.giveMastName(mast) + " aspect: " + self.cvtMastToText(mast) + "\n")
-                else :
-                    self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal masts!\n")
-            except :
-                # mast likely not supported, the dummy assignment is because I don't know how to have an empty except clause
-                #self.msgText("Masts not supported.\n")
-                x = 1
+            mast = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(block, blockTest)
+            if (mast != None) :
+                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " mast: " + self.giveMastName(mast) + " aspect: " + self.cvtMastToText(mast) + "\n")
+            else :
+                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal masts!\n")
         return
         
     def displaySegmentData(self, b) :
