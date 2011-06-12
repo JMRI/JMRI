@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -182,6 +182,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     methodlocoDistRed = None
     haltOnSignalHeadAppearance = YELLOW
     debugLevel = LowDebug
+    movementDetected = False
     
     def init(self):
         #print("start begin:.\n")
@@ -371,6 +372,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
          
     # figure out if we moved and where
     def didWeMove(self) :
+        self.movementDetected = False
         if (self.debugLevel >= HighDebug) :
             self.msgText("didWeMove start: " + self.giveBlockName(self.currentBlock) + ":" + self.giveBlockName(self.next1Block))
         if (self.currentThrottle == None) :
@@ -500,7 +502,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.msgText("test blocks: " + self.giveBlockName(oldCurrent) + ":" + self.giveBlockName(self.currentBlock) + ":" + self.giveBlockName(self.next1Block))
                 self.msgText("test signals: " + self.giveSignalName(oldSignal) + ":" + self.giveSignalName(watchSignal))
                 self.msgText("test aspects: " + self.textSignalAspect(oldAspect) + ":" + self.textSignalAspect(watchAspect))
-            if (oldCurrent != self.currentBlock or oldSignal != watchSignal or oldAspect != watchAspect or self.isStarting == True) :
+            # set flag is we just moved, needed for some timer controls
+            if oldCurrent != self.currentBlock :
+                self.movementDetected = True
+            if (self.movementDetected or oldSignal != watchSignal or oldAspect != watchAspect or self.isStarting == True) :
                 # something changed, we calc the new speed
                 if (oldCurrent == self.currentBlock and oldSignal == watchSignal and self.compareSignalAspects(oldAspect, watchAspect) < 0 and self.isStarting == False)  :
                     # signal dropped, that's bad
@@ -1072,34 +1077,35 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.speedChangeTimer.stop()
         if (self.currentThrottle != None) :
             doYellowNow = True
-            # compute how long to delay speed change
-            dist = self.currentBlock.getLengthIn()
-            rate = self.rateFromSignalAspect(FLASHGREEN)
-            speedChgDist = self.rankSpeedChangeDistance(self.rankSignalAspect(FLASHGREEN), self.rankSignalAspect(FLASHYELLOW))
-            if (self.priorSignalAspect != None) :
-                rate = self.rateFromSignalAspect(self.priorSignalAspect)
-                speedChgDist = self.rankSpeedChangeDistance(self.rankSignalAspect(self.priorSignalAspect), self.rankSignalAspect(FLASHYELLOW))
-            if (dist > 0 and rate > 0) :
-                # the delay distance is the reserved space plus 10% from far end of block
-                # the less one covers the delay of the handle() routine
-                delay = (((dist* 0.90) - speedChgDist) / rate ) - 1
-                if (self.debugLevel >= LowDebug) :
-                    self.msgText("doSpeedYellow: dist: " + dist.toString() + " rate: " + rate.toString() + " speedChgDist: " + speedChgDist.toString() + " delay: " + delay.toString())
-                if (delay > 1) :
-                    currentDelay = 0
-                    if (self.speedChangeTimer == None) :
-                        if (self.speedChangeListener == None) :
-                            self.speedChangeListener = self.SpeedChangeTimeoutReceiver()
-                        self.speedChangeTimer = javax.swing.Timer(int(delay * 0), self.speedChangeListener)
-                        self.speedChangeTimer.setInitialDelay(int(delay * 1000))
-                        self.speedChangeTimer.setRepeats(False);
-                    self.speedChangeListener.setCallBack(self.yellowDelayHandler)
-                    self.speedChangeTimer.setInitialDelay(int(delay * 1000))
-                    self.speedChangeTimer.start()
-                    doYellowNow = False
-                else :
+            if (self.movementDetected) :
+                # compute how long to delay speed change
+                dist = self.currentBlock.getLengthIn()
+                rate = self.rateFromSignalAspect(FLASHGREEN)
+                speedChgDist = self.rankSpeedChangeDistance(self.rankSignalAspect(FLASHGREEN), self.rankSignalAspect(FLASHYELLOW))
+                if (self.priorSignalAspect != None) :
+                    rate = self.rateFromSignalAspect(self.priorSignalAspect)
+                    speedChgDist = self.rankSpeedChangeDistance(self.rankSignalAspect(self.priorSignalAspect), self.rankSignalAspect(FLASHYELLOW))
+                if (dist > 0 and rate > 0) :
+                    # the delay distance is the reserved space plus 10% from far end of block
+                    # the less one covers the delay of the handle() routine
+                    delay = (((dist* 0.90) - speedChgDist) / rate ) - 1
                     if (self.debugLevel >= LowDebug) :
-                        self.msgText("yellow delay less that 1 second")
+                        self.msgText("doSpeedYellow: dist: " + dist.toString() + " rate: " + rate.toString() + " speedChgDist: " + speedChgDist.toString() + " delay: " + delay.toString())
+                    if (delay > 1) :
+                        currentDelay = 0
+                        if (self.speedChangeTimer == None) :
+                            if (self.speedChangeListener == None) :
+                                self.speedChangeListener = self.SpeedChangeTimeoutReceiver()
+                            self.speedChangeTimer = javax.swing.Timer(int(delay * 0), self.speedChangeListener)
+                            self.speedChangeTimer.setInitialDelay(int(delay * 1000))
+                            self.speedChangeTimer.setRepeats(False);
+                        self.speedChangeListener.setCallBack(self.yellowDelayHandler)
+                        self.speedChangeTimer.setInitialDelay(int(delay * 1000))
+                        self.speedChangeTimer.start()
+                        doYellowNow = False
+                    else :
+                        if (self.debugLevel >= LowDebug) :
+                            self.msgText("yellow delay less that 1 second")
             if (doYellowNow) :
                 i = 0
                 try :
@@ -1130,14 +1136,16 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def doSpeedRed(self):
-        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.speedChangeTimer == None or self.speedChangeTimer.isRunning() == False)) :
-            i = int(self.locoSpeedRed.text) * 0.01
+        if (self.speedChangeTimer != None) :
+            self.speedChangeTimer.stop()
+        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0) :
             i = 0
             try :
                 i = int(self.locoSpeedRed.text) * 0.01
             except :
                 if (self.debugLevel >= NoneDebug) :
                     self.msgText("doSpeedRed: Invalid value! " + self.locoSpeedRed.text)
+            self.currentThrottle.setSpeedSetting(i)
             if (self.debugLevel >= LowDebug) :
                 self.msgText("doSpeedRed: " + i.toString())
             self.locoSpeed.text = (100 * i).toString()
@@ -1147,7 +1155,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             stopDist = float(self.locoDistRed.text)
             if (self.priorSignalAspect != None) :
                 stopDist = self.rankSpeedChangeDistance(self.rankSignalAspect(self.priorSignalAspect), self.rankSignalAspect(RED))
-            if (dist != 0 and rate != 0) :
+            if (self.movementDetected == True and dist != 0 and rate != 0) :
                 # the stop distance is the reserved space plus 10% from far end of block
                 # the less one covers the delay of the handle() routine
                 delay = ((dist - stopDist) / rate * 0.90) - 1
