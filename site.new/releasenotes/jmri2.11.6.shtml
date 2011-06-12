@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.6.shtml,v 1.18 2011-06-10 15:19:57 kevin-dickerson Exp $ -->
+<!-- $Id: jmri2.11.6.shtml,v 1.19 2011-06-12 18:39:22 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -144,6 +144,7 @@ during the car import.</LI>
 <li>Update context report to also include system manufacturer
 <li>Updated the Windows documentation to help debug JMRI shutdown problems
 <li>Enabled Blocks data to be populated via Reporters
+<li>Fixed bug that caused Layout Editor panels not to be deleted when Delete Panel chosen on File menu
 </ul>
 
 <p>Kevin Dickerson:</p>
