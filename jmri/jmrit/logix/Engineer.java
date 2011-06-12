@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  
@@ -42,7 +42,7 @@ public class Engineer extends Thread implements Runnable {
     public void run() {
         if (log.isDebugEnabled()) log.debug("Engineer started");
 
-        while (_idxCurrentCommand+1 < _warrant._commands.size() && !_abort) {
+        while (_idxCurrentCommand+1 < _warrant._commands.size()) {
             long et = System.currentTimeMillis();
             ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand+1);
             long time = ts.getTime();
@@ -50,6 +50,7 @@ public class Engineer extends Thread implements Runnable {
             // actual playback total elapsed time is "ts.getTime()" before record time.
             // current block at playback may also be before current block at record
             synchronized(this) {
+                if (_abort) { break; }
                 try {
                     if (time > 0) {
                         wait(time);
