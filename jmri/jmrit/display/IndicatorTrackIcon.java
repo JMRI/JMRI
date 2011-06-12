@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 
@@ -151,6 +151,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             block.addPropertyChangeListener(this);
             setStatus(block, block.getState());
             displayState(_status);
+            setTooltip(new ToolTip(block.getDescription(), 0, 0));
         } 
     }
     public OBlock getOccBlock() { 

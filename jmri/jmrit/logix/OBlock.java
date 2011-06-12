@@ -51,7 +51,7 @@ import jmri.Turnout;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -562,5 +562,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         super.dispose();
     }
    
+    public String getDescription() {
+        return java.text.MessageFormat.format(
+            WarrantTableAction.rb.getString("BlockDescription"), getDisplayName());
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlock.class.getName());
 }

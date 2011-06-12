@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
@@ -187,6 +187,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             if (_iconMaps!=null) {
                 displayState(turnoutState());
             }
+            setTooltip(new ToolTip(block.getDescription(), 0, 0));
         } 
     }
     public OBlock getOccBlock() { 
