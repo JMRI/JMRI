@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.util.Map.Entry;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;

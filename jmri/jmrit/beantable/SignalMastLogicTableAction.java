@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -23,13 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JLabel;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ProgressMonitor;
 import jmri.util.com.sun.TableSorter;
-import javax.swing.*;
-import java.awt.*;
 
 public class SignalMastLogicTableAction extends AbstractTableAction implements PropertyChangeListener{
 

@@ -2,7 +2,6 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.util.NamedBeanHandle;
 
 import jmri.jmrit.display.*;
 
