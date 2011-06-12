@@ -47,7 +47,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.83 $
+ * @version $Revision: 1.84 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -279,8 +279,15 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
-        int width = 3*(FunctionButton.BUT_WDTH) + 2*3*5; 		// = 192
-        int height = 6*(FunctionButton.BUT_HGHT) + 2*6*5 +10;	// = 240 (but there seems to be another 10 needed for some LAFs)
+        
+        int width = 3*(FunctionButton.BUT_WDTH) + 2*3*5 +10; 		// = 192
+        int height = 6*(FunctionButton.BUT_HGHT) + 2*6*5 + 20;	// = 240 (but there seems to be another 10 needed for some LAFs)
+
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+        	width = FunctionButton.BUT_WDTH*3 + 2*3*5 + 10 ;
+        	height = FunctionButton.BUT_IMG_SIZE *2 + FunctionButton.BUT_HGHT*4 + 2*6*5 + 20 ;	        	
+        }
         functionPanel.setSize(width, height);
         functionPanel.setLocation(controlPanel.getWidth(), 0);
         functionPanel.setVisible(true);
@@ -303,8 +310,9 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         if (controlPanel.getHeight() < functionPanel.getHeight() + addressPanel.getHeight())
             {controlPanel.setSize(controlPanel.getWidth(),functionPanel.getHeight() + addressPanel.getHeight());}
         if (controlPanel.getHeight() > functionPanel.getHeight() + addressPanel.getHeight())
-            {addressPanel.setSize(addressPanel.getWidth(),controlPanel.getHeight()-functionPanel.getHeight());}
-        if (functionPanel.getWidth() < addressPanel.getWidth())
+            {addressPanel.setSize(addressPanel.getWidth(),controlPanel.getHeight()-functionPanel.getHeight());}       
+        if ( ! (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon())
+        		&& (functionPanel.getWidth() < addressPanel.getWidth()) )
             {functionPanel.setSize(addressPanel.getWidth(),functionPanel.getHeight());}
         
         addressPanel.addAddressListener(controlPanel);

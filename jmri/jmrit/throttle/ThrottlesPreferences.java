@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 public class ThrottlesPreferences {
     private boolean _useExThrottle = true;	
     private boolean _useToolBar = true;
-    private boolean _useFunctionIcon = true;
+    private boolean _useFunctionIcon = false;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
@@ -57,6 +57,7 @@ public class ThrottlesPreferences {
     	if ((a = e.getAttribute("isUsingExThrottle")) != null )  setUseExThrottle( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isUsingToolBar")) != null )  setUsingToolBar( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isResizingWindow")) != null )  setResizeWindow( a.getValue().compareTo("true") == 0 );
+    	if ((a = e.getAttribute("isUsingFunctionIcon")) != null )  setUsingFunctionIcon( a.getValue().compareTo("true") == 0 );
     	if (((a = e.getAttribute("windowDimensionWidth")) != null ) && ((b = e.getAttribute("windowDimensionHeight")) != null ))
     		setWindowDimension( new Dimension ( Integer.valueOf(a.getValue()),  Integer.valueOf( b.getValue()) ));
     	if ((a = e.getAttribute("isSavingThrottleOnLayoutSave")) != null ) setSaveThrottleOnLayoutSave( a.getValue().compareTo("true") == 0 );
@@ -66,16 +67,13 @@ public class ThrottlesPreferences {
     	if ((a = e.getAttribute("isHidingUndefinedFunctionButtons")) != null )  setHideUndefinedFuncButt( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isIgnoringThrottlePosition")) != null )  setIgnoreThrottlePosition( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isCleaningOnClose")) != null )  setCleanOnClose( a.getValue().compareTo("true") == 0 );
-
     }
 
 	/**
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 */
-	static class ThrottlesPrefsXml extends XmlFile {
-
-	}
+	static class ThrottlesPrefsXml extends XmlFile { }
 	
     private org.jdom.Element store() {
     	org.jdom.Element e = new org.jdom.Element("throttlesPreferences");
@@ -92,7 +90,6 @@ public class ThrottlesPreferences {
     	e.setAttribute("isHidingUndefinedFunctionButtons", ""+isHidingUndefinedFuncButt());
     	e.setAttribute("isIgnoringThrottlePosition", ""+isIgnoringThrottlePosition());
     	e.setAttribute("isCleaningOnClose", ""+isCleaningOnClose());
-
     	return e;
     }
 

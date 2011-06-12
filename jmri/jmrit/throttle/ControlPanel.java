@@ -42,7 +42,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.95 $
+ * @version    $Revision: 1.96 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -175,8 +175,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	forwardButton.setBorderPainted(false);
         	forwardButton.setContentAreaFilled(false);
         	forwardButton.setText(null);
-        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/RightRed.png"));
-        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/RightGreen.png"));
+        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/UpRed.png"));
+        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/UpGreen.png"));
         	forwardButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	forwardButton.setToolTipText(rb.getString("ButtonForward"));
         } else
@@ -188,8 +188,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	reverseButton.setBorderPainted(false);
         	reverseButton.setContentAreaFilled(false);
         	reverseButton.setText(null);
-        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/LeftRed.png"));
-        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/LeftGreen.png"));
+        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/DownRed.png"));
+        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/DownGreen.png"));
         	reverseButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	reverseButton.setToolTipText(rb.getString("ButtonReverse"));
         } else
@@ -995,7 +995,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.95 $
+     * @version    $Revision: 1.96 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
