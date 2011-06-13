@@ -17,7 +17,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -37,8 +37,8 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         if (tm.isAdvancedRoutingEnabled()){
             layoutblocks.setAttribute("blockrouting", "yes");
         }
-        if(tm.getNamedStablisedSensor()!=null){
-            layoutblocks.setAttribute("routingStablisedSensor", tm.getNamedStablisedSensor().getName());
+        if(tm.getNamedStabilisedSensor()!=null){
+            layoutblocks.setAttribute("routingStablisedSensor", tm.getNamedStabilisedSensor().getName());
         }
         
         java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
@@ -117,7 +117,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
         if (layoutblocks.getAttribute("routingStablisedSensor")!=null){
             try {
-                tm.setStablisedSensor(layoutblocks.getAttribute("routingStablisedSensor").getValue());
+                tm.setStabilisedSensor(layoutblocks.getAttribute("routingStablisedSensor").getValue());
             } catch (jmri.JmriException e){
 
             }

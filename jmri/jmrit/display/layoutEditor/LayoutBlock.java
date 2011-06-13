@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener
@@ -1023,6 +1023,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
+    /**
+    * Sets a metric cost against a block, this is used in the calculation of a 
+    * path between two location on the layout, a lower path cost is always preferred
+    * For Layout blocks defined as Mainline the default metric is 50.
+    * For Layout blocks defined as a Siding the default metric is 200.
+    */
     public void setBlockMetric(int m){
         if (metric==m)
             return;
@@ -1032,6 +1038,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         firePropertyChange("routing", null, update);
     }
     
+    /**
+    * Returns the layout block metric cost
+    */
     int getBlockMetric() { return metric; }
     
     //re work this so that is makes beter us of existing code.
@@ -1095,7 +1104,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
-    //TODO - if the block already exists, we still may want to re-work the the through paths
+    //TODO - if the block already exists, we still may want to re-work the through paths
     //With this bit we need to get our neighbour to send new routes.
     void addNeighbour(Block addBlock, int direction, int workingDirection){
     
@@ -1737,7 +1746,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     ConnectivityUtil Connection=null;
     boolean layoutConnectivity = true;
     
-    public void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel){
+    /**
+    * This is used to add a through path on this layout block, going from 
+    * the source block to the destination block, using a specific panel.
+    * Note: That if the reverse path is required, then this need to be added 
+    * seperately.
+    */
+    //Was public
+    void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel){
         //Reset connectivity flag.
         layoutConnectivity = true;
         if (srcBlock==dstBlock){
@@ -1882,7 +1898,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
-    public Integer getNextPacketID(){
+    //was public
+    Integer getNextPacketID(){
         Integer lastID;
         if (updateReferences.isEmpty()){
             lastID = 0;
@@ -1897,7 +1914,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return lastID;
     }
     
-    public boolean updatePacketActedUpon(Integer packetID){
+    //was public
+    boolean updatePacketActedUpon(Integer packetID){
         return actedUponUpdates.contains(packetID);
     }
     
@@ -1910,46 +1928,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
         }
         return currentPath;
-    }
-    /**
-    * Provides an output to the console with the anchor point details
-    */
-    
-    public void printAnchorPoints(){
-        if (Connection==null)
-            return;
-        log.info(Connection.getAnchorBoundariesThisBlock(this.getBlock()));
-        ArrayList<PositionablePoint> points = Connection.getAnchorBoundariesThisBlock(this.getBlock());
-        log.info("East Bound");
-        log.info("Sensor, Signal, Boundary With");
-        for (int i = 0; i<points.size(); i++){
-            String connectedBlock = points.get(i).getConnect1().getLayoutBlock().getDisplayName();
-            if (points.get(i).getConnect1().getLayoutBlock()==this)
-                connectedBlock = points.get(i).getConnect2().getLayoutBlock().getDisplayName();
-            log.info(points.get(i).getEastBoundSensor() + ", " + points.get(i).getEastBoundSignal() + ", " + connectedBlock);
-        }
-        
-        log.info("West Bound");
-        log.info("Sensor, Signal, Boundary With");
-        for (int i = 0; i<points.size(); i++){
-            String connectedBlock = points.get(i).getConnect1().getLayoutBlock().getDisplayName();
-            if (points.get(i).getConnect1().getLayoutBlock()==this)
-                connectedBlock = points.get(i).getConnect2().getLayoutBlock().getDisplayName();
-            log.info(points.get(i).getWestBoundSensor() + ", " + points.get(i).getWestBoundSignal()+ ", " + connectedBlock);
-        }
-    }
-    
-    /**
-    * Provides an output to the console of all the valid paths through this block
-    */
-    public void printValidThroughPaths(){
-        log.info("Through paths in this block");
-        log.info("Current Block, From Block, To Block");
-        for(int i = 0; i<throughPaths.size(); i++){
-            String activeStr= "";
-            if (throughPaths.get(i).isPathActive()) activeStr = ", *";
-            log.info("From " + this.getDisplayName() + ", " + (throughPaths.get(i).getSourceBlock()).getDisplayName() + ", " + (throughPaths.get(i).getDestinationBlock()).getDisplayName() + activeStr);
-        }
     }
     
     public Path getThroughPathSourcePathAtIndex(int i){
@@ -1987,9 +1965,30 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     // A sub class that holds valid routes through the block.
     //Possibly want to store the path direction in here as well.
     // or we store the ref to the path, so we can get the directions.
-
-    
     ArrayList<Routes>routes = new ArrayList<Routes>();
+    
+    String decodePacketFlow(int value){
+        switch(value){
+            case RXTX : return "Bi-Direction Operation";
+            case RXONLY : return "Uni-Directional - Trains can only exit to this block";
+            case TXONLY : return "Uni-Directional - Trains can not be sent down this block";
+            case NONE : return "None routing updates will be passed";
+        }
+        return "Unknown";
+    }
+    
+    /**
+    * Provides an output to the console of all the valid paths through this block
+    */
+    public void printValidThroughPaths(){
+        log.info("Through paths in this block");
+        log.info("Current Block, From Block, To Block");
+        for(int i = 0; i<throughPaths.size(); i++){
+            String activeStr= "";
+            if (throughPaths.get(i).isPathActive()) activeStr = ", *";
+            log.info("From " + this.getDisplayName() + ", " + (throughPaths.get(i).getSourceBlock()).getDisplayName() + ", " + (throughPaths.get(i).getDestinationBlock()).getDisplayName() + activeStr);
+        }
+    }
     
     /**
     * Provides an output to the console of all our neighbouring blocks
@@ -2003,21 +2002,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
-    String decodePacketFlow(int value){
-        switch(value){
-            case RXTX : return "Bi-Direction Operation";
-            case RXONLY : return "Uni-Directional - Trains can only exit to this block";
-            case TXONLY : return "Uni-Directional - Trains can not be sent down this block";
-            case NONE : return "None routing updates will be passed";
-        }
-        return "Unknown";
-    }
-    
     /**
     * Provides an output to the console of all the remote blocks reachable from our block
     */
     public void printRoutes(){
-        log.info("");
         log.info("Routes for block " + this.getDisplayName());
         log.info("Destination, Next Block, Hop Count, Direction, State, Metric");
         for(int i = 0; i<routes.size(); i++){
@@ -2121,6 +2109,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
     
     //Need to work on this to deal with the method of routing
+    /*
+    * 
+    */
     public int getNextBlockByIndex(Block previousBlock, Block destBlock, int offSet){
         for (int i = offSet; i<routes.size(); i ++){
             Routes r = routes.get(i);
@@ -2146,8 +2137,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     * The block returned will have a hopcount or metric equal to or greater than
     * the one of the last block returned.
     * if last index is set to -1 this indicates that this is the first time.
-    * Caveat - if there are more than two blocks with the same hopcount and metric
-    * only the first two will be returned.  The third one will not be considered.
     */
     public int getNextBestBlock(Block previousBlock, Block destBlock, int lastIndex, int routingMethod){
         if(enableSearchRouteLogging)
@@ -2212,22 +2201,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return bestIndex;
     }
     
-    public Block getDestBlockAtIndex(int i){
-        return routes.get(i).getDestBlock();
-    }
-
-    public int getBlockCountAtIndex(int i){
-        return routes.get(i).getHopCount();
-    }
-
-    public Block getNextBlockAtIndex(int i){
-        return routes.get(i).getNextBlock();
-    }
-
-    public int getDirectionAtIndex(int i){
-        return routes.get(i).getDirection();
-    }
-
     Routes getRouteByDestBlock(Block blk){
         for (int i = routes.size()-1; i> -1; i--){
             if(routes.get(i).getDestBlock()==blk)
@@ -2335,6 +2308,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return null;
     }
 
+    /**
+    * Is the route to the destination block, going via our neighbouring block valid.
+    * ie Does the block have a route registered via neighbour "protecting" to the 
+    * destination block.
+    */
     public boolean isRouteToDestValid(Block protecting, Block destination){
         if(protecting==destination){
             log.debug("protecting and destination blocks are the same therefore we need to check if we have a valid neighbour");
@@ -2642,6 +2620,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
     /* this should look after removal of a specific next hop from our neighbour*/
 
+    /**
+    * Gets the direction of travel to our neighbouring block.
+    */
     public int getNeighbourDirection(LayoutBlock neigh){
         Block neighbourBlock = neigh.getBlock();
         for(int i = 0; i<neighbours.size(); i++){
@@ -2701,26 +2682,48 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     
     }
     
+    /**
+    * Get the number of neighbour blocks attached to this block
+    */
     public int getNumberOfNeighbours(){
        return neighbours.size();
     }
     
+    /**
+    * Get the neighbouring block at index i
+    */
     public Block getNeighbourAtIndex(int i){
         return neighbours.get(i).getBlock();
     }
-    
+
+    /**
+    * Get the direction of travel to neighbouring block at index i
+    */
     public int getNeighbourDirection(int i){
         return neighbours.get(i).getDirection();
     }
-    
+
+    /**
+    * Get the metric/cost to neighbouring block at index i
+    */
     public int getNeighbourMetric(int i){
         return neighbours.get(i).getMetric();
     }
     
+    /**
+    * Get the flow of traffic to and from neighbouring block at index i
+    * RXTX - Means Traffic can flow both ways between the blocks
+    * RXONLY - Means we can only recieve traffic from our neighbour, we can not send traffic to it
+    * TXONLY - Means we do not recieve traffic from our neighbour, but can send traffic to it.
+    */
     public String getNeighbourPacketFlowAsString(int i){
         return decodePacketFlow(neighbours.get(i).getPacketFlow());
     }
     
+    /**
+    * Is our neighbouring block at index i a mutual neighbour, ie both blocks have
+    * each other registered as neighbours and are exchaning information.
+    */
     public boolean isNeighbourMutual(int i){
         return neighbours.get(i).isMutual();
     }
@@ -2844,34 +2847,66 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
-    public int getRouteDirection(int i){
+    /**
+    * Get the number of routes that the block has registered.
+    */
+    public int getNumberOfRoutes(){
+       return routes.size();
+    }
+    
+    /**
+    * Get the direction of route i.
+    */
+    public int getRouteDirectionAtIndex(int i){
         return routes.get(i).getDirection();
     }
 
-    public Block getRouteDestBlock(int i){
+    /**
+    * Get the destination block at route i
+    */
+    public Block getRouteDestBlockAtIndex(int i){
         return routes.get(i).getDestBlock();
     }
-
-    public Block getRouteNextBlock(int i){
+    
+    /**
+    * Get the next block at route i
+    */
+    public Block getRouteNextBlockAtIndex(int i){
         return routes.get(i).getNextBlock();
     }
 
-    public int getRouteHopCount(int i){
+    /**
+    * Get the hop count of route i.<br>
+    * The Hop count is the number of other blocks that we traverse to get to the destination
+    */
+    public int getRouteHopCountAtIndex(int i){
         return routes.get(i).getHopCount();
     }
 
+    /**
+    * Get the metric/cost at route i
+    */
     public int getRouteMetric(int i){
         return routes.get(i).getMetric();
     }
-
+    
+    /**
+    * Gets the state (Occupied, unoccupied) of the destination layout block at index i
+    */
     public int getRouteState(int i){
         return routes.get(i).getState();
     }
     
+    /**
+    * Is the route to the destination potentially valid from our block.
+    */
     public boolean getRouteValid(int i){
         return routes.get(i).isRouteCurrentlyValid();
     }
 
+    /**
+    * Gets the state of the destination layout block at index i as a string
+    */
     public String getRouteStateAsString(int i){
         int state=routes.get(i).getState();
         switch (state){
@@ -2889,11 +2924,17 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
         return -1;
     }
-
-    public int getNumberOfRoutes(){
-       return routes.size();
-    }
     
+    
+    
+    /**
+    * Returns the number of layout blocks to our desintation block going from the
+    * next directly connected block.  If the destination block and nextblock are 
+    * the same and the block is also registered as a neighbour then 1 is returned.
+    * If no valid route to the destination block can be found via the next block 
+    * then -1 is returned.  If more than one route exists to the destination then
+    * the route with the lowest count is returned.
+    */
     public int getBlockHopCount(Block destination, Block nextBlock){
         if((destination==nextBlock) && (isValidNeighbour(nextBlock)))
             return 1;
@@ -2985,18 +3026,30 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
     }
 
+    /**
+    * Returns the number of valid through paths on this block.
+    */
     public int getNumberOfThroughPaths(){
             return throughPaths.size();
     }
 
+    /**
+    * Returns the source block at index i
+    */
     public Block getThroughPathSource(int i){
         return throughPaths.get(i).getSourceBlock();
     }
 
+    /**
+    * Returns the destination block at index i
+    */
     public Block getThroughPathDestination(int i){
         return throughPaths.get(i).getDestinationBlock();
     }
 
+    /**
+    * Is the through path at index i active
+    */
     public Boolean isThroughPathActive(int i){
         return throughPaths.get(i).isPathActive();
     }

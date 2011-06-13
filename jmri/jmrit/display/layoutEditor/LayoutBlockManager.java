@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -1241,6 +1241,7 @@ public class LayoutBlockManager extends AbstractManager {
             protect = getProtectedBlockByMast(signalMast.getSystemName(), panel);
         return protect;
     }
+    
     /**
      * Method to return the LayoutBlock that a given signal is protecting.
      */
@@ -1304,7 +1305,10 @@ public class LayoutBlockManager extends AbstractManager {
         }
         return null;
     }
-
+     
+    /**
+     * Method to return the LayoutBlock that a given signal mast is facing.
+     */
     public LayoutBlock getFacingBlockByMast(SignalMast signalMast, LayoutEditor panel){
         LayoutBlock facing = getFacingBlockByMast(signalMast.getUserName(), panel);
         if(facing == null)
@@ -1391,14 +1395,20 @@ public class LayoutBlockManager extends AbstractManager {
         }
         return null;
     }
-    
+     
+    /**
+     * Method to return the LayoutBlock that a given sensor is protecting.
+     */
     public LayoutBlock getProtectedBlockBySensor(Sensor sensor, LayoutEditor panel){
         LayoutBlock pro = getProtectedBlockByMast(sensor.getUserName(), panel);
         if(pro == null)
             pro = getProtectedBlockByMast(sensor.getSystemName(), panel);
         return pro;
     }
-
+     
+    /**
+     * Method to return the LayoutBlock that a given sensor is protecting.
+     */
     public LayoutBlock getProtectedBlockBySensor(String sensorName, LayoutEditor panel){
         PositionablePoint pp = panel.findPositionablePointByEastBoundSensor(sensorName);
         TrackSegment tr;
@@ -1458,14 +1468,18 @@ public class LayoutBlockManager extends AbstractManager {
         return null;
     }
 
+    /**
+     * Method to return the LayoutBlock that a given sensor is facing.
+     */
     public LayoutBlock getFacingBlockBySensor(Sensor sensor, LayoutEditor panel){
         LayoutBlock facing = getFacingBlockByMast(sensor.getUserName(), panel);
         if(facing == null)
             facing = getFacingBlockByMast(sensor.getSystemName(), panel);
         return facing;
     }
+    
     /**
-     * Method to return the LayoutBlock that a given signal is facing.
+     * Method to return the LayoutBlock that a given sensor is facing.
      */
     public LayoutBlock getFacingBlockBySensor(String sensorName, LayoutEditor panel){
         PositionablePoint pp = panel.findPositionablePointByEastBoundSensor(sensorName); //was west
@@ -1554,7 +1568,7 @@ public class LayoutBlockManager extends AbstractManager {
     /**
      * Method to return the LayoutBlock that a given signal is protecting.
      */
-     /* This needs to be expanded to cover turnouts and level crossings. */
+     /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
         PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
         TrackSegment tr;
@@ -1582,7 +1596,7 @@ public class LayoutBlockManager extends AbstractManager {
     /**
      * Method to return the LayoutBlock that a given signal is facing.
      */
-     /* This needs to be expanded to cover turnouts and level crossings. */
+     /* @TODO This needs to be expanded to cover turnouts and level crossings. */
     public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
         PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
         TrackSegment tr;
@@ -1599,19 +1613,60 @@ public class LayoutBlockManager extends AbstractManager {
         return tr.getLayoutBlock();
     }
 
+    /**
+     * Constant used in the getLayoutBlocks to represent a path from one Signal Mast
+     * to another and that no mast should be in the path.
+     */
     public final static int MASTTOMAST = 0x01;
+    
+    /**
+     * Constant used in the getLayoutBlocks to represent a path from one Signal Head
+     * to another and that no head should be in the path.
+     */
     public final static int HEADTOHEAD = 0x02;
+    
+    /**
+     * Constant used in the getLayoutBlocks to represent a path from either 
+     * a Signal Mast or Head to another Signal Mast or Head and that no mast of
+     * head should be in the path.
+     */
     public final static int ANY = 0x04;
+    
+    /**
+     * Constant used in the getLayoutBlocks to indicate that the the system should
+     * not check for signal masts or heads on the path.
+     */
     public final static int NONE = 0x00;
     
     private static int ttlSize = 50;
 
+    /**
+    * The is used in conjunction with the layout block routing protocol, to discover
+    * a clear path from a source layout block through to a destination layout block.
+    * By specifying the sourceLayoutBlock and protectingLayoutBlock or sourceLayoutBlock+1, 
+    * a direction of travel can then be termined, eg east to west, south to north etc.
+    * <p>
+    * @param sourceLayoutBlock - The layout block that we are starting from, 
+    *                    can also be considered as the block facing a signal.
+    * @param destinationLayoutBlock - The layout block that we want to get to
+    * @param protectingLayoutBlock - The next layout block connected to the source 
+    *                 block, this can also be considered as the block being protected by a signal
+    * @param validateOnly - When set false, the system will not use layout blocks
+    *                       that are set as either reserved(useExtraColor set) or occupied, if it 
+    *                       finds any then it will try to find an alternative path
+    *                       When set false, no block state checking is performed.
+    * @param pathMethod - Performs a check to see if any signal heads/masts are 
+    *                     in the path, if there are then the system will try to find
+    *                     an alternative path.  If set to NONE, then no checking is performed.
+    * @return an ArrayList of all the layoutblocks in the path.
+    * @throws jmri.JmriException if it can not find a valid path or the routing 
+    *                            has not been enabled.
+    */
     public ArrayList<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException{
         lastErrorMessage= "";
         if (!isAdvancedRoutingEnabled()){
             log.info("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
-            //return null;
         }
         
         int directionOfTravel = sourceLayoutBlock.getNeighbourDirection(protectingLayoutBlock);
@@ -1663,16 +1718,16 @@ public class LayoutBlockManager extends AbstractManager {
 
                 offSet = -1;
 
-                directionOfTravel = currentLBlock.getDirectionAtIndex(nextBlockIndex);
+                directionOfTravel = currentLBlock.getRouteDirectionAtIndex(nextBlockIndex);
 
                 currentBlock = nextBlock;
-                nextBlock = currentLBlock.getNextBlockAtIndex(nextBlockIndex);
+                nextBlock = currentLBlock.getRouteNextBlockAtIndex(nextBlockIndex);
                 LayoutBlock nextLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
 
                 log.debug("Blocks in route size " + blocksInRoute.size());
                 log.debug(nextBlock.getDisplayName() + " " + destBlock.getDisplayName());
                 if (nextBlock==currentBlock){
-                    nextBlock = currentLBlock.getDestBlockAtIndex(nextBlockIndex);
+                    nextBlock = currentLBlock.getRouteDestBlockAtIndex(nextBlockIndex);
                     log.debug("the next block to our destination we are looking for is directly connected to this one");
                 } else if(protectingLayoutBlock!=nextLBlock){
                     log.debug("Add block " + nextLBlock.getDisplayName());
@@ -1688,13 +1743,13 @@ public class LayoutBlockManager extends AbstractManager {
                         returnBlocks.add(blocksInRoute.get(i).getBlock());
                     }
                     returnBlocks.add(destinationLayoutBlock);
-                    if(log.isDebugEnabled()){
+                //    if(log.isDebugEnabled()){
                         log.debug(sourceLayoutBlock.getDisplayName() + " Return as Long");
                         for (int i =0; i<returnBlocks.size(); i++){
                             log.debug(returnBlocks.get(i).getDisplayName());
                         }
                         log.debug("Finished List");
-                    }
+                //    }
                     return returnBlocks;
                 }
             } 
@@ -1786,7 +1841,7 @@ public class LayoutBlockManager extends AbstractManager {
                     lastErrorMessage = "Block already returned";
                     return -1;
                 }
-                block = currentLBlock.getNextBlockAtIndex(blockindex);
+                block = currentLBlock.getRouteNextBlockAtIndex(blockindex);
                 LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(block);
                 if ((block == currentBlock) && (currentLBlock.getThroughPathIndex(preBlock, destBlock)==-1)){
                     lastErrorMessage="block " + block.getDisplayName() + " is directly attached, however the route to the destination block " + destBlock.getDisplayName() + " can not be directly used";
@@ -1840,9 +1895,9 @@ public class LayoutBlockManager extends AbstractManager {
      * of travel.
      * Given the destBlock and the next block on, we can determine the whether 
      * the destBlock comes before the destBlock+1.
-     * returns true if destBlock comes before destBlock+1
-     * returns false if destBlock comes after destBlock+1
-     * throws Jmri.Exception if any Block is null;
+     * @return true if destBlock comes before destBlock+1 or 
+     * false if destBlock comes after destBlock+1
+     * @throws Jmri.Exception if any Block is null;
      */
     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1) throws jmri.JmriException {
         if (!isAdvancedRoutingEnabled()){
@@ -1920,7 +1975,19 @@ public class LayoutBlockManager extends AbstractManager {
 	public void turnOffWarning() {warnConnectivity = false;}
 	
     protected boolean enableAdvancedRouting = false;
+    
+    /**
+    * returns true if advanced layout block routing has been enabled.
+    */
     public boolean isAdvancedRoutingEnabled() { return enableAdvancedRouting; }
+    
+    /**
+    * Enables the advanced layout block routing protocol
+    * <p>
+    * The block routing protocol enables each layout block to build up a list of 
+    * all reachable blocks, along with how far away they are, which direction they
+    * are in and which of the connected blocks they are reachable from.
+    */
     public void enableAdvancedRouting(boolean boo) { 
         if (boo==enableAdvancedRouting)
             return;
@@ -1933,26 +2000,26 @@ public class LayoutBlockManager extends AbstractManager {
     public final static int HOPCOUNT = 0x00;
     public final static int METRIC = 0x01;
 
-
     private long lastRoutingChange;
-    public void setLastRoutingChange(){
+
+    void setLastRoutingChange(){
         lastRoutingChange = System.nanoTime();
-        stablised = false;
-        setRoutingStablised();
+        stabilised = false;
+        setRoutingStabilised();
     }
 
     boolean checking = false;
-    boolean stablised = false;
+    boolean stabilised = false;
 
-    private void setRoutingStablised(){
+    private void setRoutingStabilised(){
         if (checking){
             return;
         }
         log.debug("routing table change has been initiated");
         checking=true;
-        if(namedStablisedIndicator!=null){
+        if(namedStabilisedIndicator!=null){
             try {
-                namedStablisedIndicator.getBean().setState(Sensor.INACTIVE);
+                namedStabilisedIndicator.getBean().setState(Sensor.INACTIVE);
             } catch (jmri.JmriException ex){
                 log.debug("Error setting stability indicator sensor");
             }
@@ -1962,15 +2029,15 @@ public class LayoutBlockManager extends AbstractManager {
             try {
               firePropertyChange("topology", true, false);
               long oldvalue = lastRoutingChange;
-              while (!stablised) {
+              while (!stabilised) {
                 Thread.sleep(2000L);
                 if(oldvalue==lastRoutingChange){
                     log.debug("routing table has now been stable for 2 seconds");
                     checking=false;
-                    stablised=true;
+                    stabilised=true;
                     firePropertyChange("topology", false, true);
-                    if(namedStablisedIndicator!=null){
-                        namedStablisedIndicator.getBean().setState(Sensor.ACTIVE);
+                    if(namedStabilisedIndicator!=null){
+                        namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
                     }
                 }
                 oldvalue = lastRoutingChange;
@@ -1989,16 +2056,28 @@ public class LayoutBlockManager extends AbstractManager {
 
     Thread thr = null;
     
-    private NamedBeanHandle<Sensor> namedStablisedIndicator;
+    private NamedBeanHandle<Sensor> namedStabilisedIndicator;
     
-    public void setStablisedSensor(String pName) throws jmri.JmriException {
+    /**
+    * Assign a sensor to the routing protocol, that changes state dependant upon
+    * if the routing protocol has stabilised or is under going a change.
+    */
+    public void setStabilisedSensor(String pName) throws jmri.JmriException {
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
-                namedStablisedIndicator = new NamedBeanHandle<Sensor>(pName, sensor);
+                namedStabilisedIndicator = new NamedBeanHandle<Sensor>(pName, sensor);
             } else {
                 log.error("Sensor '"+pName+"' not available");
                 throw new jmri.JmriException("Sensor '"+pName+"' not available");
+            }
+            try{
+                if(stabilised)
+                    sensor.setState(Sensor.ACTIVE);
+                else
+                    sensor.setState(Sensor.INACTIVE);
+            } catch (jmri.JmriException ex){
+                log.error("Error setting stablilty indicator sensor");
             }
         } else {
             log.error("No SensorManager for this protocol");
@@ -2006,19 +2085,32 @@ public class LayoutBlockManager extends AbstractManager {
         }
     }
     
-    public Sensor getStablisedSensor(){
-        if(namedStablisedIndicator==null)
+    /**
+    * Return the sensor used to indicate if the routing protocol has stabilised or not
+    */
+    public Sensor getStabilisedSensor(){
+        if(namedStabilisedIndicator==null)
             return null;
-        return namedStablisedIndicator.getBean();
+        return namedStabilisedIndicator.getBean();
     }
 
-    public NamedBeanHandle <Sensor> getNamedStablisedSensor(){
-        return namedStablisedIndicator;
+    /**
+    *   Get the sensor used for the stability indication
+    */
+    public NamedBeanHandle <Sensor> getNamedStabilisedSensor(){
+        return namedStabilisedIndicator;
     }
     
+    /**
+    * Returns true if the layout block routing protocol has stabilised
+    */
     public boolean routingStablised(){
-        return stablised;
+        return stabilised;
     }
+    
+    /**
+    * returns the time when the last routing change was made, recorded as System.nanoTime()
+    */
     public long getLastRoutingChange(){
         return lastRoutingChange;
     }

@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  * @since 2.7.5
  */
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
@@ -110,19 +110,19 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
         	return "Error";
         }    
         switch (col) {
-        case DESTCOL:         return lBlock.getRouteDestBlock(row).getDisplayName();
-        case NEXTHOPCOL:    String nextBlock = lBlock.getRouteNextBlock(row).getDisplayName();
+        case DESTCOL:       return lBlock.getRouteDestBlockAtIndex(row).getDisplayName();
+        case NEXTHOPCOL:    String nextBlock = lBlock.getRouteNextBlockAtIndex(row).getDisplayName();
                             if (nextBlock.equals(lBlock.getDisplayName()))
                                 nextBlock = rb.getString("DirectConnect");
                             return nextBlock;
-        case HOPCOUNTCOL:    return Integer.valueOf(lBlock.getRouteHopCount(row)).intValue();
-        case DIRECTIONCOL:   return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirection(row)).intValue());
-        case METRICCOL: return Integer.valueOf(lBlock.getRouteMetric(row)).intValue();
-        case STATECOL:        return lBlock.getRouteStateAsString(row);
-        case VALIDCOL:        String value ="";
-                              if(lBlock.getRouteValid(row))
+        case HOPCOUNTCOL:   return Integer.valueOf(lBlock.getRouteHopCountAtIndex(row)).intValue();
+        case DIRECTIONCOL:  return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirectionAtIndex(row)).intValue());
+        case METRICCOL:     return Integer.valueOf(lBlock.getRouteMetric(row)).intValue();
+        case STATECOL:      return lBlock.getRouteStateAsString(row);
+        case VALIDCOL:      String value ="";
+                            if(lBlock.getRouteValid(row))
                                 value = "*";
-                              return value;
+                            return value;
         default:            return "<UNKNOWN>";
         }
     }
