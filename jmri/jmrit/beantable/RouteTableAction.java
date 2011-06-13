@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.68 $
+ * @version     $Revision: 1.69 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -821,7 +821,7 @@ public class RouteTableAction extends AbstractTableAction {
         String sName = _systemName.getText();
         String uName = _userName.getText();
         Route g;
-        if (_autoSystemName.isSelected()){
+        if (_autoSystemName.isSelected() && !editMode){
             g = jmri.InstanceManager.routeManagerInstance().newRoute(uName);
         } else {
             if (sName.length()==0) {
