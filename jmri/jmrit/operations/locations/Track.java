@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.63 $
+ * @version             $Revision: 1.64 $
  */
 public class Track {
 	
@@ -251,7 +251,10 @@ public class Track {
 	
 	public void setAlternativeTrack(Track track){
 		Track old = _location.getTrackById(_alternativeTrackId);
-		_alternativeTrackId = track.getId();
+		if (track != null)
+			_alternativeTrackId = track.getId();
+		else
+			_alternativeTrackId = "";
 		firePropertyChange("alternativeTrack", old, track);
 	}
 	
