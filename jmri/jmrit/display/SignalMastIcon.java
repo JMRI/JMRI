@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -214,17 +214,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             if(en.hasMoreElements()){
                 JMenu iconSetMenu = new JMenu(rb.getString("SignalMastIconSet"));
                 ButtonGroup iconTypeGroup = new ButtonGroup();
-                JRadioButtonMenuItem im;
+                setImageTypeList(iconTypeGroup, iconSetMenu, "default");
                 while (en.hasMoreElements()){
-                    final String icon = en.nextElement();
-                    im = new JRadioButtonMenuItem(icon);
-                    im.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) { useIconSet(icon); }
-                    });
-                    iconTypeGroup.add(r);
-                    if (useIconSet.equals(icon)) im.setSelected(true);
-                    else im.setSelected(false);
-                    iconSetMenu.add(im);
+                    setImageTypeList(iconTypeGroup, iconSetMenu, en.nextElement());
                 }
                 popup.add(iconSetMenu);
             }
@@ -253,6 +245,19 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             }
         }
         return true;
+    }
+    
+    private void setImageTypeList(ButtonGroup iconTypeGroup, JMenu iconSetMenu, final String item){
+        JRadioButtonMenuItem im;
+        im = new JRadioButtonMenuItem(item);
+        im.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { useIconSet(item); }
+        });
+        iconTypeGroup.add(im);
+        if (useIconSet.equals(item)) im.setSelected(true);
+        else im.setSelected(false);
+        iconSetMenu.add(im);
+    
     }
     
     public boolean setRotateOrthogonalMenu(JPopupMenu popup){
@@ -387,6 +392,12 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 }
                 else if((mMast.getLit()) && (mMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
                     s = mMast.getAppearanceMap().getImageLink("$dark", useIconSet);
+                }
+                if(s.equals("")){
+                    /*We have no appearance to set, therefore we will exit at this point.
+                    This can be considered normal if we are requesting an appearance 
+                    that is not support or configured, such as dark or held */
+                    return;
                 }
                 s = s.substring(s.indexOf("resources"));
                 

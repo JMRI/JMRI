@@ -14,6 +14,7 @@ import jmri.util.NamedBeanHandle;
 
 import jmri.SignalHead;
 import jmri.SignalSystem;
+import jmri.SignalAppearanceMap;
 
  /**
  * Default implementation of a basic signal head table.
@@ -22,7 +23,7 @@ import jmri.SignalSystem;
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -186,11 +187,14 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                //those associated with the aspect.
                List<String> app = SMmap.getImageTypes(appearance);
                java.util.Hashtable<String, String> images = new java.util.Hashtable<String, String>();
+               String type = "";
                for (int i = 0; i<app.size(); i++){
-                    String type = SMmap.getImageLink(appearance, app.get(i));
+                    type = SMmap.getImageLink(appearance, app.get(i));
                     images.put(app.get(i), type);
                }
-                SMmap.aspectImageMap.put(name, images);
+               //We will register the last aspect as a default.
+               images.put("default", type);
+               SMmap.aspectImageMap.put(name, images);
             } else {
                 loadImageMaps(img, name, SMmap);
             }
