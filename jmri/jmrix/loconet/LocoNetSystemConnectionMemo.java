@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -164,14 +164,14 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.setPowerManager(
             getPowerManager());
 
+        InstanceManager.setSensorManager(
+            getSensorManager());
+            
         InstanceManager.setTurnoutManager(
             getTurnoutManager());
 
         InstanceManager.setLightManager(
             getLightManager());
-
-        InstanceManager.setSensorManager(
-            getSensorManager());
 
         InstanceManager.setThrottleManager(
             getThrottleManager());
@@ -200,14 +200,18 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return powerManager;
     }
     
-    private LnThrottleManager throttleManager;
+    private ThrottleManager throttleManager;
     
-    public LnThrottleManager getThrottleManager() { 
+    public ThrottleManager getThrottleManager() { 
         if (getDisabled())
             return null;
         if (throttleManager == null)
             throttleManager = new jmri.jmrix.loconet.LnThrottleManager(getSlotManager());
         return throttleManager;
+    }
+    
+    public void setThrottleManager(ThrottleManager t) {
+        throttleManager = t;
     }
     
     private LnTurnoutManager turnoutManager;
@@ -270,9 +274,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return consistManager;
     }
     
-    
-    
-    
     public void dispose() {
         lt = null;
         sm = null;
@@ -290,7 +291,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (reporterManager != null) 
             InstanceManager.deregister(reporterManager, jmri.jmrix.loconet.LnReporterManager.class);
         if (throttleManager != null) 
-            InstanceManager.deregister(throttleManager, jmri.jmrix.loconet.LnThrottleManager.class);
+            InstanceManager.deregister(((LnThrottleManager)throttleManager), jmri.jmrix.loconet.LnThrottleManager.class);
         if (consistManager != null) 
             InstanceManager.deregister(consistManager, jmri.jmrix.loconet.LocoNetConsistManager.class);
         if (clockControl != null) 

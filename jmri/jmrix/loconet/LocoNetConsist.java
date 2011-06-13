@@ -5,7 +5,7 @@
  * it uses the LocoNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2011
- * @version                     $Revision: 1.1 $
+ * @version                     $Revision: 1.2 $
  */
 
 package jmri.jmrix.loconet;
@@ -43,7 +43,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 		super(address);
 		this.slotManager=lm.getSlotManager();
 		this.trafficController=lm.getLnTrafficController();
-		this.throttleManager=lm.getThrottleManager();
+		this.throttleManager=(LnThrottleManager)lm.getThrottleManager();
 		consistRequestState = LEADREQUESTSTATE;
 		needToWrite=new ArrayList<DccLocoAddress>();
 	        throttleManager.requestThrottle(ConsistAddress,this);
@@ -55,7 +55,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 		super(address);
 		this.slotManager=lm.getSlotManager();
 		this.trafficController=lm.getLnTrafficController();
-		this.throttleManager=lm.getThrottleManager();
+		this.throttleManager=(LnThrottleManager)lm.getThrottleManager();
 		consistRequestState = LEADREQUESTSTATE;
 		needToWrite=new ArrayList<DccLocoAddress>();
 	        throttleManager.requestThrottle(ConsistAddress,this);
