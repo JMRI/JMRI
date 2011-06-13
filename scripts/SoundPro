@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Script to start a JMRI 2.11.6 application
+# Script to start a JMRI 2.11.7 application
 #
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
@@ -26,7 +26,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.29 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.30 $ (CVS maintains this line, do not edit please)
 #
 
 # define the class to be invoked

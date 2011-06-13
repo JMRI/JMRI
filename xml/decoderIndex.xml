@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "/xml/DTD/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.11.6 on Sat Jun 04 17:36:19 MST 2011 $Id: decoderIndex.xml,v 1.169 2011-06-05 00:37:57 jacobsen Exp $-->
-  <decoderIndex version="210">
-    <mfgList nmraListDate="2011-03-08" updated="2011-04-09" lastadd="69">
+  <!--Written by JMRI version 2.11.7 on Mon Jun 13 15:38:50 MST 2011 $Id: decoderIndex.xml,v 1.170 2011-06-13 23:03:16 jacobsen Exp $-->
+  <decoderIndex version="212">
+    <mfgList nmraListDate="2011-04-09" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -14,6 +14,7 @@
       <manufacturer mfg="Aristo-Craft Trains" mfgID="34" />
       <manufacturer mfg="Arnold - Rivarossi" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
+      <manufacturer mfg="Auvidel" mfgID="76" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
       <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
       <manufacturer mfg="Bachmann Trains" mfgID="101" />
@@ -31,6 +32,7 @@
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digirails" mfgID="42" />
       <manufacturer mfg="Digital Bahn" mfgID="64" />
+      <manufacturer mfg="Digitools Elektronika, Kft" mfgID="75" />
       <manufacturer mfg="Digitrax" mfgID="129" />
       <manufacturer mfg="Digsight" mfgID="30" />
       <manufacturer mfg="Doehler and Haas" mfgID="97" />
@@ -61,10 +63,12 @@
       <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="Lahti Associates" mfgID="14" />
       <manufacturer mfg="Lenz" mfgID="99" />
+      <manufacturer mfg="LS Models Spr" mfgID="77" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MBTronik - PiN GITmBH" mfgID="26" />
       <manufacturer mfg="MERG" mfgID="165" />
       <manufacturer mfg="MRC" mfgID="143" />
+      <manufacturer mfg="MTB Model" mfgID="72" />
       <manufacturer mfg="MTH Electric Trains, Inc." mfgID="27" />
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="Mistral Train Models" mfgID="29" />
@@ -80,6 +84,7 @@
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Passmann" mfgID="41" />
+      <manufacturer mfg="PpP Digital" mfgID="74" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
       <manufacturer mfg="Public-domain and DIY" mfgID="13" />
       <manufacturer mfg="QElectronics GmbH" mfgID="55" />
@@ -103,6 +108,7 @@
       <manufacturer mfg="Tam Valley Depot" mfgID="59" />
       <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
       <manufacturer mfg="Team Digital, LLC" mfgID="25" />
+      <manufacturer mfg="The Electric Railroad Company" mfgID="73" />
       <manufacturer mfg="Throttle-Up (SoundTraxx)" mfgID="141" />
       <manufacturer mfg="Train Control Systems" mfgID="153" />
       <manufacturer mfg="Train Modules" mfgID="61" />
