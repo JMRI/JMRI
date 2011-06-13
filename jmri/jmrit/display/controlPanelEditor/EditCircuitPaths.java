@@ -48,7 +48,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 closingEvent();
             }
         });
-        _parent.setEditColors();
+        _parent.setEditColors(false);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -175,6 +175,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         l = new JLabel(rbcp.getString("selectPathIcons"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
+        l = new JLabel(rbcp.getString("pressAddButton"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
         panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
         l = new JLabel(rbcp.getString("selectPath"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -240,8 +243,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     *  When a 
     */
     public void valueChanged(ListSelectionEvent e) {
-        OPath path = (OPath)_pathList.getSelectedValue();
         clearPath();
+        OPath path = (OPath)_pathList.getSelectedValue();
         if (path!=null) {
             _pathName.setText(path.getName());
             showPath(path);
@@ -253,54 +256,58 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     private void showPath(OPath path) {
-        String name = path.getName();
-        java.util.List<Positionable> list = _parent.getCircuitGroup();
-        if (log.isDebugEnabled()) log.debug("showPath for "+name+" CircuitGroup2 size= "+list.size());
-        _pathGroup = new ArrayList<Positionable>();
-        for (int i=0; i<list.size(); i++) {
-            IndicatorTrack icon = (IndicatorTrack)list.get(i);
-            Iterator<String> iter = icon.getPaths();
-            if (iter!=null) {
-                while (iter.hasNext()) {
-                    if (name.equals(iter.next())) {
-                        _pathGroup.add(icon);
-                    }
-                }
-            }
-        }
-        if (log.isDebugEnabled()) log.debug("showPath for "+name+" _pathGroup.size()= "+_pathGroup.size());
-        for (int i=0; i<_pathGroup.size(); i++) {
-            ((IndicatorTrack)_pathGroup.get(i)).addPath(TEST_PATH);
-        }
         path.setTurnouts(0, true, 0, false);
 
         Portal fromPortal = path.getFromPortal();
         Portal toPortal = path.getToPortal();
+        String name = path.getName();
 
-        Iterator<PortalIcon> iter = _parent.getPortalIconMap().values().iterator();
-        while (iter.hasNext()) {
-            PortalIcon icon = iter.next();
-            Portal portal = icon.getPortal();
-            if (portal.equals(fromPortal)) {
-                icon.setStatus(PortalIcon.PATH);
-                _pathGroup.add(icon);
-            } else if (portal.equals(toPortal)) {
-                icon.setStatus(PortalIcon.PATH);
-                _pathGroup.add(icon);
-            } 
+        java.util.List<Positionable> list = _parent.getCircuitGroup();
+        if (log.isDebugEnabled()) log.debug("showPath for "+name+" CircuitGroup size= "+list.size());
+        _pathGroup = new ArrayList<Positionable>();
+        for (int i=0; i<list.size(); i++) {
+            Positionable pos = list.get(i);
+            if (pos instanceof IndicatorTrack) {
+                Iterator<String> iter = ((IndicatorTrack)pos).getPaths();
+                if (iter!=null) {
+                    while (iter.hasNext()) {
+                        if (name.equals(iter.next())) {
+                            _pathGroup.add(pos);
+                        }
+                    }
+                }
+            } else {
+                PortalIcon icon = (PortalIcon)pos;
+                Portal portal = icon.getPortal();
+                if (portal.equals(fromPortal)) {
+                    _pathGroup.add(icon);
+                } else if (portal.equals(toPortal)) {
+                    _pathGroup.add(icon);
+                } 
+            }
         }
+        // to avoid ConcurrentModificationException now set data
+        for (int i=0; i<_pathGroup.size(); i++) {
+            Positionable pos = _pathGroup.get(i);
+            if (pos instanceof IndicatorTrack) {
+                ((IndicatorTrack)pos).addPath(TEST_PATH);
+            } else {
+                ((PortalIcon)pos).setStatus(PortalIcon.PATH);
+            }
+        }
+        if (log.isDebugEnabled()) log.debug("showPath for "+name+" _pathGroup.size()= "+_pathGroup.size());
     }
-
+/*
     private void clearPath() {
         if (log.isDebugEnabled()) log.debug("clearPath");
         java.util.List<Positionable> list = _parent.getCircuitGroup();
         for (int i=0; i<list.size(); i++) {
-            IndicatorTrack icon = (IndicatorTrack)list.get(i);
-            icon.removePath(TEST_PATH);
-        }
-        Iterator<PortalIcon> iter = _parent.getPortalIconMap().values().iterator();
-        while (iter.hasNext()) {
-            iter.next().setStatus(PortalIcon.BLOCK);
+            Positionable pos = list.get(i);
+            if (pos instanceof IndicatorTrack) {
+                ((IndicatorTrack)pos).removePath(TEST_PATH);
+            } else {
+                ((PortalIcon)pos).setStatus(PortalIcon.BLOCK);
+            }
         }
         int state = _block.getState() & ~OBlock.ALLOCATED;
         _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
@@ -414,11 +421,13 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         // cannot do remove/add path on the fly due to conncurrent access with Iterator
         ArrayList<IndicatorTrack> changeGroup = new ArrayList<IndicatorTrack>();
         for (int i=0; i<list.size(); i++) {
-            IndicatorTrack icon = (IndicatorTrack)list.get(i);
-            Iterator<String> iter = icon.getPaths();
-            while (iter.hasNext()) {
-                if (oldName.equals(iter.next())) {
-                        changeGroup.add(icon);
+            if (list.get(i) instanceof IndicatorTrack) {
+                IndicatorTrack icon = (IndicatorTrack)list.get(i);
+                Iterator<String> iter = icon.getPaths();
+                while (iter.hasNext()) {
+                    if (oldName.equals(iter.next())) {
+                            changeGroup.add(icon);
+                    }
                 }
             }
         }
@@ -429,7 +438,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
         _pathListModel.dataChange();
     }
-
 
     private void deletePath() {
         OPath path = (OPath)_pathList.getSelectedValue();
@@ -446,14 +454,14 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     protected void closingEvent() {
-        clearPathGroup();
+        clearPath();
         _parent.closePathFrame(_block);
         _loc = getLocation(_loc);
         _dim = getSize(_dim);
         dispose();
     }
 
-    private void clearPathGroup() {
+    private void clearPath() {
         for (int i=0; i<_pathGroup.size(); i++) {
             Positionable pos = _pathGroup.get(i);
             if (pos instanceof PortalIcon) {

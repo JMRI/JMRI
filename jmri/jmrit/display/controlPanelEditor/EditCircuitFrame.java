@@ -11,6 +11,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import jmri.jmrit.logix.*;
+import jmri.jmrit.display.palette.ItemPalette;
+import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.picker.PickPanel;
 
 /**
  * <P>
@@ -23,11 +26,16 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     private OBlock _block;
     private CircuitBuilder _parent;
 
+    private JTextField  _blockName = new JTextField();
     private JTextField  _detectorSensorName = new JTextField();
     private JTextField  _errorSensorName = new JTextField();
     private JTextField  _blockState  = new JTextField();
     private JTextField  _numTrackSeg = new JTextField();
     private JTextField  _numTurnouts = new JTextField();
+
+    // Sensor list  
+    private JFrame      _pickFrame;
+    private JButton     _openPicklistButton;
 
     static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
@@ -40,7 +48,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         setTitle(java.text.MessageFormat.format(title, _block.getDisplayName()));
         _parent = parent;
         makeContentPanel();
-        _parent.setEditColors();
+        _parent.setEditColors(false);
         updateContentPanel();
     }
 
@@ -60,10 +68,20 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(CircuitBuilder.makeTextBoxPanel(false, _blockState, "blockState", false, null));
         _blockState.setPreferredSize(new Dimension(50, _blockState.getPreferredSize().height));
-        panel.add(CircuitBuilder.makeTextBoxPanel(true, _blockState, "blockState", false, null));
         contentPane.add(panel);
+
+        panel = new JPanel();
+        _blockName.setText(_block.getDisplayName());
+        panel.add(CircuitBuilder.makeTextBoxPanel(
+                    false, _blockName, "blockName", true, "TooltipBlockName"));
+        _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
+        contentPane.add(panel);
+
+        contentPane.add(MakeButtonPanel());
+        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         p = new JPanel();
         p.add(new JLabel(rbcp.getString("numTrackElements")));
@@ -99,12 +117,14 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                     false, _errorSensorName, "ErrorSensor", true, "detectorErrorName"));
         _errorSensorName.setToolTipText(rbcp.getString("detectorErrorName"));
         contentPane.add(panel);
-
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        contentPane.add(MakeButtonPanel());
+        contentPane.add(MakePickListPanel());
+        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
+
+        contentPane.add(MakeDoneButtonPanel());
         JPanel border = new JPanel();
-        border.setLayout(new java.awt.BorderLayout(10,10));
+        border.setLayout(new java.awt.BorderLayout(20,20));
         border.add(contentPane);
         setContentPane(border);
         pack();
@@ -118,7 +138,98 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         setVisible(true);
     }
 
+    private JPanel MakePickListPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        _openPicklistButton = new JButton(rbcp.getString("OpenSensorPicklist"));
+        _openPicklistButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    if (_pickFrame==null) {
+                        openPickList();
+                    } else {
+                        closePickList();
+                    }
+                }
+        });
+        _openPicklistButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
+        panel.add(_openPicklistButton);
+        panel.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
+
+        buttonPanel.add(panel);
+        return buttonPanel;
+    }
+
+    void openPickList() {
+        _pickFrame = new JFrame();
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(rbcp.getString("DragOccupancyName")));
+        blurb.add(new JLabel(ItemPalette.rbp.getString("DragErrorName")));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        content.add(panel);
+        PickListModel[] models = {PickListModel.sensorPickModelInstance()};
+        content.add(new PickPanel(models));
+
+        _pickFrame.setContentPane(content);
+        _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    closePickList();                   
+                }
+            });
+        _pickFrame.setLocationRelativeTo(this);
+        _pickFrame.toFront();
+        _pickFrame.setVisible(true);
+        _pickFrame.pack();
+        _openPicklistButton.setText(ItemPalette.rbp.getString("ClosePicklist"));
+    }
+
+    void closePickList() {
+        if (_pickFrame!=null) {
+            _pickFrame.dispose();
+            _pickFrame = null;
+            _openPicklistButton.setText(rbcp.getString("OpenSensorPicklist"));
+        }
+    }
+
     private JPanel MakeButtonPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        JButton changeButton = new JButton(rbcp.getString("buttonChangeName"));
+        changeButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    changeBlockName();
+                }
+        });
+        changeButton.setToolTipText(rbcp.getString("ToolTipChangeName"));
+        panel.add(changeButton);
+ 
+
+        JButton deleteButton = new JButton(rbcp.getString("ButtonDelete"));
+        deleteButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    deleteCircuit();
+                 }
+        });
+        deleteButton.setToolTipText(rbcp.getString("ToolTipDeleteCircuit"));
+        panel.add(deleteButton);
+        buttonPanel.add(panel);
+
+        return buttonPanel;
+    }
+
+    private JPanel MakeDoneButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
@@ -140,15 +251,6 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                 }
         });
         panel.add(doneButton);
-
-        JButton deleteButton = new JButton(rbcp.getString("ButtonDelete"));
-        deleteButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    deleteCircuit();
-                 }
-        });
-        deleteButton.setToolTipText(rbcp.getString("ToolTipDeleteCircuit"));
-        panel.add(deleteButton);
         buttonPanel.add(panel);
 
         return buttonPanel;
@@ -156,10 +258,35 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
     /************************* end setup **************************/
 
+    private void changeBlockName() {
+        String name = _blockName.getText();
+        if (name==null || name.trim().length()==0) {
+            JOptionPane.showMessageDialog(this, rbcp.getString("changeBlockName"), 
+                            rbcp.getString("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        _block.setUserName(name);
+        // block user name change will change portal names.  Change PortalIcon names to match
+        java.util.List<Positionable> list = _parent.getCircuitIcons(_block);
+        for (int i=0; i<list.size(); i++) {
+            if (list.get(i) instanceof PortalIcon) {
+                PortalIcon icon = (PortalIcon)list.get(i);
+                Portal portal = icon.getPortal();
+                icon.setName(portal.getName());
+                icon.setTooltip(new ToolTip(portal.getDescription(), 0, 0));
+            }
+        }
+    }
+
     private void deleteCircuit() {
-        _parent.removeBlock(_block);
-        _parent.closeCircuitFrame(null);
-        dispose();
+        int result = JOptionPane.showConfirmDialog(this, rbcp.getString("confirmBlockDelete"), 
+                        rbcp.getString("editCiruit"), JOptionPane.YES_NO_OPTION, 
+                        JOptionPane.QUESTION_MESSAGE);
+        if (result==JOptionPane.YES_OPTION) {
+            _parent.removeBlock(_block);
+            _parent.closeCircuitFrame(null);
+            dispose();
+        }
     }
 
     protected void updateContentPanel() {
@@ -251,6 +378,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                 _detectorSensorName.setText(errSensor.getDisplayName());
             }
         }
+        closePickList();
         // check icons to be indicator type
         _parent.iconsConverted();
         
