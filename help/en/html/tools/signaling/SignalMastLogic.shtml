@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Kevin Dickerson 2011 -->
-<!-- $Id: SignalMastLogic.shtml,v 1.2 2011-06-10 15:13:42 kevin-dickerson Exp $ -->
+<!-- $Id: SignalMastLogic.shtml,v 1.3 2011-06-13 16:09:41 kevin-dickerson Exp $ -->
 <title>JMRI: Signal Mast Logic</title>
 
 <!-- Style -->
@@ -55,17 +55,17 @@ other signal mast in-between being in the same direction.
 <img src="images/logic2.png" height="93" width="511"><br>Example 2
 <p>
 In the example above, a signalling logic from SM20 to SM24 would be invalid as 
-SM23 is in between the two.  You would have to create two separate logics one as 
-above, for SM20 to SM23, the second for SM23 to SM24.
+SM23 is in between the two.  You would have to create two separate logics, one as 
+above for SM20 to SM23, the second for SM23 to SM24.
 <p>
 <hr>
 Which aspect our source mast displays after being released from Danger is firstly
 determined by the aspect mapping that has been defined in the signal mast appearance 
 file.  If there is only one aspect that could be displayed, then the signal mast 
-will be set to that aspect.  
+will be set to that aspect.
 
 However if there are multiple aspects that could potentially be displayed then 
-the logic first looks at two areas to determine the resulting aspect to be displayed<br>
+the logic looks at two areas to determine the resulting aspect to be displayed<br>
 <ul><li>Diverging route<br><ul>
 <li>If there are aspects for a diverging route and any of the turnouts on the path are set thrown 
 then it will use the aspect for a diverging route.</li>
@@ -150,13 +150,15 @@ a signal mast that faces into block A that protects block B, you can not add a
 signal mast that faces into block B to protect block A.
 <p>
 <H3>Generate Signalling Logic</H3>
-Signalling logic can automatically be generated in two different ways.<b>
-The first is to built it on a signal mast by signal mast bases.  This can be done
-by selecting "Signal Mast Logic" from the pop up menu for the signal mast, from 
-here you then click on the "Discover" button, the system will go and find all 
-potential destination masts that are valid from the selected mast.<p>
+Signalling logic can automatically be generated in two different ways.<br>
+The first is to build it on a signal mast by signal mast basis.  This can be done
+by selecting "Signal Mast Logic" from the pop up menu for the signal mast icon on 
+the panel, from here you then click on the "Discover" button, the system will go 
+and find all potential destination masts that are valid from the selected mast.<p>
+<img src="images/discover.png" height="209" width="502"><p>
 The second method is from the "Pair" menu option in the Signal Mast Logic table, 
-this will generate logic based upon all the signal mast on the layout editor panel.
+this will generate logic based upon all the signal mast on the layout editor panel.<p>
+<img src="images/pairs.png" height="125" width="308"><p>
 Please be aware that on large layouts with a large number of signal masts configured, this 
 can take some time.
 <p>
