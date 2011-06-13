@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.14 $
+ * @version  $Revision: 1.15 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -204,9 +204,18 @@ public class IndexedPairVariableValue extends VariableValue
         if (getReadOnly() || getInfoOnly()) {
             value.setEditable(false);
         }
+        reps.add(value);
         updateRepresentation(value);
         return value;
     }
+
+    public void setAvailable(boolean a) {
+        _value.setVisible(a);
+        for (Component c : reps) c.setVisible(a);
+        super.setAvailable(a);
+    }
+
+    java.util.List<Component> reps = new java.util.ArrayList<Component>();
 
     private int _progState = 0;
     private boolean programmingLow = true;
@@ -498,7 +507,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.14 $
+     * @version     $Revision: 1.15 $
      */
     public class VarTextField extends JTextField {
 
