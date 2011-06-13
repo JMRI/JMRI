@@ -26,7 +26,13 @@
         <date>2009-12-28</date>
         <authorinitials>RGJ</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2011-06-13</date>
+        <authorinitials>KWD</authorinitials>
+        <revremark>Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>basic</aspecttable>
@@ -70,8 +76,47 @@
       <show>yellow</show>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-290.gif</imagelink>
     </appearance>
-
-
-
   </appearances>
+  
+  <specificappearances><!-- Start of Specific Appearances list -->
+     <danger>
+        <aspect>Stop</aspect>
+     </danger>
+     <held>
+        <aspect>Stop</aspect>
+     </held>
+  </specificappearances><!-- End of Specific Appearances list -->
+  
+    <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+     <ourAspect>Diverge Approach</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+     <advancedAspect>Approach</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+
+    <aspectMapping>
+     <advancedAspect>Diverging Approach</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+     <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings><!-- End of Aspect Mapping -->
+
 </appearancetable>  

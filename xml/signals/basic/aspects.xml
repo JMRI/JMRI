@@ -23,7 +23,7 @@
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -38,7 +38,13 @@
         <date>2010-3-25</date>
         <authorinitials>PWC</authorinitials>
         <revremark>Add speed element</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2011-06-13</date>
+        <authorinitials>KWD</authorinitials>
+        <revremark>Add Diverging flag=</revremark>
+    </revision>
   </revhistory>
 
   <aspects>
@@ -64,12 +70,14 @@
       <name>Diverging Clear</name>
       <indication>Proceed through diverging route</indication>
       <speed>Medium</speed>
+      <diverging>yes</diverging>
     </aspect>
 
     <aspect>
       <name>Diverging Approach</name>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
       <speed>Limited</speed>
+      <diverging>yes</diverging>
     </aspect>
 
   </aspects>
