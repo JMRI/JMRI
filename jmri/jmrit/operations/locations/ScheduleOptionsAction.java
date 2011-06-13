@@ -15,7 +15,7 @@ import jmri.jmrit.operations.OperationsFrame;
 /**
  * Action to launch schedule options.
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class ScheduleOptionsAction extends AbstractAction {
 		
@@ -114,7 +114,7 @@ class ScheduleOptionsFrame extends OperationsFrame{
 				return;
 			}
 			_track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
-			if (!trackBox.getSelectedItem().equals(""))
+			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(""))
 				_track.setAlternativeTrack((Track)trackBox.getSelectedItem());
 			else 
 				_track.setAlternativeTrack(null);
