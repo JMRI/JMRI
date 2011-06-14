@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for the Signalling Logic
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
 */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
@@ -31,7 +31,7 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
 
         getContentPane().add(sigPanel);
 
-		addHelpMenu("package.jmri.jmrit.signalling.SignallingFrame", true);
+		addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);
 
         // pack for display
         pack();
