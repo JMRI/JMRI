@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.7.shtml,v 1.5 2011-06-11 20:51:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.7.shtml,v 1.6 2011-06-14 01:25:31 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -130,7 +130,13 @@ to another consist.
 
 <P>New operations features and bug fixes:</P>
 <UL>
-<LI>Fixed a bug where a schedule's alternate track wasn't restored after restarting the program.</LI>
+	<LI>Fixed a bug where a schedule's alternate track wasn't restored
+	after restarting the program.</LI>
+	<LI>Fixed a bug, the program didn't check the car's road and the
+	schedule item's road when generating a custom load from staging.</LI>
+	<LI>Improved how custom car loads are generated from staging when
+	using match mode, and "Generate custom loads for train sidings serviced
+	by this train".</LI>
 </UL>
 
 <p>Bob Jacobsen fixed a problem with checkboxes and indexed variables in
