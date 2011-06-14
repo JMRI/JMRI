@@ -17,7 +17,7 @@ import org.jdom.JDOMException;
  * A singleton class for use by all SignalHeads and SignalMasts
  *
  * @author	Pete Cressman Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SignalSpeedMap {
 
@@ -154,7 +154,6 @@ public class SignalSpeedMap {
             // not a valid aspect
             log.warn("attempting to set invalid speed: "+name);
             //java.util.Enumeration<String> e = _table.keys();
-            //while (e.hasMoreElements()) { System.out.println(e.nextElement()); }
             throw new IllegalArgumentException("attempting to get speed from invalid name: "+name);
         }
         return _table.get(name);
@@ -164,7 +163,6 @@ public class SignalSpeedMap {
         java.util.Enumeration<String> e = _table.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            System.out.println(key);
             if(_table.get(key)==speed){
                 return key;
             }
