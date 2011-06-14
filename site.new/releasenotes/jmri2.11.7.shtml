@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.7.shtml,v 1.6 2011-06-14 01:25:31 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.7.shtml,v 1.7 2011-06-14 01:28:59 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -126,7 +126,7 @@ consist are not working
 to another consist.  
 4) The consist manager does not currently examine the slots for consists
 
-<P>Dan Boudreau:</P>
+<P>Dan Boudreau</P>
 
 <P>New operations features and bug fixes:</P>
 <UL>
@@ -138,6 +138,8 @@ to another consist.
 	using match mode, and "Generate custom loads for train sidings serviced
 	by this train".</LI>
 </UL>
+
+<P>Fixed the NCE consist editor, broken since 2.11.4.</P>
 
 <p>Bob Jacobsen fixed a problem with checkboxes and indexed variables in
 DecoderPro. No decoders were using it yet, but several are about to, so this
