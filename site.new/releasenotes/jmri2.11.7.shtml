@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.7.shtml,v 1.8 2011-06-14 16:41:39 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.7.shtml,v 1.9 2011-06-14 21:43:07 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -161,6 +161,13 @@ may have been counting on the buggy behavior for their layouts, so
 if you see any decoder definitions that look messy now, please mention 
 it in the jmriusers group.
 
+<p>Kevin Dickerson</p>
+<ul>
+<li>Fixed an issue with the Digitrax Simulator Throttle</li>
+<li>Fixed an issue where when you edited a route configured with a auto system name. it would duplicate the route</li>
+<li>Added the signal mast specific appearances and mapping to the basic set of signalmasts</li>
+<li>Added the signal mast logic facility for controlling signal masts, more info can be found <a href="/help/en/html/tools/signaling/SignalMastLogic.shtml">here<a></li>
+</ul>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
