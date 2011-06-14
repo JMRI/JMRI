@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.7.shtml,v 1.7 2011-06-14 01:28:59 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.7.shtml,v 1.8 2011-06-14 16:41:39 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -138,6 +138,18 @@ to another consist.
 	using match mode, and "Generate custom loads for train sidings serviced
 	by this train".</LI>
 </UL>
+
+<p>Pete Cressman</p>
+<ul>
+<li>Fixed bug in LRoute Initializer where extra trigger items were included</li>
+<li>Warrant route loops with repeating blocks or the same starting and ending bocks can record and playback.</li>
+<li>Indicator tracks move train Id markers automatically under both manual and auto playback warrants.</li>
+<li>Gray menus when CircuitBuilder is in an editing mode</li>
+<li>Portal editing in CircuitBuilder interface simpified.</li>
+<li>Name changing in CircuitBuilder for Blocks, Portals and Paths implemented.</li>
+<li>Conversion of track icons to Indicator icons in CircuitBuilder improved.</li>
+<li>Other fixes and improvements - CircuitBuilder is ready for use.</li>
+</ul>
 
 <P>Fixed the NCE consist editor, broken since 2.11.4.</P>
 
