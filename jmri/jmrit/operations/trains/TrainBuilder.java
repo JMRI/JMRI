@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.168 $
+ * @version             $Revision: 1.169 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1750,8 +1750,12 @@ public class TrainBuilder extends TrainCommon{
 	private ScheduleItem checkScheduleItem(ScheduleItem si, Car car, Track track){
 		if (!car.getType().equals(si.getType()) || si.getLoad().equals("") || si.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| si.getLoad().equals(CarLoads.instance().getDefaultLoadName())){
-			log.debug("Not using track ("+track.getName()+") schedule request type ("+si.getType()+") load ("+si.getLoad()+")");
+			log.debug("Not using track ("+track.getName()+") schedule request type ("+si.getType()+") road ("+si.getRoad()+") load ("+si.getLoad()+")");
 			return null;		
+		}
+		if (!si.getRoad().equals("") && !car.getRoad().equals(si.getRoad())){
+			log.debug("Not using track ("+track.getName()+") schedule request type ("+si.getType()+") road ("+si.getRoad()+") load ("+si.getLoad()+")");
+			return null;
 		}
 		if (!train.acceptsLoadName(si.getLoad())){
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainNotNewLoad"),
@@ -2087,14 +2091,14 @@ public class TrainBuilder extends TrainCommon{
 						return carAdded;	// done, no build errors					
 					}					
 					// is the destination a siding with a Schedule?
-					if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
-							&& status.contains(Car.LOAD)){
+					if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE)){
 						log.debug("Siding ("+testTrack.getName()+") status: "+status);
 						// is car departing a staging track that can generate schedule loads?
 						if (car.getTrack().isAddLoadsEnabled() && car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
-							ScheduleItem si = testTrack.getCurrentScheduleItem();
+							ScheduleItem si = getScheduleItem(car, testTrack);
+							//ScheduleItem si = testTrack.getCurrentScheduleItem();
 							// departing track and train must accept the schedule's load
-							if (car.getTrack().acceptsLoadName(si.getLoad()) && train.acceptsLoadName(si.getLoad())){
+							if (si != null && car.getTrack().acceptsLoadName(si.getLoad()) && train.acceptsLoadName(si.getLoad())){
 								addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));
 								car.setLoad(si.getLoad());
 								car.setLoadGeneratedFromStaging(true);
