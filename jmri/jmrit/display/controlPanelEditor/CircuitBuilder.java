@@ -1453,6 +1453,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                 }
                 int state = block.getState() | OBlock.ALLOCATED;
                 block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
+                _editPathsFrame._pathChange = true;
             }
             _highlightcomponent = null;
             _editPathsFrame.toFront();

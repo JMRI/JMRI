@@ -268,12 +268,14 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _block.setUserName(name);
         // block user name change will change portal names.  Change PortalIcon names to match
         java.util.List<Positionable> list = _parent.getCircuitIcons(_block);
-        for (int i=0; i<list.size(); i++) {
-            if (list.get(i) instanceof PortalIcon) {
-                PortalIcon icon = (PortalIcon)list.get(i);
-                Portal portal = icon.getPortal();
-                icon.setName(portal.getName());
-                icon.setTooltip(new ToolTip(portal.getDescription(), 0, 0));
+        if (list!=null) {
+            for (int i=0; i<list.size(); i++) {
+                if (list.get(i) instanceof PortalIcon) {
+                    PortalIcon icon = (PortalIcon)list.get(i);
+                    Portal portal = icon.getPortal();
+                    icon.setName(portal.getName());
+                    icon.setTooltip(new ToolTip(portal.getDescription(), 0, 0));
+                }
             }
         }
     }

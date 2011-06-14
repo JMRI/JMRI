@@ -27,9 +27,10 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private ArrayList<Positionable> _pathGroup = new ArrayList<Positionable>();
 
     private JTextField  _pathName = new JTextField();
-//    private JPanel      _pathPanel;
     private JList       _pathList;
-    private PathListModel _pathListModel; 
+    private PathListModel _pathListModel;
+
+    protected boolean _pathChange = false;
 
     static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
@@ -140,7 +141,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         JButton addButton = new JButton(rbcp.getString("buttonAddPath"));
         addButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    addPath();
+                    if (addOK()) {
+                        addPath();
+                    }
                 }
         });
         addButton.setToolTipText(rbcp.getString("ToolTipAddPath"));
@@ -249,6 +252,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             _pathName.setText(path.getName());
             showPath(path);
         } else {
+            checkForSavePath();
             _pathName.setText(null);
         }
         int state = _block.getState() | OBlock.ALLOCATED;
@@ -297,20 +301,20 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
         if (log.isDebugEnabled()) log.debug("showPath for "+name+" _pathGroup.size()= "+_pathGroup.size());
     }
-/*
-    private void clearPath() {
-        if (log.isDebugEnabled()) log.debug("clearPath");
-        java.util.List<Positionable> list = _parent.getCircuitGroup();
-        for (int i=0; i<list.size(); i++) {
-            Positionable pos = list.get(i);
-            if (pos instanceof IndicatorTrack) {
-                ((IndicatorTrack)pos).removePath(TEST_PATH);
-            } else {
-                ((PortalIcon)pos).setStatus(PortalIcon.BLOCK);
+
+    private void checkForSavePath() {
+        if (!addOK()) {
+            return;
+        }
+        if (_pathChange && _pathName.getText().length()>0) {
+            int result = JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
+                            rbcp.getString("savePath"), _pathName.getText()), 
+                            rbcp.getString("makePath"), JOptionPane.YES_NO_OPTION, 
+                            JOptionPane.QUESTION_MESSAGE);
+            if (result==JOptionPane.YES_OPTION) {
+                addPath();
             }
         }
-        int state = _block.getState() & ~OBlock.ALLOCATED;
-        _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
     }
 
     /************************* end setup **************************/
@@ -321,18 +325,26 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
     }
 
-    private void addPath() {
+    private boolean addOK() {
         String name = _pathName.getText();
         if (name==null || name.trim().length()==0) {
             JOptionPane.showMessageDialog(this, rbcp.getString("TooltipPathName"),
                                 rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
-            return;
+            return false;
         }
         if (_pathGroup.size()==0) {
             JOptionPane.showMessageDialog(this, rbcp.getString("noPathIcons"),
                                 rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
-            return;
+            return false;
         }
+        return true;
+    }
+
+    /**
+    * addOK() must be called prior to this method
+    */
+    private void addPath() {
+        String name = _pathName.getText();
         Portal fromPortal = null;
         Portal toPortal = null;
         boolean hasTrack = false;
@@ -384,6 +396,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         for (int i=0; i<settings.size(); i++) {
             path.addSetting(settings.get(i));
         }
+        _pathChange = false;
         _block.addPath(path);
         _pathListModel.dataChange();
     }
@@ -436,6 +449,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             track.removePath(oldName);
             track.addPath(name);
         }
+        _pathChange = false;
         _pathListModel.dataChange();
     }
 
@@ -448,12 +462,14 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         if (path==null) {
             return;
         }
+        _pathChange = false;
         _block.removePath(path);
         _pathListModel.dataChange();
         clearPath();
     }
 
     protected void closingEvent() {
+        checkForSavePath();
         clearPath();
         _parent.closePathFrame(_block);
         _loc = getLocation(_loc);
