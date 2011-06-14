@@ -543,10 +543,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 stopRunTrain();
-                // at end of Learn session, check if route was detected
-                if (!runProtectedOK()) {
-                    _runBlind.setSelected(true);
-                }
             }
         });
         startButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -590,18 +586,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     JOptionPane.showMessageDialog(null, rb.getString("MustBeFloat"),
                             rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     _throttleFactorBox.setText("1.0");
-                }
-            }
-        });
-        _runProtect.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled()) log.debug("_runProtect.isSelected()="+_runProtect.isSelected()+
-                                                    " runProtectedOK= "+runProtectedOK());
-
-                if (_runProtect.isSelected() && !runProtectedOK()) {
-                        JOptionPane.showMessageDialog(null, rb.getString("MustRunBlind"),
-                                rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                        _runBlind.setSelected(true);
                 }
             }
         });
@@ -732,16 +716,16 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     private JPanel makeThrottleTablePanel() {
         _commandTable = new JTable(_commandModel);
         _commandTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-        _commandTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//        _commandTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         for (int i=0; i<_commandModel.getColumnCount(); i++) {
             int width = _commandModel.getPreferredWidth(i);
             _commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
+        } 
         _throttlePane = new JScrollPane(_commandTable);
         ROW_HEIGHT = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
         dim.height = ROW_HEIGHT*8;
-        //_throttlePane.setPreferredSize(dim);
+        _throttlePane.setPreferredSize(dim);
         _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel buttonPanel = new JPanel();
@@ -908,14 +892,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         textField.setMinimumSize(new Dimension(200, textField.getPreferredSize().height));
         panel.add(textField);
         return panel;
-    }
-    
-    private boolean runProtectedOK() {
-        if (_throttleCommands.size() > 0) {
-            return !_throttleCommands.get(0).getBlockName().equals(
-                _throttleCommands.get(_throttleCommands.size()-1).getBlockName());
-        }
-        return true;
     }
 
     private void doControlCommand(int cmd) {
@@ -1673,8 +1649,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     *   "RouteSearch" - from run
     */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName());
-        if (e.getPropertyName().equals("RouteSearch"))  {
+        String property = e.getPropertyName();
+        if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
+                                            "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
+                                            " source= "+e.getSource());
+        if (property.equals("RouteSearch"))  {
             _searchStatus.setText(java.text.MessageFormat.format(rb.getString("FinderStatus"),
                            new Object[] {e.getOldValue(), e.getNewValue()}));
         } else {
@@ -1685,10 +1664,14 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     item = rb.getString("Idle");
                     break;
                 case Warrant.MODE_LEARN:
-                    if (e.getPropertyName().equals("blockChange")) {
+                    if (property.equals("blockChange")) {
                         setThrottleCommand("NoOp", rb.getString("Mark"));
-                    } else if (e.getPropertyName().equals("blockSkip")) {
+                    } else if (property.equals("blockSkip")) {
                         setThrottleCommand("NoOp", rb.getString("Skip"));
+                    } else if (property.equals("abortLearn")) {
+                        _learnThrottle.setSpeedSetting(-0.5F);
+                        _learnThrottle.setSpeedSetting(0.0F);
+                        stopRunTrain();
                     }
                     item = java.text.MessageFormat.format(rb.getString("Learning"),
                                 _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
@@ -2028,7 +2011,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 case VALUE_COLUMN:
                     return new JTextField(8).getPreferredSize().width;
                 case BLOCK_COLUMN:
-                    return new JTextField(50).getPreferredSize().width;
+                    return new JTextField(40).getPreferredSize().width;
             }
             return new JTextField(12).getPreferredSize().width;
         }
