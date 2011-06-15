@@ -830,10 +830,10 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                         }
                     }
                 }
-                if (log.isDebugEnabled()) log.debug("checkCircuits: block "+block.getDisplayName()
-                                                    +" has "+list.size()+" portals, "+
-                                                    iconCount+" portal icons and "+icons.size()+
-                                                    " total icons.");
+                if (log.isDebugEnabled() && list!=null )
+                                log.debug("checkCircuits: block "+block.getDisplayName()
+                                         +" has "+list.size()+" portals, "+iconCount+
+                                         " portal icons and "+icons.size()+" total icons.");
             }
         }
     }   // end checkCircuits

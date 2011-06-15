@@ -18,7 +18,7 @@ import jmri.jmrit.roster.RosterEntry;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -815,18 +815,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             log.error("activeIdx ("+activeIdx+") < _idxCurrentOrder ("+_idxCurrentOrder+")!"); 
         }
 
+        String currentSpeed = getCurrentSpeedAt(_idxCurrentOrder);
         if (_engineer!=null) {
             _engineer.synchNotify(block); // notify engineer of control point
-        }
-
-        String currentSpeed = getCurrentSpeedAt(_idxCurrentOrder);
-        if (currentSpeed==null) {
-            // originating block may not have an entrance portal. (i.e. may be a stub siding)
-            // otherwise. error
-            if (_idxCurrentOrder!=0) {
-                log.error("Block "+block.getDisplayName()+" does not have an entrance portal!");
-            }
-        } else if (_engineer!=null) {
             _engineer.rampSpeedTo(currentSpeed, getSpeedChangeWait(_idxCurrentOrder));
         }
 
