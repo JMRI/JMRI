@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.110 2011-06-05 01:11:17 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.111 2011-06-15 21:50:02 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -444,7 +444,9 @@ RFID.</P>
 
 <P>You can find some examples of custom manifests at <A
 	HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>http://groups.yahoo.com/group/jmriusers/files/Operations.</A></P>
-
+<P>There are two other options, "Enable Value Fields" and "Enable Radio Frequency Identification (RFID) Fields".
+You can use these fields to enter the value or cost of your rolling stock and the RFID if you're using them to
+track your rolling stock.</P>
 
 <A NAME="PrintOptions"></A>
 <H2>Print Options</H2>
