@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.87 $
+ * @version             $Revision: 1.88 $
  */
 public class Car extends RollingStock {
 	
@@ -564,13 +564,16 @@ public class Car extends RollingStock {
 			searchSchedule(track);
 		ScheduleItem currentSi = track.getCurrentScheduleItem();
 		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id: "+track.getScheduleItemId()+" mode: "+track.getScheduleMode());
-		if (currentSi != null && getType().equals(currentSi.getType()) && (currentSi.getLoad().equals("") || getLoad().equals(currentSi.getLoad()))){
+		if (currentSi != null && getType().equals(currentSi.getType()) 
+				&& (currentSi.getRoad().equals("") || getRoad().equals(currentSi.getRoad()))
+				&& (currentSi.getLoad().equals("") || getLoad().equals(currentSi.getLoad()))){
 			loadNext(currentSi);
 			setScheduleId("");
 			// bump schedule
 			track.bumpSchedule();
 		} else if (currentSi != null){
-			log.debug("Car ("+toString()+") type ("+getType()+") load ("+getLoad()+") arrived out of sequence, needed type ("+currentSi.getType()+") load ("+currentSi.getLoad()+")");
+			log.debug("Car ("+toString()+") type ("+getType()+") road ("+getRoad()+") load ("+getLoad()
+					+") arrived out of sequence, needed type ("+currentSi.getType()+") road ("+currentSi.getRoad()+") load ("+currentSi.getLoad()+")");
 		} else {
 			log.error("ERROR Track "+track.getName()+" current schedule item is null!");
 		}
