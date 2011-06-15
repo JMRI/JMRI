@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author Dan Boudreau Copyright (C) 2007 2008
  * Cloned from NceConsistEditFrame by
  * @author kcameron Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
@@ -489,8 +489,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 				// load right away or verify?
 				if(!verifyAllLocoAddr())
 					fullLoad();
-			}else if (updateRoster(consistTextField.getText()))
+			}else if (updateRoster(consistTextField.getText())){
 				saveLoadButton.setEnabled(false);
+				consistNum = getConsist(); // reload panel
+			}
 			return;
 		}
 
