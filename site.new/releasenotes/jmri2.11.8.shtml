@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.8.shtml,v 1.1 2011-06-14 21:46:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.8.shtml,v 1.2 2011-06-16 15:15:02 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -43,15 +43,6 @@ back to an earlier version.
 
 <p>This is the eighth in a series of test versions. We expect this series
 to end in a JMRI 2.12 or 3.0 production release in 2011. 
-
-<p>
-It contains 
-many new features, including:
-
-<ul>
-<li>
-</ul>
-along with other changes.  See the complete list below.
 
 <p>Some of the changes involved are quite extensive.
 They may require a certain amount of experience before they are working well.  
