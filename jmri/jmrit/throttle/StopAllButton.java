@@ -14,7 +14,7 @@ public class StopAllButton extends JButton {
 
 	public StopAllButton() {
 		//   	stop.setText(throttleBundle.getString("ThrottleToolBarStopAll"));
-		setIcon(new NamedIcon("resources/icons/throttles/Stop24.gif","resources/icons/throttles/Stop24.gif"));
+		setIcon(new NamedIcon("resources/icons/throttles/estop.png","resources/icons/throttles/estop.png"));
 		setToolTipText(throttleBundle.getString("ThrottleToolBarStopAllToolTip"));
 		setVerticalTextPosition(JButton.BOTTOM);
 		setHorizontalTextPosition(JButton.CENTER);

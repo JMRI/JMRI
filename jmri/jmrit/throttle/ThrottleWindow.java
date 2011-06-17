@@ -166,37 +166,9 @@ public class ThrottleWindow extends JmriJFrame {
     {
     	throttleToolBar = new JToolBar("Throttles toolbar");
     	
-    	jbPrevious = new JButton();
- //   	previous.setText(throttleBundle.getString("ThrottleToolBarPrev"));
-    	jbPrevious.setIcon(new NamedIcon("resources/icons/throttles/Back24.gif","resources/icons/misc/Back24.gif"));
-    	jbPrevious.setVerticalTextPosition(JButton.BOTTOM);
-    	jbPrevious.setHorizontalTextPosition(JButton.CENTER);
-    	jbPrevious.setToolTipText(throttleBundle.getString("ThrottleToolBarPrevToolTip"));
-    	jbPrevious.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				previousThrottleFrame();
-			}
-		});
-    	throttleToolBar.add(jbPrevious);
-    	
-    	jbNext = new JButton();
- //   	next.setText(throttleBundle.getString("ThrottleToolBarNext"));
-    	jbNext.setIcon(new NamedIcon("resources/icons/throttles/Forward24.gif","resources/icons/throttles/Forward24.gif"));
-    	jbNext.setToolTipText(throttleBundle.getString("ThrottleToolBarNextToolTip"));
-    	jbNext.setVerticalTextPosition(JButton.BOTTOM);
-    	jbNext.setHorizontalTextPosition(JButton.CENTER);
-    	jbNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				nextThrottleFrame();
-			}
-		});
-    	throttleToolBar.add(jbNext);
-		
-    	throttleToolBar.addSeparator();
-    	
     	jbNew = new JButton();
  //   	nouveau.setText(throttleBundle.getString("ThrottleToolBarNew"));
-    	jbNew.setIcon(new NamedIcon("resources/icons/throttles/Add24.gif","resources/icons/throttles/Add24.gif"));
+    	jbNew.setIcon(new NamedIcon("resources/icons/throttles/add.png","resources/icons/throttles/add.png"));
     	jbNew.setToolTipText(throttleBundle.getString("ThrottleToolBarNewToolTip"));
     	jbNew.setVerticalTextPosition(JButton.BOTTOM);
     	jbNew.setHorizontalTextPosition(JButton.CENTER);
@@ -209,7 +181,7 @@ public class ThrottleWindow extends JmriJFrame {
     	
     	jbClose = new JButton();
 //    	close.setText(throttleBundle.getString("ThrottleToolBarClose"));
-    	jbClose.setIcon(new NamedIcon("resources/icons/throttles/Remove24.gif","resources/icons/throttles/Remove24.gif"));
+    	jbClose.setIcon(new NamedIcon("resources/icons/throttles/remove.png","resources/icons/throttles/remove.png"));
     	jbClose.setToolTipText(throttleBundle.getString("ThrottleToolBarCloseToolTip"));
     	jbClose.setVerticalTextPosition(JButton.BOTTOM);
     	jbClose.setHorizontalTextPosition(JButton.CENTER);
@@ -219,10 +191,76 @@ public class ThrottleWindow extends JmriJFrame {
 			}
 		});
     	throttleToolBar.add(jbClose);
+    	
+    	throttleToolBar.addSeparator();
+
+       	jbPreviousRunning = new JButton();
+       	//   	previous.setText(throttleBundle.getString("ThrottleToolBarPrev"));
+       	jbPreviousRunning.setIcon(new NamedIcon("resources/icons/throttles/previous-jump.png","resources/icons/throttles/previous-jump.png"));
+       	jbPreviousRunning.setVerticalTextPosition(JButton.BOTTOM);
+       	jbPreviousRunning.setHorizontalTextPosition(JButton.CENTER);
+       	jbPreviousRunning.setToolTipText(throttleBundle.getString("ThrottleToolBarPrevRunToolTip"));
+       	jbPreviousRunning.addActionListener(new ActionListener() {
+       		public void actionPerformed(ActionEvent e) {
+       			previousRunningThrottleFrame();
+       		}
+       	});
+       	throttleToolBar.add(jbPreviousRunning);
+       	
+    	jbPrevious = new JButton();
+ //   	previous.setText(throttleBundle.getString("ThrottleToolBarPrev"));
+    	jbPrevious.setIcon(new NamedIcon("resources/icons/throttles/previous.png","resources/icons/throttles/previous.png"));
+    	jbPrevious.setVerticalTextPosition(JButton.BOTTOM);
+    	jbPrevious.setHorizontalTextPosition(JButton.CENTER);
+    	jbPrevious.setToolTipText(throttleBundle.getString("ThrottleToolBarPrevToolTip"));
+    	jbPrevious.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				previousThrottleFrame();
+			}
+		});
+    	throttleToolBar.add(jbPrevious);
+    	
+    	jbNext = new JButton();
+ //   	next.setText(throttleBundle.getString("ThrottleToolBarNext"));
+    	jbNext.setIcon(new NamedIcon("resources/icons/throttles/next.png","resources/icons/throttles/next.png"));
+    	jbNext.setToolTipText(throttleBundle.getString("ThrottleToolBarNextToolTip"));
+    	jbNext.setVerticalTextPosition(JButton.BOTTOM);
+    	jbNext.setHorizontalTextPosition(JButton.CENTER);
+    	jbNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nextThrottleFrame();
+			}
+		});
+    	throttleToolBar.add(jbNext);
+
+//       	throttleToolBar.addSeparator();
+
+
+       	jbNextRunning = new JButton();
+       	//   	next.setText(throttleBundle.getString("ThrottleToolBarNext"));
+       	jbNextRunning.setIcon(new NamedIcon("resources/icons/throttles/next-jump.png","resources/icons/throttles/next-jump.png"));
+       	jbNextRunning.setToolTipText(throttleBundle.getString("ThrottleToolBarNextRunToolTip"));
+       	jbNextRunning.setVerticalTextPosition(JButton.BOTTOM);
+       	jbNextRunning.setHorizontalTextPosition(JButton.CENTER);
+       	jbNextRunning.addActionListener(new ActionListener() {
+       		public void actionPerformed(ActionEvent e) {
+       			nextRunningThrottleFrame();
+       		}
+       	});
+       	throttleToolBar.add(jbNextRunning);
+       	
+    	throttleToolBar.addSeparator();
+    	
+    	throttleToolBar.add(new StopAllButton());
+    	
+		if (powerMgr != null)
+			throttleToolBar.add(new LargePowerManagerButton());
+		
+    	throttleToolBar.addSeparator();
 
     	jbMode = new JButton();
 //    	jbMode.setText(throttleBundle.getString("ThrottleToolBarEdit"));
-    	jbMode.setIcon(new NamedIcon("resources/icons/throttles/Edit24.gif","resources/icons/throttles/Edit24.gif"));
+    	jbMode.setIcon(new NamedIcon("resources/icons/throttles/edit-view.png","resources/icons/throttles/edit-view.png"));
     	jbMode.setToolTipText(throttleBundle.getString("ThrottleToolBarEditToolTip"));
     	jbMode.setVerticalTextPosition(JButton.BOTTOM);
     	jbMode.setHorizontalTextPosition(JButton.CENTER);
@@ -234,50 +272,15 @@ public class ThrottleWindow extends JmriJFrame {
     	throttleToolBar.add(jbMode);
     	
     	throttleToolBar.addSeparator();
-    	
-    	throttleToolBar.add(new StopAllButton());
-    	
-		if (powerMgr != null)
-			throttleToolBar.add(new LargePowerManagerButton());
-		
-    	throttleToolBar.addSeparator();
-    	
+
     	jbThrottleList = new JButton();
  //   	stop.setText(throttleBundle.getString("ThrottleToolBarOpenThrottleList"));
-    	jbThrottleList.setIcon(new NamedIcon("resources/icons/throttles/Movie24.gif","resources/icons/throttles/Movie24.gif"));
+    	jbThrottleList.setIcon(new NamedIcon("resources/icons/throttles/list.png","resources/icons/throttles/list.png"));
     	jbThrottleList.setToolTipText(throttleBundle.getString("ThrottleToolBarOpenThrottleListToolTip"));
     	jbThrottleList.setVerticalTextPosition(JButton.BOTTOM);
     	jbThrottleList.setHorizontalTextPosition(JButton.CENTER);
     	jbThrottleList.addActionListener(new ThrottlesListAction() );
     	throttleToolBar.add(jbThrottleList);
-
-       	throttleToolBar.addSeparator();
-
-       	jbPreviousRunning = new JButton();
-       	//   	previous.setText(throttleBundle.getString("ThrottleToolBarPrev"));
-       	jbPreviousRunning.setIcon(new NamedIcon("resources/icons/throttles/Up24.gif","resources/icons/misc/Up24.gif"));
-       	jbPreviousRunning.setVerticalTextPosition(JButton.BOTTOM);
-       	jbPreviousRunning.setHorizontalTextPosition(JButton.CENTER);
-       	jbPreviousRunning.setToolTipText(throttleBundle.getString("ThrottleToolBarPrevRunToolTip"));
-       	jbPreviousRunning.addActionListener(new ActionListener() {
-       		public void actionPerformed(ActionEvent e) {
-       			previousRunningThrottleFrame();
-       		}
-       	});
-       	throttleToolBar.add(jbPreviousRunning);
-
-       	jbNextRunning = new JButton();
-       	//   	next.setText(throttleBundle.getString("ThrottleToolBarNext"));
-       	jbNextRunning.setIcon(new NamedIcon("resources/icons/throttles/Down24.gif","resources/icons/throttles/Down24.gif"));
-       	jbNextRunning.setToolTipText(throttleBundle.getString("ThrottleToolBarNextRunToolTip"));
-       	jbNextRunning.setVerticalTextPosition(JButton.BOTTOM);
-       	jbNextRunning.setHorizontalTextPosition(JButton.CENTER);
-       	jbNextRunning.addActionListener(new ActionListener() {
-       		public void actionPerformed(ActionEvent e) {
-       			nextRunningThrottleFrame();
-       		}
-       	});
-       	throttleToolBar.add(jbNextRunning);
 
        	// Receptacle for Jynstruments
     	new FileDrop(throttleToolBar, new Listener() {

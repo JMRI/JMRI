@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import jmri.jmrit.XmlFile;
@@ -25,7 +27,7 @@ import jmri.util.swing.EditableResizableImagePanel;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -34,10 +36,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     JTextField[] labels;
     JCheckBox[] lockable;
+    JRadioButton[] shunterMode;
+    ButtonGroup shunterModeGroup;
     EditableResizableImagePanel[] _imageFilePath;
     EditableResizableImagePanel[] _imagePressedFilePath;
-	JButton[] jbRemoveImage;
-	JButton[] jbRemoveImagePressed;
 
     // we're doing a manual allocation of position for
     // now, based on 28 labels
@@ -53,6 +55,8 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
         labels = new JTextField[maxfunction+1];
         lockable = new JCheckBox[maxfunction+1];
+        shunterMode  = new JRadioButton[maxfunction+1];
+        shunterModeGroup = new ButtonGroup();
         _imageFilePath = new EditableResizableImagePanel[maxfunction+1];
         _imagePressedFilePath = new EditableResizableImagePanel[maxfunction+1];
     	
@@ -65,27 +69,32 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         cL.weighty = 1.0;
         int nextx = 0;
         
-        add(new JLabel("fn"), cL);
+        // first column
+        add(new JLabel(rb.getString("FunctionButtonN")), cL);
         cL.gridx++;
-        add(new JLabel("label"), cL);
+        add(new JLabel(rb.getString("FunctionButtonLabel")), cL);
         cL.gridx++;
-        add(new JLabel("lock"), cL);
+        add(new JLabel(rb.getString("FunctionButtonLockable")), cL);
         cL.gridx++;
-        add(new JLabel("off"), cL);
+        add(new JLabel(rb.getString("FunctionButtonImageOff")), cL);
         cL.gridx++;
-        add(new JLabel("on"), cL);
+        add(new JLabel(rb.getString("FunctionButtonImageOn")), cL);
         cL.gridx++;
-        add(new JLabel("fn"), cL);
+        add(new JLabel(rb.getString("FunctionButtonShunterFn")), cL);
         cL.gridx++;
-        add(new JLabel("label"), cL);
+        // second column
+        add(new JLabel(rb.getString("FunctionButtonN")), cL);
         cL.gridx++;
-        add(new JLabel("lock"), cL);
+        add(new JLabel(rb.getString("FunctionButtonLabel")), cL);
         cL.gridx++;
-        add(new JLabel("off"), cL);
+        add(new JLabel(rb.getString("FunctionButtonLockable")), cL);
         cL.gridx++;
-        add(new JLabel("on"), cL);
+        add(new JLabel(rb.getString("FunctionButtonImageOff")), cL);
         cL.gridx++;
-
+        add(new JLabel(rb.getString("FunctionButtonImageOn")), cL);
+        cL.gridx++;
+        add(new JLabel(rb.getString("FunctionButtonShunterFn")), cL);
+        cL.gridx++;
         
         cL.gridx = 0;
         cL.gridy = 1;
@@ -122,12 +131,19 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     		_imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
     		add(_imagePressedFilePath[i], cL);    		
             cL.gridx++;
-
+            
+            shunterMode[i] = new JRadioButton();
+            shunterModeGroup.add(shunterMode[i]);
+            if ( ("F"+i).compareTo(r.getShuntingFunction()) == 0)
+            	shunterMode[i].setSelected(true);
+            add(shunterMode[i], cL);
+            cL.gridx++;
+            
             // advance position
             cL.gridy++;
             if (cL.gridy-1 == ((maxfunction+1)/2)+1) {
                 cL.gridy = 1;  // skip titles
-                nextx = nextx+5;
+                nextx = nextx+6;
             }
             cL.gridx = nextx;
         }
@@ -172,8 +188,16 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                     if (r.getFunctionSelectedImage(i)!=null && !r.getFunctionSelectedImage(i).equals(_imagePressedFilePath[i].getImagePath()))
                         return true;
                 }
-        }        
-        
+        }
+        if (shunterMode!=null) {
+        	String shunFn = "";
+        	for (int i = 0; i<shunterMode.length; i++)  {
+        		if ((shunterMode[i]!=null) && (shunterMode[i].isSelected()))
+        			shunFn = "F"+i;
+        	}
+        	if (shunFn.compareTo(r.getShuntingFunction())!=0)
+        		return true;
+        }
         return false;        
     }
         
@@ -182,19 +206,24 @@ public class FunctionLabelPane extends javax.swing.JPanel {
      **/
     public void update(RosterEntry r) {
         if (labels!=null) {
-            for (int i = 0; i<labels.length; i++) 
-                if (labels[i]!=null && !labels[i].getText().equals("")) {
-                    r.setFunctionLabel(i, labels[i].getText());
-                    r.setFunctionLockable(i, lockable[i].isSelected());
-                   	r.setFunctionImage(i, _imageFilePath[i].getImagePath());
-                   	r.setFunctionSelectedImage(i, _imagePressedFilePath[i].getImagePath());
-                } else if (labels[i]!=null && labels[i].getText().equals("")) {
-                    if (r.getFunctionLabel(i) != null) {
-                        r.setFunctionLabel(i, null);
-                    	r.setFunctionImage(i, null);
-                    	r.setFunctionSelectedImage(i, null);
-                    }
-                }
+        	String shunFn = "";
+        	for (int i = 0; i<labels.length; i++) {
+        		if (labels[i]!=null && !labels[i].getText().equals("")) {
+        			r.setFunctionLabel(i, labels[i].getText());
+        			r.setFunctionLockable(i, lockable[i].isSelected());
+        			r.setFunctionImage(i, _imageFilePath[i].getImagePath());
+        			r.setFunctionSelectedImage(i, _imagePressedFilePath[i].getImagePath());
+        		} else if (labels[i]!=null && labels[i].getText().equals("")) {
+        			if (r.getFunctionLabel(i) != null) {
+        				r.setFunctionLabel(i, null);
+        				r.setFunctionImage(i, null);
+        				r.setFunctionSelectedImage(i, null);
+        			}
+        		}
+        		if ((shunterMode[i]!=null) && (shunterMode[i].isSelected()))
+        			shunFn = "F"+i;
+        	}
+        	r.setShuntingFunction(shunFn);
         }
     }
 

@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.23 2011-03-15 02:18:12 hebbos Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.24 2011-06-17 09:24:46 hebbos Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -38,6 +38,7 @@
 <!ATTLIST locomotive imageFilePath CDATA #IMPLIED>
 <!ATTLIST locomotive iconFilePath  CDATA #IMPLIED>
 <!ATTLIST locomotive URL  CDATA #IMPLIED>
+<!ATTLIST locomotive IsShuntingOn  CDATA #IMPLIED>
 
 <!ELEMENT dateupdated (#PCDATA) >
 

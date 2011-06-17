@@ -27,6 +27,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 
 import jmri.DccThrottle;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.util.MouseInputAdapterInstaller;
 
 import org.jdom.Attribute;
@@ -42,7 +44,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.96 $
+ * @version    $Revision: 1.97 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -77,8 +79,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     final public static int STEPDISPLAY = 1;
     final public static int SLIDERDISPLAYCONTINUOUS = 2;
     
-    final public static int BUTTON_SIZE = 32;
-    final public static int ESTOP_BUTTON_SIZE = 48;
+    final public static int BUTTON_SIZE = 40;
     
     private int _displaySlider = SLIDERDISPLAY;
     
@@ -122,6 +123,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     // Siwtch to continuous slider on function...
 	private String switchSliderFunction = "Fxx";
+	private String prevShuntingFn = null;
     
     /**
      *  Constructor.
@@ -175,8 +177,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	forwardButton.setBorderPainted(false);
         	forwardButton.setContentAreaFilled(false);
         	forwardButton.setText(null);
-        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/UpRed.png"));
-        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/UpGreen.png"));
+        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/up-red.png"));
+        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/up-green.png"));
         	forwardButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	forwardButton.setToolTipText(rb.getString("ButtonForward"));
         } else
@@ -188,8 +190,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	reverseButton.setBorderPainted(false);
         	reverseButton.setContentAreaFilled(false);
         	reverseButton.setText(null);
-        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/DownRed.png"));
-        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/DownGreen.png"));
+        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/down-red.png"));
+        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/down-green.png"));
         	reverseButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	reverseButton.setToolTipText(rb.getString("ButtonReverse"));
         } else
@@ -788,9 +790,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	stopButton.setBorderPainted(false);
         	stopButton.setContentAreaFilled(false);
         	stopButton.setText(null);
-        	stopButton.setIcon(new ImageIcon("resources/icons/throttles/Stop48.png"));
-        	stopButton.setPressedIcon(new ImageIcon("resources/icons/throttles/Stop40.png"));
-        	stopButton.setPreferredSize(new Dimension(ESTOP_BUTTON_SIZE, ESTOP_BUTTON_SIZE));
+        	stopButton.setIcon(new ImageIcon("resources/icons/throttles/estop.png"));
+        	stopButton.setPressedIcon(new ImageIcon("resources/icons/throttles/estop24.png"));
+        	stopButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	stopButton.setToolTipText(rb.getString("ButtonEStop"));
         } else
         	stopButton.setText(rb.getString("ButtonEStop"));
@@ -824,8 +826,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	idleButton.setBorderPainted(false);
         	idleButton.setContentAreaFilled(false);
         	idleButton.setText(null);
-        	idleButton.setIcon(new ImageIcon("resources/icons/throttles/RoundRedCircle24.png"));
-        	idleButton.setPressedIcon(new ImageIcon("resources/icons/throttles/RoundRedCircle20.png"));
+        	idleButton.setIcon(new ImageIcon("resources/icons/throttles/stop.png"));
+        	idleButton.setPressedIcon(new ImageIcon("resources/icons/throttles/stop24.png"));
         	idleButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	idleButton.setToolTipText(rb.getString("ButtonIdle"));
         } else
@@ -995,7 +997,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.96 $
+     * @version    $Revision: 1.97 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -1264,11 +1266,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             trackSliderMinInterval = trackSliderMinIntervalDefault;
         }
-        if (e.getAttribute("switchSliderOnFunction") != null)
-        	switchSliderFunction = e.getAttribute("switchSliderOnFunction").getValue();
-        else
-        	switchSliderFunction = null;
-
+        if ((prevShuntingFn==null) && (e.getAttribute("switchSliderOnFunction") != null))
+        	setSwitchSliderFunction( e.getAttribute("switchSliderOnFunction").getValue() );
+        
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);
     }
@@ -1280,7 +1280,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		this.setEnabled(false);
         if (throttle != null)
         	throttle.removePropertyChangeListener(this);
-        throttle = null;		
+        throttle = null;
+        if (prevShuntingFn != null) {
+        	setSwitchSliderFunction(prevShuntingFn);
+        	prevShuntingFn = null;
+        }
 	}
 
 	public void notifyAddressThrottleFound(DccThrottle t) {
@@ -1304,16 +1308,52 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if(log.isDebugEnabled()) {
            jmri.DccLocoAddress Address=(jmri.DccLocoAddress)throttle.getLocoAddress();
            log.debug("new address is " +Address.toString());
-        }		
+        }
+        
+        if ((addressPanel!=null) && (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getShuntingFunction() != null)) {
+        	prevShuntingFn = getSwitchSliderFunction();
+        	setSwitchSliderFunction(addressPanel.getRosterEntry().getShuntingFunction());
+        }	
 	}
 	
 	public void setSwitchSliderFunction(String fn) {
-		switchSliderFunction = fn;		
+		switchSliderFunction = fn;
+		if (throttle != null) { // Update UI depending on function state
+			try {
+				java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
+				if (getter!=null) {
+					Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
+		        	if (state)
+		        		setSpeedController(SLIDERDISPLAYCONTINUOUS);
+		        	else
+		        		setSpeedController(SLIDERDISPLAY);
+				}
+	        } catch (java.lang.NoSuchMethodException ex1) {
+				log.warn("Exception in setSwitchSliderFunction: " + ex1);
+			} catch (java.lang.IllegalAccessException ex2) {
+				log.warn("Exception in setSwitchSliderFunction: " + ex2);
+			} catch (java.lang.reflect.InvocationTargetException ex3) {
+				log.warn("Exception in setSwitchSliderFunction: " + ex3);
+			}
+		}
 	}
 	
 	public String getSwitchSliderFunction() {
 		return switchSliderFunction ;		
 	}   
+	
+	public void saveToRoster(RosterEntry re){
+		if (re == null)
+			return;
+		if ((re.getShuntingFunction() != null) && (re.getShuntingFunction().compareTo(getSwitchSliderFunction())!=0))
+			re.setShuntingFunction(getSwitchSliderFunction());
+		else
+			if ((re.getShuntingFunction() == null) && (getSwitchSliderFunction()!=null))
+				re.setShuntingFunction(getSwitchSliderFunction());
+			else
+				return;
+		Roster.writeRosterFile();
+	}
 	
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());

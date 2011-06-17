@@ -55,7 +55,7 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 	    
 	    JToolBar throttleToolBar = new JToolBar("Throttles list toolbar");
 	    JButton jbNew = new JButton();
-	    jbNew.setIcon(new NamedIcon("resources/icons/throttles/Add24.gif","resources/icons/throttles/Add24.gif"));
+	    jbNew.setIcon(new NamedIcon("resources/icons/throttles/new.png","resources/icons/throttles/new.png"));
 	    jbNew.setToolTipText(throttleBundle.getString("ThrottleToolBarNewWindowToolTip"));
 	    jbNew.setVerticalTextPosition(JButton.BOTTOM);
 	    jbNew.setHorizontalTextPosition(JButton.CENTER);
@@ -76,7 +76,7 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 
 	    throttleToolBar.addSeparator();
 	    JButton jbPreferences = new JButton();
-	    jbPreferences.setIcon(new NamedIcon("resources/icons/throttles/Preferences24.gif","resources/icons/throttles/Preferences24.gif"));
+	    jbPreferences.setIcon(new NamedIcon("resources/icons/throttles/preferences.png","resources/icons/throttles/Preferences24.png"));
 	    jbPreferences.setToolTipText(throttleBundle.getString("ThrottleToolBarPreferencesToolTip"));
 	    jbPreferences.setVerticalTextPosition(JButton.BOTTOM);
 	    jbPreferences.setHorizontalTextPosition(JButton.CENTER);

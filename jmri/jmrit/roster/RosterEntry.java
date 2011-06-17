@@ -47,7 +47,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.58 $
+ * @version   $Revision: 1.59 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -79,7 +79,8 @@ public class RosterEntry {
     protected String[] functionLabels;
     protected String[] functionSelectedImages;
     protected String[] functionImages;
-    boolean[] functionLockables;
+    protected boolean[] functionLockables;
+    protected String _isShuntingOn="";
     
     java.util.TreeMap<String,String> attributePairs;
     
@@ -124,6 +125,7 @@ public class RosterEntry {
         _iconFilePath = pEntry._iconFilePath;
         _URL = pEntry._URL;
         _maxSpeedPCT = pEntry._maxSpeedPCT;
+        _isShuntingOn = pEntry._isShuntingOn;
     }
 
     public void setId(String s) {
@@ -274,6 +276,11 @@ public class RosterEntry {
     }
     public String getIconPath() { return _iconFilePath; }
 
+    public void setShuntingFunction(String fn){
+    	_isShuntingOn=fn;
+    }
+    public String getShuntingFunction(){ return _isShuntingOn; }
+    
     public void setURL(String s) {
         String old = _URL;
         _URL = s;
@@ -310,6 +317,7 @@ public class RosterEntry {
         if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = XmlFile.resourcesDir()+a.getValue();
         if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = XmlFile.resourcesDir()+a.getValue();
         if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
+        if ((a = e.getAttribute("IsShuntingOn")) != null )  _isShuntingOn = a.getValue();
         if ((a = e.getAttribute("maxSpeed")) != null )  
         	_maxSpeedPCT = Integer.parseInt(a.getValue());     
         org.jdom.Element e3;
@@ -547,6 +555,7 @@ public class RosterEntry {
         	e.setAttribute("iconFilePath", "");
         }
         e.setAttribute("URL", getURL());
+        e.setAttribute("IsShuntingOn", getShuntingFunction());
 
         if (! _dateUpdated.equals("")) 
             e.addContent(new Element("dateUpdated").addContent(getDateUpdated()));
