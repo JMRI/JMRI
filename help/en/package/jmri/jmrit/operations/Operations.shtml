@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.111 2011-06-15 21:50:02 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.112 2011-06-17 02:04:04 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -204,6 +204,7 @@ If your railroad depicts trains traveling north and south select the
 "East/West" box. You must select at least one direction, and can if
 desired select both.
 
+<A NAME="Scale"></A>
 <H3>Scale</H3>
 
 Next select the scale you are modeling. This is useful when you enter
@@ -1059,17 +1060,17 @@ find.  Each time you press find, the next car with a road number ending with
 
 If you already have a list of cars in a database, you can import the
 cars into the program. The import function requires an ACSII text file,
-with one line for each car. The car import requires six attributes and
-the order is car number, road name, type, length, weight, and color. All six
+with one line for each car. The car import requires four attributes and
+the order is car number, road name, type, and length. All four
 car attributes are required for the import to work correctly. The
 following shows two examples of the correct format:
 
-<P>336 GCR Flat 40 3.8 Black
- <BR>655578 UP Boxcar 40 3.8 Yellow</P>
+<P>336 GCR Flat 40
+ <BR>655578 UP Boxcar 40</P>
 
 <P>Each line can start with a space and multiple spaces between
 fields is okay. Optionally you can include additional attributes in the
-following order, owner name, date built, and location. The location can
+following order, weight, color, owner name, date built, and location. The location can
 have two fields, the location name followed by the location's siding or
 yard name separated by a hyphen. The following shows two examples of the
 correct format:</P>
@@ -1089,6 +1090,9 @@ Terminal <BR>
 <P>You need to be very careful with spaces when importing a comma
 delimitated file. The program will include leading and trailing spaces
 if they exist between the commas.</P>
+
+<P>If you enter 0 for the car's weight, the program will automatically calculate the
+car weight for you based on the car's length and the <A HREF="#Scale">scale</A> you've selected.</P>
 
 <P>To import a file, use the "Tools" menu in the upper left hand
 corner of the Tools-&gt;Operations-&gt;Cars menu. Then select
