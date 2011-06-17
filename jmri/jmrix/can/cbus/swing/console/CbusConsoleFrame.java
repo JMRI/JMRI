@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -212,12 +212,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         showPacketCheckBox.setText("Show Packets");
         showPacketCheckBox.setVisible(true);
         showPacketCheckBox.setToolTipText("Select to show packets");
-        showPacketCheckBox.setSelected(false);
         
         showEventCheckBox.setText("Show Events");
         showEventCheckBox.setVisible(true);
         showEventCheckBox.setToolTipText("Select to show events");
-        showEventCheckBox.setSelected(true);
         
         filterButton.setText("Filter...");
         filterButton.setVisible(true);
@@ -322,12 +320,15 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         
         // Pane for network statistics
         statsPane = new JPanel();
+
+        statsPane.setVisible(false); // initial state is not displayed
+        showStatsCheckBox.setSelected(false);
+
         statsPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Statistics"));
         statsPane.add(sentCountField);
         statsPane.add(rcvdCountField);
         statsPane.add(statsClearButton);
-        statsPane.setVisible(false);
 //        getContentPane().add(statsPane);
         southPane.add(statsPane);
         showStatsCheckBox.addActionListener(new ActionListener() {
@@ -417,6 +418,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 //        getContentPane().add(sendPane);
         southPane.add(sendPane);
         
+        showPacketCheckBox.setSelected(false);
+        rxPane.setVisible(false); // initial state is not displayed
+        sendPane.setVisible(false);
+
         showPacketCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (showPacketCheckBox.isSelected()) {
@@ -442,6 +447,10 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 
         // Pane for constructing event to send
         evPane = new JPanel();
+
+        evPane.setVisible(true); // initial state is not displayed
+        showEventCheckBox.setSelected(true);
+
         evPane.setLayout(new BoxLayout(evPane, BoxLayout.X_AXIS));
         evPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Send Event"));
@@ -459,7 +468,6 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         evPane.add(offButton);
 
         evPane.add(sendEvButton);
-        evPane.setVisible(false);
 //        getContentPane().add(evPane);
         southPane.add(evPane);
 
@@ -575,9 +583,11 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         pack();
         paneA.setMaximumSize(paneA.getSize());
         pack();
+        packInside();
         
         linesBuffer[CAN] = new StringBuffer();
         linesBuffer[CBUS] = new StringBuffer();
+
     }
     
     /**
