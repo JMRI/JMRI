@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.8.shtml,v 1.3 2011-06-17 17:25:08 pete_cressman Exp $ -->
+<!-- $Id: jmri2.11.8.shtml,v 1.4 2011-06-17 18:13:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -107,9 +107,14 @@ None at the time of this release.
 
 <h3>Changes since test release version 2.11.7</h3>
 
+
 <p>Pete Cressman -
 Add user's name to loconet titles when user has modified default name to distinguish multiple connections
 </p>
+
+<p>
+The initial display of the CBUS console was fixed so that the buttons show properly.
+</P>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
