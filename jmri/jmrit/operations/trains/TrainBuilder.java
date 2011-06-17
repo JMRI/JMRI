@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.169 $
+ * @version             $Revision: 1.170 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1120,7 +1120,7 @@ public class TrainBuilder extends TrainCommon{
 					}
 					// does car have a next destination, but no destination
 					if (car.getNextDestination() != null && car.getDestination() == null){
-						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{car.toString(),(car.getNextDestinationName()+", "+car.getNextDestTrackName())}));
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{car.toString(), car.getLocationName(),(car.getNextDestinationName()+", "+car.getNextDestTrackName())}));
 						if (!Router.instance().setDestination(car, train, buildReport)){
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
 							// don't move car if routing issue was track space but not departing staging
@@ -1889,6 +1889,7 @@ public class TrainBuilder extends TrainCommon{
 							// no, find a destination track this this car
 						} else {
 							List<String> tracks = car.getDestination().getTracksByMovesList(null);
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForTrack"),new Object[]{car.toString(), car.getDestinationName()}));
 							for (int s = 0; s < tracks.size(); s++){
 								Track testTrack = car.getDestination().getTrackById(tracks.get(s));
 								// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
@@ -1926,7 +1927,7 @@ public class TrainBuilder extends TrainCommon{
 								break;
 							}
 						}
-						// car has a destination track
+					// car has a destination track
 					} else {
 						// going into the correct staging track?
 						if (!rld.equals(train.getTrainTerminatesRouteLocation()) || terminateStageTrack == null  || terminateStageTrack == car.getDestinationTrack()){
@@ -1940,10 +1941,17 @@ public class TrainBuilder extends TrainCommon{
 						}
 					}
 					// done?
-					if (carAdded)
+					if (carAdded){
 						break;	//yes
-					else
-						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCanNotDropCar"),new Object[]{car.toString(), car.getDestination(), locCount}));
+					} else {
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCanNotDropCar"),new Object[]{car.toString(), car.getDestinationName(), locCount}));
+						if (car.getDestinationTrack() == null){
+							log.debug("Could not find a destination track for location "+car.getDestinationName());
+							// remove destination and change to next destination
+							car.setNextDestination(car.getDestination());
+							car.setDestination(null,null);
+						}
+					}
 				}
 			}
 		}
