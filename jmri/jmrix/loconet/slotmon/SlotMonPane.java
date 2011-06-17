@@ -17,7 +17,7 @@ import jmri.jmrix.loconet.*;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -116,7 +116,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame"; }
     public String getTitle() { 
-        return LocoNetBundle.bundle().getString("MenuItemSlotMonitor"); 
+        return getTitle(LocoNetBundle.bundle().getString("MenuItemSlotMonitor")); 
     }
     
     public void dispose() {

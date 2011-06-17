@@ -23,7 +23,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007, 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
@@ -91,7 +91,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.pm4.PM4Frame"; }
     public String getTitle() { 
-        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer"); 
+        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer")); 
     }
 
     void setSpeedFromDisplay(int offset, JComboBox box) {

@@ -14,7 +14,7 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.16 $
+ * @version	    $Revision: 1.17 $
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -64,7 +64,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     public LoaderPane() { }
     
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.downloader.LoaderFrame"; }
-    public String getTitle() { return res.getString("TitleLoader"); }
+    public String getTitle() { return getTitle(res.getString("TitleLoader")); }
 
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);

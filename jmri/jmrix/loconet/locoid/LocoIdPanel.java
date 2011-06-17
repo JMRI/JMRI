@@ -12,7 +12,7 @@ import javax.swing.*;
  * User interface for setting the LocoNet ID
  * 
  * @author Bob Jacobsen Copyright (C) 2006, 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 		LocoNetListener {
@@ -73,7 +73,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 	}
 
 	public String getTitle() {
-		return LocoNetBundle.bundle().getString("MenuItemSetID");
+		return getTitle(LocoNetBundle.bundle().getString("MenuItemSetID"));
 	}
 
 	public void initComponents(LocoNetSystemConnectionMemo memo) {

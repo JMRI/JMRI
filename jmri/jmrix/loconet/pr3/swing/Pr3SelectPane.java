@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  */
 public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
@@ -21,7 +21,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.pr3.swing.Pr3Select"; }
     public String getTitle() { 
-        return LocoNetBundle.bundle().getString("MenuItemPr3ModeSelect"); 
+        return getTitle(LocoNetBundle.bundle().getString("MenuItemPr3ModeSelect")); 
     }
     
     public Pr3SelectPane() {

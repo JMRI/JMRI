@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.*;
 /**
  * Panel for sending messages to throttles.
  * @author		Bob Jacobsen   Copyright (C) 2008, 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -37,7 +37,7 @@ public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"; }
     public String getTitle() { 
-        return LocoNetBundle.bundle().getString("MenuItemThrottleMessages"); 
+        return getTitle(LocoNetBundle.bundle().getString("MenuItemThrottleMessages")); 
     }
     
 }

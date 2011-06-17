@@ -13,7 +13,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.11 $
+ * @version	    $Revision: 1.12 $
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -36,7 +36,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.soundloader.LoaderFrame"; }
     public String getTitle() { 
-        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemSoundload"); 
+        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemSoundload")); 
     }
     
     public LoaderPane() {

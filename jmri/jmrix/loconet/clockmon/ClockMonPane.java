@@ -23,13 +23,22 @@ import javax.swing.*;
  * items (Dave Duchamp 2007-2008).
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004, 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame"; }
     public String getTitle() { 
-        return LocoNetBundle.bundle().getString("MenuItemClockMon"); 
+        String uName = "";
+        if (memo!=null) {
+            uName = memo.getUserName();
+            if (!"LocoNet".equals(uName)) {
+                uName = " ("+uName+")";
+            } else {
+                uName = "";
+            }
+        }
+        return LocoNetBundle.bundle().getString("MenuItemClockMon")+uName; 
     }
 
     public ClockMonPane() {

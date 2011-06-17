@@ -19,7 +19,7 @@ import jmri.jmrix.loconet.*;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006, 2007, 2008, 2010
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -33,7 +33,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.soundloader.EditorFrame"; }
     public String getTitle() { 
-        return LocoNetBundle.bundle().getString("MenuItemSoundEditor"); 
+        return getTitle(LocoNetBundle.bundle().getString("MenuItemSoundEditor")); 
     }
 
     public EditorPane() {
