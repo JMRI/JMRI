@@ -2,14 +2,16 @@
 
 package jmri.jmrix.bachrus;
 
+import java.util.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
 
 /**
  * Class to represent a dimensionless speed profile of a DCC decoder.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class DccSpeedProfile {
 
@@ -18,6 +20,8 @@ public class DccSpeedProfile {
     protected float _max;
     // index of last valid data point, -1 means no data
     protected int _lastPoint;
+
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
     public DccSpeedProfile(int len) {
         _length = len;
@@ -65,33 +69,77 @@ public class DccSpeedProfile {
     public int getLast() { return _lastPoint; }
 
 
+    public static void printHeading(PrintWriter p, int address) {
+        if (p != null) {
+            Date today;
+            String result;
+            SimpleDateFormat formatter;
+            formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
+            today = new Date();
+            result = formatter.format(today);
+            // title	
+            String annotate = "Bachrus MTS-DCC "+rb.getString("ProfileFor")+" "
+                                +address+" "+rb.getString("CreatedOn")
+                                +" " + result;
+            p.print(annotate);
+            p.println();
+        }
+    }
+
     // Save data as CSV
-    public static void export(DccSpeedProfile sp) {
+    public static void export(DccSpeedProfile sp, int address, String dirString, int units) {
         openExportFile();
 
+        String unitsString;
+        if (units == Speed.MPH) {
+            unitsString = "MPH";
+        } else {
+            unitsString = "KPH";
+        }
         // Save rows
         if ((out != null) && (p != null)) {
+            printHeading(p, address);
+            p.print("Step,Speed("+dirString+" "+unitsString+")");
+            p.println();
             // for each data point
             for (int i = 0; i < sp.getLength(); i++) {
                 p.print(i);
                 p.print(",");
-                p.println(sp.getPoint(i));
+                if (units == Speed.MPH) {
+                    p.println(Speed.kphToMph(sp.getPoint(i)));
+                } else {
+                    p.println(sp.getPoint(i));
+                }
             }
         }
         closeExportFile();
     }
 
-    public static void export(DccSpeedProfile [] sp) {
+    public static void export(DccSpeedProfile [] sp, int address, int units) {
         openExportFile();
+        
+        String unitsString;
+        if (units == Speed.MPH) {
+            unitsString = "MPH";
+        } else {
+            unitsString = "KPH";
+        }
         // Save rows
         if ((out != null) && (p != null)) {
+            printHeading(p, address);
+            p.print("Step,Speed(fwd "+unitsString+"),Speed(rev "+unitsString+")");
+            p.println();
             // for each data point
             for (int i = 0; i < sp[0].getLength(); i++) {
                 p.print(i);
                 // for each profile
                 for (int j = 0; j < sp.length; j++) {
                     p.print(",");
-                    p.print(sp[j].getPoint(i));
+                    if (units == Speed.MPH) {
+                        p.print(Speed.kphToMph(sp[j].getPoint(i)));
+                    } else {
+                        p.print(sp[j].getPoint(i));
+                    }
                 }
                 p.println();
             }

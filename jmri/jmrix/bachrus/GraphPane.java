@@ -13,7 +13,7 @@ import javax.swing.*;
  * Frame for graph of loco speed curves
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
@@ -51,9 +51,10 @@ public class GraphPane extends JPanel implements Printable {
     public void setYLabel (String s) { yLabel = s; }
 
     int units = Speed.MPH;
-    String unitString = "Speed (MPH)";
+//    String unitString = "Speed (MPH)";
     void setUnitsMph() { units = Speed.MPH; setYLabel(rb.getString("SpeedMPH")); }
     void setUnitsKph() { units = Speed.KPH; setYLabel(rb.getString("SpeedKPH")); }
+    public int getUnits() { return units; }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
