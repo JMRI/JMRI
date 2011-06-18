@@ -47,7 +47,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.59 $
+ * @version   $Revision: 1.60 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -126,6 +126,18 @@ public class RosterEntry {
         _URL = pEntry._URL;
         _maxSpeedPCT = pEntry._maxSpeedPCT;
         _isShuntingOn = pEntry._isShuntingOn;
+        
+        functionLabels = new String[MAXFNNUM+1];
+        functionSelectedImages = new String[MAXFNNUM+1];
+        functionImages = new String[MAXFNNUM+1];
+        functionLockables = new boolean[MAXFNNUM+1];
+        
+        for (int i=0; i<MAXFNNUM; i++) {
+            functionLabels[i] = pEntry.functionLabels[i];
+            functionSelectedImages[i] = pEntry.functionSelectedImages[i];
+            functionImages[i] = pEntry.functionImages[i];
+            functionLockables[i] = pEntry.functionLockables[i];
+        }
     }
 
     public void setId(String s) {
