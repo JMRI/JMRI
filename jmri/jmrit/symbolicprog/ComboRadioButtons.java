@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class ComboRadioButtons extends JPanel {
 
@@ -130,9 +130,9 @@ public class ComboRadioButtons extends JPanel {
     transient ActionListener l2;
     transient PropertyChangeListener p1;
 
-    VariableValue _var = null;
-    JComboBox _box = null;
-    JComboBox _value = null;
+    transient VariableValue _var = null;
+    transient JComboBox _box = null;
+    transient JComboBox _value = null;
     Vector<JRadioButton> v = new Vector<JRadioButton>();
 
     public void dispose() {
