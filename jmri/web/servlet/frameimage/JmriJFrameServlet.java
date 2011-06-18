@@ -39,7 +39,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -204,25 +204,18 @@ public class JmriJFrameServlet implements Servlet {
             sendClickSequence((MouseListener)c, c, x, y);
             return;
         } else if (c instanceof jmri.jmrit.display.Positionable) {
-            if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener");
+            if (log.isDebugEnabled()) log.debug("Invoke Clicked on Positionable");
+
             MouseEvent e = new MouseEvent(c,
-                                          MouseEvent.MOUSE_PRESSED,
-                                          0,      // time
-                                          0,      // modifiers
-                                          x,y,    // x, y not in this component?
-                                          1,      // one click
-                                          false   // not a popup
-                                          );
-            ((jmri.jmrit.display.Positionable)c).doMousePressed(e);
-            e = new MouseEvent(c,
-                                          MouseEvent.MOUSE_RELEASED,
-                                          0,      // time
-                                          0,      // modifiers
-                                          x,y,    // x, y not in this component?
-                                          1,      // one click
-                                          false   // not a popup
-                                          );
-            ((jmri.jmrit.display.Positionable)c).doMouseReleased(e);
+            		MouseEvent.MOUSE_CLICKED,
+            		0,      // time
+            		0,      // modifiers
+            		x,y,    // x, y not in this component?
+            		1,      // one click
+            		false   // not a popup
+            );
+            ((jmri.jmrit.display.Positionable)c).doMouseClicked(e);
+
             return;
         } else {
             MouseListener[] la = c.getMouseListeners();
