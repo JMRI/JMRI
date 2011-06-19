@@ -30,7 +30,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -463,7 +463,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // Listen to export button
         exportProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                int units;
                 if (dirFwdButton.isSelected() && dirRevButton.isSelected()) {
                     DccSpeedProfile[] sp = {spFwd, spRev};
                     DccSpeedProfile.export(sp, profileAddress, profileGraphPane.getUnits());

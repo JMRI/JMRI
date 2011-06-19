@@ -14,7 +14,6 @@ import jmri.util.NamedBeanHandle;
 
 import jmri.SignalHead;
 import jmri.SignalSystem;
-import jmri.SignalAppearanceMap;
 
  /**
  * Default implementation of a basic signal head table.
@@ -23,7 +22,7 @@ import jmri.SignalAppearanceMap;
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
