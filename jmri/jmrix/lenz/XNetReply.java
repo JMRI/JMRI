@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -530,7 +530,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
        // The message may be set as an unsolicited message else where
        // or it may be classified as unsolicited based on the type of 
        // message received.
-       return(super.isUnsolicited() || this.isThrottleTakenOverMessage());
+       return(super.isUnsolicited() || 
+              this.isThrottleTakenOverMessage() ||
+	      this.isFeedbackMessage()
+            );
     }
 
     // initialize logging
