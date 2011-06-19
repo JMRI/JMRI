@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.98 $
+ * @version         $Revision: 1.99 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -239,7 +239,7 @@ abstract public class AbstractMRTrafficController {
             AbstractMRListener l = null;
             // check for something to do
             synchronized(selfLock) {
-                if (msgQueue.size()!=0 && mCurrentState == IDLESTATE) {
+                if (msgQueue.size()!=0) {
                     // yes, something to do
                     m = msgQueue.getFirst();
                     msgQueue.removeFirst();
