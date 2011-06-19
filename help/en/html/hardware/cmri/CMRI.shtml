@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.shtml,v 1.10 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
+<!-- $Id: CMRI.shtml,v 1.11 2011-06-19 19:57:13 ken_c Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -141,7 +141,7 @@ probably will need a C/MRI RS232 to RS485 conversion card between the RS485
 bus connecting the cards and the RS232 serial line to connect to your 
 computer. If your computer doesn't have an RS232 serial port (most newer 
 computers don't), you can connect to a USB computer port with a USB-to-serial 
-adapter (<A HREF="..\USBtoSerial.shtml">click here for help</a>).</p>	
+adapter (<A HREF="../USBtoSerial.shtml">click here for help</a>).</p>	
 
 <P>C/MRI inputs can be used as JMRI 'sensors', and C/MRI outputs can be driven 
 as JMRI 'turnouts' or JMRI 'lights' (<a href="#iobits">see below</a>). Note 
