@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.39 $
+ * @version			$Revision: 2.40 $
  */
 
 package jmri.jmrix.lenz;
@@ -237,7 +237,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        // address in for the address. after the message is returned.
        XNetMessage msg = XNetMessage.getFeedbackRequestMsg(mNumber,
                                                  (mNumber%4)<2); 
-       tc.sendXNetMessage(msg, null);
+       tc.sendXNetMessage(msg, null); // The reply is treated as a broadcast
+                                      // and is returned using the manager.
+
     }
 
         synchronized public void setInverted(boolean inverted) {
@@ -479,7 +481,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                          // request for this nibble
                          XNetMessage msg = XNetMessage.getFeedbackRequestMsg(
                                             mNumber, ((mNumber%4)<=1));
-                         tc.sendXNetMessage(msg, null);
+                         tc.sendXNetMessage(msg, null);// The reply is treated as a broadcast
+                                      // and is returned using the manager.
                       } else {
                          if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion complete"); 
                          // If the motion is completed, behave as though 
