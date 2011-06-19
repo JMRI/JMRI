@@ -34,7 +34,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -725,7 +725,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 float maxSigSpeed = -1;
                 float maxPathSpeed = destList.get(destination).getMinimumSpeed();
                 boolean divergRoute = destList.get(destination).turnoutThrown;
+                log.debug("Diverging route? " + divergRoute);
                 boolean divergFlagsAvailable = false;
+                    //We split the aspects into two lists, one with divering flag set, the other without.
                     for(int i = 0; i<advancedAspect.length; i++){
                         String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "diverging");
                         if ((div!=null) && (div.equals("yes"))){
@@ -747,7 +749,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         If the diverg flag has not been set then we will check.
                     */
                     log.debug(advancedAspect[i]);
-                    if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((!divergFlagsAvailable) && nonDivergAspects.contains(i))){
+                    if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable)||(!divergRoute)) && (nonDivergAspects.contains(i))){
                         log.debug("In list");
                         if ((strSpeed!=null) && (!strSpeed.equals(""))){
                             float speed = 0.0f;
@@ -1366,7 +1368,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         }
                     }
                } else if (key.getState()==Turnout.THROWN){
-                    log.debug("Set true");
                     turnoutThrown=true;
                 }
             }
