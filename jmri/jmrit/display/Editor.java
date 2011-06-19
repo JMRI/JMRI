@@ -1443,7 +1443,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                addSignalMast();
+                putSignalMast();
             }
         };
         editor.makeIconPanel();
@@ -1731,13 +1731,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Add a signal mast to the target
      */
-    void addSignalMast() {
+   protected SignalMastIcon putSignalMast() {
         SignalMastIcon l = new SignalMastIcon(this);
         IconAdder editor = _iconEditorFrame.get("SignalMast").getEditor();
         l.setSignalMast(editor.getTableSelection().getDisplayName());
         l.setDisplayLevel(SIGNALS);
         setNextLocation(l);
         putItem(l);
+        return l;
     }
 
     protected MemoryIcon putMemory() {
