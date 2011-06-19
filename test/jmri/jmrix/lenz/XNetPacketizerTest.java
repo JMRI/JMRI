@@ -8,7 +8,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.16 $
+ * @version $Revision: 2.17 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -107,10 +107,15 @@ public class XNetPacketizerTest extends TestCase {
         
         XNetMessage m1 = XNetMessage.getTurnoutCommandMsg(23, true, false, true);
         c.sendXNetMessage(m1, l2);
+
 	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
 
         // and now we verify l1 is the last sender.
-	Assert.assertEquals("Last Sender l1",l1,c.getLastSender());
+	Assert.assertEquals("itteration " +i + " Last Sender l1, before l1 reply",l1,c.getLastSender());
+
+	l.rcvdRply=null;
+	l1.rcvdRply=null;
+	l2.rcvdRply=null;
 
         // Now we reply to the messages above
         p.tistream.write(0x01);
@@ -118,21 +123,29 @@ public class XNetPacketizerTest extends TestCase {
         p.tistream.write(0x05);
 
         // check that the message was picked up by the read thread.
-        Assert.assertTrue("reply received ", waitForReply(l1));
-        //Assert.assertEquals("first char of reply ", 0x01, l1.rcvdRply.getElement(0));
+        Assert.assertTrue("itteration " + i + " reply received ", waitForReply(l1));
+        Assert.assertEquals("itteration " + i +" first char of reply to l1", 0x01, l1.rcvdRply.getElement(0));
 
 	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
         
         // and now we verify l2 is the last sender.
 	Assert.assertEquals("Last Sender l2",l2,c.getLastSender());
-        
+	l.rcvdRply=null;
+	l1.rcvdRply=null;
+	l2.rcvdRply=null;
+
         p.tistream.write(0x01);
         p.tistream.write(0x04);
         p.tistream.write(0x05);
 
         // check that the message was picked up by the read thread.
-        Assert.assertTrue("reply received ", waitForReply(l2));
-        //Assert.assertEquals("first char of reply ", 0x01, l2.rcvdRply.getElement(0));
+        Assert.assertTrue("itteration "+i+" reply received ", waitForReply(l2));
+        Assert.assertEquals("itteration "+i+" first char of reply to l2", 0x01, l2.rcvdRply.getElement(0));
+	jmri.util.JUnitUtil.releaseThread(this, 500); // Allow time for messages to process into the system
+	l.rcvdRply=null;
+	l1.rcvdRply=null;
+	l2.rcvdRply=null;
+        Assert.assertEquals("itteration "+i+" l received count ", 3*(i+1), l.rcvCount);
         }
 
 
