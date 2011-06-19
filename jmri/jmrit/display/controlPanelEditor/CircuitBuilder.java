@@ -1242,7 +1242,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     * Can a path in this circuit be drawn through this icon? 
     */
     private boolean okPath(Positionable pos, OBlock block) {
-        java.util.List icons = _circuitMap.get(block);
+        java.util.List<Positionable> icons = _circuitMap.get(block);
         if (pos instanceof PortalIcon) {
             Portal portal = ((PortalIcon)pos).getPortal();
             if (portal!=null) {
@@ -1281,7 +1281,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                                     JOptionPane.QUESTION_MESSAGE);
                     if (result==JOptionPane.YES_OPTION) {
                         // move icon from block to editBlock 
-                        java.util.List ic = _circuitMap.get(block);
+                        java.util.List<Positionable> ic = _circuitMap.get(block);
                         ic.remove(pos);
                         ((IndicatorTrack)pos).setOccBlockHandle(
                                 new NamedBeanHandle<OBlock>(editBlock.getSystemName(), editBlock));

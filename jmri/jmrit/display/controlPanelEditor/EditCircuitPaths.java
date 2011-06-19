@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import jmri.BeanSetting;
+import jmri.Path;
 import jmri.jmrit.display.*;
 
 import java.awt.*;
@@ -402,7 +403,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     private OPath getPath(String name) {
-        java.util.List list = _block.getPaths();
+        java.util.List<Path> list = _block.getPaths();
         for (int i=0; i<list.size(); i++) {
             OPath path = (OPath)list.get(i);
             if (name.equals(path.getName())) {

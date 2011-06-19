@@ -334,9 +334,9 @@ public class DccConsist implements Consist, ProgListener{
         java.util.Collections.reverse(ConsistList);
         // and itterate through the list to reverse the directions of the 
         // individual elements of the list.
-        java.util.Iterator i= ConsistList.iterator();
+        java.util.Iterator<DccLocoAddress> i= ConsistList.iterator();
         while(i.hasNext()){
-          DccLocoAddress locoaddress=(DccLocoAddress)i.next() ;
+          DccLocoAddress locoaddress=i.next() ;
 	  add(locoaddress,getLocoDirection(locoaddress));  
 	  if(ConsistPosition.contains(locoaddress))
 	  {
