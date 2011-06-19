@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DefineNewAspects.shtml,v 1.6 2011-06-13 16:09:41 kevin-dickerson Exp $ -->
+<!-- $Id: DefineNewAspects.shtml,v 1.7 2011-06-19 08:22:17 kevin-dickerson Exp $ -->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -83,7 +83,7 @@ because the names will be more consistent, etc.
 
 <p>
 Most of the file is blocks that look like this:
-<code>
+<PRE>
     &lt;aspect&gt;
       &lt;name&gt;&lt;/name&gt;
       &lt;title&gt;&lt;/title&gt;
@@ -95,7 +95,7 @@ Most of the file is blocks that look like this:
       &lt;speed&gt;&lt;/speed&gt;
       &lt;diverging&gt;&lt;/diverging&gt;
     &lt;/aspect&gt;
-</code>
+</PRE>
 
 You have to fill in the name element, but the others are optional.
 The title and indication elements can only be included once.
@@ -123,13 +123,13 @@ possible aspects.
 <p>
 Below the aspect blocks, there's a block that names all the valid
 appearance files, e.g.:
-<code>
+<PRE>
   &lt;appearancefiles&gt;
     &lt;appearancefile href="appearance-SL-1-high-abs.xml"/&gt;
     &lt;appearancefile href="appearance-SL-1-high-pbs.xml"/&gt;
     &lt;appearancefile href="appearance-SL-1-low.xml"/&gt;
   &lt;/appearancefiles&gt;
-</code>
+</PRE>
 
 Create this part as you create the appearance files (see below),
 to the program can locate all of them and display them to the user.
@@ -148,7 +148,7 @@ not every type of signal can show every aspect.
 Each aspect that the signal can show needs to be 
 described with a block like this:
 
-<code>
+<PRE>
     &lt;appearance&gt;<br>
       &lt;aspectname&gt;Clear&lt;/aspectname&gt;
       &lt;show&gt;green&lt;/show&gt;
@@ -156,7 +156,7 @@ described with a block like this:
       &lt;reference&gt;&lt;/reference&gt;
       &lt;imagelink&gt;&lt;/imagelink&gt;
     &lt;/appearance&gt;<br>
-</code>
+</PRE>
 
 The "aspectname" needs to be at the start, followed by zero or more
 "show" elements. 
@@ -180,7 +180,7 @@ parts of JMRI will specifically ask for.<br>
 Each specific aspect can be given an alternative image to use other than that given
 in the main appearance definition.<br>
 This information can be entered at after the appearance information in the following form.
-<code>
+<PRE>
   &lt;specificappearances&gt;
     &lt;danger&gt;
         &lt;aspect&gt;Danger&lt;/aspect&gt;
@@ -197,7 +197,7 @@ This information can be entered at after the appearance information in the follo
         &lt;imagelink&gt;notlit.gif&lt;/imagelink&lt;
     &lt;/dark&gt;
   &lt;/specificappearances&gt;
-</code>
+</PRE>
 The specific appearances entered in must match appearances that are valid 
 for the mast, if a mast does not support the appearance, then there is no need to include it.
 <h4>Aspect Mapping</h4>
@@ -215,7 +215,7 @@ The purpose of the map is to define which potential appearances are valid depend
  defined in the appearance file.
 <p>
 All of the mappings, are contained within the &lt;aspectMappings&gt; tags, within their own &lt;aspectMapping&gt; tag
-<code>
+<PRE>
 &lt;aspectMappings&gt;
     &lt;aspectMapping&gt;
         &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
@@ -227,7 +227,7 @@ All of the mappings, are contained within the &lt;aspectMappings&gt; tags, withi
         &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
     &lt;/aspectMapping&gt;
 &lt;/aspectMappings&gt;
-</code>
+</PRE>
 
 <h3>Check Your Work</h3>
 
