@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -945,8 +945,7 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c1 type", "bigCaboose", c1.getType());
 		Assert.assertEquals("car c1 wait", 5, c1.getWait());
 		Assert.assertEquals("car c1 weight", "45", c1.getWeight());
-		// caboose weight is based on length, .9 tons/foot
-		Assert.assertEquals("car c1 weight tons", "36", c1.getWeightTons());
+		Assert.assertEquals("car c1 weight tons", "100", c1.getWeightTons());
 
 		Assert.assertEquals("car c2 built date", "1234", c2.getBuilt());
 		Assert.assertEquals("car c2 caboose", false, c2.isCaboose());
@@ -980,8 +979,7 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getType());
 		Assert.assertEquals("car c3 wait", 0, c3.getWait());
 		Assert.assertEquals("car c3 weight", "345", c3.getWeight());
-		// caboose weight is based on length, .9 tons/foot
-		Assert.assertEquals("car c3 weight tons", "407", c3.getWeightTons());
+		Assert.assertEquals("car c3 weight tons", "1798", c3.getWeightTons());
 
 		// c4 and c6 use defaults for most of their attributes.
 		Assert.assertEquals("car c4 built date", "", c4.getBuilt());
@@ -1116,8 +1114,7 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getType());
 		Assert.assertEquals("car c3 wait", 0, c3.getWait());
 		Assert.assertEquals("car c3 weight", "345", c3.getWeight());
-		// caboose weight is based on length, .9 tons/foot
-		Assert.assertEquals("car c3 weight tons", "407", c3.getWeightTons());
+		Assert.assertEquals("car c3 weight tons", "1798", c3.getWeightTons());
 	}
 
 	// TODO: Add tests for location

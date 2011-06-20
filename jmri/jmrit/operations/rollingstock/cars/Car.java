@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.89 $
+ * @version             $Revision: 1.90 $
  */
 public class Car extends RollingStock {
 	
@@ -150,8 +150,11 @@ public class Car extends RollingStock {
 	}
 	
 	public String getWeightTons() {
+		String weight = super.getWeightTons();
+		if (!_weightTons.equals(DEFAULT_WEIGHT))
+			return weight;	
 		if (!isCaboose() && !isPassenger())
-			return super.getWeightTons();
+			return weight;
 		//.9 tons/foot for caboose and passenger cars
 		return Integer.toString((int)(Double.parseDouble(getLength()) * .9));
 	}

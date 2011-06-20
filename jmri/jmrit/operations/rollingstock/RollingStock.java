@@ -21,13 +21,13 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
 	protected static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 	
-	private static final String DEFAULT_WEIGHT = "0";
+	protected static final String DEFAULT_WEIGHT = "0";
 	
 	protected String _id = "";
 	protected String _number = "";

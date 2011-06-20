@@ -25,7 +25,7 @@ import java.util.Locale;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -339,8 +339,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("car type", "Caboose", f.typeComboBox.getSelectedItem());
 		Assert.assertEquals("car length", "40", f.lengthComboBox.getSelectedItem());
 		Assert.assertEquals("car weight", "1.4", f.weightTextField.getText());
-		// caboose weight is based on length, .9 tons/foot
-		Assert.assertEquals("car weight tons", "36", f.weightTonsTextField.getText());
+		Assert.assertEquals("car weight tons", "Tons of Weight", f.weightTonsTextField.getText());
 		Assert.assertEquals("car color", "Red", f.colorComboBox.getSelectedItem());
 		Assert.assertEquals("car load", "L", f.loadComboBox.getSelectedItem());
 		Assert.assertEquals("car built", "2009", f.builtTextField.getText());
