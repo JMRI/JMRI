@@ -14,11 +14,11 @@ import javax.swing.JPanel;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Paul Bender    Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  *
  * @see XNetSimulatorAdapter
  */
-public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;
@@ -41,10 +41,6 @@ public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnect
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    public void loadDetails(JPanel details) {
-        details.add(new JLabel("No options"));
-    }
-
     protected void setInstance() {
        if(adapter==null)
           adapter = new XNetSimulatorAdapter(); 

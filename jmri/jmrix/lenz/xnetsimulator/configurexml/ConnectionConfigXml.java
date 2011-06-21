@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.xnetsimulator.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.lenz.xnetsimulator.ConnectionConfig;
 import jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter;
 
@@ -19,9 +19,9 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender  Copyright: Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
-public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
