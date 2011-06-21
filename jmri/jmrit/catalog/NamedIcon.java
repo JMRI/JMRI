@@ -27,7 +27,7 @@ import javax.swing.ImageIcon;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -273,7 +273,7 @@ public class NamedIcon extends ImageIcon {
         setImage(bufIm);
         g2d.dispose();
     }
-
+/*
     void debugDraw(String op, Component c) {
         jmri.jmrit.display.Positionable pos = (jmri.jmrit.display.Positionable)c;
         java.awt.Rectangle r = c.getBounds();
@@ -282,6 +282,7 @@ public class NamedIcon extends ImageIcon {
         System.out.println("\tLocation at ("+c.getX()+", "+c.getY()+") width= "+
                            c.getWidth()+", height= "+c.getHeight()); 
     }
+*/
     /**
     *  Scale as a percentage
     *
@@ -293,7 +294,7 @@ public class NamedIcon extends ImageIcon {
     */
 
     public void scale(double scale, Component comp) {
-        if (log.isDebugEnabled()) debugDraw("Before scaling of "+scale, comp);
+//        if (log.isDebugEnabled()) debugDraw("Before scaling of "+scale, comp);
         if (scale==1.0) {
             double w = getIconWidth();
             double h = getIconHeight();
@@ -304,7 +305,7 @@ public class NamedIcon extends ImageIcon {
             int width = (int)Math.ceil(Math.abs(h*Math.sin(rad)) + Math.abs(w*Math.cos(rad)));
             int heigth = (int)Math.ceil(Math.abs(h*Math.cos(rad)) + Math.abs(w*Math.sin(rad)));
             transformImage(width, heigth, _transformR, comp);
-            if (log.isDebugEnabled()) debugDraw("After scaling _scale= "+_scale, comp);
+//            if (log.isDebugEnabled()) debugDraw("After scaling _scale= "+_scale, comp);
             return;
         }
         int w = (int)Math.ceil(scale*getIconWidth());
@@ -313,14 +314,14 @@ public class NamedIcon extends ImageIcon {
         transformImage(w, h, t, comp);
         _transformS.preConcatenate(t);
         _scale *= scale;
-        if (log.isDebugEnabled()) debugDraw("After scaling _scale= "+_scale, comp);
+//        if (log.isDebugEnabled()) debugDraw("After scaling _scale= "+_scale, comp);
     }
     
     /**
     * Rotate from anchor point (upper left corner) and shift into place
     */
     public void rotate(int deg, Component comp) {
-        if (log.isDebugEnabled()) debugDraw("Before Rotation of "+deg, comp);
+//        if (log.isDebugEnabled()) debugDraw("Before Rotation of "+deg, comp);
         if (deg==0) {
             setImage(mDefaultImage);
             _transformR = new AffineTransform();
@@ -358,7 +359,7 @@ public class NamedIcon extends ImageIcon {
         mRotation=0;
         _deg += deg;
         _deg =_deg%360;
-        if (log.isDebugEnabled()) debugDraw("After Rotation _deg="+_deg, comp);
+//        if (log.isDebugEnabled()) debugDraw("After Rotation _deg="+_deg, comp);
     }
 
     /**
