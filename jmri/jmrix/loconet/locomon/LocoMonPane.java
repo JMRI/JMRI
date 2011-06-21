@@ -8,7 +8,7 @@ import jmri.jmrix.loconet.swing.*;
 /**
  * LocoNet Monitor pane displaying (and logging) LocoNet messages
  * @author	   Bob Jacobsen   Copyright (C) 2001, 2008, 2010
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
 
@@ -22,12 +22,12 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         if (memo!=null) {
             uName = memo.getUserName();
             if (!"LocoNet".equals(uName)) {
-                uName = " ("+uName+")";
+                uName = uName+": ";
             } else {
                 uName = "";
             }
         }
-        return LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor")+uName;
+        return uName+LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor");
     }
     
     public void dispose() {

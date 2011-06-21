@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
@@ -69,12 +69,12 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         if (memo!=null) {
             uName = memo.getUserName();
             if (!"LocoNet".equals(uName)) {
-                uName = " ("+uName+")";
+                uName = uName+": ";
             } else {
                 uName = "";
             }
         }
-        return LocoNetBundle.bundle().getString("MenuItemCmdStnConfig")+uName; 
+        return uName+LocoNetBundle.bundle().getString("MenuItemCmdStnConfig"); 
     }
 
   public void initComponents(LocoNetSystemConnectionMemo memo) {

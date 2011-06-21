@@ -30,7 +30,7 @@ import javax.swing.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2003
  * @author			Bob Jacobsen   Copyright (C) 2008, 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
@@ -42,16 +42,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; }
     public String getTitle() { 
-        String uName = null;
-        if (memo!=null) {
-            uName = memo.getUserName();
-            if (!"LocoNet".equals(uName)) {
-                uName = " ("+uName+")";
-            } else {
-                uName = "";
-            }
-        }
-        return LocoNetBundle.bundle().getString("MenuItemLocoStats")+uName; 
+        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoStats")); 
     }
 
     public LocoStatsPanel() {

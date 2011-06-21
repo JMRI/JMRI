@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPanelInterface {
@@ -39,12 +39,12 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
             uName = memo.getUserName();
             // string "LocoNet" is hard coded
             if (!"LocoNet".equals(uName)) {
-                uName = " ("+uName+")";
+                uName = uName+": ";
             } else {
                 uName = "";
             }
         }
-        return menuTitle+uName; 
+        return uName+menuTitle; 
     }
     
 }
