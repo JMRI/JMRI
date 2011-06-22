@@ -15,7 +15,7 @@ import jmri.jmrix.ConnectionStatus;
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
  * @author			Giorgio Terdina Copyright (C) 2008-2011, based on LI100 adapter by Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2008 - Added updating of connection status in the main menu panel (using ConnectionStatus by Daniel Boudreau)
  * PB - December 2010 - refactored to be based off of AbstractNetworkController.
@@ -39,6 +39,14 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 	private  OutputTcpStream outTcpStream = null;
 	private  int pendingPackets = 0;			// Number of packets sent and not yet acknowledged
 	private String outName = "Manual";  // Interface name, used for possible error messages (can be either the netBios name or the IP address)
+
+
+	public XnTcpAdapter(){
+	   super();
+	   m_HostName=DEFAULT_IP_ADDRESS;
+	   m_port=DEFAULT_TCP_PORT;
+        }
+
 	
 	// Internal class, used to keep track of IP and port number
 	//  of each interface found on the LAN
@@ -50,6 +58,31 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 			portNumber = p;
 		}
 	}
+
+    /**
+     * Get a String that says what Option 1 represents
+     * May be an empty string, but will not be null
+     */
+        @Override
+    public String option1Name() { return "XnTcp Interface: "; }
+
+    /**
+     * Get an array of valid values for "option 1"; used to display valid options.
+     * May not be null, but may have zero entries
+     */
+    @Override
+    public String[] validOption1() { 
+	Vector<String> v = getInterfaceNames();
+	String a[]=new String[v.size()+1];
+        for (int i=0; i<v.size(); i++) 
+             a[i+1]=v.elementAt(i); 
+	a[0]="Manual";
+	return a;
+    }
+
+
+
+
 	
 	public Vector<String> getInterfaceNames() {
 		// Return the list of XnTcp interfaces connected to the LAN

@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.Color;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -23,7 +26,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2011 - Fixed problems arising from recent refactoring
  *
@@ -33,81 +36,29 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 	javax.swing.JComboBox choiceBox = new javax.swing.JComboBox();
 
 	private boolean manualInput = false;
-	private boolean init = false;
 	private String oldName;
-
-
-    /**
-     * Local initialization of defaults, to be called from all constructors
-     */
-    private void initDefaults() {
-		hostNameField = new JTextField(XnTcpAdapter.DEFAULT_IP_ADDRESS);
-		portField = new JTextField(String.valueOf(XnTcpAdapter.DEFAULT_TCP_PORT));
-    }
 
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
-        initDefaults();
-        adapter = p;
+        super(p);
 		String h = adapter.getHostName();
 		if(h != null && !h.equals(JmrixConfigPane.NONE)) hostNameField = new JTextField(h);
 		String t = adapter.getCurrentPortName();
 		if(!t.equals("0")) portField = new JTextField(t);
-		oldName = adapter.getCurrentOption1Setting();
+		oldName = adapter.getHostName();
     }
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
-        initDefaults();
+	super();
     }
 
     public String name() { return "XnTcp"; }
 
-
-		@Override
-    protected void checkInitDone() {
-    	if (log.isDebugEnabled()) log.debug("init called for "+name());
-        if (init) return;
-        choiceBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-				enableInput();
-            }
-        });
-        hostNameField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(manualInput) adapter.setHostName(hostNameField.getText());
-            }
-        });
-        hostNameField.addKeyListener( new KeyListener() {
-             public void keyPressed(KeyEvent keyEvent) {
-             }
-             public void keyReleased(KeyEvent keyEvent) {
-                if(manualInput) adapter.setHostName(hostNameField.getText());
-             }
-             public void keyTyped(KeyEvent keyEvent) {
-             }
-         });
-		portField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               if(manualInput) adapter.setPort(portField.getText());
-             }
-        });
-        portField.addKeyListener( new KeyListener() {
-             public void keyPressed(KeyEvent keyEvent) {
-             }
-             public void keyReleased(KeyEvent keyEvent) {
-                if(manualInput) adapter.setPort(portField.getText());
-             }
-             public void keyTyped(KeyEvent keyEvent) {
-             }
-         });
-		
-        init = true;
-    }
 
     /**
      * Load the adapter with an appropriate object
@@ -126,44 +77,96 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     }
 
 		@Override
-    public void loadDetails(JPanel details) {
-    	
-        setInstance();
-
-        Vector<String> v;
-		v = ((XnTcpAdapter)adapter).getInterfaceNames();
-		if (log.isDebugEnabled()) {
-			log.debug("loadDetails called in class "+this.getClass().getName());
-			log.debug("adapter class: "+adapter.getClass().getName());
-			log.debug("loadDetails called for "+name());
-			log.debug("Found "+v.size()+" ports");
-		}
-        choiceBox.removeAllItems();
-		int indSel = -1;
-		if(oldName == null) oldName = JmrixConfigPane.NONE;
-        for (int i=0; i<v.size(); i++) {
-			if(v.elementAt(i).equals(oldName)) indSel = i;
-			choiceBox.addItem(v.elementAt(i));
+    protected void showAdvancedItems(){
+        _details.removeAll();
+        int stdrows = 1;
+        boolean incAdvancedOptions=true;
+        if(!isPortAdvanced()) stdrows++;
+        if(!isHostNameAdvanced()) stdrows++;
+        if ((!isOptList1Advanced())&&(opt1List.length>=1)) stdrows++;
+        if ((!isOptList2Advanced())&&(opt2List.length>1)) stdrows++;
+        if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
+        if (stdrows == NUMOPTIONS){
+            incAdvancedOptions=false;
+        } else{
+            stdrows++;
         }
-        choiceBox.addItem("Manual");
-		if(indSel < 0) indSel = v.size();
-		choiceBox.setSelectedIndex(indSel);
+        if (showAdvanced.isSelected()) {
+            int advrows = stdrows;
+            if(isPortAdvanced()) advrows++;
+            if(isHostNameAdvanced()) advrows++;
+            if ((isOptList1Advanced())&&(opt1List.length>=1)) advrows++;
+            if ((isOptList2Advanced())&&(opt2List.length>1)) advrows++;
+            _details.setLayout(new GridLayout(advrows,2));
+            addStandardDetails(incAdvancedOptions);
 
-		details.setLayout(new GridLayout(3,2));
-        details.add(new JLabel("XnTcp Interface: "));
-        details.add(choiceBox);
-        details.add(new JLabel("IP address: "));
-		details.add(hostNameField);
-		details.add(new JLabel("Port number: "));
-		details.add(portField);
- 
-		enableInput();
-		
-        checkInitDone();
+            if(isHostNameAdvanced()){
+                _details.add(hostNameFieldLabel);
+                _details.add(hostNameField);
+            }
+
+            if(isPortAdvanced()){
+                _details.add(portFieldLabel);
+                _details.add(portField);
+            }
+            if ((isOptList1Advanced())&&(opt1List.length>=1)) {
+                _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
+                _details.add(opt1Box);
+            }
+            if ((isOptList2Advanced())&&(opt2List.length>1)) {
+                _details.add(opt2BoxLabel = new JLabel(adapter.option2Name()));
+                _details.add(opt2Box);
+            }
+        } else {
+            _details.setLayout(new GridLayout(stdrows,2));
+            addStandardDetails(incAdvancedOptions);
+        }
+        _details.validate();
+        if (_details.getTopLevelAncestor()!=null){
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
+        }
+        enableInput();
+        _details.repaint();
     }
 	
+    @Override
+    protected void addStandardDetails(boolean incAdvanced){
+        if(!isHostNameAdvanced()){
+            _details.add(hostNameFieldLabel);
+            _details.add(hostNameField);
+        }
+
+        if(!isPortAdvanced()){
+            _details.add(portFieldLabel);
+            _details.add(portField);
+        }
+
+        if ((!isOptList1Advanced())&&(opt1List.length>=1)){
+            _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
+            _details.add(opt1Box);
+        }
+
+        if ((!isOptList2Advanced())&&(opt2List.length>1)) {
+            _details.add(opt2BoxLabel);
+            _details.add(opt2Box);
+        }
+        if(adapter.getSystemConnectionMemo()!=null){
+            _details.add(systemPrefixLabel);
+            _details.add(systemPrefixField);
+            _details.add(connectionNameLabel);
+            _details.add(connectionNameField);
+        }
+
+        if (incAdvanced){
+            _details.add(new JLabel(" "));
+            _details.add(showAdvanced);
+        }
+    }
+
+
 	private void enableInput() {
-		String choice = (String)choiceBox.getSelectedItem();
+		String choice = (String)opt1Box.getSelectedItem();
 		manualInput = choice.equals("Manual");
 		hostNameField.setEnabled(manualInput);
 		portField.setEnabled(manualInput);
@@ -179,6 +182,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 		@Override
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
+
+    public boolean isHostNameAdvanced(){ return true;}
 
 
 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfig.class.getName());

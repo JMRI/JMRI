@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -243,7 +243,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         checkInitDone();
     }
         
-    void showAdvancedItems(){
+    protected void showAdvancedItems(){
         _details.removeAll();
         int stdrows = 0;
         boolean incAdvancedOptions=true;
@@ -294,7 +294,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         _details.repaint();
     }
     
-    void addStandardDetails(boolean incAdvanced){
+    protected void addStandardDetails(boolean incAdvanced){
         if(!isHostNameAdvanced()){
             _details.add(hostNameFieldLabel);
             _details.add(hostNameField);
