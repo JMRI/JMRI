@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.112 2011-06-17 02:04:04 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.113 2011-06-22 22:25:14 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -2037,10 +2037,7 @@ possible, it will try and move the car closer to that final destination.</P>
 <P>If a car has a custom load without a destination, the program will 
 search for a siding with a schedule demanding that car type and load.  
 the program will then "route" the car to that destination.  The program
-will use up to five trains to get the car to a destination.  The program
-when "routing" cars during the build process, provides some information
-about the routing to the system console.  This could be useful if you're
-not sure why the program is routing cars to certain tracks.
+will use up to five trains to get the car to a destination.
 </P>
 
 <P>Sometimes reading the build report can get tedious. If you want
