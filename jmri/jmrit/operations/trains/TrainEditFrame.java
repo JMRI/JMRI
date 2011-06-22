@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -172,18 +172,22 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	    //      Set up the panels
     	JPanel p1 = new JPanel();
     	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
+      	JScrollPane p1Pane = new JScrollPane(p1);
+       	p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+       	p1Pane.setMinimumSize(new Dimension(300,3*trainNameTextField.getPreferredSize().height));
+       	p1Pane.setBorder(BorderFactory.createTitledBorder(""));
 				
 		// Layout the panel by rows
 		// row 1a
        	JPanel pName = new JPanel();
-       	pName.setMinimumSize(new Dimension(180,50));
+       	//pName.setMinimumSize(new Dimension(180,50));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 		addItem(pName, trainNameTextField, 0, 0);
 
 		// row 1b
        	JPanel pDesc = new JPanel();
-       	pDesc.setMinimumSize(new Dimension(300,50));
+       	//pDesc.setMinimumSize(new Dimension(300,50));
     	pDesc.setLayout(new GridBagLayout());
     	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
 		addItem(pDesc, trainDescriptionTextField, 0, 0);
@@ -302,7 +306,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(pB, addTrainButton, 2, 0);
 		addItem(pB, saveTrainButton, 3, 0);
 		
-		getContentPane().add(p1);
+		getContentPane().add(p1Pane);
 		getContentPane().add(p2);
 		getContentPane().add(locationsPane);
 		getContentPane().add(typeCarPane);

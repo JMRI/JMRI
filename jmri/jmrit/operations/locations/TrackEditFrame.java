@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -157,12 +157,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 1
     	JPanel p1 = new JPanel();
     	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
+       	JScrollPane p1Pane = new JScrollPane(p1);
+       	p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+       	p1Pane.setMinimumSize(new Dimension(300,3*trackNameTextField.getPreferredSize().height));
+       	p1Pane.setBorder(BorderFactory.createTitledBorder(""));
 	    
     	// row 1a
     	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
-    	pName.setMinimumSize(new Dimension(180,1));
     	addItem(pName, trackNameTextField, 0, 0);	
 
 		// row 1b
@@ -249,8 +252,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			
 		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesTrack")));
 		
-		getContentPane().add(p1);
-		//getContentPane().add(panelTrainDir);
+		getContentPane().add(p1Pane);
 		getContentPane().add(paneCheckBoxes);
 		getContentPane().add(paneRoadNames);
 		getContentPane().add(paneLoadNames);

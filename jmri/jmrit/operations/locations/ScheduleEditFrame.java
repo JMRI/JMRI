@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -98,18 +98,22 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// Layout the panel by rows
 	    JPanel p1 = new JPanel();
     	p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+      	JScrollPane p1Pane = new JScrollPane(p1);
+       	p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+       	p1Pane.setMinimumSize(new Dimension(300,3*scheduleNameTextField.getPreferredSize().height));
+       	p1Pane.setBorder(BorderFactory.createTitledBorder(""));
     	
 		// row 1a name
 	   	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
-    	pName.setMinimumSize(new Dimension(180,1));
+    	//pName.setMinimumSize(new Dimension(180,1));
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 		addItem(pName, scheduleNameTextField, 0, 0);
 		
 		// row 1b comment
     	JPanel pC = new JPanel();
     	pC.setLayout(new GridBagLayout());
-    	pC.setMinimumSize(new Dimension(300,1));
+    	//pC.setMinimumSize(new Dimension(300,1));
     	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
 		addItem(pC, commentTextField, 0, 0);
 		
@@ -156,7 +160,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		addItem(pB, addScheduleButton, 1, 0);
 		addItem(pB, saveScheduleButton, 3, 0);
 		
-		getContentPane().add(p1);
+		getContentPane().add(p1Pane);
        	getContentPane().add(schedulePane);
        	getContentPane().add(p3);
        	getContentPane().add(pB);

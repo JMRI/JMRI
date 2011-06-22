@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -170,10 +170,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// row 1
     	JPanel p1 = new JPanel();
     	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
-    	
+       	JScrollPane p1Pane = new JScrollPane(p1);
+       	p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+       	p1Pane.setMinimumSize(new Dimension(300,3*locationNameTextField.getPreferredSize().height));
+       	p1Pane.setBorder(BorderFactory.createTitledBorder(""));
+       	
 		// row 1a
     	JPanel pName = new JPanel();
-    	pName.setMinimumSize(new Dimension(180,1));
+    	//pName.setMinimumSize(new Dimension(180,1));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 				
@@ -217,7 +221,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addItem(pB, addLocationButton, 1, 0);
 		addItem(pB, saveLocationButton, 3, 0);
 		
-		getContentPane().add(p1);
+		getContentPane().add(p1Pane);
 		getContentPane().add(typePane);
 		getContentPane().add(pOp);
        	getContentPane().add(yardPane);

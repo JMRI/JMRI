@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -100,17 +100,21 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	    //      Set up the panels
 	    JPanel p1 = new JPanel();
 	    p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+       	JScrollPane p1Pane = new JScrollPane(p1);
+       	p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+       	p1Pane.setMinimumSize(new Dimension(300,3*routeNameTextField.getPreferredSize().height));
+       	p1Pane.setBorder(BorderFactory.createTitledBorder(""));
 	    
 	    // name panel
     	JPanel pName = new JPanel();
-    	pName.setMinimumSize(new Dimension(180,50));
+    	//pName.setMinimumSize(new Dimension(180,50));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));  	
 		addItem(pName, routeNameTextField, 0, 0);
 		
 		// comment panel
 	   	JPanel pComment = new JPanel();
-	   	pComment.setMinimumSize(new Dimension(300,50));
+	   	//pComment.setMinimumSize(new Dimension(300,50));
     	pComment.setLayout(new GridBagLayout());
     	pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment"))); 	
 		addItem(pComment, commentTextField, 0, 0);
@@ -153,7 +157,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(pB, addRouteButton, 1, 0);
 		addItem(pB, saveRouteButton, 3, 0);
 		
-		getContentPane().add(p1);
+		getContentPane().add(p1Pane);
        	getContentPane().add(routePane);
        	getContentPane().add(p2);
        	getContentPane().add(pB);
