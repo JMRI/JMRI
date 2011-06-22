@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.170 $
+ * @version             $Revision: 1.171 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1901,6 +1901,25 @@ public class TrainBuilder extends TrainCommon{
 								// is train direction correct?
 								if (!checkDropTrainDirection(car, rld, testTrack))
 									continue;
+								// drop to interchange or siding?
+								if (testTrack.getLocType().equals(Track.INTERCHANGE) || testTrack.getLocType().equals(Track.SIDING)){
+									if (testTrack.getDropOption().equals(Track.TRAINS)){
+										if (testTrack.acceptsDropTrain(train)){
+											log.debug("Car ("+car.toString()+") can be droped by train to track (" +testTrack.getName()+")");
+										} else {
+											addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarTrain"),new Object[]{car.toString(), train.getName(), testTrack.getName()}));
+											continue;
+										}
+									}
+									if (testTrack.getDropOption().equals(Track.ROUTES)){
+										if (testTrack.acceptsDropRoute(train.getRoute())){
+											log.debug("Car ("+car.toString()+") can be droped by route to track (" +testTrack.getName()+")");
+										} else {
+											addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarRoute"),new Object[]{car.toString(), train.getRoute().getName(), testTrack.getName()}));
+											continue;
+										}
+									}
+								}
 								String status = car.testDestination(car.getDestination(), testTrack);
 								// is the testTrack a siding with a schedule and alternate track?
 								if (!status.equals(Car.OKAY) && status.contains(Car.LENGTH) && car.testSchedule(testTrack).equals(Car.OKAY) 
