@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.28 2011-04-12 16:18:00 kevin-dickerson Exp $ -->
+<!-- $Id: NCE.shtml,v 1.29 2011-06-22 16:46:47 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -21,8 +21,8 @@
 <BODY>
 <!--#include virtual="/Header" -->
 
-<DIV CLASS="nomenu" ID="mBody">
-<DIV ID="mainContent">
+<DIV CLASS="nomenu" ID="mBody"></DIV>
+<DIV ID="mainContent"></DIV>
 
 <H1>JMRI Hardware Guide: NCE</H1>
 
@@ -33,7 +33,7 @@ and NCE USB Interface via a USB cable.
 They are shown in the preferences menu as NCE, NCE via network,
 and NCE USB Interface respectively.</P>
 
-<a name="phpro">
+<a name="phpro"></a>
 <H2>Power Pro (PowerHouse) via serial cable</H2>
 <IMG SRC="../images/NcePowerPro.gif" WIDTH="168" HEIGHT="66" ALIGN="right" ALT="NCE Power Pro" >
 
@@ -102,7 +102,7 @@ broadcast", and set the baud rate to 9,600. These are the normal
 defaults for NCE. Both of these parameters can be found in your NCE
 user's manual under "Setup Command Station".</P>
 
-<a id="eeprom">
+<a id="eeprom"></a>
 <H3>EPROM Versions</H3>
 
 <P>The NCE Power Pro command station uses an "EPROM" to contain
@@ -134,9 +134,9 @@ NOW = REV for accessory 5, you have the earlier revision with the known
 problem. If you have the early 2007 EPROM and wish to use MONITORING for
 feedback, contact NCE for an EPROM upgrade.</P>
 
-<a name="AIU">
-<a name="names">
-<H3>AIU (Input) Numbering</H3></A></A>
+<a name="AIU"></a>
+<a name="names"></a>
+<H3>AIU (Input) Numbering</H3>
 The NCE "AIU" device allows the NCE command station to check the status
 of inputs from the layout. These are referenced in JMRI as "Sensors"
 with names like "NS785". "NS" means "NCE Sensor", and 785 is the number
@@ -171,7 +171,7 @@ normal 9-pin serial cable will not work! You'll need to make a custom
 cable that just connects the "send data", "receive data" and "ground"
 pins. See your NCE manual for details.</P>
 
-<a name="vianetwork">
+<a name="vianetwork"></a>
 <H2>Power Pro (PowerHouse) via Network</H2>
 
 Instead of connecting a serial cable from your computer to a Power Pro,
@@ -182,7 +182,7 @@ to a layout in another without having to run a long serial cable.
 
 <p>
 (There's also a <a href="../TerminalServer.shtml">general page</a>
-on the use of serial-network adapters, also known as terminal servers)
+on the use of serial-network adapters, also known as terminal servers)</p>
 
 <H3>Setup</H3>
 
@@ -208,7 +208,7 @@ on the use of serial-network adapters, also known as terminal servers)
     <LI>In the "Server hostname" box, enter the Internet name
     or Internet address numbers for your serial-network adapter.
     In the "Port number" box, enter the port on the serial-network
-    adapter to be used.
+    adapter to be used.</LI>
     
     <LI>Select the version of EPROM present in your
     command station, either "2004 or earlier" or "2006 or later".
@@ -235,7 +235,7 @@ defaults for NCE. Both of these parameters can be found in your NCE
 user's manual under "Setup Command Station".</P>
 
 
-<a name="powercab">
+<a name="powercab"></a>
 <H2>NCE USB Interface</H2>
 
 <IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" ALT="NCE USB Interface" >
@@ -274,15 +274,15 @@ system from the preference menu for reliable operation.</P>
     <a href="https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">USB interface chip</a>
 	in the NCE USB Interface. 
 	    <UL>
-	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip">Windows driver</a>
-	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">MacOS X driver</a>
-	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip">Windows driver</a></LI>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">MacOS X driver</a></LI>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a></LI>
         <LI>
         If one of the above links doesn't work, you can
         perhaps find the needed driver on the
         <a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">support web site</a>
         for
-        <a href="http://www.silabs.com">SiLabs</a> chips.
+        <a href="http://www.silabs.com">SiLabs</a> chips.</LI>
 	    </UL>
 	Download the proper file, unpack it, and execute the installer.
 	Be sure to follow the directions:  On some computers,
@@ -316,7 +316,7 @@ system from the preference menu for reliable operation.</P>
 	trouble shooting </A> section below.</LI>
 </OL>
 
-<a name="usblimitations">
+<a name="usblimitations"></a>
 <H3>NCE USB Interface Limitations</H3>
 
 <P>The NCE USB Interface doesn't support all of the current JMRI
@@ -352,8 +352,8 @@ limitation when connected to a Power Pro.</P>
 	<DD>No loco programming</DD>
 </DL>
 
-<a name="troubleShoot">
-<H2>Trouble Shooting</H2></A>
+<a name="troubleShoot"></a>
+<H2>Trouble Shooting</H2>
 
 When the connection to your NCE is okay and your NCE system is powered
 up you should see after starting PanelPro the following control panel:
@@ -362,7 +362,7 @@ up you should see after starting PanelPro the following control panel:
 <P>If your are using JMRI 2.1.2 or newer and the panel looks like
 the above, congratulations you are up and running. The panel for
 DecoderPro is similar to PanelPro's.</P>
-<P>If you have the following control panel with the words "ERROR NCE
+<P>If you have the following control panel with the words "NCE: ERROR SERIAL
 USING COMx" in the right center of the panel:</P>
 <P><IMG SRC="../images/jmriMainPageFail.jpg"
 	ALT="JMRI PanelPro Main Panel" ></P>
@@ -377,14 +377,13 @@ list of potential issues that might help you resolve your problem.</P>
 	NCE Command Station are set to the same rates.</LI>
 </OL>
 
-<H3>Console Window</H3>
+<H3>System Console</H3>
 
-When JMRI starts, it opens a console window that provides program
-status. Below is an image of the console window when the program is
+JMRI provides connection information via the system console.  You can find
+the system console under the main menu header "Help" then "System console...".
+Below is an image of the console window when the program is
 operating normally. Note that the window size has been adjusted so we
-can read it a bit more easily. To make your console window look like the
-one below, right click the window and select "Properties". Now increase
-the Window Size Width to 125. Press OK to exit.
+can read it a bit more easily.
 <P><IMG SRC="../images/jmriConsoleOk.jpg" ALT="JMRI Console" ></P>
 <P>If you're having problems the console window can look like the
 one below:</P>
@@ -392,14 +391,12 @@ one below:</P>
 <P>To help you better understand what might be happening and to
 possibly resolve your problem we'll explain some of the warning and
 error messages displayed in the above console window.</P>
-<P>The very first message is an information message labeled "INFO"
-that states messages above it should be ignored. This message occurs at
+<P>The very first messages are information message labeled "INFO".
+The first message occurs at
 time "0" which can be found at the left side of the message. The next
-"INFO" message states the version of JMRI and JAVA that you are using.
-And the next message is the communication port that you've selected in
-preferences, the baud rate, and the status of the communication port
-control lines. Don't worry about the control line status, JMRI ignores
-them.</P>
+"INFO" message states where this log file is stored.  The next info provides the version of JMRI and JAVA that you are using.
+And the last info message provides the communication port that you've selected in
+preferences, along with the baud rate or the speed of your connection.</P>
 <P>The first warning message states that there was a timeout to
 message "AA". During startup, JMRI checks to see if your preferences
 match those in the NCE command station. Message "AA" requests the EPROM
