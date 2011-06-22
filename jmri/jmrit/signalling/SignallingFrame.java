@@ -9,11 +9,11 @@ import java.util.ResourceBundle;
 /**
  * Frame for the Signalling Logic
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
 */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.signallingBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingFrame() {
         super(false, true);
