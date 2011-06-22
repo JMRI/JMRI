@@ -26,14 +26,13 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2011 - Fixed problems arising from recent refactoring
  *
  * @see XnTcpAdapter
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
-	javax.swing.JComboBox choiceBox = new javax.swing.JComboBox();
 
 	private boolean manualInput = false;
 	private String oldName;
@@ -44,6 +43,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
         super(p);
+
 		String h = adapter.getHostName();
 		if(h != null && !h.equals(JmrixConfigPane.NONE)) hostNameField = new JTextField(h);
 		String t = adapter.getCurrentPortName();
@@ -69,14 +69,34 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
 		@Override
     public String getInfo() {
-        String t = (String)choiceBox.getSelectedItem();
-        if (t==null) return JmrixConfigPane.NONE;
-		if (!t.equals("Manual") || adapter == null ) return t;
-		return adapter.getHostName();
-		
+        String x = (String)opt1Box.getSelectedItem();
+        if (x==null)  return JmrixConfigPane.NONE;
+		if (x.equals("Manual")) {
+			x = "";
+		} else {
+			x+= ":";
+		}
+        String t = adapter.getHostName();
+        int p = adapter.getPort();
+        if (t != null && !t.equals("")) {
+            if (p!=0){
+                return x+t+":"+p;
+            }
+            return x+t;
+        }
+        else return JmrixConfigPane.NONE;
     }
 
 		@Override
+    public void loadDetails(final JPanel d) {
+		super.loadDetails(d);
+		opt1Box.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				enableInput();
+			}
+		});
+	}
+
     protected void showAdvancedItems(){
         _details.removeAll();
         int stdrows = 1;
