@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.171 $
+ * @version             $Revision: 1.172 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1385,6 +1385,28 @@ public class TrainBuilder extends TrainCommon{
 		return (checkDropTrainDirection (null, rld, null));
 	}
 	
+	private boolean checkTrainCanDrop (Car car, Track track){
+		if (track.getLocType().equals(Track.INTERCHANGE) || track.getLocType().equals(Track.SIDING)){
+			if (track.getDropOption().equals(Track.TRAINS)){
+				if (track.acceptsDropTrain(train)){
+					log.debug("Car ("+car.toString()+") can be droped by train to track (" +track.getName()+")");
+				} else {
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarTrain"),new Object[]{car.toString(), train.getName(), track.getName()}));
+					return false;
+				}
+			}
+			if (track.getDropOption().equals(Track.ROUTES)){
+				if (track.acceptsDropRoute(train.getRoute())){
+					log.debug("Car ("+car.toString()+") can be droped by route to track (" +track.getName()+")");
+				} else {
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarRoute"),new Object[]{car.toString(), train.getRoute().getName(), track.getName()}));
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	
 	/**
 	 * Check departure staging track to see if engines and cars are available to
@@ -1902,24 +1924,8 @@ public class TrainBuilder extends TrainCommon{
 								if (!checkDropTrainDirection(car, rld, testTrack))
 									continue;
 								// drop to interchange or siding?
-								if (testTrack.getLocType().equals(Track.INTERCHANGE) || testTrack.getLocType().equals(Track.SIDING)){
-									if (testTrack.getDropOption().equals(Track.TRAINS)){
-										if (testTrack.acceptsDropTrain(train)){
-											log.debug("Car ("+car.toString()+") can be droped by train to track (" +testTrack.getName()+")");
-										} else {
-											addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarTrain"),new Object[]{car.toString(), train.getName(), testTrack.getName()}));
-											continue;
-										}
-									}
-									if (testTrack.getDropOption().equals(Track.ROUTES)){
-										if (testTrack.acceptsDropRoute(train.getRoute())){
-											log.debug("Car ("+car.toString()+") can be droped by route to track (" +testTrack.getName()+")");
-										} else {
-											addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarRoute"),new Object[]{car.toString(), train.getRoute().getName(), testTrack.getName()}));
-											continue;
-										}
-									}
-								}
+								if (!checkTrainCanDrop(car, testTrack))
+									continue;
 								String status = car.testDestination(car.getDestination(), testTrack);
 								// is the testTrack a siding with a schedule and alternate track?
 								if (!status.equals(Car.OKAY) && status.contains(Car.LENGTH) && car.testSchedule(testTrack).equals(Car.OKAY) 
@@ -1950,11 +1956,17 @@ public class TrainBuilder extends TrainCommon{
 					} else {
 						// going into the correct staging track?
 						if (!rld.equals(train.getTrainTerminatesRouteLocation()) || terminateStageTrack == null  || terminateStageTrack == car.getDestinationTrack()){
-							String status = car.testDestination(car.getDestination(), car.getDestinationTrack());
-							if (status.equals(Car.OKAY) && checkDropTrainDirection(car, rld, car.getDestinationTrack()))
-								carAdded = addCarToTrain(car, rl, rld, car.getDestinationTrack());
-							else if (!status.equals(Car.OKAY))
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), car.getDestinationTrackName(), status}));
+							// is train direction correct?
+							if (checkDropTrainDirection(car, rld, car.getDestinationTrack())){
+								// drop to interchange or siding?
+								if (checkTrainCanDrop(car, car.getDestinationTrack())){
+									String status = car.testDestination(car.getDestination(), car.getDestinationTrack());
+									if (status.equals(Car.OKAY) && checkDropTrainDirection(car, rld, car.getDestinationTrack()))
+										carAdded = addCarToTrain(car, rl, rld, car.getDestinationTrack());
+									else if (!status.equals(Car.OKAY))
+										addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), car.getDestinationTrackName(), status}));
+								}
+							}
 						} else {
 							throw new BuildFailedException(MessageFormat.format(rb.getString("buildCarDestinationStaging"),new Object[]{car.toString(), car.getDestinationName(), car.getDestinationTrackName()}));
 						}
@@ -2086,24 +2098,8 @@ public class TrainBuilder extends TrainCommon{
 					if (!checkDropTrainDirection(car, rld, testTrack))
 						continue;
 					// drop to interchange or siding?
-					if (testTrack.getLocType().equals(Track.INTERCHANGE) || testTrack.getLocType().equals(Track.SIDING)){
-						if (testTrack.getDropOption().equals(Track.TRAINS)){
-							if (testTrack.acceptsDropTrain(train)){
-								log.debug("Car ("+car.toString()+") can be droped by train to this track (" +testTrack.getName()+")");
-							} else {
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarTrain"),new Object[]{car.toString(), train.getName(), testTrack.getName()}));
-								continue;
-							}
-						}
-						if (testTrack.getDropOption().equals(Track.ROUTES)){
-							if (testTrack.acceptsDropRoute(train.getRoute())){
-								log.debug("Car ("+car.toString()+") can be droped by route to this track (" +testTrack.getName()+")");
-							} else {
-								addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarRoute"),new Object[]{car.toString(), train.getRoute().getName(), testTrack.getName()}));
-								continue;
-							}
-						}
-					}
+					if (!checkTrainCanDrop(car, testTrack))
+						continue;
 					String status = car.testDestination(testDestination, testTrack);
 					// is the destination a siding with a schedule demanding this car's custom load?
 					if (status.equals(Car.OKAY) && !testTrack.getScheduleId().equals("") 
