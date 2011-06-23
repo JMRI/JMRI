@@ -1,19 +1,23 @@
 <!DOCTYPE html>
+<!-- See JMRIMobile.js for program notes and TODO list  --->
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
 <title>JMRI Mobile</title>
-<link rel='stylesheet' href='css/jquery.mobile-1.0a4.1.min.css' />
+<link rel='stylesheet' href='css/jquery.mobile-1.0b1.min.css' />
 <link rel='stylesheet' href='css/JMRIMobile.css' />
-<script type='text/javascript' src='js/jquery-1.5.2.min.js'></script>
-<script type='text/javascript' src='js/jquery.mobile-1.0a4.1.min.js'></script>
+<script type='text/javascript' src='js/jquery-1.6.1.min.js'></script>
 <script type='text/javascript' src='js/JMRIMobile.js'></script>
 <script type='text/javascript' src='js/jquery.tmpl.min.js'></script>
+<script type='text/javascript' src='js/jquery.mobile-1.0b1.min.js'></script>
 
 <!-- Generic jquery templates for list items -------------------------------------------->
 <script id='genItemTemplate' type='text/html'>
-    <li id='name-${safeName}' data-icon='false' onClick="$sendChange('${type}','${name}','${nextValue}')">
-        <a class='ui-link-inherit two-line-item' href='#'><div class='userName float-left'><small><em>${name}</em></small><br /> ${userName}</div>
-            <div class='valueText float-right'>{{html valueText}}</div></a>
+    <li id='name-${safeName}' data-icon='false' >
+        <a class='ui-link-inherit two-line-item' href="javascript:$sendChange('${type}','${name}','${nextValue}');">
+            <div class='userName float-left'><small><em>${name}</em></small><br /> ${userName}</div>
+            <div class='valueText float-right'>{{html valueText}}</div>
+       </a>
     </li>
 </script>
 <script id='panelItemTemplate' type='text/html'>
@@ -27,23 +31,23 @@
 <!-- Generic jquery templates for pages -------------------------------------------->
 <script id='genPageTemplate' type='text/html'>
   <div id='type-${type}' data-url='type-${type}' data-role='page' data-theme='b'>
-    <div data-role='header' data-id='header' data-backbtn='false'>
-      <h1>JMRI Mobile - ${type}</h1>
+    <div data-role='header' data-id='header'>
+      <h1>${type} - JMRI Mobile</h1>
       <a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
-    </div>
+      <div class='errorMessage'></div>    
+   </div>
     <div data-role='content'>
       <ul class='listview' data-role='listview' data-filter='true'></ul>
     </div>
     <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true' data-scroll='true'>
-      <a data-role='button' href='#debug' data-theme='b'>Debug</a>
       <a data-role='button' href='#settings' data-theme='b'>Settings</a>
     </div>
   </div>
 </script>
 <script id='rosterPageTemplate' type='text/html'>
   <div id='type-${type}' data-url='type-${type}' data-role='page' data-theme='b'>
-    <div data-role='header' data-id='header' data-backbtn='false'>
-      <h1>JMRI Mobile - ${type}</h1>
+    <div data-role='header' data-id='header'>
+      <h1>${type} - JMRI Mobile</h1>
       <a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
     </div>
     <div data-role='content'>
@@ -51,15 +55,14 @@
        <div class='helpText'>Click on roster name to open an InControl throttle for each loco.  These open in a NEW window or tab.</div>
     </div>
     <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true'>
-      <a data-role='button' href='#debug' data-theme='b'>Debug</a>
       <a data-role='button' href='#settings' data-theme='b'>Settings</a>
     </div>
   </div>
 </script>
 <script id='panelPageTemplate' type='text/html'>
   <div id='type-${type}' data-url='type-${type}' data-role='page' data-theme='b'>
-    <div data-role='header' data-id='header' data-backbtn='false'>
-      <h1>JMRI Mobile - ${type}</h1>
+    <div data-role='header' data-id='header'>
+      <h1>${type} - JMRI Mobile</h1>
       <a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
     </div>
     <div data-role='content'>
@@ -67,30 +70,24 @@
        <div class='helpText'>Click on panel name to open a new clickable window for the selected panel.  Note: not all panels are useful via this method.</div>
     </div>
     <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true'>
-      <a data-role='button' href='#debug' data-theme='b'>Debug</a>
       <a data-role='button' href='#settings' data-theme='b'>Settings</a>
     </div>
   </div>
 </script>
 </head>
 
-<!--html for settings page -------------------------->
+<!--actual html for settings page -------------------------->
 <body>
 
 	<div data-role='page' id='settings' data-theme='b'>
-		<div data-role='header' id='header' data-id='header' data-position='fixed' data-backbtn='false'>
+		<div data-role='header' id='header' data-id='header' data-position='fixed'>
 			<h1>Settings</h1>
 			<a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
 		</div>
 		<div data-role='content' data-theme='b'>
-			<a href='/'><img src='/dist/resources/logo.gif' style='float: right;'> </a>
+			<a href='/'  rel='external'><img src='/dist/resources/logo.gif' style='float: right;'> </a>
 			<h2>JMRI Mobile</h2>
-			This is an early alpha version of a browser-based UI for controlling a layout with JMRI.  Includes:
-      <ul>
-        <li>turnout, route, power and sensor control,</li>
-        <li>links to open InControl throttles for each roster entry</li>
-        <li>clickable panels for each open JMRI window</li>
-      </ul>
+			This is an early alpha version of a browser-based UI for controlling a layout with JMRI.  
 			<div id='includes' data-role="fieldcontain">
 				<fieldset data-role="controlgroup">
 					<legend>Include in app?:</legend>
@@ -100,12 +97,18 @@
 					<input type="checkbox" name="include-sensor" id="include-sensor" class="custom" /> <label for="include-sensor">Sensors</label>
 					<input type="checkbox" name="include-roster" id="include-roster" class="custom" /> <label for="include-roster">Roster</label>
 					<input type="checkbox" name="include-panel" id="include-panel" class="custom" /> <label for="include-panel">Panels</label>
-			        <input type="checkbox" name="include-memory" id="include-memory" class="custom" /> <label for="include-memory">Memory Variables</label>
+<!---          <input type="checkbox" name="include-memory" id="include-memory" class="custom" /> <label for="include-memory">Memory Variables</label>  -->
+          <input type="checkbox" name="include-metadata" id="include-metadata" class="custom" /> <label for="include-metadata">Metadata</label>
 				</fieldset>
 			</div>
 			The screens are currently formatted for a mobile (phone-sized), but should work on any WebKit-capable web browser.
 			(Chrome, FireFox 4, Safari, IE 9, etc.)<br /> Use the Settings to include only those items you're interested in
-			controlling.
+			controlling.  Includes:
+      <ul>
+        <li>turnout, route, power and sensor control,</li>
+        <li>links to open InControl throttles for each roster entry</li>
+        <li>clickable panels for each open JMRI window</li>
+      </ul>
 		</div>
 
 		<div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed' data-inline='true'>
