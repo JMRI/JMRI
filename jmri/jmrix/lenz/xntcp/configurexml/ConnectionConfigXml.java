@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -39,7 +39,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
       boolean result=true; 
       try {
           result = super.load(e);
-	  log.error("result " +result);
+	  if(log.isDebugEnabled()) log.debug("result " +result);
       } catch (NullPointerException ex) {
 	 // If the standard configuration fails, try the original 
          // original configurations method for XnTcp which used a
@@ -48,7 +48,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
          // If manual was manual, option 1 contained the host name
          // and option 2 contained the port.  We now use option 1 to 
          // designate the manual option.
-	 log.error("Null Pointer Exception Occured");
+	 if(log.isDebugEnabled()) log.debug("Null Pointer Exception Occured");
 	 String manualOption=null;
 	 String hostName=null;
 	 int portNumber=0;
