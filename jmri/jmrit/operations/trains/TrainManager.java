@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.57 $
+ * @version	$Revision: 1.58 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -45,7 +45,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private Point _framePosition = new Point();
 	*/
 	// Train frame table column widths (12), starts with Time column and ends with Edit
-	private int[] _tableColumnWidths = {40, 38, 72, 100, 120, 100, 100, 100, 100, 100, 66, 60};
+	private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 80, 70};
 	
 	// Edit Train frame attributes
 	/* all JMRI window position and size are now saved

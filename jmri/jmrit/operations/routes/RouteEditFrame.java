@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -189,7 +189,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// set frame size and route for display
 		pack();
-		setSize(Control.panelWidth, Control.panelHeight);
+		if (getWidth()<Control.panelWidth)
+			setSize(Control.panelWidth, Control.panelHeight);
 		setVisible(true);
 	}
 	

@@ -20,7 +20,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	
@@ -90,7 +90,8 @@ public class SchedulesTableFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
     	
     	pack();
-    	if ((getWidth()<800)) setSize(800, getHeight());
+		if (getWidth() < Control.panelWidth)
+			setSize(Control.panelWidth, getHeight());
     	
     }
     

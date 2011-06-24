@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -115,9 +115,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(35);
 		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(35);
 		table.getColumnModel().getColumn(COMMENTCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
+		// set row height
+		table.setRowHeight(new JComboBox().getPreferredSize().height);
         updateList();
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

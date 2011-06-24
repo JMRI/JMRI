@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2011
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -92,12 +92,14 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(SCH_STATUSCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(SIDINGSCOLUMN).setPreferredWidth(300);
+		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
+		table.getColumnModel().getColumn(SCH_STATUSCOLUMN).setPreferredWidth(80);
+		table.getColumnModel().getColumn(SIDINGSCOLUMN).setPreferredWidth(350);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(90);
+		// set row height
+		table.setRowHeight(new JComboBox().getPreferredSize().height);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}

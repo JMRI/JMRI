@@ -30,7 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.23 $
+ * @version   $Revision: 1.24 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -119,6 +119,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
+		// set row height
+		table.setRowHeight(new JComboBox().getPreferredSize().height);
         updateList();
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

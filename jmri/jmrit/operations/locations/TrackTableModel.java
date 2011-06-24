@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -89,13 +89,13 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(45);
+		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(RESERVEDCOLUMN).setPreferredWidth(65);
 		table.getColumnModel().getColumn(ENGINES).setPreferredWidth(60);
 		table.getColumnModel().getColumn(CARS).setPreferredWidth(60);
 		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DROPS).setPreferredWidth(60);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(60);
+		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         updateList();
