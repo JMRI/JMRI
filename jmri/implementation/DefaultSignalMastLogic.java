@@ -34,7 +34,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -721,6 +721,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             aspect = advancedAspect[0];
             ArrayList<Integer> divergAspects = new ArrayList<Integer>();
             ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
+
             if (advancedAspect.length>1) {                
                 float maxSigSpeed = -1;
                 float maxPathSpeed = destList.get(destination).getMinimumSpeed();
@@ -729,13 +730,26 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 boolean divergFlagsAvailable = false;
                     //We split the aspects into two lists, one with divering flag set, the other without.
                     for(int i = 0; i<advancedAspect.length; i++){
-                        String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "diverging");
-                        if ((div!=null) && (div.equals("yes"))){
-                            divergAspects.add(i);
-                            divergFlagsAvailable = true;
-                            log.debug("Using Diverging Flag");
+                        String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
+                        if(div!=null){
+                            if (div.equals("Diverging")){
+                                log.debug("Aspect " + advancedAspect[i] + "added as Diverging Route");
+                                divergAspects.add(i);
+                                divergFlagsAvailable = true;
+                                log.debug("Using Diverging Flag");
+                            } else if (div.equals("Either")) {
+                                log.debug("Aspect " + advancedAspect[i] + "added as Both Diverging and Normal Route");
+                                nonDivergAspects.add(i);
+                                divergAspects.add(i);
+                                divergFlagsAvailable = true;
+                                log.debug("Using Diverging Flag");
+                            } else {
+                                log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
+                                nonDivergAspects.add(i);
+                            }
                         } else {
                             nonDivergAspects.add(i);
+                            log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
                         }
                     }
                 log.debug("path max speed : " + maxPathSpeed);
