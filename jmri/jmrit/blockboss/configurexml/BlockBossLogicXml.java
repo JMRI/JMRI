@@ -24,7 +24,7 @@ import org.jdom.Element;
  * "signalelements" and "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -140,68 +140,180 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
         // process each item
         for (int i = 0; i<l.size(); i++) {
             Element block = l.get(i);
-            BlockBossLogic bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
-            if (block.getAttribute("approachsensor1")!=null)
-                bb.setApproachSensor1(block.getAttributeValue("approachsensor1"));
-            if (block.getAttribute("watchedsensor")!=null)   // for older XML files
-                bb.setSensor1(block.getAttributeValue("watchedsensor"));
-
-            // old form of sensors with system names
-            List<Element> sl = block.getChildren("sensor");
-            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(sl.get(0).getAttributeValue("systemName"));
-            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getAttributeValue("systemName"));
-            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getAttributeValue("systemName"));
-            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getAttributeValue("systemName"));
-            if (sl.size()>=5 && sl.get(4)!= null) bb.setSensor5(sl.get(4).getAttributeValue("systemName"));
-
-            // new form of sensors with system names
-            sl = block.getChildren("sensorname");
-            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(sl.get(0).getText());
-            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getText());
-            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getText());
-            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getText());
-            if (sl.size()>=5 && sl.get(4)!= null) bb.setSensor5(sl.get(4).getText());
-
-            try {
-                bb.setMode(block.getAttribute("mode").getIntValue());
-                if (block.getAttribute("distantsignal")!=null)
-                    bb.setDistantSignal(block.getAttribute("distantsignal").getBooleanValue());
-                if (block.getAttribute("limitspeed1")!=null)
-                    bb.setLimitSpeed1(block.getAttribute("limitspeed1").getBooleanValue());
-                if (block.getAttribute("limitspeed2")!=null)
-                    bb.setLimitSpeed2(block.getAttribute("limitspeed2").getBooleanValue());
-                if (block.getAttribute("watchedturnout")!=null)
-                    bb.setTurnout(block.getAttributeValue("watchedturnout"));
-                if (block.getAttribute("watchedsignal1")!=null)
-                    bb.setWatchedSignal1(block.getAttributeValue("watchedsignal1"),
-                                        block.getAttribute("useflashyellow").getBooleanValue());
-                if (block.getAttribute("watchedsignal1alt")!=null)
-                    bb.setWatchedSignal1Alt(block.getAttributeValue("watchedsignal1alt"));
-                if (block.getAttribute("watchedsignal2")!=null)
-                    bb.setWatchedSignal2(block.getAttributeValue("watchedsignal2"));
-                if (block.getAttribute("watchedsignal2alt")!=null)
-                    bb.setWatchedSignal2Alt(block.getAttributeValue("watchedsignal2alt"));
-                if (block.getAttribute("watchedsensor1")!=null)
-                    bb.setWatchedSensor1(block.getAttributeValue("watchedsensor1"));
-                if (block.getAttribute("watchedsensor1alt")!=null)
-                    bb.setWatchedSensor1Alt(block.getAttributeValue("watchedsensor1alt"));
-                if (block.getAttribute("watchedsensor2")!=null)
-                    bb.setWatchedSensor2(block.getAttributeValue("watchedsensor2"));
-                if (block.getAttribute("watchedsensor2alt")!=null)
-                    bb.setWatchedSensor2Alt(block.getAttributeValue("watchedsensor2alt"));
-            
-                // load comment, if present
-                String c = block.getChildText("comment");
-                if (c != null) {
-                    bb.setComment(c);
-                }
-
-            } catch (org.jdom.DataConversionException e) {
-                log.warn("error reading blocks from file"+e);
+            BlockBossLogic bb =null;
+            try{
+                bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
+            } catch (java.lang.IllegalArgumentException e) {
+                log.error("An error occured trying to find the signal for the signal elements for " + block.getAttributeValue("signal"));
                 result = false;
             }
-            bb.retain();
-            bb.start();
+            if(bb!=null){
+                if (block.getAttribute("approachsensor1")!=null){
+                    try {
+                        bb.setApproachSensor1(block.getAttributeValue("approachsensor1"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured loading the approach sensor for the signal elements for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                }
+                if (block.getAttribute("watchedsensor")!=null){   // for older XML files
+                    try {
+                        bb.setSensor1(block.getAttributeValue("watchedsensor"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured loading the watched sensor in the SSL for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                }
+
+                // old form of sensors with system names
+                List<Element> sl = block.getChildren("sensor");
+                try{
+                    if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(sl.get(0).getAttributeValue("systemName"));
+                    if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getAttributeValue("systemName"));
+                    if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getAttributeValue("systemName"));
+                    if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getAttributeValue("systemName"));
+                    if (sl.size()>=5 && sl.get(4)!= null) bb.setSensor5(sl.get(4).getAttributeValue("systemName"));
+                } catch (java.lang.IllegalArgumentException e) {
+                    log.error("An error occured loading the sensors list in the SSL");
+                    result = false;
+                }
+                // new form of sensors with system names
+                sl = block.getChildren("sensorname");
+                try {
+                    if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(sl.get(0).getText());
+                } catch (java.lang.IllegalArgumentException e) {
+                    log.error("An error occured loading the sensor1 list in the SSL for " + bb.getDrivenSignal());
+                    result = false;
+                }
+                
+                try{
+                    if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getText());
+                } catch (java.lang.IllegalArgumentException e) {
+                    log.error("An error occured loading the sensor2 list in the SSL for " + bb.getDrivenSignal());
+                    result = false;
+                }
+                
+                try {
+                    if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getText());
+                } catch (java.lang.IllegalArgumentException e) {
+                    log.error("An error occured loading the sensor3 list in the SSL for " + bb.getDrivenSignal());
+                    result = false;
+                }
+                
+                try {
+                    if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getText());
+                } catch (java.lang.IllegalArgumentException e) {
+                    log.error("An error occured loading the sensor4 list in the SSL for " + bb.getDrivenSignal());
+                    result = false;
+                }
+                
+                try {
+                    if (sl.size()>=5 && sl.get(4)!= null) bb.setSensor5(sl.get(4).getText());
+                } catch (java.lang.IllegalArgumentException e) {
+                    log.error("An error occured loading the sensor5 list in the SSL for " + bb.getDrivenSignal());
+                    result = false;
+                }
+                
+                try {
+                    bb.setMode(block.getAttribute("mode").getIntValue());
+                    if (block.getAttribute("distantsignal")!=null)
+                        bb.setDistantSignal(block.getAttribute("distantsignal").getBooleanValue());
+                    if (block.getAttribute("limitspeed1")!=null)
+                        bb.setLimitSpeed1(block.getAttribute("limitspeed1").getBooleanValue());
+                    if (block.getAttribute("limitspeed2")!=null)
+                        bb.setLimitSpeed2(block.getAttribute("limitspeed2").getBooleanValue());
+                    try {
+                        if (block.getAttribute("watchedturnout")!=null)
+                            bb.setTurnout(block.getAttributeValue("watchedturnout"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched turnout ("+ block.getAttributeValue("watchedturnout") + ")element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    
+                    try{
+                        if (block.getAttribute("watchedsignal1")!=null)
+                            bb.setWatchedSignal1(block.getAttributeValue("watchedsignal1"),
+                                                block.getAttribute("useflashyellow").getBooleanValue());
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched signal 1 ("+ block.getAttributeValue("watchedsignal1") + ")element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    
+                    try {
+                        if (block.getAttribute("watchedsignal1alt")!=null)
+                            bb.setWatchedSignal1Alt(block.getAttributeValue("watchedsignal1alt"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched signal 1 alt ("+ block.getAttributeValue("watchedsignal1alt") + ")element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    
+                    try{
+                        if (block.getAttribute("watchedsignal2")!=null)
+                            bb.setWatchedSignal2(block.getAttributeValue("watchedsignal2"));
+                        
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched signal 2 ("+ block.getAttributeValue("watchedsignal2") + ")element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    
+                    try{
+                        if (block.getAttribute("watchedsignal2alt")!=null)
+                            bb.setWatchedSignal2Alt(block.getAttributeValue("watchedsignal2alt"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched signal 2 alt ("+ block.getAttributeValue("watchedsignal2alt") + ") element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    
+                    try{
+                        if (block.getAttribute("watchedsensor1")!=null)
+                            bb.setWatchedSensor1(block.getAttributeValue("watchedsensor1"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched sensor 1 ("+ block.getAttributeValue("watchedsensor1") + ") element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    
+                    try{
+                        if (block.getAttribute("watchedsensor1alt")!=null)
+                            bb.setWatchedSensor1Alt(block.getAttributeValue("watchedsensor1alt"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched sensor 1 alt ("+ block.getAttributeValue("watchedsensor1alt") + ") element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    try{
+                        if (block.getAttribute("watchedsensor2")!=null)
+                            bb.setWatchedSensor2(block.getAttributeValue("watchedsensor2"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched sensor 2 ("+ block.getAttributeValue("watchedsensor2")+ ") element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    try{
+                        if (block.getAttribute("watchedsensor2alt")!=null)
+                            bb.setWatchedSensor2Alt(block.getAttributeValue("watchedsensor2alt"));
+                    } catch (java.lang.IllegalArgumentException e) {
+                        log.error("An error occured in retrieving the watched sensor 2 alt ("+ block.getAttributeValue("watchedsensor2alt") + ")element attribute list for " + bb.getDrivenSignal());
+                        result = false;
+                    }
+                    // load comment, if present
+                    String c = block.getChildText("comment");
+                    if (c != null) {
+                        bb.setComment(c);
+                    }
+
+                } catch (org.jdom.DataConversionException e) {
+                    log.warn("error reading blocks from file"+e);
+                    result = false;
+                } catch (java.lang.IllegalArgumentException e) {
+                    log.error("An error occured in the signal element attribute list");
+                    result = false;
+                }
+                try {
+                    bb.retain();
+                    bb.start();
+                } catch (java.lang.NullPointerException e){
+                    log.error("An error occured trying to start the signal logic " + bb.getDrivenSignal());
+                    result = false;
+                }
+            }
         }
         return result;
     }
