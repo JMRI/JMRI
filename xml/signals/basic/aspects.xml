@@ -43,7 +43,7 @@
         <revnumber>2.1</revnumber>
         <date>2011-06-13</date>
         <authorinitials>KWD</authorinitials>
-        <revremark>Add Diverging flag=</revremark>
+        <revremark>Add Diverging flag</revremark>
     </revision>
   </revhistory>
 
@@ -70,14 +70,14 @@
       <name>Diverging Clear</name>
       <indication>Proceed through diverging route</indication>
       <speed>Medium</speed>
-      <diverging>yes</diverging>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
       <name>Diverging Approach</name>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
       <speed>Limited</speed>
-      <diverging>yes</diverging>
+      <route>Diverging</route>
     </aspect>
 
   </aspects>
