@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.8.shtml,v 1.5 2011-06-22 15:20:00 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.8.shtml,v 1.6 2011-06-24 19:34:13 mstevetodd Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -126,6 +126,12 @@ The initial display of the CBUS console was fixed so that the buttons show prope
 	could service a track when the car had a destination assigned to it
 	before the build.</LI>
 </UL>
+
+<p>Steve Todd</p>
+<ul>
+  <li>Fixed web server panel click on Positionable components,</li>
+  <li>JMRIMobile speed improvements</li>
+</ul>  
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
