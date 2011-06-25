@@ -1142,6 +1142,50 @@
       </icon>
     </positionablelabel>
   </paneleditor>
-  <!--Written by JMRI version 2.11.4 on Wed May 18 01:32:07 CDT 2011 $Id: SE8cSignalExample.xml,v 1.6 2011-05-21 21:50:58 jacobsen Exp $-->
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed May 18 01:18:12 CDT 2011</date>
+      <filename>DecoderPro version 2.11.4 starts under Java 1.6.0_24 at Wed May 18 01:18:11 CDT 2011</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed May 18 01:18:15 CDT 2011</date>
+      <filename>Simulator.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed May 18 01:18:39 CDT 2011</date>
+      <filename>SE8cSignalExample.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed May 18 00:19:50 CDT 2011</date>
+          <filename>DecoderPro version 2.11.4 starts under Java 1.6.0_24 at Wed May 18 00:19:50 CDT 2011</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed May 18 00:19:53 CDT 2011</date>
+          <filename>Simulator.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed May 18 00:21:42 CDT 2011</date>
+          <filename>SE8cSignalExample.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed May 18 01:18:03 CDT 2011</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed May 18 01:32:07 CDT 2011</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 2.11.4 on Wed May 18 01:32:07 CDT 2011 $Id: SE8cSignalExample.xml,v 1.7 2011-06-25 01:45:57 jacobsen Exp $-->
 </layout-config>
 

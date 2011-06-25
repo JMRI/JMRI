@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: SimpleSignalExample.shtml,v 1.7 2010-01-09 22:25:56 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.shtml,v 1.8 2011-06-25 01:46:24 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -55,24 +55,23 @@ the file "SE8cSignalExample.xml" in the xml/layout directory.
 Note that you may have to look around for this file; it's in the
 same place that you installed the program.
 <LI>
-<IMG SRC="../../../images/SE8cExampleInit.gif" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
+<IMG SRC="images/Start Panel.png" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
 You should now see a simple schematic panel for a layout consisting of a loop
 of track and one passing siding.
 <P>
-Because there's no connection to a real layout, the status of the block detectors and
+Because there's no connection to a real layout, the status of the sensors and
 turnouts isn't initially known.  This example shows that by displaying the
-block detectors as yellow, and the turnouts as "not connected either way".
+sensors as Red, and the turnouts as "not connected either way".
 Since the signal logic isn't sure whether blocks are occupied nor how turnouts
 are set, it shows red on all the signals.
 <P>
 You can click on the icons to change the occupancy and
 turnout status, or use another tool (e.g. the "turnout table") to do that.
 <P>Click on each of the turnouts to set them closed. Click on the 
-block detectors to set them "unoccupied", which is shown as a 
-gray circle (it's supposed to look like an unlit LED; occupied is
-indicated by a red LED)
+sensors to set them "unoccupied", which is shown as a 
+Grey, occupied is indicated by Yellow)
 <LI>
-<IMG SRC="../../../images/SE8cExampleClear.gif" ALIGN=RIGHT WIDTH="320" HEIGHT="128" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
+<IMG SRC="images/SensorsCleared.png" ALIGN=RIGHT WIDTH="320" HEIGHT="128" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
 The display should now look like the image to the right. 
 The signals on the passing siding are red, as the turnouts are thrown against
 them.  All the signals on the mainline are green.
@@ -82,13 +81,13 @@ about the item. For example, a turnout might show "Turnout 1 (LT1)".
 LT1 is the "system name" for that turnout. In this case, it
 means "LocoNet Turnout with address 1".  "Turnout 1" is a "user name", 
 which can be anything you want it to be.  You can edit these with the
-"Turnout Table" in the Tools menu. Signal heads and block detectors
+"Turnout Table" in the Tools menu. Signal heads and sensors
 work similarly.  There's more information on this on the
 <A HREF="../../doc/Technical/Names.shtml">program page on naming</a>.
 
 <LI>
-<IMG SRC="../../../images/SE8cExampleTrains.gif" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
-You can now click on the block detectors to show how the signals would react
+<IMG SRC="images/SensorTuroutsSet.png" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
+You can now click on the sensors to show how the signals would react
 to the presence of a train.  For example, the image to the right
 shows a train entering a passing siding from the left side. It's about
 to encounter a yellow signal upon entering the siding, which tells it to 
@@ -103,8 +102,8 @@ onto the main going to the right.
 If you're interested in how the program would communicate with a
 Digitrax SE8c signaling card, you can open the LocoNet Monitor
 tool from the Digitrax menu. Clicking on a turnout sends a
-LocoNet message to move the turnout. Clicking on a block detector
-causes a message as if a BDL16 block detector channel had seen
+LocoNet message to move the turnout. Clicking on a sensors
+causes a message as if a BDL16 sensors channel had seen
 a change in occupancy.  If either of those messages result in
 a change to the signals, the program will send 
 messages to those SE8c channels to change their output.
@@ -153,7 +152,7 @@ For more information on launching and configuring
 PanelPro, please see the
 <A HREF="../../apps/PanelPro/PanelPro.shtml">PanelPro web page</a>.
 
-<LI>Tell it about your block detectors. 
+<LI>Tell it about your sensors. 
   <UL>
   <LI>From the Tools menu, open the "Sensor Table"
   	  tool.
@@ -260,7 +259,7 @@ tell the program about those turnouts also.  (SE8c users skip this step)
 		thrown or closed, the train will take two different routes, and the
 		signal will protect different next blocks.
 		</UL>
-	<LI>If you want the signal to go red when a block detector shows
+	<LI>If you want the signal to go red when a sensors shows
 	occupied (sensor active), enter the sensor name in the next box.
 	<LI>If this signal is protecting travel in the trailing point
 	direction through a turnout, you can have the signal show red if
@@ -294,6 +293,8 @@ signal status will update to the new appearance.
 You can create a small control panel to do this graphically. For more
 info on how to do that, see the 
 <A HREF="../../apps/PanelPro/Panels.shtml">Panels page</a>.
+<P>
+Located at html\tools\signaling
 
 <!--#include virtual="/Footer" -->
 </body>
