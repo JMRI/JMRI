@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: Hornby8245_v2.xml,v 1.1 2011-06-25 01:55:12 jacobsen Exp $ -->
+<!-- $Id: Hornby8245_v2.xml,v 1.2 2011-06-25 03:07:44 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -61,8 +61,6 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Short Address"
             tooltip="CV1  (1 -127) default=3">
             <shortAddressVal/>
-            min/enum="1"
-            max/value="127"
             </variable>
         <!-- CV 2 -->
         <variable
@@ -188,7 +186,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Consist Direction"
             tooltip="CV19-VXXXXXXX  default=0">
             <enumVal>
-                <enumChoice choice="Forward"></enumChoice>>
+                <enumChoice choice="Forward"></enumChoice>
                 <enumChoice choice="Reverse"></enumChoice>
                 </enumVal>
             </variable>
@@ -201,7 +199,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="RailCom Address"
             tooltip="CV28-XXXXXXXV  default=1">
             <enumVal>
-                <enumChoice choice="Disabled"></enumChoice>>
+                <enumChoice choice="Disabled"></enumChoice>
                 <enumChoice choice="Enabled"></enumChoice>
                 </enumVal>
             </variable>
@@ -214,7 +212,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="RailCom Data"
             tooltip="CV28-XXXXXXVX  default=1">
             <enumVal>
-                <enumChoice choice="Disabled"></enumChoice>>
+                <enumChoice choice="Disabled"></enumChoice>
                 <enumChoice choice="Enabled"></enumChoice>
                 </enumVal>
             </variable>
@@ -227,7 +225,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="RailCom Command"
             tooltip="CV28-XXXXXVXX  default=1">
             <enumVal>
-                <enumChoice choice="Disabled"></enumChoice>>
+                <enumChoice choice="Disabled"></enumChoice>
                 <enumChoice choice="Enabled"></enumChoice>
                 </enumVal>
             </variable>
@@ -240,7 +238,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Locomotive Direction"
             tooltip="CV29-XXXXXXXV  default=0">
             <enumVal>
-                <enumChoice choice="Normal"></enumChoice>>
+                <enumChoice choice="Normal"></enumChoice>
                 <enumChoice choice="Reverse"></enumChoice>
                 </enumVal>
             </variable>
@@ -253,7 +251,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Speed Step Mode"
             tooltip="CV29-XXXXXXVX  default=1">
             <enumVal>
-                <enumChoice choice="14"></enumChoice>>
+                <enumChoice choice="14"></enumChoice>
                 <enumChoice choice="28/128"></enumChoice>
                 </enumVal>
             </variable>
@@ -266,7 +264,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Analog (DC) Operation"
             tooltip="CV29-XXXXXVXX  default=1">
             <enumVal>
-                <enumChoice choice="No"></enumChoice>>
+                <enumChoice choice="No"></enumChoice>
                 <enumChoice choice="Yes"></enumChoice>
                 </enumVal>
             </variable>
@@ -279,7 +277,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Enable RailCom"
             tooltip="CV29-XXXXVXXX  default=0">
             <enumVal>
-                <enumChoice choice="Disabled"></enumChoice>>
+                <enumChoice choice="Disabled"></enumChoice>
                 <enumChoice choice="Enabled"></enumChoice>
                 </enumVal>
             </variable>
@@ -292,7 +290,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Speed Table Definition"
             tooltip="CV29-XXXVXXXX  default=0">
             <enumVal>
-                <enumChoice choice="Vstart/mid/high"></enumChoice>>
+                <enumChoice choice="Vstart/mid/high"></enumChoice>
                 <enumChoice choice="Use Speed Table"></enumChoice>
                 </enumVal>
             </variable>
@@ -305,7 +303,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Address Format"
             tooltip="CV29-XXVXXXXX  default=0">
             <enumVal>
-                <enumChoice choice="One byte (short) address"></enumChoice>>
+                <enumChoice choice="One byte (short) address"></enumChoice>
                 <enumChoice choice="Two byte (extended) address"></enumChoice>
                 </enumVal>
             </variable>
@@ -318,7 +316,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Decoder Type"
             tooltip="CV29-VXXXXXXX  default=0">
             <enumVal>
-                <enumChoice choice="MultiFuncton"></enumChoice>>
+                <enumChoice choice="MultiFuncton"></enumChoice>
                 <enumChoice choice="Accessory"></enumChoice>
                 </enumVal>
             </variable>
@@ -331,7 +329,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             readOnly="yes"
             tooltip="CV30-XXXXXXXV  Readonly">
             <enumVal>
-                <enumChoice choice="OK"></enumChoice>>
+                <enumChoice choice="OK"></enumChoice>
                 <enumChoice choice="NOK"></enumChoice>
                 </enumVal>
             </variable>
@@ -344,7 +342,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             readOnly="yes"
             tooltip="CV30-XXXXXXVX  Readonly">
             <enumVal>
-                <enumChoice choice="OK"></enumChoice>>
+                <enumChoice choice="OK"></enumChoice>
                 <enumChoice choice="NOK"></enumChoice>
                 </enumVal>
             </variable>
@@ -357,7 +355,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             readOnly="yes"
             tooltip="CV30-XXXXXVXX  Readonly">
             <enumVal>
-                <enumChoice choice="OK"></enumChoice>>
+                <enumChoice choice="OK"></enumChoice>
                 <enumChoice choice="NOK"></enumChoice>
                 </enumVal>
             </variable>
@@ -370,7 +368,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(f) controls output 1"
             tooltip="CV33-XXXXXXXV  default=1">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -383,7 +381,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(f) controls output 2"
             tooltip="CV33-XXXXXXVX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -396,7 +394,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(f) controls output 3"
             tooltip="CV33-XXXXXVXX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -409,7 +407,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(f) controls output 4"
             tooltip="CV33-XXXXVXXX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -422,7 +420,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(r) controls output 1"
             tooltip="CV34-XXXXXXXV  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -435,7 +433,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(r) controls output 2"
             tooltip="CV34-XXXXXXVX  default=1">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -448,7 +446,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(r) controls output 3"
             tooltip="CV34-XXXXXVXX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -461,7 +459,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="FL(r) controls output 4"
             tooltip="CV34-XXXXVXXX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -474,7 +472,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F1 controls output 1"
             tooltip="CV35-XXXXXXXV  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -487,7 +485,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F1 controls output 2"
             tooltip="CV35-XXXXXXVX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -500,7 +498,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F1 controls output 3"
             tooltip="CV35-XXXXXVXX  default=1">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -513,7 +511,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F1 controls output 4"
             tooltip="CV35-XXXXVXXX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -526,7 +524,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F2 controls output 1"
             tooltip="CV36-XXXXXXXV  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -539,7 +537,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F2 controls output 2"
             tooltip="CV36-XXXXXXVX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -552,7 +550,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F2 controls output 3"
             tooltip="CV36-XXXXXVXX  default=0">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -565,7 +563,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="F2 controls output 4"
             tooltip="CV36-XXXXVXXX  default=1">
             <enumVal>
-                <enumChoice choice="No" value="0"></enumChoice>>
+                <enumChoice choice="No" value="0"></enumChoice>
                 <enumChoice choice="Yes" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -604,7 +602,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="ABC activated"
             tooltip="CV52-XXXXXXXV  default=0">
             <enumVal>
-                <enumChoice choice="No"></enumChoice>>
+                <enumChoice choice="No"></enumChoice>
                 <enumChoice choice="Yes"></enumChoice>
                 </enumVal>
             </variable>
@@ -617,7 +615,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="ABC direction-dependency deactivated"
             tooltip="CV52-XXXXXXVX  default=0">
             <enumVal>
-                <enumChoice choice="No"></enumChoice>>
+                <enumChoice choice="No"></enumChoice>
                 <enumChoice choice="Yes"></enumChoice>
                 </enumVal>
             </variable>
@@ -630,7 +628,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Activate push-pull operation with intermediate stop"
             tooltip="CV52-XXXXXVXX  default=0">
             <enumVal>
-                <enumChoice choice="No"></enumChoice>>
+                <enumChoice choice="No"></enumChoice>
                 <enumChoice choice="Yes"></enumChoice>
                 </enumVal>
             </variable>
@@ -699,7 +697,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Shunting Mode"
             tooltip="CV112-XXXXXXXV  default=0">
             <enumVal>
-                <enumChoice choice="Off"></enumChoice>>
+                <enumChoice choice="Off"></enumChoice>
                 <enumChoice choice="On"></enumChoice>
                 </enumVal>
             </variable>
@@ -712,9 +710,9 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Light effect of function output 0"
             tooltip="CV113-XXXXXXVV  default=0">
             <enumVal>
-                <enumChoice choice="Steady" value="0"></enumChoice>>
-                <enumChoice choice="Strobe" value="1"></enumChoice>>
-                <enumChoice choice="Flicker" value="2"></enumChoice>>
+                <enumChoice choice="Steady" value="0"></enumChoice>
+                <enumChoice choice="Strobe" value="1"></enumChoice>
+                <enumChoice choice="Flicker" value="2"></enumChoice>
                 <enumChoice choice="Flash" value="3"></enumChoice>
                 </enumVal>
             </variable>
@@ -727,9 +725,9 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Light effect of function output 1"
             tooltip="CV114-XXXXXXVV  default=0">
             <enumVal>
-                <enumChoice choice="Steady" value="0"></enumChoice>>
-                <enumChoice choice="Strobe" value="1"></enumChoice>>
-                <enumChoice choice="Flicker" value="2"></enumChoice>>
+                <enumChoice choice="Steady" value="0"></enumChoice>
+                <enumChoice choice="Strobe" value="1"></enumChoice>
+                <enumChoice choice="Flicker" value="2"></enumChoice>
                 <enumChoice choice="Flash" value="3"></enumChoice>
                 </enumVal>
             </variable>
@@ -742,9 +740,9 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Light effect of function output 2"
             tooltip="CV115-XXXXXXVV  default=0">
             <enumVal>
-                <enumChoice choice="Steady" value="0"></enumChoice>>
-                <enumChoice choice="Strobe" value="1"></enumChoice>>
-                <enumChoice choice="Flicker" value="2"></enumChoice>>
+                <enumChoice choice="Steady" value="0"></enumChoice>
+                <enumChoice choice="Strobe" value="1"></enumChoice>
+                <enumChoice choice="Flicker" value="2"></enumChoice>
                 <enumChoice choice="Flash" value="3"></enumChoice>
                 </enumVal>
             </variable>
@@ -757,9 +755,9 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Light effect of function output 3"
             tooltip="CV116-XXXXXXVV  default=0">
             <enumVal>
-                <enumChoice choice="Steady" value="0"></enumChoice>>
-                <enumChoice choice="Strobe" value="1"></enumChoice>>
-                <enumChoice choice="Flicker" value="2"></enumChoice>>
+                <enumChoice choice="Steady" value="0"></enumChoice>
+                <enumChoice choice="Strobe" value="1"></enumChoice>
+                <enumChoice choice="Flicker" value="2"></enumChoice>
                 <enumChoice choice="Flash" value="3"></enumChoice>
                 </enumVal>
             </variable>
@@ -869,7 +867,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Event 1 - direction"
             tooltip="CV124-VXXXXXXX  default=0">
             <enumVal>
-                <enumChoice choice="Forward" value="0"></enumChoice>>
+                <enumChoice choice="Forward" value="0"></enumChoice>
                 <enumChoice choice="Reverse" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -931,7 +929,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Event 2 - direction"
             tooltip="CV128-VXXXXXXX  default=0">
             <enumVal>
-                <enumChoice choice="Forward" value="0"></enumChoice>>
+                <enumChoice choice="Forward" value="0"></enumChoice>
                 <enumChoice choice="Reverse" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -993,7 +991,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Event 3 - direction"
             tooltip="CV132-VXXXXXXX  default=0">
             <enumVal>
-                <enumChoice choice="Forward" value="0"></enumChoice>>
+                <enumChoice choice="Forward" value="0"></enumChoice>
                 <enumChoice choice="Reverse" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -1055,7 +1053,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Event 4 - direction"
             tooltip="CV136-VXXXXXXX  default=0">
             <enumVal>
-                <enumChoice choice="Forward" value="0"></enumChoice>>
+                <enumChoice choice="Forward" value="0"></enumChoice>
                 <enumChoice choice="Reverse" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -1103,13 +1101,13 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Event Control"
             tooltip="CV140  default=0">
             <enumVal>
-                <enumChoice choice="None" value="0"></enumChoice>>
-                <enumChoice choice="E1" value="1"></enumChoice>>
-                <enumChoice choice="E1-2" value="2"></enumChoice>>
-                <enumChoice choice="E1-3" value="3"></enumChoice>>
-                <enumChoice choice="E1-4" value="4"></enumChoice>>
-                <enumChoice choice="E1-2 Repeat" value="10"></enumChoice>>
-                <enumChoice choice="E1-3 Repeat" value="11"></enumChoice>>
+                <enumChoice choice="None" value="0"></enumChoice>
+                <enumChoice choice="E1" value="1"></enumChoice>
+                <enumChoice choice="E1-2" value="2"></enumChoice>
+                <enumChoice choice="E1-3" value="3"></enumChoice>
+                <enumChoice choice="E1-4" value="4"></enumChoice>
+                <enumChoice choice="E1-2 Repeat" value="10"></enumChoice>
+                <enumChoice choice="E1-3 Repeat" value="11"></enumChoice>
                 <enumChoice choice="E1-4 Repeat" value="12"></enumChoice>
                 </enumVal>
             </variable>
@@ -1170,7 +1168,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Simulation"
             tooltip="CV146-XXXXXXXV  default=0">
             <enumVal>
-                <enumChoice choice="Off" value="0"></enumChoice>>
+                <enumChoice choice="Off" value="0"></enumChoice>
                 <enumChoice choice="On" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -1183,7 +1181,7 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Lights on empty"
             tooltip="CV146-XXXXXXVX  default=0">
             <enumVal>
-                <enumChoice choice="Off" value="0"></enumChoice>>
+                <enumChoice choice="Off" value="0"></enumChoice>
                 <enumChoice choice="On" value="1"></enumChoice>
                 </enumVal>
             </variable>
@@ -1196,8 +1194,8 @@ nmraWarrant="yes" nmraWarrantStart="2009-005"
             item="Motor Option 1"
             tooltip="CV150-XXXXXXVV  default=0">
             <enumVal>
-                <enumChoice choice="Intrain V1.3" value="0"></enumChoice>>
-                <enumChoice choice="New PID" value="1"></enumChoice>>
+                <enumChoice choice="Intrain V1.3" value="0"></enumChoice>
+                <enumChoice choice="New PID" value="1"></enumChoice>
                 <enumChoice choice="New PID tune for Lima" value="2"></enumChoice>
                 </enumVal>
             </variable>
