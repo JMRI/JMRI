@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.40 $
+ * @version			$Revision: 2.41 $
  */
 
 package jmri.jmrix.lenz;
@@ -112,6 +112,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     /* State information */
     protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
+    protected static final int STATUSREQUESTSENT = 4;
     protected static final int IDLE = 0;
     protected int internalState = IDLE;
 
@@ -237,7 +238,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        // address in for the address. after the message is returned.
        XNetMessage msg = XNetMessage.getFeedbackRequestMsg(mNumber,
                                                  (mNumber%4)<2); 
-       tc.sendXNetMessage(msg, null); // The reply is treated as a broadcast
+       tc.sendXNetMessage(msg, this); // The reply is treated as a broadcast
                                       // and is returned using the manager.
 
     }
@@ -259,7 +260,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     public boolean canInvert() {
                 return true;
         }
-
 
     /*
      *  Handle an incoming message from the XPressNet
@@ -481,8 +481,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                          // request for this nibble
                          XNetMessage msg = XNetMessage.getFeedbackRequestMsg(
                                             mNumber, ((mNumber%4)<=1));
-                         tc.sendXNetMessage(msg, null);// The reply is treated as a broadcast
-                                      // and is returned using the manager.
+                         tc.sendXNetMessage(msg, null);// is returned using the manager.
                       } else {
                          if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion complete"); 
                          // If the motion is completed, behave as though 
@@ -589,6 +588,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         if (mNumber%2!=0 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
             // is for this object, parse the message
             if (log.isDebugEnabled()) log.debug("Message for turnout " + mNumber);
+	    if(internalState==STATUSREQUESTSENT) l.resetUnsolicited();
             if(l.getTurnoutStatus(startByte,1)==THROWN) {
                synchronized(this) {
                   newCommandedState(_mThrown);
@@ -613,6 +613,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    (l.getTurnoutMsgAddr(startByte) == mNumber-1)) {
             // is for this object, parse message type
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
+	    if(internalState==STATUSREQUESTSENT) l.resetUnsolicited();
             if(l.getTurnoutStatus(startByte,0)==THROWN) {
                synchronized(this) {
                   newCommandedState(_mThrown);

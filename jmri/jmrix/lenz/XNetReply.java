@@ -7,10 +7,13 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
+
+   private boolean reallyUnsolicited=true;  // used to override automatic
+                                    // unsolicited by message type.
 
    // Create a new reply.
     public XNetReply() {
@@ -530,11 +533,16 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
        // The message may be set as an unsolicited message else where
        // or it may be classified as unsolicited based on the type of 
        // message received.
+       // NOTE: The feedback messages may be received in either solicited
+       // or unsolicited form.  requesting code can mark the reply as solicited
+       // by calling the resetUnsolicited function.
        return(super.isUnsolicited() || 
               this.isThrottleTakenOverMessage() ||
-	      this.isFeedbackMessage()
+	      ( this.isFeedbackMessage() && reallyUnsolicited )
             );
     }
+
+    public final void resetUnsolicited() { reallyUnsolicited = false; }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetReply.class.getName());

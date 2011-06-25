@@ -9,9 +9,12 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version         $Revision: 2.16 $
+ * @version         $Revision: 2.17 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
+
+
+    private boolean statusRequested=false;
 
     private int address;
     private int baseaddress; /* The result of integer division of the 
@@ -84,6 +87,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
        XNetMessage msg = XNetMessage.getFeedbackRequestMsg(baseaddress,
                                                           (nibble==0x00));
        msg.setElement(1,baseaddress);
+       statusRequested=true;
        tc.sendXNetMessage(msg, null); // The reply is treated as a broadcast
                                       // and is returned using the manager.
     }
@@ -110,6 +114,10 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
  				  " (Address " + baseaddress + 
                                   " position " + (address-(baseaddress*8)) +
 				  ")");
+                    if(statusRequested) {
+	              l.resetUnsolicited();
+                      statusRequested=false;
+                    }
 		    if( ((l.getElement(i+1) & nibblebit)!=0) ^ _inverted) {
 			    setOwnState(Sensor.ACTIVE);
 		    }

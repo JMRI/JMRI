@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.23 $
+ * @version			$Revision: 2.24 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -229,9 +229,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         if (pLowerNibble) { l.setElement(2,0x80);
 	} else { l.setElement(2,0x81); }
         l.setParity(); // Set the parity bit
-        l.setTimeout(500); // we're only expecting broadcast replies
-                            // to this message, so reduce the length 
-                            // of time we wait to timeout.
         return l;
     }
     
