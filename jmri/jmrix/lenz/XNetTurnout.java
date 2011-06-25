@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.41 $
+ * @version			$Revision: 2.42 $
  */
 
 package jmri.jmrix.lenz;
@@ -237,9 +237,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        // is a turnout address.  As a result, we substitute our base
        // address in for the address. after the message is returned.
        XNetMessage msg = XNetMessage.getFeedbackRequestMsg(mNumber,
-                                                 (mNumber%4)<2); 
-       tc.sendXNetMessage(msg, this); // The reply is treated as a broadcast
-                                      // and is returned using the manager.
+                                                 (mNumber%4)<2);
+       internalState=STATUSREQUESTSENT; 
+       tc.sendXNetMessage(msg, this); //status is returned via the manager.
 
     }
 
@@ -387,7 +387,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        if(log.isDebugEnabled()) log.debug("Handle Message for turnout " + 
 	                   mNumber + " in MONITORING feedback mode "); 
        //if(getCommandedState()==getKnownState() && internalState==IDLE) {
-       if(internalState==IDLE) {
+       if(internalState==IDLE || internalState==STATUSREQUESTSENT ) {
 	  if(l.isFeedbackBroadcastMessage()) {
              // This is a feedback message, we need to check and see if it
              // indicates this turnout is to change state or if it is for 
@@ -446,7 +446,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        // state
        if(log.isDebugEnabled()) log.debug("Handle Message for turnout " + 
 				mNumber + " in EXACT feedback mode "); 
-       if(getCommandedState()==getKnownState() && internalState==IDLE) {
+       if(getCommandedState()==getKnownState() && 
+                (internalState==IDLE || internalState==STATUSREQUESTSENT)) {
           if(l.isFeedbackBroadcastMessage()) {
              // This is a feedback message, we need to check and see if it
              // indicates this turnout is to change state or if it is for 
@@ -459,7 +460,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 }
              }
        } else if(getCommandedState()!=getKnownState() || 
-                 internalState==COMMANDSENT) {
+                 internalState==COMMANDSENT || 
+                 internalState==STATUSREQUESTSENT) {
           if(l.isFeedbackBroadcastMessage()) {
              int numDataBytes=l.getElement(0)&0x0f;
              for(int i=1;i<numDataBytes;i+=2) {
@@ -481,7 +483,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                          // request for this nibble
                          XNetMessage msg = XNetMessage.getFeedbackRequestMsg(
                                             mNumber, ((mNumber%4)<=1));
-                         tc.sendXNetMessage(msg, null);// is returned using the manager.
+                         internalState=STATUSREQUESTSENT;
+                         tc.sendXNetMessage(msg, null);//status is returned using the manager.
                       } else {
                          if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion complete"); 
                          // If the motion is completed, behave as though 
