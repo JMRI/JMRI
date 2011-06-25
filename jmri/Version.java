@@ -4,7 +4,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.11.7 of JMRI.
+ * These JavaDocs are for Version 2.11.8 of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -20,7 +20,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000 - 2011
- * @version $Revision: 1.163 $
+ * @version $Revision: 1.164 $
  */
 
 public class Version {
@@ -46,7 +46,7 @@ public class Version {
      * Modifier is used to denote specific builds.
      * It should be the empty string "" for released versions.
      */
-     static final boolean released = false;
+     static final boolean released = true;
      static final public String modifier = released?"."+test:"."+test+"+dev";
 
     /**
