@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: SimpleSignalExample.shtml,v 1.8 2011-06-25 01:46:24 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.shtml,v 1.9 2011-06-25 01:56:51 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -55,7 +55,7 @@ the file "SE8cSignalExample.xml" in the xml/layout directory.
 Note that you may have to look around for this file; it's in the
 same place that you installed the program.
 <LI>
-<IMG SRC="images/Start Panel.png" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
+<IMG SRC="images/StartPanel.png" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
 You should now see a simple schematic panel for a layout consisting of a loop
 of track and one passing siding.
 <P>
