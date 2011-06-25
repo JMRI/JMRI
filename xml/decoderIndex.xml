@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "/xml/DTD/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.11.7 on Mon Jun 13 15:38:50 MST 2011 $Id: decoderIndex.xml,v 1.170 2011-06-13 23:03:16 jacobsen Exp $-->
+  <!--Written by JMRI version 2.11.8 on Fri Jun 24 19:06:05 MST 2011 $Id: decoderIndex.xml,v 1.171 2011-06-25 02:11:52 jacobsen Exp $-->
   <decoderIndex version="212">
     <mfgList nmraListDate="2011-04-09" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -14,8 +14,8 @@
       <manufacturer mfg="Aristo-Craft Trains" mfgID="34" />
       <manufacturer mfg="Arnold - Rivarossi" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
-      <manufacturer mfg="Auvidel" mfgID="76" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
+      <manufacturer mfg="Auvidel" mfgID="76" />
       <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
       <manufacturer mfg="Bachmann Trains" mfgID="101" />
       <manufacturer mfg="Bluecher-Electronic" mfgID="60" />
@@ -61,9 +61,9 @@
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
       <manufacturer mfg="LDH" mfgID="56" />
       <manufacturer mfg="LGB" mfgID="159" />
+      <manufacturer mfg="LS Models Spr" mfgID="77" />
       <manufacturer mfg="Lahti Associates" mfgID="14" />
       <manufacturer mfg="Lenz" mfgID="99" />
-      <manufacturer mfg="LS Models Spr" mfgID="77" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MBTronik - PiN GITmBH" mfgID="26" />
       <manufacturer mfg="MERG" mfgID="165" />
@@ -2159,6 +2159,14 @@
           <versionCV lowVersionID="48" highVersionID="63" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
+        </model>
+      </family>
+      <family name="Sapphire-R8245" mfg="Hornby" highVersionID="10" lowVersionID="10" comment="Decoder with auntomous loco control and fuel/water simulation" type="locomotive" file="Hornby8245_v2.xml">
+        <model model="Sapphire-R8245" numOuts="4" numFns="4" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="0O" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="1 - White" connection="unspecified" />
+          <output name="2" label="2 - Yellow" connection="unspecified" />
+          <output name="3" label="3 - Green" connection="unspecified" />
+          <output name="4" label="4 - Purple" connection="unspecified" />
         </model>
       </family>
       <family name="R8249" mfg="Hornby" file="Hornby8249.xml">
