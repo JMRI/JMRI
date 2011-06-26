@@ -34,6 +34,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Typo Corrections</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2011-06-17</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>AAR-2</aspecttable>
@@ -62,7 +68,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-Clear</aspectname>
+      <aspectname>Medium Clear</aspectname>
       <show>dark</show>
       <show>green</show>
       <show>green</show>
@@ -71,7 +77,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-Approach Slow</aspectname>
+      <aspectname>Medium Approach Slow</aspectname>
       <show>dark</show>
       <show>green</show>
       <show>red</show>
@@ -98,7 +104,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-Approach</aspectname>
+      <aspectname>Medium Approach</aspectname>
       <show>dark</show>
       <show>yellow</show>
       <show>green</show>
@@ -107,7 +113,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Slow-Clear</aspectname>
+      <aspectname>Slow Clear</aspectname>
       <show>dark</show>
       <show>green</show>
       <show>dark</show>
@@ -116,7 +122,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Slow-Approach</aspectname>
+      <aspectname>Slow Approach</aspectname>
       <show>dark</show>
       <show>yellow</show>
       <show>dark</show>
@@ -135,7 +141,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Permissive-medium</aspectname>
+      <aspectname>Permissive medium</aspectname>
       <show>dark</show>
       <show>lunar</show>
       <show>green</show>
@@ -183,4 +189,104 @@
     </appearance>
 
   </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Medium Approach Slow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Medium Approach Slow</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+  
 </appearancetable>  

@@ -45,6 +45,12 @@
         <authorinitials>RGJ</authorinitials>
         <revremark>Add author and revision info</revremark>
     </revision>    
+    <revision>
+        <revnumber>2.2</revnumber>
+        <date>2011-06-24</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added mapping information</revremark>
+     </revision>    
   </revhistory>
 
   <aspecttable>AAR-2</aspecttable>
@@ -96,7 +102,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-Clear</aspectname>
+      <aspectname>Medium Clear</aspectname>
       <show>red</show>
       <show>green</show>
       <reference>Page 45 B</reference>
@@ -128,4 +134,106 @@
     </appearance>
 
   </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Advance Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Advance Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
 </appearancetable>  

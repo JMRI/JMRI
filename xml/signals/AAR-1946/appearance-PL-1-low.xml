@@ -27,6 +27,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2011-06-23</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added mapping information</revremark>
+     </revision>    
   </revhistory>
 
   <aspecttable>AAR-2</aspecttable>
@@ -37,14 +43,14 @@
   <appearances>
 
     <appearance>
-      <aspectname>Slow-Clear</aspectname>
+      <aspectname>Slow Clear</aspectname>
       <show>green</show>
       <reference>Page 55</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-low/rule-287.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Slow-Approach</aspectname>
+      <aspectname>Slow Approach</aspectname>
       <show>green</show>
       <reference>Page 55</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-low/rule-288.gif</imagelink>
@@ -65,4 +71,71 @@
     </appearance>
 
   </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+
 </appearancetable>  
