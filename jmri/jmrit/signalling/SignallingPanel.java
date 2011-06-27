@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 /**
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
@@ -173,7 +173,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     }
                     //p2xb.setVisible(true);
                     //pack();
-                    if (sml!=null){
+                    if ((sml!=null) && (destMast!=null)){
                         try {
                             sml.useLayoutEditor(useLayoutEditor.isSelected(), destMast);
                         } catch (jmri.JmriException je){
@@ -278,7 +278,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             fixedSourceMastLabel.setVisible(false);
             sourceMastBox.setVisible(true);
         }
-        if (sml!=null){
+        if ((sml!=null) && (destMast!=null)){
             fixedDestMastLabel.setVisible(true);
             destMastBox.setVisible(false);
             useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
@@ -340,7 +340,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             _manualBlockList.add(new ManualBlockList(bm.getBySystemName(systemName)));
         }
         
-        if (sml!=null){
+        if ((sml!=null) && (destMast!=null)){
             ArrayList<Block> blkList = sml.getAutoBlocks(destMast);
             _automaticBlockList = new ArrayList <AutoBlockList> (blkList.size());
             Iterator<Block> iterBlk = blkList.iterator();
@@ -472,7 +472,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             _manualTurnoutList.add(new ManualTurnoutList(systemName, userName));
         }
         
-        if (sml!=null){
+        if ((sml!=null)  && (destMast!=null)){
             ArrayList<Turnout> turnList = sml.getAutoTurnouts(destMast);
             _automaticTurnoutList = new ArrayList <AutoTurnoutList> (turnList.size());
             Iterator<Turnout> iterTurn = turnList.iterator();
@@ -876,7 +876,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
         
-        if (sml!=null){
+        if ((sml!=null) && (destMast!=null)){
             ArrayList<Block> blkList = sml.getAutoBlocks(destMast);
             _automaticBlockList = new ArrayList <AutoBlockList> (blkList.size());
             Iterator<Block> iter = blkList.iterator();
@@ -895,7 +895,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
         
-        if (sml!=null){
+        if ((sml!=null) && (destMast!=null)){
             ArrayList<Turnout> turnList = sml.getAutoTurnouts(destMast);
             _automaticTurnoutList = new ArrayList <AutoTurnoutList> (turnList.size());
             Iterator<Turnout> iter = turnList.iterator();
@@ -923,7 +923,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
         
-        if (sml!=null){
+        if ((sml!=null)&& (destMast!=null)){
             ArrayList<SignalMast> mastList = sml.getAutoMasts(destMast);
             _automaticSignalMastList = new ArrayList <AutoSignalMastList> (mastList.size());
             Iterator<SignalMast> iter = mastList.iterator();
