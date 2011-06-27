@@ -28,6 +28,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Initial Version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2011-06-27</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added missing map information</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSX</aspecttable>
@@ -94,6 +100,16 @@
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Limited Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
@@ -104,12 +120,47 @@
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
