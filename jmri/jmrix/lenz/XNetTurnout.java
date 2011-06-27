@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.42 $
+ * @version			$Revision: 2.43 $
  */
 
 package jmri.jmrix.lenz;
@@ -591,7 +591,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         if (mNumber%2!=0 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
             // is for this object, parse the message
             if (log.isDebugEnabled()) log.debug("Message for turnout " + mNumber);
-	    if(internalState==STATUSREQUESTSENT) l.resetUnsolicited();
+	    if(internalState!=IDLE) l.resetUnsolicited();
             if(l.getTurnoutStatus(startByte,1)==THROWN) {
                synchronized(this) {
                   newCommandedState(_mThrown);
@@ -616,7 +616,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    (l.getTurnoutMsgAddr(startByte) == mNumber-1)) {
             // is for this object, parse message type
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
-	    if(internalState==STATUSREQUESTSENT) l.resetUnsolicited();
+	    if(internalState!=IDLE) l.resetUnsolicited();
             if(l.getTurnoutStatus(startByte,0)==THROWN) {
                synchronized(this) {
                   newCommandedState(_mThrown);
