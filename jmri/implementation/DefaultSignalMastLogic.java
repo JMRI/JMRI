@@ -34,7 +34,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -51,7 +51,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     LayoutBlock facingBlock = null;
     LayoutBlock protectingBlock = null;
 
-    boolean init = false;
     boolean disposing = false;
 
     /**
@@ -59,7 +58,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      * @param source - The signalmast we are configuring
      */
     public DefaultSignalMastLogic (SignalMast source){
-        init = false;
         this.source = source;
         this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
         this.source.addPropertyChangeListener(propertySourceMastListener);
@@ -502,8 +500,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return;
         }
         destList.get(destination).initialise();
-
-        init = true;
     }
     
     public void setupLayoutEditorDetails(){
@@ -666,7 +662,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      * for things to settle down to help prevent a race condition
      */
     void setSignalAppearance(){
+        log.debug("In appearance called " + source.getDisplayName());
         if (inWait){
+            log.debug("In wait for set appearance");
             return;
         }
         inWait=true;
@@ -693,7 +691,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      */
     void setMastAppearance(){
         if(inWait){
-            log.debug("Set SignalMast Appearance called while still in wait");
+            log.error("Set SignalMast Appearance called while still in wait");
             return;
         }
         log.debug("Set Signal Appearances");
@@ -820,6 +818,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
             if ((aspect!=null) && (!aspect.equals(""))){
+                log.debug("set mast aspect called from set appearance");
                 getSourceMast().setAspect(aspect);
             }
             return;
@@ -887,6 +886,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         Hashtable<Block, Integer> autoBlocks = new Hashtable<Block, Integer>(0);
         SignalMast destination;
         boolean active = false;
+        boolean destMastInit = false;
 
         float minimumBlockSpeed = 0.0f;
         
@@ -982,7 +982,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                    key.removePropertyChangeListener(propertyTurnoutListener);
                 }
             }
-            init = false;
+            destMastInit = false;
             if(turnouts==null){
                 this.turnouts = new Hashtable<Turnout, Integer>(0);
             } else {
@@ -1006,7 +1006,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
                 //minimumBlockSpeed = 0;
             }
-            init = false;
+            destMastInit = false;
             if(turnouts==null){
                 this.autoTurnouts = new Hashtable<Turnout, Integer>(0);
             } else {
@@ -1030,7 +1030,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
                 //minimumBlockSpeed = 0;
             }
-            init = false;
+            destMastInit = false;
             if(blocks==null){
                 this.blocks = new Hashtable<Block, Integer>(0);
             } else {
@@ -1056,7 +1056,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
                 //minimumBlockSpeed = 0;
             }
-            init = false;
+            destMastInit = false;
             if (blocks==null){
                 this.autoBlocks= new Hashtable<Block, Integer>(0);
             } else {
@@ -1086,7 +1086,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                    key.removePropertyChangeListener(propertySignalMastListener);
                 }
             }
-            init = false;
+            destMastInit = false;
 
             if(masts==null){
                 this.masts = new Hashtable<SignalMast, String>(0);
@@ -1112,7 +1112,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
                 //minimumBlockSpeed = 0;
             }
-            init = false;
+            destMastInit = false;
             if(overright){
                 if(masts==null){
                     this.autoMasts = new Hashtable<SignalMast, String>(0);
@@ -1152,7 +1152,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                    key.removePropertyChangeListener(propertySensorListener);
                 }
             }
-            init = false;
+            destMastInit = false;
 
             if(sensors==null){
                 this.sensors = new Hashtable<Sensor, Integer>(0);
@@ -1468,7 +1468,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
 
         void initialise(){
-            if ((init) || (disposing)) return;
+            if ((destMastInit) || (disposing)) { return;}
 
             active=false;
             turnoutThrown=false;
@@ -1546,6 +1546,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             while ( sensorKeys.hasMoreElements() )
             {
                Sensor key = sensorKeys.nextElement();
+               log.debug(source.getDisplayName() + " to " + destination.getDisplayName() + " Add change listener to sensor  " + key.getDisplayName());
                key.addPropertyChangeListener(propertySensorListener);
 
                if (key.getKnownState()!=sensors.get(key))
@@ -1584,7 +1585,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             } else {
                 turnoutThrown =false;
             }
-            init = true;
+            destMastInit = true;
         }
         
         boolean routeclear = true;
@@ -1809,14 +1810,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 log.debug(destination.getDisplayName() + " add mast to auto list " + mast);
             String danger = mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
             this.autoMasts.put(mast, danger);
-            if (init)
+            if (destMastInit)
                 mast.addPropertyChangeListener(propertySignalMastListener);
             firePropertyChange("automasts", null, this.destination);
         }
         
         void removeAutoSignalMast(SignalMast mast){
             this.autoMasts.remove(mast);
-            if(init)
+            if(destMastInit)
                 mast.removePropertyChangeListener(propertySignalMastListener);
             firePropertyChange("automasts", this.destination, null);
         }
@@ -1977,19 +1978,20 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         protected PropertyChangeListener propertySensorListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 Sensor sen = (Sensor) e.getSource();
-             //   log.debug(destination.getDisplayName() + " destination sensor "+ sen.getDisplayName() + "trigger");
+                log.debug(source.getDisplayName() + " to " + destination.getDisplayName() + " destination sensor "+ sen.getDisplayName() + "trigger " + e.getPropertyName());
                 if (e.getPropertyName().equals("KnownState")) {
                     int now = ((Integer) e.getNewValue()).intValue();
-                    if (getSensorState(sen)!=now){
-                        if(log.isDebugEnabled())
+                    log.debug("current value " + now + " value we want " + getSensorState(sen));
+                    if (sensors.containsKey(sen) && getSensorState(sen)!=now){
+                        //if(log.isDebugEnabled())
                             log.debug("Sensor " + sen.getDisplayName() + " caused the signalmast to be set to danger");
                         //getSourceMast().setAspect(stopAspect);
                         if (active==true){
                             active=false;
                             setSignalAppearance();
                         }
-                    } else {
-                        if(log.isDebugEnabled())
+                    } else if (getSensorState(sen)==now) {
+                        //if(log.isDebugEnabled())
                             log.debug(destination.getDisplayName() + " sensor " + sen.getDisplayName() + " triggers a calculation of change");
                         checkState();
                     }
