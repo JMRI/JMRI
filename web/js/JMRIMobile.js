@@ -19,7 +19,6 @@
 //TODO: checking a new function creates a new, duplicate connection (not needed)
 //TODO: turn off "waiting" message even when no changes made
 //TODO: send periodic request for refresh, to verify server connection (maybe do on server side as well?)
-//TODO: preserve/reapply filters on update
 //TODO: "wide-screen" version that shows multiple "pages" at once, for use on wider browsers
 //TODO: add edit of memory variable values
 //TODO: support addition of memory variables, maybe turnouts?
@@ -74,7 +73,6 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 	var $xml = $($returnedData);  //jQuery-ize returned data for easier access
 
-//	$logMsg('calling xmlclean');
 	$xml.xmlClean();  //remove whitespace 
 
 	$xml.find('item').each( //find and process all "item" entries (list)
@@ -93,9 +91,14 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				}
 				var $type = $currentItem.type;  //shortcut since this is used so many times
 
+				//remove non-monitorable from xml
+				if ($type == 'roster' || $type == 'panel') {
+					$(this).remove();
+				}
+
 				//if value not changed, skip the update  //TODO: move this before the copy to current item
 				var $key = $type + $currentItem.name;
-				if ($gValues[$key] != $currentItem.value) { 
+				if ($currentItem.value == undefined || $gValues[$key] != $currentItem.value) { 
 					
 					$gValues[$key] = $currentItem.value;  //save this value for later comparison
 					
@@ -114,11 +117,6 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					}
 					//include a "safe" version of name for use as ID   TODO: other cleanup needed?
 					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/ /g, "_");
-
-					//remove non-monitorable from xml
-					if ($type == 'roster' || $type == 'panel') {
-						$(this).remove();
-					}
 
 					//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 					if (!$("#type-" + $type).length) {
