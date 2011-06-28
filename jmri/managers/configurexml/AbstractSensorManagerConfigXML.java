@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -111,7 +111,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         long goingActive = 0L;
         long goingInActive = 0L;
         if (sensors.getChild("globalDebounceTimers")!=null){
-            Element timer = sensors.getChild("debounceTimers");
+            Element timer = sensors.getChild("globalDebounceTimers");
             try{
                 if(timer.getChild("goingActive")!=null){
                     String active = timer.getChild("goingActive").getText();
@@ -191,7 +191,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                     s.useDefaultTimerSettings(true);
                 }
             }
-
             s.setInverted(inverted);
         }
         return result;
