@@ -15,20 +15,18 @@
 *
 **********************************************************************************************/
 
-//TODO: fix memory variable monitoring (sending constantly now)
+//TODO: fix memory variable monitoring (sending constantly now, so removed from list)
+//TODO: add button? link to type's page from settings Include list
 //TODO: checking a new function creates a new, duplicate connection (not needed)
-//TODO: turn off "waiting" message even when no changes made
-//TODO: send periodic request for refresh, to verify server connection (maybe do on server side as well?)
 //TODO: "wide-screen" version that shows multiple "pages" at once, for use on wider browsers
 //TODO: add edit of memory variable values
 //TODO: support addition of memory variables, maybe turnouts?
-//TODO: handle ajax errors, only alert on disconnect?
 //TODO: (long-term) read panel xml and "draw" panels on page
 //TODO: set static parms as defaults in ajaxSetup()
 
 var $gPrevType = ""; //persistent variable to help refresh views only on change 
 var $gLastLogMsgTime =new Date().getTime();  //save last time (for logging elapsed time in debug messages)
-var $gValues = new Array();  //persistent variable to keep track of current values, to avoid processing unchanged items
+var $gValues = new Array();  //persistent variable to keep track of current values, to avoid reprocessing unchanged items
 
 //handle button press, send request for immediate change 
 var $sendChange = function($type, $name, $nextValue){
@@ -48,6 +46,7 @@ var $sendXMLIOList = function($commandstr){
 			$processResponse($r, $s, $x); //handle returned data
 		},
 		async: true,
+		timeout: 15000,  //refresh every 15 seconds to (hopefully) avoid device timeout
 		dataType: 'xml' //<--dataType
 	});
 };
@@ -62,6 +61,7 @@ var $sendXMLIOChg = function($commandstr){
 			//ignore this response
 		},
 		async: true,
+		timeout: 2000,  //two seconds
 		dataType: 'xml' //<--dataType
 	});
 };
@@ -70,6 +70,8 @@ var $sendXMLIOChg = function($commandstr){
 var $processResponse = function($returnedData, $success, $xhr) {
 
 	$.mobile.showPageLoadingMsg();  //show pageloading message
+
+	$('div.errorMessage').html("");  //clear out the error message onscreen
 
 	var $xml = $($returnedData);  //jQuery-ize returned data for easier access
 
@@ -89,6 +91,9 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						}
 					}
 				}
+				if ($currentItem.value == undefined) { //if no "value" included, use the name as the value (simplifies later code)
+					$currentItem.value = $currentItem.name;  
+				}
 				var $type = $currentItem.type;  //shortcut since this is used so many times
 
 				//remove non-monitorable from xml
@@ -96,9 +101,9 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					$(this).remove();
 				}
 
-				//if value not changed, skip the update  //TODO: move this before the copy to current item
+				//if value not changed, skip the update 
 				var $key = $type + $currentItem.name;
-				if ($currentItem.value == undefined || $gValues[$key] != $currentItem.value) { 
+				if ($gValues[$key] != $currentItem.value) { 
 					
 					$gValues[$key] = $currentItem.value;  //save this value for later comparison
 					
@@ -116,7 +121,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						$currentItem.valueText = $getValueText($currentItem.type, $currentItem.value); 
 					}
 					//include a "safe" version of name for use as ID   TODO: other cleanup needed?
-					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/ /g, "_");
+					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_");
 
 					//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 					if (!$("#type-" + $type).length) {
@@ -261,8 +266,14 @@ function $getSettingsArray() {
 	return $arrInputs;
 }
 
-$(document).ajaxError(function(e,xhr,opt){
-	$logMsg("AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText);
+//handle ajax errors.  retry list on timeout, show other errors
+$(document).ajaxError(function(event,xhr,opt, exception){
+	if (xhr.statusText =="timeout") {
+//		$logMsg("AJAX timeout, retrying....");
+		$sendXMLIOList('<xmlio>' + $getXMLListCommands(true) + '</xmlio>');		
+	} else {
+		$logMsg("AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText+ " exception=" + exception);
+	}
 });
 
 //output log messages to console log and to screen
