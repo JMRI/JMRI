@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.8.shtml,v 1.7 2011-06-25 01:59:42 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.8.shtml,v 1.8 2011-06-29 16:06:36 ken_c Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -136,6 +136,12 @@ The initial display of the CBUS console was fixed so that the buttons show prope
 <p>Greg Watkins provided a decoder definition for the Hornby R8245 decoder
 
 <p>Walter Thompson updated the SE8c signaling example.
+
+<p>Ken Cameron</p>
+
+<ul>
+	<li>Fix in roster copy for NPE that prevented the copy from working.</li>
+</ul>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
