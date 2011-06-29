@@ -5,12 +5,6 @@ package jmri.jmrix.lenz.xntcp;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.Color;
-import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,7 +20,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2011 - Fixed problems arising from recent refactoring
  *
@@ -35,6 +29,7 @@ import jmri.jmrix.JmrixConfigPane;
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
 	private boolean manualInput = false;
+	@SuppressWarnings("unused")
 	private String oldName;
 
     /**
