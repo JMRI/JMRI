@@ -77,7 +77,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LayoutTurnout
@@ -1198,27 +1198,54 @@ public class LayoutTurnout
             //This should only be needed where we are looking at a single turnout.
             if(block!=null){
                 if ((connectA instanceof TrackSegment) && (((TrackSegment)connectA).getLayoutBlock()!=block)){
-                    boundaryBetween[0]=(((TrackSegment)connectA).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                    try {
+                        boundaryBetween[0]=(((TrackSegment)connectA).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                    } catch (java.lang.NullPointerException e){
+                        //Can be considered normal if tracksegement hasn't yet been allocated a block
+                        log.debug("TrackSegement at connection A doesn't contain a layout block");
+                    }
                 }
                 
                 if ((connectB instanceof TrackSegment) && (((TrackSegment)connectB).getLayoutBlock()!=block)){
-                    boundaryBetween[1]=(((TrackSegment)connectB).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                    try {
+                        boundaryBetween[1]=(((TrackSegment)connectB).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                    } catch (java.lang.NullPointerException e){
+                        //Can be considered normal if tracksegement hasn't yet been allocated a block
+                        log.debug("TrackSegement at connection B doesn't contain a layout block");
+                    }
                 }
                 if ((connectC instanceof TrackSegment) && (((TrackSegment)connectC).getLayoutBlock()!=block)){
-                    boundaryBetween[2]=(((TrackSegment)connectC).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                    try{
+                        boundaryBetween[2]=(((TrackSegment)connectC).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
+                    } catch (java.lang.NullPointerException e){
+                        //Can be considered normal if tracksegement hasn't yet been allocated a block
+                        log.debug("TrackSegement at connection C doesn't contain a layout block");
+                    }
                 }
             }
         }
         
         else {
-            int pos = 0;  //This should only be needed where we are looking at a single turnout.
+            ArrayList<LayoutBlock> localblks = new ArrayList<LayoutBlock>(4);
+            if(block!=null)
+                localblks.add(block);
+            if(blockB!=null)
+                localblks.add(blockB);
+            if(blockC!=null)
+                localblks.add(blockC);
+            if(blockD!=null)
+                localblks.add(blockD);
+            
             if(block!=null){
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(block);
                 for (int i = 0; i<conn.size(); i++){
                     if (conn.get(i).getConnectedObject()==(this)){
-                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
-                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName()));
-                            pos++;
+                        try{
+                            if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
+                                boundaryBetween[0]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName()));
+                            }
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
                         }
                     }
                 }
@@ -1227,10 +1254,14 @@ public class LayoutTurnout
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockB);
                 for (int i = 0; i<conn.size(); i++){
                     if (conn.get(i).getConnectedObject()==(this)){
-                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
-                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockB.getDisplayName()));
-                            pos++;
+                        try{
+                              if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
+                                boundaryBetween[1]=((blockB.getDisplayName() + " - " + conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()));
+                            }
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
                         }
+
                     }
                 }
             }
@@ -1238,9 +1269,12 @@ public class LayoutTurnout
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockC);
                 for (int i = 0; i<conn.size(); i++){
                     if (conn.get(i).getConnectedObject()==(this)){
-                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
-                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockC.getDisplayName()));
-                            pos++;
+                        try{
+                            if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
+                                boundaryBetween[2]=((blockC.getDisplayName() + " - " + conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()));
+                            }
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
                         }
                     }
                 }
@@ -1249,9 +1283,12 @@ public class LayoutTurnout
                 ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockD);
                 for (int i = 0; i<conn.size(); i++){
                     if (conn.get(i).getConnectedObject()==(this)){
-                        if ((conn.get(i).getTrackSegment()!=null) && (conn.get(i).getTrackSegment().getLayoutBlock()!=null)){
-                            boundaryBetween[pos]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + blockD.getDisplayName()));
-                            pos++;
+                        try{
+                            if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
+                                boundaryBetween[3]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName() + " - " + blockD.getDisplayName()));
+                            }
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
                         }
                     }
                 }
@@ -1630,7 +1667,7 @@ public class LayoutTurnout
 				blockC = layoutEditor.provideLayoutBlock(blockCName);
 				if (blockC==null) {
 					blockCName = "";
-				}
+				}
 				// decrement use if block was already counted
 				if ( (blockC!=null) && ( (block==blockC) || (blockB==blockC) ||
 						(blockC==blockD) ) ) blockC.decrementUse();
