@@ -47,7 +47,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.60 $
+ * @version   $Revision: 1.61 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -133,10 +133,18 @@ public class RosterEntry {
         functionLockables = new boolean[MAXFNNUM+1];
         
         for (int i=0; i<MAXFNNUM; i++) {
-            functionLabels[i] = pEntry.functionLabels[i];
-            functionSelectedImages[i] = pEntry.functionSelectedImages[i];
-            functionImages[i] = pEntry.functionImages[i];
-            functionLockables[i] = pEntry.functionLockables[i];
+        	if ((pEntry.functionLabels != null) && (pEntry.functionLabels[i] != null)) {
+                functionLabels[i] = pEntry.functionLabels[i];
+        	}
+        	if ((pEntry.functionSelectedImages != null) && (pEntry.functionSelectedImages[i] != null)) {
+        		functionSelectedImages[i] = pEntry.functionSelectedImages[i];
+        	}
+        	if ((pEntry.functionImages != null) && (pEntry.functionImages[i] != null)) {
+        		functionImages[i] = pEntry.functionImages[i];
+        	}
+        	if (pEntry.functionLockables != null) {
+        		functionLockables[i] = pEntry.functionLockables[i];
+        	}
         }
     }
 
