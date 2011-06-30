@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.8.shtml,v 1.8 2011-06-29 16:06:36 ken_c Exp $ -->
+<!-- $Id: jmri2.11.8.shtml,v 1.9 2011-06-30 16:01:48 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -143,6 +143,20 @@ The initial display of the CBUS console was fixed so that the buttons show prope
 	<li>Fix in roster copy for NPE that prevented the copy from working.</li>
 </ul>
 
+<p>Kevin Dickerson</p>
+
+<ul>
+	<li>Fixed an error in the loading of Simple Signalling Logic (SSL) where an invalid entry potentially causes all of the logic not be loaded and are lost on 
+    any subsequent stores.</li>
+    <li>Fixed an error that potentially prevented the pop-up menu for a turnout from being displayed.</li>
+    <li>Fixed an error in the global sensor de-bounce load process that potentially prevented sensors from not being loaded correctly.</li>
+</ul>
+
+<p>Dick Bronson</p>
+<ul>
+    <li>Added the CSX-1998 Signalmasts</li>
+    <li>Updated the AAR-1946 Signalmasts to work with the Signalling Logic.</li>
+</ul>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
