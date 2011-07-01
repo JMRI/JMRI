@@ -28,6 +28,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Initial Version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.0</revnumber>
+        <date>2011-06-29</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Correct typo in Medium Approach</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSX</aspecttable>
@@ -98,7 +104,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>286 (c)</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-1998/CLS-3-3-hi/rule-286.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-1998/CLS-3-3-lo/rule-286.gif</imagelink>
     </appearance>
 
     <appearance>
