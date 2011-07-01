@@ -44,7 +44,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.98 $
+ * @version    $Revision: 1.99 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -625,7 +625,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                       float newSpeed = ( java.lang.Math.abs(speedSliderContinuous.getValue()) / ( intSpeedSteps * 1.0f ) ) ;
                                                       boolean newDir = (speedSliderContinuous.getValue()>=0);
                                                       if (log.isDebugEnabled()) {log.debug( "stateChanged: slider pos: " + speedSliderContinuous.getValue() + " speed: " + newSpeed + " dir: " + newDir);}
-                                                      if (speedSliderContinuous.isVisible() && throttle != null) {
+                                                      if (speedSliderContinuousPanel.isVisible() && throttle != null) {
                                                           throttle.setSpeedSetting( newSpeed );
                                                           if ((newSpeed>0) && (newDir != forwardButton.isSelected()))
                                                         	  throttle.setIsForward(newDir);
@@ -996,7 +996,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.98 $
+     * @version    $Revision: 1.99 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
