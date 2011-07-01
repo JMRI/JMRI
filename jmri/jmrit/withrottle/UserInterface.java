@@ -7,7 +7,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
- *	@version $Revision: 1.25 $
+ *	@version $Revision: 1.26 $
  */
 
 
@@ -70,6 +70,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
 
 
     UserInterface(){
+        super(false, false);
         if (deviceList == null) deviceList = new ArrayList<DeviceServer>(1);
 
         createWindow();
@@ -185,7 +186,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
         
 //  Set window size & location
         this.setTitle("WiThrottle");
-        this.setMinimumSize(new Dimension(314,240));
         this.pack();
 
         this.setResizable(false);
