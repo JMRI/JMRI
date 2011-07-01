@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AspectSignaling.shtml,v 1.10 2011-06-15 17:56:18 kevin-dickerson Exp $ -->
+<!-- $Id: AspectSignaling.shtml,v 1.11 2011-07-01 06:14:41 kevin-dickerson Exp $ -->
 <title>JMRI: Aspect Signaling</title>
 
 <!-- Style -->
@@ -78,7 +78,7 @@ the specific signal type like "double searchlight" or "double head dwarf",
 and what signal heads it's going to drive.
 
 <p>
-From the table, you can set individual signal masts to 
+>From the table, you can set individual signal masts to 
 any aspect that they're able to
 display by clicking in the "Aspect" column.
 
@@ -115,6 +115,9 @@ JMRI users have provided a number of pre-defined signal systems:
 
 <dt><a href="../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a>
     <dd>British Rail 2003 rule book
+
+<dt><a href="../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a>
+    <dd>CSX 1998 rule book
 
 <dt><a href="../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV 1969</a>
     <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
