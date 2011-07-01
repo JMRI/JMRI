@@ -39,7 +39,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LevelXing 
@@ -465,18 +465,38 @@ public class LevelXing
         
         if ( (blockNameAC!=null) && (!blockNameAC.equals("")) && (blockAC!=null) ){
             if ((connectA instanceof TrackSegment) && (((TrackSegment)connectA).getLayoutBlock()!=blockAC)){
-                boundaryBetween[0]=(((TrackSegment)connectA).getLayoutBlock().getDisplayName()+ " - " + blockAC.getDisplayName());
+                try {
+                	boundaryBetween[0]=(((TrackSegment)connectA).getLayoutBlock().getDisplayName()+ " - " + blockAC.getDisplayName());
+                } catch (java.lang.NullPointerException e){
+                    //Can be considered normal if tracksegement hasn't yet been allocated a block
+                    log.debug("TrackSegement at connection A doesn't contain a layout block");
+                }
             }        
             if ((connectC instanceof TrackSegment) && (((TrackSegment)connectC).getLayoutBlock()!=blockAC)){
-                boundaryBetween[2]=(((TrackSegment)connectC).getLayoutBlock().getDisplayName()+ " - " + blockAC.getDisplayName());
+            	try {
+                	boundaryBetween[2]=(((TrackSegment)connectC).getLayoutBlock().getDisplayName()+ " - " + blockAC.getDisplayName());
+	            } catch (java.lang.NullPointerException e){
+	                //Can be considered normal if tracksegement hasn't yet been allocated a block
+	                log.debug("TrackSegement at connection C doesn't contain a layout block");
+	            }
             }
         }
         if ( (blockNameBD!=null) && (!blockNameBD.equals("")) && (blockBD!=null) ){
             if ((connectB instanceof TrackSegment) && (((TrackSegment)connectB).getLayoutBlock()!=blockBD)){
-                boundaryBetween[1]=(((TrackSegment)connectB).getLayoutBlock().getDisplayName()+ " - " + blockBD.getDisplayName());
+            	try {
+            		boundaryBetween[1]=(((TrackSegment)connectB).getLayoutBlock().getDisplayName()+ " - " + blockBD.getDisplayName());
+	            } catch (java.lang.NullPointerException e){
+	                //Can be considered normal if tracksegement hasn't yet been allocated a block
+	                log.debug("TrackSegement at connection B doesn't contain a layout block");
+	            }
             }
             if ((connectD instanceof TrackSegment) && (((TrackSegment)connectD).getLayoutBlock()!=blockBD)){
-                boundaryBetween[3]=(((TrackSegment)connectD).getLayoutBlock().getDisplayName()+ " - " + blockBD.getDisplayName());
+            	try {
+            		boundaryBetween[3]=(((TrackSegment)connectD).getLayoutBlock().getDisplayName()+ " - " + blockBD.getDisplayName());
+	            } catch (java.lang.NullPointerException e){
+	                //Can be considered normal if tracksegement hasn't yet been allocated a block
+	                log.debug("TrackSegement at connection D doesn't contain a layout block");
+	            }
             }
         }
         return boundaryBetween;
