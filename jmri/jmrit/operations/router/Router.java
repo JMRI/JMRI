@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class Router extends TrainCommon {
@@ -134,7 +134,7 @@ public class Router extends TrainCommon {
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterNotSendCarToAlternative"),new Object[]{_train.getName(), car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
 					}
 				}
-				// check to see if siding was full, if so, forward to yard if possible
+				// check to see if spur was full, if so, forward to yard if possible
 				if (Setup.isForwardToYardEnabled() && _status.contains(Track.LENGTH) && car.getLocation() != clone.getDestination()){
 					//log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSidingFull"),new Object[]{clone.getDestinationName()}));

@@ -20,7 +20,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	
@@ -68,7 +68,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 
 		addButton.setText(rb.getString("Add"));
 		addButton.setVisible(true);
-		// TODO allow user to add schedule to a siding
+		// TODO allow user to add schedule to a spur
 		//controlPanel.add (addButton);
 		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
 	   	getContentPane().add(controlPanel);

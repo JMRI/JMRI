@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 	
@@ -400,7 +400,7 @@ public class Location implements java.beans.PropertyChangeListener {
   
 	/** 
 	 * Adds a track to this location.  Valid tracks are
-	 * sidings, yards, staging and interchange tracks.
+	 * spurs, yards, staging and interchange tracks.
 	 *  @param name of track
 	 * @param type of track
 	 * @return Track

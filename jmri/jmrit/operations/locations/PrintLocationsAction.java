@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2011
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 
@@ -581,7 +581,7 @@ public class PrintLocationsAction  extends AbstractAction {
 	}
 	
 	private String getSchedule(Track track){
-		// only sidings have schedules
+		// only spurs have schedules
 		if (!track.getLocType().equals(Track.SIDING) || track.getSchedule() == null)
 			return "";
 		StringBuffer buf = new StringBuffer("\t\t" + MessageFormat.format(rb.getString("TrackScheduleName"),new Object[]{track.getScheduleName()}) + newLine);

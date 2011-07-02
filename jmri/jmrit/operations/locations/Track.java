@@ -17,10 +17,10 @@ import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents a location (track) on the layout
- * Can be a siding, yard, staging, or interchange track.
+ * Can be a spur, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.65 $
+ * @version             $Revision: 1.66 $
  */
 public class Track {
 	
@@ -28,7 +28,7 @@ public class Track {
 
 	protected String _id = "";
 	protected String _name = "";
-	protected String _locType = "";					// yard, siding, interchange or staging
+	protected String _locType = "";					// yard, spur, interchange or staging
 	protected Location _location;					// the location for this track
 	protected String _alternativeTrackId = "";		// the alternative track id
 	protected String _roadOption = ALLROADS;		// controls which car roads are accepted 
@@ -914,7 +914,7 @@ public class Track {
     }
     
     public String getScheduleId(){
-    	// Only sidings can have a schedule
+    	// Only spurs can have a schedule
     	if (!getLocType().equals(Track.SIDING))
     		return "";
     	// old code only stored schedule name, so create id if needed.

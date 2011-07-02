@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 //import java.awt.Dimension;
 //import java.awt.Point;
@@ -193,7 +193,7 @@ public class Setup {
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length
 	private static boolean allowLocalInterchangeMoves = false;	// when true local interchange to interchange moves are allowed
 	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
-	private static boolean allowLocalSidingMoves = false;	// when true local siding to siding moves are allowed
+	private static boolean allowLocalSidingMoves = false;	// when true local spur to spur moves are allowed
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
 	private static boolean promptFromStaging = false;		// when true prompt user to specify which staging track to use
 	private static boolean generateCsvManifest = false;		// when true generate csv manifest

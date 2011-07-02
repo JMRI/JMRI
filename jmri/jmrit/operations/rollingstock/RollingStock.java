@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -301,7 +301,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	/**
 	 * Sets rolling stock location on the layout
 	 * @param location 
-	 * @param track (yard, siding, staging, or interchange track)
+	 * @param track (yard, spur, staging, or interchange track)
 	 * 
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit.
@@ -313,7 +313,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	/**
 	 * Sets rolling stock location on the layout
 	 * @param location
-	 * @param track (yard, siding, staging, or interchange track)
+	 * @param track (yard, spur, staging, or interchange track)
 	 * @param force when true place rolling stock ignore track length, type, & road
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, "road" if rolling stock road isn't acceptable, 
@@ -381,7 +381,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	/**
 	 * Sets rolling stock destination on the layout
 	 * @param destination 
-	 * @param track (yard, siding, staging, or interchange track)
+	 * @param track (yard, spur, staging, or interchange track)
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit.
 	 */
@@ -392,7 +392,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	/**
 	 * Sets rolling stock destination on the layout
 	 * @param destination 
-	 * @param track (yard, siding, staging, or interchange track)
+	 * @param track (yard, spur, staging, or interchange track)
 	 * @param force when true ignore track length, type, & road when setting destination
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit.

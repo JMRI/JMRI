@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 /**
- * An Object representing the location and track for a siding.
+ * An Object representing a location and track.
  * @author Daniel Boudreau Copyright (C) 2009
  *
  */

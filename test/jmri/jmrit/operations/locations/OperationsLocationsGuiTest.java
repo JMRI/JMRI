@@ -24,7 +24,7 @@ import java.util.Locale;
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
@@ -96,7 +96,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		
 		Assert.assertNotNull(newLoc);
 		
-		// add a siding track
+		// add a yard track
 		//f.addYardButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addYardButton ) );
 		
@@ -266,7 +266,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.editScheduleButton ) );
 		
         // confirm schedule add frame creation
-        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Siding 3rd siding track");
+        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur 3rd siding track");
         Assert.assertNotNull(sef);
 		
         // kill all frames

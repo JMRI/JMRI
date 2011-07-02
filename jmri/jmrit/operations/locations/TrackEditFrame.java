@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -123,7 +123,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox comboBoxLoads = CarLoads.instance().getComboBox(null);
 	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
 
-	// optional panel for sidings, staging, and interchanges
+	// optional panel for spurs, staging, and interchanges
 	JPanel dropPanel = new JPanel();
 	JPanel pickupPanel = new JPanel();
 	JPanel panelOpt3 = new JPanel();		// not currently used

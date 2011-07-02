@@ -7,10 +7,10 @@ import javax.swing.*;
 import jmri.jmrit.operations.setup.Control;
 
 /**
- * Table Model for edit of sidings used by operations
+ * Table Model for edit of spurs used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class SidingTableModel extends TrackTableModel {
 
@@ -30,7 +30,7 @@ public class SidingTableModel extends TrackTableModel {
 	}
 
 	protected void editTrack (int row){
-		log.debug("Edit siding");
+		log.debug("Edit spur");
 		if (tef != null){
 			tef.dispose();
 		}
@@ -42,7 +42,7 @@ public class SidingTableModel extends TrackTableModel {
 		focusEditFrame = true;
 	}
 
-	// this table listens for changes to a location and it's sidings
+	// this table listens for changes to a location and it's spurs
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
@@ -57,7 +57,7 @@ public class SidingTableModel extends TrackTableModel {
 				String sidingId = ((Track) e.getSource()).getId();
 				int row = tracksList.indexOf(sidingId);
 				if (Control.showProperty && log.isDebugEnabled()) 
-					log.debug("Update siding table row: "+ row + " id: " + sidingId);
+					log.debug("Update spur table row: "+ row + " id: " + sidingId);
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}

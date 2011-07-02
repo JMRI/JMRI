@@ -5,10 +5,10 @@ package jmri.jmrit.operations.locations;
 import javax.swing.BorderFactory;
 
 /**
- * Frame for user edit of a location sidings
+ * Frame for user edit of a yard
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {

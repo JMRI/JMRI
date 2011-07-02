@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.91 $
+ * @version             $Revision: 1.92 $
  */
 public class Car extends RollingStock {
 	
@@ -391,7 +391,7 @@ public class Car extends RollingStock {
 	/**
 	 * Used to determine if a car can be set out at a destination (location).
 	 * Track is optional.  In addition to all of the tests that testLocation
-	 * performs, sidings with schedules are also checked.
+	 * performs, spurs with schedules are also checked.
 	 */
 	public String testDestination(Location destination, Track track) {
 		String status = super.testDestination(destination, track);
@@ -403,7 +403,7 @@ public class Car extends RollingStock {
 			return LOAD+ " ("+getLoad()+")";
 		}
 		*/
-		// a siding with a schedule can overload in aggressive mode, check track capacity
+		// a spur with a schedule can overload in aggressive mode, check track capacity
 		if (Setup.isBuildAggressive() && track != null && !track.getScheduleId().equals("")){
 			if (track.getUsedLength() > track.getLength()){
 				log.debug("Can't set ("+toString()+") due to exceeding maximum capacity for track ("+track.getName()+")");
@@ -422,13 +422,13 @@ public class Car extends RollingStock {
 			// does car have a scheduled load?
 			if (getLoad().equals(carLoads.getDefaultEmptyName()) || getLoad().equals(carLoads.getDefaultLoadName()))
 				return Track.OKAY; //no
-			// can't place a car with a scheduled load at a siding
+			// can't place a car with a scheduled load at a spur
 			else if (!track.getLocType().equals(Track.SIDING))
 				return Track.OKAY;
 			else
 				return MessageFormat.format(rb.getString("CarHasA"),new Object[]{CUSTOM, Track.LOAD, getLoad()});
 		}
-		// only sidings can have a schedule
+		// only spurs can have a schedule
 		if (!track.getLocType().equals(Track.SIDING))
 			return Track.OKAY;
 		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") mode "+track.getScheduleMode());
@@ -491,10 +491,10 @@ public class Car extends RollingStock {
 	/**
 	 * Sets the car's destination on the layout
 	 * @param destination 
-	 * @param track (yard, siding, staging, or interchange track)
+	 * @param track (yard, spur, staging, or interchange track)
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit, or 
-	 * Schedule if the destination will not accept the car because the siding
+	 * Schedule if the destination will not accept the car because the spur
 	 * has a schedule and the car doesn't meet the schedule requirements.
 	 * Also changes the car load status when the car reaches its destination.
 	 */
@@ -505,11 +505,11 @@ public class Car extends RollingStock {
 	/**
 	 * Sets the car's destination on the layout
 	 * @param destination 
-	 * @param track (yard, siding, staging, or interchange track)
+	 * @param track (yard, spur, staging, or interchange track)
 	 * @param force when true ignore track length, type, & road when setting destination
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit, or 
-	 * Schedule if the destination will not accept the car because the siding
+	 * Schedule if the destination will not accept the car because the spur
 	 * has a schedule and the car doesn't meet the schedule requirements.
 	 * Also changes the car load status when the car reaches its destination.
 	 */
@@ -530,7 +530,7 @@ public class Car extends RollingStock {
 		// set service order
 		if (oldDestTrack != null)
 			setOrder(oldDestTrack.getMoves());
-		// update load when car reaches a siding
+		// update load when car reaches a spur
 		loadNext(oldDestTrack);
 		// set destination and destination track if available
 		//if (!Router.instance().setDestination(this, null))
@@ -554,7 +554,7 @@ public class Car extends RollingStock {
 			setNextDestination(null);
 			setNextDestTrack(null);
 		}
-		// check for schedule, only sidings can have a schedule
+		// check for schedule, only spurs can have a schedule
 		if (track == null || track.getScheduleId().equals("") || track.getSchedule() == null || loading)
 			return;
 		// is car part of a kernel?

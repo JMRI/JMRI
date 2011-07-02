@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Manages schedules.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
@@ -297,13 +297,13 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Gets a JComboBox with a list of sidings that use this schedule.
+	 * Gets a JComboBox with a list of spurs that use this schedule.
 	 * @param schedule The schedule for this JComboBox. 
-	 * @return JComboBox with a list of sidings using schedule.
+	 * @return JComboBox with a list of spurs using schedule.
 	 */
 	public JComboBox getSidingsByScheduleComboBox(Schedule schedule){
 		JComboBox box = new JComboBox();
-    	// search all sidings for that use schedule
+    	// search all spurs for that use schedule
     	LocationManager manager = LocationManager.instance();
     	List<String> locations = manager.getLocationsByNameList();
     	for (int j=0; j<locations.size(); j++){

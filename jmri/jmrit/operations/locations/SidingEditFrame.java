@@ -14,15 +14,15 @@ import jmri.jmrit.operations.setup.Control;
 
 
 /**
- * Frame for user edit of a location sidings
+ * Frame for user edit of a spur.
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 	
-	// labels, buttons, etc. for sidings
+	// labels, buttons, etc. for spurs
 	JLabel textSchedule = new JLabel(rb.getString("DeliverySchedule"));
 	JLabel textSchError = new JLabel();
 	JButton editScheduleButton = new JButton(rb.getString("Edit"));
@@ -56,7 +56,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		addTrackButton.setText(rb.getString("AddSiding"));
 		saveTrackButton.setText(rb.getString("SaveSiding"));
 		
-		// Select the siding's Schedule
+		// Select the spur's Schedule
 		if (_track !=null){
 			Schedule s = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
 			comboBoxSchedules.setSelectedItem(s);
@@ -67,7 +67,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		// setup buttons
 		addButtonAction(editScheduleButton);
 		// finish
-		panelOrder.setVisible(false);	// Car order out of sidings is not available
+		panelOrder.setVisible(false);	// Car order out of spurs is not available
 		packFrame();
 		setVisible(true);
 	}

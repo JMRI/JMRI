@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
- * @version             $Revision: 1.173 $
+ * @version             $Revision: 1.174 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1636,7 +1636,7 @@ public class TrainBuilder extends TrainCommon{
 		//log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForSiding"),new Object[]{car.toString(), car.getLoad()}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
-		log.debug("Found "+tracks.size()+" sidings");
+		log.debug("Found "+tracks.size()+" spurs");
 		for (int i=0; i<tracks.size(); i++){
 			Track track = tracks.get(i);
 			if (car.getTrack() != track && track.getSchedule() != null){
@@ -1680,7 +1680,7 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	/**
-	 * Search for a siding with a schedule and load car if needed.
+	 * Search for a spur with a schedule and load car if needed.
 	 * @param car the car 
 	 * @throws BuildFailedException 
 	 */
@@ -1692,7 +1692,7 @@ public class TrainBuilder extends TrainCommon{
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
 				new Object[]{car.toString(), car.getType(), car.getLoad()}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
-		log.debug("Found "+tracks.size()+" sidings");
+		log.debug("Found "+tracks.size()+" spurs");
 		for (int i=0; i<tracks.size(); i++){
 			Track track = tracks.get(i);
 			if (track.getSchedule() != null){
@@ -1923,11 +1923,11 @@ public class TrainBuilder extends TrainCommon{
 								// is train direction correct?
 								if (!checkDropTrainDirection(car, rld, testTrack))
 									continue;
-								// drop to interchange or siding?
+								// drop to interchange or spur?
 								if (!checkTrainCanDrop(car, testTrack))
 									continue;
 								String status = car.testDestination(car.getDestination(), testTrack);
-								// is the testTrack a siding with a schedule and alternate track?
+								// is the testTrack a spur with a schedule and alternate track?
 								if (!status.equals(Track.OKAY) && status.contains(Track.LENGTH) && car.testSchedule(testTrack).equals(Track.OKAY) 
 										&& testTrack.getLocType().equals(Track.SIDING) && testTrack.getAlternativeTrack() != null){
 									addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrackHasAlternate"),new Object[]{testTrack.getName(), testTrack.getAlternativeTrack().getName()}));
@@ -1958,7 +1958,7 @@ public class TrainBuilder extends TrainCommon{
 						if (!rld.equals(train.getTrainTerminatesRouteLocation()) || terminateStageTrack == null  || terminateStageTrack == car.getDestinationTrack()){
 							// is train direction correct?
 							if (checkDropTrainDirection(car, rld, car.getDestinationTrack())){
-								// drop to interchange or siding?
+								// drop to interchange or spur?
 								if (checkTrainCanDrop(car, car.getDestinationTrack())){
 									String status = car.testDestination(car.getDestination(), car.getDestinationTrack());
 									if (status.equals(Track.OKAY) && checkDropTrainDirection(car, rld, car.getDestinationTrack()))
@@ -2097,11 +2097,11 @@ public class TrainBuilder extends TrainCommon{
 					// Can the train service this track?
 					if (!checkDropTrainDirection(car, rld, testTrack))
 						continue;
-					// drop to interchange or siding?
+					// drop to interchange or spur?
 					if (!checkTrainCanDrop(car, testTrack))
 						continue;
 					String status = car.testDestination(testDestination, testTrack);
-					// is the destination a siding with a schedule demanding this car's custom load?
+					// is the destination a spur with a schedule demanding this car's custom load?
 					if (status.equals(Track.OKAY) && !testTrack.getScheduleId().equals("") 
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())){
@@ -2113,7 +2113,7 @@ public class TrainBuilder extends TrainCommon{
 							log.error ("Couldn't add car "+car.toString()+" to train ("+train.getName()+"), location ("+rl.getName()+ ") destination (" +rld.getName()+")");
 						return carAdded;	// done, no build errors					
 					}					
-					// is the destination a siding with a Schedule?
+					// is the destination a spur with a Schedule?
 					if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE)){
 						log.debug("Siding ("+testTrack.getName()+") status: "+status);
 						// is car departing a staging track that can generate schedule loads?
@@ -2140,7 +2140,7 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
 						continue;
 					}		
-					// No local moves from siding to siding
+					// No local moves from spur to spur
 					if (routeList.size() == 1 && !Setup.isLocalSidingMovesEnabled() && testTrack.getLocType().equals(Track.SIDING) && car.getTrack().getLocType().equals(Track.SIDING)){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoSidingToSidingMove"),new Object[]{testTrack.getName()}));
 						continue;
