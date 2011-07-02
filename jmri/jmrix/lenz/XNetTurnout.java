@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.44 $
+ * @version			$Revision: 2.45 $
  */
 
 package jmri.jmrix.lenz;
@@ -338,7 +338,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
        if(log.isDebugEnabled()) log.debug("Handle Message for turnout " + 
 	  mNumber + " in DIRECT feedback mode ");
-       if(internalState==STATUSREQUESTSENT) {
+       if(internalState==STATUSREQUESTSENT && l.isUnsolicited() ) {
 		      // set the reply as being solicited
 		      l.resetUnsolicited();
        }
@@ -355,7 +355,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 		      // This message includes feedback for this turnout  
                       if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " DIRECT feedback mode - directed reply received."); 
 		      // set the reply as being solicited
-		      l.resetUnsolicited();
+		      if(l.isUnsolicited())
+		         l.resetUnsolicited();
 		      sendOffMessage();
                       // Explicitly send two off messages in Direct Mode
 		      sendOffMessage();
@@ -597,7 +598,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         if (mNumber%2!=0 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
             // is for this object, parse the message
             if (log.isDebugEnabled()) log.debug("Message for turnout " + mNumber);
-	    if(internalState!=IDLE) l.resetUnsolicited();
+	    if(internalState!=IDLE && l.isUnsolicited()) l.resetUnsolicited();
             if(l.getTurnoutStatus(startByte,1)==THROWN) {
                synchronized(this) {
                   newCommandedState(_mThrown);
@@ -622,7 +623,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    (l.getTurnoutMsgAddr(startByte) == mNumber-1)) {
             // is for this object, parse message type
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
-	    if(internalState!=IDLE) l.resetUnsolicited();
+	    if(internalState!=IDLE && l.isUnsolicited()) l.resetUnsolicited();
             if(l.getTurnoutStatus(startByte,0)==THROWN) {
                synchronized(this) {
                   newCommandedState(_mThrown);
