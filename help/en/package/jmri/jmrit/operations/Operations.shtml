@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.114 2011-07-02 02:06:27 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.115 2011-07-02 23:24:22 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -344,6 +344,8 @@ Note that once you've built a train, the build option can not be changed until
 all trains are terminated or reset. 
 </P>
 
+<H3>Allow Local Car Movements</H3>
+
 The next set of options controls local car movements. Normally it is
 better not to allow a car to move from one siding directly to another
 siding in the same location. This type of move can be very unrealistic,
@@ -352,14 +354,17 @@ Also moving a car from one yard track to another can have your operators
 wondering what kind of busy work is being generated! But if you need
 these types of moves, select the appropriate checkbox.
 
-<P>The next option is restricting trains to staging tracks that only
-accept the train's rolling stock type and road names. When "Enable Type
-and Road Restrictions into Staging" is selected, the program will only
-deliver a train to a staging track has the same rolling stock and road
+<A NAME="TypeRoadLoadRestrictionsStaging"></A>
+<H3>Enable Type, Road and Load Restrictions into Staging</H3>
+
+The next option is restricting trains to staging tracks that only
+accept the train's rolling stock type, road and load names. When "Enable Type,
+Road and Load Restrictions into Staging" is selected, the program will only
+deliver a train to a staging track has the same rolling stock, road and load
 name restrictions. This is useful when you want trains delivered to
 staging tracks based on the train's rolling stock restrictions. However,
 if you want certain car types, car loads, or road names to be transported by a train,
-but not delivered to staging, deselect this feature.</P>
+but not delivered to staging, deselect this feature.
 
 <A NAME="PromptDepartureTrack"></A>
 <H3>Prompt for Departure Track from Staging</H3>
@@ -920,7 +925,7 @@ various trains.</P>
 A staging track allows you to have all cars and locomotives in a train
 delivered to one track. When terminating a train into staging, the
 program will search for a completely empty track, one with no locomotives or
-cars. The staging track by <A HREF="#SettingsOptions">default</A> must
+cars. The staging track by <A HREF="#TypeRoadLoadRestrictionsStaging">default</A> must
 also service all of the train's car and locomotive types and roads. Trains
 can not share staging tracks; the program will only place one train per
 track. When departing a location with a staging track, all cars and
@@ -951,6 +956,10 @@ train will arrive on and depart. Note that the default "Any" allows any
 train to arrive or depart on the staging track, so if you want to
 restrict a train to a specific track or tracks, you must configure all
 of the staging tracks at that location.</P>
+
+<P>You can as an <A HREF="#PromptDepartureTrack">option</A>, have
+the program ask you which track you want to use when depart from
+staging.</P>
 
 <H3>Looping Trains through Staging</H3>
 
