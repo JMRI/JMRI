@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.113 2011-06-22 22:25:14 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.114 2011-07-02 02:06:27 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -666,6 +666,21 @@ containing the last settings for all of your locations.
 
 If you want to change the track type to a siding, interchange or yard, in the edit track
 window, select Tools-&gt;Change Track Type.  Select the desired track type and press "Save".
+
+<A NAME="Pools"></A>
+<H3>Pools</H3>
+
+The program allows you to "pool" a set of tracks at a location. Tracks
+in a pool share their track lengths with each other. This is useful if
+you've divided a location into track segments and you want each segment to
+adjust its length based on the program's demands. To create and place a
+track into a pool, select Tools-&gt;Pools in one of the track edit
+windows. Enter a name for your pool and press the "Add" button. You can
+also specify the minimum length for the track. A minimum track length
+prevents the other tracks in the pool from acquiring all of the track's
+length. Next select a pool name for the track and press "Save". The
+bottom of the pool window will show the other tracks that are in the
+track's pool. 
 
 <A	NAME="Sidings"></A>
 <H3>Sidings</H3>
