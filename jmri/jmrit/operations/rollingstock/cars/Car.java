@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.90 $
+ * @version             $Revision: 1.91 $
  */
 public class Car extends RollingStock {
 	
@@ -58,7 +58,7 @@ public class Car extends RollingStock {
 	public static final String SCHEDULE = rb.getString("schedule");
 	public static final String CUSTOM = rb.getString("custom");
 	public static final String CAPACITY = rb.getString("capacity");
-	public static final String LOAD = rb.getString("load");
+	//public static final String LOAD = rb.getString("load");
 	
 	public Car(){
 		
@@ -372,19 +372,21 @@ public class Car extends RollingStock {
 	
 	/**
 	 * Used to determine if a car can be placed at a location and
-	 * track.  A return of Car.OKAY means the car can be placed at
+	 * track.  A return of Track.OKAY means the car can be placed at
 	 * the location and track.
 	 */
+	/*
 	public String testLocation(Location location, Track track) {
 		String status = super.testLocation(location, track);
-		if (!status.equals(OKAY))
+		if (!status.equals(Track.OKAY))
 			return status;
 		if (location != null && track != null && !track.acceptsLoadName(getLoad())){
 			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at location ("+ location.getName() + ", " + track.getName() + ") wrong load");
-			return LOAD+ " ("+getLoad()+")";
+			return Track.LOAD+ " ("+getLoad()+")";
 		}
-		return OKAY;
+		return Track.OKAY;
 	}
+	*/
 	
 	/**
 	 * Used to determine if a car can be set out at a destination (location).
@@ -393,12 +395,14 @@ public class Car extends RollingStock {
 	 */
 	public String testDestination(Location destination, Track track) {
 		String status = super.testDestination(destination, track);
-		if (!status.equals(OKAY))
+		if (!status.equals(Track.OKAY))
 			return status;
+		/*
 		if (destination != null && track != null && !track.acceptsLoadName(getLoad())){
 			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at destination ("+ destination.getName() + ", " + track.getName() + ") wrong load");
 			return LOAD+ " ("+getLoad()+")";
 		}
+		*/
 		// a siding with a schedule can overload in aggressive mode, check track capacity
 		if (Setup.isBuildAggressive() && track != null && !track.getScheduleId().equals("")){
 			if (track.getUsedLength() > track.getLength()){
@@ -413,20 +417,20 @@ public class Car extends RollingStock {
 	public String testSchedule(Track track){
 		// does car already have this destination?
 		if (track == null || track == getDestinationTrack())
-			return OKAY;
+			return Track.OKAY;
 		if (track.getScheduleId().equals("")){
 			// does car have a scheduled load?
 			if (getLoad().equals(carLoads.getDefaultEmptyName()) || getLoad().equals(carLoads.getDefaultLoadName()))
-				return OKAY; //no
+				return Track.OKAY; //no
 			// can't place a car with a scheduled load at a siding
 			else if (!track.getLocType().equals(Track.SIDING))
-				return OKAY;
+				return Track.OKAY;
 			else
-				return MessageFormat.format(rb.getString("CarHasA"),new Object[]{CUSTOM, LOAD, getLoad()});
+				return MessageFormat.format(rb.getString("CarHasA"),new Object[]{CUSTOM, Track.LOAD, getLoad()});
 		}
 		// only sidings can have a schedule
 		if (!track.getLocType().equals(Track.SIDING))
-			return OKAY;
+			return Track.OKAY;
 		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") mode "+track.getScheduleMode());
 
 		ScheduleItem si = track.getCurrentScheduleItem();
@@ -447,11 +451,11 @@ public class Car extends RollingStock {
 			if (debugFlag)log.debug("Item id ("+si.getId()+") requesting type ("+si.getType()+") " +
 					"load ("+si.getLoad()+") next dest ("+si.getDestinationName()+") track ("+si.getDestinationTrackName()+")");
 			String status = checkScheduleItem(track, si);
-			if (status.equals(OKAY)){
+			if (status.equals(Track.OKAY)){
 				log.debug("Found item match ("+si.getId()+") car ("+toString()+") load ("+si.getLoad()+") ship ("+si.getShip()+") " +
 						"destination ("+si.getDestinationName()+", "+si.getDestinationTrackName()+")");
 				setScheduleId(si.getId());
-				return OKAY;
+				return Track.OKAY;
 			} else {
 				if (debugFlag)log.debug("Item id ("+si.getId()+") status ("+status+")");
 			}
@@ -469,19 +473,19 @@ public class Car extends RollingStock {
 		if (getType().equals(si.getType())) {
 			if (si.getRoad().equals("") || getRoad().equals(si.getRoad()))
 				if (si.getLoad().equals("") || getLoad().equals(si.getLoad()))
-					return OKAY;
+					return Track.OKAY;
 				else
 					return SCHEDULE + " (" + track.getScheduleName()
-							+ ") request car "+TYPE+" (" + si.getType()
-							+ ") "+ROAD+" (" + si.getRoad() + ") "+LOAD+" ("
+							+ ") request car "+Track.TYPE+" (" + si.getType()
+							+ ") "+Track.ROAD+" (" + si.getRoad() + ") "+Track.LOAD+" ("
 							+ si.getLoad() + ")";
 			else
 				return SCHEDULE + " (" + track.getScheduleName()
-						+ ") request car "+TYPE+" (" + si.getType()
-						+ ") "+ROAD+" (" + si.getRoad() + ")";
+						+ ") request car "+Track.TYPE+" (" + si.getType()
+						+ ") "+Track.ROAD+" (" + si.getRoad() + ")";
 		} else
 			return SCHEDULE + " (" + track.getScheduleName()
-					+ ") request car "+TYPE+" (" + si.getType() + ")";		
+					+ ") request car "+Track.TYPE+" (" + si.getType() + ")";		
 	}
 	
 	/**
@@ -515,7 +519,7 @@ public class Car extends RollingStock {
 		Track oldDestTrack = getDestinationTrack();
 		String status = super.setDestination(destination, track, force);
 		// return if not Okay 
-		if (!status.equals(OKAY))
+		if (!status.equals(Track.OKAY))
 			return status;
 		// now check to see if the track has a schedule
 		if (oldDestTrack != track)

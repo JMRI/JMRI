@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.81 $
+ * @version $Revision: 1.82 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -685,17 +685,17 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// place the cars on the tracks
 		// Place cars
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(l1, l1s1));
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(l1, l1s1));
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(l1, l1s1));
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(l1, l1s1));	
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(l1, l1s1));
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(l1, l1s1));
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(l1, l1s1));
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(l1, l1s1));		
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(l1, l1s1));
-		Assert.assertEquals("Place c10", Car.OKAY, c10.setLocation(l1, l1s1));
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(l1, l1s1));	
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(l1, l1s1));		
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(l1, l1s1));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
 		
 		t1.build();	
 		Assert.assertTrue("train built 2", t1.isBuilt());
@@ -778,15 +778,15 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location c10", "Foxboro", c10.getLocationName());
 
 		// now set caboose destinations that aren't the terminal
-		Assert.assertEquals("set destination c1", Car.OKAY, c1.setDestination(l2, l2s1));
-		Assert.assertEquals("set destination c2", Car.OKAY, c2.setDestination(l3, l3s1));
+		Assert.assertEquals("set destination c1", Track.OKAY, c1.setDestination(l2, l2s1));
+		Assert.assertEquals("set destination c2", Track.OKAY, c2.setDestination(l3, l3s1));
 		
 		// train requires a caboose, should fail	
 		t1.build();
 		Assert.assertFalse("train built 4", t1.isBuilt());
 		
 		// Set caboose destination to be the terminal
-		Assert.assertEquals("set caboose destination", Car.OKAY, c2.setDestination(l1, l1s2));
+		Assert.assertEquals("set caboose destination", Track.OKAY, c2.setDestination(l1, l1s2));
 		t1.build();
 		Assert.assertTrue("train built 5", t1.isBuilt());
 		Assert.assertTrue("train reset 5", t1.reset());
@@ -845,7 +845,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("6 Train e2", "", e2.getTrainName());
 
 		// now try setting engine destination that isn't the terminal
-		Assert.assertEquals("set destination e1", Engine.OKAY, e1.setDestination(l2, l2s1));
+		Assert.assertEquals("set destination e1", Track.OKAY, e1.setDestination(l2, l2s1));
 		// should fail
 		t1.build();
 		Assert.assertFalse("train built 11", t1.isBuilt());
@@ -857,11 +857,11 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertTrue("train built 12", t1.isBuilt());
 		
 		// set lead engine's track to null
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(l1, null));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, null));
 		// should not build
 		t1.build();
 		Assert.assertFalse("train will not build engine track is null", t1.isBuilt());
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(l1, l1s1));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
 		
 		// should now build
 		t1.build();
@@ -878,7 +878,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location e2", "Foxboro", e2.getLocationName());
 		
 		// move c8 to Foxboro to help test kernels
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(l1, l1s1));
 		// now test kernels
 		Kernel k1 = cmanager.newKernel("group of cars");
 		c8.setKernel(k1);	// lead car
@@ -937,15 +937,15 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertTrue("train reset 15", t1.reset()); // release cars
 				
 		// now set FRED destinations that aren't the terminal
-		Assert.assertEquals("set destination c1", Car.OKAY, c1.setDestination(l2, l2s1));
-		Assert.assertEquals("set destination c2", Car.OKAY, c2.setDestination(l3, l3s1));
+		Assert.assertEquals("set destination c1", Track.OKAY, c1.setDestination(l2, l2s1));
+		Assert.assertEquals("set destination c2", Track.OKAY, c2.setDestination(l3, l3s1));
 		
 		// train requires a car with FRED, should fail	
 		t1.build();
 		Assert.assertFalse("train built 16", t1.isBuilt());
 		
 		// Set FRED destination to be the terminal
-		Assert.assertEquals("set destination c2", Car.OKAY, c2.setDestination(l1, l1s2));
+		Assert.assertEquals("set destination c2", Track.OKAY, c2.setDestination(l1, l1s2));
 		t1.build();
 		Assert.assertTrue("train built 17", t1.isBuilt());
 		Assert.assertTrue("train reset 17", t1.reset());
@@ -1370,37 +1370,37 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1s1 Init Used Length", 0, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1s2 Init Used Length", 0, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 Init Used Length", 0, l1s1.getUsedLength());
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c3 Used Length", 44, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c3 Used Length", 44, l1.getUsedLength());
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c4 Used Length", 88, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c4 Used Length", 88, l1.getUsedLength());
 
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(l1, l1s2));
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c5 Used Length", 44, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c5 Used Length", 132, l1.getUsedLength());
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(l1, l1s2));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c6 Used Length", 88, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c6 Used Length", 176, l1.getUsedLength());
 		
 		// Place 2 Boxcars and Flat in yard
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(l2, l2s1));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(l2, l2s1));
 		Assert.assertEquals("Location 2s1 c7 Used Length", 54, l2s1.getUsedLength());
 		Assert.assertEquals("Location 2 c7 Used Length", 54, l2.getUsedLength());
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(l2, l2s1));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(l2, l2s1));
 		Assert.assertEquals("Location 2s1 c4 Used Length", 118, l2s1.getUsedLength());
 		Assert.assertEquals("Location 2 c4 Used Length", 118, l2.getUsedLength());
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(l2, l2s1));
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(l2, l2s1));
 		Assert.assertEquals("Location 2s1 c9 Used Length", 212, l2s1.getUsedLength());
 		Assert.assertEquals("Location 2 c9 Used Length", 212, l2.getUsedLength());
 	
 		// Place Cabooses on Staging tracks
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 c1 Used Length", 124, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 c1 Used Length", 212, l1.getUsedLength());
 
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(l1, l1s2));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 c2 Used Length", 124, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 c2 Used Length", 248, l1.getUsedLength());
 
@@ -1538,17 +1538,17 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train 2 After 2nd Build without engines", false, train2.isBuilt());
 		
 		// Place Engines on Staging tracks
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(l1, l1s1));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 e1 Used Length", 187, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 e1 Used Length", 311, l1.getUsedLength());
-		Assert.assertEquals("Place e2", Engine.OKAY, e2.setLocation(l1, l1s1));
+		Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(l1, l1s1));
 		Assert.assertEquals("Location 1s1 e2 Used Length", 250, l1s1.getUsedLength());
 		Assert.assertEquals("Location 1 e2 Used Length", 374, l1.getUsedLength());
 		
-		Assert.assertEquals("Place e3", Engine.OKAY, e3.setLocation(l1, l1s2));
+		Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 e3 Used Length", 194, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 e3 Used Length", 444, l1.getUsedLength());
-		Assert.assertEquals("Place e4", Engine.OKAY, e4.setLocation(l1, l1s2));
+		Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(l1, l1s2));
 		Assert.assertEquals("Location 1s2 e4 Used Length", 264, l1s2.getUsedLength());
 		Assert.assertEquals("Location 1 e4 Used Length", 514, l1.getUsedLength());
 		
@@ -2142,7 +2142,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// try building again
 		// Place caboose on Staging tracks
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(l1, l1s1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l1, l1s1));
 		train2.setRequirements(Train.CABOOSE);
 		train2.setNumberEngines("0");
 		train2.build();
@@ -2164,7 +2164,7 @@ public class OperationsTrainsTest extends TestCase {
 		l3s3.setLength(200);	// restore
 		
 		// Car X10001 is a location North Industries, NI Yard, send boxcar X10001 to staging
-		Assert.assertEquals("set destination", Car.OKAY, c3.setDestination(l3, null));
+		Assert.assertEquals("set destination", Track.OKAY, c3.setDestination(l3, null));
 		train2.build();
 		// Should build
 		Assert.assertTrue("Train 2 built", train2.isBuilt());
@@ -2173,7 +2173,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		// Send car X10001 to staging and track that isn't being used
 		train2.reset();
-		Assert.assertEquals("set destination", Car.OKAY, c3.setDestination(l3, l3s2));
+		Assert.assertEquals("set destination", Track.OKAY, c3.setDestination(l3, l3s2));
 		train2.build();
 		// Should build
 		Assert.assertFalse("Train 2 built", train2.isBuilt());
@@ -2867,17 +2867,17 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Westford should now accepts Flat Car", true, loc1.acceptsTypeName("Flat Car"));
 		
 		// place the cars in the yards
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
 		
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk2));
 		
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(loc1, loc1trk3));
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk3));
 
 		// do cars have the right default loads?
 		Assert.assertEquals("Car c1 load should be E", "E", c1.getLoad());
@@ -3425,21 +3425,21 @@ public class OperationsTrainsTest extends TestCase {
 		cmanager.register(c13);
 		
 		// place the cars in the yards
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
 		
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(loc1, loc1trk2));	
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk2));	
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk2));
 		
-		Assert.assertEquals("Place c10", Car.OKAY, c10.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c11", Car.OKAY, c11.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c12", Car.OKAY, c12.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c13", Car.OKAY, c13.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk2));
 	
 		train1.build();
 		
@@ -3851,21 +3851,21 @@ public class OperationsTrainsTest extends TestCase {
 		cmanager.register(c13);
 		
 		// place the cars in the yards
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
 		
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(loc1, loc1trk2));	
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk2));	
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk2));
 		
-		Assert.assertEquals("Place c10", Car.OKAY, c10.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c11", Car.OKAY, c11.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c12", Car.OKAY, c12.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c13", Car.OKAY, c13.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk1));
 		
 		train1.build();
 		train2.build();
@@ -4142,7 +4142,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk2.setPickupOption(Track.TRAINS);
 		
 		// Place car with FRED back at start of route
-		Assert.assertEquals("Place c5 again", Car.OKAY, c5.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c5 again", Track.OKAY, c5.setLocation(loc1, loc1trk2));
 		
 		train3.build();
 		Assert.assertTrue("train 3 should build", train3.isBuilt());
@@ -4150,12 +4150,12 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("car XP Q3 should not be part of train", null, c3.getTrain());
 		
 		// put some cars at start of Route
-		Assert.assertEquals("Place c1 again", Car.OKAY, c1.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c2 again", Car.OKAY, c2.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c3 again", Car.OKAY, c3.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c4 again", Car.OKAY, c4.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c6 again", Car.OKAY, c6.setLocation(loc2, loc2trk1));
-		Assert.assertEquals("Place c7 again", Car.OKAY, c7.setLocation(loc2, loc2trk2));
+		Assert.assertEquals("Place c1 again", Track.OKAY, c1.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c2 again", Track.OKAY, c2.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c3 again", Track.OKAY, c3.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c4 again", Track.OKAY, c4.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c6 again", Track.OKAY, c6.setLocation(loc2, loc2trk1));
+		Assert.assertEquals("Place c7 again", Track.OKAY, c7.setLocation(loc2, loc2trk2));
 		
 		r1l1.setMaxCarMoves(5);
 		loc2trk1.setDropOption(Track.ROUTES);
@@ -4375,23 +4375,23 @@ public class OperationsTrainsTest extends TestCase {
 		tmanager.setBuildMessagesEnabled(false);
 		
 		// Place cars
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
 		
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk1));
 		
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c10", Car.OKAY, c10.setLocation(loc2, loc2trk1));
-		Assert.assertEquals("Place c11", Car.OKAY, c11.setLocation(loc2, loc2trk1));
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc2, loc2trk1));
+		Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc2, loc2trk1));
 		
 		// Place engines
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e2", Engine.OKAY, e2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(loc1, loc1trk1));
 		
 		// no requirements, so no caboose or FRED or engines
 		train1.build();
@@ -4620,20 +4620,20 @@ public class OperationsTrainsTest extends TestCase {
 		loc1trk2.setLength(1000);
 		// now depart staging, must take all cars in staging
 		// Place cars
-		Assert.assertEquals("Move c1", Car.OKAY, c1.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Move c2", Car.OKAY, c2.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Move c3", Car.OKAY, c3.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Move c4", Car.OKAY, c4.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c1", Track.OKAY, c1.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c2", Track.OKAY, c2.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c3", Track.OKAY, c3.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c4", Track.OKAY, c4.setLocation(loc1, loc1trk2));
 		
-		Assert.assertEquals("Move c5", Car.OKAY, c5.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Move c6", Car.OKAY, c6.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Move c7", Car.OKAY, c7.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Move c8", Car.OKAY, c8.setLocation(loc1, loc1trk2));	
-		Assert.assertEquals("Move c9", Car.OKAY, c9.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c6", Track.OKAY, c6.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c7", Track.OKAY, c7.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Move c8", Track.OKAY, c8.setLocation(loc1, loc1trk2));	
+		Assert.assertEquals("Move c9", Track.OKAY, c9.setLocation(loc1, loc1trk2));
 		
 		// Place engines
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place e2", Engine.OKAY, e2.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(loc1, loc1trk2));
 
 		// program requires only staging at any location, so we don't test with yard
 		loc1.deleteTrack(loc1trk1);
@@ -5081,32 +5081,32 @@ public class OperationsTrainsTest extends TestCase {
 		tmanager.setBuildMessagesEnabled(false);
 		
 		// Place cars
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(loc2, loc2trk1));
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(loc5, loc5trk1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc2, loc2trk1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc5, loc5trk1));
 		
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc1, loc1trk1));
 		
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c10", Car.OKAY, c10.setLocation(loc2, loc2trk1));
-		Assert.assertEquals("Place c11", Car.OKAY, c11.setLocation(loc2, loc2trk1));
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc2, loc2trk1));
+		Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc2, loc2trk1));
 		
 		// set c9 destination not part of train's route
-		Assert.assertEquals("Destination c9", Car.OKAY, c9.setDestination(loc5, loc5trk1));
+		Assert.assertEquals("Destination c9", Track.OKAY, c9.setDestination(loc5, loc5trk1));
 		
 		// Place engines
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e2", Engine.OKAY, e2.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e3", Engine.OKAY, e3.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e4", Engine.OKAY, e4.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e5", Engine.OKAY, e5.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e6", Engine.OKAY, e6.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e7", Engine.OKAY, e7.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e8", Engine.OKAY, e8.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(loc1, loc1trk1));
 		
 		train1.setRequirements(Train.CABOOSE);
 		train1.setNumberEngines("2");
@@ -5140,7 +5140,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// Allow c9 to be used
 		// set c9 destination Chelmsford
-		Assert.assertEquals("Destination c9", Car.OKAY, c9.setDestination(loc4, null));
+		Assert.assertEquals("Destination c9", Track.OKAY, c9.setDestination(loc4, null));
 		
 		// check that train direction and track direction feature works properly
 		loc1trk2.setTrainDirections(Location.SOUTH);
@@ -5459,29 +5459,29 @@ public class OperationsTrainsTest extends TestCase {
 		tmanager.setBuildMessagesEnabled(false);
 		
 		// Place cars
-		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c2", Car.OKAY, c2.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c3", Car.OKAY, c3.setLocation(loc2, loc2trk1));
-		Assert.assertEquals("Place c4", Car.OKAY, c4.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(loc2, loc2trk1));
+		Assert.assertEquals("Place c4", Track.OKAY, c4.setLocation(loc1, loc1trk1));
 		
-		Assert.assertEquals("Place c5", Car.OKAY, c5.setLocation(loc1, loc1trk2));
-		Assert.assertEquals("Place c6", Car.OKAY, c6.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place c7", Car.OKAY, c7.setLocation(loc3, loc3trk1));
-		Assert.assertEquals("Place c8", Car.OKAY, c8.setLocation(loc3, loc3trk2));
+		Assert.assertEquals("Place c5", Track.OKAY, c5.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place c6", Track.OKAY, c6.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(loc3, loc3trk1));
+		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(loc3, loc3trk2));
 		
-		Assert.assertEquals("Place c9", Car.OKAY, c9.setLocation(loc4, loc4trk1));
-		Assert.assertEquals("Place c10", Car.OKAY, c10.setLocation(loc4, loc4trk2));
-		Assert.assertEquals("Place c11", Car.OKAY, c11.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place c9", Track.OKAY, c9.setLocation(loc4, loc4trk1));
+		Assert.assertEquals("Place c10", Track.OKAY, c10.setLocation(loc4, loc4trk2));
+		Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
 		
 		// Place engines
-		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e2", Engine.OKAY, e2.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e3", Engine.OKAY, e3.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e4", Engine.OKAY, e4.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e5", Engine.OKAY, e5.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e6", Engine.OKAY, e6.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e7", Engine.OKAY, e7.setLocation(loc1, loc1trk1));
-		Assert.assertEquals("Place e8", Engine.OKAY, e8.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(loc1, loc1trk1));
+		Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(loc1, loc1trk1));
 		
 		train1.setRequirements(Train.CABOOSE);
 		train1.setNumberEngines("3");

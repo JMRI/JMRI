@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010 2011
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class ImportCars extends Thread {
 	
@@ -429,7 +429,7 @@ public class ImportCars extends Thread {
 					}
 					if (l != null && sl != null){
 						String status = car.setLocation(l,sl);
-						if (!status.equals(Car.OKAY)){
+						if (!status.equals(Track.OKAY)){
 							log.debug ("Can't set car's location because of "+ status);
 							if (!autoAdjustLocationType){
 								JOptionPane.showMessageDialog(null,
@@ -437,7 +437,7 @@ public class ImportCars extends Thread {
 										rb.getString("rsCanNotLoc"),
 										JOptionPane.ERROR_MESSAGE);
 							}
-							if (status.contains(Car.TYPE)){
+							if (status.contains(Track.TYPE)){
 								if (autoAdjustLocationType){
 									l.addTypeName(carType);
 									sl.addTypeName(carType);
@@ -464,7 +464,7 @@ public class ImportCars extends Thread {
 									}		
 								}
 							}
-							if (status.contains(Car.LENGTH)){
+							if (status.contains(Track.LENGTH)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantIncreaseLength"),new Object[]{carTrack}),
 										rb.getString("TrackLength"),
 										JOptionPane.YES_NO_OPTION);
@@ -476,7 +476,7 @@ public class ImportCars extends Thread {
 									break;
 								}						
 							}
-							if (!status.equals(Car.OKAY)){
+							if (!status.equals(Track.OKAY)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceCar"),new Object[]{(carRoad+" "+carNumber), carLocation, carTrack}),
 										rb.getString("OverRide"),
 										JOptionPane.YES_NO_OPTION);

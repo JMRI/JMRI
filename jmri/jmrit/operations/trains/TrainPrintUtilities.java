@@ -24,7 +24,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
 /**
  * Train print utilities
  * @author Daniel Boudreau (C) 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  *
  */
 public class TrainPrintUtilities {
@@ -258,7 +258,6 @@ public class TrainPrintUtilities {
 	 * This method uses Desktop which is supported in Java 1.6. Since we're
 	 * currently limiting the code to Java 1.5, this method must be commented out.
 	 */
-	/*
 	public static void openDesktopEditor(File file){
 		if (!java.awt.Desktop.isDesktopSupported()) {
 			log.warn("desktop not supported");
@@ -275,12 +274,12 @@ public class TrainPrintUtilities {
 			e.printStackTrace();
 		}
 	}
-	*/
 	
 	/**
 	 * This method replaces the commented out method above for
 	 * compatibility with Java 1.5.
 	 */
+	/*
 	public static void openDesktopEditor(File file){
 		log.info("Open file using editor not supported yet!  Requires Java 1.6");
 		String path = file.getAbsolutePath();
@@ -289,6 +288,7 @@ public class TrainPrintUtilities {
 				JOptionPane.INFORMATION_MESSAGE);
 		return;
 	}
+	*/
 	
 	public static JComboBox getPrinterJComboBox(){
 		JComboBox box = new JComboBox();

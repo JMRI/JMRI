@@ -74,15 +74,27 @@ public class TrainSwitchLists extends TrainCommon {
 			for (int r=0; r<routeList.size(); r++){
 				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (splitString(rl.getName()).equals(splitString(location.getName()))){
+					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
+					if (expectedArrivalTime.equals("-1")){
+						trainDone = true;
+						expectedArrivalTime = "0";
+					}
 					if (stops > 1){
 						// Print visit number only if previous location wasn't the same
 						RouteLocation rlPrevious = route.getLocationById(routeList.get(r-1));
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))){
 							newLine(fileOut);
-							if (r != routeList.size()-1)
-								addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getName(), rl.getTrainDirectionString()}));
-							else
-								addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getName(), rl.getName()}));
+							if (train.isTrainInRoute()){
+								if (r != routeList.size()-1)
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getTrainDirectionString()}));
+								else
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getName()}));
+							} else {
+								if (r != routeList.size()-1)
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getTrainDirectionString()}));
+								else
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getName()}));
+							}
 						} else {
 							stops--;	// don't bump stop count, same location
 							// Does the train reverse direction?
@@ -91,12 +103,9 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					} else {
 						newLine(fileOut);
-						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));					
-						String expectedArrivalTime = train.getExpectedArrivalTime(rl);
+						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));										
 						if (train.isTrainInRoute()){
-							if (expectedArrivalTime.equals("-1")){
-								trainDone = true;	
-							} else {
+							if (!trainDone){
 								addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{train.getTrainDepartsName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 							}
 						} else {

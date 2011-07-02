@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.64 $
+ * @version             $Revision: 1.65 $
  */
 public class Track {
 	
@@ -103,11 +103,23 @@ public class Track {
 	public static final int SEQUENTIAL = 0;
 	public static final int MATCH = 1;
 	
+	// pool
+	protected Pool _pool = null;
+	protected int _minimumLength = 0;
+	
+	// return status when checking rolling stock
+	public static final String OKAY = rb.getString("okay");
+	public static final String LENGTH = rb.getString("length");
+	public static final String TYPE = rb.getString("type");
+	public static final String ROAD = rb.getString("road");	
+	public static final String LOAD = rb.getString("load");
+	
 	//	 For property change
 	public static final String TYPES_CHANGED_PROPERTY = "types";
 	public static final String ROADS_CHANGED_PROPERTY = "roads";
 	public static final String NAME_CHANGED_PROPERTY = "name";
 	public static final String LENGTH_CHANGED_PROPERTY = "length";
+	public static final String MIN_LENGTH_CHANGED_PROPERTY = "minLength";
 	public static final String SCHEDULE_CHANGED_PROPERTY = "schedule change";
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
 	public static final String TRAINDIRECTION_CHANGED_PROPERTY = "trainDirection";
@@ -132,15 +144,15 @@ public class Track {
 		return _name;
 	}
 
-	public String getId() {
+	public String getId(){
 		return _id;
 	}
 	
-	public Location getLocation() {
+	public Location getLocation(){
 		return _location;
 	}	
 
-	public void setName(String name) {
+	public void setName(String name){
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
@@ -148,11 +160,11 @@ public class Track {
 		}
 	}
 
-	public String getName() {
+	public String getName(){
 		return _name;
 	}
 	
-	public String getLocType() {
+	public String getLocType(){
 		return _locType;
 	}
 	
@@ -163,29 +175,40 @@ public class Track {
 			firePropertyChange(TRACK_TYPE_CHANGED_PROPERTY, old, type);
 	}
 
-	public void setLength(int length) {
+	public void setLength(int length){
 		int old = _length;
 		_length = length;
 		if (old != length)
 			firePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
 	}
 
-	public int getLength() {
+	public int getLength(){
 		return _length;
 	}
 	
-	public void setReserved(int reserved) {
+	public void setMinimumLength(int length){
+		int old = _minimumLength;
+		_minimumLength = length;
+		if (old != length)
+			firePropertyChange(MIN_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+	}
+
+	public int getMinimumLength(){
+		return _minimumLength;
+	}
+	
+	public void setReserved(int reserved){
 		int old = _reserved;
 		_reserved = reserved;
 		if (old != reserved)
 			firePropertyChange("reserved", Integer.toString(old), Integer.toString(reserved));
 	}
 
-	public int getReserved() {
+	public int getReserved(){
 		return _reserved;
 	}
 	
-	public void addReservedInRoute(Car car) {
+	public void addReservedInRoute(Car car){
 		int old = _reservedInRoute;
 		_numberCarsInRoute++;
 		_reservedInRoute = old + Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
@@ -193,7 +216,7 @@ public class Track {
 			firePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
 	}
 	
-	public void deleteReservedInRoute(Car car) {
+	public void deleteReservedInRoute(Car car){
 		int old = _reservedInRoute;
 		_numberCarsInRoute--;
 		_reservedInRoute = old - (Integer.parseInt(car.getLength())+ RollingStock.COUPLER);
@@ -206,7 +229,7 @@ public class Track {
 	 * in route to this track.  See isSpaceAvailable().
 	 * @return The length of all cars in route to this track including couplers.
 	 */
-	public int getReservedInRoute() {
+	public int getReservedInRoute(){
 		return _reservedInRoute;
 	}
 	
@@ -281,14 +304,14 @@ public class Track {
 			return false;
 	}
 	
-	public void setUsedLength(int length) {
+	public void setUsedLength(int length){
 		int old = _usedLength;
 		_usedLength = length;
 		if (old != length)
 			firePropertyChange("usedLength", Integer.toString(old), Integer.toString(length));
 	}
 	
-	public int getUsedLength() {
+	public int getUsedLength(){
 		return _usedLength;
 	}
 	
@@ -296,7 +319,7 @@ public class Track {
 	 * Sets the number of rolling stock (cars and or engines) on this track
 	 * @param number
 	 */
-	private void setNumberRS(int number) {
+	private void setNumberRS(int number){
 		int old = _numberRS;
 		_numberRS = number;
 		if (old != number)
@@ -307,7 +330,7 @@ public class Track {
 	 * Sets the number of cars on this track
 	 * @param number
 	 */
-	private void setNumberCars(int number) {
+	private void setNumberCars(int number){
 		int old = _numberCars;
 		_numberCars = number;
 		if (old != number)
@@ -318,7 +341,7 @@ public class Track {
 	 * Sets the number of engines on this track
 	 * @param number
 	 */
-	private void setNumberEngines(int number) {
+	private void setNumberEngines(int number){
 		int old = _numberEngines;
 		_numberEngines = number;
 		if (old != number)
@@ -329,7 +352,7 @@ public class Track {
 	 * 
 	 * @return The number of rolling stock (cars and engines) on this track
 	 */
-	public int getNumberRS() {
+	public int getNumberRS(){
 		return _numberRS;
 	}
 	
@@ -337,7 +360,7 @@ public class Track {
 	 * 
 	 * @return The number of cars on this track
 	 */
-	public int getNumberCars() {
+	public int getNumberCars(){
 		return _numberCars;
 	}
 	
@@ -345,7 +368,7 @@ public class Track {
 	 * 
 	 * @return The number of engines on this track
 	 */
-	public int getNumberEngines() {
+	public int getNumberEngines(){
 		return _numberEngines;
 	}
 	
@@ -375,7 +398,7 @@ public class Track {
 	 * Increments the number of cars and or engines that will be picked up by a train
 	 * from this track.
 	 */
-	public void addPickupRS(RollingStock rs) {
+	public void addPickupRS(RollingStock rs){
 		int old = _pickupRS;
 		_pickupRS++;
 		if (Setup.isBuildAggressive())
@@ -383,7 +406,7 @@ public class Track {
 		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
-	public void deletePickupRS(RollingStock rs) {
+	public void deletePickupRS(RollingStock rs){
 		int old = _pickupRS;
 		if (Setup.isBuildAggressive())
 			setReserved(getReserved() + (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
@@ -396,15 +419,15 @@ public class Track {
 	 * @return the number of rolling stock (cars and or locos) that are
 	 *         scheduled for pick up from this track.
 	 */
-	public int getPickupRS() {
+	public int getPickupRS(){
 		return _pickupRS;
 	}
 
-	public int getDropRS() {
+	public int getDropRS(){
 		return _dropRS;
 	}
 	
-	public void addDropRS(RollingStock rs) {
+	public void addDropRS(RollingStock rs){
 		int old = _dropRS;
 		_dropRS++;
 		setMoves(getMoves()+1);
@@ -412,18 +435,18 @@ public class Track {
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
-	public void deleteDropRS(RollingStock rs) {
+	public void deleteDropRS(RollingStock rs){
 		int old = _dropRS;
 		_dropRS--;
 		setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 
-	public void setComment(String comment) {
+	public void setComment(String comment){
 		_comment = comment;
 	}
 
-	public String getComment() {
+	public String getComment(){
 		return _comment;
 	}
 	
@@ -468,7 +491,7 @@ public class Track {
     	return _typeList.contains(type);
     }
     
-    public String getRoadOption (){
+    public String getRoadOption(){
     	return _roadOption;
     }
     
@@ -476,7 +499,7 @@ public class Track {
      * Set the road option for this track.
      * @param option ALLROADS, INCLUDEROADS, or EXCLUDEROADS
      */
-    public void setRoadOption (String option){
+    public void setRoadOption(String option){
     	String old = _roadOption;
     	_roadOption = option;
     	firePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
@@ -551,7 +574,7 @@ public class Track {
      * Gets the car load option for this track.
      * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
      */
-	public String getLoadOption (){
+	public String getLoadOption(){
     	return _loadOption;
     }
     
@@ -559,7 +582,7 @@ public class Track {
  	 * Set how this track deals with car loads
  	 * @param option ALLLOADS INCLUDELOADS EXCLUDELOADS
  	 */
-    public void setLoadOption (String option){
+    public void setLoadOption(String option){
     	String old = _loadOption;
     	_loadOption = option;
     	firePropertyChange (LOADS_CHANGED_PROPERTY, old, option);
@@ -636,7 +659,7 @@ public class Track {
        	return !_loadList.contains(load);
     }
     
-    public String getDropOption (){
+    public String getDropOption(){
     	return _dropOption;
     }
     
@@ -644,7 +667,7 @@ public class Track {
      * Set the car drop option for this track.
      * @param option ANY, TRAINS, or ROUTES
      */
-    public void setDropOption (String option){
+    public void setDropOption(String option){
     	String old = _dropOption;
     	_dropOption = option;
     	if (!old.equals(option))
@@ -652,7 +675,7 @@ public class Track {
     	firePropertyChange (DROP_CHANGED_PROPERTY, old, option);
     }
     
-    public String getPickupOption (){
+    public String getPickupOption(){
     	return _pickupOption;
     }
     
@@ -660,7 +683,7 @@ public class Track {
      * Set the car pick up option for this track.
      * @param option ANY, TRAINS, or ROUTES
      */
-    public void setPickupOption (String option){
+    public void setPickupOption(String option){
        	String old = _pickupOption;
        	_pickupOption = option;
     	if (!old.equals(option))
@@ -790,7 +813,53 @@ public class Track {
     
     public boolean containsPickupId(String id){
     	return _pickupList.contains(id);
-    }  
+    }
+    
+    public String accepts(RollingStock rs){
+    	// first determine if rolling stock can be move to the new location
+    	if (!acceptsTypeName(rs.getType())){
+    		log.debug("Rolling stock ("+rs.toString()+") type ("+rs.getType()+") not accepted at location ("+getLocation().getName()+", "+getName()+") wrong type");
+    		return TYPE + " ("+rs.getType()+")";
+    	}
+    	if (!acceptsRoadName(rs.getRoad())){
+    		log.debug("Rolling stock ("+rs.toString()+") road ("+rs.getRoad()+") not accepted at location ("+getLocation().getName()+", "+getName()+") wrong road");
+    		return ROAD + " ("+rs.getRoad()+")";
+    	}
+    	// now determine if there's enough space for the rolling stock
+		int length = 0;
+    	try {
+    		length = Integer.parseInt(rs.getLength())+ RollingStock.COUPLER;
+    	} catch (Exception e){
+    		return LENGTH + " ("+rs.getLength()+")";
+    	}
+		// check for car in kernel
+		if (rs.getClass().equals(Car.class)){
+			Car car = (Car)rs;
+			if (car.getKernel() != null && car.getKernel().isLead(car)){
+				length = car.getKernel().getLength();
+			}
+			if (!acceptsLoadName(car.getLoad())){
+				log.debug("Car  ("+rs.toString()+") load ("+car.getLoad()+") not accepted at location ("+getLocation().getName()+", "+getName()+") wrong load");
+				return LOAD+ " ("+car.getLoad()+")";
+			}
+		}
+		// check for engine in consist
+		if (rs.getClass().equals(Engine.class)){
+			Engine eng = (Engine)rs;
+			if (eng.getConsist() != null && eng.getConsist().isLead(eng)){
+				length = eng.getConsist().getLength();
+			}
+		}
+    	if (rs.getTrack() != this && rs.getDestinationTrack() != this
+    			&& (getUsedLength() + getReserved() + length) > getLength()){
+    		// not enough track length check to see if track is in a pool
+    		if (getPool() != null && getPool().requestTrackLength(this, length))
+    			return OKAY;
+    		log.debug("Rolling stock ("+rs.toString()+") not accepted at location ("+getLocation().getName()+", "+getName()+") no room!");
+    		return LENGTH + " ("+length+")";	
+    	}
+    	return OKAY;
+    }
     
     public int getMoves(){
     	return _moves;
@@ -1093,9 +1162,32 @@ public class Track {
 	public boolean isAddLoadsEnabledAnySiding(){
 		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS_ANY_SIDING));
 	}
+	
+	public void setPool(Pool pool){
+		Pool old = _pool;
+		_pool = pool;
+		if (old != pool){
+			if (old != null)
+				old.remove(this);	
+			if (_pool != null){
+				_pool.add(this);
+			}
+			firePropertyChange("Pool change", old, pool);
+		}
+	}
+	
+	public Pool getPool(){
+		return _pool;
+	}
+	
+	public String getPoolName(){
+		if (getPool()!=null)
+			return getPool().getName();
+		return "";
+	}
     
     public void dispose(){
-    	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
+    	firePropertyChange(DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
     
 	
@@ -1162,6 +1254,10 @@ public class Track {
         
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("order")) != null ) _order = a.getValue();
+        if ((a = e.getAttribute("pool")) != null ){
+        	setPool(_location.addPool(a.getValue()));
+        	if ((a = e.getAttribute("minLength")) != null )  _minimumLength = Integer.parseInt(a.getValue());
+        }
     }
 
     /**
@@ -1235,6 +1331,10 @@ public class Track {
     	if (!getServiceOrder().equals(NORMAL))
     		e.setAttribute("order", getServiceOrder());
     	e.setAttribute("comment", getComment());
+    	if (getPool() != null){
+    		e.setAttribute("pool", getPool().getName());
+    		e.setAttribute("minLength", Integer.toString(getMinimumLength()));
+    	}
 
     	return e;
     }

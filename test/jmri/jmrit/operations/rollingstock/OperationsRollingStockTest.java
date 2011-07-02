@@ -85,11 +85,6 @@ public class OperationsRollingStockTest extends TestCase {
 		RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
 		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoad());
 		Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
-
-		Assert.assertEquals("RollingStock Constant OKAY", "okay", RollingStock.OKAY);
-		Assert.assertEquals("RollingStock Constant LENGTH", "length", RollingStock.LENGTH);
-		Assert.assertEquals("RollingStock Constant TYPE", "type", RollingStock.TYPE);
-		Assert.assertEquals("RollingStock Constant ROAD", "road", RollingStock.ROAD);
                 
 		Assert.assertEquals("RollingStock Constant LOCATION_CHANGED_PROPERTY", "rolling stock location", RollingStock.LOCATION_CHANGED_PROPERTY);
 		Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);
@@ -116,6 +111,7 @@ public class OperationsRollingStockTest extends TestCase {
 		Assert.assertEquals("RollingStock null Location Id", "", rs1.getLocationId());
 		Assert.assertEquals("RollingStock null Track Name", "", rs1.getTrackName());
 		Assert.assertEquals("RollingStock null Track Id", "", rs1.getTrackId());
+		Assert.assertEquals("RollingStock null car length", "", rs1.getLength());
 
 		String testresult;
 
@@ -141,12 +137,12 @@ public class OperationsRollingStockTest extends TestCase {
 		/* track needs to have a defined length */
 		rs1.setLength("41");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length null", "length (41)", testresult);
+		Assert.assertEquals("RollingStock null Set Length null", "length (45)", testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(40);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length short", "length (41)", testresult);
+		Assert.assertEquals("RollingStock null Set Length short", "length (45)", testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(44);  // rs length + Coupler == 4

@@ -26,7 +26,7 @@ import java.util.Locale;
  * Tests for the Operations Engines GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 
@@ -80,8 +80,8 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		e1.setRfid("RFID 3");
 		e1.setWeightTons("Tons of Weight");
 		e1.setComment("Test Engine NH 1 Comment");
-		Assert.assertEquals("e1 location", Engine.OKAY, e1.setLocation(westford, westfordYard));
-		Assert.assertEquals("e1 destination", Engine.OKAY, e1.setDestination(boxford, boxfordJacobson));
+		Assert.assertEquals("e1 location", Track.OKAY, e1.setLocation(westford, westfordYard));
+		Assert.assertEquals("e1 destination", Track.OKAY, e1.setDestination(boxford, boxfordJacobson));
 
 		Engine e2 = cManager.newEngine("UP", "2");
 		e2.setModel("FT");
@@ -96,8 +96,8 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		e3.setMoves(40);
 		e3.setOwner("AB");
 		e3.setRfid("RFID 5");
-		Assert.assertEquals("e3 location", Engine.OKAY, e3.setLocation(boxford, boxfordHood));
-		Assert.assertEquals("e3 destination", Engine.OKAY, e3.setDestination(boxford, boxfordYard));
+		Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
+		Assert.assertEquals("e3 destination", Track.OKAY, e3.setDestination(boxford, boxfordYard));
 		
 		Engine e4 = cManager.newEngine("SP", "2");
 		e4.setModel("GP35");
@@ -105,8 +105,8 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		e4.setMoves(30);
 		e4.setOwner("AAA");
 		e4.setRfid("RFID 4");
-		Assert.assertEquals("e4 location", Engine.OKAY, e4.setLocation(westford, westfordSiding));
-		Assert.assertEquals("e4 destination", Engine.OKAY, e4.setDestination(boxford, boxfordHood));
+		Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
+		Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
 		
 		Engine e5 = cManager.newEngine("NH", "5");
 		e5.setModel("SW1200");
@@ -114,8 +114,8 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		e5.setMoves(25);
 		e5.setOwner("DAB");
 		e5.setRfid("RFID 1");
-		Assert.assertEquals("e5 location", Engine.OKAY, e5.setLocation(westford, westfordAble));
-		Assert.assertEquals("e5 destination", Engine.OKAY, e5.setDestination(westford, westfordAble));
+		Assert.assertEquals("e5 location", Track.OKAY, e5.setLocation(westford, westfordAble));
+		Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
 		
 		Assert.assertEquals("number of Engines", "5", etf.numEngines.getText());
 	

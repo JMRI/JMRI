@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -473,20 +473,20 @@ public class OperationsCarsTest extends TestCase {
         ct.addName("Boxcar");
         
         // place cars on tracks
-        Assert.assertEquals("place c1", Car.OKAY, c1.setLocation(l1, l1t1));
-        Assert.assertEquals("place c2", Car.OKAY, c2.setLocation(l1, l1t2));
-        Assert.assertEquals("place c3", Car.OKAY, c3.setLocation(l2, l2t1));
-        Assert.assertEquals("place c4", Car.OKAY, c4.setLocation(l2, l2t2));
-        Assert.assertEquals("place c5", Car.OKAY, c5.setLocation(l3, l3t1));
-        Assert.assertEquals("place c6", Car.OKAY, c6.setLocation(l3, l3t2));
+        Assert.assertEquals("place c1", Track.OKAY, c1.setLocation(l1, l1t1));
+        Assert.assertEquals("place c2", Track.OKAY, c2.setLocation(l1, l1t2));
+        Assert.assertEquals("place c3", Track.OKAY, c3.setLocation(l2, l2t1));
+        Assert.assertEquals("place c4", Track.OKAY, c4.setLocation(l2, l2t2));
+        Assert.assertEquals("place c5", Track.OKAY, c5.setLocation(l3, l3t1));
+        Assert.assertEquals("place c6", Track.OKAY, c6.setLocation(l3, l3t2));
 
         // set car destinations
-        Assert.assertEquals("destination c1", Car.OKAY, c1.setDestination(l3, l3t1));
-        Assert.assertEquals("destination c2", Car.OKAY, c2.setDestination(l3, l3t2));
-        Assert.assertEquals("destination c3", Car.OKAY, c3.setDestination(l2, l2t2));
-        Assert.assertEquals("destination c4", Car.OKAY, c4.setDestination(l2, l2t1));
-        Assert.assertEquals("destination c5", Car.OKAY, c5.setDestination(l1, l1t1));
-        Assert.assertEquals("destination c6", Car.OKAY, c6.setDestination(l1, l1t2));
+        Assert.assertEquals("destination c1", Track.OKAY, c1.setDestination(l3, l3t1));
+        Assert.assertEquals("destination c2", Track.OKAY, c2.setDestination(l3, l3t2));
+        Assert.assertEquals("destination c3", Track.OKAY, c3.setDestination(l2, l2t2));
+        Assert.assertEquals("destination c4", Track.OKAY, c4.setDestination(l2, l2t1));
+        Assert.assertEquals("destination c5", Track.OKAY, c5.setDestination(l1, l1t1));
+        Assert.assertEquals("destination c6", Track.OKAY, c6.setDestination(l1, l1t2));
 
         // set car weight so there won't be an exception when setting car in a kernel
         c1.setWeight("20");

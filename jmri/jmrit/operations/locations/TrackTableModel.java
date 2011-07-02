@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -32,18 +32,21 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 	protected List<String> tracksList = new ArrayList<String>();
 	protected int _sort = SORTBYNAME;
 	protected String _trackType = "";
+	protected boolean _showPoolColumn = false;
+	protected JTable _table;
 	
 	// Defines the columns
-    protected static final int IDCOLUMN   = 0;
-    protected static final int NAMECOLUMN   = 1;
+    protected static final int IDCOLUMN = 0;
+    protected static final int NAMECOLUMN = 1;
     protected static final int LENGTHCOLUMN = 2;
     protected static final int USEDLENGTHCOLUMN = 3;
     protected static final int RESERVEDCOLUMN = 4;  
-    protected static final int CARS = 5;
-    protected static final int ENGINES = 6;
-    protected static final int PICKUPS = 7;
-    protected static final int DROPS = 8;
-    protected static final int EDITCOLUMN = 9;
+    protected static final int CARSCOLUMN = 5;
+    protected static final int ENGINESCOLUMN = 6;
+    protected static final int PICKUPSCOLUMN = 7;
+    protected static final int DROPSCOLUMN = 8;
+    protected static final int EDITPOOLCOLUMN = 9;
+    protected static final int EDITCOLUMN = 10;
     
     protected static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -67,43 +70,63 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     	// and add them back in
     	for (int i = 0; i < tracksList.size(); i++){
     		//log.debug("tracks ids: " + tracksList.get(i));
-    		_location.getTrackById(tracksList.get(i))
-    		.addPropertyChangeListener(this);
+    		_location.getTrackById(tracksList.get(i)).addPropertyChangeListener(this);
     	}
+		if (_location.hasPools() && !_showPoolColumn){
+			_showPoolColumn = true;
+			fireTableStructureChanged();
+			initTable();
+		}
     }
     
 	protected void initTable(JTable table, Location location, String trackType) {
+		_table = table;
 		_location = location;
 		synchronized (this){
 			_trackType = trackType;
 		}
 		if (_location != null)
-			_location.addPropertyChangeListener(this);
-		// Install the button handlers
-		TableColumnModel tcm = table.getColumnModel();
-		ButtonRenderer buttonRenderer = new ButtonRenderer();
-		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
-		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
-		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
-		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(RESERVEDCOLUMN).setPreferredWidth(65);
-		table.getColumnModel().getColumn(ENGINES).setPreferredWidth(60);
-		table.getColumnModel().getColumn(CARS).setPreferredWidth(60);
-		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(60);
-		table.getColumnModel().getColumn(DROPS).setPreferredWidth(60);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
+			_location.addPropertyChangeListener(this);		
+		initTable();
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         updateList();
 	}
+	
+	private void initTable() {
+		// Install the button handlers
+		TableColumnModel tcm = _table.getColumnModel();
+		ButtonRenderer buttonRenderer = new ButtonRenderer();
+		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
+
+		// set column preferred widths
+		tcm.getColumn(IDCOLUMN).setPreferredWidth(40);
+		tcm.getColumn(NAMECOLUMN).setPreferredWidth(200);
+		tcm.getColumn(LENGTHCOLUMN).setPreferredWidth(50);
+		tcm.getColumn(USEDLENGTHCOLUMN).setPreferredWidth(50);
+		tcm.getColumn(RESERVEDCOLUMN).setPreferredWidth(65);
+		tcm.getColumn(ENGINESCOLUMN).setPreferredWidth(60);
+		tcm.getColumn(CARSCOLUMN).setPreferredWidth(60);
+		tcm.getColumn(PICKUPSCOLUMN).setPreferredWidth(60);
+		tcm.getColumn(DROPSCOLUMN).setPreferredWidth(60);
+		tcm.getColumn(EDITPOOLCOLUMN).setPreferredWidth(70);
+		if (_showPoolColumn){
+			tcm.getColumn(EDITCOLUMN).setPreferredWidth(70);
+			tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
+			tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
+		} else {
+			tcm.getColumn(EDITPOOLCOLUMN).setCellRenderer(buttonRenderer);
+			tcm.getColumn(EDITPOOLCOLUMN).setCellEditor(buttonEditor);
+		}
+	}
     
     public int getRowCount() { return tracksList.size(); }
 
-    public int getColumnCount( ){ return HIGHESTCOLUMN;}
+    public int getColumnCount(){ 
+    	if (_showPoolColumn)
+    		return HIGHESTCOLUMN;
+    	return HIGHESTCOLUMN-1;	// show one less column
+    }
 
     public String getColumnName(int col) {
         switch (col) {
@@ -112,10 +135,14 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case LENGTHCOLUMN: return rb.getString("Length");
         case USEDLENGTHCOLUMN: return rb.getString("Used");
         case RESERVEDCOLUMN: return rb.getString("Reserved");
-        case ENGINES: return rb.getString("Engines");
-        case CARS: return rb.getString("Cars");
-        case PICKUPS: return rb.getString("Pickup");
-        case DROPS: return rb.getString("Drop");
+        case ENGINESCOLUMN: return rb.getString("Engines");
+        case CARSCOLUMN: return rb.getString("Cars");
+        case PICKUPSCOLUMN: return rb.getString("Pickup");
+        case DROPSCOLUMN: return rb.getString("Drop");
+        case EDITPOOLCOLUMN: 
+        	if(_showPoolColumn) 
+        		return rb.getString("Pool");
+        	return "";
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -128,10 +155,14 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case LENGTHCOLUMN: return String.class;
         case USEDLENGTHCOLUMN: return String.class;
         case RESERVEDCOLUMN: return String.class;
-        case ENGINES: return String.class;
-        case CARS: return String.class;
-        case PICKUPS: return String.class;
-        case DROPS: return String.class;
+        case ENGINESCOLUMN: return String.class;
+        case CARSCOLUMN: return String.class;
+        case PICKUPSCOLUMN: return String.class;
+        case DROPSCOLUMN: return String.class;
+        case EDITPOOLCOLUMN: 
+        	if(_showPoolColumn) 
+        		return String.class;
+        	return JButton.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -139,6 +170,10 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
+        case EDITPOOLCOLUMN: 
+        	if(_showPoolColumn) 
+        		return false;
+        	return true;
         case EDITCOLUMN: 
         	return true;
         default: 
@@ -167,10 +202,14 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case LENGTHCOLUMN: return Integer.toString(track.getLength());
         case USEDLENGTHCOLUMN: return Integer.toString(track.getUsedLength());
         case RESERVEDCOLUMN: return Integer.toString(track.getReserved());
-        case ENGINES: return Integer.toString(track.getNumberEngines());
-        case CARS: return Integer.toString(track.getNumberCars());
-        case PICKUPS: return Integer.toString(track.getPickupRS());
-        case DROPS: return Integer.toString(track.getDropRS());
+        case ENGINESCOLUMN: return Integer.toString(track.getNumberEngines());
+        case CARSCOLUMN: return Integer.toString(track.getNumberCars());
+        case PICKUPSCOLUMN: return Integer.toString(track.getPickupRS());
+        case DROPSCOLUMN: return Integer.toString(track.getDropRS());
+        case EDITPOOLCOLUMN: 
+        	if(_showPoolColumn) 
+        		return track.getPoolName();
+        	return rb.getString("Edit");
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
@@ -178,6 +217,11 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
+        case EDITPOOLCOLUMN:
+        	if(_showPoolColumn) 
+        		break;
+        	editTrack(row);
+        	break;
         case EDITCOLUMN: editTrack(row);
         	break;
         default:

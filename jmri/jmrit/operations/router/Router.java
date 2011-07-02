@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class Router extends TrainCommon {
@@ -70,7 +70,7 @@ public class Router extends TrainCommon {
 	public boolean setDestination(Car car, Train train, PrintWriter buildReport){
 		if (car.getTrack() == null || car.getNextDestination() == null)
 			return false;
-		_status = Car.OKAY;
+		_status = Track.OKAY;
 		_train = train;
 		_buildReport = buildReport;
 		// Only keep train if car is departing staging
@@ -98,7 +98,7 @@ public class Router extends TrainCommon {
 		Car clone = clone(car);
 		//Note the following test doesn't check for car length which is what we want!
 		_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
-		if (!_status.equals(Car.OKAY)){
+		if (!_status.equals(Track.OKAY)){
 			//log.info("Next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterNextDestFailed"),new Object[]{car.getNextDestinationName(),car.getNextDestTrackName(),car.toString(),_status}));
 			return false;
@@ -120,13 +120,13 @@ public class Router extends TrainCommon {
 				return true;	// car can be routed, but not by this train!
 			}
 			_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
-			if (!_status.equals(Car.OKAY)){
+			if (!_status.equals(Track.OKAY)){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterCanNotDeliverCar"),new Object[]{car.toString(), clone.getDestinationName(), clone.getDestinationTrackName(), _status}));
 				// check to see if an alternative track was specified
-				if (_status.contains(Car.LENGTH) && car.getLocation() != clone.getDestination() 
+				if (_status.contains(Track.LENGTH) && car.getLocation() != clone.getDestination() 
 						&& clone.getDestinationTrack() != null && clone.getDestinationTrack().getAlternativeTrack() != null){
 					String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack().getAlternativeTrack());
-					if (status.equals(Car.OKAY)){
+					if (status.equals(Track.OKAY)){
 						if (_train == null || (_train != null && _train.servicesCar(car))){
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToAlternative"),new Object[]{car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
 							return true;
@@ -135,7 +135,7 @@ public class Router extends TrainCommon {
 					}
 				}
 				// check to see if siding was full, if so, forward to yard if possible
-				if (Setup.isForwardToYardEnabled() && _status.contains(Car.LENGTH) && car.getLocation() != clone.getDestination()){
+				if (Setup.isForwardToYardEnabled() && _status.contains(Track.LENGTH) && car.getLocation() != clone.getDestination()){
 					//log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSidingFull"),new Object[]{clone.getDestinationName()}));
 					Location dest = clone.getDestination();
@@ -144,7 +144,7 @@ public class Router extends TrainCommon {
 					for (int i=0; i<yards.size(); i++){
 						Track track = dest.getTrackById(yards.get(i));
 						String status = car.setDestination(dest, track);
-						if (status.equals(Car.OKAY)){
+						if (status.equals(Track.OKAY)){
 							if (_train != null && !_train.servicesCar(car)){
 								log.debug("Train ("+_train.getName()+") can not deliver car ("+car.toString()+") to yard ("+track.getName()+")");
 								continue;
@@ -262,7 +262,7 @@ public class Router extends TrainCommon {
 			List<String> tracks = location.getTracksByNameList(trackType);	// restrict to yards, interchanges, or staging
 			for (int j=0; j<tracks.size(); j++){
 				Track track = location.getTrackById(tracks.get(j));
-				if (ts.testLocation(location, track).equals(Car.OKAY)){
+				if (ts.testLocation(location, track).equals(Track.OKAY)){
 					if (debugFlag)
 						log.debug("Found "+trackType+" track ("+location.getName()+", "+track.getName()+") for car ("+car.toString()+")");
 					// test to see if there's a train that can deliver the car to its final location
@@ -284,7 +284,7 @@ public class Router extends TrainCommon {
 						// Is there a "first" train for this car out of staging?
 						if (_train != null && !_train.servicesCar(ts) && car.getTrack().getLocType().equals(Track.STAGING))
 							firstTrain = null;	// can't use this train
-						if (status.equals(Car.OKAY) && firstTrain != null){
+						if (status.equals(Track.OKAY) && firstTrain != null){
 							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute2ForCar"),new Object[]{car.toString(),car.getLocationName(),ts.getDestinationName(),car.getNextDestinationName()}));
 							// only set car's destination if specific train can service car
 							if (_train != null && !_train.servicesCar(ts)){
@@ -342,7 +342,7 @@ public class Router extends TrainCommon {
 				if ((track.getLocType().equals(Track.INTERCHANGE)
 						|| track.getLocType().equals(Track.YARD) 
 						|| (enable_staging && track.getLocType().equals(Track.STAGING)))
-						&& ts.testLocation(location, track).equals(Car.OKAY)) {
+						&& ts.testLocation(location, track).equals(Track.OKAY)) {
 					if (debugFlag)
 						log.debug("Found "+track.getLocType()+" track ("+location.getName()+", "+track.getName()+") for car ("+car.toString()+")");
 					// test to see if there's a train that can deliver the car to this location
@@ -416,7 +416,7 @@ public class Router extends TrainCommon {
 							return true;
 						}
 						String status = car.setDestination(ts.getLocation(), ts.getTrack());
-						if (status.equals(Car.OKAY)){							
+						if (status.equals(Track.OKAY)){							
 							return true;	// done 3 train routing
 						} else {
 							log.debug("Could not set car ("+car.toString()+") destination ("+ts.getLocation()+", "+ts.getTrack()+") status "+status);
@@ -462,7 +462,7 @@ public class Router extends TrainCommon {
 									track = null;	// don't specify which track in staging is to be used, decide later
 								String status = car.setDestination(fltp.getLocation(), track);
 								log.debug("Found 4 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");					
-								if (status.equals(Car.OKAY)){
+								if (status.equals(Track.OKAY)){
 									//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestinationName());
 									return true;	// done 4 train routing
 								} else {
@@ -522,7 +522,7 @@ public class Router extends TrainCommon {
 											track = null;	// don't specify which track in staging is to be used, decide later
 										String status = car.setDestination(fltp.getLocation(), track);
 										log.debug("Found 5 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");			
-										if (status.equals(Car.OKAY)){
+										if (status.equals(Track.OKAY)){
 											//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp1.getLocation().getName()+"->"+mltp2.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestinationName());
 											return true;	// done 5 train routing
 										} else {

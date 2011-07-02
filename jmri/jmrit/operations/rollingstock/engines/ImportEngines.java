@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class ImportEngines extends Thread {
 	
@@ -311,13 +311,13 @@ public class ImportEngines extends Thread {
 
 					if (l != null && sl != null){
 						String status = engine.setLocation(l,sl);
-						if (!status.equals(Engine.OKAY)){
+						if (!status.equals(Track.OKAY)){
 							log.debug ("Can't set engine's location because of "+ status);
 							JOptionPane.showMessageDialog(null,
 									MessageFormat.format(rb.getString("CanNotSetEngineAtLocation"),new Object[]{(engineRoad+" "+engineNumber),engineModel,engineLocation,engineTrack,status}),
 									rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
-							if (status.equals(Engine.TYPE)){
+							if (status.equals(Track.TYPE)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToAllowService"),new Object[]{engineLocation, engineTrack, (engineRoad+" "+engineNumber), engine.getType()}),
 										rb.getString("ServiceEngineType"),
 										JOptionPane.YES_NO_OPTION);
@@ -329,7 +329,7 @@ public class ImportEngines extends Thread {
 									break;
 								}						
 							}
-							if (status.equals(Engine.LENGTH)){
+							if (status.equals(Track.LENGTH)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantIncreaseLength"),new Object[]{engineTrack}),
 										rb.getString("TrackLength"),
 										JOptionPane.YES_NO_OPTION);
@@ -340,7 +340,7 @@ public class ImportEngines extends Thread {
 									break;
 								}						
 							}
-							if (!status.equals(Engine.OKAY)){
+							if (!status.equals(Track.OKAY)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceCar"),new Object[]{(engineRoad+" "+engineNumber), engineLocation, engineTrack}),
 										rb.getString("OverRide"),
 										JOptionPane.YES_NO_OPTION);

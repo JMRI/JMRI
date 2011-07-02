@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -159,7 +159,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						&& !finalDestTrackBox.getSelectedItem().equals(""))
 					finalDestTrack = (Track)finalDestTrackBox.getSelectedItem();
 				String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
-				if (!status.equals(Car.OKAY)){
+				if (!status.equals(Track.OKAY)){
 					JOptionPane.showMessageDialog(this,
 							MessageFormat.format(rb.getString("rsCanNotFinalMsg"), new Object[]{car.toString(), status}),
 							rb.getString("rsCanNotFinal"),
@@ -180,7 +180,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				if (trackReturnWhenEmptyBox.getSelectedItem() != null 
 						&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")){	
 					String status = car.testDestination((Location) destReturnWhenEmptyBox.getSelectedItem(), (Track)trackReturnWhenEmptyBox.getSelectedItem());
-					if (!status.equals(Car.OKAY)){
+					if (!status.equals(Track.OKAY)){
 						JOptionPane.showMessageDialog(this,
 								MessageFormat.format(rb.getString("rsCanNotRWEMsg"), new Object[]{car.toString(), status}),
 								rb.getString("rsCanNotRWE"),

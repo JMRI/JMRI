@@ -35,7 +35,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -460,7 +460,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						|| rs.getTrack() == null || !rs.getTrack().equals(trackLocationBox.getSelectedItem())){
 					String status = rs.setLocation((Location) locationBox.getSelectedItem(),
 							(Track)trackLocationBox.getSelectedItem());
-					if (!status.equals(RollingStock.OKAY)){
+					if (!status.equals(Track.OKAY)){
 						log.debug ("Can't set rs's location because of "+ status);
 						JOptionPane.showMessageDialog(this,
 								getRb().getString("rsCanNotLocMsg")+ status,
@@ -485,7 +485,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					destTrack = (Track)trackDestinationBox.getSelectedItem();
 				}
 				String status = rs.setDestination((Location) destinationBox.getSelectedItem(), destTrack);
-				if (!status.equals(RollingStock.OKAY)){
+				if (!status.equals(Track.OKAY)){
 					log.debug ("Can't set rs's destination because of "+ status);
 					JOptionPane.showMessageDialog(this,
 							getRb().getString("rsCanNotDestMsg")+ status,

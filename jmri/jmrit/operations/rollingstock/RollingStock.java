@@ -6,11 +6,9 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -21,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -57,18 +55,15 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	
 	public int number = 0;	// used by managers for sort by number
 	
-	public static final String OKAY = rb.getString("okay");			// return status when placing rolling stock at a location
-	public static final String LENGTH = rb.getString("length");
-	public static final String TYPE = rb.getString("type");
-	public static final String ROAD = rb.getString("road");	
-	
-	public static final String ERROR_TRACK = "ERROR wrong track for location";
+	public static final String ERROR_TRACK = "ERROR wrong track for location";	// checks for coding error
 	
 	public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location";  		// property change descriptions
 	public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location";
 	public static final String DESTINATION_CHANGED_PROPERTY = "rolling stock destination";
 	public static final String DESTINATIONTRACK_CHANGED_PROPERTY = "rolling stock track destination";
 	public static final String TRAIN_CHANGED_PROPERTY = "rolling stock train";
+	public static final String LENGTH_CHANGED_PROPERTY = "rolling stock length";
+	public static final String TYPE_CHANGED_PROPERTY = "rolling stock type";
 	
 	public static final int COUPLER = 4;		// draw bar length between rolling stocks
 
@@ -328,7 +323,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		// first determine if rolling stock can be move to the new location
 		if (!force){
 			String status = testLocation(location, track);
-			if (status != OKAY)
+			if (!status.equals(Track.OKAY))
 				return status;
 		}
 		// now update
@@ -372,39 +367,15 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			firePropertyChange(LOCATION_CHANGED_PROPERTY, oldLocation, location);
 			firePropertyChange(TRACK_CHANGED_PROPERTY, oldTrack, track);
 		}
-		return OKAY;
+		return Track.OKAY;
 	}
 	
 	public String testLocation(Location location, Track track){
-		if (location == null && track == null)
-			return OKAY;
-		// first determine if rolling stock can be move to the new location
-		if (location != null && !location.acceptsTypeName(getType())){
-			log.debug("Can't set (" + toString() + ") type (" +getType()+ ") at location ("+ location.getName() + ") wrong type");
-			return TYPE + " ("+getType()+")";
-		}
-		if (location != null && track != null && !track.acceptsTypeName(getType())){
-			log.debug("Can't set (" + toString() + ") type (" +getType()+ ") at location ("+ location.getName() + ", " + track.getName() + ") wrong type");
-			return TYPE + " ("+getType()+")";
-		}
-		if (location != null && track != null && !track.acceptsRoadName(getRoad())){
-			log.debug("Can't set (" + toString() + ") road (" +getRoad()+ ") at location ("+ location.getName() + ", " + track.getName() + ") wrong road");
-			return ROAD+ " ("+getRoad()+")";
-		}
-		// now determine if there's enough space for the rolling stock
-		try{
-			Integer.parseInt(getLength());
-		} catch (Exception e){
-			return LENGTH + " ("+getLength()+")";
-		}
-		if (location != null && track != null && _trackLocation != track &&
-				(track.getUsedLength() + track.getReserved() + Integer.parseInt(getLength()) + COUPLER) > track.getLength()){
-			log.debug("Can't set (" + toString() + ") at location ("+ location.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH + " ("+getLength()+")";	
-		}
+		if (track == null)
+			return Track.OKAY;
 		if (location != null && !location.isTrackAtLocation(track))
 			return ERROR_TRACK;
-		return OKAY;
+		return track.accepts(this);
 	}
 	
 	/**
@@ -429,7 +400,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String setDestination(Location destination, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new destination
 		String status = RsTestDestination(destination, track);
-		if (!force && !status.equals(OKAY)){
+		if (!force && !status.equals(Track.OKAY)){
 			return status;
 		}
 		// now set the rolling stock destination!	
@@ -488,59 +459,20 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * @param track
 	 * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
 	 */
-	public String testDestination(Location destination, Track track) {
+	public String testDestination(Location destination, Track track){
 		return RsTestDestination(destination, track);
 	}
 	
-	private String RsTestDestination(Location destination, Track track) {
-		// first determine if rolling stock can be move to the new destination
+	private String RsTestDestination(Location destination, Track track){
 		if (destination != null && !destination.acceptsTypeName(getType())){
 			log.debug("Can't set (" + toString() + ") type (" +getType()+ ") at destination ("+ destination.getName() + ") wrong type");
-			return TYPE + " ("+getType()+")";
-		}
-		if (destination != null && track != null && !track.acceptsTypeName(getType())){
-			log.debug("Can't set (" + toString() + ") type (" +getType()+ ") at destination ("+ destination.getName() + ", " +track.getName() + ") wrong type");
-			return TYPE + " ("+getType()+")";
-		}
-		if (destination != null && track != null && !track.acceptsRoadName(getRoad())){
-			log.debug("Can't set (" + toString() + ") road (" +getRoad()+ ") at destination ("+ destination.getName() + ", " + track.getName() + ") wrong road");
-			return ROAD + " ("+getRoad()+")";
-		}
-		// does rolling stock already have this destination?
-		if (destination == getDestination() && track == getDestinationTrack())
-			return OKAY;
-		// is rolling stock returning to same track?
-		if (track == getTrack())
-			return OKAY;
-		// now determine if there's enough space for the rolling stock
-		int length = 0;
-		try {
-			length = Integer.parseInt(getLength())+ COUPLER;
-		} catch (Exception e){
-			return LENGTH + " ("+getLength()+")";
-		}
-		// check for car in kernel
-		if (this.getClass().equals(Car.class)){
-			Car car = (Car)this;
-			if (car.getKernel() != null && car.getKernel().isLead(car)){
-				length = car.getKernel().getLength();
-			}
-		}
-		// check for engine in consist
-		if (this.getClass().equals(Engine.class)){
-			Engine eng = (Engine)this;
-			if (eng.getConsist() != null && eng.getConsist().isLead(eng)){
-				length = eng.getConsist().getLength();
-			}
-		}
-		if (destination != null && track != null &&
-				track.getUsedLength() + track.getReserved()+ length > track.getLength()){
-			log.debug("Can't set (" + toString() + ") length ("+length+") at destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH+ " ("+length+")";	
+			return Track.TYPE + " ("+getType()+")";
 		}
 		if (destination != null && !destination.isTrackAtLocation(track))
 			return ERROR_TRACK;
-		return OKAY;
+		if (destination == null || track == null)
+			return Track.OKAY;
+		return track.accepts(this);
 	}
 	
 	public Location getDestination() {
@@ -855,7 +787,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		if ((a = e.getAttribute("secLocationId")) != null && location != null)
 			track = location.getTrackById(a.getValue());
 		String status = setLocation(location, track, true);		// force location
-		if (!status.equals(OKAY) && location!=null && track!=null)
+		if (!status.equals(Track.OKAY) && location!=null && track!=null)
 			log.warn("Could not place ("+getRoad()+" "+getNumber()+") at location ("+location.getName()+") track ("+track.getName()
 					+") because of ("+status+")");
 		Location destination = null;
@@ -865,7 +797,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		if ((a = e.getAttribute("secDestinationId")) != null  && destination != null)
 			trackDestination = destination.getTrackById(a.getValue());
 		status = setDestination(destination, trackDestination, true);	// force destination
-		if (!status.equals(OKAY) && destination!=null && trackDestination!=null)
+		if (!status.equals(Track.OKAY) && destination!=null && trackDestination!=null)
 			log.warn("Forced destination for rolling stock ("+getRoad()+" "+getNumber()+") destination ("+destination.getName()
 					+") track ("+trackDestination.getName()+") because of ("+status+")");
 		if ((a = e.getAttribute("moves")) != null)

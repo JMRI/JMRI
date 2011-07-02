@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a location roster -->
-<!-- $Id: operations-locations.dtd,v 1.18 2011-05-28 15:54:14 dan_boudreau Exp $ -->
+<!-- $Id: operations-locations.dtd,v 1.19 2011-07-02 02:12:06 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -67,6 +67,8 @@
 <!ATTLIST track loadOptions		CDATA #IMPLIED> 
 <!ATTLIST track order			CDATA #IMPLIED> 
 <!ATTLIST track alternative		CDATA #IMPLIED> 
+<!ATTLIST track pool			CDATA #IMPLIED>
+<!ATTLIST track minLength		CDATA #IMPLIED>
 <!ATTLIST track comment			CDATA #IMPLIED>
 
 <!ATTLIST schedule id			CDATA #REQUIRED>      

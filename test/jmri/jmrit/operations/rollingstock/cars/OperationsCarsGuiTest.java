@@ -25,7 +25,7 @@ import java.util.Locale;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -85,8 +85,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c1.setWeightTons("Tons of Weight");
 		c1.setCaboose(true);
 		c1.setComment("Test Car NH 1 Comment");
-		Assert.assertEquals("c1 location", Car.OKAY, c1.setLocation(westford, westfordYard));
-		Assert.assertEquals("c1 destination", Car.OKAY, c1.setDestination(boxford, boxfordJacobson));
+		Assert.assertEquals("c1 location", Track.OKAY, c1.setLocation(westford, westfordYard));
+		Assert.assertEquals("c1 destination", Track.OKAY, c1.setDestination(boxford, boxfordJacobson));
 
 		Car c2 = cManager.newCar("UP", "2");
 		c2.setBuilt("2004");
@@ -107,8 +107,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c3.setOwner("AB");
 		c3.setRfid("RFID 5");
 		c3.setType("Gon");
-		Assert.assertEquals("c3 location", Car.OKAY, c3.setLocation(boxford, boxfordHood));
-		Assert.assertEquals("c3 destination", Car.OKAY, c3.setDestination(boxford, boxfordYard));
+		Assert.assertEquals("c3 location", Track.OKAY, c3.setLocation(boxford, boxfordHood));
+		Assert.assertEquals("c3 destination", Track.OKAY, c3.setDestination(boxford, boxfordYard));
 		
 		Car c4 = cManager.newCar("SP", "2");
 		c4.setBuilt("1990");
@@ -119,8 +119,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c4.setOwner("AAA");
 		c4.setRfid("RFID 4");
 		c4.setType("Tank Food");
-		Assert.assertEquals("c4 location", Car.OKAY, c4.setLocation(westford, westfordSiding));
-		Assert.assertEquals("c4 destination", Car.OKAY, c4.setDestination(boxford, boxfordHood));
+		Assert.assertEquals("c4 location", Track.OKAY, c4.setLocation(westford, westfordSiding));
+		Assert.assertEquals("c4 destination", Track.OKAY, c4.setDestination(boxford, boxfordHood));
 		
 		Car c5 = cManager.newCar("NH", "5");
 		c5.setBuilt("1956");
@@ -131,8 +131,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c5.setOwner("DAB");
 		c5.setRfid("RFID 1");
 		c5.setType("Coil Car");
-		Assert.assertEquals("c5 location", Car.OKAY, c5.setLocation(westford, westfordAble));
-		Assert.assertEquals("c5 destination", Car.OKAY, c5.setDestination(westford, westfordAble));
+		Assert.assertEquals("c5 location", Track.OKAY, c5.setLocation(westford, westfordAble));
+		Assert.assertEquals("c5 destination", Track.OKAY, c5.setDestination(westford, westfordAble));
 		
 		Assert.assertEquals("number of cars", "5", ctf.numCars.getText());
 	

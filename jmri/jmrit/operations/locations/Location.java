@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 	
@@ -47,6 +47,10 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected Point _trainIconSouth = new Point();
 	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
 	
+	// Pool
+	protected int _idPoolNumber = 0;
+	protected Hashtable<String, Pool> _poolHashTable = new Hashtable<String, Pool>();
+	
 	public static final int NORMAL = 1;		// types of track allowed at this location
 	public static final int STAGING = 2;	// staging only
 	
@@ -70,6 +74,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String SWITCHLIST_CHANGED_PROPERTY = "switchList";
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
 	public static final String STATUS_CHANGED_PROPERTY = "locationStatus";
+	public static final String POOL_LENGTH_CHANGED_PROPERTY = "PoolLengthChanged";
 
 	public Location(String id, String name) {
 		log.debug("New location " + name + " " + id);
@@ -272,12 +277,12 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * Adds rolling stock to a specific location.  
 	 * @param rs
 	 */	
-	public void addRS (RollingStock rs){
+	public void addRS(RollingStock rs){
 		setNumberRS(getNumberRS()+1);
 		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ RollingStock.COUPLER);
 	}
 	
-	public void deleteRS (RollingStock rs){
+	public void deleteRS(RollingStock rs){
 		setNumberRS(getNumberRS()-1);
 		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ RollingStock.COUPLER));
 	}
@@ -342,7 +347,6 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _dropRS;
 	}
 
-
 	public void setComment(String comment) {
 		_comment = comment;
 	}
@@ -401,7 +405,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param type of track
 	 * @return Track
 	 */
-    public Track addTrack (String name, String type){
+    public Track addTrack(String name, String type){
 		Track track = getTrackByName(name, type);
 		if (track == null){
 			_IdNumber++;
@@ -418,7 +422,7 @@ public class Location implements java.beans.PropertyChangeListener {
    /**
      * Remember a NamedBean Object created outside the manager.
  	 */
-    public void register(Track track) {
+    public void register(Track track){
     	Integer old = Integer.valueOf(_trackHashTable.size());
         _trackHashTable.put(track.getId(), track);
         // add to the locations's available track length
@@ -432,17 +436,15 @@ public class Location implements java.beans.PropertyChangeListener {
          // listen for name and state changes to forward
         track.addPropertyChangeListener(this);
     }
-
-	
-    public void deleteTrack (Track track){
+    
+    public void deleteTrack(Track track){
     	if (track != null){
     		track.removePropertyChangeListener(this);
     		// subtract from the locations's available track length
             setLength(getLength() - track.getLength());
-    		String id = track.getId();
     		track.dispose();
     		Integer old = Integer.valueOf(_trackHashTable.size());
-    		_trackHashTable.remove(id);
+    		_trackHashTable.remove(track.getId());
     		firePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
     	}
     }
@@ -591,7 +593,6 @@ public class Location implements java.beans.PropertyChangeListener {
     		track.setMoves(0);
     	}
     }
-	
       
     /**
      * Updates a JComboBox with all of the track locations for
@@ -627,13 +628,76 @@ public class Location implements java.beans.PropertyChangeListener {
 			} else {
 				status = rs.testLocation(this, track);
 			}
-			if (status.equals(RollingStock.OKAY) && (!destination || !track.getLocType().equals(Track.STAGING))){
+			if (status.equals(Track.OKAY) && (!destination || !track.getLocType().equals(Track.STAGING))){
 				box.setSelectedItem(track);
 				log.debug("Available track: "+track.getName()+" for location: "+getName());
 			} else {
 				box.removeItem(track);
 			}
 		}   	
+    }
+    
+    public Pool addPool(String name){
+		Pool pool = getPoolByName(name);
+		if (pool == null){
+			_idPoolNumber++;
+			String id = _id + "p"+ Integer.toString(_idPoolNumber);
+			log.debug("creating new pool ("+name+") id: " + id);
+	   		pool = new Pool(id, name);
+	   		register(pool);
+ 		}
+		return pool;
+    }
+    
+    public void removePool(Pool pool){
+    	if (pool != null){
+    		_poolHashTable.remove(pool.getId());
+    		firePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, Integer.valueOf(_poolHashTable.size()+1), Integer.valueOf(_poolHashTable.size()));
+    	} 	
+    }
+    
+    public Pool getPoolByName(String name) {
+    	Pool pool;
+    	Enumeration<Pool> en =_poolHashTable.elements();
+    	for (int i = 0; i < _poolHashTable.size(); i++){
+    		pool = en.nextElement(); 
+    		if (pool.getName().equals(name))
+    			return pool;
+    	}
+    	return null;
+    }
+    
+    public void register(Pool pool){
+    	Integer old = Integer.valueOf(_poolHashTable.size());
+    	 _poolHashTable.put(pool.getId(), pool);
+         // find last id created
+         String[] getId = pool.getId().split("p");
+         int id = Integer.parseInt(getId[1]);
+         if (id > _idPoolNumber)
+         	_idPoolNumber = id;
+    	firePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_poolHashTable.size()));
+    }
+
+    public void updatePoolComboBox(JComboBox box) {
+    	box.removeAllItems();
+    	box.addItem("");
+    	List<Pool> pools = getPoolsByNameList();
+		for (int i = 0; i < pools.size(); i++){
+			box.addItem(pools.get(i));
+		}
+    }
+    
+    public List<Pool> getPoolsByNameList(){
+    	List<Pool> pools = new ArrayList<Pool>();
+    	Enumeration<Pool> en =_poolHashTable.elements();
+    	for (int i = 0; i < _poolHashTable.size(); i++){
+    		pools.add(en.nextElement());
+    	}
+    	return pools;
+    }
+    
+    public boolean hasPools(){
+    	return _poolHashTable.size()>0;
     }
   	    
     public void dispose(){

@@ -11,7 +11,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class Engine extends RollingStock {
 	
@@ -53,7 +53,7 @@ public class Engine extends RollingStock {
 		String old = getType();
 		engineModels.setModelType(getModel(), type);
 		if (!old.equals(type))
-			firePropertyChange("type", old, type);	
+			firePropertyChange(TYPE_CHANGED_PROPERTY, old, type);	
 	}
 	
 	public String getType(){
@@ -93,7 +93,7 @@ public class Engine extends RollingStock {
 		String old = getLength();
 		engineModels.setModelLength(getModel(), length);
 		if (!old.equals(length))
-			firePropertyChange(LENGTH, old, length);
+			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
 	}
 	
 	public String getLength(){
@@ -113,7 +113,7 @@ public class Engine extends RollingStock {
 		String old = getWeight();
 		engineModels.setModelWeight(getModel(), weight);
 		if (!old.equals(weight))
-			firePropertyChange(LENGTH, old, weight);
+			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, weight);
 	}
 	
 	public String getWeightTons(){

@@ -41,7 +41,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -555,20 +555,20 @@ public class OperationsEnginesTest extends TestCase {
         et.addName("Diesel");
         
         // place engines on tracks
-        Assert.assertEquals("place e1", Engine.OKAY, e1.setLocation(l1, l1t1));
-        Assert.assertEquals("place e2", Engine.OKAY, e2.setLocation(l1, l1t2));
-        Assert.assertEquals("place e3", Engine.OKAY, e3.setLocation(l2, l2t1));
-        Assert.assertEquals("place e4", Engine.OKAY, e4.setLocation(l2, l2t2));
-        Assert.assertEquals("place e5", Engine.OKAY, e5.setLocation(l3, l3t1));
-        Assert.assertEquals("place e6", Engine.OKAY, e6.setLocation(l3, l3t2));
+        Assert.assertEquals("place e1", Track.OKAY, e1.setLocation(l1, l1t1));
+        Assert.assertEquals("place e2", Track.OKAY, e2.setLocation(l1, l1t2));
+        Assert.assertEquals("place e3", Track.OKAY, e3.setLocation(l2, l2t1));
+        Assert.assertEquals("place e4", Track.OKAY, e4.setLocation(l2, l2t2));
+        Assert.assertEquals("place e5", Track.OKAY, e5.setLocation(l3, l3t1));
+        Assert.assertEquals("place e6", Track.OKAY, e6.setLocation(l3, l3t2));
 
         // set engine destinations
-        Assert.assertEquals("destination e1", Engine.OKAY, e1.setDestination(l3, l3t1));
-        Assert.assertEquals("destination e2", Engine.OKAY, e2.setDestination(l3, l3t2));
-        Assert.assertEquals("destination e3", Engine.OKAY, e3.setDestination(l2, l2t2));
-        Assert.assertEquals("destination e4", Engine.OKAY, e4.setDestination(l2, l2t1));
-        Assert.assertEquals("destination e5", Engine.OKAY, e5.setDestination(l1, l1t1));
-        Assert.assertEquals("destination e6", Engine.OKAY, e6.setDestination(l1, l1t2));
+        Assert.assertEquals("destination e1", Track.OKAY, e1.setDestination(l3, l3t1));
+        Assert.assertEquals("destination e2", Track.OKAY, e2.setDestination(l3, l3t2));
+        Assert.assertEquals("destination e3", Track.OKAY, e3.setDestination(l2, l2t2));
+        Assert.assertEquals("destination e4", Track.OKAY, e4.setDestination(l2, l2t1));
+        Assert.assertEquals("destination e5", Track.OKAY, e5.setDestination(l1, l1t1));
+        Assert.assertEquals("destination e6", Track.OKAY, e6.setDestination(l1, l1t2));
 
         e1.setConsist(new Consist("F"));
         e2.setConsist(new Consist("D"));

@@ -40,7 +40,7 @@ import java.util.Locale;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -192,11 +192,11 @@ public class OperationsCarRouterTest extends TestCase {
 		c4.setBuilt("1-86");
 		Assert.assertEquals("Box Car 4 Length", "40", c4.getLength());
 		
-		Assert.assertEquals("place car at BI", Car.OKAY, c3.setLocation(Acton, AS1));
+		Assert.assertEquals("place car at BI", Track.OKAY, c3.setLocation(Acton, AS1));
 		Assert.assertFalse("Try routing no next destination", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
-		Assert.assertEquals("place car at Acton", Car.OKAY, c4.setLocation(Acton, AS1));
+		Assert.assertEquals("place car at Acton", Track.OKAY, c4.setLocation(Acton, AS1));
 		Assert.assertFalse("Try routing no next destination", router.setDestination(c4, null, null));
 		Assert.assertEquals("Check car's destination", "", c4.getDestinationName());
 		
@@ -1133,8 +1133,8 @@ public class OperationsCarRouterTest extends TestCase {
 		DS2.setMoves(50);
 		
 		// place cars
-		Assert.assertEquals("Place car", Car.OKAY, c3.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c4.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c3.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c4.setLocation(Acton, AS1));
 		
 		// c3 (BA 3) is a Boxcar
 		c3.setLoad("Food");
@@ -1477,10 +1477,10 @@ public class OperationsCarRouterTest extends TestCase {
 		c6.setMoves(4);
 		
 		// place cars
-		Assert.assertEquals("Place car", Car.OKAY, c3.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c4.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c5.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c6.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c3.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c4.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c5.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c6.setLocation(Acton, AS1));
 		
 		// note car move count is exactly the same order as schedule
 		// build train
@@ -1721,13 +1721,13 @@ public class OperationsCarRouterTest extends TestCase {
 		c9.setMoves(7);	
 		
 		// place cars
-		Assert.assertEquals("Place car", Car.OKAY, c3.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c4.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c5.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c6.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c7.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c8.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c9.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c3.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c4.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c5.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c6.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c7.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c8.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c9.setLocation(Acton, AS1));
 		
 		// build train
 		Train ActonTrain = tmanager.getTrainByName("Acton Local");
@@ -1877,13 +1877,13 @@ public class OperationsCarRouterTest extends TestCase {
 		c9.setMoves(21);
 		
 		// place cars
-		Assert.assertEquals("Place car", Car.OKAY, c3.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c4.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c5.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c6.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c7.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c8.setLocation(Danbury, DS1));
-		Assert.assertEquals("Place car", Car.OKAY, c9.setLocation(Danbury, DS1));
+		Assert.assertEquals("Place car", Track.OKAY, c3.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c4.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c5.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c6.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c7.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c8.setLocation(Danbury, DS1));
+		Assert.assertEquals("Place car", Track.OKAY, c9.setLocation(Danbury, DS1));
 		
 		// build train
 		Train ActonTrain = tmanager.getTrainByName("Acton Local");
@@ -2301,13 +2301,13 @@ public class OperationsCarRouterTest extends TestCase {
 		AS3.setScheduleMode(Track.MATCH);
 			
 		// place cars
-		Assert.assertEquals("Place car", Car.OKAY, c3.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c4.setLocation(Acton, AS1));
-		Assert.assertEquals("Place car", Car.OKAY, c5.setLocation(Acton, AS2));
-		Assert.assertEquals("Place car", Car.OKAY, c6.setLocation(Acton, AS2));
-		Assert.assertEquals("Place car", Car.OKAY, c7.setLocation(Acton, AS3));
-		Assert.assertEquals("Place car", Car.OKAY, c8.setLocation(Acton, AY));
-		Assert.assertEquals("Place car", Car.OKAY, c9.setLocation(Acton, AI));
+		Assert.assertEquals("Place car", Track.OKAY, c3.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c4.setLocation(Acton, AS1));
+		Assert.assertEquals("Place car", Track.OKAY, c5.setLocation(Acton, AS2));
+		Assert.assertEquals("Place car", Track.OKAY, c6.setLocation(Acton, AS2));
+		Assert.assertEquals("Place car", Track.OKAY, c7.setLocation(Acton, AS3));
+		Assert.assertEquals("Place car", Track.OKAY, c8.setLocation(Acton, AY));
+		Assert.assertEquals("Place car", Track.OKAY, c9.setLocation(Acton, AI));
 		
 		// Build train
 		Train ActonToBedfordTrain = tmanager.getTrainByName("Acton to Bedford");
