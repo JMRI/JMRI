@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -138,7 +138,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     public BlockBossFrame(String frameName) {
 
         // create the frame
-        super(frameName);
+        super(frameName, false, true);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
