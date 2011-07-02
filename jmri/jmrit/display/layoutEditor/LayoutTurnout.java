@@ -77,7 +77,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutTurnout
@@ -1327,7 +1327,7 @@ public class LayoutTurnout
 		}
 		// Initialize if needed
 		if (editLayoutTurnoutFrame == null) {
-            editLayoutTurnoutFrame = new JmriJFrame( rb.getString("EditTurnout") );
+            editLayoutTurnoutFrame = new JmriJFrame( rb.getString("EditTurnout"), false, true );
             editLayoutTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutTurnout", true);
             editLayoutTurnoutFrame.setLocation(50,30);
             Container contentPane = editLayoutTurnoutFrame.getContentPane();        
@@ -1667,7 +1667,9 @@ public class LayoutTurnout
 				blockC = layoutEditor.provideLayoutBlock(blockCName);
 				if (blockC==null) {
 					blockCName = "";
-				}
+				}
+
+
 				// decrement use if block was already counted
 				if ( (blockC!=null) && ( (block==blockC) || (blockB==blockC) ||
 						(blockC==blockD) ) ) blockC.decrementUse();
