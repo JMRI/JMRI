@@ -49,7 +49,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  * GT 28-AUG-2008 Added window menu
  */
 
@@ -134,6 +134,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             if ((reuseFrameSavedSized) &&(!((p.getWindowSize(windowFrameRef).getWidth()==0.0) ||
                 (p.getWindowSize(windowFrameRef).getHeight()==0.0)))){
                 this.setPreferredSize(p.getWindowSize(windowFrameRef));
+                this.setSize(p.getWindowSize(windowFrameRef));
             }
             
             /* We just check to make sure that having set the location
