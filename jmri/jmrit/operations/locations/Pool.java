@@ -7,7 +7,7 @@ import java.util.List;
  * Represents a pool of tracks that share their length.
  * 
  * @author Daniel Boudreau Copyright (C) 2011
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class Pool{
 
@@ -100,7 +100,7 @@ public class Pool{
      * Request track length from one of the other tracks in this pool.
      * @param track the track requesting additional length
      * @param length the amount of track length requested
-     * @return
+     * @return true if successful
      */
     public boolean requestTrackLength(Track track, int length){
     	int additionalLength = track.getUsedLength() + track.getReserved() + length - track.getLength();
