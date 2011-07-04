@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a spur, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.68 $
+ * @version             $Revision: 1.69 $
  */
 public class Track {
 	
@@ -833,22 +833,40 @@ public class Track {
     	} catch (Exception e){
     		return LENGTH + " ("+rs.getLength()+")";
     	}
-		// check for car in kernel
-		if (Car.class.isInstance(rs)){
-			Car car = (Car)rs;
-			if (car.getKernel() != null && car.getKernel().isLead(car)){
-				length = car.getKernel().getLength();
-			}
+    	// check for car in kernel
+    	if (Car.class.isInstance(rs)){
+    		Car car = (Car)rs;
+    		if (car.getKernel() != null && car.getKernel().isLead(car)){
+    			length = 0;
+    			List<Car> cars = car.getKernel().getCars();
+    			for (int i=0; i<cars.size(); i++){
+    				Car c = cars.get(i);
+    				// don't add length for cars already on this track or already going to this track
+    				if (c.getTrack() != null && c.getTrack().equals(this)
+    						|| c.getDestinationTrack() != null && c.getDestinationTrack().equals(this))
+    					continue;
+    				length = length + Integer.parseInt(c.getLength()) + RollingStock.COUPLER;	
+    			}
+    		}
 			if (!acceptsLoadName(car.getLoad())){
 				log.debug("Car  ("+rs.toString()+") load ("+car.getLoad()+") not accepted at location ("+getLocation().getName()+", "+getName()+") wrong load");
 				return LOAD+ " ("+car.getLoad()+")";
 			}
 		}
-		// check for engine in consist
+		// check for loco in consist
 		if (Engine.class.isInstance(rs)){
 			Engine eng = (Engine)rs;
 			if (eng.getConsist() != null && eng.getConsist().isLead(eng)){
-				length = eng.getConsist().getLength();
+    			length = 0;
+    			List<Engine> engines = eng.getConsist().getEngines();
+    			for (int i=0; i<engines.size(); i++){
+    				Engine e = engines.get(i);
+    				// don't add length for locos already on this track or already going to this track
+    				if (e.getTrack() != null && e.getTrack().equals(this)
+    						|| e.getDestinationTrack() != null && e.getDestinationTrack().equals(this))
+    					continue;
+    				length = length + Integer.parseInt(e.getLength()) + RollingStock.COUPLER;	
+    			}
 			}
 		}
     	if (rs.getTrack() != this && rs.getDestinationTrack() != this
