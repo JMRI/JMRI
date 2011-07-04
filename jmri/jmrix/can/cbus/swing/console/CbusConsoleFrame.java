@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -379,6 +379,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             rxPane.add(lastRxDataFields[i]);
         }
         rxPane.add(copyButton);
+//        rxPane.setVisible(false);
 //        getContentPane().add(rxPane);
         southPane.add(rxPane);
         
@@ -415,6 +416,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         }
         sendPane.add(sendButton);
         sendPane.add(dataClearButton);
+        sendPane.setVisible(false);
 //        getContentPane().add(sendPane);
         southPane.add(sendPane);
         
@@ -468,6 +470,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         evPane.add(offButton);
 
         evPane.add(sendEvButton);
+        evPane.setVisible(true);
 //        getContentPane().add(evPane);
         southPane.add(evPane);
 
@@ -887,9 +890,17 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         if (ev == -1) return;
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY*4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         if (onButton.isSelected()) {
-            m.setElement(0, CbusConstants.CBUS_ACON);
+            if (nn > 0) {
+                m.setElement(0, CbusConstants.CBUS_ACON);
+            } else {
+                m.setElement(0, CbusConstants.CBUS_ASON);
+            }
         } else {
-            m.setElement(0, CbusConstants.CBUS_ACOF);
+            if (nn > 0) {
+                m.setElement(0, CbusConstants.CBUS_ACOF);
+            } else {
+                m.setElement(0, CbusConstants.CBUS_ASOF);
+            }
         }
         m.setElement(1, nn>>8);
         m.setElement(2, nn&0xff);
