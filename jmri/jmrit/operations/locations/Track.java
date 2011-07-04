@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a spur, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.67 $
+ * @version             $Revision: 1.68 $
  */
 public class Track {
 	
@@ -834,7 +834,7 @@ public class Track {
     		return LENGTH + " ("+rs.getLength()+")";
     	}
 		// check for car in kernel
-		if (rs.getClass() == Car.class){
+		if (Car.class.isInstance(rs)){
 			Car car = (Car)rs;
 			if (car.getKernel() != null && car.getKernel().isLead(car)){
 				length = car.getKernel().getLength();
@@ -845,7 +845,7 @@ public class Track {
 			}
 		}
 		// check for engine in consist
-		if (rs.getClass() == Engine.class){
+		if (Engine.class.isInstance(rs)){
 			Engine eng = (Engine)rs;
 			if (eng.getConsist() != null && eng.getConsist().isLead(eng)){
 				length = eng.getConsist().getLength();
