@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMessage;
  * Description:		methods to decode CBUS opcodes
  *
  * @author		Andrew Crosland   Copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class CbusOpCodes {
     /**
@@ -118,6 +118,9 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_ACON,"Accessory ON (ACON) NN:,%2, EV:,%2");
         result.put(CbusConstants.CBUS_ACOF,"Accessory OFF (ACOF) NN:,%2, EV:,%2");
         result.put(CbusConstants.CBUS_AREQ,"Accessory Request (AREQ) NN:,%2, EV:,%2");
+
+        result.put(CbusConstants.CBUS_ASON,"Accessory Short ON (ASON) [NN:,%2,] EV:,%2");
+        result.put(CbusConstants.CBUS_ASOF,"Accessory Short OFF (ASOF) [NN:,%2,] EV:,%2");
 
         result.put(CbusConstants.CBUS_EVRD,"Read Event (EVRD) NN:,%2 EV:,%2");
         result.put(CbusConstants.CBUS_EVULN,"Unlearn Event (EVULN) NN:,%2 EV:,%2");

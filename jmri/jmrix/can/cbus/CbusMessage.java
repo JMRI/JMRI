@@ -15,7 +15,7 @@ import jmri.Programmer;
  * can message
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
@@ -93,12 +93,18 @@ public class CbusMessage {
     }
     
      public static String toAddress(CanMessage m) {
-        if (m.getElement(0) == 0x90) {
+        if (m.getElement(0) == CbusConstants.CBUS_ACON) {
             // + form
             return "+n"+(m.getElement(1)*256+m.getElement(2))+"e"+(m.getElement(3)*256+m.getElement(4));
-        } else if (m.getElement(0) == 0x91) {
+        } else if (m.getElement(0) == CbusConstants.CBUS_ACOF) {
             // - form
             return "-n"+(m.getElement(1)*256+m.getElement(2))+"e"+(m.getElement(3)*256+m.getElement(4));
+         } else if (m.getElement(0) == CbusConstants.CBUS_ASON) {
+            // + short form
+            return "+"+(m.getElement(3)*256+m.getElement(4));
+        } else if (m.getElement(0) == CbusConstants.CBUS_ASOF) {
+            // - short form
+            return "-"+(m.getElement(3)*256+m.getElement(4));
         } else {
             // hex form
             return "x"+m.toString().replaceAll(" ","");
@@ -192,12 +198,18 @@ public class CbusMessage {
     }
 
     public static String toAddress(CanReply r) {
-        if (r.getElement(0) == 0x90) {
+        if (r.getElement(0) == CbusConstants.CBUS_ACON) {
             // + form
             return "+n"+(r.getElement(1)*256+r.getElement(2))+"e"+(r.getElement(3)*256+r.getElement(4));
-        } else if (r.getElement(0) == 0x91) {
+        } else if (r.getElement(0) == CbusConstants.CBUS_ACOF) {
             // - form
             return "-n"+(r.getElement(1)*256+r.getElement(2))+"e"+(r.getElement(3)*256+r.getElement(4));
+        } else if(r.getElement(0) == CbusConstants.CBUS_ASON) {
+            // + short form
+            return "+"+(r.getElement(3)*256+r.getElement(4));
+        } else if (r.getElement(0) == CbusConstants.CBUS_ASOF) {
+            // - short form
+            return "-"+(r.getElement(3)*256+r.getElement(4));
         } else {
             // hex form
             return "x"+r.toString().replaceAll(" ","");

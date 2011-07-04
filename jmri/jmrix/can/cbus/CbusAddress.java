@@ -20,10 +20,12 @@ import jmri.jmrix.can.CanMessage;
  * <dt>+/-ddd<dd>ddd is node*100,000 (a.k.a NODEFACTOR) + event
  * <dt>+/-nNNNeEEE<dd>where NNN is a node number and EEE is an event number
  * </dl>
- *
+ * If ddd &lt; 65536 then the CBUS address is taken to represent a short event.
+ * 
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.10 $
+ * @author	Andrew Crosland Copyright (C) 2011
+ * @version     $Revision: 1.11 $
  */
 public class CbusAddress {
 
@@ -69,12 +71,25 @@ public class CbusAddress {
                 aFrame[1] = (node>>8)&0xff;
                 
                  // add command
-                if (aString.substring(0,1).equals("+"))
-                    aFrame[0] = CbusConstants.CBUS_ACON;
-                else if (aString.substring(0,1).equals("-"))
-                    aFrame[0] = CbusConstants.CBUS_ACOF;
-                else // default
-                    aFrame[0] = CbusConstants.CBUS_ACON;
+                if (aString.substring(0,1).equals("+")) {
+                    if (node > 0) {
+                        aFrame[0] = CbusConstants.CBUS_ACON;
+                    } else {
+                        aFrame[0] = CbusConstants.CBUS_ASON;
+                    }
+                }  else if (aString.substring(0, 1).equals("-")) {
+                    if (node > 0) {
+                        aFrame[0] = CbusConstants.CBUS_ACOF;
+                    } else {
+                        aFrame[0] = CbusConstants.CBUS_ASOF;
+                    }
+                }  else {   // default
+                    if (node > 0) {
+                        aFrame[0] = CbusConstants.CBUS_ACON;
+                    } else {
+                        aFrame[0] = CbusConstants.CBUS_ASON;
+                    }
+                }
             } else if (hCode.group(3)!=null) {
                 // hit on hex form
                 String l = hCode.group(3);
