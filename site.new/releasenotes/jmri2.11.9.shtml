@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.9.shtml,v 1.2 2011-07-04 14:27:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.9.shtml,v 1.3 2011-07-05 19:37:30 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -31,7 +31,7 @@
 
 	<p>Date: MMM DD, 2011</p>
 	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 2.11.9 of JMRI/DecoderPro is available for download.
+	<p>Subject: Test version 2.11.9 of JMRI/DecoderPro is available for download.</p>
  
 <br><b>This is a draft release note only; the download links do not yet work</b>
 
@@ -39,20 +39,20 @@
 
 <p>This is a test release.  Please post a note if you encounter any new or old bugs!  
 And please back up your JMRI files before installing this, in case you want to go 
-back to an earlier version.
+back to an earlier version.</p>
 
-<p>This is the nineth in a series of test versions. We expect this series
-to end in a JMRI 2.12 or 3.0 production release in 2011. 
+<p>This is the ninth in a series of test versions. We expect this series
+to end in a JMRI 2.12 or 3.0 production release in 2011.</p> 
 
 <p>Some of the changes involved are quite extensive.
 They may require a certain amount of experience before they are working well.  
-Therefore, this test version should be considered experimental.
+Therefore, this test version should be considered experimental.</p>
 
-<b><p>
+<p><b>
 JMRI is now only available under the 
 <A HREF="/COPYING">GNU General Public License</a>. For more information, please
 see our 
-<a href="/Copyright.html">copyright and licensing page</a>.</p></b>
+<a href="/Copyright.html">copyright and licensing page</a>.</b></p>
 
 <h3>New warnings for this version:</h3>
 
@@ -66,27 +66,29 @@ As a result, previously working Preferences may now show no connections for some
 If this occurs, go to Preferences and setup the Powerline Layout Connections again. 
 Then save the Preferences and restart JMRI.
 
-<p>
-In Development Version 2.11.3 JMRI instituted a more robust and transparent system for handling missing panel icon files. 
-If missing icon files are discovered during the panel loading process 
-this system presents a dialog box that allows the user to either delete the offending reference 
-or use the file browser to find the proper location. 
-Older versions of JMRI didn't always fully remove the references to deleted panel icons. 
-Panels which contain these stray references will present the dialog box during the first panel load. 
-If the panel worked fine before, simply choose the delete option for each "missing" icon presented 
-to remove the stray references. Once the panel has finished loading, save/store the panel file, quit JMRI and then reload. As a precaution, we recommend either making a backup copy of your panel file before diving in or saving the modified file under a different name
+<p>In Development Version 2.11.3 JMRI instituted a more robust and
+transparent system for handling missing panel icon files. If missing
+icon files are discovered during the panel loading process this system
+presents a dialog box that allows the user to either delete the
+offending reference or use the file browser to find the proper location.
+Older versions of JMRI didn't always fully remove the references to
+deleted panel icons. Panels which contain these stray references will
+present the dialog box during the first panel load. If the panel worked
+fine before, simply choose the delete option for each "missing" icon
+presented to remove the stray references. Once the panel has finished
+loading, save/store the panel file, quit JMRI and then reload. As a
+precaution, we recommend either making a backup copy of your panel file
+before diving in or saving the modified file under a different name</p>
 
-<p>
-There have been extensive changes to the throttle code.
-If you have written scripts that use throttles, particularly
-multiple throttles, please check to make sure they still work.
+<p>There have been extensive changes to the throttle code. If you
+have written scripts that use throttles, particularly multiple
+throttles, please check to make sure they still work.</p>
 
-<p>
-The numerical values of "ON" and "OFF" for Lights changed in JMRI 2.11.2, 
-along with some of the other constants in the class.  
-This will have no impact on people just using the program.  
-If you're using scripts with numerical values
-in them, please recode them to use the symbolic values.
+<p>The numerical values of "ON" and "OFF" for Lights changed in JMRI
+2.11.2, along with some of the other constants in the class. This will
+have no impact on people just using the program. If you're using scripts
+with numerical values in them, please recode them to use the symbolic
+values.</p>
 
 <h3>Known problems with this release</h3>
 
@@ -94,20 +96,30 @@ None at the time of this release.
 
 <h3>Download links:</h3>
 
-<p>Please use these links for downloading:
+<p>Please use these links for downloading:</p>
 
-<p>MacOS X:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.dmg/download</a>
+<p>MacOS X: <A
+	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.dmg/download</a></p>
 
-<p>Windows:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.exe/download</a>
+<p>Windows: <A
+	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.exe/download</a></p>
 
-<p>Linux:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.tgz/download</a>
+<p>Linux: <A
+	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.tgz/download</a></p>
 
 <h3>Changes since test release version 2.11.8</h3>
 
 James LeFevre updated the help for TMCC
+
+<P>Dan Boudreau</P>
+
+<P>New operations features and bug fixes:</P>
+<UL>
+	<LI>New feature, the ability to pool a set of tracks to share
+	their lengths. See under Edit Track, Tools-&gt;Pools.</LI>
+	<LI>Changed the track type "siding" to "spur" to better represent a track
+	that serves an industry.</LI>
+</UL>
 
 
 <!--#include virtual="/Footer" -->
