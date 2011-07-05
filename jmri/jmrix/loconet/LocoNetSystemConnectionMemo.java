@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -290,8 +290,12 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             InstanceManager.deregister(sensorManager, jmri.jmrix.loconet.LnSensorManager.class);
         if (reporterManager != null) 
             InstanceManager.deregister(reporterManager, jmri.jmrix.loconet.LnReporterManager.class);
-        if (throttleManager != null) 
-            InstanceManager.deregister(((LnThrottleManager)throttleManager), jmri.jmrix.loconet.LnThrottleManager.class);
+        if (throttleManager != null) {
+            if (throttleManager instanceof LnThrottleManager)
+                InstanceManager.deregister(((LnThrottleManager)throttleManager), jmri.jmrix.loconet.LnThrottleManager.class);
+            else if (throttleManager instanceof jmri.jmrix.debugthrottle.DebugThrottleManager)
+                InstanceManager.deregister(((jmri.jmrix.debugthrottle.DebugThrottleManager)throttleManager), jmri.jmrix.debugthrottle.DebugThrottleManager.class);
+        }
         if (consistManager != null) 
             InstanceManager.deregister(consistManager, jmri.jmrix.loconet.LocoNetConsistManager.class);
         if (clockControl != null) 
