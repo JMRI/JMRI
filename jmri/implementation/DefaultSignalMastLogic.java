@@ -34,7 +34,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -719,6 +719,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             aspect = advancedAspect[0];
             ArrayList<Integer> divergAspects = new ArrayList<Integer>();
             ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
+            ArrayList<Integer> eitherAspects = new ArrayList<Integer>();
 
             if (advancedAspect.length>1) {                
                 float maxSigSpeed = -1;
@@ -727,29 +728,35 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 log.debug("Diverging route? " + divergRoute);
                 boolean divergFlagsAvailable = false;
                     //We split the aspects into two lists, one with divering flag set, the other without.
-                    for(int i = 0; i<advancedAspect.length; i++){
-                        String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
-                        if(div!=null){
-                            if (div.equals("Diverging")){
-                                log.debug("Aspect " + advancedAspect[i] + "added as Diverging Route");
-                                divergAspects.add(i);
-                                divergFlagsAvailable = true;
-                                log.debug("Using Diverging Flag");
-                            } else if (div.equals("Either")) {
-                                log.debug("Aspect " + advancedAspect[i] + "added as Both Diverging and Normal Route");
-                                nonDivergAspects.add(i);
-                                divergAspects.add(i);
-                                divergFlagsAvailable = true;
-                                log.debug("Using Diverging Flag");
-                            } else {
-                                log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
-                                nonDivergAspects.add(i);
-                            }
-                        } else {
+                for(int i = 0; i<advancedAspect.length; i++){
+                    String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
+                    if(div!=null){
+                        if (div.equals("Diverging")){
+                            log.debug("Aspect " + advancedAspect[i] + "added as Diverging Route");
+                            divergAspects.add(i);
+                            divergFlagsAvailable = true;
+                            log.debug("Using Diverging Flag");
+                        } else if (div.equals("Either")) {
+                            log.debug("Aspect " + advancedAspect[i] + "added as Both Diverging and Normal Route");
                             nonDivergAspects.add(i);
+                            divergAspects.add(i);
+                            divergFlagsAvailable = true;
+                            eitherAspects.add(i);
+                            log.debug("Using Diverging Flag");
+                        } else {
                             log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
+                            nonDivergAspects.add(i);
                         }
+                    } else {
+                        nonDivergAspects.add(i);
+                        log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
                     }
+                }
+                if((eitherAspects.equals(divergAspects)) && (divergAspects.size()<nonDivergAspects.size())){
+                    //There are no unique diverging aspects 
+                    log.debug("'Either' aspects equals divergAspects and is less than non-diverging aspects");
+                    divergFlagsAvailable = false;
+                }
                 log.debug("path max speed : " + maxPathSpeed);
                 for (int i = 0; i<advancedAspect.length; i++){
                     String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
@@ -990,7 +997,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             firePropertyChange("turnouts", null, this.destination);
         }
-    
+        
         /**
          * Sets which blocks must be inactive for the signal not to be set at a stop aspect
          * @param blocks
@@ -1692,8 +1699,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 try {
                     ArrayList<LayoutBlock> lblks = InstanceManager.layoutBlockManagerInstance().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST);                    
                     ConnectivityUtil connection;
-                    ArrayList<LayoutTurnout> turnoutlist;//=connection.getTurnoutList(protectingBlock.getBlock(), facingBlock.getBlock(), lblks.get(0).getBlock());
-                    ArrayList<Integer> throwlist;//=connection.getTurnoutSettingList();
+                    ArrayList<LayoutTurnout> turnoutlist;
+                    ArrayList<Integer> throwlist;
 
                     for (int i = 0; i<lblks.size(); i++){
                         if(log.isDebugEnabled())
