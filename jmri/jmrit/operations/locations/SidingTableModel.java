@@ -10,20 +10,20 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of spurs used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
-public class SidingTableModel extends TrackTableModel {
+public class SidingTableModel extends TrackTableModel{
 
-	public SidingTableModel() {
+	public SidingTableModel(){
 		super();
 	}
 
-	public void initTable(JTable table, Location location) {
+	public void initTable(JTable table, Location location){
 		super.initTable(table, location, Track.SIDING);
 	}
 
-	public String getColumnName(int col) {
-		switch (col) {
+	public String getColumnName(int col){
+		switch (col){
 		case NAMECOLUMN: return rb.getString("SidingName");
 		}
 		return super.getColumnName(col);
@@ -43,14 +43,10 @@ public class SidingTableModel extends TrackTableModel {
 	}
 
 	// this table listens for changes to a location and it's spurs
-	public void propertyChange(PropertyChangeEvent e) {
+	public void propertyChange(PropertyChangeEvent e){
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
-			updateList();
-			fireTableDataChanged();
-		}
-
+		super.propertyChange(e);
 		if (e.getSource().getClass().equals(Track.class)){
 			String type = ((Track) e.getSource()).getLocType();
 			if (type.equals(Track.SIDING)){

@@ -12,14 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 /**
  * Table Model for edit of tracks used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.18 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2011
+ * @version   $Revision: 1.19 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -50,7 +51,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     
     protected static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
-    public TrackTableModel() {
+    public TrackTableModel(){
         super();
     }
      
@@ -60,7 +61,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         fireTableDataChanged();
     }
     
-    synchronized void updateList() {
+    synchronized void updateList(){
     	if (_location == null)
     		return;
     	// first, remove listeners from the individual objects
@@ -79,7 +80,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 		}
     }
     
-	protected void initTable(JTable table, Location location, String trackType) {
+	protected void initTable(JTable table, Location location, String trackType){
 		_table = table;
 		_location = location;
 		synchronized (this){
@@ -93,7 +94,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         updateList();
 	}
 	
-	private void initTable() {
+	private void initTable(){
 		// Install the button handlers
 		TableColumnModel tcm = _table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -120,7 +121,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 		}
 	}
     
-    public int getRowCount() { return tracksList.size(); }
+    public int getRowCount(){ return tracksList.size(); }
 
     public int getColumnCount(){ 
     	if (_showPoolColumn)
@@ -128,7 +129,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     	return HIGHESTCOLUMN-1;	// show one less column
     }
 
-    public String getColumnName(int col) {
+    public String getColumnName(int col){
         switch (col) {
         case IDCOLUMN: return rb.getString("Id");
         case NAMECOLUMN: return rb.getString("TrackName");
@@ -148,7 +149,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         }
     }
 
-    public Class<?> getColumnClass(int col) {
+    public Class<?> getColumnClass(int col){
         switch (col) {
         case IDCOLUMN: return String.class;
         case NAMECOLUMN: return String.class;
@@ -168,7 +169,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         }
     }
 
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(int row, int col){
         switch (col) {
         case EDITPOOLCOLUMN: 
         	if(_showPoolColumn) 
@@ -181,7 +182,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         }
     }
 
-    public Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col){
        	// Funky code to put the edit frame in focus after the edit table buttons is used.
     	// The button editor for the table does a repaint of the button cells after the setValueAt code
     	// is called which then returns the focus back onto the table.  We need the edit frame
@@ -215,7 +216,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         }
     }
 
-    public void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col){
         switch (col) {
         case EDITPOOLCOLUMN:
         	if(_showPoolColumn) 
@@ -246,21 +247,29 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     }
 
     // this table listens for changes to a location and it's tracks
-    public void propertyChange(PropertyChangeEvent e) {
-    	if (log.isDebugEnabled()) 
-    		log.debug("Unexpected Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+    public void propertyChange(PropertyChangeEvent e){
+    	if (Control.showProperty && log.isDebugEnabled()) 
+    		log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+    	if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)){
+    		updateList();
+    		fireTableDataChanged();
+    	}
+    	if (e.getSource().getClass().equals(Track.class) 
+    			&& e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY)){
+    		updateList();
+    	}
     }
     
-    protected void removePropertyChangeTracks() {
-    	for (int i = 0; i < tracksList.size(); i++) {
+    protected void removePropertyChangeTracks(){
+    	for (int i = 0; i < tracksList.size(); i++){
     		// if object has been deleted, it's not here; ignore it
-    		Track y = _location.getTrackById(tracksList.get(i));
-    		if (y != null)
-    			y.removePropertyChangeListener(this);
+    		Track t = _location.getTrackById(tracksList.get(i));
+    		if (t != null)
+    			t.removePropertyChangeListener(this);
     	}
     }
 
-    public void dispose() {
+    public void dispose(){
         if (log.isDebugEnabled()) log.debug("dispose");
         removePropertyChangeTracks();
         if (_location != null)
