@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.9.shtml,v 1.5 2011-07-06 18:52:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.10.shtml,v 1.1 2011-07-06 18:52:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
- JMRI: Release Notes for 2.11.9
+ JMRI: Release Notes for 2.11.10
  
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="java model railroad JMRI 2.11.9 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+    <meta name="keywords" content="java model railroad JMRI 2.11.10 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
   <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -26,14 +26,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.11.9 release
+      Release Notes for JMRI 2.11.10 release
       </h2>
 
-	<p>Date: July 6, 2011</p>
+	<p>Date: MMM DD, 2011</p>
 	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 2.11.9 of JMRI/DecoderPro is available for download.</p>
+	<p>Subject: Test version 2.11.10 of JMRI/DecoderPro is available for download.</p>
  
-<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+<br><b>This is a draft release note only; the download links do not yet work</b>
 
 <h3>Notes:</h3>
 
@@ -41,7 +41,7 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.</p>
 
-<p>This is the ninth in a series of test versions. We expect this series
+<p>This is the N+1th in a series of test versions. We expect this series
 to end in a JMRI 2.12 or 3.0 production release in 2011.</p> 
 
 <p>Some of the changes involved are quite extensive.
@@ -99,27 +99,15 @@ None at the time of this release.
 <p>Please use these links for downloading:</p>
 
 <p>MacOS X: <A
-	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.dmg/download</a></p>
+	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.10.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.10.dmg/download</a></p>
 
 <p>Windows: <A
-	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.exe/download</a></p>
+	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.10.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.10.exe/download</a></p>
 
 <p>Linux: <A
-	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.9.tgz/download</a></p>
+	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.10.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.10.tgz/download</a></p>
 
-<h3>Changes since test release version 2.11.8</h3>
-
-James LeFevre updated the help for TMCC
-
-<P>Dan Boudreau</P>
-
-<P>New operations features and bug fixes:</P>
-<UL>
-	<LI>New feature, the ability to pool a set of tracks to share
-	their lengths. See under Edit Track, Tools-&gt;Pools.</LI>
-	<LI>Changed the track type "siding" to "spur" to better represent a track
-	that serves an industry.</LI>
-</UL>
+<h3>Changes since test release version 2.11.9</h3>
 
 
 <!--#include virtual="/Footer" -->
