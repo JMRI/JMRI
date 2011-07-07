@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.6 2011-07-07 19:15:40 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.7 2011-07-07 19:19:05 crosland Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -465,6 +465,28 @@ Its been tested by a couple of Zimo sound users, and we found a bug in the Zimo 
 <li>provided a new decoder definition for the CML Electronics DAC 20 decoder.
 </ul>
 
+
+<p>
+Andrew Crosland
+<ul>
+<li>Improved the speed averaging for the Bachrus speedometer.
+<li>Improved the Bachrus speedometer readout to work more closely with the hardware, 
+and to reject measurements that appear to suffer from jitter.
+<li>Updated the Bachrus speedometer to add dial type speed display, in both metric
+and English units, and to integrate with DCC system to capture loco speed profile.
+<li>Fixed conversion of metric/english units and added column headings to the 
+Bachrus Speedometer exported .csv file.
+<li>Added help pages for the Bachrus speedometer.
+<li>Updated the SPROG support to make repeated ops mode CV writes appear consecutively 
+rather than interleaved. Problem reported on developers list by Galen Seitz 22 July 2010
+<li>Improved the SPROG throttle to better handle fractional speeds.
+<li>Added support for SPROG 3.
+<li>Updated the MERG CBUS command station (CANCMD) support to respond to track off 
+message as well as emergency stop. Also made some internal changes.
+<li>Changed the defaults for the CBUS console to decimal, show events.
+<li>Added support for CBUS short events.
+</ul>
+
 <p>
 Team Digital 
 <ul>
@@ -725,8 +747,6 @@ above here!</P>
 
 <h5>2.11.1</h5>
 
-Andrew Crosland improved the speed averaging for the Bachrus speedometer.
-
 <p>
 Kevin Dickerson updated the auto width justification of a memory label in LayoutEditor, around the x position, 
 ie the text will centre around position X, or be right justified to the value of X.
@@ -738,28 +758,14 @@ Kevin Dickerson improved the preferences:
     However if there are more than 4 connections, the 5th and above connections do not have a jmrixconfigpane instance created and 
     do not automatically get listed in the preference window.
 
-<p>
-Andrew Crosland improved the Bachrus speedometer readout to work more closely with the hardware, and to reject measurements that appear to suffer from jitter.
 
 <p>
 Pete Cressman added a copy popup to the Control Panel Editor.
 
 <p>
-Andrew Crosland updated the SPROG support to make repeated ops mode CV writes appear consecutively rather than interleaved.
-Problem reported on developers list by Galen Seitz 22 July 2010
-
-<p>
-Andrew Crosland updated the Bachrus speedometer to add dial type speed display, in both metric and English units,
-and to
-integrate with DCC system to capture loco speed profile. You can now export a speed curve to a .csv file.
-
-<p>
 Pete Cressman improved how icons are found in the computer's file system.
 
 <p>
-
-<p>
-Andrew Crosland added help pages for the Bachrus speedometer.
 
 <p>
 Simon Ginsburg made a huge update to the JMRI translations into other languages.
@@ -769,10 +775,6 @@ Ken Cameron fixed a problem where a variable-intensity Light would not step all 
 
 <p>
 Simon Ginsburg added translation tool scripts.
-
-
-<p>
-Andrew Crosland improved the SPROG throttle to better handle fractional speeds.
 
 <p>
 Pete Cressman fixed a problem selecting groups on panels
@@ -967,10 +969,6 @@ in the program, which rewrites the roster file)
 If you'd like to get links to these in the local home page, remove the "index.html" file
 in your JMRI preferences directory. JMRI will automatically replace it with an updated
 one when it next starts.
-<p>
-Andrew Crosland updated the MERG CBUS support to 
-respond to track off message as well as emergency stop.
-Also made some internal changes.
 
 <p>
 Pete Cressman made numerous small changes to Logix and panel support.
@@ -1046,12 +1044,6 @@ path route, occupancy or error condition by color.</li>
 <li>The Item Palette user interface has all tab items drag from a "Drag Panel" icon.  Dragging from a table
 row places a text label in the panel.</li>
 </ul>
-
-<p>
-Andrew Crosland added support for SPROG 3.
-
-<p>
-Andrew Crosland changed the defaults for the CBUS console to decimal, show events.
 
 <p>
 Ken Cameron made it possible to select a default power manager when using multiple connections.
