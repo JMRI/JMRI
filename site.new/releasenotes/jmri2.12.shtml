@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.5 2011-07-07 18:35:23 pbender Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.6 2011-07-07 19:15:40 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -395,6 +395,16 @@ Leo Bicknell
 	their lengths. See under Edit Track, Tools-&gt;Pools.</LI>
 </ul>
 
+<P>Dan Boudreau made the following general enhancements:
+<ul>
+<LI>Users can now adjust font size.  See Edit Preferences, Display GUI.</LI>
+<LI>Fixed the NCE consist editor.</LI>
+<LI>Worked with Ken Cameron to allow multiple NCE connections.</LI>
+<LI>Worked with Jeff Rowe to fix a problem with timeouts on the serial interface.  Problem
+was found using a Mac Intel Mini connected to a NCE system.</LI>
+
+</ul>
+
 <p>
 Chris Bradshaw provided a decoder definition for the TCS Z2 and DP2x decoders.
 
@@ -707,33 +717,6 @@ startup splash screen gives you more information when you disable at startup.
     <li>Newly opened windows will now cascade down the screen rather than stacking up on top of each other. (KD)</li>
 </ul>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <h3>Test Version Release Notes</h3>
 <p>
 The following is just the concatenation of the individual
@@ -794,26 +777,6 @@ Andrew Crosland improved the SPROG throttle to better handle fractional speeds.
 <p>
 Pete Cressman fixed a problem selecting groups on panels
 
-
-<p>Dan Boudreau made many enhancements to operations.
-<ul>
-	<li>The operations program now supports car routing. The program
-	will now use up to 5 trains to move a car from one location to another.
-	Routing through staging tracks is disabled by default.
-	<li>A new feature, "Return When Empty" is now
-	available. When a car's load changes to empty, the car can optionally
-	return to a location or location/track.
-	<li>UK support been improved.
-	<li>Improved operations staging warning messages.
-	<li>User can now specify a pickup or drop comment for a car based
-	on the car's load.
-	<li>Users can now mark a car as misplaced. When a car is marked
-	misplaced, the program will not attempt to move the car. Also a list of
-	misplaced cars is now appended to manifests and switch lists.
-	<li>Schedules can now delay a car's pickup from a siding.
-	<li>A new feature, car loads can now have a low or high
-	priority. High priority loads are serviced before low priority loads.
-</ul>
 
 <p>
 Lionel Jeanson made multiple improvements to throttles:
@@ -878,9 +841,7 @@ Ken Cameron fixed a problem with RobotThrottle debugged by Jay Janzen.
 <p>
 Ken Cameron worked on X10 and Insteon light support.
 
-<p>
-Jeff Rowe and Dan Boudreau fixed a problem with timeouts on the serial interface.  Problem
-was found using a Mac Intel Mini connected to a NCE system.
+
 
 <p>
 Pete Cressman change the editor's drag behavior from auto expand left &amp; 
@@ -897,39 +858,6 @@ Ken Cameron changes the X10 support for
 dim to use extended command which is a single direct command. 
 May not work with older dim modules. 
 Also may cause cp290 interface issues, not tested yet on cp290.
-
-
-
-<p>
-Dan Boudreau fixed several problems and added some new features to operations:
-<ul>
-<li>Fixed a build problem when a staging track didn't have an engine, and the staging track name was the same as another in a different location.
-<li>Fixed two minor bugs, lead car in kernel wasn't always saved correctly, cars in a kernel didn't always have a proper destination and track.
-<li>Fixed a problem with cabooses going to wrong track in staging when there wasn't an engine assigned to the train.
-<li>New feature, "Timetable" under Trains->Tools.  Allows you to quickly set which trains will run on any given day of the week.
-<li>New tool "Routes->Tools->Set Train Icons Coordinates", you can now visually update train icon coordinates for all locations.
-<li>New tool "Route->Tools->Set Train Icons Coordinates for this Route", you can now visually update train icon coordinates for a route.
-<li>New route feature. User can now specify additional wait time in a route.  This allows you to adjust a train's manifest arrival times to your liking.
-<li>New route feature. You can now set a departure time anywhere in a route.  Nice feature for passenger trains!
-<li>New route feature. You can now add an optional comment to each stop in a route.  Comments will show up in your manifests.
-<li>User can now decide to print location comments on the train's manifests.  See Trains-&gt;Tools-&gt;Print Options.
-<li>New build configurations, "Settings->Tools->Options".  You can now allow local moves between sidings, yards, and interchanges.
-<li>You can now configure if staging tracks are restrictive.  Default is restrictive.  Option is under Settings->Tools->Options.
-<li>New operations panel feature, you can now move train anywhere in the route via the train icon popup menu. Select Route in the popup menu, then the next location desired.
-<li>When using the car and engine set windows, the selection of auto checkboxes is now remembered for the session.
-<li>Improved the way the code handles switching from descriptive to AAR car types.
-<li>You can now use a text editor to preview a train's build report.  Unfortunately, this feature requires java 1.6. and is currently disabled for general release.
-<li>User can now customize the order in which engine and car attributes are printed on manifests and switch lists.
-<li>A train's total weight calculation is now based on whether the cars are loaded or empty.  
-<li>Users can now define a car as being a passenger car.   A passenger car's weight doesn't change with load.  Passenger cars are placed towards the rear of a train.
-<li>Add some additional fonts for operations.  
-<li>Users can now modify and save column widths for the Cars and Engines tables.
-<li>Scheduling has been improved, now when a track can not accept a car because there's no room, the program will hold the car at its current location until there's space available.
-<li>New tools to print trains and locations by car types.</li>
-<li>Allow passenger cars to return to their starting location.
-<li>You can now change a track's type (Siding, Yard or Interchange).  Use the track "Tools->ChangeTrackType".</li>
-<li>You can now specify the year you're modeling.  To the year that you're modeling, use the Settings window.
-</ul>
 
 <p>
 Pete Cressman changed icon selection in the editor so it's the top one that's selected.
@@ -1060,49 +988,6 @@ Matt Harris improved the audio implementation, particularly for Mac OS X.
 <h5>2.11.3</h5>
 
 <p>
-New operations features and bug fixes:
-<ul>
-<li>Users can now modify the train timetable.
-<li>Change switch list valid date to 24 hour clock
-<li>Code now checks the train's direction when determining a track for engines and cabooses.
-<li>Added "Modify Location by Car Type" tool to the location window.
-<li>Fixed operations bug introduced in 2.11.2.  When parsing a location or track name, if a name ends with "-x" the -x should be dropped if x is a number. 
-<li>Use the route departure time if set.
-<li>Allow user to select default printer for switch lists.
-<li>Add to train tool menu print and preview build report.
-<li>Rolling stock move count improved.
-<li>Allow user to change departure comment to loads and empties.
-<li>Users can now control which loads a track can service.
-<li>New tabbed manifest and switch lists.
-<li>Minor enhancement to check the car's load when placing car at a location.
-<li>Improve how operations moves cars when a route services a location more than once.
-<li>Improved car routing when car has a custom load.
-<li>All car loads in a kernel are now updated by siding's schedule.
-<li>User can now change all of the loads in a kernel when editing a car's load.
-<li>Add GUI for selecting tabbed manifests
-<li>Update "Show Car Types Serviced" Tool for train, now shows load status for train and track.
-<li>Fix bug when car has destination and train terminates into staging.
-<li>Fixed operations problem when two or more consecutive schedules were used to route cars.
-<li>Minor improvement to manifests when using colors.
-<li>Fix minor bug when restarting program: A track with a schedule would move to the next items during load when cars had that destination track.
-<li>Operations enhancement, in the Trains window, user can select "Show All" or "Show only build trains".
-<li>Operations enhancement, now the user can sort trains by status.
-<li>The program modifies all cars in kernel when using custom loads from staging.
-<li>Users can now preview or print out the car loads for the various car types.  This feature can be found in the Edit Car Loads->&gt;Tools
-<li>Users can now control which staging track a train will use.
-<li>Provided a new operations sample script to deselect the train build button when a train terminates: OperationsDeselectBuild.py 
-<li>Users can now run scripts after operation files have been loaded, and users can run scripts when the Trains window is closed. 
-<li>The program now checks car and engine length field during file imports.
-<li>Users can now select where to place the backup operations files.  See Settings / Tools / Backups.
-<li>The program now routes cars from staging with a custom load to a siding with a schedule demanding that car type and load.
-<li>Fixed trains terminate button, it should have terminated all trains that have been printed.
-<li>When printing car locations you can now optionally have a space or page break after each set of locations.</li>
-<li>New manifest print option, you can now show destination and track when picking up a car.</li>
-<li>Schedules can now operate in two modes, sequential or match.  Use match mode when you don't care about car order.</li>
-<li>New optional train requirements, you can now have two locomotive changes in the train's route, or request helper service.</li>
-</ul>
-
-<p>
 Pete Cressman added support for invisible icons on panels.  The file "Invisible.gif" in the program icon directory can be selected 
 as a dimensionless icon.  This can be used when sensors are stacked amd allows "peeking through" a state of the top sensor
 to view the state of the sensor underneath.  For example. combining two sensors to depict a 3 state panel jewel.
@@ -1117,16 +1002,11 @@ to the web throttles application, including lockable buttons.
 Dan Boudreau and Ken Cameron updated the NCE support to
 allow more than one NCE connection.
 
-<p>
-Dan Boudreau fixed a bug with configuring multiple port options.
 
 <p>
 Ken Cameron updated the main window to 
 show connection name for each line. 
 Nice confirmation for multiple connections.
-
-<p>
-Dan Boudreau added a warning when trying to load an icon with a bad url
 
 <p>
 Matt Harris fixed a problem with the System Console configuration
@@ -1267,50 +1147,6 @@ Steve Todd made multiple updates to the JMRI mini webserver:
 <h5>2.11.4</h5>
 
 <p>
-<P>Dan Boudreau:
-<ul>
-<LI>Users can now adjust font size.  See Edit Preferences, Display GUI.</LI>
-</ul>
-
-New operations features and bug fixes:
-<ul>
-	<li>Cars with a final destination will no longer wander if the
-	destination track doesn't have space for the car.</li>
-	<li>The edit schedule destination track menu now shows only valid
-	tracks. Staging tracks are no longer shown in the edit schedule window.</li>
-	<li>The program will now check the entire schedule in match mode
-	when generating custom loads from staging.</li>
-	<li>Fixed a minor bug with switch lists, the location status
-	wouldn't become "Changed" when there were only car pick ups.</li>
-	<li>The switch list "Print Switch List Changes" now only shows new
-	trains since the last printing.</li>
-	<li>New "Set Cars" tool. Now you can set the location,
-	destinations, and load for a group of cars.</li>
-	<li>You can also decide to not modify the car's load status when
-	using the Set Cars Tool.</li>
-	<li>New car sort in the cars window, by car's final destination.</li>	
-	<li>New build option, you can now optionally select the departure
-	track from staging.</li>
-	<Li>New operations feature. You can now optionally create a Comma
-	Separated Values (csv) manifest file. Now you can use Excel to create a
-	custom manifest to your liking. Files can be found in
-	operations-&gt;csvManifests</Li>
-	<li>A new capacity check has been added to limit overloading of a
-	siding with a schedule in aggressive mode. Overloading a siding can
-	still happen when using aggressive mode, but the overloading is now
-	limited.</li>
-	<Li>Bug fix. A car in a kernel with FRED must be the lead (*) car.
-	When editing car with FRED and in kernel, the program will
-	automatically make the car the lead.</Li>
-	<li>Manifests and switch lists now block
-	cars by kernel. The new blocking order is: first by road, then number,
-	kernel, location and finally destination.  This should keep cars in a
-	kernel together on the manifest and switch lists.</li>
-	<li>You can now change the loco and car manifest and switch list pick up
-	and set out prefixes, i.e. " [ ] Pick up".  See Setting-&gt;Tools Print Options.</li>
-	<li>Users can now reset a train directly from the Trains window.</li>
-	<li>You can now have operations windows close on save.  See Settings Options.</li>
-</ul>
 
 
 <p>
@@ -1390,63 +1226,6 @@ test the held state of signal heads and to operate turnouts and accessories like
 
 <h5>2.11.5</h5>
 
-<P>Dan Boudreau:</P>
-
-<P>New operations features and bug fixes:</P>
-<UL>
-	<LI>Enhancement to the "Set Cars" tool. You can now ignore
-	selected fields when changing a group of cars.</LI>
-	<LI>You can now optionally select which trains can set out and
-	pick up cars from a siding.</LI>
-	<LI>Car routing enhancement, program now checks the number of
-	available moves when determining if a train can service a car.</LI>
-	<LI>Improved how the program set outs cars when there's two or
-	more stops at the same location. There is now a bias to set out the
-	cars at the earlier stop.</LI>
-	<LI>New schedules enhancement, uses can optionally control a
-	schedule using the train timetables. For example you can now deliver a
-	car to a siding based on the day of the week.</LI>
-	<LI>The trains window now shows which timetable is active.</LI>
-	<LI>Siding/schedule enhancement. When a car is placed at a siding with
-	a schedule the car's destination isn't immediately set, only the car's
-	final destination. This should eliminate overloading at sidings with
-	schedules when in aggressive mode.</LI>
-	<LI>Car forwarding enhancement when a car has a final destination.
-	Now when the destination track is full, the program will determine if a
-	yard track at the destination is available, and deliver the car to the
-	yard track. The car will remain at the yard track until the siding
-	becomes available.</LI>
-	<LI>The program will now warn you if you haven't saved your files
-	before doing a backup.</LI>
-	<LI>You can now use the wild card "*" when using the "Find" button in the
-	cars and locomotives windows. For example, if you wanted to find all
-	cars with road numbers that ended with 456, you would enter *456.</LI>
-	<LI>Fixed a problem when a siding has a schedule and a group of cars (kernel) was
-	placed at the siding.  Sometimes the car load wasn't updated properly.  Thank-you
-	Frank Wyatt for bring this to our attention.</LI>
-	<Li>Changed the order of the location comment when there's no work at a location.
-	The location and route comments now come after the "No work statement".</Li>
-	<LI>Added some additional comments in the build report with regards to car routing.
-	Messages are now in the build report.  Messages to the console have been removed.</LI>
-	<LI>Fixed a problem with switch lists showing loco pickups when there wasn't.  This
-	happened when the switch list was printed when the engines were at that location.</LI>
-	<LI>New feature, train logging.  In addition to car and loco logging, the program
-	can now log train activity.</LI>
-	<LI>Operations manifest and switch lists enhancement, users can
-	now specify local car message format and color, see Print Options for details.</LI>
-	<LI>Program now remembers a car's previous final destination when reseting a train. Now
-	when you reset a train and the car destinations that were set by a schedule will remain.</LI>
-	<LI>Improved how tracks with setting FIFO and LIFO behave.  Previously if the program couldn't
-	find a destination for a car, all cars behind that car were stuck.  Now the program will jump
-	over a car that can't move.</LI>
-	<LI>Train manifests now correctly show trains length and weight when there are engine changes
-	in route.</LI>
-	<LI>New feature, you can now enter a cost value for your cars and locos.  Nothing to do with
-	operations, but nice to have.</LI>
-	<LI>You can now delete a schedule directly from the schedules window.</LI>
-
-</UL>
-
 <p>Pete Cressman</p>
 <ul>
 <li>Added Circuit Builder tool to Control Panel Editor.  This is an 
@@ -1509,23 +1288,6 @@ test the held state of signal heads and to operate turnouts and accessories like
 
 <h5>2.11.6</h5>
 
-
-<P>Dan Boudreau:</P>
-
-<P>New operations features and bug fixes:</P>
-<UL>
-<LI>You can now specify an alternative track for sidings with schedules.  See Tools-&gt;Options in the Schedule
-window.</LI>
-<LI>Fixed a couple of bugs that were introduced by using the change track type tool.  FIFO, LIFO, schedules, and train services
-are features that only certain track types support.  The program now only allows certain feature to work based on track type.</LI>
-<lI>Fixed the car and loco import tools to work correctly when the "comma" attribute is part of the import file.</lI>
-<LI>Improved car import by allowing users the option of having the program automatically create new locations and tracks
-during the car import.</LI>
-<LI>Print car and loco roster can now show the value field.</LI>
-<LI>Export car and loco now exports the value field.</LI>
-<LI>Switch lists now show the train's arrival and or departure direction.</LI>
-</UL>
-
 <p>Pete Cressman</p>
 <ul>
 <li>Occupany Block Tables, PickLists, Palette bean tables are sortable.</li>
@@ -1560,19 +1322,6 @@ during the car import.</LI>
 
 <h5>2.11.7</h5>
 
-<P>Dan Boudreau</P>
-
-<P>New operations features and bug fixes:</P>
-<UL>
-	<LI>Fixed a bug where a schedule's alternate track wasn't restored
-	after restarting the program.</LI>
-	<LI>Fixed a bug, the program didn't check the car's road and the
-	schedule item's road when generating a custom load from staging.</LI>
-	<LI>Improved how custom car loads are generated from staging when
-	using match mode, and "Generate custom loads for train sidings serviced
-	by this train".</LI>
-</UL>
-
 <p>Pete Cressman</p>
 <ul>
 <li>Fixed bug in LRoute Initializer where extra trigger items were included</li>
@@ -1594,17 +1343,6 @@ during the car import.</LI>
 Add user's name to loconet titles when user has modified default name to distinguish multiple connections
 </p>
 
-<P>Dan Boudreau</P>
-
-<P>New operations features and bug fixes:</P>
-<UL>
-	<LI>Fixed some of the operations windows so the input text fields
-	now work correctly when using large font sizes.</LI>
-	<LI>Fixed a bug were the program didn't check to see if a train
-	could service a track when the car had a destination assigned to it
-	before the build.</LI>
-</UL>
-
 <p>Steve Todd</p>
 <ul>
   <li>Fixed web server panel click on Positionable components,</li>
@@ -1617,19 +1355,6 @@ Add user's name to loconet titles when user has modified default name to disting
 <ul>
 	<li>Fix in roster copy for NPE that prevented the copy from working.</li>
 </ul>
-
-<h5>2.11.9</h5>
-
-
-<P>Dan Boudreau</P>
-
-<P>New operations features and bug fixes:</P>
-<UL>
-	<LI>New feature, the ability to pool a set of tracks to share
-	their lengths. See under Edit Track, Tools-&gt;Pools.</LI>
-	<LI>Changed the track type "siding" to "spur" to better represent a track
-	that serves an industry.</LI>
-</UL>
 
 (End of copies of original notes)
 
