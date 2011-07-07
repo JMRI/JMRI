@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.4 2011-07-07 16:19:32 kevin-dickerson Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.5 2011-07-07 18:35:23 pbender Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -109,6 +109,36 @@ Robin Becker
 to properly support objects within Components such as Tables and Sliders. 
 <li>Added support for RadioButtons and CheckBoxes, tested with Turnout Table and Throttle tools on IE8 and Firefox.
 </ul>
+
+<p>
+Paul Bender
+<ul> 
+<li> updated the XPressNet adapter code to allow multiple connections.
+<li> Made bug fixes to the following XPressNet Throttles
+<li> updated EasyDCC consist support
+<li> made some internal improvements to the XPressNet support.  If you've 
+written scripts that directly use the XPressNet communications, you may 
+have to revisit them.
+<li> Added two new scripts:
+<ul>
+<li> ThrottleBridge.py is a proof of concept script showing how to bridge a throttle
+from one system to another.
+<li> ConsistExample.py showes how to add and remove a consist
+</ul>
+<li> updated how the throttles handle notifications internally.
+<li> updated the error checking in the JMRI consisting tool.
+<li> added a Consist Manager for LocoNet with the following notes on it's current capabilities and known issues:
+<ol>
+<li> Basic functionallity of adding and removing locomotives from consits is working.
+<li> The check boxes for changing the direction of a locomotive within a
+consist are not working
+<li> The delete button at the bottom of the consist tool does not work correctly.
+<li> You cannot currently add an existing lead address (created with the tool)
+to another consist.
+<li> The consist manager does not currently examine the slots for consists
+</ol>
+</ul>
+<p>
 
 <p>
 Leo Bicknell 
@@ -732,8 +762,6 @@ Andrew Crosland improved the Bachrus speedometer readout to work more closely wi
 Pete Cressman added a copy popup to the Control Panel Editor.
 
 <p>
-Paul Bender is updating the XPressNet adapter code to allow multiple connections.
-<p>
 Andrew Crosland updated the SPROG support to make repeated ops mode CV writes appear consecutively rather than interleaved.
 Problem reported on developers list by Galen Seitz 22 July 2010
 
@@ -851,9 +879,6 @@ Ken Cameron fixed a problem with RobotThrottle debugged by Jay Janzen.
 Ken Cameron worked on X10 and Insteon light support.
 
 <p>
-Paul Bender updated EasyDCC consist support.
-
-<p>
 Jeff Rowe and Dan Boudreau fixed a problem with timeouts on the serial interface.  Problem
 was found using a Mac Intel Mini connected to a NCE system.
 
@@ -863,11 +888,6 @@ top border to stop move at left &amp; top border
 
 <p>
 Matt Harris fixed a problem during startup when certain options are used
-
-<p>
-Paul Bender made some internal improvements to the XPressNet support.
-If you've written scripts that directly use the XPressNet communications,
-you may have to revisit them.
 
 <p>
 Simon Ginsburg updated the German translation
@@ -1025,9 +1045,6 @@ respond to track off message as well as emergency stop.
 Also made some internal changes.
 
 <p>
-Paul Bender made a fix to the Lenz momentary function support.
-
-<p>
 Pete Cressman made numerous small changes to Logix and panel support.
 
 <p>
@@ -1041,13 +1058,6 @@ Ken Cameron added initial support for the Digitrax DCS51 command station.
 Matt Harris improved the audio implementation, particularly for Mac OS X.
 
 <h5>2.11.3</h5>
-
-Paul Bender provided a new ThrottleBridge.py script.
-It is a proof of concept script showing how to bridge a throttle 
-from one system to another.
-
-<p>
-Paul Bender fixed a bug in Lenz XPressNet throttle implementation.
 
 <p>
 New operations features and bug fixes:
@@ -1111,9 +1121,6 @@ allow more than one NCE connection.
 Dan Boudreau fixed a bug with configuring multiple port options.
 
 <p>
-Paul Bender updated how the throttles handle notifications internally.
-
-<p>
 Ken Cameron updated the main window to 
 show connection name for each line. 
 Nice confirmation for multiple connections.
@@ -1165,8 +1172,6 @@ Andrew Crosland added support for SPROG 3.
 
 <p>
 Andrew Crosland changed the defaults for the CBUS console to decimal, show events.
-<p>
-Paul Bender made changes to the XPressNet code toward multiple connection support
 
 <p>
 Ken Cameron made it possible to select a default power manager when using multiple connections.
@@ -1223,11 +1228,6 @@ Matthew Harris corrected a bug where Layout Editor and Control Panel Editor Pane
 
 <p>
 Matthew Harris changed the BeanTableDataModel to use internationalised strings for column names rather than hard-coded strings.
-
-<p>
-Paul Bender added a script showing how to add and remove a consist.
-
-
 
 <p>
 Ken Cameron converted Powerline to support:
@@ -1485,9 +1485,6 @@ test the held state of signal heads and to operate turnouts and accessories like
 <li>Added ability to save customized throttle function buttons in regular throttle files</li>
 </ul>
 
-<p>Paul Bender updated the error checking in the JMRI consisting tool.</p>
-
-
 <p>Steve Todd, changes to xmlio server: </p>
 <ul>
 <li>Added support for Memory Variables</li>
@@ -1562,16 +1559,6 @@ during the car import.</LI>
 <p>Steve Todd added protocol to send MiniWebServer port to Wi-Fi devices.
 
 <h5>2.11.7</h5>
-
-Paul Bender added a Consist Manager for LocoNet with the following notes on it's current capabilities and known issues:
-
-Basic functionallity of adding and removing locomotives from consits is working, however there are several known issues with this release:
-1) The check boxes for changing the direction of a locomotive within a 
-consist are not working 
-2) The delete button at the bottom of the throttle does not work correctly.
-3) You cannot currently add an existing lead address (created with the tool)
-to another consist.  
-4) The consist manager does not currently examine the slots for consists
 
 <P>Dan Boudreau</P>
 
