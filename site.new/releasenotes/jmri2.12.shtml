@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.8 2011-07-07 21:04:22 matthewharris Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.9 2011-07-07 22:28:45 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -699,6 +699,13 @@ with the rate information.
 values to the XMLIO support so that web browsers can inquire about the JMRI version, etc.
 </ul>
 
+<p>Brett Hoffman, changes to WiFi throttles:</p>
+<ul>
+    <li>Updated to allow F2 to follow "lock" setting in roster entry function labels.</li>
+    <li>Added support for one throttle to control multiple addresses.</li>
+    <li>WiFi devices can now request speed, direction, and function momentary info.</li>
+    <li>Function states can now be set directly.</li>
+</ul>
 
 <b>Editors</b>
     <ul>
@@ -954,9 +961,6 @@ Pete Cressman added custom tooltips to the panel editors.
 
 <p>
 Pete Cressman added an update of indicator track icons from the panel.
-
-<p>
-Brett Hoffman updated the WiThrottle protocol to allow F2 to follow "lock" setting in roster entry function labels
 
 <p>
 Pete Cressman fixed a problem adding a clock to a panel.
@@ -1234,12 +1238,6 @@ test the held state of signal heads and to operate turnouts and accessories like
 <li>Added "Show Comm Info" to miniserver prefs, to promote key messages from debug to info when checked.  Default is off.</li>
 </ul>
 
-<p>Brett Hoffman, changes to WiFi throttles:</p>
-<ul>
-    <li>Added support for one throttle to control multiple addresses.</li>
-    <li>WiFi devices can now request speed, direction, and function momentary info.</li>
-    <li>Function states can now be set directly.</li>
-</ul>
 <p>Giorgio Terdina fixed a problem with the XnTCP adapter code.
 
 <h5>2.11.6</h5>
