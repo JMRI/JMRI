@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.3 2011-07-07 14:49:00 jacobsen Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.4 2011-07-07 16:19:32 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -581,6 +581,103 @@ values to the XMLIO support so that web browsers can inquire about the JMRI vers
 </ul>
 
 
+<b>Editors</b>
+    <ul>
+    <li>Positioning can now be adjusted by using the arrow keys, the arrow keys on their own will move the items by 5 pixels either way, by holding shift and then the arrow key, it will move a pixel at a time. (KD)</li>
+    <li>Add the ability to set the background color of the panel via a menu option. Selected items now have a square box drawn around them. (KD)</li>
+    <li>Provides a basic copy & paste function within a single panel, allows for single or multiple items to be copied. (KD)</li>
+    <li>Multiple items can be selected, by holding down the ctrl key and clicking on them.</li>
+    <li>Selected items now have a square box drawn around them. (KD)</li>
+    <li>updated memory labels to set the auto width justification of a memory label around the x position, ie the text will centre around position X, or be right justified to the value of X. Before the justification only really showed itself with fixed width memory labels.(KD)</li>
+    <li>Signal Mast Icons
+    <ul>
+        <li>Added a set action in a signal mast icon, so that when it is clicked the appearance will change aspect, alternate held, alternate dark. In the same manner as the existing Signalhead Icon. (KD)</li>
+        <li>It is now possible to select which set of icons are used for a signal mast in the editors where more than one set has been provided for. (KD)</li>
+    </ul></li>
+    <li>Layout Editor
+    <ul>
+        <li>Added the Layout Block Routing Mechnaisum for use with the SignalMast Logic, to automatically build up a list of full connectivity between blocks. (KD)</li>
+    </ul></li>
+    <li>Panel Editor
+     <ul>
+     <ul>Provided a "Properties" window for text based items, which allows the user to set various text based settings in the popup menu from a single window all at once, 
+(eg Font Size, Color, Background, style, border margins etc) and preview them prior to applying the changes. Also allows for the user to enter in font sizes that are not listed in the popup.
+For texted based sensors, it is possible to preview and configure the text for the four different states. Feature request 2958431 relates.(KD)</ul>
+
+        <li>Added a double & single slip and a three way turnout to the panel editor. (KD)</li>
+        <li>It is now possible to add icons tot he panel editor via the mouse popup menu while in edit mode.  The Icon will be placed at the co-ordinates of the mouse location. (KD)</li>
+    </ul></li>
+    </ul>
+
+<b>Tables</b>
+<ul>
+    <li>Created the listed Table frame, so that all tables are now accessible in one window with a quick selection list to one side, rather than having multiple windows per table. (KD)</li>
+</ul>
+<b>Logixs</b>
+<ul>
+<li>Improved methods for disabling Logix when debugging.
+The selection in the Debug menu now shows the status, and the 
+startup splash screen gives you more information when you disable at startup.
+</li></ul>
+<b>Sensors</b>
+    <ul>
+    <li>Added a sensor debounce facility to individual sensors see <a href="http://www.jmri.org/help/en/html/tools/Sensors.shtml#Debounce">Sensors</a> for further information. By default this new option is disabled (KD)</li>
+    </ul>
+
+
+<b>SignalMasts</b><ul>
+    <li>Add the ability to identify which signal mast appearance should be used for the following states in the signal mast appearance file  (KD)
+    <ul>
+    <li>Danger</li>
+    <li>Permissive,</li>
+    <li>Held,</li>
+    <li>Dark.</li>
+    </ul></li>
+    <li>SignalMast appearance files expanded to include mapping of advanced signal mast appearance to multiple potential local appearances. (KD)</li>
+
+    <li>Added the signal mast logic facility for controlling signal masts, more info can be found <a href="/help/en/html/tools/signaling/SignalMastLogic.shtml">here<a> (KD)</li>
+    
+    </ul>
+<b>SSL</b><ul>
+    <li>Fixed an error in the loading of Simple Signalling Logic (SSL) where an invalid entry potentially causes all of the logic not be loaded and are lost on any subsequent stores. (KD)</li>
+    </ul>
+<b>Roster</b><ul>
+
+    <li>updated roster printing: Puts the loco icon on the print out, formats the text around the graphic so it looks neater and doesn't run into the loco graphic. Function Labels can now be printed on individual roster items. When printing individual roster items, the user is given the option to select which tabs should be printed.  (KD)</li>
+
+    <li>It is also possible to the select items to print option, prior to selecting the printer.  (KD)</li>
+    </ul>
+<b>Connections</b><ul>
+    <li>The Serial port drop down list refereshes each time it is selected, thus picking up any new serial/usb interfaces that might have been added since JMRI was started. (KD)</li>
+
+    <li>Invalid/missing serial ports that are configured against a device are now shown iin red, while valid comm ports are left in black (KD)</li>
+
+    <li>Catched an error that causes a High CPU Utilisation when an unexpected/abnormal termination occurs in a TCP connection. (KD)</li>
+
+    <li>The Default tab in preferences is automatically updated when a connection is added, removed, enabled or disabled. Thus allowing you to select your default system on the next reload for a newly added or enabled system. (KD)</li>
+
+    <li>Ecos<ul>
+    <li>It is now possible to monitor the current Speed and Direction of Loco from the Ecos Loco Database and also the ability to Force a stop on a loco (KD)</li>
+
+    <li>Added to the Ecos Preferences the ability to always force control of a Loco when trying to access it from a throttle (KD)</li>
+
+    <li>Updated the support to allow multiple ECOS devices to be connected (KD)</li>
+    </ul></li>
+    <li>Sprog<ul>
+    <li>Added the ability to access F12-F28 on the SPROG Throttle (KD)</li>
+    </ul></li>
+    <li>Throttle Code<ul>
+    <li>Updated the Throttle code so that only a single throttle instance is created per loco address requested, also added the ability to add a listener to a throttle address with out the need to request a throttle in the first place. (KD)</li>
+    </ul></li>
+    </ul>
+
+<b>Preferences</b><ul>
+    <li>Window size and posstions are now saved, so that when you open the window in a new session it will return to its last know size and position. (KD)</li>
+
+    <li>Newly opened windows will now cascade down the screen rather than stacking up on top of each other. (KD)</li>
+</ul>
+
+
 
 
 
@@ -623,26 +720,10 @@ ie the text will centre around position X, or be right justified to the value of
 Before the justification only really showed itself with fixed width memory labels.
 
 <p>
-Kevin Dickerson made multiple improvements to panel editor.
-<ul>
-<li>Multiple items can be selected, by holding down the ctrl key and clicking on them.
-<li>Selected items now have a square box drawn around them.
-<li>Positioning can now be adjusted by using the arrow keys, the arrow keys on their own will move the items by 5 pixels either way, 
-    by holding shift and then the arrow key, it will move a pixel at a time.
-<li>Provides a basic copy & paste function within a single panel, allows for single or multiple items to be copied.
-<li>A revised pop-up menu is displayed when multiple items are selected, it only displays the options for Edit Alignment, Remove, Copy.
-<li>Should also remove the issue in ubuntu when dragging items on the panel editor, that the popupbox is displayed when it shouldn't be. 
-    Nb this needs to be check on a MAC that it doesn't cause a problem.
-</ul>
-
-<p>
 Kevin Dickerson improved the preferences:
     By default 4 sets of jmrixconfigpanes are created at start up.  
     However if there are more than 4 connections, the 5th and above connections do not have a jmrixconfigpane instance created and 
     do not automatically get listed in the preference window.
-
-<p>
-Kevin Dickerson fixed a problem that could cause multiple LocoNet connections to get the wrong prefix.
 
 <p>
 Andrew Crosland improved the Bachrus speedometer readout to work more closely with the hardware, and to reject measurements that appear to suffer from jitter.
@@ -652,28 +733,6 @@ Pete Cressman added a copy popup to the Control Panel Editor.
 
 <p>
 Paul Bender is updating the XPressNet adapter code to allow multiple connections.
-
-<p>
-Kevin Dickerson made it possible to dismiss a print preview dialog.
-
-<p>
-Kevin Dickerson updated roster printing: 
-Puts the loco icon on the print out, formats the text around the graphic so it looks neater and doesn't run into the loco graphic.
-Function Labels can now be printed on individual roster items.
-When printing individual roster items, the user is given the option to select which tabs should be printed.
-
-<p>
-Kevin Dickerson updated the layout editor:
-Add the ability to set the background color of the panel via a menu option.
-Selected items now have a square box drawn around them.
-Multiple items can be selected, by holding down the ctrl key and clicking on them.
-Positioning can now be adjusted by using the arrow keys, the arrow keys on their own will move the items by 5 pixels either way, 
-by holding shift and then the arrow key, it will move a pixel at a time.
-
-<p>
-Kevin Dickerson updated the Panel Editor & Control Editor:
-Added ability to set the background colour by bring up the popup menu on an empty part of the panel. 
-
 <p>
 Andrew Crosland updated the SPROG support to make repeated ops mode CV writes appear consecutively rather than interleaved.
 Problem reported on developers list by Galen Seitz 22 July 2010
@@ -684,33 +743,9 @@ and to
 integrate with DCC system to capture loco speed profile. You can now export a speed curve to a .csv file.
 
 <p>
-Kevin Dickerson made some improvements to the connection code, including catching an error, removing deprecated code and 
-adding a "disable adapter" option.
-
-<p>
 Pete Cressman improved how icons are found in the computer's file system.
 
 <p>
-Kevin Dickerson changed the editors so you don't have to hold the control key down while moving items.
-
-<p>
-Kevin Dickerson updated memory labels to set the auto width justification of a memory label around the x position, 
-ie the text will centre around position X, or be right justified to the value of X.
-Before the justification only really showed itself with fixed width memory labels.
-
-<p>
-Kevin Dickerson placed the select items to print option, prior to selecting the printer.
-
-<p>
-Kevin Dickerson provided a "Properties" window for text based items, which
-allows the user to set various text based settings in the popup menu from a single window all at once, 
-(eg Font Size, Color, Background, style, border margins etc) and preview them prior to applying the changes.
-Also allows for the user to enter in font sizes that are not listed in the popup.
-For texted based sensors, it is possible to preview and configure the text for the four different states.
-Initial development of the feature, will need some further refinement, 
-only available with the panel editor, 
-but can be used in the other editors once any issues have been ironed out.
-Feature request 2958431 relates.
 
 <p>
 Andrew Crosland added help pages for the Bachrus speedometer.
@@ -763,9 +798,6 @@ Lionel Jeanson made multiple improvements to throttles:
 <p>
 Kevin Dickerson improved the C/MRI sensor add process so that it now displays an error message when an invalid system name is entered.
 Sensor manager now allows for multiple sensors to be added.
-
-<p>
-Kevin Dickerson added a double & single slip and a three way turnout to the panel editor.
 
 <p>
 Matt Harris added 'Copy to clipboard' button in context window.
@@ -846,8 +878,6 @@ dim to use extended command which is a single direct command.
 May not work with older dim modules. 
 Also may cause cp290 interface issues, not tested yet on cp290.
 
-<p>
-Kevin Dickerson: Re-creates the serial port drop down list box each time it becomes active, thus picking up any new serial/usb interfaces that have been added since JMRI was started.
 
 
 <p>
@@ -901,13 +931,6 @@ in them, please recode them to use the symbolic values.
 Matt Harris fixed some problems with custom programming scripts
 
 <p>
-Kevin Dickerson improved the methods for disabling Logix when debugging.
-The selection in the Debug menu now shows the status, and the 
-startup splash screen gives you more information when you disable at startup.
-
-<p>
-Kevin Dickerson improved handling of missing ports.
-Comm ports that are configured against a device but are not found while loading (eg usb adapter not connected) are now shown in red, while valid comm ports are left in black.  
 
 <p>
 Lionel Jeanson added buttons in throttle window (next and previous running locomotives) and
@@ -942,10 +965,6 @@ This also shows the last (real) time the cab was active.
 Matt Harris improved some documentation.
 
 <p>
-Kevin Dickerson added a new item to the Debug menu, a tool under development that
-gives you tabbed access to the tables.
-
-<p>
 Ken Cameron made a change in the NCE fast clock.
 
 <p>
@@ -978,11 +997,6 @@ Brett Hoffman updated the WiThrottle protocol to allow F2 to follow "lock" setti
 Pete Cressman fixed a problem adding a clock to a panel.
 
 <p>
-Kevin Dickerson updated the British Rail 2003 signal definition.
-
-
-
-<p>
 Steve Todd provided several new files which go into the web folder
 to facilitate testing and education about the xmlio server and its features.
 He also added a few links to the generated index.html (delete existing file and restart to see them).
@@ -990,10 +1004,6 @@ He also added a few links to the generated index.html (delete existing file and 
 <p>
 Steve Todd fixed the MIME types for image files from the mini web server.
 
-<p>
-Kevin Dickerson updated the ECOS support.
-An additional feature for the Ecos Loco Database table is the monitoring of current Speed and 
-Direction of Locos and the ability to Force a stop on a certain loco.
 
 <p>
 Lionel Jeanson improved the Roster XSLT support so that it displays well via the mini web server,
@@ -1029,10 +1039,6 @@ Ken Cameron added initial support for the Digitrax DCS51 command station.
 
 <p>
 Matt Harris improved the audio implementation, particularly for Mac OS X.
-
-<p>
-Kevin Dickerson added F12-28 to the SPROG throttle.
-
 
 <h5>2.11.3</h5>
 
@@ -1116,16 +1122,7 @@ Nice confirmation for multiple connections.
 Dan Boudreau added a warning when trying to load an icon with a bad url
 
 <p>
-Kevin Dickerson improved the script input window.
-
-<p>
-Kevin Dickerson improved how Blocks are saved and loaded
-
-<p>
 Matt Harris fixed a problem with the System Console configuration
-
-<p>
-Kevin Dickerson added a "New Throttle Window" to the File menu
 
 <p>
 Pete Cressman added a dialog to correct or delete broken icon paths (bad url) when loading a panel.
@@ -1168,13 +1165,6 @@ Andrew Crosland added support for SPROG 3.
 
 <p>
 Andrew Crosland changed the defaults for the CBUS console to decimal, show events.
-
-<p>
-Kevin Dickerson added an option in the Ecos preferences to select if we always force control of the loco when trying to open a throttle or not.
-
-<p>
-Kevin Dickerson greatly improved the internals for throttle handling
-
 <p>
 Paul Bender made changes to the XPressNet code toward multiple connection support
 
@@ -1199,8 +1189,6 @@ Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connecti
 Ken Cameron improved handling of the Digitrax DCS51 Super Zephyr.
 Thanks go to Ed Sisk for the loan of a DCS51 to perform the development and testing.
 
-<p>
-Kevin Dickerson fixed NPE that can occur with some versions of unix and MAC OS X with getting the multiclick interval time that may not be supported
 
 <p>
 Matthew Harris added an example script to enable persistence of turnout states between sessions
@@ -1208,28 +1196,14 @@ Matthew Harris added an example script to enable persistence of turnout states b
 <p>
 Matthew Harris updated SerialPortRFID script - as per patch #3152534 from Nigel Cliffe and MERG member Ian King
 
-<p>
-Kevin Dickerson updated the user preference manager so that items and descriptions
-are now dynamically added via the using code.  The message preferences pane is 
-now dynamically created bases upon this information.  
-See AbstractTableAction and LogixTableAction for examples of its use.
-The old items stored in the xml files is nolonger valid, but shouldn't 
-be a major issue as all these dealt with was the surpression of message boxes.
 
 <p>
 Matthew Harris fixed a GUI anomaly on Tabbed Preferences window
 
-<p>
-Kevin Dickerson added the ability for the user to add icons to the panel editor via the mouse popup menu while in edit mode.   The icon will be placed at the co-ordinates of the mouse.
-Also Signal Masts and sensors can be added to boundary points on the layout editor
 
 <p>
 Kevin Dickerson added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
 Also added tools to return either a facing or protected blocks by signal heads, masts or sensors.
-
-<p>
-Kevin Dickerson has done some work on storing frame positions and sizes
-via the user preference manager.
 
 <p>
 Lionel Jeanson improved the Jynstrument throttle support:
@@ -1401,25 +1375,6 @@ Lionel Jeanson:
 </ul>
 
 <p>
-Kevin Dickerson:
-<ul>
-<li>Add the ability to set speeds to Blocks and Turnouts for use with automation tools</li>
-<li>Catched an error that causes a High CPU Utilisation when an unexpected/abnormal termination occurs in a TCP connection.</li>
-<li>Add the ability to identify which signal mast appearance should be used for the following states in the signal mast appearance file<br>
-<ul><li>Danger</li>
-<li>Permissive,</li>
-<li>Held,</li>
-<li>Dark.</li></ul></li>
-<li>SignalMast appearance files expanded to include mapping of advanced signal mast appearance 
-    to multiple potential local appearances.  
-    See <a href="http://jmri.org/xml/signals/BR-2003/appearance-3.xml">BR-2003/appearance-3.xml</a> for an example.</li>
-<li>Added a set action in a signal mast icon, so that when it is clicked the appearance will change aspect,
-alternate held, alternate dark.  In the same manner as the existing Signalhead Icon.</li>
-<li>It is now possible to select which set of icons are used for a signal mast in the editors 
-where more than one set has been provided for.</li>
-</ul>
-
-<p>
 Steve Todd:
 <ul>
 <li>add handling for "route" and "panel" to xmlio server.</li>
@@ -1540,14 +1495,6 @@ test the held state of signal heads and to operate turnouts and accessories like
 <li>Return "Content-Length" in reply header</li>
 <li>Added "Show Comm Info" to miniserver prefs, to promote key messages from debug to info when checked.  Default is off.</li>
 </ul>
-<p>Kevin Dickerson</p>
-<ul>
-<li>Updated so that the user selected preferences and the window size/position data is now saved in a seperate file and not in with the connection preferences.</li>
-<li>Added a sensor debounce facility to individual sensors see <a href="http://www.jmri.org/help/en/html/tools/Sensors.shtml#Debounce">Sensors</a> for further information.<br>
-By default this new option is disabled</li>
-<li>It is now possible to view signal mast specific appearances, and aspect mapping on the JMRI website.</li>
-<li>The Default tab in preferences is automatically updated when a connection is added, removed, enabled or disabled.  Thus allowing you to select your default system on the next reload for a newly added or enabled system</li>
-</ul>
 
 <p>Brett Hoffman, changes to WiFi throttles:</p>
 <ul>
@@ -1654,14 +1601,6 @@ to another consist.
 <P>Fixed the NCE consist editor, broken since 2.11.4.</P>
 
 
-<p>Kevin Dickerson</p>
-<ul>
-<li>Fixed an issue with the Digitrax Simulator Throttle</li>
-<li>Fixed an issue where when you edited a route configured with a auto system name. it would duplicate the route</li>
-<li>Added the signal mast specific appearances and mapping to the basic set of signalmasts</li>
-<li>Added the signal mast logic facility for controlling signal masts, more info can be found <a href="/help/en/html/tools/signaling/SignalMastLogic.shtml">here<a></li>
-</ul>
-
 <h5>2.11.8</h5>
 
 <p>Pete Cressman -
@@ -1691,16 +1630,6 @@ Add user's name to loconet titles when user has modified default name to disting
 <ul>
 	<li>Fix in roster copy for NPE that prevented the copy from working.</li>
 </ul>
-
-<p>Kevin Dickerson</p>
-
-<ul>
-	<li>Fixed an error in the loading of Simple Signalling Logic (SSL) where an invalid entry potentially causes all of the logic not be loaded and are lost on 
-    any subsequent stores.</li>
-    <li>Fixed an error that potentially prevented the pop-up menu for a turnout from being displayed.</li>
-    <li>Fixed an error in the global sensor de-bounce load process that potentially prevented sensors from not being loaded correctly.</li>
-</ul>
-
 
 <h5>2.11.9</h5>
 
