@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.7 2011-07-07 19:19:05 crosland Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.8 2011-07-07 21:04:22 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -504,6 +504,63 @@ of the BLI Paragon decoder definitions.
 <p>
 Michael Greene updated the Lenz Ultradrive decoder definition.
 
+<p>Matthew Harris:
+<ul>
+<li>Added support for general ID Tags and specific implementations for RFID readers that use the CORE-ID protocol in both stand-alone and MERG concentrator configurations.
+<li>Added test cases for Audio and ID Tag support.
+<li>Added 'Copy to clipboard' button in context window.
+<li>Added the new JMRI System Console which takes the place of the Windows Console. 
+The Windows Console didn't always auto-minimize properly 
+and would close JMRI without going through the normal shutdown procedures if someone accidentally clicked on the close button. 
+The JMRI System Console is available from the Help menu.
+As with most of the menu items, you can also set it up in Preference to autostart with JMRI. 
+It displays the same information as the old Windows Console, is easy to resize and has a button to simplify the task of copying text to the clipboard.
+<li>Updated the system console window for multiple screens.
+<li>Fixed a problem during startup to delay the load of certain objects until after initial configuration loaded.
+<li>Fixed bug when importing decoder definition from user preference location (thanks to Greg Watkins for finding this)
+<li>Enabled Blocks data to be populated via Reporters
+<li>Fixed a bug where Layout Editor and Control Panel Editor Panels were not being deleted when 'Delete' was picked from the 'File' menu.
+<li>Fixed a bug in the implementation of Reporters and updated the JavaDoc.
+<li>Added a new test case for Reporter objects.
+<li>Added a new object and test case that holds the current JMRI application name.
+<li>Improved some documentation.
+<li>Improved the audio implementation, particularly for Mac OS X.
+<li>Updated the JMRI website search facility to correct for changes in Google's custom search API.
+
+<li><b>Windows-specific</b>
+<ul>
+<li>Made several improvements to the Windows installer.
+<li>Updated Windows Installation documentation incorporating details of reversion procedure (thanks to Walter Thompson for the initial procedure)
+<li>Updated the Windows documentation to help debug JMRI shutdown problems
+<li>Updated documentation for Windows start-up scripts, giving more details of how the shortcuts are structured.
+<li>Allowed the use of environment variables to modify launcher behaviour.
+<li>Updated LaunchJMRI to correctly set the user.home variable which was incorrectly determined in some configurations.
+<li>Enabled the process name displayed in Task Manager to match the JMRI application being launched.
+</ul>
+
+<li><b>User interface related</b>
+<ul>
+<li>Added a new column to the Reporters table that shows the last known report.
+<li>Changed the BeanTableDataModel to use internationalised strings for column names rather than hard-coded strings.
+<li>Added a VerticalLabelUI class so to allow JLabels to be displayed vertically.
+<li>Corrected some GUI anomalies, especially on Tabbed Preferences window.
+<li>Corrected the behavior of snapping JSliders by making them snap whilst dragging
+rather than after dragging by using the SliderSnap class provided by Michael Kneebone.
+<li>Enabled default Speedometer settings to be saved.
+<li>Update context report to also include system manufacturer
+</ul>
+  
+<li><b>Script related</b>
+<ul>
+<li>Improved the script output window allowing configurable automatic scrolling.
+<li>Added an example script to enable persistence of turnout states between sessions.
+<li>Added the "RosterCsvExport.py" script to export Roster details to a .csv (comma-separated variables) file.
+<li>Provided the ComPortEnumeration.py sample script, for getting a list of available ports.
+<li>Updated SerialPortRFID script - as per patch #3152534 from Nigel Cliffe and MERG member Ian King
+<li>Fixed some problems with custom programming scripts
+</ul>
+</ul>
+
 <p>
 David Heap updated the QSI Version 7 Steam definition to restore CV 51.5 for Eureka C38 4-6-2
 
@@ -793,25 +850,8 @@ Kevin Dickerson improved the C/MRI sensor add process so that it now displays an
 Sensor manager now allows for multiple sensors to be added.
 
 <p>
-Matt Harris added 'Copy to clipboard' button in context window.
-
-
-
-<p>
 david zuhn added support for exporting the entire roster to one file.  
 Menu support (but a null implementation) for importing from an exported roster file.
-
-
-<p>
-Matt Harris added a VerticalLabelUI class so to allow JLabels to be displayed vertically.
-
-<p>
-Matt Harris added the new JMRI System Console which takes the place of the Windows Console. 
-The Windows Console didn't always auto-minimize properly 
-and would close JMRI without going through the normal shutdown procedures if someone accidentally clicked on the close button. 
-The JMRI System Console is available from the Help menu.
-As with most of the menu items, you can also setup it up in Preference to autostart with JMRI. 
-It displays the same information as the old Windows Console, is easy to resize and has a button to simplify the task of copying text to the clipboard
 
 <p>
 Pete Cressman added a new editor tool: Item Palette. He also updated the signal head icons to only show icons that 
@@ -822,16 +862,7 @@ are relevant to valid states.
 <p>
 David Duchamp made some improvements to running trains with the Dispatcher.
 
-
-<p>
-Matt Harris made several improvements to the Windows installer.
-
-
-
 <h5>2.11.2</h5>
-
-<p>
-Matt Harris updated the system console window for multiple screens
 
 <p>
 Pete Cressman fixed stacking of a multiple selection in the editors when moved 
@@ -848,9 +879,6 @@ Ken Cameron worked on X10 and Insteon light support.
 <p>
 Pete Cressman change the editor's drag behavior from auto expand left &amp; 
 top border to stop move at left &amp; top border
-
-<p>
-Matt Harris fixed a problem during startup when certain options are used
 
 <p>
 Simon Ginsburg updated the German translation
@@ -877,8 +905,6 @@ people just using the program.  If you're using scripts with numerical values
 in them, please recode them to use the symbolic values.
 
 
-<p>
-Matt Harris fixed some problems with custom programming scripts
 
 <p>
 
@@ -900,19 +926,8 @@ web browser.
 
 
 <p>
-Matt Harris improved the script output window allowing configurable automatic scrolling.
-
-
-<p>
-Matt Harris provided the ComPortEnumeration.py sample script, for getting
-a list of available ports.
-
-<p>
 Ken Cameron added a way to purge cabs from the NCE active cab list. 
 This also shows the last (real) time the cab was active.
-
-<p>
-Matt Harris improved some documentation.
 
 <p>
 Ken Cameron made a change in the NCE fast clock.
@@ -974,14 +989,7 @@ one when it next starts.
 Pete Cressman made numerous small changes to Logix and panel support.
 
 <p>
-Matt Harris added the "RosterCsvExport.py" script to export Roster details to a .csv (comma-separated variables) file
-
-
-<p>
 Ken Cameron added initial support for the Digitrax DCS51 command station.
-
-<p>
-Matt Harris improved the audio implementation, particularly for Mac OS X.
 
 <h5>2.11.3</h5>
 
@@ -1005,9 +1013,6 @@ allow more than one NCE connection.
 Ken Cameron updated the main window to 
 show connection name for each line. 
 Nice confirmation for multiple connections.
-
-<p>
-Matt Harris fixed a problem with the System Console configuration
 
 <p>
 Pete Cressman added a dialog to correct or delete broken icon paths (bad url) when loading a panel.
@@ -1068,17 +1073,6 @@ Thanks go to Ed Sisk for the loan of a DCS51 to perform the development and test
 
 
 <p>
-Matthew Harris added an example script to enable persistence of turnout states between sessions
-
-<p>
-Matthew Harris updated SerialPortRFID script - as per patch #3152534 from Nigel Cliffe and MERG member Ian King
-
-
-<p>
-Matthew Harris fixed a GUI anomaly on Tabbed Preferences window
-
-
-<p>
 Kevin Dickerson added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
 Also added tools to return either a facing or protected blocks by signal heads, masts or sensors.
 
@@ -1094,12 +1088,6 @@ Note: once the keyboard driver is running, all keyboard inputs will be considere
     avoids to have all key inputs redirected to the Throttle.
 </ul>
 
-
-<p>
-Matthew Harris corrected a bug where Layout Editor and Control Panel Editor Panels were not being deleted when 'Delete' was picked from the 'File' menu.
-
-<p>
-Matthew Harris changed the BeanTableDataModel to use internationalised strings for column names rather than hard-coded strings.
 
 <p>
 Ken Cameron converted Powerline to support:
@@ -1150,24 +1138,6 @@ It now will log an error message on the console with the port and conflicting in
 <li>With testing by Walt Thompson, found and fixed a significant timing bug that was causing
 a train to stop due to it tripping its own signals. Seven trains running for over 4 hours with
 no issues!!</li>
-</ul>
-
-<p>Matthew Harris:
-<ul>
-<li>Fixed a bug in the implementation of Reporters and updated the JavaDoc.</li>
-<li>Added a new column to the Reporters table that shows the last known report.</li>
-<li>Added a new test case for Reporter objects.</li>
-<li>Updated documentation for Windows start-up scripts, giving more details of how the shortcuts are structured.</li>
-<li>Updated LaunchJMRI to correctly set the user.home variable which was incorrectly determined in some configurations.</li>
-<li>Allowed the use of environment variables to modify launcher behaviour.</li>
-<li>Enabled the process name displayed in Task Manager to match the JMRI application being launched.</li>
-<li>Added a new object and test case that holds the current JMRI application name.</li>
-<li>Corrected the behavior of snapping JSliders by making them snap whilst dragging
-rather than after dragging by using the SliderSnap class provided by Michael Kneebone.</li>
-<li>Added support for general ID Tags and specific implementations for RFID readers that use the CORE-ID protocol in both stand-alone and MERG concentrator configurations.</li>
-<li>Added test cases for Audio and ID Tag support.</li>
-<li>Enabled default Speedometer settings to be saved.</li>
-<li>Corrected a few UI anomalies.</li>
 </ul>
 
 <p>
@@ -1270,12 +1240,6 @@ test the held state of signal heads and to operate turnouts and accessories like
     <li>WiFi devices can now request speed, direction, and function momentary info.</li>
     <li>Function states can now be set directly.</li>
 </ul>
-<p>Matthew Harris</p>
-<ul>
-<li>Updated Windows Installation documentation incorporating details of reversion procedure (thanks to Walter Thompson for the initial procedure)</li>
-<li>Fixed bug when importing decoder definition from user preference location (thanks to Greg Watkins for finding this)</li>
-</ul>
-
 <p>Giorgio Terdina fixed a problem with the XnTCP adapter code.
 
 <h5>2.11.6</h5>
@@ -1287,14 +1251,6 @@ test the held state of signal heads and to operate turnouts and accessories like
 <li>Fix bug intoduced in 2.11.5 where rotated SignalMasts were not stored properly.</li>
 <li>Add copy warrant button to warrant list table.</li>
 <li>Panel grants local control of block with "Out Of Service" status.</li>
-</ul>
-
-<p>Matthew Harris:</p>
-<ul>
-<li>Update context report to also include system manufacturer
-<li>Updated the Windows documentation to help debug JMRI shutdown problems
-<li>Enabled Blocks data to be populated via Reporters
-<li>Fixed bug that caused Layout Editor panels not to be deleted when Delete Panel chosen on File menu
 </ul>
 
 <p>Kevin Dickerson:</p>
