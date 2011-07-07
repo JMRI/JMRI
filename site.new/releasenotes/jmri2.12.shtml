@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.1 2011-07-06 18:49:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.2 2011-07-07 00:14:32 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -101,6 +101,231 @@ None at the time of this release.
 	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.tgz/download</a></p>
 
 <h3>Changes since production release 2.10</h3>
+
+<p>Dan Boudreau made many enhancements to operations.</p>
+<ul>
+	<LI>Changed the track type "siding" to "spur" to better represent
+	a track that serves an industry.</LI>
+	<li>The operations program now supports car routing. The program
+	will now use up to 5 trains to move a car from one location to another.
+	Routing through staging tracks is disabled by default.</li>
+	<li>A new feature, "Return When Empty" is now available. When a
+	car's load changes to empty, the car can optionally return to a
+	location or location/track.</li>
+	<li>UK support been improved.</li>
+	<li>Improved the build report messages.</li>
+	<li>You can now specify a set out or pick up comment for a car based
+	on the car's load.</li>
+	<li>You can now mark a car as misplaced. When a car is marked
+	misplaced, the program will not attempt to move the car. Also a list of
+	misplaced cars is now appended to manifests and switch lists.</li>
+	<li>Schedules can now delay a car's pick up from a spur.</li>
+	<li>New feature, car loads can now have a low or high priority.
+	High priority loads are serviced before low priority loads.</li>
+	<li>New feature, "Timetable" under Trains-&gt;Tools. Allows you to
+	quickly set which trains will run on any given day of the week.</li>
+	<li>New tool "Routes-&gt;Tools-&gt;Set Train Icons Coordinates", you can
+	now visually update train icon coordinates for all locations.</li>
+	<li>New tool "Route-&gt;Tools-&gt;Set Train Icons Coordinates for this
+	Route", you can now visually update train icon coordinates for a route.</li>
+	<li>New route feature. You can now specify additional wait time
+	in a route. This allows you to adjust a train's manifest arrival times
+	to your liking.</li>
+	<li>New route feature. You can now set a departure time anywhere
+	in a route. Nice feature for passenger trains!</li>
+	<li>New route feature. You can now add an optional comment to each
+	stop in a route. Comments will show up in your manifests.</li>
+	<li>You can now decide to print location comments on the train's
+	manifests. See Trains-&gt;Tools-&gt;Print Options.</li>
+	<li>New build option, "Settings-&gt;Tools-&gt;Options". You can
+	now allow local switcher moves between spurs, yards, and interchanges.</li>
+	<li>You can now configure if staging tracks are restrictive.
+	Default is restrictive. Option is under Settings-&gt;Tools-&gt;Options. See help for
+	more info.</li>
+	<li>New operations panel feature, you can now move a train anywhere
+	in the route via the train icon popup menu. Select Route in the popup
+	menu, then the next location desired.</li>
+	<li>Improved the way the code handles switching from descriptive
+	to AAR car types.</li>
+	<li>You can now use a text editor to preview a train's build
+	report. Unfortunately, this feature requires java 1.6. and is currently
+	disabled for general release. Contact Dan Boudreau by email if you want
+	a jmri.jar file that has this feature.</li>
+	<li>You can now customize the order in which loco and car
+	attributes are printed on manifests and switch lists.</li>
+	<li>A train's total weight calculation is now based on whether the
+	cars are loaded or empty.</li>
+	<li>You can now define a car as being a passenger car. A
+	passenger car's weight doesn't change with load. Passenger cars are
+	placed towards the rear of a train.</li>
+	<li>Add some additional fonts for operations.</li>
+	<li>You can now modify and save column widths for the Cars and
+	Engines tables.</li>
+	<li>New tools to print trains and locations by car types. See Tools under "Modify Trains/Locations by Car Type";</li>
+	<li>The program now allow passenger cars to return to their starting location.</li>
+	<li>You can now change a track's type (Spur, Yard or Interchange).
+	Use the track "Tools-&gt;ChangeTrackType".</li>
+	<li>You can now specify the year you're modeling. To enter the year that
+	you're modeling, use the Settings window.</li>
+	<li>You can now modify the train timetable.</li>
+	<li>Changed switch list valid date to 24 hour clock</li>
+	<li>Code now checks the train's direction when determining a track
+	for locos and cabooses.</li>
+	<li>Added "Modify Location by Car Type" tool to the location
+	window.</li>
+	<li>Use the route departure time if set.</li>
+	<li>Allow user to select default printer for switch lists.</li>
+	<li>Add to train tool menu print and preview build report.</li>
+	<li>Allow user to change departure comment to show loads and
+	empties.</li>
+	<li>You can now control which loads a track can service.</li>
+	<li>Added tabbed manifest and switch lists, see Settings Tools-&gt;Print Options:</li>
+	<li>Minor enhancement to check the car's load when placing car at
+	a location.</li>
+	<li>Improve how operations moves cars when a route services a
+	location more than once. The program now performs set out first followed by pick ups.</li>
+	<li>All car loads in a kernel are now updated by spur's
+	schedule.</li>
+	<li>You can now change all of the loads in a kernel when editing
+	a car's load.</li>
+	<li>Update "Show Car Types Serviced" Tool for train, now shows
+	load status for train and track.</li>
+	<li>Operations enhancement, in the Trains window, user can select
+	"Show All" or "Show only build trains".</li>
+	<li>Operations enhancement, now the user can sort trains by
+	status.</li>
+	<li>The program now modifies all cars in kernel when using custom
+	loads from staging.</li>
+	<li>You can now preview or print out the car loads for the
+	various car types. This feature can be found in the Edit Car
+	Loads-&gt;Tools</li>
+	<li>You can now control which staging track a train will use.  You can also have
+	the program prompt you for a departure track from staging.  See Settings Tools-&gt;Options.</li>
+	<li>Provided a new operations sample script to deselect the train
+	build button when a train terminates: OperationsDeselectBuild.py</li>
+	<li>Users can now run scripts after operation files have been
+	loaded, and users can run scripts when the Trains window is closed.</li>
+	<li>The program now checks car and loco length field during file
+	imports.</li>
+	<li>You can now select where to place the backup operations
+	files. See Settings Tools-&gt;Backups and Restore.</li>
+	<li>The program now routes cars from staging with a custom load to
+	a spur with a schedule demanding that car type and load.</li>
+	<li>When printing car locations you can now optionally have a
+	space or page break after each set of locations.</li>
+	<li>New manifest print option, you can now show destination and
+	track when picking up a car.</li>
+	<li>Schedules can now operate in two modes, sequential or match.
+	Use match mode when you don't care about car order.</li>
+	<li>New optional train requirements, you can now have two
+	locomotive changes in the train's route, or request helper service.</li>
+	<li>Cars with a final destination will no longer wander if the
+	destination track doesn't have space for the car.</li>
+	<li>The edit schedule destination track menu now shows only valid
+	tracks. Staging tracks are no longer shown in the edit schedule window.</li>
+	<li>The program will now check the entire schedule in match mode
+	when generating custom loads from staging.</li>
+	<li>The switch list "Print Switch List Changes" now only shows new
+	trains since the last printing.</li>
+	<li>New "Set Cars" tool. Now you can set the location,
+	destinations, and load for a group of cars.</li>
+	<li>New car sort in the cars window, by car's final destination.</li>
+	<Li>New operations feature. You can now optionally create a Comma
+	Separated Values (csv) manifest file. Now you can use Excel to create a
+	custom manifest to your liking. Files can be found in
+	operations-&gt;csvManifests</Li>
+	<li>A new capacity check has been added to limit overloading of a
+	spur with a schedule in aggressive mode. Overloading a spur can
+	still happen when using aggressive mode, but the overloading is now
+	limited.</li>
+	<Li>Enhancement. A car in a kernel with FRED must be the lead (*)
+	car. When editing car with FRED and in kernel, the program will
+	automatically make the car the lead.</Li>
+	<li>Manifests and switch lists now block cars by kernel. The new
+	blocking order is: first by road, then number, kernel, location and
+	finally destination. This should keep cars in a kernel together on the
+	manifest and switch lists.</li>
+	<li>You can now change the loco and car manifest and switch list
+	pick up and set out prefixes, i.e. " [ ] Pick up". See
+	Setting-&gt;Tools Print Options.</li>
+	<li>You can now reset a train directly from the Trains window.</li>
+	<li>You can now have operations windows close on save. See
+	Settings Options.</li>
+	<LI>Enhancement to the "Set Cars" tool. You can now ignore
+	selected fields when changing a group of cars.</LI>
+	<LI>You can now optionally select which trains can set out and
+	pick up cars from a spur.</LI>
+	<LI>Car routing enhancement, program now checks the number of
+	available moves when determining if a train can service a car.</LI>
+	<LI>Improved how the program set outs cars when there's two or
+	more stops at the same location. There is now a bias to set out the
+	cars at the earlier stop.</LI>
+	<LI>New schedules enhancement, uses can optionally control a
+	schedule using the train timetables. For example you can now deliver a
+	car to a spur based on the day of the week.</LI>
+	<LI>The trains window now shows which timetable is active.</LI>
+	<LI>Spur/schedule enhancement. When a car is placed at a spur
+	with a schedule the car's destination isn't immediately set, only the
+	car's final destination. This should eliminate overloading at spurs
+	with schedules when in aggressive mode.</LI>
+	<LI>Car forwarding enhancement when a car has a final destination.
+	Now when the destination track is full, the program will determine if a
+	yard track at the destination is available, and deliver the car to the
+	yard track. The car will remain at the yard track until the spur
+	becomes available.</LI>
+	<LI>The program will now warn you if you haven't saved your files
+	before doing a backup.</LI>
+	<LI>You can now use the wild card "*" when using the "Find" button
+	in the cars and locomotives windows. For example, if you wanted to find
+	all cars with road numbers that ended with 456, you would enter *456.</LI>
+	<LI>Fixed a problem when a spur has a schedule and a group of
+	cars (kernel) was placed at the spur. Sometimes the car load wasn't
+	updated properly. Thank-you Frank Wyatt for bring this to our
+	attention.</LI>
+	<Li>Changed the order of the location comment when there's no work
+	at a location. The location and route comments now come after the "No
+	work statement".</Li>
+	<LI>Added some additional comments in the build report with
+	regards to car routing. Messages are now in the build report. Messages
+	to the console have been removed.</LI>
+	<LI>Fixed a problem with switch lists showing loco pick ups when
+	there wasn't. This happened when the switch list was printed when the
+	locos were at that location.</LI>
+	<LI>New feature, train logging. In addition to car and loco
+	logging, the program can now log train activity.</LI>
+	<LI>Operations manifest and switch lists enhancement, users can
+	now specify local car message format and color, see Print Options for
+	details.</LI>
+	<LI>Program now remembers a car's previous final destination when
+	reseting a train. Now when you reset a train and the car destinations
+	that were set by a schedule will remain.</LI>
+	<LI>Improved how tracks with setting FIFO and LIFO behave.
+	Previously if the program couldn't find a destination for a car, all
+	cars behind that car were stuck. Now the program will jump over a car
+	that can't move.</LI>
+	<LI>Train manifests now correctly show trains length and weight
+	when there are loco changes in route.</LI>
+	<LI>New feature, you can now enter a cost value for your cars and
+	locos. Nothing to do with operations, but nice to have.</LI>
+	<LI>You can now delete a schedule directly from the schedules
+	window.</LI>
+	<LI>You can now specify an alternative track for spurs with
+	schedules. See Tools-&gt;Options in the Schedule window.</LI>
+	<LI>Improved car import by allowing users the option of having the
+	program automatically create new locations and tracks during the car
+	import.</LI>
+	<LI>Print car and loco roster can now show the value field.</LI>
+	<LI>Export car and loco now exports the value field.</LI>
+	<LI>Switch lists now show the train's arrival and or departure
+	direction.</LI>
+	<LI>Improved how custom car loads are generated from staging when
+	using match mode, and "Generate custom loads for train spurs serviced
+	by this train".</LI>
+	<LI>Fixed some of the operations windows so the input text fields
+	now work correctly when using large font sizes.</LI>
+	<LI>New feature, the ability to pool a set of tracks to share
+	their lengths. See under Edit Track, Tools-&gt;Pools.</LI>
+</ul>
 
 
 <!--#include virtual="/Footer" -->
