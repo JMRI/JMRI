@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.9 2011-07-07 22:28:45 bhoffman351 Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.10 2011-07-08 02:07:19 ken_c Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -707,6 +707,44 @@ values to the XMLIO support so that web browsers can inquire about the JMRI vers
     <li>Function states can now be set directly.</li>
 </ul>
 
+<p>Ken Cameron</p>
+<ul>
+    <p>
+    X10/Insteon
+    <ul>
+    	   <li>Fixed a problem where a variable-intensity Light would not step all the way to the correct final intensity.</li>
+		   <li>Changed the X10 support for dim to use extended command which is a single direct command. Some very old units don't handle this, so can only do on/off operations via JMRI.</li>
+			<li>Multiple Connection support added.</li>
+			<li>Added a simulator connection.</li>
+    </ul>
+	<p>NCE</p>
+	<ul>
+		<li>Added a way to purge cabs from the NCE active cab list.</li>
+		<li>Added display of last time a cab was active.</li>
+		<li>Minor changes in fast clock management.</li>
+		<li>Worked with Dan Boudreau to update the NCE support to allow more than one NCE connection.</li>
+	</ul>
+	<p>Digitrax</p>
+	<ul>
+		 <li>Added initial support for the Digitrax DCS51 command station.</li>
+		 <li>Due to the loan of a DCS51 by Ed Sisk, I was able to finish support for the DCS51.</li>
+	</ul>
+	<p>Train Automation - Robot Throttle</p>
+	<ul>
+		<li>Added the RobotThrottle3 script.</li>
+		<li>Fixed a problem with RobotThrottle found by Jay Janzen.</li>
+		<li>Improved RT3 to handle blocks without signals (like interlockings).</li>
+		<li>Added buttons to manually move a train at the red, yellow or green speed to add manual
+setups.</li>
+	</ul>
+	<p>Other things:</p>
+	<ul>
+		 <li>Updated the main window to show connection name for each line. Nice confirmation for multiple connections.</li>
+		 <li>Enabled the option to select a default power manager when using multiple connections.</li>
+		 <li>Added a script, BlockLister.py, to investigate what is connected to a block. It displays which block connections, signals, signal masts, etc...</li>
+	</ul>
+</ul>
+
 <b>Editors</b>
     <ul>
     <li>Positioning can now be adjusted by using the arrow keys, the arrow keys on their own will move the items by 5 pixels either way, by holding shift and then the arrow key, it will move a pixel at a time. (KD)</li>
@@ -830,12 +868,7 @@ Pete Cressman added a copy popup to the Control Panel Editor.
 Pete Cressman improved how icons are found in the computer's file system.
 
 <p>
-
-<p>
 Simon Ginsburg made a huge update to the JMRI translations into other languages.
-
-<p>
-Ken Cameron fixed a problem where a variable-intensity Light would not step all the way to the correct final intensity.
 
 <p>
 Simon Ginsburg added translation tool scripts.
@@ -876,25 +909,11 @@ Pete Cressman fixed stacking of a multiple selection in the editors when moved
 beyond the left or top border of the panel
 
 <p>
-Ken Cameron fixed a problem with RobotThrottle debugged by Jay Janzen.
-
-<p>
-Ken Cameron worked on X10 and Insteon light support.
-
-
-
-<p>
 Pete Cressman change the editor's drag behavior from auto expand left &amp; 
 top border to stop move at left &amp; top border
 
 <p>
 Simon Ginsburg updated the German translation
-
-<p>
-Ken Cameron changes the X10 support for 
-dim to use extended command which is a single direct command. 
-May not work with older dim modules. 
-Also may cause cp290 interface issues, not tested yet on cp290.
 
 <p>
 Pete Cressman changed icon selection in the editor so it's the top one that's selected.
@@ -932,16 +951,6 @@ Steve Todd added a button to the mini web server startup window that opens your 
 web browser.
 
 
-<p>
-Ken Cameron added a way to purge cabs from the NCE active cab list. 
-This also shows the last (real) time the cab was active.
-
-<p>
-Ken Cameron made a change in the NCE fast clock.
-
-<p>
-Ken Cameron changed the X10 support to use an extended command for dimming. 
-Some very old units don't handle this, so can only do on/off operations via JMRI.
 
 <p>
 Steve Todd updated the xmlio server 
@@ -953,8 +962,6 @@ Also fixed GET processing.
 Added readback of the speed, direction and functions for a throttle to the xmlio server.
 Also, requests to set the power now get a reply with proper power state.
 
-<p>
-Ken Cameron added the RobotThrottle3 script
 
 <p>
 Pete Cressman added custom tooltips to the panel editors.
@@ -992,8 +999,6 @@ one when it next starts.
 <p>
 Pete Cressman made numerous small changes to Logix and panel support.
 
-<p>
-Ken Cameron added initial support for the Digitrax DCS51 command station.
 
 <h5>2.11.3</h5>
 
@@ -1007,16 +1012,6 @@ Lionel Jeanson updated the JMRI mini web server
 index.html with entries to prefs/roster.xml and web/roster.html
 Also, added automatic creation of function buttons from the JMRI roster 
 to the web throttles application, including lockable buttons.
-
-<p>
-Dan Boudreau and Ken Cameron updated the NCE support to
-allow more than one NCE connection.
-
-
-<p>
-Ken Cameron updated the main window to 
-show connection name for each line. 
-Nice confirmation for multiple connections.
 
 <p>
 Pete Cressman added a dialog to correct or delete broken icon paths (bad url) when loading a panel.
@@ -1055,9 +1050,6 @@ row places a text label in the panel.</li>
 </ul>
 
 <p>
-Ken Cameron made it possible to select a default power manager when using multiple connections.
-
-<p>
 Pete Cressman changes:
 <ul>
 <li>edited tooltip-text is saved and default tiooltip is its device display name
@@ -1070,11 +1062,6 @@ Pete Cressman changes:
 
 <p>
 Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connections.
-
-<p>
-Ken Cameron improved handling of the Digitrax DCS51 Super Zephyr.
-Thanks go to Ed Sisk for the loan of a DCS51 to perform the development and testing.
-
 
 <p>
 Kevin Dickerson added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
@@ -1091,24 +1078,6 @@ Note: once the keyboard driver is running, all keyboard inputs will be considere
 <li>A "None" device was introduced in the device list accessible on right click, 
     avoids to have all key inputs redirected to the Throttle.
 </ul>
-
-
-<p>
-Ken Cameron converted Powerline to support:
-<ul>
-<li>Multiple Connections.
-<li>Added a simulator connection.
-</ul>
-
-<p>
-Ken Cameron added a script, BlockLister.py, to investigate what is connected to a block.
-It displays which block connections, signals, signal masts, etc...
-
-<p>
-Ken Cameron updated RobotThrottle3.py to look past a block boundary without a signal.
-Added buttons to manually move a train at the red, yellow or green speed to add manual
-setups.
-
 
 <p>
 Steve Todd made multiple updates to the JMRI mini webserver:
@@ -1129,20 +1098,6 @@ Steve Todd made multiple updates to the JMRI mini webserver:
 </ul>
 
 <h5>2.11.4</h5>
-
-<p>
-
-
-<p>
-Ken Cameron:
-<ul>
-<li>Fixed Powerline interfaces for CP290 and Insteon.</li>
-<li>Improved the testing of the ports used for interfaces when saving the preferences.
-It now will log an error message on the console with the port and conflicting interfaces.</li>
-<li>With testing by Walt Thompson, found and fixed a significant timing bug that was causing
-a train to stop due to it tripping its own signals. Seven trains running for over 4 hours with
-no issues!!</li>
-</ul>
 
 <p>
 Pete Cressman:
@@ -1295,12 +1250,6 @@ Add user's name to loconet titles when user has modified default name to disting
   <li>JMRIMobile speed improvements</li>
 </ul>  
 
-
-<p>Ken Cameron</p>
-
-<ul>
-	<li>Fix in roster copy for NPE that prevented the copy from working.</li>
-</ul>
 
 (End of copies of original notes)
 
