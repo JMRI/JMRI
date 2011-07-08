@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.10 2011-07-08 02:07:19 ken_c Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.11 2011-07-08 20:05:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -47,13 +47,10 @@ JMRI is now only available under the
 see our 
 <a href="/Copyright.html">copyright and licensing page</a>.</b></p>
 
-<h3>New warnings for this version:</h3>
 
-(None yet)
+<h3>Warnings</h3>
 
-<h3>Older warnings</h3>
-
-Development Version 2.11.4 contains significant improvements to the Powerline Interfaces. 
+Development Version 2.11.4 contained significant improvements to the Powerline Interfaces. 
 Some of these improvements involved a complete restructuring of the underlying code. 
 As a result, previously working Preferences may now show no connections for some of the Powerline Interfaces. 
 If this occurs, go to Preferences and setup the Powerline Layout Connections again. 
@@ -923,16 +920,6 @@ Pete Cressman added signal mast Lit and Held states and actions to Logix and Con
 
 <p>
 Pete Cressman added the conditional table to the Logix picklist
-
-<p>
-The numerical values of "ON" and "OFF" for Lights have changed, along with
-some of the other constants in the class.  This will have no impact on 
-people just using the program.  If you're using scripts with numerical values
-in them, please recode them to use the symbolic values.
-
-
-
-<p>
 
 <p>
 Lionel Jeanson added buttons in throttle window (next and previous running locomotives) and
