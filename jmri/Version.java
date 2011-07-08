@@ -20,7 +20,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000 - 2011
- * @version $Revision: 1.168 $
+ * @version $Revision: 1.169 $
  */
 
 public class Version {
@@ -35,12 +35,12 @@ public class Version {
      * Minor number changes with each production release.
      * Odd is development, even is production.
      */
-     static final public int minor = 12;
+     static final public int minor = 13;
      
     /* Test number changes with individual releases,
      * general fastest for test releases. Set 0 for production
      */
-     static final public int test = 0;
+     static final public int test = 1;
      
     /**
      * Modifier is used to denote specific builds.
