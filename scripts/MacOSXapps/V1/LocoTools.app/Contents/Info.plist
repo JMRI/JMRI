@@ -11,11 +11,11 @@
 	<key>CFBundleSignature</key>
 	<string>JMRL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.11.9</string>
+    <string>2.12</string>
     <key>CFBundleLongVersionString</key>
-    <string>2.11.9, Copyright 1998-2011 JMRI Project</string>
+    <string>2.12, Copyright 1998-2011 JMRI Project</string>
     <key>CFBundleGetInfoString</key>
-    <string>LocoTools 2.11.9, Copyright 1998-2011 JMRI Project</string>
+    <string>LocoTools 2.12, Copyright 1998-2011 JMRI Project</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleExecutable</key>
