@@ -10,20 +10,20 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of staging tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.12 $
  */
-public class StagingTableModel extends TrackTableModel{
+public class StagingTableModel extends TrackTableModel {
 
-	public StagingTableModel(){
+	public StagingTableModel() {
 		super();
 	}
 
-	public void initTable(JTable table, Location location){
+	public void initTable(JTable table, Location location) {
 		super.initTable(table, location, Track.STAGING);
 	}
 
-	public String getColumnName(int col){
-		switch (col){
+	public String getColumnName(int col) {
+		switch (col) {
 		case NAMECOLUMN: return rb.getString("StagingName");
 		}
 		return super.getColumnName(col);
@@ -42,11 +42,15 @@ public class StagingTableModel extends TrackTableModel{
 		focusEditFrame = true;
 	}
 
-    // this table listens for changes to a location and it's staging tracks
+    // this table listens for changes to a location and it's stagings
     public void propertyChange(PropertyChangeEvent e) {
     	if (Control.showProperty && log.isDebugEnabled()) 
     		log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	super.propertyChange(e);
+    	if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
+    		updateList();
+    		fireTableDataChanged();
+    	}
+
     	if (e.getSource().getClass().equals(Track.class)){
     		String type = ((Track) e.getSource()).getLocType();
     		if (type.equals(Track.STAGING)){

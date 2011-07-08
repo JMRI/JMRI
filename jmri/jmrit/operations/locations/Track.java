@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a spur, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.70 $
+ * @version             $Revision: 1.69 $
  */
 public class Track {
 	
@@ -127,7 +127,6 @@ public class Track {
 	public static final String PICKUP_CHANGED_PROPERTY = "pickup";
 	public static final String TRACK_TYPE_CHANGED_PROPERTY = "trackType";
 	public static final String LOADS_CHANGED_PROPERTY = "TrackLoads";
-	public static final String POOL_CHANGED_PROPERTY = "TrackPool";
 	
 	public Track(String id, String name, String type, Location location){
 		log.debug("New track " + name + " " + id);
@@ -1192,7 +1191,7 @@ public class Track {
 			if (_pool != null){
 				_pool.add(this);
 			}
-			firePropertyChange(POOL_CHANGED_PROPERTY, old, pool);
+			firePropertyChange("Pool change", old, pool);
 		}
 	}
 	

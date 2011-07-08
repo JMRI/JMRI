@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.9 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
@@ -153,8 +153,6 @@ public class EcosTurnout extends AbstractTurnout
      * @param closed State of the turnout to be sent to the command station
      */
     protected void sendMessage(boolean closed) {
-        if (getInverted())
-            closed =!closed;
         if ((masterObjectNumber)&&(extended==0)){
             EcosMessage m;
             // get control
