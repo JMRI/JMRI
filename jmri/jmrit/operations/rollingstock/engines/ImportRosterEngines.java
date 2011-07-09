@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -90,11 +91,12 @@ public class ImportRosterEngines extends Thread {
 		fstatus.dispose();
 
 		if (enginesAdded>0) {
-			JOptionPane.showMessageDialog(null, enginesAdded+" "+rb.getString("ImportEnginesAdded"),
+			JOptionPane.showMessageDialog(null, 
+					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
 					rb.getString("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null,
-					enginesAdded+" "+rb.getString("ImportEnginesAdded"),
+					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
 					rb.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
