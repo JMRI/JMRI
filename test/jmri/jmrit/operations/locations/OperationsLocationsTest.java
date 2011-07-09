@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 
@@ -16,6 +17,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
@@ -37,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -403,7 +405,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car Start Number of Cars", 0, t.getNumberCars());
 		Assert.assertEquals("Location Track Car Start Number of Engines", 0, t.getNumberEngines());
 
-		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		Car c1 = new Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		t.addRS(c1);
 
@@ -412,7 +414,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car First Number of Engines", 0, t.getNumberEngines());
 		Assert.assertEquals("Location Track Car First Used Length", 40+4, t.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
+		Car c2 = new Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
 		t.addRS(c2);
 
@@ -430,7 +432,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car 3rd Number of Engines", 1, t.getNumberEngines());
 		Assert.assertEquals("Location Track Car 3rd Used Length", 40+4+33+4+70+4, t.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.rollingstock.cars.Car c3 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER3");
+		Car c3 = new Car("TESTROAD", "TESTNUMBER3");
 		c3.setLength("50");
 		t.addRS(c3);
 
@@ -439,7 +441,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car 4th Number of Engines", 1, t.getNumberEngines());
 		Assert.assertEquals("Location Track Car 4th Used Length", 40+4+33+4+70+4+50+4, t.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.rollingstock.engines.Engine e2 = new jmri.jmrit.operations.rollingstock.engines.Engine("TESTROAD", "TESTNUMBERE2");
+		Engine e2 = new Engine("TESTROAD", "TESTNUMBERE2");
 		e2.setModel("E8");  // Default length == 70
 		t.addRS(e2);
 
@@ -494,7 +496,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		Assert.assertEquals("Location Track Pick Ups Start", 0, t.getPickupRS());
-		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		Car c1 = new Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		
 		t.addPickupRS(c1);
@@ -522,13 +524,13 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Drops Start", 0, t.getDropRS());
 		Assert.assertEquals("Location Track Drops Start Reserved", 0, t.getReserved());
 
-		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		Car c1 = new Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		t.addDropRS(c1);
 		Assert.assertEquals("Location Track Drops 1st", 1, t.getDropRS());
 		Assert.assertEquals("Location Track Drops 1st Reserved", 40+4, t.getReserved());
 
-		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
+		Car c2 = new Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("50");
 		t.addDropRS(c2);
 		Assert.assertEquals("Location Track Drops 2nd", 2, t.getDropRS());
@@ -991,21 +993,21 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Used Length", 0, l.getUsedLength());
 		Assert.assertEquals("Location Number of Cars", 0, l.getNumberRS());
 
-		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		Car c1 = new Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		l.addRS(c1);
 
 		Assert.assertEquals("Location Number of Cars", 1, l.getNumberRS());
 		Assert.assertEquals("Location Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
+		Car c2 = new Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
 		l.addRS(c2);
 
 		Assert.assertEquals("Location Number of Cars", 2, l.getNumberRS());
 		Assert.assertEquals("Location Used Length one car", 40+4+33+4, l.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.rollingstock.cars.Car c3 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER3");
+		Car c3 = new Car("TESTROAD", "TESTNUMBER3");
 		c3.setLength("50");
 		l.addRS(c3);
 
@@ -1037,14 +1039,14 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Used Length", 0, l.getUsedLength());
 		Assert.assertEquals("Location Number of Cars", 0, l.getNumberRS());
 
-		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		Car c1 = new Car("TESTROAD", "TESTNUMBER1");
 		c1.setLength("40");
 		l.addRS(c1);
 
 		Assert.assertEquals("Location Number of Cars", 1, l.getNumberRS());
 		Assert.assertEquals("Location Used Length one car", 44, l.getUsedLength()); // Drawbar length is 4
 
-		jmri.jmrit.operations.rollingstock.cars.Car c2 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER2");
+		Car c2 = new Car("TESTROAD", "TESTNUMBER2");
 		c2.setLength("33");
 		l.addRS(c2);
 
@@ -1147,6 +1149,118 @@ public class OperationsLocationsTest extends TestCase {
 		// remove dummy schedule
 		ScheduleManager.instance().deregister(sch);
 		
+	}
+	
+	public void testTrackPools() {
+		LocationManager locMan = new LocationManager();
+		Location l = locMan.newLocation("TestTrackPoolsLocation");
+		Track t1 = l.addTrack("Yard 1", Track.YARD);
+		Track t2 = l.addTrack("Yard 2", Track.YARD);
+		Track t3 = l.addTrack("Siding 1", Track.SIDING);
+		Track t4 = l.addTrack("Siding 2", Track.SIDING);
+		Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
+		Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
+		Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
+		
+		// create two pools
+		Pool pool1 = l.addPool("Pool One");
+		Pool pool2 = l.addPool("Pool Two");
+		
+		t1.setPool(pool1);
+		t3.setPool(pool1);
+		t7.setPool(pool1);
+		
+		t2.setPool(pool2);
+		t4.setPool(pool2);
+		t5.setPool(pool2);
+		t6.setPool(pool2);
+		
+		// only give one track in the pool some length
+		t3.setLength(100);
+		t5.setLength(200);
+		
+		// set minimums
+		t2.setMinimumLength(50);
+		t5.setMinimumLength(100);
+		
+		Car c1 = new Car("C", "1");
+		c1.setLength("40");
+		c1.setType("Boxcar");	// location and track defaults should support type Boxcar
+		
+		Car c2 = new Car("C", "2");
+		c2.setLength("25");
+		c2.setType("Boxcar");	// location and track defaults should support type Boxcar
+		
+		Car c3 = new Car("C", "3");
+		c3.setLength("32");
+		c3.setType("Boxcar");	// location and track defaults should support type Boxcar
+		
+		// now place cars and see if track lengths adjust correctly
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t1));
+		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
+		Assert.assertEquals("track length", 100-(40+Car.COUPLER), t3.getLength());
+		Assert.assertEquals("track length", 0, t7.getLength());
+		
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t7));
+		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
+		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
+		Assert.assertEquals("track length", 100-(40+Car.COUPLER)-(25+Car.COUPLER), t3.getLength());
+		
+		// not able to place c3, not enough available track length
+		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t1));
+		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
+		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
+		Assert.assertEquals("track length", 100-(40+Car.COUPLER)-(25+Car.COUPLER), t3.getLength());
+		
+		// now test the minimum track length pool feature
+		// tracks t2 t4 t5 and t6 in the same pool 
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t2));
+		Assert.assertEquals("track length", 40+Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200-(40+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 0, t4.getLength());
+		Assert.assertEquals("track length", 0, t6.getLength());
+		
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t2));
+		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 0, t4.getLength());
+		Assert.assertEquals("track length", 0, t6.getLength());
+
+		// not able to place c3, not enough available track length because of minimum for t5
+		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t2));
+		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 0, t4.getLength());
+		Assert.assertEquals("track length", 0, t6.getLength());
+		
+		// now give t6 some length so the set location will work
+		t6.setLength(50);
+		
+		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l, t2));
+		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 0, t4.getLength());
+		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
+		
+		// now move the cars on t2 to t4 to test the minimum for t2
+		c1.setLocation(null,null);	// release the used track. TODO requestTrackLength() should have checked
+									// to see if car's track was part of pool
+		
+		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t4));
+		Assert.assertEquals("track length", 25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 40+Car.COUPLER, t4.getLength());
+		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
+		
+		c2.setLocation(null,null);
+		
+		// not enough track length for c2
+		Assert.assertEquals("Place c2", Track.LENGTH + " ("+(25+Car.COUPLER)+")", c2.setLocation(l, t4));
+		Assert.assertEquals("track length", 25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 40+Car.COUPLER, t4.getLength());
+		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
+			
 	}
 
 	// test location Xml create support
