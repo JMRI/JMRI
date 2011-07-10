@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1295,6 +1295,13 @@ public class OperationsLocationsTest extends TestCase {
 		t3.setRoadOption(Track.EXCLUDEROADS);
 		t4.addTypeName("Track 4 Type");
 		
+		// test pool features
+		Pool pool = l1.addPool("Test Pool");
+		t1.setPool(pool);
+		t1.setMinimumLength(321);
+		t2.setPool(pool);
+		t2.setMinimumLength(123);
+		
 		CarTypes ct = CarTypes.instance();
 		ct.addName("Boxcar");
 		ct.addName("boxCar");
@@ -1333,6 +1340,13 @@ public class OperationsLocationsTest extends TestCase {
 		s2i1.setShip("Schedule 2 Item 1 Ship");
 		s2i1.setCount(123);
 		s2i1.setComment("Schedule 2 Item 1 Comment");
+		
+		// test schedule and alternate track features
+		t2.setScheduleId(s1.getId());
+		t2.setAlternativeTrack(t1);
+		t2.setReservationFactor(33);
+		t2.setScheduleMode(Track.MATCH);
+		t2.setScheduleCount(2);
 
 		locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("New Location by Id 1", "Test Location 2", manager.getLocationById(locationList.get(0)).getName());
@@ -1490,6 +1504,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 1 track road option", Track.EXCLUDEROADS, t.getRoadOption());
 				Assert.assertEquals("Location 1 track road", true, t.acceptsRoadName("Track 1 Road"));
 				Assert.assertEquals("Location 1 track road", false, t.acceptsRoadName("Track 3 Road"));
+				Assert.assertNull("Location 1 track pool", t.getPool());
 			}
 			if (i == 1) {
 				Assert.assertEquals("New Location by Name List 2", "Test Location 2", loc.getName());
@@ -1510,6 +1525,19 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertEquals("Location 2 track 1 type", true, t.acceptsTypeName("Track 2 Type"));
 				Assert.assertEquals("Location 2 track 1 type", false, t.acceptsTypeName("Track 4 Type"));
+				Assert.assertNotNull("Location 2 track 1 pool exists", t.getPool());
+				Assert.assertEquals("Location 2 track 1 pool name", "Test Pool", t.getPool().getName());
+				Assert.assertEquals("Location 2 track 1 pool name", "Test Pool", t.getPoolName());
+				Assert.assertEquals("Location 2 track 1 min track length", 123, t.getMinimumLength());		
+				Assert.assertNotNull("Location 2 track 1 schedule", t.getSchedule());
+				Assert.assertEquals("Location 2 track 1 schedule name", "Schedule 1 Name", t.getSchedule().getName());
+				Assert.assertEquals("Location 2 track 1 schedule name", "Schedule 1 Name", t.getScheduleName());
+				Assert.assertNotNull("Location 2 track 1 alternate track", t.getAlternativeTrack());
+				Assert.assertEquals("Location 2 track 1 alternate track name", "A Yard", t.getAlternativeTrack().getName());
+				Assert.assertEquals("Location 2 track 1 schedule mode", Track.MATCH, t.getScheduleMode());
+				Assert.assertEquals("Location 2 track 1 reservation factor", 33, t.getReservationFactor());
+				Assert.assertEquals("Location 2 track 1 schedule count", 2, t.getScheduleCount());
+				
 				t = loc.getTrackById(list.get(1));
 				Assert.assertEquals("Location 2 2nd track name", "A Yard", t.getName());
 				Assert.assertEquals("Location 2 track 2 road option", Track.INCLUDEROADS, t.getRoadOption());
@@ -1517,7 +1545,9 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 2 track 2 road", false, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertEquals("Location 2 track 2 type", false, t.acceptsTypeName("Track 2 Type"));
 				Assert.assertEquals("Location 2 track 2 type", false, t.acceptsTypeName("Track 4 Type"));
-
+				Assert.assertNotNull("Location 2 track 2 pool exists", t.getPool());
+				Assert.assertEquals("Location 2 track 2 pool name", "Test Pool", t.getPool().getName());
+				Assert.assertEquals("Location 2 track 2 min track length", 321, t.getMinimumLength());
 			}
 			if (i == 2) {
 				Assert.assertEquals("New Location by Name List 3", "Test Location 3", loc.getName());
@@ -1538,6 +1568,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 3 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
 				Assert.assertEquals("Location 3 track type", false, t.acceptsTypeName("Track 2 Type"));
 				Assert.assertEquals("Location 3 track type", true, t.acceptsTypeName("Track 4 Type"));
+				Assert.assertNull("Location 3 track pool", t.getPool());
 			}
 		}
 		
