@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2011-06-12 21:24:06 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2011-07-10 20:29:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>JMRI: NMRA 2011 Clinics</TITLE>
@@ -38,6 +38,7 @@ our clinics.
     <a href="http://www.x2011west.org/clinicsTable.php#C061">Wednesday, 4:00 PM - 5:00 PM</a> 
     and <a href="http://www.x2011west.org/clinicsTable.php#C089">Thursday, 4:00 PM - 5:00 PM</a>
 <dt><b>JMRI Users Meeting</b><dd><a href="http://www.x2011west.org/clinicsTable.php#C062">Monday, 9:00 PM - 11:00 PM</a>
+(<a href="2011JmriUserMeeting.pdf">slides, including comments added during discussion</a>)
 </dl>
 (Unfortunately, the Advanced DecoderPro clinic had to be cancelled due to schedule conflict)<p>
 
