@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.11 2011-07-08 20:05:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.12 2011-07-10 18:52:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -33,7 +33,7 @@
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Production release 2.12 of JMRI/DecoderPro is available for download.</p>
  
-<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
+<br><b>This is a draft release note only; the download links do not yet work</b>
 
 <h3>Notes:</h3>
 
@@ -441,7 +441,114 @@ SPTCO-1930 signal aspects.
 </ul>
 
 <p>
-Nigel Cliffe 
+Pete Cressman:
+<ul>
+<li>added a copy popup to the Control Panel Editor.
+<li>improved how icons are found in the computer's file system.
+<li>fixed a problem selecting groups on panels
+<li>added a new editor tool: Item Palette. He also updated the signal head icons to only show icons that 
+are relevant to valid states.
+<li>fixed stacking of a multiple selection in the editors when moved 
+beyond the left or top border of the panel
+<li>changed the editor's drag behavior from auto expand left &amp; 
+top border to stop move at left &amp; top border
+<li>changed icon selection in the editor so it's the top one that's selected.
+<li>added signal mast Lit and Held states and actions to Logix and Conditionals
+<li>added the conditional table to the Logix picklist
+<li>added custom tooltips to the panel editors.
+<li>added an update of indicator track icons from the panel.
+<li>fixed a problem adding a clock to a panel.
+<li>made numerous small changes to Logix and panel support.
+<li>added support for invisible icons on panels.  The file "Invisible.gif" in the program icon directory can be selected 
+as a dimensionless icon.  This can be used when sensors are stacked amd allows "peeking through" a state of the top sensor
+to view the state of the sensor underneath.  For example. combining two sensors to depict a 3 state panel jewel.
+<li>added a dialog to correct or delete broken icon paths (bad url) when loading a panel.
+<li>added new Logix features
+<ul>
+<li>A dialog will display Logix errors if any occur during runtime</li>
+<li>Conditionals can be set to calculate the triggering of their actions whenever one of the state 
+variable changes state.  Until now Conditionals have only calculated the triggering of their actions  
+when the antecedent expression itself changed truth value.  In both cases, 
+actions are still triggered according to the truth value of the antecedent expression.</li>
+<li>State variables to test the status of Occupancy Blocks have been added.</li>
+<li>Actions for setting Occupancy Block conditions have been added.</li>
+</ul>
+<li>added new ControlPanelEditor features
+<ul>
+<li>Clipboard Copy & Paste can be done between two control panels.</li>
+<li>The Item Palette can hold multiple sets of icons for each item type.</li>
+<li>The Item Palette has "Indicator Track" and "Indicator Turnouts" that change color when their block sensor 
+shows occupacy.  When used with Occupancy Blocks and Warrants, indicator icons will show allocation, 
+path route, occupancy or error condition by color.</li>
+<li>Accelerator keys added for Item Palette and Table List.</li>
+<li>The Item Palette user interface has all tab items drag from a "Drag Panel" icon.  Dragging from a table
+row places a text label in the panel.</li>
+</ul>
+<li>edited tooltip-text is saved and default tiooltip is its device display name
+<li>improved path detection and display for simultaneous manual and auto train running under warrants.
+<li>fixed duplication and copy of rotated Signal Masts bug.
+<li>improved path detection and display for simultaneous manual and auto train running under warrants.
+<li>added a loco icon to follow auto trains running under warrants
+<li>fixed bug where orthogonal rotations overrode degree rotations when loading a panel.
+<li>Fixed a bug where groups of icons copied and pasted into another panel had their attributes incorrectly modified.</li>
+<li>Updated Control Panel documentation.</li>
+<li>Added edit text menu item to Loco Marker popup when in operations mode.</li>
+<li>Fixed bug when removing Memory Input and Memory Spinner icons.</li>
+<li>Fixed bug for Memory Input popup menu to change column width.</li>
+<li>fix bug of multiple additions of items from Item Palette duplicating the rotations of the first.</li>
+<li>fix bug unable to select family type after selecting signal head row in Item Palette.</li>
+<li>The Path list on the Indicator Track and Indicator Turnout tabs of the Item Palette have
+been replaced with checkboxes.  See the help page on the Item Palette.</li>
+<li>A help page has been added to the Item Palette.</li>
+<li>Warrant throttle command scripts editing improved. Commands may be added and deleted.  
+Scripts can be edited to trigger an external sensor to operate additional animation.
+<li>Internal improvements to Portals and OPaths</li>
+<li>Fixed bug that would hang scipts if Speed Table was not initialized.</li>
+<li>Fixed bug #3209940 Logix StateVariable for SignalHead Apperance and Mast Aspect did not report user errors.</li> 
+<li>Added Circuit Builder tool to Control Panel Editor.  This is an 
+ alternative tool to the Occupancy Tables that creates OBlocks,
+ Portals and OPaths through a "point and click" GUI. (features still in progress)</li>
+<li>Fix route finder and warrant recording bug introduced in ver 2.11.4</li>
+<li>Fix loco icon following warrant playback through all track circuits.</li>
+<li>Fix bug that did not load ver 2.4 signalHead icons.</lii>
+<li>Fix bug that did not load rotated or scaled signalMastd icons.</li>
+<li>Fix bug loading panel after Occupancy Block Table is open.</li>
+<li>Inserting or deleting rows of a Throttle Command warrant script now
+ keeps the total elapsed time a train is in a block the same.</li>
+<li>Added set TrainID, set TrainName warrant actions to Logix</li>
+<li>Fix background color of panels when changing views between editors</li>
+<li>Add indirection to Logix actions for device names and action types.
+ The '@' symbol before a memory location will use the value in that memory for
+ the device name or its action string.</li>
+<li>Simplifird LRoute GUI</li> 
+<li>Added an LRoute "Initializer".  Creates a Logix guaranteed to execute first
+ for initializing sensors, turnouts and signals, avoiding thrashing of
+ enabling Logixes at panel load time.</li>
+<li>Help files updated for Warrants, ItemPalette, Control Panel Editor</li>   
+<li>All known problems with the Abort command to Auto or Manual warrants fixed.</li>   
+<li>Two or more warrants can be allocated when they have blocks in common as long as each
+ can acquire its first block.  (An allocated warrant must always have a starting block under its control.)</li>   
+<li>Dark blocks may used as starting and destination blocks.  They should be registered OBlocks without a sensor.</li>   
+<li>Speed sampling interval changed to 500ms instead of 200ms when recording auto train scripts</li>
+<li>Train name in loco icon follows progress on both record and playback of a warrant.<li>   
+<li>Occupany Block Tables, PickLists, Palette bean tables are sortable.</li>
+<li>Fix bug where auto trains waited indefinitely when resynchronizing block entry.</li>
+<li>Fix bug intoduced in 2.11.5 where rotated SignalMasts were not stored properly.</li>
+<li>Add copy warrant button to warrant list table.</li>
+<li>Panel grants local control of block with "Out Of Service" status.</li>
+<li>Fixed bug in LRoute Initializer where extra trigger items were included</li>
+<li>Warrant route loops with repeating blocks or the same starting and ending bocks can record and playback.</li>
+<li>Indicator tracks move train Id markers automatically under both manual and auto playback warrants.</li>
+<li>Gray menus when CircuitBuilder is in an editing mode</li>
+<li>Portal editing in CircuitBuilder interface simpified.</li>
+<li>Name changing in CircuitBuilder for Blocks, Portals and Paths implemented.</li>
+<li>Conversion of track icons to Indicator icons in CircuitBuilder improved.</li>
+<li>Other fixes and improvements - CircuitBuilder is ready for use.</li>
+<li>Added user's name to loconet titles when user has modified default name to distinguish multiple connections
+</ul>
+
+<p>
+Nigel Cliffe: 
 <ul>
 <li>contributed a decoder definition for the MERG ACC5 decoder
 and did a major update to the MERG ACC4 decoder definition.
@@ -464,7 +571,7 @@ Its been tested by a couple of Zimo sound users, and we found a bug in the Zimo 
 
 
 <p>
-Andrew Crosland
+Andrew Crosland:
 <ul>
 <li>Improved the speed averaging for the Bachrus speedometer.
 <li>Improved the Bachrus speedometer readout to work more closely with the hardware, 
@@ -485,7 +592,30 @@ message as well as emergency stop. Also made some internal changes.
 </ul>
 
 <p>
-Team Digital 
+Kevin Dickerson:
+<ul>
+<li>updated the auto width justification of a memory label in LayoutEditor, around the x position, 
+ie the text will centre around position X, or be right justified to the value of X.
+Before the justification only really showed itself with fixed width memory labels.
+<li>improved the preferences:
+    By default 4 sets of jmrixconfigpanes are created at start up.  
+    However if there are more than 4 connections, the 5th and above connections do not have a jmrixconfigpane instance created and 
+    do not automatically get listed in the preference window.
+<li>improved the C/MRI sensor add process so that it now displays an error message when an invalid system name is entered.
+Sensor manager now allows for multiple sensors to be added.
+<li>improved handling of errors when opening LocoNetOverTCP connections.
+<li>added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
+Also added tools to return either a facing or protected blocks by signal heads, masts or sensors.
+<li>Fixed an error that would occur if a cv value is left blank.  If the user blanks out a value and doesn't enter in a new, then the old value is restored.</li>
+<li>Prevented an occuring from occuring when the power on command is issued to the NCE Power Cab via the usb interface.</li>
+<li>Fixed a bug with the default selector for the throttle manager.</li>
+<li>Fixed a bug in the Speedo Console read button, where the correct address isn't correct read.</li>
+<li>Updated the file export facility on the Speedo Console, so that the forward and reverse values for a given speed step are on the same row.</li>
+<li>Newly opened windows will now cascade down the screen rather than stacking up on top of each other.</li>
+</ul>
+
+<p>
+Team Digital: 
 <ul>
 <li>provided a decoder definition for their Team Digital BlocD8 board.
 <li>updated the definition for their SIC24AD decoder.
@@ -495,8 +625,19 @@ state and added unoccupied delay time CVs
 </ul>
 
 <p>
+David Duchamp made some improvements to running trains with the Dispatcher.
+
+<p>
 Marc Fournier improved the wording in the reset section
 of the BLI Paragon decoder definitions.
+
+<p>
+Simon Ginsburg
+<ul>
+<li>made a huge update to the JMRI translations into other languages.
+<li>added translation tool scripts.
+<li>updated the German translation
+</ul>
 
 <p>
 Michael Greene updated the Lenz Ultradrive decoder definition.
@@ -561,6 +702,14 @@ rather than after dragging by using the SliderSnap class provided by Michael Kne
 <p>
 David Heap updated the QSI Version 7 Steam definition to restore CV 51.5 for Eureka C38 4-6-2
 
+<p>Brett Hoffman, changes to WiFi throttles:</p>
+<ul>
+    <li>Updated to allow F2 to follow "lock" setting in roster entry function labels.</li>
+    <li>Added support for one throttle to control multiple addresses.</li>
+    <li>WiFi devices can now request speed, direction, and function momentary info.</li>
+    <li>Function states can now be set directly.</li>
+</ul>
+
 <p>Bob Jacobsen:
 <ul>
 <li>fixed a bug in LocoNet message processing that kept the "Send LocoNet Message" tool from 
@@ -582,6 +731,63 @@ it in the jmriusers group.
 <li>When identifying a decoder type, DecoderPro is now smarter about displaying a partial match.
 <li>Fixed a problem with OpenLCB turnout and sensor device addresses in "dot" form: 12.34.56.7.8.AB.C.DE
 <li>The initial display of the CBUS console was fixed so that the buttons show properly.
+</ul>
+
+<p>
+Lionel Jeanson 
+<ul>
+<li>made multiple improvements to throttles:
+<ul>
+<li>More French translation
+<li>Improved edit/play mode and transparency, transparency no longer proposed as a preference, in edit mode, internal frames are opaque and are set translucent when going to play mode (click on button with pen in toolbar). Tested on OS-X/Windows/Linux with several L&F, works fine on all.
+<li>Improved "save throttle layout" and "save default throttle layout", now also save throttles themselves, new preference in throttle preference to configure this behavior (activated as default, to be deactivated to go to older mode that would only save the windows layout).
+</ul>
+<li>added buttons in throttle window (next and previous running locomotives) and
+fixed a selection bug in throttles list window.
+<li>improved the Wiimote driver:
+<ul>
+<li>next and previous running locomotives on up and down
+<li>roster browse with + and - when current throttle frame empty (home button to acquire throttle)
+</ul>
+<li>updated the JMRI mini web server
+index.html with entries to prefs/roster.xml and web/roster.html
+Also, added automatic creation of function buttons from the JMRI roster 
+to the web throttles application, including lockable buttons.
+<li>improved the Roster XSLT support so that it displays well via the mini web server,
+and shows a button for opening a throttle. 
+<ul>
+<li><a href="http://localhost:12080/web/roster.html">http://localhost:12080/web/roster.html</a>
+now displays a simplified roster list in a clickable table, a click on an entry will open a matching inControl throttle in a new window.
+<li><a href="http://localhost:12080/prefs/roster.xml">http://localhost:12080/prefs/roster.xml</a> 
+displays the roster rendered in an html table with all attributes displayed and links to subreports like decoder details etc.
+(Requires update to roster file format; this will happen the first time you save a locomotive definition
+in the program, which rewrites the roster file)
+</ul>
+If you'd like to get links to these in the local home page, remove the "index.html" file
+in your JMRI preferences directory. JMRI will automatically replace it with an updated
+one when it next starts.
+<li>improved the ZeroConf handling.
+<li>improved the Jynstrument throttle support:
+<ul>
+<li>Added function control up to 28.
+<li>Removed filter on kind of acceptable devices so that any Jinput device 
+    can be used for throttle control (Keyboard, mouse...).
+<li>Added a sample driver for keyboards.
+Note: once the keyboard driver is running, all keyboard inputs will be considered even if the JMRI window is not on the front
+<li>A "None" device was introduced in the device list accessible on right click, 
+    avoids to have all key inputs redirected to the Throttle.
+</ul>
+<li>Improved roster xslt files, roster.xml now better rendered in web browser when accessed through JMRI MiniWebServer.</li>
+<li>Added possibility to have function icons for throttles (defined via DecoderPro function labels pane).</li>
+<li>Function icons usage implemented in JMRI native throttles and inControl web throttles</li>
+<li>Added icons on buttons for JMRI native throttles control panel.</li>
+<li>Option available in throttles preferences to disable buttons icons for JMRI native throttles.</li>
+<li>Improved drag'n drop component for images, remove now on contextual menu.</li>
+<li>Improved Jynstrument on throttle window toolbar, Jynstruments now saved when window layout saved, and restored on load.</li>
+<li>Added a new way to control locomotive speed in throttle control panel : the "continuous" speed slider going from -100 to +100 through 0 with automatic direction change at 0. (option accessible in throttle control panel property window)</li>
+<li>Added an option to have a throttle control panel automatically switch between regular and continuous speed slider when a decoder function is activated/deactivated (most decoders have a slow function for "shunting" mode where a continuous speed slider is more appropriate for speed control). (option accessible in throttle control panel property window)</li>
+<li>Added possibility to customize throttle function buttons with images in throttle function button property window</li>
+<li>Added ability to save customized throttle function buttons in regular throttle files</li>
 </ul>
 
 <p>
@@ -669,12 +875,67 @@ Oscar Moutinho
 Jack Shall added the EMD 710G3C-T2 and GE Gevo-12 to the Tsunami 
 decoder definitions.
 
+<p>Giorgio Terdina:
+<ul>
+<li>fixed a problem with the XnTCP adapter code.
+<li>updated AutoDispatcher2 to version 2.3.4, 
+which copes with some changes in SignalHeadicon and is backwards compatible.
+<l>released a new version of AutoDispatcher, 
+supporting user-defined track colors and including new schedule commands to 
+test the held state of signal heads and to operate turnouts and accessories like level crossings.
+</ul>
+
 <p>
 Walt Thompson 
 <ul>
 <li>added reset definitions to the TCS definitions.
 <li>contributed an improved SE8cSignalExample XML file</p>
 <li>updated the SE8c signaling example.
+</ul>
+
+<p>
+Steve Todd 
+<ul>
+<li>added a button to the mini web server startup window that opens your local 
+web browser.
+<li>updated the xmlio server 
+to add roster list, complete with function labels. 
+Also changed turnout list to always use systemname as name, added username as additional value.
+Also fixed GET processing.
+<li>added readback of the speed, direction and functions for a throttle to the xmlio server.
+Also, requests to set the power now get a reply with proper power state.
+<li>provided several new files which go into the web folder
+to facilitate testing and education about the xmlio server and its features.
+He also added a few links to the generated index.html (delete existing file and restart to see them).
+<li>fixed the MIME types for image files from the mini web server.
+<li>made multiple updates to the JMRI mini webserver:
+<ul>
+<li>greatly improved the speed
+<li>provided a favorite icon for the server
+<li>modified the miniserver fileservlet to return the appropriate status
+(i.e. 404, 403) instead of unhandled exception or blank 200 responses. 
+<li>removed GetHost() which was causing timeouts on every access on some networks
+<li>set a 5-minute expiration on static files to avoid unneeded retrievals.
+<li>turned off caching on jframe images
+<li>added css folder so existing help files find default.css
+<li>improved index.html and dir listings to match jmri.org
+<li>changed headers from HTTP 1.0 to HTTP 1.1
+<li>added jmri icon for miniweb panel
+<li>added MiniServer preferences panel (port, rebuild, refreshes)
+<li>updated various help files related to miniserver
+</ul>
+<li>add handling for "route" and "panel" to xmlio server.</li>
+<li>xmlio server: handle read larger than default block size, minor error trapping/prevention</li>
+<li>added protocol to send MiniWebServer port to Wi-Fi devices.
+  <li>Fixed web server panel click on Positionable components,</li>
+  <li>JMRIMobile speed improvements</li>
+<li>changes to xmlio server: </p>
+<ul>
+<li>Added support for Memory Variables</li>
+<li>Reduced timeout on waiting threads from "forever" to 30 seconds</li>
+<li>Return "Content-Length" in reply header</li>
+<li>Added "Show Comm Info" to miniserver prefs, to promote key messages from debug to info when checked.  Default is off.</li>
+</ul>
 </ul>
 
 <p>
@@ -696,13 +957,11 @@ with the rate information.
 values to the XMLIO support so that web browsers can inquire about the JMRI version, etc.
 </ul>
 
-<p>Brett Hoffman, changes to WiFi throttles:</p>
-<ul>
-    <li>Updated to allow F2 to follow "lock" setting in roster entry function labels.</li>
-    <li>Added support for one throttle to control multiple addresses.</li>
-    <li>WiFi devices can now request speed, direction, and function momentary info.</li>
-    <li>Function states can now be set directly.</li>
-</ul>
+
+<p>
+david zuhn added support for exporting the entire roster to one file.  
+Menu support (but a null implementation) for importing from an exported roster file.
+
 
 <p>Ken Cameron</p>
 <ul>
@@ -837,408 +1096,6 @@ startup splash screen gives you more information when you disable at startup.
 
     <li>Newly opened windows will now cascade down the screen rather than stacking up on top of each other. (KD)</li>
 </ul>
-
-<h3>Test Version Release Notes</h3>
-<p>
-The following is just the concatenation of the individual
-test release change notes.  Please move interesting ones
-above here!</P>
-
-<h5>2.11.1</h5>
-
-<p>
-Kevin Dickerson updated the auto width justification of a memory label in LayoutEditor, around the x position, 
-ie the text will centre around position X, or be right justified to the value of X.
-Before the justification only really showed itself with fixed width memory labels.
-
-<p>
-Kevin Dickerson improved the preferences:
-    By default 4 sets of jmrixconfigpanes are created at start up.  
-    However if there are more than 4 connections, the 5th and above connections do not have a jmrixconfigpane instance created and 
-    do not automatically get listed in the preference window.
-
-
-<p>
-Pete Cressman added a copy popup to the Control Panel Editor.
-
-<p>
-Pete Cressman improved how icons are found in the computer's file system.
-
-<p>
-Simon Ginsburg made a huge update to the JMRI translations into other languages.
-
-<p>
-Simon Ginsburg added translation tool scripts.
-
-<p>
-Pete Cressman fixed a problem selecting groups on panels
-
-
-<p>
-Lionel Jeanson made multiple improvements to throttles:
-<ul>
-<li>More French translation
-<li>Improved edit/play mode and transparency, transparency no longer proposed as a preference, in edit mode, internal frames are opaque and are set translucent when going to play mode (click on button with pen in toolbar). Tested on OS-X/Windows/Linux with several L&F, works fine on all.
-<li>Improved "save throttle layout" and "save default throttle layout", now also save throttles themselves, new preference in throttle preference to configure this behavior (activated as default, to be deactivated to go to older mode that would only save the windows layout).
-</ul>
-
-<p>
-Kevin Dickerson improved the C/MRI sensor add process so that it now displays an error message when an invalid system name is entered.
-Sensor manager now allows for multiple sensors to be added.
-
-<p>
-david zuhn added support for exporting the entire roster to one file.  
-Menu support (but a null implementation) for importing from an exported roster file.
-
-<p>
-Pete Cressman added a new editor tool: Item Palette. He also updated the signal head icons to only show icons that 
-are relevant to valid states.
-
-
-
-<p>
-David Duchamp made some improvements to running trains with the Dispatcher.
-
-<h5>2.11.2</h5>
-
-<p>
-Pete Cressman fixed stacking of a multiple selection in the editors when moved 
-beyond the left or top border of the panel
-
-<p>
-Pete Cressman change the editor's drag behavior from auto expand left &amp; 
-top border to stop move at left &amp; top border
-
-<p>
-Simon Ginsburg updated the German translation
-
-<p>
-Pete Cressman changed icon selection in the editor so it's the top one that's selected.
-
-<p>
-Pete Cressman added signal mast Lit and Held states and actions to Logix and Conditionals
-
-<p>
-Pete Cressman added the conditional table to the Logix picklist
-
-<p>
-Lionel Jeanson added buttons in throttle window (next and previous running locomotives) and
-fixed a selection bug in throttles list window.
-
-<p>
-Lionel Jeanson improved the Wiimote driver:
-
-<ul>
-<li>next and previous running locomotives on up and down
-<li>roster browse with + and - when current throttle frame empty (home button to acquire throttle)
-</ul>
-
-<p>
-Steve Todd added a button to the mini web server startup window that opens your local 
-web browser.
-
-
-
-<p>
-Steve Todd updated the xmlio server 
-to add roster list, complete with function labels. 
-Also changed turnout list to always use systemname as name, added username as additional value.
-Also fixed GET processing.
-
-<p>
-Added readback of the speed, direction and functions for a throttle to the xmlio server.
-Also, requests to set the power now get a reply with proper power state.
-
-
-<p>
-Pete Cressman added custom tooltips to the panel editors.
-
-<p>
-Pete Cressman added an update of indicator track icons from the panel.
-
-<p>
-Pete Cressman fixed a problem adding a clock to a panel.
-
-<p>
-Steve Todd provided several new files which go into the web folder
-to facilitate testing and education about the xmlio server and its features.
-He also added a few links to the generated index.html (delete existing file and restart to see them).
-
-<p>
-Steve Todd fixed the MIME types for image files from the mini web server.
-
-
-<p>
-Lionel Jeanson improved the Roster XSLT support so that it displays well via the mini web server,
-and shows a button for opening a throttle. 
-<ul>
-<li><a href="http://localhost:12080/web/roster.html">http://localhost:12080/web/roster.html</a>
-now displays a simplified roster list in a clickable table, a click on an entry will open a matching inControl throttle in a new window.
-<li><a href="http://localhost:12080/prefs/roster.xml">http://localhost:12080/prefs/roster.xml</a> 
-displays the roster rendered in an html table with all attributes displayed and links to subreports like decoder details etc.
-(Requires update to roster file format; this will happen the first time you save a locomotive definition
-in the program, which rewrites the roster file)
-</ul>
-If you'd like to get links to these in the local home page, remove the "index.html" file
-in your JMRI preferences directory. JMRI will automatically replace it with an updated
-one when it next starts.
-
-<p>
-Pete Cressman made numerous small changes to Logix and panel support.
-
-
-<h5>2.11.3</h5>
-
-<p>
-Pete Cressman added support for invisible icons on panels.  The file "Invisible.gif" in the program icon directory can be selected 
-as a dimensionless icon.  This can be used when sensors are stacked amd allows "peeking through" a state of the top sensor
-to view the state of the sensor underneath.  For example. combining two sensors to depict a 3 state panel jewel.
-
-<p>
-Lionel Jeanson updated the JMRI mini web server
-index.html with entries to prefs/roster.xml and web/roster.html
-Also, added automatic creation of function buttons from the JMRI roster 
-to the web throttles application, including lockable buttons.
-
-<p>
-Pete Cressman added a dialog to correct or delete broken icon paths (bad url) when loading a panel.
-
-<p>
-Giorgio Terdina updated AutoDispatcher2 to version 2.3.4, 
-which copes with some changes in SignalHeadicon and is backwards compatible.
-
-
-<p>
-Lionel Jeanson improved the ZeroConf handling.
-
-<p>
-Pete Cressman added new Logix features
-<ul>
-<li>A dialog will display Logix errors if any occur during runtime</li>
-<li>Conditionals can be set to calculate the triggering of their actions whenever one of the state 
-variable changes state.  Until now Conditionals have only calculated the triggering of their actions  
-when the antecedent expression itself changed truth value.  In both cases, 
-actions are still triggered according to the truth value of the antecedent expression.</li>
-<li>State variables to test the status of Occupancy Blocks have been added.</li>
-<li>Actions for setting Occupancy Block conditions have been added.</li>
-</ul>
-
-<p>
-Pete Cressman added new ControlPanelEditor features
-<ul>
-<li>Clipboard Copy & Paste can be done between two control panels.</li>
-<li>The Item Palette can hold multiple sets of icons for each item type.</li>
-<li>The Item Palette has "Indicator Track" and "Indicator Turnouts" that change color when their block sensor 
-shows occupacy.  When used with Occupancy Blocks and Warrants, indicator icons will show allocation, 
-path route, occupancy or error condition by color.</li>
-<li>Accelerator keys added for Item Palette and Table List.</li>
-<li>The Item Palette user interface has all tab items drag from a "Drag Panel" icon.  Dragging from a table
-row places a text label in the panel.</li>
-</ul>
-
-<p>
-Pete Cressman changes:
-<ul>
-<li>edited tooltip-text is saved and default tiooltip is its device display name
-<li>improved path detection and display for simultaneous manual and auto train running under warrants.
-<li>fixed duplication and copy of rotated Signal Masts bug.
-<li>improved path detection and display for simultaneous manual and auto train running under warrants.
-<li>added a loco icon to follow auto trains running under warrants
-<li>fixed bug where orthogonal rotations overrode degree rotations when loading a panel.
-</ul>
-
-<p>
-Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connections.
-
-<p>
-Kevin Dickerson added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
-Also added tools to return either a facing or protected blocks by signal heads, masts or sensors.
-
-<p>
-Lionel Jeanson improved the Jynstrument throttle support:
-<ul>
-<li>Added function control up to 28.
-<li>Removed filter on kind of acceptable devices so that any Jinput device 
-    can be used for throttle control (Keyboard, mouse...).
-<li>Added a sample driver for keyboards.
-Note: once the keyboard driver is running, all keyboard inputs will be considered even if the JMRI window is not on the front
-<li>A "None" device was introduced in the device list accessible on right click, 
-    avoids to have all key inputs redirected to the Throttle.
-</ul>
-
-<p>
-Steve Todd made multiple updates to the JMRI mini webserver:
-<ul>
-<li>greatly improved the speed
-<li>provided a favorite icon for the server
-<li>modified the miniserver fileservlet to return the appropriate status
-(i.e. 404, 403) instead of unhandled exception or blank 200 responses. 
-<li>removed GetHost() which was causing timeouts on every access on some networks
-<li>set a 5-minute expiration on static files to avoid unneeded retrievals.
-<li>turned off caching on jframe images
-<li>added css folder so existing help files find default.css
-<li>improved index.html and dir listings to match jmri.org
-<li>changed headers from HTTP 1.0 to HTTP 1.1
-<li>added jmri icon for miniweb panel
-<li>added MiniServer preferences panel (port, rebuild, refreshes)
-<li>updated various help files related to miniserver
-</ul>
-
-<h5>2.11.4</h5>
-
-<p>
-Pete Cressman:
-<ul>
-<li>Fixed a bug where groups of icons copied and pasted into another panel had their attributes incorrectly modified.</li>
-<li>Updated Control Panel documentation.</li>
-<li>Added edit text menu item to Loco Marker popup when in operations mode.</li>
-<li>Fixed bug when removing Memory Input and Memory Spinner icons.</li>
-<li>Fixed bug for Memory Input popup menu to change column width.</li>
-<li>fix bug of multiple additions of items from Item Palette duplicating the rotations of the first.</li>
-<li>fix bug unable to select family type after selecting signal head row in Item Palette.</li>
-<li>The Path list on the Indicator Track and Indicator Turnout tabs of the Item Palette have
-been replaced with checkboxes.  See the help page on the Item Palette.</li>
-<li>A help page has been added to the Item Palette.</li>
-<li>Warrant throttle command scripts editing improved. Commands may be added and deleted.  
-Scripts can be edited to trigger an external sensor to operate additional animation.
-<li>Internal improvements to Portals and OPaths</li>
-<li>Fixed bug that would hang scipts if Speed Table was not initialized.</li>
-<li>Fixed bug #3209940 Logix StateVariable for SignalHead Apperance and Mast Aspect did not report user errors.</li> 
-</ul>
-
-<p>
-Lionel Jeanson:
-<ul>
-<li>Improved roster xslt files, roster.xml now better rendered in web browser when accessed through JMRI MiniWebServer.</li>
-<li>Added possibility to have function icons for throttles (defined via DecoderPro function labels pane).</li>
-<li>Function icons usage implemented in JMRI native throttles and inControl web throttles</li>
-<li>Added icons on buttons for JMRI native throttles control panel.</li>
-<li>Option available in throttles preferences to disable buttons icons for JMRI native throttles.</li>
-<li>Improved drag'n drop component for images, remove now on contextual menu.</li>
-<li>Improved Jynstrument on throttle window toolbar, Jynstruments now saved when window layout saved, and restored on load.</li>
-</ul>
-
-<p>
-Steve Todd:
-<ul>
-<li>add handling for "route" and "panel" to xmlio server.</li>
-<li>xmlio server: handle read larger than default block size, minor error trapping/prevention</li>
-</ul>
-
-</ul>
-
-<p>
-Giorgio Terdina released a new version of AutoDispatcher, 
-supporting user-defined track colors and including new schedule commands to 
-test the held state of signal heads and to operate turnouts and accessories like level crossings.
-
-<h5>2.11.5</h5>
-
-<p>Pete Cressman</p>
-<ul>
-<li>Added Circuit Builder tool to Control Panel Editor.  This is an 
- alternative tool to the Occupancy Tables that creates OBlocks,
- Portals and OPaths through a "point and click" GUI. (features still in progress)</li>
-<li>Fix route finder and warrant recording bug introduced in ver 2.11.4</li>
-<li>Fix loco icon following warrant playback through all track circuits.</li>
-<li>Fix bug that did not load ver 2.4 signalHead icons.</lii>
-<li>Fix bug that did not load rotated or scaled signalMastd icons.</li>
-<li>Fix bug loading panel after Occupancy Block Table is open.</li>
-<li>Inserting or deleting rows of a Throttle Command warrant script now
- keeps the total elapsed time a train is in a block the same.</li>
-<li>Added set TrainID, set TrainName warrant actions to Logix</li>
-<li>Fix background color of panels when changing views between editors</li>
-<li>Add indirection to Logix actions for device names and action types.
- The '@' symbol before a memory location will use the value in that memory for
- the device name or its action string.</li>
-<li>Simplifird LRoute GUI</li> 
-<li>Added an LRoute "Initializer".  Creates a Logix guaranteed to execute first
- for initializing sensors, turnouts and signals, avoiding thrashing of
- enabling Logixes at panel load time.</li>
-<li>Help files updated for Warrants, ItemPalette, Control Panel Editor</li>   
-<li>All known problems with the Abort command to Auto or Manual warrants fixed.</li>   
-<li>Two or more warrants can be allocated when they have blocks in common as long as each
- can acquire its first block.  (An allocated warrant must always have a starting block under its control.)</li>   
-<li>Dark blocks may used as starting and destination blocks.  They should be registered OBlocks without a sensor.</li>   
-<li>Speed sampling interval changed to 500ms instead of 200ms when recording auto train scripts</li>
-<li>Train name in loco icon follows progress on both record and playback of a warrant.<li>   
-</ul>
-
-<p>Lionel Jeanson</p>
-<ul>
-<li>Added a new way to control locomotive speed in throttle control panel : the "continuous" speed slider going from -100 to +100 through 0 with automatic direction change at 0. (option accessible in throttle control panel property window)</li>
-<li>Added an option to have a throttle control panel automatically switch between regular and continuous speed slider when a decoder function is activated/deactivated (most decoders have a slow function for "shunting" mode where a continuous speed slider is more appropriate for speed control). (option accessible in throttle control panel property window)</li>
-<li>Added possibility to customize throttle function buttons with images in throttle function button property window</li>
-<li>Added ability to save customized throttle function buttons in regular throttle files</li>
-</ul>
-
-<p>Steve Todd, changes to xmlio server: </p>
-<ul>
-<li>Added support for Memory Variables</li>
-<li>Reduced timeout on waiting threads from "forever" to 30 seconds</li>
-<li>Return "Content-Length" in reply header</li>
-<li>Added "Show Comm Info" to miniserver prefs, to promote key messages from debug to info when checked.  Default is off.</li>
-</ul>
-
-<p>Giorgio Terdina fixed a problem with the XnTCP adapter code.
-
-<h5>2.11.6</h5>
-
-<p>Pete Cressman</p>
-<ul>
-<li>Occupany Block Tables, PickLists, Palette bean tables are sortable.</li>
-<li>Fix bug where auto trains waited indefinitely when resynchronizing block entry.</li>
-<li>Fix bug intoduced in 2.11.5 where rotated SignalMasts were not stored properly.</li>
-<li>Add copy warrant button to warrant list table.</li>
-<li>Panel grants local control of block with "Out Of Service" status.</li>
-</ul>
-
-<p>Kevin Dickerson:</p>
-<ul>
-<li>Fixed an error that would occur if a cv value is left blank.  If the user blanks out a value and doesn't enter in a new, then the old value is restored.</li>
-<li>Prevented an occuring from occuring when the power on command is issued to the NCE Power Cab via the usb interface.</li>
-<li>Fixed a bug with the default selector for the throttle manager.</li>
-<li>Fixed a bug in the Speedo Console read button, where the correct address isn't correct read.</li>
-<li>Updated the file export facility on the Speedo Console, so that the forward and reverse values for a given speed step are on the same row.</li>
-<li>Newly opened windows will now cascade down the screen rather than stacking up on top of each other.</li>
-</ul>
-
-
-
-
-<p>Steve Todd added protocol to send MiniWebServer port to Wi-Fi devices.
-
-<h5>2.11.7</h5>
-
-<p>Pete Cressman</p>
-<ul>
-<li>Fixed bug in LRoute Initializer where extra trigger items were included</li>
-<li>Warrant route loops with repeating blocks or the same starting and ending bocks can record and playback.</li>
-<li>Indicator tracks move train Id markers automatically under both manual and auto playback warrants.</li>
-<li>Gray menus when CircuitBuilder is in an editing mode</li>
-<li>Portal editing in CircuitBuilder interface simpified.</li>
-<li>Name changing in CircuitBuilder for Blocks, Portals and Paths implemented.</li>
-<li>Conversion of track icons to Indicator icons in CircuitBuilder improved.</li>
-<li>Other fixes and improvements - CircuitBuilder is ready for use.</li>
-</ul>
-
-<P>Fixed the NCE consist editor, broken since 2.11.4.</P>
-
-
-<h5>2.11.8</h5>
-
-<p>Pete Cressman -
-Add user's name to loconet titles when user has modified default name to distinguish multiple connections
-</p>
-
-<p>Steve Todd</p>
-<ul>
-  <li>Fixed web server panel click on Positionable components,</li>
-  <li>JMRIMobile speed improvements</li>
-</ul>  
-
-
-(End of copies of original notes)
 
 
 <!--#include virtual="/Footer" -->
