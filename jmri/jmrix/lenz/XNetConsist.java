@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004-2010
- * @version                     $Revision: 2.21 $
+ * @version                     $Revision: 2.22 $
  */
 
 package jmri.jmrix.lenz;
@@ -123,8 +123,9 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	 */
 	private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
 	        Boolean Direction = Boolean.valueOf(directionNormal);
-		if(!(ConsistList.contains(LocoAddress))) 
-					ConsistList.add(LocoAddress);
+		if(!(ConsistList.contains(LocoAddress))) {
+			ConsistList.add(LocoAddress);
+                }
 		ConsistDir.put(LocoAddress,Direction);
 		if(ConsistType==CS_CONSIST && ConsistList.size()==2) {
 		    notifyConsistListeners(LocoAddress,
@@ -142,7 +143,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	private synchronized void removeFromConsistList(DccLocoAddress LocoAddress){
 		ConsistDir.remove(LocoAddress);
 		ConsistList.remove(LocoAddress);
-		notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);	   	
+		notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);	   
 	}
 
         /*
@@ -228,23 +229,27 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
          */
 	public synchronized void remove(DccLocoAddress LocoAddress) {
 	      if(ConsistType==ADVANCED_CONSIST) {
-	         removeFromAdvancedConsist(LocoAddress);		
 		 // save the address for the check after we get a response 
 		 // from the command station
 		 _locoAddress = LocoAddress;
+	         removeFromAdvancedConsist(LocoAddress);		
 	      }
 	      else if(ConsistType==CS_CONSIST) {
 		 // Lenz Double Headers must be formed with EXACTLY 2 
 		 // addresses, so if there are two addresses in the list, 
 	         // we'll actually send the commands to remove the consist
-		 if(ConsistList.size()==2) {
-	         removeFromCSConsist(LocoAddress);
-		 // save the address for the check after we get a response 
-		 // from the command station
-		 _locoAddress = LocoAddress;
+		 if(ConsistList.size()==2  &&
+ 		    _state!=REMOVEREQUESTSENTSTATE ) {
+		    // save the address for the check after we get a response 
+		    // from the command station
+		    _locoAddress = LocoAddress;
+	            removeFromCSConsist(LocoAddress);
 		 } else {
 		    // we just want to remove this from the list.
+		    if(_state!=REMOVEREQUESTSENTSTATE || 
+		       _locoAddress != LocoAddress) {
 		    removeFromConsistList(LocoAddress);
+                    }
 		 }
 	      }
 	      else {
@@ -317,7 +322,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		// trailing locomotive to the consist with the same
 		// address as the lead locomotive.  This isn't supposed to 
 		// happen.
-		log.error("Attempted to add " + LocoAddress.toString() + 
+		log.error("Attempted to add " + LocoAddress.toString() +
                           " to consist " + ConsistAddress.toString() );
 		_state=IDLESTATE;
 		notifyConsistListeners(_locoAddress,
