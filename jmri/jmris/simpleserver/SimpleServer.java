@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  */
 public class SimpleServer extends JmriServer{
@@ -55,6 +55,7 @@ public class SimpleServer extends JmriServer{
         SimpleTurnoutServer turnoutServer = new SimpleTurnoutServer(inStream,outStream);
         SimpleLightServer lightServer = new SimpleLightServer(inStream,outStream);
         SimpleSensorServer sensorServer = new SimpleSensorServer(inStream,outStream);
+        SimpleReporterServer reporterServer = new SimpleReporterServer(inStream,outStream);
 
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
@@ -72,27 +73,33 @@ public class SimpleServer extends JmriServer{
            
            if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
               if(cmd.startsWith("POWER")){
-	         try {
-                     powerServer.parseStatus(cmd);
-		     powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
+	             try {
+                        powerServer.parseStatus(cmd);
+		        powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
                  } else if(cmd.startsWith("TURNOUT")){
-	         try {
-                     turnoutServer.parseStatus(cmd);
+	             try {
+                       turnoutServer.parseStatus(cmd);
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
                  } else if(cmd.startsWith("LIGHT")){
-	         try {
-                     lightServer.parseStatus(cmd);
+	             try {
+                       lightServer.parseStatus(cmd);
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
                  } else if(cmd.startsWith("SENSOR")){
-	         try {
-                     sensorServer.parseStatus(cmd);
+	             try {
+                       sensorServer.parseStatus(cmd);
+                     } catch(jmri.JmriException je) {
+                       outStream.writeBytes("not supported\n");
+                     }
+                 } else if(cmd.startsWith("REPORTER")){
+	             try {
+                       reporterServer.parseStatus(cmd);
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
