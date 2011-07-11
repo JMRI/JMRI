@@ -20,10 +20,13 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of consist information.
  * 
  * @author		Paul Bender Copyright (c) 2004-2005
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
+
+         final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
+
 	static private final int ADDRCOLUMN = 0;    // Locomotive address
 	static private final int ROSTERCOLUMN = 1;  // Roster Entry, this exists
 	static private final int DIRECTIONCOLUMN = 2;  // Relative Direction
@@ -79,9 +82,9 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 
         public String getColumnName(int col) {
 	   switch(col) {
-	      case ADDRCOLUMN: return "Address";
-	      case ROSTERCOLUMN: return "Roster Entry";
-	      case DIRECTIONCOLUMN: return "Direction Normal?";
+	      case ADDRCOLUMN: return rb.getString("AddressColumnLabel");
+	      case ROSTERCOLUMN: return rb.getString("RosterColumnLabel");
+	      case DIRECTIONCOLUMN: return rb.getString("DirectionColumnLabel");
 	      default: return "";
            }
 	}
@@ -120,7 +123,7 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
         		      RosterBox.setSelectedItem(getValueAt(ADDRCOLUMN,row));
 	  		      return RosterBox;*/
 	      case DIRECTIONCOLUMN: return(Boolean.valueOf(_consist.getLocoDirection(_consist.getConsistList().get(row))));
-	      case DELCOLUMN: return "DEL";
+	      case DELCOLUMN: return rb.getString("DeleteColumnButtonLabel");
 	      default: return("");
            }
        }

@@ -1,4 +1,4 @@
-Todo as of 02/01/2008
+Todo as of 07/01/2011
 
    Should we ask if the consist should be cleared when the consist is 
      deleted or the window is closed?
@@ -10,10 +10,6 @@ Todo as of 02/01/2008
 
    Table in tool has a slot for roster entry, this needs to be filled in 
    or removed.
-
-   Per request from widebayburnett, add button to "Reverse Consist" (change 
-   normal direction of consist to the reverse of what it currently is, 
-   including decoder specific reversals where required.
 
    Per request from widebayburnett, add an "uncouple" button, that 
    deletes locomotive consist information so consist can be reordered, but 
