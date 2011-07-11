@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version         $Revision: 2.18 $
+ * @version         $Revision: 2.19 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -93,6 +93,20 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     /**
+     *  initmessage is a package proteceted class which allows the 
+     *  Manger to send a feedback message at initilization without 
+     *  changing the state of the sensor with respect to whether or 
+     *  not a feedback request was sent.  This is used only when the
+     *  sensor is created by on layout feedback.
+     * @param l
+     **/
+    synchronized void initmessage(XNetReply l) {
+	boolean oldState = statusRequested;
+	message(l);
+        statusRequested=oldState;
+    }
+
+    /**
      * implementing classes will typically have a function/listener to get
      * updates from the layout, which will then call
      *      public void firePropertyChange(String propertyName,
@@ -101,7 +115,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * _once_ if anything has changed state (or set the commanded state directly)
      * @param l
      */
-    public void message(XNetReply l) {
+    public synchronized void message(XNetReply l) {
 	   if(log.isDebugEnabled()) log.debug("recieved message: " +l);
 	   if(l.isFeedbackBroadcastMessage()) {
 	     int numDataBytes = l.getElement(0)&0x0f;

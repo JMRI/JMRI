@@ -11,7 +11,7 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.19 $
+ * @version			$Revision: 2.20 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -56,7 +56,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                    if (null == getBySystemName(s)) {
                       // need to create a new one, and send the message on 
                       // to the newly created object.
-                      ((XNetTurnout)provideTurnout(s)).message(l);
+                      ((XNetTurnout)provideTurnout(s)).initmessage(l);
                    } else {
                       // The turnout exists, forward this message to the 
                       // turnout

@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.45 $
+ * @version			$Revision: 2.46 $
  */
 
 package jmri.jmrix.lenz;
@@ -260,6 +260,21 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     public boolean canInvert() {
                 return true;
         }
+
+    /**
+     *  initmessage is a package proteceted class which allows the 
+     *  Manger to send a feedback message at initilization without 
+     *  changing the state of the turnout with respect to whether or 
+     *  not a feedback request was sent.  This is used only when the
+     *  turnout is created by on layout feedback.
+     * @param l
+     **/
+    synchronized void initmessage(XNetReply l) {
+        int oldState = internalState;
+        message(l);
+        internalState=oldState;
+    }
+
 
     /*
      *  Handle an incoming message from the XPressNet

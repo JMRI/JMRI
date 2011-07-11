@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004-2010
- * @version 		$Revision: 2.22 $
+ * @version 		$Revision: 2.23 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -240,6 +240,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * @param istream character source.  
      * @throws IOException when presented by the input source.
      */
+    @Override
     protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize(); i++) { 
