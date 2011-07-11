@@ -32,7 +32,7 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009-2010
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 
 public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable{
@@ -245,6 +245,27 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                            reply=notSupportedReply();
                    }
                    break;
+	       case XNetConstants.ACC_INFO_REQ:
+		        reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
+			reply.setElement(1,m.getElement(1));
+			if(m.getElement(1)<64){
+			   // treat as turnout feedback request.
+			   if(m.getElement(2)==0x80){
+			      reply.setElement(2,0x00);
+			   } else {
+			      reply.setElement(2,0x10);
+                           }
+			} else {
+			  // treat as feedback encoder request.
+			  if(m.getElement(2)==0x80){
+			     reply.setElement(2,0x40);
+			  } else {
+			     reply.setElement(2,0x50);
+                          }
+                        }
+			reply.setElement(3,0x00);
+			reply.setParity();
+		   break;
                case XNetConstants.LI101_REQUEST:
                case XNetConstants.CS_SET_POWERMODE:
                //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST 
@@ -253,7 +274,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                case XNetConstants.PROG_WRITE_REQUEST:
                case XNetConstants.OPS_MODE_PROG_REQ:
                case XNetConstants.LOCO_DOUBLEHEAD:
-               case XNetConstants.ACC_INFO_REQ: 
 		default:
                    reply=notSupportedReply();
             }
