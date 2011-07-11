@@ -14,7 +14,7 @@ import jmri.DccLocoAddress;
  * system specific consist managers can be built.
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 1.10 $
+ * @version               $Revision: 1.11 $
  */
 abstract public class AbstractConsistManager implements jmri.ConsistManager{
 
@@ -45,7 +45,6 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	
 	// remove the old Consist
 	public void delConsist(DccLocoAddress address){
-		consistTable.get(address).dispose();
 		consistTable.remove(address);
 		consistList.remove(address);
 	}
