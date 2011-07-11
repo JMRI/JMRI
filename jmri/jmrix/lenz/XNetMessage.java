@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.24 $
+ * @version			$Revision: 2.25 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -66,6 +66,9 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	 * Create an XNetMessage from a String containing bytes.
     	 */
 	public XNetMessage(String s) {
+       	     setBinary(true);
+	     setRetries(_nRetries);
+	     setTimeout(XNetMessageTimeout);
              // gather bytes in result
              byte b[] = jmri.util.StringUtil.bytesFromHexString(s);
              if (b.length == 0) 
