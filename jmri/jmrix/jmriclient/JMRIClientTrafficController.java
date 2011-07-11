@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  * 
  * @author Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JMRIClientTrafficController extends AbstractMRTrafficController
 	implements JMRIClientInterface {
@@ -55,7 +55,6 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
         ((JMRIClientListener)client).reply((JMRIClientReply)m);
     }
 
-    public void setSensorManager(jmri.SensorManager m) { }
     protected AbstractMRMessage pollMessage() {
 		return null;
     }
