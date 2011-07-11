@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.12.shtml,v 1.14 2011-07-11 04:07:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.12.shtml,v 1.15 2011-07-11 05:27:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -91,13 +91,13 @@ None at the time of this release.
 <p>Please use these links for downloading:</p>
 
 <p>MacOS X: <A
-	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.dmg/download</a></p>
+	HREF="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.12.dmg/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.12.dmg/download</a></p>
 
 <p>Windows: <A
-	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.exe/download</a></p>
+	HREF="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.12.exe/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.12.exe/download</a></p>
 
 <p>Linux: <A
-	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.12.tgz/download</a></p>
+	HREF="https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.12.tgz/download">https://sourceforge.net/projects/jmri/files/production%20files/JMRI.2.12.tgz/download</a></p>
 
 <h3>Changes since production release 2.10</h3>
 
