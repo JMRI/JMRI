@@ -20,7 +20,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000 - 2011
- * @version $Revision: 1.169 $
+ * @version $Revision: 1.170 $
  */
 
 public class Version {
@@ -46,7 +46,7 @@ public class Version {
      * Modifier is used to denote specific builds.
      * It should be the empty string "" for released versions.
      */
-     static final boolean released = true;
+     static final boolean released = false;
      static final public String modifier = (test!=0?("."+test):"")+
                                             (!released?"+dev":"");
 
