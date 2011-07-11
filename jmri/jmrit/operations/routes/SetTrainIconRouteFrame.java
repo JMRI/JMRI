@@ -31,7 +31,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -116,7 +116,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         getContentPane().add(pControl);
     	
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true);
     	
        	// setup buttons
     	addButtonAction(previousButton);

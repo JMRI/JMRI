@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class TrainScriptFrame extends OperationsFrame {
@@ -147,7 +147,7 @@ public class TrainScriptFrame extends OperationsFrame {
 		} else {
 			enableButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true);
 		packFrame();
 	}
 	

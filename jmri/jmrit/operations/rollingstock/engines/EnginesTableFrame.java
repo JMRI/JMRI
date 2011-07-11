@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -178,7 +178,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		toolMenu.add(new NceConsistEngineAction(rb.getString("MenuItemNceSync"), this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true);
     	
     	pack();
     	/* all JMRI window position and size are now saved

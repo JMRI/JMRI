@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -263,7 +263,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_LocomotivesAdd", true);
 
 		//	 get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
