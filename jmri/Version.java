@@ -20,7 +20,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000 - 2011
- * @version $Revision: 1.170 $
+ * @version $Revision: 1.171 $
  */
 
 public class Version {
@@ -47,8 +47,7 @@ public class Version {
      * It should be the empty string "" for released versions.
      */
      static final boolean released = false;
-     static final public String modifier = (test!=0?("."+test):"")+
-                                            (!released?"+dev":"");
+     static final public String modifier = (test!=0?("."+test):"")+(!released?"+dev":"");
 
     /**
      * Provide the current version string in I.J.Kmod format.
