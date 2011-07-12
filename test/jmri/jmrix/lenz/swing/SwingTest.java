@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.swing package
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SwingTest extends TestCase {
 
@@ -34,6 +34,7 @@ public class SwingTest extends TestCase {
             suite.addTest(jmri.jmrix.lenz.swing.mon.MonTest.suite());
             suite.addTest(jmri.jmrix.lenz.swing.stackmon.StackMonTest.suite());
             suite.addTest(jmri.jmrix.lenz.swing.systeminfo.SystemInfoTest.suite());
+            suite.addTest(jmri.jmrix.lenz.swing.packetgen.PacketGenTest.suite());
         }
         
         return suite;

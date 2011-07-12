@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.15 $
+ * @version			$Revision: 2.16 $
  */
 public class XNetTest extends TestCase {
 
@@ -62,7 +62,6 @@ public class XNetTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(new TestSuite(jmri.jmrix.lenz.packetgen.PacketGenFrameTest.class));
             suite.addTest(jmri.jmrix.lenz.lz100.LZ100Test.suite());
             suite.addTest(jmri.jmrix.lenz.lzv100.LZV100Test.suite());
             suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
