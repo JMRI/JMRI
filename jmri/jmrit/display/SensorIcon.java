@@ -30,7 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.84 $
+ * @version $Revision: 1.85 $
  */
 
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -95,7 +95,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
-                setSensor(new NamedBeanHandle<Sensor>(pName, sensor));                
+                setSensor(new NamedBeanHandle<Sensor>(pName, sensor));
             } else {
                 log.error("Sensor '"+pName+"' not available, icon won't see changes");
             }
@@ -466,7 +466,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             Entry<String, NamedIcon> entry = it.next();
             if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
             NamedIcon newIcon = entry.getValue();
-            NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
+            NamedIcon oldIcon = oldMap.get(entry.getKey());
             newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
             newIcon.setRotation(oldIcon.getRotation(), this);
             setIcon(entry.getKey(), newIcon);
@@ -571,7 +571,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         return clone;
     }
-
+    
     public int maxWidth() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
