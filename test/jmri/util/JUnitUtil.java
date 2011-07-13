@@ -38,7 +38,7 @@ import java.beans.PropertyChangeListener;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  * @since 2.5.3
  */
 
@@ -93,34 +93,34 @@ public class JUnitUtil {
         InstanceManager.setTurnoutManager(new InternalTurnoutManager());
         if (InstanceManager.configureManagerInstance() != null)
             InstanceManager.configureManagerInstance().registerConfig(
-                InstanceManager.turnoutManagerInstance());
+                InstanceManager.turnoutManagerInstance(), jmri.Manager.TURNOUTS);
     }
 
     public static void initInternalLightManager() {
         InternalLightManager m = new InternalLightManager();
         InstanceManager.setLightManager(m);
         if (InstanceManager.configureManagerInstance() != null)
-            InstanceManager.configureManagerInstance().registerConfig(m);
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.LIGHTS);
     }
 
     public static void initInternalSensorManager() {
         InternalSensorManager m = new InternalSensorManager();
         InstanceManager.setSensorManager(m);
         if (InstanceManager.configureManagerInstance() != null)
-            InstanceManager.configureManagerInstance().registerConfig(m);
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.SENSORS);
     }
 
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
         if (InstanceManager.configureManagerInstance() != null)
-            InstanceManager.configureManagerInstance().registerConfig(m);
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.MEMORIES);
     }
 
     public static void initInternalSignalHeadManager() {
         SignalHeadManager m = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(m);
         if (InstanceManager.configureManagerInstance() != null)
-            InstanceManager.configureManagerInstance().registerConfig(m);
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.SIGNALHEADS);
     }
 
     public static void initDebugThrottleManager() {
