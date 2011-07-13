@@ -47,7 +47,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.61 $
+ * @version   $Revision: 1.62 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -278,7 +278,13 @@ public class RosterEntry {
     public String getDecoderComment() { return _decoderComment; }
 
     public DccLocoAddress getDccLocoAddress() {
-        int n = Integer.parseInt(getDccAddress());
+        int n;
+        try {
+            n = Integer.parseInt(getDccAddress());
+        } catch (NumberFormatException e) {
+            log.error("Illegal format for DCC address roster entry: \""+getId()+"\" value: \""+getDccAddress()+"\"");
+            n = 0;
+        }
         return new DccLocoAddress(n,isLongAddress());
     }
 
