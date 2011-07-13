@@ -417,6 +417,13 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
     JLabel sourceLabel = new JLabel();
     
     void autoCreatePairs(jmri.util.JmriJFrame f) {
+        if (!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            int response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
+            if (response == 0){
+                InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
+                JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
+            }
+        }
         signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs");
         signalMastLogicFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
@@ -434,10 +441,10 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
                     
             } catch (jmri.JmriException e){
+                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
                 JOptionPane.showMessageDialog(null, e.toString());
                 signalMastLogicFrame.setVisible(false);
             }
-            InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
         } else {
             signalMastLogicFrame.setVisible(false);
         }
@@ -447,6 +454,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
         if (evt.getPropertyName().equals("autoGenerateComplete")){
             if (signalMastLogicFrame!=null)
                 signalMastLogicFrame.setVisible(false);
+            InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
             JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
         }
     }
