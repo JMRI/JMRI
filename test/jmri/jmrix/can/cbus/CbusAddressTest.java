@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.SensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class CbusAddressTest extends TestCase {
 
@@ -64,13 +64,23 @@ public class CbusAddressTest extends TestCase {
     }
 
     public void testCbusIdParseMatchReply() {
+        // Cbus short events
         assertTrue(new CbusAddress("+12").match(
                 new CanReply(
-                    new int[]{CbusConstants.CBUS_ACON,0x00,0x00,0x00,12}
+                    new int[]{CbusConstants.CBUS_ASON,0x00,0x00,0x00,12}
         )));
         assertTrue(new CbusAddress("-12").match(
                 new CanReply(
-                    new int[]{CbusConstants.CBUS_ACOF,0x00,0x00,0x00,12}
+                    new int[]{CbusConstants.CBUS_ASOF,0x00,0x00,0x00,12}
+        )));
+        // Cbus normal events
+        assertTrue(new CbusAddress("+2700012").match(
+                new CanReply(
+                    new int[]{CbusConstants.CBUS_ACON,0x00,0x1b,0x00,12}
+        )));
+        assertTrue(new CbusAddress("-2700012").match(
+                new CanReply(
+                    new int[]{CbusConstants.CBUS_ACOF,0x00,0x1b,0x00,12}
         )));
         assertTrue(new CbusAddress("X123456789ABCDEF0").match(
                 new CanReply(
@@ -82,11 +92,19 @@ public class CbusAddressTest extends TestCase {
     public void testCbusIdParseMatchMessage() {
         assertTrue(new CbusAddress("+12").match(
                 new CanMessage(
-                    new int[]{CbusConstants.CBUS_ACON,0x00,0x00,0x00,12}
+                    new int[]{CbusConstants.CBUS_ASON,0x00,0x00,0x00,12}
         )));
         assertTrue(new CbusAddress("-12").match(
                 new CanMessage(
-                    new int[]{CbusConstants.CBUS_ACOF,0x00,0x00,0x00,12}
+                    new int[]{CbusConstants.CBUS_ASOF,0x00,0x00,0x00,12}
+        )));
+        assertTrue(new CbusAddress("+2700012").match(
+                new CanMessage(
+                    new int[]{CbusConstants.CBUS_ACON,0x00,0x1b,0x00,12}
+        )));
+        assertTrue(new CbusAddress("-2700012").match(
+                new CanMessage(
+                    new int[]{CbusConstants.CBUS_ACOF,0x00,0x1b,0x00,12}
         )));
         assertTrue(new CbusAddress("X123456789ABCDEF0").match(
                 new CanMessage(
@@ -135,14 +153,17 @@ public class CbusAddressTest extends TestCase {
     
     public void testPlusMinus() {
         assertTrue( (new CbusAddress("+001")).equals(new CbusAddress("+001")));        
-        assertTrue( (new CbusAddress("+001")).equals(new CbusAddress("x9000000001")));
+        assertTrue( (new CbusAddress("+001")).equals(new CbusAddress("x9800000001")));
+        assertTrue( (new CbusAddress("+200001")).equals(new CbusAddress("x9000020001")));
+        assertTrue( (new CbusAddress("-003")).equals(new CbusAddress("x9900000003")));
         assertTrue( (new CbusAddress("-200003")).equals(new CbusAddress("x9100020003")));
         
     }
 
     public void testEqualsOK() {
         assertTrue( (new CbusAddress("+001")).equals(new CbusAddress("+001")));
-        assertTrue( (new CbusAddress("+001")).equals(new CbusAddress("x9000000001")));
+        assertTrue( (new CbusAddress("+001")).equals(new CbusAddress("x9800000001")));
+        assertTrue( (new CbusAddress("+200001")).equals(new CbusAddress("x9000020001")));
     }
     
     public void testSplitCheckOK() {

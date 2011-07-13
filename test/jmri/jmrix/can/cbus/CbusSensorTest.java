@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class CbusSensorTest extends TestCase {
 
@@ -28,10 +28,10 @@ public class CbusSensorTest extends TestCase {
         
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
-                    new int[]{CbusConstants.CBUS_ACON,0x00,0x00,0x00,0x01}
+                    new int[]{CbusConstants.CBUS_ASON,0x00,0x00,0x00,0x01}
         );
         CanMessage mInactive = new CanMessage(
-                    new int[]{CbusConstants.CBUS_ACOF,0x00,0x00,0x00,0x01}
+                    new int[]{CbusConstants.CBUS_ASOF,0x00,0x00,0x00,0x01}
         );
 
         // check states
