@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -493,7 +493,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         DefaultRouteManager pManager = DefaultRouteManager.instance();
         InstanceManager.store(pManager, RouteManager.class);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager);
+        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.ROUTES);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRouteManagerXml.class.getName());

@@ -20,13 +20,17 @@ import java.text.DecimalFormat;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
 
     public DefaultLogixManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return Manager.LOGIXS;
     }
 
     public String getSystemPrefix() { return "I"; }

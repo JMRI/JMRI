@@ -17,13 +17,17 @@ import jmri.managers.AbstractManager;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
 
     public AbstractSignalHeadManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return Manager.SIGNALHEADS;
     }
 
     public String getSystemPrefix() { return "I"; }

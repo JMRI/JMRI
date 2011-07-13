@@ -30,7 +30,7 @@ import java.text.DecimalFormat;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class TransitManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -39,6 +39,10 @@ public class TransitManager extends AbstractManager
         super();
     }
 
+    protected int getXMLOrder(){
+        return Manager.TRANSITS;
+    }
+    
     public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'Z'; }
     

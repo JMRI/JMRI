@@ -30,7 +30,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -47,6 +47,10 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     ShutDownTask audioShutDownTask;
 
+    protected int getXMLOrder(){
+        return jmri.Manager.AUDIO;
+    }
+    
     public String getSystemPrefix() { return "I"; }
 
     protected Audio createNewAudio(String systemName, String userName) throws AudioException {

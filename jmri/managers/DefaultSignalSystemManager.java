@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -32,6 +32,10 @@ public class DefaultSignalSystemManager extends AbstractManager
         // load when created, which will generally
         // be the first time referenced
         load();
+    }
+    
+    protected int getXMLOrder(){
+        return 65400;
     }
 
     /**

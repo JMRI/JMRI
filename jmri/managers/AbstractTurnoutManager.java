@@ -10,14 +10,20 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
 	
 	public AbstractTurnoutManager() {
+        //super(Manager.TURNOUTS);
 		TurnoutOperationManager.getInstance();		// force creation of an instance
 	}
+    
+    protected int getXMLOrder(){
+        return Manager.TURNOUTS;
+    }
+    //protected int xmlorder = 20;
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
@@ -214,6 +220,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF", justification="We are validating user input however the value is stored in its original format")
     public void setDefaultClosedSpeed(String speed) throws JmriException {
         if(speed==null)
             throw new JmriException("Value of requested turnout default closed speed can not be null");
@@ -239,7 +246,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         defaultClosedSpeed = speed;
         firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
     }
-
     public void setDefaultThrownSpeed(String speed) throws JmriException{
         if(speed==null)
             throw new JmriException("Value of requested turnout default thrown speed can not be null");

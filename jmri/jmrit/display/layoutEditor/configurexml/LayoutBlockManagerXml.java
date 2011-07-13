@@ -17,7 +17,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -197,7 +197,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         LayoutBlockManager pManager = LayoutBlockManager.instance();
         InstanceManager.setLayoutBlockManager(pManager);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager);
+        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManagerXml.class.getName());

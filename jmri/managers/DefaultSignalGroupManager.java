@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class DefaultSignalGroupManager extends AbstractManager
     implements SignalGroupManager, java.beans.PropertyChangeListener {
@@ -31,6 +31,10 @@ public class DefaultSignalGroupManager extends AbstractManager
         // load when created, which will generally
         // be the first time referenced
         //load();
+    }
+    
+    protected int getXMLOrder(){
+        return Manager.SIGNALGROUPS;
     }
 
     public String getSystemPrefix() { return "I"; }

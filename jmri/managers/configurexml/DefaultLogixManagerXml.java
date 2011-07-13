@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -183,7 +183,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         DefaultLogixManager pManager = DefaultLogixManager.instance();
         InstanceManager.setLogixManager(pManager);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager);
+        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LOGIXS);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogixManagerXml.class.getName());

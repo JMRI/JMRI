@@ -23,7 +23,7 @@ import org.jdom.ProcessingInstruction;
  * Concrete implementation for the Internal {@link jmri.IdTagManager} interface.
  * @author      Bob Jacobsen    Copyright (C) 2010
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.11.4
  */
 public class DefaultIdTagManager extends AbstractManager
@@ -36,6 +36,10 @@ public class DefaultIdTagManager extends AbstractManager
 
     public DefaultIdTagManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return jmri.Manager.IDTAGS;
     }
 
     public boolean isInitialised() {

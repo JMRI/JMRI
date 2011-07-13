@@ -11,6 +11,8 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -29,7 +31,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager {
@@ -144,7 +146,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      **/
     protected void registerSelf() {
          if (InstanceManager.configureManagerInstance()!=null) {
-            InstanceManager.configureManagerInstance().registerConfig(this);
+            InstanceManager.configureManagerInstance().registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
             log.debug("register for config");
         }
     }
@@ -240,6 +242,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     signalmast source/destination pairs, these tools have yet to be initialised
     */
     
+
     /**
     * Discover valid destination signalmasts for a given source signal on a 
     * given layout editor panel.

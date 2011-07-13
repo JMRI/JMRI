@@ -9,11 +9,15 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
 
+    protected int getXMLOrder(){
+        return Manager.REPORTERS;
+    }
+    
     public char typeLetter() { return 'R'; }
 
     public Reporter provideReporter(String sName) {

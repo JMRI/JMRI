@@ -8,8 +8,11 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Comparator;
 
-//import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -22,7 +25,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.90 $
+ * @version $Revision: 1.91 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -36,6 +39,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public ConfigXmlManager() {
     }
 
+    public void registerConfig(Object o){
+        registerConfig(o, 50);
+    }
+    
     public void registerPref(Object o) {
         // skip if already present, leaving in original order
         if (plist.contains(o)) return;
@@ -79,7 +86,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     public Object findInstance(Class<?> c, int index) {
         ArrayList<Object> temp = new ArrayList<Object>(plist);
-        temp.addAll(clist);
+        temp.addAll(clist.keySet());
         temp.addAll(tlist);
         temp.addAll(ulist);
         temp.addAll(uplist);
@@ -94,7 +101,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public ArrayList<Object> getInstanceList(Class<?> c){
         ArrayList<Object> temp = new ArrayList<Object>(plist);
         ArrayList<Object> returnlist = new ArrayList<Object>();
-        temp.addAll(clist);
+        temp.addAll(clist.keySet());
         temp.addAll(tlist);
         temp.addAll(ulist);
         temp.addAll(uplist);
@@ -110,14 +117,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     
     }
 
-    public void registerConfig(Object o) {
+    public void registerConfig(Object o, int x) {
         // skip if already present, leaving in original order
         if (clist.contains(o)) return;
 
         confirmAdapterAvailable(o);
         
-        // and add to list
-        clist.add(o);
+        clist.put(o, x);
     }
     public void registerTool(Object o) {
         // skip if already present, leaving in original order
@@ -156,14 +162,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     public void deregister(Object o) {
         plist.remove(o);
-        clist.remove(o);
+        if(o!=null)
+            clist.remove(o);
         tlist.remove(o);
         ulist.remove(o);
         uplist.remove(o);
     }
 
     ArrayList<Object> plist = new ArrayList<Object>();
-    ArrayList<Object> clist = new ArrayList<Object>();
+    Hashtable<Object, Integer> clist = new Hashtable<Object, Integer>();
     ArrayList<Object> tlist = new ArrayList<Object>();
     ArrayList<Object> ulist = new ArrayList<Object>();
     ArrayList<Object> uplist = new ArrayList<Object>();
@@ -219,9 +226,28 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (e!=null) root.addContent(e);
         }
     }
+    
+    public static void sortValue(Hashtable<?, Integer> t){
+
+       //Transfer as List and sort it
+       ArrayList<Map.Entry<Object, Integer>> l = new ArrayList(t.entrySet());
+       Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>(){
+
+         public int compare(Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) {
+            return o1.getValue().compareTo(o2.getValue());
+        }});
+
+    }
+
     protected void addConfigStore(Element root) {
-        for (int i=0; i<clist.size(); i++) {
-            Object o = clist.get(i);
+        ArrayList<Map.Entry<Object, Integer>> l = new ArrayList(clist.entrySet());
+        Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>(){
+
+         public int compare(Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) {
+            return o1.getValue().compareTo(o2.getValue());
+        }});
+        for (int i=0; i<l.size(); i++) {
+            Object o = l.get(i).getKey();
             Element e = elementFromObject(o);
             if (e!=null) root.addContent(e);
         }

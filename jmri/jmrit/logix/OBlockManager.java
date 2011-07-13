@@ -29,13 +29,17 @@ import jmri.managers.AbstractManager;
  *
  * @author      Bob Jacobsen Copyright (C) 2006
  * @author      Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class OBlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
 
     public OBlockManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return jmri.Manager.OBLOCKS;
     }
 
     public String getSystemPrefix() { return "O"; }

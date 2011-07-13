@@ -36,13 +36,17 @@ import jmri.managers.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
 
     public SectionManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return Manager.SECTIONS;
     }
 
     public String getSystemPrefix() { return "I"; }

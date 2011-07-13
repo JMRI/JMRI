@@ -23,7 +23,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -147,7 +147,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         AbstractSignalHeadManager pManager = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(pManager);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager);
+        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.SIGNALHEADS);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSignalHeadManagerXml.class.getName());

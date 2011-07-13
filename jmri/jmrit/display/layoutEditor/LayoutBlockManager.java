@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -33,6 +33,10 @@ public class LayoutBlockManager extends AbstractManager {
 
     public LayoutBlockManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return jmri.Manager.LAYOUTBLOCKS;
     }
 
     public String getSystemPrefix() { return "I"; }

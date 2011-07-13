@@ -9,12 +9,20 @@ import java.util.Enumeration;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
+    /*public AbstractSensorManager(){
+        super(Manager.SENSORS);
+    }*/
+    
+    protected int getXMLOrder(){
+        return Manager.SENSORS;
+    }
+    
     public char typeLetter() { return 'S'; }
-
+    
     public Sensor provideSensor(String name) {
         Sensor t = getSensor(name);
         if (t!=null) return t;

@@ -27,13 +27,17 @@ import jmri.jmrit.sensorgroup.SensorGroupFrame;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author      Pete Cresman Copyright (C) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
 
     public DefaultConditionalManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return jmri.Manager.CONDITIONALS;
     }
 
     public String getSystemPrefix() { return "I"; }

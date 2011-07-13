@@ -113,7 +113,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -879,7 +879,7 @@ public class BlockBossLogic extends Siglet {
         if (smap == null) {
             smap = new Hashtable<String,BlockBossLogic>();
             umap = new Hashtable<String,BlockBossLogic>();
-            InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic());
+            InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
         }
     }
     

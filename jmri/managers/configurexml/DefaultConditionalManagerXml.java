@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author Pete Cressman Copyright (C) 2009, 2011
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -358,7 +358,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         DefaultConditionalManager pManager = DefaultConditionalManager.instance();
         InstanceManager.setConditionalManager(pManager);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager);
+        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.CONDITIONALS);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditionalManagerXml.class.getName());

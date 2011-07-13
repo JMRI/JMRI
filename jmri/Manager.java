@@ -43,7 +43,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public interface Manager {
 
@@ -107,6 +107,35 @@ public interface Manager {
      * uses this method.
      */
     public void deregister(NamedBean n);
+    
+    /**
+    * The order in which things get saved to the xml file.
+    */
+    public static final int SENSORS = 10;
+    public static final int TURNOUTS = SENSORS + 10;
+    public static final int LIGHTS = TURNOUTS + 10;
+    public static final int REPORTERS = LIGHTS + 10;
+    public static final int MEMORIES = REPORTERS + 10;
+    public static final int SENSORGROUPS = MEMORIES + 10;
+    public static final int SIGNALHEADS = SENSORGROUPS + 10;
+    public static final int SIGNALMASTS = SIGNALHEADS + 10;
+    public static final int SIGNALGROUPS = SIGNALMASTS + 10;
+    public static final int BLOCKS = SIGNALGROUPS +10;
+    public static final int OBLOCKS = BLOCKS +10;
+    public static final int LAYOUTBLOCKS = OBLOCKS +10;
+    public static final int SECTIONS = LAYOUTBLOCKS +10;
+    public static final int TRANSITS = SECTIONS +10;
+    public static final int BLOCKBOSS = TRANSITS +10;
+    public static final int ROUTES = BLOCKBOSS + 10;
+    public static final int WARRANTS = ROUTES + 10;
+    public static final int SIGNALMASTLOGICS = WARRANTS + 10;
+    public static final int IDTAGS = SIGNALMASTLOGICS + 10;
+    public static final int LOGIXS = IDTAGS + 10;
+    public static final int CONDITIONALS = LOGIXS + 10;
+    public static final int AUDIO = LOGIXS + 10;
+    public static final int TIMEBASE = AUDIO + 10;
+    
+    
 }
 
 

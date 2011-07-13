@@ -28,7 +28,7 @@ import jmri.jmrit.roster.RosterIconFactory;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @since           2.9.4
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
@@ -97,7 +97,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
         if (type == Timebase.class) {
             Timebase timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
             if (InstanceManager.configureManagerInstance() != null)
-                InstanceManager.configureManagerInstance().registerConfig(timebase);        
+                InstanceManager.configureManagerInstance().registerConfig(timebase, jmri.Manager.TIMEBASE);        
             return timebase;
         }
 
