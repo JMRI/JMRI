@@ -26,7 +26,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  * @since 2.1.2
  *
  */
@@ -90,11 +90,12 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 				// store length and curvature attributes
 				elem.setAttribute("length", Float.toString(b.getLengthMm()));
 				elem.setAttribute("curve", Integer.toString(b.getCurvature()));
+                // store common parts
+                storeCommon(b, elem);
+                
                 if((b.getBlockSpeed()!=null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")){
                     elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
                 }
-                // store common parts
-                storeCommon(b, elem);
                 String perm = "no";
                 if (b.getPermissiveWorking())
                     perm = "yes";
