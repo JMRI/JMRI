@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -3074,6 +3074,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 popup.addSeparator();
                 popupSet = false;
             }
+            popupSet = p.setEditIconMenu(popup);
             popupSet = p.setTextEditMenu(popup);
 
             PositionablePopupUtil util = p.getPopupUtility();
