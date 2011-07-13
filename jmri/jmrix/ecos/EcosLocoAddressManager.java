@@ -18,7 +18,7 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager{
 
@@ -43,6 +43,10 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     public String getSystemPrefix() { return prefix; }
     public char typeLetter() { return 'Z'; }
 
+    protected int getXMLOrder(){
+        return 65400;
+    }
+    
     String rosterAttribute;
     private RosterEntry _re;
     private boolean addLocoToRoster = false;
@@ -560,7 +564,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
                 int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
                 if ( (1000<=object) && (object<2000)) {
-                    tmploco = provideByEcosObject(Integer.toString(object));
+                    tmploco = provideByEcosObject(""+object);
                     if(tmploco.getCV7()==null){
                         tmploco.setCV7("0");
                         getEcosCVs(tmploco);
@@ -629,7 +633,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
                 if ((1000<=object) && (object<2000)){
                     log.debug("Forwarding on State change for " + object);
-                    tmploco = _tecos.get(Integer.toString(object));
+                    tmploco = _tecos.get(object);
                     if (tmploco!=null){
                         tmploco.reply(m);
                         //As the event will come from one object, we shall check to see if it is an extended address,

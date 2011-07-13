@@ -28,13 +28,17 @@ import java.text.DecimalFormat;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
 
     public BlockManager() {
         super();
+    }
+    
+    protected int getXMLOrder(){
+        return Manager.BLOCKS;
     }
 
     public String getSystemPrefix() { return "I"; }
@@ -127,6 +131,7 @@ public class BlockManager extends AbstractManager
     
     String defaultSpeed = "Normal";
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF", justification="We are validating user input however the value is stored in its original format")
     public void setDefaultSpeed(String speed) throws JmriException {
         if(speed==null)
             throw new JmriException("Value of requested default thrown speed can not be null");

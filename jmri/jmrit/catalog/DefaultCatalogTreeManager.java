@@ -25,6 +25,10 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     protected void registerSelf() {
         log.debug("not registering");
     }
+    
+    protected int getXMLOrder(){
+        return 65400;
+    }
 
     /**
     * This is a bogus systemPrefix.  Naming is enforced in method

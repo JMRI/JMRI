@@ -25,7 +25,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.91 $
+ * @version $Revision: 1.92 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -228,8 +228,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     
     public static void sortValue(Hashtable<?, Integer> t){
-
        //Transfer as List and sort it
+        @SuppressWarnings("unchecked")
        ArrayList<Map.Entry<Object, Integer>> l = new ArrayList(t.entrySet());
        Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>(){
 
@@ -240,7 +240,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     protected void addConfigStore(Element root) {
-        ArrayList<Map.Entry<Object, Integer>> l = new ArrayList(clist.entrySet());
+        ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<Map.Entry<Object, Integer>>(clist.entrySet());
         Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>(){
 
          public int compare(Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) {
