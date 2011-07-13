@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.13.1.shtml,v 1.1 2011-07-11 02:45:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.13.1.shtml,v 1.2 2011-07-13 20:25:41 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -80,6 +80,12 @@ None at the time of this release.
 	HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.13.1.tgz/download</a></p>
 
 <h3>Changes since production release 2.12</h3>
+
+<p>Dan Boudreau made the following enhancements to operations.</p>
+<ul>
+	<LI>You can now show the timetable name on your manifests and switch lists.  See under Settings-&gt;Tools
+	Print Options, Manifest Comments, select Show Timetable.</LI>
+</ul>
 
 
 <!--#include virtual="/Footer" -->
