@@ -31,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -59,6 +59,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
 	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
+	JCheckBox printTimetableNameCheckBox = new JCheckBox(rb.getString("PrintTimetableName"));
 	
 	// text field
 	JTextField pickupEngPrefix = new JTextField(10);
@@ -101,6 +102,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		tabFormatCheckBox.setToolTipText(rb.getString("TabComment"));
 		printLocCommentsCheckBox.setToolTipText(rb.getString("AddLocationComments"));
 		printLoadsEmptiesCheckBox.setToolTipText(rb.getString("LoadsEmptiesComment"));
+		printTimetableNameCheckBox.setToolTipText(rb.getString("ShowTimetableTip"));
 		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFile"));
 		
 		// Manifest panel
@@ -221,6 +223,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifestComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutComments")));
 		pManifestComment.add(printLocCommentsCheckBox);
 		pManifestComment.add(printLoadsEmptiesCheckBox);
+		pManifestComment.add(printTimetableNameCheckBox);
 		
 		// manifest logo
 		JPanel pLogo = new JPanel();
@@ -268,6 +271,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
+		printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		
 		updateLogoButtons();
@@ -385,6 +389,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
+			Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 			// Check font if user selected tab output

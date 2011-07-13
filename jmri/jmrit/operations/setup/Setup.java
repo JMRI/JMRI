@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 //import java.awt.Dimension;
 //import java.awt.Point;
@@ -200,6 +200,7 @@ public class Setup {
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
+	private static boolean printTimetableName	= false;	// when true print timetable name on manifests and switch lists.
 
 	/* all JMRI window position and size are now saved
 	// Setup frame attributes
@@ -454,6 +455,14 @@ public class Setup {
 	
 	public static boolean isPrintLoadsAndEmptiesEnabled(){
 		return printLoadsAndEmpties;
+	}
+	
+	public static void setPrintTimetableNameEnabled(boolean enable){
+		printTimetableName = enable;
+	}
+	
+	public static boolean isPrintTimetableNameEnabled(){
+		return printTimetableName;
 	}
 	
 	public static void setSwitchTime(int minutes){
@@ -992,6 +1001,7 @@ public class Setup {
        	values.setAttribute("trainLogger", isTrainLoggerEnabled()?"true":"false");
        	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
        	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
+       	values.setAttribute("printTimetable", isPrintTimetableNameEnabled()?"true":"false");
        	values.setAttribute("yearModeled", getYearModeled());
        	
        	e.addContent(values = new Element("pickupEngFormat"));
@@ -1213,6 +1223,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("printLoadsEmpties: "+enable);
         		setPrintLoadsAndEmptiesEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("printTimetable"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("printTimetable: "+enable);
+        		setPrintTimetableNameEnabled(enable.equals("true"));
         	}
          	if ((a = operations.getChild("settings").getAttribute("yearModeled"))!= null){
         		String year = a.getValue();

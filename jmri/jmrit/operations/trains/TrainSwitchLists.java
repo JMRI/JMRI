@@ -48,7 +48,13 @@ public class TrainSwitchLists extends TrainCommon {
 		addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{splitString(location.getName())}));
-		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()}));
+		String valid = MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()});
+		
+		if (Setup.isPrintTimetableNameEnabled()){
+			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(manager.getTrainScheduleActiveId());
+			valid = valid + " ("+sch.getName()+")"; 
+		}
+		addLine(fileOut, valid);
 		
 		// get a list of trains
 		List<String> trains = manager.getTrainsByTimeList();
