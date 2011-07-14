@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.69 $
+ * @version     $Revision: 1.70 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -216,6 +216,10 @@ public class RouteTableAction extends AbstractTableAction {
             }
             public JButton configureButton() {
                 return new JButton(" Set ");
+            }
+                
+            protected String getBeanType(){
+                return AbstractTableAction.rbean.getString("BeanNameRoute");
             }
         };
     }

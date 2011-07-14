@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -208,6 +208,10 @@ public class SignalGroupTableAction extends AbstractTableAction {
             }
             public JButton configureButton() {
                 return new JButton(" Set ");
+            }
+            
+            protected String getBeanType(){
+                return "Signal Group";
             }
         };
     }

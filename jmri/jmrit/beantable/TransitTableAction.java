@@ -34,21 +34,21 @@ import java.util.ArrayList;
  * Swing action to create and register a
  * TransitTable GUI.
  *
- * <P>
+ * <P
  * This file is part of JMRI.
- * <P>
+ * <P
  * JMRI is open source software; you can redistribute it and/or modify it 
  * under the terms of version 2 of the GNU General Public License as 
  * published by the Free Software Foundation. See the "COPYING" file for 
  * a copy of this license.
- * <P>
+ * <P
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010, 2011
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 
 
@@ -56,7 +56,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <P
      * Note that the argument is the Action title, not the title of the
      * resulting frame.  Perhaps this should be changed?
      * @param actionName
@@ -197,13 +197,17 @@ public class TransitTableAction extends AbstractTableAction {
 
 			protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 			    return true;
-				// return (e.getPropertyName().indexOf("alue")>=0);
+				// return (e.getPropertyName().indexOf("alue")=0);
 			}
 
 			public JButton configureButton() {
 				BeanTableDataModel.log.error("configureButton should not have been called");
 				return null;
 			}
+            
+            protected String getBeanType(){
+                return "Transit";
+            }
         };
     }
 
@@ -615,6 +619,7 @@ public class TransitTableAction extends AbstractTableAction {
 		}	
 		sectionTableModel.fireTableDataChanged();
 	}
+
 	void removeLastSectionPressed(ActionEvent e) {
 		if (sectionList.size()<=1) {
 			deleteAllSections(e);
@@ -1009,6 +1014,7 @@ public class TransitTableAction extends AbstractTableAction {
 
 		sectionTableModel.fireTableDataChanged();
 	}
+
 	void addAlternateSectionPressed(ActionEvent e) {
 		if (sectionList.size()>maxSections) {
 			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx

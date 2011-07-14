@@ -62,7 +62,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.97 $
+ * @version $Revision: 1.98 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -253,6 +253,10 @@ public class LogixTableAction extends AbstractTableAction {
 			public String getValue(String s) {
 				return "";
 			}
+            
+            protected String getBeanType(){
+                return AbstractTableAction.rbean.getString("BeanNameLogix");
+            }
 		};
 	}
 
@@ -3482,6 +3486,7 @@ public class LogixTableAction extends AbstractTableAction {
     void loadJComboBoxWithMastAspects(JComboBox box, String mastName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithMastAspects called with name: "+mastName);
+        System.out.println(mastName);
         SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
         if (m == null) {
             box.addItem(rbx.getString("PromptLoadMastName"));

@@ -4,7 +4,7 @@ package jmri.implementation;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 /**
  * Extend jmri.SignalHead for signals implemented by an SE8c
@@ -23,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * and Bob Jacobsen.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 
@@ -116,7 +116,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
      */
     static NamedBeanHandle<Turnout> makeHandle(int i) {
         String number = ""+i;
-        return new NamedBeanHandle<Turnout>(
+        return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(
             number,
             InstanceManager.turnoutManagerInstance().provideTurnout(number)
         );

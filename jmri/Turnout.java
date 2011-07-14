@@ -1,7 +1,9 @@
 // Turnout.java
 
 package jmri;
-import jmri.util.NamedBeanHandle;
+
+import jmri.NamedBeanHandle;
+
 
 /**
  * Represent a Turnout on the layout.
@@ -68,7 +70,7 @@ import jmri.util.NamedBeanHandle;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.33 $
+ * @version	$Revision: 1.34 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -239,8 +241,10 @@ public interface Turnout extends NamedBean {
      * Sensor-based feedback will not function until these
      * sensors have been provided.
      */
-    public void provideFirstFeedbackSensor(String pName) throws jmri.JmriException;
-    public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException;
+    //public void provideFirstFeedbackSensor(NamedBeanHandle<Sensor> s);
+    public void provideFirstFeedbackSensor(String pName) throws JmriException;
+    public void provideSecondFeedbackSensor(String pName) throws JmriException;
+    
     
     /**
      * Get the first sensor, if defined.
@@ -248,17 +252,27 @@ public interface Turnout extends NamedBean {
      * Returns null if no Sensor recorded.
      */
     public Sensor getFirstSensor();
-
-    public NamedBeanHandle <Sensor> getFirstNamedSensor();
+    
+    /**
+     * Get the first sensor, if defined.
+     *<P>
+     * Returns null if no Sensor recorded.
+     */
+    public NamedBeanHandle<Sensor> getFirstNamedSensor();
     
     /**
      * Get the Second sensor, if defined.
      *<P>
      * Returns null if no Sensor recorded.
      */
-    public Sensor getSecondSensor();
-
-    public NamedBeanHandle <Sensor> getSecondNamedSensor();
+    public Sensor getSecondSensor();    
+    
+    /**
+     * Get the first sensor, if defined.
+     *<P>
+     * Returns null if no Sensor recorded.
+     */
+    public NamedBeanHandle<Sensor> getSecondNamedSensor();
     
     /**
      * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback

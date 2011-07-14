@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -207,6 +207,10 @@ public class SectionTableAction extends AbstractTableAction {
 			    return true;
 				// return (e.getPropertyName().indexOf("alue")>=0);
 			}
+                
+            protected String getBeanType(){
+                return "Section";
+            }
         };
     }
 

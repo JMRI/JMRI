@@ -9,9 +9,10 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperation;
+import jmri.Sensor;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +44,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.99 $
+ * @version     $Revision: 1.100 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -301,27 +302,38 @@ public class TurnoutTableAction extends AbstractTableAction {
                             }
                         });
                         return c;
-                    } else if (col==STRAIGHTCOL|| ((col==xSTRAIGHTCOL || col==ySTRAIGHTCOL || col==zSTRAIGHTCOL) && showTurnoutSpeed)) {
-                        String speed = t.getStraightSpeed();
-                        //System.out.println(speed + " - " + defaultClosedSpeedText);
-                        if(!speedListClosed.contains(speed)){
-                            speedListClosed.add(speed);
+                    } else if(showTurnoutSpeed){
+                        if ((col==STRAIGHTCOL) || 
+                            (col==zSTRAIGHTCOL &&!showLock && !showFeedback) ||
+                                (col==xSTRAIGHTCOL &&showLock && !showFeedback) || 
+                                (col==ySTRAIGHTCOL &&!showLock && showFeedback)){
+                            
+                            String speed = t.getStraightSpeed();
+                            if(!speedListClosed.contains(speed)){
+                                speedListClosed.add(speed);
+                            }
+                            JComboBox c = new JComboBox(speedListClosed);
+                            c.setEditable(true);
+                            c.setSelectedItem(speed);
+                            
+                            return c;
                         }
-                        JComboBox c = new JComboBox(speedListClosed);
-                        c.setEditable(true);
-                        c.setSelectedItem(speed);
-                        
-                        return c;
-                    } else if (col==DIVERGCOL || ((col==xDIVERGCOL || col==yDIVERGCOL || col==zDIVERGCOL) && showTurnoutSpeed)) {
-                        String speed = t.getDivergingSpeed();
-                        if(!speedListThrown.contains(speed)){
-                            speedListThrown.add(speed);
+                        else if ((col==DIVERGCOL) || 
+                            (col==zDIVERGCOL &&!showLock && !showFeedback) ||
+                                (col==xDIVERGCOL &&showLock && !showFeedback) || 
+                                (col==yDIVERGCOL &&!showLock && showFeedback)){
+                                 
+                            String speed = t.getDivergingSpeed();
+                            if(!speedListThrown.contains(speed)){
+                                speedListThrown.add(speed);
+                            }
+                            JComboBox c = new JComboBox(speedListThrown);
+                            c.setEditable(true);
+                            c.setSelectedItem(speed);
+                            return c;
                         }
-                        JComboBox c = new JComboBox(speedListThrown);
-                        c.setEditable(true);
-                        c.setSelectedItem(speed);
-                        return c;
-                    }else return super.getValueAt(row, col);
+                    }
+                    return super.getValueAt(row, col);
                 }    		
 		
     		public void setValueAt(Object value, int row, int col) {
@@ -375,30 +387,42 @@ public class TurnoutTableAction extends AbstractTableAction {
                     } else if ((col == LOCKDECCOL || col==xLOCKDECCOL) && showLock) {
                         String decoderName = (String)((JComboBox)value).getSelectedItem();
                         t.setDecoderName(decoderName);
-                    } else if ((col==STRAIGHTCOL || col==xSTRAIGHTCOL || col==ySTRAIGHTCOL || col==zSTRAIGHTCOL) && showTurnoutSpeed){
-                        String speed = (String)((JComboBox)value).getSelectedItem();
-                        try {
-                            t.setStraightSpeed(speed);
-                        } catch (jmri.JmriException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
-                            return;
+                    } else if(showTurnoutSpeed){
+                        System.out.println("Column " + col);
+                        if ((col==STRAIGHTCOL) || 
+                            (col==zSTRAIGHTCOL &&!showLock && !showFeedback) ||
+                                (col==xSTRAIGHTCOL &&showLock && !showFeedback) || 
+                                (col==ySTRAIGHTCOL &&!showLock && showFeedback)){
+                                
+                            String speed = (String)((JComboBox)value).getSelectedItem();
+                            try {
+                                t.setStraightSpeed(speed);
+                            } catch (jmri.JmriException ex) {
+                                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                                return;
+                            }
+                            if ((!speedListClosed.contains(speed)) && !speed.contains("Global")){
+                                speedListClosed.add(speed);
+                            }
+                            fireTableRowsUpdated(row,row);
                         }
-                        if ((!speedListClosed.contains(speed)) && !speed.contains("Global")){
-                            speedListClosed.add(speed);
+                        else if ((col==DIVERGCOL) || 
+                            (col==zDIVERGCOL &&!showLock && !showFeedback) ||
+                                (col==xDIVERGCOL &&showLock && !showFeedback) || 
+                                (col==yDIVERGCOL &&!showLock && showFeedback)){
+                            
+                            String speed = (String)((JComboBox)value).getSelectedItem();
+                            try {
+                                t.setDivergingSpeed(speed);
+                            } catch (jmri.JmriException ex) {
+                                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                                return;
+                            }
+                            if ((!speedListThrown.contains(speed)) && !speed.contains("Global")){
+                                speedListThrown.add(speed);
+                            }
+                            fireTableRowsUpdated(row,row);
                         }
-                        fireTableRowsUpdated(row,row);
-                    } else if ((col==DIVERGCOL || col==xDIVERGCOL || col==yDIVERGCOL || col==zDIVERGCOL)&& showTurnoutSpeed){
-                        String speed = (String)((JComboBox)value).getSelectedItem();
-                        try {
-                            t.setDivergingSpeed(speed);
-                        } catch (jmri.JmriException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
-                            return;
-                        }
-                        if ((!speedListThrown.contains(speed)) && !speed.contains("Global")){
-                            speedListThrown.add(speed);
-                        }
-                        fireTableRowsUpdated(row,row);                    
                     } else super.setValueAt(value, row, col);
     		}
                 
@@ -416,8 +440,6 @@ public class TurnoutTableAction extends AbstractTableAction {
 
                 public NamedBean getBySystemName(String name) { return turnManager.getBySystemName(name);}
                 public NamedBean getByUserName(String name) { return turnManager.getByUserName(name);}
-                /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
-                public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
                 protected String getMasterClassName() { return getClassName(); }
 
                 
@@ -461,7 +483,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                         super.propertyChange(e);
                     }
                 }
-               
+                
+                protected String getBeanType(){
+                    return AbstractTableAction.rbean.getString("BeanNameTurnout");
+                }               
             };  // end of custom data model
     }
     
@@ -1078,7 +1103,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     private boolean noWarn = false;
-	
+
     protected String getClassName() { return TurnoutTableAction.class.getName(); }
     
     public void setMessagePreferencesDetails(){

@@ -3,8 +3,11 @@
 package jmri.implementation;
 
 import jmri.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -12,7 +15,7 @@ import java.util.HashMap;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -70,13 +73,60 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<java.beans.PropertyChangeListener, String>();
+    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<java.beans.PropertyChangeListener, String>();
+    
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(l);
+        if(beanRef!=null)
+            register.put(l, beanRef);
+        if(listenerRef!=null)
+            listenerRefs.put(l, listenerRef);
+    }
+    
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
+    
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+        register.remove(l);
+        listenerRefs.remove(l);
     }
-
+    
+    public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
+        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<java.beans.PropertyChangeListener>();
+        Enumeration<java.beans.PropertyChangeListener> en = register.keys();
+        while (en.hasMoreElements()) {
+            java.beans.PropertyChangeListener l = en.nextElement();
+            if(register.get(l).equals(name)){
+                list.add(l);
+            }
+        }
+        return list;
+    }
+    
+    /* This allows a meaning full list of places where the bean is in use!*/
+    public synchronized ArrayList<String> getListenerRefs() {
+        ArrayList<String> list = new ArrayList<String>();
+        Enumeration<java.beans.PropertyChangeListener> en = listenerRefs.keys();
+        while (en.hasMoreElements()) {
+            java.beans.PropertyChangeListener l = en.nextElement();
+            list.add(listenerRefs.get(l));
+        }
+        return list;
+    }
+    
+    public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName){
+        if(listenerRefs.contains(l)){
+            listenerRefs.put(l, newName);
+        }
+    }
+    
+    public synchronized String getListenerRef(java.beans.PropertyChangeListener l) {
+        return listenerRefs.get(l);
+    }
+    
     /**
      * Number of current listeners. May return -1 if the 
      * information is not available for some reason.

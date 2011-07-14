@@ -1,7 +1,7 @@
 package jmri.implementation;
 
 import jmri.*;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import java.util.ArrayList;
 import java.beans.PropertyChangeListener;
 
@@ -456,7 +456,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
             SignalTurnout(String pName, int state) {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(pName);
-                _turnout = new NamedBeanHandle<Turnout>(pName, turnout);
+                _turnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout);
                 setState(state);
             }
 
@@ -536,8 +536,8 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             int _state;
 
             SignalSensor(String pName, int state) {
-                Sensor Sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                _Sensor = new NamedBeanHandle<Sensor>(pName, Sensor);
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+                _Sensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
                 setState(state);
             }
 

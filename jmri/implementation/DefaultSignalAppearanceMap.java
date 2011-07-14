@@ -10,7 +10,7 @@ import java.util.Vector;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import jmri.SignalHead;
 import jmri.SignalSystem;
@@ -22,7 +22,7 @@ import jmri.SignalSystem;
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 

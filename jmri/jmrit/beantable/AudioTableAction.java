@@ -45,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -420,6 +420,10 @@ public class AudioTableAction extends AbstractTableAction {
             setColumnToHoldButton(table, EDITCOL,
                     new JButton(AbstractTableAction.rb.getString("ButtonEdit")));
         }
+        
+            protected String getBeanType(){
+                return "Audio";
+            }
     }
 
     /**

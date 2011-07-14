@@ -3,7 +3,7 @@
 package jmri.implementation;
 
 import jmri.*;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 /**
  * Abstract base for the Turnout interface.
@@ -26,9 +26,9 @@ import jmri.util.NamedBeanHandle;
  * <p>
  * Turnout system names are always upper case.
  * <P>
- *
+ * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -45,7 +45,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	 * Handle a request to change state, typically by sending a message to the
 	 * layout in some child class. Public version (used by TurnoutOperator)
 	 * sends the current commanded state without changing it.
-	 *
+	 * 
 	 * @param s new state value
 	 */
 	abstract protected void forwardCommandChangeToLayout(int s);
@@ -122,7 +122,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	 * network state.
 	 * <P>
 	 * Not intended for general use, e.g. for users to set the KnownState.
-	 *
+	 * 
 	 * @param s
 	 *            New state value
 	 */
@@ -150,7 +150,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	}
 
 	/**
-	 * The name pretty much says it.
+	 * The name pretty much says it. 
 	 *<P>
 	 * Triggers all listeners, etc. For use by the TurnoutOperator classes.
 	 */
@@ -250,7 +250,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		if (oldMode != _activeFeedbackType)
 			firePropertyChange("feedbackchange", Integer.valueOf(oldMode),
 					Integer.valueOf(_activeFeedbackType));
-		// unlock turnout if feedback is changed
+		// unlock turnout if feedback is changed 
 		setLocked(CABLOCKOUT, false);
 	}
 
@@ -313,7 +313,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	 * changed, negate it by forcing the turnout to return to the commanded
 	 * state. Turnout that have local buttons can also be locked if their
 	 * decoder supports it.
-	 *
+	 * 
 	 * @param locked
 	 */
 
@@ -345,7 +345,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
 	/**
 	 * Determine if turnout is locked. Returns true if turnout is locked.
-	 * There are two types of locks, cab lockout, and pushbutton lockout.
+	 * There are two types of locks, cab lockout, and pushbutton lockout. 
 	 */
 	public boolean getLocked(int turnoutLockout) {
 		if (turnoutLockout == CABLOCKOUT)
@@ -520,7 +520,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 if (sensor != null) {
-                    provideFirstFeedbackNamedSensor(new NamedBeanHandle<Sensor>(pName, sensor));
+                    provideFirstFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
                 } else {
                     log.error("Sensor '"+pName+"' not available");
                     throw new jmri.JmriException("Sensor '"+pName+"' not available");
@@ -531,7 +531,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             throw new jmri.JmriException("No Sensor Manager Found");
         }
     }
-
+    
     public void provideFirstFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         if (getFirstSensor() != null) {
 			getFirstSensor().removePropertyChangeListener(this);
@@ -543,7 +543,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		if (getFirstSensor() != null) {
 			getFirstSensor().addPropertyChangeListener(this);
 		}
-
+    
     }
 
     public Sensor getFirstSensor() {
@@ -552,11 +552,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
         return _firstNamedSensor.getBean();
     }
-
+    
     public NamedBeanHandle <Sensor> getFirstNamedSensor() {
         return _firstNamedSensor;
     }
-
+    
     public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException {
         if (InstanceManager.sensorManagerInstance()!=null) {
             if (pName==null || pName.equals(""))
@@ -564,7 +564,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 if (sensor != null) {
-                    provideSecondFeedbackNamedSensor(new NamedBeanHandle<Sensor>(pName, sensor));
+                    provideSecondFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
                 } else {
                     log.error("Sensor '"+pName+"' not available");
                     throw new jmri.JmriException("Sensor '"+pName+"' not available");
@@ -589,21 +589,21 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 			getSecondSensor().addPropertyChangeListener(this);
 		}
 	}
-
+    
 	public Sensor getSecondSensor() {
         if (_secondNamedSensor==null) {
             return null;
         }
         return _secondNamedSensor.getBean();
 	}
-
+    
     public NamedBeanHandle <Sensor> getSecondNamedSensor() {
         return _secondNamedSensor;
     }
 
 	public void setInitialKnownStateFromFeedback() {
 		if (_activeFeedbackType == ONESENSOR) {
-			// ONESENSOR feedback
+			// ONESENSOR feedback 
 			if (getFirstSensor() != null) {
 				// set according to state of sensor
 				int sState = getFirstSensor().getKnownState();
@@ -702,7 +702,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	}
 	protected boolean binaryOutput = false;
 
-
+        	
 	public void dispose() {
 		if (getFirstSensor() != null) {
 			getFirstSensor().removePropertyChangeListener(this);
@@ -718,13 +718,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     String _divergeSpeed = "";
     String _straightSpeed = "";
     //boolean useBlockSpeed = true;
-
+    
     //float speedThroughTurnout = 0;
 
     public float getDivergingLimit() {
         if ((_divergeSpeed==null) || (_divergeSpeed==""))
             return -1;
-
+        
         String speed = _divergeSpeed;
         if(_divergeSpeed.equals("Global")){
             speed = InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed();
@@ -743,8 +743,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
     }
-
-    public String getDivergingSpeed() {
+    
+    public String getDivergingSpeed() { 
         if(_divergeSpeed.equals("Global")){
             return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
         }
@@ -752,7 +752,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return ("Use Block Speed");
         return _divergeSpeed;
     }
-
+    
     public void setDivergingSpeed(String s) throws JmriException {
         if(s==null)
             throw new JmriException("Value of requested turnout thrown speed can not be null");
@@ -777,7 +777,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         _divergeSpeed=s;
         firePropertyChange("TurnoutDivergingSpeedChange", oldSpeed, s);
     }
-
+    
     public float getStraightLimit() {
         if ((_straightSpeed==null) || (_straightSpeed==""))
             return -1;
@@ -798,15 +798,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
     }
-
-    public String getStraightSpeed() {
+    
+    public String getStraightSpeed() { 
         if(_straightSpeed.equals("Global"))
             return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
         if(_straightSpeed.equals("Block"))
             return ("Use Block Speed");
         return _straightSpeed;
     }
-
+    
     public void setStraightSpeed(String s) throws JmriException {
         if(s==null)
             throw new JmriException("Value of requested turnout straight speed can not be null");
@@ -831,9 +831,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         _straightSpeed=s;
         firePropertyChange("TurnoutStraightSpeedChange", oldSpeed, s);
     }
-
+    
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(AbstractTurnout.class.getName());
 }
 
 /* @(#)AbstractTurnout.java */
+
+

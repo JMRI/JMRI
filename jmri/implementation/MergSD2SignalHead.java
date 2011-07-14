@@ -15,7 +15,7 @@
 package jmri.implementation;
 
 import jmri.Turnout;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 /**
  * Implement SignalHead for the MERG Signal Driver 2.

@@ -1,6 +1,6 @@
 package jmri;
 
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 /**
  * SignalGroup.java

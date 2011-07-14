@@ -2,7 +2,7 @@
 
 package jmri.implementation;
 import jmri.*;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 /**
  * Drive a single signal head via one "Turnout" objects.
@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead {
 

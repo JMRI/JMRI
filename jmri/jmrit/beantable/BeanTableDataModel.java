@@ -14,9 +14,13 @@ import java.io.IOException;
 import javax.swing.table.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
+import java.util.ArrayList;
 import java.util.List;
 import jmri.util.com.sun.TableSorter;
 
@@ -24,10 +28,10 @@ import jmri.util.com.sun.TableSorter;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.43 $
+ * @version		$Revision: 1.44 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
-            implements PropertyChangeListener  {
+            implements PropertyChangeListener {
 
     static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
@@ -37,7 +41,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
 
     static public final int NUMCOLUMN = 5;
-
+    
     public BeanTableDataModel() {
         super();
         getManager().addPropertyChangeListener(this);
@@ -57,7 +61,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         sysNameList = getManager().getSystemNameList();
         // and add them back in
         for (int i = 0; i< sysNameList.size(); i++)
-            getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this);
+            getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this, null, "Table View");
     }
 
     protected List<String> sysNameList = null;
@@ -128,11 +132,15 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-        case USERNAMECOL:
         case VALUECOL:
         case COMMENTCOL:
         case DELETECOL:
             return true;
+        case USERNAMECOL:
+            NamedBean b = getBySystemName(sysNameList.get(row));
+            if((b.getUserName()==null) || b.getUserName().equals(""))
+                return true;
+            //$FALL-THROUGH$
         default:
             return false;
         }
@@ -185,15 +193,13 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     abstract protected NamedBean getByUserName(String name);
     abstract protected void clickOn(NamedBean t);
     
-    //abstract protected int getDisplayDeleteMsg();
-    //abstract protected void setDisplayDeleteMsg(int boo);
-
     public int getDisplayDeleteMsg() { return jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getMasterClassName(),"deleteInUse"); }
     public void setDisplayDeleteMsg(int boo) { jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getMasterClassName(), "deleteInUse", boo); }
-   abstract protected String getMasterClassName();
+    abstract protected String getMasterClassName();
 
     public void setValueAt(Object value, int row, int col) {
         if (col==USERNAMECOL) {
+            //Directly changing the username should only be possible if the username was previously null or ""
         	// check to see if user name already exists
         	if (((String)value).equals("")) value = null;
             else {
@@ -210,8 +216,22 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                     return;
                 }
             }
-            getBySystemName(sysNameList.get(row)).setUserName(
-                    (String) value);
+            NamedBean nBean = getBySystemName(sysNameList.get(row));
+            nBean.setUserName((String) value);
+            String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                .getString("UpdateToUserName"),
+                new Object[] { getBeanType(),value,sysNameList.get(row) });
+            int optionPane = JOptionPane.showConfirmDialog(null,
+                msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"), 
+                JOptionPane.YES_NO_OPTION);
+            if(optionPane == JOptionPane.YES_OPTION){
+                //This will update the bean reference from the systemName to the userName
+                ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(nBean.getSystemName());
+                for(int i = 0; i<listeners.size();i++){
+                    nBean.updateListenerRef(listeners.get(i), (String)value);
+                }
+                nbMan.updateBeanFromSystemToUser(nBean);
+            }
             fireTableRowsUpdated(row, row);
         } else if (col==COMMENTCOL) {
             getBySystemName(sysNameList.get(row)).setComment(
@@ -245,15 +265,28 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
             if (count>0) { // warn of listeners attached before delete
                 msg = java.text.MessageFormat.format(AbstractTableAction.rb.getString("DeletePrompt"), new Object[]{t.getSystemName()});
-                        
-                msg1 = java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
-                        new Object[]{""+count});
+                
                 JLabel question = new JLabel(msg);
                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
                 container.add(question);
+                
+                msg1 = java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
+                        new Object[]{""+count});
+
                 question = new JLabel(msg1);
                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
                 container.add(question);
+                
+                ArrayList<String> listenerRefs = t.getListenerRefs();
+                if(listenerRefs.size()>0){
+                    question = new JLabel("    ");
+                    container.add(question);
+                    for (int i = 0; i<listenerRefs.size(); i++){
+                        question = new JLabel(listenerRefs.get(i));
+                        question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        container.add(question);
+                    }
+                }
 
             } else {
                 msg = java.text.MessageFormat.format(
@@ -341,6 +374,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
         configValueColumn(table);
         configDeleteColumn(table);
+        
+        MouseListener popupListener = new PopupListener();
+        table.addMouseListener(popupListener);
         
     }
 
@@ -506,7 +542,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     }
 
     protected JTable makeJTable(TableSorter sorter) {
-	    return new JTable(sorter)  {
+	    JTable table = new JTable(sorter)  {
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
@@ -516,8 +552,233 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 return res;
             }
         };
+        return table;
+    }
+    
+    abstract protected String getBeanType();/*{
+        return "Bean";
+    }*/
+    
+    class PopupListener extends MouseAdapter {
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger())
+                showPopup(e);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger())
+                showPopup(e);
+        }
+    }
+    
+    protected void showPopup(MouseEvent e){
+        JTable source = (JTable)e.getSource();
+        TableSorter tmodel = ((TableSorter)source.getModel());
+        int row = source.rowAtPoint( e.getPoint() );
+        int column = source.columnAtPoint( e.getPoint() );
+        if (! source.isRowSelected(row))
+            source.changeSelection(row, column, false, false);
+        final int rowindex = tmodel.modelIndex(row);
+        
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem menuItem = new JMenuItem(AbstractTableAction.rb.getString("Rename"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                renameBean(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Clear"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                removeName(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Move"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                moveBean(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Delete"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                deleteBean(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+
+        
+        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+
+    }
+    
+    class popupmenuRemoveName implements ActionListener {
+        int row;
+        popupmenuRemoveName(int row) {
+            this.row=row;
+        }
+        public void actionPerformed(ActionEvent e) {
+            deleteBean(row, 0);
+        }
+    }
+    
+    jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    
+    public void renameBean(int row, int column){
+        NamedBean nBean = getBySystemName(sysNameList.get(row));
+        String oldName = nBean.getUserName();
+        JTextField _newName = new JTextField(20);
+        int retval = JOptionPane.showOptionDialog(null,
+                                                  "Rename UserName From " + oldName, "Rename " + getBeanType(),
+                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                                                  new Object[]{"Cancel", "OK", _newName}, null );
+
+        if (retval != 1) return;
+        String value = _newName.getText();
+        
+        if(value.equals(oldName)){
+            //name not changed.
+            return;
+        }
+        else {
+            NamedBean nB = getByUserName(value);
+            if (nB != null) {
+                log.error("User name is not unique " + value);
+                String msg;
+                msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                        .getString("WarningUserName"),
+                        new Object[] { ("" + value) });
+                JOptionPane.showMessageDialog(null, msg,
+                        AbstractTableAction.rb.getString("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        nBean.setUserName(value);
+        fireTableRowsUpdated(row, row);
+        if(value!=null){
+            if(oldName==null || oldName.equals("")){
+                if(!nbMan.inUse(sysNameList.get(row), nBean))
+                    return;
+                String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                        .getString("UpdateToUserName"),
+                        new Object[] { getBeanType(),value,sysNameList.get(row) });
+                int optionPane = JOptionPane.showConfirmDialog(null,
+                    msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"), 
+                    JOptionPane.YES_NO_OPTION);
+                if(optionPane == JOptionPane.YES_OPTION){
+                    //This will update the bean reference from the systemName to the userName
+                    ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(nBean.getSystemName());
+                    for(int i = 0; i<listeners.size();i++){
+                        nBean.updateListenerRef(listeners.get(i), value);
+                    }
+                    nbMan.updateBeanFromSystemToUser(nBean);
+                }
+                
+            } else {
+                nbMan.renameBean(oldName, value, nBean);
+                ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
+                for(int i = 0; i<listeners.size();i++){
+                    nBean.updateListenerRef(listeners.get(i), value);
+                }
+            }
+            
+        }
+        else {
+            //This will update the bean reference from the old userName to the SystemName
+            nbMan.updateBeanFromUserToSystem(nBean);
+            ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
+            for(int i = 0; i<listeners.size();i++){
+                nBean.updateListenerRef(listeners.get(i), nBean.getSystemName());
+            }
+        }
     }
 
+    public void removeName(int row, int column){
+        NamedBean nBean = getBySystemName(sysNameList.get(row));
+        String oldName = nBean.getUserName();
+        nBean.setUserName(null);
+        String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                .getString("UpdateToSystemName"),
+                new Object[] { getBeanType()});
+        int optionPane = JOptionPane.showConfirmDialog(null,
+            msg, AbstractTableAction.rb.getString("UpdateToSystemNameTitle"), 
+            JOptionPane.YES_NO_OPTION);
+        if(optionPane == JOptionPane.YES_OPTION){
+            nbMan.updateBeanFromUserToSystem(nBean);
+            ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
+            for(int i = 0; i<listeners.size();i++){
+                nBean.updateListenerRef(listeners.get(i), nBean.getSystemName());
+            }
+        }
+        fireTableRowsUpdated(row, row);
+    }
+    
+    public void moveBean(int row, int column){
+        final NamedBean t = getBySystemName(sysNameList.get(row));
+        String currentName = t.getUserName();
+        NamedBean oldNameBean = getBySystemName(sysNameList.get(row));
+        
+        if((currentName==null) || currentName.equals("")){
+            JOptionPane.showMessageDialog(null,"Can not move an empty UserName");
+            return;
+        }
+        
+        JComboBox box = new JComboBox();
+        List<String> nameList = getManager().getSystemNameList();
+        for(int i = 0; i<nameList.size(); i++){
+            NamedBean nb = getBySystemName(nameList.get(i));
+            //Only add items that do not have a username assigned.
+            if(nb.getDisplayName().equals(nameList.get(i)))
+                box.addItem(nameList.get(i));
+        }
+        
+        int retval = JOptionPane.showOptionDialog(null,
+              "Move " + getBeanType() + " " + currentName + " from " + oldNameBean.getSystemName(), "Move UserName", 
+                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                                                  new Object[]{"Cancel", "OK", box}, null );
+        log.debug("Dialog value "+retval+" selected "+box.getSelectedIndex()+":"
+                  +box.getSelectedItem());
+        if (retval != 1) return;
+        String entry = (String) box.getSelectedItem();
+        NamedBean newNameBean = getBySystemName(entry);
+        if(oldNameBean!=newNameBean){
+            oldNameBean.setUserName("");
+            newNameBean.setUserName(currentName);
+            jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
+            ArrayList<java.beans.PropertyChangeListener> listeners = oldNameBean.getPropertyChangeListeners(currentName);
+            for(int i = 0; i<listeners.size();i++){
+                String listenerRef = oldNameBean.getListenerRef(listeners.get(i));
+                oldNameBean.removePropertyChangeListener(listeners.get(i));
+                newNameBean.addPropertyChangeListener(listeners.get(i), currentName, listenerRef);
+            }
+            
+            if(nbMan.inUse(newNameBean.getSystemName(), newNameBean)){
+                    String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                        .getString("UpdateToUserName"),
+                        new Object[] { getBeanType(),currentName,sysNameList.get(row)});
+                    int optionPane = JOptionPane.showConfirmDialog(null,msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
+                if(optionPane == JOptionPane.YES_OPTION){
+                    ArrayList<java.beans.PropertyChangeListener> listenerRef = newNameBean.getPropertyChangeListeners(newNameBean.getSystemName());
+                    for(int i = 0; i<listenerRef.size();i++){
+                        newNameBean.updateListenerRef(listenerRef.get(i), currentName);
+                    }
+                    nbMan.updateBeanFromSystemToUser(newNameBean);
+                }
+            }
+            fireTableRowsUpdated(row, row);
+            JOptionPane.showMessageDialog(null, getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"));
+        }
+    
+    }
+    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableDataModel.class.getName());
 
 }

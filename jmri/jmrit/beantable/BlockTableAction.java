@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -324,6 +324,10 @@ public class BlockTableAction extends AbstractTableAction {
                 } else {
                     super.propertyChange(e);
                 }
+            }
+            
+            protected String getBeanType(){
+                return AbstractTableAction.rbean.getString("BeanNameBlock");
             }
         };
     }

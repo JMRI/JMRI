@@ -263,6 +263,10 @@ public class LRouteTableAction extends AbstractTableAction {
         }
         protected void configValueColumn(JTable table) {
         }
+        
+        protected String getBeanType(){
+            return "LRoute";
+        }
 
 	}
     

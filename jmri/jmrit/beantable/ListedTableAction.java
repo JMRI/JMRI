@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
      * <P>
      * @author	Bob Jacobsen   Copyright (C) 2003
      * @author	Kevin Dickerson   Copyright (C) 2009
-     * @version	$Revision: 1.6 $
+     * @version	$Revision: 1.7 $
      */
 
 public class ListedTableAction extends AbstractAction {
@@ -32,20 +32,16 @@ public class ListedTableAction extends AbstractAction {
         gotoListItem = selection;
     }
 
-    public ListedTableAction(String s, String selection, int x, int y, int divider) {
+    public ListedTableAction(String s, String selection, int divider) {
         super(s);
         title=s;
         gotoListItem = selection;
-        frameOffSetx = x;
-        frameOffSety = y;
         dividerLocation = divider;
     }
     
-    public ListedTableAction(String s, int x, int y, int divider) {
+    public ListedTableAction(String s, int divider) {
         super(s);
         title=s;
-        frameOffSetx = x;
-        frameOffSety = y;
         dividerLocation = divider;
     }
 
@@ -57,8 +53,6 @@ public class ListedTableAction extends AbstractAction {
     public ListedTableAction() { this(rbean.getString("TitleListedTable"));}
     
     ListedTableFrame f;
-    int frameOffSetx=0;
-    int frameOffSety=0;
     int dividerLocation=0;
 
     public void actionPerformed() {

@@ -34,7 +34,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
@@ -720,7 +720,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             ArrayList<Integer> divergAspects = new ArrayList<Integer>();
             ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
             ArrayList<Integer> eitherAspects = new ArrayList<Integer>();
-
             if (advancedAspect.length>1) {                
                 float maxSigSpeed = -1;
                 float maxPathSpeed = destList.get(destination).getMinimumSpeed();
@@ -746,6 +745,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         } else {
                             log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
                             nonDivergAspects.add(i);
+                            log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
                         }
                     } else {
                         nonDivergAspects.add(i);
@@ -878,6 +878,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         Hashtable<Turnout, Integer> turnouts = new Hashtable<Turnout, Integer>(0);
         Hashtable<Turnout, Integer> autoTurnouts = new Hashtable<Turnout, Integer>(0);
+        Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
+        Hashtable<Turnout, Boolean> autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
         Hashtable<SignalMast, String> masts = new Hashtable<SignalMast, String>(0);
 
         //Hashtable<SignalMast, autoSignalMast> autoMasts = new Hashtable<SignalMast, autoSignalMast>(0);
@@ -994,6 +996,42 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 this.turnouts = new Hashtable<Turnout, Integer>(0);
             } else {
                 this.turnouts=turnouts;
+            }
+            firePropertyChange("turnouts", null, this.destination);
+        }
+        
+        void setTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
+                if(this.turnoutThroats!=null){
+                Enumeration<Turnout> keys = this.turnouts.keys();
+                while ( keys.hasMoreElements() )
+                {
+                   Turnout key = keys.nextElement();
+                   key.removePropertyChangeListener(propertyTurnoutListener);
+                }
+            }
+            destMastInit = false;
+            if(turnouts==null){
+                this.turnoutThroats = new Hashtable<Turnout, Boolean>(0);
+            } else {
+                this.turnoutThroats=turnouts;
+            }
+            firePropertyChange("turnouts", null, this.destination);
+        }
+    
+        void setAutoTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
+                if(this.turnoutThroats!=null){
+                Enumeration<Turnout> keys = this.turnouts.keys();
+                while ( keys.hasMoreElements() )
+                {
+                   Turnout key = keys.nextElement();
+                   key.removePropertyChangeListener(propertyTurnoutListener);
+                }
+            }
+            destMastInit = false;
+            if(turnouts==null){
+                this.autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
+            } else {
+                this.autoTurnoutThroats=turnouts;
             }
             firePropertyChange("turnouts", null, this.destination);
         }
@@ -1722,6 +1760,15 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                                 String t = turnoutlist.get(x).getTurnoutName();
                                 Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
 
+                                if ((turnoutlist.get(x).getTurnoutType()<=3) && (!turnoutlist.get(x).getBlockName().equals(""))){
+                                    log.debug("turnout in list is straight left/right wye");
+                                    log.debug("turnout block Name " + turnoutlist.get(x).getBlockName());
+                                    log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
+                                    log.debug("A " + turnoutlist.get(x).getConnectA());
+                                    log.debug("B " + turnoutlist.get(x).getConnectB());
+                                    log.debug("C " + turnoutlist.get(x).getConnectC());
+                                    log.debug("D " + turnoutlist.get(x).getConnectD());
+                                }
                                 turnoutSettings.put(turnout, throwlist.get(x));
                             }
                         }

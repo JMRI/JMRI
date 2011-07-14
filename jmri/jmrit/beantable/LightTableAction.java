@@ -37,7 +37,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.53 $
+ * @version     $Revision: 1.54 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -212,6 +212,10 @@ public class LightTableAction extends AbstractTableAction {
             }
             public JButton configureButton() {
                 return new JButton(" "+rbean.getString("LightStateOff")+" ");
+            }
+            
+            protected String getBeanType(){
+                return AbstractTableAction.rbean.getString("BeanNameLight");
             }
         };
     }

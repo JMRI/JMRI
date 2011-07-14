@@ -38,7 +38,7 @@ import java.beans.PropertyChangeListener;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  * @since 2.5.3
  */
 
@@ -83,6 +83,7 @@ public class JUnitUtil {
 				root = this;
 			}
 		};
+        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
 	}
 
     public static void initConfigureManager() {

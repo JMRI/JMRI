@@ -3,7 +3,7 @@ package jmri.implementation;
 import java.util.*;
 
 import jmri.*;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
  /**
  * SignalMast implemented via one SignalHead object.
@@ -29,7 +29,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 

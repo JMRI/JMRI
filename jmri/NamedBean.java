@@ -1,6 +1,7 @@
 // NamedBean.java
 
 package jmri;
+import java.util.ArrayList;
 
 /**
  * Provides common services for classes representing objects
@@ -26,7 +27,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * @see         jmri.Manager
  */
 public interface NamedBean {
@@ -63,19 +64,47 @@ public interface NamedBean {
     /**
      * Request a call-back when a bound property changes.
      * Bound properties are the known state, commanded state, user and system names.
+     * @param l - Listener
+     * @param name - The name (either system or user) that the listener uses for 
+     *               this namedBean, this parameter is used to help determine when 
+     *               which listeners should be moved when the username is moved from
+     *               one bean to another.
+     * @param listenerRef - A textual reference for the listener, that can be 
+     *                      presented to the user when a delete is called
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener l, String name, String listenerRef);
 
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
     /**
      * Remove a request for a call-back when a bound property changes.
      */
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
-
+    
+    public void updateListenerRef(java.beans.PropertyChangeListener l, String newName);
+    /**
+    * Get the textual reference for the specific listener
+    *
+    */ 
+    public String getListenerRef(java.beans.PropertyChangeListener l);
+    
+    /**
+    * Returns a list of all the listerners references
+    */
+    public ArrayList<String> getListenerRefs();
+    
     /**
      * Number of current listeners. May return -1 if the 
      * information is not available for some reason.
      */
     public int getNumPropertyChangeListeners();
+    
+    /**
+    * Get a list of all the property change listeners that are registered using
+    * a specific name
+    * @param name  - The name (either system or user) that the listener has registered as 
+    *           referencing this namedBean
+    */
+    public ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name);
 
     /**
      * Deactivate this object, so that it releases as many

@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -362,10 +362,7 @@ public class ListedTableFrame extends BeanTableFrame {
         }
         
         void createDataModel(){
-            //try {
                 dataModel = tableAction.getTableDataModel();
-                /*if (dataModel == null)
-                    return;*/
                 TableSorter sorter = new TableSorter(dataModel);
                 dataTable = dataModel.makeJTable(sorter);
                 sorter.setTableHeader(dataTable.getTableHeader());
@@ -397,10 +394,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     public void actionPerformed(ActionEvent e) {
                         tableAction.addPressed(e);
                     }
-                });   
-            /*} catch ( NullPointerException e) {
-                log.error("An error occured while trying to create the table for " + itemText);
-            }*/
+                });
         }
         
         void addPanelModel(){
@@ -547,7 +541,6 @@ public class ListedTableFrame extends BeanTableFrame {
             if (clickTimer==null){
                 clickTimer=new Timer(clickDelay, new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    //currentItemSelected = mouseItem;
                     selectListItem(mouseItem);
                 }
                 });
@@ -565,23 +558,17 @@ public class ListedTableFrame extends BeanTableFrame {
 
         void openNewTableWindow(int index){
             tabbedTableItem item = tabbedTableArray.get(index);
-            int x = frame.getX()+frame.getInsets().top;
-            int y = frame.getY()+frame.getInsets().top;
             class WindowMaker implements Runnable {
                 tabbedTableItem item;
-                int x;
-                int y;
-                WindowMaker(tabbedTableItem tItem, int tx, int ty){
-                    x = tx;
-                    y = ty;
+                WindowMaker(tabbedTableItem tItem){
                     item = tItem;
                 }
                 public void run() {
-                    ListedTableAction tmp = new ListedTableAction(item.getItemString(), item.getClassAsString(), x, y, cardHolder.getDividerLocation());
+                    ListedTableAction tmp = new ListedTableAction(item.getItemString(), item.getClassAsString(),cardHolder.getDividerLocation());
                     tmp.actionPerformed();
                 }
             }
-            WindowMaker t = new WindowMaker(item, x, y);
+            WindowMaker t = new WindowMaker(item);
             javax.swing.SwingUtilities.invokeLater(t);
         }
 
@@ -591,6 +578,7 @@ public class ListedTableFrame extends BeanTableFrame {
             CardLayout cl = (CardLayout) (detailpanel.getLayout());
             cl.show(detailpanel, item.getClassAsString());
             frame.setTitle(item.getItemString());
+            frame.generateWindowRef();
             try {
                 item.getAAClass().setFrame(frame);
                 buildMenus(item);

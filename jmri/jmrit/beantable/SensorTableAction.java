@@ -32,7 +32,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -310,7 +310,6 @@ public class SensorTableAction extends AbstractTableAction {
                     showDebounceChanged();
                 }
             });
-    
     }
     
     public void setMessagePreferencesDetails(){

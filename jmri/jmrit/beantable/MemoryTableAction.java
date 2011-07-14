@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -100,6 +100,10 @@ public class MemoryTableAction extends AbstractTableAction {
 				BeanTableDataModel.log.error("configureButton should not have been called");
 				return null;
 			}
+            
+            protected String getBeanType(){
+                return AbstractTableAction.rbean.getString("BeanNameMemory");
+            }
         };
     }
 
