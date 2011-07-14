@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -31,7 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.86 $
+ * @version $Revision: 1.87 $
  */
 
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -72,11 +71,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         setPopupUtility(new SensorPopupUtil(this, this));
     }
 
+    @Override
     public Positionable deepClone() {
         SensorIcon pos = new SensorIcon(_editor);
         return finishClone(pos);
     }
 
+    @Override
     public Positionable finishClone(Positionable p) {
         SensorIcon pos = (SensorIcon)p;
         pos.setSensor(getNamedSensor().getName());
@@ -218,6 +219,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     /**
     * Get icon by its localized bean state name
     */
+    @Override
     public NamedIcon getIcon(String state) {
         return _iconMap.get(state);
     }
@@ -225,9 +227,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return _iconMap.get(_state2nameMap.get(state));
     }
 
+    @Override
     public String getFamily() {
         return _iconFamily;
     }
+    @Override
     public void setFamily(String family) {
         _iconFamily = family;
     }
@@ -251,6 +255,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (namedSensor == null) name = rb.getString("NotConnected");
@@ -265,6 +270,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     /**
      * Pop-up just displays the sensor name
      */
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
             if(isIcon()){
@@ -294,6 +300,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     /******** popup AbstractAction.actionPerformed method overrides *********/
 
     // overide
+    @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
         if (debug) log.debug("setTextEditMenu isIcon="+isIcon()+", isText="+isText());
         if (isIcon()) {
@@ -373,6 +380,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     TableItemPanel _itemPanel;
 
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
         popup.add(new AbstractAction(txt) {
@@ -427,6 +435,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         invalidate();
     }
 
+    @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
         popup.add(new AbstractAction(txt) {
@@ -436,6 +445,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             });
         return true;
     }
+
+    @Override
     protected void edit() {
         makeIconEditorFrame(this, "Sensor", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
@@ -468,7 +479,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
             NamedIcon newIcon = entry.getValue();
             NamedIcon oldIcon = oldMap.get(entry.getKey());
-            int degrees = 0;
             newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
             newIcon.setRotation(oldIcon.getRotation(), this);
             setIcon(entry.getKey(), newIcon);
@@ -486,6 +496,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     public String getOriginalText() { return originalText; }
 
+    @Override
     public void setText(String s) {
         _text = (s!=null && s.length()>0);
         super.setText(s);
@@ -504,6 +515,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return _editor.getFlag(Editor.OPTION_CONTROLS, isControlling());
     }
 
+    @Override
     public void doMousePressed(MouseEvent e) {
         if (debug) log.debug("doMousePressed buttonLive="+buttonLive()+", getMomentary="+getMomentary());
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
@@ -517,6 +529,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super.doMousePressed(e);
     }
 
+    @Override
     public void doMouseReleased(MouseEvent e) {
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button release
@@ -529,6 +542,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super.doMouseReleased(e);
     }
 
+    @Override
     public void doMouseClicked(MouseEvent e) {
         if (buttonLive() && !getMomentary()) {
             // this button responds to clicks
@@ -546,6 +560,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super.doMouseClicked(e);
     }
 
+    @Override
     public void dispose() {
         if (namedSensor != null) {
             getSensor().removePropertyChangeListener(this);
@@ -574,6 +589,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return clone;
     }
     
+    @Override
     public int maxWidth() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
@@ -615,6 +631,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return max;
     }
 
+    @Override
     public int maxHeight() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedHeight()!=0) {
@@ -816,22 +833,28 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         SensorPopupUtil(Positionable parent, javax.swing.JComponent textComp) {
             super(parent, textComp);
         }
+        @Override
         public void setTextJustificationMenu(JPopupMenu popup) {
             if (isText()) { super.setTextJustificationMenu(popup); }
         }
+        @Override
         public void setFixedTextMenu(JPopupMenu popup) {
             if (isText()) { super.setFixedTextMenu(popup); }
         }
+        @Override
         public void setTextMarginMenu(JPopupMenu popup) {
             if (isText()) { super.setTextMarginMenu(popup); }
         }
+        @Override
         public void setTextBorderMenu(JPopupMenu popup) {
             if (isText()) { super.setTextBorderMenu(popup); }
         }
+        @Override
         public void setTextFontMenu(JPopupMenu popup) {
             if (isText()) { super.setTextFontMenu(popup); }
         }
 
+        @Override
         protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
                                final String name, final Color color, final int colorType) {
             ActionListener a = new ActionListener() {

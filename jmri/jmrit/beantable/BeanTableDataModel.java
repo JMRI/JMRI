@@ -28,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.44 $
+ * @version		$Revision: 1.45 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener {
@@ -640,7 +640,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                                                   new Object[]{"Cancel", "OK", _newName}, null );
 
         if (retval != 1) return;
-        String value = _newName.getText();
+        String value = _newName.getText().trim();
         
         if(value.equals(oldName)){
             //name not changed.
@@ -663,7 +663,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
         nBean.setUserName(value);
         fireTableRowsUpdated(row, row);
-        if(value!=null){
+        if(!value.equals("")){
             if(oldName==null || oldName.equals("")){
                 if(!nbMan.inUse(sysNameList.get(row), nBean))
                     return;
