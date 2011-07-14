@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetReply;
 /**
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -68,7 +68,9 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
 
                 t.setFeedbackMode(jmri.Turnout.ONESENSOR);
                 jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
-                t.provideFirstFeedbackSensor(s);
+                try {
+                    t.provideFirstFeedbackSensor("IS1");
+                } catch (jmri.JmriException e){ log.error(e.toString()); }
                 try {
                     s.setState(jmri.Sensor.ACTIVE);
                 } catch (Exception x) {log.error("TO exception: " +x);

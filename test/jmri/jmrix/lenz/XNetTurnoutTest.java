@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.10 $
+ * @version         $Revision: 2.11 $
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -126,7 +126,9 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
                 t.setFeedbackMode(jmri.Turnout.ONESENSOR);
                 jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
-                t.provideFirstFeedbackSensor(s);
+                try {
+                    t.provideFirstFeedbackSensor("IS1");
+                } catch (jmri.JmriException e){ log.error(e.toString()); }
                 try {
                     s.setState(jmri.Sensor.ACTIVE);
                 } catch (Exception x) {log.error("TO exception: " +x);
