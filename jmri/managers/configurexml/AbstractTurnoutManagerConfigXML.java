@@ -8,6 +8,7 @@ import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
 import jmri.configurexml.TurnoutOperationManagerXml;
+import jmri.NamedBeanHandle;
 
 import java.util.List;
 import org.jdom.Element;
@@ -25,7 +26,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -72,9 +73,11 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                                 
                 // include feedback info
                 elem.setAttribute("feedback", t.getFeedbackModeName());
-
-                if (t.getFirstNamedSensor()!=null) elem.setAttribute("sensor1", t.getFirstNamedSensor().getName());
-                if (t.getSecondNamedSensor()!=null) elem.setAttribute("sensor2", t.getSecondNamedSensor().getName());
+                NamedBeanHandle s;
+                s = t.getFirstNamedSensor();
+                if (s!=null) elem.setAttribute("sensor1", s.getName());
+                s = t.getSecondNamedSensor();
+                if (s!=null) elem.setAttribute("sensor2", s.getName());
                 
                 // include turnout inverted
                 elem.setAttribute("inverted", t.getInverted()?"true":"false");
@@ -225,11 +228,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                     //continue;
             } else if (userName!=null)
                 t.setUserName(userName);
-            /*if (t==null){
-            	log.error("Could not create turnout: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
-            	result = false;
-            	continue;
-            }*/
             
             // Load common parts
             loadCommon(t, elem);
@@ -246,21 +244,19 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             	}
             }
             a = elem.getAttribute("sensor1");
-            if (a!=null) {
+            if (a!=null) { 
                 try {
                     t.provideFirstFeedbackSensor(a.getValue());
-                } catch ( jmri.JmriException e){
-                    log.error("An error occured loading feedback sensor '"+a.getValue()+ "' on turnout " +sysName + " " + e.toString());
-                    result=false;
+                } catch (jmri.JmriException e){
+                    result = false;
                 }
             }
             a = elem.getAttribute("sensor2");
             if (a!=null) {
-                try{
+                try {
                     t.provideSecondFeedbackSensor(a.getValue());
-                } catch ( jmri.JmriException e){
-                    log.error("An error occured loading feedback sensor " + a.getValue()  + " on turnout " + sysName + " " + e.toString());
-                    result=false;
+                } catch (jmri.JmriException e){
+                    result = false;
                 }
             }
             

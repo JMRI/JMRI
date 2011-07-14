@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.MergSD2SignalHead;
 import jmri.Turnout;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.util.List;
 import org.jdom.Element;
@@ -28,7 +28,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Kevin Dickerson  Copyright: Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -175,11 +175,11 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             } else {
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
             }
-            return new NamedBeanHandle<Turnout>(name, t);
+            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         } else {
             String name = e.getText();
             Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            return new NamedBeanHandle<Turnout>(name, t);
+            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         }
     }
 

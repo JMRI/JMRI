@@ -14,7 +14,7 @@ import javax.swing.JPopupMenu;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 
@@ -91,7 +91,7 @@ public class IndicatorTrackIcon extends PositionableIcon
          if (InstanceManager.sensorManagerInstance()!=null) {
              Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
              if (sensor != null) {
-                 setOccSensorHandle(new NamedBeanHandle<Sensor>(pName, sensor));                
+                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));                
              } else {
                  log.error("Occupancy Sensor '"+pName+"' not available, icon won't see changes");
              }

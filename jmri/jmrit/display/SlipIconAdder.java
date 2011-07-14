@@ -1,7 +1,7 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import jmri.Turnout;
 
 import java.awt.Dimension;
@@ -9,19 +9,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.TransferHandler;
+import javax.swing.JCheckBox;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -421,9 +425,9 @@ public class SlipIconAdder extends IconAdder {
     * Override
     *
     */
-    public void complete(ActionListener addIconAction, boolean changeIcon,
+    public void complete(ActionListener addIconAction, boolean changeIconAction,
                           boolean addToTable, boolean update) {
-        super.complete(addIconAction, changeIcon, addToTable, update);
+        super.complete(addIconAction, changeIconAction, addToTable, update);
         _table.setDragEnabled(true);
         _table.setTransferHandler(new ExportHandler());
         valueChanged(null);
@@ -570,7 +574,7 @@ public class SlipIconAdder extends IconAdder {
                 return false;
             }
         }
-        _turnoutMap.put(key, new NamedBeanHandle<Turnout>(name, sensor));
+        _turnoutMap.put(key, jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor));
         return true;
     }
 

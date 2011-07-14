@@ -8,6 +8,10 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
 import javax.swing.tree.DefaultTreeModel;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Enumeration;
+
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
  * <P>
@@ -114,6 +118,50 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     public synchronized int getNumPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners().length;
     }
+    
+    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<java.beans.PropertyChangeListener, String>();
+    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<java.beans.PropertyChangeListener, String>();
+    
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(l);
+        if(beanRef!=null)
+            register.put(l, beanRef);
+        if(listenerRef!=null)
+            listenerRefs.put(l, listenerRef);
+    }
+    
+    public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
+        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<java.beans.PropertyChangeListener>();
+        Enumeration<java.beans.PropertyChangeListener> en = register.keys();
+        while (en.hasMoreElements()) {
+            java.beans.PropertyChangeListener l = en.nextElement();
+            if(register.get(l).equals(name)){
+                list.add(l);
+            }
+        }
+        return list;
+    }
+    
+    /* This allows a meaning full list of places where the bean is in use!*/
+    public synchronized ArrayList<String> getListenerRefs() {
+        ArrayList<String> list = new ArrayList<String>();
+        Enumeration<java.beans.PropertyChangeListener> en = listenerRefs.keys();
+        while (en.hasMoreElements()) {
+            java.beans.PropertyChangeListener l = en.nextElement();
+            list.add(listenerRefs.get(l));
+        }
+        return list;
+    }
+    
+    public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName){
+        if(listenerRefs.contains(l)){
+            listenerRefs.put(l, newName);
+        }
+    }
+    
+    public synchronized String getListenerRef(java.beans.PropertyChangeListener l) {
+        return listenerRefs.get(l);
+    }
 
     public String getSystemName() {return mSystemName;}
 
@@ -124,6 +172,8 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         mUserName = s;
         firePropertyChange("UserName", old, s);
     }
+    
+    
 
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 

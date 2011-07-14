@@ -11,11 +11,11 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.SE8cSignalHead;
 
 import jmri.util.JUnitUtil;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 /**
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007, 2008, 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SignalHeadTableActionTest extends TestCase {
 

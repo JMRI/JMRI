@@ -13,6 +13,8 @@ import javax.swing.JComboBox;
 import javax.swing.table.TableColumn;
 import javax.swing.DefaultCellEditor;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.EcosLocoAddressManager;
@@ -360,7 +362,15 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     return null;
                 }
             }
-
+            
+            protected String getBeanType(){
+                return "Ecos Loco";
+            }
+            
+            @Override
+            protected void showPopup(MouseEvent e){
+            
+            }
             
         };
     }

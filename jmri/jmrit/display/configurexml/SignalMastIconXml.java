@@ -5,7 +5,7 @@ package jmri.jmrit.display.configurexml;
 import jmri.SignalMast;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -112,6 +112,10 @@ public class SignalMastIconXml extends PositionableLabelXml {
         //    return;
         }
 
+        attr=element.getAttribute("imageset");
+        if(attr!=null)
+            l.useIconSet(attr.getValue());
+        
         attr=element.getAttribute("imageset");
         if(attr!=null)
             l.useIconSet(attr.getValue());

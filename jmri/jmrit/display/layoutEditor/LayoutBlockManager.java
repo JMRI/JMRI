@@ -8,7 +8,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -2070,7 +2070,7 @@ public class LayoutBlockManager extends AbstractManager {
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
-                namedStabilisedIndicator = new NamedBeanHandle<Sensor>(pName, sensor);
+                namedStabilisedIndicator = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
             } else {
                 log.error("Sensor '"+pName+"' not available");
                 throw new jmri.JmriException("Sensor '"+pName+"' not available");

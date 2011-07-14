@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.Turnout;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -105,11 +105,11 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             } else {
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
             }
-            return new NamedBeanHandle<Turnout>(name, t);
+            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         } else {
             String name = e.getText();
             Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            return new NamedBeanHandle<Turnout>(name, t);
+            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         }
     }
 

@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -37,7 +37,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -72,7 +72,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             Turnout turnout = InstanceManager.turnoutManagerInstance().
                  provideTurnout(pName);
              if (turnout != null) {
-                setTurnout(new NamedBeanHandle<Turnout>(pName, turnout), turn);
+                setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout), turn);
              } else {
                  log.error("Turnout '"+pName+"' not available, icon won't see changes");
              }

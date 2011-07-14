@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -81,7 +81,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public void addEntry(String pName, NamedIcon icon) {
         NamedBeanHandle<Sensor> sensor;
         if (InstanceManager.sensorManagerInstance()!=null) {
-            sensor = new NamedBeanHandle<Sensor>(pName, InstanceManager.sensorManagerInstance().provideSensor(pName));
+            sensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, InstanceManager.sensorManagerInstance().provideSensor(pName));
             addEntry(sensor, icon);
         } else {
             log.error("No SensorManager for this protocol, icon won't see changes");

@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SingleTurnoutSignalHead implementation
  * @author	Bob Jacobsen  Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SingleTurnoutSignalHeadTest extends TestCase {
 
@@ -20,7 +20,7 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         SingleTurnoutSignalHead h 
                 = new SingleTurnoutSignalHead("IH1", 
-                    new jmri.util.NamedBeanHandle<Turnout>("IT1", t),
+                    new jmri.NamedBeanHandle<Turnout>("IT1", t),
                     SignalHead.GREEN, SignalHead.RED);
         
         int[] states = h.getValidStates();
@@ -47,7 +47,7 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         SingleTurnoutSignalHead h 
                 = new SingleTurnoutSignalHead("IH1", 
-                    new jmri.util.NamedBeanHandle<Turnout>("IT1", t),
+                    new jmri.NamedBeanHandle<Turnout>("IT1", t),
                     SignalHead.DARK, SignalHead.RED);
         
         int[] states = h.getValidStates();
@@ -80,7 +80,7 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         SingleTurnoutSignalHead h 
                 = new SingleTurnoutSignalHead("IH1", 
-                    new jmri.util.NamedBeanHandle<Turnout>("IT1", t),
+                    new jmri.NamedBeanHandle<Turnout>("IT1", t),
                     SignalHead.GREEN, SignalHead.DARK);
         
         int[] states = h.getValidStates();

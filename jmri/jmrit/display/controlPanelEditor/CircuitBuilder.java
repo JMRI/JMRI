@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 //import jmri.jmrit.catalog.NamedIcon;
 
 import jmri.jmrit.logix.*;

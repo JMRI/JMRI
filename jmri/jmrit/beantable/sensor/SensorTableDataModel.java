@@ -15,7 +15,7 @@ import jmri.InstanceManager;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {
@@ -171,6 +171,10 @@ public class SensorTableDataModel extends BeanTableDataModel {
             s.setSensorDebounceGoingInActiveTimer(goingInActive);
         }
         else super.setValueAt(value, row, col);
+    }
+    
+    protected String getBeanType(){
+        return rbean.getString("BeanNameSensor");
     }
     
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {

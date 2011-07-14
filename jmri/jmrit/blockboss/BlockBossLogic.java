@@ -8,7 +8,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -113,7 +113,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -160,7 +160,7 @@ public class BlockBossLogic extends Siglet {
             watchSensor1 = null;
             return;
         }
-        watchSensor1 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchSensor1 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle (name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchSensor1.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
@@ -169,7 +169,7 @@ public class BlockBossLogic extends Siglet {
             watchSensor2 = null;
             return;
         }
-        watchSensor2 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchSensor2 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle (name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchSensor2.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
@@ -178,7 +178,7 @@ public class BlockBossLogic extends Siglet {
             watchSensor3 = null;
             return;
         }
-        watchSensor3 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchSensor3 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle (name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchSensor3.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor3_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
@@ -187,7 +187,7 @@ public class BlockBossLogic extends Siglet {
             watchSensor4 = null;
             return;
         }
-        watchSensor4 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchSensor4 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle (name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchSensor4.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor4_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
@@ -196,7 +196,7 @@ public class BlockBossLogic extends Siglet {
             watchSensor5 = null;
             return;
         }
-        watchSensor5 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchSensor5 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle (name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchSensor5.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor5_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
@@ -230,7 +230,7 @@ public class BlockBossLogic extends Siglet {
             watchTurnout = null;
             return;
         }
-        watchTurnout = new NamedBeanHandle<Turnout>(name, InstanceManager.turnoutManagerInstance().provideTurnout(name));
+        watchTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, InstanceManager.turnoutManagerInstance().provideTurnout(name));
         if (watchTurnout.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Turnout_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     
@@ -327,7 +327,7 @@ public class BlockBossLogic extends Siglet {
             watchedSensor1 = null;
             return;
         }
-        watchedSensor1 = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchedSensor1 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchedSensor1.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
@@ -345,7 +345,7 @@ public class BlockBossLogic extends Siglet {
             watchedSensor1Alt = null;
             return;
         }
-        watchedSensor1Alt = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchedSensor1Alt = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchedSensor1Alt.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
@@ -363,7 +363,7 @@ public class BlockBossLogic extends Siglet {
             watchedSensor2 = null;
             return;
         }
-        watchedSensor2 = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchedSensor2 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchedSensor2.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
@@ -381,7 +381,7 @@ public class BlockBossLogic extends Siglet {
             watchedSensor2Alt = null;
             return;
         }
-        watchedSensor2Alt = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        watchedSensor2Alt = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (watchedSensor2Alt.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
@@ -456,7 +456,7 @@ public class BlockBossLogic extends Siglet {
             approachSensor1 = null;
             return;
         }
-        approachSensor1 = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        approachSensor1 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
         if (approachSensor1.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Approach_Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }

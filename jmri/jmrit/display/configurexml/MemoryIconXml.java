@@ -4,7 +4,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import jmri.Memory;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 

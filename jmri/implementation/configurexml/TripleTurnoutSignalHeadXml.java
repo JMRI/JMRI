@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
 import jmri.Turnout;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 

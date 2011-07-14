@@ -6,7 +6,7 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 

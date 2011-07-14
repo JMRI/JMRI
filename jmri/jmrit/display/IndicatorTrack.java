@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import jmri.Sensor;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import jmri.jmrit.logix.OBlock;
 /**
  * Defines track objects that dispaly status bt color.
  * <P>
  *
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public interface IndicatorTrack extends Positionable  {
 

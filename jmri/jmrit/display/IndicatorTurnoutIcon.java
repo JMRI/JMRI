@@ -9,7 +9,7 @@ import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
@@ -127,7 +127,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
          if (InstanceManager.sensorManagerInstance()!=null) {
              Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
              if (sensor != null) {
-                 setOccSensorHandle(new NamedBeanHandle<Sensor>(pName, sensor));                
+                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));                
              } else {
                  log.error("Occupancy Sensor '"+pName+"' not available, icon won't see changes");
              }

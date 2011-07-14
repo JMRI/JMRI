@@ -5,7 +5,7 @@ package jmri.implementation;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.SignalHead;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import jmri.util.JUnitUtil;
 
 import junit.framework.Assert;
@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SE8cSignalHead implmentation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SE8cSignalHeadTest extends TestCase {
 

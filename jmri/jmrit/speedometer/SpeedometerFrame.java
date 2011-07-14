@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.SensorIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import java.awt.FlowLayout;
 import java.io.File;
 import java.util.List;
@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
  * @author      Matthew Harris  Copyright (c) 2011
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -329,7 +329,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     }
                 }
             });
-        startSensorIcon.setSensor(new NamedBeanHandle<Sensor>(startSensor.getText(),s));
+        startSensorIcon.setSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(startSensor.getText(),s));
 
         // set stop sensor1
         s = InstanceManager.sensorManagerInstance().
@@ -365,7 +365,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     }
                 }
             });
-        stopSensorIcon1.setSensor(new NamedBeanHandle<Sensor>(stopSensor1.getText(),s));
+        stopSensorIcon1.setSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(stopSensor1.getText(),s));
 
         if (valid==1) return;
 
@@ -405,7 +405,8 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     }
                 }
             });
-        stopSensorIcon2.setSensor(new NamedBeanHandle<Sensor>(stopSensor2.getText(),s));
+        NamedBeanHandle<Sensor> namedSensor2 = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(stopSensor2.getText(), s);
+        stopSensorIcon2.setSensor(namedSensor2);
     }
 
     private void enableConfiguration(boolean enable) {

@@ -1,7 +1,7 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import jmri.NamedBean;
 import jmri.Sensor;
 
@@ -421,7 +421,7 @@ public class MultiSensorIconAdder extends IconAdder {
                 return false;
             }
         }
-        _sensorMap.put(key, new NamedBeanHandle<Sensor>(name, sensor));
+        _sensorMap.put(key, jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor));
         return true;
     }
 

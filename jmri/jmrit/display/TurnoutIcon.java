@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -72,7 +72,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
          if (InstanceManager.turnoutManagerInstance()!=null) {
             Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(pName);
              if (turnout != null) {
-                 setTurnout(new NamedBeanHandle<Turnout>(pName, turnout));
+                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout));
              } else {
                  log.error("Turnout '"+pName+"' not available, icon won't see changes");
              }

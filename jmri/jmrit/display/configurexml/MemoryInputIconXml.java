@@ -3,7 +3,7 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryInputIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 import jmri.Memory;
 import org.jdom.Element;
 import org.jdom.Attribute;
@@ -12,7 +12,7 @@ import org.jdom.Attribute;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 

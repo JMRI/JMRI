@@ -4,7 +4,7 @@ package jmri.implementation;
 
 import jmri.*;
 
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Tests for the SignalAppearanceMap interface
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultSignalAppearanceMapTest extends TestCase {
 

@@ -3,7 +3,7 @@ package jmri.jmrit.display.configurexml;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SensorIcon;
-//import jmri.util.NamedBeanHandle;
+//import jmri.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import java.awt.Color;
@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -35,10 +35,8 @@ public class SensorIconXml extends PositionableLabelXml {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-
         SensorIcon p = (SensorIcon)o;
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
-
         Element element = new Element("sensoricon");
         element.setAttribute("sensor", p.getNamedSensor().getName());
         storeCommonAttributes(p, element);

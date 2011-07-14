@@ -20,7 +20,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 /**
  * An icon to display a status of a SignalHead.
@@ -31,7 +31,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.82 $
+ * @version $Revision: 1.83 $
  */
 
 public class SignalHeadIcon extends PositionableIcon implements java.beans.PropertyChangeListener {

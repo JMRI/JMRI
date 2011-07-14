@@ -19,7 +19,7 @@ import jmri.util.com.sun.TableSorter;
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class SignalMastTableDataModel extends BeanTableDataModel {
@@ -191,7 +191,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
                 return retval;
             }
             Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
+            
         };
+    }
+    
+    protected String getBeanType(){
+        return rbean.getString("BeanNameSignalMast");
     }
     
         		 

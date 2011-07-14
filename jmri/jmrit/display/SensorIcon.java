@@ -2,7 +2,8 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -30,7 +31,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.85 $
+ * @version $Revision: 1.86 $
  */
 
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
@@ -95,7 +96,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
-                setSensor(new NamedBeanHandle<Sensor>(pName, sensor));
+                setSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             } else {
                 log.error("Sensor '"+pName+"' not available, icon won't see changes");
             }
@@ -118,7 +119,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 makeIconMap();
             }
             displayState(sensorState());
-            getSensor().addPropertyChangeListener(this);
+            getSensor().addPropertyChangeListener(this, s.getName(), "SensorIcon on Panel " + _editor.getName());
             setName(namedSensor.getName());  // Swing name for e.g. tests
         }
         if (isText()) {
@@ -467,6 +468,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
             NamedIcon newIcon = entry.getValue();
             NamedIcon oldIcon = oldMap.get(entry.getKey());
+            int degrees = 0;
             newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
             newIcon.setRotation(oldIcon.getRotation(), this);
             setIcon(entry.getKey(), newIcon);

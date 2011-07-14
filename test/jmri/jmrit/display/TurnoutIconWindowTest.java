@@ -7,7 +7,7 @@ import java.util.*;
 
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.util.NamedBeanHandle;
+import jmri.NamedBeanHandle;
 
 import junit.framework.*;
 import junit.extensions.jfcunit.*;
@@ -17,7 +17,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the TurnoutIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
