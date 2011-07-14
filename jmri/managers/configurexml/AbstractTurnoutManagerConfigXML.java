@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -72,11 +72,9 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                                 
                 // include feedback info
                 elem.setAttribute("feedback", t.getFeedbackModeName());
-                Sensor s;
-                s = t.getFirstSensor();
-                if (s!=null) elem.setAttribute("sensor1", s.getSystemName());
-                s = t.getSecondSensor();
-                if (s!=null) elem.setAttribute("sensor2", s.getSystemName());
+
+                if (t.getFirstNamedSensor()!=null) elem.setAttribute("sensor1", t.getFirstNamedSensor().getName());
+                if (t.getSecondNamedSensor()!=null) elem.setAttribute("sensor2", t.getSecondNamedSensor().getName());
                 
                 // include turnout inverted
                 elem.setAttribute("inverted", t.getInverted()?"true":"false");
@@ -248,14 +246,22 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             	}
             }
             a = elem.getAttribute("sensor1");
-            if (a!=null) { 
-                Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
-                t.provideFirstFeedbackSensor(s);
+            if (a!=null) {
+                try {
+                    t.provideFirstFeedbackSensor(a.getValue());
+                } catch ( jmri.JmriException e){
+                    log.error("An error occured loading feedback sensor '"+a.getValue()+ "' on turnout " +sysName + " " + e.toString());
+                    result=false;
+                }
             }
             a = elem.getAttribute("sensor2");
-            if (a!=null) { 
-                Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
-                t.provideSecondFeedbackSensor(s);
+            if (a!=null) {
+                try{
+                    t.provideSecondFeedbackSensor(a.getValue());
+                } catch ( jmri.JmriException e){
+                    log.error("An error occured loading feedback sensor " + a.getValue()  + " on turnout " + sysName + " " + e.toString());
+                    result=false;
+                }
             }
             
             // check for turnout inverted

@@ -9,9 +9,9 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperation;
-import jmri.Sensor;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
+import jmri.util.NamedBeanHandle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +43,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.98 $
+ * @version     $Revision: 1.99 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -264,12 +264,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                         });
                         return c;
                     } else if (col==SENSOR1COL && showFeedback) {
-                        Sensor s = t.getFirstSensor();
-                        if (s!=null) return s.getSystemName();
+                        NamedBeanHandle s = t.getFirstNamedSensor();
+                        if (s!=null) return s.getName();
                         else return "";
                     } else if (col==SENSOR2COL && showFeedback) {
-                        Sensor s = t.getSecondSensor();
-                        if (s!=null) return s.getSystemName();
+                        NamedBeanHandle s = t.getSecondNamedSensor();
+                        if (s!=null) return s.getName();
                         else return "";
                     } else if (col==OPSONOFFCOL && showFeedback) {
                         return makeAutomationBox(t);
@@ -341,16 +341,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                         t.setFeedbackMode(modeName);
                     } else if (col==SENSOR1COL && showFeedback) {
                         String sname = (String)value;
-                        Sensor s;
-                        if (!sname.equals("")) s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
-                        else s = null;
-                        t.provideFirstFeedbackSensor(s);
+                        try {
+                            t.provideFirstFeedbackSensor(sname);
+                        } catch (jmri.JmriException e) {
+                            JOptionPane.showMessageDialog(null, e.toString());
+                        }
                     } else if (col==SENSOR2COL && showFeedback) {
                         String sname = (String)value;
-                        Sensor s;
-                        if (!sname.equals("")) s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
-                        else s = null;
-                        t.provideSecondFeedbackSensor(s);
+                        try {
+                            t.provideSecondFeedbackSensor(sname);
+                        } catch (jmri.JmriException e) {
+                            JOptionPane.showMessageDialog(null, e.toString());
+                        }
                     } else if (col==OPSONOFFCOL && showFeedback) {
                         // do nothing as this is handled by the combo box listener
                     } else if (col==OPSEDITCOL && showFeedback) {

@@ -8,11 +8,14 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.Collections;
-import java.util.Hashtable;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 
+//import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -25,7 +28,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.92 $
+ * @version $Revision: 1.93 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -119,10 +122,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     public void registerConfig(Object o, int x) {
         // skip if already present, leaving in original order
-        if (clist.contains(o)) return;
+        if (clist.containsKey(o)) return;
 
         confirmAdapterAvailable(o);
         
+        // and add to list
+        //clist.add(o);
         clist.put(o, x);
     }
     public void registerTool(Object o) {
@@ -170,7 +175,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     ArrayList<Object> plist = new ArrayList<Object>();
-    Hashtable<Object, Integer> clist = new Hashtable<Object, Integer>();
+    //Hashtable<Object, Integer> clist = new Hashtable<Object, Integer>();
+    Map<Object, Integer> clist = Collections.synchronizedMap(new LinkedHashMap<Object, Integer>());
     ArrayList<Object> tlist = new ArrayList<Object>();
     ArrayList<Object> ulist = new ArrayList<Object>();
     ArrayList<Object> uplist = new ArrayList<Object>();
@@ -227,18 +233,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
     
-    public static void sortValue(Hashtable<?, Integer> t){
-       //Transfer as List and sort it
-        @SuppressWarnings("unchecked")
-       ArrayList<Map.Entry<Object, Integer>> l = new ArrayList(t.entrySet());
-       Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>(){
-
-         public int compare(Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) {
-            return o1.getValue().compareTo(o2.getValue());
-        }});
-
-    }
-
     protected void addConfigStore(Element root) {
         ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<Map.Entry<Object, Integer>>(clist.entrySet());
         Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>(){
@@ -252,6 +246,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (e!=null) root.addContent(e);
         }
     }
+    
     protected void addToolsStore(Element root) {
         for (int i=0; i<tlist.size(); i++) {
             Object o = tlist.get(i);
@@ -259,6 +254,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (e!=null) root.addContent(e);
         }
     }
+    
     protected void addUserStore(Element root) {
         for (int i=0; i<ulist.size(); i++) {
             Object o = ulist.get(i);
@@ -266,6 +262,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (e!=null) root.addContent(e);
         }
     }
+    
     protected void addUserPrefsStore(Element root) {
         for (int i=0; i<uplist.size(); i++) {
             Object o = uplist.get(i);
@@ -273,6 +270,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (e!=null) root.addContent(e);
         }
     }
+    
     protected void includeHistory(Element root) {
         // add history to end of document
         if (InstanceManager.getDefault(FileHistory.class) != null)

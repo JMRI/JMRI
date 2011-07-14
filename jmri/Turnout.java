@@ -1,7 +1,7 @@
 // Turnout.java
 
 package jmri;
-
+import jmri.util.NamedBeanHandle;
 
 /**
  * Represent a Turnout on the layout.
@@ -68,7 +68,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -239,8 +239,8 @@ public interface Turnout extends NamedBean {
      * Sensor-based feedback will not function until these
      * sensors have been provided.
      */
-    public void provideFirstFeedbackSensor(Sensor s);
-    public void provideSecondFeedbackSensor(Sensor s);
+    public void provideFirstFeedbackSensor(String pName) throws jmri.JmriException;
+    public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException;
     
     /**
      * Get the first sensor, if defined.
@@ -248,13 +248,17 @@ public interface Turnout extends NamedBean {
      * Returns null if no Sensor recorded.
      */
     public Sensor getFirstSensor();
+
+    public NamedBeanHandle <Sensor> getFirstNamedSensor();
     
     /**
      * Get the Second sensor, if defined.
      *<P>
      * Returns null if no Sensor recorded.
      */
-    public Sensor getSecondSensor();    
+    public Sensor getSecondSensor();
+
+    public NamedBeanHandle <Sensor> getSecondNamedSensor();
     
     /**
      * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback
