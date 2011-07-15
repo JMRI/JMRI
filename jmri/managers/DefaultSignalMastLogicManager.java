@@ -11,8 +11,6 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import javax.swing.*;
-import java.awt.*;
 
 /**
  *
@@ -31,7 +29,7 @@ import java.awt.*;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager {

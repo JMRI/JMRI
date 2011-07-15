@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.75 $
+ * @version			$Revision: 1.76 $
  */
 public class InstanceManager {
 
@@ -89,7 +89,6 @@ public class InstanceManager {
      * Now, we do that moving the item to the front;
      * see the getDefault() method
      */
-    @SuppressWarnings("unchecked")   // checked by construction
     static public <T> void setDefault(Class<T> type, T val) {
         List<Object> l = getList(type);
         if (l == null || (l.size()<1) ) {

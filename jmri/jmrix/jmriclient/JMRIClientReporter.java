@@ -3,7 +3,6 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.implementation.AbstractReporter;
-import jmri.Reporter;
 
 /**
  * JMRIClient implementation of the Reporter interface.
@@ -12,7 +11,7 @@ import jmri.Reporter;
  * Description:		extend jmri.AbstractReporter for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class JMRIClientReporter extends AbstractReporter implements JMRIClientListener {
 

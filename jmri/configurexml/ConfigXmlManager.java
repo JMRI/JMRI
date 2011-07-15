@@ -8,9 +8,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Map;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -28,7 +26,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.94 $
+ * @version $Revision: 1.95 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {

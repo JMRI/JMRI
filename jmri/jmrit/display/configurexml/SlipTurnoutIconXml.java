@@ -11,7 +11,7 @@ import org.jdom.Element;
  *
  * Based upon the TurnoutIconXml by Bob Jacobsen
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
@@ -193,7 +193,6 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         return null;
     }
     
-    @SuppressWarnings("unchecked")
     private void loadTurnoutIcon(String state, int rotation, SlipTurnoutIcon l, 
                                  Element element, Editor ed){
         NamedIcon icon = loadIcon(l, state, element, "SlipTurnout \""+l.getNameString()+"\" icon \""+state+"\" ", ed);

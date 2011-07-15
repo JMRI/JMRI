@@ -3,7 +3,6 @@ package jmri.managers.configurexml;
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
 import jmri.Turnout;
-import jmri.Sensor;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
@@ -26,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
