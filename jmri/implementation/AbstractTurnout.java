@@ -28,7 +28,7 @@ import jmri.NamedBeanHandle;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -541,7 +541,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
 		// if need be, set listener
 		if (getFirstSensor() != null) {
-			getFirstSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " getDisplayName());
+			getFirstSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
 		}
     
     }
@@ -586,7 +586,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
 		// if need be, set listener
 		if (getSecondSensor() != null) {
-			getSecondSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " getDisplayName());
+			getSecondSensor().addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
 		}
 	}
     
