@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.77 $
+ * @version	$Revision: 1.78 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -66,7 +66,11 @@ public class JmrixConfigPane extends JPanel {
         }
 
         if (retval.ccCurrent!=null) {
-            retval.ccCurrent.dispose();
+            try {
+                retval.ccCurrent.dispose();
+            } catch (Exception ex){
+                log.error("Error Occured while disposing connection " + ex.toString());
+            }
         }
 
         InstanceManager.configureManagerInstance().deregister(retval);
