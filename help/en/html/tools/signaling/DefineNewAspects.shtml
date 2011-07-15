@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DefineNewAspects.shtml,v 1.8 2011-06-24 14:40:57 kevin-dickerson Exp $ -->
+<!-- $Id: DefineNewAspects.shtml,v 1.9 2011-07-15 21:00:52 kevin-dickerson Exp $ -->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -150,25 +150,16 @@ not every type of signal can show every aspect.
 Each aspect that the signal can show needs to be 
 described with a block like this:
 
-<<<<<<< DefineNewAspects.shtml
-<code><pre>
-    &lt;appearance&gt;<br>
-=======
+
 <PRE>
     &lt;appearance&gt;<br>
->>>>>>> 1.7
       &lt;aspectname&gt;Clear&lt;/aspectname&gt;
       &lt;show&gt;green&lt;/show&gt;
       &lt;show&gt;red&lt;/show&gt;
       &lt;reference&gt;&lt;/reference&gt;
       &lt;imagelink&gt;&lt;/imagelink&gt;
-<<<<<<< DefineNewAspects.shtml
-    &lt;/appearance&gt;<br>
-</pre></code>
-=======
     &lt;/appearance&gt;<br>
 </PRE>
->>>>>>> 1.7
 
 The "aspectname" needs to be at the start, followed by zero or more
 "show" elements. 
@@ -218,10 +209,6 @@ The purpose of the map is to define which potential appearances are valid depend
  what appearance is being displayed on the signal mast that is ahead of us.  
  This mapping can be a simple one-to-one, E.g. Advanced signal mast is showing Approach, we should show Clear.
  Or a more complex one-to-many map where there could be multiple appearances that we could display, 
-<<<<<<< DefineNewAspects.shtml
- E.g. Advanced signal is showing Stop, but we could display either a 
- Approach or Diverging Approach depending upon other conditions.
-=======
  E.g. Advanced signal is showing Stop, but we could display either a 
  Approach or Diverging Approach depending upon other conditions.
  <p>
@@ -229,25 +216,8 @@ The purpose of the map is to define which potential appearances are valid depend
  for that signalling system.<br>
  The value of Our Aspect, must be one that is defined and supported by the 
  defined in the appearance file.
->>>>>>> 1.7
 <p>
 All of the mappings, are contained within the &lt;aspectMappings&gt; tags, within their own &lt;aspectMapping&gt; tag
-<<<<<<< DefineNewAspects.shtml
-<code><pre>
-&lt;aspectMappings&gt;
-    &lt;aspectMapping&gt;
-        &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
-        &lt;ourAspect&gt;Clear&lt;/ourAspect&gt;
-    &lt;/aspectMapping&gt;
-<br>
-    &lt;aspectMapping&gt;
-        &lt;advancedAspect&gt;Stop&lt;/advancedAspect&gt;
-        &lt;ourAspect&gt;Approach&lt;/ourAspect&gt;
-        &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
-    &lt;/aspectMapping&gt;
-&lt;/aspectMappings&gt;
-</pre></code>
-=======
 <PRE>
 &lt;aspectMappings&gt;
     &lt;aspectMapping&gt;
@@ -261,7 +231,6 @@ All of the mappings, are contained within the &lt;aspectMappings&gt; tags, withi
     &lt;/aspectMapping&gt;
 &lt;/aspectMappings&gt;
 </PRE>
->>>>>>> 1.7
 
 <h3>Check Your Work</h3>
 
