@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetReply;
 /**
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -70,12 +70,15 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
                 jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
                 try {
                     t.provideFirstFeedbackSensor("IS1");
-                } catch (jmri.JmriException e){ log.error(e.toString()); }
+                } catch (Exception x1) { log.error("TO exception: " +x1);
+                }
                 try {
                     s.setState(jmri.Sensor.ACTIVE);
                 } catch (Exception x) {log.error("TO exception: " +x);
                 } 
                 // check to see if the turnout state changes.
+        /*System.out.println(t.getKnownState());
+        System.out.println(jmri.Turnout.THROWN);*/
 		Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
         }
 
@@ -105,6 +108,7 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
 		lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
 
 		t = new EliteXNetTurnout("XT",21,lnis);
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
