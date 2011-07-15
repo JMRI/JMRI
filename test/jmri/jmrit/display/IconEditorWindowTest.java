@@ -16,14 +16,13 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SensorIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
     Editor _editor;
     JComponent _panel;
 
-	@SuppressWarnings("unchecked")
 	public void testSensorEditor() throws Exception {
 
         _editor.addSensorEditor();
@@ -69,7 +68,6 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(iconEditorFrame, this);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void testRightTOEditor() throws Exception {
 	    
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("RightTurnout");
@@ -113,7 +111,6 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(iconEditorFrame, this);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void testLeftTOEditor() throws Exception {
 	    
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("LeftTurnout");
@@ -157,7 +154,6 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(iconEditorFrame, this);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void testLightEditor() throws Exception {
 	    
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Light");
@@ -201,7 +197,6 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(iconEditorFrame, this);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void testSignalHeadEditor() throws Exception {
 	    
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("SignalHead");
@@ -248,7 +243,6 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(iconEditorFrame, this);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void testMemoryEditor() throws Exception {
 	    
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Memory");
@@ -335,7 +329,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         TestHelper.disposeWindow(iconEditorFrame, this);
 	}
-	@SuppressWarnings("unchecked")
+
 	public void testReporterEditor() throws Exception {
 	    
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Reporter");
