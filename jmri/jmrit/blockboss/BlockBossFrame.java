@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -680,19 +680,24 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         }
 
         // it does
-        BlockBossLogic b = BlockBossLogic.getStoppedObject(outSignalField.getText());
-        b.setApproachSensor1(approachSensorField1.getText());
-        if (buttonSingle.isSelected())
-            loadSingle(b);
-        else if (buttonTrailMain.isSelected())
-            loadTrailMain(b);
-        else if (buttonTrailDiv.isSelected())
-            loadTrailDiv(b);
-        else if (buttonFacing.isSelected())
-            loadFacing(b);
-        else {
-            log.error(rbt.getString("no_button_selected?"));
-            return;
+        try {
+            BlockBossLogic b = BlockBossLogic.getStoppedObject(outSignalField.getText());
+            b.setApproachSensor1(approachSensorField1.getText());
+            if (buttonSingle.isSelected())
+                loadSingle(b);
+            else if (buttonTrailMain.isSelected())
+                loadTrailMain(b);
+            else if (buttonTrailDiv.isSelected())
+                loadTrailDiv(b);
+            else if (buttonFacing.isSelected())
+                loadFacing(b);
+            else {
+                log.error(rbt.getString("no_button_selected?"));
+                return;
+            }
+        } catch (Exception e){
+            log.error("An error occured creating the boss logic " + e.toString());
+            JOptionPane.showMessageDialog(this,"An error occured creating the Simple Signal Logic\nPlease check the console log for more information");
         }
     }
 
