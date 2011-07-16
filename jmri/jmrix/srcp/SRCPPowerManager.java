@@ -8,7 +8,7 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SRCPPowerManager implements PowerManager, SRCPListener {
 
@@ -79,6 +79,15 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 		}
 		waiting = false;
 	}
+
+	// to listen for status changes from SRCP system
+	public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
+		if (waiting) {
+			power = onReply;
+			firePropertyChange("Power", null, null);
+		}
+		waiting = false;
+        }
 
 	public void message(SRCPMessage m) {
 		if (m.isKillMain() ) {

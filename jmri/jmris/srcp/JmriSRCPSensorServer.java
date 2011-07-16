@@ -1,26 +1,25 @@
-//JmriSRCPTurnoutServer.java
+//JmriSRCPSensorServer.java
 
 package jmri.jmris.srcp;
 
 import java.io.*;
 
-import jmri.Turnout;
+import jmri.Sensor;
 import jmri.InstanceManager;
-import jmri.jmris.AbstractTurnoutServer;
+import jmri.jmris.AbstractSensorServer;
 
 /**
- * SRCP Server interface between the JMRI Turnout manager and a
+ * SRCP Server interface between the JMRI Sensor manager and a
  * network connection
- * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.5 $
+ * @author          Paul Bender Copyright (C) 2011
+ * @version         $Revision: 1.1 $
  */
 
-public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
+public class JmriSRCPSensorServer extends AbstractSensorServer {
 
    private DataOutputStream output;
 
-   public JmriSRCPTurnoutServer(DataInputStream inStream,DataOutputStream outStream){
-
+   public JmriSRCPSensorServer(DataInputStream inStream,DataOutputStream outStream){
         output=outStream;
     }
 
@@ -29,9 +28,40 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
      * Protocol Specific Abstract Functions
      */
 
-     public void sendStatus(String turnoutName,int Status) throws IOException
+     public void sendStatus(String sensorName,int Status) throws IOException
      {
-		output.writeBytes("499 ERROR unspecified error\n\r");
+        int bus=0;
+	int address=0;
+        java.util.List<Object> list
+            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        for (Object memo: list)
+        {
+	   String prefix=((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix();
+	   if(sensorName.startsWith(prefix)){
+		try{
+                    address=Integer.parseInt(sensorName.substring(prefix.length()+1));
+		   break;
+                } catch(NumberFormatException ne){
+			// we expect this if the prefix doesn't match
+                }
+           }
+           bus++;
+        }
+
+	if(bus>list.size()){
+ 	   output.writeBytes("499 ERROR unspecified error\n\r");
+	   return;
+	}
+	
+        if(Status==Sensor.ACTIVE){
+		output.writeBytes("100 INFO" + bus + " FB " + address + " 1\n\r");
+        } else if (Status==Sensor.INACTIVE){
+		output.writeBytes("100 INFO" + bus + " FB " + address + " 0\n\r");
+        } else {
+               //  unknown state
+		output.writeBytes("416 ERROR no data\n\r");
+        }
+
      }
 
      public void sendStatus(int bus, int address) throws IOException
@@ -46,20 +76,20 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
          output.writeBytes("412 ERROR wrong value\n\r");
          return;
        }
-       String turnoutName=((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix()
-                          + "T" + address;
-       int Status=InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
-	if(Status==Turnout.THROWN){
-		output.writeBytes("100 INFO " + bus + " GA " + address + " 0 0\n\r");
-        } else if (Status==Turnout.CLOSED){
-		output.writeBytes("100 INFO " + bus + " GA " + address + " 1 0\n\r");
+       String sensorName=((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix()
+                          + "S" + address;
+       int Status=InstanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
+        if(Status==Sensor.ACTIVE){
+		output.writeBytes("100 INFO" + bus + " FB " + address + " 1\n\r");
+        } else if (Status==Sensor.INACTIVE){
+		output.writeBytes("100 INFO" + bus + " FB " + address + " 0\n\r");
         } else {
                //  unknown state
 		output.writeBytes("416 ERROR no data\n\r");
         }
      }
 
-     public void sendErrorStatus(String turnoutName) throws IOException {
+     public void sendErrorStatus(String sensorName) throws IOException {
  	output.writeBytes("499 ERROR unspecified error\n\r");
      }
 
@@ -72,7 +102,6 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     * the correct string from the provided compoents.
     */
     public void parseStatus(int bus,int address,int value) throws jmri.JmriException,java.io.IOException {
-
        log.debug("parse Status called with bus " +bus +" address " +address
                  + " and value " +value);
        java.util.List<Object> list
@@ -84,26 +113,26 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
          output.writeBytes("412 ERROR wrong value\n\r");
          return;
        }
-       String turnoutName=((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix()
-                          + "T" + address;
+       String sensorName=((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix()
+                          + "S" + address;
 	    if(value==0){
                    if(log.isDebugEnabled())
-                      log.debug("Setting Turnout THROWN");
-                   throwTurnout(turnoutName);
+                      log.debug("Setting Sensor INACTIVE");
+                   setSensorInactive(sensorName);
             } else if(value==1){
                    if(log.isDebugEnabled())
-                      log.debug("Setting Turnout CLOSED");
-                   closeTurnout(turnoutName);
+                      log.debug("Setting Sensor ACTIVE");
+                   setSensorActive(sensorName);
             }
-            sendStatus(bus,address);
+            //sendStatus(bus,address);
     }
 
-    // update state as state of turnout changes
+    // update state as state of sensor changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // If the Commanded State changes, show transition state as "<inconsistent>"
         if (e.getPropertyName().equals("KnownState")) {
             try {
-               String Name=((jmri.Turnout)e.getSource()).getSystemName();
+               String Name=((jmri.Sensor)e.getSource()).getSystemName();
                java.util.List<Object> List=jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
                int i=0;
                int address;
@@ -124,6 +153,6 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPTurnoutServer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPSensorServer.class.getName());
 
 }

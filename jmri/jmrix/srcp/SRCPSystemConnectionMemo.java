@@ -3,6 +3,7 @@
 package jmri.jmrix.srcp;
 
 import jmri.InstanceManager;
+import jmri.*;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -13,13 +14,14 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public SRCPSystemConnectionMemo(SRCPTrafficController et) {
         super("D", "SRCP");
         this.et = et;
+        this.et.setSystemConnectionMemo(this);
         register();
         /*InstanceManager.store(cf = new jmri.jmrix.srcp.swing.ComponentFactory(this), 
                 jmri.jmrix.swing.ComponentFactory.class);*/
@@ -41,7 +43,11 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * particular connection.
      */
     public SRCPTrafficController getTrafficController() { return et; }
-    public void setTrafficController(SRCPTrafficController et) { this.et = et; }
+    public void setTrafficController(SRCPTrafficController et) 
+    { 
+       this.et = et; 
+       this.et.setSystemConnectionMemo(this);
+    }
     private SRCPTrafficController et;
     
     /**
@@ -53,15 +59,19 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureManagers() {
     
-        jmri.InstanceManager.setProgrammerManager(
-            new SRCPProgrammerManager(
-                new SRCPProgrammer()));
-      
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager());
+	setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer()));
+        jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
+     
+        setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager()); 
+        jmri.InstanceManager.setPowerManager(getPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.srcp.SRCPTurnoutManager.instance());
+        setTurnoutManager(new jmri.jmrix.srcp.SRCPTurnoutManager()); 
+        jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
+
+        jmri.InstanceManager.setSensorManager(getSensorManager());
         
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager());
+        setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager()); 
+        jmri.InstanceManager.setThrottleManager(getThrottleManager());
 
     }
     
@@ -76,7 +86,86 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         et.sendSRCPMessage(new SRCPMessage("SET CONNECTIONMODE SRCP COMMAND\n"), null);
         et.sendSRCPMessage(new SRCPMessage("GO\n"), null);
     }
-    
+   
+
+    /**
+     * Provides access to the Programmer for this particular connection.
+     * NOTE: Programmer defaults to null
+     */
+    public ProgrammerManager getProgrammerManager() {
+        return programmerManager;
+    }
+    public void setProgrammerManager(ProgrammerManager p) {
+        programmerManager = p;
+    }
+
+    private ProgrammerManager programmerManager=null;
+
+    /*
+     * Provides access to the Throttle Manager for this particular connection.
+     */
+    public ThrottleManager getThrottleManager(){
+        if (throttleManager == null)
+            throttleManager = new SRCPThrottleManager();
+        return throttleManager;
+
+    }
+    public void setThrottleManager(ThrottleManager t){
+         throttleManager = t;
+    }
+
+    private ThrottleManager throttleManager;
+
+    /*
+     * Provides access to the Power Manager for this particular connection.
+     */
+    public PowerManager getPowerManager(){
+        if (powerManager == null)
+            powerManager = new SRCPPowerManager();
+        return powerManager;
+   }
+    public void setPowerManager(PowerManager p){
+         powerManager = p;
+    }
+
+    private PowerManager powerManager;
+
+    /*
+     * Provides access to the Sensor Manager for this particular connection.
+     */
+    public SensorManager getSensorManager(){
+        if (sensorManager == null)
+            sensorManager = new SRCPSensorManager(this);
+        return sensorManager;
+
+    }
+    public void setSensorManager(SensorManager s){
+         sensorManager = s;
+    }
+
+    private SensorManager sensorManager=null;
+
+    /*
+     * Provides access to the Turnout Manager for this particular connection.
+     * NOTE: Turnout manager defaults to NULL
+     */
+    public TurnoutManager getTurnoutManager(){
+        return turnoutManager;
+
+    }
+    public void setTurnoutManager(TurnoutManager t){
+         turnoutManager = t;
+    }
+
+    private TurnoutManager turnoutManager=null;
+
+
+
+   
+
+
+
+ 
     public void dispose(){
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);

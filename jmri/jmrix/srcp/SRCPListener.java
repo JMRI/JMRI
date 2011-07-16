@@ -7,11 +7,12 @@ package jmri.jmrix.srcp;
  * communications link.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public interface SRCPListener extends jmri.jmrix.AbstractMRListener {
     public void message(SRCPMessage m);
     public void reply(SRCPReply m);
+    public void reply(jmri.jmrix.srcp.parser.SimpleNode n);
 }
 
 /* @(#)SRCPListener.java */

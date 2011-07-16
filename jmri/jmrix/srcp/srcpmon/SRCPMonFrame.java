@@ -10,7 +10,7 @@ import jmri.jmrix.srcp.SRCPTrafficController;
 /**
  * Frame displaying (and logging) SRCP command messages
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPListener {
 
@@ -36,6 +36,9 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
 	}
 	public synchronized void reply(SRCPReply l) {  // receive a reply message and log it
 		nextLine("rep: "+l.toString(), "");
+	}
+	public synchronized void reply(jmri.jmrix.srcp.parser.SimpleNode n) {  // receive a reply message and log it
+		nextLine("rep: "+n.toString(), "");
 	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPMonFrame.class.getName());

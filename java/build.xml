@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010, 2011 -->
-<!-- Revision $Revision: 1.90 $ -->
+<!-- Revision $Revision: 1.91 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -52,7 +52,8 @@
   <property name="jartarget" value=".."/>
   <property name="doctarget" value="doc"/>
   <property name="tmptarget" value="tmp"/>
-  <property name="javacctarget" value="${tmptarget}/jmri/jmris/srcp/parser"/>
+  <property name="javacctarget" value="${tmptarget}/jmri"/>
+
   
   <path id="project.class.path">
     <pathelement location=".." />
@@ -123,7 +124,8 @@
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${target}"/>
     <mkdir dir="${target}/resources" />
-    <mkdir dir="${javacctarget}" />
+    <mkdir dir="${javacctarget}/jmris/srcp/parser"/>
+    <mkdir dir="${javacctarget}/jmrix/srcp/parser"/>
   </target>
 
   <target name="realclean" description="remove more files from a build" depends="clean">
@@ -139,9 +141,13 @@
     <delete includeEmptyDirs="true">
       <fileset dir="${doctarget}"/>
     </delete>
-    <mkdir dir="${javacctarget}"/>
+    <mkdir dir="${javacctarget}/jmris/srcp/parser"/>
     <delete includeEmptyDirs="true">
-      <fileset dir="${javacctarget}"/>
+      <fileset dir="${javacctarget}/jmris/srcp/parser"/>
+    </delete>
+    <mkdir dir="${javacctarget}/jmrix/srcp/parser"/>
+    <delete includeEmptyDirs="true">
+      <fileset dir="${javacctarget}/jmrix/srcp/parser"/>
     </delete>
   </target>
 
@@ -162,7 +168,12 @@
   <!-- Run JJTree -->
   <jjtree
      target="${source}/jmri/jmris/srcp/SRCPParser.jjt"
-     outputdirectory="${javacctarget}"
+     outputdirectory="${javacctarget}/jmris/srcp/parser"
+     javacchome="lib/"
+  />
+  <jjtree
+     target="${source}/jmri/jmrix/srcp/SRCPClientParser.jjt"
+     outputdirectory="${javacctarget}/jmrix/srcp/parser"
      javacchome="lib/"
   />
   </target>
@@ -170,15 +181,20 @@
   <target name="javacc" depends="jjtree" description="JavaCC related actions">
   <!-- Run JavaCC -->
   <javacc
-     target="${javacctarget}/SRCPParser.jj"
-     outputdirectory="${javacctarget}"
+     target="${javacctarget}/jmris/srcp/parser/SRCPParser.jj"
+     outputdirectory="${javacctarget}/jmris/srcp/parser"
+     javacchome="lib/"
+  />
+  <javacc
+     target="${javacctarget}/jmrix/srcp/parser/SRCPClientParser.jj"
+     outputdirectory="${javacctarget}/jmrix/srcp/parser"
      javacchome="lib/"
   />
   </target>
 
   <target name="javacc-compile" depends="init, javacc" description="compile javacc output">
     <!-- Compile the java code from ${javacctarget} into ${target} -->
-    <javac srcdir="${javacctarget}" 
+    <javac srcdir="${javacctarget}"
            destdir="${target}"
            source="${source_version}" 
            target="${jre_version}" 
@@ -673,7 +689,7 @@
     <mkdir dir="${doctarget}/jmri/jmris/srcp/"/>
     <!-- Run JJDoc -->
     <jjdoc
-      target="${javacctarget}/SRCPParser.jj"
+      target="${javacctarget}/jmris/srcp/parser/SRCPParser.jj"
       javacchome="lib/"
       outputfile="${doctarget}/jmri/jmris/srcp/SRCPParser.html"
     />

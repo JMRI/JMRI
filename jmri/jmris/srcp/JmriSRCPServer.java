@@ -19,7 +19,7 @@ import jmri.jmris.srcp.parser.SimpleNode;
 /**
  * This is an implementation of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  *
  */
 public class JmriSRCPServer extends JmriServer{
@@ -74,14 +74,16 @@ public class JmriSRCPServer extends JmriServer{
 	String cmd; 
 	int index=0;
         int runmode=HANDSHAKEMODE;
+        SRCPSERVERMODE=HANDSHAKEMODE; 
 
         // interface components
         ServiceHandler sh= new ServiceHandler();
         sh.setPowerServer(new JmriSRCPPowerServer(outStream));
         sh.setTurnoutServer(new JmriSRCPTurnoutServer(inStream,outStream));
+        sh.setSensorServer(new JmriSRCPSensorServer(inStream,outStream));
 
           // Start by sending a welcome message
-          outStream.writeBytes("SRCP 0.8.3\n");
+          outStream.writeBytes("SRCP 0.8.3\n\r");
 
 	    while(true) {
 	   // Read the command from the client
@@ -95,35 +97,35 @@ public class JmriSRCPServer extends JmriServer{
                  index = cmd.indexOf(" ",index)+1;
                  if(cmd.substring(index).startsWith("PROTOCOL SRCP")) {
                    if(cmd.contains("0.8"))
-	            outStream.writeBytes("201 OK PROTOCOL SRCP\n");
+	            outStream.writeBytes("201 OK PROTOCOL SRCP\n\r");
                    else
-	            outStream.writeBytes("400 ERROR unsupported protocol\n");
+	            outStream.writeBytes("400 ERROR unsupported protocol\n\r");
                                     
                  } else if(cmd.substring(index).startsWith("CONNECTIONMODE SRCP")) {
                         index=cmd.indexOf(" ",index)+1;
                         index=cmd.indexOf(" ",index)+1;
                         if(cmd.substring(index).startsWith("COMMAND")){
                            runmode=COMMANDMODE;
-                           outStream.writeBytes("202 OK\n");
+                           outStream.writeBytes("202 OK CONNECTIONMODEOK\n\r");
                         } else if(cmd.substring(index).startsWith("INFO")){
                            runmode=INFOMODE;
-                           outStream.writeBytes("202 OK\n");
+                           outStream.writeBytes("202 OK CONNECTIONMODEOK\n\r");
                         } else {
-                           outStream.writeBytes("401 ERROR unsupported connection mode\n");
+                           outStream.writeBytes("401 ERROR unsupported connection mode\n\r");
                         }
                  } else { 
-	            outStream.writeBytes("500 ERROR out of resources\n");
+	            outStream.writeBytes("500 ERROR out of resources\n\r");
                  }
               } else if (cmd.startsWith("GO")){
                 if(runmode==0){
-                  outStream.writeBytes("402 ERROR unsufficient data\n");
+                  outStream.writeBytes("402 ERROR unsufficient data\n\r");
                 } else {
                   SRCPSERVERMODE = runmode;
                   if(log.isDebugEnabled()) log.debug("Switching to runmode after GO");
-                  outStream.writeBytes("200 OK 1\n");
+                  outStream.writeBytes("200 OK 1\n\r");
                 }
               } else {
-                  outStream.writeBytes("402 ERROR unsufficient data\n");
+                  outStream.writeBytes("402 ERROR unsufficient data\n\r");
 	      }
            } else if (SRCPSERVERMODE == COMMANDMODE ){
 
@@ -138,14 +140,14 @@ public class JmriSRCPServer extends JmriServer{
                       log.debug("Parse Exception");
                       pe.printStackTrace();
                    }
-                   outStream.writeBytes("425 ERROR not supported\n");
+                   outStream.writeBytes("425 ERROR not supported\n\r");
               }
            } else if (SRCPSERVERMODE == INFOMODE) {
               cmd = inStream.readLine(); 
               if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
              // input commands are ignored in INFOMODE. 
            } else {
-	      outStream.writeBytes("500 ERROR out of resources\n");
+	      outStream.writeBytes("500 ERROR out of resources\n\r");
               outStream.close();
               inStream.close();
               return;

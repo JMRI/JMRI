@@ -2,11 +2,15 @@
 
 package jmri.jmrix.srcp;
 
+import jmri.jmrix.srcp.parser.SimpleNode;
+import jmri.jmrix.srcp.parser.SRCPClientVisitor;
+import jmri.jmrix.srcp.parser.Token;
+
 /**
  * Carries the reply to an SRCPMessage.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 
@@ -20,6 +24,20 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     public SRCPReply(SRCPReply l) {
         super(l);
     }
+
+    // from a parser message node.
+    public SRCPReply(SimpleNode n){
+	super();
+        String s=new String(n.jjtGetFirstToken().toString());
+	for(int i=1;i<n.jjtGetNumChildren();i++) {
+	   s= s +" " +((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString();
+        }
+        _nDataChars = s.length();
+        for (int i = 0; i<_nDataChars; i++)
+            _dataChars[i] = s.charAt(i);
+
+    }
+
 
     public boolean isResponseOK() {
 	return getResponseCode().charAt(0) == '1' || getResponseCode().charAt(0) == '2';
@@ -62,6 +80,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 
     public boolean isUnsolicited() {
 	String s = toString();
+	try {
 	// Split in 7 is enough for initial handshake 
 	String[] part = s.split("\\s",7);
 	// Test for initial handshake message with key "SRCP".
@@ -69,8 +88,10 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 	    setUnsolicited();
 	    return true;
         } else {
+	    // the string wasn't long enough to split.
 	    return false;
         }
+	} catch(Exception e){ return false;}
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPReply.class.getName());

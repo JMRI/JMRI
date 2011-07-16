@@ -12,7 +12,7 @@ import jmri.jmrix.srcp.SRCPReply;
 /**
  * Description:		Frame for user input of SRCP messages
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.srcp.SRCPListener {
@@ -73,4 +73,5 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
 
   	public void  message(SRCPMessage m) {}  // ignore replies
   	public void  reply(SRCPReply r) {} // ignore replies
+  	public void  reply(jmri.jmrix.srcp.parser.SimpleNode n) {} // ignore replies
 }
