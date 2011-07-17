@@ -23,8 +23,12 @@
   Provides build services for JMRI libraries and applications
   </description>
 
-  <!-- options you might want to change during development,   -->
-  <!-- but please change them back before commiting this file -->
+  <!-- allow for persistent local values, shouldn't be an error if this doesn't exists --> 
+  <property file="local.properties" />
+
+  <!-- options you might want to change during development,       -->
+  <!-- but set them in the local.properties file, instead of here -->
+  <!-- that you don't accidentally commit them                    -->
   
     <!-- should compiler warn of use of deprecated APIs? (on/off) -->
     <property name="deprecation" value="off" />
@@ -38,27 +42,27 @@
     <!-- JRE version (1.5 as of JMRI 2.5.1) -->
     <property name="jre_version" value="1.5" />
 
-		<!-- Set this to the directory where Findbugs is installed if you don't 
-		want to use the command line arguments -->
-        <!--property name="findbugs.home" value="C:/findbugs-1.3.8" /-->
+    <!-- Set this to the directory where Findbugs is installed if you don't 
+         want to use the command line arguments -->
+    <!--property name="findbugs.home" value="C:/findbugs-1.3.8" /-->
     
   <!-- You can specify a DecoderPro/PanelPro config file at runtime -->
   <!-- with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"   -->
 
   <!-- set global properties for this build -->
-  <property name="source" value="src"/>
-  <property name="libdir" value="../lib"/>
-  <property name="resourcedir" value="../resources"/>
-  <property name="test" value="test"/>
-  <property name="target" value="classes"/>
-  <property name="jartarget" value=".."/>
-  <property name="doctarget" value="doc"/>
-  <property name="tmptarget" value="tmp"/>
-  <property name="javacctarget" value="${tmptarget}/jmri"/>
+  <property name="doctarget"    value="java/doc"/>
+  <property name="jartarget"    value="."/>
+  <property name="libdir"       value="lib"/>
+  <property name="resourcedir"  value="resources"/>
+  <property name="source"       value="java/src"/>
+  <property name="target"       value="java/classes"/>
+  <property name="test"         value="java/test"/>
+  <property name="tmptarget"    value="java/tmp"/>
 
+  <property name="javacctarget" value="${tmptarget}/jmri"/>
   
   <path id="project.class.path">
-    <pathelement location=".." />
+    <pathelement location="${jartarget}" />
     <pathelement location="${libdir}/MRJAdapter.jar" />
     <pathelement location="${libdir}/RXTXcomm.jar" />
     <pathelement location="${libdir}/Serialio.jar" />
@@ -135,22 +139,14 @@
   </target>
 
   <target name="clean" description="remove compilation results to force rebuild">
-    <mkdir dir="${target}"/>
-    <delete includeEmptyDirs="true">
-      <fileset dir="${target}"/>
-    </delete>
-    <mkdir dir="${doctarget}"/>
-    <delete includeEmptyDirs="true">
+    <delete includeEmptyDirs="true" quiet="true">
       <fileset dir="${doctarget}"/>
-    </delete>
-    <mkdir dir="${javacctarget}/jmris/srcp/parser"/>
-    <delete includeEmptyDirs="true">
+      <fileset dir="${target}"/>
       <fileset dir="${javacctarget}/jmris/srcp/parser"/>
-    </delete>
-    <mkdir dir="${javacctarget}/jmrix/srcp/parser"/>
-    <delete includeEmptyDirs="true">
       <fileset dir="${javacctarget}/jmrix/srcp/parser"/>
     </delete>
+
+
   </target>
 
   <target name="copyfiles" depends="init" description="copy resource files">
@@ -270,7 +266,7 @@
        <compilerclasspath>
 	      <pathelement path="${libdir}/ecj.jar" />
        </compilerclasspath>	
-       <compilerarg value="@ecj.warning.options"/>
+       <compilerarg value="@java/ecj.warning.options"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -309,7 +305,7 @@
     <!-- Compile the test java code from ${source} into ${target} -->
     <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
     <copy todir="${target}">
-        <fileset dir="test/" includes="**/*.properties"  /> 
+        <fileset dir="${test}" includes="**/*.properties"  /> 
     </copy>
     <javac srcdir="${test}" 
            destdir="${target}"
@@ -320,7 +316,7 @@
        <compilerclasspath>
 	      <pathelement path="${libdir}/ecj.jar" />
        </compilerclasspath>	
-       <compilerarg value="@ecj.warning.options"/>
+       <compilerarg value="@java/ecj.warning.options"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -391,7 +387,7 @@
   <target name="decoderpro" depends="debug, runtime-library-selection" description="build and run DecoderPro app">
     <property name="antargline" value="DecoderProConfig2.xml" />
     <java classname="apps.DecoderPro.DecoderPro"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -409,7 +405,7 @@
   <target name="dp3" depends="debug, runtime-library-selection" description="build and run DecoderPro3 app">
     <property name="antargline" value="DecoderProConfig3.xml" />
     <java classname="apps.gui3.dp3.DecoderPro3"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -427,7 +423,7 @@
   <target name="panelpro" depends="debug, runtime-library-selection" description="build and run PanelPro app">
     <property name="antargline" value="PanelProConfig2.xml" />
     <java classname="apps.PanelPro.PanelPro"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -442,7 +438,7 @@
   <target name="soundpro" depends="debug, runtime-library-selection" description="build and run SoundPro app">
     <property name="antargline" value="SoundProConfig2.xml" />
     <java classname="apps.SoundPro.SoundPro"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -457,7 +453,7 @@
 
   <target name="gui3mdi" depends="debug, runtime-library-selection" description="build and run GUI3 MDI demo app">
     <java classname="apps.gui3.mdi.MDI"
-          dir=".."
+          dir="."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -475,7 +471,7 @@
 
   <target name="gui3ide" depends="debug, runtime-library-selection" description="build and run GUI3 IDE demo app">
     <java classname="apps.gui3.paned.Paned"
-          dir=".."
+          dir="."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -493,7 +489,7 @@
   <target name="installtest" depends="debug, runtime-library-selection" description="build and run InstallTest app">
     <property name="antargline" value="InstallTestConfig2.xml" />
     <java classname="apps.InstallTest.InstallTest"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -508,7 +504,7 @@
   <target name="jmridemo" depends="debug, runtime-library-selection" description="build and run JmriDemo app">
     <property name="antargline" value="JmriDemoConfig2.xml" />
     <java classname="apps.JmriDemo.JMRIdemo"
-          dir=".."
+          dir="."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -523,7 +519,7 @@
   <target name="locotools" depends="debug, runtime-library-selection" description="build and run LocoTools app">
     <property name="antargline" value="LocoToolsConfig2.xml" />
     <java classname="apps.LocoTools.LocoTools"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -537,7 +533,7 @@
 
   <target name="cornwall" depends="debug, runtime-library-selection" description="build and run CornwallRR app">
     <java classname="apps.cornwall.CornwallRR"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -550,7 +546,7 @@
 
   <target name="wizard" depends="debug, runtime-library-selection" description="build and run Wizard app">
     <java classname="apps.wizard.Wizard"
-          dir=".."
+          dir="."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -564,7 +560,7 @@
   <!-- Force false language/country to check I8N -->
   <target name="locale" depends="debug, runtime-library-selection" description="check JmriDemo I8N">
     <java classname="apps.JmriDemo.JMRIdemo"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -583,7 +579,7 @@
 
   <target name="faceless" depends="debug, runtime-library-selection" description="build and run faceless app">
     <java classname="apps.FacelessApp"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -598,7 +594,7 @@
   <!-- NetBeans IDE profile target in this file -->
   <target name="profile" depends="debug, runtime-library-selection" description="build and run JmriDemo app with profiling">
     <java classname="apps.JmriDemo.JMRIdemo"
-          dir=".."
+          dir="."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -611,7 +607,7 @@
   </target>
 
   <target name="headlesstest" depends="runtime-library-selection" description="run headless test suite">
-     <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir=".." >
+     <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
 	<sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
 	<sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
 	<sysproperty key="log4j.ignoreTCL" path="true/"/>       
@@ -634,7 +630,7 @@
   <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
   <target name="alltest" depends="debug, tests, runtime-library-selection" description="build and run test suite">
     <java classname="apps.tests.AllTest"
-          dir=".." 
+          dir="." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -657,7 +653,7 @@
        <classpath refid="project.class.path"    />
     </nbprofiledirect>
     <java classname="apps.DecoderPro.DecoderPro"
-            dir=".." 
+            dir="." 
 	        fork="yes" >
        <classpath refid="project.class.path"    />
        <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
@@ -677,7 +673,7 @@
           description="create working jar file with current contents">
     <jar jarfile="${jartarget}/jmri.jar" 
          basedir="${target}"
-         manifest="manifest" 
+         manifest="java/manifest" 
          compress="true" />   <!-- compress="true" is default -->
     <!-- Starting with JMRI 1.9, building the JAR index crashes.  -->
     <!-- This appears to be due to a problem with compression in  -->
