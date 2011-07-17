@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir=".." name="JMRI-IDE">
-    <import file="../build.xml"/>
+<project basedir="../java" name="JMRI-IDE">
+    <import file="../java/build.xml"/>
     <!-- TODO: edit the following target according to your needs -->
     <!-- (more info: http://www.netbeans.org/kb/41/freeform-config.html#debugj2se) -->
     <target depends="debug, runtime-library-selection" description="build and run DecoderPro app" name="debug-nb">
