@@ -183,6 +183,9 @@
   ; -- usually, this will be determined by the dist.xml ant script
   !define JMRI_VER  "unknown"                   ; Application version
 !endif
+!ifndef RELEASEDIR
+  !define RELEASEDIR ".."
+!endif
 !define JRE_VER   "1.5"                         ; Required JRE version
 !define INST_VER  "0.1.17.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
@@ -264,7 +267,7 @@ AutoCloseWindow False ; do not automatically close when finished
 Name "${APP} ${JMRI_VER}"
 Caption "${APP} ${JMRI_VER} Setup"
 BrandingText "${APP} - ${COPYRIGHT}"
-OutFile "../../${PNAME}.exe"
+OutFile "${RELEASEDIR}/${PNAME}.exe"
 
 ; -------------------------------------------------------------------------
 ; - Interface Settings

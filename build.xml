@@ -26,6 +26,14 @@
   <!-- allow for persistent local values, shouldn't be an error if this doesn't exists --> 
   <property file="local.properties" />
 
+  <property name="release.major" value="2" />
+  <property name="release.minor" value="13" />
+  <property name="release.build" value="1" />
+
+  <property name="release" value="${release.major}.${release.minor}.${release.build}" />
+  <property name="number"  value="${release}"  />
+
+
   <!-- options you might want to change during development,       -->
   <!-- but set them in the local.properties file, instead of here -->
   <!-- that you don't accidentally commit them                    -->
@@ -50,16 +58,20 @@
   <!-- with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"   -->
 
   <!-- set global properties for this build -->
+  <property name="dist"         value="dist" />
   <property name="doctarget"    value="java/doc"/>
   <property name="jartarget"    value="."/>
   <property name="libdir"       value="lib"/>
   <property name="resourcedir"  value="resources"/>
+  <property name="scriptdir"    value="scripts" />
   <property name="source"       value="java/src"/>
   <property name="target"       value="java/classes"/>
   <property name="test"         value="java/test"/>
   <property name="tmptarget"    value="java/tmp"/>
 
   <property name="javacctarget" value="${tmptarget}/jmri"/>
+
+  <property name="ecj.warning.options" value="@java/ecj.warning.options" />
   
   <path id="project.class.path">
     <pathelement location="${jartarget}" />
@@ -136,12 +148,14 @@
 
   <target name="realclean" description="remove more files from a build" depends="clean">
     <delete file="findbugs.xml" quiet="true" />
+    <delete file="junit-results.xml" quiet="true" />
   </target>
 
   <target name="clean" description="remove compilation results to force rebuild">
     <delete includeEmptyDirs="true" quiet="true">
       <fileset dir="${doctarget}"/>
       <fileset dir="${target}"/>
+      <fileset dir="${dist}"/>
       <fileset dir="${javacctarget}/jmris/srcp/parser"/>
       <fileset dir="${javacctarget}/jmrix/srcp/parser"/>
     </delete>
@@ -266,7 +280,7 @@
        <compilerclasspath>
 	      <pathelement path="${libdir}/ecj.jar" />
        </compilerclasspath>	
-       <compilerarg value="@java/ecj.warning.options"/>
+       <compilerarg value="${ecj.warning.options}"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -316,7 +330,7 @@
        <compilerclasspath>
 	      <pathelement path="${libdir}/ecj.jar" />
        </compilerclasspath>	
-       <compilerarg value="@java/ecj.warning.options"/>
+       <compilerarg value="${ecj.warning.options}"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -900,6 +914,166 @@
 			</checks>
 		</resourceCheck>
 	</target>
+
+
+<!-- targets to support the creation & packaging of the distributions -->
+
+  <!-- This depends list assumes that one can create each of these packages on the current host.
+       Right now that's okay for Linux & Mac OS X hosts, which are capable of producing a release
+       package for each of the three targets we currently support.  I suspect that Windows as a 
+       host will only be able to create the Windows & Linux packages.  If there are HFS+ filesystem
+       tools available for Windows, that's news to me.
+  -->
+  <target name="packages" depends="package-windows, package-macosx, package-linux">
+
+  </target>
+
+  <property name="dist.release" value="${dist}/release" />
+  <property name="dist.windows" value="${dist}/Windows" />
+  <property name="dist.macosx"  value="${dist}/MacOSX" />
+  <property name="dist.linux"   value="${dist}/Linux" />
+
+  <target name="package-windows" depends="jar">
+    <delete dir="${dist.windows}" />
+    <mkdir dir="${dist.windows}/JMRI" />
+    <copy todir="${dist.windows}/JMRI">
+        <fileset dir="${jartarget}"
+                 includes="jmri.jar" />
+        <fileset dir="."
+		 includes="xml/,resources/,help/,web/,jython/"  />
+        <fileset dir="${scriptdir}"
+		 includes="default.lcf,COPYING,InstallTest.bat" />
+        <fileset dir="${scriptdir}/WinInstallFiles"
+                 includes="*" />
+    </copy>
+    <mkdir dir="${dist.windows}/JMRI/lib" />
+    <copy todir="${dist.windows}/JMRI/lib">
+        <fileset dir="${libdir}" 
+                 includes="*.jar,security.policy"
+                 excludes="UmlGraph-*.jar,junit.jar,jfcunit.jar,Serialio.jar,ecj.jar" />
+    </copy>
+    <mkdir dir="${dist.windows}/JMRI/lib/windows" />
+    <copy todir="${dist.windows}/JMRI/lib/windows">
+        <fileset dir="${libdir}/windows" />
+    </copy>
+    <mkdir dir="${dist.release}" />
+    <exec executable="${nsis.home}makensis" dir="${dist.windows}/JMRI">
+        <!-- RELEASEDIR below is relative because it's interpreted from the location of 'dir' in this exec -->
+        <arg line="-V2 -DJMRI_VER=${number} -DRELEASEDIR='../../release' InstallJMRI.nsi"/>
+    </exec>
+  </target>
+
+  <target name="package-macosx" depends="jar">
+    <delete dir="${dist.macosx}" />
+    <mkdir dir="${dist.macosx}/JMRI" />
+    <copy todir="${dist.macosx}/JMRI">
+        <fileset dir="${jartarget}"
+                 includes="jmri.jar" />
+        <fileset dir="."
+		 includes="xml/,resources/,help/,web/,jython/"  />
+        <fileset dir="scripts/MacOSXapps/V1"
+                 includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JmriDemo.app/,LocoTools.app/,CornwallRR.app/,DecoderPro3.app/" />
+        <fileset dir="scripts"
+		 includes="default.lcf,COPYING" />
+    </copy>
+    <mkdir dir="${dist.macosx}/JMRI/lib" />
+    <copy todir="${dist.macosx}/JMRI/lib">
+        <fileset dir="${libdir}" 
+                 includes="*.jar,security.policy"
+                 excludes="UmlGraph-*.jar,junit.jar,jfcunit.jar,Serialio.jar,ecj.jar" />
+    </copy>
+    <mkdir dir="${dist.macosx}/JMRI/lib/macosx" />
+    <copy todir="${dist.macosx}/JMRI/lib/macosx">
+        <fileset dir="${libdir}/macosx" />
+    </copy>
+    <mkdir dir="${dist.release}" />
+    <exec executable="${scriptdir}/diskimage.sh" osFamily="unix">
+      <arg line="-t ${release} -v ${number} -o ${dist.release}/JMRI.${number}.dmg -d ${dist.macosx}"/>
+    </exec>
+  </target>
+
+  <target name="package-linux" depends="jar">
+    <delete dir="${dist.linux}" />
+    <mkdir dir="${dist.linux}/JMRI" />
+    <copy todir="${dist.linux}/JMRI">
+        <fileset dir="${jartarget}" 
+                 includes="jmri.jar" />
+        <fileset dir="."
+		 includes="xml/,resources/,help/,web/,jython/"  />
+        <fileset dir="${scriptdir}"
+		 includes="default.lcf,COPYING" />
+    </copy>
+    <mkdir dir="${dist.linux}/JMRI/lib" />
+    <copy todir="${dist.linux}/JMRI/lib">
+        <fileset dir="${libdir}" 
+                 includes="*.jar,security.policy"
+                 excludes="UmlGraph-*.jar,junit.jar,jfcunit.jar,Serialio.jar,ecj.jar" />
+    </copy>
+    <mkdir dir="${dist.linux}/JMRI/lib/linux" />
+    <copy todir="${dist.linux}/JMRI/lib/linux">
+        <fileset dir="${libdir}/linux" />
+    </copy>
+    <copy todir="${dist.linux}/JMRI">
+        <fileset dir="${scriptdir}">
+	    <include name="DecoderPro"/>
+	    <include name="PanelPro"/>
+	    <include name="SoundPro"/>
+	    <include name="SignalPro"/>
+	    <include name="DispatcherPro"/>
+	    <include name="LocoTools"/>
+	    <include name="JmriDemo"/>
+	    <include name="InstallTest"/>
+	    <include name="cornwall"/>
+	    <include name="DecoderPro3"/>
+	    <include name="RXTXuninstall.sh"/>
+      	</fileset>
+    </copy>
+    <chmod perm="ugo+rx">
+        <fileset dir="${scriptdir}">
+	    <include name="DecoderPro"/>
+	    <include name="PanelPro"/>
+	    <include name="SoundPro"/>
+	    <include name="SignalPro"/>
+	    <include name="DispatcherPro"/>
+	    <include name="LocoTools"/>
+	    <include name="JmriDemo"/>
+	    <include name="InstallTest"/>
+	    <include name="cornwall"/>
+	    <include name="DecoderPro3"/>
+	    <include name="RXTXuninstall.sh"/>
+      	</fileset>
+    </chmod>
+    <mkdir dir="${dist.release}" />
+    <tar 
+        compression="gzip" 
+        destfile="${dist.release}/JMRI.${number}.tgz" >
+            <tarfileset dir="${dist.linux}">
+                <include name="JMRI/**" />
+                <exclude name="JMRI/DecoderPro" />
+                <exclude name="JMRI/PanelPro" />
+                <exclude name="JMRI/SoundPro" />
+                <exclude name="JMRI/LocoTools" />
+                <exclude name="JMRI/JmriDemo" />
+                <exclude name="JMRI/InstallTest" />
+                <exclude name="JMRI/cornwall" />
+                <exclude name="JMRI/DecoderPro3" />
+                <exclude name="JMRI/RXTXuninstall.sh" />
+            </tarfileset>
+            <tarfileset  dir="${dist.linux}" filemode="755">
+                <include name="JMRI/DecoderPro" />
+                <include name="JMRI/PanelPro" />
+                <include name="JMRI/SoundPro" />
+                <include name="JMRI/SignalPro" />
+                <include name="JMRI/DispatcherPro" />
+                <include name="JMRI/LocoTools" />
+                <include name="JMRI/JmriDemo" />
+                <include name="JMRI/InstallTest" />
+                <include name="JMRI/cornwall" />
+                <include name="JMRI/DecoderPro3" />
+                <include name="JMRI/RXTXuninstall.sh" />
+            </tarfileset>
+    </tar>
+  </target>
 	
 </project>
 
