@@ -47,6 +47,8 @@
 
   <!-- set global properties for this build -->
   <property name="source" value="src"/>
+  <property name="libdir" value="../lib"/>
+  <property name="resourcedir" value="../resources"/>
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
   <property name="jartarget" value=".."/>
@@ -57,65 +59,65 @@
   
   <path id="project.class.path">
     <pathelement location=".." />
-    <pathelement location="../lib/MRJAdapter.jar" />
-    <pathelement location="../lib/RXTXcomm.jar" />
-    <pathelement location="../lib/Serialio.jar" />
-    <pathelement location="../lib/ch.ntb.usb.jar" />
-    <pathelement location="../lib/xercesImpl.jar" />
-    <pathelement location="../lib/gluegen-rt.jar" />
-    <pathelement location="../lib/javacsv.jar" />
-    <pathelement location="../lib/jdom.jar" />
-    <pathelement location="../lib/jhall.jar" />
-    <pathelement location="../lib/jinput.jar" />
-    <pathelement location="../lib/jmdns.jar" />
-    <pathelement location="../lib/openlcb.jar" />
-    <pathelement location="../lib/joal.jar" />
-    <pathelement location="../lib/jython.jar" />
-    <pathelement location="../lib/log4j.jar" />
-    <pathelement location="../lib/servlet.jar" />
-    <pathelement location="../lib/vecmath.jar" />
-    <pathelement location="../lib/activation.jar" />
-    <pathelement location="../lib/mailapi.jar" />
-    <pathelement location="../lib/smtp.jar" />
-    <pathelement location="../lib/xAPlib.jar" />
-    <pathelement location="../lib/ExternalLinkContentViewerUI.jar" />
-    <pathelement location="../lib/junit.jar" />
+    <pathelement location="${libdir}/MRJAdapter.jar" />
+    <pathelement location="${libdir}/RXTXcomm.jar" />
+    <pathelement location="${libdir}/Serialio.jar" />
+    <pathelement location="${libdir}/ch.ntb.usb.jar" />
+    <pathelement location="${libdir}/xercesImpl.jar" />
+    <pathelement location="${libdir}/gluegen-rt.jar" />
+    <pathelement location="${libdir}/javacsv.jar" />
+    <pathelement location="${libdir}/jdom.jar" />
+    <pathelement location="${libdir}/jhall.jar" />
+    <pathelement location="${libdir}/jinput.jar" />
+    <pathelement location="${libdir}/jmdns.jar" />
+    <pathelement location="${libdir}/openlcb.jar" />
+    <pathelement location="${libdir}/joal.jar" />
+    <pathelement location="${libdir}/jython.jar" />
+    <pathelement location="${libdir}/log4j.jar" />
+    <pathelement location="${libdir}/servlet.jar" />
+    <pathelement location="${libdir}/vecmath.jar" />
+    <pathelement location="${libdir}/activation.jar" />
+    <pathelement location="${libdir}/mailapi.jar" />
+    <pathelement location="${libdir}/smtp.jar" />
+    <pathelement location="${libdir}/xAPlib.jar" />
+    <pathelement location="${libdir}/ExternalLinkContentViewerUI.jar" />
+    <pathelement location="${libdir}/junit.jar" />
     <pathelement location="/System/Library/Java" /> <!-- MacOS X -->
-    <pathelement location="../lib/jfcunit.jar" />
-    <pathelement location="../lib/jakarta-regexp-1.5.jar" />
-    <pathelement location="../lib/annotations.jar" /> <!-- findbugs build-time only-->
-    <pathelement location="../lib/jsr305.jar" /><!-- findbugs build-time only-->
+    <pathelement location="${libdir}/jfcunit.jar" />
+    <pathelement location="${libdir}/jakarta-regexp-1.5.jar" />
+    <pathelement location="${libdir}/annotations.jar" /> <!-- findbugs build-time only-->
+    <pathelement location="${libdir}/jsr305.jar" /><!-- findbugs build-time only-->
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
   
 	<!-- the classpath used by FindBugs when checking the JMRI jar -->
 	<path id="findbugs.aux.class.path">
-    <pathelement location="../lib/MRJAdapter.jar" />
-    <pathelement location="../lib/RXTXcomm.jar" />
-    <pathelement location="../lib/Serialio.jar" />
-    <pathelement location="../lib/ch.ntb.usb.jar" />
-    <pathelement location="../lib/xercesImpl.jar" />
-    <pathelement location="../lib/gluegen-rt.jar" />
-    <pathelement location="../lib/javacsv.jar" />
-    <pathelement location="../lib/jdom.jar" />
-    <pathelement location="../lib/jhall.jar" />
-    <pathelement location="../lib/jinput.jar" />
-    <pathelement location="../lib/jmdns.jar" />
-    <pathelement location="../lib/openlcb.jar" />
-    <pathelement location="../lib/joal.jar" />
-    <pathelement location="../lib/jython.jar" />
-    <pathelement location="../lib/log4j.jar" />
-    <pathelement location="../lib/servlet.jar" />
-    <pathelement location="../lib/vecmath.jar" />
-    <pathelement location="../lib/activation.jar" />
-    <pathelement location="../lib/mailapi.jar" />
-    <pathelement location="../lib/smtp.jar" />
-    <pathelement location="../lib/junit.jar" />
-    <pathelement location="../lib/ExternalLinkContentViewerUI.jar" />
-    <pathelement location="../lib/jfcunit.jar" />
-    <pathelement location="../lib/jakarta-regexp-1.5.jar" />
-    <pathelement location="../lib/annotations.jar" /> <!-- findbugs build-time only-->
-    <pathelement location="../lib/jsr305.jar" /><!-- findbugs build-time only-->
+    <pathelement location="${libdir}/MRJAdapter.jar" />
+    <pathelement location="${libdir}/RXTXcomm.jar" />
+    <pathelement location="${libdir}/Serialio.jar" />
+    <pathelement location="${libdir}/ch.ntb.usb.jar" />
+    <pathelement location="${libdir}/xercesImpl.jar" />
+    <pathelement location="${libdir}/gluegen-rt.jar" />
+    <pathelement location="${libdir}/javacsv.jar" />
+    <pathelement location="${libdir}/jdom.jar" />
+    <pathelement location="${libdir}/jhall.jar" />
+    <pathelement location="${libdir}/jinput.jar" />
+    <pathelement location="${libdir}/jmdns.jar" />
+    <pathelement location="${libdir}/openlcb.jar" />
+    <pathelement location="${libdir}/joal.jar" />
+    <pathelement location="${libdir}/jython.jar" />
+    <pathelement location="${libdir}/log4j.jar" />
+    <pathelement location="${libdir}/servlet.jar" />
+    <pathelement location="${libdir}/vecmath.jar" />
+    <pathelement location="${libdir}/activation.jar" />
+    <pathelement location="${libdir}/mailapi.jar" />
+    <pathelement location="${libdir}/smtp.jar" />
+    <pathelement location="${libdir}/junit.jar" />
+    <pathelement location="${libdir}/ExternalLinkContentViewerUI.jar" />
+    <pathelement location="${libdir}/jfcunit.jar" />
+    <pathelement location="${libdir}/jakarta-regexp-1.5.jar" />
+    <pathelement location="${libdir}/annotations.jar" /> <!-- findbugs build-time only-->
+    <pathelement location="${libdir}/jsr305.jar" /><!-- findbugs build-time only-->
   </path>
 	
   <target name="init" description="create needed directories">
@@ -154,13 +156,13 @@
   <target name="copyfiles" depends="init" description="copy resource files">
     <!-- Copy top level resources to include in jar file -->
     <copy todir="${target}/resources/">
-      <fileset dir="src/resources" includes="*.gif"  /> 
+      <fileset dir="${resourcedir}" includes="*.gif"  /> 
     </copy>
     <copy todir="${target}/resources/icons/cornwall/">
-      <fileset dir="src/resources/icons/cornwall" includes="cornwall_logo.gif"  /> 
+      <fileset dir="${resourcedir}/icons/cornwall" includes="cornwall_logo.gif"  /> 
     </copy>
     <copy todir="${target}">
-      <fileset dir="src/" includes="**/*.properties"  /> 
+      <fileset dir="${source}" includes="**/*.properties"  /> 
     </copy>
   </target>
 
@@ -169,12 +171,12 @@
   <jjtree
      target="${source}/jmri/jmris/srcp/SRCPParser.jjt"
      outputdirectory="${javacctarget}/jmris/srcp/parser"
-     javacchome="lib/"
+     javacchome="${libdir}"
   />
   <jjtree
      target="${source}/jmri/jmrix/srcp/SRCPClientParser.jjt"
      outputdirectory="${javacctarget}/jmrix/srcp/parser"
-     javacchome="lib/"
+     javacchome="${libdir}"
   />
   </target>
 
@@ -183,12 +185,12 @@
   <javacc
      target="${javacctarget}/jmris/srcp/parser/SRCPParser.jj"
      outputdirectory="${javacctarget}/jmris/srcp/parser"
-     javacchome="lib/"
+     javacchome="${libdir}"
   />
   <javacc
      target="${javacctarget}/jmrix/srcp/parser/SRCPClientParser.jj"
      outputdirectory="${javacctarget}/jmrix/srcp/parser"
-     javacchome="lib/"
+     javacchome="${libdir}"
   />
   </target>
 
@@ -266,7 +268,7 @@
  	       includeantruntime="false"
            debug="yes" >
        <compilerclasspath>
-	      <pathelement path="../lib/ecj.jar" />
+	      <pathelement path="${libdir}/ecj.jar" />
        </compilerclasspath>	
        <compilerarg value="@ecj.warning.options"/>
        <classpath refid="project.class.path"    />
@@ -316,7 +318,7 @@
  	       includeantruntime="false"
            debug="yes" >
        <compilerclasspath>
-	      <pathelement path="../lib/ecj.jar" />
+	      <pathelement path="${libdir}/ecj.jar" />
        </compilerclasspath>	
        <compilerarg value="@ecj.warning.options"/>
        <classpath refid="project.class.path"    />
@@ -382,7 +384,7 @@
        </and>
      </condition>
 
-     <property name="arch.lib.path" value="lib/${baseOS}/${baseArch}:lib/${baseOS}" />
+     <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}" />
      <echo message="arch.lib.path ${arch.lib.path}"/>
   </target>
 
@@ -392,10 +394,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:${arch.lib.path}:lib"/>
+       <sysproperty key="java.library.path" path=".:${arch.lib.path}:${libdir}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
@@ -410,10 +412,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:${arch.lib.path}:lib"/>
+       <sysproperty key="java.library.path" path=".:${arch.lib.path}:${libdir}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
@@ -428,10 +430,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <arg value="${antargline}"/>
     </java>
@@ -443,10 +445,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <arg value="${antargline}"/>
     </java>
@@ -458,10 +460,10 @@
           dir=".."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/>
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
        <sysproperty key="log4j.ignoreTCL" path="true/"/>
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
@@ -476,10 +478,10 @@
           dir=".."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/>
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
        <sysproperty key="log4j.ignoreTCL" path="true/"/>
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
@@ -494,10 +496,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <arg value="${antargline}"/>
     </java>
@@ -509,10 +511,10 @@
           dir=".."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <arg value="${antargline}"/>
     </java>
@@ -524,10 +526,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <arg value="${antargline}"/>
     </java>
@@ -538,10 +540,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
     </java>
  </target>
@@ -551,10 +553,10 @@
           dir=".."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/>
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
        <sysproperty key="log4j.ignoreTCL" path="true/"/>
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
     </java>
  </target>
@@ -565,10 +567,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <sysproperty key="user.language" value="tlh"/>  <!-- klingon -->
        <sysproperty key="user.country" value="001"/> 
@@ -584,10 +586,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
     </java>
   </target>
@@ -599,10 +601,10 @@
           dir=".."
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <jvmarg value="-Xrunhprof:cpu=samples,heap=sites,file=log.txt,depth=10" />
     </java>
@@ -610,10 +612,10 @@
 
   <target name="headlesstest" depends="runtime-library-selection" description="run headless test suite">
      <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir=".." >
-	<sysproperty key="java.security.policy" value="lib/security.policy"/> 
+	<sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
 	<sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
 	<sysproperty key="log4j.ignoreTCL" path="true/"/>       
-	<sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+	<sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
 	<sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
 	<sysproperty key="java.awt.headless" value="true" />
@@ -635,10 +637,10 @@
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <arg value="${antargline}"/>
     </java>
@@ -658,10 +660,10 @@
             dir=".." 
 	        fork="yes" >
        <classpath refid="project.class.path"    />
-       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="java.security.policy" value="${libdir}/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>       
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <jvmarg value="${profiler.info.jvmargs.agent}"/>
        <!-- <jvmarg value="-verbose"/> -->
@@ -690,7 +692,7 @@
     <!-- Run JJDoc -->
     <jjdoc
       target="${javacctarget}/jmris/srcp/parser/SRCPParser.jj"
-      javacchome="lib/"
+      javacchome="${libdir}"
       outputfile="${doctarget}/jmri/jmris/srcp/SRCPParser.html"
     />
   </target>
@@ -698,7 +700,7 @@
   <target name="javadoc" depends="init, jjdoc" description="create JavaDocs">
     <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
-           overview="src/jmri/overview.html"
+           overview="${source}/jmri/overview.html"
            destdir="${doctarget}"
            additionalparam="-breakiterator"
            author="true"
@@ -754,7 +756,7 @@
   <target name="javadoc-uml" depends="init, jjdoc" description="create JavaDocs with UML; requires java 1.6">
     <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
-           overview="src/jmri/overview.html"
+           overview="${source}/jmri/overview.html"
            destdir="${doctarget}"
            additionalparam="-breakiterator"
            author="true"
@@ -770,7 +772,7 @@
         <include name="jmri/**"/>  
       </packageset>
       <doclet name="org.umlgraph.doclet.UmlGraphDoc"
-	        		  path="../lib/UmlGraph-5.2.jar">
+	        		  path="${libdir}/UmlGraph-5.2.jar">
 	        	        <param name="-attributes" />
 	        	        <param name="-operations" />
 	        	        <param name="-qualify" />
@@ -883,7 +885,7 @@
 
 <!-- See http://rscbundlecheck.sourceforge.net/ -->
 	<target name="checkPropertiesFiles" description="check all JMRI properties files for duplicate properties in same file" >
-		<taskdef classpath="lib/rscbundlecheck.jar" resource="task.properties"/>
+		<taskdef classpath="${libdir}/rscbundlecheck.jar" resource="task.properties"/>
 		<resourceCheck failonerror="true">
 			<fileset dir="${source}">
 				<include name="**/*.properties"/>
