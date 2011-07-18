@@ -44,6 +44,7 @@
       <xs:attribute name="rate" type="xs:float"/>
       <xs:attribute name="run" type="yesNoType"/>
       <xs:attribute name="master" type="yesNoType"/>
+      <xs:attribute name="mastername" type="xs:string"/>
       <xs:attribute name="sync" type="yesNoType"/>
       <xs:attribute name="correct" type="yesNoType"/>
       <xs:attribute name="display" type="yesNoType"/>
