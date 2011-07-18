@@ -54,7 +54,7 @@
         <xs:element name="fastclock"          type="EditorFastClockIconType"     minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="multisensoricon"    type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="levelxing"          type="EditorLevelXingType"         minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="layoutturnouttable" type="EditorLayoutTurntableType"   minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutturntable"    type="EditorLayoutTurntableType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="locoicon"           type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
