@@ -200,8 +200,10 @@
       <xs:enumeration value="Cyan"/>
       <xs:enumeration value="black"/>
       <xs:enumeration value="darkgray"/>
+      <xs:enumeration value="darkGray"/>
       <xs:enumeration value="gray"/>
       <xs:enumeration value="lightgray"/>
+      <xs:enumeration value="lightGray"/>
       <xs:enumeration value="white"/>
       <xs:enumeration value="red"/>
       <xs:enumeration value="pink"/>
