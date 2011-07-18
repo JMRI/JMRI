@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Sample Pane class for tests
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 
 // sample class

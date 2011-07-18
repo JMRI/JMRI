@@ -23,7 +23,7 @@ import java.io.File;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007, 2009, 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class MDI extends apps.gui3.Apps3 {
 

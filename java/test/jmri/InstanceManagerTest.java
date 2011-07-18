@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class InstanceManagerTest extends TestCase {
 

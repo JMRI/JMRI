@@ -9,7 +9,7 @@ import javax.swing.JTable;
  * Frame for user to place a group of cars on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2011
- * @version $Revision: 1.14 $
+ * @version $Revision$
  */
 
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {

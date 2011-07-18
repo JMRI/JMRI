@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.sdf;
  * Implement generic four-byte macros from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.5 $
+ * @version             $Revision$
  */
 
 public class FourByteMacro extends SdfMacro {

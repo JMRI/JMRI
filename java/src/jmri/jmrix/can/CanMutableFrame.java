@@ -14,7 +14,7 @@ package jmri.jmrix.can;
  *<p>
  *
  * @author      Bob Jacobsen Copyright (C) 2008, 2009, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public interface CanMutableFrame extends CanFrame {
     

@@ -23,7 +23,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 

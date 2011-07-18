@@ -28,7 +28,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Kevin Dickerson  Copyright: Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

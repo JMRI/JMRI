@@ -15,7 +15,7 @@ import org.jdom.*;
  * Only parses top level of XML file, since ToolBars have only level.
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.5 $
+ * @version $Revision$
  * @since 2.9.4
  */
 

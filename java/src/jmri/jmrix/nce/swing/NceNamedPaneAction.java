@@ -13,7 +13,7 @@ import jmri.util.swing.*;
  * @author		Bob Jacobsen Copyright (C) 2010
  * Copied from LocoNet
  * @author kcameron
- * @version		$Revision: 1.2 $
+ * @version		$Revision$
  */
  
 public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {

@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @since 2.1.7
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision$
  */
 
 

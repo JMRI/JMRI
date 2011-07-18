@@ -15,7 +15,7 @@ import jmri.util.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class MdiMainFrame extends jmri.util.JmriJFrame {

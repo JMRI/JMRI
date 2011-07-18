@@ -9,7 +9,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.17 $
+ * @version $Revision$
  */
 public class ReporterIconXml extends PositionableLabelXml {
 

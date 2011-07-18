@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011
- * @version             $Revision: 1.23 $
+ * @version             $Revision$
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	

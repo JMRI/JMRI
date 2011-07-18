@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
  * an underlying variable; we return one of these in DecValVariable.getNewRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 

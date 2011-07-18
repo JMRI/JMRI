@@ -6,7 +6,7 @@ package jmri.jmrix.can;
  * Defines the interface for listening to CAN messages
  *
  * @author      Andrew Crosland	Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 
 public interface CanListener extends jmri.jmrix.AbstractMRListener {

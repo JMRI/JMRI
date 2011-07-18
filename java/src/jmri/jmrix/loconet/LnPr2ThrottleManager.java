@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see AbstractThrottleManager
  * @author		Bob Jacobsen  Copyright (C) 2001, 2006
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision$
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 

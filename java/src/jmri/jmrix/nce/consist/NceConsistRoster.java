@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision$
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {

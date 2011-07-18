@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  *
  * Description:	    tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class EliteXNetThrottleManagerTest extends TestCase {
 

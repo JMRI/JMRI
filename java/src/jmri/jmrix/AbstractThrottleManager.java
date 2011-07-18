@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.29 $
+ * @version     $Revision$
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	

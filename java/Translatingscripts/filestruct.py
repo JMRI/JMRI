@@ -12,7 +12,7 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
 
-# Revision $Revision: 1.1 $
+# Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
 
 import sys

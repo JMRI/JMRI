@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class Ash1_0Algorithm implements Calculator {
 

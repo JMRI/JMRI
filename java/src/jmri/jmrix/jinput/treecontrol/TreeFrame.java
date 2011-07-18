@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * Frame for controlling JInput access to USN
  * @author	 Bob Jacobsen   Copyright (C) 2008
- * @version	 $Revision: 1.4 $
+ * @version	 $Revision$
  */
 public class TreeFrame extends jmri.util.JmriJFrame {
 

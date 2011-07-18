@@ -22,7 +22,7 @@ import java.io.InputStream;
  * and the custom <user.home>/temp/xml directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.17 $
+ * @version         $Revision$
  */
 public class XmlFileTest extends TestCase {
 

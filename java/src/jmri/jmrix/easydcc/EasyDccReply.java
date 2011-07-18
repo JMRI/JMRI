@@ -6,7 +6,7 @@ package jmri.jmrix.easydcc;
  * Carries the reply to an EasyDccMessage.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2004
- * @version             $Revision: 1.9 $
+ * @version             $Revision$
  */
 public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 

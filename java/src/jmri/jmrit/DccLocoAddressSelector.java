@@ -31,7 +31,7 @@ import java.awt.event.ComponentEvent;
  * where you might be configuring a loco to run somewhere else.
  *
  * @author     Bob Jacobsen   Copyright (C) 2005
- * @version    $Revision: 1.5 $
+ * @version    $Revision$
  */
 public class DccLocoAddressSelector extends JPanel
 {

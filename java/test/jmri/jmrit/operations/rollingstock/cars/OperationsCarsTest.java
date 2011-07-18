@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.25 $
+ * @version $Revision$
  */
 public class OperationsCarsTest extends TestCase {
 

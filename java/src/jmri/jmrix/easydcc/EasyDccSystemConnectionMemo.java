@@ -14,7 +14,7 @@ import jmri.InstanceManager;
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
  *              Kevin Dickerson
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

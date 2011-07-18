@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
  * place in the file system each time an action is invoked.
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {

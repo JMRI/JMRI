@@ -23,7 +23,7 @@ import gnu.io.SerialPortEventListener;
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.21 $
+ * @version			$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

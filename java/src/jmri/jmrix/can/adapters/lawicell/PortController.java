@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author          Andrew Crosland 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public abstract class PortController extends jmri.jmrix.AbstractSerialPortController {
 	// base class. Implementations will provide InputStream and OutputStream

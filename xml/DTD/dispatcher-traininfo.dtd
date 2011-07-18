@@ -1,5 +1,5 @@
 <!-- Defines XML for Dispatcher train info file information -->
-<!-- $Id: dispatcher-traininfo.dtd,v 1.5 2011-05-13 12:14:03 djduchamp Exp $ -->
+<!-- $Id$ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2009.                         -->
 <!--                                                                        -->

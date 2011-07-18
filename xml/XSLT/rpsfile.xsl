@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: rpsfile.xsl,v 1.5 2011-02-11 17:54:15 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet to convert a JMRI RPS XML file into displayable HTML -->
 

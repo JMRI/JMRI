@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision: 1.7 $
+ * @version $Revision$
  * @author	Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  

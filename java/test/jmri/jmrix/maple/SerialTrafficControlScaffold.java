@@ -7,7 +7,7 @@ import java.util.Vector;
 /**
  * Description:	    Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 	public SerialTrafficControlScaffold() {

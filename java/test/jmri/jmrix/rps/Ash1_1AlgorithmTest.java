@@ -18,7 +18,7 @@ import javax.vecmath.Point3d;
  * The default transmitter location is (3,2,1)
  * 
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class Ash1_1AlgorithmTest extends TestCase {
         

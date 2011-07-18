@@ -6,7 +6,7 @@ package jmri.util;
  * <P>
  *
  * @author Pete Cressman  Copyright 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 import javax.swing.JComponent;

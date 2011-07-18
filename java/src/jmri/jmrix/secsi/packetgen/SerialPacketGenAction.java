@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SerialPacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class SerialPacketGenAction extends AbstractAction {
 

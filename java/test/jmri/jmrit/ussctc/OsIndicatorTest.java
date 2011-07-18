@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class OsIndicatorTest extends TestCase {
 

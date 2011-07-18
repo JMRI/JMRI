@@ -26,7 +26,7 @@ import jmri.util.SystemNameComparator;
  * internal manager.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.17 $
+ * @version	$Revision$
  */
 abstract public class AbstractProxyManager implements Manager {
 

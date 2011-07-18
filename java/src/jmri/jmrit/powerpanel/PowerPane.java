@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2010
- * @version	    $Revision: 1.10 $
+ * @version	    $Revision$
  */
 public class PowerPane extends jmri.util.swing.JmriPanel 
             implements java.beans.PropertyChangeListener {

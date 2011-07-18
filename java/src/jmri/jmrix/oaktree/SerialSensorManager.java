@@ -13,7 +13,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006
  * @author          Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {

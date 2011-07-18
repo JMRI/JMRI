@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.18 $
+ * @version $Revision$
  */
 public class ConfigXmlManagerTest extends TestCase {
 

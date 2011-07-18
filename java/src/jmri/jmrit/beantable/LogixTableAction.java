@@ -62,7 +62,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.98 $
+ * @version $Revision$
  */
 
 public class LogixTableAction extends AbstractTableAction {

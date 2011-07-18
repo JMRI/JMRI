@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class RosterConfigPane extends JPanel {
 

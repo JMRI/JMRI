@@ -9,7 +9,7 @@ import jmri.util.*;
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  * @author	Bob Jacobsen  Copyright 2010
- * @version	$Revision: 1.11 $
+ * @version	$Revision$
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 

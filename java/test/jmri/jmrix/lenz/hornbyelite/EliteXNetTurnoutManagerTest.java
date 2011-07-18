@@ -17,7 +17,7 @@ import jmri.jmrix.lenz.XNetReply;
 /**
  Tests for the jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager class.
  * @author			Bob Jacobsen Copyright 2004
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 

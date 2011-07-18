@@ -38,7 +38,7 @@ import jmri.jmrit.audio.AudioFactory;
  * for more details.
  * <P>
  * @author Matthew Harris   Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public interface AudioManager extends Manager {
 

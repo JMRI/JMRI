@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id: ESU_Roco_10745_old.xml,v 1.1 2011-04-10 03:34:15 jacobsen Exp $ -->
+<!--$Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->

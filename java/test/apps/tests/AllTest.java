@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * for more details.
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public class AllTest extends TestCase  {
     public AllTest(String s) {

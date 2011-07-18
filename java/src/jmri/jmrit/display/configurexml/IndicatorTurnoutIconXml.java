@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision$
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 

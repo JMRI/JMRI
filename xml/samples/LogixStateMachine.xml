@@ -68,6 +68,6 @@
       <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 1.7.6-B1 on Mon Apr 16 13:59:08 PDT 2007 $Id: LogixStateMachine.xml,v 1.2 2007-11-27 18:36:24 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.6-B1 on Mon Apr 16 13:59:08 PDT 2007 $Id$-->
 </layout-config>
 

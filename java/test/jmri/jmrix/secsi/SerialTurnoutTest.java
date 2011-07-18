@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.secsi.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 

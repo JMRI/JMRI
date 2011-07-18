@@ -11,7 +11,7 @@ import junit.framework.*;
  * @author			Bob Jacobsen Copyright 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 

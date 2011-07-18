@@ -43,7 +43,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.15 $
+ * @version     $Revision$
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {

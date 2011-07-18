@@ -14,7 +14,7 @@ import jmri.util.docbook.*;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {

@@ -61,7 +61,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 
 public class AutoAllocate {

@@ -123,7 +123,7 @@ more receivers (1.0 GHz Pentium III).
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2006
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class Ash1_1Algorithm implements Calculator {
 

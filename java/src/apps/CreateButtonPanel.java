@@ -12,7 +12,7 @@ import java.util.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  * @see apps.CreateButtonModel
  */
 public class CreateButtonPanel extends AbstractActionPanel {

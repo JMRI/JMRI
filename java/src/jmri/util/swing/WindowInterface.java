@@ -19,7 +19,7 @@ package jmri.util.swing;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 
 public interface WindowInterface {

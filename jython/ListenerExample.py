@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
+# $Revision$
 
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is

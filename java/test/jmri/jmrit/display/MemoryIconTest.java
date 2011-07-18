@@ -13,7 +13,7 @@ import jmri.util.JUnitUtil;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class MemoryIconTest extends jmri.util.SwingTestCase {
 

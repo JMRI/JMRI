@@ -22,7 +22,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class OlcbAddress {
 

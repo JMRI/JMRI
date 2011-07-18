@@ -10,7 +10,7 @@ package jmri;
  * case a later task aborts the shutdown.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public interface ShutDownTask {
 

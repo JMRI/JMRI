@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2011
- * @version			$Revision: 1.22 $
+ * @version			$Revision$
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.21 $
+ * @version   $Revision$
  *
  */
 public class ConstantValue extends VariableValue {

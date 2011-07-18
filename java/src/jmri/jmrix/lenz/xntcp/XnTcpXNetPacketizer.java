@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * <P>
  * In particular, XnTcpXNetPacketizer counts the number of commands received.
  * @author		Giorgio Terdina Copyright (C) 2008-2011, based on LIUSB packetizer by Paul Bender, Copyright (C) 2005
- * @version 	$Revision: 1.5 $
+ * @version 	$Revision$
  * GT - May 2011 - Removed calls to deprecated method "XnTcpAdapter.instance()"
  *
  */

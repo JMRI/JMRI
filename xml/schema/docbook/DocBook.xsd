@@ -7,7 +7,7 @@
 <!-- http://www.docbook.org/xml/5.0/xsd/docbook.xsd -->
 <!-- XML schema file for DocBook 5.0                -->
 
-<!-- $Id: DocBook.xsd,v 1.6 2010-02-16 02:01:02 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     elementFormDefault="qualified" 

@@ -9,7 +9,7 @@ import junit.framework.*;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.16 $
+ * @version			$Revision$
  */
 public class PanelEditorTest extends TestCase {
 

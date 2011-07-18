@@ -11,7 +11,7 @@ import jmri.jmrix.JmrixConfigPane;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

@@ -15,7 +15,7 @@ import java.awt.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.19 $
+ * @version	$Revision$
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 

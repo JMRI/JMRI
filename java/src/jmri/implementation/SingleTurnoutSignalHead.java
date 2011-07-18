@@ -24,7 +24,7 @@ import jmri.NamedBeanHandle;
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead {
 

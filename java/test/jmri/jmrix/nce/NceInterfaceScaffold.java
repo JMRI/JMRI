@@ -9,7 +9,7 @@ import java.util.Vector;
  * Stands in for the NceTrafficController class
  * 
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
     class NceInterfaceScaffold extends NceTrafficController {
         public NceInterfaceScaffold() {

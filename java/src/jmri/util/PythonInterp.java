@@ -21,7 +21,7 @@ import java.io.*;
  * on Windows machines where it might normally appear in a filename.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 public class PythonInterp {
 

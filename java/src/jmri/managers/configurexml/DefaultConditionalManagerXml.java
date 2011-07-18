@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author Pete Cressman Copyright (C) 2009, 2011
- * @version $Revision: 1.10 $
+ * @version $Revision$
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

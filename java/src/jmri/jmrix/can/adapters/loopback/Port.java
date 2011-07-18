@@ -12,7 +12,7 @@ import java.io.DataOutputStream;
  * Loopback connection to simulate a CAN link
  *
  * @author			Bob Jacobsen    Copyright (C) 2008, 2010
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public class Port extends AbstractSerialPortController {
 

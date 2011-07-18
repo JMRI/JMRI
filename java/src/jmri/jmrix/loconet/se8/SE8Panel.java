@@ -26,7 +26,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003, 2004, 2007, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 

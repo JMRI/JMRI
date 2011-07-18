@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a LocationsByCarTypeFrame object.
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class ModifyLocationsAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");

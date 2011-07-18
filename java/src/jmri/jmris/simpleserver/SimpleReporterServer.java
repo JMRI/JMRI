@@ -12,7 +12,7 @@ import jmri.jmris.AbstractReporterServer;
  * Simple Server interface between the JMRI reporter manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2011
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 
 public class SimpleReporterServer extends AbstractReporterServer {

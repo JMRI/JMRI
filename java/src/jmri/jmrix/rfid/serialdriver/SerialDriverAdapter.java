@@ -21,7 +21,7 @@ import jmri.jmrix.rfid.RfidTrafficController;
  * Derived from the oaktree code.
  * @author      Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  * @since       2.11.4
  */
 public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {

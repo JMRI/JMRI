@@ -29,7 +29,7 @@ import jmri.jmrix.jinput.UsbNode;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class TreePanel extends JPanel {
     public TreePanel() {

@@ -11,7 +11,7 @@ import jmri.jmrix.can.TrafficController;
  * Frame displaying (and logging) CAN frames
  *
  * @author	    Bob Jacobsen   Copyright (C) 2009
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanListener {

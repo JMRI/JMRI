@@ -25,7 +25,7 @@ import jmri.Audio;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public abstract class AbstractAudioFactory implements AudioFactory {
 

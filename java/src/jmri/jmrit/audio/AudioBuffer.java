@@ -37,7 +37,7 @@ import jmri.Audio;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public interface AudioBuffer extends Audio {
 

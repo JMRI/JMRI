@@ -22,7 +22,7 @@ package jmri;
  * for more details.
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public interface CommandStation {
 

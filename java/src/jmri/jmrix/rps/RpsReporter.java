@@ -12,7 +12,7 @@ import jmri.implementation.AbstractReporter;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {

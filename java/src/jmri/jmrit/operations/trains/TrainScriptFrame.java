@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.10 $
+ * @version $Revision$
  */
 
 public class TrainScriptFrame extends OperationsFrame {

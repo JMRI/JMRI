@@ -14,7 +14,7 @@ import jmri.util.swing.*;
  * Copied from NCE
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version		$Revision: 1.1 $
+ * @version		$Revision$
  */
  
 public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {

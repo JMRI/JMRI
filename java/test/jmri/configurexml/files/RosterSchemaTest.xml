@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/roster.xsd"
         >
-  <!--Written by JMRI version 2.7.10 on Thu Dec 10 11:14:19 PST 2009 $Id: RosterSchemaTest.xml,v 1.1 2010-05-02 19:52:10 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.10 on Thu Dec 10 11:14:19 PST 2009 $Id$-->
   <roster>
     <locomotive id="000WithDefaultImages" fileName="000WithDefaultImages.xml" roadNumber="" roadName="" mfg="You" owner="Me" model="" dccAddress="3" comment="" imageFilePath="PanelPro.gif" iconFilePath="jmri32x32.gif" URL="http://foo ">
       <decoder model="NMRA standard CV definitions" family="NMRA standard CV definitions" comment="" />

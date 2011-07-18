@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *  LcdClockFrame object
  *
  * @author			Ken Cameron    Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  * 
  * This was a direct steal form the Nixie clock code, ver 1.5.
  * Thank you Bob Jacobsen.

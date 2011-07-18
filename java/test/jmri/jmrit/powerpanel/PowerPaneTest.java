@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * Tests for the Jmri package
  * @author	Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class PowerPaneTest extends TestCase {
 

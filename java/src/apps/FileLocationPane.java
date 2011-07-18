@@ -16,7 +16,7 @@ import javax.swing.*;
  * a Set button is provided so that the user can select the path.
  *
  * @author      Kevin Dickerson   Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
  
 public class FileLocationPane extends JPanel {

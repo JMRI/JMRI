@@ -23,7 +23,7 @@ import jmri.JmriException;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 public class InputBits {
 

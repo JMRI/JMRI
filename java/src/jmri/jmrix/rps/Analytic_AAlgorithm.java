@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * There is also a link there to a C port of Sam's programs
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 

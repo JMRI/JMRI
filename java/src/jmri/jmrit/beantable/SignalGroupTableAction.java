@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.15 $
+ * @version     $Revision$
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {

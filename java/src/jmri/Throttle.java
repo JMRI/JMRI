@@ -30,7 +30,7 @@ import java.util.Vector;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.17 $
+ * @version			$Revision$
  */
 public interface Throttle {
 

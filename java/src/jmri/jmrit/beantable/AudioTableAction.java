@@ -45,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.15 $
+ * @version     $Revision$
  */
 
 public class AudioTableAction extends AbstractTableAction {

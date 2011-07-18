@@ -13,7 +13,7 @@ import java.io.*;
  * Tests for the jmri.jmrix.loconet.sdf.SdfBuffer class.
  * 
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class SdfBufferTest extends TestCase {
 

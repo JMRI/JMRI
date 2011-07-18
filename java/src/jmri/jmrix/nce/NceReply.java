@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version             $Revision: 1.16 $
+ * @version             $Revision$
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 	

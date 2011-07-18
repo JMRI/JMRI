@@ -14,7 +14,7 @@ import jmri.progdebugger.*;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.19 $
+ * @version         $Revision$
  */
 public class CvValueTest extends TestCase {
 

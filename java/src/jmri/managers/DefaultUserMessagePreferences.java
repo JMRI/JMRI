@@ -35,7 +35,7 @@ import jmri.jmrit.XmlFile;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.31 $
+ * @version	$Revision$
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only

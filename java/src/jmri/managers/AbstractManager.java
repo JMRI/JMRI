@@ -17,7 +17,7 @@ import jmri.*;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {

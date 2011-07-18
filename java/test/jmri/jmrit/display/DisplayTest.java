@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmrit.display package
  * @author			Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.15 $
+ * @version         $Revision$
  */
 
 package jmri.jmrit.display;

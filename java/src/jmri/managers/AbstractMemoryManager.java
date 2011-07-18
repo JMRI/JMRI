@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {

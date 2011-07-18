@@ -34,7 +34,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.37 $
+ * @version			$Revision$
  */
 public class PaneProgAction 			extends AbstractAction {
 

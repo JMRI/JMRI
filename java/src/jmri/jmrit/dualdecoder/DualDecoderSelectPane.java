@@ -11,7 +11,7 @@ import jmri.*;
 /**
  * Pane for selecting an active decoder from multiple ones in a loco
  * @author   Bob Jacobsen   Copyright (C) 2003
- * @version  $Revision: 1.4 $
+ * @version  $Revision$
  */
 public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.ProgListener {
 

@@ -16,7 +16,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.26 $
+ * @version	$Revision$
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 

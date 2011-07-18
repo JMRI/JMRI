@@ -8,7 +8,7 @@ package jmri.jmrix.powerline.cp290;
  *
  * @author			Bob Jacobsen Copyright (C) 2008
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class Constants {
 

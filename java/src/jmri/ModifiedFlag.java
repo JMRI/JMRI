@@ -25,7 +25,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  * @since 2.1.6
  */
 public interface ModifiedFlag {

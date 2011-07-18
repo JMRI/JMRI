@@ -22,7 +22,7 @@ import jmri.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.27 $
+ * @version $Revision$
  * @since 2.7.2
  */
 

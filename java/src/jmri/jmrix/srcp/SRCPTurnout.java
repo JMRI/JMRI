@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for SRCP layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class SRCPTurnout extends AbstractTurnout {
 

@@ -8,7 +8,7 @@ import jmri.jmrit.roster.RosterEntry;
 /**
  *
  *	@author Brett Hoffman   Copyright (C) 2010, 2011
- *	@version $Revision: 1.8 $
+ *	@version $Revision$
  */
 public class ConsistFunctionController implements ThrottleListener{
 

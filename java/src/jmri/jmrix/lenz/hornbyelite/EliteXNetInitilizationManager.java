@@ -11,7 +11,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
 

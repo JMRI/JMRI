@@ -11,7 +11,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.21 $
+# $Revision$
 
 #define shortcuts to some managers
 import jmri

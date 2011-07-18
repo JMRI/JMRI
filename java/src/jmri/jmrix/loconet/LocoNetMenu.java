@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  * was moved to {@link jmri.jmrix.loconet.swing}.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.23 $
+ * @version     $Revision$
  * @deprecated 2.9.5
  */
 @Deprecated

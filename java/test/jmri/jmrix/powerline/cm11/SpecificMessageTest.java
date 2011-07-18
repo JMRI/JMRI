@@ -12,7 +12,7 @@ import jmri.jmrix.powerline.SerialMessage;
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class SpecificMessageTest extends TestCase {
 

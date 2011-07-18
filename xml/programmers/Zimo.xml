@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Zimo.xml,v 1.4 2007-09-21 05:49:59 jacobsen Exp $ -->
+<!-- $Id$ -->
 		<version author="sip@euronet.nl" 
 			version="1.4" lastUpdated="20031008"/>
 			<!-- Based on the contribution of many others -->

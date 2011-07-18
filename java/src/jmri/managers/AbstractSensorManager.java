@@ -9,7 +9,7 @@ import java.util.Enumeration;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 

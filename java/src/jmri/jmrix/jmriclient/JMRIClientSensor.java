@@ -12,7 +12,7 @@ import jmri.Sensor;
  * Description:		extend jmri.AbstractSensor for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class JMRIClientSensor extends AbstractSensor implements JMRIClientListener {
 

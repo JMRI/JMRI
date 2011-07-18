@@ -13,7 +13,7 @@ import org.jdom.*;
  * Invokes complete set of tests of the jmri.web.xmlio.DefaultXmlIOServerTest class
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.6 $
+ * @version         $Revision$
  */
 public class DefaultXmlIOServerTest extends TestCase {
 

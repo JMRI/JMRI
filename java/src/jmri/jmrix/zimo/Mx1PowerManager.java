@@ -9,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling layout power.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

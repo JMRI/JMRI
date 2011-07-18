@@ -1,5 +1,5 @@
 <!-- Defines XML for configuring the DecoderPro program -->
-<!-- $Id: DecoderPro-config.dtd,v 1.6 2007-09-21 05:49:29 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- This file is obsolete!  All program preferences now use preferences-config.dtd -->
 <!-- Its kept in the distribution so that old config files can be read, but -->

@@ -9,7 +9,7 @@ import jmri.implementation.DefaultMemory;
  * Provide the concrete implementation for the Internal Memory Manager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class DefaultMemoryManager extends AbstractMemoryManager {
 

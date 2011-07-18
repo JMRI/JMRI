@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "GTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 

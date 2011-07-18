@@ -4,7 +4,7 @@
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.9 $
+ * @version			$Revision$
  */
 
 package jmri.jmrix.lenz;

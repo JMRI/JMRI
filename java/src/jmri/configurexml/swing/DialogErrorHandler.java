@@ -5,7 +5,7 @@ package jmri.configurexml.swing;
  * Shows each one, could save until end if needed.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
     
 public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {

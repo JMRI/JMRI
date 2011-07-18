@@ -8,7 +8,7 @@ import jmri.jmrit.roster.RosterEntry;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2011
- *	@version $Revision: 1.1 $
+ *	@version $Revision$
  */
 
 public class MultiThrottleController extends ThrottleController{

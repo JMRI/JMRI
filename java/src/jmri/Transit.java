@@ -58,7 +58,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008-2011
  * 
- * @version			$Revision: 1.18 $
+ * @version			$Revision$
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {

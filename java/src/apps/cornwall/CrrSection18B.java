@@ -11,7 +11,7 @@ import jmri.*;
  *  of tu20, tu21, tu22. Includes additional routes.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 public class CrrSection18B extends CrrSection {
 

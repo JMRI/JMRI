@@ -7,7 +7,7 @@ package jmri.util;
  * of operating system is in use.
  *
  * @author Bob Jacobsen  Copyright 2006
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 public class SystemType {

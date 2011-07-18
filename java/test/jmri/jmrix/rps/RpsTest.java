@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.rps package.
  * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision: 1.9 $
+ * @version   $Revision$
  */
 public class RpsTest extends TestCase {
 

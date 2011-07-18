@@ -6,7 +6,7 @@ import java.util.*;
  * Hashtable that preserves order for later access.
  *
  * @author Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 public class OrderedHashtable<K, V> extends Hashtable<K, V> {

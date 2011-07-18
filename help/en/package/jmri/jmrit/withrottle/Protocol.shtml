@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: bhoffman351 $) 2009 -->
-<!-- $Id: Protocol.shtml,v 1.2 2010-01-11 21:04:19 bhoffman351 Exp $ -->
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
 <title>JMRI: WiFi Throttle Communications Protocol</title>
 
 <!-- Style -->

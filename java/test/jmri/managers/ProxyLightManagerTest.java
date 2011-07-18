@@ -10,7 +10,7 @@ import junit.framework.*;
 /**
  * Test the ProxyLightManager
  * @author			Bob Jacobsen    2003, 2006, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 
 public class ProxyLightManagerTest extends TestCase {

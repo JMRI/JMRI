@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version             $Revision: 1.26 $
+ * @version             $Revision$
  */
 public class Route implements java.beans.PropertyChangeListener {
 	

@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.40 $
+ * @version $Revision$
  */
 public class Location implements java.beans.PropertyChangeListener {
 	

@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
 /**
  * JUnit tests for the rps.RpsTrackingPanel class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class RpsTrackingPanelTest extends TestCase {
 

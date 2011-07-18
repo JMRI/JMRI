@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the NamedBean interface
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class NamedBeanTest extends TestCase {
 

@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
  *              Andrew Crosland           (C) 2006 ported to SPROG
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 
 public class SprogSlotMonAction extends AbstractAction {

@@ -6,7 +6,7 @@ package jmri.jmrix;
  * Lightweight class to check if a system is active.
  *
  * @author		Bob Jacobsen  Copyright (C) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  */
 abstract public class ActiveSystemFlag {
 

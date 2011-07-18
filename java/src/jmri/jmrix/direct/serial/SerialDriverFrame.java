@@ -7,7 +7,7 @@ import javax.swing.*;
 /** 
  * Frame to control and connect serial direct drive
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {

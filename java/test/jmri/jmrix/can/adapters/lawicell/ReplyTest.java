@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.lawicell.Reply class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision$
  */
 public class ReplyTest extends TestCase {
     

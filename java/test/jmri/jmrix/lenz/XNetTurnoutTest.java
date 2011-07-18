@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.12 $
+ * @version         $Revision$
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 

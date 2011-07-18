@@ -14,7 +14,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  */
 public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

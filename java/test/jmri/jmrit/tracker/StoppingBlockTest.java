@@ -11,7 +11,7 @@ import jmri.Block;
 /**
  * Tests for the StoppingBlock class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class StoppingBlockTest extends TestCase {
 

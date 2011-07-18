@@ -8,7 +8,7 @@ package jmri.jmrix.bachrus;
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class SpeedoReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring

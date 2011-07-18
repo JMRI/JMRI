@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the DataSource class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.4 $
+ * @version		$Revision$
  */
 public class DataSourceTest extends TestCase {
 

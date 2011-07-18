@@ -9,7 +9,7 @@ import javax.swing.*;
  * User interface for adding an item to the log file.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class LogPanel extends JPanel {
 

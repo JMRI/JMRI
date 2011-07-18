@@ -7,7 +7,7 @@ package jmri.jmrix.jinput.treecontrol;
  * Create a JInput control window.
  *
  * @author   Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class TreeAction extends jmri.util.JmriJFrameAction {
 

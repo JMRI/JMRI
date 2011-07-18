@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.14 $
+ * @version			$Revision$
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame

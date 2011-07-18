@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.swing package
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SwingTest extends TestCase {
 

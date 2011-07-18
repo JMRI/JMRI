@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Represents a car delivery schedule for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2011
- * @version             $Revision: 1.10 $
+ * @version             $Revision$
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 

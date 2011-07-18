@@ -6,7 +6,7 @@ package jmri.configurexml;
  * Test bean for DefaultJavaBeanConfigXMLTest
  * 
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TestBean1 {
 

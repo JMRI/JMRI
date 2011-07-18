@@ -24,7 +24,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009-2010
- * @version			$Revision: 1.12 $
+ * @version			$Revision$
  */
 
 public class LIUSBServerAdapter extends XNetNetworkPortController {

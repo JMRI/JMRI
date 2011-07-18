@@ -34,7 +34,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  */
 public class PacketScript extends Apps {
 

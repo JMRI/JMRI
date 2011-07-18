@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *	dependent on order of items in the panel file.
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class TransitSection {
 

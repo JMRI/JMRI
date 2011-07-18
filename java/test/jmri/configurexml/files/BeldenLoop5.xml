@@ -1054,6 +1054,6 @@
     <positionablepoint ident="EB1" type="2" x="10.0" y="110.0" connect1name="T26" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
     <positionablepoint ident="A9" type="1" x="700.0" y="110.0" connect1name="T12" connect2name="T27" eastboundsignal="IHMP285E" westboundsignal="IHMP285W" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <!--Written by JMRI version 2.7.6 on Wed Oct 07 18:06:17 EDT 2009 $Id: BeldenLoop5.xml,v 1.2 2010-05-02 19:52:10 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.6 on Wed Oct 07 18:06:17 EDT 2009 $Id$-->
 </layout-config>
 

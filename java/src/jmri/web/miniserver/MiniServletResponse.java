@@ -12,7 +12,7 @@ import java.io.*;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 
 public class MiniServletResponse implements javax.servlet.ServletResponse {

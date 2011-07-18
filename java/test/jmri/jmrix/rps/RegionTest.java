@@ -12,7 +12,7 @@ import javax.vecmath.*;
 /**
  * JUnit tests for the rps.Region class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class RegionTest extends TestCase {
 

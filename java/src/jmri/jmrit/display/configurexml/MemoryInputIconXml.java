@@ -12,7 +12,7 @@ import org.jdom.Attribute;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 

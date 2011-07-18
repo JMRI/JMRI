@@ -24,7 +24,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.44 $
+ * @version	$Revision$
  */
 public class CarManager extends RollingStockManager{
 

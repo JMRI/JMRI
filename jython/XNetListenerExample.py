@@ -4,7 +4,7 @@
 # Author: Paul Bender, Copyright 2009
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision$
 
 import jmri
 

@@ -18,7 +18,7 @@ import jmri.Manager;
  * for multiple system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.30 $
+ * @version	$Revision$
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 

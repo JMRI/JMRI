@@ -9,7 +9,7 @@ import jmri.jmrix.openlcb.OpenLcbMenu;
  * Provide access to Swing components for the LocoNet subsystem.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  * @since 2.9.4
  */
 public class OpenLcbComponentFactory extends jmri.jmrix.swing.ComponentFactory {

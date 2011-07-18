@@ -11,7 +11,7 @@ package jmri.jmrix.lenz.liusb;
  * connection.
  *
  * @author      Paul Bender  Copyright (C) 2005
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  *
  * @see LIUSBAdapter
  */

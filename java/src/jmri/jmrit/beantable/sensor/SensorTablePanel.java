@@ -10,7 +10,7 @@ import java.awt.event.*;
  * SensorTable GUI in a JPanel
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 
 public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {

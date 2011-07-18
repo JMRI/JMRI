@@ -14,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the turnout table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.8 $
+ * @version         $Revision$
  */
 public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 

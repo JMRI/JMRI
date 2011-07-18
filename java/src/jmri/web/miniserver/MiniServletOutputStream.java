@@ -9,7 +9,7 @@ import java.io.OutputStream;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 
 public class MiniServletOutputStream extends javax.servlet.ServletOutputStream {

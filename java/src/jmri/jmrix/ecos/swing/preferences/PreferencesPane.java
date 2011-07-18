@@ -15,7 +15,7 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 

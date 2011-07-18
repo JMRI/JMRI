@@ -15,7 +15,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 

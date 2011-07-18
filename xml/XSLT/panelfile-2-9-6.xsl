@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile-2-9-6.xsl,v 1.4 2011-02-11 17:54:15 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 

@@ -9,7 +9,7 @@ import java.io.*;
  * and post them to a JTextArea for display
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
  class PipeListener extends Thread {
     private PipedReader pr;

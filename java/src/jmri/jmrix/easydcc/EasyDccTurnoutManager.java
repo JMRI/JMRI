@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "ETnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.14 $
+ * @version	$Revision$
  */
 
 public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager {

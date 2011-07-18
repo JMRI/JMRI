@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
  * Start a PanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  * @see  jmri.jmrit.display.panelEditor.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {

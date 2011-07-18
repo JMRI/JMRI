@@ -12,7 +12,7 @@ package jmri.util.exceptionhandler;
   Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
 </pre>
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {

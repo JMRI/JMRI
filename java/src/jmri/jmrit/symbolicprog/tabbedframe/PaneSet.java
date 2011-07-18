@@ -30,7 +30,7 @@ import jmri.jmrit.symbolicprog.*;
  * @see apps.gui3.dp3.DecoderPro3Window
  *
  * @author    Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.4 $
+ * @version		$Revision$
  */
 public class PaneSet {
 

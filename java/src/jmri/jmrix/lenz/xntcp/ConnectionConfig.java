@@ -20,7 +20,7 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.18 $
+ * @version	$Revision$
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2011 - Fixed problems arising from recent refactoring
  *

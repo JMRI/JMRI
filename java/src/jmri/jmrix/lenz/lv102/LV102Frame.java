@@ -12,7 +12,7 @@ import javax.swing.*;
  * The actual utility is defined in {@link LV102InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2004,2005
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class LV102Frame extends jmri.util.JmriJFrame {
 

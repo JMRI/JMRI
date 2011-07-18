@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.15 $
+ * @version $Revision$
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 

@@ -13,7 +13,7 @@ import java.io.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 
 public class SocketUtil {

@@ -17,7 +17,7 @@ import javax.swing.table.*;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {

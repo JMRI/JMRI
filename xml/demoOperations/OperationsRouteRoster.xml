@@ -3,7 +3,7 @@
 <!DOCTYPE operations-config SYSTEM "operations-routes.dtd">
 
 <operations-config>
-  <!--Written by JMRI version Test build 200912111516(Daniel Boudreau) on Sat Dec 12 01:17:48 EST 2009 $Id: OperationsRouteRoster.xml,v 1.3 2009-12-20 15:59:10 dan_boudreau Exp $-->
+  <!--Written by JMRI version Test build 200912111516(Daniel Boudreau) on Sat Dec 12 01:17:48 EST 2009 $Id$-->
   <routes>
     <route id="1" name="Bksfld-Frmnt" comment="">
       <location id="1r1" name="Bakersfield" locationId="78" sequenceId="1" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="12" pickups="yes" drops="yes" trainIconX="0" trainIconY="0" comment="" />

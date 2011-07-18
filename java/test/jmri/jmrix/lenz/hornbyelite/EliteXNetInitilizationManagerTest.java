@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.EliteXNetInitilizationManager class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class EliteXNetInitilizationManagerTest extends TestCase {
 

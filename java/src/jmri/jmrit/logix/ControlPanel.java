@@ -35,7 +35,7 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.10 $
+ * @version    $Revision$
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {

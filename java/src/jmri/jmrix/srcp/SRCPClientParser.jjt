@@ -17,7 +17,7 @@ package jmri.jmrix.srcp.parser;
  * the SRCP protocol responses to the client.
  * 
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS

@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * suite for the package, but also contains some tests for the ProgDebugger class.
  *
  * @author		Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision$
  */
 public class ProgDebuggerTest extends TestCase {
 

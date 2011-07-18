@@ -6,7 +6,7 @@ package jmri.jmrix;
  * Basic interface for messages to and from the layout hardware
  *
  * @author jake Copyright 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision$
  */
 public interface Message {
     int getElement(int n);

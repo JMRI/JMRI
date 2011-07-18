@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.25 $
+ * @version $Revision$
  */
 public class ListedTableFrame extends BeanTableFrame {
     

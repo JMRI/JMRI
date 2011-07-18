@@ -5,7 +5,7 @@ package jmri.jmrix.easydcc;
 /**
  * Abstract base for classes representing a EasyDcc communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public abstract class EasyDccNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements jmri.jmrix.NetworkPortAdapter{
 	// base class. Implementations will provide InputStream and OutputStream

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class PaneOpsProgFrame extends PaneProgFrame
                  implements java.beans.PropertyChangeListener  {

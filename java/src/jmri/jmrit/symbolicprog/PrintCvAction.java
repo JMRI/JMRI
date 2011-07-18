@@ -15,7 +15,7 @@ import javax.swing.*;
  * Macintosh MRJ
  *
  * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003, 2005
- * @version             $Revision: 1.8 $
+ * @version             $Revision$
  */
 public class PrintCvAction  extends AbstractAction {
 

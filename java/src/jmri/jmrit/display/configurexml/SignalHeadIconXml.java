@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.52 $
+ * @version $Revision$
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 

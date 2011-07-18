@@ -10,7 +10,7 @@ import jmri.jmrix.can.*;
  * Turnout for OpenLCB connections.
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010, 2011
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout 
                     implements CanListener {

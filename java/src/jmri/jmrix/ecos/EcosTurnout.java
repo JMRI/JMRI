@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {

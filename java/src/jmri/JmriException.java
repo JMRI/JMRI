@@ -7,7 +7,7 @@ package jmri;
  * just used to confirm type-safety.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2008, 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class JmriException extends Exception {
 	public JmriException(String s, Throwable t) { super(s, t); }

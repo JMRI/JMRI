@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 
 /**
  * @author Bob Jacobsen, Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public interface LnMessageBufferInterface extends Remote
 {

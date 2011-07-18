@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.liusb.LIUSBAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Paul Bender Copyright: Copyright (c) 2005
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

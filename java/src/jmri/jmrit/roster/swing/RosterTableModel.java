@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.10 $
+ * @version             $Revision$
  * @since 2.7.5
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel {

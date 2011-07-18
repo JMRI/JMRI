@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  * communications link.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 
 public interface SprogListener extends java.util.EventListener{

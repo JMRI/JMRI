@@ -5,7 +5,7 @@
  *       			MonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version		$Revision: 1.3 $
+ * @version		$Revision$
  * @author		kcameron Copyright (C) 2011
  * 	copied from SerialMonPane.java
  */

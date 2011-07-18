@@ -7,7 +7,7 @@ import jmri.jmrix.AbstractThrottleManager;
 /**
  * XPA implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2004
- * @version    $Revision: 1.8 $
+ * @version    $Revision$
  */
 
 public class XpaThrottleManager extends AbstractThrottleManager implements ThrottleManager {

@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.beantable package
  * @author	Bob Jacobsen  Copyright 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision$
  */
 public class BeanTableTest extends TestCase {
 

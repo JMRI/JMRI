@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceMessage class
  * @author			Bob Jacobsen Copyright 2002-2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 
 public class NceMessageTest extends TestCase {

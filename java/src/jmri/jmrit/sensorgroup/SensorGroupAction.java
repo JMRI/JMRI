@@ -10,7 +10,7 @@ import javax.swing.*;
  * Swing action to create and register a SensorGroupFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class SensorGroupAction extends AbstractAction {
 

@@ -18,7 +18,7 @@ import java.io.*;
  * more information.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class ProgDefault {
 

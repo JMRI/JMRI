@@ -2,7 +2,7 @@ package jmri.layout;
 
 /**
  * @author Alex Shepherd  Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 public class LayoutElement extends javax.swing.tree.DefaultMutableTreeNode implements LayoutEventInterface

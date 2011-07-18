@@ -10,7 +10,7 @@ import jmri.Turnout;
  * <P>
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class XpaTurnout extends AbstractTurnout {
 

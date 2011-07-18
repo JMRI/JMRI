@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for QuadOutputSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 

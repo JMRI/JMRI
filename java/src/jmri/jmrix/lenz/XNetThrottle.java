@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.45 $
+ * @version    $Revision$
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener

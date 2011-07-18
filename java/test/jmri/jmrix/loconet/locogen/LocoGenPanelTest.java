@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.*;
 /**
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenPanel class
  * @author   Bob Jacobsen Copyright 2001, 2003
- * @version  $Revision: 1.1 $
+ * @version  $Revision$
  */
 public class LocoGenPanelTest extends TestCase {
 

@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * SPROG Command Station implementation of a ThrottleManager.
  * <P>
  * @author	    Andrew Crosland  Copyright (C) 2006
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class SprogCSThrottleManager extends AbstractThrottleManager {
 

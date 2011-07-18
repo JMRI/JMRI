@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmrit.display.configurexml package
  * @author			Bob Jacobsen   Copyright 2009
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 
 package jmri.jmrit.display.configurexml;

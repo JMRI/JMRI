@@ -12,7 +12,7 @@ import jmri.Turnout;
  * Abstract interface between the a JMRI turnout and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision$
  */
 
 abstract public class AbstractTurnoutServer {

@@ -11,7 +11,7 @@ import jmri.Light;
  * nnn is the light number without padding.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {

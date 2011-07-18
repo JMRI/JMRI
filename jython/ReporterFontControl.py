@@ -14,7 +14,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision$
 
 
 # set the desired colour and size in the two lines below.

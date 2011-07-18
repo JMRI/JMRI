@@ -23,7 +23,7 @@ import java.io.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision$
  */
 public class RunJythonScript extends AbstractAction {
 

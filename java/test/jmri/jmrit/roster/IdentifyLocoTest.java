@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmrit.roster.IdentifyLoco class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class IdentifyLocoTest extends TestCase {
     

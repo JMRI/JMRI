@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.18 $
+ * @version     $Revision$
  */
 public class ThrottleCreationAction extends AbstractAction {
 

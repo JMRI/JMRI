@@ -11,7 +11,7 @@ import java.util.Hashtable;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2005
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 

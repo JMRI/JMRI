@@ -6,7 +6,7 @@ package jmri.util;
  * Utility class for managing access to a NamedBean
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class NamedBeanHandle<T> implements java.io.Serializable {

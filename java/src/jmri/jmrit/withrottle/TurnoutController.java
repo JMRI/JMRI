@@ -14,7 +14,7 @@ import jmri.TurnoutManager;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.4 $
+ *	@version $Revision$
  */
 
 public class TurnoutController extends AbstractController implements PropertyChangeListener{

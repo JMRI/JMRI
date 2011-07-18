@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.LnConstants;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 public class LnMessageManager implements LocoNetListener {
 

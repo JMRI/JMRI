@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPanelInterface {

@@ -7,7 +7,7 @@ package jmri.jmrix;
  * Add description of class here.
  *
  * @author Bob Jacobsen  Copyright 2007, 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision$
  */
 public abstract class AbstractMessage implements Message {
     

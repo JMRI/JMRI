@@ -47,7 +47,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.85 $
+ * @version $Revision$
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {

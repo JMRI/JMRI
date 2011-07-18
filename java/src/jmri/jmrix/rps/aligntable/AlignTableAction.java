@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
  * Note that we only allow one of these right now.
  *
  * @author	Bob Jacobsen    Copyright (C) 2006, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class AlignTableAction extends AbstractAction {
 

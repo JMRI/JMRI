@@ -18,7 +18,7 @@ import apps.Apps;
  * directory selected by the user.
  * 
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class RestoreFilesAction extends AbstractAction {
 

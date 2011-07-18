@@ -12,7 +12,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML{

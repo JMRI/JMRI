@@ -23,7 +23,7 @@ import jmri.util.StringUtil;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 

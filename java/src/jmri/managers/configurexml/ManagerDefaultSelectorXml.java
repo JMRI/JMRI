@@ -14,7 +14,7 @@ import jmri.managers.ManagerDefaultSelector;
  * form created or used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision$
  * @since 2.9.7
  */
 public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {

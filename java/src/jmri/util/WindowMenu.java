@@ -15,7 +15,7 @@ import javax.swing.event.MenuEvent;
  * and allows to bring one in front
  * <P>
  * @author	Giorgio Terdina   Copyright 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  * 18-Nov-2008 GT Replaced blank menu lines, due to untitled windows, with "Untitled" string
  */
 

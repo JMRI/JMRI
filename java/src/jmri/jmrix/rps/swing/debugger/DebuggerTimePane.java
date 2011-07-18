@@ -15,7 +15,7 @@ import javax.vecmath.Point3d;
  * as the RPS hardware number.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision$
  */
 
 

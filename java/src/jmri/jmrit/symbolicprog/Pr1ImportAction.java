@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  * Action to import the CV values from a PR1WIN/PR1DOS data file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 
 public class Pr1ImportAction  extends AbstractAction {

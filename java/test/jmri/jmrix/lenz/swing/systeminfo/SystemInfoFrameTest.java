@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.swing.systeminfo.SystemInfoFrame class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class SystemInfoFrameTest extends TestCase {
 

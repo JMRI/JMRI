@@ -18,7 +18,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision$
 
 # First, define the listener that does everything
 class MainTurnoutListener(java.beans.PropertyChangeListener):

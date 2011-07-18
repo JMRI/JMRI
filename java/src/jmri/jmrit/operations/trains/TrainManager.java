@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.58 $
+ * @version	$Revision$
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	

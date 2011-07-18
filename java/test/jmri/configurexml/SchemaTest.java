@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 public class SchemaTest extends LoadFileTestBase {
 

@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * JUnit tests for the rps.AlignmentPanel class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class AlignmentPanelTest extends TestCase {
 

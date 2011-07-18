@@ -28,7 +28,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class PaneNewProgAction extends AbstractAction {
 

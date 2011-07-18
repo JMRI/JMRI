@@ -13,7 +13,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.PositionablePoint objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 

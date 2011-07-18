@@ -12,7 +12,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri XPA-specific tools
  *
  * @author	Paul Bender   Copyright 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class XpaMenu extends JMenu {
     public XpaMenu(String name) {

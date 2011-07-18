@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Ken Cameron   Copyright 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class InstallTest extends Apps {
 

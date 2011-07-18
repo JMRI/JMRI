@@ -8,7 +8,7 @@ package jmri.jmrix.can;
  * Description:		Constants to represent CAN protocols and adpters
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public final class CanConstants {
     

@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			XpaConfigureFrame object
  *
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class XpaConfigureAction  extends AbstractAction {
 

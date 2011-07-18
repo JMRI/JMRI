@@ -12,7 +12,7 @@ import java.util.*;
  * system-independent tools
  *
  * @author	Paul Bender   Copyright 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class JmriSRCPServerMenu extends JMenu {
     public JmriSRCPServerMenu(String name) {

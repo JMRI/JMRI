@@ -21,7 +21,7 @@ import jmri.jmrix.swing.ComponentFactory;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.40 $
+ * @version     $Revision$
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {

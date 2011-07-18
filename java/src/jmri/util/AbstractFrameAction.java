@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  * get two JFrame objects.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 
 abstract public class AbstractFrameAction extends AbstractAction {

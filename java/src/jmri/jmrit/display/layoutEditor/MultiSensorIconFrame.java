@@ -17,7 +17,7 @@ import jmri.jmrit.display.MultiSensorIcon;
  * It should be.
  *
  * @author  Bob Jacobsen  Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 public class MultiSensorIconFrame extends JmriJFrame {

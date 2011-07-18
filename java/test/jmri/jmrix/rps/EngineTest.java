@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Engine class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class EngineTest extends TestCase {
 

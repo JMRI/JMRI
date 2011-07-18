@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.15 $
+ * @version			$Revision$
  */
 public class PaneProgFrameTest extends TestCase {
 

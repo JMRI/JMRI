@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.33 $
+ * @version $Revision$
  */
 abstract public class AbstractThrottle implements DccThrottle {
 	public final static float SPEED_STEP_14_INCREMENT=1.0f/14.0f;

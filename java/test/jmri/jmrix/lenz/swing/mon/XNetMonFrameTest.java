@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.swing.mon.XNetMonFrame class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class XNetMonFrameTest extends TestCase {
 

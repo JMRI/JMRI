@@ -84,7 +84,7 @@ package jmri.jmrix.direct;
  * </pre>
  *
  * @author	 Bob Jacobsen Copyright (C) 2001
- * @version  $Revision: 1.10 $
+ * @version  $Revision$
  *
  */
 

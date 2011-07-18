@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a SpeedoConsoleFrame object
  *
  * @author			Andrew Crosland    Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class SpeedoConsoleAction extends AbstractAction {
 

@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision: 1.10 $
+ * @version         $Revision$
  */
 public class LnSensorTest extends TestCase {
 

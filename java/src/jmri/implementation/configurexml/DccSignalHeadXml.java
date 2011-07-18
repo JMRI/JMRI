@@ -24,7 +24,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2009
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

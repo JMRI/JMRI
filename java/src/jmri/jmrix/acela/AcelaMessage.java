@@ -9,7 +9,7 @@ package jmri.jmrix.acela;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 

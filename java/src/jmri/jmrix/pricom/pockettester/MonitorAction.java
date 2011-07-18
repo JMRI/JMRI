@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public abstract class MonitorAction extends AbstractAction  {
 

@@ -18,7 +18,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * derived from:
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePanel implements SerialListener {
 	

@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
 	

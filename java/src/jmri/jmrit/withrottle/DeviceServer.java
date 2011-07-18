@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.25 $
+ *	@version $Revision$
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.

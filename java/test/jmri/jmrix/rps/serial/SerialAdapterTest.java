@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.serial.SerialAdapter class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class SerialAdapterTest extends TestCase {
 

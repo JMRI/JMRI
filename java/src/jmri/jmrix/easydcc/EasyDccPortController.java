@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Abstract base for classes representing a EasyDcc communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public abstract class EasyDccPortController extends jmri.jmrix.AbstractSerialPortController {
 	// base class. Implementations will provide InputStream and OutputStream

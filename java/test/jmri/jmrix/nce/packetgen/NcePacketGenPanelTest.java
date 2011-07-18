@@ -9,7 +9,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
  * @author	Bob Jacobsen
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class NcePacketGenPanelTest extends TestCase {
 

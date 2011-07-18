@@ -7,7 +7,7 @@ package jmri.jmrix.bachrus;
  * communications link.
  *
  * @author	Andrew Crosland  Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 
 public interface SpeedoListener extends java.util.EventListener{

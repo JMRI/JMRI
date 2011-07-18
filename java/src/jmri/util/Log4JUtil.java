@@ -13,7 +13,7 @@ import java.util.Enumeration;
  * information.
  *
  * @author Bob Jacobsen  Copyright 2009, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class Log4JUtil {

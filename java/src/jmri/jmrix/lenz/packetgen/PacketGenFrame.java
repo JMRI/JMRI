@@ -10,7 +10,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 2.7 $
+ * @version			$Revision$
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame {
 

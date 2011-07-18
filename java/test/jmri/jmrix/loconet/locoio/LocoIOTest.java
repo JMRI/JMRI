@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.locoio package
  * @author	Bob Jacobsen Copyright (C) 2002, 2010
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  */
 public class LocoIOTest extends TestCase {
 

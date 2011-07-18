@@ -34,7 +34,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  * @see         jmri.implementation.AbstractMemory
  * @see         jmri.MemoryManager
  * @see         jmri.InstanceManager

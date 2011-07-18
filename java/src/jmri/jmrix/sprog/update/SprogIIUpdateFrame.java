@@ -15,7 +15,7 @@ import javax.swing.*;
  * Extended to cover SPROG 3 which uses the same bootloader protocol
  * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.19 $
+ * @version			$Revision$
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame

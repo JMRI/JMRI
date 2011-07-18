@@ -11,7 +11,7 @@ import jmri.jmrix.nce.NceListener;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.16 $
+ * @version	$Revision$
  */
 public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager implements NceListener {
 

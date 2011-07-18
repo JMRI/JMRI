@@ -9,7 +9,7 @@ import jmri.implementation.AbstractTurnout;
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
  * @author			Bob Jacobsen Copyright (C) 2006
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 

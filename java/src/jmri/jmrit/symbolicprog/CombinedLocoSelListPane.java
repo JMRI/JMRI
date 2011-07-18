@@ -36,7 +36,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision$
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 

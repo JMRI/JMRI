@@ -15,7 +15,7 @@ import jmri.jmrix.rps.Reading;
  * Action to export the incoming raw data to a CSV-format file
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  * @since 2.3.1
  */
 public class CsvExportAction extends AbstractAction implements ReadingListener {

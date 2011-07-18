@@ -17,7 +17,7 @@ import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.SerialDriverAdapt
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Andrew Crosland 2008
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

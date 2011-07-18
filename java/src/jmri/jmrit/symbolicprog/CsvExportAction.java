@@ -11,7 +11,7 @@ import javax.swing.*;
  * Action to export the CV values to a Comma Separated Valiable (CSV) data file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class CsvExportAction  extends AbstractAction {
 

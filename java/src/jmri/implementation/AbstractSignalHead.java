@@ -10,7 +10,7 @@ import jmri.*;
  * SignalHead system names are always upper case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {

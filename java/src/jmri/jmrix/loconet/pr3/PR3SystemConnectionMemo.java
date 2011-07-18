@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.*;
  * Lightweight class to denote that a PR3 is active
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.9 $
+ * @version             $Revision$
  */
 public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 

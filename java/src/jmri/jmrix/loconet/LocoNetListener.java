@@ -13,7 +13,7 @@ package jmri.jmrix.loconet;
  * case.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public interface LocoNetListener extends java.util.EventListener{
 

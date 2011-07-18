@@ -9,7 +9,7 @@ package jmri.jmrix.pricom.pockettester;
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author			Bob Jacobsen    Copyright (C) 2002,2005
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class DataSourceAction extends jmri.util.JmriJFrameAction  {
 

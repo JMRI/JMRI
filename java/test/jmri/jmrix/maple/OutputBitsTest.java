@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * JUnit tests for the OutputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.4 $
+ * @version		$Revision$
  */
 public class OutputBitsTest extends TestCase {
 		

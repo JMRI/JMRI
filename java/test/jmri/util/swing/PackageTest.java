@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.util.swing tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class PackageTest extends TestCase {
     

@@ -22,7 +22,7 @@ import java.util.Locale;
  * Tests for the Operations Setup GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	

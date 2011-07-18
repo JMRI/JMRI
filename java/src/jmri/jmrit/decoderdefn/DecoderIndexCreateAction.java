@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2011
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  */
 public class DecoderIndexCreateAction extends AbstractAction {

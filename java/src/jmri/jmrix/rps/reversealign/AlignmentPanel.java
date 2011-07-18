@@ -20,7 +20,7 @@ import javax.vecmath.Point3d;
  * flip the sign of Z coordinates to keep this bias working for us.
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.6 $
+ * @version   $Revision$
  */
 public class AlignmentPanel extends javax.swing.JPanel 
         implements ReadingListener, Constants {

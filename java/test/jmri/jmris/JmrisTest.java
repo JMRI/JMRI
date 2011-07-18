@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Set of tests for the jmri.jmris package
  * @author	Paul Bender  Copyright 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class JmrisTest extends TestCase {
 

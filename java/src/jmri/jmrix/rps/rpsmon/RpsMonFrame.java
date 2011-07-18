@@ -3,7 +3,7 @@
  *
  * Description:		Frame displaying (and logging) RPS messages
  * @author	   Bob Jacobsen   Copyright (C) 2006
- * @version   $Revision: 1.4 $
+ * @version   $Revision$
  */
 
 package jmri.jmrix.rps.rpsmon;

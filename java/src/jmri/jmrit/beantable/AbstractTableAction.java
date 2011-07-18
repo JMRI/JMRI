@@ -20,7 +20,7 @@ import jmri.util.com.sun.TableSorter;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision$
  */
 
 abstract public class AbstractTableAction extends AbstractAction {

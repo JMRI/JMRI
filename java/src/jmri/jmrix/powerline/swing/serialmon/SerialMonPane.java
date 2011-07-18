@@ -7,7 +7,7 @@
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * copied from Ecos and converted to Powerline
  * @author			Ken Cameron Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 
 package jmri.jmrix.powerline.swing.serialmon;

@@ -10,7 +10,7 @@ import jmri.jmrix.acela.AcelaTrafficController;
 /**
  * Frame displaying (and logging) Acela command messages
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 

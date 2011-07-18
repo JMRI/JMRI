@@ -11,7 +11,7 @@ import junit.extensions.jfcunit.*;
  * been bypassed for now.
  *
  * @author	Bob Jacobsen - Copyright 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  * @since 2.5.3
  */
  

@@ -10,7 +10,7 @@ import jmri.jmrix.srcp.SRCPTrafficController;
 /**
  * Frame displaying (and logging) SRCP command messages
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPListener {
 

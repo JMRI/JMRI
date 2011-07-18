@@ -12,7 +12,7 @@ import jmri.jmris.AbstractSensorServer;
  * SRCP Server interface between the JMRI Sensor manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2011
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 
 public class JmriSRCPSensorServer extends AbstractSensorServer {

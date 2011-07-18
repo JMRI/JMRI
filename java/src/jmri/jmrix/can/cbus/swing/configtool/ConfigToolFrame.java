@@ -11,7 +11,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  * @since 2.3.1
  */
 public class ConfigToolFrame extends jmri.util.JmriJFrame {

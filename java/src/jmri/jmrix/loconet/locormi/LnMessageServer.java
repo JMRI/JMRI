@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author  Alex Shepherd
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
  // -Djava.security.policy=lib/security.policy

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

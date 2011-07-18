@@ -7,7 +7,7 @@ import jmri.jmrix.DCCManufacturerList;
  * the System Name Prefix
  *
  * @author Kevin Dickerson  Copyright 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class ConnectionNameFromSystemName{
     

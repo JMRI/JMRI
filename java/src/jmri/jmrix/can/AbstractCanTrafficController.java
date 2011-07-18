@@ -17,7 +17,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 
 abstract public class AbstractCanTrafficController 

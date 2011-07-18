@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetReply class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.1 $
+ * @version         $Revision$
  */
 public class XNetReplyTest extends TestCase {
 

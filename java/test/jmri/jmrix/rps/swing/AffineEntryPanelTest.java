@@ -13,7 +13,7 @@ import java.awt.geom.*;
 /**
  * Tests for the jmri.jmrix.rps.swing.AffineEntryPanel class
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision$
  */
 public class AffineEntryPanelTest extends TestCase {
 

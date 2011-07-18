@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the PacketDataModel class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.3 $
+ * @version		$Revision$
  */
 public class PacketDataModelTest extends TestCase {
 

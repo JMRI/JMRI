@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: decoder.xsl,v 1.18 2011-02-11 17:54:15 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->

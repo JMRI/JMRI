@@ -14,7 +14,7 @@ import jmri.jmrix.rps.*;
  * Tests for the RpsIcon class.
  *
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 

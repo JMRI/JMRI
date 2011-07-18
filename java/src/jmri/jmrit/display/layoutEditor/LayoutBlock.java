@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.14 $
+ * @version $Revision$
  */
 
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener

@@ -13,7 +13,7 @@ import javax.swing.*;
  * Swing action to display the file revision history
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class FileHistoryAction extends AbstractAction {
 

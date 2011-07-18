@@ -12,7 +12,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * @author      Matthew Harris  Copyright (C) 2011
  * @since       2.11.4
  *
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 public interface RfidPanelInterface  {

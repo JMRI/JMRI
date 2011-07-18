@@ -8,7 +8,7 @@ import jmri.CommandStation;
  * EasyDcc implementation of the CommandStation interface.
  *
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class EasyDccCommandStation implements CommandStation {
 

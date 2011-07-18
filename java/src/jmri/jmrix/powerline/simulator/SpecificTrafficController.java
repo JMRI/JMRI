@@ -34,7 +34,7 @@ import java.io.DataInputStream;
  * @author			Ken Cameron Copyright (C) 2010
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class SpecificTrafficController extends SerialTrafficController {
 

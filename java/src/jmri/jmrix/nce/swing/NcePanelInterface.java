@@ -11,7 +11,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.11.1
  * @author kcameron 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 public interface NcePanelInterface  {

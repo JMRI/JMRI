@@ -13,7 +13,7 @@ import jmri.util.swing.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.2 $
+ * @version		$Revision$
  */
  
 public class QuitAction extends jmri.util.swing.JmriAbstractAction {

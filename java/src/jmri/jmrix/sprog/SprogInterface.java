@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  * command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 
 public interface SprogInterface {

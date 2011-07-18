@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {

@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * as a JmriJPanel
  * 
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 

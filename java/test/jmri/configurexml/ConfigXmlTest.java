@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Test the jmri.configxml package.
  * @author	Bob Jacobsen
- * @version         $Revision: 1.9 $
+ * @version         $Revision$
  */
 public class ConfigXmlTest extends TestCase {
 

@@ -9,7 +9,7 @@ import javax.swing.*;
  * Frame displaying start/stop buttons for the JMRI server.
  *
  * @author			Paul Bender  Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class SimpleServerFrame extends jmri.util.JmriJFrame {
 

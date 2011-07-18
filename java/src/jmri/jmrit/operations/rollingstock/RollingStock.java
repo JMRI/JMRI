@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.62 $
+ * @version $Revision$
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 

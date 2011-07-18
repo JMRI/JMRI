@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.69 $
+ * @version     $Revision$
  */
 public class JMRIdemo extends Apps {
 

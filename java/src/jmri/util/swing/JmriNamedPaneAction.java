@@ -8,7 +8,7 @@ import javax.swing.*;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.8 $
+ * @version		$Revision$
  */
  
 public class JmriNamedPaneAction extends JmriAbstractAction {

@@ -19,7 +19,7 @@ import jmri.util.JUnitAppender;
 /**
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006
- * @version $Revision: 1.14 $
+ * @version $Revision$
  */
 public class SerialTrafficControllerTest extends TestCase {
 

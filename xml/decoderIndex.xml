@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "/xml/DTD/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.11.8 on Fri Jun 24 19:06:05 MST 2011 $Id: decoderIndex.xml,v 1.171 2011-06-25 02:11:52 jacobsen Exp $-->
+  <!--Written by JMRI version 2.11.8 on Fri Jun 24 19:06:05 MST 2011 $Id$-->
   <decoderIndex version="212">
     <mfgList nmraListDate="2011-04-09" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />

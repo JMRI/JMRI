@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.23 $
+ * @version    $Revision$
  */
 public class ThrottleFrameManager
 {

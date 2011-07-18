@@ -10,7 +10,7 @@ import jmri.jmrix.qsi.QsiTrafficController;
 /**
  * Frame displaying (and logging) QSI command messages
  * @author			Bob Jacobsen   Copyright (C) 2007, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListener {
 

@@ -15,7 +15,7 @@ import java.util.Vector;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.13 $
+ * @version             $Revision$
  */
 abstract public class SystemConnectionMemo {
 

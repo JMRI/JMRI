@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
   */
 public class DeleteRosterGroupAction extends AbstractAction {
 

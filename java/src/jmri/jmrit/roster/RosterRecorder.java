@@ -10,7 +10,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * <P>
  *
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */

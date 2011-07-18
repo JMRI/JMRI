@@ -10,7 +10,7 @@ import jmri.jmrix.srcp.parser.Token;
  * Carries the reply to an SRCPMessage.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision$
  */
 public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 

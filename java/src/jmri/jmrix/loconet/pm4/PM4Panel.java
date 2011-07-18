@@ -23,7 +23,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007, 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 

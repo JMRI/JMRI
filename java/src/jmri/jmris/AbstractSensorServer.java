@@ -12,7 +12,7 @@ import jmri.Sensor;
  * Abstract interface between the a JMRI sensor and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.5 $
+ * @version         $Revision$
  */
 
 abstract public class AbstractSensorServer {

@@ -29,7 +29,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager {

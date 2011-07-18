@@ -31,7 +31,7 @@ import jmri.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.83 $
+ * @version $Revision$
  */
 
 public class SignalHeadIcon extends PositionableIcon implements java.beans.PropertyChangeListener {

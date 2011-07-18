@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
  * Swing action to create and register a SerialDriverFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SerialDriverAction extends AbstractAction  {
     

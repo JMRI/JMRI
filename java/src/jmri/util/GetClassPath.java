@@ -8,7 +8,7 @@ import java.io.*;
  * Creates a classpath for JMRI from directories
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class GetClassPath {
 

@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.18 $
+ * @version	$Revision$
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

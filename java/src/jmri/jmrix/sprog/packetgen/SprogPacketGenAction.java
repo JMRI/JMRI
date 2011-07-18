@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SprogPacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class SprogPacketGenAction 			extends AbstractAction {
 

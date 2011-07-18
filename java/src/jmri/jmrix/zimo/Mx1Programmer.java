@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * LoaderFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class LoaderPanelAction extends AbstractAction {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");

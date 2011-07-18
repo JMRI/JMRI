@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
  * @author			Paul Bender
- * @version         $Revision: 2.2 $
+ * @version         $Revision$
  */
 public class XNetSystemConnectionMemoTest extends TestCase {
 

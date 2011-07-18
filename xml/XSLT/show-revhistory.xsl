@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: show-revhistory.xsl,v 1.3 2011-02-11 17:54:15 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet fragment to display a docbook:revhistory element            -->
 

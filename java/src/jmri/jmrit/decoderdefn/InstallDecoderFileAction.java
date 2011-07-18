@@ -12,7 +12,7 @@ import java.net.URL;
  * Install decoder definition from local file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {

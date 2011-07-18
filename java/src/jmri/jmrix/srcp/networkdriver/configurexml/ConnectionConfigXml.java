@@ -22,7 +22,7 @@ import javax.swing.*;*/
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender Copyright: Copyright (c) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

@@ -27,7 +27,7 @@ import jmri.Throttle;
  * should it not restart? Optional restart?)
  * </UL>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class StoppingBlock {
     

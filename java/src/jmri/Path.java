@@ -30,7 +30,7 @@ import java.util.List;
  * been extended from the initial implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public class Path  {
 

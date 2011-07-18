@@ -9,7 +9,7 @@ import jmri.jmrit.Sound;
 /**
  * Tests for the jmri.jmrix.loconet.spjfile package
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class SpjFileTest extends TestCase {
 

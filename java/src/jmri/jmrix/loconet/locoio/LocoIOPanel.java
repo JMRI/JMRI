@@ -19,7 +19,7 @@ import java.beans.*;
  * Panel displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel

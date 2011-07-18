@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * accuracy that's needed here.
  * 
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 

@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
  * via an C/MRI SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

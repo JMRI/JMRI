@@ -13,7 +13,7 @@ import org.jdom.output.*;
  * Invokes complete set of tests in the jmri.web.xmlio tree
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class PackageTest extends TestCase {
 

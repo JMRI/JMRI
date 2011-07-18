@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for backing up operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
 public class BackupFrame extends OperationsFrame {

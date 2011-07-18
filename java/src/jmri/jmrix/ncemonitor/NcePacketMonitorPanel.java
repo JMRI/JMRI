@@ -26,7 +26,7 @@ import jmri.jmrix.nce.swing.NcePanelInterface;
  * @author			Ken Cameron Copyright (C) 2010
  * derived from - 
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC", justification="serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {

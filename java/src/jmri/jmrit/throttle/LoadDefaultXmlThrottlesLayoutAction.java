@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  *  @author		Lionel Jeanson      Copyright 2009
- *  @version $Revision: 1.2 $
+ *  @version $Revision$
  */
 public class LoadDefaultXmlThrottlesLayoutAction extends AbstractAction {
 

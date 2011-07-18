@@ -10,7 +10,7 @@ import javax.swing.*;
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class OsIndicatorPanel extends BasePanel {
 

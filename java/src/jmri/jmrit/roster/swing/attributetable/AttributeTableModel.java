@@ -14,7 +14,7 @@ import jmri.jmrit.roster.*;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  * @since 2.7.5
  */
 public class AttributeTableModel extends javax.swing.table.AbstractTableModel {

@@ -8,7 +8,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2009</p>
  * @author Paul Bender 
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class XnTcpXNetPacketizerTest extends TestCase {
 

@@ -11,7 +11,7 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
  * a JMRI server (daemon) via a telnet connection.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class NetworkDriverAdapter extends JMRIClientPortController {
 

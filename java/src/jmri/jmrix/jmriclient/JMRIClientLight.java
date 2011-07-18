@@ -12,7 +12,7 @@ import jmri.Light;
  * Description:		extend jmri.AbstractLight for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class JMRIClientLight extends AbstractLight implements JMRIClientListener {
 

@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  * <P>
  *
  * @author      Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  *
  */
 abstract public class AbstractXNetSerialConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {

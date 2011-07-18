@@ -41,7 +41,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.15 $
+ * @version			$Revision$
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 

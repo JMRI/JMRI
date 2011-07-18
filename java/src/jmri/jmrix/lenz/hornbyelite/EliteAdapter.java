@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  *	Normally controlled by the lenz.hornbyelite.EliteFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003,2008-2010
- * @version			$Revision: 1.14 $
+ * @version			$Revision$
  */
 
 public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {

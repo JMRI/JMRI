@@ -13,7 +13,7 @@ import java.awt.*;
  * Frame for control of the sound speed for the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision$
  */
 
 

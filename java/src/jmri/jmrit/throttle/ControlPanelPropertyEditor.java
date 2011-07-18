@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  * object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class ControlPanelPropertyEditor extends JDialog
 {

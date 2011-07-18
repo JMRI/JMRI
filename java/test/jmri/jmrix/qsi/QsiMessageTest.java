@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the QsiMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 
 package jmri.jmrix.qsi;

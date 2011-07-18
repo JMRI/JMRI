@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  * @since 2.7.5
  */
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {

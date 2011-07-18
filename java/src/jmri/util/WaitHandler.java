@@ -26,7 +26,7 @@ import java.util.Calendar;
  * You can modify this behavior via the handleInterruptedException routine.
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 
 public class WaitHandler {

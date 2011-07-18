@@ -6,7 +6,7 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision$
  * @deprecated 2.7.8
  */
 @Deprecated

@@ -18,7 +18,7 @@ import junit.framework.TestCase;
  * This is not itself a test class, e.g. should not be added to a suite.  Instead,
  * this forms the base for test classes, including providing some common tests
  * @author			Bob Jacobsen    2003, 2006, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 
 public abstract class AbstractLightMgrTest extends TestCase {

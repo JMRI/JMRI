@@ -7,7 +7,7 @@ package jmri.jmrix.loconet;
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version $Revision: 1.14 $
+ * @version $Revision$
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names

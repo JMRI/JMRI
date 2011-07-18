@@ -12,7 +12,7 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
 
-# Revision $Revision: 1.1 $
+# Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
 
 import sys
@@ -40,7 +40,7 @@ class textmanager:
         return outputstring
     
     def getversion(self, inputstring):
-    # Revision $Revision: 1.1 $
+    # Revision $Revision$
         partlist = inputstring.rsplit("$",2)
         #print partlist
         revstring = str(partlist[1]).strip()

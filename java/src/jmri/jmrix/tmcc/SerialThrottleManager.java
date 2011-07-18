@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * Implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2006
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class SerialThrottleManager extends AbstractThrottleManager {
 

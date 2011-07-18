@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class SerialNode extends AbstractNode {
 

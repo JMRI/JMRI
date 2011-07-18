@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005-2010
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 

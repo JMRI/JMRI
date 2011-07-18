@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 /**
  * Frame displaying (and logging) Sprog command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 

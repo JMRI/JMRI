@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.26 2011-05-21 22:31:17 jacobsen Exp $ -->
+<!-- $Id$ -->
 <names-config>
 		<version author="Jack Shall lcrr@bellsouth.net" 
 			version="11" lastUpdated="20100819"/>

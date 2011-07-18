@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			EasyDccPacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class EasyDccPacketGenAction 			extends AbstractAction {
 

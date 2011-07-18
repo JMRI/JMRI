@@ -3932,6 +3932,6 @@
     </turnouticon>
     <positionablelabel x="38" y="79" level="5" forcecontroloff="false" fixed="false" showtooltip="true" text="blk000" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.7.7-Pete#7 on Wed Nov 11 15:43:08 PST 2009 $Id: Warrant.xml,v 1.1 2009-11-12 02:15:09 pete_cressman Exp $-->
+  <!--Written by JMRI version 2.7.7-Pete#7 on Wed Nov 11 15:43:08 PST 2009 $Id$-->
 </layout-config>
 

@@ -13,7 +13,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author	Bob Jacobsen   Copyright 2003, 2010
  * converted to multiple connection
  * @author	kcameron	Copyright 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 
 public class NceMenu extends JMenu {

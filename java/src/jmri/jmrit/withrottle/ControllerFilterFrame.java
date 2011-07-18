@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.7 $
+ *	@version $Revision$
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener{
 

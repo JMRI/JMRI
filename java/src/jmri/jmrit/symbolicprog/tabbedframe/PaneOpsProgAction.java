@@ -32,7 +32,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision$
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 

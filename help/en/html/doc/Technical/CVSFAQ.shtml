@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CVSFAQ.shtml,v 1.7 2010-05-03 02:56:04 jacobsen Exp $ -->
+<!-- $Id$ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -103,7 +103,7 @@ as needed.  If you already have a release checked out and want to update it
 to a specific release, change the "co" command to "update -d"
 
 <A name="refid">
-<h3>What are those lines like <i>$Revision: 1.7 $</i> and <i>$Id: CVSFAQ.shtml,v 1.7 2010-05-03 02:56:04 jacobsen Exp $</i>?</h3>
+<h3>What are those lines like <i>$Revision$</i> and <i>$Id$</i>?</h3>
 </a>
 
 Those are automatically updated by CVS every time a new version of the 

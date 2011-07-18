@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
      * with a list option to the left hand side.
      * <P>
      * @author	Kevin Dickerson   Copyright (C) 2009
-     * @version	$Revision: 1.3 $
+     * @version	$Revision$
      */
 
 public class TabbedPreferencesAction extends AbstractAction {

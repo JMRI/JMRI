@@ -11,7 +11,7 @@ import junit.framework.*;
  * 
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
 

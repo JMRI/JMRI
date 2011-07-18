@@ -11,7 +11,7 @@ import javax.swing.*;
  * Frame for user input of Ecos messages
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision$
  * @deprecated 2.11.3
  */
 @Deprecated

@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * @author	Dave Duchamp   Copyright (C) 2007
  * @author	Bob Jacobsen   Copyright (C) 2008 
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class NewPanelAction extends AbstractAction {
 

@@ -22,7 +22,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.15 $
+ * @version $Revision$
  */
 
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {

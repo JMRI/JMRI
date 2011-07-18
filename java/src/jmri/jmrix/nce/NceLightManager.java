@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class NceLightManager extends AbstractLightManager {
 

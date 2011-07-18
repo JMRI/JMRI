@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SoundSetFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class SoundSetAction extends AbstractAction {
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: roster2text.xsl,v 1.2 2011-02-11 17:54:15 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 

@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a PacketTable frame.
  *
  * @author	Bob Jacobsen    Copyright (C) 2005
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 
 public abstract class PacketTableAction extends AbstractAction {

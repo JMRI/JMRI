@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.16 $
+ * @version			$Revision$
  */
 public class XNetTest extends TestCase {
 

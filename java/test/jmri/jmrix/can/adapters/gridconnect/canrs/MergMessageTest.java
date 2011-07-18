@@ -15,7 +15,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergMessage class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision$
  */
 public class MergMessageTest extends TestCase {
 

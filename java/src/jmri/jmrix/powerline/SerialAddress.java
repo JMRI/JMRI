@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author	Ken Cameron, Copyright (C) 2008, 2009, 2010
- * @version     $Revision: 1.19 $
+ * @version     $Revision$
  */
 public class SerialAddress {
 

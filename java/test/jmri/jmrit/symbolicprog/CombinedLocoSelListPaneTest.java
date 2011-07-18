@@ -6,7 +6,7 @@ import javax.swing.*;
 import jmri.managers.DefaultProgrammerManager;
 import junit.framework.*;
 
-// Revision: $Revision: 1.12 $
+// Revision: $Revision$
 
 public class CombinedLocoSelListPaneTest extends TestCase {
 

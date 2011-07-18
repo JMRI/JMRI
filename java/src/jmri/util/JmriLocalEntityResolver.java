@@ -19,7 +19,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007, 2009
- * @version $Revision: 1.14 $
+ * @version $Revision$
  */
 
 import org.xml.sax.EntityResolver;

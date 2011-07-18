@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Basic.xml,v 1.5 2009-10-05 16:17:49 jacobsen Exp $ -->
+<!-- $Id$ -->
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
 
 <!-- A very basic programmer, containing only the most important few CVs -->

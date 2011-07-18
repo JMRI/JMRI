@@ -38,7 +38,7 @@ import org.jdom.JDOMException;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.20 $
+ * @version $Revision$
  */
 public class OperationsRoutesTest extends TestCase {
 

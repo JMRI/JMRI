@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.14 $
+ * @version         $Revision$
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 

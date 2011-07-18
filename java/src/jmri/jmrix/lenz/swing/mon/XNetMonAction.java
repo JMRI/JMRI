@@ -6,7 +6,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
  * @author			Paul Bender     Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 
 package jmri.jmrix.lenz.swing.mon;

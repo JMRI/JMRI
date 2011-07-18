@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

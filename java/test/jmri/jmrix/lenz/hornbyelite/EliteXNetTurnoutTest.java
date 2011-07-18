@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetReply;
 /**
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision$
  */
 public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 

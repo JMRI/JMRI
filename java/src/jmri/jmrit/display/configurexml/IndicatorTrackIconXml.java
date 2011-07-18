@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision$
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 

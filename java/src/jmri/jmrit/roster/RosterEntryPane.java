@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author  Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.21 $
+ * @version	$Revision$
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 

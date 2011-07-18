@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor package.
  * @author	Bob Jacobsen Copyright 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class SdfEditorTest extends TestCase {
 

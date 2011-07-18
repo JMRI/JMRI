@@ -15,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
 public class RosterTableModelTest extends TestCase {
 

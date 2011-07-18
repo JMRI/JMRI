@@ -22,7 +22,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 

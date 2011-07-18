@@ -19,7 +19,7 @@ import jmri.jmrix.loconet.*;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2006, 2007, 2008, 2010
- * @version             $Revision: 1.8 $
+ * @version             $Revision$
  */
 public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 

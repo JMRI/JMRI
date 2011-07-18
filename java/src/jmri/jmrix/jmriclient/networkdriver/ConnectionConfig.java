@@ -7,7 +7,7 @@ package jmri.jmrix.jmriclient.networkdriver;
  * JMRI instance via the JMRI Network Protocol.
  *
  * @author      Paul Bender   Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 

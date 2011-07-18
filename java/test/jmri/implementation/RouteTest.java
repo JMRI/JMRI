@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Route interface
  * @author	Bob Jacobsen  Copyright (C) 2006, 2007
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class RouteTest extends TestCase {
 

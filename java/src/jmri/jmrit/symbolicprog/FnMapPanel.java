@@ -31,7 +31,7 @@ import jmri.util.jdom.LocaleSelector;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision$
  */
 public class FnMapPanel extends JPanel {
     // columns

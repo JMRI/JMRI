@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision$
  */
 public class Backup extends XmlFile {
 

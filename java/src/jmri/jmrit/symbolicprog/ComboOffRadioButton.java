@@ -7,7 +7,7 @@ import javax.swing.*;
 /* Represents a JComboBox as a JPanel containing just the "off" button
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class ComboOffRadioButton extends ComboRadioButtons {
 

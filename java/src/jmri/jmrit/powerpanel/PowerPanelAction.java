@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  * PowerPanelFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001, 2010
- * @version         $Revision: 1.9 $
+ * @version         $Revision$
  */
 public class PowerPanelAction extends jmri.util.swing.JmriNamedPaneAction {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");

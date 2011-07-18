@@ -6,7 +6,7 @@ package jmri.jmrix.xpa;
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class XpaMessage {
 

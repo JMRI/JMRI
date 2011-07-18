@@ -69,7 +69,7 @@ import jmri.jmrix.nce.swing.NcePanelInterface;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, jmri.jmrix.nce.NceListener  {

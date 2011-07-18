@@ -8,7 +8,7 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 

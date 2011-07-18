@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class SignalHeadSignalMastTest extends TestCase {
 

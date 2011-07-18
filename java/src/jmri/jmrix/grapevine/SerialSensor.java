@@ -10,7 +10,7 @@ import jmri.implementation.AbstractSensor;
  * do all the work in a node-based system.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 public class SerialSensor extends AbstractSensor {
 

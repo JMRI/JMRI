@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.8 $
+ *	@version $Revision$
  */
 
 import java.awt.event.ActionEvent;

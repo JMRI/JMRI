@@ -37,7 +37,7 @@ import jmri.util.StringUtil;
  * provided by Leo Bicknell with help from B. Milhaupt, used with permission.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @version $Revision: 1.57 $
+ * @version $Revision$
  */
 public class Llnmon {
 

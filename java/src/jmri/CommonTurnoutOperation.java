@@ -9,7 +9,7 @@ import jmri.implementation.AbstractTurnout;
  * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
  * common properties and methods for concrete subclasses
  * @author John Harper
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public abstract class CommonTurnoutOperation extends TurnoutOperation {
 

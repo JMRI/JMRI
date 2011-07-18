@@ -18,7 +18,7 @@ import jmri.jmrix.can.TrafficController;
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
  * @author			Bob Jacobsen  Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener {
 

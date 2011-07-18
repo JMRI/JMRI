@@ -1105,6 +1105,6 @@
     <positionablepoint ident="EB1" type="2" x="40.0" y="82.0" connect1name="T10" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
     <positionablepoint ident="EB2" type="2" x="184.0" y="266.0" connect1name="T27" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <!--Written by JMRI version 2.5.4 on Mon May 25 21:56:06 EDT 2009 $Id: MedinaA24.xml,v 1.1 2010-02-03 05:57:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.5.4 on Mon May 25 21:56:06 EDT 2009 $Id$-->
 </layout-config>
 

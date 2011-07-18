@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.locomon package
  * @author	Bob Jacobsen Copyright (C) 2002, 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 public class LocoMonTest extends TestCase {
 

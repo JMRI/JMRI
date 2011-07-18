@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Integrated with {@link AbstractMRNodeTrafficController}.
  *
  * @author Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision$
  */
 public abstract class AbstractNode {
     

@@ -10,7 +10,7 @@ import junit.framework.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnTrafficControllerTest.java,v 1.4 2009-06-06 23:47:03 dan_boudreau Exp $
+ * @version $Id$
  */
 public class LnTrafficControllerTest extends TestCase {
 

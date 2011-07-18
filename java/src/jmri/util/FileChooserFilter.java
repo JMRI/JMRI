@@ -13,7 +13,7 @@ import java.util.*;
  * Except in that case, files without extensions fail.
  *
  * @author Alex Shepherd
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {

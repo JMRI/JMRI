@@ -10,7 +10,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new LocoBuffer-USB
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 

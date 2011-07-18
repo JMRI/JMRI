@@ -61,7 +61,7 @@ import javax.vecmath.Point3d;
 * <P>
  * @author	Robert Ashenfelter  Copyright (C) 2008
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class Ash2_2Algorithm extends AbstractCalculator {
 

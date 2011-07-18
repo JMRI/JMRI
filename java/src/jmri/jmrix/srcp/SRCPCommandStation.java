@@ -8,7 +8,7 @@ import jmri.CommandStation;
  * SRCP implementation of the CommandStation interface.
  *
  * @author			Bob Jacobsen Copyright (C) 2007, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SRCPCommandStation implements CommandStation {
 

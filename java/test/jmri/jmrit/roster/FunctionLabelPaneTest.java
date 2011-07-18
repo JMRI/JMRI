@@ -5,7 +5,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.FunctionLabelPane class.
  * @author	Bob Jacobsen     Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class FunctionLabelPaneTest extends TestCase {
 

@@ -27,7 +27,7 @@ import jmri.util.StringUtil;
  * @author      Ken Cameron Copyright (C) 2009, 2010
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 

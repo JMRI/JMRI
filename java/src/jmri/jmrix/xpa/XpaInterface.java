@@ -7,7 +7,7 @@ package jmri.jmrix.xpa;
  * XPressNet System using an XPA and a modem.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 
 public interface XpaInterface {

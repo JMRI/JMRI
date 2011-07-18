@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007 
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener

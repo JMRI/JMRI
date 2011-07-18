@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SE8cSignalHead implmentation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class SE8cSignalHeadTest extends TestCase {
 

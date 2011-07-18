@@ -29,7 +29,7 @@ import jmri.jmrix.swing.ComponentFactory;
  *
  * @author      Bob Jacobsen    Copyright (C) 2010
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

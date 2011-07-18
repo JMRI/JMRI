@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
  * Abstract base Frame to open and configure a NetworkPortAdapeter 
  * @author			Paul Bender Copyright (C) 2009,
  * @author                      Bob Jacobsen Copyright (C) 2001-2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 abstract public class NetworkPortFrame extends jmri.util.JmriJFrame {
 

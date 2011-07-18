@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Swing thread to notify it's own listeners.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007 
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class AutomatSummary  {
 

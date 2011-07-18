@@ -3,7 +3,7 @@
  *
  * Description:		Frame for user input of Xpa+Modem (dialing) messages
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 
 

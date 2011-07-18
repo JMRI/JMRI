@@ -15,7 +15,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class SprogCSTurnout extends AbstractTurnout {
 

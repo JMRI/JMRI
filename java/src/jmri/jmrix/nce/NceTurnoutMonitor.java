@@ -27,7 +27,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.36 $
+ * @version     $Revision$
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {

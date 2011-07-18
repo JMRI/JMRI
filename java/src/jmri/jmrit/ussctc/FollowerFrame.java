@@ -9,7 +9,7 @@ import javax.swing.*;
  * on USS CTC machines.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class FollowerFrame extends jmri.util.JmriJFrame {
 

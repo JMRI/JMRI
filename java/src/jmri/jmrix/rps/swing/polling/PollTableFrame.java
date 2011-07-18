@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  * Frame for control of RPS polling
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision$
  */
 
 

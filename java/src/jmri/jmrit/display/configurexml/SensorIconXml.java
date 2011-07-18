@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.57 $
+ * @version $Revision$
  */
 public class SensorIconXml extends PositionableLabelXml {
 

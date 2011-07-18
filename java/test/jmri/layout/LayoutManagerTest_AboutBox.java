@@ -23,7 +23,7 @@ public class LayoutManagerTest_AboutBox extends JDialog implements ActionListene
     FlowLayout flowLayout1 = new FlowLayout();
     GridLayout gridLayout1 = new GridLayout();
     String product = "";
-    String version = "$Revision: 1.2 $";
+    String version = "$Revision$";
     String copyright = "Copyright (c) 2002";
     String comments = "";
     public LayoutManagerTest_AboutBox(Frame parent)

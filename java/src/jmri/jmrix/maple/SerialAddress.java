@@ -14,7 +14,7 @@ package jmri.jmrix.maple;
  *		node number in the address.
   * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  */
 public class SerialAddress {
 

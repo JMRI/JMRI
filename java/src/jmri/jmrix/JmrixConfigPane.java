@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.78 $
+ * @version	$Revision$
  */
 public class JmrixConfigPane extends JPanel {
 

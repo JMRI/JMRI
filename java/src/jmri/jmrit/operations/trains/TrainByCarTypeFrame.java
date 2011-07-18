@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  * Frame to display by rolling stock, the locations serviced by this train
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

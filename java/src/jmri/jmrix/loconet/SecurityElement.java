@@ -38,7 +38,7 @@ import jmri.*;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.16 $
+ * @version         $Revision$
  */
 public class SecurityElement implements LocoNetListener {
 

@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.44 $
+ * @version $Revision$
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

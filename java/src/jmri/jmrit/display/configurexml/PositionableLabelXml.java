@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.64 $
+ * @version $Revision$
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 

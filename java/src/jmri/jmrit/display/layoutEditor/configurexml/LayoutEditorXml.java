@@ -19,7 +19,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision$
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 

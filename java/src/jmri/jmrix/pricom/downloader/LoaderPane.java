@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.20 $
+ * @version	    $Revision$
  */
 public class LoaderPane extends javax.swing.JPanel {
 

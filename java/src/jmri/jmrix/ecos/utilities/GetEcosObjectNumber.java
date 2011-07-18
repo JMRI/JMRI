@@ -21,7 +21,7 @@ package jmri.jmrix.ecos.utilities;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public class GetEcosObjectNumber {
 

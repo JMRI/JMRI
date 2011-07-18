@@ -18,7 +18,7 @@ import gnu.io.CommPortIdentifier;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 

@@ -10,7 +10,7 @@ import javax.swing.*;
  * Swing action to create and register a SendPacketFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class SendPacketAction extends AbstractAction {
 

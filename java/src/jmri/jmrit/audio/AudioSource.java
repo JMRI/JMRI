@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 public interface AudioSource extends Audio {
 

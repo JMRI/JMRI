@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.81 $
+ * @version   $Revision$
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */

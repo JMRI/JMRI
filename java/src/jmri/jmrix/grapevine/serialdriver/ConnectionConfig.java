@@ -9,7 +9,7 @@ import jmri.jmrix.grapevine.nodeconfig.*;
  * Definition of objects to handle configuring a Grapevine layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

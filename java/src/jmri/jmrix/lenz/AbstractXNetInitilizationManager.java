@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.8 $
+ * @version			$Revision$
  */
 abstract public class AbstractXNetInitilizationManager {
 

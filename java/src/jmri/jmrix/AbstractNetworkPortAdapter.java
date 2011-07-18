@@ -13,7 +13,7 @@ import java.net.*;
  *
  *
  * @author      Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  * @see         jmri.jmrix.NetworkConfigException
  */
 @Deprecated

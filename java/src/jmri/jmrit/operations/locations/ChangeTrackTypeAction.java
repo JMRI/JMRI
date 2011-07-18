@@ -17,7 +17,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Action to change the type of track.  Track types are Spurs, Yards, Interchanges and
  * Staging.
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 public class ChangeTrackTypeAction extends AbstractAction {
 		

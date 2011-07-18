@@ -66,7 +66,7 @@ import javax.swing.plaf.basic.BasicSliderUI;
  *
  * @author  Michael Kneebone    Copyright (c) 2007, 2011
  * @author  Matthew Harris      Copyright (c) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class SliderSnap extends BasicSliderUI {
 

@@ -26,7 +26,7 @@ import java.util.Locale;
  * Tests for the Operations Engines GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 

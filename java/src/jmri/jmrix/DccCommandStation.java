@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Defines standard operations for Dcc command stations.  
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public interface DccCommandStation {
 

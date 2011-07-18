@@ -12,7 +12,7 @@ import javax.vecmath.Point3d;
  * 
  * 
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class Analytic_AAlgorithmTest extends AbstractAlgorithmTest {
         

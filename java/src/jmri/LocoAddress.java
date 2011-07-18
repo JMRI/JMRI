@@ -23,7 +23,7 @@ package jmri;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 
 public interface LocoAddress {

@@ -19,7 +19,7 @@ import jmri.Sensor;
  * that AIU is polled.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class NceAIU {
 

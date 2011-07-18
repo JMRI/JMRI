@@ -10,7 +10,7 @@ import jmri.util.StringUtil;
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.8 $
+ * @version         $Revision$
  */
 public class LocoNetMessageTest extends TestCase {
 

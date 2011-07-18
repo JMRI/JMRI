@@ -10,4 +10,4 @@ retry.
 bytes of data from each node, in other words there's only
 one input message generated.
 
-$Id: README,v 1.1 2006-06-25 23:09:51 jacobsen Exp $
+$Id$

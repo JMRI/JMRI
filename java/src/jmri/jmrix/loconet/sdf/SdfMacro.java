@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.19 $
+ * @version             $Revision$
  */
 
 public abstract class SdfMacro implements SdfConstants {

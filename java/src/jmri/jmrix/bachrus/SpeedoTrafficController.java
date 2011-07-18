@@ -23,7 +23,7 @@ import gnu.io.SerialPortEventListener;
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener  {
 

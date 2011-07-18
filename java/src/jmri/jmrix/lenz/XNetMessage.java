@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.25 $
+ * @version			$Revision$
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {

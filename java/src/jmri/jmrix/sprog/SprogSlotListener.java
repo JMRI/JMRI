@@ -8,7 +8,7 @@ package jmri.jmrix.sprog;
  * Description:		<describe the SlotListener class here>
  * @author          Bob Jacobsen  Copyright (C) 2001
  *                  Andrew Crosland (c) 2006 ported for SPROG
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public interface SprogSlotListener extends java.util.EventListener{
     // This and the Loconet equivalent should probably be re-factored

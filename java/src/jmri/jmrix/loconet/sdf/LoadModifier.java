@@ -14,7 +14,7 @@ import jmri.util.StringUtil;
  *
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.8 $
+ * @version             $Revision$
  */
 
 public class LoadModifier extends SdfMacro {

@@ -14,7 +14,7 @@ import java.util.Vector;
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.12 $
+ * @version             $Revision$
  */
 
 public class EnumVariableValueTest extends VariableValueTest {

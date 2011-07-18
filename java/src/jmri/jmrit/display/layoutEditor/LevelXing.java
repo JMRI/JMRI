@@ -39,7 +39,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
 public class LevelXing 

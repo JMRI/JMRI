@@ -14,7 +14,7 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * use the LocoNet connection on this machine.
  * Copyright:    Copyright (c) 2002
  * @author      Alex Shepherd
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class LnMessageServerAction extends AbstractAction {
 

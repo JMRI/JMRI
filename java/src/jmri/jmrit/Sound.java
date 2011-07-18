@@ -21,7 +21,7 @@ import javax.sound.sampled.*;
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
  * @author  Dave Duchamp  Copyright (C) 2011 - add streaming play of large files
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class Sound  {
 

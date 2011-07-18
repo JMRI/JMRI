@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
  * Careful - tests are loaded via a separate class loader!
  *
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class SwingShutDownTaskTest extends TestCase {
 

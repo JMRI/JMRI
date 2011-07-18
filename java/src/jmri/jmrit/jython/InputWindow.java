@@ -16,7 +16,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 public class InputWindow extends JPanel {
 

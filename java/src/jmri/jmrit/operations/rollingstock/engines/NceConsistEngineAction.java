@@ -17,7 +17,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * Starts the NceConsistEngine thread
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 

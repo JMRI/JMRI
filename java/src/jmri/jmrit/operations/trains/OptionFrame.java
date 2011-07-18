@@ -24,7 +24,7 @@ import java.io.File;
  * Frame for user edit of train options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 public class OptionFrame extends OperationsFrame{

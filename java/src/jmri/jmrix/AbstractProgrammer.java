@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.20 $
+ * @version     $Revision$
  */
 public abstract class AbstractProgrammer implements Programmer {
 

@@ -43,7 +43,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.18 $
+ * @version	$Revision$
  */
 public interface Manager {
 

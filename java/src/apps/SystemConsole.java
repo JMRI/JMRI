@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 public class SystemConsole extends JTextArea {
 

@@ -15,7 +15,7 @@ import javax.swing.*;
  * @see AlignTableAction
  * 
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 

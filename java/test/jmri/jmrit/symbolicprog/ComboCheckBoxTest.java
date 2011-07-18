@@ -14,7 +14,7 @@ import jmri.progdebugger.*;
 
 /**
  * @author			Bob Jacobsen Copyright 2005
- * @version			$Revision: 1.14 $
+ * @version			$Revision$
  */
 public class ComboCheckBoxTest extends TestCase {
 

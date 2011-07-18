@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.web.miniserver.servlet tree
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class ServletTest extends TestCase {
 

@@ -24,7 +24,7 @@ import javax.swing.*;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  * @since 2.9.5  (Previously in jmri package)
  */
 public class GuiLafConfigPane extends JPanel {

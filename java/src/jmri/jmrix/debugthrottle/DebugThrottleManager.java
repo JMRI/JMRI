@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * Implementation of a ThrottleManager for debugging.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2003, 2005
- * @version         $Revision: 1.5 $
+ * @version         $Revision$
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 

@@ -7,7 +7,7 @@ package jmri.jmrit.ussctc;
  * Define common constants for the ussctc package
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public interface Constants {
 

@@ -43,7 +43,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.101 $
+ * @version     $Revision$
  */
 
 public class TurnoutTableAction extends AbstractTableAction {

@@ -9,7 +9,7 @@ import java.io.DataOutputStream;
  * Abstract base for classes representing a Bachrus speedo communications port
  * @author			Bob Jacobsen        Copyright (C) 2001
  * @author			Andrew Crosland     Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPortController {
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to SprogTrafficController classes, who in turn will deal in messages.

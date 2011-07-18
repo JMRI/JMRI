@@ -13,7 +13,7 @@ import jmri.Turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  *
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class SerialTurnout extends AbstractTurnout {
 

@@ -24,7 +24,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 public class GcTrafficController extends TrafficController {
     

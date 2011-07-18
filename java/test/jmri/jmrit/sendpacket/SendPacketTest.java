@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.sendpacket package
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class SendPacketTest extends TestCase {
 

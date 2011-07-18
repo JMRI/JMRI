@@ -8,7 +8,7 @@ package jmri.jmrix.sprog.sprogCS;
  * via an SPROG SerialDriverAdapter object.
  *
  * @author      Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

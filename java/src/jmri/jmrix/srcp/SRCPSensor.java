@@ -12,7 +12,7 @@ import jmri.Sensor;
  * Description:		extend jmri.AbstractSensor for SRCP layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class SRCPSensor extends AbstractSensor implements SRCPListener {
 

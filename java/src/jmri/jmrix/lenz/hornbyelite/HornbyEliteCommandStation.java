@@ -10,7 +10,7 @@ package jmri.jmrix.lenz.hornbyelite;
  * from a Lenz command station.
  *
  * @author			Paul Bender Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 

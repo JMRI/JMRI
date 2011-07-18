@@ -30,7 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.87 $
+ * @version $Revision$
  */
 
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {

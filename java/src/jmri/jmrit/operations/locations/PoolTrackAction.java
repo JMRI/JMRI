@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Action to create a track pool and place a track in that pool.
  * @author Daniel Boudreau Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class PoolTrackAction extends AbstractAction {
 		

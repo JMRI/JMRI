@@ -11,7 +11,7 @@ import jmri.managers.AbstractManager;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener, java.io.Serializable {

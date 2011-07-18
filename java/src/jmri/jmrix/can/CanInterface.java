@@ -6,7 +6,7 @@ package jmri.jmrix.can;
  * Define interface for sending and receiving CAN messages
  *
  * @author      Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 
 public interface CanInterface {

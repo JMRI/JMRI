@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * Description:		Carries the reply to a SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Berridge - refactored, cleaned up, Feb 2010
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 public class SprogReply extends AbstractMRReply {
 	// Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX

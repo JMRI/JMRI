@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * high part of 24 port card.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class SerialTurnoutTest2 extends AbstractTurnoutTest {
 

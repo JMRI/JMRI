@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.26 $
+ * @version $Revision$
  */
 public class TrainManagerXml extends OperationsXml {
 	

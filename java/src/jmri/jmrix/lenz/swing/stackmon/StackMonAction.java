@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a StackMonFrame object
  *
  * @author	Paul Bender    Copyright (C) 2005
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 
 public class StackMonAction extends AbstractAction {

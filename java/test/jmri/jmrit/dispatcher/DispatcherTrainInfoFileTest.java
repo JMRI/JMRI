@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Swing jfcUnit tests for dispatcher train info
  * @author			Dave Duchamp
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class DispatcherTrainInfoFileTest extends TestCase {
 

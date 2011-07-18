@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Kato_FL12.xml,v 1.1 2010-10-03 20:39:41 jacobsen Exp $ -->
+<!-- $Id$ -->
 <decoder-config>
 		<version author="dat7719@daletripp.com" 
 					version="1" lastUpdated="20080321"/>

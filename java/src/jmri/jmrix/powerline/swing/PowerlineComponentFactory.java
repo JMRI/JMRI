@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  * @author		Bob Jacobsen  Copyright (C) 2010
  * coverted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version             $Revision: 1.1 $
+ * @version             $Revision$
  */
 public class PowerlineComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 

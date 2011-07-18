@@ -11,7 +11,7 @@ import javax.swing.*;
  * Make sure an XML file is readable, without doing a DTD validation.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005, 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileValidateAction
  */

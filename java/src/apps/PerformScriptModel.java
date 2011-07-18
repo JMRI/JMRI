@@ -10,7 +10,7 @@ import java.util.List;
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  * @see PerformScriptPanel
  */
 public class PerformScriptModel {

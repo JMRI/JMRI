@@ -9,7 +9,7 @@ import javax.swing.JLabel;
  * Editor panel for the BRANCH_TO macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  */
 
 class BranchToEditor extends SdfMacroEditor {

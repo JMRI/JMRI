@@ -21,7 +21,7 @@ package jmri.jmrix.lenz;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.12 $
+ * @version 		$Revision$
  *
  */
 public class XNetPacketizer extends XNetTrafficController {

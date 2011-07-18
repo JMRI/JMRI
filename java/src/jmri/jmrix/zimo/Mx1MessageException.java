@@ -8,7 +8,7 @@ import jmri.JmriException;
  * Zimo-specfic exceptions.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  */

@@ -22,7 +22,7 @@ import jmri.BeanSetting;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 public class LayoutEditorAuxTools 

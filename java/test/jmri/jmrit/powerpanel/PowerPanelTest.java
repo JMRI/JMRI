@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 /**
  * Tests for the jmrit.PowerPanel package
  * @author			Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class PowerPanelTest extends TestCase {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");

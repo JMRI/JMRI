@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class SpecificReplyTest extends TestCase {
 

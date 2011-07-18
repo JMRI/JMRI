@@ -7,7 +7,7 @@ import java.util.*;
  * A group of rolling stock that is managed as one unit.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class RollingStockGroup {
 	

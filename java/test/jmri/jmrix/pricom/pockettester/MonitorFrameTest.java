@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MonitorFrame class
  * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision: 1.4 $
+ * @version		$Revision$
  */
 public class MonitorFrameTest extends TestCase {
 

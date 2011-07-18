@@ -12,7 +12,7 @@ import jmri.implementation.AbstractLight;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004, 2009, 2010
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class SerialLight extends AbstractLight {
 

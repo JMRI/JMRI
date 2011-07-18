@@ -13,7 +13,7 @@ package jmri.util;
  * they don't need to start the JVM twice.
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class GetArgumentList {
 

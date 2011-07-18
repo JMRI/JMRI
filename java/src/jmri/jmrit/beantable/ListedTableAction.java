@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
      * <P>
      * @author	Bob Jacobsen   Copyright (C) 2003
      * @author	Kevin Dickerson   Copyright (C) 2009
-     * @version	$Revision: 1.7 $
+     * @version	$Revision$
      */
 
 public class ListedTableAction extends AbstractAction {

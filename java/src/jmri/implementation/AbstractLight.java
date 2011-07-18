@@ -46,7 +46,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004, 2010
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {

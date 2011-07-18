@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.dispatcher package
  * @author			Dave Duchamp
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class DispatcherTest extends TestCase {
 

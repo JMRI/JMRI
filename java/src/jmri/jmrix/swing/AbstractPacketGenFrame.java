@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
 

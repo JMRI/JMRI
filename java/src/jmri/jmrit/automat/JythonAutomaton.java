@@ -12,7 +12,7 @@ import jmri.InstanceManager;
  * read the code, the "non-reflection" statements are in the comments
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class JythonAutomaton extends AbstractAutomaton {
     Object interp;

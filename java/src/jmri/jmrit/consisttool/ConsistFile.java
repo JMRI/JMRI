@@ -17,7 +17,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision$
  */
 
 public class ConsistFile extends jmri.jmrit.XmlFile {

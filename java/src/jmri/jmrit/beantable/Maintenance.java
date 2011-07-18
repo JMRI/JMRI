@@ -61,7 +61,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.20 $
+ * @version $Revision$
  */
 
 public class Maintenance

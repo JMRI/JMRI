@@ -20,7 +20,7 @@ import java.util.List;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 
 public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable{

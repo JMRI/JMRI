@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.locormi;
  * Description:
  * Copyright:    Copyright (c) 2002
  * @author   Alex Shepherd
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
 import java.util.LinkedList;

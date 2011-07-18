@@ -7,7 +7,7 @@ package apps.gui3;
  * listed pane.
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class TabbedPreferencesFrame extends jmri.util.JmriJFrame {
     

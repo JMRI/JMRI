@@ -22,7 +22,7 @@ import javax.swing.table.TableCellEditor;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.18 $
+ * @version		$Revision$
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 

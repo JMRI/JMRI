@@ -19,7 +19,7 @@ import java.awt.Shape;
  * It uses a Java2D GeneralPath to handle the inside/outside calculations.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 @net.jcip.annotations.Immutable
 public class Region {

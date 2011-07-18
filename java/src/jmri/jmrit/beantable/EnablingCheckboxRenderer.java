@@ -14,7 +14,7 @@ import javax.swing.table.*;
    * line with user expectations.
    *
    * @author Bob Jacobsen
-   * @version $Revision: 1.2 $
+   * @version $Revision$
    */
 public class EnablingCheckboxRenderer extends JCheckBox implements TableCellRenderer {
    

@@ -28,7 +28,7 @@ import jmri.util.javaworld.GridLayout2;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 

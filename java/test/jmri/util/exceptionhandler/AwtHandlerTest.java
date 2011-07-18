@@ -9,7 +9,7 @@ import jmri.util.*;
 /**
  * Tests for the jmri.util.AwtHandlerTest class.
  * @author	Bob Jacobsen  Copyright 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class AwtHandlerTest extends SwingTestCase {
 

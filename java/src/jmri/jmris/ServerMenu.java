@@ -12,7 +12,7 @@ import java.util.*;
  * system-independent tools
  *
  * @author	Paul Bender   Copyright 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class ServerMenu extends JMenu {
     public ServerMenu(String name) {

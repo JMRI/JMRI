@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.37 $
+ * @version $Revision$
  */
 
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {

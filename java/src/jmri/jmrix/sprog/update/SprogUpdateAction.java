@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SprogIIUpdateFrame object
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 
 public class SprogUpdateAction 	extends AbstractAction {

@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
  * @author  Pete Cressman    Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {

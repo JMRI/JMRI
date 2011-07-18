@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {

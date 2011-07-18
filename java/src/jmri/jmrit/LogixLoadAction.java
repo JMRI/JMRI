@@ -13,7 +13,7 @@ import javax.swing.*;
  * Provide an action to allow Logixs to be loaded disabled when panel file is loaded
  *
  * @author	Dave Duchamp   Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class LogixLoadAction extends AbstractAction {
 

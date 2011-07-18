@@ -24,7 +24,7 @@ import javax.swing.tree.DefaultTreeModel;
  * CVS directories, or files whose name starts with a "."
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class CatalogTreeModel extends DefaultTreeModel {
     public CatalogTreeModel() {

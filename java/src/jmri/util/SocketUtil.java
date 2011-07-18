@@ -17,7 +17,7 @@ import java.net.ServerSocket;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2006
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class SocketUtil {

@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * to DefaultLunarSignalHead.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 

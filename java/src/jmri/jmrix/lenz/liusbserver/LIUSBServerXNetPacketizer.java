@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractMRListener;
  * <P>
  * In particular, LIUSBServerXNetPacketizer counts the number of commands received.
  * @author		Paul Bender, Copyright (C) 2009
- * @version 	$Revision: 1.2 $
+ * @version 	$Revision$
  *
  */
 public class LIUSBServerXNetPacketizer extends XNetPacketizer {

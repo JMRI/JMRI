@@ -24,7 +24,7 @@ import java.util.List;
  * a larger detailed view.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007, 2008
- * @version	    $Revision: 1.12 $
+ * @version	    $Revision$
  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 

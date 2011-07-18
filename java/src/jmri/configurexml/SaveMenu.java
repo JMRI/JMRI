@@ -10,7 +10,7 @@ import java.util.*;
  * various data (subsets).
  *
  * @author	Bob Jacobsen   Copyright 2005
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class SaveMenu extends JMenu {
     public SaveMenu(String name) {

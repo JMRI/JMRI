@@ -12,7 +12,7 @@ import jmri.*;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2010
- * @version  $Revision: 1.3 $
+ * @version  $Revision$
  */
 
 public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {

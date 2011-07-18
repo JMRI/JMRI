@@ -12,7 +12,7 @@ import jmri.jmris.AbstractLightServer;
  * Simple Server interface between the JMRI light manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 
 public class SimpleLightServer extends AbstractLightServer {

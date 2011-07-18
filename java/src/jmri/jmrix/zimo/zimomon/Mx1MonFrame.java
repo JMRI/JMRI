@@ -9,7 +9,7 @@ import jmri.jmrix.zimo.Mx1Message;
 /**
  * Frame displaying (and logging) MX-1 messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 1.5 $
+ * @version         $Revision$
  *
  * Adapted by Sip Bosch for use with MX-1
  */

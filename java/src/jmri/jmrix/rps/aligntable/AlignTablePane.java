@@ -24,7 +24,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision$
  */
 public class AlignTablePane extends javax.swing.JPanel {
 

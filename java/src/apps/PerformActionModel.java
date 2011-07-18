@@ -17,7 +17,7 @@ import java.util.List;
  * systems realize the type of data being stored.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  * @see PerformActionPanel
  */
 public class PerformActionModel extends AbstractActionModel {

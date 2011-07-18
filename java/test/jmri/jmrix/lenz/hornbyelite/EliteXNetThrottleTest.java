@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
  *
  * Description:	    tests for the jmri.jmrix.lenz.EliteXNetThrottle class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class EliteXNetThrottleTest extends TestCase {
 

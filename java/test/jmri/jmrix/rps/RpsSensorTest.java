@@ -14,7 +14,7 @@ import javax.vecmath.*;
 /**
  * JUnit tests for the RPS Sensor class.
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class RpsSensorTest extends TestCase {
 

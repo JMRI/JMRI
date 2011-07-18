@@ -17,7 +17,7 @@ import org.jdom.JDOMException;
  * A singleton class for use by all SignalHeads and SignalMasts
  *
  * @author	Pete Cressman Copyright (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 public class SignalSpeedMap {
 

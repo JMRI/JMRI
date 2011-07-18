@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.31 $
+ * @version $Revision$
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

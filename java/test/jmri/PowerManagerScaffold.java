@@ -21,7 +21,7 @@ import java.beans.PropertyChangeListener;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class PowerManagerScaffold implements PowerManager {
 

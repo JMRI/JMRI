@@ -13,7 +13,7 @@ import jmri.jmrix.qsi.QsiReply;
  * JUnit tests for the QsiReplyclass
  * @author			Bob Jacobsen Copyright 2006, 2007
  *
- * @version         $Revision: 1.6 $
+ * @version         $Revision$
  */
 public class QsiReplyTest extends TestCase {
 

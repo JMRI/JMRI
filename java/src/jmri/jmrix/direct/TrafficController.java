@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * In particular, note that transmission is not a threaded operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class TrafficController implements jmri.CommandStation {
 

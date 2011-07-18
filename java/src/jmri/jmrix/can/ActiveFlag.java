@@ -11,7 +11,7 @@ package jmri.jmrix.can;
  *
  * @author		Bob Jacobsen  Copyright (C) 2003, 2008, 2009
  * @author      Andrew Crosland 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 abstract public class ActiveFlag {
 

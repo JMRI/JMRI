@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  * and the command station
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class SystemInfoAction extends AbstractAction {
 

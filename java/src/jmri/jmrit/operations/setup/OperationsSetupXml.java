@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class OperationsSetupXml extends OperationsXml {
 	

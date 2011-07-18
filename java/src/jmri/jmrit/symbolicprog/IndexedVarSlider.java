@@ -12,7 +12,7 @@ import javax.swing.event.ChangeListener;
  * an underlying variable; we return one of these in IndexedVariableValue.getNewRep.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.3 $
+ * @version   $Revision$
  */
 public class IndexedVarSlider extends JSlider implements ChangeListener {
 

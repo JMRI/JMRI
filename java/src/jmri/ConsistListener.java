@@ -21,7 +21,7 @@ package jmri;
  * for more details.
  * <P>
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public interface ConsistListener extends java.util.EventListener{
 

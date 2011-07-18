@@ -14,7 +14,7 @@ import javax.swing.*;
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
 public class Pr1WinExportAction  extends AbstractAction {
 

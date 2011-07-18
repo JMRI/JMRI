@@ -37,7 +37,7 @@ import javax.swing.*;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 public class MemoryIconCoordinateEdit extends CoordinateEdit {

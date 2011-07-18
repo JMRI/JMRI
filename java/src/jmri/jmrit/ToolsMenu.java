@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.48 $
+ * @version     $Revision$
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {

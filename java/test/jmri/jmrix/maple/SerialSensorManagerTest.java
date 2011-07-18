@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  */
 public class SerialSensorManagerTest extends TestCase {
 

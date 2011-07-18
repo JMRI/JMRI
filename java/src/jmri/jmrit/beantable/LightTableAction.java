@@ -37,7 +37,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.54 $
+ * @version     $Revision$
  */
 
 public class LightTableAction extends AbstractTableAction {

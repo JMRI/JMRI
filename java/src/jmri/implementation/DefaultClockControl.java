@@ -15,7 +15,7 @@ import java.util.Date;
  *	systems with no hardware fast clock.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class DefaultClockControl implements ClockControl {
 

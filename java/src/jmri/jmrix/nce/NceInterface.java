@@ -7,7 +7,7 @@ package jmri.jmrix.nce;
  * command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public interface NceInterface {
 

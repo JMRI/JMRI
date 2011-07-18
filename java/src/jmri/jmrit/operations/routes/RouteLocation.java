@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.24 $
+ * @version             $Revision$
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 	

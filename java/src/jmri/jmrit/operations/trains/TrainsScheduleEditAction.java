@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Action to edit timetable
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class TrainsScheduleEditAction extends AbstractAction {
 		

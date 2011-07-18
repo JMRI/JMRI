@@ -21,7 +21,7 @@ package jmri.web.xmlio;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  * @see  jmri.web.xmlio.XmlIOServer
  */
 public class XmlIOFactory {

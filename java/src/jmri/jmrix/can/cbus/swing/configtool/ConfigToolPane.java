@@ -18,7 +18,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  * @since 2.3.1
  */
 public class ConfigToolPane extends JPanel implements CanListener {

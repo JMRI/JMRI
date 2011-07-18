@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision$
  * @see jmri.GuiLafConfigPane
  * @since 2.9.5
  */

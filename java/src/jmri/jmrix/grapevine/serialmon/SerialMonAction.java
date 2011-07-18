@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			SerialMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2006, 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class SerialMonAction 			extends AbstractAction {
 

@@ -3,7 +3,7 @@
  *
  * Description:		Frame for configuring an XPA using a modem 
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 
 

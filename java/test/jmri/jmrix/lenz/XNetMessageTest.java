@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.4 $
+ * @version         $Revision$
  */
 public class XNetMessageTest extends TestCase {
 

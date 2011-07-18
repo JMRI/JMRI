@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a CbusConsoleFrame object
  *
  * @author			Andrew Crosland    Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class CbusConsoleAction extends AbstractAction {
 

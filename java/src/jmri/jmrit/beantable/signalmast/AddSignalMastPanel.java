@@ -17,7 +17,7 @@ import org.jdom.*;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009, 2010
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  */
 
 public class AddSignalMastPanel extends JPanel {

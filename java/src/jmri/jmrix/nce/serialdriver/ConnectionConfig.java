@@ -9,7 +9,7 @@ package jmri.jmrix.nce.serialdriver;
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author kcameron Copyright (C) 2010
  * 	added multiple connections
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

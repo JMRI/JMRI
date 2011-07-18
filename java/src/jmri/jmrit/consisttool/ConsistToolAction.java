@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * ConsistToolFrame object
  *
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.6 $
+ * @version             $Revision$
  */
  public class ConsistToolAction extends AbstractAction {
 

@@ -11,7 +11,7 @@ import junit.framework.Assert;
  * Test simple functioning of MemoryContents
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 
 public class MemoryContentsTest extends TestCase {

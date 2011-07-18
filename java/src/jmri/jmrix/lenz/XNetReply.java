@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.17 $
+ * @version			$Revision$
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {

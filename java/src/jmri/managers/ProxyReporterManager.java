@@ -13,7 +13,7 @@ import jmri.managers.AbstractManager;
  * for multiple system-specific implementations.  
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
 

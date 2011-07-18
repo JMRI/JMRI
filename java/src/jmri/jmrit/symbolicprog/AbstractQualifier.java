@@ -6,7 +6,7 @@ package jmri.jmrit.symbolicprog;
  * Watches a specific Variable to qualify others.
  *
  * @author			Bob Jacobsen   Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  *
  */
 public abstract class AbstractQualifier implements Qualifier, java.beans.PropertyChangeListener {

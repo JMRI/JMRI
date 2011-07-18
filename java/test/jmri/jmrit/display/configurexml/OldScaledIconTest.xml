@@ -33,6 +33,6 @@
       <icon url="program:resources/jmri48x48.gif" rotate="3" degrees="0" scale="1.5" />
     </positionablelabel>
   </paneleditor>
-  <!--Written by JMRI version 2.8 on Fri Dec 18 15:12:01 EST 2009 $Id: OldScaledIconTest.xml,v 1.1 2010-02-25 17:53:03 pete_cressman Exp $-->
+  <!--Written by JMRI version 2.8 on Fri Dec 18 15:12:01 EST 2009 $Id$-->
 </layout-config>
 

@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @since 2.3.1
  */
 public class OlcbTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {

@@ -39,7 +39,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.18 $
+ * @version     $Revision$
  */
 
 public class JmriJFrameServlet implements Servlet {

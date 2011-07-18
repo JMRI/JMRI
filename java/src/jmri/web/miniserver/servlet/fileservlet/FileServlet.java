@@ -21,7 +21,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.12 $
+ * @version $Revision$
  */
 
 public class FileServlet extends AbstractServlet {

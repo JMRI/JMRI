@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallDefinitions.xml,v 1.9 2007-05-13 02:47:55 jacobsen Exp $ -->
+<!-- $Id$ -->
 <!-- Cornwall RR configuration: turnout, sensor, signal definitions -->
 <layout-config>
 

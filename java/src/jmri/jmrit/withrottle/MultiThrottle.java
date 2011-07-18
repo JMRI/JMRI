@@ -22,7 +22,7 @@ import java.util.List;
  * MT-L757<;>L757       On T throttle, remove loco L757. (Still has L1234)
  *
  *	@author Brett Hoffman   Copyright (C) 2011
- *	@version $Revision: 1.3 $
+ *	@version $Revision$
  */
 
 public class MultiThrottle {

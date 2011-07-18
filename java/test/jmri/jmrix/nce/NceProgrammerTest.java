@@ -20,7 +20,7 @@ import jmri.jmrix.nce.NceProgrammer;
 /**
  * JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version          $Revision: 1.14 $
+ * @version          $Revision$
  */
 public class NceProgrammerTest extends TestCase {
 

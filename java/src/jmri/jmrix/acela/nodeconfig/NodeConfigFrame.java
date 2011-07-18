@@ -16,7 +16,7 @@ import jmri.jmrix.acela.AcelaNode;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 

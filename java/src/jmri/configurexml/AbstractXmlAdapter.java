@@ -4,7 +4,7 @@ package jmri.configurexml;
  * Abstract class to provide basic error handling for XmlAdapter
  *
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision$
  * @see XmlAdapter
  */
 

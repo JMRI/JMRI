@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class Throttle extends AbstractThrottle
 {

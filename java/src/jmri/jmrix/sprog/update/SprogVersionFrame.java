@@ -12,7 +12,7 @@ import javax.swing.*;
  * Get the firmware version of the attached SPROG, SPROG II or SPROG 3
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame

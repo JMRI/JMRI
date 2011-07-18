@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for the Signalling Logic
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.6 $
+ * @version $Revision$
 */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 

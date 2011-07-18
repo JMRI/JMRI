@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 /**
  * Exports the Engine roster into a comma delimitated file (CSV).
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  *
  */
 public class ExportEngines extends XmlFile {

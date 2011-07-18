@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetThrottle class
  * @author			Paul Bender
- * @version         $Revision: 2.7 $
+ * @version         $Revision$
  */
 public class XNetThrottleTest extends TestCase {
 

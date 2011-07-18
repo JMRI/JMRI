@@ -6,7 +6,7 @@ package jmri.implementation;
  * Provides a base to perform a shutdown task without user-intervention.
  * 
  * @author      Matthew Harris Copyright (c) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class QuietShutDownTask extends AbstractShutDownTask {
 

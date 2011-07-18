@@ -26,7 +26,7 @@ import java.util.List;
  * Logs rolling stock movements by writing their locations to a file.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class RollingStockLogger extends XmlFile implements java.beans.PropertyChangeListener{
 	

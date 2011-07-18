@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

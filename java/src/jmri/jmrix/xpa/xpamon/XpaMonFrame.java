@@ -9,7 +9,7 @@ import jmri.jmrix.xpa.XpaTrafficController;
 /**
  * Frame displaying (and logging) Xpa+Modem command messages
  * @author			Paul Bender   Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListener {
 

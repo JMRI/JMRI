@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.30 $
+ * @version         $Revision$
  */
 public class ProgDebugger implements Programmer  {
 

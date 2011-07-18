@@ -10,7 +10,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Tests for the jmri.util.SwingTestCase class.
  * @author	Bob Jacobsen  Copyright 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class SwingTestCaseTest extends SwingTestCase {
 

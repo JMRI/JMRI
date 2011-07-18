@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.118 $
+ * @version $Revision$
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*

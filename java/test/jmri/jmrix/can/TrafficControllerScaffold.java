@@ -16,7 +16,7 @@ import java.util.Vector;
  * Stands in for the can.TrafficController class
  * 
  * @author			Bob Jacobsen 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class TrafficControllerScaffold extends TrafficController {
     public TrafficControllerScaffold() {

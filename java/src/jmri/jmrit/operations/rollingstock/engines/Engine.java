@@ -11,7 +11,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.21 $
+ * @version $Revision$
  */
 public class Engine extends RollingStock {
 	

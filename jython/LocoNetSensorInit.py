@@ -2,7 +2,7 @@
 #
 #This script will issue the DS54 interrogate commands 
 #
-# $Revision: 1.1 $ please don't update this line
+# $Revision$ please don't update this line
 #
 # Created by Phil Klein  copyright 2010
 

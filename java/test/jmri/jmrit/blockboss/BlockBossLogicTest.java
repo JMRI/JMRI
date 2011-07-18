@@ -17,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.15 $
+ * @version $Revision$
  */
 public class BlockBossLogicTest extends TestCase {
 	

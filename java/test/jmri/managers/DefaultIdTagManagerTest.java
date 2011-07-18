@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.managers.DefaultIdTagManager class.
  * @author	Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class DefaultIdTagManagerTest extends TestCase {
 

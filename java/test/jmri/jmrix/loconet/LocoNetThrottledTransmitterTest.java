@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
  * 
  * @author Bob Jacobsen Copyright 2001, 2002, 2009
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class LocoNetThrottledTransmitterTest extends TestCase {
 

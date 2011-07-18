@@ -39,7 +39,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class AudioListenerFrame extends AbstractAudioFrame {
 

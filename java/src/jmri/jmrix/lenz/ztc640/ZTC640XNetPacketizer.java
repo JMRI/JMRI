@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
  * 0xFF bytes that appear prior to some messages.
  *
  * @author		Paul Bender  Copyright (C) 2006
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision$
  *
  */
 public class ZTC640XNetPacketizer extends XNetPacketizer {

@@ -15,7 +15,7 @@ import jmri.Programmer;
  * can message
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.9 $
+ * @version         $Revision$
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */

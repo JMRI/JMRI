@@ -13,7 +13,7 @@ package jmri;
  * change, because it's a function of the current bean setting(s).
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008, 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 @net.jcip.annotations.Immutable
 public class BeanSetting  {

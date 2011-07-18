@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.NamedBeanUtil class.
  * @author	Bob Jacobsen  Copyright 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class NamedBeanHandleTest extends TestCase {
 

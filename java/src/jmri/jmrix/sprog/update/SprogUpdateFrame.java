@@ -14,7 +14,7 @@ import javax.swing.*;
  * Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't being used
  * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.16 $
+ * @version			$Revision$
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame {

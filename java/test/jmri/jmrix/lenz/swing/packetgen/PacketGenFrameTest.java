@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
  * @author			Bob Jacobsen   Copyright (c) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class PacketGenFrameTest extends TestCase {
 

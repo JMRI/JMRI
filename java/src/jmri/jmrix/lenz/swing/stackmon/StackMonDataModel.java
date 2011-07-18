@@ -16,7 +16,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Lenz Command Station Stack information.
  *
  * @author              Paul Bender Copyright (c) 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision$
  */
 
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {

@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Immutable
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class Measurement {
 

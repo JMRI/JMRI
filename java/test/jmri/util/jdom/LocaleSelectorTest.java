@@ -8,7 +8,7 @@ import org.jdom.*;
 /**
  * Tests for the jmri.util.LocaleSelector class.
  * @author	Bob Jacobsen  Copyright 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class LocaleSelectorTest extends TestCase {
 

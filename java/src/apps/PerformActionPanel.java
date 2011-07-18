@@ -13,7 +13,7 @@ import java.util.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  * @see apps.PerformActionModel
  */
 public class PerformActionPanel extends AbstractActionPanel {

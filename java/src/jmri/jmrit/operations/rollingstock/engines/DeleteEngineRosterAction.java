@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * This routine will remove all engines from the operation database.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 
 

@@ -11,7 +11,7 @@ package jmri.util.exceptionhandler;
   System.setProperty("sun.awt.exception.handler", jmri.util.AwtHandler.class.getName());
 </pre>
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 public class AwtHandler {

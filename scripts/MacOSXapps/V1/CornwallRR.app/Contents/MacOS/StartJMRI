@@ -29,7 +29,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.16 $ (CVS maintains this line, do not edit please)
+# $Revision$ (CVS maintains this line, do not edit please)
 #
 
 # define the class to be invoked

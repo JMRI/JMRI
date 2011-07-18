@@ -15,7 +15,7 @@ import javax.swing.JLabel;
  *
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  */
 
 class LoadModifierEditor extends SdfMacroEditor {

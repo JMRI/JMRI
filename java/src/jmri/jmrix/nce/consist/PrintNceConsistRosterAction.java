@@ -20,7 +20,7 @@ import java.util.List;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class PrintNceConsistRosterAction  extends AbstractAction {
 

@@ -10,7 +10,7 @@ import jmri.jmrix.can.*;
  * Turnout for CBUS connections.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class CbusTurnout extends jmri.implementation.AbstractTurnout 
                     implements CanListener {

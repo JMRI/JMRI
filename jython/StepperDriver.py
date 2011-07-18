@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision$
 #
 # This class lets you create a light that is driven by a 4 pole
 #	stepper motor connected to a normal lamp dimmer. A novel solution

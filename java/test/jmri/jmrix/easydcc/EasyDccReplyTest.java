@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccReplyclass
  * @author			Bob Jacobsen
- * @version         $Revision: 1.9 $
+ * @version         $Revision$
  */
 
 package jmri.jmrix.easydcc;

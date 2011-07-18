@@ -17,7 +17,7 @@ package jmri.jmrix.maple;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class OutputBits {
 

@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2007, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class PacketGenAction extends AbstractAction {
 

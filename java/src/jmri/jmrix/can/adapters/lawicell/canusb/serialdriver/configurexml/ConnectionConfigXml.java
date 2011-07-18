@@ -17,7 +17,7 @@ import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.CanUsbDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Andrew Crosland 2008
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

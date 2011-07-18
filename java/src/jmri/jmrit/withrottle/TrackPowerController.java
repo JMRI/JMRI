@@ -5,7 +5,7 @@ package jmri.jmrit.withrottle;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision$
  */
 
 import java.beans.PropertyChangeEvent;

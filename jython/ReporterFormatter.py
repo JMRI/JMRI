@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision$
 #
 # The Reporter and Memory names are hardcoded in the example
 # near the bottom.  Change those to something that makes

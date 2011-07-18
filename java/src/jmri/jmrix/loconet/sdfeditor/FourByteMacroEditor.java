@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  * escape claus for unrecognized content.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision$
  */
 
 class FourByteMacroEditor extends SdfMacroEditor {

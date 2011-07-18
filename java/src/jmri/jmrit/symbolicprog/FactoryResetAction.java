@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * to execute.  The user can cancel this dialog skipping any resets
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.3 $
+ * @version   $Revision$
  */
 public class FactoryResetAction extends AbstractAction {
 

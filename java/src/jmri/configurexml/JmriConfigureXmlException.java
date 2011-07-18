@@ -7,7 +7,7 @@ package jmri.configurexml;
  * No functionality, just used to confirm type-safety.
  *
  * @author			Bob Jacobsen Copyright (C) 2009, 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class JmriConfigureXmlException extends jmri.JmriException {
 	public JmriConfigureXmlException(String s, Throwable t) { super(s, t); }

@@ -15,7 +15,7 @@ import jmri.InstanceManager;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {

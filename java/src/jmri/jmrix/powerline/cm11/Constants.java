@@ -7,7 +7,7 @@ package jmri.jmrix.powerline.cm11;
  * Constants and functions specific to the CM11 interface
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class Constants {
 

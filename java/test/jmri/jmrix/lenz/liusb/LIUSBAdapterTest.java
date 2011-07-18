@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.liusb.LIUSBAdapter class
  * @author			Paul Bender
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class LIUSBAdapterTest extends TestCase {
 

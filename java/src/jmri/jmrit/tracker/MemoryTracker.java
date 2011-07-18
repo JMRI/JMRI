@@ -8,7 +8,7 @@ import jmri.Memory;
  * Tracks train into memory object
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class MemoryTracker  {
 

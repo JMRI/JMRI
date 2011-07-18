@@ -34,7 +34,7 @@ import javax.vecmath.Vector3f;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 

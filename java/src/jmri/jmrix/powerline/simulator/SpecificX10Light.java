@@ -26,7 +26,7 @@ import jmri.jmrix.powerline.*;
  * @author      Ken Cameron Copyright (C) 2009, 2010
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 

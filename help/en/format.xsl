@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: format.xsl,v 1.4 2008-01-08 15:13:53 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet to convert JavaHelp index and TOC pages into HTML -->
 

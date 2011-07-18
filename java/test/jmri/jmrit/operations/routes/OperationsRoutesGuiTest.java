@@ -23,7 +23,7 @@ import java.util.Locale;
  * Tests for the Operations Routes GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 	

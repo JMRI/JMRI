@@ -24,7 +24,7 @@ import gnu.io.SerialPort;
  * string.
  *
  * @author	Paul Bender   Copyright (C) 2004
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 

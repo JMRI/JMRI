@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * Tests for the XmlFile class.
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class ActiveSystemFlagTest extends TestCase {
 

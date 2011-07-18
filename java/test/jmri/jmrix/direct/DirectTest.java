@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.direct package.
  * @author      Bob Jacobsen  Copyright 2004
- * @version   $Revision: 1.2 $
+ * @version   $Revision$
  */
 public class DirectTest extends TestCase {
 

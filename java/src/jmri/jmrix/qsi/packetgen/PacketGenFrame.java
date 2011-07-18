@@ -15,7 +15,7 @@ import jmri.jmrix.qsi.QsiReply;
  * lead 'A', checksum or final 'E'.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 

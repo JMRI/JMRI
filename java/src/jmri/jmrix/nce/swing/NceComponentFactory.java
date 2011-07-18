@@ -9,7 +9,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
  * @author		kcameron Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 public class NceComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 

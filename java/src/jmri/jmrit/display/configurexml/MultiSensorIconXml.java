@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.26 $
+ * @version $Revision$
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 

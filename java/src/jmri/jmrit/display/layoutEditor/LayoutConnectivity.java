@@ -46,7 +46,7 @@ import jmri.Path;
  *		panels.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007-2008
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class LayoutConnectivity {
 	

@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for Signal Mast Add / Edit Panel
  * @author	Kevin Dickerson   Copyright (C) 2011
- * @version $Revision: 1.5 $
+ * @version $Revision$
 */
 
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {

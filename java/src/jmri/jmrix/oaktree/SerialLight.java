@@ -13,7 +13,7 @@ import jmri.implementation.AbstractLight;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  */
 public class SerialLight extends AbstractLight {
 

@@ -10,7 +10,7 @@ package jmri.jmrix.easydcc;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004
- * @version			$Revision: 1.15 $
+ * @version			$Revision$
  */
 public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 

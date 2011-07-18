@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003
  * @author Daniel Boudreau Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class OperationsMenu extends JMenu {
     public OperationsMenu(String name) {

@@ -4,7 +4,7 @@ package jmri.jmrit.display;
  * Dummy class so exiting config files continue to load
  *
  * @author	Bob Jacobsen   Copyright (C) 2008, 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  * @see         jmri.jmrit.display.layoutEditor.LayoutEditorAction
  * @deprecated 2.11.1
  */

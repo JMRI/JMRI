@@ -1,5 +1,5 @@
 <!-- Defines XML for configuring the ThrottleFrames -->
-<!-- $Id: throttle-config.dtd,v 1.13 2011-04-23 15:16:33 hebbos Exp $ -->
+<!-- $Id$ -->
 
 <!-- This DTD is part of JMRI. Copyright 2003-2007.                         -->
 <!--                                                                        -->

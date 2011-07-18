@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Modifications by Steve Todd   Copyright (C) 2011
- *	@version $Revision: 1.2 $
+ *	@version $Revision$
  */
 public class MiniServerPreferences extends AbstractMiniServerPreferences{
     

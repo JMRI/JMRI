@@ -25,7 +25,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
  * @author	Andrew Crosland Copyright (C) 2011
- * @version     $Revision: 1.11 $
+ * @version     $Revision$
  */
 public class CbusAddress {
 

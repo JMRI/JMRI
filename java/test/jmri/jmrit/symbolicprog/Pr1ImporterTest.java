@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Tests for Pr1Importer class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class Pr1ImporterTest extends TestCase {
 

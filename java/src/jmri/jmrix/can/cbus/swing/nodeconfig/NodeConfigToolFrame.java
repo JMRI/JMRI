@@ -10,7 +10,7 @@ import javax.swing.*;
  * Create Frame containing NodeConfig tool frame
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  * @since 2.3.1
  */
 public class NodeConfigToolFrame extends jmri.util.JmriJFrame {

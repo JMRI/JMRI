@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class ReporterIconTest extends jmri.util.SwingTestCase {
 

@@ -16,7 +16,7 @@ import org.jdom.Element;
  * If no programmer is provided, the programmer parts of the GUI are suppressed.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2002, 2008
- * @version	   $Revision: 1.12 $
+ * @version	   $Revision$
  */
 public class PaneServiceProgFrame extends PaneProgFrame
                          implements java.beans.PropertyChangeListener  {

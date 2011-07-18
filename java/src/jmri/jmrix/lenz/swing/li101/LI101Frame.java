@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 

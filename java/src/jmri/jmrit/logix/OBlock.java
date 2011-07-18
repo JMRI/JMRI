@@ -51,7 +51,7 @@ import jmri.Turnout;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.37 $
+ * @version $Revision$
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {

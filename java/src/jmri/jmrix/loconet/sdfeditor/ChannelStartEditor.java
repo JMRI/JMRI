@@ -8,7 +8,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * Editor panel for the CHANNEL_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.4 $
+ * @version             $Revision$
  */
 
 class ChannelStartEditor extends SdfMacroEditor {

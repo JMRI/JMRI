@@ -1,5 +1,5 @@
 # start the PacketScript Java application, including main menu
-# $Id: PacketScript.py,v 1.1 2003-10-24 04:22:58 jacobsen Exp $
+# $Id$
 
 # Start the program
 import apps

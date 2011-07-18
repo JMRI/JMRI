@@ -13,7 +13,7 @@ import javax.vecmath.Point3d;
 /**
  * Tests for the jmri.jmrix.rps.swing.debugger package
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision$
  */
 public class DebuggerTest extends TestCase {
 

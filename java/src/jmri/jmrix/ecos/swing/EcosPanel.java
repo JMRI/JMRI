@@ -12,7 +12,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.11.3
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 abstract public class EcosPanel extends jmri.util.swing.JmriPanel implements EcosPanelInterface {

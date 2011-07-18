@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.18 2011-05-18 15:41:23 kevin-dickerson Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 

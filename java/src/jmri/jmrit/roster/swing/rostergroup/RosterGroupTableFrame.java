@@ -28,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 

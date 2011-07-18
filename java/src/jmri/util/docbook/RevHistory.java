@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * These can be nested:  A revision can come with a history.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
     
 public class RevHistory {

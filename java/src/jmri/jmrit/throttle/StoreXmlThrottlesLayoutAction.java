@@ -17,7 +17,7 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 

@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.sdfeditor;
  * parameter messages.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2007
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision$
  */
 public class MonitoringLabel extends javax.swing.JTextArea implements java.beans.PropertyChangeListener {
 

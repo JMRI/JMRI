@@ -30,7 +30,7 @@ import java.util.Date;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public interface Timebase extends NamedBean {
 

@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 
 package jmri.jmrix.nce;

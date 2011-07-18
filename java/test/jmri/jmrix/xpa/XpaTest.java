@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.xpa package
  * @author			Paul Bender
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class XpaTest extends TestCase {
 

@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  * If no "action" name is provided, only the continue and cancel options are shown.
  * 
  * @author Bob Jacobsen Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class SwingShutDownTask extends AbstractShutDownTask {
 

@@ -17,7 +17,7 @@ import jmri.util.com.sun.TableSorter;
 /**
  * Pane for editing Digitrax SPJ files
  * @author	    Bob Jacobsen   Copyright (C) 2006, 2010
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision$
  */
 public class EditorFilePane extends javax.swing.JPanel {
 

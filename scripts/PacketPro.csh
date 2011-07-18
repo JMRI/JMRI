@@ -6,7 +6,7 @@
 #
 # There must be a local jython interpreter and JMRI libraries available
 #
-# $Revision: 1.5 $ (CVS maintains this line, do not edit please)
+# $Revision$ (CVS maintains this line, do not edit please)
 #
 setenv CLASSPATH .:java/classes:jmriplugins.jar:lib/jmriplugins.jar:jmri.jar:lib/log4j.jar:lib/jhall.jar:lib/crimson.jar:lib/jdom.jar:lib/jython.jar:lib/javacsv.jar:lib/MRJAdapter.jar:lib/jakarta-regexp-1.5.jar:lib/vecmath.jar \
 

@@ -10,7 +10,7 @@ package jmri.jmrix.cmri.serial;
  * so as to limit the number of unneeded class loadings.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 abstract public class ActiveFlag {
 

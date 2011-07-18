@@ -7,7 +7,7 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author  Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 import javax.swing.*;

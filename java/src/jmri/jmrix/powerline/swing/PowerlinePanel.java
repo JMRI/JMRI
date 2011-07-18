@@ -15,7 +15,7 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  * Copied from Nce.swing
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 abstract public class PowerlinePanel extends jmri.util.swing.JmriPanel implements PowerlinePanelInterface {

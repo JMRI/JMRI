@@ -17,7 +17,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortController {
 

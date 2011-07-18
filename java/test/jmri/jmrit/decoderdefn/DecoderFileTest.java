@@ -15,7 +15,7 @@ import jmri.progdebugger.*;
  * DecoderFileTest.java
  *
  * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.12 $
+ * @version         $Revision$
  */
 public class DecoderFileTest extends TestCase {
 

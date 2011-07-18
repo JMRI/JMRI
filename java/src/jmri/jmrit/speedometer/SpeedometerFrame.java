@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
  * @author      Matthew Harris  Copyright (c) 2011
- * @version	$Revision: 1.32 $
+ * @version	$Revision$
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 

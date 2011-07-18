@@ -9,7 +9,7 @@ package jmri.jmrix.ecos;
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 public class EcosReply extends jmri.jmrix.AbstractMRReply {
 

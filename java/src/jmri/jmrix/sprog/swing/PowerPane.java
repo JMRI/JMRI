@@ -14,7 +14,7 @@ import jmri.jmrix.sprog.*;
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision$
  */
 public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 

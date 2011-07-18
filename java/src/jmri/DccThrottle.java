@@ -19,7 +19,7 @@ package jmri;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  * @see Throttle
  */
 public interface DccThrottle extends Throttle {

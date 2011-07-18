@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 public class LocoNetMenu extends JMenu {
 

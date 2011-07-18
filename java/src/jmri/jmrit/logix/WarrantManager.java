@@ -25,7 +25,7 @@ import jmri.managers.AbstractManager;
  * <P>
  *
  * @author      Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class WarrantManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

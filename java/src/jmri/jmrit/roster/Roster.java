@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008, 2010
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.60 $
+ * @version	$Revision$
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {

@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  * @author	Bob Jacobsen   Copyright 2003, 2006, 2007, 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")

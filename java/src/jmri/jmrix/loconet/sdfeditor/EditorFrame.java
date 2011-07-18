@@ -18,7 +18,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * This handles file read/write.
  *
  * @author		Bob Jacobsen   Copyright (C) 2007
- * @version             $Revision: 1.5 $
+ * @version             $Revision$
  */
 public class EditorFrame extends JmriJFrame {
 

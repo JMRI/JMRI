@@ -11,7 +11,7 @@ import junit.framework.Assert;
  * Test simple functioning of DccLocoAddress 
  *
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 
 public class DccLocoAddressTest extends TestCase {

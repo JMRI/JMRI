@@ -11,7 +11,7 @@ import javax.swing.*;
  *       			SprogIIUpdateFrame object
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 
 public class SprogIIUpdateAction 	extends SprogUpdateAction {

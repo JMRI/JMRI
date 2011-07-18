@@ -12,7 +12,7 @@ package jmri.jmrix.oaktree;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006
- * @version   $Revision: 1.3 $
+ * @version   $Revision$
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {

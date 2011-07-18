@@ -39,7 +39,7 @@
 # and everything will slow right down....
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
+# $Revision$
 
 #
 # Set the name of the controller you're using

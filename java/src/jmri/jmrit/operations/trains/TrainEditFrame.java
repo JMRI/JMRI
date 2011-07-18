@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.76 $
+ * @version $Revision$
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

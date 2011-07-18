@@ -32,7 +32,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 

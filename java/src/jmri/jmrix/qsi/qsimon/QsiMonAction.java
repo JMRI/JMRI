@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			QsiMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 
 public class QsiMonAction 			extends AbstractAction {

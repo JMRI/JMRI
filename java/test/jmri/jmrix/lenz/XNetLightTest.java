@@ -7,7 +7,7 @@ import junit.framework.Assert;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetLight} class.
  * @author	    Paul Bender 
- * @version         $Revision: 2.3 $
+ * @version         $Revision$
  */
 public class XNetLightTest extends jmri.implementation.AbstractLightTest {
 

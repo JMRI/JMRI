@@ -17,7 +17,7 @@ import java.util.Vector;
 /**
  * Description:	    JUnit tests for the EasyDccTrafficController class
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
- * @version         $Revision: 1.16 $
+ * @version         $Revision$
  */
 public class EasyDccTrafficControllerTest extends TestCase {
 

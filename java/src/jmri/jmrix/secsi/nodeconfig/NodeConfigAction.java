@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			NodeConfigFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2006, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class NodeConfigAction extends AbstractAction {
 

@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  * @see apps.PerformScriptModel
  */
 public class PerformScriptPanel extends JPanel {

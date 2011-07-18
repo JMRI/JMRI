@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.29 $
+ * @version			$Revision$
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -389,7 +389,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.29 $
+     * @version     $Revision$
      */
     public class VarTextField extends JTextField {
 

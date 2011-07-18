@@ -11,7 +11,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class CarOwners {
 	

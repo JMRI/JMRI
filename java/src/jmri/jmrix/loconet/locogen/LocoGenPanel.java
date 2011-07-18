@@ -19,7 +19,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
                     implements LocoNetListener {

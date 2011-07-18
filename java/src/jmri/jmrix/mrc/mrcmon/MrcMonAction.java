@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  *       			MrcMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class MrcMonAction 			extends AbstractAction {
 

@@ -10,7 +10,7 @@ import junit.framework.Assert;
  * Log4J Appender that just publishes what it sees
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
  
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {

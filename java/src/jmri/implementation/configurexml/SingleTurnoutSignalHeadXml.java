@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for SingleTurnoutSignalHead objects.
  * Based Upon DoubleTurnoutSignalHeadXML by Bob Jacobsen
  * @author Kevin Dickerson: Copyright (c) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * Frame for ECoS status
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision$
  * @deprecated 2.11.3
  */
 @Deprecated

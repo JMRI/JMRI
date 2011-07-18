@@ -15,7 +15,7 @@ import jmri.InstanceManager;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.34 $
+ * @version	$Revision$
  */
 abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 

@@ -4,7 +4,7 @@ package jmri.configurexml;
  * Default operation for reporting errors while loading.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
     
 public class ErrorHandler {

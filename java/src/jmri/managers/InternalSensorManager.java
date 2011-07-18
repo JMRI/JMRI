@@ -8,7 +8,7 @@ import jmri.Sensor;
 /**
  * Implementation of the InternalSensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003, 2006
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class InternalSensorManager extends AbstractSensorManager {
 

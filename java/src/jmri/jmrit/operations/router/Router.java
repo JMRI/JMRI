@@ -26,7 +26,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.22 $
+ * @version $Revision$
  */
 
 public class Router extends TrainCommon {

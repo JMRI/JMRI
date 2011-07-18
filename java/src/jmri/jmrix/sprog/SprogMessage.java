@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 

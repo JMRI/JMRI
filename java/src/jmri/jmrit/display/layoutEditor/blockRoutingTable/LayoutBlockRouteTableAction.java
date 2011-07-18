@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
      * Swing action to create and register a Block Routing Table.
      * <P>
      * @author	Kevin Dickerson   Copyright (C) 2011
-     * @version	$Revision: 1.2 $
+     * @version	$Revision$
      */
 
 public class LayoutBlockRouteTableAction extends AbstractAction {

@@ -8,7 +8,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * Editor panel for the END_SOUND.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  */
 
 class EndSoundEditor extends SdfMacroEditor {

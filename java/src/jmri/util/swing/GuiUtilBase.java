@@ -10,7 +10,7 @@ import org.jdom.*;
  * Common utility methods for working with GUI items
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 public class GuiUtilBase {

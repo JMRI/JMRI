@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.8 $      
+ * @version             $Revision$      
  */
 public interface  ConsistManager {
 	

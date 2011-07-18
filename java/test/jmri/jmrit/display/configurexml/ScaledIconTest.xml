@@ -70,6 +70,6 @@
     <positionablelabel x="51" y="293" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Upsidedown" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="160" y="277" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Clockwise 45 degrees" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.11 on Sun Aug 15 00:00:10 PDT 2010 $Id: ScaledIconTest.xml,v 1.19 2011-05-21 22:43:50 jacobsen Exp $-->
+  <!--Written by JMRI version 2.11 on Sun Aug 15 00:00:10 PDT 2010 $Id$-->
 </layout-config>
 

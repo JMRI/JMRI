@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Registers.xml,v 1.5 2007-09-21 05:49:59 jacobsen Exp $ -->
+<!-- $Id$ -->
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
 
 <!-- A very basic programmer, containing only the variables that -->

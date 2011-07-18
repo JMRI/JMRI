@@ -11,7 +11,7 @@ import java.awt.geom.*;
  * Panel for entry and modifiation of an Affine Transform
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision$
  */
 
 

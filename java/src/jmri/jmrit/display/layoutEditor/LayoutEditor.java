@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.57 $
+ * @version $Revision$
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {

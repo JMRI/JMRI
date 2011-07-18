@@ -19,7 +19,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007, 2010
- * @version     $Revision: 1.14 $
+ * @version     $Revision$
  * 
  */
 

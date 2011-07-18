@@ -7,7 +7,7 @@ package jmri.jmrix.openlcb;
  * implementations.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 public class ConfigurationManager {
 

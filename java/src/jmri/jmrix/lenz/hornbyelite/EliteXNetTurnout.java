@@ -6,7 +6,7 @@
  *                      See XNetTurnout for further documentation.
  * </P>
  * @author			Paul Bender Copyright (C) 2008 
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 
 package jmri.jmrix.lenz.hornbyelite;

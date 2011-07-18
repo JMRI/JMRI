@@ -10,7 +10,7 @@ import jmri.implementation.NoFeedbackTurnoutOperator;
  * NoFeedBackTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with no feedback
  * @author John Harper
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 

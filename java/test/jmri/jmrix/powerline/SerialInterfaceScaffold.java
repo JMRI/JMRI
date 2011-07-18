@@ -8,7 +8,7 @@ import java.util.Vector;
  * Stands in for the SerialTrafficController class
  * 
  * @author			Ken Cameron
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  * Copied from NceInterfaceScaffold
  * 
  */

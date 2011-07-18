@@ -15,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.attributetable.AttributeTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 public class AttributeTableModelTest extends TestCase {
 

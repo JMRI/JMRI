@@ -12,7 +12,7 @@ import jmri.Reporter;
  * Abstract interface between the a JMRI reporter and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 
 abstract public class AbstractReporterServer {

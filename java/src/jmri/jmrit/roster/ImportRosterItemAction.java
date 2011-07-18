@@ -29,7 +29,7 @@ import org.jdom.Element;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  * @see         jmri.jmrit.roster.AbstractRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */

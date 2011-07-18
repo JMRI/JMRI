@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * connection to the layout changes.
  *
  * @author     Daniel Boudreau   Copyright (C) 2007
- * @version    $Revision: 1.6 $
+ * @version    $Revision$
  */
 public class ConnectionStatus {
 

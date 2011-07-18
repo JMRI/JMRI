@@ -11,7 +11,7 @@ import jmri.util.swing.*;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision$
  */
  
 public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {

@@ -32,7 +32,7 @@ import jmri.implementation.DefaultSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision$
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 

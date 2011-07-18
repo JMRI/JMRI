@@ -27,7 +27,7 @@ import net.java.games.input.*;
  * while constructor is still active.
  *
  * @author			Bob Jacobsen  Copyright 2008, 2010
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public final class TreeModel extends DefaultTreeModel {
     private TreeModel() {

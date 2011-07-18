@@ -13,7 +13,7 @@ import org.jdom.*;
  * creating a tree from an XML definition
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.6 $
+ * @version $Revision$
  * @since 2.9.4
  */
 

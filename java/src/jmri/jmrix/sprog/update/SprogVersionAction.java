@@ -10,7 +10,7 @@ import javax.swing.*;
  * Swing action to get SPROG frimware version
  *
  * @author			Andrew crosland    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 
 public class SprogVersionAction extends AbstractAction {

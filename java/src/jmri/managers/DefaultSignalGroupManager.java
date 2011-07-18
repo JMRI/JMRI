@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class DefaultSignalGroupManager extends AbstractManager
     implements SignalGroupManager, java.beans.PropertyChangeListener {

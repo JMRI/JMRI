@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.docbook.RevHistory class.
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class RevHistoryTest extends TestCase {
 

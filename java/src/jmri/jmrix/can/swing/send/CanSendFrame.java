@@ -26,7 +26,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 

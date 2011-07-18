@@ -10,7 +10,7 @@ package jmri.jmrix.qsi;
  * so as to limit the number of unneeded class loadings.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 abstract public class ActiveFlag {
 

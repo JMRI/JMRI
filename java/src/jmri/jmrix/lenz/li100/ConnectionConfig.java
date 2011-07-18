@@ -11,7 +11,7 @@ package jmri.jmrix.lenz.li100;
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 2.5 $
+ * @version	$Revision$
  *
  * @see LI100Adapter
  */

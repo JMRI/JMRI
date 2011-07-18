@@ -29,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.13 $
+ * @version     $Revision$
  */
 
 public class MiniServer extends NetworkServer {

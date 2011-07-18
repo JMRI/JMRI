@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * @author		Dave Duchamp  multi-node extensions 2003
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version		$Revision: 1.10 $
+ * @version		$Revision$
  */
 public class SerialNodeTest extends TestCase {
 

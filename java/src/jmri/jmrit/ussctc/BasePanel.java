@@ -9,7 +9,7 @@ import javax.swing.*;
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class BasePanel extends JPanel implements Constants {
 

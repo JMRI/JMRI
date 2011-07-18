@@ -2980,6 +2980,6 @@
       <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" rotate="0" degrees="0" scale="1.0" />
     </multisensoricon>
   </paneleditor>
-  <!--Written by JMRI version 2.7.7 on Wed Oct 21 08:31:12 EDT 2009 $Id: JimHeidt14.xml,v 1.2 2010-05-02 04:30:39 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.7 on Wed Oct 21 08:31:12 EDT 2009 $Id$-->
 </layout-config>
 

@@ -13,7 +13,7 @@ import javax.swing.JMenuBar;
  * etc at startup time.
  *
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class JmriPlugin {
      public static void start(JFrame mainFrame, JMenuBar menuBar) {}

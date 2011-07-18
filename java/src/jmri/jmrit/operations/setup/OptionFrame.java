@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.14 $
+ * @version $Revision$
  */
 
 public class OptionFrame extends OperationsFrame{

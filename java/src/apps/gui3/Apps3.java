@@ -25,7 +25,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.12 $
+ * @version $Revision$
  */
 public abstract class Apps3 extends apps.AppsBase {
 

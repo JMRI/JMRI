@@ -8,7 +8,7 @@ import java.io.File;
 /**
  *
  * @author	    Bob Jacobsen  Copyright 2003, 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision$
  */
 public class PackageTest extends TestCase {
 

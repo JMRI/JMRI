@@ -11,7 +11,7 @@ import javax.swing.*;
  * Panel to show ECoS status
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 

@@ -26,7 +26,7 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 

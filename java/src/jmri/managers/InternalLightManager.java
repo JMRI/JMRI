@@ -10,7 +10,7 @@ import jmri.managers.AbstractLightManager;
  * Implement a light manager for "Internal" (virtual) lights.
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class InternalLightManager extends AbstractLightManager {
 

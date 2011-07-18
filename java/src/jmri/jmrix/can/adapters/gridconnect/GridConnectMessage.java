@@ -20,7 +20,7 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision$
  */
 public class GridConnectMessage extends AbstractMRMessage {
     

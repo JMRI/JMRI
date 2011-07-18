@@ -16,7 +16,7 @@ import jmri.implementation.AbstractNamedBean;
  * Checks of basic NamedBean storage
  * 
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 

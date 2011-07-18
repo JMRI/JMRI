@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.31 $
+ * @version             $Revision$
  *
  */
 public class DecVariableValue extends VariableValue

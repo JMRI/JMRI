@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004-2010
- * @version                     $Revision: 2.22 $
+ * @version                     $Revision$
  */
 
 package jmri.jmrix.lenz;

@@ -10,7 +10,7 @@ package jmri.jmrix.cmri.serial;
  * are included. But it does include addressing characters,
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

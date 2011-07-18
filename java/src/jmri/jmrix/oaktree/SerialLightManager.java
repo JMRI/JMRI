@@ -14,7 +14,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class SerialLightManager extends AbstractLightManager {
 

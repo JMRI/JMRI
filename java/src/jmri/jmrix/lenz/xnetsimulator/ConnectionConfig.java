@@ -12,7 +12,7 @@ package jmri.jmrix.lenz.xnetsimulator;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Paul Bender    Copyright (C) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  *
  * @see XNetSimulatorAdapter
  */

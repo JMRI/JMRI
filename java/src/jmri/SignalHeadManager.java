@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public interface SignalHeadManager extends Manager {
 

@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005, 2008
  * @author Modified by Kelly Loyd
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class SRCPThrottleManager extends AbstractThrottleManager {
 

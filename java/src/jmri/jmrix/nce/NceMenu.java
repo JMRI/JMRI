@@ -13,7 +13,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  * @author	Bob Jacobsen   Copyright 2003
  * moved to swing class
  * @author kcameron 2010
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")

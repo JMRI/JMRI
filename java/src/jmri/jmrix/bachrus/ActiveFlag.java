@@ -10,7 +10,7 @@ package jmri.jmrix.bachrus;
  * so as to limit the number of unneeded class loadings.
  *
  * @author		Andrew Crosland  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision$
  */
 abstract public class ActiveFlag {
 

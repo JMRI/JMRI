@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * tests for the jmri.jmrix.nce package
  * @author			Bob Jacobsen
- * @version   $Revision: 1.7 $
+ * @version   $Revision$
  */
 public class NceTest extends TestCase {
 

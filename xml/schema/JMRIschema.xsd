@@ -4,7 +4,7 @@
 <!-- Schema for elements include in JMRI XML schema direct, not elements    -->
 <!-- in the resulting XML documents.                                        -->
 
-<!-- $Id: JMRIschema.xsd,v 1.6 2010-03-24 22:06:30 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->

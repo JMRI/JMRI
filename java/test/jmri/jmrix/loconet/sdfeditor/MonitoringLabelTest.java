@@ -13,7 +13,7 @@ import javax.swing.*;
  * Tests for the jmri.jmrix.loconet.sdfeditor.MonitoringLabel class.
  *
  * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class MonitoringLabelTest extends TestCase {
 

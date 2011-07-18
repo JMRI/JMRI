@@ -12,7 +12,7 @@ import java.io.PipedOutputStream;
  *
  * Description:	    test implementation of XNetPortController
  * @author			Bob Jacobsen Copyright (C) 2006
- * @version         $Revision: 2.4 $
+ * @version         $Revision$
  */
 class XNetPortControllerScaffold extends XNetSimulatorPortController {
 

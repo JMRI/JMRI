@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision$
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {

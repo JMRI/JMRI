@@ -7,7 +7,7 @@ import javax.swing.*;
 /**
  * Frame to control and connect a serial port as two sensors
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SerialSensorFrame extends jmri.jmrix.SerialPortFrame {
 

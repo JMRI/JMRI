@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdf.InitiateSound class.
  * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class InitiateSoundTest extends TestCase {
 

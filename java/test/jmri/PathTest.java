@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Path class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class PathTest extends TestCase {
 

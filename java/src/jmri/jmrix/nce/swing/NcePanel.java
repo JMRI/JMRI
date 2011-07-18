@@ -14,7 +14,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  * @since 2.9.4
  * Copied from LocoNet.swing
  * @author kcameron 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 abstract public class NcePanel extends jmri.util.swing.JmriPanel implements NcePanelInterface {

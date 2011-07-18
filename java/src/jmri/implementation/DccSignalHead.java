@@ -32,7 +32,7 @@ import jmri.*;
  * The FLASH appearances are expected to be implemented in the decoder.
  *
  * @author Alex Shepherd Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class DccSignalHead extends AbstractSignalHead {
 

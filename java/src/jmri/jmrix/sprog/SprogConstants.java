@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  *
  * Description:		Constants to represent values seen in SPROG traffic
  * @author		Andrew Crosland   Copyright (C) 2006 from LnConstants.java
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public final class SprogConstants {
 

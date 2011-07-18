@@ -13,7 +13,7 @@ import java.io.*;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.12 $
+ * @version	    $Revision$
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 

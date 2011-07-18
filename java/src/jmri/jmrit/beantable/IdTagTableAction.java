@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  * @since       2.11.4
  */
 public class IdTagTableAction extends AbstractTableAction {

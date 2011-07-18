@@ -2,7 +2,7 @@ package jmri.web.miniserver;
 
 /**
  *	@author Modifications by Steve Todd   Copyright (C) 2011
- *	@version $Revision: 1.1 $
+ *	@version $Revision$
  */
 
 import jmri.util.JmriJFrame;

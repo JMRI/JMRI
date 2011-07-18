@@ -11,7 +11,7 @@ import jmri.jmrit.logix.Portal;
 
 /**
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
 public class PortalIcon extends jmri.jmrit.display.PositionableIcon {

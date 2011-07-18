@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.35 $
+ * @version $Revision$
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 

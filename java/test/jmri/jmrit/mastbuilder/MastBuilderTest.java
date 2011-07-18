@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * Tests for the jmrit.mastbuilder package & jmrit.mastbuilder.MastBuilder class.
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class MastBuilderTest extends TestCase {
 

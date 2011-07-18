@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceAIU class.
  * @author	Bob Jacobsen Copyright 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class NceSensorManagerTest extends TestCase {
 

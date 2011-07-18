@@ -21,7 +21,7 @@ import jmri.jmrix.can.CanReply;
  * 
  * @author                      Andrew Crosland Copyright (C) 2008, 2009
  * @author                      Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 public class GridConnectReply extends AbstractMRReply {
     

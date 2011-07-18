@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.16 $
+ * @version     $Revision$
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {

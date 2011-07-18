@@ -29,7 +29,7 @@ import jmri.util.JTableUtil;
  * @author	Bob Jacobsen   Copyright (C) 2001
  *              Andrew Crosland          (C) 2006 ported to SPROG
  *                                           2008 Use JmriJframe
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 

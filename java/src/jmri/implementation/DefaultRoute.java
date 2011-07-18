@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;

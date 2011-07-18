@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogCommandStation;
  *
  * @see             jmri.Programmer
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class SprogOpsModeProgrammer extends SprogProgrammer  {
 

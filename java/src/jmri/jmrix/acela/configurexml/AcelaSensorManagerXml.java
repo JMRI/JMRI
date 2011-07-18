@@ -13,7 +13,7 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 

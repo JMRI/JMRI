@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  *
  * Description:	    tests for the jmri.jmrix.lenz.lzv100.LZV100Frame class
  * @author			Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class LZV100FrameTest extends TestCase {
 

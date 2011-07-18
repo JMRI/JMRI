@@ -7,7 +7,7 @@ import java.util.List;
  * Represents a pool of tracks that share their length.
  * 
  * @author Daniel Boudreau Copyright (C) 2011
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 public class Pool{
 

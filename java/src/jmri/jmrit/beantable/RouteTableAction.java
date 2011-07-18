@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.70 $
+ * @version     $Revision$
  */
 
 public class RouteTableAction extends AbstractTableAction {

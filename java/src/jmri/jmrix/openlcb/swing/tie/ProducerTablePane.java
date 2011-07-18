@@ -10,7 +10,7 @@ import javax.swing.table.*;
 /**
  * Pane for showing the producer table
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.2 $
+ * @version	 $Revision$
  * @since 2.3.7
  */
 public class ProducerTablePane extends JPanel {

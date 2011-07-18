@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  *       		Mx1MonFrame object.
  *
  * @author		Bob Jacobsen    Copyright (C) 2002
- * @version             $Revision: 1.5 $
+ * @version             $Revision$
  *
  * Adapted by Sip Bosch for use with MX-1
  *

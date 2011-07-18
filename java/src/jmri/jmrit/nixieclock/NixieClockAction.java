@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *  NixieClockFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 
  public class NixieClockAction extends AbstractAction {

@@ -11,7 +11,7 @@ import javax.swing.JMenu;
  * <P>
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class DirectMenu extends JMenu {
     public DirectMenu(String name) {

@@ -25,7 +25,7 @@ import javax.swing.JMenuBar;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class AudioTableFrame extends BeanTableFrame {
 

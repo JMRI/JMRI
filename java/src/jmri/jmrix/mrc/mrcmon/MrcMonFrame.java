@@ -10,7 +10,7 @@ import jmri.jmrix.mrc.MrcTrafficController;
 /**
  * Frame displaying (and logging) MRC command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class MrcMonFrame extends jmri.jmrix.AbstractMonFrame implements MrcListener {
 

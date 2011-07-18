@@ -19,7 +19,7 @@ package jmri.jmrix.merg;
  * <P>
  *
  * @author      Matthew Harris  Copyright (c) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

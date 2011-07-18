@@ -19,7 +19,7 @@ import jmri.jmrix.jmriclient.networkdriver.NetworkDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender Copyright: Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

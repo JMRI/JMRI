@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  *       			RpsTrackingFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.6 $
+ * @version         $Revision$
  */
 public class RpsTrackingFrameAction extends AbstractAction {
     

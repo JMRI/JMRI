@@ -6,7 +6,7 @@ package jmri.jmrix.acela;
  * Contains the data payload of a Acela reply packet
  *
  * @author	Bob Jacobsen  Copyright (C) 2002
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 

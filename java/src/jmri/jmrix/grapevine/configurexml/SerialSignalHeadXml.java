@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for Grapevine SerialSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 

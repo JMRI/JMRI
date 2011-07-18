@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.7 $
+ * @version             $Revision$
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

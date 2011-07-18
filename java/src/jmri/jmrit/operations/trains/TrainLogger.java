@@ -22,7 +22,7 @@ import java.util.List;
  * Logs rolling stock movements by writing their locations to a file.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class TrainLogger extends XmlFile implements java.beans.PropertyChangeListener{
 	

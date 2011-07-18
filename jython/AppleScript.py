@@ -7,7 +7,7 @@
 # Adapted from <http://www.oreilly.com/pub/a/mac/2003/02/25/apple_scripting.html>
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision$
 #
 #
 

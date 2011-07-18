@@ -11,7 +11,7 @@ import jmri.util.com.sun.TableSorter;
  * as a JmriJPanel
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003, 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class RosterTable extends jmri.util.swing.JmriPanel {
 

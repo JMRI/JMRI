@@ -16,7 +16,7 @@ import javax.swing.*;
  * @author Dan Boudreau 	Copyright (C) 2007
  * Cloned into a Panel by
  * @author kcameron
- * @version $Revision: 1.2 $
+ * @version $Revision$
  **/
 
 public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {

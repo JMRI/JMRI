@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Block class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class BlockTest extends TestCase {
 

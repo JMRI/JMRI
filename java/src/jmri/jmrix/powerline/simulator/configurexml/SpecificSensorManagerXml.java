@@ -15,7 +15,7 @@ package jmri.jmrix.powerline.simulator.configurexml;
  *
  * @author Bob Jacobsen 2008
  * @author Ken Cameron, (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class SpecificSensorManagerXml extends jmri.jmrix.powerline.configurexml.SerialSensorManagerXml {
 

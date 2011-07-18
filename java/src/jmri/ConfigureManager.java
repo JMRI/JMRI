@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.19 $
+ * @version     $Revision$
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */

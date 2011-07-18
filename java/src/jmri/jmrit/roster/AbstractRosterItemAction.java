@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * different that it doesn't use this base class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007, 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {

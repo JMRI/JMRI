@@ -12,7 +12,7 @@ import jmri.implementation.AbstractLight;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.11 $
+ * @version     $Revision$
  */
 public class LnLight extends AbstractLight {
 

@@ -9,7 +9,7 @@ import jmri.*;
  * JUnit tests for the AbstractProgrammer class
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class AbstractProgrammerTest extends TestCase {
 

@@ -13,7 +13,7 @@ import jmri.jmrix.ConnectionStatus;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  * 
  */
 

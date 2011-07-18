@@ -17,7 +17,7 @@ package jmri.jmrit.decoderdefn;
  * 
  * @author    Bob Jacobsen   Copyright (C) 2001, 2010
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.12 $
+ * @version   $Revision$
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see       jmri.jmrit.symbolicprog.NewLocoSelPane

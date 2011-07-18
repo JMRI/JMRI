@@ -26,7 +26,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision$
  */
 public class LocationsTableFrame extends OperationsFrame {
 	

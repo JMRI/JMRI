@@ -19,7 +19,7 @@ import jmri.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 public class JythonSiglet extends Siglet {
     Object interp;

@@ -32,7 +32,7 @@ package jmri;
  * <P>
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public interface ProgrammerManager  {
 

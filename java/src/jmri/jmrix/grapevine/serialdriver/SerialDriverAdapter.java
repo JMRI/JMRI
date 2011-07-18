@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to ProTrak Grapevine via a serial comm port.
  * Normally controlled by the serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

@@ -8,7 +8,7 @@ import jmri.JmriException;
  *  LocoNet-specific exception
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class LocoNetException extends JmriException {
 

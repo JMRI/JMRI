@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.11 $
+ * @version $Revision$
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 

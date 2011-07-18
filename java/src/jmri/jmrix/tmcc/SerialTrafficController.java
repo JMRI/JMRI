@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 

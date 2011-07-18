@@ -9,7 +9,7 @@ import org.jdom.Element;
  * <P>The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 

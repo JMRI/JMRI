@@ -18,7 +18,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the LayoutEditor 
  * @author			Dave Duchamp  Copyright 2011
- * @version         $Revision: 1.5 $
+ * @version         $Revision$
  */
 public class LEConnectivityTest extends jmri.util.SwingTestCase {
 

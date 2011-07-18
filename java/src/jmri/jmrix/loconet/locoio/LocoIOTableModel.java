@@ -32,7 +32,7 @@ import java.beans.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision$
  */
 
 public class LocoIOTableModel

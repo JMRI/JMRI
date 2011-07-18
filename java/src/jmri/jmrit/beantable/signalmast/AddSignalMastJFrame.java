@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * JFrame to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 
 public class AddSignalMastJFrame extends JmriJFrame {

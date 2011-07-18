@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.22 $
+ * @version   $Revision$
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {

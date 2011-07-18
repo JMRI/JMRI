@@ -20,7 +20,7 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.13 $
+ * @version         $Revision$
  */
 public class MiniServerAction extends AbstractAction {
 

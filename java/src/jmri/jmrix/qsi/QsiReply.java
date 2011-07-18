@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
     static final int MAXREPLYLENGTH = 200;

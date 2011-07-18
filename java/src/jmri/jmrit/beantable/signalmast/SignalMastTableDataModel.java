@@ -19,7 +19,7 @@ import jmri.util.com.sun.TableSorter;
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 
 public class SignalMastTableDataModel extends BeanTableDataModel {

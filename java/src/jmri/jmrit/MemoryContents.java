@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005, 2008
- * @version         $Revision: 1.11 $
+ * @version         $Revision$
  */
 public class MemoryContents {
 

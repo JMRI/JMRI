@@ -28,7 +28,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
 public abstract class AbstractAlmImplementation implements LocoNetListener {

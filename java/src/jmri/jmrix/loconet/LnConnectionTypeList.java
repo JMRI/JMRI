@@ -8,7 +8,7 @@ package jmri.jmrix.loconet;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  *
  */
 public class LnConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {

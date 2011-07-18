@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.32 $
+ * @version	$Revision$
  */
 public class EngineManager extends RollingStockManager{
 	

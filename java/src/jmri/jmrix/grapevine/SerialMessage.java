@@ -9,7 +9,7 @@ import jmri.util.StringUtil;
  * packet.
  * 
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision$
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {

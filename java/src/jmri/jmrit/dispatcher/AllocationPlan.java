@@ -35,7 +35,7 @@ import jmri.Section;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2011
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 
 public class AllocationPlan {

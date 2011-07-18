@@ -7,7 +7,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision$
 #
 # To use this script you must assign the location, tracks, car type
 # and car loads.

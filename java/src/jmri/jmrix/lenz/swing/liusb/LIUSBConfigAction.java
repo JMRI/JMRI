@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * The {@link LIUSBConfigFrame} is a configuration tool. 
  *
  * @author			Paul Bender    Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class LIUSBConfigAction extends AbstractAction {
 

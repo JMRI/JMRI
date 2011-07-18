@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.12 $
+ * @version			$Revision$
  */
 public class ActivateTrainFrame {
 

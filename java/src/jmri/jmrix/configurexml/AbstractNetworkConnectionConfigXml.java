@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of Network port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdapter {
 

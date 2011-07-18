@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * booster, and the booster portion of an LZV100 command station.
  *
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class LV102Action extends AbstractAction {
 

@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author Dan Boudreau Copyright (C) 2007 2008
  * Cloned from NceConsistEditFrame by
  * @author kcameron Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements

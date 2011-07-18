@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.JUnitAppender class.
  * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class JUnitAppenderTest extends TestCase {
 

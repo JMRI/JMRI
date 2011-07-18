@@ -22,7 +22,7 @@ import jmri.SignalSystem;
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.28 $
+ * @version     $Revision$
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 

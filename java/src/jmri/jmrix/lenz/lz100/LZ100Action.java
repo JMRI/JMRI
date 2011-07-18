@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * Station.
  *
  * @author			Paul Bender    Copyright (C) 2005
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class LZ100Action extends AbstractAction {
 

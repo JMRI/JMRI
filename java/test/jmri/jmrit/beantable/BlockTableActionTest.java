@@ -12,7 +12,7 @@ import jmri.util.*;
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
 

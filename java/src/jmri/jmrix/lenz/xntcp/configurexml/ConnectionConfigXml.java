@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

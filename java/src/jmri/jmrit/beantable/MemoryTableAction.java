@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.28 $
+ * @version     $Revision$
  */
 
 public class MemoryTableAction extends AbstractTableAction {

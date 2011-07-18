@@ -8,7 +8,7 @@ import junit.framework.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.8 $
+ * @version $Revision$
  */
 public class XNetTrafficRouterTest extends TestCase {
 

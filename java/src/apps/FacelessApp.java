@@ -21,7 +21,7 @@ import jmri.InstanceManager;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2005, 2007, 2010
- * @version     $Revision: 1.11 $
+ * @version     $Revision$
  */
 public class FacelessApp {
 	static String name = "Faceless App";

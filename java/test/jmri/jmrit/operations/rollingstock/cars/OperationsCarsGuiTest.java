@@ -25,7 +25,7 @@ import java.util.Locale;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.18 $
+ * @version $Revision$
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 

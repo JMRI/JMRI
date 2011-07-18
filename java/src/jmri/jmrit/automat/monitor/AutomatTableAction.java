@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * AutomatTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 
 public class AutomatTableAction extends AbstractAction {

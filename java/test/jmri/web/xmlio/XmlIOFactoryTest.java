@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.web.xmlio.XmlIOFactoryTest class
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class XmlIOFactoryTest extends TestCase {
 

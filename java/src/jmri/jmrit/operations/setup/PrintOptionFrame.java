@@ -31,7 +31,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.21 $
+ * @version $Revision$
  */
 
 public class PrintOptionFrame extends OperationsFrame{

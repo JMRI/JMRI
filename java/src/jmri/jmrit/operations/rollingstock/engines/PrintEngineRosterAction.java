@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2011
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class PrintEngineRosterAction  extends AbstractAction {
 	

@@ -14,7 +14,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
  * @author	Andrew CRosland Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class CbusPowerManager implements PowerManager, CanListener {
 

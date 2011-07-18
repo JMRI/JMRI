@@ -7,7 +7,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision$
  */
 abstract public class AbstractWiThrottlePreferences {
     private String fileName;

@@ -23,7 +23,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision$
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on Mrc example, modified to establish Acela support. 

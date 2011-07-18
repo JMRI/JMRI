@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * Frame for running assignment list.
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.2 $
+ * @version	 $Revision$
  * @since 2.3.7
  */
 public class TieToolFrame extends jmri.util.JmriJFrame {

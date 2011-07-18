@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			ListFrame object
  *
  * @author   Dave Duchamp Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class ListAction extends AbstractAction {
 

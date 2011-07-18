@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.19 $
+ * @version $Revision$
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 

@@ -30,7 +30,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.20 $ (CVS maintains this line, do not edit please)
+# $Revision$ (CVS maintains this line, do not edit please)
 
 # runs from usual program directory
 cd ..

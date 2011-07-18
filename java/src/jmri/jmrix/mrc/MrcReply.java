@@ -6,7 +6,7 @@ package jmri.jmrix.mrc;
  * Carries the reply to an MrcMessage.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2004
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 public class MrcReply extends jmri.jmrix.AbstractMRReply {
 

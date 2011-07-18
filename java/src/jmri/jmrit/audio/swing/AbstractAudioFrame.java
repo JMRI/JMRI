@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 

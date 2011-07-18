@@ -43,7 +43,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.35 $
+ * @version     $Revision$
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {

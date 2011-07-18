@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
  * Extend jmri.AbstractSensor for CBUS controls.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version         $Revision: 1.6 $
+ * @version         $Revision$
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
 

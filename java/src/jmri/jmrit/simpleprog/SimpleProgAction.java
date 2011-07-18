@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SimpleProgAction object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */public class SimpleProgAction 			extends AbstractAction {
 
      public SimpleProgAction(String s) {

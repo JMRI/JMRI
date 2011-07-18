@@ -8,7 +8,7 @@ import jmri.ShutDownTask;
  * Handle name for ShutDownTask implementations.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public abstract class AbstractShutDownTask implements ShutDownTask {
     

@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision: 2.8 $
+ * @version	$Revision$
  */
 public class XNetProgrammerManager  extends DefaultProgrammerManager {
 

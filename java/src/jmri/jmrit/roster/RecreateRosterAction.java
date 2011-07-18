@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Scans the roster directory for xml files, including any that are found.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.13 $
+ * @version	$Revision$
  */
 public class RecreateRosterAction extends AbstractAction {
 

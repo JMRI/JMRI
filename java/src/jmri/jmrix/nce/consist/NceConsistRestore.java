@@ -28,7 +28,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate consist address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 
 

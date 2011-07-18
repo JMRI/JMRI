@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Note:  This makes noise!
  *
  * @author	    Bob Jacobsen  Copyright 2006
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class SoundUtilTest extends TestCase {
 

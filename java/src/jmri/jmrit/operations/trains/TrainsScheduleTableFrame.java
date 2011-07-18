@@ -34,7 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.8 $
+ * @version             $Revision$
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 	

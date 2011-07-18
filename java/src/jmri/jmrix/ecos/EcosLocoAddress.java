@@ -7,7 +7,7 @@ import java.util.List;
  * Stores all the loco information from the Ecos into JMRI
  *
  * @author Kevin Dickerson
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 public class EcosLocoAddress {
     private String _ecosObject = null;

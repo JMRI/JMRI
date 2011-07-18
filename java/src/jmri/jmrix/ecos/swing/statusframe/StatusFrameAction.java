@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
  *       			StatusFrame object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2008
- * @version		$Revision: 1.4 $	
+ * @version		$Revision$	
  */
 @Deprecated
 public class StatusFrameAction extends AbstractAction {

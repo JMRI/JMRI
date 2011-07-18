@@ -29,7 +29,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.14 $
+ * @version     $Revision$
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 

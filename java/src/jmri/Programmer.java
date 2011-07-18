@@ -40,7 +40,7 @@ import java.beans.PropertyChangeListener;
  * <P>
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.20 $
+ * @version	$Revision$
  */
 public interface Programmer  {
 

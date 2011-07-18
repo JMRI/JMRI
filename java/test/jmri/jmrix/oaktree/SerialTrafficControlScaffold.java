@@ -3,7 +3,7 @@
  *
  * Description:	    Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 
 package jmri.jmrix.oaktree;

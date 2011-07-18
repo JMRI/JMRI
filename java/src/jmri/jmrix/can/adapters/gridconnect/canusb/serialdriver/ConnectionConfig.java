@@ -8,7 +8,7 @@ package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Andrew Crosland 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

@@ -14,7 +14,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LevelXing objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class LevelXingXml extends AbstractXmlAdapter {
 

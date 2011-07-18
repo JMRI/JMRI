@@ -72,7 +72,7 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007, 2010
-  * @version     $Revision: 1.25 $
+  * @version     $Revision$
   */
 
 public class NceBinaryCommand {

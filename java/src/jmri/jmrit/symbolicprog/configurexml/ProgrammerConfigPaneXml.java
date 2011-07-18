@@ -21,7 +21,7 @@ import org.jdom.Element;
  * CombinedLocoSelPane object.  It is <b>not</b> known why this works!
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 

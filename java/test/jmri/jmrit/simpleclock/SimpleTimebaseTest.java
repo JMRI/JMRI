@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Tests for the SimpleTimebase class
  * @author	Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class SimpleTimebaseTest extends TestCase {
 

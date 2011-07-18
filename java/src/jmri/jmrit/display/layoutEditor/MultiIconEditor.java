@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * {@link jmri.jmrit.display.layoutEditor.LayoutEditor} for an example of how to use this.
  *
  * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.layoutEditor.LayoutEditor
  * @see jmri.jmrit.catalog

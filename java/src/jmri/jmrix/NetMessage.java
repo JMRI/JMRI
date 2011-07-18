@@ -16,7 +16,7 @@ import java.io.Serializable;
  * They may not appear at all...
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  *
  */
 public abstract class NetMessage implements Serializable {

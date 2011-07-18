@@ -16,7 +16,7 @@ package jmri.jmris.srcp.parser;
  * the SRCP protocol.
  * 
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS

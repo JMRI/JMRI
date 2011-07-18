@@ -8,7 +8,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.11 $
+ * @version $Revision$
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {

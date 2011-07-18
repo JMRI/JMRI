@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.qsi package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class QsiTest extends TestCase {
 

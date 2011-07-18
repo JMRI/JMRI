@@ -32,7 +32,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class AddRosterEntryToEcos extends AbstractAction {
 

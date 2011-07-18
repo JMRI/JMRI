@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractMRListener;
  * Traffic controller for loopback CAN simulation.
  *
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController {
     

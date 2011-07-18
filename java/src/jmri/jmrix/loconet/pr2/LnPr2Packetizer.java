@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.pr2;
  * Differs only in handling PR2's non-echo
  *
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision$
  *
  */
 public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {

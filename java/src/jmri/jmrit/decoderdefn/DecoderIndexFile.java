@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.42 $
+ * @version			$Revision$
  *
  */
 public class DecoderIndexFile extends XmlFile {

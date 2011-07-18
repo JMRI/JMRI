@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * is (0,0,12)
  * 
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class Ash2_1AlgorithmTest extends AbstractAlgorithmTest {
 

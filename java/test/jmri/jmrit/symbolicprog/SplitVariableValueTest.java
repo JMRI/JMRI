@@ -13,7 +13,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.18 $
+ * @version $Revision$
  */
 
 

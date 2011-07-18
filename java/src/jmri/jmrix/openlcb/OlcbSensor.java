@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008, 2010, 2011
- * @version         $Revision: 1.4 $
+ * @version         $Revision$
  */
 public class OlcbSensor extends AbstractSensor implements CanListener {
 

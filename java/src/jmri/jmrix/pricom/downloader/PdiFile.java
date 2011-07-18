@@ -14,7 +14,7 @@ import java.io.BufferedInputStream;
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp.
  * They have kindly given permission for this use.
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.8 $
+ * @version             $Revision$
  */
 public class PdiFile {
 

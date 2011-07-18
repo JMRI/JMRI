@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class JoalAudioSource extends AbstractAudioSource {
 

@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  *       			SignallingFrame object
  *
  * @author	    Kevin Dickerson Copyright (C) 2011
- * @version		$Revision: 1.2 $	
+ * @version		$Revision$	
  */
 
 public class SignallingFrameAction extends AbstractAction {

@@ -10,7 +10,7 @@ package jmri.jmrix.maple;
  * are included. But it does include addressing characters,
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

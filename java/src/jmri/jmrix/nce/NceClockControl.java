@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.17 $
+ * @version     $Revision$
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {

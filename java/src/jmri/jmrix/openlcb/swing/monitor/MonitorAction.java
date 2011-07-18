@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *       			MonitorFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2009, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class MonitorAction 			extends AbstractAction {
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * @author   Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class LayoutEventSource implements LayoutEventInterface
 {

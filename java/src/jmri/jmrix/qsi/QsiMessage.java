@@ -10,7 +10,7 @@ package jmri.jmrix.qsi;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision$
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 

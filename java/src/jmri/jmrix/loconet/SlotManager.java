@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.55 $
+ * @version     $Revision$
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 

@@ -27,7 +27,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * reduces code duplication </P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.13 $
+ * @version     $Revision$
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 

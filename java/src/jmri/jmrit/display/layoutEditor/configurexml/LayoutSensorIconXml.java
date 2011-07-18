@@ -12,7 +12,7 @@ import org.jdom.Element;
  *
  * @author David Duchamp Copyright (c) 2007
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @deprecated 2.7.8
  */
  

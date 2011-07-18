@@ -9,7 +9,7 @@ import javax.swing.*;
  * Open a window to recieve Log4J output
  *
  * @author	Bob Jacobsen   Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  * @see         jmri.util.JLogoutputFrame
  * @see         jmri.util.JTextPaneAppender
  */

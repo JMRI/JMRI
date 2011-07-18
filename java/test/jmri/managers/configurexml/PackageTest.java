@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the jmri.managers.configurexml package
  * @author	Bob Jacobsen, Copyright (C) 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class PackageTest extends TestCase {
 

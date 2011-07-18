@@ -14,7 +14,7 @@ package jmri.jmrix.lenz;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender Copyright (C) 2004-2010
- * @version 		$Revision: 2.9 $
+ * @version 		$Revision$
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {

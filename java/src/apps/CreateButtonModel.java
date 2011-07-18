@@ -16,7 +16,7 @@ import java.util.List;
  * has no additional behavior, so that persistance
  * systems realize the type of data being stored.
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  * @see CreateButtonPanel
  */
 public class CreateButtonModel extends AbstractActionModel {

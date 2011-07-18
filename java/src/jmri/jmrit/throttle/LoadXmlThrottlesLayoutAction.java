@@ -17,7 +17,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	static final ResourceBundle rb = ThrottleBundle.bundle();
@@ -122,7 +122,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.6 $
+	 * @version $Revision$
 	 */
 	static class ThrottlePrefs extends XmlFile {}
 

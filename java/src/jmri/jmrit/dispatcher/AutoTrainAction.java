@@ -38,7 +38,7 @@ import jmri.TransitSection;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2010-2011
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class AutoTrainAction {
 	

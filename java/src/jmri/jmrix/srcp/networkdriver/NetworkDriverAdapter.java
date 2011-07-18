@@ -21,7 +21,7 @@ import java.util.Vector;*/
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmrix.NetworkPortAdapter{
 

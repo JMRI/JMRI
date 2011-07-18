@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a SprogConsoleFrame object
  *
  * @author			Andrew Crosland    Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class SprogConsoleAction extends AbstractAction {
 

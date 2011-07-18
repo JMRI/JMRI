@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.packetgen.EasyDccPacketGenFrame class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 
 package jmri.jmrix.easydcc.packetgen;

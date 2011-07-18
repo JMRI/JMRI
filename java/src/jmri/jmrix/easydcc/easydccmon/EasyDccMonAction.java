@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  *       			EasyDccMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class EasyDccMonAction 			extends AbstractAction {
 

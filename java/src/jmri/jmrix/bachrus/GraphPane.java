@@ -13,7 +13,7 @@ import javax.swing.*;
  * Frame for graph of loco speed curves
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;

@@ -26,7 +26,7 @@ import jmri.util.com.sun.TableSorter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 

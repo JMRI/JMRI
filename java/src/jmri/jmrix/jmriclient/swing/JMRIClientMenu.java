@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "JMRIClient" menu containing the system-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class JMRIClientMenu extends JMenu {
     public JMRIClientMenu(String name,jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {

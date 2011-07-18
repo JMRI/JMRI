@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.21 $
+ * @version $Revision$
  */
 public class RouteManagerXml extends OperationsXml {
 	

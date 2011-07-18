@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetConsist class
  * @author			Paul Bender
- * @version         $Revision: 2.1 $
+ * @version         $Revision$
  */
 public class XNetConsistTest extends TestCase {
 

@@ -23,7 +23,7 @@ import javax.swing.*;
  *
  * @author	Andrew Crosland          (C) 2009
  *
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class CbusEventTableFrame extends jmri.util.JmriJFrame {
     

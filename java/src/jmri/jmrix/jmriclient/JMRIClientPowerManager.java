@@ -9,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class JMRIClientPowerManager implements PowerManager, JMRIClientListener {
 

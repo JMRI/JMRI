@@ -15,7 +15,7 @@ import jmri.jmrix.grapevine.SerialMessage;
  * Frame lets user renumber a Grapevine node
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class RenumberFrame extends jmri.util.JmriJFrame {
 

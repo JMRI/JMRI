@@ -21,7 +21,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.17 $
+ * @version	$Revision$
  */
 public interface SensorManager extends Manager {
 

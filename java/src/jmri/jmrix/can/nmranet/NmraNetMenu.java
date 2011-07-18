@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a menu containing the JMRI NmraNet-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class NmraNetMenu extends JMenu {
     public NmraNetMenu(String name) {

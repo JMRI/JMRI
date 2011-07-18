@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  * @author                      Paul Bender Copyright (C) 2010
- * @version                     $Revision: 2.1 $
+ * @version                     $Revision$
  */
 public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
 

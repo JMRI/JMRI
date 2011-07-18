@@ -39,7 +39,7 @@ import javax.swing.JPanel;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision$
  */
 public class PanelPro extends Apps {
 

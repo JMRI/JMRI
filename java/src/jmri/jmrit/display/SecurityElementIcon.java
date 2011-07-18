@@ -26,7 +26,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.31 $
+ * @version $Revision$
  */
 
 public class SecurityElementIcon extends PositionableJPanel

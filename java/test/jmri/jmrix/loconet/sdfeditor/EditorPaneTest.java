@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision: 1.5 $
+ * @version         $Revision$
  */
 public class EditorPaneTest extends TestCase {
 

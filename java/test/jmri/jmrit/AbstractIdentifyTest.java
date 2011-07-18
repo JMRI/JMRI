@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * we define a local subclass here for the tests.
  *
  * @author			Bob Jacobsen  Copyright 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class AbstractIdentifyTest extends TestCase {
 

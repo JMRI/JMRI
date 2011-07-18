@@ -14,7 +14,7 @@ import javax.swing.*;
  * Action to print a train's build report
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class PrintTrainBuildReportAction  extends AbstractAction {
 	

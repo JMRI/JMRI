@@ -11,7 +11,7 @@ import org.jdom.Element;
  * form created or used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
 

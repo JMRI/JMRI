@@ -8,7 +8,7 @@ import org.jdom.Element;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class MemorySpinnerIconXml extends PositionableLabelXml {
 

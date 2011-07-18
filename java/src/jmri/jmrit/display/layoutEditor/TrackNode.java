@@ -33,7 +33,7 @@ import jmri.*;
  *		Type, are not returned.
  *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public class TrackNode {
 

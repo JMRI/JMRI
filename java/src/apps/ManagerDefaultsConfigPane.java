@@ -15,7 +15,7 @@ import jmri.managers.ManagerDefaultSelector;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C)  2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  * @since 2.9.5
  */
 public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {

@@ -10,7 +10,7 @@ import javax.swing.*;
  * Pane for building mast definitions
  *
  * @author	    Bob Jacobsen   Copyright (C) 2010
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision$
  */
 public class MastBuilderPane extends javax.swing.JPanel {
 

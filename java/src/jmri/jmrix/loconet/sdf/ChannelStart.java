@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Implement the CHANNEL_START macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.9 $
+ * @version             $Revision$
  */
 
 public class ChannelStart extends SdfMacro {

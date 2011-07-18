@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * JmriServerControlFrame object
  *
  * @author              Paul Bender Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision$
  */
  public class JmriServerAction extends AbstractAction {
 

@@ -9,7 +9,7 @@ import javax.swing.JSeparator;
  * Create a "RPS" menu containing the Jmri RPS-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2006, 2007, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class RpsMenu extends JMenu {
     public RpsMenu(String name) {

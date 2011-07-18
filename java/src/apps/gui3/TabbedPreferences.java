@@ -35,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.51 $
+ * @version $Revision$
  */
 public class TabbedPreferences extends AppConfigBase {
 

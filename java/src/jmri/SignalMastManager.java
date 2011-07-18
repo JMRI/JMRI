@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public interface SignalMastManager extends Manager {
 

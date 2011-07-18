@@ -9,7 +9,7 @@ import jmri.DccThrottle;
  * decoder address has been selected.
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.7 $
+ * @version    $Revision$
  */
 public interface AddressListener extends EventListener
 {

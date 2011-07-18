@@ -19,7 +19,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to TMCC via a serial comm port.
  * Normally controlled by the tmcc.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

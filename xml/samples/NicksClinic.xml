@@ -4,7 +4,7 @@
 
 <!-- This is the panel definition file for Nick Kulps PnalePro clinic of -->
 <!-- March 2004.  For more info, see http://jmri.sourceforge.net/clinics/NickKulpMarch2004/clinic.html  -->
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision$ -->
 
 <layout-config>
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">

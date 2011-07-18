@@ -45,7 +45,7 @@
 #
 
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.6 $
+# $Revision$
 
 #
 # Set the name of the controller you're using

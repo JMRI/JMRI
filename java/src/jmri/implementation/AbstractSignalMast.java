@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract class providing the basic logic of the SignalMast interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
     implements SignalMast, java.io.Serializable {

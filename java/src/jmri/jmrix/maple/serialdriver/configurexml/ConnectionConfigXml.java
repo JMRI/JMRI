@@ -22,7 +22,7 @@ import org.jdom.*;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp Copyright (c) 2009 - Maple modifications
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

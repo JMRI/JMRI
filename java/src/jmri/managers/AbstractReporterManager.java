@@ -9,7 +9,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {

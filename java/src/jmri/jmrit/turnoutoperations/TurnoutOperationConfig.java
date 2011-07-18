@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class TurnoutOperationConfig extends JPanel {
 

@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  * done elsewhere.
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class LI101Action extends AbstractAction {
 

@@ -14,7 +14,7 @@ import jmri.implementation.DefaultRoute;
  * any other object.
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class SensorGroup {
 

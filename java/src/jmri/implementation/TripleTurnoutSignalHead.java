@@ -20,7 +20,7 @@ import jmri.NamedBeanHandle;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
 

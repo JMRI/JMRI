@@ -13,7 +13,7 @@ import jmri.PowerManager;
  * Create a menu for selecting the Power Manager to use
  *
  * @author	Bob Jacobsen   Copyright 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {

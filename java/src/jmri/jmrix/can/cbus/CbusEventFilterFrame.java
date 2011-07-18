@@ -19,7 +19,7 @@ import jmri.jmrix.can.CanReply;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     

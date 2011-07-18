@@ -37,7 +37,7 @@ import jmri.*;
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.14 $
+ * @version     $Revision$
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 

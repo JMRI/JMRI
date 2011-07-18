@@ -8,7 +8,7 @@ package jmri.jmrix;
  *
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision$
  * @see         jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {

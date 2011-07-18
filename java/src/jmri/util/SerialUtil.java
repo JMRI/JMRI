@@ -15,7 +15,7 @@ import gnu.io.SerialPort;
  * method, falling back to  JavaComm 2 if necessary.
  *
  * @author Paul Bender Copyright 2007
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class SerialUtil {

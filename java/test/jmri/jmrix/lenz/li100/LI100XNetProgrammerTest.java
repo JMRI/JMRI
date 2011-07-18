@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.LenzCommandStation;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100XNetProgrammer class
  * @author			Paul Bender
- * @version         $Revision: 1.5 $
+ * @version         $Revision$
  */
 public class LI100XNetProgrammerTest extends TestCase {
 

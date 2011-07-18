@@ -11,7 +11,7 @@ import jmri.jmrix.sprog.SprogMessage;
 /**
  * Frame for user input of Sprog messages.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2010
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 

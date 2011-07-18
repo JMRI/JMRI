@@ -12,7 +12,7 @@ package jmri.jmrix.maple;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003
- * @version   $Revision: 1.5 $
+ * @version   $Revision$
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {

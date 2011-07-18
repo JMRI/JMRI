@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.28 $
+ * @version             $Revision$
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	

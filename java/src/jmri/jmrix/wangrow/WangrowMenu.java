@@ -16,7 +16,7 @@ import javax.swing.JMenu;
  * {@link jmri.jmrix.nce} package.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class WangrowMenu extends JMenu {
 	

@@ -3,7 +3,7 @@
 <!DOCTYPE operations-config SYSTEM "operations-locations.dtd">
 
 <operations-config>
-  <!--Written by JMRI version Test build 200912111516(Daniel Boudreau) on Sat Dec 12 01:17:48 EST 2009 $Id: OperationsLocationRoster.xml,v 1.4 2009-12-20 15:59:10 dan_boudreau Exp $-->
+  <!--Written by JMRI version Test build 200912111516(Daniel Boudreau) on Sat Dec 12 01:17:48 EST 2009 $Id$-->
   <options>
     <locationEditOptions />
   </options>

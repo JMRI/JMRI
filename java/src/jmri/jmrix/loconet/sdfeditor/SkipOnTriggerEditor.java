@@ -9,7 +9,7 @@ import javax.swing.JLabel;
  * Editor panel for the SKIP_ON_TRIGGER macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  */
 
 class SkipOnTriggerEditor extends SdfMacroEditor {

@@ -7,7 +7,7 @@ import jmri.jmrix.SystemConnectionMemo;
 /*
  * Identifying class representing a NCE communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 
 public abstract class NcePortController extends jmri.jmrix.AbstractSerialPortController {

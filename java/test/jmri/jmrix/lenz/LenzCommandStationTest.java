@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.LenzCommandStation class
  * @author			Paul Bender
- * @version         $Revision: 2.1 $
+ * @version         $Revision$
  */
 public class LenzCommandStationTest extends TestCase {
 

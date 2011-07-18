@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.63 $
+ * @version $Revision$
  */
 //import java.awt.Dimension;
 //import java.awt.Point;

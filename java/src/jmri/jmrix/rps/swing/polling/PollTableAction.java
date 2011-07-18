@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * We only permit one, because notification is not entirely right yet.
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class PollTableAction 			extends AbstractAction {
 

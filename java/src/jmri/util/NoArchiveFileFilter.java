@@ -11,7 +11,7 @@ package jmri.util;
  *
  * @author Bob Jacobsen  Copyright 2007
  * Made from a suggestion by John Plocher
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class NoArchiveFileFilter extends jmri.util.FileChooserFilter {

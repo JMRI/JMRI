@@ -11,7 +11,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Andrew Crosland 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 public class CanMenu extends JMenu {
     public CanMenu(String name) {

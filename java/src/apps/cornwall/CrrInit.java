@@ -12,7 +12,7 @@ import java.util.List;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 

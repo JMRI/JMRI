@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.7 $
+ *	@version $Revision$
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     

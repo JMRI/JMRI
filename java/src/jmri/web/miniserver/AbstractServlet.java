@@ -15,7 +15,7 @@ import java.io.BufferedReader;
  * Implement some useful tools for a Servlet.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 
 public abstract class AbstractServlet implements Servlet, ServletConfig {

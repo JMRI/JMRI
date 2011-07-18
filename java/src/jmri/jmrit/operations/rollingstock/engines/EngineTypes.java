@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision$
  */
 public class EngineTypes {
 	

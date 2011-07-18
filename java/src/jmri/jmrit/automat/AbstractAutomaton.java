@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.44 $
+ * @version     $Revision$
  */
 public class AbstractAutomaton implements Runnable {
 

@@ -9,7 +9,7 @@
 # configure JMRI to use LocoNet Simulator
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision$
 
 name = "LPT1" 
 #name = "/dev/cu.usbmodem3d11" # debug

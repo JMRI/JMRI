@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.40 $
+ * @version $Revision$
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 

@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LIUSB.
  *
  * @author			Paul Bender  Copyright (C) 2009-2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 

@@ -14,7 +14,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class InputWindowAction extends AbstractAction {
 

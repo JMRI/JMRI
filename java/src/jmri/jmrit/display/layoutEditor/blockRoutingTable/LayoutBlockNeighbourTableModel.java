@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author              Kevin Dickerson   Copyright (C) 2011
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

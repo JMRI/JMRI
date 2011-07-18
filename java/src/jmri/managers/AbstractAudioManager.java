@@ -24,7 +24,7 @@ import jmri.AudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public abstract class AbstractAudioManager extends AbstractManager
     implements AudioManager {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: idtags.xsl,v 1.1 2011-04-10 18:26:22 matthewharris Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet to convert a JMRI ID Tag XML file into displayable HTML     -->
 

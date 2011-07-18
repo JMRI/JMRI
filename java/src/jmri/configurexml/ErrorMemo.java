@@ -5,7 +5,7 @@ package jmri.configurexml;
  * loading
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
     
 public class ErrorMemo {

@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class FileUtilTest extends TestCase {
 

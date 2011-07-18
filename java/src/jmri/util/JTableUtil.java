@@ -18,7 +18,7 @@ import jmri.util.com.sun.TableSorter;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class JTableUtil {

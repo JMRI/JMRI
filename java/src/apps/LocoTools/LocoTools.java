@@ -32,7 +32,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.40 $
+ * @version     $Revision$
  */
 public class LocoTools extends Apps {
 

@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class InternalReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 

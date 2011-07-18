@@ -99,7 +99,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author			Dave Duchamp Copyright (C) 2008,2010
  * 
- * @version			$Revision: 1.14 $
+ * @version			$Revision$
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {

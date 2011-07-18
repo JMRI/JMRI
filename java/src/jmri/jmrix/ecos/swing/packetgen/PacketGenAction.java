@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			PacketGenFrame object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001, 2008
- * @version		$Revision: 1.3 $	
+ * @version		$Revision$	
  * @deprecated 2.11.3
  */
 @Deprecated

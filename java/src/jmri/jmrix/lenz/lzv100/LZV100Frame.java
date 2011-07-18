@@ -16,7 +16,7 @@ import javax.swing.*;
  * utility for the LV102 power station
  *
  * @author			Paul Bender  Copyright (C) 2003,2005
- * @version			$Revision: 2.9 $
+ * @version			$Revision$
  */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 

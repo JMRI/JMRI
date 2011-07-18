@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.pricom.downloader package.
  * @author      Bob Jacobsen  Copyright 2005
- * @version   $Revision: 1.2 $
+ * @version   $Revision$
  */
 public class DownloaderTest extends TestCase {
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SimpleRoster4web.xsl,v 1.7 2011-03-24 14:16:30 hebbos Exp $ -->
+<!-- $Id$ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 

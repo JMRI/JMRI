@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *
  * @author	Andrew Crosland           (C) 2009
  *
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 
 public class CbusEventTableAction extends AbstractAction {

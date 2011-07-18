@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * Create and register a LocoStatsFrame object.
  * 
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  * @since 2.3.1
  */
 public class ConfigToolAction extends AbstractAction {

@@ -9,7 +9,7 @@ import junit.framework.*;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class,
  * middle bank.
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class SerialTurnoutTest1 extends AbstractTurnoutTest {
 

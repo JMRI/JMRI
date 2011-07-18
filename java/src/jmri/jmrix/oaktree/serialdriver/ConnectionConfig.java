@@ -9,7 +9,7 @@ import jmri.jmrix.oaktree.nodeconfig.*;
  * Definition of objects to handle configuring a Oak Tree layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

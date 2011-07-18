@@ -12,7 +12,7 @@ import javax.swing.*;
  * Pane to for setting node configuration
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  * @since 2.3.1
  */
 public class NodeConfigToolPane extends JPanel implements CanListener {

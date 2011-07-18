@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * standard, but is used as an expedient here.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 public class SRCPThrottle extends AbstractThrottle
 {

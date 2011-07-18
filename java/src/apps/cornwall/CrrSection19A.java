@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0029.bas, but the logic has been changed due to renaming of tu20, tu21, tu22
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class CrrSection19A extends CrrSection {
 

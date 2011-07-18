@@ -23,7 +23,7 @@ import jmri.util.SerialUtil;
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 2.28 $
+ * @version			$Revision$
  */
 
 public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {

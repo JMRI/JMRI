@@ -10,7 +10,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
 /**
  * Frame displaying (and logging) EasyDcc command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 

@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class EasyDccTrafficController extends AbstractMRTrafficController
 	implements EasyDccInterface {

@@ -24,7 +24,7 @@ import jmri.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.26 $
+ * @version $Revision$
  * @since 2.7.2
  */
 

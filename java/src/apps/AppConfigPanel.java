@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.39 $
+ * @version	$Revision$
  * @deprecated  2.10.3
  */
 @Deprecated

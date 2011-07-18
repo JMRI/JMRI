@@ -10,7 +10,7 @@ package jmri.jmrix.sprog;
  * so as to limit the number of unneeded class loading.
  *
  * @author		Andrew Crosland  Copyright (C) 2006
- * @version             $Revision: 1.3 $
+ * @version             $Revision$
  */
 abstract public class ActiveFlagCS {
 

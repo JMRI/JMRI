@@ -15,7 +15,7 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.18 $
+ * @version         $Revision$
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 

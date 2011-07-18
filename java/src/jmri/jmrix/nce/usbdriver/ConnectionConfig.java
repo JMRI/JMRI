@@ -8,7 +8,7 @@ package jmri.jmrix.nce.usbdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

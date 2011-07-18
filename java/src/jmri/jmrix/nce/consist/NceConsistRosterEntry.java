@@ -31,7 +31,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision$
  * @see NceConsistRoster
  * 
  */

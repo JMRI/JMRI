@@ -15,7 +15,7 @@ import jmri.util.swing.*;
 /**
  * Abstact base class for JPanels displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public abstract class AbstractMonPane extends JmriPanel  {
 

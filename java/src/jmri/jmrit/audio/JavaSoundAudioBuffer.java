@@ -37,7 +37,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 

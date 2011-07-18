@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class CbusDccProgrammerManager  extends DefaultProgrammerManager {
 

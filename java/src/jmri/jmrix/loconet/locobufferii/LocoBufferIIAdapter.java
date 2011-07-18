@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * refers to the switch settings on the new LocoBuffer II
  
  * @author			Bob Jacobsen   Copyright (C) 2004
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
 public class LocoBufferIIAdapter extends LocoBufferAdapter {
 

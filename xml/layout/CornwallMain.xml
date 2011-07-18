@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.31 2007-05-13 02:47:55 jacobsen Exp $ -->
+<!-- $Id$ -->
 <!-- Cornwall RR main dispatcher panel -->
 <!-- The layout turnouts, signals, and sensors are defined in CornwallDefinitions.xml -->
 <layout-config>

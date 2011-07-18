@@ -8,7 +8,7 @@ import jmri.implementation.AbstractSensor;
  * Extend jmri.AbstractSensor for serial systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class SerialSensor extends AbstractSensor {
 

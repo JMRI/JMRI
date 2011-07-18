@@ -9,7 +9,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class RouteTableActionTest extends TestCase {
 

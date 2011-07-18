@@ -7,7 +7,7 @@ package jmri.util;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Paul Bender  Copyright 2004
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 public class RuntimeUtil {

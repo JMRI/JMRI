@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.11 $
+ * @version	    $Revision$
  */
 public class LoaderEngine {
     static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");

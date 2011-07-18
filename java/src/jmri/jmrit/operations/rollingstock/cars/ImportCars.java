@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010 2011
- * @version $Revision: 1.24 $
+ * @version $Revision$
  */
 public class ImportCars extends Thread {
 	

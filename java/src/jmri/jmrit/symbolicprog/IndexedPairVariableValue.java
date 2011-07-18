@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.15 $
+ * @version  $Revision$
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -507,7 +507,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.15 $
+     * @version     $Revision$
      */
     public class VarTextField extends JTextField {
 

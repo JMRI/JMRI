@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.pricom package.
  * @author      Bob Jacobsen  Copyright 2005
- * @version   $Revision: 1.4 $
+ * @version   $Revision$
  */
 public class PricomTest extends TestCase {
 

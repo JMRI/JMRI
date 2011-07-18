@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.7 $
+ * @version     $Revision$
  */
 public class PrintDecoderListAction  extends AbstractAction {
 

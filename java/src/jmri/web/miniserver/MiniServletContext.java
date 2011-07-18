@@ -13,7 +13,7 @@ import javax.servlet.ServletContext;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  * @since       2.9.4
  */
 

@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 
 public class OptionsMenu extends JMenu {

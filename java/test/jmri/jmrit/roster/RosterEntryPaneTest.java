@@ -5,7 +5,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision$
  */
 public class RosterEntryPaneTest extends TestCase {
 

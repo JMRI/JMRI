@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.23 $
+ * @version $Revision$
  */
 
 public class IndicatorTrackIcon extends PositionableIcon 

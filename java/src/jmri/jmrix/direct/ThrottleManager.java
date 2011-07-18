@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * sends the first group of function packets.
  *
  * @author	    Bob Jacobsen  Copyright (C) 2004
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class ThrottleManager extends AbstractThrottleManager {
 

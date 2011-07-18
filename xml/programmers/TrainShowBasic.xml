@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: TrainShowBasic.xml,v 1.2 2007-09-21 05:49:59 jacobsen Exp $ -->
+<!-- $Id$ -->
           <!--version author="Joe Ellis, based on Comprehensive Programmer"/-->
 		<version author="Mark Gurries, Bob Jacobsen" 
 					version="5" lastUpdated="20031205"/>

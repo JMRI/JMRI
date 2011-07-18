@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  */
 
 //

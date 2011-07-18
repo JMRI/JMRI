@@ -7,7 +7,7 @@ package jmri.implementation;
  * Concrete implementation of the Reporter interface for the Internal system.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class DefaultMemory extends AbstractMemory {
 

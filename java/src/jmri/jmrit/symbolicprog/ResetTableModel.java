@@ -19,7 +19,7 @@ import jmri.util.jdom.LocaleSelector;
  * particular decoder.
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.9 $
+ * @version   $Revision$
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
     private String headers[] = {"Label", "Name",

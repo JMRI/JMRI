@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.ussctc package
  * @author	Bob Jacobsen  Copyright 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class UssCtcTest extends TestCase {
 

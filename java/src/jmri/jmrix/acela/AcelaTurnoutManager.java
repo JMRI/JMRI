@@ -13,7 +13,7 @@ import jmri.Turnout;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  *
  * @author	Bob Coleman Copyright (C) 2008
  *              Based on CMRI serial example, modified to establish Acela support. 

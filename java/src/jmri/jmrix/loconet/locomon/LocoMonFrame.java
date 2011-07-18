@@ -7,7 +7,7 @@ import jmri.jmrix.loconet.*;
 /**
  * LocoNet Monitor Frame displaying (and logging) LocoNet messages
  * @author	   Bob Jacobsen   Copyright (C) 2001, 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision$
  * @deprecated 2.9.5
  */
 @Deprecated

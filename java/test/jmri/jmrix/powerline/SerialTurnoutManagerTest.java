@@ -16,7 +16,7 @@ import jmri.jmrix.powerline.SerialTurnoutManager;
  * @author			Bob Jacobsen Copyright 2004, 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version  $Revision: 1.10 $
+ * @version  $Revision$
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 

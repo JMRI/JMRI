@@ -10,7 +10,7 @@ import jmri.jmrit.XmlFile;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.10 $
+ * @version $Revision$
  */
 public class PollingFile extends XmlFile {
 

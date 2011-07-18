@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class Gui3AppsTest extends TestCase {
 

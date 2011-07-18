@@ -22,7 +22,7 @@ import jmri.jmrix.powerline.cp290.Constants;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision$
  */
 
 public class SpecificMessage extends SerialMessage {

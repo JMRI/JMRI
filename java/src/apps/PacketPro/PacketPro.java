@@ -36,7 +36,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.8 $
+ * @version     $Revision$
  */
 public class PacketPro extends Apps {
 

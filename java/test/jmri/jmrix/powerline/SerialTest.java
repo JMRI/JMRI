@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.powerline package.
  * @author      Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision$
  */
 public class SerialTest extends TestCase {
 

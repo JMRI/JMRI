@@ -16,7 +16,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.11 $
+ * @version		$Revision$
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 

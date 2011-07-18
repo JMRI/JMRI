@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SlipTurnoutTextEditor version);
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 public class SlipTurnoutTextEdit extends JmriJFrame 

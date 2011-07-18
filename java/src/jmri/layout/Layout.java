@@ -4,7 +4,7 @@ import java.util.TreeMap;
 
 /**
  * @author Alex Shepherd  Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 
 public class Layout implements LayoutEventListener, LayoutEventInterface

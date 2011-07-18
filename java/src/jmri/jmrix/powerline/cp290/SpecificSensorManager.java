@@ -22,7 +22,7 @@ import jmri.jmrix.powerline.SerialReply;
  * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class SpecificSensorManager extends SerialSensorManager {
 

@@ -7,7 +7,7 @@ package jmri.jmrix.cmri.serial;
  * Interface to send/receive serial C/MRI information
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public interface SerialInterface {
 

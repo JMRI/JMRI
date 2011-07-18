@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * not all the package tests.
  *
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision$
  */
 public class AlgorithmsTest extends TestCase {
 

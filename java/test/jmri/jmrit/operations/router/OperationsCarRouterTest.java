@@ -40,7 +40,7 @@ import java.util.Locale;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 1.22 $
+ * @version $Revision$
  */
 public class OperationsCarRouterTest extends TestCase {
 	

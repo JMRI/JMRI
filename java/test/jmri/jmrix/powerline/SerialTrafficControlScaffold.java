@@ -9,7 +9,7 @@ import java.util.Vector;
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 
 public class SerialTrafficControlScaffold extends SerialTrafficController {

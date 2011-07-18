@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * for more details.
  * <P>
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version         $Revision: 1.9 $
+ * @version         $Revision$
  */
 public class HeadLessTest extends TestCase {
 

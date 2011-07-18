@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a spur, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.70 $
+ * @version             $Revision$
  */
 public class Track {
 	

@@ -19,7 +19,7 @@ import java.util.List;
  * Used in PaneProgFrame to control cursor operations during programming.
  *
  * @author  Howard G. Penny   Copyright (C) 2005
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class BusyGlassPane extends JComponent {
 

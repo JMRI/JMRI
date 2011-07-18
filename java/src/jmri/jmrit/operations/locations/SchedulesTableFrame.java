@@ -20,7 +20,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.8 $
+ * @version             $Revision$
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	

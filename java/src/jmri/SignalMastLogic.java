@@ -22,7 +22,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  * <P>
  *
  * @author			Kevin Dickerson Copyright (C) 2011
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public interface SignalMastLogic {
     /**

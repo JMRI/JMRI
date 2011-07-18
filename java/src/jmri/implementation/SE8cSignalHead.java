@@ -23,7 +23,7 @@ import jmri.NamedBeanHandle;
  * and Bob Jacobsen.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 

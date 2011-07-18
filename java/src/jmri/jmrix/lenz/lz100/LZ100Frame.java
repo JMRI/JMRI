@@ -12,7 +12,7 @@ import javax.swing.*;
  * utiliy is defined in {@link LZ100InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 

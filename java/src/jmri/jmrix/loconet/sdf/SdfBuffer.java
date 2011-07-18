@@ -23,7 +23,7 @@ import java.util.List;
  *</UL>
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008, 2010
- * @version             $Revision: 1.9 $
+ * @version             $Revision$
  */
 
 public class SdfBuffer {

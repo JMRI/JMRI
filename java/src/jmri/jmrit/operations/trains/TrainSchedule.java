@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Represents a schedule for trains
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
 public class TrainSchedule {
 	

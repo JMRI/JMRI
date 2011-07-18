@@ -5,7 +5,7 @@
  * it uses the EasyDcc specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2006
- * @version                     $Revision: 1.8 $
+ * @version                     $Revision$
  */
 
 package jmri.jmrix.easydcc;

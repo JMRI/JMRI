@@ -7,7 +7,7 @@ package jmri.util;
  * bypass verification.
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 import org.xml.sax.EntityResolver;

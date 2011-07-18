@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.24 $
+ * @version $Revision$
  */
 
 public class CoordinateEdit extends JmriJFrame {

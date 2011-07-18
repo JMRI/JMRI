@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class LawicellTrafficController extends jmri.jmrix.can.TrafficController {
     

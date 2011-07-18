@@ -12,7 +12,7 @@ import jmri.jmrix.nce.NceReply;
 /**
  * JUnit tests for the NceReplyclass
  * @author			Bob Jacobsen
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public class NceReplyTest extends TestCase {
 

@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 
 public class SignalGroupSubTableAction {

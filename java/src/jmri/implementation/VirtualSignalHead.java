@@ -8,7 +8,7 @@ package jmri.implementation;
  * This can be useful e.g. as part of a more complex signal calculation.
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public class VirtualSignalHead extends DefaultSignalHead {
 

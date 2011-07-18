@@ -7,7 +7,7 @@ package jmri.jmrix;
  * port, typically via a NetworkPortAdapter interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class NetworkConfigException extends jmri.JmriException {
     public NetworkConfigException(String s) { super(s); }

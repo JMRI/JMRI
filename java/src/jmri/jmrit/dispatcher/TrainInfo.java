@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  *		TrainInfoFile.java and dispatcher-traininfo.DTD as well as this module.
  *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class TrainInfo {
 

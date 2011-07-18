@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class SRCPProgrammerManager  extends DefaultProgrammerManager {
 

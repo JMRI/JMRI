@@ -26,7 +26,7 @@ import jmri.util.swing.EditableResizableImagePanel;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision$
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;

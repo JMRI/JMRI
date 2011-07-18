@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.9 $
+ * @version 		$Revision$
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *

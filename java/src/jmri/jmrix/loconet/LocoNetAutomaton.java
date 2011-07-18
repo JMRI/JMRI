@@ -8,7 +8,7 @@ package jmri.jmrix.loconet;
  * Deprecated because it can't do multiple connections
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  * @deprecated 2.9.4
  */
 @Deprecated

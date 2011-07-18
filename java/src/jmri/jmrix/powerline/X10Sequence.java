@@ -21,7 +21,7 @@ package jmri.jmrix.powerline;
  * you should check the coding of your new specific adapter before using them.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class X10Sequence {
 

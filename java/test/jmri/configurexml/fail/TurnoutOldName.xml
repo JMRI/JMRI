@@ -17,7 +17,7 @@
       <comment>Manual</comment>
     </turnout>
   </turnouts>
-  <!--Written by JMRI version 2.7.7 on Tue Dec 29 23:34:19 EST 2009 $Id: TurnoutOldName.xml,v 1.1 2010-05-02 19:52:10 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.7 on Tue Dec 29 23:34:19 EST 2009 $Id$-->
 </layout-config>
 
 

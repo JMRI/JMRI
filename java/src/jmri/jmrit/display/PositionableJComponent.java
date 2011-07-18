@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.27 $
+ * @version $Revision$
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 

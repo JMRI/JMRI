@@ -12,7 +12,7 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class SecurityElementTest extends TestCase {
 

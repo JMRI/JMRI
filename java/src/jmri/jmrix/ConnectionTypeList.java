@@ -6,7 +6,7 @@ package jmri.jmrix;
  * Definition of objects to handle configuring a layout connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  * @see JmrixConfigPane
  * @see AbstractPortController
  */

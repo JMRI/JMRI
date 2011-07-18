@@ -23,7 +23,7 @@ import javax.swing.*;
  * items (Dave Duchamp 2007-2008).
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004, 2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision$
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
 

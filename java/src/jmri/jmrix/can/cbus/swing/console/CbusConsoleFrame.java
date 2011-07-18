@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.33 $
+ * @version			$Revision$
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     

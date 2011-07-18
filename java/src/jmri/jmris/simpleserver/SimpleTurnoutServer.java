@@ -13,7 +13,7 @@ import jmri.jmris.AbstractTurnoutServer;
  * Simple Server interface between the JMRI turnout manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 
 public class SimpleTurnoutServer extends AbstractTurnoutServer {

@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.38 $
+ * @version $Revision$
  */
 public class MemoryIconXml extends PositionableLabelXml {
 

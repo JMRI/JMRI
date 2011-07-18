@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.LnConstants;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.29 $
+ * @version			$Revision$
  * @see             jmri.jmrix.nce.NceMessage
  *
  */

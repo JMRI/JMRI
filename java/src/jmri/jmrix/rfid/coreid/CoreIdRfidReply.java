@@ -23,7 +23,7 @@ import jmri.jmrix.rfid.RfidTrafficController;
  * <P>
  *
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 abstract public class CoreIdRfidReply extends RfidReply {
 

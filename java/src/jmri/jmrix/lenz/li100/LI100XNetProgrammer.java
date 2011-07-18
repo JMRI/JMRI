@@ -29,7 +29,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.7 $
+ * @version $Revision$
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 

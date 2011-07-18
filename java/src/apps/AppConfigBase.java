@@ -26,7 +26,7 @@ import javax.swing.*;
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision: 1.19 $
+ * @version	$Revision$
  */
 public class AppConfigBase extends JmriPanel {
 

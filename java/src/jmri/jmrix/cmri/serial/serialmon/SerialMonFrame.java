@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.12 $
+ * @version         $Revision$
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {

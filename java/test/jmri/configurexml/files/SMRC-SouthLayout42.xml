@@ -521,6 +521,6 @@
     <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="95" y="47" level="3" size="12" style="1" red="51" green="51" blue="51" icon="resources/icons/USSpanels/TrackSegments/block.gif" rotate="1" />
     <turnouticon turnout="LT131" x="108" y="81" level="7" closed="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-closed.gif" thrown="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-thrown.gif" unknown="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-unknown.gif" inconsistent="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-error.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.5.1 on Sun Feb 08 19:00:28 EST 2009 $Id: SMRC-SouthLayout42.xml,v 1.1 2010-02-03 05:57:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.5.1 on Sun Feb 08 19:00:28 EST 2009 $Id$-->
 </layout-config>
 

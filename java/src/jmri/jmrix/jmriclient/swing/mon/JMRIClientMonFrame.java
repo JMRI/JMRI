@@ -10,7 +10,7 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 /**
  * Frame displaying (and logging) JMRIClient command messages
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements JMRIClientListener {
 

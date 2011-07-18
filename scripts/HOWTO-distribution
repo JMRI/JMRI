@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.130 $)
+distribution.  ($Revision$)
 
 Start in a directory, typically called "Distributions", that
 contains "scripts" and "java" (modules checked out from CVS) as subdirectories, then:

@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision$
  */
 
 import java.util.ResourceBundle;

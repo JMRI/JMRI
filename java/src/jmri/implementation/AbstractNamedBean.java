@@ -15,7 +15,7 @@ import java.util.Hashtable;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 

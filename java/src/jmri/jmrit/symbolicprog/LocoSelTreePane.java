@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class LocoSelTreePane extends CombinedLocoSelTreePane  {
 

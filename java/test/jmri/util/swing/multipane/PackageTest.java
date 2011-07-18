@@ -12,7 +12,7 @@ import jmri.util.swing.*;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class PackageTest extends TestCase {
 

@@ -16,7 +16,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.21 $
+ * @version         $Revision$
  */
 public class PaneProgPaneTest extends TestCase {
 

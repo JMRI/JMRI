@@ -12,7 +12,7 @@ import javax.vecmath.Point3d;
  * This interface does not describe that.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public interface Calculator {
 

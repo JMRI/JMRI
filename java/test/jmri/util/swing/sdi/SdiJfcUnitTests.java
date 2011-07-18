@@ -14,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SDI GUI 
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision$
  */
 public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 

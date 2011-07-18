@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Andrew Crosland Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class CbusThrottle extends AbstractThrottle {
     private CbusCommandStation cs = null;

@@ -12,7 +12,7 @@ import javax.swing.JMenu;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision$
  * @since 2.9.4
  */
 abstract public class ComponentFactory {

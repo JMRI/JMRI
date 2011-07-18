@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.89 2008-08-20 14:00:34 djduchamp Exp $ -->
+<!-- $Id$ -->
 
 <!-- This version is now frozen.  Make no changes to it!  -->
 <!-- For more information, see http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlPersistance.shtml#DTD -->

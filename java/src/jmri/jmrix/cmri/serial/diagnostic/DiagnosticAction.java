@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			DiagnosticFrame object
  *
  * @author                  Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision$
  */
 public class DiagnosticAction 	extends AbstractAction {
 

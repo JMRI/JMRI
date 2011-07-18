@@ -59,7 +59,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision$
  */
 public interface SignalHead extends NamedBean {
 

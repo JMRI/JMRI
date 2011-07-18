@@ -10,7 +10,7 @@ import jmri.jmrit.XmlFile;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class OperationsXml extends XmlFile {
 

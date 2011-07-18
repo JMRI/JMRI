@@ -7,7 +7,7 @@ package jmri;
  * {@link Programmer} operations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $	
+ * @version			$Revision$	
  */
 public class ProgrammerException extends JmriException {
 	public ProgrammerException(String s) { super(s); }

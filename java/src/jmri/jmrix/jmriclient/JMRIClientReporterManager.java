@@ -11,7 +11,7 @@ import jmri.Reporter;
  * nnn is the reporter number without padding.
  *
  * @author	Paul Bender Copyright (C) 2011
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 
 public class JMRIClientReporterManager extends jmri.managers.AbstractReporterManager {

@@ -87,6 +87,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTest277.xml,v 1.4 2010-08-29 21:52:37 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id$-->
 </layout-config>
 

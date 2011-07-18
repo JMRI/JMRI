@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
  * but null is also possible.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.5 $
+ * @version		$Revision$
  */
  
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {

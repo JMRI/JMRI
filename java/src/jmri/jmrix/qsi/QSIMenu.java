@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri QSI-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class QSIMenu extends JMenu {
     public QSIMenu(String name) {

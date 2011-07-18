@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.11 $
+ * @version         $Revision$
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 

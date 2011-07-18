@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.insteon2412s.Constants;
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008, 2009
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class SpecificTrafficControllerTest extends TestCase {
 

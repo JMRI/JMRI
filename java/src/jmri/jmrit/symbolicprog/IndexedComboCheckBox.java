@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JCheckBox for indexed CVs
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.4 $
+ * @version   $Revision$
  */
 public class IndexedComboCheckBox extends JCheckBox {
 

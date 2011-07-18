@@ -23,7 +23,7 @@ import jmri.jmrit.beantable.oblock.TableFrames;
  * <P>
  *
  * @author	Pete Cressman (C) 2009, 2010
- * @version     $Revision: 1.15 $
+ * @version     $Revision$
  */
 
 public class OBlockTableAction extends AbstractAction {

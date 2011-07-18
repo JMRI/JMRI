@@ -13,7 +13,7 @@ import javax.swing.table.*;
 /**
  * Table Model for access to producer info
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.6 $
+ * @version	 $Revision$
  * @since 2.3.7
  */
 

@@ -30,7 +30,7 @@ import jmri.implementation.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version			$Revision: 1.10 $
+ * @version			$Revision$
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {

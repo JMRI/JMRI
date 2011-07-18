@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.14 $
+ * @version $Revision$
  */
 public class LoadFileTest extends LoadFileTestBase {
 

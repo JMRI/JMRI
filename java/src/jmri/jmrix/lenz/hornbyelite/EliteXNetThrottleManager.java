@@ -7,7 +7,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2008
- * @version    $Revision: 1.6 $
+ * @version    $Revision$
  */
 
 public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager implements ThrottleManager

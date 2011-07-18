@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 public class TurnoutIconTest extends jmri.util.SwingTestCase {
 

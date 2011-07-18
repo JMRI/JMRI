@@ -10,7 +10,7 @@ import jmri.jmrix.tmcc.SerialTrafficController;
 /**
  * Frame displaying (and logging) TMCC serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {

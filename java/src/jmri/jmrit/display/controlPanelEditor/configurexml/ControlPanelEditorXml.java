@@ -18,7 +18,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.19 $
+ * @version $Revision$
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 

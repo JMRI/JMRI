@@ -19,7 +19,7 @@ import jmri.jmrix.rfid.coreid.CoreIdRfidSensor;
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2007
  * @author      Matthew Harris Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  * @since       2.11.4
  */
 public class SpecificSensorManager extends RfidSensorManager {

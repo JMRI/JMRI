@@ -14,7 +14,7 @@ import jmri.implementation.AbstractSensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class EcosSensor extends AbstractSensor {
 

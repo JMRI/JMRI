@@ -7,7 +7,7 @@ package jmri.jmrix.grapevine;
  * Interface to send/receive serial information
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2006, 2007
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public interface SerialInterface {
 

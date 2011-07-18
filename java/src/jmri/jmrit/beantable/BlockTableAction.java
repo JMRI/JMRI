@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.27 $
+ * @version     $Revision$
  */
 
 public class BlockTableAction extends AbstractTableAction {

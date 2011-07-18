@@ -6,7 +6,7 @@ package jmri.layout;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 import java.util.Date ;

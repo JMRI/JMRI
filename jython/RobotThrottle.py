@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.6 $
+# $Revision$
 #
 # The start button is inactive until data has been entered.
 #

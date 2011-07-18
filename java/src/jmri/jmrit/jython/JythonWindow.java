@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
  * @author      Matthew Harris  Copyright (C) 2010
- * @version     $Revision: 1.9 $
+ * @version     $Revision$
  */
 public class JythonWindow extends AbstractAction {
 

@@ -4,7 +4,7 @@ package jmri.jmrit.withrottle;
  *  WiThrottle GUI
  *
  *  @author Brett Hoffman   Copyright (C) 2009
- *  @version $Revision: 1.2 $
+ *  @version $Revision$
  *
  */
 

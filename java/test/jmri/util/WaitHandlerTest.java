@@ -17,7 +17,7 @@ import java.util.Calendar;
  * so they don't run during normal production testing.
  *
  * @author	Bob Jacobsen  Copyright 2003, 2009, 2010
- * @version	$Revision: 1.12 $
+ * @version	$Revision$
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;

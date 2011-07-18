@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision$
  *
  */
 public class SimpleServer extends JmriServer{

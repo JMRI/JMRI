@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision$
  */
 public class CanTest extends TestCase {
 

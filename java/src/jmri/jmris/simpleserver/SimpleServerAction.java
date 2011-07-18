@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * SimpleServerControlFrame object
  *
  * @author              Paul Bender Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision$
  */
  public class SimpleServerAction extends AbstractAction {
 

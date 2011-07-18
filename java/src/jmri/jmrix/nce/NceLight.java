@@ -13,7 +13,7 @@ import jmri.NmraPacket;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class NceLight extends AbstractLight {
 

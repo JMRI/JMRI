@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.25 $
+ * @version             $Revision$
  */
 public class HardcopyWriter extends Writer {
 

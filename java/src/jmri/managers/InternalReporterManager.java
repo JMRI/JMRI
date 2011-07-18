@@ -8,7 +8,7 @@ import jmri.Reporter;
 /**
  * Implementation of the InternalReporterManager interface.
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  * @since           2.9.4
  */
 public class InternalReporterManager extends AbstractReporterManager {

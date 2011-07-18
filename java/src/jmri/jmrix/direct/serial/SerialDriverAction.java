@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SerialDriverFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class SerialDriverAction extends AbstractAction  {
 

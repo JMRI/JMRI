@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottle;
  * An XPA+Modem implementation of the Throttle for XPressNet Systems
  *
  * @author  Paul Bender  Copyright (C) 2004
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 public class XpaThrottle extends AbstractThrottle {
 

@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.25 $
+ * @version	$Revision$
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 

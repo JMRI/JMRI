@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.22 $
+ * @version $Revision$
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

@@ -11,7 +11,7 @@ import java.io.StringReader;
 /**
  * Tests for the {@link jmri.jmris.srcp.parser.SRCPTokenizer} class.
  * @author          Paul Bender
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class SRCPTokenizerTest extends TestCase {
 

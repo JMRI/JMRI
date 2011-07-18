@@ -7,7 +7,7 @@ import jmri.jmrix.ecos.*;
 /** 
  * Frame displaying (and logging) ECOS command messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
   * @deprecated 2.11.3
  */
 @Deprecated

@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
 

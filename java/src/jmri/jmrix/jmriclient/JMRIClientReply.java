@@ -6,7 +6,7 @@ package jmri.jmrix.jmriclient;
  * Carries the reply to an JMRIClientMessage.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version             $Revision: 1.1 $
+ * @version             $Revision$
  */
 public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
 

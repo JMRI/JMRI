@@ -862,7 +862,7 @@
     <positionablepoint ident="A2" type="1" x="199.0" y="151.0" connect1name="T33" connect2name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
     <positionablepoint ident="A3" type="1" x="180.0" y="60.0" connect1name="T3" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <!--Written by JMRI version 2.7.7 on Tue Dec 29 23:34:19 EST 2009 $Id: LargePanelFileSchemaTest.xml,v 1.1 2010-05-02 19:52:10 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.7 on Tue Dec 29 23:34:19 EST 2009 $Id$-->
 </layout-config>
 
 

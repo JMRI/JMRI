@@ -16,7 +16,7 @@ import javax.swing.*;
  * people can retrieve it.  
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class ReportPanel extends JPanel {
 

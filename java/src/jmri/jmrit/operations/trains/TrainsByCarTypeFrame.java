@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which trains service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

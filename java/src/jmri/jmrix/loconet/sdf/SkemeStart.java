@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This nests until the next SKEME_START.
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision$
  */
 
 public class SkemeStart extends SdfMacro {

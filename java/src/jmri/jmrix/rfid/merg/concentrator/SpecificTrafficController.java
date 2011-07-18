@@ -24,7 +24,7 @@ import jmri.jmrix.rfid.RfidTrafficController;
  *
  * @author      Bob Jacobsen    Copyright (C) 2001, 2003, 2005, 2006, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  * @since       2.11.4
  */
 public class SpecificTrafficController extends RfidTrafficController {

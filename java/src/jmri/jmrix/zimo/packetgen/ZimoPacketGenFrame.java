@@ -11,7 +11,7 @@ import jmri.jmrix.zimo.Mx1TrafficController;
  * Frame for user input of MX-1 messages.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001,2002
- * @version		$Revision: 1.7 $
+ * @version		$Revision$
  *
  * Adapted by Sip Bosch for use with Zimo MX-1
  *

@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 public class SymbolicProgBundle {

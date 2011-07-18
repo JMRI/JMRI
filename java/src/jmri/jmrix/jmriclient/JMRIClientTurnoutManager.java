@@ -11,7 +11,7 @@ import jmri.Turnout;
  * nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 
 public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManager {

@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.PortalIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class PortalIconXml extends PositionableLabelXml {
 

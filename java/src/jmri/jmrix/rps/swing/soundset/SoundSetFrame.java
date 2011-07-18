@@ -8,7 +8,7 @@ import javax.swing.BoxLayout;
  * Frame for controlling sound-speed calculation for RPS system.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision$
  */
 
 

@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri Grapevine-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2003, 2006, 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class GrapevineMenu extends JMenu {
     public GrapevineMenu(String name) {

@@ -8,7 +8,7 @@ package jmri.jmrix.oaktree;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

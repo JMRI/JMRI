@@ -36,7 +36,7 @@ import jmri.jmrit.roster.swing.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.11 $
+ * @version		$Revision$
  */
  
 public class DecoderPro3Window 

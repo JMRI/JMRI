@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SensorTextEditor version);
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 
 public class SensorTextEdit extends JmriJFrame 

@@ -27,7 +27,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * <LI>Wait for Normal Operations Resumed broadcast -- The Elite does not seem to require this step.
  * </UL>
  * @author Paul Bender      Copyright (c) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
 

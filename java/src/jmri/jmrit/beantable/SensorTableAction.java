@@ -32,7 +32,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.42 $
+ * @version     $Revision$
  */
 
 public class SensorTableAction extends AbstractTableAction {

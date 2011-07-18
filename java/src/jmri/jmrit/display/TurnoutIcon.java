@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.68 $
+ * @version $Revision$
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {

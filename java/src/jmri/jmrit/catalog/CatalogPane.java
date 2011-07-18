@@ -40,7 +40,7 @@ import javax.swing.tree.TreePath;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision$
  */
 public class CatalogPane extends JPanel {
     JLabel preview = new JLabel();

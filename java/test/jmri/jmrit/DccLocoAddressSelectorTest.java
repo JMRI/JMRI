@@ -16,7 +16,7 @@ import javax.swing.*;
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 
 public class DccLocoAddressSelectorTest extends TestCase {

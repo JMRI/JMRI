@@ -5,7 +5,7 @@
  *       			XpressNet PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
- * @version			$Revision: 2.4 $
+ * @version			$Revision$
  */
 
 package jmri.jmrix.lenz.packetgen;

@@ -11,7 +11,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  */
 public class SprogProgrammerManager  extends DefaultProgrammerManager {
 	//private Programmer localProgrammer;

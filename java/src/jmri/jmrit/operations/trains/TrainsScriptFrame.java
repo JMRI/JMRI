@@ -26,7 +26,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2011
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 public class TrainsScriptFrame extends OperationsFrame {

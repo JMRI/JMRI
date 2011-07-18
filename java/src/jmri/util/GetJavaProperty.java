@@ -13,7 +13,7 @@ package jmri.util;
  * e.g. for including in a script
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision$
  */
 public class GetJavaProperty {
 

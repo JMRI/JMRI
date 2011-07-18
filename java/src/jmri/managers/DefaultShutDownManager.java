@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * logging.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class DefaultShutDownManager implements ShutDownManager {
 

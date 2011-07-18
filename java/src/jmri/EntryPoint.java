@@ -17,7 +17,7 @@ package jmri;
  *  an Entry Point is loaded from a configuration file.
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class EntryPoint {
 

@@ -6,7 +6,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.6 $
+# $Revision$
 ##
 # A ActionListener is used to get timeout events.
 #

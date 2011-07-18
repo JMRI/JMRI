@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.15 $
+ * @version			$Revision$
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {

@@ -3,7 +3,7 @@
 <!DOCTYPE dispatcheroptions SYSTEM "dispatcher-options.dtd">
 
 <dispatcheroptions>
-  <!--Written by JMRI version 2.9.5+dev on Sun Apr 25 11:20:40 EDT 2010 $Id: dispatcheroptions.xml,v 1.1 2010-04-26 18:32:43 djduchamp Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sun Apr 25 11:20:40 EDT 2010 $Id$-->
   <options useconnectivity="no" trainsfromroster="yes" trainsfromtrains="no" trainsfromuser="no" autoallocate="no" autoturnouts="yes" hasoccupancydetection="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="no" nameinallocatedblock="no" layoutscale="HO" usescalemeters="no" />
 </dispatcheroptions>
 

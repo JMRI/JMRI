@@ -22,7 +22,7 @@ import jmri.jmrix.maple.OutputBits;
  *
  * @author	Bob Jacobsen   Copyright (C) 2004, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 

@@ -49,7 +49,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
 

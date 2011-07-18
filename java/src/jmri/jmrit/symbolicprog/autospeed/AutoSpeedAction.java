@@ -23,7 +23,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class AutoSpeedAction 			extends AbstractAction {
 

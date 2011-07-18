@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * Description:	    tests for the SerialLightManager class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version  $Revision: 1.6 $
+ * @version  $Revision$
  */
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
 

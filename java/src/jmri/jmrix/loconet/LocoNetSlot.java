@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.24 $
+ * @version         $Revision$
  */
 public class LocoNetSlot {
 

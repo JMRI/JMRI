@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.11 $
+ * @version     $Revision$
  */
 public class JmriInsets {
 

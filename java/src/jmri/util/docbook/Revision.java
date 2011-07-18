@@ -4,7 +4,7 @@ package jmri.util.docbook;
  * Memo class to remember a single revision.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
     
 public class Revision {

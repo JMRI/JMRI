@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  * Tests for AbstractMRReply
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class AbstractMRReplyTest extends TestCase {
     AbstractMRReply testMsg;

@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * @author	Bob Jacobsen    Copyright (C) 2007
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.20 $
+ * @version         $Revision$
  */
 public class ReportContextAction extends AbstractAction {
 

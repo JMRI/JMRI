@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri TMCC-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2003, 2006
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class TMCCMenu extends JMenu {
     public TMCCMenu(String name) {

@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.sdf;
 /**
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision$
  */
  
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants

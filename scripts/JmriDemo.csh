@@ -1,6 +1,6 @@
 #! /bin/csh -f
 #
-# Short csh script to start JMRIdemo in java ($Revision: 1.16 $)
+# Short csh script to start JMRIdemo in java ($Revision$)
 #
 # Assumes that the program is being run from the distribution directory.
 # Uncomment and change the following to match the JMRI

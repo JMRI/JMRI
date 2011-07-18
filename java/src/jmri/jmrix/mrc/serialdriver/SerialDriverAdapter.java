@@ -22,7 +22,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class SerialDriverAdapter extends MrcPortController  implements jmri.jmrix.SerialPortAdapter {
 

@@ -14,7 +14,7 @@ import javax.swing.*;
  * Action to print a train's manifest
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class PrintTrainManifestAction  extends AbstractAction {
 	

@@ -16,7 +16,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @deprecated 2.7.8
  */
   @Deprecated

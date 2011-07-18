@@ -3,7 +3,7 @@ package jmri.layout;
 /**
  * Define an address consisting of a layout name, a type, and an offset number.
  * @author   Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 
 public class LayoutAddress implements Comparable<Object>

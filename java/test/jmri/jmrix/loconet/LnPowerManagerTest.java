@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * tests for the Jmri package LnPowerManager
  * @author	Bob Jacobsen   Copyright 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTest {
 

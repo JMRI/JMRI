@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public class PositionableLabelTest extends jmri.util.SwingTestCase {
 

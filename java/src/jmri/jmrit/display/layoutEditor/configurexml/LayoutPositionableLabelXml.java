@@ -11,7 +11,7 @@ import jmri.jmrit.display.configurexml.*;
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.3 $
+ * @version $Revision$
  * @deprecated 2.7.8
  */
 

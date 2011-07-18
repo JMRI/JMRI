@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.util.docbook package
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class DocBookTest extends TestCase {
 

@@ -20,7 +20,7 @@ import java.util.Vector;
  * so that the DP values are forced to be the correct ones.
  * 
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007
- * @version     $Revision: 1.15 $
+ * @version     $Revision$
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {

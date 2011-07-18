@@ -12,7 +12,7 @@ import java.util.Vector;
  * This interface does not provide any methods to change the map.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public interface SignalAppearanceMap  {
 

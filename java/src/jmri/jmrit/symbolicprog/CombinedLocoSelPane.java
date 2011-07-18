@@ -50,7 +50,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.34 $
+ * @version			$Revision$
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 

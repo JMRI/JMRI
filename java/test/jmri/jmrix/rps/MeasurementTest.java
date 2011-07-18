@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Measurement class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class MeasurementTest extends TestCase {
 

@@ -22,7 +22,7 @@ import jmri.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.63 $
+ * @version $Revision$
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {

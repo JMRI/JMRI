@@ -9,7 +9,7 @@ package jmri.jmrix;
  *
  * @author  Kevin Dickerson Copyright (C) 2010
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision$
  * @see         jmri.jmrix.NetworkConfigException
  */
 public interface NetworkPortAdapter extends PortAdapter {

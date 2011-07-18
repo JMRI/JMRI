@@ -20,7 +20,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class JmrixConfigPaneXml extends AbstractXmlAdapter {
 

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the BeanSetting class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class BeanSettingTest extends TestCase {
 

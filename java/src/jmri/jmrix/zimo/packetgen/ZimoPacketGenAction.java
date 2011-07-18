@@ -12,7 +12,7 @@ import jmri.jmrix.zimo.Mx1TrafficController;
  *       		MX-1 PacketGenFrame object.
  *
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version		$Revision: 1.4 $
+ * @version		$Revision$
  *
  * Adapted for use with Zimo MX-1 by Sip Bosch
  *

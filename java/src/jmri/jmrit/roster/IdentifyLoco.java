@@ -16,7 +16,7 @@ import jmri.*;
  * it works through the identification progress.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  * @see         jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {

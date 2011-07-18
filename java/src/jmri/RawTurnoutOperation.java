@@ -12,7 +12,7 @@ import jmri.implementation.RawTurnoutOperator;
  * to the turnout.
  * This class is based on the NoTurnoutOperation class.
  * @author Paul Bender 
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class RawTurnoutOperation extends CommonTurnoutOperation {
 

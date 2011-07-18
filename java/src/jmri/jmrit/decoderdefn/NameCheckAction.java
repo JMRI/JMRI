@@ -16,7 +16,7 @@ import org.jdom.filter.*;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {

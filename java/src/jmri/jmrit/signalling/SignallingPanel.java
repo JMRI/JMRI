@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 /**
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
     

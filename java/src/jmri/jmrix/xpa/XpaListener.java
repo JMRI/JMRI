@@ -7,7 +7,7 @@ package jmri.jmrix.xpa;
  * based Command Station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 
 public interface XpaListener extends java.util.EventListener{

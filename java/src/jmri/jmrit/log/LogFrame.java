@@ -8,7 +8,7 @@ import javax.swing.*;
  * Frame for adding to the log file.
  * 
  * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class LogFrame extends jmri.util.JmriJFrame {
 

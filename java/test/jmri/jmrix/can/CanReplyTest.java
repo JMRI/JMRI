@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.CanReply class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.5 $
+ * @version   $Revision$
  */
 public class CanReplyTest extends CanMRCommonTest {
     

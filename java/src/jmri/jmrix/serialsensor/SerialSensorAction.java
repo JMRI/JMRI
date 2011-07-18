@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  *       			SerialSensorFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class SerialSensorAction extends AbstractAction  {
 

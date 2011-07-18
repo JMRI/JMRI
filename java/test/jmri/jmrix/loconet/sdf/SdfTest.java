@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.sdf package.
  * @author	Bob Jacobsen Copyright 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class SdfTest extends TestCase {
 

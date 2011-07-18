@@ -3,7 +3,7 @@
 # Script to Uninstall RXTX in a Ubuntu GNU/Linux environment
 #
 #
-# $Revision: 1.1 $ (CVS maintains this line, do not edit please)
+# $Revision$ (CVS maintains this line, do not edit please)
 # Assumes sun-java6-jre has been downloaded from repositories
 #
 # INITALISE

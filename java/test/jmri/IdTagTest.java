@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the IdTag class
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision$
  */
 public class IdTagTest extends TestCase {
 

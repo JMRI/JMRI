@@ -15,7 +15,7 @@ package jmri;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  * @since           2.9.4
  */
 public interface InstanceInitializer {

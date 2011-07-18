@@ -8,7 +8,7 @@ package jmri.jmrix.secsi;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

@@ -16,7 +16,7 @@ import jmri.jmrix.secsi.SerialSensorManager;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 

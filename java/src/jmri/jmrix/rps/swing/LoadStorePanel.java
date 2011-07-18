@@ -13,7 +13,7 @@ import java.io.*;
  * Panel for load/store of RPS setup
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision$
  */
 
 

@@ -5,7 +5,7 @@
  *                        DccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2003
- * @version               $Revision: 1.9 $
+ * @version               $Revision$
  */
 
 

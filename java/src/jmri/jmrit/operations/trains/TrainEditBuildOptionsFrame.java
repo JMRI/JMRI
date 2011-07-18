@@ -41,7 +41,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision$
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

@@ -12,7 +12,7 @@ import jmri.jmrix.jmriclient.JMRIClientReply;
 /**
  * Description:		Frame for user input of JMRIClient messages
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.jmriclient.JMRIClientListener {

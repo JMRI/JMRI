@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS polling.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class PollTablePane extends javax.swing.JPanel {
 

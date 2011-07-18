@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a spur.
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.26 $
+ * @version $Revision$
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {

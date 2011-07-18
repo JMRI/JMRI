@@ -23,7 +23,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class MergTrafficController extends GcTrafficController {
     

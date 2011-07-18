@@ -7,7 +7,7 @@ package jmri;
  * rate setting that's been requested.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 public class TimebaseRateException extends JmriException {
 	public TimebaseRateException(String s) { super(s); }

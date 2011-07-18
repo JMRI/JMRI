@@ -16,7 +16,7 @@ import jmri.jmrix.sprog.SprogCommandStation;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  */
 public class SprogCSThrottle extends AbstractThrottle
 {

@@ -1,5 +1,5 @@
 <!-- Defines XML for RPS position information -->
-<!-- $Id: rpsfile.dtd,v 1.4 2009-06-17 17:01:03 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- This DTD is part of JMRI.                                              -->
 <!-- Copyright Bob Jacobsen 2008                                            -->

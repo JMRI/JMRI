@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  * @see apps.PerformFileModel
  */
 public class PerformFilePanel extends JPanel {

@@ -14,7 +14,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.24 $
+ * @version			$Revision$
  *
  */
 public class LongAddrVariableValue extends VariableValue

@@ -9,7 +9,7 @@ import jmri.util.JmriJFrame;
 /**
  * Tests for the LocoStatsFrame class
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision$
  */
 public class LocoStatsFrameTest extends TestCase {
 

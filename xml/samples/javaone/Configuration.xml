@@ -239,6 +239,6 @@
       <sensor systemName="LS154" />
     </block>
   </blocks>
-  <!--Written by JMRI version 1.7.3 on Sat May 13 17:12:58 PDT 2006 $Id: Configuration.xml,v 1.2 2007-05-13 02:49:15 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.3 on Sat May 13 17:12:58 PDT 2006 $Id$-->
 </layout-config>
 

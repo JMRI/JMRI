@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kelly Loyd
- * @version         $Revision: 1.6 $
+ * @version         $Revision$
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
 

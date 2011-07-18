@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
  * to TrackEditFram for train/route car drops and pick ups.
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision: 1.26 $
+ * @version $Revision$
  */
 
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {

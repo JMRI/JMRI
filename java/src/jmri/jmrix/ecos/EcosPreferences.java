@@ -10,7 +10,7 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.34 $
+ * @version     $Revision$
  */
 
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{

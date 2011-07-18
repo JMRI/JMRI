@@ -13,7 +13,7 @@ import java.util.Vector;
  * Test the HexVariableValue class
  *
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.11 $
+ * @version     $Revision$
  */
 public class HexVariableValueTest extends VariableValueTest {
 

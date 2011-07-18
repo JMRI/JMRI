@@ -154,6 +154,6 @@
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 05 23:42:04 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
-  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTestRef.xml,v 1.23 2011-07-15 21:03:39 kevin-dickerson Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id$-->
 </layout-config>
 

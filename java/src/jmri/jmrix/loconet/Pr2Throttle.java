@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class Pr2Throttle extends AbstractThrottle {
     private int addr;

@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * Test CompositeVariableValue class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision: 1.8 $
+ * @version $Revision$
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 

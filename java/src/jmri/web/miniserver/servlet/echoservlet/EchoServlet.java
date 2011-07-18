@@ -20,7 +20,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 
 public class EchoServlet extends AbstractServlet {

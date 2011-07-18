@@ -10,7 +10,7 @@ import jmri.*;
  * This is a configuration failure, not an operational failure
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision$
  */
 public class ProgModeException extends ProgrammerException {
 	public ProgModeException(String s) { super(s); }

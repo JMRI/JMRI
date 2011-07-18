@@ -7,7 +7,7 @@ package jmri.jmrit.dualdecoder;
  * Frame for user dual-decoder select too.
  * This allows the user (person) to select an active decoder from multiple ones in a loco
  * @author   Bob Jacobsen   Copyright (C) 2003
- * @version  $Revision: 1.5 $
+ * @version  $Revision$
  */
 public class DualDecoderSelectFrame extends jmri.util.JmriJFrame {
 

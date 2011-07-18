@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SingleTurnoutSignalHead implementation
  * @author	Bob Jacobsen  Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class SingleTurnoutSignalHeadTest extends TestCase {
 

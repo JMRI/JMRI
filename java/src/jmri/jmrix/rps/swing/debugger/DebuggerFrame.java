@@ -11,7 +11,7 @@ import java.awt.*;
  * Frame for manual operation and debugging of the RPS system
  *
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision$
  */
 
 

@@ -4,7 +4,7 @@
 # Modified by Scott CR Henry
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision$
 
 # Define the listener to play a sound when a sensor goes active
 class SoundListener(java.beans.PropertyChangeListener):

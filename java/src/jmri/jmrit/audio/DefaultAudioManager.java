@@ -30,7 +30,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision$
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 

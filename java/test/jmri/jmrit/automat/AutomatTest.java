@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.automat package
  * @author	Bob Jacobsen  Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class AutomatTest extends TestCase {
 

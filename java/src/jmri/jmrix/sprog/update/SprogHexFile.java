@@ -9,7 +9,7 @@ import javax.swing.*;
  * hardware device via some bootloading process.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.12 $
+ * @version			$Revision$
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
   private File file;

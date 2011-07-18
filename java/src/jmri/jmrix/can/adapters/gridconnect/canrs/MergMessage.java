@@ -28,7 +28,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
  * <P>
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class MergMessage extends GridConnectMessage {
     

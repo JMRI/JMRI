@@ -16,7 +16,7 @@ import javax.swing.JMenu;
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  *
  */
 public class EngineRosterMenu extends JMenu {

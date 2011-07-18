@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.12 $
+ * @version    $Revision$
  */
 
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager, XNetListener

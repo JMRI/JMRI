@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 

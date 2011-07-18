@@ -15,7 +15,7 @@ package jmri.jmrix.powerline.cp290.configurexml;
  *
  * @author Bob Jacobsen 2008
  * @author Ken Cameron 2009
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class SpecificLightManagerXml extends jmri.jmrix.powerline.configurexml.SerialLightManagerXml {
 

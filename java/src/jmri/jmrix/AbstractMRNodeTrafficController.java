@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Provides node management services, but no additional protocol.
  *
  * @author jake  Copyright 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision$
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
     

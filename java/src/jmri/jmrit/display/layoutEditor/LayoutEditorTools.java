@@ -41,7 +41,7 @@ import jmri.jmrit.display.PositionableIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.15 $
+ * @version $Revision$
  */
 
 public class LayoutEditorTools 

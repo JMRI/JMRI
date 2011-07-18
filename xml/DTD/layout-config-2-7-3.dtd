@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-3.dtd,v 1.1 2009-07-12 15:44:04 jacobsen Exp $ -->
+<!-- $Id$ -->
 
 <!-- This DTD is part of version 2.7.3 development.  Do not modify it       -->
 <!-- after version 2.7.3 is released.  For more information,                -->

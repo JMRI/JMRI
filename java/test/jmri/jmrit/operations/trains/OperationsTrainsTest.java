@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.82 $
+ * @version $Revision$
  */
 public class OperationsTrainsTest extends TestCase {
 

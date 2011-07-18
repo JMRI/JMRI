@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * Just tests Elements, not actual files.
  * 
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class BlockManagerXmlTest extends TestCase {
 

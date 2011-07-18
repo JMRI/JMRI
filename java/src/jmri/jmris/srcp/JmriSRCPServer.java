@@ -19,7 +19,7 @@ import jmri.jmris.srcp.parser.SimpleNode;
 /**
  * This is an implementation of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.12 $
+ * @version $Revision$
  *
  */
 public class JmriSRCPServer extends JmriServer{

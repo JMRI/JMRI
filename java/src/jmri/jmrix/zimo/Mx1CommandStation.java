@@ -9,7 +9,7 @@ package jmri.jmrix.zimo;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *

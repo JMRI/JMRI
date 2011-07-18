@@ -26,7 +26,7 @@ import java.util.Locale;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.19 $
+ * @version $Revision$
  */
 public class OperationsSetupTest extends TestCase {
 

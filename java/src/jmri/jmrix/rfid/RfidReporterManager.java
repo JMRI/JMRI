@@ -12,7 +12,7 @@ import jmri.managers.AbstractReporterManager;
  * <P>
  * @author      Bob Jacobsen    Copyright (C) 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  * @since       2.11.4
  */
 abstract public class RfidReporterManager extends AbstractReporterManager implements RfidListener {

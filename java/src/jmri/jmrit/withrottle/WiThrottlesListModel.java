@@ -8,7 +8,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 11/11/09.
- *	@version $Revision: 1.3 $
+ *	@version $Revision$
  */
 
 import javax.swing.table.AbstractTableModel;

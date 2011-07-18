@@ -28,7 +28,7 @@ import java.util.List;
  * <P>
  *
  * @author   Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public interface SignalGroupManager extends Manager {
 

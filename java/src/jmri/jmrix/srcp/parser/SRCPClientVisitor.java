@@ -8,7 +8,7 @@ import jmri.jmrix.srcp.*;
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SRCP protocol and the JMRI front end.
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParserVisitor {

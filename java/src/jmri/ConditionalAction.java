@@ -12,7 +12,7 @@ import jmri.jmrit.Sound;
  * <P>
  * 
  * @author Pete Cressman Copyright (C) 2009
- * @version   $Revision: 1.7 $
+ * @version   $Revision$
  */
 public interface ConditionalAction {
     /**

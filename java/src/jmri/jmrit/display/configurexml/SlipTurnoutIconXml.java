@@ -11,7 +11,7 @@ import org.jdom.Element;
  *
  * Based upon the TurnoutIconXml by Bob Jacobsen
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 

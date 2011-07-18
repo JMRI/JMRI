@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.58 $
+ * @version $Revision$
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

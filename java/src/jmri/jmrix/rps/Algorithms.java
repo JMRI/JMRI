@@ -10,7 +10,7 @@ import javax.vecmath.Point3d;
  * Provide central access to the RPS algorithms
  * 
  * @author	   Bob Jacobsen   Copyright (C) 2007
- * @version   $Revision: 1.5 $
+ * @version   $Revision$
  */
 public class Algorithms implements Constants {
 

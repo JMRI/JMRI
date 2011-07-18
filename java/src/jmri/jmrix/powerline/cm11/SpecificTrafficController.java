@@ -26,7 +26,7 @@ import jmri.jmrix.powerline.SerialMessage;
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public class SpecificTrafficController extends SerialTrafficController {
 

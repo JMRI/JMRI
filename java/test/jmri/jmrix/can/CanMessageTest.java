@@ -12,7 +12,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
  * Tests for the jmri.jmrix.can.CanMessage class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.6 $
+ * @version   $Revision$
  */
 public class CanMessageTest extends CanMRCommonTest {
 

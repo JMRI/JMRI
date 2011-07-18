@@ -4,7 +4,7 @@ import java.util.EventListener;
 
 /**
  * @author   Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @see jmri.layout.LayoutEventInterface
  */
 

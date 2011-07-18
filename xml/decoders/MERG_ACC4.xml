@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MERG_ACC4.xml,v 1.6 2010-10-03 20:35:18 jacobsen Exp $ -->
+<!-- $Id$ -->
 <decoder-config>
 		<version author="ncliffe" version="4b" lastUpdated="20090330"/>
 			<!--  Version 4b (beta) by Nigel Cliffe    -->

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.ztc640.ZTC640Adapter class
  * @author			Paul Bender
- * @version         $Revision: 1.2 $
+ * @version         $Revision$
  */
 public class ZTC640AdapterTest extends TestCase {
 

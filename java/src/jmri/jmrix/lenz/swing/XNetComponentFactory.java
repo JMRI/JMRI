@@ -9,7 +9,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
  * @author		Paul Bender   Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision$
  * @since 2.11.1
  */
 public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {

@@ -26,7 +26,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision: 1.14 $
+ * @version     $Revision$
  */
 public class LnSensorAddress {
 

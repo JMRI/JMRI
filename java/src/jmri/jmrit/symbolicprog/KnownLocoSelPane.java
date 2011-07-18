@@ -26,7 +26,7 @@ import java.util.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 

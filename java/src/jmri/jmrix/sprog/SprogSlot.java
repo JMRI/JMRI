@@ -13,7 +13,7 @@ import jmri.NmraPacket;
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
  * @author			Andrew Berridge 2010
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
  public class SprogSlot {
 	 

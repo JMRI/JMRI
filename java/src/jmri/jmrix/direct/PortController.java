@@ -5,7 +5,7 @@ package jmri.jmrix.direct;
 /*
  * Identifying class representing a direct-drive communications port
  * @author			Bob Jacobsen    Copyright (C) 2001, 2004
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 public abstract class PortController extends jmri.jmrix.AbstractSerialPortController {

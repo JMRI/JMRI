@@ -15,7 +15,7 @@ import javax.sound.sampled.*;
  *
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision$
  */
 public class SoundUtil  {
 

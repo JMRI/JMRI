@@ -17,7 +17,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.13 $
+ * @version     $Revision$
  */
 
 public class SignalMastTableAction extends AbstractTableAction {

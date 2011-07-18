@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * DispatcherFrame
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision$
  */
 
 public class DispatcherAction extends AbstractAction {

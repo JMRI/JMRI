@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
 /**
  * Starts the ImportCars thread
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 

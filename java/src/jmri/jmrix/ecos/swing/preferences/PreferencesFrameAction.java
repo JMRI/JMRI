@@ -11,7 +11,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  *       			PreferencesFrame object
  *
  * @author	    Kevin Dickerson    Copyright (C) 2009
- * @version		$Revision: 1.2 $	
+ * @version		$Revision$	
  */
 
 public class PreferencesFrameAction extends AbstractAction {

@@ -22,7 +22,7 @@ import jmri.jmrix.loconet.*;
  *
  * @author Alex Shepherd  Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision: 1.25 $
+ * @version $Revision$
  */
 
 public class LnMessageClient extends LnTrafficRouter {

@@ -10,7 +10,7 @@ import jmri.util.StringUtil;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.13 $
+ * @version             $Revision$
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 

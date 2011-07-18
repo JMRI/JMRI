@@ -9,7 +9,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
  * @author  Paul Bender (C) 2008-2009
- * @version    $Revision: 1.9 $
+ * @version    $Revision$
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle

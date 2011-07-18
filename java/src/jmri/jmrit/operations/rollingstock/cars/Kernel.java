@@ -9,7 +9,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockGroup;
  * A Kernel is a group of cars that is managed as one car.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision$
  */
 public class Kernel extends RollingStockGroup{
 	

@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
  * @author              Kevin Dickerson   Copyright (C) 2009
- * @version             $Revision: 1.6 $
+ * @version             $Revision$
  * @since 2.7.5
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {

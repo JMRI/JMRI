@@ -12,7 +12,7 @@ import jmri.implementation.DefaultSignalHead;
  *
  * Description:		extend jmri.AbstractSignalHead for grapevine serial signals
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class SerialSignalHead extends DefaultSignalHead {
 

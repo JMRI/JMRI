@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Tests for the jmri.jmrix.loconet.soundloader.LoaderEngine class.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2006
- * @version         $Revision: 1.6 $
+ * @version         $Revision$
  */
 public class LoaderEngineTest extends TestCase {
 

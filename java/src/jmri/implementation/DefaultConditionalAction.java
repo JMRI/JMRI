@@ -20,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.18 $
+ * @version $Revision$
  */
 
 

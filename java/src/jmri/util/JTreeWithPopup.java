@@ -12,7 +12,7 @@ import java.awt.event.*;
  * From the 
  * <A HREF="http://www.java-tips.org/java-se-tips/javax.swing/have-a-popup-attached-to-a-jtree.html">Java Tips</a> web site.
  *
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 
 class JTreeWithPopup extends JTree implements ActionListener{

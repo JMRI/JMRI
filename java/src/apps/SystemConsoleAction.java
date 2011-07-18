@@ -23,7 +23,7 @@ import javax.swing.AbstractAction;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class SystemConsoleAction extends AbstractAction {
 

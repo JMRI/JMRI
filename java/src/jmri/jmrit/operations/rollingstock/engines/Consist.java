@@ -9,7 +9,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockGroup;
  * A consist is a group of engines that is managed as one engine
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.11 $
+ * @version $Revision$
  */
 public class Consist extends RollingStockGroup{
 	

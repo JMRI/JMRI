@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision$
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  *
  * @author      Ken Cameron   Copyright (C) 2011
  * based on NceSimulator by Bob Jacobson
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 

@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * NCE implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision$
  */
 public class NceThrottleManager extends AbstractThrottleManager {
 

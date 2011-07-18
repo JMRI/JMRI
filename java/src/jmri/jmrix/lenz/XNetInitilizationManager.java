@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.16 $
+ * @version			$Revision$
  */
 public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 

@@ -16,7 +16,7 @@ import net.java.games.input.*;
  * Can be connected to a JMRI Sensor or Memory.
  * 
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class UsbNode extends DefaultMutableTreeNode {
     String name;

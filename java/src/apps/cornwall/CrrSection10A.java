@@ -12,7 +12,7 @@ import jmri.Sensor;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 public class CrrSection10A extends CrrSection {
 

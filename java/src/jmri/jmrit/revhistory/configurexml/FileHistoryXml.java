@@ -14,7 +14,7 @@ import jmri.jmrit.revhistory.FileHistory;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {

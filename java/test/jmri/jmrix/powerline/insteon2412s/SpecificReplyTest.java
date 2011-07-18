@@ -16,7 +16,7 @@ import jmri.jmrix.powerline.SerialReply;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009, 2010
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class SpecificReplyTest extends TestCase {
 

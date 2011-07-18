@@ -12,7 +12,7 @@ import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on MRC example, modified to establish Acela support. 

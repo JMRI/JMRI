@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision$
  */
 public class MemoryFrameAction extends AbstractAction {
 

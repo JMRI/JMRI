@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * directory below current working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  */
 public class PositionFileTest extends TestCase {
 

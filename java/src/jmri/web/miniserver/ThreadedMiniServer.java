@@ -11,7 +11,7 @@ import java.net.*;
  *  may be freely used or adapted.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2009, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 
 public class ThreadedMiniServer extends MiniServer

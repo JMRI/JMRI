@@ -16,7 +16,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  *
  * @author      Bob Jacobsen    Copyright (C) 2001, 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  * @since       2.11.4
  */
 

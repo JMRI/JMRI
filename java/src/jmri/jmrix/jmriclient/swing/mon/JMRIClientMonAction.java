@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  *       			JMRIClientMonFrame object
  * 
  * @author Bob Jacobsen    Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class JMRIClientMonAction extends AbstractAction {
 

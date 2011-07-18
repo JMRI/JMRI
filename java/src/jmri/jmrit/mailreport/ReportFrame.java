@@ -8,7 +8,7 @@ import javax.swing.*;
  * Frame for uploading debugging information
  * 
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class ReportFrame extends jmri.util.JmriJFrame {
 

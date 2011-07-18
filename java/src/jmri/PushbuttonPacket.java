@@ -40,7 +40,7 @@ package jmri;
  * Also note that CVP decoder's use the old legacy format for ops mode programming. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision$
  * 
  */
 public class PushbuttonPacket {

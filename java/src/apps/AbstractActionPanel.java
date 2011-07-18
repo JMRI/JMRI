@@ -31,7 +31,7 @@ import java.util.List;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision$
  */
 abstract public class AbstractActionPanel extends JPanel {
 

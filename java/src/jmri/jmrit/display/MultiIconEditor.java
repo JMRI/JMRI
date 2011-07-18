@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * for an example of how to use this.
  *
  * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision$
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.panelEditor.PanelEditor
  * @see jmri.jmrit.catalog

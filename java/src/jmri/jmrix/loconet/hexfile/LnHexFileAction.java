@@ -10,7 +10,7 @@ import javax.swing.AbstractAction;
  * LnHexFileFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision$
  */
 public class LnHexFileAction 			extends AbstractAction {
 

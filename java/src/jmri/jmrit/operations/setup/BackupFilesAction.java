@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * directory selected by the user.
  * 
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class BackupFilesAction extends AbstractAction {
 	

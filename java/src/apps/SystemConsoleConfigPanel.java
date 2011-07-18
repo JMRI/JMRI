@@ -34,7 +34,7 @@ import javax.swing.ListCellRenderer;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class SystemConsoleConfigPanel extends JPanel {
 

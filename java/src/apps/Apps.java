@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 1.137 $
+ * @version     $Revision$
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 

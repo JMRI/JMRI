@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  *
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision$
  */
 public class PaneEditAction 	extends AbstractAction {
 

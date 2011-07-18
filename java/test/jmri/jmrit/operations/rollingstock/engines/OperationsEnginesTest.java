@@ -41,7 +41,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.24 $
+ * @version $Revision$
  */
 public class OperationsEnginesTest extends TestCase {
 

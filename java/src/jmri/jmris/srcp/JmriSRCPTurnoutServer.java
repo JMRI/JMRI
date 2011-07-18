@@ -12,7 +12,7 @@ import jmri.jmris.AbstractTurnoutServer;
  * SRCP Server interface between the JMRI Turnout manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.5 $
+ * @version         $Revision$
  */
 
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {

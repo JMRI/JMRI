@@ -13,7 +13,7 @@ package jmri.jmrix.loconet;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.8 $
+ * @version 		$Revision$
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {

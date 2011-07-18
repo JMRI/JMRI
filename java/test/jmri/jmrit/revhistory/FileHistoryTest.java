@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.revhistory package & jmrit.revhistory.FileHistory class.
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 public class FileHistoryTest extends TestCase {
 

@@ -14,7 +14,7 @@ import javax.vecmath.Point3d;
  * three sensors, so we test with four and more.
  * 
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision$
  */
 public class Ash2_2AlgorithmTest extends AbstractAlgorithmTest {
         

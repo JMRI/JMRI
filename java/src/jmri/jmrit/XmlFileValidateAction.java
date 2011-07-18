@@ -15,7 +15,7 @@ import org.jdom.output.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author	Bob Jacobsen   Copyright (C) 2005, 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileCheckAction
  */

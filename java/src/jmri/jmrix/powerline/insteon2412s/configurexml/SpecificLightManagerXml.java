@@ -14,7 +14,7 @@ package jmri.jmrix.powerline.insteon2412s.configurexml;
  * in terms of which-ever manager object is currently installed.
  *
  * @author Bob Jacobsen 2008
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class SpecificLightManagerXml extends jmri.jmrix.powerline.configurexml.SerialLightManagerXml {
 

@@ -11,7 +11,7 @@ import jmri.jmrix.can.TrafficController;
  * Create and register a tool to send CAN frames.
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision$
  */
 public class CanSendAction extends AbstractAction {
 

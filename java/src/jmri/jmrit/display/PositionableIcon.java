@@ -5,7 +5,7 @@ package jmri.jmrit.display;
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
  * @author PeteCressman Copyright (C) 2011
- * @version $Revision: 1.7 $
+ * @version $Revision$
  */
 import java.util.Enumeration;
 import java.util.Hashtable;

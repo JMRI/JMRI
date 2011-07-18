@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision$
  */
 public class EngineManagerXml extends OperationsXml {
 	

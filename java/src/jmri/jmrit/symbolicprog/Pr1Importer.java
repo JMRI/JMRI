@@ -27,7 +27,7 @@ import java.util.Properties;
  * for more details.
  * <P>
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.16 $
+ * @version			$Revision$
  */
 public class Pr1Importer {
   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1Importer.class.getName());

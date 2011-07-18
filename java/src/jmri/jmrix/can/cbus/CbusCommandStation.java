@@ -17,7 +17,7 @@ import jmri.jmrix.can.TrafficController;
  * station state should always be referred to.
  *
  * @author      Andrew Crosland Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision$
  */
 public class CbusCommandStation implements CommandStation, DccCommandStation, CanListener {
 

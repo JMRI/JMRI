@@ -15,7 +15,7 @@ import junit.framework.*;
  * Test PaneProg with qualified variables
  *
  * @author			Bob Jacobsen    Copyright 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class QualifiedVarTest extends TestCase {
 

@@ -10,7 +10,7 @@ package jmri.jmrix.mrc;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision$
  */
 public class MrcMessage extends jmri.jmrix.AbstractMRMessage {
 

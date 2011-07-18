@@ -16,7 +16,7 @@ import jmri.managers.*;
 /**
  * Tests for the ProgServiceModePane
  * @author	Bob Jacobsen 2008
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class ProgServiceModePaneTest extends TestCase {
 

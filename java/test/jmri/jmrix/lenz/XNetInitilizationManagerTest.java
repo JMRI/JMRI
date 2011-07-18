@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetInitilizationManager class
  * @author			Paul Bender
- * @version         $Revision: 2.4 $
+ * @version         $Revision$
  */
 public class XNetInitilizationManagerTest extends TestCase {
 

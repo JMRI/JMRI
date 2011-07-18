@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Tests for the SignalAppearanceMap interface
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class DefaultSignalAppearanceMapTest extends TestCase {
 

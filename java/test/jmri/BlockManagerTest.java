@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the BlockManager class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class BlockManagerTest extends TestCase {
 

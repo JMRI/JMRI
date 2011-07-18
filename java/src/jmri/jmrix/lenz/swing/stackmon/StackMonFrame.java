@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005-2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision$
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 

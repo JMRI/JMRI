@@ -21,7 +21,7 @@ import jmri.ProgrammerException;
  * this class, be sure that initialization is in the right order.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.9 $
+ * @version			$Revision$
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 

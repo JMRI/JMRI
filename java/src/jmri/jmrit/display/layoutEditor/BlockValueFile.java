@@ -17,7 +17,7 @@ import org.jdom.Attribute;
  * This class manipulates files conforming to the block_value DTD.
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision$
  */
 
 public class BlockValueFile extends jmri.jmrit.XmlFile {

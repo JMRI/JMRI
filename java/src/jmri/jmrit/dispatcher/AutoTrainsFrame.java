@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision$
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	

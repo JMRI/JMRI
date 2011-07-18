@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the SRCP powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision$
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 

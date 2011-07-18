@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version             $Revision: 1.15 $
+ * @version             $Revision$
  */
 public class RoutesTableFrame extends OperationsFrame {
 	

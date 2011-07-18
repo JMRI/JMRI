@@ -21,7 +21,7 @@ import java.io.PipedOutputStream;
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision: 1.1 $
+ * @version	$Revision$
  */
 public class SimulatorAdapter extends SerialPortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {

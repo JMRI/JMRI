@@ -31,7 +31,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 public class TrackSegment 

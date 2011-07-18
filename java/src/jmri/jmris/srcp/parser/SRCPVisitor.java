@@ -7,7 +7,7 @@ import jmri.InstanceManager;
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SRCP protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 
 public class SRCPVisitor implements SRCPParserVisitor {

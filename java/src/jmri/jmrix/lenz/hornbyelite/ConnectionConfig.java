@@ -12,7 +12,7 @@ package jmri.jmrix.lenz.hornbyelite;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Paul Bender    Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision$
  *
  * @see EliteAdapter
  */

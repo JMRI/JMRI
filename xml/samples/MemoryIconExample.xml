@@ -43,6 +43,6 @@
       <memorystate value="0" icon="resource:resources/icons/misc/Nixie/M0B.gif" />
     </memoryicon>
   </paneleditor>
-  <!--Written by JMRI version 1.7.6 on Thu Aug 03 17:55:38 PDT 2006 $Id: MemoryIconExample.xml,v 1.10 2007-11-27 20:10:11 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.6 on Thu Aug 03 17:55:38 PDT 2006 $Id$-->
 </layout-config>
 

@@ -7,7 +7,7 @@ package jmri.jmris;
  * types which can be passed to a parser visitor object.
  * 
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision$
  *
  */
 public class ServiceHandler {

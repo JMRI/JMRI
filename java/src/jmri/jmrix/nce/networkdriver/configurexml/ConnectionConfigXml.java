@@ -20,7 +20,7 @@ import jmri.jmrix.nce.networkdriver.NetworkDriverAdapter;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author kcameron Copyright (C) 2010
  * 	added multiple connections
- * @version $Revision: 1.10 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

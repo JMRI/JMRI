@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Frame containing the entire display tool
  *
  * @author			Bob Jacobsen    Copyright (C) 2006, 2008
- * @version         $Revision: 1.8 $
+ * @version         $Revision$
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
     

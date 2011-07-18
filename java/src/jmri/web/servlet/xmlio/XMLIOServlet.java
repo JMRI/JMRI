@@ -24,7 +24,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.20 $
+ * @version     $Revision$
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {

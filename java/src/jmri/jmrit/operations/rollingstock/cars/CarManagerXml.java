@@ -20,7 +20,7 @@ import jmri.jmrit.operations.OperationsXml;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.23 $
+ * @version	$Revision$
  */
 public class CarManagerXml extends OperationsXml {
 	
