@@ -146,7 +146,7 @@
         <xs:element name="masts" minOccurs="0" maxOccurs="1" >
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="mastt" minOccurs="0" maxOccurs="unbounded" >
+              <xs:element name="mast" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="mastName" type="xs:string" minOccurs="1" maxOccurs="1"/>

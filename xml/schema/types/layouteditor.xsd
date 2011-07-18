@@ -47,6 +47,7 @@
         <xs:element name="sensoricon"         type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"         type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalheadicon"     type="EditorSignalHeadIconType"    minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalmasticon"     type="EditorSignalMastIconType"    minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="reportericon"       type="EditorReporterIconType"      minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutturnout"      type="EditorLayoutTurnoutType"     minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="tracksegment"       type="EditorTrackSegmentType"      minOccurs="0" maxOccurs="unbounded" />
@@ -97,6 +98,9 @@
       <xs:attribute name="xoverlong" type="xs:float"/>
       <xs:attribute name="xoverhwid" type="xs:float"/>
       <xs:attribute name="xovershort" type="xs:float"/>
+      <xs:attribute name="redBackground" type="xs:integer"/>
+      <xs:attribute name="greenBackground" type="xs:integer"/>
+      <xs:attribute name="blueBackground" type="xs:integer"/>
     </xs:complexType>
 
 
