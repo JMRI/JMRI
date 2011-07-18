@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010, 2011 -->
-<!-- Revision $Revision: 1.91 $ -->
+<!-- Revision $Revision$ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -157,6 +157,7 @@
   </target>
 
   <target name="clean" description="remove compilation results to force rebuild">
+    <delete file="${jartarget}/jmri.jar" quiet="true" />
     <delete includeEmptyDirs="true" quiet="true">
       <fileset dir="${doctarget}"/>
       <fileset dir="${target}"/>
@@ -164,8 +165,6 @@
       <fileset dir="${javacctarget}/jmris/srcp/parser"/>
       <fileset dir="${javacctarget}/jmrix/srcp/parser"/>
     </delete>
-
-
   </target>
 
   <target name="copyfiles" depends="init" description="copy resource files">
@@ -302,7 +301,7 @@
   <target name="tests" depends="debug" description="compile test classes">
     <!-- Compile the test java code from ${source} into ${target} -->
     <copy todir="${target}">
-        <fileset dir="java/test/" includes="**/*.properties"  /> 
+        <fileset dir="${test}" includes="**/*.properties"  /> 
     </copy>
     <javac srcdir="${test}" 
            destdir="${target}"
