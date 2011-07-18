@@ -10,7 +10,7 @@ import java.io.*;
  *
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Bob Jacobsen    Copyright (C) 2009
- *	@version $Revision: 1.3 $
+ *	@version $Revision$
  */
 
 public class ZeroConfUtil {
