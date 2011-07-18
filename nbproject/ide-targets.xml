@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="../java" name="JMRI-IDE">
-    <import file="../java/build.xml"/>
+<project basedir=".." name="JMRI-IDE">
+    <import file="../build.xml"/>
     <!-- TODO: edit the following target according to your needs -->
     <!-- (more info: http://www.netbeans.org/kb/41/freeform-config.html#debugj2se) -->
     <target depends="debug, runtime-library-selection" description="build and run DecoderPro app" name="debug-nb">
         <nbjpdastart addressproperty="jpda.address" name="JMRI" transport="dt_socket">
             <classpath refid="project.class.path"/>
         </nbjpdastart>
-        <java classname="apps.DecoderPro.DecoderPro" dir=".." fork="yes">
+        <java classname="apps.DecoderPro.DecoderPro" dir="../jmri" fork="yes">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -29,7 +29,7 @@
         <nbjpdastart addressproperty="jpda.address" name="JMRI" transport="dt_socket">
             <classpath refid="project.class.path"    />
         </nbjpdastart>
-        <java classname="apps.tests.AllTest" dir=".." fork="yes">
+        <java classname="apps.tests.AllTest" dir="../jmri" fork="yes">
             <classpath refid="project.class.path"    />
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
