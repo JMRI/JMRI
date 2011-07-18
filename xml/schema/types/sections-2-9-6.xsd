@@ -44,8 +44,8 @@
         <xs:element name="section" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="comment" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="blockentry" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                   <xs:attribute name="sName" type="xs:string" />
@@ -62,9 +62,7 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute name="systemName" type="systemNameType">
-                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
-            </xs:attribute>
+            <xs:attribute name="systemName" type="systemNameType"/>
             <xs:attribute name="userName" type="userNameType">
                 <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
             </xs:attribute>
