@@ -75,6 +75,7 @@ the main JMRI menu, "Panels-&gt;Load Panels .." a window should appear and
 open the "operations" directory and then open the "Operations Demo
 Panel" xml file.
 </P>
+
 <H3>Quick Start Help</H3>
 
 In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There
