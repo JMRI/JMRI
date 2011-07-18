@@ -100,11 +100,11 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
                     boolean state = ((sw2 & 0x10) != 0) ^ _inverted;
                     if (log.isDebugEnabled())
                         log.debug("INPUT_REP received with valid address, old state "
-                                    +getKnownState()+" new packet "+state);
-                    if ( state && getKnownState() != Sensor.ACTIVE) {
+                                    +getRawState()+" new packet "+state);
+                    if ( state && getRawState() != Sensor.ACTIVE) {
                         if (log.isDebugEnabled()) log.debug("Set ACTIVE");
                         setOwnState(Sensor.ACTIVE);
-                    } else if ( (!state) && getKnownState() != Sensor.INACTIVE) {
+                    } else if ( (!state) && getRawState() != Sensor.INACTIVE) {
                         if (log.isDebugEnabled()) log.debug("Set INACTIVE");
                         setOwnState(Sensor.INACTIVE);
                     }
