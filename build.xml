@@ -302,7 +302,7 @@
   <target name="tests" depends="debug" description="compile test classes">
     <!-- Compile the test java code from ${source} into ${target} -->
     <copy todir="${target}">
-        <fileset dir="test/" includes="**/*.properties"  /> 
+        <fileset dir="java/test/" includes="**/*.properties"  /> 
     </copy>
     <javac srcdir="${test}" 
            destdir="${target}"
