@@ -5,9 +5,6 @@ package jmri.jmrix.loconet.loconetovertcp;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.*;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
 import java.util.Vector;
 
 /**
@@ -21,9 +18,10 @@ import java.util.Vector;
  * @version     $Revision$
  */
 
-public class LnTcpDriverAdapter extends LnPortController {
+public class LnTcpDriverAdapter extends LnNetworkPortController {
 
     public LnTcpDriverAdapter() {
+        super();
         adaptermemo = new LocoNetSystemConnectionMemo();
     }
     /**
@@ -37,7 +35,7 @@ public class LnTcpDriverAdapter extends LnPortController {
 
         // create memo
         adaptermemo.setSlotManager(new SlotManager(packets));
-        adaptermemo.setLnTrafficController(packets);        
+        adaptermemo.setLnTrafficController(packets);
         // do the common manager config
         adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
         adaptermemo.configureManagers();
@@ -48,67 +46,31 @@ public class LnTcpDriverAdapter extends LnPortController {
 
     }
 
-    // base class methods for the LnPortController interface
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-        }
-        try {
-            return new DataInputStream(socket.getInputStream());
-        } catch (java.io.IOException ex1) {
-            log.error("Exception getting input stream: "+ex1);
-            return null;
-        }
-    }
-
-    public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
-        try {
-            return new DataOutputStream(socket.getOutputStream());
-        }
-        catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-        }
-        return null;
-    }
 
     public boolean status() {return opened;}
 
     // private control members
     private boolean opened = false;
-    private Socket socket = null;
+    
+    /**
+     * Get an array of valid values for "option 2"; used to display valid options.
+     * May not be null, but may have zero entries
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    public String[] validOption1() { return commandStationNames; }
 
-    public void connect(String host, int port) throws Exception{
-        try {
-            socket = new Socket(host, port);
-            opened = true;
-        } catch (Exception e) {
-            log.error("error opening LocoNetOverTcp network connection: "+e);
-            throw e;
-        }
+    /**
+     * Get a String that says what Option 2 represents
+     * May be an empty string, but will not be null
+     */
+    public String option1Name() { return "Command station type: "; }
+    
+    public void configureOption1(String value) {
+        super.configureOption1(value);
+    	log.debug("configureOption1: "+value);
+        setCommandStationType(value);
     }
-
-    static private LnTcpDriverAdapter mInstance = null;
-    static public synchronized LnTcpDriverAdapter instance() {
-        if (mInstance == null){
-            mInstance = new LnTcpDriverAdapter();
-        }
-        return mInstance;
-    }
-
-    public Vector<String> getPortNames() {
-        log.error("Unexpected call to getPortNames");
-        return null;
-    }
-    public String openPort(String portName, String appName)  {
-        log.error("Unexpected call to openPort");
-        return null;
-    }
-    public String[] validBaudRates() {
-        log.error("Unexpected call to validBaudRates");
-        return null;
-    }
-
+    
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] getCommandStationNames() { return commandStationNames; }
     public String   getCurrentCommandStation() { return commandStationName; }

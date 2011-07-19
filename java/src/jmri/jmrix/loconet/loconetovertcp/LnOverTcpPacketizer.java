@@ -4,6 +4,7 @@ package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LocoNetMessageException;
 
 import java.util.NoSuchElementException;
@@ -47,6 +48,34 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     xmtHandler = new XmtHandler();
     rcvHandler = new RcvHandler(this) ;
   }
+  
+    public LnNetworkPortController controller = null;
+  
+      /**
+     * Make connection to existing LnPortController object.
+     * @param p Port controller for connected. Save this for a later
+     *              disconnect call
+     */
+    public void connectPort(LnNetworkPortController p) {
+        istream = p.getInputStream();
+        ostream = p.getOutputStream();
+        if (controller != null)
+            log.warn("connectPort: connect called while connected");
+        controller = p;
+    }
+
+    /**
+     * Break connection to existing LnPortController object. Once broken,
+     * attempts to send via "message" member will fail.
+     * @param p previously connected port
+     */
+    public void disconnectPort(LnNetworkPortController p) {
+        istream = null;
+        ostream = null;
+        if (controller != p)
+            log.warn("disconnectPort: disconnect called from non-connected LnPortController");
+        controller = null;
+    }
 
   /**
    * Captive class to handle incoming characters.  This is a permanent loop,
@@ -194,7 +223,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                   // input - now send
                   try {
                       if (ostream != null) {
-                          if (!controller.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
+                          //Commented out as the origianl LnPortController always returned true.
+                          //if (!controller.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
                           if (debug) log.debug("start write to stream");
                           StringBuffer packet = new StringBuffer(msg.length * 3 + SEND_PREFIX.length() + 2 ) ;
                           packet.append( SEND_PREFIX ) ;

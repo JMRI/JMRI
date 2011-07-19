@@ -152,6 +152,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     However this is in place until all the other code has been refactored */
     public void dispose(){ return; }
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkPortController.class.getName());
+    final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkPortController.class.getName());
     
 }

@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.loconetovertcp.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.loconet.loconetovertcp.ConnectionConfig;
 import jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter;
 
@@ -25,22 +25,21 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
  */
-public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
     }
 
     protected void getInstance() {
-        log.error("unexpected call to getInstance");
-        new Exception().printStackTrace();
+        adapter = new LnTcpDriverAdapter();
     }
     
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
 
-    public Element store(Object o) {
+    /*public Element store(Object o) {
         getInstance(o);
         ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
@@ -60,23 +59,20 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         e.setAttribute("cmd-station",(String) c.commandStation.getSelectedItem());
 
         return e;
-    }
+    }*/
     /**
      * Port name carries the hostname for the network connection
      * @param e Top level Element to unpack.
      * @return true if successful
       */
-    public boolean load(Element e) {
-    	boolean result = true;
+    /*public boolean load(Element e) {
+    	boolean result = true;*/
         // configure port name
-        String hostName   = e.getAttribute("hostname").getValue();
+        /*String hostName   = e.getAttribute("hostname").getValue();
         String portNumber = e.getAttribute("port").getValue();
         String cmdStation = e.getAttribute("cmd-station").getValue();
         String manufacturer = null;
-        try { 
-            manufacturer = e.getAttribute("manufacturer").getValue();
-        } catch ( NullPointerException ex) { //Considered normal if not present
-        }
+
         // notify
         JFrame f = new JFrame("LocoNetOverTcp network connection");
         f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
@@ -118,22 +114,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             return false;
         }
 
-        // configure the other instance objects
-        client.setCommandStationType(cmdStation);
-        client.configure();
+        // configure the other instance objects*/
+        /*client.setCommandStationType(cmdStation);
+        client.configure();*/
 
-        f.setVisible(false);
-        f.dispose();
+        //f.setVisible(false);
+        //f.dispose();
 
-        return result;
-    }
+        //return result;
+    //}
 
     protected void register() {
-        log.error("unexpected call to register()");
-        new Exception().printStackTrace();
-    }
-    protected void register(String host, String port, String manufacturer) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, manufacturer));
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
 
     // initialize logging
