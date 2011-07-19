@@ -562,7 +562,7 @@
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="icons" minOccurs="0" maxOccurs="1" >
           <xs:complexType>
-            <xs:sequence>
+            <xs:all>
                 <xs:element name="held" type="EditorIconType" minOccurs="0" maxOccurs="1" />
                 <xs:element name="dark" type="EditorIconType" minOccurs="0" maxOccurs="1" />
                 <xs:element name="red" type="EditorIconType" minOccurs="0" maxOccurs="1" />
@@ -573,12 +573,10 @@
                 <xs:element name="flashyellow" type="EditorIconType" minOccurs="0" maxOccurs="1" />
                 <xs:element name="flashgreen" type="EditorIconType" minOccurs="0" maxOccurs="1" />
                 <xs:element name="flashlunar" type="EditorIconType" minOccurs="0" maxOccurs="1" />
-            </xs:sequence>
-          </xs:complexType>
+            </xs:all>
+           </xs:complexType>
         </xs:element>
-        <xs:element name="iconmaps" type="xs:string" minOccurs="0" maxOccurs="1">
-            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
-        </xs:element>
+        <xs:element name="iconmaps" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="held" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
         </xs:element>

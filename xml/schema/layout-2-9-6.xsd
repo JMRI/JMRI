@@ -76,6 +76,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmastlogics.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio-2-9-6.xsd"/>
@@ -336,6 +337,7 @@ signals - obsolete, EMPTY, never used
         </xs:element>
 
         <xs:element name="signalgroups" type="SignalGroupManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalmastlogics" type="SignalMastLogicManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutblocks" type="LayoutBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded">
           <xs:key name="signalElementName">
