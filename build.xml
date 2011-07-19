@@ -58,6 +58,7 @@
          Make sure the trailing / is present, since the usage is ${nsis.home}makensis,
          which will do a $PATH search if nsis.home is not set.  -->
     <!--property name="nsis.home" value="/opt/nsis/nsis-2.46/" / -->
+    <!--property name="nsis.home" value="C:/Program Files/NSIS/" / -->
     
   <!-- You can specify a DecoderPro/PanelPro config file at runtime -->
   <!-- with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"   -->
