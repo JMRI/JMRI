@@ -153,6 +153,16 @@ Running this on JMRI 2.5.4 produced the following:
 <tr><th>Total</th><th>1322</th></tr>
 </table>
 
+<p>A lot of work has gone into JMRI during the 2.12 release cycle to
+bring the bug count down to zero.  The <a
+ href="ContinuousIntegration.shtml">Continous Integration server</a>
+runs FindBugs twice a day, which helps developers see the results of
+their coding without having to set up to run findbugs themselves.</p>
+
+<p>If you are checking code in to the JMRI Subversion repository,
+please check the CI server and make sure that your changes do not
+introduce new errors.</p>
+
 
 <!--#include virtual="/Footer" -->
 
