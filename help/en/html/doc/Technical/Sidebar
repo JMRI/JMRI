@@ -11,8 +11,8 @@
 		<dt>Development tools</dt>
 		<dd>
 			<ul>
-			<LI><a href="getcode.shtml">Getting the code via CVS</a>
-			<LI><a href="CVSFAQ.shtml">CVS FAQs</a>
+			<LI><a href="getcode.shtml">Getting the code via SVN</a>
+			<LI><a href="SVNFAQ.shtml">SVN FAQs</a>
 			<LI><a href="Ant.shtml">Building with Ant</a>
 			<LI><a href="NetBeans.shtml">Building with NetBeans</a>
 			<LI><a href="XCode.shtml">Building with XCode</a>
