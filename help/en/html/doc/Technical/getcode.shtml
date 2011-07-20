@@ -78,7 +78,7 @@
   <p>See also the <a href="SVNFAQ.shtml">Subversion FAQ page</a>.</p>
 
   <p>After the checkout is complete, you'll find a top level
-  directories called <tt>java</tt>, with subdirectories <tt>xml</tt>,
+  directory called <tt>java</tt>, with subdirectories <tt>xml</tt>,
   <tt>resources</tt>, <tt>jython</tt>, <tt>help</tt>, <tt>lib</tt>,
   <tt>java</tt> and others.</p>
 
