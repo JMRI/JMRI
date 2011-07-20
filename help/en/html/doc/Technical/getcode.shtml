@@ -91,7 +91,7 @@
   on the bar at the left: <a href="Ant.shtml">Ant</a>, <a
    href="Eclipse.shtml">Eclipse</a>, <a
    href="NetBeans.shtml">NetBeans</a>, <a
-   href="JBuilder.html">JBuilder</a>, etc.  (Ant may be the easiest to
+   href="JBuilder.shtml">JBuilder</a>, etc.  (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
 
   <p>Once you're working with the code, you'll probably create some improvements
