@@ -27,35 +27,35 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mainContent">
 
-	    <H1>Building JMRI with Ant</H1>
+<h1>Building JMRI with Ant</h1>
 
 Those of you who prefer a command line approach might want to investigate "ant", a
 better make-like utility for Java projects.  Ant is available for 
 download at
-<A HREF="http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>. 
+<a href="http://ant.apache.org/">http://ant.apache.org/</a>. 
 Install it, then:
 <UL>
 <LI>Create a directory to contain your project.
 <LI>In that project directory, do a 
-<a href="http://jmri.org/help/en/html/doc/Technical/getcode.shtml">CVS checkout</a> of the "all" 
-module from our repository. 
-This will create a "java" subdirectory 
+<a href="http://jmri.org/help/en/html/doc/Technical/getcode.shtml">SVN checkout</a> of the <tt>jmri</tt>
+directory from our repository. 
+This will create a <tt>jmri</tt> subdirectory 
 where Ant will run, and load it with source, tests and resources.
 It will also create and populate directories for xml, libraries, etc in the 
 project directory.
-<LI>Change to the newly created java subdirectory. To compile, type "ant debug". 
-<LI>To run the program, type "ant decoderpro" or "ant jmridemo", and sit back to watch it go.
-<LI>To run the test suite, type "ant alltest".
-<LI>To build a jmri.jar file, type "ant dist".
-Note that you don't have to create the jmri.jar file to run the program.
+<LI>Change to the newly created <tt>jmri</tt> subdirectory. To compile, type <tt>ant debug</tt>. 
+<LI>To run the program, type <tt>ant decoderpro</tt> or <tt>ant jmridemo</tt>, and sit back to watch it go.
+<LI>To run the test suite, type <tt>ant alltest</tt>.
+<LI>To build a jmri.jar file, type <tt>ant dist</tt>.
+Note that you don't have to create the <tt>jmri.jar</tt> file to run the program.
 <LI>To erase all previously compiled results and force the program to 
-be entirely built from scratch, type "ant clean".
+be entirely built from scratch, type <tt>ant clean</tt>.
 </ul>
 
 <p>
-To make sure everything is working, before you e.g. commit back to CVS, please
+To make sure everything is working, before you e.g. commit back to Subversion, please
 do:
 <code>
 <pre>
@@ -66,8 +66,8 @@ do:
 and make sure the tests run cleanly.
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+</div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 
