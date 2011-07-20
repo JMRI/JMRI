@@ -34,7 +34,6 @@
 
   <h1>JMRI: Getting the Code</h1>
 
-
   <h2>Quickstart</h2>
 
   <p>You can download the most recent source code from Subversion using:
@@ -99,7 +98,14 @@
   you'd like to contribute back to the project.  This is where Subversion has tremendous
   advantages; with the appropriate permissions and commands, you can merge your
   changes back into the common source automagically.  Contact us when you're ready to
-  do that or see the <a href="index.shtml#contributing">info on contributing</a>.</p>
+  do that or see the <a href="index.shtml#contributing">info on
+  contributing</a>.</p>
+
+  <h2>Access to Old Releases</h2>
+
+  <p>The best way to retrieve the source for releases 2.12 and earlier
+  is from the <a href="getoldcode.shtml">CVS Repository</a>.  Please
+  see those instructions for details.</p>
 
 
   <!--#include virtual="/Footer" -->
