@@ -133,24 +133,25 @@ is where we are trying to document the structure of the code and how it's evolvi
 
 <p>
 SourceForge.net provides project hosting:<ul>
-<li><A HREF="http://sourceforge.net/projects/jmri/">JMRI project page</A> and 
-<A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788">project statistics</A>.
+<li><a href="http://sourceforge.net/projects/jmri/">JMRI project page</a> and 
+<a href="http://sourceforge.net/export/projhtml.php?group_id=26788">project statistics</a>.
 <li>Trackers for 
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388313">Bugs</A>,
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Feature Requests</A>, and
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</A>.
-<li>SourceForge-hosted <A HREF="http://jmri.cvs.sourceforge.net/">CVS Repository</A>
-which you can <A HREF="http://jmri.cvs.sourceforge.net/">browse through</a>.
+<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388313">Bugs</a>,
+<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Feature Requests</a>, and
+<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</a>.
+<li>SourceForge-hosted <a href="http://jmri.svn.sourceforge.net/svnroot/jmri/">Subversion Repository</a>
+which you can <a href="http://jmri.svn.sourceforge.net/viewvc/jmri/">browse through</a>.
 </ul>
 
 <h2>Code</h2>
-All of the JMRI code is available from CVS.  See the 
-<a href="getcode.shtml">"Getting the code via CVS"</a> and
-<a href="CVSFAQ.shtml">"CVS FAQ"</a>
+All of the JMRI code is available from Subversion.  See the 
+<a href="getcode.shtml">"Getting the code via Subversion"</a> and
+<a href="SVNFAQ.shtml">"SVN FAQ"</a>
 pages for more information on how to do that. 
 <p>
 If you just want to look at the contents of a few files, you can 
-<A HREF="http://jmri.cvs.sourceforge.net/">browse CVS</a> over the web.
+<a href="http://jmri.svn.sourceforge.net/svnroot/jmri/">browse the
+Subversion repository</a> over the web.
 
 <h2>Building Your Own Copy</h2>
 
@@ -178,7 +179,7 @@ and compile it from a command line, please see the page of instructions for
 <a href="Ant.shtml">building with Ant</a>.
 
 
-<h2><A name="contributing">Contributing</h2></a>
+<h2><a name="contributing">Contributing</h2></a>
 
 We encourage contributions of code, decoder definitions, improvements to 
 web pages, etc, to the JMRI project so that 
@@ -186,11 +187,11 @@ we can distribute them to the rest of the community.
 <P>
 For your first small contributions, e.g. a new decoder file or small bug fix,
 please fill out a new "Patches" entry on SourceForge using 
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">our patches page</a>
+<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">our patches page</a>
 (click new on the middle-left, then fill out the resulting form).
 You can attach the entire file there.  If it's multiple files,
 and you're using an IDE like
-<A HREF="">NetBeans</a>, it's very easy to create a "diff patch file"
+<a href="NetBeans.shtml">NetBeans</a>, it's very easy to create a "diff patch file"
 to carry your changes, and that will save us a significant amount of
 work merging them in.  Please see the 
 <A href="NetBeans.shtml#patch">instructions for creating a patch file with NetBeans</a>.
@@ -198,12 +199,12 @@ work merging them in.  Please see the
 <P>
 It saves us a lot of work if, before you create and send the patch file, 
 you make sure that your copy of the code is up to date, and that the
-<A HREF="JUnit.shtml#run">unit tests<a/>
+<a href="JUnit.shtml#run">unit tests<a/>
 all work.
 <P>
 If you are doing a significant amount of development, please
 contact us so the we can make it possible to directly
-commit your changes into our CVS repository.
+commit your changes into our Subversion repository.
 <P>
 When you contribute your code to JMRI for the first time, 
 we'll ask you to sign an assignment form that
@@ -211,16 +212,16 @@ allows us to register copyright on the code, and
 gives us
 unlimited-duration license to 
 redistribute it consistent with the 
-<A HREF="#use">JMRI licensing</a>. 
+<a href="#use">JMRI licensing</a>. 
 (We regret this paperwork, but
-<A HREF="http://jmri.sourceforge.net/k/copycomparison.html">Matt Katzer's misuse of copyright</a>
+<a href="http://jmri.sourceforge.net/k/copycomparison.html">Matt Katzer's misuse of copyright</a>
 makes it necessary).
 If other people also
 helped with the contribution, please let us know so
 we can add them to the 
-<A HREF="../../../Acknowledgements.shtml">acknowledgements page</a>.
+<a href="../../../Acknowledgements.shtml">acknowledgements page</a>.
 
-<h2><A name="use">Licensing</h2></a>
+<h2><a name="use">Licensing</h2></a>
 
 We encourage people to build their own projects on top of JMRI.  That's the original reason
 that the project was started!
@@ -231,22 +232,22 @@ We use version 2 of the license, along with the "classpath exception"
 allowing people to link JMRI with their own code under more relaxed conditions.
 Copies of the license are distributed with the source and executable downloads,
 and can be gotten from 
-<A HREF="../../../COPYING">the web</a>. 
+<a href="../../../COPYING">the web</a>. 
 
 <P>
 This is both an "open source" and a "free" license.
 For more information
 on those definitions, please see the
-<A HREF="http://www.opensource.org/">Open Source Initiative</a>
+<a href="http://www.opensource.org/">Open Source Initiative</a>
 web pages, including their
-<A HREF="http://www.opensource.org/docs/definition.php">description of what Open Source means</a>,
+<a href="http://www.opensource.org/docs/definition.php">description of what Open Source means</a>,
 and the 
-<A HREF="http://www.gnu.org/">Free Software Foundation</a> web pages, particularly their 
-<A HREF="http://www.gnu.org/licenses/">licensing page</a>.
+<a href="http://www.gnu.org/">Free Software Foundation</a> web pages, particularly their 
+<a href="http://www.gnu.org/licenses/">licensing page</a>.
 <P>
 Informally, the license means that there are only a few limitations on what you
 can do with JMRI.  (Check the exact wording in 
-<A HREF="../../../COPYING">the license</a>
+<a href="../../../COPYING">the license</a>
 for the details behind the following summary):
 <UL>
 <LI>You can redistribute it, for free or for a charge to cover your costs.  
@@ -267,7 +268,7 @@ their content.
 </UL>
 
 If you have any questions about this, please 
-<A HREF="mailto:jmri@pacbell.net">contact us</a>
+<a href="mailto:jmri@pacbell.net">contact us</a>
 directly.
 
 <h2>Developer Code Swarm</h2>
