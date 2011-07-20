@@ -55,9 +55,10 @@ We provide these separately:
 <ol>
 <li>Run-time user information is made available by putting the help system
 on the web site.
-<li>Other user information is stored in CVS as the site.new module, and
+<li>Other user information is stored in Subversion as the
+  <tt>trunk/jmri-website</a> directory and
 placed directly on the web site.
-<li>Reference information is put on the web site from their own CVS modules,
+<li>Reference information is put on the web site from their own Subversion modules,
 or created by automated Ant scripts during release builds.
 </ol>
 
@@ -89,17 +90,17 @@ so that people who request just a directory URL will be served something useful)
 <h2>Directory Organization</h2>
 
 The web site contains several separate areas, which translate to different 
-CVS modules:
+SVN directories:
 <UL>
 <LI>jython, resources, xml - these are taken directly from the
-CVS modules of the same name. They are only occasionally referenced
+directories of the same name under <tt>trunk/jmri/</tt>. They are only occasionally referenced
 directly.
-<LI>help - from the CVS module and JavaHelp system, this has the internal
+<LI>help - from the Subversion module and JavaHelp system, this has the internal
 structure described below and on our
 <A HREF="Help.shtml">JavaHelp</a>
 page.
 </ul>
-The rest are from the site.new CVS module, and are checked out at 
+The rest are from the <tt>trunk/jmri-website</tt>, and are checked out at 
 the root of the web server.
 <ul>
 <LI>releasenotes - Specific information on each test and production release
@@ -182,19 +183,14 @@ cd /Library/WebServer/Documents
 </PRE>
     <LI>Check out the relevant files
 <PRE>
-cvs co site.new
-mv site.new/* .
-mv site.new/.cvsignore .
-rmdir site.new
-cvs co help
-cvs co jython
-cvs co resources
-cvs co xml
+# the trailing dot on the next line is important!
+svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri-website .  
+svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/help 
+svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/jython
+svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/resources
+svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/xml
 </PRE>
-The "mv" commands move the files from the CVS "site.new" module
-to the root level of the webservers file space, so that 
-they're accessible as simple URLs.
-    </UL>
+</UL>
 <LI>Restart your computer to reinitialize the web server.
 <LI>Test it by trying to display the URL
 <A HREF="http://localhost/">http://localhost/</a>, 
