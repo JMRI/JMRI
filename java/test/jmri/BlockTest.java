@@ -24,7 +24,6 @@ public class BlockTest extends TestCase {
 	}
 
 	public void testSensorAdd() {
-	    SensorManager sm = new jmri.managers.InternalSensorManager();
 	    Block b = new Block("SystemName");
 	    b.setSensor("IS12");
 	}
