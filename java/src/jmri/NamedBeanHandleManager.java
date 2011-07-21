@@ -28,16 +28,20 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     public NamedBeanHandleManager(){
         super();
     }
-    
+    @SuppressWarnings("unchecked")
+    //Checks are performed to make sure that the beans are the same type before being returned
     public <T> NamedBeanHandle<T> getNamedBeanHandle(String name, T bean){
+        if (bean==null || name==null || name.equals(""))
+            return null;
         NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
-        for(int i = 0; i<namedBeans.size(); i++){
-            if(namedBeans.get(i).equals(temp)){
-                temp=null;
-                return namedBeans.get(i);
+        
+        for (NamedBeanHandle h : namedBeanHandles ) {
+            if (temp.equals(h)){
+                temp = null;
+                return h;
             }
         }
-        namedBeans.add(temp);
+        namedBeanHandles.add(temp);
         return temp;
     }
     
@@ -55,17 +59,12 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         multiple named bean entries for one name.
         */
         NamedBeanHandle<T> oldBean = new NamedBeanHandle<T>(oldName, bean);
-        ArrayList<NamedBeanHandle> oldRefs = new ArrayList<NamedBeanHandle>();
-        for(int i = 0; i<namedBeans.size(); i++){
-            if(namedBeans.get(i).equals(oldBean)){
-                oldRefs.add(namedBeans.get(i));
+        for (NamedBeanHandle h : namedBeanHandles ) {
+            if (oldBean.equals(h)){
+                h.setName(newName);
             }
         }
         oldBean=null;
-        
-        for(int i= 0; i<oldRefs.size(); i++){
-            oldRefs.get(i).setName(newName);
-        }
     }
     
     /**
@@ -73,6 +72,8 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     *  This method only updates the references to point to the new bean
     *  It does not move the name provided from one bean to another.
     */
+    @SuppressWarnings("unchecked")
+    //Checks are performed to make sure that the beans are the same type before being moved
     public <T> void moveBean(T oldBean, T newBean, String name){
         /*Gather a list of the beans in the system with the oldBean ref.
         Although when a new bean is requested, we always return the first one that exists
@@ -82,24 +83,18 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         */
         
         NamedBeanHandle<T> oldNamedBean = new NamedBeanHandle<T>(name, oldBean);
-        ArrayList<NamedBeanHandle<T>> oldRefs = new ArrayList<NamedBeanHandle<T>>();
-        for(int i = 0; i<namedBeans.size(); i++){
-            if(namedBeans.get(i).equals(oldNamedBean)){
-                oldRefs.add(namedBeans.get(i));
-            }
+        for (NamedBeanHandle h : namedBeanHandles ) {
+            if (oldNamedBean.equals(h))
+                h.setBean(newBean);
         }
         oldNamedBean=null;
-        
-        for(int i= 0; i<oldRefs.size(); i++){
-            oldRefs.get(i).setBean(newBean);
-        }
     }
     
     public void updateBeanFromUserToSystem(NamedBean bean){
         String systemName = bean.getSystemName();
-        for(int i = 0; i<namedBeans.size(); i++){
-            if(namedBeans.get(i).getBean().equals(bean))
-                namedBeans.get(i).setName(systemName);
+        for (NamedBeanHandle h : namedBeanHandles ) {
+            if (h.getBean().equals(bean))
+                h.setName(systemName);
         }
     }
     
@@ -110,17 +105,17 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
             return;
         }
         
-        for(int i = 0; i<namedBeans.size(); i++){
-            if(namedBeans.get(i).getBean().equals(bean))
-                namedBeans.get(i).setName(userName);
+        for (NamedBeanHandle h : namedBeanHandles ) {
+            if (h.getBean().equals(bean))
+                h.setName(userName);
         }
     }
     
     public <T> boolean inUse(String name, T bean){
         NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
-        for(int i = 0; i<namedBeans.size(); i++){
-            if(namedBeans.get(i).equals(temp)){
-                temp=null;
+        for (NamedBeanHandle h : namedBeanHandles ) {
+            if (temp.equals(h)){
+                temp = null;
                 return true;
             }
         }
@@ -138,7 +133,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         super.dispose();
     }
     
-    ArrayList<NamedBeanHandle> namedBeans = new ArrayList<NamedBeanHandle>();
+    ArrayList<NamedBeanHandle> namedBeanHandles = new ArrayList<NamedBeanHandle>();
     
     /**
      * Don't want to store this information
