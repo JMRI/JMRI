@@ -92,7 +92,7 @@ so that people who request just a directory URL will be served something useful)
 The web site contains several separate areas, which translate to different 
 SVN directories:
 <UL>
-<LI>jython, resources, xml - these are taken directly from the
+<LI>jython, resources, xml, web - these are taken directly from the
 directories of the same name under <tt>trunk/jmri/</tt>. They are only occasionally referenced
 directly.
 <LI>help - from the Subversion module and JavaHelp system, this has the internal
@@ -188,6 +188,7 @@ svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri-website .
 svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/help 
 svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/jython
 svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/resources
+svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/web
 svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/xml
 </PRE>
 </UL>
