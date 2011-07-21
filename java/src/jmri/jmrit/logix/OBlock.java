@@ -10,6 +10,7 @@ import java.util.List;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 /**
  * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It is the smallest
@@ -126,6 +127,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private float _scaleRatio   = 87.1f;
     private boolean _metric     = false; // desired display mode
     private Sensor _errSensor;      // optional sensor to indicate shorts or other power problems
+    private NamedBeanHandle<Sensor> _errNamedSensor;
     
     public OBlock(String systemName) {
         super(systemName);
@@ -136,26 +138,50 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         super(systemName, userName);
         setState(DARK);
     }
+    
     // override to determine if not DARK
-    public void setSensor(Sensor sensor) {
-        super.setSensor(sensor);
-        if (sensor!=null) {
-            setState(getState() & ~DARK);
+    public void setSensor(String pName){
+        super.setSensor(pName);
+        if(getSensor()!=null){
+            setState(getSensor().getState() & ~DARK);
+        }
+        if (log.isDebugEnabled()) log.debug("setSensor block \""+getDisplayName()+"\" state= "+getState());
+    }
+    
+    // override to determine if not DARK
+    public void setNamedSensor(NamedBeanHandle<Sensor> namedSensor){
+        super.setNamedSensor(namedSensor);
+        if(namedSensor!=null){
+            setState(getSensor().getState() & ~DARK);
         }
         if (log.isDebugEnabled()) log.debug("setSensor block \""+getDisplayName()+"\" state= "+getState());
     }
 
-    public void setErrorSensor(Sensor sensor) {
-        if (_errSensor != null) {
-            _errSensor.removePropertyChangeListener(this);
+    public void setErrorSensor(String pName) {
+        if (getErrorSensor() != null) {
+            getErrorSensor().removePropertyChangeListener(this);
         }
-        _errSensor = sensor;
-        if (_errSensor != null) {
-            _errSensor.addPropertyChangeListener(this);
+        
+        if (jmri.InstanceManager.sensorManagerInstance()!=null) {
+            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(pName);
+            if (sensor != null) {
+                _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
+                getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
+            } else {
+                _errNamedSensor = null;
+                log.error("Sensor '"+pName+"' not available");
+            }
+        } else {
+            log.error("No SensorManager for this protocol");
         }
     }
+    
     public Sensor getErrorSensor() {
-        return _errSensor;
+        return _errNamedSensor.getBean();
+    }
+    
+    public NamedBeanHandle getNamedErrorSensor() {
+        return _errNamedSensor;
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {

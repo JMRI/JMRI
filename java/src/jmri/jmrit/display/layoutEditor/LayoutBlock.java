@@ -6,6 +6,7 @@ import jmri.util.JmriJFrame;
 import jmri.Path;
 import jmri.Block;
 import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -86,7 +87,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	public static final int UNKNOWN = jmri.Sensor.UNKNOWN;  // must be a different bit
 	// operational instance variables (not saved to disk)
 	private int useCount = 0;
-	private Sensor occupancySensor = null;
+    private NamedBeanHandle<Sensor> occupancyNamedSensor = null;
 	private jmri.Memory memory = null;
 	private jmri.Block block = null;
 	//private int maxBlockNumber = 0;
@@ -100,7 +101,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	// persistent instances variables (saved between sessions)
 	public String blockName = "";
 	public String lbSystemName = "";
-	public String occupancySensorName = "";
+    public String occupancySensorName = "";
 	public String memoryName = "";
 	public int occupiedSense = Sensor.ACTIVE;
 	public Color blockTrackColor = Color.black;
@@ -149,8 +150,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 						handleBlockChange(e);
 					}
 				});
-			if (occupancySensor!=null) {			
-				block.setSensor(occupancySensor);
+			if (occupancyNamedSensor!=null) {			
+				block.setNamedSensor(occupancyNamedSensor);
 			}
 		}
             if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){                
@@ -265,14 +266,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 			sensorName = sensorName.toUpperCase();
 		}
 		// ensure that this sensor is unique among defined Layout Blocks
-		Sensor savedSensor = occupancySensor;
-		//String savedName = occupancySensorName;
-		occupancySensor = null;
+		NamedBeanHandle<Sensor> savedNamedSensor = occupancyNamedSensor;
+		occupancyNamedSensor = null;
 		LayoutBlock b = InstanceManager.layoutBlockManagerInstance().
 											getBlockWithSensorAssigned(s);
 		if (b!=null) {
 			// new sensor is not unique, return to the old one
-			occupancySensor = savedSensor;
+			occupancyNamedSensor = savedNamedSensor;
 			JOptionPane.showMessageDialog(openFrame,
 					java.text.MessageFormat.format(rb.getString("Error6"),
 					new Object[]{sensorName,b.getID()}),
@@ -356,25 +356,32 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 * Returns occupancy Sensor name
 	*/
 	public String getOccupancySensorName() {
-		return (occupancySensorName);
+        if(occupancyNamedSensor!=null){
+            return occupancyNamedSensor.getName();
+        }
+        return occupancySensorName;
 	}
 			
 	/**
 	 * Returns occupancy Sensor
 	*/
 	public Sensor getOccupancySensor() {
-		return (occupancySensor);
+        if(occupancyNamedSensor!=null)
+            return occupancyNamedSensor.getBean();
+        return null;
 	}
 
 	/**
 	 * Add occupancy sensor by name
 	 */
 	public void setOccupancySensorName(String name) {
-		occupancySensorName = name;
-		occupancySensor = jmri.InstanceManager.sensorManagerInstance().
+        occupancySensorName = name;
+        Sensor sensor = jmri.InstanceManager.sensorManagerInstance().
                             getSensor(name);
-		if (block!=null) {
-			block.setSensor(occupancySensor);
+        if (sensor!=null){
+            occupancyNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
+            if (block!=null)
+                block.setNamedSensor(occupancyNamedSensor);
 		}
 	}
 	
@@ -388,18 +395,23 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 * Test block occupancy
 	 */
 	public int getOccupancy() {
-		if ( (occupancySensor == null) || (occupancySensorName.equals("")) ) {
-			occupancySensor = jmri.InstanceManager.sensorManagerInstance().
+    
+        if(occupancyNamedSensor == null) {
+			Sensor s = jmri.InstanceManager.sensorManagerInstance().
                             getSensor(occupancySensorName);
-			if (occupancySensor == null) {			
+			if (s == null) {			
 				// no occupancy sensor
 				return (UNKNOWN);
 			}
-		}
-		if (occupancySensor.getKnownState() != occupiedSense) {
+            occupancyNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(occupancySensorName, s);
+            if (block!=null)
+                block.setNamedSensor(occupancyNamedSensor);
+        }
+    
+		if (getOccupancySensor().getKnownState() != occupiedSense) {
 			return (EMPTY);
 		}
-		else if (occupancySensor.getKnownState() == occupiedSense) {
+		else if (getOccupancySensor().getKnownState() == occupiedSense) {
 			return (OCCUPIED);
 		}
 		return (UNKNOWN);
@@ -494,7 +506,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     
 	private void updateBlockPaths(ArrayList<LayoutConnectivity> c, LayoutEditor panel) {
         if(enableAddRouteLogging)
-            System.out.println("From " + this.getDisplayName() + " updatePaths Called");
+            log.info("From " + this.getDisplayName() + " updatePaths Called");
 		LayoutEditorAuxTools auxTools = new LayoutEditorAuxTools(panel);
 		java.util.List<jmri.Path> paths = block.getPaths();
 		boolean[] used = new boolean[c.size()];
@@ -566,7 +578,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				}
 				block.addPath(newp);
                 if(enableAddRouteLogging)
-                    System.out.println("From " + this.getDisplayName() + " updateBlock Paths");
+                    log.info("From " + this.getDisplayName() + " updateBlock Paths");
                 if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
                     addAdjacency(newp);
 				//else log.error("Trouble adding Path to block '"+blockName+"'.");
@@ -789,7 +801,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		}
 		// Set up for Edit
 		blockUseLabel.setText(rb.getString("UseCount")+": "+useCount );
-		sensorNameField.setText(occupancySensorName);
+		sensorNameField.setText(getOccupancySensorName());
 		if (occupiedSense==Sensor.ACTIVE) {
 			senseBox.setSelectedIndex(senseActiveIndex);
 		}
@@ -813,13 +825,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	void blockEditDonePressed(ActionEvent a) {
 		boolean needsRedraw = false;
 		// check if Sensor changed
-		if ( !occupancySensorName.equals(sensorNameField.getText().trim()) ) {
+		if ( !(getOccupancySensorName()).equals(sensorNameField.getText().trim()) ) {
 			// sensor has changed
 			String newName = sensorNameField.getText().trim();
 			if (validateSensor(newName,editLayoutBlockFrame)==null) {
 				// invalid sensor entered
-				occupancySensor = null;
-				occupancySensorName = "";
+				occupancyNamedSensor = null;
+                occupancySensorName = "";
 				sensorNameField.setText("");
 				return;
 			}

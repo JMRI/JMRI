@@ -76,10 +76,6 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         if (icon!=null) {
             elem.addContent(storeIcon("green", icon));
         }
-        icon = p.getIcon(rbean.getString("SignalHeadStateFlashingYellow"));
-        if (icon!=null) {
-            elem.addContent(storeIcon("flashyellow", icon));
-        }
         icon = p.getIcon(rbean.getString("SignalHeadStateLunar"));
         if (icon!=null) {
             elem.addContent(storeIcon("lunar", icon));
@@ -87,6 +83,10 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         icon = p.getIcon(rbean.getString("SignalHeadStateFlashingRed"));
         if (icon!=null) {
             elem.addContent(storeIcon("flashred", icon));
+        }
+        icon = p.getIcon(rbean.getString("SignalHeadStateFlashingYellow"));
+        if (icon!=null) {
+            elem.addContent(storeIcon("flashyellow", icon));
         }
         icon = p.getIcon(rbean.getString("SignalHeadStateFlashingGreen"));
         if (icon!=null) {

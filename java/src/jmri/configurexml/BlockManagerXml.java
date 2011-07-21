@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 import java.util.List;
 import jmri.Reporter;
@@ -101,11 +102,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     perm = "yes";
                 elem.addContent(new Element("permissive").addContent(perm));
                 // Add content. First, the sensor.
-                Sensor s = b.getSensor();
-                if (s!=null) {
-                    Element se = new Element("sensor");
-                    se.setAttribute("systemName", s.getSystemName());
-                    elem.addContent(se);
+                if (b.getNamedSensor()!=null) {
+                    elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
                 }
 
                 // Now the Reporter
@@ -246,10 +244,17 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             List<Element> sensors = element.getChildren("sensor");
             if (sensors.size()>1) log.error("More than one sensor present: "+sensors.size());
             if (sensors.size()==1) {
-                // sensor
-                String name = sensors.get(0).getAttribute("systemName").getValue();
-                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
-                block.setSensor(sensor);
+                //Old method of saving sensors
+                if(sensors.get(0).getAttribute("systemName")!=null){
+                    String name = sensors.get(0).getAttribute("systemName").getValue();
+                    if (!name.equals(""))
+                        block.setSensor(name);
+                }
+            }
+            if(element.getChild("occupancysensor")!=null){
+                String name = element.getChild("occupancysensor").getText();
+                if(!name.equals(""))
+                    block.setSensor(name);
             }
 
             // load Reporter if present

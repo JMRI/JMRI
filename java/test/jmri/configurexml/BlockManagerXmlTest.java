@@ -39,7 +39,7 @@ public class BlockManagerXmlTest extends TestCase {
         Sensor s2 = new AbstractSensor("IS2"){
             public void requestUpdateFromLayout() {}
         };
-        b2.setSensor(s2);
+        b2.setSensor("IS2");
         s2.setState(Sensor.ACTIVE);
         b2.setValue("b2 contents");
         

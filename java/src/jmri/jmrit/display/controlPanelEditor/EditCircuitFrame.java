@@ -361,7 +361,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         // check Sensors
         String sensorName = _detectorSensorName.getText();
         Sensor sensor = getSensor(sensorName);
-        _block.setSensor(sensor);
+        _block.setSensor(sensorName);
         if (sensor==null) {
             JOptionPane.showMessageDialog(this, rbcp.getString("noDetecterSensor"), 
                             rbcp.getString("noSensor"), JOptionPane.INFORMATION_MESSAGE);
@@ -369,13 +369,13 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         String errorName = _errorSensorName.getText();
         Sensor errSensor = getSensor(errorName);
-        _block.setErrorSensor(errSensor);
+        _block.setErrorSensor(errorName);
         if (errSensor!=null && sensor==null) {
             int result = JOptionPane.showConfirmDialog(this, rbcp.getString("mixedSensors"), 
                             rbcp.getString("noSensor"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.QUESTION_MESSAGE);
             if (result==JOptionPane.YES_OPTION) {
-                _block.setSensor(errSensor);
+                _block.setSensor(errorName);
                 _block.setErrorSensor(null);
                 _detectorSensorName.setText(errSensor.getDisplayName());
             }

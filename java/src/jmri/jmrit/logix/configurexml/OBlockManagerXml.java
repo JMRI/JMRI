@@ -63,16 +63,14 @@ public class OBlockManagerXml // extends XmlFile
             }
             elem.setAttribute("length", ""+block.getLengthMm());
             elem.setAttribute("curve", ""+block.getCurvature());
-            Sensor s = block.getSensor();
-            if (s!=null) {
+            if (block.getNamedSensor()!=null) {
                 Element se = new Element("sensor");
-                se.setAttribute("systemName", s.getSystemName());
+                se.setAttribute("systemName", block.getNamedSensor().getName());
                 elem.addContent(se);
             }
-            s = block.getErrorSensor();
-            if (s!=null) {
+            if (block.getNamedErrorSensor()!=null) {
                 Element se = new Element("errorSensor");
-                se.setAttribute("systemName", s.getSystemName());
+                se.setAttribute("systemName", block.getNamedErrorSensor().getName());
                 elem.addContent(se);
             }
             List<Path> paths = block.getPaths();
@@ -278,15 +276,14 @@ public class OBlockManagerXml // extends XmlFile
             if (sensors.size()>0) {
                 // sensor
                 String name = sensors.get(0).getAttribute("systemName").getValue();
-                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
-                block.setSensor(sensor);
+                block.setSensor(name);
             }
             Element errSensor = elem.getChild("errorSensor");
             if (errSensor!=null) {
                 // sensor
                 String name = errSensor.getAttribute("systemName").getValue();
-                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
-                block.setErrorSensor(sensor);
+                //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
+                block.setErrorSensor(name);
             }
             List<Element> paths = elem.getChildren("path");
             for (int j=0; j<paths.size(); j++) {

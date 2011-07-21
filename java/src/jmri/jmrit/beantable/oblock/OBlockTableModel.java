@@ -203,7 +203,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                     try {
                         sensor = InstanceManager.sensorManagerInstance().getSensor(tempRow[SENSORCOL]);
                         if (sensor!=null) {
-                            block.setSensor(sensor);
+                            block.setSensor(tempRow[SENSORCOL]);
                         }
                     } catch (Exception ex) {
                         log.error("No Sensor named \""+(String)value+"\" found. threw exception: "+ ex);
@@ -265,11 +265,8 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                         block.setSensor(null);
                         block.setState(OBlock.DARK);
                     } else {
-                        Sensor s = InstanceManager.sensorManagerInstance().getSensor((String)value);
-                        if (s!=null) {
-                            block.setSensor(s);
-                            fireTableRowsUpdated(row,row);
-                        }
+                        block.setSensor((String)value);
+                        fireTableRowsUpdated(row,row);
                     }
                     return;
                 } catch (Exception ex) {

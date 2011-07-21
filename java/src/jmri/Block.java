@@ -111,7 +111,40 @@ public class Block extends jmri.implementation.AbstractNamedBean {
 	static final public int TIGHT = 0x02;
 	static final public int SEVERE = 0x04;
     
-    public void setSensor(Sensor sensor) {
+    public void setSensor(String pName){
+        if (InstanceManager.sensorManagerInstance()!=null) {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+            if (sensor != null) {
+                setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
+            } else {
+                setNamedSensor(null);
+                log.error("Sensor '"+pName+"' not available");
+            }
+        } else {
+            log.error("No SensorManager for this protocol");
+        }
+    }
+    
+    public void setNamedSensor(NamedBeanHandle<Sensor> s) {
+        if (_namedSensor != null) {
+            if (_sensorListener != null) {
+				getSensor().removePropertyChangeListener(_sensorListener);
+				_sensorListener = null;
+			}
+        }
+        _namedSensor = s;
+        
+        if(_namedSensor !=null){
+            getSensor().addPropertyChangeListener(_sensorListener = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) { handleSensorChange(e); }
+            }, s.getName(), "Block Sensor " + getDisplayName());
+            _current = getSensor().getState();
+        } else {
+            _current = UNOCCUPIED;
+        }
+    }
+    
+    /*public void setSensor(Sensor sensor) {
         if (_sensor!=null) {
 			// remove sensor listener
 			if (_sensorListener != null) {
@@ -129,9 +162,16 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         } else {
             _current = UNOCCUPIED;    // return to default state at init.
         }
+    }*/
+    public Sensor getSensor() { 
+        if (_namedSensor!=null)
+            return _namedSensor.getBean();
+        return null;
     }
-    public Sensor getSensor() { return _sensor; }
 
+    public NamedBeanHandle <Sensor> getNamedSensor() {
+        return _namedSensor;
+    }
 
     /**
      * Set the Reporter that should provide the data value for this block.
@@ -310,7 +350,8 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     
     // internal data members
     private int _current = UNOCCUPIED; // state
-    private Sensor _sensor = null;
+    //private Sensor _sensor = null;
+    private NamedBeanHandle<Sensor> _namedSensor = null;
 	private java.beans.PropertyChangeListener _sensorListener = null;
     private Object _value;
     private int _direction;
@@ -326,7 +367,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
      */
     void handleSensorChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) {
-            int state = _sensor.getState();
+            int state = getSensor().getState();
             if (state == Sensor.ACTIVE) goingActive();
             else if (state == Sensor.INACTIVE) goingInactive();
             else if (state == Sensor.UNKNOWN) {

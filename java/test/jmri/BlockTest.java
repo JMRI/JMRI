@@ -26,7 +26,7 @@ public class BlockTest extends TestCase {
 	public void testSensorAdd() {
 	    SensorManager sm = new jmri.managers.InternalSensorManager();
 	    Block b = new Block("SystemName");
-	    b.setSensor(sm.provideSensor("IS12"));
+	    b.setSensor("IS12");
 	}
 
     static int count; 
@@ -39,7 +39,8 @@ public class BlockTest extends TestCase {
                 count++;
             }
 	    };
-	    b.setSensor(sm.provideSensor("IS12"));
+        Sensor s = sm.provideSensor("IS12");
+	    b.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS12", s));
 	    sm.provideSensor("IS12").setState(jmri.Sensor.ACTIVE);
 	    Assert.assertEquals("count of detected changes", 1, count);
 	}
@@ -57,7 +58,7 @@ public class BlockTest extends TestCase {
 	    Block b = new Block("SystemName");
 	    Sensor s = sm.provideSensor("IS12");
 	    Assert.assertEquals("Initial state", Block.UNKNOWN, s.getState());
-	    b.setSensor(s);
+	    b.setSensor("IS12");
 	    s.setState(jmri.Sensor.ACTIVE);
 	    Assert.assertEquals("State with sensor active", Block.OCCUPIED, s.getState());
 	    s.setState(jmri.Sensor.INACTIVE);
@@ -73,7 +74,7 @@ public class BlockTest extends TestCase {
 
 	    Block b2 = new Block("SystemName2");
         Sensor s2 = sm.provideSensor("IS2");
-        b2.setSensor(s2);
+        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
         s2.setState(Sensor.ACTIVE);
         b2.setValue("b2 contents");
         
@@ -97,16 +98,16 @@ public class BlockTest extends TestCase {
 	    Block b3 = new Block("SystemName3");
 
         Sensor s1 = sm.provideSensor("IS1");
-        b1.setSensor(s1);
+        b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
         s1.setState(Sensor.ACTIVE);
         b1.setValue("b1 contents");
         
         Sensor s2 = sm.provideSensor("IS2");
-        b2.setSensor(s2);
+        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
         s2.setState(Sensor.INACTIVE);
         
         Sensor s3 = sm.provideSensor("IS3");
-        b3.setSensor(s3);
+        b3.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
         s3.setState(Sensor.INACTIVE);
         
         Path p21 = new Path();
@@ -139,17 +140,17 @@ public class BlockTest extends TestCase {
 	    Block b3 = new Block("SystemName3");
 
         Sensor s1 = sm.provideSensor("IS1");
-        b1.setSensor(s1);
+        b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
         s1.setState(Sensor.ACTIVE);
         b1.setValue("b1 contents");
         b1.setDirection(Path.RIGHT);
         
         Sensor s2 = sm.provideSensor("IS2");
-        b2.setSensor(s2);
+        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
         s2.setState(Sensor.INACTIVE);
         
         Sensor s3 = sm.provideSensor("IS3");
-        b3.setSensor(s3);
+        b3.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
         s3.setState(Sensor.ACTIVE);
         b3.setValue("b3 contents");
         b3.setDirection(Path.RIGHT);
@@ -257,7 +258,10 @@ public class BlockTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp();
+        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
