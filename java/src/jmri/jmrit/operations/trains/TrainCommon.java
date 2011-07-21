@@ -180,6 +180,8 @@ public class TrainCommon {
 	protected String getEngineAttribute(Engine engine, String attribute, boolean pickup){
 		if (attribute.equals(Setup.MODEL))
 			return " "+ engine.getModel();
+		if (attribute.equals(Setup.CONSIST))
+			return " "+ engine.getConsistName();
 		return getRollingStockAttribute(engine, attribute, pickup, false);
 	}
 	
@@ -193,6 +195,8 @@ public class TrainCommon {
 			return " "+CarLoads.instance().getDropComment(car.getType(), car.getLoad());
 		else if (attribute.equals(Setup.PICKUP_COMMENT))
 			return " "+CarLoads.instance().getPickupComment(car.getType(), car.getLoad());
+		else if (attribute.equals(Setup.KERNEL))
+			return " "+tabString(car.getKernelName(), Control.MAX_LEN_STRING_ATTRIBUTE);
 		return getRollingStockAttribute(car, attribute, pickup, local);
 	}
 

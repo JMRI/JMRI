@@ -120,6 +120,8 @@ public class Setup {
 	public static final String DESTINATION = rb.getString("Destination");
 	public static final String DEST_TRACK = rb.getString("DestAndTrack");
 	public static final String LOCATION = rb.getString("Location");
+	public static final String CONSIST = rb.getString("Consist");
+	public static final String KERNEL = rb.getString("Kernel");
 	public static final String COMMENT = rb.getString("Comment");
 	public static final String DROP_COMMENT = rb.getString("DropComment");
 	public static final String PICKUP_COMMENT = rb.getString("PickupComment");
@@ -881,6 +883,7 @@ public class Setup {
 		box.addItem(TYPE);
 		box.addItem(MODEL);
 		box.addItem(LENGTH);
+		box.addItem(CONSIST);
 		box.addItem(LOCATION);
 		box.addItem(DESTINATION);
 		box.addItem(COMMENT);
@@ -897,6 +900,7 @@ public class Setup {
 		box.addItem(LOAD);
 		box.addItem(HAZARDOUS);
 		box.addItem(COLOR);
+		box.addItem(KERNEL);
 		box.addItem(LOCATION);
 		box.addItem(DESTINATION);
 		box.addItem(DEST_TRACK);
