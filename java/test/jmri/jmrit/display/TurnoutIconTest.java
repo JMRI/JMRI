@@ -35,7 +35,8 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
             }
         };
         Assert.assertNotNull("Instance exists", i );
-        to.setTurnout("IT1");
+        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
 
         // test buttons
         JButton throwButton = new JButton("throw");
@@ -114,6 +115,7 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    
     protected void tearDown() { 
        // now close panel window
         java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
