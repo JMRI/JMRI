@@ -12,7 +12,7 @@ import java.util.StringTokenizer ;
 /**
  * Converts Stream-based I/O to/from LocoNet messages.  The "LocoNetInterface"
  * side sends/receives LocoNetMessage objects.  The connection to
- * a LnPortController is via a pair of *Streams, which then carry sequences
+ * a LnPortnetworkController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.
  *<P>
  * Messages come to this via the main GUI thread, and are forwarded back to
@@ -30,9 +30,9 @@ import java.util.StringTokenizer ;
  * does not extend to uses in other software products.  If you wish to
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
- * @author		Bob Jacobsen  Copyright (C) 2001
- * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision$
+ * @author      Bob Jacobsen  Copyright (C) 2001
+ * @author      Alex Shepherd Copyright (C) 2003, 2006
+ * @version     $Revision$
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -42,45 +42,52 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification="Only used during system initialization")
-  public LnOverTcpPacketizer()
-  {
-    self=this;
-    xmtHandler = new XmtHandler();
-    rcvHandler = new RcvHandler(this) ;
-  }
+    public LnOverTcpPacketizer(){
+        self=this;
+        xmtHandler = new XmtHandler();
+        rcvHandler = new RcvHandler(this) ;
+    }
   
-    public LnNetworkPortController controller = null;
+    public LnNetworkPortController networkController = null;
   
+  
+    @Override
+    public boolean isXmtBusy() {
+        if (networkController == null) return false;
+        
+        return true;
+    }
+    
       /**
-     * Make connection to existing LnPortController object.
-     * @param p Port controller for connected. Save this for a later
+     * Make connection to existing LnPortnetworkController object.
+     * @param p Port networkController for connected. Save this for a later
      *              disconnect call
      */
     public void connectPort(LnNetworkPortController p) {
         istream = p.getInputStream();
         ostream = p.getOutputStream();
-        if (controller != null)
+        if (networkController != null)
             log.warn("connectPort: connect called while connected");
-        controller = p;
+        networkController = p;
     }
 
     /**
-     * Break connection to existing LnPortController object. Once broken,
+     * Break connection to existing LnPortnetworkController object. Once broken,
      * attempts to send via "message" member will fail.
      * @param p previously connected port
      */
     public void disconnectPort(LnNetworkPortController p) {
         istream = null;
         ostream = null;
-        if (controller != p)
-            log.warn("disconnectPort: disconnect called from non-connected LnPortController");
-        controller = null;
+        if (networkController != p)
+            log.warn("disconnectPort: disconnect called from non-connected LnPortnetworkController");
+        networkController = null;
     }
 
   /**
    * Captive class to handle incoming characters.  This is a permanent loop,
    * looking for input messages in character form on the
-   * stream connected to the LnPortController via <code>connectPort</code>.
+   * stream connected to the LnPortnetworkController via <code>connectPort</code>.
    */
   class RcvHandler implements Runnable {
     /**
@@ -191,7 +198,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
               // fired when write-end of HexFile reaches end
               if (debug) log.debug("IOException, should only happen with HexFIle: "+e);
               log.info("End of file");
-//                    disconnectPort(controller);
+//                    disconnectPort(networkController);
               return;
           }
           // normally, we don't catch the unnamed Exception, but in this
@@ -223,8 +230,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                   // input - now send
                   try {
                       if (ostream != null) {
-                          //Commented out as the origianl LnPortController always returned true.
-                          //if (!controller.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
+                          //Commented out as the origianl LnPortnetworkController always returned true.
+                          //if (!networkController.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
                           if (debug) log.debug("start write to stream");
                           StringBuffer packet = new StringBuffer(msg.length * 3 + SEND_PREFIX.length() + 2 ) ;
                           packet.append( SEND_PREFIX ) ;
