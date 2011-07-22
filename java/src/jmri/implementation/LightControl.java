@@ -72,9 +72,15 @@ public class LightControl {
      */
 	public int getControlType() {return _controlType;}
     public void setControlType(int type) {_controlType = type;}
-	public String getControlSensorName() {return _controlSensorName;}
     public void setControlSensorName(String sensorName) {_controlSensorName = sensorName;}     
-	public int getControlSensorSense() {return _controlSensorSense;}         
+	public int getControlSensorSense() {return _controlSensorSense;}
+    
+    public String getControlSensorName() {
+        if (_namedControlSensor!=null)
+            return _namedControlSensor.getName();
+        return _controlSensorName;
+    }
+    
     public void setControlSensorSense(int sense) {_controlSensorSense = sense;}           
     public int getFastClockOnHour() {return _fastClockOnHour;}
 	public int getFastClockOnMin() {return _fastClockOnMin;}             
@@ -90,20 +96,32 @@ public class LightControl {
     public void setControlTurnout(String turnoutName) {_controlTurnoutName = turnoutName;}    
 	public int getControlTurnoutState() {return _turnoutState;}   
 	public void setControlTurnoutState(int state) {_turnoutState = state;}
-	public String getControlTimedOnSensorName() {return _timedSensorName;} 
+    
+	public String getControlTimedOnSensorName() {
+        if(_namedTimedControlSensor!=null)
+            return _namedTimedControlSensor.getName();
+        return _timedSensorName;
+    } 
+    
 	public void setControlTimedOnSensorName(String sensorName) {_timedSensorName = sensorName;} 
 	public int getTimedOnDuration() {return _timeOnDuration;}            
 	public void setTimedOnDuration(int duration) {_timeOnDuration = duration;}
-	public String getControlSensor2Name() {return _controlSensor2Name;}
+    
+	public String getControlSensor2Name() {
+        if (_namedControlSensor2!=null)
+            return _namedControlSensor2.getName();
+        return _controlSensor2Name;
+    }
+    
     public void setControlSensor2Name(String sensorName) {_controlSensor2Name = sensorName;}  	
 	public void setParentLight(Light l) {_parentLight = l;}
 	
 	// operational instance variables - not saved between runs
 	protected Light _parentLight = null;        // Light that is being controlled			
 	private boolean _active = false;
-	protected Sensor _controlSensor = null;
+    protected NamedBeanHandle<Sensor> _namedControlSensor = null;
     private java.beans.PropertyChangeListener _sensorListener = null;
-	protected Sensor _controlSensor2 = null;
+    protected NamedBeanHandle<Sensor> _namedControlSensor2 = null;
     private java.beans.PropertyChangeListener _sensor2Listener = null;
 	private java.beans.PropertyChangeListener _timebaseListener = null;
 	protected Timebase _clock = null;
@@ -111,13 +129,14 @@ public class LightControl {
 	protected int _timeOff = 0;
     protected Turnout _controlTurnout = null;
     private java.beans.PropertyChangeListener _turnoutListener = null;
-    protected Sensor _timedControlSensor = null;
+    protected NamedBeanHandle<Sensor> _namedTimedControlSensor = null;
     private java.beans.PropertyChangeListener _timedSensorListener = null;
 	protected Timer _timedControlTimer = null;
 	protected java.awt.event.ActionListener _timedControlListener = null;
 	private boolean _lightOnTimerActive = false;
 	
-      
+    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+        
     /**
      * Activates a Light Control by control type.  This method tests the 
      *   control type, and set up a control mechanism, appropriate 
@@ -129,13 +148,15 @@ public class LightControl {
             // activate according to control type
             switch (_controlType) {
                 case Light.SENSOR_CONTROL:
-                    _controlSensor = null;
-                    if (_controlSensorName.length()>0)
-                            _controlSensor= InstanceManager.sensorManagerInstance().
+                    _namedControlSensor = null;
+                    if (_controlSensorName.length()>0){
+                        Sensor sen = InstanceManager.sensorManagerInstance().
                                                 provideSensor(_controlSensorName);
-                    if (_controlSensor!=null) {
+                        _namedControlSensor = nbhm.getNamedBeanHandle(_controlSensorName, sen);
+                    }
+                    if (_namedControlSensor!=null) {
 						// if sensor state is currently known, set light accordingly
-						int kState = _controlSensor.getKnownState();
+						int kState = _namedControlSensor.getBean().getKnownState();
 						if (kState==Sensor.ACTIVE) { 
 							if (_controlSensorSense==Sensor.ACTIVE) {
 								// Turn light on
@@ -158,12 +179,12 @@ public class LightControl {
 						}
 					
 						// listen for change in sensor state
-                        _controlSensor.addPropertyChangeListener(_sensorListener =
+                        _namedControlSensor.getBean().addPropertyChangeListener(_sensorListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
 									if (!_parentLight.getEnabled()) return;  // ignore property change if user disabled Light
                                     if (e.getPropertyName().equals("KnownState")) {
-                                        int now = _controlSensor.getKnownState();
+                                        int now = _namedControlSensor.getBean().getKnownState();
                                         if (now==Sensor.ACTIVE) { 
                                             if (_controlSensorSense==Sensor.ACTIVE) {
                                                 // Turn light on
@@ -186,7 +207,7 @@ public class LightControl {
                                         }
                                     }
                                 }
-                        });
+                        }, _controlSensorName, "Light Control " + _parentLight.getDisplayName());
                         _active = true;
                     }
                     else {
@@ -285,18 +306,21 @@ public class LightControl {
                     }
                     break;
                 case Light.TIMED_ON_CONTROL:
-                    _timedControlSensor = InstanceManager.sensorManagerInstance().
+                    if (_timedSensorName.length()>0){
+                        Sensor sen = InstanceManager.sensorManagerInstance().
                                             provideSensor(_timedSensorName);
-                    if (_timedControlSensor!=null) {
+                        _namedTimedControlSensor = nbhm.getNamedBeanHandle(_timedSensorName, sen);
+                    }
+                    if (_namedTimedControlSensor!=null) {
 						// set initial state off
 						_parentLight.setState(Light.OFF);
 						// listen for change in timed control sensor state
-                        _timedControlSensor.addPropertyChangeListener(_timedSensorListener =
+                        _namedTimedControlSensor.getBean().addPropertyChangeListener(_timedSensorListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
 									if (!_parentLight.getEnabled()) return;  // ignore property change if user disabled light
 									if (e.getPropertyName().equals("KnownState")) {
-                                        int now = _timedControlSensor.getKnownState();
+                                        int now = _namedTimedControlSensor.getBean().getKnownState();
 										if (!_lightOnTimerActive) {
 											if (now==Sensor.ACTIVE) { 
                                                 // Turn light on
@@ -314,7 +338,7 @@ public class LightControl {
                                         }
                                     }
                                 }
-                        });
+                        }, _timedSensorName, "Light Control " + _parentLight.getDisplayName());
                         _active = true;
                     }
                     else {
@@ -325,18 +349,22 @@ public class LightControl {
                     }
                     break;
                 case Light.TWO_SENSOR_CONTROL:
-                    _controlSensor = null;
-					_controlSensor2 = null;
-                    if (_controlSensorName.length()>0)
-                            _controlSensor = InstanceManager.sensorManagerInstance().
+                    _namedControlSensor = null;
+					_namedControlSensor2 = null;
+                    if (_controlSensorName.length()>0){
+                        Sensor sen = InstanceManager.sensorManagerInstance().
                                                 provideSensor(_controlSensorName);
-                    if (_controlSensor2Name.length()>0)
-                            _controlSensor2 = InstanceManager.sensorManagerInstance().
+                        _namedControlSensor = nbhm.getNamedBeanHandle(_controlSensorName, sen);
+                    }
+                    if (_controlSensor2Name.length()>0){
+                        Sensor sen = InstanceManager.sensorManagerInstance().
                                                 provideSensor(_controlSensor2Name);
-                    if ( (_controlSensor!=null) && (_controlSensor2!=null) ) {
+                        _namedControlSensor2 = nbhm.getNamedBeanHandle(_controlSensor2Name, sen);
+                    }
+                    if ( (_namedControlSensor!=null) && (_namedControlSensor2!=null) ) {
 						// if sensor state is currently known, set light accordingly
-						int kState = _controlSensor.getKnownState();
-						int kState2 = _controlSensor2.getKnownState();
+						int kState = _namedControlSensor.getBean().getKnownState();
+						int kState2 = _namedControlSensor2.getBean().getKnownState();
 						if (_controlSensorSense==Sensor.ACTIVE) { 
 							if ( (kState==Sensor.ACTIVE) || (kState2==Sensor.ACTIVE) ) { 
 								// Turn light on
@@ -359,18 +387,18 @@ public class LightControl {
 						}
 					
 						// listen for change in sensor states
-                        _controlSensor.addPropertyChangeListener(_sensorListener =
+                        _namedControlSensor.getBean().addPropertyChangeListener(_sensorListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
 									twoSensorChanged(e);
                                }
-                        });
-                        _controlSensor2.addPropertyChangeListener(_sensor2Listener =
+                        }, _controlSensorName, "Light Control " + _parentLight.getDisplayName());
+                        _namedControlSensor2.getBean().addPropertyChangeListener(_sensor2Listener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
 									twoSensorChanged(e);
                                }
-                        });
+                        }, _controlSensor2Name, "Light Control " + _parentLight.getDisplayName());
                         _active = true;
                     }
                     else {
@@ -388,8 +416,8 @@ public class LightControl {
 	protected void twoSensorChanged(java.beans.PropertyChangeEvent e) {
 		if (!_parentLight.getEnabled()) return;  // ignore property change if user disabled Light
 		if (e.getPropertyName().equals("KnownState")) {
-			int kState = _controlSensor.getKnownState();
-			int kState2 = _controlSensor2.getKnownState();
+			int kState = _namedControlSensor.getBean().getKnownState();
+			int kState2 = _namedControlSensor2.getBean().getKnownState();
 			if (_controlSensorSense==Sensor.ACTIVE) { 
 				if ( (kState==Sensor.ACTIVE) || (kState2==Sensor.ACTIVE) ) { 
 					// Turn light on
@@ -460,7 +488,7 @@ public class LightControl {
             switch (_controlType) {
                 case Light.SENSOR_CONTROL:
                     if (_sensorListener!=null) {
-                        _controlSensor.removePropertyChangeListener(_sensorListener);
+                        _namedControlSensor.getBean().removePropertyChangeListener(_sensorListener);
                         _sensorListener = null;
                     }
                     break;
@@ -478,7 +506,7 @@ public class LightControl {
                     break;
                 case Light.TIMED_ON_CONTROL:
                     if (_timedSensorListener!=null) {
-                        _timedControlSensor.removePropertyChangeListener(_timedSensorListener);
+                        _namedTimedControlSensor.getBean().removePropertyChangeListener(_timedSensorListener);
                         _timedSensorListener = null;
                     }
 					if (_lightOnTimerActive) {
@@ -495,11 +523,11 @@ public class LightControl {
                     break;
                 case Light.TWO_SENSOR_CONTROL:
                     if (_sensorListener!=null) {
-                        _controlSensor.removePropertyChangeListener(_sensorListener);
+                        _namedControlSensor.getBean().removePropertyChangeListener(_sensorListener);
                         _sensorListener = null;
                     }
                     if (_sensor2Listener!=null) {
-                        _controlSensor2.removePropertyChangeListener(_sensor2Listener);
+                        _namedControlSensor2.getBean().removePropertyChangeListener(_sensor2Listener);
                         _sensor2Listener = null;
                     }
                     break;

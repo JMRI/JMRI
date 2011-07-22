@@ -235,7 +235,6 @@ public class LightTableAction extends AbstractTableAction {
     boolean lightCreatedOrUpdated = false;
     boolean noWarn = false;
 	boolean inEditMode = false;
-	boolean reminderActive = true;
 	private boolean lightControlChanged = false;
 
     // items of add frame
@@ -285,7 +284,7 @@ public class LightTableAction extends AbstractTableAction {
 			cancelPressed(null);
 		}
         if (addFrame==null) {
-            addFrame = new JmriJFrame( rb.getString("TitleAddLight") );
+            addFrame = new JmriJFrame( rb.getString("TitleAddLight"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.LightAddEdit", true);
             addFrame.setLocation(100,30);
             Container contentPane = addFrame.getContentPane();        
@@ -804,6 +803,7 @@ public class LightTableAction extends AbstractTableAction {
 		systemNameLabel.setVisible(true);
 		systemLabel.setVisible(false);
 		panel1a.setVisible(false);
+        addRangeBox.setVisible(false);
         // deactivate this light
         curLight.deactivateLight();
 		inEditMode = true;
@@ -910,14 +910,10 @@ public class LightTableAction extends AbstractTableAction {
 			inEditMode = false;
 		}
 		// remind to save, if Light was created or edited
-		if (lightCreatedOrUpdated && reminderActive) {
-			int selectedValue = JOptionPane.showOptionDialog(addFrame,
-						rb.getString("Reminder"),rb.getString("ReminderTitle"),
-						JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE,
-						null,new Object[]{rb.getString("ButtonOK"),
-						rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
-			if (selectedValue==1) reminderActive = false;
-		}	
+        if (lightCreatedOrUpdated){
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    showInfoMessage("Reminder","Remember to save your Light information.",getClassName(), "remindSaveLight");
+        }
 		lightCreatedOrUpdated = false;
 		// get rid of the add/edit Frame
 		clearLightControls();
@@ -972,16 +968,23 @@ public class LightTableAction extends AbstractTableAction {
 			// cancel Edit and reactivate the edited light
 			cancelControlPressed(null);
 		}
-		addEditControlWindow();
-		addControlFrame.pack();
-		addControlFrame.setVisible(true);
+        // set up to edit. Use separate Thread so window is created on top
+        class WindowMaker implements Runnable {
+            WindowMaker(){
+            }
+            public void run() {
+                    addEditControlWindow();
+                }
+            }
+        WindowMaker t = new WindowMaker();
+        javax.swing.SwingUtilities.invokeLater(t);
 	}
 	/**
 	 * Creates the Add/Edit control window
 	 */
 	private void addEditControlWindow() {			
         if (addControlFrame==null) {
-            addControlFrame = new JmriJFrame( rb.getString("TitleAddLightControl") );
+            addControlFrame = new JmriJFrame( rb.getString("TitleAddLightControl"), false, true );
             addControlFrame.addHelpMenu("package.jmri.jmrit.beantable.LightAddEdit", true);
             addControlFrame.setLocation(120,40);
             Container contentPane = addControlFrame.getContentPane();        
@@ -1077,6 +1080,8 @@ public class LightTableAction extends AbstractTableAction {
 			});			
         }
         typeBox.setSelectedIndex(defaultControlIndex);  // force GUI status consistent
+        addControlFrame.pack();
+        addControlFrame.setVisible(true);
 	}
 	
     /**
@@ -1788,8 +1793,18 @@ public class LightTableAction extends AbstractTableAction {
 		
 		public void setValueAt(Object value, int row, int col) {
 			if (col==EDIT_COLUMN) {
-				// set up to edit
-				editControlAction(row);
+                // set up to edit. Use separate Thread so window is created on top
+                class WindowMaker implements Runnable {
+                    WindowMaker(int _row){
+                        row = _row;
+                    }
+                    int row;
+                    public void run() {
+                            editControlAction(row);
+                        }
+                    }
+                WindowMaker t = new WindowMaker(row);
+                javax.swing.SwingUtilities.invokeLater(t);
 			}
 			if (col==REMOVE_COLUMN) {
 				deleteControlAction(row);
