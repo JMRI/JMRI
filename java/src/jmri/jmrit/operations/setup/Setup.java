@@ -197,7 +197,8 @@ public class Setup {
 	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
 	private static boolean allowLocalSidingMoves = false;	// when true local spur to spur moves are allowed
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
-	private static boolean promptFromStaging = false;		// when true prompt user to specify which staging track to use
+	private static boolean promptFromStaging = false;		// when true prompt user to specify which departure staging track to use
+	private static boolean promptToStaging = false;			// when true prompt user to specify which arrival staging track to use
 	private static boolean generateCsvManifest = false;		// when true generate csv manifest
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
@@ -329,6 +330,14 @@ public class Setup {
 	
 	public static void setPromptFromStagingEnabled(boolean enabled){
 		promptFromStaging = enabled;
+	}
+	
+	public static boolean isPromptToStagingEnabled(){
+		return promptToStaging;
+	}
+	
+	public static void setPromptToStagingEnabled(boolean enabled){
+		promptToStaging = enabled;
 	}
 	
 	public static boolean isGenerateCsvManifestEnabled(){
@@ -1087,6 +1096,7 @@ public class Setup {
     	values.setAttribute("allowLocalYard", isLocalYardMovesEnabled()?"true":"false");
     	values.setAttribute("stagingRestrictionEnabled", isTrainIntoStagingCheckEnabled()?"true":"false");
     	values.setAttribute("promptStagingEnabled", isPromptFromStagingEnabled()?"true":"false");
+    	values.setAttribute("promptToStagingEnabled", isPromptToStagingEnabled()?"true":"false");
     	values.setAttribute("generateCsvManifest", isGenerateCsvManifestEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("buildReport"));
@@ -1388,6 +1398,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("promptStagingEnabled: "+enable);
         		setPromptFromStagingEnabled(enable.equals("true"));
+        	}
+          	if((a = operations.getChild("buildOptions").getAttribute("promptToStagingEnabled")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("promptToStagingEnabled: "+enable);
+        		setPromptToStagingEnabled(enable.equals("true"));
         	}
           	if((a = operations.getChild("buildOptions").getAttribute("generateCsvManifest")) != null) {
         		String enable = a.getValue();

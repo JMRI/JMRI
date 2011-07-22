@@ -50,7 +50,8 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox localSidingCheckBox = new JCheckBox(rb.getString("AllowLocalSiding"));
 	JCheckBox localYardCheckBox = new JCheckBox(rb.getString("AllowLocalYard"));
 	JCheckBox trainIntoStagingCheckBox = new JCheckBox(rb.getString("TrainIntoStaging"));
-	JCheckBox promptTrackStagingCheckBox = new JCheckBox(rb.getString("PromptFromStaging"));
+	JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(rb.getString("PromptFromStaging"));
+	JCheckBox promptToTrackStagingCheckBox = new JCheckBox(rb.getString("PromptToStaging"));
 	JCheckBox generateCvsManifestCheckBox = new JCheckBox(rb.getString("GenerateCsvManifest"));
 	
 	// text field
@@ -76,7 +77,8 @@ public class OptionFrame extends OperationsFrame{
 		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
 		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
-		promptTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
+		promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
+		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
 
 		// add tool tips
@@ -100,7 +102,8 @@ public class OptionFrame extends OperationsFrame{
 		addItemLeft(pBuild, localSidingCheckBox, 1,2);
 		addItemLeft(pBuild, localYardCheckBox, 1,3);
 		addItemLeft(pBuild, trainIntoStagingCheckBox, 1,4);
-		addItemLeft(pBuild, promptTrackStagingCheckBox, 1,5);
+		addItemLeft(pBuild, promptFromTrackStagingCheckBox, 1,5);
+		addItemLeft(pBuild, promptToTrackStagingCheckBox, 1,6);
 		
 		// Router panel
 		JPanel pRouter = new JPanel();
@@ -152,8 +155,8 @@ public class OptionFrame extends OperationsFrame{
 		pack();
 		if (getWidth()<400)
 			setSize(400, getHeight());
-		if (getHeight()<500)		
-			setSize(getWidth(), 500);
+		if (getHeight()<550)		
+			setSize(getWidth(), 550);
 		setVisible(true);
 	}
 	
@@ -184,7 +187,8 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
 			// Staging restriction?
 			Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
-			Setup.setPromptFromStagingEnabled(promptTrackStagingCheckBox.isSelected());
+			Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
+			Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// Options

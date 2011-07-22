@@ -299,9 +299,12 @@ public class TrainBuilder extends TrainCommon{
 		List<String> stagingTracksTerminate = terminateLocation.getTracksByMovesList(Track.STAGING);
 		if (stagingTracksTerminate.size() > 0){
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTerminateStaging"),new Object[]{terminateLocation.getName(), Integer.toString(stagingTracksTerminate.size())}));
-			for (int i=0; i<stagingTracksTerminate.size(); i++){
+			if (stagingTracksTerminate.size() > 1 && Setup.isPromptToStagingEnabled()){
+				terminateStageTrack = PromptToStagingDialog();
+			}
+			else for (int i=0; i<stagingTracksTerminate.size(); i++){
 				terminateStageTrack = terminateLocation.getTrackById(stagingTracksTerminate.get(i));
-				if (checkTerminateStagingTrack()){
+				if (checkTerminateStagingTrack(terminateStageTrack)){
 					addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingAvail"),new Object[]{terminateStageTrack.getName(), terminateLocation.getName()}));
 					break;
 				} 
@@ -464,6 +467,28 @@ public class TrainBuilder extends TrainCommon{
 			tracks[i] = departLocation.getTrackById(validTrackIds.get(i));
 		if (validTrackIds.size()>1){
 			Track selected = (Track)JOptionPane.showInputDialog(null, rb.getString("SelectDepartureTrack"), rb.getString("TrainDepartingStaging"), 
+					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+			return selected;
+		} else if (validTrackIds.size() == 1)
+			return (Track)tracks[0];
+		return null;	// no tracks available
+	}
+	
+	// ask which staging track the train is to terminate on
+	private Track PromptToStagingDialog() {		
+		List<String> trackIds = terminateLocation.getTracksByNameList(null);
+		List<String> validTrackIds = new ArrayList<String>();
+		// only show valid tracks
+		for (int i=0; i<trackIds.size(); i++){
+			Track track = terminateLocation.getTrackById(trackIds.get(i));
+			if (checkTerminateStagingTrack(track))
+				validTrackIds.add(trackIds.get(i));
+		}
+		Object[] tracks = new Object[validTrackIds.size()];
+		for (int i=0; i<validTrackIds.size(); i++)
+			tracks[i] = terminateLocation.getTrackById(validTrackIds.get(i));
+		if (validTrackIds.size()>1){
+			Track selected = (Track)JOptionPane.showInputDialog(null, rb.getString("SelectArrivalTrack"), rb.getString("TrainTerminatingStaging"), 
 					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
 			return selected;
 		} else if (validTrackIds.size() == 1)
@@ -1526,7 +1551,7 @@ public class TrainBuilder extends TrainCommon{
 	 * @return true if staging track is empty, not reserved, and accepts
 	 * car and engine types, roads, and loads.
 	 */
-	private boolean checkTerminateStagingTrack(){
+	private boolean checkTerminateStagingTrack(Track terminateStageTrack){
 		if (terminateStageTrack.getNumberRS() != 0){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackOccupied"),new Object[]{terminateStageTrack.getName(), terminateStageTrack.getNumberEngines(), terminateStageTrack.getNumberCars()}));
 			return false;
