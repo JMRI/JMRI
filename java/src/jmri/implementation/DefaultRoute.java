@@ -43,6 +43,8 @@ public class DefaultRoute extends AbstractNamedBean
     protected String soundFilename;
     protected String scriptFilename;
     
+    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    
     private static final long serialVersionUID = 1L;
     
     /**
@@ -50,16 +52,18 @@ public class DefaultRoute extends AbstractNamedBean
      */
     ArrayList <OutputSensor> _outputSensorList = new ArrayList<OutputSensor>();
     private class OutputSensor {
-        Sensor _sensor;
+        //Sensor _sensor;
+        NamedBeanHandle<Sensor> _sensor;
         int _state = Sensor.ACTIVE;
         OutputSensor(String name) {
-            _sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
+            _sensor = nbhm.getNamedBeanHandle(name, sensor);
         }
 
         String getName() {
             if (_sensor != null)
             {
-                return _sensor.getSystemName();
+                return _sensor.getName();
             }
             return null;
         }
@@ -78,7 +82,9 @@ public class DefaultRoute extends AbstractNamedBean
             return _state;
         }
         Sensor getSensor() {
-            return _sensor;
+            if(_sensor !=null)
+                return _sensor.getBean();
+            return null;
         }
     }
 
@@ -96,10 +102,12 @@ public class DefaultRoute extends AbstractNamedBean
             return true;
         }
         void addListener() {
-            _sensor.addPropertyChangeListener(this);
+            if(_sensor!=null)
+                _sensor.getBean().addPropertyChangeListener(this, getName(), "Route " + getDisplayName());
         }
         void removeListener() {
-            _sensor.removePropertyChangeListener(this);
+            if(_sensor!=null)
+                _sensor.getBean().removePropertyChangeListener(this);
         }
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState")) {

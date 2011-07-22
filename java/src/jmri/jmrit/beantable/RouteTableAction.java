@@ -25,6 +25,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
+import java.awt.event.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -105,6 +106,7 @@ public class RouteTableAction extends AbstractTableAction {
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
+                if (col==USERNAMECOL) return true;
     			if (col==SETCOL) return true;
     			if (col==ENABLECOL) return true;
     			// Route lock is available if turnouts are lockable
@@ -134,7 +136,29 @@ public class RouteTableAction extends AbstractTableAction {
 				else return super.getValueAt(row, col);
 			}    		
     		public void setValueAt(Object value, int row, int col) {
-    			if (col==SETCOL) {
+                if (col==USERNAMECOL) {
+                    //Directly changing the username should only be possible if the username was previously null or ""
+                    // check to see if user name already exists
+                    if (((String)value).equals("")) value = null;
+                    else {
+                        NamedBean nB = getByUserName((String)value);
+                        if (nB != null) {
+                            log.error("User name is not unique " + value);
+                            String msg;
+                            msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                                    .getString("WarningUserName"),
+                                    new Object[] { ("" + value) });
+                            JOptionPane.showMessageDialog(null, msg,
+                                    AbstractTableAction.rb.getString("WarningTitle"),
+                                    JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                    NamedBean nBean = getBySystemName(sysNameList.get(row));
+                    nBean.setUserName((String) value);
+                    fireTableRowsUpdated(row, row);
+                }
+    			else if (col==SETCOL) {
                     // set up to edit. Use separate Thread so window is created on top
                     class WindowMaker implements Runnable {
                         int row;
@@ -150,11 +174,6 @@ public class RouteTableAction extends AbstractTableAction {
                         }
                     WindowMaker t = new WindowMaker(row);
 					javax.swing.SwingUtilities.invokeLater(t);
-                    /*
-                    addPressed(null);
-                    _systemName.setText((String)getValueAt(row, SYSNAMECOL));
-                    editPressed(null); // don't really want to stop Route w/o user action
-                    */
     			}
     			else if (col==ENABLECOL) {
                     // alternate
@@ -220,6 +239,11 @@ public class RouteTableAction extends AbstractTableAction {
                 
             protected String getBeanType(){
                 return AbstractTableAction.rbean.getString("BeanNameRoute");
+            }
+            /*Routes do not get references by other parts of the code, we therefore 
+            do not need to worry about controlling how the username is changed
+            */
+            protected void showPopup(MouseEvent e){
             }
         };
     }
@@ -859,7 +883,7 @@ public class RouteTableAction extends AbstractTableAction {
     int setSensorInformation(Route g) {
         for (int i=0; i<_includedSensorList.size(); i++) {
             RouteSensor s = _includedSensorList.get(i);
-            g.addOutputSensor(s.getSysName(), s.getState());
+            g.addOutputSensor(s.getDisplayName(), s.getState());
         }
         return _includedSensorList.size();
     }
@@ -1921,6 +1945,16 @@ public class RouteTableAction extends AbstractTableAction {
         }
         boolean isIncluded() {
             return _included;
+        }
+        
+        String getDisplayName(){
+            String name = getUserName();
+            if (name != null && name.length() > 0) {
+                return name;
+            } else {
+                return getSysName();
+            }
+        
         }
         void setIncluded(boolean include) {
             _included = include;
