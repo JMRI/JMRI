@@ -245,7 +245,13 @@ public class TrainCommon {
 		
 		// Use 24 hour clock
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
-
+		
+		if (Setup.is12hrFormatEnabled()){
+			hour = calendar.get(Calendar.HOUR);
+			if (hour == 0)
+				hour = 12;
+		}
+		
 		String h  = Integer.toString(hour);
 		if (hour <10)
 			h = "0"+ Integer.toString(hour);
@@ -255,9 +261,11 @@ public class TrainCommon {
 		if (minute <10)
 			m = "0"+ Integer.toString(minute);
 					
-		//remove AM_PM field
-		//String AM_PM = (calendar.get(Calendar.AM_PM)== Calendar.AM)? "AM":"PM";
+		//AM_PM field
 		String AM_PM = "";
+		if (Setup.is12hrFormatEnabled()){
+			AM_PM = (calendar.get(Calendar.AM_PM)== Calendar.AM)? "AM":"PM";
+		}
 		
 		// Java 1.6 methods calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()
 		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault())

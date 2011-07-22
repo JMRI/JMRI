@@ -2349,10 +2349,10 @@ public class TrainBuilder extends TrainCommon{
 					newWork = true;
 					if (r == 0){
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-								+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
+								+", "+rb.getString("departureTime")+" "+train.getFormatedDepartureTime());
 					} else if (!rl.getDepartureTime().equals("")){
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-								+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
+								+", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime());
 					} else {
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
@@ -2363,7 +2363,7 @@ public class TrainBuilder extends TrainCommon{
 								+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
 					} else if (!rl.getDepartureTime().equals("")){
 						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}) 
-								+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
+								+", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime());
 					} else {
 						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}));
 					}

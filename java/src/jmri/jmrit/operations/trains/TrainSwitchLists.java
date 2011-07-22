@@ -116,9 +116,9 @@ public class TrainSwitchLists extends TrainCommon {
 							}
 						} else {
 							if (r == 0 && routeList.size()>1)
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{train.getTrainDepartsName(), rl.getTrainDirectionString(), train.getDepartureTime()}));
+								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{train.getTrainDepartsName(), rl.getTrainDirectionString(), train.getFormatedDepartureTime()}));
 							else if (routeList.size()>1)
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAtExpectedArrival"), new Object[]{train.getTrainDepartsName(), train.getDepartureTime(), expectedArrivalTime, rl.getTrainDirectionString()}));
+								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAtExpectedArrival"), new Object[]{train.getTrainDepartsName(), train.getFormatedDepartureTime(), expectedArrivalTime, rl.getTrainDirectionString()}));
 						}
 					}
 					// go through the list of engines and determine if the engine departs here

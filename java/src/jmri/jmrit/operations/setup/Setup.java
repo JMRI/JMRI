@@ -203,7 +203,8 @@ public class Setup {
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
-	private static boolean printTimetableName	= false;	// when true print timetable name on manifests and switch lists.
+	private static boolean printTimetableName	= false;	// when true print timetable name on manifests and switch lists
+	private static boolean use12hrFormat		= false;	// when true use 12hr rather than 24hr format
 
 	/* all JMRI window position and size are now saved
 	// Setup frame attributes
@@ -474,6 +475,14 @@ public class Setup {
 	
 	public static boolean isPrintTimetableNameEnabled(){
 		return printTimetableName;
+	}
+	
+	public static void set12hrFormatEnabled(boolean enable){
+		use12hrFormat = enable;
+	}
+	
+	public static boolean is12hrFormatEnabled(){
+		return use12hrFormat;
 	}
 	
 	public static void setSwitchTime(int minutes){
@@ -1015,6 +1024,7 @@ public class Setup {
        	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
        	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
        	values.setAttribute("printTimetable", isPrintTimetableNameEnabled()?"true":"false");
+       	values.setAttribute("use12hrFormat", is12hrFormatEnabled()?"true":"false");
        	values.setAttribute("yearModeled", getYearModeled());
        	
        	e.addContent(values = new Element("pickupEngFormat"));
@@ -1242,6 +1252,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("printTimetable: "+enable);
         		setPrintTimetableNameEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("use12hrFormat"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("use12hrFormat: "+enable);
+        		set12hrFormatEnabled(enable.equals("true"));
         	}
          	if ((a = operations.getChild("settings").getAttribute("yearModeled"))!= null){
         		String year = a.getValue();

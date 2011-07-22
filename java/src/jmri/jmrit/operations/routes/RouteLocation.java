@@ -255,6 +255,22 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _departureTime;
 	}
 	
+	public String getFormatedDepartureTime(){
+		if (getDepartureTime().equals("") || !Setup.is12hrFormatEnabled())
+			return _departureTime;
+		String AM_PM = " AM";
+		String[] time = getDepartureTime().split(":");
+		int hour = Integer.parseInt(time[0]);
+		if (hour >= 12){
+			AM_PM = " PM";
+			hour = hour - 12;
+		}
+		if (hour == 0)
+			hour = 12;
+		time[0] = Integer.toString(hour);
+		return time[0]+":"+time[1]+AM_PM;
+	}
+	
 	public void setGrade(double grade){
 		double old = _grade;
 		_grade = grade;

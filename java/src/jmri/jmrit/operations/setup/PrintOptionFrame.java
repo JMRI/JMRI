@@ -60,6 +60,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
 	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
 	JCheckBox printTimetableNameCheckBox = new JCheckBox(rb.getString("PrintTimetableName"));
+	JCheckBox use12hrFormatCheckBox = new JCheckBox(rb.getString("12hrFormat"));
 	
 	// text field
 	JTextField pickupEngPrefix = new JTextField(10);
@@ -103,6 +104,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		printLocCommentsCheckBox.setToolTipText(rb.getString("AddLocationComments"));
 		printLoadsEmptiesCheckBox.setToolTipText(rb.getString("LoadsEmptiesComment"));
 		printTimetableNameCheckBox.setToolTipText(rb.getString("ShowTimetableTip"));
+		use12hrFormatCheckBox.setToolTipText(rb.getString("Use12hrFormatTip"));
 		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFile"));
 		
 		// Manifest panel
@@ -223,6 +225,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifestComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutComments")));
 		pManifestComment.add(printLocCommentsCheckBox);
 		pManifestComment.add(printLoadsEmptiesCheckBox);
+		pManifestComment.add(use12hrFormatCheckBox);
 		pManifestComment.add(printTimetableNameCheckBox);
 		
 		// manifest logo
@@ -272,6 +275,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
 		printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
+		use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		
 		updateLogoButtons();
@@ -389,6 +393,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
+			Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
 			Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();

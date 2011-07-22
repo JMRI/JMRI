@@ -217,6 +217,37 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Get's train's departure time in 12hr or 24hr format
+	 * @return train's departure time in the String format hh:mm or hh:mm(AM/PM)
+	 */
+	public String getFormatedDepartureTime(){
+		// check to see if the route has a departure time
+		RouteLocation rl = getTrainDepartsRouteLocation();
+		if (rl != null && !rl.getDepartureTime().equals("")){
+			// need to forward any changes to departure time
+			rl.removePropertyChangeListener(this);
+			rl.addPropertyChangeListener(this);
+			return rl.getFormatedDepartureTime();
+		}			
+		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
+		//AM_PM field
+		String am_pm = "";
+		if (Setup.is12hrFormatEnabled()){
+			hour = _departureTime.get(Calendar.HOUR);
+			if (hour == 0)
+				hour = 12;
+			am_pm = (_departureTime.get(Calendar.AM_PM)== Calendar.AM)? " AM":" PM";
+		}
+		int minute = _departureTime.get(Calendar.MINUTE);
+		String h = Integer.toString(hour);
+		if (hour < 10)
+			h = "0"+h;
+		if (minute < 10)
+			return h+":0"+minute+am_pm;
+		return h+":"+minute+am_pm;
+	}
+	
+	/**
 	 * Get train's departure time in minutes from midnight for sorting
 	 * @return int hh*60+mm
 	 */
@@ -332,12 +363,24 @@ public class Train implements java.beans.PropertyChangeListener {
 			d = Integer.toString(days)+":";
 		}
 		
+		//AM_PM field
+		String am_pm = "";
+		if (Setup.is12hrFormatEnabled()){
+			am_pm = " AM";
+			if  (hours >= 12){
+				hours = hours - 12;
+				am_pm = " PM";
+			}
+			if (hours == 0)
+				hours = 12;
+		}
+		
 		String h = Integer.toString(hours);
 		if (hours < 10)
 			h = "0"+h;
 		if (minutes < 10)
 			return d+h+":0"+minutes;
-		return d+h+":"+minutes;
+		return d+h+":"+minutes+am_pm;
 	}
 	
 	
