@@ -1286,6 +1286,9 @@ public class TrainBuilder extends TrainCommon{
 				kCar.setRouteLocation(rl);
 				kCar.setRouteDestination(rld);
 				kCar.setDestination(destination, track, true);	//force destination
+				// save next destination and track values in case of train reset
+				kCar.setPreviousNextDestination(car.getPreviousNextDestination());
+				kCar.setPreviousNextDestTrack(car.getPreviousNextDestTrack());
 			}
 		} 
 		numberCars++;		// bump number of cars moved by this train
