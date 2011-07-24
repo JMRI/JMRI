@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.ResourceBundle;
 
 // imports for ZeroConf.
-import jmri.util.zeroconf.ZeroConfUtil;
+import jmri.util.zeroconf.ZeroConfService;
 
 import jmri.jmris.srcp.parser.SRCPParser;
 import jmri.jmris.srcp.parser.ParseException;
@@ -53,19 +53,10 @@ public class JmriSRCPServer extends JmriServer{
 
      // Advertise the service with ZeroConf
      protected void advertise(){
-           try {
-                serviceInfo = ZeroConfUtil.advertiseService(
-                    ZeroConfUtil.getServerName("SRCP 0.8.3"),
-                    "_srcp._tcp.local.",
-                    portNo,
-                    jmdns);
-           
-           } catch (java.io.IOException e) {
-               log.error("JmDNS Failure");
+        service = ZeroConfService.create("_srcp._tcp.local.", portNo);
+        service.publish();
            }
      
-     }
-
      // Handle communication to a client through inStream and outStream
      @SuppressWarnings("deprecation")
      public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {

@@ -25,7 +25,6 @@ import java.util.Enumeration;
 import java.net.NetworkInterface;
 import java.net.InetAddress;
 
-import javax.jmdns.*;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -40,7 +39,7 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
 import jmri.util.JmriJFrame;
-import jmri.util.zeroconf.ZeroConfUtil;
+import jmri.util.zeroconf.ZeroConfService;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 
@@ -62,8 +61,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
 
 //	Server iVars
     int port;
-    JmDNS jmdns;
-    ServiceInfo serviceInfo;
+    ZeroConfService service;
     boolean isListen = true;
     ServerSocket socket = null;
     ArrayList<DeviceServer> deviceList;
@@ -74,13 +72,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
         if (deviceList == null) deviceList = new ArrayList<DeviceServer>(1);
 
         createWindow();
-
-        try{
-                jmdns = JmDNS.create();
-                if (log.isDebugEnabled()) log.debug("JmDNS v:"+JmDNS.VERSION);
-        }catch (IOException e){
-                log.error("JmDNS creation failed.");
-        }
 
         setShutDownTask();
         createServerThread();
@@ -253,13 +244,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
         port = socket.getLocalPort();
         if(log.isDebugEnabled()) log.debug("WiThrottle listening on TCP port: " + port);
 
-        try {serviceInfo = ZeroConfUtil.advertiseService(
-                    ZeroConfUtil.getServerName("WiThrottle"),
-                    "_withrottle._tcp.local.",
-                    port,
-                    jmdns);
+        service = ZeroConfService.create("_withrottle._tcp.local.", port);
+        service.publish();
             
-            portLabel.setText(serviceInfo.getName());
+        if (service.isPublished()) {
+            portLabel.setText(service.name());
             //Determine the first externally accessible IP address for this system. This is presented in the GUI for
             //those users who can't, or don't want to use ZeroConf to connect to the WiThrottle.
             //Adapted from http://www.rgagnon.com/javadetails/java-0390.html
@@ -287,7 +276,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
             }
             catch(Exception except) { log.error("Failed to determine this system's IP address: "+except.toString()); }
             manualPortLabel.setText(bound_ip_address+":"+port);
-        } catch (java.io.IOException e2) {
+        } else {
             log.error("JmDNS Failure");
             portLabel.setText("failed to advertise service");
         }
@@ -397,15 +386,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
         try{
             socket.close();
             log.debug("UI socket just closed");
-            try{
-                jmdns.unregisterService(serviceInfo);
-            }
-            catch (NullPointerException ea){
-                log.warn("JmDNS null pointer when closing");
-            }
-            catch (IllegalStateException eb){
-                log.warn("JmDNS Timer error when closing");
-            }
+            service.stop();
         } catch (IOException ex){
             log.error("socket in ServerThread won't close");
             return;

@@ -124,12 +124,7 @@ public class FacelessApp {
             // as the MiniServer ctor is the service loop
         }
         }.start();
-        try {
-           jmri.util.zeroconf.ZeroConfUtil.advertiseService("JMRI on "+jmri.util.zeroconf.ZeroConfUtil.getServerName("(unknown)"), 
-                                                                "_http._tcp.local.", port, jmri.util.zeroconf.ZeroConfUtil.jmdnsInstance());
-        } catch (java.io.IOException e) {
-                log.error("can't advertise via ZeroConf: "+e);
-        }
+        jmri.util.zeroconf.ZeroConfService.create("_http._tcp.local.", port, new java.util.HashMap(){{put("path","/index.html");}}).publish();
 
         log.info("Up!");
 	}

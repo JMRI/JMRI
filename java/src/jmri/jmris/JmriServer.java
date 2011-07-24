@@ -8,8 +8,7 @@ import java.io.*;
 import java.util.Vector;
 
 // imports for ZeroConf.
-import javax.jmdns.*;
-import jmri.util.zeroconf.ZeroConfUtil;
+import jmri.util.zeroconf.ZeroConfService;
 
 /**
  * This is the main JMRI Server implementation.
@@ -21,8 +20,7 @@ public class JmriServer {
 
      protected int portNo = 3000; // Port to listen to for new clients.
      protected ServerSocket connectSocket;
-     protected ServiceInfo serviceInfo;
-     protected JmDNS jmdns;
+     protected ZeroConfService service;
      private Thread listenThread = null;
      private Vector<clientListener> connectedClientThreads = new Vector<clientListener>();
 
@@ -50,13 +48,7 @@ public class JmriServer {
 
 	this.portNo = port;
  
-        try{
-              jmdns = JmDNS.create();
-        }catch (IOException e){
-              log.error("JmDNS creation failed.");
         }
-
-     }
 
      // Maintain a vector of connected clients
 
@@ -86,23 +78,14 @@ public class JmriServer {
     
      // Advertise the service with ZeroConf
      protected void advertise(){
-           try {
-                serviceInfo = ZeroConfUtil.advertiseService(
-                    ZeroConfUtil.getServerName("JMRI"),
-                    "_jmri._tcp.local.",
-                    portNo,
-                    jmdns);
-
-           } catch (java.io.IOException e) {
-               log.error("JmDNS Failure");
+        service = ZeroConfService.create("_jmri._tcp.local.", portNo);
+        service.publish();
            }
 
-     }
- 
      @SuppressWarnings("deprecation")
      public void stop(){
            listenThread.stop();
-           jmdns.unregisterService(serviceInfo);
+           service.stop();
      }
 
      // Internal thread to listen for new connections

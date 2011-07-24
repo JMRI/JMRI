@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import jmri.util.zeroconf.ZeroConfUtil;
+import jmri.util.zeroconf.ZeroConfService;
 
 /**
  * Start a LnMessageServer that will listen for clients wanting to
@@ -32,11 +32,7 @@ public class LnMessageServerAction extends AbstractAction {
             LnMessageServer server = LnMessageServer.getInstance() ;
             server.enable();
             // advertise under zeroconf
-            try {
-               ZeroConfUtil.advertiseService(ZeroConfUtil.getServerName("JMRI locormi server"), "_jmri-locormi._tcp.local.", 1099, ZeroConfUtil.jmdnsInstance());
-            } catch (java.io.IOException e2) {
-                    Logger.getLogger(LnMessageServerAction.class.getName()).error("can't advertise via ZeroConf: "+e2);
-            }
+            ZeroConfService.create("_jmri-locormi._tcp.local.", 1099).publish();
             // disable action, as already run
             setEnabled(false);
         } catch( RemoteException ex ) {

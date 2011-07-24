@@ -7,8 +7,7 @@ import java.net.Socket;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Properties;
-
-import jmri.util.zeroconf.ZeroConfUtil;
+import jmri.util.zeroconf.ZeroConfService;
 
 /**
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
@@ -144,11 +143,7 @@ public class Server{
       socketListener.start();
       updateServerStateListener();
       // advertise over Zeroconf/Bonjour
-      try {
-         ZeroConfUtil.advertiseService(ZeroConfUtil.getServerName("JMRI loconetserver"), "_loconetovertcpserver._tcp.local.", portNumber, ZeroConfUtil.jmdnsInstance());
-      } catch (java.io.IOException e2) {
-         log.error("can't advertise via ZeroConf: "+e2);
-      }
+      ZeroConfService.create("_loconetovertcpserver._tcp.local.", portNumber).publish();
 
     }
   }

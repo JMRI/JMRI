@@ -10,11 +10,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.HashMap;
 
 import java.util.ResourceBundle;
 
 import jmri.util.BareBonesBrowserLaunch;
-import jmri.util.zeroconf.ZeroConfUtil;
+import jmri.util.zeroconf.ZeroConfService;
 
 /**
  * Action to start a miniserver
@@ -41,13 +42,8 @@ public class MiniServerAction extends AbstractAction {
         startServer();
         
         // advertise via zeroconf
-        try {
-           ZeroConfUtil.advertiseService("JMRI on "+ZeroConfUtil.getServerName("(unknown)"), "_http._tcp.local.", port, ZeroConfUtil.jmdnsInstance());
-           if (log.isDebugEnabled()) log.debug("ZeroConf advertising JMRI on "+ZeroConfUtil.getServerName("(unknown)"));  
-        } catch (java.io.IOException e) {
-                log.error("can't advertise via ZeroConf: "+e);
+        ZeroConfService.create("_http._tcp.local.", port, new HashMap(){{put("path","/index.html");}}).publish();
         }
-    }
     
     public void ensureIndexPage() {
         String name = jmri.jmrit.XmlFile.prefsDir()+"index.html";

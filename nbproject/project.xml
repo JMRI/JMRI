@@ -35,7 +35,7 @@
                 </action>
                 <action name="run">
                     <script>${ant.script}</script>
-                    <target>decoderpro</target>
+                    <target>lnsim</target>
                 </action>
                 <action name="profile">
                     <script>${ant.script}</script>
@@ -102,7 +102,7 @@
             </export>
             <export>
                 <type>folder</type>
-                <location>java/tmp</location>
+                <location>java/classes</location>
                 <script>${ant.script}</script>
                 <build-target>debug</build-target>
             </export>
@@ -122,12 +122,12 @@
                 </items>
                 <context-menu>
                     <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
                     <ide-action name="clean"/>
                     <ide-action name="javadoc"/>
                     <ide-action name="run"/>
-                    <ide-action name="profile"/>
                     <ide-action name="test"/>
-                    <ide-action name="rebuild"/>
+                    <ide-action name="profile"/>
                     <ide-action name="debug"/>
                     <action>
                         <script>${ant.script}</script>
