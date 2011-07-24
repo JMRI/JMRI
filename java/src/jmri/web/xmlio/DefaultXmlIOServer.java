@@ -44,19 +44,30 @@ public class DefaultXmlIOServer implements XmlIOServer {
         List<Element> lists = new ArrayList(e.getChildren("list"));
         for (Element list : lists) {
             e.removeContent(list);
-            String type = list.getChild("type").getText();
+            String type = list.getAttributeValue("type");
+            useAttributes = (type != null);
+            if (!useAttributes) {
+                type = list.getChild("type").getText();
+            }
             if (type.equals("turnout")) {
                 // add an element for each turnout
                 TurnoutManager m = InstanceManager.turnoutManagerInstance();
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Turnout t = m.getTurnout(name);
-                    Element n = new Element("item");
+                    Element n = new Element((useAttributes) ? "turnout" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("name", name);
+                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
+                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
+                    } else {
                     n.addContent(new Element("type").addContent("turnout"));
                     n.addContent(new Element("name").addContent(name));
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
                     n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                    }
                     e.addContent(n);
                 }
             } else if (type.equals("memory")) {
@@ -65,11 +76,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Memory t = m.getMemory(name);
-                    Element n = new Element("item");
+                    Element n = new Element((useAttributes) ? "memory" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("name", name);
+                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
+                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                    } else {
                     n.addContent(new Element("type").addContent("memory"));
                     n.addContent(new Element("name").addContent(name));
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
+                    }
                     e.addContent(n);
                 }
             } else if (type.equals("route")) {
@@ -78,11 +95,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Route t = m.getRoute(name);
-                    Element n = new Element("item");
+                    Element n = new Element((useAttributes) ? "route" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("name", name);
+                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
+                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                    } else {
                     n.addContent(new Element("type").addContent("route"));
                     n.addContent(new Element("name").addContent(name));
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
+                    }
                     e.addContent(n);
                 }
             } else if (type.equals("sensor")) {
@@ -91,12 +114,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Sensor t = m.getSensor(name);
-                    Element n = new Element("item");
+                    Element n = new Element((useAttributes) ? "sensor" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("name", name);
+                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
+                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
+                    } else {
                     n.addContent(new Element("type").addContent("sensor"));
                     n.addContent(new Element("name").addContent(name));
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
                     n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                    }
                     e.addContent(n);
                 }            
             } else if (type.equals("roster")) {
@@ -104,7 +134,32 @@ public class DefaultXmlIOServer implements XmlIOServer {
             	List <RosterEntry> rlist = Roster.instance().matchingList(null, null, null, null, null, null, null);
             	for (int i = 0; i < rlist.size(); i++) {
             		RosterEntry entry = rlist.get(i);
-            		Element n = new Element("item");
+            		Element n = new Element((useAttributes) ? "roster" : "item");
+                        if (useAttributes) {
+                            n.setAttribute("name", entry.getId());
+                            n.setAttribute("dccAddress", entry.getDccAddress());
+                            n.setAttribute("addressLength", entry.isLongAddress() ? "L" : "S");
+                            n.setAttribute("roadName", entry.getRoadName());
+                            n.setAttribute("roadNumber", entry.getRoadNumber());
+                            n.setAttribute("mfg", entry.getMfg());
+                            n.setAttribute("model", entry.getModel());
+                            n.setAttribute("comment", entry.getComment());
+                            n.setAttribute("maxSpeedPct", Integer.valueOf(entry.getMaxSpeedPCT()).toString());
+                            File file = new File(entry.getImagePath());
+                            n.setAttribute("imageFileName", file.getName());
+                            file = new File(entry.getIconPath());
+                            n.setAttribute("imageIconName", file.getName());
+                            Element f;
+                            for (int j = 0; j < entry.getMAXFNNUM(); j++) {
+                                if (entry.getFunctionLabel(j) != null) {
+                                    f = new Element("function");
+                                    f.setAttribute("name", "F" + j);
+                                    f.setAttribute("label", entry.getFunctionLabel(j));
+                                    f.setAttribute("lockable", Boolean.valueOf(entry.getFunctionLockable(j)).toString());
+                                    n.addContent(f);
+                                }
+                            }
+                        } else {
             		n.addContent(new Element("type").addContent("roster"));
             		n.addContent(new Element("name").addContent(entry.getId()));
             		n.addContent(new Element("dccAddress").addContent(entry.getDccAddress()));
@@ -129,6 +184,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             		}
         			n.addContent(f);
         			n.addContent(g);
+                        }
         			e.addContent(n);
             	}
 
@@ -140,69 +196,89 @@ public class DefaultXmlIOServer implements XmlIOServer {
             		JmriJFrame iFrame = framesList.get(i);
             		String frameTitle = iFrame.getTitle();
             		if (!frameTitle.equals("")) {
-            			Element n = new Element("item");
+                            Element n = new Element((useAttributes) ? "panel" : "item");
+                            if (useAttributes) {
+                                n.setAttribute("name", frameTitle.replaceAll(" ", "%20"));
+                                n.setAttribute("userName", frameTitle);
+                            } else {
                         n.addContent(new Element("type").addContent("panel"));
                         //get rid of spaces in name
             			n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ","%20")));
             			n.addContent(new Element("userName").addContent(frameTitle)); 
+                            }
             			e.addContent(n);
             		}
             	}
 
             } else if (type.equals("power")) {
             	// add a power element
-                Element n = new Element("item");
+                Element n = new Element((useAttributes) ? "power" : "item");
+                if (useAttributes) {
+                    n.setAttribute("type", "power");
+                    n.setAttribute("name", "power");
+                } else {
                 n.addContent(new Element("type").addContent("power"));
                 n.addContent(new Element("name").addContent("power"));
+                }
                 e.addContent(n);
             } else if (type.equals("metadata")) {
                 // list meta data elements
                 List<String> metaNames = Metadata.getSystemNameList();
                 for (String mn : metaNames) {
-                    Element n = new Element("item");
+                    Element n = new Element((useAttributes) ? "metadata" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("type", "metadata");
+                        n.setAttribute("name", mn);
+                    } else {
                     n.addContent(new Element("type").addContent("metadata"));
                     n.addContent(new Element("name").addContent("" + mn));
+                    }
                     e.addContent(n);
                 }
-            } else log.warn("Unexpected type in list element: "+type);
+            } else log.warn("Unexpected type in list element: " + type);
         }
         
-        // then process "throttle" elements
+        // handle everything else
         @SuppressWarnings("unchecked")
-        List<Element> throttles = e.getChildren("throttle");
-        for (Element throttle : throttles) {
-            immediateSetThrottle(throttle);
-        }
-        
-        // then handle the specific items elements.
-        @SuppressWarnings("unchecked")
-        List<Element> items = e.getChildren("item");
+        List<Element> items = e.getChildren();
         for (Element item : items) {
-            String type = item.getChild("type").getText();
-            String name = item.getChild("name").getText();
-            
+            String type = item.getName();
+            String name = item.getAttributeValue("name");
+            useAttributes = (!type.equals("item"));
+            if (!useAttributes) {
+                type = item.getChild("type").getText();
+                name = item.getChild("name").getText();
+        }
+        
             //check for "set" values and process them
-            if (type.equals("turnout")) immediateWriteTurnout(name, item);
-            else if (type.equals("memory")) immediateWriteMemory(name, item);
-            else if (type.equals("route")) immediateWriteRoute(name, item);
-            else if (type.equals("sensor")) immediateWriteSensor(name, item);
-            else if (type.equals("power")) immediateWritePower(name, item);
-            else if (type.equals("roster")) {}
-            else if (type.equals("panel")) {}
-            else if (type.equals("metadata")) {}
-            else log.warn("Unexpected type in item: "+type);
+            if (type.equals("throttle")) {
+                immediateSetThrottle(item);
+            } else if (type.equals("turnout")) {
+                immediateWriteTurnout(name, item);
+                immediateReadTurnout(name, item);
+            } else if (type.equals("memory")) {
+                immediateWriteMemory(name, item);
+                immediateReadMemory(name, item);
+            } else if (type.equals("route")) {
+                immediateWriteRoute(name, item);
+                immediateReadRoute(name, item);
+            } else if (type.equals("sensor")) {
+                immediateWriteSensor(name, item);
+                immediateReadSensor(name, item);
+            } else if (type.equals("power")) {
+                immediateWritePower(name, item);
+                immediateReadPower(name, item);
+            } else if (type.equals("metadata")) {
+                immediateReadMetadata(name, item);
+            } else if (type.equals("roster")) {
+                // nothing to process
+            } else if (type.equals("panel")) {
+                // nothing to process
+            } else if (item.getName().equals("item")) {
+                log.warn("Unexpected type in item: " + type);
+            } else {
+                log.warn("Unexpected element: " + type);
         }
-        
-        for (Element item : items) {
-            String type = item.getChild("type").getText();
-            String name = item.getChild("name").getText();
-            
-            if (type.equals("turnout")) immediateReadTurnout(name, item);
-            else if (type.equals("memory")) immediateReadMemory(name, item);
-            else if (type.equals("route")) immediateReadRoute(name, item);
-            else if (type.equals("sensor")) immediateReadSensor(name, item);
-            else if (type.equals("power")) immediateReadPower(name, item);
-            else if (type.equals("metadata")) immediateReadMetadata(name, item);
         }
         
         return e;
@@ -223,18 +299,23 @@ public class DefaultXmlIOServer implements XmlIOServer {
         dr.requestor = r;
         
         @SuppressWarnings("unchecked")
-        List<Element> items = e.getChildren("item");
+        List<Element> items = e.getChildren();
 
         for (Element item : items) {
-            String type = item.getChild("type").getText();
-            String name = item.getChild("name").getText();
+            String type = item.getName();
+            String name = item.getAttributeValue("name");
+            useAttributes = (!type.equals("item"));
+            if (!useAttributes) {
+                type = item.getChild("type").getText();
+                name = item.getChild("name").getText();
+            }
             
             if (type.equals("turnout")) addListenerToTurnout(name, item, dr);
             else if (type.equals("memory")) addListenerToMemory(name, item, dr);
             else if (type.equals("route")) addListenerToRoute(name, item, dr);
             else if (type.equals("sensor")) addListenerToSensor(name, item, dr);
             else if (type.equals("power")) addListenerToPower(name, item, dr);
-            else log.warn("Unexpected type: "+type);
+            else log.warn("Unexpected type: " + type);
         }
 
         // Check one more time to ensure clear of race conditions
@@ -244,11 +325,16 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
     void sendMonitorReply(Element e, XmlIORequestor r) {
         @SuppressWarnings("unchecked")
-        List<Element> items = e.getChildren("item");
+        List<Element> items = e.getChildren();
         
         for (Element item : items) {
-            String type = item.getChild("type").getText();
-            String name = item.getChild("name").getText();
+            String type = item.getName();
+            String name = item.getAttributeValue("name");
+            useAttributes = (!type.equals("item"));
+            if (!useAttributes) {
+                type = item.getChild("type").getText();
+                name = item.getChild("name").getText();
+            }
             
             try {
                 if (type.equals("turnout")) immediateReadTurnout(name, item);
@@ -257,7 +343,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 else if (type.equals("route")) immediateReadRoute(name, item);
                 else if (type.equals("power")) immediateReadPower(name, item);
             } catch (JmriException j) {
-                log.warn("exception handling "+type+" "+name, j);
+                log.warn("exception handling " + type + " " + name, j);
             }
         }
         
@@ -267,13 +353,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     boolean checkValues(Element e) {
         @SuppressWarnings("unchecked")
-        List<Element> items = e.getChildren("item");
+        List<Element> items = e.getChildren();
         
         boolean changed = false;
         for (Element item : items) {
-            String type = item.getChild("type").getText();
-            String name = item.getChild("name").getText();
-            if (item.getChild("value") == null) return true;  // if no value, consider changed
+            String type = item.getName();
+            String name = item.getAttributeValue("name");
+            useAttributes = (!type.equals("item"));
+            if (!useAttributes) {
+                type = item.getChild("type").getText();
+                name = item.getChild("name").getText();
+            }
+            if (item.getAttribute("value") == null &&
+                    item.getChild("value") == null) return true;  // if no value, consider changed
 
             try {
                 if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
@@ -344,10 +436,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
 
         // check for value element, which means compare
+        if (item.getAttributeValue("value") != null) {
+            return (b.getKnownState() != Integer.parseInt(item.getAttributeValue("value")));
+        } else {
         Element v = item.getChild("value");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             return  (b.getKnownState() != state);
+        }
         }
         return false;  // no difference
     }
@@ -357,10 +453,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
 
         // check for value element, which means compare
+        if (item.getAttributeValue("value") != null) {
+            return (!b.getValue().equals(item.getAttributeValue("value")));
+        } else {
         Element v = item.getChild("value");
         if (v!=null) {
             String state = v.getText();
             return  (!b.getValue().equals(state));  //return true if strings are different
+        }
         }
         return false;  // no difference
     }
@@ -390,10 +490,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
         // check for value element, which means compare
+        if (item.getAttributeValue("value") != null) {
+            return (b.getState() != Integer.parseInt(item.getAttributeValue("value")));
+        } else {
         Element v = item.getChild("value");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             return  (b.getState() != state);
+        }
         }
         return false;  // no difference
     }
@@ -406,10 +510,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
         PowerManager b = InstanceManager.powerManagerInstance();
 
         // check for value element, which means compare
+        if (item.getAttributeValue("value") != null) {
+            return (b.getPower() != Integer.parseInt(item.getAttributeValue("value")));
+        } else {
         Element v = item.getChild("value");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             return  (b.getPower() != state);
+        }
         }
         return false;  // no difference
     }
@@ -419,6 +527,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
 
         // check for set element, which means write
+        if (item.getAttributeValue("set") != null) {
+            b.setCommandedState(Integer.parseInt(item.getAttributeValue("set")));
+            item.removeAttribute("set");
+        } else {
         Element v = item.getChild("set");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
@@ -426,13 +538,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
             item.removeContent(v);
         }
     }
-    
+    }    
     
     void immediateWriteMemory(String name, Element item) throws JmriException {
         // get memory
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
 
         // check for set element, which means write
+        if (item.getAttributeValue("set") != null) {
+            b.setValue(item.getAttributeValue("set"));
+            item.removeAttribute("set");
+        } else {
         Element v = item.getChild("set");
         if (v!=null) {
             String state = v.getText();
@@ -440,11 +556,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
             item.removeContent(v);
         }
     }
+    }
+
     void immediateWriteSensor(String name, Element item) throws JmriException {
         // get sensor
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
         // check for set element, which means write
+        if (item.getAttributeValue("set") != null) {
+            b.setState(Integer.parseInt(item.getAttributeValue("set")));
+            item.removeAttribute("set");
+        } else {
         Element v = item.getChild("set");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
@@ -452,18 +574,24 @@ public class DefaultXmlIOServer implements XmlIOServer {
             item.removeContent(v);
         }
     }
+    }
     
     void immediateWriteRoute(String name, Element item) throws JmriException {
+        // get route
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
 
+        if (item.getAttributeValue("set") != null) {
+            b.setRoute();
+            item.removeAttribute("set");
+        } else {
         // check for set element, which means write
         Element v = item.getChild("set");
         if (v!=null) {
-            // get route
-            Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
 //            int state = Integer.parseInt(v.getText());
             b.setRoute(); 
             item.removeContent(v);
         }
+    }
     }
     
     void immediateWritePower(String name, Element item) throws JmriException {
@@ -471,6 +599,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
         PowerManager b = InstanceManager.powerManagerInstance();
 
         // check for set element, which means write
+        if (item.getAttributeValue("set") != null) {
+            b.setPower(Integer.parseInt(item.getAttributeValue("set")));
+            item.removeAttribute("set");
+            //item.setAttribute("value", Integer.toString(b.getPower()));
+        } else {
         Element v = item.getChild("set");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
@@ -479,10 +612,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
             item.removeContent(v);
         }
 
-        v = item.getChild("value");
-        if (v == null) item.addContent(v = new Element("value"));
+            // why set value in power and not anywhere else?
+            //v = item.getChild("value");
+            //if (v == null) item.addContent(v = new Element("value"));
         // set result
-        v.setText(""+b.getPower());
+            //v.setText(""+b.getPower());
+    }
     }
     
     void immediateWriteRoster(String name, Element item) throws JmriException {
@@ -493,10 +628,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
         log.error("no immediate write for panel element");
     }
     
+    void immediateWriteMetadata(String name, Element item) throws JmriException {
+        log.error("no immediate write for metadata element");
+    }
+
     void immediateReadTurnout(String name, Element item) {
         // get turnout
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
 
+        if (useAttributes) {
+            item.setAttribute("value", Integer.toString(b.getKnownState()));
+        } else {
         Element v = item.getChild("value");
 
         // Start read: ensure value element
@@ -505,11 +647,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // set result
         v.setText(""+b.getKnownState());
     }
+    }
     
     void immediateReadMemory(String name, Element item) {
         // get memory
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
 
+        if (useAttributes) {
+            item.setAttribute("value", b.getValue().toString());
+        } else {
         Element v = item.getChild("value");
 
         // Start read: ensure value element
@@ -518,16 +664,22 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // set result
         v.setText(""+b.getValue());
     }
+    }
     
     void immediateReadRoute(String name, Element item) {
 
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+        Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
+ 
+        if (useAttributes) {
+            // 0 is the "unknown" state
+            item.setAttribute("value", Integer.toString((routeAligned != null) ? routeAligned.getKnownState() : 0));
+        } else {
         Element v = item.getChild("value");
 
         // Start read: ensure value element
         if (v == null) item.addContent(v = new Element("value"));
         
-        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
-        Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
         int state = 0;  //default to unknown
         if (routeAligned != null){
         	state = routeAligned.getKnownState();
@@ -535,11 +687,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // set result
         v.setText(""+state);
     }
+    }
     
     void immediateReadSensor(String name, Element item) {
         // get sensor
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
+        if (useAttributes) {
+            item.setAttribute("value", Integer.toString(b.getState()));
+        } else {
         Element v = item.getChild("value");
 
         // Start read: ensure value element
@@ -548,11 +704,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // set result
         v.setText(""+b.getState());
     }
+    }
     
     void immediateReadPower(String name, Element item) throws JmriException {
         // get power manager
         PowerManager b = InstanceManager.powerManagerInstance();
 
+        if (useAttributes) {
+            item.setAttribute("value", Integer.toString(b.getPower()));
+        } else {
         Element v = item.getChild("value");
 
         // Start read: ensure value element
@@ -561,9 +721,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // set result
         v.setText(""+b.getPower());
     }
+    }
     
     void immediateReadMetadata(String name, Element item) throws JmriException {
         
+        if (useAttributes) {
+            item.setAttribute("value", Metadata.getBySystemName(name));
+        } else {
         Element v = item.getChild("value");
         
         // Start read: ensure value element
@@ -572,11 +736,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // set result
         v.setText("" + Metadata.getBySystemName(name));
     }
+    }
     
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();
     
     void immediateSetThrottle(Element item) {
-        Integer address = Integer.parseInt(item.getChild("address").getText());
+        Integer address;
+        useAttributes = (item.getAttribute("address") != null);
+        if (useAttributes) {
+            address = Integer.parseInt(item.getAttributeValue("address"));
+        } else {
+            address = Integer.parseInt(item.getChild("address").getText());
+        }
         ThrottleContext tc = map.get(address);
         if (tc == null) {
             // first request does the allocation
@@ -598,6 +769,104 @@ public class DefaultXmlIOServer implements XmlIOServer {
             log.debug("process active throttle");
             // set speed, etc, as needed
             DccThrottle t = tc.throttle;
+
+            if (useAttributes) {
+                Attribute a;
+                try {
+                    if ((a = item.getAttribute("speed")) != null) {
+                        t.setSpeedSetting(a.getFloatValue());
+                    } else {
+                        item.setAttribute("speed", Float.toString(t.getSpeedSetting()));
+                    }
+
+                    if ((a = item.getAttribute("forward")) != null) {
+                        t.setIsForward(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("forward", Boolean.valueOf(t.getIsForward()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F0")) != null) {
+                        t.setF0(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F0", Boolean.valueOf(t.getF0()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F1")) != null) {
+                        t.setF1(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F1", Boolean.valueOf(t.getF1()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F2")) != null) {
+                        t.setF2(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F2", Boolean.valueOf(t.getF2()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F3")) != null) {
+                        t.setF3(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F3", Boolean.valueOf(t.getF3()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F4")) != null) {
+                        t.setF4(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F4", Boolean.valueOf(t.getF4()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F5")) != null) {
+                        t.setF5(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F5", Boolean.valueOf(t.getF5()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F6")) != null) {
+                        t.setF6(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F6", Boolean.valueOf(t.getF6()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F7")) != null) {
+                        t.setF7(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F7", Boolean.valueOf(t.getF7()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F8")) != null) {
+                        t.setF8(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F8", Boolean.valueOf(t.getF8()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F9")) != null) {
+                        t.setF9(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F9", Boolean.valueOf(t.getF9()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F10")) != null) {
+                        t.setF10(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F10", Boolean.valueOf(t.getF10()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F11")) != null) {
+                        t.setF11(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F11", Boolean.valueOf(t.getF11()).toString());
+                    }
+
+                    if ((a = item.getAttribute("F12")) != null) {
+                        t.setF12(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F12", Boolean.valueOf(t.getF12()).toString());
+                    }
+
+                } catch (DataConversionException e) {
+
+                }
+            } else {
             Element e;
             
             if ( (e = item.getChild("speed")) != null) {
@@ -608,7 +877,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
                                     ""+t.getSpeedSetting()
                                 ));
             
-            
             if ( (e = item.getChild("forward")) != null) {
                 if (e.getText().equals("false")) t.setIsForward(false);
                 else t.setIsForward(true);
@@ -618,7 +886,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
                                     t.getIsForward() ? "true" : "false"
                                 ));
             
-
             if ( (e = item.getChild("F0")) != null)  
                 if (e.getText().equals("false")) t.setF0(false);
                 else t.setF0(true);
@@ -722,8 +989,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                                 .addContent(
                                     t.getF12() ? "true" : "false"
                                 ));
+            }
             
-
         }
     }
 
@@ -748,8 +1015,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
             List<Element> items = request.getChildren("item");
     
             for (Element item : items) {
-                String type = item.getChild("type").getText();
-                String name = item.getChild("name").getText();
+                String type = item.getAttributeValue("type");
+                String name = item.getAttributeValue("name");
+                if (type == null) {
+                    type = item.getChild("type").getText();
+                    name = item.getChild("name").getText();
+                }
                 
                 if (type.equals("turnout")) removeListenerFromTurnout(name, item, this);
                 else if (type.equals("memory")) removeListenerFromMemory(name, item, this);
@@ -764,6 +1035,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         }
     }
     
+    boolean useAttributes = false;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultXmlIOServer.class.getName());
 }
