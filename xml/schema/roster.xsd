@@ -112,6 +112,7 @@
                   <xs:attribute name="imageFilePath" type="xs:string"/>
                   <xs:attribute name="iconFilePath" type="xs:string"/>
                   <xs:attribute name="URL" type="xs:string"/>
+                  <xs:attribute name="IsShuntingOn" type="xs:string"/>
                   <xs:attribute name="groupName" type="xs:string"/>
                   <xs:attribute name="roadName" type="xs:string"/>
                   <xs:attribute name="roadNumber" type="xs:string"/>
