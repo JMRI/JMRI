@@ -33,7 +33,7 @@
 <!-- familyList is actually a list of families and hence decoder definitions -->
 <!ELEMENT familyList (family*) >
 
-<!ELEMENT family (model*) >
+<!ELEMENT family (model*, functionlabels*) >
 <!ATTLIST family file      		CDATA #REQUIRED>  <!-- file name for details -->
 <!ATTLIST family name      		CDATA #REQUIRED>  <!-- family name used for identification -->
 <!ATTLIST family mfg       		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
@@ -78,7 +78,10 @@
 <!ATTLIST model extFnsNmraF13 ( no | yes ) "no" >  <!-- RP packets for F13-F20 -->
 <!ATTLIST model extFnsNmraBSC ( no | yes ) "no" >  <!-- "Binary State Control" -->
 <!ATTLIST model extFnsMRC  ( no | yes ) "no" >     <!-- Model Rectifier Corp "extension" -->
-
+<!ELEMENT functionlabels (functionlabel*) >
+<!ELEMENT functionlabel (#PCDATA)  >
+<!ATTLIST functionlabel  num	CDATA #REQUIRED>
+<!ATTLIST functionlabel  lockable ( true | false ) "false">
 <!ELEMENT versionCV EMPTY >
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
 <!-- If only one is specified, only that single value is acceptable -->
@@ -91,7 +94,7 @@
 <!ATTLIST output label     	CDATA #IMPLIED>  <!-- optional label, e.g. wire color -->
 <!ATTLIST output comment   	CDATA #IMPLIED>
 <!ATTLIST output maxcurrent CDATA #IMPLIED>
-<!ATTLIST output connection ( plug | solder | wire | other | unspecified ) "unspecified" >
+<!ATTLIST output connection ( plug | solder | wire | other | LED | unspecified  ) "unspecified" >
 
 <!ELEMENT size EMPTY>
 <!ATTLIST size length    CDATA #IMPLIED >
