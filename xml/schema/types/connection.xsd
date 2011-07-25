@@ -40,11 +40,15 @@
           <xs:sequence>
             <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
               <xs:complexType>
-                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="name" type="xs:string" use = "required"/>
+                  </xs:extension>
+                </xs:simpleContent>
               </xs:complexType>
-            </xs:element>
+            </xs:element> 
           </xs:sequence>
-          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="name" type="xs:string" use = "required"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="commandStationPreferences" minOccurs="0" maxOccurs="unbounded">

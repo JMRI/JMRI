@@ -173,6 +173,15 @@ signals - obsolete, EMPTY, never used
                 </xs:appinfo>
             </xs:annotation>
             <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="fileLocation" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:attribute name="defaultScriptLocation" type="xs:string"/>
+                      <xs:attribute name="defaultUserLocation" type="xs:string"/>
+                      <xs:attribute name="defaultThrottleLocation" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
                 <xs:attribute name="defaultScriptLocation" type="xs:string"/>
                 <xs:attribute name="class" type="classType" use="required" />
                 <xs:attribute name="defaultUserLocation" type="xs:string"/>
@@ -201,7 +210,6 @@ signals - obsolete, EMPTY, never used
                       </xs:element>
                     </xs:sequence>
                   </xs:complexType>
-
                 </xs:element>
               </xs:sequence>
               <xs:attribute name="class" type="classType" use="required" />
