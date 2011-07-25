@@ -9,6 +9,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.SignalMastLogic;
 import jmri.Turnout;
+import jmri.NamedBeanHandle;
 import jmri.util.com.sun.TableSorter;
 
 import java.beans.PropertyChangeListener;
@@ -58,6 +59,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     SignalMastLogic sml;
     
     SignalMastManager smm = InstanceManager.signalMastManagerInstance();
+    
+    jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     
     JFrame jFrame;
 
@@ -829,10 +832,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
         sml.setTurnouts(hashTurnouts, destMast);
         
-        Hashtable<Sensor, Integer> hashSensors = new Hashtable<Sensor, Integer>();
+        Hashtable<NamedBeanHandle<Sensor>, Integer> hashSensors = new Hashtable<NamedBeanHandle<Sensor>, Integer>();
         for(int i = 0; i<_includedManualSensorList.size(); i++){
-            Sensor blk = jmri.InstanceManager.sensorManagerInstance().getSensor(_includedManualSensorList.get(i).getSysName());
-            hashSensors.put(blk, _includedManualSensorList.get(i).getState());
+            String sensorName = _includedManualSensorList.get(i).getDisplayName();
+            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(_includedManualSensorList.get(i).getDisplayName());
+            NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sensor);
+            hashSensors.put(namedSensor, _includedManualSensorList.get(i).getState());
         }
         sml.setSensors(hashSensors, destMast);
 
@@ -1031,10 +1036,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         for (int i=_manualSensorList.size()-1; i>=0; i--) {
             ManualSensorList sensor = _manualSensorList.get(i);
             String tSysName = sensor.getSysName();
-            Sensor turn = InstanceManager.sensorManagerInstance().getSensor(tSysName);
-            if (sml.isSensorIncluded(turn, destMast)) {
+            Sensor sen = InstanceManager.sensorManagerInstance().getSensor(tSysName);
+            if (sml.isSensorIncluded(sen, destMast)) {
                 sensor.setIncluded(true);
-                sensor.setState(sml.getSensorState(turn, destMast));
+                sensor.setState(sml.getSensorState(sen, destMast));
                 setRow = i;
             } else {
                 sensor.setIncluded(false);
@@ -1098,6 +1103,16 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         String getUserName() {
             return _userName;
         }
+        
+        String getDisplayName() {
+            String name = getUserName();
+            if (name != null && name.length() > 0) {
+                return name;
+            } else {
+                return getSysName();
+            }
+        }
+        
         boolean isIncluded() {
             return _included;
         }

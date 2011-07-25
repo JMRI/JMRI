@@ -18,6 +18,7 @@ import jmri.Block;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 /**
  *
@@ -29,6 +30,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
     }
 
     private boolean debug;
+    
+    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     public Element store(Object o) {
         Element signalMastLogic = new Element("signalmastlogics");
@@ -109,14 +112,14 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(turnoutElement);
                             }
-                            ArrayList<Sensor> sensors = sm.getSensors(dest);
+                            ArrayList<NamedBeanHandle<Sensor>> sensors = sm.getNamedSensors(dest);
                             if (sensors.size()>0){
                                 Element sensorElement = new Element("sensors");
                                 for(int j = 0; j<sensors.size(); j++){
                                     Element sensor= new Element("sensor");
-                                    sensor.addContent(new Element("sensorName").addContent(sensors.get(j).getDisplayName()));
+                                    sensor.addContent(new Element("sensorName").addContent(sensors.get(j).getName()));
                                     String sensorState = "inActive";
-                                    if (sm.getSensorState(sensors.get(j), dest)==Sensor.ACTIVE)
+                                    if (sm.getSensorState(sensors.get(j).getBean(), dest)==Sensor.ACTIVE)
                                         sensorState = "active";
                                     sensor.addContent(new Element("sensorState").addContent(sensorState));
                                     sensorElement.addContent(sensor);
@@ -249,19 +252,20 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                 if(sensorElem!=null){
                     List<Element> sensorList = sensorElem.getChildren("sensor");
                     if (sensorList.size()>0){
-                        Hashtable<Sensor, Integer> list = new Hashtable<Sensor, Integer>();
+                        Hashtable<NamedBeanHandle<Sensor>, Integer> list = new Hashtable<NamedBeanHandle<Sensor>, Integer>();
                         for (Element sl : sensorList){
-                            String sensor = sl.getChild("sensorName").getText();
+                            String sensorName = sl.getChild("sensorName").getText();
                             String state = sl.getChild("sensorState").getText();
                             int value = Sensor.INACTIVE;
                             if (state.equals("active"))
                                 value = Sensor.ACTIVE;
 
-                            Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensor);
-                            if(sen!=null)
-                                list.put(sen, value);
-                            else if (debug)
-                                log.debug("Unable to add sensor " + sensor + " as it does not exist in the panel file");
+                            Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+                            if(sen!=null){
+                                NamedBeanHandle namedSensor = nbhm.getNamedBeanHandle(sensorName, sen);
+                                list.put(namedSensor, value);
+                            } else if (debug)
+                                log.debug("Unable to add sensor " + sensorName + " as it does not exist in the panel file");
 
                         }
                         logic.setSensors(list, dest);

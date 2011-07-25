@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -427,7 +428,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      * Sets which sensors must be in a given state before our mast can be set.
      * @param sensors
      */
-    public void setSensors(Hashtable<Sensor, Integer> sensors, SignalMast destination){
+    public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination){
         if(!destList.containsKey(destination)){
             return;
         }
@@ -467,6 +468,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return new ArrayList<Sensor>();
         }
         return destList.get(destination).getSensors();
+    }
+    
+    public ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(SignalMast destination){
+        if(!destList.containsKey(destination)){
+            return new ArrayList<NamedBeanHandle<Sensor>>();
+        }
+        return destList.get(destination).getNamedSensors();
     }
 
     public ArrayList<SignalMast> getSignalMasts(SignalMast destination){
@@ -884,7 +892,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
 
         //Hashtable<SignalMast, autoSignalMast> autoMasts = new Hashtable<SignalMast, autoSignalMast>(0);
         Hashtable<SignalMast, String> autoMasts = new Hashtable<SignalMast, String>(0);
-        Hashtable<Sensor, Integer> sensors = new Hashtable<Sensor, Integer>(0);
+        //Hashtable<Sensor, Integer> sensors = new Hashtable<Sensor, Integer>(0);
+        Hashtable<NamedBeanHandle<Sensor>, Integer> sensors = new Hashtable<NamedBeanHandle<Sensor>, Integer>(0);
         //Blocks is used for user defined blocks between two signalmasts
         Hashtable<Block, Integer> blocks = new Hashtable<Block, Integer>(0);
         boolean turnoutThrown = false;
@@ -908,8 +917,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             this.destination=destination;
             if(destination.getAspect()==null)
                 destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
-                    
-            //InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertySignalMastLogicManagerListener);
         }
         
         String comment;
@@ -1188,19 +1195,19 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
          * Sets which sensors must be in a given state before our mast can be set.
          * @param sensors
          */
-        void setSensors(Hashtable<Sensor, Integer> sensors){
+        void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors){
             if (this.sensors!=null){
-                Enumeration<Sensor> keys = this.sensors.keys();
+                Enumeration<NamedBeanHandle<Sensor>> keys = this.sensors.keys();
                 while ( keys.hasMoreElements() )
                 {
-                   Sensor key = keys.nextElement();
+                   Sensor key = keys.nextElement().getBean();
                    key.removePropertyChangeListener(propertySensorListener);
                 }
             }
             destMastInit = false;
 
             if(sensors==null){
-                this.sensors = new Hashtable<Sensor, Integer>(0);
+                this.sensors = new Hashtable<NamedBeanHandle<Sensor>, Integer>(0);
             } else {
                 this.sensors=sensors;
             }
@@ -1264,13 +1271,21 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         ArrayList<Sensor> getSensors(){
             ArrayList<Sensor> out = new ArrayList<Sensor>();
-            Enumeration<Sensor> en = sensors.keys();
+            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
+            while (en.hasMoreElements()) {
+                out.add(en.nextElement().getBean());
+            }
+            return out;
+        }
+
+        ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(){
+            ArrayList<NamedBeanHandle<Sensor>> out = new ArrayList<NamedBeanHandle<Sensor>>();
+            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
             while (en.hasMoreElements()) {
                 out.add(en.nextElement());
             }
             return out;
         }
-        
         
         boolean isBlockIncluded(Block block){
             return blocks.containsKey(block);
@@ -1297,7 +1312,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         boolean isSensorIncluded(Sensor sensor){
-            return sensors.containsKey(sensor);
+            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
+            while (en.hasMoreElements()) {
+                if(en.nextElement().getBean()==sensor)
+                    return true;
+            }
+            return false;
         }
         
         boolean isSignalMastIncluded(SignalMast signal){
@@ -1317,8 +1337,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         int getSensorState(Sensor sensor){
             if(sensors==null)
                 return -1;
-            if(sensors.containsKey(sensor))
-                return sensors.get(sensor);
+            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
+            while (en.hasMoreElements()) {
+                NamedBeanHandle namedSensor = en.nextElement();
+                if (namedSensor.getBean()==sensor)
+                    return sensors.get(namedSensor);
+            }
             return -1;
         }
         
@@ -1470,11 +1494,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                    state=false;
             }
 
-            Enumeration<Sensor> sensorKeys = sensors.keys();
+            Enumeration<NamedBeanHandle<Sensor>> sensorKeys = sensors.keys();
             while ( sensorKeys.hasMoreElements() )
             {
-               Sensor key = sensorKeys.nextElement();
-               if (key.getKnownState()!=sensors.get(key))
+               NamedBeanHandle<Sensor> namedSensor = sensorKeys.nextElement();
+               Sensor key = namedSensor.getBean();
+               if (key.getKnownState()!=sensors.get(namedSensor))
                    state=false;
             }
 
@@ -1587,14 +1612,15 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     routeclear=false;
             }
 
-            Enumeration<Sensor> sensorKeys = sensors.keys();
+            Enumeration<NamedBeanHandle<Sensor>> sensorKeys = sensors.keys();
             while ( sensorKeys.hasMoreElements() )
             {
-               Sensor key = sensorKeys.nextElement();
-               log.debug(source.getDisplayName() + " to " + destination.getDisplayName() + " Add change listener to sensor  " + key.getDisplayName());
-               key.addPropertyChangeListener(propertySensorListener);
+               NamedBeanHandle<Sensor> namedSensor = sensorKeys.nextElement();
+               Sensor sensor = namedSensor.getBean();
+               log.debug(source.getDisplayName() + " to " + destination.getDisplayName() + " Add change listener to sensor  " + namedSensor.getName());
+               sensor.addPropertyChangeListener(propertySensorListener, namedSensor.getName(), "Signal Mast Logic:" + source.getDisplayName() + " to " + destination.getDisplayName());
 
-               if (key.getKnownState()!=sensors.get(key))
+               if (sensor.getKnownState()!=sensors.get(namedSensor))
                    routeclear = false;
             }
 

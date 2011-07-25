@@ -108,6 +108,8 @@ public interface SignalMastLogic {
     public int getSensorState(Sensor sensor, SignalMast destination);
 
     public ArrayList<Sensor> getSensors(SignalMast destination);
+    
+    public ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(SignalMast destination);
 
     public String getSignalMastState(SignalMast mast, SignalMast destination);
 
@@ -225,8 +227,8 @@ public interface SignalMastLogic {
      * Sets which sensors must be in a given state before our mast can be set.
      * @param sensors
      */
-    public void setSensors(Hashtable<Sensor, Integer> sensors, SignalMast destination);
-
+    public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination);
+    
     /**
      * Use this to determine if the signalmast logic is stored in the panel file
      * and if all the information is stored.
