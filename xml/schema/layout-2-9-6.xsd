@@ -63,6 +63,7 @@ signals - obsolete, EMPTY, never used
     </xs:annotation>
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/connection.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/userpreferences.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-2-9-6.xsd"/>
@@ -188,33 +189,6 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="defaultThrottleLocation" type="xs:string"/>
             </xs:complexType>
         </xs:element>
-        <xs:element name="UserMessagePreferences" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-                <xs:documentation>
-                  Defines the User preferences for message boxes and drop down lists.
-                </xs:documentation>
-                <xs:appinfo>
-                    <jmri:usingclass configurexml="yes">jmri.managers.configurexml.DefaultUserMessagePreferencesXml</jmri:usingclass>
-                </xs:appinfo>
-            </xs:annotation>
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element name="comboBoxLastValue" minOccurs="0" maxOccurs="unbounded">
-                  <xs:complexType>
-                    <xs:sequence>
-                      <xs:element name="comboBox" minOccurs="0" maxOccurs="unbounded">
-                        <xs:complexType>
-                          <xs:attribute name="name" type="xs:string" />
-                          <xs:attribute name="lastSelected" type="xs:string"/>
-                        </xs:complexType>
-                      </xs:element>
-                    </xs:sequence>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-              <xs:attribute name="class" type="classType" use="required" />
-            </xs:complexType>
-        </xs:element>
         
         <xs:element name="managerdefaults" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
@@ -300,7 +274,8 @@ signals - obsolete, EMPTY, never used
         </xs:element>
 
         <xs:element name="connection"   type="ConnectionType" minOccurs="0" maxOccurs="unbounded" />
-      
+        <xs:element name="UserMessagePreferences"   type="UserPrefsType" minOccurs="0" maxOccurs="unbounded" />
+        
         <xs:element name="turnouts"     type="TurnoutManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensors"      type="SensorManagerType" minOccurs="0" maxOccurs="unbounded" />
 
