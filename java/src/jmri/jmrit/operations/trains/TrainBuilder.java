@@ -335,7 +335,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 			} else for (int i=0; i<stagingTracks.size(); i++ ){
 				departStageTrack = departLocation.getTrackById(stagingTracks.get(i));
-				addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
+				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
 					departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
 					Integer.toString(departStageTrack.getNumberCars())}));
 				// is the departure track available?
@@ -351,7 +351,7 @@ public class TrainBuilder extends TrainCommon{
 				departStageTrack = null;
 			}
 			if (departStageTrack == null){
-				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorStagingReq"),new Object[]{departLocation.getName()}));
+				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorStagingEmpty"),new Object[]{departLocation.getName()}));
 			}
 		} else {
 			// load engines for this train
@@ -2320,7 +2320,8 @@ public class TrainBuilder extends TrainCommon{
 		
 		if (Setup.isPrintTimetableNameEnabled()){
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(TrainManager.instance().getTrainScheduleActiveId());
-			valid = valid + " ("+sch.getName()+")"; 
+			if (sch != null)
+				valid = valid + " ("+sch.getName()+")"; 
 		}
 		
 		addLine(fileOut, valid);
