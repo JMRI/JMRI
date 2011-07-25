@@ -326,6 +326,8 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildDepartStaging"),new Object[]{departLocation.getName(), Integer.toString(stagingTracks.size())}));
 			if (stagingTracks.size()>1 && Setup.isPromptFromStagingEnabled()){
 				departStageTrack = PromptFromStagingDialog();
+				if (departStageTrack == null)
+					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorStagingEmpty"),new Object[]{departLocation.getName()}));
 				// load engines for this train
 				if (getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)){
 				} else {
@@ -334,8 +336,8 @@ public class TrainBuilder extends TrainCommon{
 			} else for (int i=0; i<stagingTracks.size(); i++ ){
 				departStageTrack = departLocation.getTrackById(stagingTracks.get(i));
 				addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
-						departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
-						Integer.toString(departStageTrack.getNumberCars())}));
+					departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
+					Integer.toString(departStageTrack.getNumberCars())}));
 				// is the departure track available?
 				if (!checkDepartureStagingTrack(departStageTrack)){
 					departStageTrack = null;
@@ -1443,8 +1445,10 @@ public class TrainBuilder extends TrainCommon{
 	 * @return true is there are engines and cars available.
 	 */
 	private boolean checkDepartureStagingTrack(Track departStageTrack){
-		if (departStageTrack.getNumberRS()==0)
+		if (departStageTrack.getNumberRS()==0){
+			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingEmpty"),new Object[]{departStageTrack.getName()}));
 			return false;
+		}
 		// is the staging track direction correct for this train?
 		if ((departStageTrack.getTrainDirections() & train.getTrainDepartsRouteLocation().getTrainDirection()) == 0){
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingNotDirection"),new Object[]{departStageTrack.getName()}));
@@ -1462,7 +1466,7 @@ public class TrainBuilder extends TrainCommon{
 				if (eng.getTrack() == departStageTrack){
 					// has engine been assigned to another train?
 					if (eng.getRouteLocation() != null){
-						addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingDepart"),
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepart"),
 								new Object[]{departStageTrack.getName(), eng.getTrainName()}));
 						return false;
 					}
@@ -1506,7 +1510,7 @@ public class TrainBuilder extends TrainCommon{
 				if (car.getTrack() == departStageTrack){
 					// has car been assigned to another train?
 					if (car.getRouteLocation() != null){
-						addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingDepart"),
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepart"),
 								new Object[]{departStageTrack.getName(), car.getTrainName()}));
 						return false;
 					}
