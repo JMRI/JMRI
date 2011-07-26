@@ -281,8 +281,14 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 if(listenerRefs.size()>0){
                     question = new JLabel("    ");
                     container.add(question);
+                    ArrayList<String> listeners = new ArrayList<String>();
                     for (int i = 0; i<listenerRefs.size(); i++){
-                        question = new JLabel(listenerRefs.get(i));
+                        if(!listeners.contains(listenerRefs.get(i)))
+                            listeners.add(listenerRefs.get(i));
+                    }
+                    
+                    for (int i = 0; i<listeners.size(); i++){
+                        question = new JLabel(listeners.get(i));
                         question.setAlignmentX(Component.CENTER_ALIGNMENT);
                         container.add(question);
                     }
