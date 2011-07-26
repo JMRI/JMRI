@@ -3,6 +3,8 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.Sensor;
+import jmri.NamedBeanHandle;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 
 import java.awt.*;
@@ -134,10 +136,10 @@ public class LayoutTurnout
 	public String signalCMast = ""; // diverging
 	public String signalDMast = ""; // single or double crossover only
     
-    public String sensorA = ""; // Throat
-	public String sensorB = ""; // Continuing 
-	public String sensorC = ""; // diverging
-	public String sensorD = ""; // single or double crossover only
+    private NamedBeanHandle<Sensor> sensorANamed = null; // Throat
+    private NamedBeanHandle<Sensor> sensorBNamed = null; // Continuing 
+    private NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
+    private NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
     
 	public int type = RH_TURNOUT;
 	public Object connectA = null;		// throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
@@ -278,14 +280,84 @@ public class LayoutTurnout
 	public String getSignalDMast() {return signalDMast;}
 	public void setSignalDMast(String signalMast) {signalDMast = signalMast;}
     
-    public String getSensorA() {return sensorA;}
-	public void setSensorA(String sensor) {sensorA = sensor;}
-	public String getSensorB() {return sensorB;}
-	public void setSensorB(String sensor) {sensorB = sensor;}
-	public String getSensorC() {return sensorC;}
-	public void setSensorC(String sensor) {sensorC = sensor;}
-	public String getSensorD() {return sensorD;}
-	public void setSensorD(String sensor) {sensorD = sensor;}
+    public String getSensorA() {
+        if(sensorANamed!=null)
+            return sensorANamed.getName();
+        return "";
+    }
+    
+	public void setSensorA(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorANamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorANamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorANamed=null;
+        }
+    }
+	public String getSensorB() {
+        if(sensorBNamed!=null)
+            return sensorBNamed.getName();
+        return "";
+    }
+    
+	public void setSensorB(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorBNamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorBNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorBNamed=null;
+        }
+    }
+    
+	public String getSensorC() {
+        if(sensorCNamed!=null)
+            return sensorCNamed.getName();
+        return "";
+    }
+    
+	public void setSensorC(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorCNamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorCNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorCNamed=null;
+        }
+    }
+    
+	public String getSensorD() {
+        if(sensorDNamed!=null)
+            return sensorDNamed.getName();
+        return "";
+    }
+    
+	public void setSensorD(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorDNamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorDNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorDNamed=null;
+        }
+    }
     
 	public String getLinkedTurnoutName() {return linkedTurnoutName;}
 	public void setLinkedTurnoutName(String s) {linkedTurnoutName = s;}

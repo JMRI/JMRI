@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+import jmri.Sensor;
+import jmri.NamedBeanHandle;
+import jmri.InstanceManager;
+
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
@@ -70,11 +74,15 @@ public class LevelXing
 	private String signalCMastName = "";  // signal at C track junction
 	private String signalDMastName = "";  // signal at D track junction    
     
-    private String sensorAName = "";  // sensor at A track junction
+    /*private String sensorAName = "";  // sensor at A track junction
 	private String sensorBName = "";  // sensor at B track junction
 	private String sensorCName = "";  // sensor at C track junction
-	private String sensorDName = "";  // sensor at D track junction    
+	private String sensorDName = "";  // sensor at D track junction    */
     
+    private NamedBeanHandle<Sensor> sensorANamed = null; // sensor at A track junction
+    private NamedBeanHandle<Sensor> sensorBNamed = null; // sensor at B track junction
+    private NamedBeanHandle<Sensor> sensorCNamed = null; // sensor at C track junction
+    private NamedBeanHandle<Sensor> sensorDNamed = null; // sensor at D track junction
     
 	private Object connectA = null;
 	private Object connectB = null;
@@ -119,14 +127,85 @@ public class LevelXing
 	public String getSignalDMastName() {return signalDMastName;}
 	public void setSignalDMastName(String signalName) {signalDMastName = signalName;}
     
-    public String getSensorAName() {return sensorAName;}
-	public void setSensorAName(String sensorName) {sensorAName = sensorName;}
-	public String getSensorBName() {return sensorBName;}
-	public void setSensorBName(String sensorName) {sensorBName = sensorName;}
-	public String getSensorCName() {return sensorCName;}
-	public void setSensorCName(String sensorName) {sensorCName = sensorName;}
-	public String getSensorDName() {return sensorDName;}
-	public void setSensorDName(String sensorName) {sensorDName = sensorName;}
+    public String getSensorAName() {
+        if(sensorANamed!=null)
+            return sensorANamed.getName();
+        return "";
+    }
+    
+	public void setSensorAName(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorANamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorANamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorANamed=null;
+        }
+    }
+    
+	public String getSensorBName() {
+        if(sensorBNamed!=null)
+            return sensorBNamed.getName();
+        return "";
+    }
+    
+	public void setSensorBName(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorBNamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorBNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorBNamed=null;
+        }
+    }
+    
+	public String getSensorCName() {
+        if(sensorCNamed!=null)
+            return sensorCNamed.getName();
+        return "";
+    }
+    
+	public void setSensorCName(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorCNamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorCNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorCNamed=null;
+        }
+    }
+    
+	public String getSensorDName() {
+        if(sensorDNamed!=null)
+            return sensorDNamed.getName();
+        return "";
+    }
+    
+	public void setSensorDName(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            sensorDNamed=null;
+            return;
+        }
+        
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            sensorDNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            sensorDNamed=null;
+        }
+    }
     
 	public Object getConnectA() {return connectA;}
 	public Object getConnectB() {return connectB;}

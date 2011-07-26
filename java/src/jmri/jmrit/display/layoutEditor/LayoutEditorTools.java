@@ -9676,8 +9676,8 @@ public class LayoutEditorTools
 					setSensorsCancelPressed(null);
 				}
 			});
-			if (turnoutFromMenu) turnoutSensorsGetSaved(null);
 		}
+        if (turnoutFromMenu) turnoutSensorsGetSaved(null);
         setSensorsFrame.setPreferredSize(null);
         setSensorsFrame.pack();
         setSensorsFrame.setVisible(true);		
@@ -10206,8 +10206,8 @@ public class LayoutEditorTools
 					setXingSensorsCancelPressed(null);
 				}
 			});
-			if (xingSensorFromMenu) xingSensorsGetSaved(null);
 		}
+        if (xingSensorFromMenu) xingSensorsGetSaved(null);
         sensorsAtXingFrame.setPreferredSize(null);
         sensorsAtXingFrame.pack();
         sensorsAtXingFrame.setVisible(true);
