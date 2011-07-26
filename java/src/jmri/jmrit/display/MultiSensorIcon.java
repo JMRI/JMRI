@@ -68,7 +68,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (sensor != null) {
             if (log.isDebugEnabled()) log.debug("addEntry: sensor= "+sensor.getName());       
             Entry e = new Entry();
-            sensor.getBean().addPropertyChangeListener(this);
+            sensor.getBean().addPropertyChangeListener(this, sensor.getName(), "MultiSensor Icon");
             e.namedSensor = sensor;
             e.icon = icon;
             entries.add(e);
