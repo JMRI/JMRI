@@ -7125,7 +7125,9 @@ public class LayoutEditorTools
 				}
 			});
 			if (boundaryFromMenu) getSavedAnchorSensors(null);
-		}
+		} else {
+            if (boundaryFromMenu) getSavedAnchorSensors(null);
+        }
         setSensorsAtBoundaryFrame.pack();
         setSensorsAtBoundaryFrame.setVisible(true);		
 		setSensorsAtBoundaryOpen = true;

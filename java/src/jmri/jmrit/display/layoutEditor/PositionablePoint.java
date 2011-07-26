@@ -9,6 +9,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
+import jmri.NamedBeanHandle;
+import jmri.InstanceManager;
+import jmri.Sensor;
+
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged around the
  * inside of the enclosing LayoutEditor panel using a right-drag (drag with meta key).
@@ -52,8 +56,10 @@ public class PositionablePoint
 	private Point2D coords = new Point2D.Double(10.0,10.0);
 	private String eastBoundSignalName = ""; // signal head for east (south) bound trains
 	private String westBoundSignalName = ""; // signal head for west (north) bound trains
-    private String eastBoundSensorName = "";
-    private String westBoundSensorName = "";
+    /* We use a namedbeanhandle for the the sensors, even though we only store the name here, 
+    this is so that we can keep up with moves and changes of userNames */
+    private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
+    private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
     private String eastBoundSignalMastName = "";
     private String westBoundSignalMastName = "";
 	
@@ -85,10 +91,42 @@ public class PositionablePoint
 	public String getWestBoundSignal() {return westBoundSignalName;}
 	public void setWestBoundSignal(String signalName) {westBoundSignalName = signalName;}
     
-    public String getEastBoundSensor() {return eastBoundSensorName;}
-	public void setEastBoundSensor(String sensorName) {eastBoundSensorName = sensorName;}
-	public String getWestBoundSensor() {return westBoundSensorName;}
-	public void setWestBoundSensor(String sensorName) {westBoundSensorName = sensorName;}
+    public String getEastBoundSensor() {
+        if(eastBoundSensorNamed!=null)
+            return eastBoundSensorNamed.getName();
+        return "";
+    }
+	public void setEastBoundSensor(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            eastBoundSensorNamed=null;
+            return;
+        }
+            
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            eastBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            eastBoundSensorNamed=null;
+        }
+    }
+    
+	public String getWestBoundSensor() {
+        if(westBoundSensorNamed!=null)
+            return westBoundSensorNamed.getName();
+        return "";
+    }
+	public void setWestBoundSensor(String sensorName) {
+        if(sensorName==null || sensorName.equals("")){
+            westBoundSensorNamed=null;
+            return;
+        }
+        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+        if (sensor != null) {
+            westBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            westBoundSensorNamed=null;
+        }
+    }
     
 	public String getEastBoundSignalMast() {return eastBoundSignalMastName;}
 	public void setEastBoundSignalMast(String signalMastName) {eastBoundSignalMastName = signalMastName;}
