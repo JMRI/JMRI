@@ -124,8 +124,8 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
             logComm("stalling thread, waiting for reply");
             
             try {
-                Thread.sleep(10000000000000L);  // really long
-//                Thread.sleep(5000);  // not so long (30 secs)
+//                Thread.sleep(10000000000000L);  // really long
+                Thread.sleep(300000);  // not quite so long (5 minutes)
             	logComm("Thread sleep completed.");
             } catch (InterruptedException e) {
             	logComm("Interrupted");
