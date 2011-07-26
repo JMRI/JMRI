@@ -13,7 +13,7 @@ import javax.swing.JComponent;
 import jmri.util.JmriJFrame;
 
 /**
- * Displays and allows user to modify the text display used in a sensor
+ * Displays and allows user to modify the text display used in a turnout slip
  *
  * This is a modification of CoordinateEdit.java by Dan Boudreau for use with LayoutEditor
  * 
@@ -137,13 +137,13 @@ public class SlipTurnoutTextEdit extends JmriJFrame
         
 		okButton.setText(rb.getString("Set"));
 		okButton.setVisible(true);
-		okButton.setToolTipText(rb.getString("SetButtonToolTipSensor"));
+		okButton.setToolTipText(rb.getString("SetButtonToolTip"));
 
 		cancelButton.setText(rb.getString("Cancel"));
 		cancelButton.setVisible(true);
-		cancelButton.setToolTipText(rb.getString("CancelButtonToolTipSensor"));
+		cancelButton.setToolTipText(rb.getString("CancelButtonToolTip"));
 
-		setTitle(rb.getString("SetSensorText"));
+		setTitle(rb.getString("SetTurnoutText"));
 		getContentPane().setLayout(new GridBagLayout());
 		
 		setSize(250, 220);
