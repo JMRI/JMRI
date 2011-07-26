@@ -126,7 +126,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private String  _pathName;      // when not null, this is the allocated path
     private float _scaleRatio   = 87.1f;
     private boolean _metric     = false; // desired display mode
-    private Sensor _errSensor;      // optional sensor to indicate shorts or other power problems
     private NamedBeanHandle<Sensor> _errNamedSensor;
     
     public OBlock(String systemName) {
@@ -188,7 +187,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 		if (log.isDebugEnabled())
 			log.debug("property change: " + getDisplayName() + " property " + evt.getPropertyName() + " is now "
 					+ evt.getNewValue()+" from "+evt.getSource().getClass().getName());
-        if (evt.getSource().equals(_errSensor)) {
+        if ((getErrorSensor()!=null) && (evt.getSource().equals(getErrorSensor()))) {
             if (evt.getPropertyName().equals("KnownState")) {
                 int errState = ((Integer)evt.getNewValue()).intValue();
                 int oldState = getState();
