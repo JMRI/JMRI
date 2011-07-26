@@ -554,10 +554,10 @@ public class SlipIconAdder extends IconAdder {
             return false;
     }
     
-    private boolean putTurnout(String key, Turnout sensor) {
-        String name = sensor.getUserName();
+    private boolean putTurnout(String key, Turnout turnout) {
+        String name = turnout.getUserName();
         if (name == null) {
-            name = sensor.getSystemName();
+            name = turnout.getSystemName();
         }
         Iterator<NamedBeanHandle<Turnout>> iter = _turnoutMap.values().iterator();
         while (iter.hasNext()) {
@@ -570,7 +570,7 @@ public class SlipIconAdder extends IconAdder {
                 return false;
             }
         }
-        _turnoutMap.put(key, jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor));
+        _turnoutMap.put(key, jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, turnout));
         return true;
     }
 
