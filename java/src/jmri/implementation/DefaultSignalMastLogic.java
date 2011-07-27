@@ -886,7 +886,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         Hashtable<Turnout, Integer> turnouts = new Hashtable<Turnout, Integer>(0);
         Hashtable<Turnout, Integer> autoTurnouts = new Hashtable<Turnout, Integer>(0);
-        Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
+        //Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
         //Hashtable<Turnout, Boolean> autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
         Hashtable<SignalMast, String> masts = new Hashtable<SignalMast, String>(0);
         Hashtable<SignalMast, String> autoMasts = new Hashtable<SignalMast, String>(0);
@@ -1004,7 +1004,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             firePropertyChange("turnouts", null, this.destination);
         }
         
-        void setTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
+        /*void setTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
                 if(this.turnoutThroats!=null){
                 Enumeration<Turnout> keys = this.turnouts.keys();
                 while ( keys.hasMoreElements() )
@@ -1020,7 +1020,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 this.turnoutThroats=turnouts;
             }
             firePropertyChange("turnouts", null, this.destination);
-        }
+        }*/
     
         /*void setAutoTurnoutThroats(Hashtable<Turnout, Boolean> turnouts){
                 if(this.turnoutThroats!=null){
