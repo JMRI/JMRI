@@ -62,7 +62,6 @@ public class ZeroConfService {
      * 
      * @param type
      * @param port
-     * @return 
      */
     public static ZeroConfService create(String type, int port) {
         return create(type, port, new HashMap());
@@ -77,7 +76,6 @@ public class ZeroConfService {
      * @param type
      * @param port
      * @param props
-     * @return 
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> props) {
         return create(type, ZeroConfService.hostName(), port, 0, 0, props);
@@ -95,7 +93,6 @@ public class ZeroConfService {
      * @param weight
      * @param priority
      * @param props
-     * @return 
      */
     @SuppressWarnings("UseOfObsoleteCollectionType") // JmDNS 3.0 uses Hashtables, upgrade to JmDNS 3.4 and this is not required
     public static ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> props) {
@@ -124,7 +121,6 @@ public class ZeroConfService {
      * Get the key of the ZeroConfService object. The key is fully qualified
      * name of the service in all lowercase, jmri._http.local.
      *
-     * @return
      */
     public String key() {
         // JmDNS 3.4 supports a getKey() method, but 3.0 does not
@@ -137,7 +133,6 @@ public class ZeroConfService {
      *
      * @param type
      * @param name
-     * @return
      */
     protected static String key(String type, String name) {
         return (name + "." + type).toLowerCase();
@@ -147,7 +142,6 @@ public class ZeroConfService {
      * Get the name of the ZeroConfService object. The name can only be set
      * when creating the object.
      * 
-     * @return 
      */
     public String name() {
         return _serviceInfo.getName();
@@ -157,7 +151,6 @@ public class ZeroConfService {
      * Get the type of the ZeroConfService object. The type can only be set
      * when creating the object.
      * 
-     * @return 
      */
     public String type() {
         return _serviceInfo.getType();
@@ -167,7 +160,6 @@ public class ZeroConfService {
      * Get the ServiceInfo property of the object. This is the JmDNS
      * implementation of a zeroConf service.
      * 
-     * @return 
      */
     public ServiceInfo serviceInfo() {
         return _serviceInfo;
@@ -177,7 +169,6 @@ public class ZeroConfService {
      * Get the state of the service. True if the service is being advertised,
      * and false otherwise.
      * 
-     * @return 
      */
     public Boolean isPublished() {
         return ZeroConfService.services().containsKey(key());
@@ -221,7 +212,6 @@ public class ZeroConfService {
     /**
      * A list of published ZeroConfServices 
      * 
-     * @return 
      */
     public Collection<ZeroConfService> allServices() {
         return ZeroConfService.services().values();
@@ -263,7 +253,6 @@ public class ZeroConfService {
      * Return the system name or "computer" if the system name cannot be
      * determined. This method uses the JmDNS.getHostName() method.
      * 
-     * @return
      */
     public static String hostName() {
         String hostName = ZeroConfService.jmdns().getHostName() + ".";
