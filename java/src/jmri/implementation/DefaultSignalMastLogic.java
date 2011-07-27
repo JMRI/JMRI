@@ -889,10 +889,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
         //Hashtable<Turnout, Boolean> autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
         Hashtable<SignalMast, String> masts = new Hashtable<SignalMast, String>(0);
-
-        //Hashtable<SignalMast, autoSignalMast> autoMasts = new Hashtable<SignalMast, autoSignalMast>(0);
         Hashtable<SignalMast, String> autoMasts = new Hashtable<SignalMast, String>(0);
-        //Hashtable<Sensor, Integer> sensors = new Hashtable<Sensor, Integer>(0);
         Hashtable<NamedBeanHandle<Sensor>, Integer> sensors = new Hashtable<NamedBeanHandle<Sensor>, Integer>(0);
         //Blocks is used for user defined blocks between two signalmasts
         Hashtable<Block, Integer> blocks = new Hashtable<Block, Integer>(0);
@@ -2062,7 +2059,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if (e.getPropertyName().equals("KnownState")) {
                     int now = ((Integer) e.getNewValue()).intValue();
                     log.debug("current value " + now + " value we want " + getSensorState(sen));
-                    if (sensors.containsKey(sen) && getSensorState(sen)!=now){
+                    if (IsSensorIncluded(sen) && getSensorState(sen)!=now){
                         //if(log.isDebugEnabled())
                             log.debug("Sensor " + sen.getDisplayName() + " caused the signalmast to be set to danger");
                         //getSourceMast().setAspect(stopAspect);
@@ -2245,7 +2242,22 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
         };
+        
+        protected boolean IsSensorIncluded(Sensor sen){
+            Enumeration<NamedBeanHandle<Sensor>> sensorKeys = sensors.keys();
+            while ( sensorKeys.hasMoreElements() )
+            {
+                NamedBeanHandle<Sensor> namedSensor = sensorKeys.nextElement();
+                if(namedSensor.getBean()==sen) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    
     }
+    
+    
     //This is the listener on the destination signalMast
     protected PropertyChangeListener propertyDestinationMastListener = new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent e) {
