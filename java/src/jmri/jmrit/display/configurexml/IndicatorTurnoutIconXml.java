@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.NamedBean;
+import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.display.Editor;
@@ -42,23 +43,18 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         Element element = new Element("indicatorturnouticon");
         storeCommonAttributes(p, element);
 
-        Turnout t = p.getTurnout();
+        NamedBeanHandle<Turnout> t = p.getNamedTurnout();
         if (t!=null) {
-            element.addContent(storeBean("turnout", t));
+            element.addContent(storeNamedBean("turnout", t));
         }
-        OBlock b = p.getOccBlock();
+        NamedBeanHandle<OBlock> b = p.getNamedOccBlock();
         if (b!=null) {
-            element.addContent(storeBean("occupancyblock", b));
+            element.addContent(storeNamedBean("occupancyblock", b));
         }
-        Sensor s = p.getOccSensor();
+        NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
         if (s!=null) {
-            element.addContent(storeBean("occupancysensor", s));
+            element.addContent(storeNamedBean("occupancysensor", s));
         }
-        /*
-        s = p.getErrSensor();
-        if (s!=null) {
-            element.addContent(storeBean("errorsensor", s));
-        }  */
 
         Element elem = new Element("showTrainName");
         String show = "no";
@@ -100,10 +96,10 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
         return element;
     }
-
-    Element storeBean(String elemName, NamedBean nb) {
+    
+    Element storeNamedBean(String elemName, NamedBeanHandle nb) {
         Element elem = new Element(elemName);
-        elem.addContent(nb.getSystemName());
+        elem.addContent(nb.getName());
         return elem;
     }
 

@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.NamedBean;
+import jmri.NamedBeanHandle;
 import jmri.Sensor;
 
 import jmri.jmrit.catalog.NamedIcon;
@@ -43,13 +44,13 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         Element element = new Element("indicatortrackicon");
         storeCommonAttributes(p, element);
 
-        OBlock b = p.getOccBlock();
+        NamedBeanHandle<OBlock> b = p.getNamedOccBlock();
         if (b!=null) {
-            element.addContent(storeBean("occupancyblock", b));
+            element.addContent(storeNamedBean("occupancyblock", b));
         }
-        Sensor s = p.getOccSensor();
+        NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
         if (s!=null) {
-            element.addContent(storeBean("occupancysensor", s));
+            element.addContent(storeNamedBean("occupancysensor", s));
         }
         /*
         s = p.getErrSensor();
@@ -92,9 +93,15 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         return element;
     }
 
-    Element storeBean(String elemName, NamedBean nb) {
+    /*Element storeBean(String elemName, NamedBean nb) {
         Element elem = new Element(elemName);
         elem.addContent(nb.getSystemName());
+        return elem;
+    }*/
+    
+    Element storeNamedBean(String elemName, NamedBeanHandle nb) {
+        Element elem = new Element(elemName);
+        elem.addContent(nb.getName());
         return elem;
     }
 

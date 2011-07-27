@@ -109,7 +109,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                  _iconMap = new Hashtable<String, NamedIcon>();
              }
              Sensor sensor = getOccSensor();
-             sensor.addPropertyChangeListener(this);
+             sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Track");
              setStatus(sensor.getKnownState());
              displayState(_status);
          } 
@@ -148,7 +148,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 _iconMap = new Hashtable<String, NamedIcon>();
             }
             OBlock block = getOccBlock();
-            block.addPropertyChangeListener(this);
+            block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Track");
             setStatus(block, block.getState());
             displayState(_status);
             setTooltip(new ToolTip(block.getDescription(), 0, 0));

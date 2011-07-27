@@ -143,7 +143,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         namedOccSensor = sen;
         if (namedOccSensor != null) {
             Sensor sensor = getOccSensor();
-            sensor.addPropertyChangeListener(this);
+            sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Turnout Icon");
             setStatus(sensor.getKnownState());
             if (_iconMaps!=null) {
                 displayState(turnoutState());
@@ -182,7 +182,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         namedOccBlock = blockHandle;
         if (namedOccBlock != null) {
             OBlock block = getOccBlock();
-            block.addPropertyChangeListener(this);
+            block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Turnout Icon");
             setStatus(block, block.getState());
             if (_iconMaps!=null) {
                 displayState(turnoutState());
