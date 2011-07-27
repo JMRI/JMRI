@@ -633,7 +633,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
                 if ((1000<=object) && (object<2000)){
                     log.debug("Forwarding on State change for " + object);
-                    tmploco = _tecos.get((Integer.toString(object)));
+                    String strLocoObject = Integer.toString(object);
+                    tmploco = _tecos.get(strLocoObject);
                     if (tmploco!=null){
                         tmploco.reply(m);
                         //As the event will come from one object, we shall check to see if it is an extended address,
