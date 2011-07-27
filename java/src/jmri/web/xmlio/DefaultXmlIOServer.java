@@ -342,6 +342,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 else if (type.equals("sensor")) immediateReadSensor(name, item);
                 else if (type.equals("route")) immediateReadRoute(name, item);
                 else if (type.equals("power")) immediateReadPower(name, item);
+                else if (type.equals("metadata")) immediateReadMetadata(name, item);
             } catch (JmriException j) {
                 log.warn("exception handling " + type + " " + name, j);
             }
