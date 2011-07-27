@@ -47,17 +47,16 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String VT = "VT"+del+"Valid"+del;
 	
 	// switch list specific operators
-	
-	protected final static String NCPU = "NCPU"+del+"No Car Pick Up";
-	protected final static String NCSO = "NCSO"+del+"No Car Set Out";
-	protected final static String TDONE = "TDONE"+del+"Train has already serviced this location";
-	protected final static String TDC = "TDC"+del+"Train changes direction, departs"+del;
-	protected final static String VN = "VN"+del+"Visit Number"+del;
+	protected final static String DL = "DL"+del+"Departure Location"+del;
 	protected final static String ETA = "ETA"+del+"Expected Time Arrival"+del;
 	protected final static String ETE = "ETE"+del+"Estimated Time Enroute"+del;
-	protected final static String TIR = "TIR"+del+"Train In Route";
-	protected final static String DL = "DL"+del+"Departure Location"+del;
+	protected final static String NCPU = "NCPU"+del+"No Car Pick Up";
+	protected final static String NCSO = "NCSO"+del+"No Car Set Out";
 	protected final static String TA = "TA"+del+"Train Arrives"+del;
+	protected final static String TDC = "TDC"+del+"Train changes direction, departs"+del;
+	protected final static String TIR = "TIR"+del+"Train In Route";
+	protected final static String TDONE = "TDONE"+del+"Train has already serviced this location";	
+	protected final static String VN = "VN"+del+"Visit Number"+del;
 	
 	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
 		// check for delimiter in names
