@@ -62,6 +62,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	// Switch list status
 	public static final String UNKNOWN = "";
 	public static final String PRINTED = rb.getString("Printed");
+	public static final String CSV_GENERATED = rb.getString("CsvGenerated");
 	public static final String MODIFIED = rb.getString("Modified");
 	
 	// For property change
@@ -221,7 +222,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * 
 	 */
 	public void setStatus(){
-		if (getStatus().equals(PRINTED))
+		if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED))
 			setStatus(MODIFIED);
 	}
 	

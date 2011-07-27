@@ -96,7 +96,8 @@
 <!ATTLIST buildOptions stagingRestrictionEnabled	(true | false ) "true"> 
 <!ATTLIST buildOptions promptStagingEnabled			(true | false ) "false">   
 <!ATTLIST buildOptions promptToStagingEnabled		(true | false ) "false">
-<!ATTLIST buildOptions generateCsvManifest			(true | false ) "false">       
+<!ATTLIST buildOptions generateCsvManifest			(true | false ) "false">  
+<!ATTLIST buildOptions generateCsvSwitchList		(true | false ) "false">     
 <!ATTLIST buildReport level			CDATA #IMPLIED>    
 <!ATTLIST buildReport useEditor		(true | false ) "false">                                  
 <!ATTLIST owner name				CDATA #IMPLIED>

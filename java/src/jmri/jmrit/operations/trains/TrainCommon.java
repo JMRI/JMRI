@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Common routines for trains
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011
- *
+ * @version             $Revision: 1 $
  */
 public class TrainCommon {
 	

@@ -53,6 +53,7 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(rb.getString("PromptFromStaging"));
 	JCheckBox promptToTrackStagingCheckBox = new JCheckBox(rb.getString("PromptToStaging"));
 	JCheckBox generateCvsManifestCheckBox = new JCheckBox(rb.getString("GenerateCsvManifest"));
+	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(rb.getString("GenerateCsvSwitchList"));
 	
 	// text field
 	
@@ -80,6 +81,7 @@ public class OptionFrame extends OperationsFrame{
 		promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
 		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
+		generateCvsSwitchListCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
@@ -123,8 +125,9 @@ public class OptionFrame extends OperationsFrame{
 		pOption.setLayout(new GridBagLayout());
 		pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
 		addItemLeft (pOption, generateCvsManifestCheckBox, 1,0);
-		addItemLeft (pOption, valueCheckBox, 1,1);
-		addItemLeft (pOption, rfidCheckBox, 1,2);
+		addItemLeft (pOption, generateCvsSwitchListCheckBox, 1,1);
+		addItemLeft (pOption, valueCheckBox, 1,2);
+		addItemLeft (pOption, rfidCheckBox, 1,3);
 		
 		// row 11
 		JPanel pControl = new JPanel();
@@ -193,6 +196,7 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// Options
 			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
+			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
 			Setup.setValueEnabled(valueCheckBox.isSelected());
 			Setup.setRfidEnabled(rfidCheckBox.isSelected());
 			// Logging enabled?		

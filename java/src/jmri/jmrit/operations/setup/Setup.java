@@ -200,6 +200,7 @@ public class Setup {
 	private static boolean promptFromStaging = false;		// when true prompt user to specify which departure staging track to use
 	private static boolean promptToStaging = false;			// when true prompt user to specify which arrival staging track to use
 	private static boolean generateCsvManifest = false;		// when true generate csv manifest
+	private static boolean generateCsvSwitchList = false;	// when true generate csv switch list
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
@@ -347,6 +348,14 @@ public class Setup {
 	
 	public static void setGenerateCsvManifestEnabled(boolean enabled){
 		generateCsvManifest = enabled;
+	}
+	
+	public static boolean isGenerateCsvSwitchListEnabled(){
+		return generateCsvSwitchList;
+	}
+	
+	public static void setGenerateCsvSwitchListEnabled(boolean enabled){
+		generateCsvSwitchList = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -1108,6 +1117,7 @@ public class Setup {
     	values.setAttribute("promptStagingEnabled", isPromptFromStagingEnabled()?"true":"false");
     	values.setAttribute("promptToStagingEnabled", isPromptToStagingEnabled()?"true":"false");
     	values.setAttribute("generateCsvManifest", isGenerateCsvManifestEnabled()?"true":"false");
+    	values.setAttribute("generateCsvSwitchList", isGenerateCsvSwitchListEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
@@ -1423,6 +1433,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("generateCvsManifest: "+enable);
         		setGenerateCsvManifestEnabled(enable.equals("true"));
+        	}
+         	if((a = operations.getChild("buildOptions").getAttribute("generateCsvSwitchList")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("generateCvsSwitchList: "+enable);
+        		setGenerateCsvSwitchListEnabled(enable.equals("true"));
         	}
         }
         if (operations.getChild("buildReport") != null){

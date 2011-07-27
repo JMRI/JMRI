@@ -211,6 +211,23 @@ public class TrainManagerXml extends OperationsXml {
     public String defaultSwitchListName(String name) { 
     	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"switchLists"+File.separator+SwitchListFileName+name+fileType;
     }
+    
+	/**
+     * Store the csv switch list for a location
+     */
+    public File createCsvSwitchListFile(String name) {
+    	return createFile(defaultCsvSwitchListName(name), false);	// don't backup
+	}
+     
+    public File getCsvSwitchListFile(String name) {
+    	File file = new File(defaultCsvSwitchListName(name));
+    	return file;
+    }
+     
+    public String defaultCsvSwitchListName(String name) { 
+    	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"csvSwitchLists"+File.separator+SwitchListFileName+name+fileTypeCsv;
+    }
+    
     public void setTrainSwitchListName(String name) { SwitchListFileName = name; }
     private String SwitchListFileName = "location (";
     

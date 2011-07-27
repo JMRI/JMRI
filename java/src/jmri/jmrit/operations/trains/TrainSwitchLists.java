@@ -52,7 +52,8 @@ public class TrainSwitchLists extends TrainCommon {
 		
 		if (Setup.isPrintTimetableNameEnabled()){
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(manager.getTrainScheduleActiveId());
-			valid = valid + " ("+sch.getName()+")"; 
+			if (sch != null)
+				valid = valid + " ("+sch.getName()+")"; 
 		}
 		addLine(fileOut, valid);
 		
@@ -94,12 +95,12 @@ public class TrainSwitchLists extends TrainCommon {
 								if (r != routeList.size()-1)
 									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 								else
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getName()}));
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, splitString(rl.getName())}));
 							} else {
 								if (r != routeList.size()-1)
 									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 								else
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getName()}));
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getName(), expectedArrivalTime, splitString(rl.getName())}));
 							}
 						} else {
 							stops--;	// don't bump stop count, same location
@@ -112,13 +113,13 @@ public class TrainSwitchLists extends TrainCommon {
 						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));										
 						if (train.isTrainInRoute()){
 							if (!trainDone){
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{train.getTrainDepartsName(), expectedArrivalTime, rl.getTrainDirectionString()}));
+								addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{splitString(train.getTrainDepartsName()), expectedArrivalTime, rl.getTrainDirectionString()}));
 							}
 						} else {
 							if (r == 0 && routeList.size()>1)
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{train.getTrainDepartsName(), rl.getTrainDirectionString(), train.getFormatedDepartureTime()}));
+								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{splitString(train.getTrainDepartsName()), rl.getTrainDirectionString(), train.getFormatedDepartureTime()}));
 							else if (routeList.size()>1)
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAtExpectedArrival"), new Object[]{train.getTrainDepartsName(), train.getFormatedDepartureTime(), expectedArrivalTime, rl.getTrainDirectionString()}));
+								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAtExpectedArrival"), new Object[]{splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(), expectedArrivalTime, rl.getTrainDirectionString()}));
 						}
 					}
 					// go through the list of engines and determine if the engine departs here
