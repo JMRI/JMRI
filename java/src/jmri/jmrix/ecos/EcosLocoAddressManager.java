@@ -102,7 +102,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         
         l = new EcosLocoAddress(ecosObject, p.getRosterAttribute());
         register(l);
-        //return (EcosLocoAddress)_tecos.get(ecosObject);
         return _tecos.get(ecosObject);
     }
 
@@ -269,8 +268,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 _tecos.remove(ecosObject);
             }
         }
-        
-        //final EcosPreferences p = adaptermemo.getPreferenceManager();
 
         if(p.getAdhocLocoFromEcos()==0x01){
             disposefinal();
@@ -498,12 +495,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     }
 
     public void reply(EcosReply m) {
-    // is this a list of Locos?
-        //int startval;
-        //int endval;
-        //int addr;
-        //String description;
-        //String protocol;
         String strde;
         String msg = m.toString();
         String[] lines = msg.split("\n");
@@ -544,19 +535,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                      }
                 }
             }
-            //the locoAddressManager doesn't handle the creation of locos
-            /*else if (lines[0].startsWith("<REPLY create(10, addr")){
-                for(int i =1; i<lines.length-1; i++) {
-                    if(lines[i].contains("10 id[")){
-                        int start = lines[i].indexOf("[")+1;
-                        int end = lines[i].indexOf("]");
-                        String EcosAddr = lines[i].substring(start, end);
-                        System.out.println(EcosAddr + " " + lines[i]);
-                        l.setEcosObject(EcosAddr);
-                        register(l);
-                    }
-                }
-            }*/
             //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
             //identify the loco correctly
             else if (lines[0].startsWith("<REPLY get(")){
@@ -583,14 +561,12 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                             case 7 :    tmploco.setCV7(cvval);
                                         break;
                             case 8  :   tmploco.setCV8(cvval);
-                                        //System.out.println(tmploco.getEcosDescription());
                                         checkInRoster(tmploco);
                                         break;
                         }
                     }
                     if (lines[i].contains("addr")){
                         tmploco.setEcosLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(lines[i], "addr[", "]"));
-                        //tmploco.setEcosLocoAddress(getAddress(lines[i]));
                     }
                     if (lines[i].contains("name")){
                         tmploco.setEcosDescription(getName(lines[i]));
@@ -600,16 +576,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     }
                     register(tmploco);
                 }
-
-                /*if((p.getAddLocoToJMRI()==0x02) && addLocoToRoster){
-                    EcosLocoToRoster addLoco = new EcosLocoToRoster();
-                    addLoco.ecosLocoToRoster(""+object);
-                    //System.out.println("Code here to Add a loco to JMRI");
-                    //return;
-                }*/
             } 
             else if(lines[0].contains("<EVENT 10>")){
-                //System.out.println("We have a change in the loco database");
                 log.debug("We have received notification of a change in the Loco list");
                 if (lines.length==2){
                     EcosMessage mout = new EcosMessage("queryObjects(10)");
@@ -637,8 +605,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     tmploco = _tecos.get(strLocoObject);
                     if (tmploco!=null){
                         tmploco.reply(m);
-                        //As the event will come from one object, we shall check to see if it is an extended address,
-                        // if it is we also forward the message onto the slaved address.
                     }
                 }
             } 
@@ -652,15 +618,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         endval=(line.substring(startval)).indexOf("]")+startval-1;
         return line.substring(startval, endval);
     }
-    
-    /*int getAddress(String line){
-        int startval;
-        int endval;
-        startval=line.indexOf("addr[")+5;
-        endval=(line.substring(startval)).indexOf("]")+startval;
-        return Integer.parseInt(line.substring(startval, endval));
-        
-    }*/
     
     String getProtocol(String line){
         int startval;
@@ -676,27 +633,20 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      * to the roster otherwise this causes a problem with the roster list.
      */
     void checkLocoList(String[] ecoslines){
-        //final EcosPreferences p = adaptermemo.getPreferenceManager();
-        //System.out.println("Check loco list");
         String loco;
         for(int i=1; i<ecoslines.length-1; i++){
             loco = ecoslines[i];
             loco = loco.replaceAll("[\\n\\r]","");
-            //System.out.println("-" + loco +"-" +loco.length());
             if(getByEcosObject(loco)==null){
                 log.debug("We are to add loco " + loco + " to the Ecos Loco List");
-                //System.out.println("We have a new loco to add " + loco);
                 EcosMessage mout = new EcosMessage("get(" + loco + ", addr, name, protocol)");
                 tc.sendEcosMessage(mout, this);
-                //This loco can be added to the roster
-                //addLocoToRoster = true;
             }
         }
         
         String[] jmrilist = getEcosObjectArray();
         boolean nomatch = true;
         for(int i=0; i<jmrilist.length; i++){
-            //System.out.println(jmrilist[i]);
             nomatch=true;
             for(int k=1; k<ecoslines.length-1;k++){
                 loco = ecoslines[k];
@@ -721,7 +671,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     } else if (p.getRemoveLocoFromJMRI()==0x00) {
                         final JDialog dialog = new JDialog();
                         dialog.setTitle("Remove Roster Entry From JMRI?");
-                        //test.setSize(300,130);
                         dialog.setLocation(300,200);
                         dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                         JPanel container = new JPanel();
@@ -874,15 +823,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
 
         }
-        /*if (p.getLocoMaster()!=0x00){
-            List<RosterEntry> re = Roster.instance().getEntriesWithAttributeKeyValue(rosterAttribute, tmploco.getEcosObject());
-            //It should be unique
-            if (re.size()==0){
-                EcosLocoToRoster tmp = new EcosLocoToRoster();
-                tmp.ecosLocoToRoster(tmploco.getEcosObject());
-               //System.out.println("Code here to add the loco? .." + tmploco.getEcosDescription() + ".");
-            }
-        }*/
     }
     
     Thread waitPrefLoad;
