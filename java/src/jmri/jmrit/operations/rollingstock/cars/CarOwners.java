@@ -18,6 +18,8 @@ public class CarOwners {
 	public static final String CAROWNERS_NAME_CHANGED_PROPERTY = "CarOwners Name";
 	public static final String CAROWNERS_LENGTH_CHANGED_PROPERTY = "CarOwners Length";
 	
+	private static final int MIN_NAME_LENGTH = 4;
+	
     public CarOwners() {
     }
     
@@ -96,6 +98,22 @@ public class CarOwners {
 		String[] owners = getNames();
 		for (int i = 0; i < owners.length; i++)
 			box.addItem(owners[i]);
+    }
+    
+    private int maxNameLength = 0;
+    
+    public int getCurMaxNameLength(){
+    	if (maxNameLength == 0){
+    		String[] colors = getNames();
+    		int length = MIN_NAME_LENGTH;
+    		for (int i = 0; i < colors.length; i++){
+    			if (colors[i].length()>length)
+    				length = colors[i].length();
+    		}
+    		return length;
+    	} else {
+    		return maxNameLength;
+    	}
     }
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

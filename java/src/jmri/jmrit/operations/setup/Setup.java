@@ -122,6 +122,7 @@ public class Setup {
 	public static final String LOCATION = rb.getString("Location");
 	public static final String CONSIST = rb.getString("Consist");
 	public static final String KERNEL = rb.getString("Kernel");
+	public static final String OWNER = rb.getString("Owner");
 	public static final String COMMENT = rb.getString("Comment");
 	public static final String DROP_COMMENT = rb.getString("DropComment");
 	public static final String PICKUP_COMMENT = rb.getString("PickupComment");
@@ -911,8 +912,9 @@ public class Setup {
 		box.addItem(MODEL);
 		box.addItem(LENGTH);
 		box.addItem(CONSIST);
+		box.addItem(OWNER);
 		box.addItem(LOCATION);
-		box.addItem(DESTINATION);
+		box.addItem(DESTINATION);		
 		box.addItem(COMMENT);
 		return box;
 	}
@@ -928,6 +930,7 @@ public class Setup {
 		box.addItem(HAZARDOUS);
 		box.addItem(COLOR);
 		box.addItem(KERNEL);
+		box.addItem(OWNER);
 		box.addItem(LOCATION);
 		box.addItem(DESTINATION);
 		box.addItem(DEST_TRACK);

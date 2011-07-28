@@ -17,6 +17,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -228,6 +229,8 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.DEST_TRACK))
 			return " "+rb.getString("dest")+ " "+splitString(rs.getDestinationName())
 					+ ", "+splitString(rs.getDestinationTrackName());
+		else if (attribute.equals(Setup.OWNER))
+			return " "+tabString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COMMENT))
 			return " "+rs.getComment();
 		else if (attribute.equals(Setup.NONE))
