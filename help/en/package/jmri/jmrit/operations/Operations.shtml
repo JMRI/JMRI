@@ -34,7 +34,7 @@ and where they should be eventually positioned on the railroad. The
 program allows you to build a roster of cars, define locations on the
 railroad, and routes for trains to travel. The car roster includes
 information about the car, including road name, number, type of car,
-color, length, weight, date built, and owner. Trains are assigned routes
+color, length, weight, load, date built, and owner. Trains are assigned routes
 that define locations where cars can be picked up or set out. Features
 include the ability to control what car types, road names, and car loads
 a location can service, the available track space for a location, and
@@ -375,6 +375,16 @@ depart from staging during the train build, select this option. Normally
 during the train build the program would selected the least
 recently used track when determining the track to depart from. Note that the
 program will only prompt you if there are two or more trains available
+in staging that meet the train's requirements. 
+
+<A NAME="PromptArrivalTrack"></A>
+<H3>Prompt for Arrival Track into Staging</H3>
+
+If you would like the program to ask you which track a train should
+use when arriving into staging during the train build, select this option. Normally
+during the train build the program would selected the least
+recently used track when determining the track to arrive on. Note that the
+program will only prompt you if there are two or more tracks available
 in staging that meet the train's requirements. 
 
 <A NAME="CarRouting"></A>
@@ -987,8 +997,8 @@ restrict a train to a specific track or tracks, you must configure all
 of the staging tracks at that location.</P>
 
 <P>You can as an <A HREF="#PromptDepartureTrack">option</A>, have
-the program ask you which track you want to use when depart from
-staging.</P>
+the program ask you which track you want to use when departing from,
+or arriving into staging.</P>
 
 <H3>Looping Trains through Staging</H3>
 
@@ -1193,11 +1203,11 @@ identical roads and numbers, simply add a -1, -2, etc. to each of the
 car numbers. The program when printing out the manifest or switch list
 will drop the -1, -2, etc. from the car's road number.
 
-<H3>Car Type, Length, Color, Weight</H3>
+<H3>Car Type, Length, Weight</H3>
 
-Select the car's type, length, and color from the menu boxes. Use the
-"Edit" button to add or delete car types, lengths, or colors that you
-want to add or remove. The car weight is automatically calculated, but
+Select the car's type and length from the menu boxes. Use the
+"Edit" button to add or delete car types, or lengths that you
+want to add or remove. The car's weight is automatically calculated, but
 you can enter a different weight if necessary. When entering the length
 of a car, enter the length of the body and not the total length. For
 example, a forty foot boxcar has a length of 40 feet. The program when
@@ -1256,7 +1266,7 @@ enter a kernel name. Then select the kernel from the menu box.
 
 <H3>Optional Fields</H3>
 
-Finally you can optionally enter the build date, owner and comment for
+Finally you can optionally enter the color, build date, owner and comment for
 this car.  The build date can be entered as a four digit year, or in the format of
 month-year.  
 
