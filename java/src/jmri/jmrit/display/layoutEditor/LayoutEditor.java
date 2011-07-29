@@ -6383,12 +6383,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 if (t.getArc()){
                     CalculateTrackSegmentAngle(t);
                     Stroke drawingStroke;
+                    Stroke originalStroke = g2.getStroke();
                     if (mainline)
                         drawingStroke = new BasicStroke(mainlineTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
                     else
                         drawingStroke = new BasicStroke(sideTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
                     g2.setStroke(drawingStroke);
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
+                    g2.setStroke(originalStroke);
                 } else {
                     Point2D end1 = getCoords(t.getConnect1(),t.getType1());
                     Point2D end2 = getCoords(t.getConnect2(),t.getType2());
@@ -6594,6 +6596,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
 
                 }
+                g2.setColor(defaultTrackColor);
 			}
 		}
 	}
