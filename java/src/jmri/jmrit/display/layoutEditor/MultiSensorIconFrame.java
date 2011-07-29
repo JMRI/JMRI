@@ -82,7 +82,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
             defaultIcons.setIcon(1, "Inconsistent:","resources/icons/USS/plate/levers/l-unknown.gif");
             defaultIcons.setIcon(2, "Inactive:","resources/icons/USS/plate/levers/l-inconsistent.gif");
             defaultIcons.complete();
-        defaultsFrame = new JmriJFrame("");
+        defaultsFrame = new JmriJFrame("", false, true);
             defaultsFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
             defaultsFrame.getContentPane().add(defaultIcons);
             defaultsFrame.pack();
@@ -141,7 +141,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         JTextField sensor = new JTextField(5);
         JPanel self;
         MultiIconEditor ed = new MultiIconEditor(1);
-        JmriJFrame edf = new JmriJFrame("");
+        JmriJFrame edf = new JmriJFrame("", false, true);
         
         public String toString() {
             return ed.getIcon(0).toString();

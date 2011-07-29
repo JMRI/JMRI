@@ -142,7 +142,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSignalsFrame == null) {
-            setSignalsFrame = new JmriJFrame( rb.getString("SignalsAtTurnout") );
+            setSignalsFrame = new JmriJFrame( rb.getString("SignalsAtTurnout"), false, true);
             setSignalsFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTurnout", true);
             setSignalsFrame.setLocation(70,30);
             Container theContentPane = setSignalsFrame.getContentPane();        
@@ -1678,7 +1678,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSignalsAtBoundaryFrame == null) {
-            setSignalsAtBoundaryFrame = new JmriJFrame( rb.getString("SignalsAtBoundary") );
+            setSignalsAtBoundaryFrame = new JmriJFrame( rb.getString("SignalsAtBoundary"), false, true );
             setSignalsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtBoundary", true);
             setSignalsAtBoundaryFrame.setLocation(70,30);
             Container theContentPane = setSignalsAtBoundaryFrame.getContentPane();  
@@ -2226,7 +2226,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSignalsAtXoverFrame == null) {
-            setSignalsAtXoverFrame = new JmriJFrame( rb.getString("SignalsAtXoverTurnout") );
+            setSignalsAtXoverFrame = new JmriJFrame( rb.getString("SignalsAtXoverTurnout"), false, true );
             setSignalsAtXoverFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtXoverTurnout", true);
             setSignalsAtXoverFrame.setLocation(70,30);
             Container theContentPane = setSignalsAtXoverFrame.getContentPane();        
@@ -3339,7 +3339,7 @@ public class LayoutEditorTools
 		dField.setText("");
 		// Initialize if needed
 		if (setSignalsAtXingFrame == null) {
-            setSignalsAtXingFrame = new JmriJFrame( rb.getString("SignalsAtLevelXing") );
+            setSignalsAtXingFrame = new JmriJFrame( rb.getString("SignalsAtLevelXing"), false, true );
             setSignalsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
             setSignalsAtXingFrame.setLocation(70,30);
             Container theContentPane = setSignalsAtXingFrame.getContentPane();        
@@ -4182,7 +4182,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSignalsAtTToTFrame == null) {
-            setSignalsAtTToTFrame = new JmriJFrame( rb.getString("SignalsAtTToTTurnout") );
+            setSignalsAtTToTFrame = new JmriJFrame( rb.getString("SignalsAtTToTTurnout"), false, true );
             setSignalsAtTToTFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTToTTurnout", true);
             setSignalsAtTToTFrame.setLocation(70,30);
             Container theContentPane = setSignalsAtTToTFrame.getContentPane();        
@@ -5762,7 +5762,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSignalsAt3WayFrame == null) {
-            setSignalsAt3WayFrame = new JmriJFrame( rb.getString("SignalsAt3WayTurnout") );
+            setSignalsAt3WayFrame = new JmriJFrame( rb.getString("SignalsAt3WayTurnout"), false, true );
             setSignalsAt3WayFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAt3WayTurnout", true);
             setSignalsAt3WayFrame.setLocation(70,30);
             Container theContentPane = setSignalsAt3WayFrame.getContentPane();        
@@ -7017,7 +7017,7 @@ public class LayoutEditorTools
             westBoundSensor = new BeanDetails("Sensor");
             eastBoundSensor = new BeanDetails("Sensor");
             
-            setSensorsAtBoundaryFrame = new JmriJFrame( rb.getString("SensorsAtBoundary") );
+            setSensorsAtBoundaryFrame = new JmriJFrame( rb.getString("SensorsAtBoundary"), false, true );
             setSensorsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtBoundary", true);
             setSensorsAtBoundaryFrame.setLocation(70,30);
             Container theContentPane = setSensorsAtBoundaryFrame.getContentPane();  
@@ -7423,7 +7423,7 @@ public class LayoutEditorTools
 		if (setSignalMastsAtBoundaryFrame == null) {
             eastSignalMast = new BeanDetails("SignalMast");
             westSignalMast = new BeanDetails("SignalMast");
-            setSignalMastsAtBoundaryFrame = new JmriJFrame( rb.getString("SignalMastsAtBoundary") );
+            setSignalMastsAtBoundaryFrame = new JmriJFrame( rb.getString("SignalMastsAtBoundary"), false, true );
             setSignalMastsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
             setSignalMastsAtBoundaryFrame.setLocation(70,30);
             Container theContentPane = setSignalMastsAtBoundaryFrame.getContentPane();  
@@ -8404,7 +8404,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (signalMastsJmriFrame == null) {
-            signalMastsJmriFrame = new JmriJFrame( rb.getString("SignalMastsAtTurnout") );
+            signalMastsJmriFrame = new JmriJFrame( rb.getString("SignalMastsAtTurnout"), false, true );
             signalMastsJmriFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtTurnout", true);
             signalMastsJmriFrame.setLocation(70,30);
             Container theContentPane = signalMastsJmriFrame.getContentPane();
@@ -8997,7 +8997,7 @@ public class LayoutEditorTools
             xingSignalMastC = new BeanDetails("SignalMast");
             xingSignalMastD = new BeanDetails("SignalMast");
             
-            signalMastsAtXingFrame = new JmriJFrame( rb.getString("SignalMastsAtLevelXing") );
+            signalMastsAtXingFrame = new JmriJFrame( rb.getString("SignalMastsAtLevelXing"), false, true );
             signalMastsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
             signalMastsAtXingFrame.setLocation(70,30);
             Container theContentPane = signalMastsAtXingFrame.getContentPane();
@@ -9576,7 +9576,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSensorsFrame == null) {
-            setSensorsFrame = new JmriJFrame( rb.getString("SensorsAtTurnout") );
+            setSensorsFrame = new JmriJFrame( rb.getString("SensorsAtTurnout"), false, true );
             setSensorsFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtTurnout", true);
             setSensorsFrame.setLocation(70,30);
             Container theContentPane = setSensorsFrame.getContentPane();        
@@ -10089,7 +10089,7 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (sensorsAtXingFrame == null) {
-            sensorsAtXingFrame = new JmriJFrame( rb.getString("SensorsAtLevelXing") );
+            sensorsAtXingFrame = new JmriJFrame( rb.getString("SensorsAtLevelXing"), false, true );
             sensorsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelXing", true);
             sensorsAtXingFrame.setLocation(70,30);
             Container theContentPane = sensorsAtXingFrame.getContentPane();

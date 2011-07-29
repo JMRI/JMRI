@@ -305,7 +305,7 @@ public class LayoutTurntable
 		needsRedraw = false;
 		// Initialize if needed
 		if (editTurntableFrame == null) {
-            editTurntableFrame = new JmriJFrame( rb.getString("EditTurntable") );
+            editTurntableFrame = new JmriJFrame( rb.getString("EditTurntable"), false, true );
             editTurntableFrame.addHelpMenu("package.jmri.jmrit.display.EditTurntable", true);
             editTurntableFrame.setLocation(50,30);
             Container contentPane = editTurntableFrame.getContentPane();        

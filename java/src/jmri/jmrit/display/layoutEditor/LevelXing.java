@@ -603,7 +603,7 @@ public class LevelXing
 		}
 		// Initialize if needed
 		if (editLevelXingFrame == null) {
-            editLevelXingFrame = new JmriJFrame( rb.getString("EditXing") );
+            editLevelXingFrame = new JmriJFrame( rb.getString("EditXing"), false, true );
             editLevelXingFrame.addHelpMenu("package.jmri.jmrit.display.EditLevelXing", true);
             editLevelXingFrame.setLocation(50,30);
             Container contentPane = editLevelXingFrame.getContentPane();        
