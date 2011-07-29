@@ -540,7 +540,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         
         if (addFrame==null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddTurnout"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddTurnout"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TurnoutAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 

@@ -376,7 +376,7 @@ public class RouteTableAction extends AbstractTableAction {
         
         // Set up window
         if (addFrame==null) {
-            addFrame = new JmriJFrame("Add/Edit Route");
+            addFrame = new JmriJFrame("Add/Edit Route", false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100,30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));

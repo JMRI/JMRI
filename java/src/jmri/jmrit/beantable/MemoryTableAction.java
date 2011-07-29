@@ -129,7 +129,7 @@ public class MemoryTableAction extends AbstractTableAction {
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddMemory"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddMemory"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.MemoryAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 

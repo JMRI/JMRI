@@ -240,7 +240,7 @@ public class IdTagTableAction extends AbstractTableAction {
 
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddIdTag"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddIdTag"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.IdTagAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 

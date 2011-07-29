@@ -166,7 +166,7 @@ public class ReporterTableAction extends AbstractTableAction {
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddReporter"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
             ActionListener listener = new ActionListener() {
                     public void actionPerformed(ActionEvent e) {

@@ -375,7 +375,7 @@ public class TrackSegment
 		}
 		// Initialize if needed
 		if (editTrackSegmentFrame == null) {
-            editTrackSegmentFrame = new JmriJFrame( rb.getString("EditTrackSegment") );
+            editTrackSegmentFrame = new JmriJFrame( rb.getString("EditTrackSegment"), false, true );
 			editTrackSegmentFrame.addHelpMenu("package.jmri.jmrit.display.EditTrackSegment", true);
             editTrackSegmentFrame.setLocation(50,30);
             Container contentPane = editTrackSegmentFrame.getContentPane();        

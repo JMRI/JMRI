@@ -431,7 +431,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                 JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
             }
         }
-        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs");
+        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs", false, false);
         signalMastLogicFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
         sourceLabel = new JLabel("Discovering Signalmasts");

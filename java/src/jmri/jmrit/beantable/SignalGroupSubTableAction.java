@@ -209,7 +209,7 @@ public class SignalGroupSubTableAction {
         
         // Set up window
         if (addFrame==null) {
-            addFrame = new JmriJFrame("Add/Edit SignalGroup");
+            addFrame = new JmriJFrame("Add/Edit SignalGroup", false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
             addFrame.setLocation(100,30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
