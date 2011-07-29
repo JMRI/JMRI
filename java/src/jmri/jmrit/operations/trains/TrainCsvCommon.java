@@ -47,7 +47,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String VT = "VT"+del+"Valid"+del;
 	
 	// switch list specific operators
-	protected final static String DL = "DL"+del+"Departure Location"+del;
+	protected final static String DL = "DL"+del+"Departure Location Name"+del;
 	protected final static String ETA = "ETA"+del+"Expected Time Arrival"+del;
 	protected final static String ETE = "ETE"+del+"Estimated Time Enroute"+del;
 	protected final static String NCPU = "NCPU"+del+"No Car Pick Up";

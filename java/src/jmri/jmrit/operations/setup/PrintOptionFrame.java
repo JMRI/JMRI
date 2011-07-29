@@ -58,6 +58,7 @@ public class PrintOptionFrame extends OperationsFrame{
     JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
+	JCheckBox printRouteCommentsCheckBox = new JCheckBox(rb.getString("PrintRouteComments"));
 	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
 	JCheckBox printTimetableNameCheckBox = new JCheckBox(rb.getString("PrintTimetableName"));
 	JCheckBox use12hrFormatCheckBox = new JCheckBox(rb.getString("12hrFormat"));
@@ -102,6 +103,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
 		tabFormatCheckBox.setToolTipText(rb.getString("TabComment"));
 		printLocCommentsCheckBox.setToolTipText(rb.getString("AddLocationComments"));
+		printRouteCommentsCheckBox.setToolTipText(rb.getString("AddRouteComments"));
 		printLoadsEmptiesCheckBox.setToolTipText(rb.getString("LoadsEmptiesComment"));
 		printTimetableNameCheckBox.setToolTipText(rb.getString("ShowTimetableTip"));
 		use12hrFormatCheckBox.setToolTipText(rb.getString("Use12hrFormatTip"));
@@ -224,6 +226,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		JPanel pManifestComment = new JPanel();
 		pManifestComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutComments")));
 		pManifestComment.add(printLocCommentsCheckBox);
+		pManifestComment.add(printRouteCommentsCheckBox);
 		pManifestComment.add(printLoadsEmptiesCheckBox);
 		pManifestComment.add(use12hrFormatCheckBox);
 		pManifestComment.add(printTimetableNameCheckBox);
@@ -273,6 +276,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
+		printRouteCommentsCheckBox.setSelected(Setup.isPrintRouteCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
 		printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
 		use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
@@ -392,6 +396,7 @@ public class PrintOptionFrame extends OperationsFrame{
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
+			Setup.setPrintRouteCommentsEnabled(printRouteCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
 			Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
 			Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());

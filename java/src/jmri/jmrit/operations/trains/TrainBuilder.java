@@ -2329,9 +2329,11 @@ public class TrainBuilder extends TrainCommon{
 			addLine(fileOut, train.getComment());
 		}
 		
-		List<String> engineList = engineManager.getByTrainList(train);
-		
+		List<String> engineList = engineManager.getByTrainList(train);		
 		pickupEngines(fileOut, engineList, train.getTrainDepartsRouteLocation());
+		
+		if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(""))
+			addLine(fileOut, train.getRoute().getComment());
 		
 		List<String> carList = carManager.getByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");

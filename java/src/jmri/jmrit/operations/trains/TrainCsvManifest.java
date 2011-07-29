@@ -59,6 +59,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			for (int i=0; i<comments.length; i++)
 				addLine(fileOut, TC+"\""+comments[i]+"\"");							
 		}
+		if (Setup.isPrintRouteCommentsEnabled())
+			addLine(fileOut, RC+"\""+train.getRoute().getComment()+"\"");
 
 		// get engine and car lists
 		List<String> engineList = engineManager.getByTrainList(train);			

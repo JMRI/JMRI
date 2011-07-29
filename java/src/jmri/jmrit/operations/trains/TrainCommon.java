@@ -198,6 +198,11 @@ public class TrainCommon {
 			return " "+CarLoads.instance().getPickupComment(car.getType(), car.getLoad());
 		else if (attribute.equals(Setup.KERNEL))
 			return " "+tabString(car.getKernelName(), Control.MAX_LEN_STRING_ATTRIBUTE);
+		else if (attribute.equals(Setup.RWE)){
+			if (!car.getReturnWhenEmptyDestName().equals(""))
+				return " "+rb.getString("RWE")+" "+car.getReturnWhenEmptyDestName();
+			return "";
+		}
 		return getRollingStockAttribute(car, attribute, pickup, local);
 	}
 

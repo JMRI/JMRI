@@ -49,23 +49,24 @@
 <!ATTLIST settings maxEngines		CDATA #IMPLIED> 
 <!ATTLIST settings switchTime		CDATA #IMPLIED> 
 <!ATTLIST settings travelTime		CDATA #IMPLIED>
-<!ATTLIST settings showCarLength	(true | false ) "true">  
-<!ATTLIST settings showCarColor		(true | false ) "true">  
-<!ATTLIST settings showCarLoad		(true | false ) "false">  
-<!ATTLIST settings showCarDestination (true | false ) "false">  
-<!ATTLIST settings showValue 		(true | false ) "false">  
-<!ATTLIST settings showRfid 		(true | false ) "false">  
-<!ATTLIST settings carRoutingEnabled (true | false ) "true"> 
+<!ATTLIST settings showCarLength		(true | false ) "true">  
+<!ATTLIST settings showCarColor			(true | false ) "true">  
+<!ATTLIST settings showCarLoad			(true | false ) "false">  
+<!ATTLIST settings showCarDestination 	(true | false ) "false">  
+<!ATTLIST settings showValue 			(true | false ) "false">  
+<!ATTLIST settings showRfid 			(true | false ) "false">  
+<!ATTLIST settings carRoutingEnabled 	(true | false ) "true"> 
 <!ATTLIST settings carRoutingViaStaging (true | false ) "false">
-<!ATTLIST settings forwardToYard 	(true | false ) "true">
-<!ATTLIST settings carLogger 		(true | false ) "false">  
-<!ATTLIST settings engineLogger 	(true | false ) "false"> 
-<!ATTLIST settings trainLogger 		(true | false ) "false"> 
-<!ATTLIST settings addCarComment	(true | false ) "false">
-<!ATTLIST settings printLocComments	(true | false ) "false"> 
-<!ATTLIST settings printLoadsEmpties (true | false ) "false"> 
-<!ATTLIST settings printTimetable	(true | false ) "false"> 
-<!ATTLIST settings use12hrFormat	(true | false ) "false"> 
+<!ATTLIST settings forwardToYard 		(true | false ) "true">
+<!ATTLIST settings carLogger 			(true | false ) "false">  
+<!ATTLIST settings engineLogger 		(true | false ) "false"> 
+<!ATTLIST settings trainLogger 			(true | false ) "false"> 
+<!ATTLIST settings addCarComment		(true | false ) "false">
+<!ATTLIST settings printLocComments		(true | false ) "false"> 
+<!ATTLIST settings printRouteComments	(true | false ) "false"> 
+<!ATTLIST settings printLoadsEmpties 	(true | false ) "false"> 
+<!ATTLIST settings printTimetable		(true | false ) "false"> 
+<!ATTLIST settings use12hrFormat		(true | false ) "false"> 
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
 <!ATTLIST settings yearModeled		CDATA #IMPLIED> 

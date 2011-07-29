@@ -123,6 +123,7 @@ public class Setup {
 	public static final String CONSIST = rb.getString("Consist");
 	public static final String KERNEL = rb.getString("Kernel");
 	public static final String OWNER = rb.getString("Owner");
+	public static final String RWE = rb.getString("RWE");
 	public static final String COMMENT = rb.getString("Comment");
 	public static final String DROP_COMMENT = rb.getString("DropComment");
 	public static final String PICKUP_COMMENT = rb.getString("PickupComment");
@@ -204,6 +205,7 @@ public class Setup {
 	private static boolean generateCsvSwitchList = false;	// when true generate csv switch list
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
+	private static boolean printRouteComments = false;		// when true print route comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
 	private static boolean printTimetableName	= false;	// when true print timetable name on manifests and switch lists
 	private static boolean use12hrFormat		= false;	// when true use 12hr rather than 24hr format
@@ -469,6 +471,14 @@ public class Setup {
 	
 	public static boolean isPrintLocationCommentsEnabled(){
 		return printLocationComments;
+	}
+	
+	public static void setPrintRouteCommentsEnabled(boolean enable){
+		printRouteComments = enable;
+	}
+	
+	public static boolean isPrintRouteCommentsEnabled(){
+		return printRouteComments;
 	}
 	
 	public static void setPrintLoadsAndEmptiesEnabled(boolean enable){
@@ -937,6 +947,7 @@ public class Setup {
 		box.addItem(COMMENT);
 		box.addItem(DROP_COMMENT);
 		box.addItem(PICKUP_COMMENT);
+		box.addItem(RWE);
 		return box;
 	}
 	
@@ -1034,6 +1045,7 @@ public class Setup {
        	values.setAttribute("engineLogger", isEngineLoggerEnabled()?"true":"false");
        	values.setAttribute("trainLogger", isTrainLoggerEnabled()?"true":"false");
        	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
+       	values.setAttribute("printRouteComments", isPrintRouteCommentsEnabled()?"true":"false");
        	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
        	values.setAttribute("printTimetable", isPrintTimetableNameEnabled()?"true":"false");
        	values.setAttribute("use12hrFormat", is12hrFormatEnabled()?"true":"false");
@@ -1255,6 +1267,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("printLocComments: "+enable);
         		setPrintLocationCommentsEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("printRouteComments"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("printRouteComments: "+enable);
+        		setPrintRouteCommentsEnabled(enable.equals("true"));
         	}
           	if ((a = operations.getChild("settings").getAttribute("printLoadsEmpties"))!= null){
         		String enable = a.getValue();

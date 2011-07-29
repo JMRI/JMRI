@@ -451,9 +451,31 @@ RFID.</P>
 
 <P>You can find some examples of custom manifests at <A
 	HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>http://groups.yahoo.com/group/jmriusers/files/Operations.</A></P>
+
+<P>You can also generate custom switch lists using a comma separated value (.csv) files.
+You can find the switch list files in the operations directory in a directory called "csvSwitchLists". The csv switch
+lists use the same codes and descriptions as the csv manifests, plus the following:
+</P>
+
+<P></P>
+<table>
+<tr><td>Code</td><td>Description</td><td>Parameters</td></tr>
+<tr><td>DL</td><td>Departure Location Name</td><td>Name</td></tr>
+<tr><td>ETA</td><td>Expected Time Arrival</td><td>Time</td></tr>
+<tr><td>ETE</td><td>Estimated Time Enroute</td><td>Time</td></tr>
+<tr><td>NCPU</td><td>No Car Pick Up</td></tr>
+<tr><td>NCSO</td><td>No Car Set Out</td></tr>
+<tr><td>TA</td><td>Train Arrives</td><td>Direction</td></tr>
+<tr><td>TDC</td><td>Train changes direction, departs</td><td>Direction</td></tr>
+<tr><td>TIR</td><td>Train In Route</td></tr>
+<tr><td>TDONE</td><td>Train has already serviced this location</td></tr>
+<tr><td>VN</td><td>Visit Number</td><td>Number</td></tr>
+</table>
+
 <P>There are two other options, "Enable Value Fields" and "Enable Radio Frequency Identification (RFID) Fields".
 You can use these fields to enter the value or cost of your rolling stock and the RFID if you're using them to
 track your rolling stock.</P>
+
 
 <A NAME="PrintOptions"></A>
 <H2>Print Options</H2>
@@ -502,11 +524,17 @@ To remove an attribute select blank. You can also edit the "[ ] Set out",
 "[ ] Pick up" and "[ ] Move" prefixes. If you want to use the text color
 options, the set out, pick up, and move prefixes must be unique.
 
-<H3>Show Comments on Manifests</H3>
+<A NAME="ManifestComments"></A>
+<H3>Manifests Comments</H3>
 
-Each location can have an optional comment.  You can print these comments on your manifest if
-the "Location" check box is selected.  If you want the manifest to show how many car loads and
-empties are in the train, select the "Loads and Empties" checkbox.
+Each location and train route can have an optional comment. You can
+print these comments on your manifest if the "Location" and "Route"
+check boxes are selected respectively. If you want the manifest to show
+how many car loads and empties are in the train, select the "Loads and
+Empties" checkbox. You can also use a 12 hour rather than a 24
+hour clock format on your manifests and switch lists. And finally, you
+can show which train <A HREF="#Timetable">timetable</A> you are using
+when building your trains.
 
 <H3>Add Logo</H3>
 
@@ -1523,17 +1551,19 @@ for example, "Orphan" means the route hasn't been assigned to a train.
 
 <P><img src="images/EditRoute.png"></P>
 
-<P>Enter the route name and an optional comment. Each route must
-have unique name. Then press the "Add Route" button located at the
-bottom of the window. Now select the location the train will depart by
-selecting the location in the menu box located at the left bottom side
-of the window. Press "Add Location". Now build your route by selecting
-the next location the train will visit, select all locations that the
-train will pass through even if the train will not work the location.
-This way your train's engineer will know when reading his manifest the
-towns he will be traveling through. Each time you add a location to the
-route, the table shows the order in which the train will visit. You can
-move a location up or down in the sequence if needed.</P>
+<P>Enter the route name and an optional comment. This comment is
+shown in the routes window, and <A HREF="#ManifestComments">optionally</A>
+on your manifests. Each route must have unique name. Then press the "Add
+Route" button located at the bottom of the window. Now select the
+location the train will depart by selecting the location in the menu box
+located at the left bottom side of the window. Press "Add Location". Now
+build your route by selecting the next location the train will visit,
+select all locations that the train will pass through even if the train
+will not work the location. This way your train's engineer will know
+when reading his manifest the towns he will be traveling through. Each
+time you add a location to the route, the table shows the order in which
+the train will visit. You can move a location up or down in the sequence
+if needed.</P>
 
 <A NAME="EditRoute"></A>
 <H3>Edit Route</H3>
@@ -1562,9 +1592,10 @@ want the train icon placed when the train is at the specified location.
 Leave the X and Y coordinates at zero if you want to manually move the
 icon or you're not using the icon feature.</P>
 
-
+<A NAME="RouteComment"></A>
 <p>Each location in the route can also have an optional comment that
-will appear on the train manifests.</p>
+will appear on the train manifests.  Press the "Add" button under the
+heading "Comment" to add a comment to a location.</p>
 
 <H3>Save Route</H3>
 
