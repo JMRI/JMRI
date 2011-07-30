@@ -104,7 +104,6 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		super.enableButtons(enabled);
 	}
 	
-	@SuppressWarnings("null")
 	protected void saveTrack (Track track){
 		// save the schedule
 		Object selected =  comboBoxSchedules.getSelectedItem();	
@@ -113,9 +112,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		} else {
 			Schedule sch = (Schedule)selected;
 			// update only if the schedule has changed
-			if (sch != null){
-				track.setScheduleId(sch.getId());	
-			}
+			track.setScheduleId(sch.getId());	
 		}
 		textSchError.setText(track.checkScheduleValid());	
 		super.saveTrack(track);
