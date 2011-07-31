@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 
@@ -51,7 +52,13 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	}
 	
 	protected boolean save(){
-		int rows[] = _carsTable.getSelectedRows();	
+		int rows[] = _carsTable.getSelectedRows();
+		if (rows.length == 0)					
+			JOptionPane.showMessageDialog(this,
+				rb.getString("selectCars"),
+				rb.getString("carNoneSelected"),
+				JOptionPane.WARNING_MESSAGE);
+			
 		for (int i=0; i<rows.length; i++){
 			Car car = _carsTableModel.getCarAtIndex(rows[i]);
 			if (!super.change(car))
