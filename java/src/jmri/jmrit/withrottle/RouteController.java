@@ -5,10 +5,12 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
+import java.util.Enumeration;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
+import jmri.NamedBeanHandle;
 
 /**
  *
@@ -20,7 +22,7 @@ import jmri.Sensor;
 public class RouteController extends AbstractController implements PropertyChangeListener{
 
     private RouteManager manager = null;
-    private Hashtable<Sensor, Route> indication;    //  Monitor turnouts for aligned status
+    private Hashtable<NamedBeanHandle<Sensor>, Route> indication;    //  Monitor turnouts for aligned status
 
     public RouteController(){
         manager = InstanceManager.routeManagerInstance();
@@ -28,7 +30,7 @@ public class RouteController extends AbstractController implements PropertyChang
             log.info("No route manager instance.");
             isValid = false;
         }else {
-            indication = new Hashtable<Sensor, Route>();
+            indication = new Hashtable<NamedBeanHandle<Sensor>, Route>();
             isValid = true;
         }
     }
@@ -89,6 +91,8 @@ public class RouteController extends AbstractController implements PropertyChang
         }
 
     }
+    
+    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
 /**
  *  Send list of routes
@@ -111,7 +115,7 @@ public class RouteController extends AbstractController implements PropertyChang
             list.append("}|{");
             if (r.getUserName() != null) list.append(r.getUserName());
             list.append("}|{");
-            Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(r.getTurnoutsAlignedSensor());
+            Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(r.getTurnoutsAlignedSensor());
             if (routeAligned != null){
                 list.append(routeAligned.getKnownState());
             }
@@ -149,11 +153,12 @@ public class RouteController extends AbstractController implements PropertyChang
     public void register(){
         for (String sysName : sysNameList){
             Route r = manager.getBySystemName(sysName);
-            Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(r.getTurnoutsAlignedSensor());
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(r.getTurnoutsAlignedSensor());
+            NamedBeanHandle<Sensor> routeAligned = nbhm.getNamedBeanHandle(r.getTurnoutsAlignedSensor(), sensor);
             if (routeAligned != null){
                 indication.put(routeAligned, r);
-                routeAligned.addPropertyChangeListener(this);
-                if (log.isDebugEnabled()) log.debug("Add listener to Sensor: "+routeAligned.getSystemName()+" for Route: "+r.getSystemName());
+                sensor.addPropertyChangeListener(this, routeAligned.getName(), "Wi Throttle Route Controller");
+                if (log.isDebugEnabled()) log.debug("Add listener to Sensor: "+routeAligned.getName()+" for Route: "+r.getSystemName());
             }
 
 
@@ -166,16 +171,13 @@ public class RouteController extends AbstractController implements PropertyChang
     public void deregister(){
         if (sysNameList.isEmpty()) return;
 
-        for (String sysName : sysNameList){
-            Route r = manager.getBySystemName(sysName);
-            Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(r.getTurnoutsAlignedSensor());
-            if (routeAligned != null){
-                routeAligned.removePropertyChangeListener(this);
-                indication.remove(routeAligned);
-                if (log.isDebugEnabled()) log.debug("Removing listener from Sensor: "+routeAligned.getSystemName()+" for Route: "+r.getSystemName());
-            }
-
+        Enumeration<NamedBeanHandle<Sensor>> en = indication.keys();
+        while (en.hasMoreElements()) {
+            NamedBeanHandle<Sensor> namedSensor = en.nextElement();
+            namedSensor.getBean().removePropertyChangeListener(this);
+            if (log.isDebugEnabled()) log.debug("Removing listener from Sensor: "+namedSensor.getName()+" for Route: "+(indication.get(namedSensor)).getSystemName());
         }
+        indication = new Hashtable<NamedBeanHandle<Sensor>, Route>();
     }
 
 
