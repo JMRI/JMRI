@@ -270,6 +270,7 @@ public class DefaultLogix extends AbstractNamedBean
                     // check if listening for a change has been suppressed
                     int varListenerType = 0;
                     String varName = variable.getName();
+                    NamedBeanHandle<?> namedBean = variable.getNamedBean();
                     int varType = variable.getType();
                     int signalAspect = -1;
                     // Get Listener type from varible type
@@ -355,7 +356,7 @@ public class DefaultLogix extends AbstractNamedBean
                         switch (varListenerType) {
                             case LISTENER_TYPE_SENSOR:
                                 listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
-                                                                    varName, varType, conditional);
+                                                                    namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_TURNOUT:
                                 listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
@@ -675,15 +676,17 @@ public class DefaultLogix extends AbstractNamedBean
 	 */
     private void startListener(JmriSimplePropertyListener listener) {
         String msg = "(unknown type number "+listener.getType()+")";
+        /* If all are converted to NamedBeanHandles, do we have to go through this switch, 
+        the only reason for doing so would be the error message */
 		switch (listener.getType()) {
 			case LISTENER_TYPE_SENSOR:
-				Sensor s = InstanceManager.sensorManagerInstance().
-										provideSensor(listener.getDevName());
-				if (s==null) {
+				NamedBeanHandle<?> namedBeanHandle = listener.getNamedBean();
+				if (namedBeanHandle==null) {
 					msg = "sensor";
 					break;
   				}
-				s.addPropertyChangeListener (listener);
+                NamedBean nb= (NamedBean) namedBeanHandle.getBean();
+				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
 				return;
 			case LISTENER_TYPE_TURNOUT:
 				Turnout t = InstanceManager.turnoutManagerInstance().

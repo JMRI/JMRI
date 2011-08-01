@@ -31,6 +31,11 @@ public class JmriTwoStatePropertyListener extends JmriSimplePropertyListener
                               Conditional client) {
         super(propName, type, name, varType, client);
     }
+    
+    JmriTwoStatePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, int varType, 
+                              Conditional client) {
+        super(propName, type, namedBean, varType, client);
+    }
 
     public void propertyChange(PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) log.debug("\""+_varName+"\" sent PropertyChangeEvent \""+evt.getPropertyName()+

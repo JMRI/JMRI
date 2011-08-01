@@ -31,7 +31,7 @@ public class DefaultConditionalAction implements ConditionalAction {
 	private String _deviceName = " ";
 	private int _actionData = 0;
 	private String _actionString = "";
-
+    private NamedBeanHandle<?> _namedBean = null;
 
     private Timer _timer = null;
     private ActionListener _listener = null;
@@ -40,7 +40,8 @@ public class DefaultConditionalAction implements ConditionalAction {
 
 	static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 	static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
+    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    
     public DefaultConditionalAction() {
     }
 
@@ -50,6 +51,30 @@ public class DefaultConditionalAction implements ConditionalAction {
         _deviceName = name;
         _actionData = actionData;
         _actionString = actionStr;
+        
+        NamedBean bean = null;
+        int itemType = Conditional.ACTION_TO_ITEM[_type];
+        switch (itemType) {
+            case Conditional.ITEM_TYPE_SENSOR:
+				bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
+				if (bean == null) {
+					log.error("invalid sensor name= \""+_deviceName+"\" in conditional action");
+					return;
+				}
+                break;
+            case Conditional.ITEM_TYPE_TURNOUT:
+                bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
+                if (bean == null) {
+					log.error("invalid turnout name= \""+_deviceName+"\" in conditional action");
+					return;
+				}
+                break;
+        }
+        if (bean!=null){
+            _namedBean = nbhm.getNamedBeanHandle(_deviceName, bean);
+        } else {
+            _namedBean = null;
+        }
     }
 
 	/**
@@ -74,11 +99,34 @@ public class DefaultConditionalAction implements ConditionalAction {
 	 * Name of the device or element that is effected
 	 */
     public String getDeviceName() {
+        if(_namedBean!=null) {
+            return _namedBean.getName();
+        }
         return _deviceName;
     }
 
     public void setDeviceName(String deviceName) {
         _deviceName = deviceName;
+        NamedBean bean = null;
+        int itemType = Conditional.ACTION_TO_ITEM[_type];
+        
+        switch (itemType) {
+            case Conditional.ITEM_TYPE_SENSOR:
+                bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
+                break;
+            case Conditional.ITEM_TYPE_TURNOUT:
+                bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
+                break;
+        }
+        if (bean!=null){
+            _namedBean = nbhm.getNamedBeanHandle(_deviceName, bean);
+        } else {
+            _namedBean = null;
+        }
+    }
+    
+    public NamedBeanHandle<?> getNamedBean(){
+        return _namedBean;
     }
 
 	/**

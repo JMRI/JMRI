@@ -3486,7 +3486,6 @@ public class LogixTableAction extends AbstractTableAction {
     void loadJComboBoxWithMastAspects(JComboBox box, String mastName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithMastAspects called with name: "+mastName);
-        System.out.println(mastName);
         SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
         if (m == null) {
             box.addItem(rbx.getString("PromptLoadMastName"));

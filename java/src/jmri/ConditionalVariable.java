@@ -53,6 +53,9 @@ public class ConditionalVariable {
     private String _dataString = "";
     private int _num1 = 0;
     private int _num2 = 0;
+    private NamedBeanHandle<?> _namedBean = null;
+    //private NamedBeanHandle<Sensor> _namedSensorBean = null;
+    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     // Name clarification: Formerly was named '_triggersCalculation' because it controlled whether
     // a listener was installed for this device and thus trigger calcuation of the Conditional.
     // Now named '_triggersActions' because listeners are always installed for activated Logix 
@@ -70,6 +73,16 @@ public class ConditionalVariable {
         _type = type;
         _name = name;
         _triggersActions = trigger;
+        int itemType = Conditional.TEST_TO_ITEM[_type];
+		switch (itemType) {
+            case Conditional.ITEM_TYPE_SENSOR:
+				Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
+				if (sn == null) {
+					log.error("invalid sensor name= \""+_name+"\" in state variable");
+					return;
+				}
+                _namedBean = nbhm.getNamedBeanHandle(_name, sn);
+        }
     }
 
     public boolean isNegated() {
@@ -105,11 +118,35 @@ public class ConditionalVariable {
     }
 
     public String getName() {
+        if (_namedBean!=null){
+            return _namedBean.getName();
+        }
         return _name;
     }
 
     public void setName(String name) {
         _name = name;
+        NamedBean bean = null;
+        int itemType = Conditional.TEST_TO_ITEM[_type];
+        
+        switch (itemType) {
+            case Conditional.ITEM_TYPE_SENSOR:
+                bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
+                break;
+            /*case Conditional.ITEM_TYPE_TURNOUT:
+                bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
+                break;*/
+        }
+        //Once all refactored, we should probably register an error if the bean is returned null.
+        if (bean!=null){
+            _namedBean = nbhm.getNamedBeanHandle(_name, bean);
+        } else {
+            _namedBean = null;
+        }
+    }
+    
+    public NamedBeanHandle<?> getNamedBean(){
+        return _namedBean;
     }
 
     public String getDataString() {
@@ -195,12 +232,13 @@ public class ConditionalVariable {
 		boolean result = true;
 		// evaluate according to state variable type
         int itemType = Conditional.TEST_TO_ITEM[_type];
-        if (log.isDebugEnabled()) log.debug("evaluate: \""+_name+"\" type= "+_type+" itemType= "+itemType);
+        if (log.isDebugEnabled()) log.debug("evaluate: \""+getName()+"\" type= "+_type+" itemType= "+itemType);
 		switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
-				Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
+				//Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(getName());
+                Sensor sn = (Sensor) _namedBean.getBean();
 				if (sn == null) {
-					log.error("invalid sensor name= \""+_name+"\" in state variable");
+					log.error("invalid sensor name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 if (_type == Conditional.TYPE_SENSOR_ACTIVE) {
@@ -212,9 +250,9 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_TURNOUT:
-				Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
+				Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(getName());
 				if (t == null) {
-					log.error("invalid turnout name= \""+_name+"\" in state variable");
+					log.error("invalid turnout name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 if (_type == Conditional.TYPE_TURNOUT_THROWN) {
@@ -226,9 +264,9 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_LIGHT:
-				Light lgt = InstanceManager.lightManagerInstance().getLight(_name);
+				Light lgt = InstanceManager.lightManagerInstance().getLight(getName());
 				if (lgt == null) {
-					log.error("invalid light name= \""+_name+"\" in state variable");
+					log.error("invalid light name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 if (_type == Conditional.TYPE_LIGHT_ON) {
@@ -240,9 +278,9 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-				SignalMast f = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+				SignalMast f = InstanceManager.signalMastManagerInstance().provideSignalMast(getName());
 				if (f == null) {
-					log.error("invalid signal mast name= \""+_name+"\" in state variable");
+					log.error("invalid signal mast name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 switch ((_type)) {
@@ -259,9 +297,9 @@ public class ConditionalVariable {
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
-				SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
+				SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(getName());
 				if (h == null) {
-					log.error("invalid signal head name= \""+_name+"\" in state variable");
+					log.error("invalid signal head name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 switch (_type)
@@ -313,9 +351,9 @@ public class ConditionalVariable {
                 }
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
-				Memory m = InstanceManager.memoryManagerInstance().provideMemory(_name);
+				Memory m = InstanceManager.memoryManagerInstance().provideMemory(getName());
 				if (m == null) {
-					log.error("invalid memory name= \""+_name+"\" in state variable");
+					log.error("invalid memory name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 String value1 = null;
@@ -341,11 +379,11 @@ public class ConditionalVariable {
                 result = compare(value1,  value2, caseInsensitive);
 				break;
             case Conditional.ITEM_TYPE_CONDITIONAL:
-				Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(_name);
+				Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(getName());
 				if (c ==null) {
-                    c = InstanceManager.conditionalManagerInstance().getByUserName(_name);
+                    c = InstanceManager.conditionalManagerInstance().getByUserName(getName());
                     if (c == null) {
-                        log.error("invalid conditional name= \""+_name+"\" in state variable");
+                        log.error("invalid conditional name= \""+getName()+"\" in state variable");
                         return (false);
                     }
 				}
@@ -358,9 +396,9 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_WARRANT:
-				Warrant w = InstanceManager.warrantManagerInstance().getWarrant(_name);
+				Warrant w = InstanceManager.warrantManagerInstance().getWarrant(getName());
 				if (w == null) {
-					log.error("invalid Warrant name= \""+_name+"\" in state variable");
+					log.error("invalid Warrant name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 switch (_type)
@@ -404,9 +442,9 @@ public class ConditionalVariable {
 				}
 				break;
             case Conditional.ITEM_TYPE_OBLOCK:
-                OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(_name);
+                OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(getName());
 				if (b == null) {
-					log.error("invalid OBlock name= \""+_name+"\" in state variable");
+					log.error("invalid OBlock name= \""+getName()+"\" in state variable");
 					return (false);
 				}
                 result = b.statusIs(_dataString); 
@@ -767,48 +805,48 @@ public class ConditionalVariable {
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                             new Object[] {rbx.getString("Sensor"), _name, type} );
+                             new Object[] {rbx.getString("Sensor"), getName(), type} );
             case Conditional.ITEM_TYPE_TURNOUT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                             new Object[] {rbx.getString("Turnout"), _name, type} );
+                             new Object[] {rbx.getString("Turnout"), getName(), type} );
             case Conditional.ITEM_TYPE_LIGHT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                             new Object[] {rbx.getString("Light"), _name, type} );
+                             new Object[] {rbx.getString("Light"), getName(), type} );
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 if ((_type==Conditional.TYPE_SIGNAL_HEAD_LIT) ||
                         (_type==Conditional.TYPE_SIGNAL_HEAD_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                                 new Object[] {rbx.getString("SignalHead"), _name, type} );
+                                 new Object[] {rbx.getString("SignalHead"), getName(), type} );
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
-                                 new Object[] {rbx.getString("SignalHead"), _name, type} );
+                                 new Object[] {rbx.getString("SignalHead"), getName(), type} );
                 }
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 if ((_type==Conditional.TYPE_SIGNAL_MAST_LIT) ||
                         (_type==Conditional.TYPE_SIGNAL_MAST_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                                 new Object[] {rbx.getString("SignalMast"), _name, type} );
+                                 new Object[] {rbx.getString("SignalMast"), getName(), type} );
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
-                                 new Object[] {rbx.getString("SignalMast"), _name, _dataString} );
+                                 new Object[] {rbx.getString("SignalMast"), getName(), _dataString} );
                 }
             case Conditional.ITEM_TYPE_MEMORY:
                 if ((_type==Conditional.TYPE_MEMORY_EQUALS) ||
                         (_type==Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE)) {
                     return java.text.MessageFormat.format(rbx.getString("MemoryValueDescrpt"),
-                                 new Object[] {rbx.getString("Memory"), _name, 
+                                 new Object[] {rbx.getString("Memory"), getName(), 
                                                getCompareSymbols(_num1), _dataString} );
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("MemoryCompareDescrpt"),
-                                 new Object[] {rbx.getString("Memory"), _name, 
+                                 new Object[] {rbx.getString("Memory"), getName(), 
                                                getCompareSymbols(_num1), _dataString} );
                 }
             case Conditional.ITEM_TYPE_CONDITIONAL:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                             new Object[] {rbx.getString("Conditional"), _name, type} );
+                             new Object[] {rbx.getString("Conditional"), getName(), type} );
             case Conditional.ITEM_TYPE_WARRANT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                             new Object[] {rbx.getString("WarrantRoute"), _name, type} );
+                             new Object[] {rbx.getString("WarrantRoute"), getName(), type} );
             case Conditional.ITEM_TYPE_CLOCK:
                 return java.text.MessageFormat.format(rbx.getString("FastClockDescrpt"),
                              new Object[] {rbx.getString("FastClock"), 
@@ -816,9 +854,9 @@ public class ConditionalVariable {
                           LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60)) });
             case Conditional.ITEM_TYPE_OBLOCK:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                             new Object[] {rbx.getString("OBlockStatus"), _name, _dataString} );
+                             new Object[] {rbx.getString("OBlockStatus"), getName(), _dataString} );
             case Conditional.TYPE_NONE:
-                return _name+" type "+type;
+                return getName()+" type "+type;
         }
         return super.toString();
     }

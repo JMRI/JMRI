@@ -104,4 +104,6 @@ public interface ConditionalAction {
     * get Sound file
     */
     public Sound getSound();
+    
+    public NamedBeanHandle<?> getNamedBean();
 }

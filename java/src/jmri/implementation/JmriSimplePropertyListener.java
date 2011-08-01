@@ -35,6 +35,7 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
     String _propertyName;
     ArrayList <Conditional> _clients;
     boolean _enabled;
+    NamedBeanHandle<?> _namedBean;
 
     JmriSimplePropertyListener(String propName, int type, String varName, int varType, Conditional client)
     {
@@ -45,6 +46,21 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
         _clients = new ArrayList<Conditional>();
         _clients.add(client);
         _enabled = true;
+    }
+    
+    JmriSimplePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, int varType, Conditional client)
+    {
+        _propertyName = propName;
+        _type = type;
+        _namedBean = namedBean;
+        _varType = varType;
+        _clients = new ArrayList<Conditional>();
+        _clients.add(client);
+        _enabled = true;
+    }
+    
+    NamedBeanHandle<?> getNamedBean(){
+        return _namedBean;
     }
 
     public int getType() {
@@ -60,6 +76,9 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
     }
 	
     public String getDevName() {
+        if(_namedBean!=null){
+            return _namedBean.getName();
+        }
         return _varName;
     }
 	
