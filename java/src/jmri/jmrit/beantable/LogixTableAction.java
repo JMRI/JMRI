@@ -903,11 +903,11 @@ public class LogixTableAction extends AbstractTableAction {
         }
         String sName = _systemName.getText().trim();
         if(_autoSystemName.isSelected()){
-            _curLogix = _logixManager.createNewLogix(uName);
             if (!checkLogixUserName(uName)) {
                 return;
             }
-        } else {    
+            _curLogix = _logixManager.createNewLogix(uName);
+        } else {
             if (!checkLogixSysName()) {
                 return;
             }
