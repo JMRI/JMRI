@@ -640,10 +640,11 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         NamedBean nBean = getBySystemName(sysNameList.get(row));
         String oldName = nBean.getUserName();
         JTextField _newName = new JTextField(20);
+        Object[] renameBeanOption = {"Cancel", "OK", _newName};
         int retval = JOptionPane.showOptionDialog(null,
                                                   "Rename UserName From " + oldName, "Rename " + getBeanType(),
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
-                                                  new Object[]{"Cancel", "OK", _newName}, null );
+                                                  renameBeanOption, renameBeanOption[2] );
 
         if (retval != 1) return;
         String value = _newName.getText().trim();
