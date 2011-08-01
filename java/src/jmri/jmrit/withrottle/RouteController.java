@@ -137,13 +137,18 @@ public class RouteController extends AbstractController implements PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {
             Sensor s = (Sensor)evt.getSource();
-            Route r = indication.get(s);
-            String message;
-
-            message = "PRA" + s.getKnownState() + r.getSystemName();
-
-            for (ControllerInterface listener : listeners){
-                listener.sendPacketToDevice(message);
+            Enumeration<NamedBeanHandle<Sensor>> en = indication.keys();
+            while (en.hasMoreElements()) {
+                NamedBeanHandle<Sensor> namedSensor = en.nextElement();
+                if(namedSensor.getBean()==s){
+                    Route r = indication.get(namedSensor);
+                    String message = "PRA" + s.getKnownState() + r.getSystemName();
+                    
+                    for (ControllerInterface listener : listeners){
+                        listener.sendPacketToDevice(message);
+                    }
+                    return;
+                }
             }
         }
     }
