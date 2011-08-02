@@ -682,7 +682,7 @@
 
   
 <li>
-<a href="">Engines </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locomotives">Locomotives </a>
 <ul></ul>
 </li>
 
@@ -712,7 +712,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Sidings </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spurs </a>
 <ul></ul>
 </li>
 

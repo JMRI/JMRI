@@ -223,7 +223,7 @@
  <indexitem text="Operations " target="package.jmri.jmrit.operations.Operations">
   <indexitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
-  <indexitem text="Engines " target="package.jmri.jmrit.operations.Operations_Engines"/>
+  <indexitem text="Locomotives " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
 
   <indexitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
@@ -233,7 +233,7 @@
 
   <indexitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
-  <indexitem text="Sidings " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+  <indexitem text="Spurs " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
   <indexitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
 

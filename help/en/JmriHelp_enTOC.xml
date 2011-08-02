@@ -207,7 +207,7 @@
    <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
     <tocitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
 
-    <tocitem text="Sidings " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+    <tocitem text="Spurs " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
     <tocitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
@@ -216,7 +216,7 @@
    </tocitem>
    <tocitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
-   <tocitem text="Engines " target="package.jmri.jmrit.operations.Operations_Engines"/>
+   <tocitem text="Locomotives " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
 
    <tocitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
 
@@ -354,7 +354,7 @@
   <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
    <tocitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
 
-   <tocitem text="Sidings " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+   <tocitem text="Spurs " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
    <tocitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
@@ -363,7 +363,7 @@
   </tocitem>
   <tocitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
-  <tocitem text="Engines " target="package.jmri.jmrit.operations.Operations_Engines"/>
+  <tocitem text="Locomotives " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
 
   <tocitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
 
