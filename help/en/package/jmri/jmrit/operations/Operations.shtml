@@ -613,10 +613,17 @@ lists.</P>
 the bottom of the window. The various fields that were disabled should
 now appear.
 </P>
-<P>Each location can have several yard, spur, interchange or
-staging tracks. Yards are where cars and locomotives are placed for
+<P>Each location can have several <A HREF="#Yards">yard</A>, 
+<A HREF="#Sidings">spur</A>, <A HREF="#Interchange">interchange</A> or
+<A HREF="#Staging">staging</A> tracks. Yards are where cars and locomotives are placed for
 temporary storage. A spur can be an industry or any place where a car
-is loaded or unloaded. For a train to service a location, there must be
+is loaded or unloaded.  An interchange track is used to exchange cars
+between trains, or to create a classification yard which is used to build
+trains.  Staging tracks represent distant locations where trains can travel between to service
+the layout.
+
+<P>
+For a train to service a location, there must be
 at least one track for that location. See below how to add tracks to
 your location.</P>
 <P>The tables show the length of the tracks, the amount of track
@@ -646,9 +653,11 @@ serviced by the various tracks.
 <A NAME="Yards"></A>
 <H3>Yards</H3>
 
-To add a yard, select the "Yards" radio button and then press the "Add Yard Track" button. 
+			A yard is used to store cars and locomotives. A car's load status
+			does not change when delivered to a yard track. To add a yard, select
+			the "Yards" radio button and then press the "Add Yard Track" button.
 
-<P>
+			<P>
 <img src="images/AddYard.png">
 </P>
 
@@ -937,6 +946,8 @@ interchange, once the branch line train delivers the cars, they will remain
 there until the main line train stops to service the terminal's
 interchange track.
 
+<P>The car's load status does not change when placed at an interchange track.</P>
+
 <P>If you want more control on how your interchange track will
 operate, you can optionally specify a train or route to pick up or set out
 cars at an interchange track.</P>
@@ -1000,24 +1011,6 @@ of the staging tracks at that location.</P>
 the program ask you which track you want to use when departing from,
 or arriving into staging.</P>
 
-<H3>Looping Trains through Staging</H3>
-
-Sometimes for operations a train enters staging at one location (call it
-A) and then later departs at another location (call it B). From an
-operations perspective locations A and B are locations not directly
-connected by trains. So we need to relocate locomotives and cars from
-location A to B so the train's manifest can make sense. One way to do
-this is to terminate the train into staging at location A. Then create a
-"virtual" train that simply moves the cars from location A staging to
-location B staging. Doing this causes the program to "move" the train
-and its cars from A to B which is really the same physical track. Later
-you can build a train that departs location B, and the manifest will
-show that the train originated from B and not A.
-
-<p>You can automate the restaging of a train by creating a <A
-	HREF="#TrainScripts">script</A> that is activated when the train is
-terminated into staging.</P>
-
 <A	NAME="StagingAndCarLoads"></A>
 <H3>Staging and Car loads</H3>
 
@@ -1066,6 +1059,25 @@ the types of loads the train departing from staging is allowed to
 service. See "Select loads serviced by this train" under Edit-&gt;Train,
 then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
 
+<H3>Looping Trains through Staging</H3>
+
+Sometimes for operations a train enters staging at one location (call it
+A) and then later departs at another location (call it B). From an
+operations perspective locations A and B are locations not directly
+connected by trains. So we need to relocate locomotives and cars from
+location A to B so the train's manifest can make sense. One way to do
+this is to terminate the train into staging at location A. Then create a
+"virtual" train that simply moves the cars from location A staging to
+location B staging. Doing this causes the program to "move" the train
+and its cars from A to B which is really the same physical track. Later
+you can build a train that departs location B, and the manifest will
+show that the train originated from B and not A.
+
+<p>You can automate the restaging of a train by creating a <A
+	HREF="#TrainScripts">script</A> that is activated when the train is
+terminated into staging.</P>
+
+
 <A NAME="ModifyLocationsByCarType"></A>
 <H3>Modify Locations by Car Type</H3>
 
@@ -1085,7 +1097,7 @@ car your would like to copy, then select the "copy" checkbox, the car
 type will now appear to the right of the checkbox, then select the type
 of car you want to modify, and press "Save" to have both car types
 serviced by the same locations and tracks.</P>
-</P>
+
 <A NAME="Cars"></A>
 <H2>Cars</H2>
 
