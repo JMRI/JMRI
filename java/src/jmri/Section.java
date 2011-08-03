@@ -133,7 +133,7 @@ public class Section extends AbstractNamedBean
     /**
      *  Persistant instance variables (saved between runs)
      */
-	private String mForwardBlockingSensorName = "";
+    private String mForwardBlockingSensorName = "";
 	private String mReverseBlockingSensorName = "";
 	private String mForwardStoppingSensorName = "";
 	private String mReverseStoppingSensorName = "";
@@ -149,11 +149,14 @@ public class Section extends AbstractNamedBean
 	private boolean mOccupancyInitialized = false;
 	private Block mFirstBlock = null;
 	private Block mLastBlock = null;
-	private Sensor mForwardBlockingSensor = null;
-	private Sensor mReverseBlockingSensor = null;
-	private Sensor mForwardStoppingSensor = null;
-	private Sensor mReverseStoppingSensor = null;
+    
+	private NamedBeanHandle<Sensor> mForwardBlockingNamedSensor = null;
+	private NamedBeanHandle<Sensor> mReverseBlockingNamedSensor = null;
+	private NamedBeanHandle<Sensor> mForwardStoppingNamedSensor = null;
+	private NamedBeanHandle<Sensor> mReverseStoppingNamedSensor = null;
+    
 	private ArrayList<PropertyChangeListener> mBlockListeners = new ArrayList<PropertyChangeListener>();
+    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 	
 	/**
 	 * Query the state of the Section
@@ -171,30 +174,30 @@ public class Section extends AbstractNamedBean
 			// update the forward/reverse blocking sensors as needed
 			if (state==FORWARD) {
 				try {
-					if ( (getForwardBlockingSensor()!=null) && (mForwardBlockingSensor.getState()!=Sensor.INACTIVE) ) 
-						mForwardBlockingSensor.setState(Sensor.INACTIVE);
-					if ( (getReverseBlockingSensor()!=null) && (mReverseBlockingSensor.getState()!=Sensor.ACTIVE) ) 
-						mReverseBlockingSensor.setKnownState(Sensor.ACTIVE);
+					if ( (getForwardBlockingSensor()!=null) && (getForwardBlockingSensor().getState()!=Sensor.INACTIVE) ) 
+						getForwardBlockingSensor().setState(Sensor.INACTIVE);
+					if ( (getReverseBlockingSensor()!=null) && (getReverseBlockingSensor().getState()!=Sensor.ACTIVE) ) 
+						getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
 				} catch (jmri.JmriException reason) {
 					log.error ("Exception when setting Sensors for Section "+getSystemName());
 				}
 			}
 			else if (state==REVERSE) {
 				try {
-					if ( (getReverseBlockingSensor()!=null) && (mReverseBlockingSensor.getState()!=Sensor.INACTIVE) ) 
-						mReverseBlockingSensor.setKnownState(Sensor.INACTIVE);
-					if ( (getForwardBlockingSensor()!=null) && (mForwardBlockingSensor.getState()!=Sensor.ACTIVE) ) 
-						mForwardBlockingSensor.setKnownState(Sensor.ACTIVE);
+					if ( (getReverseBlockingSensor()!=null) && (getReverseBlockingSensor().getState()!=Sensor.INACTIVE) ) 
+						getReverseBlockingSensor().setKnownState(Sensor.INACTIVE);
+					if ( (getForwardBlockingSensor()!=null) && (getForwardBlockingSensor().getState()!=Sensor.ACTIVE) ) 
+						getForwardBlockingSensor().setKnownState(Sensor.ACTIVE);
 				} catch (jmri.JmriException reason) {
 					log.error ("Exception when setting Sensors for Section "+getSystemName());
 				}
 			}
 			else if (state==FREE) {
 				try {
-					if ( (getForwardBlockingSensor()!=null) && (mForwardBlockingSensor.getState()!=Sensor.ACTIVE) ) 
-						mForwardBlockingSensor.setKnownState(Sensor.ACTIVE);
-					if ( (getReverseBlockingSensor()!=null) && (mReverseBlockingSensor.getState()!=Sensor.ACTIVE) ) 
-						mReverseBlockingSensor.setKnownState(Sensor.ACTIVE);
+					if ( (getForwardBlockingSensor()!=null) && (getForwardBlockingSensor().getState()!=Sensor.ACTIVE) ) 
+						getForwardBlockingSensor().setKnownState(Sensor.ACTIVE);
+					if ( (getReverseBlockingSensor()!=null) && (getReverseBlockingSensor().getState()!=Sensor.ACTIVE) ) 
+						getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
 				} catch (jmri.JmriException reason) {
 					log.error ("Exception when setting Sensors for Section "+getSystemName());
 				}
@@ -235,23 +238,35 @@ public class Section extends AbstractNamedBean
 	 *	The set methods return a Sensor object if successful, or else they
 	 *		return "null";
 	 */
-	public String getForwardBlockingSensorName() { return mForwardBlockingSensorName; }
-	public Sensor getForwardBlockingSensor() { 
-		if ( (mForwardBlockingSensor==null) && (mForwardBlockingSensorName!=null) && 
+	public String getForwardBlockingSensorName() { 
+        if(mForwardBlockingNamedSensor!=null)
+            return mForwardBlockingNamedSensor.getName();
+        return mForwardBlockingSensorName;
+    
+    }
+	public Sensor getForwardBlockingSensor() {
+        if(mForwardBlockingNamedSensor!=null){
+            return mForwardBlockingNamedSensor.getBean();
+        }
+        if ((mForwardBlockingSensorName!=null) && 
 							(!mForwardBlockingSensorName.equals("")) ) {
-			mForwardBlockingSensor = InstanceManager.sensorManagerInstance().
+			Sensor s = InstanceManager.sensorManagerInstance().
 												getSensor(mForwardBlockingSensorName);
-			if (mForwardBlockingSensor==null) {
-				log.warn("Missing Sensor - "+mForwardBlockingSensorName+" - when initializing Section - "+
+			if (s==null) {
+				log.error("Missing Sensor - "+mForwardBlockingSensorName+" - when initializing Section - "+
 									getSystemName());
+                return null;
 			}
+            mForwardBlockingNamedSensor = nbhm.getNamedBeanHandle(mForwardBlockingSensorName, s);
+            return s;
 		}
-		return mForwardBlockingSensor; 
+		return null; 
 	}
+    
 	public Sensor setForwardBlockingSensorName(String forwardSensor) {
 		if ( (forwardSensor==null) || (forwardSensor.length()<=0) ) {
-			mForwardBlockingSensor = null;
 			mForwardBlockingSensorName = "";
+            mForwardBlockingNamedSensor = null;
 			return null;
 		}
 		tempSensorName = forwardSensor;
@@ -261,17 +276,23 @@ public class Section extends AbstractNamedBean
 			log.error("Sensor name -"+forwardSensor+"invalid when setting forward sensor in Section "+getSystemName());
 			return null;
 		}
+        nbhm.getNamedBeanHandle(tempSensorName, s);
 		mForwardBlockingSensorName = tempSensorName;
-		mForwardBlockingSensor = s;
 		return s;
 	}
+    
+    
 	public void delayedSetForwardBlockingSensorName(String forwardSensor) {
 		mForwardBlockingSensorName = forwardSensor;
 	}
-	public String getReverseBlockingSensorName() { return mReverseBlockingSensorName; }
+	public String getReverseBlockingSensorName() { 
+        if(mReverseBlockingNamedSensor!=null)
+            return mReverseBlockingNamedSensor.getName();
+        return mReverseBlockingSensorName;
+    }
 	public Sensor setReverseBlockingSensorName(String reverseSensor) {
 		if ( (reverseSensor==null) || (reverseSensor.length()<=0) ) {
-			mReverseBlockingSensor = null;
+			mReverseBlockingNamedSensor = null;
 			mReverseBlockingSensorName = "";
 			return null;
 		}
@@ -282,24 +303,31 @@ public class Section extends AbstractNamedBean
 			log.error("Sensor name -"+reverseSensor+"invalid when setting reverse sensor in Section "+getSystemName());
 			return null;
 		}
+        mReverseBlockingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
 		mReverseBlockingSensorName = tempSensorName;
-		mReverseBlockingSensor = s;
 		return s;
 	}
+    
 	public void delayedSetReverseBlockingSensorName(String reverseSensor) {
 		mReverseBlockingSensorName = reverseSensor;
 	}
-	public Sensor getReverseBlockingSensor() { 
-		if ( (mReverseBlockingSensor==null) && (mReverseBlockingSensorName!=null) && 
+	public Sensor getReverseBlockingSensor() {
+        if(mReverseBlockingNamedSensor!=null){
+            return mReverseBlockingNamedSensor.getBean();
+        }
+		if ((mReverseBlockingSensorName!=null) && 
 							(!mReverseBlockingSensorName.equals("")) ) {
-			mReverseBlockingSensor = InstanceManager.sensorManagerInstance().
+			Sensor s = InstanceManager.sensorManagerInstance().
 												getSensor(mReverseBlockingSensorName);
-			if (mReverseBlockingSensor==null) {
+			if (s==null) {
 				log.error("Missing Sensor - "+mReverseBlockingSensorName+" - when initializing Section - "+
 									getSystemName());
+                return null;
 			}
-		}	
-		return mReverseBlockingSensor; 
+            mReverseBlockingNamedSensor = nbhm.getNamedBeanHandle(mReverseBlockingSensorName, s);
+            return s;
+		}
+		return null; 
 	}
 
 	String tempSensorName = "";
@@ -323,22 +351,32 @@ public class Section extends AbstractNamedBean
 	 *	The set methods return a Sensor object if successful, or else they
 	 *		return "null";
 	 */
-	public String getForwardStoppingSensorName() { return mForwardStoppingSensorName; }
-	public Sensor getForwardStoppingSensor() { 
-		if ( (mForwardStoppingSensor==null) && (mForwardStoppingSensorName!=null) && 
+	public String getForwardStoppingSensorName() { 
+        if(mForwardStoppingNamedSensor!=null)
+            return mForwardStoppingNamedSensor.getName();
+        return mForwardStoppingSensorName;
+    }
+	public Sensor getForwardStoppingSensor() {
+        if(mForwardStoppingNamedSensor!=null){
+            return mForwardStoppingNamedSensor.getBean();
+        }
+		if (( mForwardStoppingSensorName!=null) && 
 							(!mForwardStoppingSensorName.equals("")) ) {
-			mForwardStoppingSensor = InstanceManager.sensorManagerInstance().
+			Sensor s = InstanceManager.sensorManagerInstance().
 												getSensor(mForwardStoppingSensorName);
-			if (mForwardStoppingSensor==null) {
+			if (s==null) {
 				log.error("Missing Sensor - "+mForwardStoppingSensorName+" - when initializing Section - "+
 									getSystemName());
+                return null;
 			}
+            mForwardStoppingNamedSensor = nbhm.getNamedBeanHandle(mForwardStoppingSensorName, s);
+            return s;
 		}
-		return mForwardStoppingSensor; 
+		return null; 
 	}
 	public Sensor setForwardStoppingSensorName(String forwardSensor) {
 		if ( (forwardSensor==null) || (forwardSensor.length()<=0) ) {
-			mForwardStoppingSensor = null;
+			mForwardStoppingNamedSensor = null;
 			mForwardStoppingSensorName = "";
 			return null;
 		}
@@ -349,17 +387,21 @@ public class Section extends AbstractNamedBean
 			log.error("Sensor name -"+forwardSensor+"invalid when setting forward sensor in Section "+getSystemName());
 			return null;
 		}
+        mForwardStoppingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
 		mForwardStoppingSensorName = tempSensorName;
-		mForwardStoppingSensor = s;
 		return s;
 	}
 	public void delayedSetForwardStoppingSensorName(String forwardSensor) {
 		mForwardStoppingSensorName = forwardSensor;
 	}
-	public String getReverseStoppingSensorName() { return mReverseStoppingSensorName; }
+	public String getReverseStoppingSensorName() { 
+        if(mReverseStoppingNamedSensor!=null)
+            return mReverseStoppingNamedSensor.getName();
+        return mReverseStoppingSensorName;
+    }
 	public Sensor setReverseStoppingSensorName(String reverseSensor) {
 		if ( (reverseSensor==null) || (reverseSensor.length()<=0) ) {
-			mReverseStoppingSensor = null;
+			mReverseStoppingNamedSensor = null;
 			mReverseStoppingSensorName = "";
 			return null;
 		}
@@ -370,24 +412,29 @@ public class Section extends AbstractNamedBean
 			log.error("Sensor name -"+reverseSensor+"invalid when setting reverse sensor in Section "+getSystemName());
 			return null;
 		}
+        mReverseStoppingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
 		mReverseStoppingSensorName = tempSensorName;
-		mReverseStoppingSensor = s;
 		return s;
 	}
 	public void delayedSetReverseStoppingSensorName(String reverseSensor) {
 		mReverseStoppingSensorName = reverseSensor;
 	}
-	public Sensor getReverseStoppingSensor() { 
-		if ( (mReverseStoppingSensor==null) && (mReverseStoppingSensorName!=null) && 
+	public Sensor getReverseStoppingSensor() {
+        if(mReverseStoppingNamedSensor!=null){
+            return mReverseStoppingNamedSensor.getBean();
+        }
+		if ( (mReverseStoppingSensorName!=null) && 
 							(!mReverseStoppingSensorName.equals("")) ) {
-			mReverseStoppingSensor = InstanceManager.sensorManagerInstance().
+			Sensor s = InstanceManager.sensorManagerInstance().
 												getSensor(mReverseStoppingSensorName);
-			if (mReverseStoppingSensor==null) {
+			if (s==null) {
 				log.error("Missing Sensor - "+mReverseStoppingSensorName+" - when initializing Section - "+
 									getSystemName());
+                return null;
 			}
+            mReverseStoppingNamedSensor = nbhm.getNamedBeanHandle(mReverseStoppingSensorName, s);
 		}	
-		return mReverseStoppingSensor; 
+		return null;
 	}
 
 	/**
@@ -1728,10 +1775,10 @@ public class Section extends AbstractNamedBean
 																ConnectivityUtil cUtil) {
 		String sensorName = "";
 		if (direction == EntryPoint.FORWARD) {		
-			sensorName = mForwardBlockingSensorName;
+			sensorName = getForwardBlockingSensorName();
 		}
 		else if (direction == EntryPoint.REVERSE) {
-			sensorName = mReverseBlockingSensorName;
+			sensorName = getReverseBlockingSensorName();
 		}
 		return (cUtil.addSensorToSignalHeadLogic(sensorName, sh, where));
 	}
