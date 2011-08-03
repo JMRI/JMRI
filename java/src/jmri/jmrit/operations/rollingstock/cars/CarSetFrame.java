@@ -86,6 +86,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		
 		// tool tips
 		ignoreLoadCheckBox.setToolTipText(getRb().getString("TipIgnore"));
+		outOfServiceCheckBox.setToolTipText(getRb().getString("TipCarOutOfService"));
 		
 		// get notified if combo box gets modified
 		CarLoads.instance().addPropertyChangeListener(this);
@@ -114,8 +115,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	protected void enableComponents(boolean enabled){
 		super.enableComponents(enabled);
 		ignoreLoadCheckBox.setEnabled(enabled);
-		loadComboBox.setEnabled(enabled);
-		editLoadButton.setEnabled(enabled & _car != null);
+		loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected() & enabled);
+		editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() & enabled & _car != null);
 	}
 	
 	// location combo box

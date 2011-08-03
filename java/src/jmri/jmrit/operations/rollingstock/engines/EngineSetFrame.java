@@ -41,6 +41,9 @@ public class EngineSetFrame extends RollingStockSetFrame implements java.beans.P
 		pOptional.setVisible(false);
 		pFinalDestination.setVisible(false);
 		autoTrainCheckBox.setVisible(false);
+		
+		// tool tips
+		outOfServiceCheckBox.setToolTipText(getRb().getString("TipLocoOutOfService"));
 			
 		packFrame();
 	}

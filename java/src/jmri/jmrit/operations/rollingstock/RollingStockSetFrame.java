@@ -595,25 +595,27 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		}
 		if (ae.getSource() == ignoreTrainCheckBox){
 			trainBox.setEnabled(!ignoreTrainCheckBox.isSelected());
+			autoTrainCheckBox.setEnabled(!ignoreTrainCheckBox.isSelected());
 		}
 	}
 	
 	protected void enableComponents(boolean enabled){
 		// combo boxes
-		locationBox.setEnabled(enabled);
-		trackLocationBox.setEnabled(enabled); 
-		destinationBox.setEnabled(enabled);
-		trackDestinationBox.setEnabled(enabled); 
-		destReturnWhenEmptyBox.setEnabled(enabled);
-		trackReturnWhenEmptyBox.setEnabled(enabled); 
-		finalDestinationBox.setEnabled(enabled);
-		finalDestTrackBox.setEnabled(enabled);
-		trainBox.setEnabled(enabled);
+		locationBox.setEnabled(!ignoreLocationCheckBox.isSelected() & enabled);
+		trackLocationBox.setEnabled(!ignoreLocationCheckBox.isSelected() & enabled); 
+		destinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enabled);
+		trackDestinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enabled); 
+		destReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled);
+		trackReturnWhenEmptyBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled); 
+		finalDestinationBox.setEnabled(!ignoreFinalDestinationCheckBox.isSelected() & enabled);
+		finalDestTrackBox.setEnabled(!ignoreFinalDestinationCheckBox.isSelected() & enabled);
+		trainBox.setEnabled(!ignoreTrainCheckBox.isSelected() & enabled);
 		// checkboxes
-		autoTrackCheckBox.setEnabled(enabled);
-		autoDestinationTrackCheckBox.setEnabled(enabled);
-		autoFinalDestTrackCheckBox.setEnabled(enabled);
-		autoReturnWhenEmptyTrackCheckBox.setEnabled(enabled);
+		autoTrackCheckBox.setEnabled(!ignoreLocationCheckBox.isSelected() & enabled);
+		autoDestinationTrackCheckBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enabled);
+		autoFinalDestTrackCheckBox.setEnabled(!ignoreFinalDestinationCheckBox.isSelected() & enabled);
+		autoReturnWhenEmptyTrackCheckBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled);
+		autoTrainCheckBox.setEnabled(!ignoreTrainCheckBox.isSelected() & enabled);
 		outOfServiceCheckBox.setEnabled(enabled);
 		
 		ignoreStatusCheckBox.setEnabled(enabled);
