@@ -226,11 +226,11 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 JOptionPane.YES_NO_OPTION);
             if(optionPane == JOptionPane.YES_OPTION){
                 //This will update the bean reference from the systemName to the userName
-                ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(nBean.getSystemName());
-                for(int i = 0; i<listeners.size();i++){
-                    nBean.updateListenerRef(listeners.get(i), (String)value);
+                try{
+                    nbMan.updateBeanFromSystemToUser(nBean);
+                } catch (jmri.JmriException ex) {
+                    //We should never get an exception here as we already check that the username is not valid
                 }
-                nbMan.updateBeanFromSystemToUser(nBean);
             }
             fireTableRowsUpdated(row, row);
         } else if (col==COMMENTCOL) {
@@ -682,35 +682,26 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                     JOptionPane.YES_NO_OPTION);
                 if(optionPane == JOptionPane.YES_OPTION){
                     //This will update the bean reference from the systemName to the userName
-                    ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(nBean.getSystemName());
-                    for(int i = 0; i<listeners.size();i++){
-                        nBean.updateListenerRef(listeners.get(i), value);
+                    try {
+                        nbMan.updateBeanFromSystemToUser(nBean);
+                    } catch (jmri.JmriException ex){
+                        //We should never get an exception here as we already check that the username is not valid
                     }
-                    nbMan.updateBeanFromSystemToUser(nBean);
                 }
                 
             } else {
                 nbMan.renameBean(oldName, value, nBean);
-                ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
-                for(int i = 0; i<listeners.size();i++){
-                    nBean.updateListenerRef(listeners.get(i), value);
-                }
             }
             
         }
         else {
             //This will update the bean reference from the old userName to the SystemName
             nbMan.updateBeanFromUserToSystem(nBean);
-            ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
-            for(int i = 0; i<listeners.size();i++){
-                nBean.updateListenerRef(listeners.get(i), nBean.getSystemName());
-            }
         }
     }
 
     public void removeName(int row, int column){
         NamedBean nBean = getBySystemName(sysNameList.get(row));
-        String oldName = nBean.getUserName();
         nBean.setUserName(null);
         String msg = java.text.MessageFormat.format(AbstractTableAction.rb
                 .getString("UpdateToSystemName"),
@@ -720,10 +711,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             JOptionPane.YES_NO_OPTION);
         if(optionPane == JOptionPane.YES_OPTION){
             nbMan.updateBeanFromUserToSystem(nBean);
-            ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
-            for(int i = 0; i<listeners.size();i++){
-                nBean.updateListenerRef(listeners.get(i), nBean.getSystemName());
-            }
         }
         fireTableRowsUpdated(row, row);
     }
@@ -760,24 +747,17 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             oldNameBean.setUserName("");
             newNameBean.setUserName(currentName);
             jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
-            ArrayList<java.beans.PropertyChangeListener> listeners = oldNameBean.getPropertyChangeListeners(currentName);
-            for(int i = 0; i<listeners.size();i++){
-                String listenerRef = oldNameBean.getListenerRef(listeners.get(i));
-                oldNameBean.removePropertyChangeListener(listeners.get(i));
-                newNameBean.addPropertyChangeListener(listeners.get(i), currentName, listenerRef);
-            }
-            
             if(nbMan.inUse(newNameBean.getSystemName(), newNameBean)){
                     String msg = java.text.MessageFormat.format(AbstractTableAction.rb
                         .getString("UpdateToUserName"),
                         new Object[] { getBeanType(),currentName,sysNameList.get(row)});
                     int optionPane = JOptionPane.showConfirmDialog(null,msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
                 if(optionPane == JOptionPane.YES_OPTION){
-                    ArrayList<java.beans.PropertyChangeListener> listenerRef = newNameBean.getPropertyChangeListeners(newNameBean.getSystemName());
-                    for(int i = 0; i<listenerRef.size();i++){
-                        newNameBean.updateListenerRef(listenerRef.get(i), currentName);
+                    try {
+                        nbMan.updateBeanFromSystemToUser(newNameBean);
+                    } catch (jmri.JmriException ex) {
+                        //We should never get an exception here as we already check that the username is not valid
                     }
-                    nbMan.updateBeanFromSystemToUser(newNameBean);
                 }
             }
             fireTableRowsUpdated(row, row);

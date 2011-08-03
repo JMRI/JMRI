@@ -4,7 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Instance for controlling the issuing of NamedBeanHandles.
+ * <hr>
+ * The NamedBeanHandleManager, deals with controlling and updating NamedBeans 
+ * across JMRI.  When a piece of code requires persistent access to a bean, it 
+ * should use a NamedBeanHandle, the NamedBeanHandle stores not only the bean 
+ * that has been requested but also the named that was used to request it 
+ * (either User or System Name).
+ * <p>
+ * This Manager will only issue out one NamedBeanHandle per Bean/Name request.  
+ * The Manager also deals with updates and changes to the names of Beans, along
+ * with moving usernames between different beans.
+ * <p>
+ * If a beans username is changed by the user, then the name will be updated in
+ * the NamedBeanHandle.  If a username is moved from one bean to another, then 
+ * the bean reference will be updated and the propertyChangeListener attached to
+ * that bean will also be moved, so long as the correct method of adding the
+ * listener has been used.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -64,6 +80,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
                 h.setName(newName);
             }
         }
+        updateListenerRef(oldName, newName, ((NamedBean)bean));
         oldBean=null;
     }
     
@@ -87,28 +104,36 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
             if (oldNamedBean.equals(h))
                 h.setBean(newBean);
         }
+        moveListener((NamedBean)oldBean, (NamedBean)newBean, name);
         oldNamedBean=null;
     }
     
     public void updateBeanFromUserToSystem(NamedBean bean){
         String systemName = bean.getSystemName();
-        for (NamedBeanHandle h : namedBeanHandles ) {
-            if (h.getBean().equals(bean))
+        String userName = bean.getUserName();
+        renameBean(userName, systemName, bean);
+        /*for (NamedBeanHandle h : namedBeanHandles ) {
+            if (h.getBean().equals(bean)){
                 h.setName(systemName);
+            }
         }
+        updateListenerRef(userName, systemName, bean);*/
     }
     
-    public void updateBeanFromSystemToUser(NamedBean bean){
+    public void updateBeanFromSystemToUser(NamedBean bean) throws JmriException{
         String userName = bean.getUserName();
+        String systemName = bean.getSystemName();
+
         if((userName==null) || (userName.equals(""))){
             log.error("UserName is empty, can not update items to use UserName");
-            return;
+            throw new JmriException("UserName is empty, can not update items to use UserName");
         }
-        
-        for (NamedBeanHandle h : namedBeanHandles ) {
+        renameBean(systemName, userName, bean);
+        /*for (NamedBeanHandle h : namedBeanHandles ) {
             if (h.getBean().equals(bean))
                 h.setName(userName);
         }
+        updateListenerRef(systemName, userName, bean);*/
     }
     
     public <T> boolean inUse(String name, T bean){
@@ -124,6 +149,29 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
     public <T> NamedBeanHandle<T> newNamedBeanHandle(String name, T bean, Class<T> type){
         return getNamedBeanHandle(name, bean);
+    }
+    
+    /**
+    * A method to update the listener reference from oldName to a newName
+    */
+    private void updateListenerRef(String oldName, String newName, NamedBean nBean){
+        ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
+        for(int i = 0; i<listeners.size();i++){
+            nBean.updateListenerRef(listeners.get(i), newName);
+        }
+    }
+    
+    /**
+    * Moves a propertyChangeListener from one bean to another, where the listerner
+    * reference matches the currentName.
+    */
+    private void moveListener(NamedBean oldBean, NamedBean newBean, String currentName) {
+        ArrayList<java.beans.PropertyChangeListener> listeners = oldBean.getPropertyChangeListeners(currentName);
+        for (java.beans.PropertyChangeListener l : listeners ) {
+            String listenerRef = oldBean.getListenerRef(l);
+            oldBean.removePropertyChangeListener(l);
+            newBean.addPropertyChangeListener(l, currentName, listenerRef);
+        }
     }
 
     // abstract methods to be extended by subclasses
