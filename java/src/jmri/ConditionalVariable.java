@@ -73,15 +73,19 @@ public class ConditionalVariable {
         _type = type;
         _name = name;
         _triggersActions = trigger;
-        int itemType = Conditional.TEST_TO_ITEM[_type];
-		switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
-				Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
-				if (sn == null) {
-					log.error("invalid sensor name= \""+_name+"\" in state variable");
-					return;
-				}
-                _namedBean = nbhm.getNamedBeanHandle(_name, sn);
+        try {
+            int itemType = Conditional.TEST_TO_ITEM[_type];
+            switch (itemType) {
+                case Conditional.ITEM_TYPE_SENSOR:
+                    Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
+                    if (sn == null) {
+                        log.error("invalid sensor name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, sn);
+            }
+        } catch (java.lang.NumberFormatException ex) {
+            //Can be Considered Normal where the logix is loaded prior to any other beans
         }
     }
 
@@ -121,6 +125,10 @@ public class ConditionalVariable {
         if (_namedBean!=null){
             return _namedBean.getName();
         }
+        /* As we have a trigger for something using the variable, then hopefully
+        all the managers have been loaded and we can get the bean, which prevented
+        the bean from being loaded in the first place */
+        setName(_name);
         return _name;
     }
 
@@ -129,13 +137,17 @@ public class ConditionalVariable {
         NamedBean bean = null;
         int itemType = Conditional.TEST_TO_ITEM[_type];
         
-        switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
-                bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
-                break;
-            /*case Conditional.ITEM_TYPE_TURNOUT:
-                bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
-                break;*/
+        try {
+            switch (itemType) {
+                case Conditional.ITEM_TYPE_SENSOR:
+                    bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
+                    break;
+                /*case Conditional.ITEM_TYPE_TURNOUT:
+                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
+                    break;*/
+            }
+        } catch (java.lang.NumberFormatException ex){
+            //Can be considered normal if the logixs are loaded prior to the sensors
         }
         //Once all refactored, we should probably register an error if the bean is returned null.
         if (bean!=null){
@@ -147,6 +159,16 @@ public class ConditionalVariable {
     
     public NamedBeanHandle<?> getNamedBean(){
         return _namedBean;
+    }
+    
+    public NamedBean getBean(){
+        if (_namedBean!=null){
+            return (NamedBean) _namedBean.getBean();
+        } 
+        setName(_name); //ReApply name as that will create namedBean, save replicating it here
+        if(_namedBean!=null)
+            return (NamedBean) _namedBean.getBean();
+        return null;
     }
 
     public String getDataString() {
@@ -236,7 +258,7 @@ public class ConditionalVariable {
 		switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
 				//Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(getName());
-                Sensor sn = (Sensor) _namedBean.getBean();
+                Sensor sn = (Sensor) getBean();
 				if (sn == null) {
 					log.error("invalid sensor name= \""+getName()+"\" in state variable");
 					return (false);

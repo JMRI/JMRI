@@ -53,22 +53,26 @@ public class DefaultConditionalAction implements ConditionalAction {
         _actionString = actionStr;
         
         NamedBean bean = null;
-        int itemType = Conditional.ACTION_TO_ITEM[_type];
-        switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
-				bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
-				if (bean == null) {
-					log.error("invalid sensor name= \""+_deviceName+"\" in conditional action");
-					return;
-				}
-                break;
-            case Conditional.ITEM_TYPE_TURNOUT:
-                bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
-                if (bean == null) {
-					log.error("invalid turnout name= \""+_deviceName+"\" in conditional action");
-					return;
-				}
-                break;
+        try {
+            int itemType = Conditional.ACTION_TO_ITEM[_type];
+            switch (itemType) {
+                case Conditional.ITEM_TYPE_SENSOR:
+                    bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
+                    if (bean == null) {
+                        log.error("invalid sensor name= \""+_deviceName+"\" in conditional action");
+                        return;
+                    }
+                    break;
+                case Conditional.ITEM_TYPE_TURNOUT:
+                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
+                    if (bean == null) {
+                        log.error("invalid turnout name= \""+_deviceName+"\" in conditional action");
+                        return;
+                    }
+                    break;
+            }
+        } catch (java.lang.NumberFormatException ex){
+            //Can be considered normal if the logixs are loaded prior to any other beans
         }
         if (bean!=null){
             _namedBean = nbhm.getNamedBeanHandle(_deviceName, bean);
@@ -102,6 +106,10 @@ public class DefaultConditionalAction implements ConditionalAction {
         if(_namedBean!=null) {
             return _namedBean.getName();
         }
+        /* As we have a trigger for something using the action, then hopefully
+        all the managers have been loaded and we can get the bean, which prevented
+        the bean from being loaded in the first place */
+        setDeviceName(_deviceName);
         return _deviceName;
     }
 
@@ -109,14 +117,17 @@ public class DefaultConditionalAction implements ConditionalAction {
         _deviceName = deviceName;
         NamedBean bean = null;
         int itemType = Conditional.ACTION_TO_ITEM[_type];
-        
-        switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
-                bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
-                break;
-            case Conditional.ITEM_TYPE_TURNOUT:
-                bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
-                break;
+        try {
+            switch (itemType) {
+                case Conditional.ITEM_TYPE_SENSOR:
+                    bean = InstanceManager.sensorManagerInstance().provideSensor(_deviceName);
+                    break;
+                case Conditional.ITEM_TYPE_TURNOUT:
+                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
+                    break;
+            }
+        } catch (java.lang.NumberFormatException ex){
+            //Can be considered normal if the logixs are loaded prior to the sensors
         }
         if (bean!=null){
             _namedBean = nbhm.getNamedBeanHandle(_deviceName, bean);
@@ -127,6 +138,16 @@ public class DefaultConditionalAction implements ConditionalAction {
     
     public NamedBeanHandle<?> getNamedBean(){
         return _namedBean;
+    }
+    
+    public NamedBean getBean(){
+        if (_namedBean!=null){
+            return (NamedBean) _namedBean.getBean();
+        } 
+        setDeviceName(_deviceName); //ReApply name as that will create namedBean, save replicating it here
+        if(_namedBean!=null)
+            return (NamedBean) _namedBean.getBean();
+        return null;
     }
 
 	/**
