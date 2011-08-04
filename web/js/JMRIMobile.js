@@ -28,6 +28,7 @@
 var $gPrevType = ""; //persistent variable to help refresh views only on change 
 var $gLastLogMsgTime =new Date().getTime();  //save last time (for logging elapsed time in debug messages)
 var $gValues = new Array();  //persistent variable to keep track of current values, to avoid reprocessing unchanged items
+//var $gXHRList;  //persistent variable to allow aborting of superseded connections
 
 //handle button press, send request for immediate change 
 var $sendChange = function($type, $name, $nextValue){
@@ -39,7 +40,13 @@ var $sendChange = function($type, $name, $nextValue){
 
 //send a command to the server, and setup callback to process the response (used for lists)
 var $sendXMLIOList = function($commandstr){
-	$.ajax({ 
+
+	//abort active connection
+//	if ($gXHRList) {
+//		$gXHRList.abort();
+//	}
+//	$gXHRList = $.ajax({ 
+	$.ajax({
 		type: 'POST',
 		url:  '/xmlio',
 		data: $commandstr,
