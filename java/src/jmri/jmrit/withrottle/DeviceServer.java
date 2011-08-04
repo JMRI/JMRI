@@ -258,6 +258,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             
                             if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()){
                                 pulseInterval = WiThrottleManager.withrottlePreferencesInstance().getEStopDelay();
+                                if (log.isDebugEnabled()) log.debug("Sent:*"+pulseInterval);
                                 out.println("*"+pulseInterval+newLine); //  Turn on heartbeat, if used
                             }
                             break;
