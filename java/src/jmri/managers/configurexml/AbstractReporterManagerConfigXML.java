@@ -109,6 +109,10 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         }
         return result;
     }
+    
+    public int loadOrder(){
+        return InstanceManager.reporterManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractReporterManagerConfigXML.class.getName());
 }

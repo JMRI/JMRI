@@ -289,7 +289,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
         return new ArrayList<String>(ts);
     }
-
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractProxyManager.class.getName());
 }

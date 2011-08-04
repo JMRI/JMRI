@@ -235,7 +235,10 @@ public class DefaultSignalGroupManagerXml
         else if (colour.equals("FLASHLUNAR")) return SignalHead.FLASHLUNAR;
         else log.warn("Unexpected appearance: "+colour);
         return SignalHead.DARK;
+    }
     
+    public int loadOrder(){
+        return InstanceManager.signalGroupManagerInstance().getXMLOrder();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalGroupManagerXml.class.getName());

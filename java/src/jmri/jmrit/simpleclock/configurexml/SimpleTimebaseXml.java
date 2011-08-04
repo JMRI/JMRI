@@ -173,6 +173,10 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
     public void load(Element element, Object o) {
         log.error("load(Element, Object) called unexpectedly");
     }
+    
+    public int loadOrder(){
+        return jmri.Manager.TIMEBASE;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTimebaseXml.class.getName());
 

@@ -20,7 +20,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 		TurnoutOperationManager.getInstance();		// force creation of an instance
 	}
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.TURNOUTS;
     }
     //protected int xmlorder = 20;
@@ -280,7 +280,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     public String getDefaultClosedSpeed(){
         return defaultClosedSpeed;
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManager.class.getName());
 }
 

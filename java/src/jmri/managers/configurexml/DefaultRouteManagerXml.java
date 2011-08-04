@@ -495,6 +495,10 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.ROUTES);
     }
+    
+    public int loadOrder(){
+        return InstanceManager.routeManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRouteManagerXml.class.getName());
 }

@@ -327,6 +327,10 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         }
         return result;
     }
+    
+    public int loadOrder(){
+        return InstanceManager.lightManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLightManagerConfigXML.class.getName());
 }

@@ -316,6 +316,10 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         }
         sml.initialise();
     }
+    
+    public int loadOrder(){
+        return InstanceManager.signalMastLogicManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
 }

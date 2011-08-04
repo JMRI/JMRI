@@ -47,7 +47,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     ShutDownTask audioShutDownTask;
 
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return jmri.Manager.AUDIO;
     }
     

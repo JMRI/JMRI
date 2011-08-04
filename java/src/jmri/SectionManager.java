@@ -45,7 +45,7 @@ public class SectionManager extends AbstractManager
         super();
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.SECTIONS;
     }
 

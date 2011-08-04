@@ -52,6 +52,13 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public boolean loadDeferred() {
         return false;
     }
+    
+    /**
+    * Used for determining which order to load items from XML files in.
+    */
+    public int loadOrder(){
+        return 50;
+    }
      
     private ConfigXmlManager c;
     public void setConfigXmlManager(ConfigXmlManager c) { this.c = c; }

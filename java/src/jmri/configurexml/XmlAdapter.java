@@ -52,6 +52,8 @@ public interface XmlAdapter {
      */
     public Element store(Object o);
     
+    public int loadOrder();
+    
     /**
      * Invoke common handling of errors that
      * happen during the "load" process.

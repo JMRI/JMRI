@@ -29,7 +29,7 @@ public class DefaultLogixManager extends AbstractManager
         super();
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.LOGIXS;
     }
 

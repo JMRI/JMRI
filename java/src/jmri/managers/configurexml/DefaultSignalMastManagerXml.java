@@ -73,6 +73,10 @@ public class DefaultSignalMastManagerXml
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
+    
+    public int loadOrder(){
+        return InstanceManager.signalMastManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastManagerXml.class.getName());
 }

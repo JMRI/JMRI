@@ -360,6 +360,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.CONDITIONALS);
     }
+    
+    public int loadOrder(){
+        return InstanceManager.conditionalManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditionalManagerXml.class.getName());
 }

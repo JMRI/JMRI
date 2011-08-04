@@ -337,7 +337,10 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         
         BeanSetting bs = new BeanSetting(t, setting);
         path.addSetting(bs);
-
+    }
+    
+    public int loadOrder(){
+        return InstanceManager.blockManagerInstance().getXMLOrder();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManagerXml.class.getName());

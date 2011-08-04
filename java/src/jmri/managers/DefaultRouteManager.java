@@ -22,7 +22,7 @@ public class DefaultRouteManager extends AbstractManager
         super();
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.ROUTES;
     }
 

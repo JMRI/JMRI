@@ -39,6 +39,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
     }
     
+    public int getXMLOrder(){
+        return Manager.SIGNALMASTLOGICS;
+    }
+    
     private static jmri.implementation.SignalSpeedMap _speedMap;
     
     public final static jmri.implementation.SignalSpeedMap getSpeedMap() {

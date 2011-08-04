@@ -218,6 +218,10 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setSize(width,height);
         return result;
     }
+    
+    public int loadOrder(){
+        return jmri.Manager.PANELFILES;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditorXml.class.getName());
 

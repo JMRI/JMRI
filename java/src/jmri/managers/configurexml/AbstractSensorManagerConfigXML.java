@@ -195,6 +195,10 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         }
         return result;
     }
+    
+    public int loadOrder(){
+        return InstanceManager.sensorManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManagerConfigXML.class.getName());
 }

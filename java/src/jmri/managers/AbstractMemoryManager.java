@@ -17,7 +17,7 @@ import java.text.DecimalFormat;
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
 
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.MEMORIES;
     }
     

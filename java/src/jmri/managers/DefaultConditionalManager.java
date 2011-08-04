@@ -36,7 +36,7 @@ public class DefaultConditionalManager extends AbstractManager
         super();
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return jmri.Manager.CONDITIONALS;
     }
 

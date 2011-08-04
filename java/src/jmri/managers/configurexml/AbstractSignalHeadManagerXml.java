@@ -149,6 +149,10 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.SIGNALHEADS);
     }
+    
+    public int loadOrder(){
+        return InstanceManager.signalHeadManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSignalHeadManagerXml.class.getName());
 

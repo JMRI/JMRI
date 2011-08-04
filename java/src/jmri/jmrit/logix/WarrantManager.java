@@ -34,7 +34,7 @@ public class WarrantManager extends AbstractManager
         super();
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return jmri.Manager.WARRANTS;
     }
 

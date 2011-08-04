@@ -219,6 +219,10 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         return result;
     }
+    
+    public int loadOrder(){
+        return jmri.Manager.PANELFILES;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanelEditorXml.class.getName());
 

@@ -444,6 +444,10 @@ public class OBlockManagerXml // extends XmlFile
         }
         return path;
     }
+    
+    public int loadOrder(){
+        return InstanceManager.oBlockManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlockManagerXml.class.getName());
 }

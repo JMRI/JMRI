@@ -122,6 +122,10 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
             loadCommon(m, memoryList.get(i));
         }
     }
+    
+    public int loadOrder(){
+        return InstanceManager.memoryManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMemoryManagerConfigXML.class.getName());
 }

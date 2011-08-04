@@ -34,7 +34,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         load();
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return 65400;
     }
 

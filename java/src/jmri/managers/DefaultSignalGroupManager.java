@@ -33,7 +33,7 @@ public class DefaultSignalGroupManager extends AbstractManager
         //load();
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.SIGNALGROUPS;
     }
 

@@ -468,6 +468,10 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         InstanceManager.configureManagerInstance().registerUser(panel);
         return result;
     }
+    
+    public int loadOrder(){
+        return jmri.Manager.PANELFILES;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditorXml.class.getName());
 

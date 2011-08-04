@@ -81,6 +81,8 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public String getDefaultThrownSpeed() { return null;}
 
     public String getDefaultClosedSpeed() {return null; }
+    
+    public int getXMLOrder() { return -1; }
 
 }
 

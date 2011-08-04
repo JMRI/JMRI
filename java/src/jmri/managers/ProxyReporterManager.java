@@ -25,6 +25,10 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     protected AbstractManager makeInternalManager() {
         return new InternalReporterManager();
     }
+    
+    public int getXMLOrder(){
+        return jmri.Manager.REPORTERS;
+    }
 
     /**
      * Locate via user name, then system name if needed.

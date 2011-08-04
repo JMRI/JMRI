@@ -242,7 +242,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

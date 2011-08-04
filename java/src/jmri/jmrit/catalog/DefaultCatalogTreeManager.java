@@ -26,7 +26,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
         log.debug("not registering");
     }
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return 65400;
     }
 

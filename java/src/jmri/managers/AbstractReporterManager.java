@@ -14,7 +14,7 @@ import jmri.managers.AbstractManager;
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
 
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.REPORTERS;
     }
     

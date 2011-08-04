@@ -43,7 +43,7 @@ abstract public class AbstractManager
         }
     }
     
-    abstract protected int getXMLOrder();
+    abstract public int getXMLOrder();
 
     
     public String makeSystemName(String s) {

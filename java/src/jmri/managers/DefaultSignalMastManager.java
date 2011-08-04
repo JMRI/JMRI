@@ -22,7 +22,7 @@ public class DefaultSignalMastManager extends AbstractManager
         super();
     }
 
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.SIGNALMASTS;
     }
     

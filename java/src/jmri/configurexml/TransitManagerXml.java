@@ -207,6 +207,10 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
 			}	
 	    }
 	}
+    
+    public int loadOrder(){
+        return InstanceManager.transitManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitManagerXml.class.getName());
 }

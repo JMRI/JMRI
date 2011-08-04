@@ -17,7 +17,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         super(Manager.SENSORS);
     }*/
     
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.SENSORS;
     }
     
@@ -196,7 +196,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
                 sen.setSensorDebounceGoingInActiveTimer(timer);
         }
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManager.class.getName());
 }
 

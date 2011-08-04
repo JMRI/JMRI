@@ -133,6 +133,10 @@ public class ProxySensorManager extends AbstractProxyManager
             ((SensorManager)getMgr(i)).setDefaultSensorDebounceGoingInActive(timer);
         }
     }
+    
+    public int getXMLOrder(){
+        return jmri.Manager.SENSORS;
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxySensorManager.class.getName());

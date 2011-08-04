@@ -326,6 +326,10 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
     public void load(Element element, Object o) {
         log.error("load(Element, Object) called unexpectedly");
     }
+    
+    public int loadOrder(){
+        return jmri.Manager.BLOCKBOSS;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockBossLogicXml.class.getName());
 

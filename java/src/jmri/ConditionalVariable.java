@@ -137,7 +137,7 @@ public class ConditionalVariable {
         NamedBean bean = null;
         int itemType = Conditional.TEST_TO_ITEM[_type];
         
-        try {
+        //try {
             switch (itemType) {
                 case Conditional.ITEM_TYPE_SENSOR:
                     bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
@@ -146,9 +146,9 @@ public class ConditionalVariable {
                     bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
                     break;*/
             }
-        } catch (java.lang.NumberFormatException ex){
+        /*} catch (java.lang.NumberFormatException ex){
             //Can be considered normal if the logixs are loaded prior to the sensors
-        }
+        }*/
         //Once all refactored, we should probably register an error if the bean is returned null.
         if (bean!=null){
             _namedBean = nbhm.getNamedBeanHandle(_name, bean);

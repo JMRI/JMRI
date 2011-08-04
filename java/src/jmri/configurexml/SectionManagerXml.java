@@ -224,6 +224,10 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
 			}	
 	    }
 	}
+    
+    public int loadOrder(){
+        return InstanceManager.sectionManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionManagerXml.class.getName());
 }

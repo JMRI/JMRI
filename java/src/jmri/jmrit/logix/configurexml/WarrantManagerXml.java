@@ -310,6 +310,10 @@ public class WarrantManagerXml //extends XmlFile
         return new ThrottleSetting(time, command, value, block);
     }
     
+    public int loadOrder(){
+        return InstanceManager.warrantManagerInstance().getXMLOrder();
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WarrantManagerXml.class.getName());
 }
 

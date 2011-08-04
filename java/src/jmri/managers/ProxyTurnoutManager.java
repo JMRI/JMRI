@@ -243,6 +243,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     public String getDefaultClosedSpeed(){
         return ((TurnoutManager)getMgr(0)).getDefaultClosedSpeed();
     }
+    
+    public int getXMLOrder(){
+        return jmri.Manager.TURNOUTS;
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyTurnoutManager.class.getName());

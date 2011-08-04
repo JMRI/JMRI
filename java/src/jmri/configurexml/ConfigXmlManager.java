@@ -462,7 +462,99 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public boolean load(File fi, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
-        try {
+        /* We will put all the elements into a load list, along with the load order
+        As XML files prior to 2.13.1 had no order to the store, beans would be stored/loaded
+        before beans that they were dependant upon had been stored/loaded
+        */
+        Map<Element, Integer> loadlist = Collections.synchronizedMap(new LinkedHashMap<Element, Integer>());
+        
+        try{
+            root = super.rootFromFile(fi);
+            // get the objects to load
+            List<Element> items = root.getChildren();
+            for (int i = 0; i<items.size(); i++) {
+                //Put things into an ordered list
+                Element item = items.get(i);
+                if (item.getAttribute("class") == null) {
+                    // this is an element that we're not meant to read
+                    continue;
+                }
+                String adapterName = item.getAttribute("class").getValue();
+                log.debug("attempt to get adapter "+adapterName);
+                XmlAdapter adapter = null;
+                
+                adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                int order = adapter.loadOrder();
+                log.debug("add element "+ item + " to load list with order id of " + order);
+                loadlist.put(item, order);
+            }
+            
+            ArrayList<Map.Entry<Element, Integer>> l = new ArrayList<Map.Entry<Element, Integer>>(loadlist.entrySet());
+            Collections.sort(l, new Comparator<Map.Entry<Element, Integer>>(){
+
+             public int compare(Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) {
+                return o1.getValue().compareTo(o2.getValue());
+            }});
+            for (int i=0; i<l.size(); i++) {
+                Element item = l.get(i).getKey();
+                String adapterName = item.getAttribute("class").getValue();
+                log.debug("load via "+adapterName);
+                XmlAdapter adapter = null;
+                try {
+                    adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+
+                    // get version info
+                    // loadVersion(root, adapter);
+                    
+                    // and do it
+                    if (adapter.loadDeferred() && registerDeferred) {
+                        // register in the list for deferred load
+                        loadDeferredList.add(item);
+                        log.debug("deferred load registered for " + adapterName);
+                    } else {
+                        boolean loadStatus = adapter.load(item);
+                        log.debug("load status for "+adapterName+" is "+loadStatus);
+                    
+                        // if any adaptor load fails, then the entire load has failed
+                        if (!loadStatus)
+                            result = false;
+                    }
+                } catch (Exception e) {
+                    creationErrorEncountered (adapter, "load("+fi.getName()+")",Level.ERROR,
+                                              "Unexpected error (Exception)",null,null,e);
+                   
+                    result = false;  // keep going, but return false to signal problem
+                } catch (Throwable et) {
+                    creationErrorEncountered (adapter, "in load("+fi.getName()+")", Level.ERROR,
+                                              "Unexpected error (Throwable)",null,null,et);
+
+                    result = false;  // keep going, but return false to signal problem
+                }
+            }
+
+            
+            
+        } catch (java.io.FileNotFoundException e1) {
+            // this returns false to indicate un-success, but not enough
+            // of an error to require a message
+            creationErrorEncountered (null, "opening file "+fi.getName(), Level.ERROR,
+                                      "File not found", null,null,e1);
+            result = false;
+        } catch (org.jdom.JDOMException e) {
+            creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
+                                      "Parse error", null,null,e);
+            result = false;
+        } catch (java.lang.Exception e) {
+            creationErrorEncountered (null, "loading from file "+fi.getName(), Level.ERROR,
+                                      "Unknown error (Exception)", null,null,e);
+            result = false;
+        } finally {
+            // no matter what, close error reporting
+            handler.done();
+        }
+       
+        
+        /*try {
             root = super.rootFromFile(fi);
             // get the objects to load
             List<Element> items = root.getChildren();
@@ -527,7 +619,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } finally {
             // no matter what, close error reporting
             handler.done();
-        }
+        }*/
 
         // loading complete, as far as it got, make history entry
         FileHistory r = InstanceManager.getDefault(FileHistory.class);

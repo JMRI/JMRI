@@ -23,6 +23,10 @@ public class ProxyLightManager extends AbstractProxyManager
     public ProxyLightManager() {
     	super();
     }
+    
+    public int getXMLOrder(){
+        return jmri.Manager.LIGHTS;
+    }
 
     protected AbstractManager makeInternalManager() {
         return new InternalLightManager();

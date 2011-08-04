@@ -185,6 +185,10 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LOGIXS);
     }
+    
+    public int loadOrder(){
+        return InstanceManager.logixManagerInstance().getXMLOrder();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogixManagerXml.class.getName());
 }

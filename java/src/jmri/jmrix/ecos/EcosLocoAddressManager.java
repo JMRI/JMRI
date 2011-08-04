@@ -43,7 +43,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     public String getSystemPrefix() { return prefix; }
     public char typeLetter() { return 'Z'; }
 
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return 65400;
     }
     

@@ -39,7 +39,7 @@ public class TransitManager extends AbstractManager
         super();
     }
 
-    protected int getXMLOrder(){
+    public int getXMLOrder(){
         return Manager.TRANSITS;
     }
     

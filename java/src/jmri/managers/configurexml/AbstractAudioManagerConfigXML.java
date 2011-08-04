@@ -477,7 +477,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 am.getActiveAudioFactory().setDistanceAttenuated(a.getValue().equals("yes"));
             }
         }
-        
+    }
+    
+    public int loadOrder(){
+        return InstanceManager.audioManagerInstance().getXMLOrder();
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioManagerConfigXML.class.getName());
