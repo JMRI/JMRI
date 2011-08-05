@@ -65,8 +65,8 @@ on a piece of track by watching two sensors, reversing the locomotive
 when they change state.
 </ul></p>
 
-<p>These can be started from the "Development" Menu of the JmriDemo
-application.  Note that they may not do anything useful on your
+<p>These can be started from the "Development" Menu of the JMRI
+applications.  Note that they may not do anything useful on your
 railroad, as they have block and locomotive numbers hard-coded.
 They're meant to be examples for your own programming, not useful
 tools.
