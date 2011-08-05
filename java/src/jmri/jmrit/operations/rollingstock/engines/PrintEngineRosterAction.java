@@ -27,8 +27,8 @@ import java.util.ResourceBundle;
  */
 public class PrintEngineRosterAction  extends AbstractAction {
 	
+	private static final int numberCharPerLine = 90;
 	final int ownerMaxLen = 4;	// Only show the first 4 characters of the owner's name
-	final int locMaxLen = 33;	// limit the number of characters for location and track
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
@@ -65,93 +65,57 @@ public class PrintEngineRosterAction  extends AbstractAction {
         
         // Loop through the Roster, printing as needed
         String newLine = "\n";
-        String location;
+        String number;       
         String road;
         String model;
         String type;
         String length;
-        String owner;
+        String owner = "";
+        String consist = "";
         String built = "";
         String value = "";
+        String location;
  
         List<String> engines = panel.getSortByList();
         try {
+        	// header
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
 					+ "\t" + rb.getString("Model") + "\t     "
 					+ rb.getString("Type") + "      " + rb.getString("Length")
-					+ " " + rb.getString("Owner") + " "
-					+ (panel.sortByValue.isSelected()?rb.getString("Value")+"        ":rb.getString("Built")+ " ")
-					+ rb.getString("Location")
+					+ " " + (panel.sortByConsist.isSelected()?rb.getString("Consist")+"     ":rb.getString("Owner"))
+					+ " " + (panel.sortByValue.isSelected()?rb.getString("Value")+"       ":rb.getString("Built"))
+					+ " " + rb.getString("Location")
 					+ newLine;
-        	writer.write(s, 0, s.length());
+        	writer.write(s);
         	for (int i=0; i<engines.size(); i++){
         		Engine engine = manager.getById(engines.get(i));
+        		
+        		// loco number
+        		number = padAttribute(engine.getNumber().trim(), 7);     		
+        		road = padAttribute(engine.getRoad().trim(), 7);     		
+        		model = padAttribute(engine.getModel().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);     		
+        		type = padAttribute(engine.getType().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);       		
+      			length = padAttribute(engine.getLength().trim(), Control.MAX_LEN_STRING_LENGTH_NAME); 
+        				
+    			if (panel.sortByConsist.isSelected())
+       				consist = padAttribute(engine.getConsistName().trim(), Control.MAX_LEN_STRING_ATTRIBUTE); 
+    			else
+    				owner = padAttribute(engine.getOwner().trim(), ownerMaxLen);
+         		
+    			if (panel.sortByValue.isSelected())
+    				value = padAttribute(engine.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
+    			else
+    				built = padAttribute(engine.getBuilt().trim(), Control.MAX_LEN_STRING_BUILT_NAME);
+    			
         		location = "";
         		if (!engine.getLocationName().equals("")){
         			location = engine.getLocationName() + " - " + engine.getTrackName();
-           			if (location.length() > locMaxLen)
-        				location = location.substring(0, locMaxLen);
         		}
-         		
-           		road = engine.getRoad().trim();
-        		if (road.length() > 7)
-        			road = road.substring(0, 7);
-        		StringBuffer buf = new StringBuffer(road);
-        		for (int j=road.length(); j<7; j++)
-        			buf.append(" ");
-        		road = buf.toString();
-         		
-         		model = engine.getModel();
-         		if (model.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-         			model = model.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
-         		buf = new StringBuffer(model);
-         		for (int j=model.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)		
-         			buf.append(" ");
-         		model = buf.toString();
-         		
-        		type = engine.getType().trim();
-        		if (type.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-        			type = type.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
-           		buf = new StringBuffer(type);
-        		for (int j=type.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-        			buf.append(" ");
-        		type = buf.toString();
-         		
-      			length = engine.getLength().trim();
-    			buf = new StringBuffer(length);
-    			for (int j=length.length(); j<Control.MAX_LEN_STRING_LENGTH_NAME+1; j++)
-    				buf.append(" ");
-    			length = buf.toString();
- 		
-       			owner = engine.getOwner().trim();
-    			if (owner.length() > ownerMaxLen)
-    				owner = owner.substring(0, ownerMaxLen);
-    			buf = new StringBuffer(owner);
-    			for (int j=owner.length(); j<ownerMaxLen+1; j++)
-       				buf.append(" ");
-    			owner = buf.toString();
-         		
-    			if (panel.sortByValue.isSelected()){
-    				value = engine.getValue().trim();
-    				if (value.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-    					value = built.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
-    				buf = new StringBuffer(value);
-    				for (int j=value.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-    					buf.append(" ");
-    				value = buf.toString();
-    			} else {
-    				built = engine.getBuilt().trim();
-    				if (built.length() > 4)
-    					built = built.substring(0, 4);
-    				buf = new StringBuffer(built);
-    				for (int j=built.length(); j<Control.MAX_LEN_STRING_BUILT_NAME+1; j++)
-    					buf.append(" ");
-    				built = buf.toString();
-    			}
-         		
-				s = engine.getNumber() + "\t" + road + " " + model + type
-						+ length + owner + value + built + location + newLine;			
-        		writer.write(s, 0, s.length());
+         		          		
+				s = number + road + model + type + length + owner + consist+ value + built + location;			
+    			if (s.length() > numberCharPerLine)
+    				s = s.substring(0, numberCharPerLine);
+        		writer.write(s+newLine);
         	}
 
         	// and force completion of the printing
@@ -159,6 +123,15 @@ public class PrintEngineRosterAction  extends AbstractAction {
         } catch (IOException we) {
         	log.error("Error printing ConsistRosterEntry: " + e);
         }
+    }
+    
+    private String padAttribute(String attribute, int length){
+			if (attribute.length() > length)
+				attribute = attribute.substring(0, length);
+			StringBuffer buf = new StringBuffer(attribute);
+			for (int i=attribute.length(); i<length+1; i++)
+   				buf.append(" ");
+			return buf.toString(); 	
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintEngineRosterAction.class.getName());
