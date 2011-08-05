@@ -35,6 +35,15 @@ public class SensorTableDataModel extends BeanTableDataModel {
     public SensorTableDataModel(SensorManager manager) {
         super();
         getManager().removePropertyChangeListener(this);
+        if (sysNameList != null) {
+            for (int i = 0; i< sysNameList.size(); i++) {
+                // if object has been deleted, it's not here; ignore it
+                NamedBean b = getBySystemName(sysNameList.get(i));
+                if (b!=null){
+                    b.removePropertyChangeListener(this);
+                }
+            }
+        }
         senManager = manager;
         getManager().addPropertyChangeListener(this);
         updateNameList();
@@ -52,10 +61,19 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
     protected void setManager(SensorManager manager) { 
         getManager().removePropertyChangeListener(this);
+        if (sysNameList != null) {
+            for (int i = 0; i< sysNameList.size(); i++) {
+                // if object has been deleted, it's not here; ignore it
+                NamedBean b = getBySystemName(sysNameList.get(i));
+                if (b!=null){
+                    b.removePropertyChangeListener(this);
+                }
+            }
+        }
         senManager = manager;
         getManager().addPropertyChangeListener(this);
         updateNameList();
-        }
+    }
     protected Manager getManager() { 
         if (senManager==null)
             senManager=InstanceManager.sensorManagerInstance();
