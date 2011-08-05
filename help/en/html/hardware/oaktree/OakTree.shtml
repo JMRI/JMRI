@@ -52,7 +52,7 @@
 	<dt class=left>Configuration</dt>
 	<dd class=top>
 	    <ol>
-		<li>Start the JMRIdemo program
+		<li>Start the program (usually PanelPro)
 		<li>From the edit menu, select preferences and configure:
 	        <ul>
 		    <li>Protocol as "Oak Tree Systems"
