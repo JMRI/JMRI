@@ -7,6 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitUtil;
 /**
  * Tests for the Block class
  * @author	Bob Jacobsen  Copyright (C) 2006
@@ -257,10 +258,17 @@ public class BlockTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { 
+    protected void setUp() throws Exception { 
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.setUp();
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    
+    protected void tearDown() throws Exception { 
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

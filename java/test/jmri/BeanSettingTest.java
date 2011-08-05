@@ -7,6 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitUtil;
 /**
  * Tests for the BeanSetting class
  * @author	Bob Jacobsen  Copyright (C) 2006
@@ -15,14 +16,14 @@ import junit.framework.TestSuite;
 public class BeanSettingTest extends TestCase {
 
 	public void testCreate() {
-	    new BeanSetting(null, "", 0);
+	    new BeanSetting(null, 0);
 	}
 
 	public void testCheckSensor() throws JmriException {
 	    SensorManager sm = new jmri.managers.InternalSensorManager();
 	    Sensor s = sm.provideSensor("IS12");
 	    
-	    BeanSetting b = new BeanSetting(s, "IS12", Sensor.ACTIVE);
+	    BeanSetting b = new BeanSetting(s, Sensor.ACTIVE);
 	    Assert.assertTrue("Initial check of sensor", !b.check());
 	    
 	    s.setState(Sensor.ACTIVE);
@@ -33,7 +34,7 @@ public class BeanSettingTest extends TestCase {
 	    TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
 	    Turnout s = sm.provideTurnout("IT12");
 	    
-	    BeanSetting b = new BeanSetting(s, "IT12", Turnout.THROWN);
+	    BeanSetting b = new BeanSetting(s, Turnout.THROWN);
 	    Assert.assertTrue("Initial check of turnout", !b.check());
 	    
 	    s.setState(Turnout.THROWN);
@@ -58,8 +59,16 @@ public class BeanSettingTest extends TestCase {
 		return suite;
 	}
 
-    protected void setUp() {
+    protected void setUp() throws Exception { 
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.setUp();
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        //InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
+    
+    protected void tearDown() throws Exception  { 
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 }
