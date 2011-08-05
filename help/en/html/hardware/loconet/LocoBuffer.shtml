@@ -88,7 +88,7 @@ Start DecoderPro or other program and configure it for:
 
 	  <p>Some Windows versions, in particular Win2000, cannot handle
 	  the LocoBuffer's control leads properly.  You'll see this as
-	  DecoderPro or JmriDemo being unable to communicate with the
+	  DecoderPro or PanelPro being unable to communicate with the
 	  command station, even though you can see LocoNet traffic with the
 	  LocoNet monitor.  To fix this, try opening the preferences and
 	  select "no flow control" option, click save, then quit and
