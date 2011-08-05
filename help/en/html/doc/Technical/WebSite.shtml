@@ -56,7 +56,7 @@ We provide these separately:
 <li>Run-time user information is made available by putting the help system
 on the web site.
 <li>Other user information is stored in Subversion as the
-  <tt>trunk/jmri-website</a> directory and
+  <tt>trunk/jmri-website</tt> directory and
 placed directly on the web site.
 <li>Reference information is put on the web site from their own Subversion modules,
 or created by automated Ant scripts during release builds.
