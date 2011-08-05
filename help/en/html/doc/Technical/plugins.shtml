@@ -35,8 +35,8 @@
 
 The original goal of the JMRI project was to produce a library upon which people
 could use to build their own applications.  Although some people do that, more
-use the existing applications such as DecoderPro, PanelPro and
-JmriDemo.  We want to make this more flexible by providing a way to extend
+use the existing applications such as DecoderPro and PanelPro. 
+We want to make this more flexible by providing a way to extend
 those programs without having to rebuild them from scratch.  This note describes
 mechanisms for that which will is included in JMRI 2.4 and later.
 

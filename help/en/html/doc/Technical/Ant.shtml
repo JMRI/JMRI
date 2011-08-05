@@ -46,7 +46,7 @@ where Ant will run, and load it with source, tests and resources.
 It will also create and populate directories for xml, libraries, etc in the 
 project directory.
 <LI>Change to the newly created <tt>jmri</tt> subdirectory. To compile, type <tt>ant debug</tt>. 
-<LI>To run the program, type <tt>ant decoderpro</tt> or <tt>ant jmridemo</tt>, and sit back to watch it go.
+<LI>To run the program, type <tt>ant decoderpro</tt> or <tt>ant panelpro</tt>, and sit back to watch it go.
 <LI>To run the test suite, type <tt>ant alltest</tt>.
 <LI>To build a jmri.jar file, type <tt>ant dist</tt>.
 Note that you don't have to create the <tt>jmri.jar</tt> file to run the program.
