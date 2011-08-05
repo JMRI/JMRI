@@ -22,7 +22,7 @@ public class BeanSettingTest extends TestCase {
 	    SensorManager sm = new jmri.managers.InternalSensorManager();
 	    Sensor s = sm.provideSensor("IS12");
 	    
-	    BeanSetting b = new BeanSetting(s, Sensor.ACTIVE);
+	    BeanSetting b = new BeanSetting(s, "IS12", Sensor.ACTIVE);
 	    Assert.assertTrue("Initial check of sensor", !b.check());
 	    
 	    s.setState(Sensor.ACTIVE);
@@ -33,7 +33,7 @@ public class BeanSettingTest extends TestCase {
 	    TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
 	    Turnout s = sm.provideTurnout("IT12");
 	    
-	    BeanSetting b = new BeanSetting(s, Turnout.THROWN);
+	    BeanSetting b = new BeanSetting(s, "IT12", Turnout.THROWN);
 	    Assert.assertTrue("Initial check of turnout", !b.check());
 	    
 	    s.setState(Turnout.THROWN);
@@ -58,4 +58,7 @@ public class BeanSettingTest extends TestCase {
 		return suite;
 	}
 
+    protected void setUp() { 
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
 }

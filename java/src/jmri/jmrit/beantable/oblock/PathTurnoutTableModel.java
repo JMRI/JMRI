@@ -108,7 +108,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         }
         switch(columnIndex) {
             case TURNOUT_NAME_COL:
-                return bs.getBean().getDisplayName();
+                return bs.getBeanName();
             case SETTINGCOLUMN:
                 switch (bs.getSetting()) {
                     case Turnout.CLOSED:
@@ -146,7 +146,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                         } else if (tempRow[SETTINGCOLUMN].equals(inconsistent)) {
                             s = Turnout.INCONSISTENT; 
                         }
-                        BeanSetting bs = new BeanSetting(t,s);
+                        BeanSetting bs = new BeanSetting(t, name, s);
                         _path.addSetting(bs);
                         fireTableRowsUpdated(row,row);
                     } else {
@@ -171,7 +171,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 if (t!=null) {
                      if (!t.equals(bs.getBean())) {
                          _path.removeSetting(bs);
-                         _path.addSetting(new BeanSetting(t, bs.getSetting()));
+                         _path.addSetting(new BeanSetting(t, (String)value, bs.getSetting()));
                      }
                 } else {
                     JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
@@ -185,16 +185,16 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 String setting = (String)value;
                 if (setting.equals(closed)) {
                     //bs.setSetting(Turnout.CLOSED);  - This was the form before BeanSetting was returned to Immutable
-                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.CLOSED));
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.CLOSED));
                 } else if (setting.equals(thrown)) {
                     //bs.setSetting(Turnout.THROWN); 
-                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.THROWN));
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.THROWN));
                 } else if (setting.equals(unknown)) {
                     //bs.setSetting(Turnout.UNKNOWN);
-                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.UNKNOWN));
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.UNKNOWN));
                 } else if (setting.equals(inconsistent)) {
                     //bs.setSetting(Turnout.INCONSISTENT);
-                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), Turnout.INCONSISTENT));
+                    _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.INCONSISTENT));
                 }
                 fireTableRowsUpdated(row,row);
                 break;

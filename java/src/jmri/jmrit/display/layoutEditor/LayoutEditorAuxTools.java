@@ -627,9 +627,9 @@ public class LayoutEditorAuxTools
 					if (lc.getConnectedType()==LayoutEditor.TURNOUT_B) {
 						// Track Segment connected to continuing track of turnout
 						if (ltx.getContinuingSense()==Turnout.CLOSED) 
-							bs = new BeanSetting(ltx.getTurnout(),Turnout.CLOSED);
+							bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.CLOSED);
 						else
-							bs = new BeanSetting(ltx.getTurnout(),Turnout.THROWN);
+							bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(),Turnout.THROWN);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -641,9 +641,9 @@ public class LayoutEditorAuxTools
 					else if (lc.getConnectedType()==LayoutEditor.TURNOUT_C) {
 						// Track Segment connected to diverging track of turnout
 						if (ltx.getContinuingSense()==Turnout.CLOSED) 
-							bs = new BeanSetting(ltx.getTurnout(),Turnout.THROWN);
+							bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName() ,Turnout.THROWN);
 						else
-							bs = new BeanSetting(ltx.getTurnout(),Turnout.CLOSED);
+							bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -664,7 +664,7 @@ public class LayoutEditorAuxTools
 							( (ltz.getTurnoutType()==LayoutTurnout.LH_XOVER) && 
 							( (lc.getConnectedType()==LayoutEditor.TURNOUT_A) ||
 							(lc.getConnectedType()==LayoutEditor.TURNOUT_C)	) ) ) {
-						bs = new BeanSetting(ltz.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(ltz.getTurnout(), ltz.getTurnoutName(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -681,19 +681,19 @@ public class LayoutEditorAuxTools
 				if ( (lt!=null) && (lt.getTurnout()!=null) ) {
 					int type = lc.getXoverBoundaryType();
 					if (type==LayoutConnectivity.XOVER_BOUNDARY_AB) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
 						curConnection = lt.getConnectA();
 					}
 					else if (type==LayoutConnectivity.XOVER_BOUNDARY_CD) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(),lt.getTurnoutName(),Turnout.CLOSED);
 						curConnection = lt.getConnectC();
 					}
 					else if (type==LayoutConnectivity.XOVER_BOUNDARY_AC) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+						bs = new BeanSetting(lt.getTurnout(),lt.getTurnoutName(),Turnout.THROWN);
 						curConnection = lt.getConnectA();
 					}
 					else if (type==LayoutConnectivity.XOVER_BOUNDARY_BD) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+						bs = new BeanSetting(lt.getTurnout(),lt.getTurnoutName(),Turnout.THROWN);
 						curConnection = lt.getConnectB();
 					}
 					typeCurConnection = LayoutEditor.TRACK;
@@ -712,19 +712,19 @@ public class LayoutEditorAuxTools
 			if ( (lt!=null) && (lt.getTurnout()!=null) ) {
 				int type = lc.getXoverBoundaryType();
 				if (type==LayoutConnectivity.XOVER_BOUNDARY_AB) {
-					bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+					bs = new BeanSetting(lt.getTurnout(),lt.getTurnoutName(),Turnout.CLOSED);
 					curConnection = lt.getConnectB();
 				}
 				else if (type==LayoutConnectivity.XOVER_BOUNDARY_CD) {
-					bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+					bs = new BeanSetting(lt.getTurnout(),lt.getTurnoutName(),Turnout.CLOSED);
 					curConnection = lt.getConnectD();
 				}
 				else if (type==LayoutConnectivity.XOVER_BOUNDARY_AC) {
-					bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+					bs = new BeanSetting(lt.getTurnout(),lt.getTurnoutName(),Turnout.THROWN);
 					curConnection = lt.getConnectC();
 				}
 				else if (type==LayoutConnectivity.XOVER_BOUNDARY_BD) {
-					bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+					bs = new BeanSetting(lt.getTurnout(),lt.getTurnoutName(),Turnout.THROWN);
 					curConnection = lt.getConnectD();
 				}
 				typeCurConnection = LayoutEditor.TRACK;
@@ -759,7 +759,7 @@ public class LayoutEditorAuxTools
 						}
 						else {
 							// entering turnout at continuing track
-							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),((LayoutTurnout)curConnection).getTurnoutName(),Turnout.CLOSED);
 							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else {
@@ -790,9 +790,9 @@ public class LayoutEditorAuxTools
 					else if (typeCurConnection==LayoutEditor.TURNOUT_B) {
 						// continuing track of turnout
 						if (((LayoutTurnout)curConnection).getContinuingSense()==Turnout.CLOSED) 
-							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),((LayoutTurnout)curConnection).getTurnoutName(), Turnout.CLOSED);
 						else
-							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),((LayoutTurnout)curConnection).getTurnoutName(), Turnout.THROWN);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -806,9 +806,9 @@ public class LayoutEditorAuxTools
 					else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
 						// diverging track of turnout
 						if (((LayoutTurnout)curConnection).getContinuingSense()==Turnout.CLOSED) 
-							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(), ((LayoutTurnout)curConnection).getTurnoutName(), Turnout.THROWN);
 						else
-							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(), ((LayoutTurnout)curConnection).getTurnoutName(), Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -849,19 +849,19 @@ public class LayoutEditorAuxTools
 				if ( (lt!=null) && (lt.getTurnout()!=null) ) {
 					int type = lc.getXoverBoundaryType();
 					if (type==LayoutConnectivity.XOVER_BOUNDARY_AB) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
 						curConnection = lt.getConnectB();
 					}
 					else if (type==LayoutConnectivity.XOVER_BOUNDARY_CD) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(),Turnout.CLOSED);
 						curConnection = lt.getConnectD();
 					}
 					else if (type==LayoutConnectivity.XOVER_BOUNDARY_AC) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(),Turnout.THROWN);
 						curConnection = lt.getConnectC();
 					}
 					else if (type==LayoutConnectivity.XOVER_BOUNDARY_BD) {
-						bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(),Turnout.THROWN);
 						curConnection = lt.getConnectD();
 					}
 					typeCurConnection = LayoutEditor.TRACK;
@@ -939,9 +939,9 @@ public class LayoutEditorAuxTools
 						else if (typeCurConnection==LayoutEditor.TURNOUT_B) {
 							// continuing track of turnout, add a bean setting
 							if (lt.getContinuingSense()==Turnout.CLOSED) 
-								bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+								bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName() ,Turnout.CLOSED);
 							else
-								bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+								bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName() ,Turnout.THROWN);
 							if (bs.getBean() != null) 
 								p.addSetting(bs);
 							else {
@@ -960,9 +960,9 @@ public class LayoutEditorAuxTools
 						else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
 							// diverging track of turnout
 							if (lt.getContinuingSense()==Turnout.CLOSED) 
-								bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+								bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.THROWN);
 							else
-								bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+								bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
 							if (bs.getBean() != null)
 								p.addSetting(bs);
 							else {
@@ -993,7 +993,7 @@ public class LayoutEditorAuxTools
 					}
 					else if (typeCurConnection==LayoutEditor.TURNOUT_B) {
 						// entry is at continuing track of turnout 
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -1012,7 +1012,7 @@ public class LayoutEditorAuxTools
 					}						
 					else if (typeCurConnection==LayoutEditor.TURNOUT_D) {
 						// entry is at continuing track of turnout 
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName() ,Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -1039,7 +1039,7 @@ public class LayoutEditorAuxTools
 					}
 					else if (typeCurConnection==LayoutEditor.TURNOUT_A) {
 						// entry is at continuing track of turnout 
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {
@@ -1058,7 +1058,7 @@ public class LayoutEditorAuxTools
 					}						
 					else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
 						// entry is at continuing track of turnout 
-						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(),Turnout.CLOSED);
 						if (bs.getBean() != null) 
 							p.addSetting(bs);
 						else {

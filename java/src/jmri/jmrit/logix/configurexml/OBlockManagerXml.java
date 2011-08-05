@@ -165,8 +165,8 @@ public class OBlockManagerXml // extends XmlFile
         for (int i=0; i<list.size(); i++) {
             BeanSetting bs = list.get(i);
             Element e = new Element("setting");
-            Turnout to = (Turnout)bs.getBean();
-            e.setAttribute("turnout", to.getSystemName());
+            //Turnout to = (Turnout)bs.getBean();
+            e.setAttribute("turnout", bs.getBeanName());
             e.setAttribute("set", ""+bs.getSetting());
             elem.addContent(e);
         }
@@ -439,7 +439,7 @@ public class OBlockManagerXml // extends XmlFile
             String sysName = setElem.getAttribute("turnout").getValue();
             Turnout to = InstanceManager.turnoutManagerInstance().provideTurnout(sysName);
 
-            BeanSetting bs = new BeanSetting(to, setting);
+            BeanSetting bs = new BeanSetting(to, sysName, setting);
             path.addSetting(bs);
         }
         return path;

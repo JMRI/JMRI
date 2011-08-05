@@ -153,7 +153,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         // for now, assume turnout
         bse.setAttribute("setting", ""+bs.getSetting());
         Element be = new Element("turnout");
-        be.setAttribute("systemName", bs.getBean().getSystemName());
+        be.setAttribute("systemName", bs.getBeanName());
         bse.addContent(be);
         e.addContent(bse);
     }
@@ -335,7 +335,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         String name = turnouts.get(0).getAttribute("systemName").getValue();
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         
-        BeanSetting bs = new BeanSetting(t, setting);
+        BeanSetting bs = new BeanSetting(t, name, setting);
         path.addSetting(bs);
     }
     

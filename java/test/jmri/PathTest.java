@@ -30,7 +30,7 @@ public class PathTest extends TestCase {
 	    TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
 	    Turnout s = sm.provideTurnout("IT12");
 
-        p.addSetting(new BeanSetting(s, Turnout.CLOSED));
+        p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
         
         Block b = new Block("IB1");
         p.setBlock(b);
@@ -52,7 +52,7 @@ public class PathTest extends TestCase {
 	    TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
 	    Turnout s = sm.provideTurnout("IT12");
 
-        p.addSetting(new BeanSetting(s, Turnout.CLOSED));
+        p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
         
         Assert.assertTrue("check path not set", !p.checkPathSet());
         
@@ -104,5 +104,9 @@ public class PathTest extends TestCase {
 		TestSuite suite = new TestSuite(PathTest.class);
 		return suite;
 	}
+    
+    protected void setUp() { 
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
 
 }

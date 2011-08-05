@@ -366,7 +366,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 hasTrack = true;
                 if (pos instanceof IndicatorTurnoutIcon) {
                     jmri.Turnout t = ((IndicatorTurnoutIcon)pos).getTurnout();
-                    settings.add(new BeanSetting(t, t.getKnownState()));
+                    String turnoutName = ((IndicatorTurnoutIcon)pos).getNamedTurnout().getName();
+                    settings.add(new BeanSetting(t, turnoutName, t.getKnownState()));
                 }
                 ((IndicatorTrack)pos).addPath(name);
             }

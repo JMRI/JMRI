@@ -18,22 +18,48 @@ package jmri;
 @net.jcip.annotations.Immutable
 public class BeanSetting  {
 
-    public BeanSetting(jmri.NamedBean t, int setting) {
-        _bean = t;
+    public BeanSetting(jmri.NamedBean t, String pName, int setting) {
         _setting = setting;
+        if(t==null){
+            _namedBean=null;
+            return;
+        }
+        _namedBean = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, t);
+    }
+    
+    public BeanSetting(jmri.NamedBean t, int setting){
+        _setting = setting;
+        if(t==null){
+            _namedBean=null;
+            return;
+        }
+        _namedBean = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(t.getDisplayName(), t);
     }
     
     /**
      * Convenience method; check if the Bean currently has the desired setting
      */
     public boolean check(){
-        return _bean.getState() == _setting;
+        if(_namedBean==null)
+            return false;
+        return _namedBean.getBean().getState() == _setting;
     }
     
-    public NamedBean getBean() { return _bean; }
+    public NamedBean getBean() {
+        if(_namedBean==null)
+            return null;
+        return _namedBean.getBean();
+    }
+    
+    public String getBeanName() {
+        if(_namedBean==null)
+            return "";
+        return _namedBean.getName();
+    }
+    
     public int getSetting() { return _setting; }
     
-    private final NamedBean _bean;
+    private final NamedBeanHandle<NamedBean> _namedBean;
     final private int _setting;
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanSetting.class.getName());
