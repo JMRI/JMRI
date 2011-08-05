@@ -167,7 +167,10 @@ changes will not take effect until after restarting the program</p>
 href="../../../../../jython/JmriDemo.py">JmriDemo.py</a></p>
 
 <p>Python code to start a JmriDemo app, complete with
-menu bar</p>
+menu bar (probably obsolete at this point, the usual
+method now is to start DecoderPro or PanelPro
+and then run Python scripts from within it; left as
+an example of the approach)</p>
 
 <p><a
 href="../../../../../jython/ListenerExample.py">ListenerExample.py</a></p>
