@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
 public class BeanSettingTest extends TestCase {
 
 	public void testCreate() {
-	    new BeanSetting(null, 0);
+	    new BeanSetting(null, "", 0);
 	}
 
 	public void testCheckSensor() throws JmriException {
@@ -58,7 +58,8 @@ public class BeanSettingTest extends TestCase {
 		return suite;
 	}
 
-    protected void setUp() { 
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 }
