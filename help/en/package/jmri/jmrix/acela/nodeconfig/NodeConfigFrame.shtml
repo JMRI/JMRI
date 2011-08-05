@@ -32,13 +32,12 @@ Thank you for reading this, hopefully the few minutes you spend reading this wil
 If you have not already, please be sure to read more about JMRI <a href="../../../../../html/hardware/acela/index.shtml">Acela</a> hardware support and the <a href="../../../../../html/hardware/acela/Names.shtml">CTI Acela System Names</a>.</p>
 <H2>Configuration Files
 </H2>
-Just to perfectly clear, DecoderPro, PanelPro, and JmriDemo are all different skins or user interfaces to the same JMRI program.
+Just to perfectly clear, DecoderPro and PanelPro are different skins or user interfaces to the same JMRI program.
 <p>
 You can do anything from any of these three programs, the user interface has just been tailored in an attempt to make it easier for you to do what you want to do:
 <ul>
 <li>Program Decoders using DecoderPro
 <li>Control your Layout using PanelPro
-<li>Experiment using JmriDemo
 </ul>
 <p>
 The one difference is that each skin stores its own version of your configuration.
@@ -55,7 +54,7 @@ So, if you make a change and SAVE your configuration file (by pressing the SAVE 
 <p>
 This is all fine and dandy until you realize that you were not connected to your layout and just lost your CTI Acela custom configuration (see below).
 <p>
-So, again, make backup copies of your configuration files (i.e. DecoderProConfig2.xml, PanelProConfig2.xml, JmriDemoConfig2.xml) often and store them in a safe place. 
+So, again, make backup copies of your configuration files (i.e. DecoderProConfig2.xml, PanelProConfig2.xml) often and store them in a safe place. 
 
 <H2>Connecting to Your CTI Acela System
 </H2>
@@ -63,13 +62,13 @@ It is highly recommended that you let the JMRI software discover your CTI Acela 
 <p>
 To that end, the Add and Delete buttons have been disabled for the time being.
 <p>
-You can go ahead and edit your preferences file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml or JmriDemoConfig2.xml) if you really want to change things manually.
+You can go ahead and edit your preferences file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) if you really want to change things manually.
 
 <p>
 It is recommended that you configure your CTI Acela network in three steps: Establish Your Connection, Discover Your CTI Acela Network, and then Customize Your Configuration.
 <h3>Establish the Connection
 </h3>
-With the CTI Aclea system powered on and connected to your computer, start JMRI  (DecoderPro or PanelPro or JmriDemo).
+With the CTI Aclea system powered on and connected to your computer, start JMRI  (DecoderPro or PanelPro).
 <p>
 From the main menu select <Edit> and then select <Preferences>.  
 <p>
@@ -79,7 +78,7 @@ You then need to select the correct serial port.  Make sure that you get this ri
 <p>
 Press the <Save> button.  The JMRI program will end.  
 <p>
-If you look at your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml or JmriDemoConfig2.xml depending upon which program you ran) you should see a connection entry with the specified serial port.
+If you look at your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml depending upon which program you ran) you should see a connection entry with the specified serial port.
 It will look something like (note the second "connection port" line):
 <p>
 &lt?xml version="1.0" encoding="UTF-8"?>
@@ -103,7 +102,7 @@ It will look something like (note the second "connection port" line):
 &lt/layout-config>
 <h3>Let JMRI discover your CTI Acela network configuration  
 </h3>
-Restart JMRI (DecoderPro or PanelPro or JmriDemo).  If you specified the correct serial port in the previous step then the JMRI software should automatically connect to the CTI Acela network, reset the Acela node and then poll the CTI Acela network and discover which modules (JMRI calls a module a node) you have and in what order.
+Restart JMRI (DecoderPro or PanelPro).  If you specified the correct serial port in the previous step then the JMRI software should automatically connect to the CTI Acela network, reset the Acela node and then poll the CTI Acela network and discover which modules (JMRI calls a module a node) you have and in what order.
 <p>
 JMRI will create a node for each module that it finds.
 <p>
@@ -115,7 +114,7 @@ The first section is entitled The Nodes in the Network and it will display a two
 <p>
 At this point you should close this window and once again use the "Save" button on the Preferences Screen.
 <p>
-If you now look at your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml or JmriDemoConfig2.xml depending upon which program you ran) in addition to the connection entry with the specified serial port for the CTI Acela network you should see node descriptions for each CTI Acela node that was found.
+If you now look at your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml depending upon which program you ran) in addition to the connection entry with the specified serial port for the CTI Acela network you should see node descriptions for each CTI Acela node that was found.
 <p>
 It will look something like (note the lines after the second "connection port" line):
 <p>
@@ -288,7 +287,7 @@ It will look something like (note the lines after the second "connection port" l
 You can always get back to this state by erasing your configuration file and repeating these two steps.
 <h3>Customize your configuration
 </h3>
-Restart JMRI  (DecoderPro or PanelPro or JmriDemo).
+Restart JMRI  (DecoderPro or PanelPro).
 <p>
 Once again go to the preferences menu (Main menu then Edit menu then preferences) and again click the show advanced preferences checkbox to see the auxillary connections.
 <p>
@@ -360,7 +359,7 @@ Larger values correspond to heavier filtering.
 <p>
 By default, JMRI initializes all sensor circuits to Car Gap, Reverse Polarity, and a threshold of 4.  This seems to work rather well for the CTI supplied Infrared Sensor Kits.
 <p>
-Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml or JmriDemoConfig2.xml) in a safe place.
+Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.
 <h3>Configuring Outputs
 </h3>
 If an output circuit is being controlled by a relay then the relay can be wired in one of three ways:
@@ -400,7 +399,7 @@ The output circuit can also have an initial state or default configuration:
 </ul>
 </ul>
 
-Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml or JmriDemoConfig2.xml) in a safe place.
+Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.
 <!--#include virtual="/Footer" -->
 </body>
 </html>
