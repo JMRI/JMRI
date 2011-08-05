@@ -101,7 +101,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
 
     @Override
-    public void setManager(Manager man) { 
+    public void setManager(Manager man) {
         turnManager = (TurnoutManager) man;
     }
     /**
@@ -396,7 +396,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                         String decoderName = (String)((JComboBox)value).getSelectedItem();
                         t.setDecoderName(decoderName);
                     } else if(showTurnoutSpeed){
-                        System.out.println("Column " + col);
                         if ((col==STRAIGHTCOL) || 
                             (col==zSTRAIGHTCOL &&!showLock && !showFeedback) ||
                                 (col==xSTRAIGHTCOL &&showLock && !showFeedback) || 

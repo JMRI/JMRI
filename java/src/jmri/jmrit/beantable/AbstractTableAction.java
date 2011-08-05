@@ -131,6 +131,11 @@ abstract public class AbstractTableAction extends AbstractAction {
     public JPanel getPanel(){
         return null;
     }
+    
+    public void dispose() {
+        if (m!=null)
+            m.dispose();
+    }
 
     /**
      * Specify the JavaHelp target for this specific panel

@@ -125,6 +125,13 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
             log.error("Trying to print returned a NPE error");
         }
     }
+    
+    public void dispose(){
+        for(int x=0; x<tabbedTableArray.size(); x++){
+            tabbedTableArray.get(x).dispose();
+        }
+        super.dispose();
+    }
    
     protected class TabbedTableItem {
         

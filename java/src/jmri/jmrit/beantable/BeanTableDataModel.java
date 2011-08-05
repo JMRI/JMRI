@@ -54,8 +54,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             for (int i = 0; i< sysNameList.size(); i++) {
                 // if object has been deleted, it's not here; ignore it
                 NamedBean b = getBySystemName(sysNameList.get(i));
-                if (b!=null)
+                if (b!=null){
                     b.removePropertyChangeListener(this);
+                }
             }
         }
         sysNameList = getManager().getSystemNameList();

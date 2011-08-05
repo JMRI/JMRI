@@ -438,6 +438,8 @@ public class ListedTableFrame extends BeanTableFrame {
         void dispose(){
             if (dataModel != null)
                 dataModel.dispose();
+            if (tableAction!=null)
+                tableAction.dispose();
             dataModel = null;
             dataTable = null;
             dataScroll = null;
