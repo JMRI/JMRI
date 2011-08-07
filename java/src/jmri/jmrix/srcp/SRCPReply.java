@@ -28,10 +28,12 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     // from a parser message node.
     public SRCPReply(SimpleNode n){
 	super();
-        String s=new String(n.jjtGetFirstToken().toString());
+        StringBuilder b = new StringBuilder(n.jjtGetFirstToken().toString());
 	for(int i=1;i<n.jjtGetNumChildren();i++) {
-	   s= s +" " +((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString();
+	   b.append(" " +((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
         }
+        
+        String s = b.toString();
         _nDataChars = s.length();
         for (int i = 0; i<_nDataChars; i++)
             _dataChars[i] = s.charAt(i);
