@@ -87,7 +87,8 @@
 <!ATTLIST load type					CDATA #IMPLIED> 
 <!ATTLIST load names				CDATA #IMPLIED> 
 
-<!ATTLIST carLoad name				CDATA #IMPLIED> 
+<!ATTLIST carLoad name				CDATA #IMPLIED>
+<!ATTLIST carLoad loadType			CDATA #IMPLIED> 
 <!ATTLIST carLoad priority			CDATA #IMPLIED>
 <!ATTLIST carLoad pickupComment		CDATA #IMPLIED>
 <!ATTLIST carLoad dropComment		CDATA #IMPLIED>
