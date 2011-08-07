@@ -32,16 +32,16 @@
 <hr>
 
 <h2>&nbsp;</h2>
-<p>The first action in programming a locomotive with Decoder Pro is to fill out the roster entry screen.</p>
+<p>The first action in programming a locomotive with DecoderPro&reg; is to fill out the roster entry screen.</p>
 
 A <b>roster</b> is a  database of all locomotives that your installation
-of Decoder Pro has programmed. It includes the information seen in the screen
+of DecoderPro&reg; has programmed. It includes the information seen in the screen
 below:
-<div align="center"><img src="images/Basic_Roster.png" alt="Basic Programmer Roster Tab" width=648 height=520 border=5 class="BOXIT"></div>
+<div align="center"><img src="images/Basic_Roster.png" width="640" height="554" alt="roster"></div>
 <p>Most of these fields are self-explanatory.  However, note that the first field (<strong>ID</strong>) becomes the 
 file name in the Roster for the locomotive you are programming. Set up a  schema to identify your locomotive to its decoder program. i.e. Mfr, Loco Type, and &nbsp;Address (Kato_SD40-2_5645). Spaces in the ID field will be  changed to underscores (_) when the file is written.&nbsp; In a club environment, often the ID begins  with the owner&rsquo;s name, or  member number. This way the Roster (which is sorted alphabetically) will keep  all of an owner's locomotives listed together. </p>
 
-<p> The  <strong>Comment</strong> field is a good place 
+<p> The <strong>Decoder</strong> <strong>Comment</strong> field is a good place 
   to add the date you purchased the locomotive, price, or  any other information you might 
 feel is important to record. </p>
 
@@ -58,7 +58,14 @@ button can be used to return the Roster file to the condition of a new file for 
 <p><img src="images/FactoryReset.jpg" alt="Factory Reset" width="776" height="534" border="4" align="middle" class="center"></p>
 <p>You  will note that the decoder address is shown but grayed out (or blank if this is  a new locomotive in the roster).&nbsp; This  field is automatically filled in by the program and is determined from the  address entered using the <strong>Basic</strong> tab which we will get to shortly.&nbsp; This address is used with the <strong>Ident </strong>function  on the start page if you wish to recall a locomotive that is already in your  roster. </p>
 
-<p><a name="ProgramModes"></a>The Programming mode can be changed by clicking on the <strong>Set.</strong>.. button at the bottom of the window. To the left of the <strong>Set</strong>... button is the current programming mode that is selected. When you click on the <strong>Set.</strong>. button, the <strong>Set programming mode</strong> dialog box displays.</p>
+<p><a name="ProgramModes"></a>The Programming mode can be changed by clicking on the <strong>
+  <input type="button" name="button2" id="button2" value="Set...">
+</strong> at the bottom of the window. To the left of the
+<input type="button" name="button3" id="button3" value="Set..">
+is the current programming mode that is selected. When you click on the
+<input type="button" name="button4" id="button4" value="Set...">
+,
+the <strong>Set programming mode</strong> dialog box displays.</p>
 
 <div align="center"><img src="images/SetProgramMode.png" alt="Set pogram mode dialog" border="5" class="BOXIT">
   
@@ -69,11 +76,15 @@ button can be used to return the Roster file to the condition of a new file for 
 stay with <strong>Paged mode</strong> or whichever Direct mode  your Command Station supports. Your 
 decoder documentation should let you know if programming  in some other mode is 
 necessary... but if you are having problems, experiment.  If a mode is not supported for the selected decoder and system, that option will be grayed out. 
-<p>When you make your selection, the programming mode should now display to the left of the Set button.</p>
+<p>When you make your selection, the programming mode should now display to the left of the 
+  <input type="button" name="button5" id="button5" value="Set...">
+.</p>
+<p>Basic Programming Roster setup for Kato F40 n scale with Digitrax DN163K0a decoder.</p>
+<p><img src="images/Basic_Roster01.png" width="752" height="646" alt="roster"></p>
 
 <p>Now that we have the Roster  information all in order, we can continue with programming the decoder. </p>
 
-<p>But, first a let&rsquo;s talk a  bit about Roster management.&nbsp; The Main DecoderPro window (the one where we selected the programmer) and the initial DecoderPro  &ldquo;Splash&rdquo; screen have a menu called <strong>Roster.</strong>&nbsp;  When you click on it you get opportunities to modify, print and move  your roster files.&nbsp; Particularly  interesting are<strong> Export/Import </strong>and <strong>Copy</strong>.&nbsp;  Let&rsquo;s say you and a friend have two identical Berkshires, and you desire  to have yours to be set up just like your friends.&nbsp; Now, you could put his loco on your track and  read all the CVs out and then put them in yours, but if he lives on the other  coast that&rsquo;s not practical.&nbsp; So, have him  use DecoderPro to export his loco file and e-mail it to you.&nbsp; You import it into DecoderPro, change the  address if you wish and then use that roster entry to program your loco.&nbsp;Similarly you can Copy a roster entry to duplicate one  of your own locomotives into a second roster entry with it&rsquo;s own address. Details about the <strong><a href="Main_Roster.shtml">Roster Menu</a></strong></p>
+<p>But, first a let&rsquo;s talk a  bit about Roster management.&nbsp; The Main DecoderPro&reg; window (the one where we selected the programmer) and the initial DecoderPro  &reg;&ldquo;Splash&rdquo; screen have a menu called <strong>Roster.</strong>&nbsp;  When you click on it you get opportunities to modify, print and move  your roster files.&nbsp; Particularly  interesting are<strong> Export/Import </strong>and <strong>Copy</strong>.&nbsp;  Let&rsquo;s say you and a friend have two identical Berkshires, and you desire  to have yours to be set up just like your friends.&nbsp; Now, you could put his loco on your track and  read all the CVs out and then put them in yours, but if he lives on the other  coast that&rsquo;s not practical.&nbsp; So, have him  use DecoderPro&reg; to export his loco file and e-mail it to you.&nbsp; You import it into DecoderPro&reg;, change the  address if you wish and then use that roster entry to program your loco.&nbsp;Similarly you can Copy a roster entry to duplicate one  of your own locomotives into a second roster entry with it&rsquo;s own address. Details about the <strong><a href="Main_Roster.shtml">Roster Menu</a></strong></p>
 
 <p align="center"><img src="images/RosterEdit.png" alt="Roster Edit" width="412" height="265" border="4"></p>
 

@@ -33,8 +33,8 @@
 <p>The Comprehensive Programmer begins the same way as the Basic Programmer, with  a Programmer Setup Pane and a Roster Pane.  The content  are identical, so they will not be repeated here. Just be sure to select the Comprehensive Programmer on the Setup Pane.  (<a href="Basic_Programming.shtml#Setting Up">Tab Programmer Setup</a>),
 <p>When you are  on the <strong>Setup Pane</strong> and click on the <b>Open Programmer</b> button, the appropriate
   Comprehensive Programmer window will open. All programmers, Basic and Comprehensive, open
-  to the Roster Entry pane, which will be similar to that shown below.
-<h1><img src="images/Comp_Roste_01.png" alt="comp roster" width="919" height="798" class="BOXIT"></h1>
+  to the Roster Entry pane, which will be similar to that shown below. (Using Digitrax DN163K0a decoder examples)
+<h1><img src="images/Comp_Roste_01.png" width="821" height="601" alt="comp roster"></h1>
 
 <p>
 Note that the <b>Roster</b> pane is essentially unchanged from the <b>Basic</b>

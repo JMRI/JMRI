@@ -39,7 +39,7 @@
 One of the first things you will notice about the expanded Basic Pane
 in the Comprehensive Programmer is that there are a lot more options than
 you found in the Basic Programmer.</p>
-<p align="center"><img src="images/Extended_Basic_Program_Roster.png" width="917" height="794" alt="Extended basic pane"></p>
+<p align="center"><img src="images/Extended_Basic_Program_Roster.png" width="828" height="602" alt="Extended Basix"></p>
 <p>
 Select 2 or 4 digit <b>addressing</b> radio button to select which mode of addressing you wish to be active</p>
 <p>You can enter locomotive addresses in both the <strong>Primary address</strong> and/or the <strong>Extended address</strong>. The address of a decoder is the prefix for the code it responds to.
@@ -69,7 +69,7 @@ is "breaking away" and running out of control at high speed on a DCC layout, you
 At the bottom of all the programmer panes you will find three rows of buttons, as shown :
 <p align="center"><img src="images/Comp_03_Basic.png" width="929" height="168" alt="comp basic buttons">
 <p>
-The top row operates <span class="ACCENT">only</span> on the currently visible pane. These buttons are:</p>
+The top row operates <span class="ACCENT"><strong>ONLY</strong></span> on the currently visible pane. These buttons are:</p>
 
 <ol>
      <li><b>Read changes on sheet</b> - an "Oops!" button that lets you recover data from the decoder if you've changed it accidentally on the computer (and don't remember what the values were!), but only if       you haven&rsquo;t written it yet.

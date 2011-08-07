@@ -35,26 +35,33 @@ a decoder?</h1>
 <h2>&nbsp;</h2>
 <p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
 <p><br>
-  On opening DecoderPro, the main  page will be displayed: </p>
-<div align="center"><img src="images/Splash_Screen.png" alt="Splaxh Screen" width="425" height="265" border="5" class="BOXIT">
-  
-</div>
+  On opening DecoderPro, the main  page will be displayed: (After preferences are set)</p>
+<div align="center"><img src="images/Splash_Screen01.png" width="433" height="317" alt="splash"></div>
 <p>There are four buttons near the  bottom, the first two of which are: </p>
-<p><b><a href="Programmer_ServiceMode.shtml">Service Mode </a>(programming track) Programmer</b>- 
+<p><b><a href="Programmer_ServiceMode.shtml">
+<input type="button" name="button" id="button" value="Service Mode (Programming Track) Programmer">
+Service Mode </a></b>- 
   With this button you select a programmer to program the  locomotive(decoder) on the dedicated programming track.  (Probably because the Locomotive has to be taken to the  servicing track to be programmed).&nbsp; Not all command  stations support a dedicated programming track, and some brands  will shut down the mainline power when in programming mode (not pleasant when you have  an ops session in progress.
 </p>
-<p><b><a href="Programmer_OpsMode.shtml">Operations Mode</a> (Main Track) Programmer</b> - 
-    or <strong>Programming on the main(POM)</strong>.&nbsp; This  lets you program a specific decoder on the layout, even while it is 
+<p><b><a href="Programmer_OpsMode.shtml">
+  <input type="button" name="button2" id="button2" value="Operations Mode (Main Track ) Programmer">
+  Operations Mode</a></b> - 
+    or <strong>[Programming on the main(POM)]</strong>.&nbsp; This  lets you program a specific decoder on the layout, even while it is 
     operating. However, because it addresses a specific  decoder address, some  decoders will not allow you to change the  decoder's address using this method! 
 Some  command stations will only &quot;broadcast&quot; programming commands,  which can mean every locomotive on 
   the layout gets the same programming! The same is true if  you try to program a loco with address zero (or forget to enter an address when  you start). &nbsp;If in doubt, check  your documentation.   </p>
-<p><strong>Help </strong>- Accesses the help files<br>
+<p><strong>
+  <input type="button" name="button3" id="button3" value="Help">
+</strong>- Accesses the help files<br>
 </p>
-<p><b>Quit</b> - Exits the program. </p>
+<p>
+  <input type="button" name="button4" id="button4" value="Quit"> 
+- Exits the program. </p>
+<p>Any additional buttons are added in the<strong> <a href="Start_Preferences.shtml">preferences</a></strong>.</p>
 <h1>Additional programmers that are available.</h1>
 <p><a href="Programmer_SingleCV.shtml"><strong>Single CV Programmer</strong></a>
   Lets you program older decoders one CV at a time.</p>
-<p><a href="Programmer_Multi_Decoder.shtml"><strong>Multi-Programmer Control</strong></a>provides a convenient way to program CV's when you have more than one decoder installed in a locomotive. For example, if you have separate decoders to control the motor and provide sound, and they both use the same CV locations, programming one decoder would change he settings on the other, usually an undesired feature.</p>
+<p><a href="Programmer_Multi_Decoder.shtml"><strong>Multi-Programmer Control</strong></a> provides a convenient way to program CV's when you have more than one decoder installed in a locomotive. For example, if you have separate decoders to control the motor and provide sound, and they both use the same CV locations, programming one decoder would change the settings on the other, usually an undesired feature.</p>
 <p>Now that you have decided on which Programming Mode to use, you may continue </p>
 <div align=right>
   <p><a href="Programmer_Start.shtml">Next</a></p>

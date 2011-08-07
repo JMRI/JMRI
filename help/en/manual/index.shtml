@@ -21,9 +21,9 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>DecoderPro&reg; v2.8</h1>
+<h1>DecoderPro&reg; v2.12</h1>
 
-<h3>Updated 1/15/2010</h3>
+<h3>Updated 9/15/2011</h3>
 
 <p>
 <h3>
@@ -39,32 +39,37 @@ on the computer. You can get Java as a free (but very large...) download
 at:
 <p><a href="http://java.sun.com/getjava/" target="_blank">
 http://java.sun.com/getjava/</a>
-<p>If  this is your first visit to our manual we suggest that you take the
-<a href="../html/apps/DecoderPro/Tour.shtml">DecoderPro&reg;  tour</a><br>
-to get an overview of what we&rsquo;re about to cover..
-
+<p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at
+<p><a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+  to get an overview of what we&rsquo;re about to cover..
+  
 <p>
 <span class="ACCENT">
 Note that all screen shots in this manual are from a Windows machine using the
  "Metal" User Interface option. While your screens will probably differ
 in some layout details, they will be essentially the same.</span>
 
-<hr>
-<p><span class="UPDATE">Note: This entire manual has been updated to correspond to DecoderPro 2.8, and the HTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you probably need to update your browser. </span>
-<a NAME="index"></a>
-
+<p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be digitrax, except for sound examples.</p>
+<p>Note: This entire manual has been updated to   correspond to DecoderPro 2.10, and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
+<p>
+  <a name="index"></a>
 <div align="right">
 <p>
-<a href="https://sourceforge.net/projects/jmri/files/manuals/DecoderProManual_2_8.pdf/download">
+<a href="https://sourceforge.net/projects/jmri/files/manuals/DecoderProManual_2_12.pdf/download">
 Download a .PDF file of this manual.<br>
 (7 MB, 249 pages)
 </a></div>
 
 <h1>Table of Contents</h1>
+<h4><a name="Installing"></a>Installing JMRI</h4>
+<ul>
+<li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
+<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a>
+</ul>
 <h4>
   <a NAME="GettingStarted" id="GettingStarted"></a>Getting
     started</h4>
-<ol>
+<ul>
 <li>
 <a href="Start_DCC.shtml">What is DCC?</a></li>
 
@@ -79,7 +84,7 @@ Download a .PDF file of this manual.<br>
 
 <li>
 <a href="Start_Preferences.shtml">How do I set up my preferences?</a></li>
-</ol>
+</ul>
 
 <h4>
 <a NAME="Setting up"></a>Using DecoderPro&reg;</h4>
@@ -187,7 +192,7 @@ The Basic Programmer</h4>
           <li>Load Throttle Layout...</li>
           <li>Save as Default Throttle Layout</li>
           <li>Load Default Throttle Layout</li>
-          <li><a href="Main_Tool.shtml#Preferences">Throttle Preferences...</a></li>
+          <li>Start Wi Throttle</li>
         </ul>
       </li>
       <li><a href="Main_ConsistControl.shtml">Consisting Tool...</a></li>
@@ -210,7 +215,7 @@ The Basic Programmer</h4>
       <li>USS CTC Tools <img src="images/arrow.gif" width="20" height="9" alt="arrow">(not covered in this manual)</li>
       <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
         <ul>
-          <li><a href="Ops_Settings.shtml">Setup</a></li>
+          <li><a href="Ops_Settings.shtml">Settings</a></li>
           <li><a href="Ops_Locations.shtml">Locations</a></li>
           <li><a href="Ops_Cars.shtml">Cars</a></li>
           <li><a href="Ops_Engines.shtml">Engines</a></li>
@@ -247,6 +252,7 @@ The Basic Programmer</h4>
       <li>New Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow">
         <ul>
           <li><a href="Main_Panels.shtml#PanelEditor">Panel Editor</a></li>
+          <li><a href="#">Control Panel Editor</a></li>
           <li><a href="Main_Panels.shtml#LayoutEditor">Layout Editor</a></li>
         </ul>
       </li>
@@ -261,7 +267,7 @@ The Basic Programmer</h4>
   </li>
   <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
     <ul>
-      <li><a href="Ops_Settings.shtml">Setup</a></li>
+      <li><a href="Ops_Settings.shtml">Settings</a></li>
       <li><a href="Ops_Locations.shtml">Locations</a></li>
       <li><a href="Ops_Cars.shtml">Cars</a></li>
       <li><a href="Ops_Engines.shtml">Engines</a></li>
@@ -302,6 +308,8 @@ The Basic Programmer</h4>
       <li>Check Programmer Names</li>
           <li>Load Logixs Disabled</li>
           <li><a href="Main_Debug.shtml#logMessage">Log Message</a></li>
+          <li>Display Message Log</li>
+          <li>Display Log Categories</li>
           <li>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow">
             <ul>
               <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
@@ -317,6 +325,7 @@ The Basic Programmer</h4>
           <li>RailDriver Throttle</li>
           <li>Start Mini Web Server</li>
           <li>Start Wi Throttle</li>
+          <li>New DP Window</li>
     </ul>
   </li>
   <li><a href="Main_Window.shtml">Window Menu</a>
@@ -347,6 +356,7 @@ The Basic Programmer</h4>
           <li>Send Problem Report...</li>
           <li>Locations...</li>
           <li>Context....</li>
+          <li>Upload Debugging info...</li>
     </ul>
 </li>
 </ul>
@@ -442,6 +452,16 @@ are best submitted to the
       Added Roster Group feature<br>
       Updated decoder definition submission process<br>
     Added Operations section</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">2.12</td>
+    <td align="left" valign="top">9/15/2011</td>
+    <td align="left" valign="top">Dale A. Tripp<br>
+      Bruce Shanks</td>
+    <td align="left" valign="top"><p>Updated to JMRI 2.12<br>
+    Installation information added<br>
+    Contents updated to current functions
+    </p></td>
   </tr>
 </table>
 <hr>
