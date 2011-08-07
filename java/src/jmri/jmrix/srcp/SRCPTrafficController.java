@@ -12,7 +12,6 @@ import jmri.jmrix.srcp.parser.ParseException;
 import jmri.jmrix.srcp.parser.SimpleNode;
 import jmri.jmrix.srcp.parser.SRCPClientVisitor;
 
-import java.io.DataOutputStream;
 
 /**
  * Converts Stream-based I/O to/from SRCP messages.  The "SRCPInterface"
