@@ -122,6 +122,17 @@ public class CarLoads {
     }
     
     /**
+     * Gets a combobox with the available load types
+     * @return JComboBox with load types.
+     */
+    public JComboBox getLoadTypesComboBox(){
+    	JComboBox box = new JComboBox();
+    	box.addItem(CarLoad.LOAD_TYPE_EMPTY);
+    	box.addItem(CarLoad.LOAD_TYPE_LOAD);
+    	return box;
+    }
+    
+    /**
      * Gets the load names for a given car type
      * @param type car type
      * @return list of load names
@@ -239,6 +250,42 @@ public class CarLoads {
     	String old = _emptyName;
     	_emptyName = name;
     	firePropertyChange (LOAD_NAME_CHANGED_PROPERTY, old, name);
+    }
+    
+    /**
+     * Sets a loads type.
+     * @param type car type.
+     * @param name load name.
+     * @param load type, LOAD_TYPE_EMPTY or LOAD_TYPE_LOAD.
+     */
+    public void setLoadType(String type, String name, String loadType){
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			cl.setLoadType(loadType);
+       	}
+    }
+    
+    /**
+     * Get's a load's type.
+     * @param type car type.
+     * @param name load name.
+     * @return load type, LOAD_TYPE_EMPTY or LOAD_TYPE_LOAD.
+     */
+    public String getLoadType(String type, String name){
+       	if (!containsName(type, name)){
+       		if (name != null && name.equals(getDefaultEmptyName()))
+       			return CarLoad.LOAD_TYPE_EMPTY;
+    		return CarLoad.LOAD_TYPE_LOAD;
+       	}
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			return cl.getLoadType();
+       	}
+       	return "error";
     }
     
     /**
@@ -405,10 +452,11 @@ public class CarLoads {
 					carLoad.setAttribute("dropComment", loads.get(j).getDropComment());
 					buf.append("DC");	// must store
 				}
+				carLoad.setAttribute("loadType", loads.get(j).getLoadType());
 				load.addContent(carLoad);
 			}
 			// only store loads that aren't the defaults
-			if(!buf.toString().equals(getDefaultEmptyName()+getDefaultLoadName()))
+			if(!buf.toString().equals(getDefaultLoadName()+getDefaultEmptyName()))
 				values.addContent(load);
 		}
 		return values;
@@ -461,6 +509,9 @@ public class CarLoads {
         				}
            				if ((a = carLoad.getAttribute("dropComment")) != null){
         					setDropComment(type, name, a.getValue());
+        				}
+          				if ((a = carLoad.getAttribute("loadType")) != null){
+        					setLoadType(type, name, a.getValue());
         				}
         			}
         		}

@@ -169,7 +169,7 @@ public class Car extends RollingStock {
 			// get loaded weight
 			weightTons = Integer.parseInt(getWeightTons());
 			// adjust for empty weight if car is empty, 1/3 of loaded weight
-			if (!isCaboose() && !isPassenger() && getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
+			if (!isCaboose() && !isPassenger() && CarLoads.instance().getLoadType(getType(), getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
 				weightTons = weightTons / 3;
 		} catch (Exception e){
 			log.debug ("Car ("+toString()+") weight not set");

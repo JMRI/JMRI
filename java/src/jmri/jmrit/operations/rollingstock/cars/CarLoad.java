@@ -13,21 +13,18 @@ public class CarLoad {
 	
 	public static final String PRIORITY_LOW = rb.getString("PriorityLow");
 	public static final String PRIORITY_HIGH = rb.getString("PriorityHigh");
+	
+	public static final String LOAD_TYPE_EMPTY = rb.getString("EmptyTypeName");
+	public static final String LOAD_TYPE_LOAD = rb.getString("LoadTypeName");
 
 	String _name;
 	String _priority = PRIORITY_LOW;
 	String _pickupComment = "";
 	String _dropComment = "";
+	String _loadType = LOAD_TYPE_LOAD;
 	
 	public CarLoad(String name){
-		_name = name;
-	}
-	
-	public CarLoad(String name, String priority, String pickupComment, String dropComment){
-		_name = name;
-		_priority = priority;
-		_pickupComment = pickupComment;
-		_dropComment = dropComment;		
+		setName(name);
 	}
 	
 	public String getName(){
@@ -36,6 +33,8 @@ public class CarLoad {
 	
 	public void setName(String name){
 		_name = name;
+		if (name.equals(CarLoads.instance().getDefaultEmptyName()))
+			setLoadType(LOAD_TYPE_EMPTY);
 	}
 	
 	public String getPriority(){
@@ -60,6 +59,14 @@ public class CarLoad {
 	
 	public void setDropComment(String comment){
 		_dropComment = comment;
+	}
+	
+	public String getLoadType(){
+		return _loadType;
+	}
+	
+	public void setLoadType(String type){
+		_loadType = type;
 	}
 
 }
