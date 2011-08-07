@@ -75,7 +75,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     @Override
     public void receiveLoop(){
 	if(log.isDebugEnabled()) log.debug("SRCP receiveLoop starts");
-	DataOutputStream outstream=new DataOutputStream(ostream);
 	SRCPClientParser parser = new SRCPClientParser(istream);
         while(true){
               try {
