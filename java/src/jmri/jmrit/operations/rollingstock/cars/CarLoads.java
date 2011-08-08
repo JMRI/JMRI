@@ -253,10 +253,10 @@ public class CarLoads {
     }
     
     /**
-     * Sets a loads type.
+     * Sets the load type, empty or load.
      * @param type car type.
      * @param name load name.
-     * @param load type, LOAD_TYPE_EMPTY or LOAD_TYPE_LOAD.
+     * @param loadType load type: LOAD_TYPE_EMPTY or LOAD_TYPE_LOAD.
      */
     public void setLoadType(String type, String name, String loadType){
     	List<CarLoad> loads = list.get(type);
@@ -268,7 +268,7 @@ public class CarLoads {
     }
     
     /**
-     * Get's a load's type.
+     * Get's the load type, empty or load.
      * @param type car type.
      * @param name load name.
      * @return load type, LOAD_TYPE_EMPTY or LOAD_TYPE_LOAD.
