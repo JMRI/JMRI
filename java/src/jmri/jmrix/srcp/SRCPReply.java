@@ -3,8 +3,6 @@
 package jmri.jmrix.srcp;
 
 import jmri.jmrix.srcp.parser.SimpleNode;
-import jmri.jmrix.srcp.parser.SRCPClientVisitor;
-import jmri.jmrix.srcp.parser.Token;
 
 /**
  * Carries the reply to an SRCPMessage.
@@ -30,7 +28,8 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 	super();
         StringBuilder b = new StringBuilder(n.jjtGetFirstToken().toString());
 	for(int i=1;i<n.jjtGetNumChildren();i++) {
-	   b.append(" " +((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
+            b.append(" ");
+            b.append(((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
         }
         
         String s = b.toString();
