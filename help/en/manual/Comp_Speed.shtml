@@ -37,7 +37,7 @@ the most significant in improving the performance of your locomotive fleet.
 
 <p>Let's look first at the top of the pane: You now have the option of using Basic Speed Control (this pane) or Speed Table to control your locomotive's speed.  Which ever one you select last and write to your decoder will be the method used for speed control.  To select this pane:
 <p>Click on the <strong>Use Vstart, Vmid, Vhigh</strong> radio button.
-<p>Three important CVs are programmed in this pane Vstart, Vmid and Vhigh. They work together to make a very basic three point speed table. On some decoders these settings may be labeled differently and all three may not be available.  Decoder Pro will show the correct options for your selected decoder.
+<p>Three important CVs are programmed in this pane Vstart, Vmid and Vhigh. They work together to make a very basic three point speed table. On some decoders these settings may be labeled differently and all three may not be available.  Decoder Pro will show the correct options for your selected decoder.  
 <p>
 <b>Vstart</b>(<strong>Start Voltage</strong>) is the voltage at the first speed step. If your locomotive
 didn't start moving until there were three volts on the track with analog
