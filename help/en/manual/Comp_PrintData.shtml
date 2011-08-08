@@ -31,8 +31,21 @@ DecoderPro&reg; Comprehensive Programmer
 </div>
 
 <hr>
-<p><strong>Print Data:</strong> DecoderPro provides the capabiltiy to print out a full list of  the decoder CV data. To print, select the <strong>File</strong> menu of any Comprehensive  Programmer Pane, then select the Print or Print Preview options.&nbsp; These printouts show the variables by name in each&nbsp; category (as shown on the DecoderPro panes)  along with their CV number and Value.&nbsp; A  handy reference for the future.
+<p><strong>Print Data:</strong> DecoderPro provides the capabiltiy to print out a full list of  the decoder CV data or selected data. To print, select the <strong>File</strong> menu of any Comprehensive  Programmer Pane, then select the Print or Print Preview options.&nbsp;
+<ul>
+<li>Print all..., Preview all... Displays Select Items to Pring dialog box</li>
+
+<p><img src="images/Comp_09d_PrintData.png" width="254" height="459" alt="print items"><br>
+  Select each or all of the decoder items that you want to print</p>
+<p>Click 
+  <input type="button" name="button" id="button" value="Okay"> 
+  to print then Print dialog for your computer system is displayed.
+</p>
+<li>Print CVs...,Preview CVs...Displays <strong>Select Items to Print</strong> Dialog box or Preview screen </li>
+</ul> 
+<p>These printouts show the variables by name in each&nbsp; category that is selectected.(as shown on the DecoderPro panes)  along with their CV number and Value.&nbsp; A  handy reference for the future.
 <p>Print preview will look like it&rsquo;s  about to print the list, and ask  for which printer to use.&nbsp; Don&rsquo;t  panic!, that&rsquo;s only to get the preview to work.&nbsp; Go ahead and select the  printer and you&rsquo;ll only get the preview. 
+<p><strong>Import Data: </strong>You may import the list from another computer in the PR1  file format.&nbsp; Thus, the  Export and Import capability allows you to take the data from one  computer system to another. 
 <p><strong>Export Data:</strong> you  may export the list as one of several file types :
 <ul>
   <li>CSV file...&nbsp;(Comma separated variables) </li>
@@ -40,7 +53,7 @@ DecoderPro&reg; Comprehensive Programmer
   <li>PR1WIN file... </li>
 </ul>
 <p>All are two columns, CV#, and Value) 
-<p><strong>Import Data: </strong>You may import the list from another computer in the PR1  file format.&nbsp; Thus, the  Export and Import capability allows you to take the data from one  computer system to another. 
+
 <h1><img src="images/Comp_09_PrintData.png" alt="Comprehensive Programmer - Advanced Features"  border=5 height=669 width=922></h1>
 
 <p>
