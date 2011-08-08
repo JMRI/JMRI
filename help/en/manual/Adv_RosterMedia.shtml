@@ -31,7 +31,7 @@
 
 <hr>
 <p>The Roster Media Pane allows you to add a main image and an icon to the engines roster. The main image may be used for Throttle background image if selected in the Throttle preferences. The icon image is used in the Throttle list and various roster combo boxes.</p>
-<p align="center"><img src="images/Adv_04_RosterMedia.png" width="920" height="635" alt="Advanced Roster Media pane"></p>
+<p align="center"><img src="images/Adv_04_RosterMedia.png" width="642" height="647" alt="Roster Media"></p>
 <p align="left"><strong>Image to be used as main image for that roster:</strong> The  large black box is the  image holder. The image  is placed into  the image holder by following these instructions. </p>
 <ol>
   <ol>
@@ -60,12 +60,10 @@
 </ol>
 <blockquote>
   <blockquote>
-    <p align="center">&nbsp;</p>
-    <p align="center"><img src="images/Adv_04a_RosterMedia.png" width="922" height="489" alt="Drag and drop"></p>
+    <p align="center"><img src="images/Adv_04a_RosterMedia.png" width="830" height="647" alt="roster"></p>
   </blockquote>
   <p>
-    <input type="submit" name="button2" id="button2" value="Remove ">
-  Is used to remove the image from the Roster, however, it will not remove the image from the Resources folder.</p>
+ To remove either image from the Roster, Right click and click remove in the context that displays, however, it will not remove the image from the Resources folder.</p>
   <p align="left"><strong>Image to be used as icon for that roster, head to the right:</strong> similarly, there is a  small black box which can be filled with a picture to be used as an icon for  roster entry identification.&nbsp; The  instructions are the also similar:</p>
 </blockquote>
 <ol>
@@ -94,9 +92,7 @@
   </ol>
 </ol>
 <blockquote>
-  <p>
-    <input type="submit" name="button3" id="button3" value="Remove">
-  Again used to remove the icon image from the Roster Media pane, however, it will not remove the image from the Resources folder.</p>
+  <p>To remove either image from the Roster, Right click and click remove in the context that displays, however, it will not remove the image from the Resources folder.</p>
   <p><strong>Web reference:</strong> You can copy the URL of the website where you located the images for reference</p>
 </blockquote>
 <p>
