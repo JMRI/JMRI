@@ -248,7 +248,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
             if (!useAttributes) {
                 type = item.getChild("type").getText();
                 name = item.getChild("name").getText();
-        }
+            } else if (name == null) {
+                name = "";
+            }
         
             //check for "set" values and process them
             if (type.equals("throttle")) {
@@ -278,7 +280,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 log.warn("Unexpected type in item: " + type);
             } else {
                 log.warn("Unexpected element: " + type);
-        }
+            }
         }
         
         return e;
@@ -308,6 +310,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             if (!useAttributes) {
                 type = item.getChild("type").getText();
                 name = item.getChild("name").getText();
+            } else if (name == null) {
+                name = "";
             }
             
             if (type.equals("turnout")) addListenerToTurnout(name, item, dr);
@@ -334,6 +338,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             if (!useAttributes) {
                 type = item.getChild("type").getText();
                 name = item.getChild("name").getText();
+            } else if (name == null) {
+                name = "";
             }
             
             try {
@@ -364,6 +370,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             if (!useAttributes) {
                 type = item.getChild("type").getText();
                 name = item.getChild("name").getText();
+            } else if (name == null) {
+                name = "";
             }
             if (item.getAttribute("value") == null &&
                     item.getChild("value") == null) return true;  // if no value, consider changed
@@ -455,12 +463,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {
-            return (!b.getValue().equals(item.getAttributeValue("value")));
+            return (!b.getValue().toString().equals(item.getAttributeValue("value")));
         } else {
         Element v = item.getChild("value");
         if (v!=null) {
-            String state = v.getText();
-            return  (!b.getValue().equals(state));  //return true if strings are different
+            return (!b.getValue().toString().equals(v.getText()));  //return true if strings are different
         }
         }
         return false;  // no difference
