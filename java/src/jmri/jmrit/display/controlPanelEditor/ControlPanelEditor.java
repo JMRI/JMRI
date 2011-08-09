@@ -52,7 +52,6 @@ import jmri.jmrit.catalog.NamedIcon;
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
 
     public boolean _debug;
-	private boolean delayedPopupTrigger = false;
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
     protected JMenu _editMenu;
@@ -791,7 +790,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _lastX = _anchorX;
         _lastY = _anchorY;
 
-        if (!event.isPopupTrigger()) {
+        if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
           /*  if (!event.isControlDown()) */{
                 _currentSelection = getCurrentSelection(event);
                 if (_currentSelection!=null) {
@@ -816,10 +815,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             }
         } else {
-            if (event.isMetaDown() || event.isAltDown()) {
-                // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
-                delayedPopupTrigger = true;
-            }
             _selectionGroup = null;
         }
         //if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+//") _dragging="+_dragging);
@@ -837,7 +832,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         Positionable selection = getCurrentSelection(event);
 
-        if ((event.isPopupTrigger() || delayedPopupTrigger) && !_dragging) {
+        if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) && !_dragging) {
             if (selection!=null) {
                 _highlightcomponent = null;
                 showPopUp(selection, event);
@@ -870,7 +865,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
             mouseClicked(event);
 
-        delayedPopupTrigger = false;
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
 //        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+
@@ -892,7 +886,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         Positionable selection = getCurrentSelection(event);
 
-        if (event.isPopupTrigger() || delayedPopupTrigger) {
+        if (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) {
             if (selection!=null) {
                 _highlightcomponent = null;
                 showPopUp(selection, event);
@@ -904,7 +898,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             }
         }
-        delayedPopupTrigger = false;
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -912,7 +905,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
         setToolTip(null); // ends tooltip if displayed
 
-        if (!event.isPopupTrigger() && !delayedPopupTrigger && (isEditable() || _currentSelection instanceof LocoIcon)) {
+        if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
             moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
@@ -969,7 +962,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     public void mouseMoved(MouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
-        if (_dragging || event.isPopupTrigger() || delayedPopupTrigger) { return; }
+        if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) { return; }
 
         Positionable selection = getCurrentSelection(event);
         if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
