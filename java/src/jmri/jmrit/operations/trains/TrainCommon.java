@@ -296,7 +296,7 @@ public class TrainCommon {
 	}
 	
 	int chars_per_line = 0;
-	private int lineLength(){
+	protected int lineLength(){
 		if (chars_per_line == 0){
 			// page size has been adjusted to account for margins of .5
 			// Dimension pagesize = new Dimension(612,792);

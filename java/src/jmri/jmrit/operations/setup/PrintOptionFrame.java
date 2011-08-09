@@ -295,13 +295,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		buildReportGroup.add(buildReportMax);
 		buildReportGroup.add(buildReportVD);
 		
-		// load font sizes 7 through 12
-		fontSizeComboBox.addItem(7);
-		fontSizeComboBox.addItem(8);
-		fontSizeComboBox.addItem(9);
-		fontSizeComboBox.addItem(10);
-		fontSizeComboBox.addItem(11);
-		fontSizeComboBox.addItem(12);
+		// load font sizes 7 through 14
+		for (int i=7; i<15; i++)
+			fontSizeComboBox.addItem(i);
 		fontSizeComboBox.setSelectedItem(Setup.getFontSize());
 		fontComboBox.setSelectedItem(Setup.getFontName());
 

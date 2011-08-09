@@ -177,16 +177,19 @@ public class TrainManifest extends TrainCommon {
 				String nextRouteLocationName = splitString(rlNext.getName());
 				if (!routeLocationName.equals(nextRouteLocationName)){
 					if (newWork){
-						if (Setup.isPrintLoadsAndEmptiesEnabled()){
-							addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
-									+ rb.getString("boundWith") +" " + (cars-emptyCars) + " " +rb.getString("Loads")
-									+", " + emptyCars + " " + rb.getString("Empties")+ ", " +rl.getTrainLength()
-									+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
-						} else {
-							addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
-									+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
-									+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+						StringBuffer buf = new StringBuffer(rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
+								+ rb.getString("boundWith") +" ");
+						if (Setup.isPrintLoadsAndEmptiesEnabled())
+							buf.append((cars-emptyCars)+" "+rb.getString("Loads")+", "+emptyCars+" "+rb.getString("Empties")+", ");
+						else
+							buf.append(cars +" "+rb.getString("cars")+", ");
+						String s = rl.getTrainLength()+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons");
+						if (buf.length()+s.length()>lineLength()){
+							addLine(fileOut, buf.toString());
+							buf = new StringBuffer();
 						}
+						buf.append(s);
+						addLine(fileOut, buf.toString());
 						newWork = false;
 						newLine(fileOut);
 					}
