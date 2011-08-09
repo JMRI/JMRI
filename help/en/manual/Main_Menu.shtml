@@ -30,7 +30,7 @@
 
 <hr>
 <p wrap="">All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window.</p>
-<p><img src="images/Main_05_MenuBar.png" width="430" height="119" alt="menu bar"><img src="images/Main_05_MenuBar_A.png" width="502" height="126" alt="main menu bar alt"></p>
+<p><img src="images/Main_05_MenuBar.png" width="440" height="151" alt="menu bar"><img src="images/Main_05_MenuBar_A.png" width="510" height="171" alt="main menu bar"></p>
 <h4><a href="Main_File.shtml">File</a></h4>
 <ul>
   <li>Print Decoder Definitions...</li>
@@ -42,7 +42,7 @@
   <li>Cut</li>
   <li>Copy</li>
   <li>Paste</li>
-  <li>Preferences...</li>
+  <li>Preferences</li>
 </ul>
 <h4><a href="Main_Tool.shtml">Tools</a></h4>
 <ul>
@@ -61,12 +61,13 @@
   </li>
   <li><strong>Throttles <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
-      <li>New Throttle...</li>
+      <li>New Throttle</li>
+      <li>Throttles List Window</li>
       <li>Save Throttle Layout...</li>
       <li>Load Throttle Layout...</li>
       <li>Save as Default Throttle Layout</li>
       <li>Load Default Throttle Layout</li>
-      <li>Throttle Preferences...</li>
+      <li>Start WiThrottle</li>
     </ul>
   </li>
   <li><strong>Consisting Tool...</strong></li>
@@ -92,7 +93,7 @@
       <li><a href="Ops_Settings.shtml">Settings</a></li>
       <li><a href="Ops_Locations.shtml">Location</a></li>
       <li><a href="Ops_Cars.shtml">Cars</a></li>
-      <li><a href="Ops_Engines.shtml">Engines</a></li>
+      <li><a href="Ops_Engines.shtml">Locomotives</a></li>
       <li><a href="Ops_Routes.shtml">Routes</a></li>
       <li><a href="Ops_Trains.shtml">Trains</a></li>
     </ul>
@@ -119,6 +120,7 @@
       <li>Disassociation of Roster Entry to Group</li>
     </ul>
   </li>
+  <li><strong>Export Complete Roster...</strong></li>
 </ul>
 <h4><a href="Main_Panels.shtml">Panels</a></h4>
 <p>Beyond the scope of this manual, primarily for use in connection with PanelPro</p>
@@ -155,6 +157,10 @@
   <li><strong>Check Programmer Names</strong></li>
   <li><strong>Load Logix Disabled</strong></li>
   <li><strong>Log Message</strong></li>
+  <li><strong>Display Message Log</strong></li>
+  <li><strong>Display Log Categories</strong></li>
+  <li><strong>Listed Table Access</strong></li>
+  <li><strong>Listed Table Access-Direct to Routes</strong></li>
   <li><strong>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
       <li>PRICOM Pocket Tester&raquo;
@@ -194,9 +200,10 @@
   <li><strong>Window Help...</strong></li>
   <li><strong>General Help...</strong></li>
   <li><strong>License...</strong></li>
-  <li><strong>Send Problem Report...</strong></li>
   <li><strong>Locations...</strong></li>
   <li><strong>Context....</strong></li>
+  <li><strong>System Console...</strong></li>
+  <li><strong>Upload Debugging Info...</strong></li>
 </ul>
 <hr>
 

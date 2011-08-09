@@ -31,14 +31,14 @@
 
 <hr>
 <h4 class="style1">Print Decoder Definitions...  </h4>
-<p>Opens your computer Print dialog to print the installed decoder definitions. The complete list may be more than 20 printed pages. The format is shown below.</p>
-<p align="center"><img src="images/Main_file_01.png" width="627" height="408" alt="Decoder Definition print"></p>
+<p>Opens your computer Print dialog to print the installed decoder definitions. The complete list may be more than 25 printed pages. The format is shown below.</p>
+<p align="center"><img src="images/Main_file_01.png" width="726" height="770" alt="decoder definitions"></p>
 <h4><span class="style1">Print Preview Decoder Definitions..</span>. </h4>
-<p>Opens your computer Print dialog, click OK and the Print Preview window opens. A list of all the Decoder Definitions installed in DecoderPro will be displayed. You then can decide whether to print the pages.</p>
-<p align="center"><img src="images/Main_file_02.png" width="660" height="487" alt="Decoder Print preview"></p>
+<p>Opens your computer  Preview window opens. A list of all the Decoder Definitions installed in DecoderPro will be displayed. You then can decide whether to print the pages.</p>
+<p align="center"><img src="images/Main_file_02.png" width="680" height="531" alt="preview"></p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <h4 class="style1">Quit </h4>
-<p>Close DecoderPro and all associated functions, same as clicking on the Quit button</p>
+<p>Closes DecoderPro and all associated functions, same as clicking on the Quit button</p>
 <p>
 <hr>
 

@@ -16,7 +16,6 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -38,7 +37,7 @@
 <p>Pastes the contents of your computer's clipboard to the location of your cursor</p>
 <p><strong>Preferences.</strong>..</p>
 <p>Opens the <a href="Start_Preferences.shtml">Preferences window</a>.</p>
-<p align="center"><img src="images/Preferences.png" alt="preferences" width="455" height="358" border="4"></p>
+<p align="center"><img src="images/Preferences.png" width="753" height="432" alt="preferences"></p>
 <p>
 <hr>
 

@@ -29,36 +29,34 @@
 </div>
 
 <hr>
-<p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window</p>
-<p align="left">. </p>
-<p align="center"><img src="images/Main_01_main.png" width="421" height="282" alt="main screen"><img src="images/Main_01_main_b.png" width="495" height="282" alt="main alt version"></p>
+<p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when functions are selected, example below with added operations menu(selected on operations setup window), which is also in the tools menu.</p>
+<p align="center"><img src="images/Splash_Screen01.png" width="433" height="317" alt="splash01"><img src="images/Main_01_main_b.png" width="497" height="307" alt="main window"></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Provides access to the menus that allow you to access all the features of JMRI/</p>
-<p align="left"><strong>Service Mode (Programming Track) Programmer button</strong></p>
-<p align="left">Provides access to the decoder programming capability in <a href="Basic_Programming.shtml#ServiceMode"><strong>Service Mode Programmer</strong></a>.</p>
-<p><strong>Operations Mode (Main Track) Programmer button
-</strong>
-<p>Provides access to the <a href="Basic_Programming.shtml#OpsMode"><strong>Operations Mode Programmer. </strong></a>
-<p><strong>Help button</strong>
-<p>Opens the Help Window
-<p><strong>Quit button</strong>
-<p>Exists the program, with confirmation dialog.
-<p>Additional  buttons at the bottom of the window will depend on how you set your <strong>preferences</strong>, You can add additional buttons or set the button to load on start up as you require for your use.  Sample buttons are:
-<h4><strong>Additional Buttons (Optional)</strong></h4>
-<p align="center"><img src="images/Main_01a_main.png" width="472" height="324" alt="Main screen with options"></p>
-<p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup in your preference to open each time you start DecoderPro&reg;. The following are samples that could be set in your preferences. (Shown are for a Digitrax LocoNet system)</p>
-<p><strong>New Throttle.. button
-</strong>
-<p>Opens a throttle window provides a tool to control your trains, you may open more than one throttle and position on the computer screen
-<p align="center"><img src="images/Main_02_Thottle.png" width="384" height="478" alt="Throttle">
-<p><strong>LocoNet monitor button</strong>
-<p>Opens the LocoNet Traffic window that allows you to monitor the commands and responses on the LocoNet.
-<p align="center"><img src="images/Main_03_locoNet.png" alt="locoNet" width="895" height="337" border="4">
-
-<p><strong>Power Control button
-</strong>
-<p>Opens Power Control window, which allows you to turn track power on or off during operations.
-<p align="center"><img src="images/Main_04_PwrCntr.png" alt="Power Control" width="188" height="133">
+<p align="left">DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
+<p align="left"><strong>
+  <input type="button" name="button" id="button" value="Service Mode (Programming Track) Programmer"> 
+</strong>Provides access to the decoder programming capability in <a href="Basic_Programming.shtml#ServiceMode"><strong>Service Mode Programmer</strong></a>
+<input type="button" name="button2" id="button2" value="Operations Mode (Main Track) Programmer">
+Provides access to the <a href="Basic_Programming.shtml#OpsMode"><strong>Operations Mode Programmer. 
+<br>
+<input type="button" name="button3" id="button3" value="Help">
+</strong></a>Opens the Help Window<br>
+<input type="button" name="button4" id="button4" value="Quit">
+Exists the program, with confirmation dialog.</p>
+<p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup in your <strong>preference </strong>to open each time you start DecoderPro&reg;. The following are samples that could be set in your preferences. (Shown are for a Digitrax LocoNet system)
+<p><strong>
+  <input type="button" name="button5" id="button5" value="New Throttle...">
+</strong>Opens a throttle window which provides a tool to control your trains, you may open more than one throttle and position on the computer screen
+<p align="center"><img src="images/Main_02_Thottle.png" width="510" height="498" alt="Throttle">
+<p><strong>
+    <input type="button" name="button6" id="button6" value="Monitor LocoNet">
+</strong>Opens the Monitor LocoNet window that allows you to monitor the commands and responses on the LocoNet.
+<p align="center"><img src="images/Main_03_locoNet.png" width="800" height="355" alt="locoNet monitor">
+<p><strong>
+    <input type="button" name="button7" id="button7" value="Power Control"> 
+</strong>Opens Power Control window, which allows you to turn track power on or off during operations.
+<p align="center"><img src="images/Main_04_PwrCntr.png" width="207" height="114" alt="power control">
 <p align="left">These are just samples of the possible buttons that may be added at startup.  
 <hr>
 
