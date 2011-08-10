@@ -112,7 +112,7 @@ abstract public class AbstractProxyManager implements Manager {
      */
     abstract protected NamedBean makeBean(int index, String systemName, String userName);
 
-    protected NamedBean getBeanBySystemName(String systemName) {
+    public NamedBean getBeanBySystemName(String systemName) {
         NamedBean t = null;
         for (int i=0; i<nMgrs(); i++) {
             t = (NamedBean)getMgr(i).getInstanceBySystemName(systemName);

@@ -78,6 +78,14 @@ public interface Manager {
 
     public String[] getSystemNameArray();
     public List<String> getSystemNameList();
+    
+    /**
+     * Locate an instance based on a system name.  Returns null if no
+     * instance already exists.
+     * @param systemName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     */
+    public NamedBean getBeanBySystemName(String systemName);
 
 	/**
 	 * At a minimum,

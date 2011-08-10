@@ -94,7 +94,17 @@ abstract public class AbstractManager
     protected Object getInstanceByUserName(String userName) {
         return _tuser.get(userName);
     }
-
+    
+    /**
+     * Locate an instance based on a system name.  Returns null if no
+     * instance already exists.
+     * @param systemName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     */
+    public NamedBean getBeanBySystemName(String systemName){
+        return _tsys.get(systemName);
+    }
+    
     /**
      * Remember a NamedBean Object created outside the manager.
      * <P>
