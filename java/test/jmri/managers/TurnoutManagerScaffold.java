@@ -83,6 +83,8 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public String getDefaultClosedSpeed() {return null; }
     
     public int getXMLOrder() { return -1; }
+    
+    public NamedBean getBeanBySystemName(String systemName) { return null; }
 
 }
 
