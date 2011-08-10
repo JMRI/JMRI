@@ -36,12 +36,13 @@
   For a tutorial on how to work with PanelPro go to 
   <a href="http://jmri.org/community/clinics/NMRA2008/LayoutEditorClinic2008/LayoutEditorClinic.pdf" target="_blank">PanelPro Layout Editor Tutorial</a> and <a href="http://www.rr-cirkits.com/Clinics/Clinics.shtml" target="_blank">PanelPro Clinic (</a>pdf and flash video files). The subject of 
   panels is included here only show what is available in the DecoderPro menus with a brief illustration/description of what these menu 
-  selections access.  They are covered here because the there is a Panels menu on the 
+  selections access.  They are covered here because  there is a Panels menu on the 
 DecoderPro main window that allows access to some of the PanelPro functions.</p>
 
 <p><strong><a name="NewPanel"></a>New Panels...<img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong></p>
 <ul>
   <li><a href="#PanelEditor">Panel Editor</a></li>
+  <li><a href="#Control">Control Panel Editor</a></li>
   <li><a href="#LayoutEditor">Layout Editor</a></li>
 </ul>
 <p><strong>Load Panels...</strong></p>
@@ -51,6 +52,10 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
 <p><strong>Store Panels...</strong></p>
 <blockquote>
   <p>The Save dialog opens, select the location on your computer that you would like to store your panel file.</p>
+</blockquote>
+<p><strong>Show History</strong></p>
+<blockquote>
+  <p>Opens untitled window with History of	panel operations</p>
 </blockquote>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>Show Panels <img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong></p>
@@ -74,6 +79,10 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
 <blockquote>
   <p>Displays the <strong>Script Entry</strong> window, in which you may enter scripted function and click on the <strong>Execute</strong> button to execute the script.</p>
 </blockquote>
+<div align=right>
+  <p><a href="Main_Debug.shtml"></a><a href="Main_Roster.shtml">Previous | </a><a href="Main_Operations.shtml">Next</a></p>
+  <p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
 <hr>
 
 
@@ -87,6 +96,10 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
 <div>
   <div align="right"><a href="#NewPanel">Back</a></div>
 </div>
+<h4><a name="Control"></a>Control Panel Editor</h4>
+<p align="center"><img src="images/Main_PanelMenu_05.png" width="463" height="381" alt="control panel editor"></p>
+<div align="right"><a href="#NewPanel"><strong>Back</strong></a></div>
+<p align="center">&nbsp;</p>
 <h4><a name="LayoutEditor"></a> Layout Editor</h4>
 <p>For more information on how to use the <a href="http://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">Layout  Editor.</a></p>
 <p align="center">

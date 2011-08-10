@@ -32,11 +32,11 @@
 <hr>
 <p><strong><a name="Create"></a><a href="#CreateRoster">Create Entry...</a></strong></p>
 <blockquote>
-  <p>Opens New Roster Setup Pane.</p>
+  <p>Opens <strong>New Roster Entry Setup</strong> Pane.</p>
 </blockquote>
 <p><strong><a name="Edit"></a><a href="#EditRoster">Edit Entry...</a></strong></p>
 <blockquote>
-  <p>Opens Edit Roster Entry Setup Pane.</p>
+  <p>Opens <strong>Edit Roster Entry Setup</strong> Pane.</p>
 </blockquote>
 <p><strong><a name="copy"></a>Copy Entry...</strong></p>
 <blockquote>
@@ -44,7 +44,7 @@
 </blockquote>
 <p><strong><a name="Import"></a>Import Entry...</strong></p>
 <blockquote>
-  <p>The Open dialog is displayed, select the roster file (roster.xml) that you wish to import. The<a href="#InputDialog"> Input prompt </a>will be displayed. The roster file will be imported, update your roster index in the Debug menu.</p>
+  <p>The <strong>Open</strong> dialog is displayed, select the roster file (roster.xml) that you wish to import. The<a href="#InputDialog"> Input prompt </a>will be displayed. The roster file will be imported, update your roster index in the <strong>Debug </strong>menu.</p>
 </blockquote>
 <p><strong><a name="Export"></a>Export Entry...</strong></p>
 <blockquote>
@@ -60,7 +60,7 @@
 </blockquote>
 <p><a href="#PrintOutput"><strong>Print Preview Summary...</strong></a></p>
 <blockquote>
-  <p>Open your operating systems printer and when the print is initiated the preview window is shown. but nothing will be sent to the printer, but nothing will be sent to the printer. </p>
+  <p>Open print preview window and displays your roster but nothing will be sent to the printer. </p>
 </blockquote>
 <p><strong><a href="Main_RosterGroup.shtml">Roster Groups</a></strong><img src="images/arrow.gif" width="20" height="9" alt="arrow"></p>
 

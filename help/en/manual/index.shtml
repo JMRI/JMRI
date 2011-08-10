@@ -163,6 +163,9 @@ The Basic Programmer</h4>
     <ul>
       <li>Print Decoder Definitions...</li>
       <li>Print Preview Decoder Definitions...</li>
+    </ul>
+    
+    <ul>
       <li>Quit</li>
     </ul>
   </li>
@@ -188,6 +191,7 @@ The Basic Programmer</h4>
       <li><a href="Main_Throttle.shtml">Throttles</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
         <ul>
           <li>New Throttle...</li>
+          <li>Throttles List Window</li>
           <li>Save Throttle Layout...</li>
           <li>Load Throttle Layout...</li>
           <li>Save as Default Throttle Layout</li>
@@ -218,7 +222,7 @@ The Basic Programmer</h4>
           <li><a href="Ops_Settings.shtml">Settings</a></li>
           <li><a href="Ops_Locations.shtml">Locations</a></li>
           <li><a href="Ops_Cars.shtml">Cars</a></li>
-          <li><a href="Ops_Engines.shtml">Engines</a></li>
+          <li><a href="Ops_Engines.shtml">locomotives</a></li>
           <li><a href="Ops_Routes.shtml">Routes</a></li>
           <li><a href="Ops_Trains.shtml">Trains</a></li>
         </ul>
@@ -245,6 +249,7 @@ The Basic Programmer</h4>
           <li>Disassociation of Roster Entry to Group</li>
         </ul>
       </li>
+      <li>Export Complete Roster...</li>
     </ul>
   </li>
   <li><a href="Main_Panels.shtml">Panels Menu</a>
@@ -258,6 +263,7 @@ The Basic Programmer</h4>
       </li>
       <li>Load Panels...</li>
       <li>Store Panels...</li>
+      <li>Show History</li>
       <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow"> </li>
       <li>Run Script...</li>
       <li><a href="/Main_Panels.shtml#ThreadMonitor">Thread Monitor</a></li>
@@ -270,7 +276,7 @@ The Basic Programmer</h4>
       <li><a href="Ops_Settings.shtml">Settings</a></li>
       <li><a href="Ops_Locations.shtml">Locations</a></li>
       <li><a href="Ops_Cars.shtml">Cars</a></li>
-      <li><a href="Ops_Engines.shtml">Engines</a></li>
+      <li><a href="Ops_Engines.shtml">Locomotives</a></li>
       <li><a href="Ops_Routes.shtml">Routes</a></li>
       <li><a href="Ops_Trains.shtml">Trains</a></li>
     </ul>
@@ -310,6 +316,8 @@ The Basic Programmer</h4>
           <li><a href="Main_Debug.shtml#logMessage">Log Message</a></li>
           <li>Display Message Log</li>
           <li>Display Log Categories</li>
+          <li>Listed Table Access</li>
+          <li>Listed Table Access-Direct to Routes</li>
           <li>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow">
             <ul>
               <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
@@ -325,7 +333,6 @@ The Basic Programmer</h4>
           <li>RailDriver Throttle</li>
           <li>Start Mini Web Server</li>
           <li>Start Wi Throttle</li>
-          <li>New DP Window</li>
     </ul>
   </li>
   <li><a href="Main_Window.shtml">Window Menu</a>
@@ -344,18 +351,15 @@ The Basic Programmer</h4>
         <input name="checkbox3" id="checkbox3" type="checkbox">
       </strong>        Power Control</li>
     </ul>
-    <ul>
-      <li></li>
-    </ul>
-  </li>
+</li>
   <li><a href="Main_Help.shtml">Help Menu</a>
     <ul>
       <li>Window Help...</li>
           <li>General Help...</li>
           <li>License...</li>
-          <li>Send Problem Report...</li>
           <li>Locations...</li>
           <li>Context....</li>
+          <li>System Console...</li>
           <li>Upload Debugging info...</li>
     </ul>
 </li>

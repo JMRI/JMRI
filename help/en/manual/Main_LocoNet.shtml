@@ -30,59 +30,65 @@
 
 <hr>
 <p><strong>Monitor LocoNet</strong></p>
-<p>Opens the <a href="Main_Monitor_Window.shtml">Communications  Monitor Window</a> and automatically displays the information that is being sent and  received on the communications link between your computer and your DCC  system.</p>
+<p>Opens the <a href="Main_Monitor_Window.shtml">Monitor LocoNet  Window(Gerneric Communications Monitor Window)</a> and automatically displays the information that is being sent and  received on the communications link between your computer and your DCC  system.</p>
 <p><strong><a name="Slots"></a>Monitor Slots</strong></p>
-<p>Opens the <a href="#SlotMonitor">Slot Monitor </a>window, and displays a table of the &quot;command station slots&quot; contents.</p>
+<p>Opens the <a href="#SlotMonitor"> Monitor Slots </a>window, and displays a table of the &quot;command station slots&quot; contents.</p>
 <p><strong><a name="Clock"></a>Monitor Clock</strong></p>
-<p>A Digitrax LocoNet can contain it's own fast clock timebase.  This can be driven either by a DCS100/DCS200 command station, or by  a separate fast clock module such as those made by Logic Rail Technologies. The <a href="#ClockMonitor">LocoNet Clock Monitor</a> dialog allows you to control this feature.</p>
+<p>A Digitrax LocoNet can contain it's own fast clock timebase.  This can be driven either by a DCS100/DCS200 command station, or by  a separate fast clock module such as those made by Logic Rail Technologies. The <a href="#ClockMonitor">  Monitor Clock</a> dialog allows you to control this feature.</p>
 <p><strong>Monitor LocoNet Stats</strong></p>
-<p>If active displays the statistics related to traffic on the LocoNet.</p>
+<p>If active displays the statistics related to traffic on the LocoNet Monitor <strong>LocoNet Stats</strong> Window.</p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
-<p><strong><a name="BDL16"></a>Configure BDL16</strong></p>
-<p>Opens <a href="#BDL16Programmer">BDL 16 Programmer </a>.</p>
-<p><strong><a name="LocoIO"></a>Configure LocoIO</strong></p>
-<p>Opens the <a href="#LocoIOProgrammer">LocoIO programmer </a>window.</p>
-<p><strong><a name="PM4"></a>Configure PM4</strong> (also newer PM42)</p>
-<p>Opens the <a href="#PM4">PM4 programmer</a> window.</p>
+<p><strong><a name="BDL16"></a>Configure BDL16</strong>/<strong>BDL168</strong></p>
+<p>Opens <a href="#BDL16Programmer">Configure BDL 16/BDL168</a> window</p>
+<p><strong>Configure LocoIO</strong></p>
+<p>Opens the <a href="#LocoIOProgrammer">Configure LocoIO </a>window.</p>
+<p><strong><a name="PM4"></a>Configure PM4</strong>/PM42 </p>
+<p>Opens the <a href="#PM4">Configure PM4/PM42</a> window.</p>
 <p><strong><a name="SE8C"></a>Configure SE8C</strong></p>
-<p>Opens the <a href="#SE8CProgrammer">SE3C programmer</a> window.</p>
+<p>Opens the <a href="#SE8CProgrammer">Configure SE3C</a> window.</p>
 <p><strong><a name="DS64"></a>Configure DS64</strong></p>
-<p>Opens the <a href="#DS64Programmer">DS64 programmer </a>window.</p>
+<p>Opens the <a href="#DS64Programmer">Configure DS64 </a>window.</p>
 <p><strong><a name="CommandStation"></a>Configure Command Station</strong></p>
-<p>Opens the DCS100(Chief) Programmeer</p>
+<p>Opens the Configure Command Station window</p>
 <p><strong>Configure LocoNet ID</strong></p>
-<p>Opens the Set LocoNet ID dialog that allows you to 
-  <input type="submit" name="button5" id="button5" value="Read"> 
+<p>Opens the <strong>Configure LocoNet ID</strong> dialog that allows you to
+<input type="submit" name="button5" id="button5" value="Read"> 
   or 
   <input type="submit" name="button6" id="button6" value="Set"> 
   the LocoNet ID <strong>Value:</strong></p>
-<p><img src="images/Main_Loconet08.png" alt="LocoNet ID" width="195" height="123" border="4"></p>
-<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
-<p><strong>Start LocoNet Server</strong></p>
-<p>Starts the LocoNet server.</p>
-<p><strong>Start LocoNet over TCP Server</strong></p>
-<p>Opens the <strong>LocoNetOver Tcp Server</strong> dialog.</p>
-<p><img src="images/Main_Loconet09.png" alt="LocoNet server" width="361" height="120" border="4"></p>
+<p><img src="images/Main_Loconet08.png" width="245" height="145" alt="loconet if"></p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>Send Throttle Messages</strong></p>
 <p>Opens <strong>Throttle message</strong> prompt with limited capabiltiy to send messages to handheld throttle.</p>
-<p><img src="images/Main_Loconet10.png" alt="Send Throttle" width="223" height="97" border="4"></p>
+<p><img src="images/Main_Loconet10.png" width="267" height="100" alt="send loconet messages"></p>
+<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong><a name="Packet"></a>Send LocoNet Packet</strong></p>
 <p>Opens the <a href="#SendPacket">Send LocoNet Packet</a> dialog that lets you directly command LocoNet devices.</p>
+<p><strong>Select PR3 Mode</strong></p>
+<p>Opens the <strong>Select PR3 Mode</strong> dialog.</p>
+<p><img src="images/Main_Loconet14.png" width="452" height="91" alt="PR3 Mode"></p>
+<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong><a name="Firmware"></a>Download Firmware</strong></p>
 <p>Opens the Firmware Downloader.</p>
 <p><strong><a name="Sounds"></a>Download Sounds</strong></p>
 <p>Opens the <a href="#SoundDownloader">Decoder Sound Downloader</a>.</p>
 <p><strong>Edit SPJ Sound</strong> <strong>File</strong></p>
-<p>Opens Sound File editing tool.</p>
-<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
-<p><strong>Select PR3 Mode</strong></p>
-<p>Open the Select PR3 Mode dialog.</p>
+<p>Opens Sound File editing tool</p>
+<p><img src="images/Main_Loconet15.png" width="248" height="93" alt="Edit soumd"></p>
+<p><strong>Start LocoNet Server</strong></p>
+<p>Starts the LocoNet server.</p>
+<p><strong>Start LocoNet over TCP Server</strong></p>
+<p>Opens the <strong>LocoNetOver Tcp Server</strong> dialog.</p>
+<p><img src="images/Main_Loconet09.png" alt="LocoNet server" width="361" height="120" border="4"></p>
+<p>.</p>
+<div align=right>
+  <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+</div>
 <hr>
 
-<h4><a name="SlotMonitor"></a>LocoNet Slot Monitor Window</h4>
+<h4><a name="SlotMonitor"></a>Monitor Slot Window</h4>
 <p>Slots are used to control individual locomotive and consists. The display includes the decoder's speed step format, current speed and function settings, consist information and status. You may choose to show all slots or just the ones being actively used.</p>
-<p align="center"><img src="images/Main_Loconet01.png" alt="Slot Monitor" width="972" height="227" border="4"></p>
+<p align="center"><img src="images/Main_Loconet01.png" width="800" height="274" alt="slot monitor"></p>
 <p>The checkboxes at the top allow to select what slots are displayed.</p>
 <p>
   <input type="checkbox" name="checkbox" id="checkbox"> 
@@ -155,9 +161,9 @@
 <div>
   <div align="right"><a href="#Slots">Back</a></div>
 </div>
-<h4> <a name="ClockMonitor"></a>LocoNet Fast Clock Monitor</h4>
-<p><img src="images/Main_Loconet02.png" alt="Loconet clock monitor" width="258" height="145" border="4"></p>
-<p>The <strong>LocoNet clock monitor</strong> tool  provides a   convenient way to: </p>
+<h4> <a name="ClockMonitor"></a>   Monitor Clock</h4>
+<p><img src="images/Main_Loconet02.png" width="215" height="153" alt="clock monitor"></p>
+<p>The <strong>Clock Monitor </strong> tool  provides a   convenient way to: </p>
 <ul>
   <li>
     <input type="submit" name="button2" id="button2" value="Read">
@@ -169,28 +175,28 @@
 <div>
   <div align="right"><a href="#Clock">Back</a></div>
 </div>
-<h4><a name="BDL16Programmer"></a>BDL 16 Programmer window</h4>
+<h4><a name="BDL16Programmer"></a>Configure BDL16/BDL168 window</h4>
 <p><img src="images/Main_Loconet03.png" alt="BDL 16" width="447" height="628" border="4"></p>
 <div>
   <div align="right"><a href="#BDL16">Back</a></div>
 </div>
-<h4><a name="LocoIOProgrammer"></a>LocoIO programmer window</h4>
+<h4><a name="LocoIOProgrammer"></a>Configure LocoIO window</h4>
 <p><img src="images/Main_Loconet04.png" alt="LocoNet IO programmer" width="693" height="518" border="4"></p>
 <div>
   <div align="right"><a href="#BDL16">Back</a></div>
 </div>
 
-<h4><a name="PM4Programmer"></a>PM4 Programmer Window (also newer PM42)</h4>
+<h4><a name="PM4Programmer"></a>Configure PM4/PM42  Window </h4>
 <p><img src="images/Main_Loconet05.png" alt="PM4 programmer" width="416" height="289" border="4"></p>
 <div>
   <div align="right"><a href="#PM4">Back</a></div>
 </div>
-<h4><a name="SE8CProgrammer"></a>SE8C Programmer Window</h4>
+<h4><a name="SE8CProgrammer"></a>Configure SE8c Window</h4>
 <p><img src="images/Main_Loconet06.png" alt="SE8C programmer" width="411" height="506" border="4"></p>
 <div>
   <div align="right"><a href="#SE8C">Back</a></div>
 </div>
-<h4><a name="DS64Programmer"></a>DS64 Programmer Window</h4>
+<h4><a name="DS64Programmer"></a>Configure DS64  Window</h4>
 <p>The DS64 programming tool lets you configure   the internal options of a DS64 directly from your computer. </p>
 <p>Type  the address of a DS64 board in the text field  and click 
   <input type="submit" name="button3" id="button3" value="Read from DS64">
@@ -237,7 +243,7 @@ Because of the way the DS64 board works, this tool can't change  the basic addre
     to load the firmware. This will take a little while.</li>
 </ul>
 <div><a href="#Firmware">Back</a></div>
-<h4><a name="SoundDownloader"></a>Decoder Sound Downloader</h4>
+<h4><a name="SoundDownloader"></a>Download Sounds</h4>
 <p><img src="images/Main_Loconet13.png" alt="Sound Download" width="436" height="232"></p>
 <p>Digitrax sound decoders are loaded with "sound projects", stored in  "Sound Project" (.spj) files.  Those contain a number of "sound fragments"  in .wav format, plus some additional control information. </p>
 <p> The Decoder Sound Downloader tool lets you load a new .spj file into   a Digitrax sound decoder via a Digitrax PR2 or PR3 interface. If you're   using a PR3, it needs to be put into "Programmer mode" before   trying to download, see the main 
