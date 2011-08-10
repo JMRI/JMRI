@@ -382,6 +382,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
                 else if (type.equals("route")) changed |= monitorProcessRoute(name, item);
                 else if (type.equals("power")) changed |= monitorProcessPower(name, item);
+                else if (type.equals("metadata")) changed = true;
                 else log.warn("Unexpected type: "+type);
             } catch (JmriException j) {
                 log.warn("exception handling "+type+" "+name, j);
