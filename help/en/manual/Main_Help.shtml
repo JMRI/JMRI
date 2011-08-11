@@ -43,26 +43,20 @@
 <blockquote>
   <p>Displays the License agreement under which JMRI operates.</p>
 </blockquote>
-<p><strong>Send Problem Report...</strong></p>
-<blockquote>
-  <p>Opens the Send Problem Report window, complete the form and click on the 
-    <input type="submit" name="button" id="button" value="Send">
-  at the bottom of the window</p>
-  <p align="center">
-    <input type="image" name="bug report" id="bug report" src="images/Main_Help_02.png">
-  </p>
-</blockquote>
 <p><strong>Locations...</strong></p>
 <blockquote>
   <p>Opens an information box showing the location of JMRI programs and files related to DecoderPro.</p>
   <p align="center"><img src="images/Main_Help_01.png" alt="location information" width="375" height="167" border="4"></p>
 </blockquote>
 <p><strong>Context...</strong></p>
-<p>Opens a window that shows the configuration setting for your DecoderPro installation.</p>
-<p align="center">
-  <input type="image" name="context page" id="context page" src="images/Main_Help_03.png">
-</p>
-<p>
+<p>Opens the<strong> JMRI Context</strong> window that shows the configuration setting for your DecoderPro installation.</p>
+<p align="center"><img src="images/Main_Help_03.png" width="778" height="321" alt="Context"></p>
+<p align="left"><strong>System Console...</strong></p>
+<p align="left">Opens the JMRI System console window that displays the Java Execution activity.</p>
+<p><img src="images/Main_Help_02.png" width="800" height="382" alt="console">
+<p><strong>Upload Debugging Info...</strong>
+<p>Opens the <strong>Upload Debugging Info</strong> Window
+<p><img src="images/Main_Help_04.png" width="577" height="311" alt="debugging">
 <hr>
 
 <div align=right>
