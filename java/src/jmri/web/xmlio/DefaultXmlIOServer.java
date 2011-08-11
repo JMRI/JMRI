@@ -214,7 +214,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
             	// add a power element
                 Element n = new Element((useAttributes) ? "power" : "item");
                 if (useAttributes) {
-                    n.setAttribute("type", "power");
                     n.setAttribute("name", "power");
                 } else {
                 n.addContent(new Element("type").addContent("power"));
@@ -227,7 +226,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 for (String mn : metaNames) {
                     Element n = new Element((useAttributes) ? "metadata" : "item");
                     if (useAttributes) {
-                        n.setAttribute("type", "metadata");
                         n.setAttribute("name", mn);
                     } else {
                     n.addContent(new Element("type").addContent("metadata"));

@@ -9,10 +9,6 @@ $(document).ready(
                         $('div#formatted').text($commandstr);
                         $('div#formattedLabel').text("Waiting....  Sent:");
 
-                        var $outputstr = "";
-                        var $headers = [];
-
-
                         $.post(
                                 '/xmlio', //<--url
                                 $commandstr, //<--data
@@ -61,24 +57,49 @@ $(document).ready(
             );
             //process the response returned for the "list" command
             var $processResponse = function($returnedData, $success, $xhr) {
+                var $outputstr = "";
+                var $headers = [];
                 $('textarea#result').text((new XMLSerializer()).serializeToString($returnedData));  //output raw result                  
                 var $xml = $($returnedData);  //jQuery-ize returned data for easier access
                 $xml.find('item').each( //find and process all "item" entries (list)
-                        function() {
-                            $outputstr += "<tr>";  //start a new row
-                            for (var $i=0; $i < $(this)[0].childNodes.length; $i++) {
-                                if ($(this)[0].childNodes[$i].nodeName != "#text") { //skip empty elements (whitespace, etc.)
-                                    $outputstr += "<td>" + $(this)[0].childNodes[$i].textContent + "</td>";
-                                    $headers[$i] = $(this)[0].childNodes[$i].nodeName;  //save node name for header row
-                                }
-                            }
-                            $outputstr += "</tr>";
-                        }
+                		function() {
+        					$col = 0;
+                			$outputstr += "<tr>";  //start a new row
+                			$($(this)[0].childNodes).each(
+                					function() {
+                						if (this.nodeName != "#text") { //skip empty elements (whitespace, etc.)
+                							$outputstr += "<td>" + this.textContent + "</td>";
+            								$col++;
+                							$headers[$col] = this.nodeName;  //save node name for header row
+                						}
+                					}
+                			);
+                			$outputstr += "</tr>";
+                		}
                 );
-                if ($outputstr == "") { //no "items" found
-                    $outputstr = "&nbsp;";
-
-                } else {  //generate a table for "items" results
+                if ($outputstr == "") { //no "items" found, try for attribute-based xml
+                	$($xml.find('XMLIO')[0].childNodes).each(
+                			function() {
+                				if (this.nodeName != "#text") { //skip empty elements (whitespace, etc.)
+                					$outputstr += "<tr>"; //start a new row,
+                					$outputstr += "<td>" + this.nodeName + "</td>";  //set name as first col
+                					$col = 0;
+                					$headers[$col] = "type";  //type is inferred
+                					$(this.attributes).each(
+                							function() {
+                								$outputstr += "<td>" + this.value + "</td>";
+                								$col++;
+                								$headers[$col] = this.name;  //save attribute name for header row
+                							}
+                					);
+                					$outputstr += "</tr>";
+                				}
+                			}
+                	);
+                }
+                if ($outputstr == "") { //if still no results found, leave empty
+                	$outputstr = "&nbsp;";
+                } else {  //generate a table for results
                     var $headerstr = "";  //populate table header
                     for (var $i=0; $i < $headers.length; $i++) {
                         if ($headers[$i] != null) {  //skip the undefined ones
@@ -87,7 +108,7 @@ $(document).ready(
                     }
                     $outputstr = "<table>" +$headerstr + $outputstr + '</table>'; //put the parts together
                 }
-                $('div#formatted').html($outputstr);  //output results as table
+                $('div#formatted').html($outputstr);  //put results table into proper div
                 $('div#formattedLabel').text("Formatted results:");
             };
         }

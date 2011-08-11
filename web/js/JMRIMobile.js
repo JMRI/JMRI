@@ -16,7 +16,6 @@
 *
 **********************************************************************************************/
 
-//TODO: fix memory variable monitoring (sending constantly now, so removed from list)
 //TODO: add button? link to type's page from settings Include list
 //TODO: checking a new function creates a new, duplicate connection (not needed)
 //TODO: "wide-screen" version that shows multiple "pages" at once, for use on wider browsers
@@ -90,22 +89,24 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 				//put data from current xml items into $currentItem object for easier reference and template use
 				var $currentItem = {};
-				for (var $i=0; $i < this.childNodes.length; $i++) {
-					if (this.childNodes[$i].nodeName != "#text") { //skip empty elements (whitespace, etc.)
-						if (this.childNodes[$i].textContent) {
-							$currentItem[this.childNodes[$i].nodeName] = this.childNodes[$i].textContent;
-						} else {
-							$currentItem[this.childNodes[$i].nodeName] = this.childNodes[$i].text;  //another IE workaround
+				$(this.childNodes).each(
+						function() {
+							if (this.nodeName != "#text") { //skip empty elements (whitespace, etc.)
+								if (this.textContent) {
+									$currentItem[this.nodeName] = this.textContent;
+								} else {
+									$currentItem[this.nodeName] = this.text;  //another IE workaround
+								}
+							}
 						}
-					}
-				}
+				);
 				if ($currentItem.value == undefined) { //if no "value" included, use the name as the value (simplifies later code)
 					$currentItem.value = $currentItem.name;  
 				}
 				var $type = $currentItem.type;  //shortcut since this is used so many times
 
 				//remove non-monitorable from xml
-				if ($type == 'roster' || $type == 'panel') {
+				if ($type == 'roster' || $type == 'panel' || $type == 'metadata') {
 					$(this).remove();
 				}
 
