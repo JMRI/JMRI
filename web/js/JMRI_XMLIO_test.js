@@ -59,7 +59,7 @@ $(document).ready(
             var $processResponse = function($returnedData, $success, $xhr) {
                 var $outputstr = "";
                 var $headers = [];
-                $('textarea#result').text((new XMLSerializer()).serializeToString($returnedData));  //output raw result                  
+                $('textarea#result').text(xml2Str($returnedData));  //output raw result                  
                 var $xml = $($returnedData);  //jQuery-ize returned data for easier access
                 $xml.find('item').each( //find and process all "item" entries (list)
                 		function() {
@@ -68,7 +68,7 @@ $(document).ready(
                 			$($(this)[0].childNodes).each(
                 					function() {
                 						if (this.nodeName != "#text") { //skip empty elements (whitespace, etc.)
-                							$outputstr += "<td>" + this.textContent + "</td>";
+                							$outputstr += "<td>" + $(this).text() + "</td>";
             								$col++;
                 							$headers[$col] = this.nodeName;  //save node name for header row
                 						}
@@ -112,4 +112,21 @@ $(document).ready(
                 $('div#formattedLabel').text("Formatted results:");
             };
         }
+
 );
+
+//workaround for IE (from http://www.webdeveloper.com/forum/showthread.php?t=187378)
+function xml2Str(xmlNode) {
+	try {  // Gecko-based browsers, Safari, Opera.
+		return (new XMLSerializer()).serializeToString(xmlNode);
+	}
+	catch (e) {
+		try {	// Internet Explorer.
+			return xmlNode.xml;
+		}
+		catch (e)	{  //Strange Browser ??
+			alert('Xmlserializer not supported');
+		}
+	}
+	return false;
+}

@@ -92,11 +92,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				$(this.childNodes).each(
 						function() {
 							if (this.nodeName != "#text") { //skip empty elements (whitespace, etc.)
-								if (this.textContent) {
-									$currentItem[this.nodeName] = this.textContent;
-								} else {
-									$currentItem[this.nodeName] = this.text;  //another IE workaround
-								}
+								$currentItem[this.nodeName] = $(this).text();
 							}
 						}
 				);
