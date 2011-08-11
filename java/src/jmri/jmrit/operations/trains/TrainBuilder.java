@@ -1719,8 +1719,10 @@ public class TrainBuilder extends TrainCommon{
 	private void searchForCarLoad(Car car) throws BuildFailedException{
 		if (car.getTrack() == null || !car.getTrack().isAddLoadsEnabledAnySiding()
 				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-				|| car.getDestination() != null || car.getNextDestination() != null)
+				|| car.getDestination() != null || car.getNextDestination() != null){
+			log.debug("No load search for car ("+car.toString()+") loads enabled: "+(car.getTrack().isAddLoadsEnabledAnySiding()?"true":"false")+", car load: ("+car.getLoad()+")");
 			return;
+		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
 				new Object[]{car.toString(), car.getType(), car.getLoad()}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
@@ -1964,7 +1966,7 @@ public class TrainBuilder extends TrainCommon{
 										&& testTrack.getLocType().equals(Track.SIDING) && testTrack.getAlternativeTrack() != null){
 									addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrackHasAlternate"),new Object[]{testTrack.getName(), testTrack.getAlternativeTrack().getName()}));
 									String altStatus = car.testDestination(car.getDestination(), testTrack.getAlternativeTrack());
-									if (altStatus.equals(Track.OKAY) || (altStatus.contains(Car.CUSTOM)&& altStatus.contains(Track.LOAD))){
+									if (altStatus.equals(Track.OKAY) || (altStatus.contains(Car.CUSTOM) && altStatus.contains(Track.LOAD))){
 										addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUseAlternateTrack"),new Object[]{car.toString(), testTrack.getAlternativeTrack().getName()}));
 										carAdded = addCarToTrain(car, rl, rld, testTrack.getAlternativeTrack());
 										car.setNextDestination(car.getDestination());
@@ -2037,7 +2039,7 @@ public class TrainBuilder extends TrainCommon{
 	 *            The car that is looking for a destination and destination
 	 *            track.
 	 * @param rl
-	 *            The route location for this car.
+	 *            The current route location for this car.
 	 * @param routeIndex
 	 *            Where in the train's route to begin a search for a destination
 	 *            for this car.
@@ -2151,8 +2153,7 @@ public class TrainBuilder extends TrainCommon{
 						// is car departing a staging track that can generate schedule loads?
 						if (car.getTrack().isAddLoadsEnabled() && car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
 							ScheduleItem si = getScheduleItem(car, testTrack);
-							//ScheduleItem si = testTrack.getCurrentScheduleItem();
-							// departing track and train must accept the schedule's load
+							// departing track and train must also accept the schedule's load
 							if (si != null && car.getTrack().acceptsLoadName(si.getLoad()) && train.acceptsLoadName(si.getLoad())){
 								addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));
 								car.setLoad(si.getLoad());
@@ -2233,7 +2234,7 @@ public class TrainBuilder extends TrainCommon{
 							break;	// done
 						if (rle.getName().equals(rld.getName()) 
 								&& (rle.getMaxCarMoves()-rle.getCarMoves()>0) 
-								&& rle.canDrop() && checkDropTrainDirection(car, rle, trackSave)){
+								&& rle.canDrop() && checkDropTrainDirection(car, rle, trackTemp)){
 							log.debug("Found an earlier drop for car ("+car.toString()+") destination ("+rle.getName()+")");
 							nextCarMoves = rle.getCarMoves();
 							nextRatio = nextCarMoves/rle.getMaxCarMoves();
