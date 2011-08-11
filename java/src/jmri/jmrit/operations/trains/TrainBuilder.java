@@ -2148,17 +2148,21 @@ public class TrainBuilder extends TrainCommon{
 						return carAdded;	// done, no build errors					
 					}					
 					// is the destination a spur with a Schedule?
-					if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE)){
-						log.debug("Siding ("+testTrack.getName()+") status: "+status);
-						// is car departing a staging track that can generate schedule loads?
-						if (car.getTrack().isAddLoadsEnabled() && car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
-							ScheduleItem si = getScheduleItem(car, testTrack);
-							// departing track and train must also accept the schedule's load
-							if (si != null && car.getTrack().acceptsLoadName(si.getLoad()) && train.acceptsLoadName(si.getLoad())){
+					// And is car departing a staging track that can generate schedule loads?
+					if(testTrack.getLocType().equals(Track.SIDING) 
+							&& !testTrack.getScheduleId().equals("")
+							&& car.getTrack().isAddLoadsEnabled() 
+							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
+								new Object[]{car.toString(), car.getType(), car.getLoad()}));
+						String carLoad = car.getLoad(); // save the car's load
+						ScheduleItem si = getScheduleItem(car, testTrack);
+						if (si != null){				
+							car.setLoad(si.getLoad());
+							status = car.testDestination(testDestination, testTrack);
+							if (status.equals(Track.OKAY)){
 								addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));
-								car.setLoad(si.getLoad());
 								car.setLoadGeneratedFromStaging(true);
-								// is car part of kernel?
 								car.updateKernel();
 								// force car to this destination
 								boolean carAdded = addCarToTrain(car, rl, rld, testTrack);	// should always be true
@@ -2167,6 +2171,7 @@ public class TrainBuilder extends TrainCommon{
 								return carAdded;	// done, no build errors
 							}
 						}
+						car.setLoad(carLoad); // restore car's load
 					}
 					// okay to drop car?
 					if(!status.equals(Track.OKAY)){
