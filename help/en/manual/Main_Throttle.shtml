@@ -30,13 +30,13 @@
 </div>
 
 <hr>
-<p>The DecoderPro&reg; Throttle may be used on your computer screen to replace the vendor throttle that is furnished with your DCC system. One or several throttles may be in use at one time. The Throttle opens as a floating window that may be positioned anywhere on  your desktop. </p>
+<p>The DecoderPro&reg; Throttle may be used on your computer screen to replace the vendor throttle that is furnished with your DCC system. One or several throttles may be in use at one time. The Throttle opens as a floating window that may be positioned anywhere on  your desktop. Note the Title Bar contains the locomotive address information.</p>
 <table width="100%" border="0" cellspacing="1" cellpadding="1">
   <tr>
-    <td width="38%" align="left" valign="top"><input type="image" name="Throttle" id="Throttle" src="images/Main_Throttle01.png"></td>
+    <td width="38%" align="left" valign="top"><img src="images/Main_Throttle01.png" width="506" height="495" alt="throttle"></td>
     <td width="62%" align="left" valign="top"><p>(color shading added to show functional areas throttle panels)</p>
     <p>The Throttle Window contains <a href="#MenuBar"><strong>Menu Bar</strong></a>, <a href="#Toolbar"><strong>Toolbar</strong></a> and three panels which may be enabled or disabled via check box in the View menu. Each panel has a title bar with windows controls to minimize, maximize and exit: :&nbsp;&nbsp; </p>
-    <p><strong>Warning!!! </strong>Be careful with the left  hand (minimize) buttons.&nbsp;In Windows, if the little guy is clicked it  will minimize the panel, which means it is no longer visible but the restore  button is lost behind the rest of the panels.&nbsp;  The  way to easily get it back, is to go into the view menu, uncheck  it there, say OK, and then go back again and re-check it.&nbsp; </p>
+    <p><strong>Warning!!! </strong>Be careful with the left  hand (minimize) buttons.&nbsp;In Windows, if the little guy is clicked it  will minimize the panel, which means it is no longer visible but the restore  button is lost behind the rest of the panels.&nbsp;  The  way to easily get it back, is to go into the view menu, uncheck  it there,  then go back again and re-check it.&nbsp; You may also drag the panels out of the way to uncover the Maximize icon for a minimized panel.</p>
 <p><a href="#AddressPanel"><strong>Address Panel </strong></a>(green shading) facilitates setting the address of the locomotive you wish to control with the throttle.</p>
     <p><a href="#ControlPanel"><strong>Control Panel</strong></a> (blue shading) contains the controls for applying power to the locomotive that is addressed and controlling speed</p>
     <p><a href="#FunctionPanel"><strong>Function Panel</strong></a>(yellow shading) contains all the function buttons used to control the addressed locomotives functions.</p></td>
@@ -45,92 +45,108 @@
 <h4><a name="MenuBar"></a>Throttle Window Menu Bar<br>
 <img src="images/Main_Throttle_menu.png" width="394" height="74" alt="Throttle menu"></h4>
 <ul>
-  <li><strong>File</strong>
-  <ul>
-    <li>Load Throttle
-      <p>Opens the Open dialog to allow you to select the desired Throttle XML file</p>
+  <li>
+    <h3><strong>File</strong>
+    </h3>
+    <ul>
+      <li><strong>New Throttle...</strong></li>
+    </ul>
+    <blockquote>
+      <p>Opens another copy of the throttle.</p>
+    </blockquote>
+    <ul>
+      <li><strong>Load Throttle</strong>
+        <p>Opens the Open dialog to allow you to select the desired Throttle XML file</p>
       </li>
-    
-    <li>Save Current Throttle</li>
+      
+      <li><strong>Save Current Throttle</strong></li>
     </ul>
     <blockquote>
       <p>Save the displayed throttle to its designated file name</p>
     </blockquote>
     <ul>
-      <li>Save Current Throttle As...</li>
+      <li><strong>Save Current Throttle As...</strong></li>
     </ul>
     <blockquote>
       <p>Opens the Save dialog to allow you to save the Throttle XML file in the location you select and using the name you specify</p>
     </blockquote>
   </li>
-  <li><strong>Edit</strong>
-<ul>
+  <li>
+    <h4><strong>Edit</strong>
+    </h4>
+    <ul>
       <li><a href="#Frame">Frame Properties</a></li>
     </ul>
-<blockquote>
-  <p>Allows you to edit the current throttle window title</p>
-</blockquote>
-<ul>
-  <li>Reset Function Buttons</li>
-</ul>
-<blockquote>
-  <p>Resets the function buttons to the default throttle layout</p>
-</blockquote>
-<ul>
-  <li>Export Current Throttle Customization to roster<br>
-  </li>
-  </ul>
+    <blockquote>
+      <p>Opens the Edit Throttle Frame dialog and allows you to edit the current throttle window title and selected Frame properties.</p>
+    </blockquote>
+    <ul>
+      <li><strong>Export Current Throttle Customization to roster</strong><br>
+      </li>
+    </ul>
   </li>
   <blockquote>
     <p><img src="images/Main_Throttle_menu_UpdateRoster.png" width="361" height="121" alt="Update Roster"></p>
   </blockquote>
-  <li><strong>View
-  -- </strong>allows you to select which of the three       panels of the throttle are being shown. 
-  <ul>
-    <li>
-      <input name="checkbox" type="checkbox" id="checkbox" checked>      
-      Address Panel</li>
-    
-    <li>
-      <input name="checkbox2" type="checkbox" id="checkbox2" checked> 
-      Control Panel
-      </li>
-    <li>
-      <input name="checkbox3" type="checkbox" id="checkbox3" checked> 
-      Function Panel</li>
+  <li>
+    <h4><strong>View
+  --</strong></h4>  
+   
+      <p>Allows you to select which of the three       panels of the throttle are being shown. Place a check mark in each of the panels that your want to display. </p>
+   
+    <ul>
+      <li>
+        <input name="checkbox" type="checkbox" id="checkbox" checked>      
+        <strong>Address Panel</strong></li>
+      
+      <li>
+        <strong>
+        <input name="checkbox2" type="checkbox" id="checkbox2" checked> 
+        Control Panel
+        </strong></li>
+      <li>
+        <strong>
+        <input name="checkbox3" type="checkbox" id="checkbox3" checked> 
+        Function Panel</strong></li>
     </ul>
-  <blockquote>
-    <p>You  may ask yourself, &ldquo;Why would I want to turn off any of these panels?&rdquo;&nbsp; As only one example, let&rsquo;s say we have an  observation car at the rear of a passenger train.&nbsp; We could equip this car with a function only  decoder to control:</p>
-    <ol>
-      <li> Interior lights, </li>
-      <li> Rear marker lights, and</li>
-      <li>A rear  Drum light.&nbsp; </li>
+    <blockquote>
+      <p>You  may ask yourself, &ldquo;Why would I want to turn off any of these panels?&rdquo;&nbsp; As only one example, let&rsquo;s say we have an  observation car at the rear of a passenger train.&nbsp; We could equip this car with a function only  decoder to control:</p>
+      <ol>
+        <li> Interior lights, </li>
+        <li> Rear marker lights, and</li>
+        <li>A rear  Drum light.&nbsp; </li>
       </ol>
-    <p>We have no need for the  speed control pane and only need three function buttons for this  &ldquo;Throttle&rdquo;.&nbsp; <br>
+      <p>We have no need for the  speed control pane and only need three function buttons for this  &ldquo;Throttle&rdquo;.&nbsp; <br>
         With  a whole passenger train equipped like this, lots of screen space can be  conserved by using the throttle set-up files to optimize the <strong>Throttle</strong> windows.  Then you could turn off the lights in the kitchen and lower the lights in the  dining area so the passengers can enjoy the sunset as they transit the Rockies  enjoying the beautiful sunset sipping Cognac&hellip;. but I digress.&nbsp; You get the idea.</p>
     </blockquote>
-  <ul>
-    <li>Show All Function Buttons</li>
-  </ul>
-  <blockquote>
-    <p>If  you have edited the function button panel to remove functions which you did not  wish to have displayed, but subsequently would like to restore them, this is  the way to show ALL the function buttons again. </p>
-</blockquote>
-  <ul>
-    <li>Get all throttle components in bounds
-      <p>Returns all the throttle panels to the throttle frame.</p>
-</li>
-  </ul>
-  <li><strong>Power</strong> (<em>track power control, if supported by your system)</em>
+    <ul>
+      <li><strong>Reset All Function Buttons</strong></li>
+    </ul>
+    <blockquote>
+      <p>Resets all the Function buttons to the default settings, 
+        <input type="button" name="button14" id="button14" value="F1">
+      , 
+      <input type="button" name="button15" id="button15" value="F2">
+      , etc.</p>
+    </blockquote>
+    <ul>
+      <li><strong>Get all throttle components in bounds</strong>
+        <p>Returns all the throttle panels to the throttle frame.</p>
+      </li>
+    </ul>
+  <li>
+    <h4><strong>Power</strong> (<em>track power control, if supported by your system)</em>
+    </h4>
   </li>
 </ul>
 <ul>
   <ul>
-    <li>Power On</li>
-    <li>Power Off</li>
+    <li><strong>Power On</strong></li>
+    <li><strong>Power Off</strong></li>
   </ul>
   <li><strong>Window</strong>
 <ul>
-  <li>Minimize</li>
+  <li><strong>Minimize</strong></li>
   <li>Lists all open DecoderPro windows.&nbsp; If one of the windows        is clicked it will be brought to the front so that you can minimize it to        the system tray. </li>
 </ul>
 </li>
@@ -138,7 +154,11 @@
 <ul>
       <li>Window Help...</li>
       <li>General Help...</li>
-      <li>Send Problem Report...</li>
+      <li>License...</li>
+      <li>Locations...</li>
+      <li>Context</li>
+      <li>System Console</li>
+      <li>Upload Debugging Info...</li>
     </ul>
     </li>
 </ul>
@@ -147,26 +167,27 @@
 </div>
 <h4>&nbsp;</h4>
 <h4><a name="Toolbar"></a>Toolbar<br>
-  <img src="images/Main_Throttle_toolbar.png" width="394" height="74" alt="Throttle toolbar"></h4>
+  <img src="images/Main_Throttle_toolbar.png" width="515" height="118" alt="throttle toolbar"></h4>
 <p>The Throttle toolbar is enabled from the <a href="Main_Tool.shtml#Preferences" target="_blank">Throttles Preferences Pane</a></p>
-<p>When it is enabled, a Throttle Window can host a set of Throttles. You can browse through these throttles:</p>
+<ul>
+  <p>Use Throttles preferences window to set the desired preferences.</p>
+  <p align="center"><img src="images/Main_Tool01.png" width="700" height="427" alt="Throttle pref"></p>
+</ul>
+<p>&nbsp;</p>
+<p>When it is enabled, a Throttle Window can host a set of Throttles. You can browse through these throttles: Add a new Throttle in that Throttle Window. Once the number of Throttles in a Throttle Window is greater than one, Next and Previous Icons are enabled. </p>
 <ul>
   <li>
-    <input type="submit" name="button3" id="button3" value="&lt;">
-  Move to previous Throttle for that Throttle Window</li>
+<img src="images/Main_Throttle_toolbar_new.png" width="51" height="45" alt="new"> Open a new Throttle Window</li>
   <li>
-    <input type="submit" name="button4" id="button4" value="&gt;">
-  Move to next Throttle for that Throttle Window</li>
-  <li><input type="image" src="images/Main_Throttle_toolbar_new.png" width="25" height="29" /> 
-  Add a new Throttle in that Throttle Window. Once the number of Throttles in a Throttle Window is greater than one, Next, Previous and Trash buttons are enabled</li>
-  <li><input type="image" src="images/Main_Throttle_toolbar_trash.png" width="25" height="29" /> 
-  Remove the current Throttle from that Throttle Window. When the number of Throttles in a Throttle Window is equal to one, Next, Previous and Trash buttons are disabled</li>
-  <li><input type="image" src="images/Main_Throttle_toolbar_stop.png" width="25" height="29" /> 
-   Send a stop message to all throttles managed by JMRI</li>
-  <li><input type="image" src="images/Main_Throttle_toolbar_power.png" width="25" height="29" /> 
-  Provide layout power control (if your system allows this feature) (Red is off, Green is on, Yellow is status unkown)</li>
-  <li><input type="image" src="images/Main_Throttle_toolbar_list.png" width="25" height="29" /> 
-  Show/Hide the <a href="#List">Throttles List Window</a></li>
+    <img src="images/Main_Throttle_toolbar_close_current.png" width="43" height="50" alt="close"> Closes the current Throttle Window</li>
+  <li><img src="images/Main_Throttle_toolbar_previous_loco.png" width="44" height="44" alt="previous loco">  Return to Previous running Locomotive. </li>
+  <li><img src="images/Main_Throttle_toolbar_previous.png" width="44" height="44" alt="previous"> Goes to previous throttle.</li>
+  <li><img src="images/Main_Throttle_toolbar_next.png" width="46" height="43" alt="next throttle"> Goes to next throttle</li>
+  <li><img src="images/Main_Throttle_toolbar_next_loco.png" width="45" height="45" alt="next loco"> Goes to next running locomotive</li>
+  <li><img src="images/Main_Throttle_toolbar_stop.png" width="44" height="48" alt="stop"> Issues an emergency stop command to all locomotives under JMRI control.</li>
+  <li><img src="images/Main_Throttle_toolbar_power.png" width="45" height="48" alt="power"> Controls track power on or off, if supported.</li>
+  <li><img src="images/Main_Throttle_toolbar_edit.png" width="50" height="49" alt="edit">Switch to or revert from Edit Throttle mode.</li>
+  <li><img src="images/Main_Throttle_toolbar_list.png" width="48" height="51" alt="listr"> Opens the <a href="#List">Local JMRI Window</a></li>
  
 </ul>
 <div>
@@ -178,11 +199,11 @@
 <p><strong>Frame Title:</strong>Type the title of your choice for  the Throttle frame. This is referred to below  as&rdquo;text&rdquo;.</p>
 <p><strong>Frame Title Components:</strong> Select the text component desired. There are two components  which can be in the title bar of the throttle &ldquo;Text&rdquo; and &ldquo;Address&rdquo;&nbsp; The selections allow either or both to be in  the title (in the order they appear in the selection), or one can opt for the  description in the locomotive Roster Entry</p>
 <blockquote>
-  <p>Address --Automatically display the address of whatever locomotive is selected. (default)</p>
-  <p>Text	-- Display the text that you enter in the field at the top of this window</p>
-  <p>Text Address -- Display the text you entered, followed by the selected address</p>
+  <p><strong>Address </strong>--Automatically display the address of whatever locomotive is selected. (default)</p>
+  <p><strong>Text</strong> -- Display the text that you enter in the field as the title at the top of this window</p>
+  <p><strong>Text Address</strong> -- Display the text you entered, followed by the selected address</p>
   <p>Address Text -- Display the selected address, followed by the text you entered</p>
-  <p>Roster ID -- Display the selected roster ID</p>
+  <p><strong>Roster ID</strong> -- Display the selected roster ID</p>
   <blockquote>
     <p class="ACCENT">(Note that if you enter text, it will not be visible unless one of the middle three modes is selected)</p>
   </blockquote>
@@ -200,21 +221,35 @@ aborts the operation</p>
 <div>
   <div align="right"><a href="#Top">Top</a></div>
 </div>
-<h4><a name="List"></a>Throttles List Window</h4>
-<p><img src="images/Main_Throttle_List.png" width="331" height="236" alt="Throttle List"></p>
-<p>The list is accessible from the Throttle Window Toolbar. Shows all currently open Throttles in JMRI. If an icon is stored in the roster database it will be automatically used</p>
-<p>Clicking on a line will bring up the matching throttle</p>
-<li><input type="image" src="images/Main_Throttle_toolbar_new.png" width="25" height="29" /> 
-  Creates a new throttle window. 
-    <p>This is different from the  New Throttle in the Tools menu.&nbsp; The one  in the tools menu brings up a new and separate throttle window.&nbsp; This one brings up a new throttle in the same  throttle window that you already have open.&nbsp;  This allows you to only have one throttle window taking up space on the  screen, and you access the various throttles by using the left/right arrows in  the throttle window tool bar, or the list mentioned above.</p>
-</li>
-<li><input type="image" src="images/Main_Throttle_toolbar_stop.png" width="25" height="29" />
-Send a stop message to all throttles managed by JMRI</li>
- <li><input type="image" src="images/Main_Throttle_toolbar_power.png" width="25" height="29" />
- Provide layout power control ( if your system allows this feature)( Red is off, Green is on, Yellow is status unkown.)</li>
- <div>
-   <div align="right"><a href="#Top">Top</a></div>
- </div>
+<h4><a name="List"></a>Local JMRI throttles</h4>
+<ul>
+  <p>Opens the Local JMRI throttles Window,<br>
+  </p>
+  <table width="50%" border="1" align="center" cellpadding="2" cellspacing="1">
+    <tr>
+      <td width="29%" rowspan="4"><ul>
+        <div align="center"><img src="images/Main_Tool02.png" width="313" height="207" alt="local JMRI throttles"></div>
+      </ul></td>
+      <td width="6%"><div align="center"><img src="images/Main_Tool_Throttle01.png" width="45" height="44" alt="icon1"></div></td>
+      <td width="65%">Opens a new Thottle</td>
+    </tr>
+    <tr>
+      <td><div align="center"><img src="images/Main_Tool_Throttle02.png" width="49" height="44" alt="icon"></div></td>
+      <td>Emergency stop for all  Throttles under JMRI control</td>
+    </tr>
+    <tr>
+      <td><div align="center"><img src="images/Main_Tool_Throttle03.png" width="41" height="43" alt="icon3"></div></td>
+      <td>Track power control</td>
+    </tr>
+    <tr>
+      <td><div align="center"><img src="images/Main_Tool_Throttle04.png" width="42" height="43" alt="icon4"></div></td>
+      <td>Opens the Throttles preferences window</td>
+    </tr>
+  </table>
+</ul>
+<div>
+  <div align="right"><a href="#Top">Top</a></div>
+</div>
  <p>&nbsp;</p>
 <h4><a name="AddressPanel"></a>Throttle Address Panel</h4>
 <table width="90%" border="0" cellspacing="1" cellpadding="1">
@@ -240,34 +275,56 @@ is used to dispatch the locomotive which releases the throttle for that address 
   <div align="right"><a href="#Top">Top</a></div>
 </div>
 <h4><a name="ControlPanel"></a>Throttle Control Panel</h4>
-<table width="90%" border="0" cellspacing="1" cellpadding="1">
+<table width="90%" border="0" align="center" cellpadding="1" cellspacing="1">
   <tr>
-    <td width="11%" rowspan="2"><img src="images/Main_Throttle_Control.png" width="103" height="384" alt="Throttle control pane"></td>
-    <td width="11%" rowspan="2"><img src="images/Main_Throttle_Control01.png" width="106" height="381" alt="Throttle Control step"></td>
-    <td colspan="2" align="left" valign="top"><p>After you have established an address for the throttle, you should be able to run the train on your layout. The Control panel is used to control the speed and direction on your locomotive when the throttle is used to operate on a layout.</p>
-    <p>The throttle slider controls the speed and indicates the percentage of power from <strong>Stop</strong> to <strong>100%</strong>. Use mouse to drag the slider to the desired speed.</p>
-    <p>In the Step mode the up and down arrows control the speed one step at a time, or you may enter a number into the text box area between 0 and the max step indicated.</p>
-    <p><strong>
-      <input name="radio" type="radio" id="radio" value="radio" checked>
-      Forward</strong> and 
-      <input type="radio" name="radio2" id="radio2" value="radio2">
-      <strong>Reverse </strong> set the locomotives direction.</p>
-    <p><strong>
-      <input type="submit" name="button9" id="button9" value="Stop!">
-</strong> executes an emergency stop, locomotive stops immediately overriding any BEMF or momentum programmed into the decoder.</p>
-    <p><strong>
-      <input type="submit" name="button10" id="button10" value="Idle">
-</strong> stops the locomotive smoothly using any momentum setting programmed into the decoder..</p></td>
+    <td width="13%" valign="top"><p><img src="images/Main_Throttle_Control.png" width="96" height="391" alt="speed control"></p>
+    <h4>Slider from 0% to 100%</h4></td>
+    <td width="14%" valign="top"><p><img src="images/Main_Throttle_Control01.png" width="103" height="384" alt="digital control"></p>
+    <h4>Speed steps</h4></td>
+    <td width="26%"  align="left" valign="top"><p><img src="images/Main_Throttle_Control02.png" width="104" height="387" alt="control 2"></p>
+    <h4>Slider 100% to 100%<br>
+through 0%</h4></td>
+    <td align="left" valign="top"><p>After you have established an address for the throttle, you should be able to run the train on your layout. The Control panel is used to control the speed and direction on your locomotive when the throttle is used to operate on a layout.</p>
+      <p>The throttle slider controls the speed and indicates the percentage of power from <strong>Stop</strong> to <strong>100%</strong>. Use mouse to drag the slider to the desired speed</p>
+      <p>Alternately, the slider may be set to STOP in the middle and move to + 100% or to -100% to control locomotive speed.</p>
+      <p>In the Step mode the up and down arrows control the speed one step at a time, or you may enter a number into the text box area between 0 and the max step indicated.</p>
+      <p><strong>
+        <input name="radio" type="radio" id="radio" value="radio" checked>
+        Forward</strong> and
+  <input type="radio" name="radio2" id="radio2" value="radio2">
+  <strong>Reverse </strong> set the locomotives direction.</p>
+      <p><strong>
+        <input type="submit" name="button9" id="button9" value="Stop!">
+      </strong> executes an emergency stop, locomotive stops immediately overriding any BEMF or momentum programmed into the decoder.</p>
+      <p><strong>
+        <input type="submit" name="button10" id="button10" value="Idle">
+    </strong> stops the locomotive smoothly using any momentum setting programmed into the decoder..</p></td>
   </tr>
   <tr>
-    <td width="19%" align="left" valign="top"><img src="images/Main_Throttle_Control_edit.png" width="178" height="144" alt="Throttle Control Edit"></td>
-    <td width="59%" align="left" valign="top">By right clicking on the Throttle Control Panel(Speed), Properties may be selected to display the Edit Speed Control dialog. This allows you to select either the slider or step speed control
-      <p>
+    <td colspan="3"><img src="images/Main_Throttle_Control_edit.png" width="383" height="196" alt="control edit"></td>
+    <td width="47%" align="left" valign="top">Control Panel Properties may be set by right clicking on the Throttle Control Panel(Speed),  the <strong>Edit Speed Control Panel </strong>dialog is displayed. This allows you to select either of the two slider or step speed control
+<p>
       <input name="radio3" type="radio" id="radio3" value="radio3" checked>
-      <strong>Display Speed Slider</strong>-- displays the Throttle Control shown at the left</p>
+      <strong>Display Speed Slider(from 0 to 100)</strong>-- displays the Throttle Control shown at the left</p>
     <p>
       <input type="radio" name="radio4" id="radio4" value="radio4">
-    <strong>Display Speed Steps </strong>-- displays the Throttle Control shown at the right</p></td>
+    <strong>Display Speed Steps </strong>-- displays the Throttle Control shown in the middle</p>
+    <p>
+      <input type="radio" name="radio5" id="radio5" value="radio5">
+    <strong>Display shunting speed slider(from 100 to 0 to 100)  -- </strong>displays the Throttle control shown on the right</p>
+    <p>
+      <input type="checkbox" name="checkbox7" id="checkbox7">
+      <strong>Track sider in real time</strong></p>
+    <p><strong>Switch to contiuous speed slider on function:</strong>
+<input name="textfield" type="text" id="textfield" value="F5" size="5">
+    Enter the function from the <strong>Function Panel</strong> that you want to use.</p>
+    <p>
+      <input type="button" name="button3" id="button3" value="OK">
+    Sets the selections</p>
+    <p>
+      <input type="button" name="button4" id="button4" value="Cancel"> 
+      Cancels any settings
+    </p></td>
   </tr>
 </table>
 <div>

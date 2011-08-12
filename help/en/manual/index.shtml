@@ -174,7 +174,7 @@ The Basic Programmer</h4>
       <li>Cut</li>
       <li>Copy</li>
       <li>Paste</li>
-      <li>Preferences...</li>
+      <li>Preferences</li>
     </ul>
   </li>
   <li><a href="Main_Tool.shtml">Tools Menu</a>
@@ -229,6 +229,7 @@ The Basic Programmer</h4>
       </li>
     </ul>
   </li>
+  <li></li>
   <li><a href="Main_Roster.shtml">Roster Menu</a>
     <ul>
       <li><a href="Main_Roster.shtml#CreateRoster">Create Entry...</a></li>
@@ -264,7 +265,7 @@ The Basic Programmer</h4>
       <li>Load Panels...</li>
       <li>Store Panels...</li>
       <li>Show History</li>
-      <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow"> </li>
+      <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow"></li>
       <li>Run Script...</li>
       <li><a href="/Main_Panels.shtml#ThreadMonitor">Thread Monitor</a></li>
       <li>Script Output</li>
@@ -381,7 +382,7 @@ The Basic Programmer</h4>
     </ul>
   </li>
   <li><a href="Ops_Cars.shtml">Cars</a></li>
-  <li><a href="Ops_Engines.shtml">Engines</a></li>
+  <li><a href="Ops_Engines.shtml">Locomotives</a></li>
   <li><a href="Ops_Routes.shtml">Routes</a></li>
   <li><a href="Ops_Trains.shtml">Trains</a></li>
   <li><a href="Ops_TripThruOperations.shtml">A Trip Through Operations</a></li>
