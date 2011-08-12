@@ -2149,7 +2149,8 @@ public class TrainBuilder extends TrainCommon{
 					}					
 					// is the destination a spur with a Schedule?
 					// And is car departing a staging track that can generate schedule loads?
-					if(testTrack.getLocType().equals(Track.SIDING) 
+					if(!status.equals(Track.OKAY) 
+							&& testTrack.getLocType().equals(Track.SIDING) 
 							&& !testTrack.getScheduleId().equals("")
 							&& car.getTrack().isAddLoadsEnabled() 
 							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
