@@ -334,26 +334,34 @@ through 0%</h4></td>
 <table width="90%" border="0" cellspacing="1" cellpadding="1">
   <tr>
     <td width="44%"><img src="images/Main_Throttle_Function.png" width="281" height="248" alt="Throttle function panel"></td>
-    <td width="56%" align="left" valign="top"><p>The Throttle Function Panel allows you to select the decoder functions from F0 through F15 on first overlay and F16 through F28 on second overlay. Many new Sound decoders use up to 28 functions.. use the 
-      <input type="submit" name="button11" id="button11" value="*">
+    <td width="56%" align="left" valign="top"><p>The <strong>Throttle Function Panel</strong> allows you to select the decoder functions from F0 through F15 on first overlay and F16 through F28 on second overlay. Many new Sound decoders use up to 28 functions.. use the
+<input type="submit" name="button11" id="button11" value="*">
     to toggle between the two overlays</p>
     <p>If you&nbsp;have entered <a href="Comp_FunctionLabel.shtml">Function labels, using the Advanced  Programmer,</a> the label text will  appear on the throttle Function buttons.</p>
 <p>Another way to change the labels on the function buttons, is to right click on the button that you want to edit, the word <strong>Properties..</strong> is displayed and when clicked on, an <strong>Edit Function Button</strong> dialog box will be displayed.</p>
     <p>&nbsp;</p></td>
   </tr>
   <tr>
-    <td align="left" valign="top"><img src="images/Main_Throttle_FunctionEdit.png" alt="Function Edit" width="229" height="189"></td>
+    <td align="left" valign="top"><img src="images/Main_Throttle_FunctionEdit.png" width="229" height="257" alt="Function edit"></td>
     <td width="56%" align="left" valign="top"><p><strong>Edit Function Button </strong>allows you to edit the text displayed on the button and the function assigned.</p>
     <p><strong>Function Number:</strong> text box to set the function assigned to the button. </p>
     <p><strong>Warning!!! </strong>Make sure you do not assign the same function  number to more than one button, otherwise, undesirable results may occur</p>
-<p><strong>Text:</strong> the text displayed on the button.</p>
+<p><strong>Text:</strong> the text you want displayed on the button.</p>
     <p><strong>Font Size:</strong> Select the font size in points.</p>
     <p>
   <input name="checkbox4" type="checkbox" id="checkbox4" checked> 
   <strong>Lockable</strong> - locks the function when button is clicked. eg makes the button a push  on / push off button.</p>
 <p>
   <input name="checkbox5" type="checkbox" id="checkbox5" checked> 
-<strong>Visible</strong> - makes the button visible.  When unchecked the button will not show in the panel. To restore use the <strong>View</strong> menu and select Show All Function Buttons option.</p>
+<strong>Visible</strong> - makes the button visible.  When unchecked the button will not show in the panel. To restore use the <strong>View</strong> menu and select <strong>Show All Function Buttons</strong> option.</p>
+<p><strong>Function off icon</strong>:</p>
+<p>
+  <input name="textfield2" type="text" id="textfield2" size="5">
+ Drag and drop icon of your choice into the box. To remove icon right click and click on Remove.</p>
+<p><strong>Function on icon:</strong></p>
+<p>
+  <input name="textfield3" type="text" id="textfield3" size="5">
+ Drag and drop icon of your choice into the box. To remove icon right click and click on Remove.</p>
     <p><strong>
       <input type="submit" name="button12" id="button12" value="OK">
 </strong> sets all the values edited.</p>

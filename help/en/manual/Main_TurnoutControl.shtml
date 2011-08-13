@@ -34,12 +34,12 @@
 
 <table width="90%" border="0" cellspacing="1" cellpadding="1">
   <tr>
-    <td width="32%" align="left" valign="top"><img src="images/Main_TurnoutControl_01.png" alt="Tunout control" width="203" height="212"></td>
+    <td width="32%" align="left" valign="top"><img src="images/Main_TurnoutControl_01.png" width="282" height="291" alt="turnout control"></td>
     <td width="68%" align="left" valign="top"><p><strong>Turnout Control</strong></p>
-      <p>Enter the accessory number or tunout system name for the accessory or turnout you wish to control in the box to right of <strong>turnout:</strong>
-        <input type="text" name="textfield" id="textfield">
-      </p>
-      <p>For example, entering 678 and by pressing either the 
+      <p><strong>Turnout</strong></p>
+      <p>
+        <input name="textfield2" type="text" id="textfield2" size="8">
+        Enter the accessory number or tunout system name for the accessory or turnout you wish to control. For example, entering 678 and by pressing either the 
         <input type="submit" name="button" id="button" value="Thrown">
       or 
       <input type="submit" name="button2" id="button2" value="closed">
@@ -57,9 +57,8 @@ will only change the state of the internal turnout and will not change a turnout
       </p>
       <p><strong>current state:</strong> A turnout can have four states: &lt;unknown&gt;, &lt;inconsistent&gt;, &lt;thrown&gt; and &lt;closed&gt;</p>
 <p><strong>feedback mode:</strong> some of the available feedback modes are: &lt;DIRECT&gt;, &lt;ONE SENSOR&gt;, &lt;TWO SENSOR&gt;, and &lt;MONITORING&gt;. A turnout using DIRECT mode does not have feedback from the layout. ONE SENSOR use one sensor on the layout to provide feedback on he state of the turnout. TWO SENSOR uses two sensors for feedback, one for closed and one for thrown. MONITORING gets feedback from the system by either listening to cab commands on the layout or polling the system for turnout status.</p>
-    <p><strong>Thrown</strong> button: push this button to throw the turnout.</p>
-    <p><strong>Closed</strong> button: push this button to close the turnout.</p>
-    <p><strong>Caboperation:</strong> some turnouts can be locked. If the control button is grayed out, the lock feature is not available.</p></td>
+    <p><strong>Caboperation:</strong> some turnouts can be locked. If the control button is grayed out, the lock feature is not available.</p>
+    <p><strong>Pushbuttons:</strong> Shows state of Pushbuttons.</p></td>
   </tr>
 </table>
 <p>
