@@ -90,7 +90,7 @@ public class OptionFrame extends OperationsFrame{
 		
 		// Build Options panel
 		JPanel pBuild = new JPanel();
-		pBuild.setLayout(new GridBagLayout());
+		pBuild.setLayout(new BoxLayout(pBuild,BoxLayout.Y_AXIS));
 		pBuild.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutBuildOptions")));
 		
 		JPanel pOpt = new JPanel();
@@ -98,14 +98,27 @@ public class OptionFrame extends OperationsFrame{
 		
 		addItem(pOpt, buildNormal, 1, 0);
 		addItem(pOpt, buildAggressive, 2, 0);
-		
 		addItem(pBuild, pOpt, 1, 0);
-		addItemLeft(pBuild, localInterchangeCheckBox, 1,1);
-		addItemLeft(pBuild, localSidingCheckBox, 1,2);
-		addItemLeft(pBuild, localYardCheckBox, 1,3);
-		addItemLeft(pBuild, trainIntoStagingCheckBox, 1,4);
-		addItemLeft(pBuild, promptFromTrackStagingCheckBox, 1,5);
-		addItemLeft(pBuild, promptToTrackStagingCheckBox, 1,6);
+		
+		// Switcher Service
+		JPanel pSwitcher = new JPanel();
+		pSwitcher.setLayout(new GridBagLayout());
+		pSwitcher.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitcherService")));
+		
+		addItemLeft(pSwitcher, localInterchangeCheckBox, 1,1);
+		addItemLeft(pSwitcher, localSidingCheckBox, 1,2);
+		addItemLeft(pSwitcher, localYardCheckBox, 1,3);
+		addItemLeft(pBuild, pSwitcher, 1, 1);
+		
+		// Staging
+		JPanel pStaging = new JPanel();
+		pStaging.setLayout(new GridBagLayout());
+		pStaging.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStaging")));
+		
+		addItemLeft(pStaging, trainIntoStagingCheckBox, 1,4);
+		addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1,5);
+		addItemLeft(pStaging, promptToTrackStagingCheckBox, 1,6);
+		addItemLeft(pBuild, pStaging, 1, 2);
 		
 		// Router panel
 		JPanel pRouter = new JPanel();
@@ -158,8 +171,8 @@ public class OptionFrame extends OperationsFrame{
 		pack();
 		if (getWidth()<400)
 			setSize(400, getHeight());
-		if (getHeight()<550)		
-			setSize(getWidth(), 550);
+		if (getHeight()<600)		
+			setSize(getWidth(), 600);
 		setVisible(true);
 	}
 	
