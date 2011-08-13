@@ -214,6 +214,7 @@ and the program will convert to scale feet. Append a double quote to the
 length when entering actual inches. The program will also automatically
 assign the proper NMRA weight for a car based on scale and length.
 
+<A NAME="MaximumTrainLength"></A>
 <H3>Maximum Train Length</H3>
 
 Now enter the default "Maximum Train Length" you desire for your trains.
@@ -345,16 +346,19 @@ Note that once you've built a train, the build option can not be changed until
 all trains are terminated or reset. 
 </P>
 
-<H3>Allow Local Car Movements</H3>
+<A NAME="AllowLocalCarMovements"></A>
+<H3>Allow Local Car Movements when using a Switcher</H3>
 
-The next set of options controls local car movements. Normally it is
-better not to allow a car to move from one spur directly to another
-spur in the same location. This type of move can be very unrealistic,
-picture moving a boxcar from a shoe manufacture directly to an auto manufacture.
-Also moving a car from one yard track to another can have your operators
-wondering what kind of busy work is being generated! But if you need
-these types of moves, select the appropriate checkbox.
-
+The next set of options control local car movements when using
+<A HREF="#SwitcherService">switcher</A> to service a location.
+Normally it is better not to allow a car to move from one spur
+directly to another spur in the same location. This type of move can
+be very unrealistic, picture moving a boxcar from a shoe manufacture
+directly to an auto manufacture. Also moving a car from one yard
+track to another can have your operators wondering what kind of busy
+work is being generated! But if you need these types of moves, select
+the appropriate checkbox. 
+			
 <A NAME="TypeRoadLoadRestrictionsStaging"></A>
 <H3>Enable Type, Road and Load Restrictions into Staging</H3>
 
@@ -1609,7 +1613,7 @@ or increase the train's travel time,
 enter the number of minutes desired in the "Wait" cell.  Another choice
 is to specify the train's departure time from a location.</P>
 
-<P>You can also adjust the maximum train length that can depart each
+<P>You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> that can depart each
 location. The grade is used to determine how many locomotives the train will
 require for that segment.</P>
 
@@ -1997,10 +2001,10 @@ The program when generating a manifest for a switcher (a train with a single
 location in its route) will by default never move a car from a spur
 to a spur or yard to a yard, only yard to spur or spur to yard.
 This rule also applies to interchanges. This restriction helps prevent
-unrealistic car movements between spurs (industries). If you want a
+unrealistic car movements between spurs (industries). However, if you want a
 spur to spur move, use a <A HREF="#Schedules">Schedule</A> to
 force the car move. You can also disable this restriction see 
-<A	HREF="#SettingsOptions">Options.</A>
+<A	HREF="#AllowLocalCarMovements">Options.</A>
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
