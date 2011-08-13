@@ -193,9 +193,9 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.HAZARDOUS))
 			return (car.isHazardous()? " ("+rb.getString("Hazardous")+")" : "");
 		else if (attribute.equals(Setup.DROP_COMMENT))
-			return " "+CarLoads.instance().getDropComment(car.getType(), car.getLoad());
+			return " "+car.getDropComment();
 		else if (attribute.equals(Setup.PICKUP_COMMENT))
-			return " "+CarLoads.instance().getPickupComment(car.getType(), car.getLoad());
+			return " "+car.getPickupComment();
 		else if (attribute.equals(Setup.KERNEL))
 			return " "+tabString(car.getKernelName(), Control.MAX_LEN_STRING_ATTRIBUTE);
 		else if (attribute.equals(Setup.RWE)){

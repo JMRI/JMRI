@@ -5,7 +5,6 @@ package jmri.jmrit.operations.trains;
 import java.io.PrintWriter;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 
@@ -99,8 +98,8 @@ public class TrainCsvCommon extends TrainCommon {
 				+del+car.getOwner()
 				+del+car.getKernelName()
 				+del+car.getComment()
-				+del+CarLoads.instance().getPickupComment(car.getType(), car.getLoad())
-				+del+CarLoads.instance().getDropComment(car.getType(), car.getLoad())
+				+del+car.getPickupComment()
+				+del+car.getDropComment()
 				+del+(car.isCaboose()?"C":"")
 				+del+(car.hasFred()?"F":"")
 				+del+(car.isHazardous()?"H":"")

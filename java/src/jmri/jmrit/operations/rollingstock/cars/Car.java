@@ -114,6 +114,21 @@ public class Car extends RollingStock {
 		return _load;
 	}
 	
+	/**
+	 * Gets the car load's priority.
+	 */
+	public String getPriority(){
+		return (carLoads.getPriority(_type, _load));
+	}
+	
+	public String getPickupComment(){
+		return carLoads.getPickupComment(getType(), getLoad());
+	}
+	
+	public String getDropComment(){
+		return carLoads.getDropComment(getType(), getLoad());
+	}
+	
 	public void setLoadGeneratedFromStaging(boolean fromStaging){
 		_loadGeneratedByStaging = fromStaging;
 	}
@@ -143,10 +158,6 @@ public class Car extends RollingStock {
 	
 	public String getNextLoad(){
 		return _nextLoad;
-	}
-	
-	public String getPriority(){
-		return (carLoads.getPriority(_type, _load));
 	}
 	
 	public String getWeightTons() {
