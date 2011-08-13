@@ -199,8 +199,13 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.KERNEL))
 			return " "+tabString(car.getKernelName(), Control.MAX_LEN_STRING_ATTRIBUTE);
 		else if (attribute.equals(Setup.RWE)){
-			if (!car.getReturnWhenEmptyDestName().equals(""))
-				return " "+rb.getString("RWE")+" "+car.getReturnWhenEmptyDestName();
+			if (!car.getReturnWhenEmptyDestName().equals("")){
+				String dest = splitString(car.getReturnWhenEmptyDestination().getName());
+				String track = "";
+				if (car.getReturnWhenEmptyDestTrack() != null)
+					track = splitString(car.getReturnWhenEmptyDestTrack().getName());
+				return " "+rb.getString("RWE")+" "+dest+" ("+track+")";
+			}
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, pickup, local);
