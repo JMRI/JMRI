@@ -456,8 +456,8 @@ Here's a list of the current codes and descriptions:
 <P>The car parameters for pick up car (PC) and set out car (SC) are: road,
 number, type, length, load, color, location name, track name,
 destination name, destination track name, owner name, kernel name, car
-comment, pick up comment, set out comment,C,F,H, RFID. Where C =
-Caboose, F = FRED, and H = Hazardous</P>
+comment, pick up comment, set out comment,C,F,H, RFID, RWE location name, RWE track name. Where C =
+Caboose, F = FRED, and H = Hazardous.</P>
 <P>The loco parameters for pick up loco (PL) and set out loco (SL) are: road,
 number, model, length, type, hp, location name, track name, destination
 name, destination track name, owner name, consist name, car comment,

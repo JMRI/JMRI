@@ -62,28 +62,39 @@ public class TrainCsvCommon extends TrainCommon {
       	String carType = car.getType();
     	if (carType.contains(del)){
     		log.debug("Car ("+car.toString()+") has delimiter in type field: "+carType);
-    		carType = "\""+car.getType()+"\"";
+    		carType = "\""+carType+"\"";
     	}
        	String carLocationName = car.getLocationName();
     	if (carLocationName.contains(del)){
     		log.debug("Car ("+car.toString()+") has delimiter in location field: "+carLocationName);
-    		carLocationName = "\""+car.getLocationName()+"\"";
+    		carLocationName = "\""+carLocationName+"\"";
     	}
     	String carTrackName = car.getTrackName();
     	if (carTrackName.contains(del)){
     		log.debug("Car ("+car.toString()+") has delimiter in track field: "+carTrackName);
-    		carTrackName = "\""+car.getTrackName()+"\"";
+    		carTrackName = "\""+carTrackName+"\"";
     	}
        	String carDestName = car.getDestinationName();
     	if (carDestName.contains(del)){
     		log.debug("Car ("+car.toString()+") has delimiter in destination field: "+carDestName);
-    		carDestName = "\""+car.getDestinationName()+"\"";
+    		carDestName = "\""+carDestName+"\"";
     	}
     	String carDestTrackName = car.getDestinationTrackName();
     	if (carDestTrackName.contains(del)){
     		log.debug("Car ("+car.toString()+") has delimiter in destination track field: "+carDestTrackName);
-    		carDestTrackName = "\""+car.getDestinationTrackName()+"\"";
+    		carDestTrackName = "\""+carDestTrackName+"\"";
     	}
+    	String carRWEDestName = car.getReturnWhenEmptyDestinationName();
+      	if (carRWEDestName.contains(del)){
+    		log.debug("Car ("+car.toString()+") has delimiter in RWE destination field: "+carRWEDestName);
+    		carRWEDestName = "\""+carRWEDestName+"\"";
+    	}
+       	String carRWETrackName = car.getReturnWhenEmptyDestTrackName();
+      	if (carRWETrackName.contains(del)){
+    		log.debug("Car ("+car.toString()+") has delimiter in RWE destination track field: "+carRWETrackName);
+    		carRWETrackName = "\""+carRWETrackName+"\"";
+    	}
+
 		addLine(fileOut, operation 
 				+del+car.getRoad()
 				+del+car.getNumber()
@@ -103,7 +114,9 @@ public class TrainCsvCommon extends TrainCommon {
 				+del+(car.isCaboose()?"C":"")
 				+del+(car.hasFred()?"F":"")
 				+del+(car.isHazardous()?"H":"")
-				+del+car.getRfid());
+				+del+car.getRfid()
+				+del+carRWEDestName
+				+del+carRWETrackName);
 	}
 	
 	protected void fileOutCsvEngine(PrintWriter fileOut, Engine engine, String operation){	

@@ -316,6 +316,14 @@ public class Car extends RollingStock {
 		return _rweDestination;
 	}
 	
+	public String getReturnWhenEmptyDestinationName(){
+		if (getReturnWhenEmptyDestination()!=null)
+			return getReturnWhenEmptyDestination().getName();
+		else
+			return "";
+		
+	}
+	
 	public void setReturnWhenEmptyDestTrack(Track track){
 		Track old = _rweDestTrack;
 		_rweDestTrack = track;
@@ -328,11 +336,16 @@ public class Car extends RollingStock {
 		return _rweDestTrack;
 	}
 	
+	public String getReturnWhenEmptyDestTrackName(){
+		if (getReturnWhenEmptyDestTrack() != null)
+			return getReturnWhenEmptyDestTrack().getName();
+		else
+			return "";
+	}
+	
 	public String getReturnWhenEmptyDestName(){
-		if (getReturnWhenEmptyDestination() != null && getReturnWhenEmptyDestTrack() != null)
-			return getReturnWhenEmptyDestination().getName()+"("+getReturnWhenEmptyDestTrack().getName()+")";
-		else if (getReturnWhenEmptyDestination() != null)
-			return getReturnWhenEmptyDestination().getName()+"()";
+		if (getReturnWhenEmptyDestination() != null)
+			return getReturnWhenEmptyDestinationName()+"("+getReturnWhenEmptyDestTrackName()+")";
 		else
 			return "";
 	}
