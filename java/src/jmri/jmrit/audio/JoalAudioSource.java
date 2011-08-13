@@ -262,6 +262,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @SuppressWarnings("SleepWhileInLoop")
     protected void doStop() {
         if (log.isDebugEnabled()) log.debug("Stop JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -270,13 +271,13 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
         int[] myState = new int[1];
         al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, myState, 0);
-        boolean stopped = myState[0] != AL.AL_STOPPED;
+        boolean stopped = myState[0] != AL.AL_LOOPING;
         while (!stopped) {
             try {
                 Thread.sleep(5);
             } catch (InterruptedException ex) {
                 al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, myState, 0);
-                stopped = myState[0] != AL.AL_STOPPED;
+                stopped = myState[0] != AL.AL_LOOPING;
             }
         }
         this.setState(STATE_STOPPED);
