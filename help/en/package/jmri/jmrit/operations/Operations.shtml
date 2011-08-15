@@ -530,6 +530,15 @@ If you would like your manifest printed in a tabular format select the
 tabular checkbox. This options works best with font names that have
 equally spaced characters like "Courier or Monospaced".
 
+<H3>Preview Manifest</H3>
+
+If you want to use a text editor to preview your manifests, select
+this option. JMRI is currently built for compatibility with Java 1.5.
+This feature requires Java 1.6 and a custom jmri.jar file. You
+can get the replacement file from
+<A HREF="http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar">
+	http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar.</A>
+
 <H3>Message Formats</H3>
 
 You can customize the pick up, set out, and local move messages for your
