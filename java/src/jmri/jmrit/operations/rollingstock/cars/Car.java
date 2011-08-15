@@ -138,7 +138,7 @@ public class Car extends RollingStock {
 	}
 	
 	public void setScheduleId(String id){
-		log.debug("set schedule id ("+id+") for car ("+toString()+")");
+		//log.debug("set schedule id ("+id+") for car ("+toString()+")");
 		String old = _scheduleId;
 		_scheduleId = id;
 		if (!old.equals(id))
@@ -240,7 +240,7 @@ public class Car extends RollingStock {
 		_nextDestination = destination;
 		if (_nextDestination != null)
 			_nextDestination.addPropertyChangeListener(this);
-		log.debug("Next destination for car ("+toString()+") old: "+old+" new: "+destination);
+		//log.debug("Next destination for car ("+toString()+") old: "+old+" new: "+destination);
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
 			firePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, old, destination);
 	}
@@ -282,26 +282,34 @@ public class Car extends RollingStock {
 	}
 	
 	public void setPreviousNextDestination(Location location){
+		/*
 		if (location != null)
 			log.debug("Car ("+toString()+") setPreviousNextDestination ("+location.getName()+")");
+			*/
 		_previousNextDestination = location;
 	}
 	
 	public Location getPreviousNextDestination(){
+		/*
 		if (_previousNextDestination != null)
 			log.debug("Car ("+toString()+") getPreviousNextDestination ("+ _previousNextDestination.getName()+")");
+			*/
 		return _previousNextDestination;
 	}
 		
 	public void setPreviousNextDestTrack(Track track){
+		/*
 		if (track != null)
 			log.debug("Car ("+toString()+") setPreviousNextDestTrack ("+track.getName()+")");
+			*/
 		_previousNextDestTrack = track;
 	}
 	
 	public Track getPreviousNextDestTrack(){
+		/*
 		if (_previousNextDestTrack != null)
 			log.debug("Car ("+toString()+") getPreviousNextDestTrack "+ _previousNextDestTrack.getName()+")");
+			*/
 		return _previousNextDestTrack;
 	}
 	
