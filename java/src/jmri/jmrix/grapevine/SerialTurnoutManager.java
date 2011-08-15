@@ -4,6 +4,7 @@ package jmri.jmrix.grapevine;
 
 import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
+import jmri.JmriException;
 
 /**
  * Implement turnout manager for Grapevine systems
@@ -59,35 +60,51 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     //Turnout address format is more than a simple number.
     public boolean allowMultipleAdditions() { return false;  }
     
-    /**
-    * A method that returns the next valid free turnout hardware address
-    */
-    
-    public String getNextValidAddress(String curAddress, String prefix){
-        int nCard = 0;
-        int nNode = 0;
-        int bitNum = 0;
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
         String tmpSName = prefix+"T"+curAddress;
-        
         
         if(curAddress.contains(":")){
             //Address format passed is in the form of node:cardOutput or node:card:address
             int seperator = curAddress.indexOf(":");
-            nNode = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
-            int nxSeperator = curAddress.indexOf(":", seperator+1);
-            if (nxSeperator == -1){
-                //Address has been entered in the format node:cardOutput
-                bitNum = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
-            } else {
-                //Address has been entered in the format node:card:output
-                nCard = Integer.valueOf(curAddress.substring(seperator+1,nxSeperator)).intValue()*100;
-                bitNum = Integer.valueOf(curAddress.substring(nxSeperator+1)).intValue();
+            try {
+                nNode = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+                int nxSeperator = curAddress.indexOf(":", seperator+1);
+                if (nxSeperator == -1){
+                    //Address has been entered in the format node:cardOutput
+                    bitNum = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+                } else {
+                    //Address has been entered in the format node:card:output
+                    nCard = Integer.valueOf(curAddress.substring(seperator+1,nxSeperator)).intValue()*100;
+                    bitNum = Integer.valueOf(curAddress.substring(nxSeperator+1)).intValue();
+                }
+            } catch (NumberFormatException ex) { 
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                throw new JmriException("Hardware Address passed should be a number");
             }
             tmpSName = prefix+"T"+nNode+(nCard+bitNum);
         } else {
             bitNum = SerialAddress.getBitFromSystemName(tmpSName);
             nNode = SerialAddress.getNodeAddressFromSystemName(tmpSName);
             tmpSName = prefix+"T"+nNode+bitNum;
+        }
+        return (tmpSName);
+    }
+    
+    int nCard = 0;
+    int bitNum = 0;
+    int nNode = 0;
+    
+    /**
+    * A method that returns the next valid free turnout hardware address
+    */
+    
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException{
+        
+        String tmpSName = "";
+        try {
+            tmpSName = createSystemName(curAddress, prefix);
+        } catch (JmriException ex) {
+            throw ex;
         }
 
         //If the hardware address past does not already exist then this can

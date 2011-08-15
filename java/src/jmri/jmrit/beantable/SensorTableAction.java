@@ -168,7 +168,13 @@ public class SensorTableAction extends AbstractTableAction {
         String curAddress = sysName.getText();
 
         for (int x = 0; x < numberOfSensors; x++){
-            curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
+            try {
+                curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
+            }  catch (jmri.JmriException ex) {
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                return;
+            }
             if (curAddress==null){
                 //The next address is already in use, therefore we stop.
                 break;

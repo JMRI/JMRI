@@ -179,10 +179,29 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     
     public boolean allowMultipleAdditions(String systemName) { return true;  }
     
-    public String getNextValidAddress(String curAddress, String prefix){
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
+        try {
+            Integer.parseInt(curAddress);
+        } catch (java.lang.NumberFormatException ex) {
+            log.error("Hardware Address passed should be a number " + ex);
+            throw new JmriException("Hardware Address passed should be a number");
+        }
+        return prefix+typeLetter()+curAddress;
+    }
+    
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException{
         //If the hardware address past does not already exist then this can
         //be considered the next valid address.
-        Turnout t = getBySystemName(prefix+typeLetter()+curAddress);
+        String tmpSName = "";
+        try {
+            tmpSName = createSystemName(curAddress, prefix);
+        } catch (JmriException ex) {
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+            return null;
+        }
+        
+        Turnout t = getBySystemName(tmpSName);
         if(t==null){
             return curAddress;
         }

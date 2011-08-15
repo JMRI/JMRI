@@ -112,8 +112,9 @@ public interface SensorManager extends Manager {
     * @param curAddress - The hardware address of the turnout we which to check.
     */
      
-    public String getNextValidAddress(String curAddress, String prefix);
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException;
     
+    public String createSystemName(String curAddress, String prefix) throws JmriException;
     
     public long getDefaultSensorDebounceGoingActive();
     public long getDefaultSensorDebounceGoingInActive();

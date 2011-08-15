@@ -132,10 +132,29 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     
     public boolean allowMultipleAdditions(String systemName) { return false;  }
 
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
+        try {
+            Integer.parseInt(curAddress);
+        } catch (java.lang.NumberFormatException ex) {
+            log.error("Hardware Address passed should be a number " + ex);
+            throw new JmriException("Hardware Address passed should be a number");
+        }
+        return prefix+typeLetter()+curAddress;
+    }
+    
     public String getNextValidAddress(String curAddress, String prefix){
         //If the hardware address past does not already exist then this can
         //be considered the next valid address.
-        Sensor s = getBySystemName(prefix+typeLetter()+curAddress);
+        String tmpSName = "";
+        
+        try {
+            tmpSName = createSystemName(curAddress, prefix);
+        } catch (JmriException ex) {
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+            return null;
+        }
+        Sensor s = getBySystemName(tmpSName);
         if(s==null){
             return curAddress;
         }

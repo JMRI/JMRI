@@ -102,14 +102,33 @@ public class ProxySensorManager extends AbstractProxyManager
         if (i >= 0)
             return ((SensorManager)getMgr(i)).allowMultipleAdditions(systemName);
         return ((SensorManager)getMgr(0)).allowMultipleAdditions(systemName);
-        }
+    }
     
-    public String getNextValidAddress(String curAddress, String prefix){
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
+        for (int i=0; i<nMgrs(); i++) {
+            if ( prefix.equals(
+                    ((SensorManager)getMgr(i)).getSystemPrefix()) ) {
+                //System.out.println((TurnoutManager)getMgr(i))
+                try {
+                    return ((SensorManager)getMgr(i)).createSystemName(curAddress, prefix);
+                } catch (jmri.JmriException ex) {
+                    log.error(ex.toString());
+                    throw ex;
+                }
+            }
+        }
+        throw new jmri.JmriException("Sensor Manager could not be found for System Prefix " + prefix);
+    }
+    
+    public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException{
         for (int i=0; i<nMgrs(); i++) {
             if ( prefix.equals( 
                     ((SensorManager)getMgr(i)).getSystemPrefix()) ) {
-                //System.out.println((TurnoutManager)getMgr(i))
-                return ((SensorManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
+                try {
+                    return ((SensorManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
             }
         }
         return null;

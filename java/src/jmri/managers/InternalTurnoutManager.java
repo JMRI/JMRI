@@ -27,6 +27,9 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     
     public String getSystemPrefix() { return prefix; }
     
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
+        return prefix+typeLetter()+curAddress;
+    }
     /*
      * Turnout operation support. Internal turnouts don't need retries.
      */

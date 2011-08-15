@@ -996,7 +996,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         boolean useLastType = false;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         for (int x = 0; x < numberOfTurnouts; x++){
-            curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
+            try {
+                curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
+            } catch (jmri.JmriException ex) {
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                return;
+            }
             if (curAddress==null){
                 //The next address is already in use, therefore we stop.
                 break;

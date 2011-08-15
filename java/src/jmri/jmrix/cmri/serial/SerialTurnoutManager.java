@@ -4,6 +4,7 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
+import jmri.JmriException;
 
 /**
  * Implement turnout manager for CMRI serial systems
@@ -201,12 +202,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     
     public boolean isControlTypeSupported(String systemName) {return true;}
     
-    /**
-    * A method that returns the next valid free turnout hardware address
-    */
-    public String getNextValidAddress(String curAddress, String prefix){
-        int nAddress = 0;
-        int bitNum = 0;
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
         int seperator=0;
         String tmpSName;
         
@@ -224,10 +220,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 int b = (curAddress.toUpperCase()).indexOf("B")+1;
                 Integer.parseInt(curAddress.substring(b));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-                return null;
+                throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix+typeLetter()+curAddress;
             bitNum = SerialAddress.getBitFromSystemName(tmpSName);
@@ -237,21 +230,36 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 //We do this to simply check that the value passed is a number!
                 Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-                return null;
+                throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix+"T"+curAddress;
             bitNum = SerialAddress.getBitFromSystemName(tmpSName);
             nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
         }
-
-        //If the hardware address past does not already exist then this can
+        return (tmpSName);
+    }
+    
+    int bitNum = 0;
+    int nAddress = 0;
+    
+    /**
+    * A method that returns the next valid free turnout hardware address
+    */
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+        String tmpSName = "";
+        try {
+            tmpSName = createSystemName(curAddress, prefix);
+        } catch (JmriException ex) {
+            throw ex;
+        }
+        
+        //If the hardware address part does not already exist then this can
         //be considered the next valid address.
         Turnout t = getBySystemName(tmpSName);
         if(t==null){
-            seperator = tmpSName.indexOf("T")+1;
+            /*We look for the last instance of T, as the hardware address side 
+            of the system name should not contain the letter, however parts of the prefix might */
+            int seperator = tmpSName.lastIndexOf("T")+1;
             curAddress = tmpSName.substring(seperator);
             return curAddress;
         }
@@ -269,14 +277,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 //System.out.println("This should increment " + bitNum);
                 tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
                 t = getBySystemName(tmpSName);
-                if(t==null)
-                    seperator = tmpSName.indexOf("T")+1;
+                if(t==null){
+                    int seperator = tmpSName.lastIndexOf("T")+1;
                     curAddress = tmpSName.substring(seperator);
                     return curAddress;
+                }
             }
             return null;
         } else {
-            seperator = tmpSName.indexOf("T")+1;
+            int seperator = tmpSName.lastIndexOf("T")+1;
             curAddress = tmpSName.substring(seperator);
             return curAddress;
         }

@@ -3,6 +3,7 @@
 package jmri.jmrix.lenz;
 
 import jmri.Sensor;
+import jmri.JmriException;
 
 /**
  * Manage the XPressNet specific Sensor implementation.
@@ -89,25 +90,19 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     
     public boolean allowMultipleAdditions(String systemName) { return true;  }
     
-    /**
-     * Does not enforce any rules on the encoder or input values.
-    **/
-    public String getNextValidAddress(String curAddress, String prefix){
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
         int encoderAddress = 0;
-        int seperator=0;
         int input = 0;
-        int iName;
+        
         if(curAddress.contains(":")){
             //Address format passed is in the form of encoderAddress:input or T:turnout address
-            seperator = curAddress.indexOf(":");
+            int seperator = curAddress.indexOf(":");
             try {
                 encoderAddress = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
                 input = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " into the cab and input format of nn:xx");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-                return null;
+                throw new JmriException("Hardware Address passed should be a number");
             }
             iName = ((encoderAddress-1)*8)+input;
         } else {
@@ -116,15 +111,33 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-                return null;
+                throw new JmriException("Hardware Address passed should be a number");
             }
+        }
+        
+        return prefix+typeLetter()+iName;
+    }
+    
+    int iName;
+    
+    /**
+     * Does not enforce any rules on the encoder or input values.
+     */
+    public String getNextValidAddress(String curAddress, String prefix){
+
+        String tmpSName = "";
+
+        try {
+            tmpSName = createSystemName(curAddress, prefix);
+        } catch (JmriException ex) {
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+            return null;
         }
         
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
-        Sensor s = getBySystemName(prefix+typeLetter()+iName);
+        Sensor s = getBySystemName(tmpSName);
         if(s!=null){
             for(int x = 1; x<10; x++){
                 iName=iName+1;

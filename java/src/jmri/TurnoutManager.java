@@ -192,8 +192,13 @@ public interface TurnoutManager extends Manager {
     * @param curAddress - The hardware address of the turnout we which to check.
     */
      
-    public String getNextValidAddress(String curAddress, String prefix);
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException;
 
+    /**
+     * Returns a system name for a given hardware address and system prefix.
+     */
+    public String createSystemName(String curAddress, String prefix) throws JmriException;
+    
     public void setDefaultClosedSpeed(String speed) throws JmriException;
     
     public void setDefaultThrownSpeed(String speed) throws JmriException;

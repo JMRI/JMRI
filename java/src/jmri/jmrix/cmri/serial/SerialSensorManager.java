@@ -4,6 +4,7 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
+import jmri.JmriException;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
@@ -155,26 +156,18 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     
     public boolean allowMultipleAdditions(String systemName) { return true;  }
     
-    public String getNextValidAddress(String curAddress, String prefix){
-        //If the hardware address past does not already exist then this can
-        //be considered the next valid address.
-        int nAddress = 0;
-        int bitNum = 0;
-        int seperator=0;
-        String tmpSName;
-        
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
+        String tmpSName = "";
         if(curAddress.contains(":")){
             //Address format passed is in the form node:address
-            seperator = curAddress.indexOf(":");
+            int seperator = curAddress.indexOf(":");
             try{
                 nAddress = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
                 bitNum = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
             } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address format of node:address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-            return null;
-        }
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
+            }
             tmpSName = SerialAddress.makeSystemName("S", nAddress, bitNum);
         } else if (curAddress.contains("B")||(curAddress.contains("b"))) {
             curAddress = curAddress.toUpperCase();
@@ -185,9 +178,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 Integer.parseInt(curAddress.substring(b));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-                return null;
+                throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix+typeLetter()+curAddress;
             bitNum = SerialAddress.getBitFromSystemName(tmpSName);
@@ -198,14 +189,34 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-                return null;
+                throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix+typeLetter()+curAddress;
             bitNum = SerialAddress.getBitFromSystemName(tmpSName);
             nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
         }
+        
+        return tmpSName;
+    }
+    
+    int bitNum = 0;
+    int nAddress = 0;
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        //If the hardware address past does not already exist then this can
+        //be considered the next valid address.
+        
+        String tmpSName = "";
+        try {
+            tmpSName = createSystemName(curAddress, prefix);
+        } catch (JmriException ex) {
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+
+            return null;
+        }
+        
          
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
@@ -216,14 +227,14 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 tmpSName = SerialAddress.makeSystemName("S", nAddress, bitNum);
                 s = getBySystemName(tmpSName);
                 if(s==null){
-                    seperator = tmpSName.indexOf("S")+1;
+                    int seperator = tmpSName.lastIndexOf("S")+1;
                     curAddress = tmpSName.substring(seperator);
                     return curAddress;
                 }
             }
             return null;
         } else {
-            seperator = tmpSName.indexOf("S")+1;
+            int seperator = tmpSName.lastIndexOf("S")+1;
             curAddress = tmpSName.substring(seperator);
             return curAddress;
         }

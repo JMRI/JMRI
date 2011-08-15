@@ -201,14 +201,31 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         if (i >= 0)
             return ((TurnoutManager)getMgr(i)).allowMultipleAdditions(systemName);
         return ((TurnoutManager)getMgr(0)).allowMultipleAdditions(systemName);
-        }
+    }
 
-    public String getNextValidAddress(String curAddress, String prefix){
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
         for (int i=0; i<nMgrs(); i++) {
             if ( prefix.equals(
                     ((TurnoutManager)getMgr(i)).getSystemPrefix()) ) {
-                //System.out.println((TurnoutManager)getMgr(i))
-                return ((TurnoutManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
+                try {
+                    return ((TurnoutManager)getMgr(i)).createSystemName(curAddress, prefix);
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        throw new jmri.JmriException("Turnout Manager could not be found for System Prefix " + prefix);
+    }
+    
+    public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException{
+        for (int i=0; i<nMgrs(); i++) {
+            if ( prefix.equals(
+                    ((TurnoutManager)getMgr(i)).getSystemPrefix()) ) {
+                try {
+                    return ((TurnoutManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
             }
         }
         return null;
