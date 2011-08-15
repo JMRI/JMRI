@@ -66,7 +66,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     public void deregister(NamedBean n) {}
 
-    public String getNextValidAddress(String curAddress, String prefix) { return curAddress; }
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException { return curAddress; }
 
     public boolean isControlTypeSupported(String systemName) {return false;}
 
@@ -85,6 +85,8 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public int getXMLOrder() { return -1; }
     
     public NamedBean getBeanBySystemName(String systemName) { return null; }
+    
+    public String createSystemName(String curAddress, String prefix) throws JmriException {return " "; }
 
 }
 
