@@ -1693,6 +1693,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.warn("Manifest file missing for train "+getName());
 			return false;
 		}
+		if (isPreview && Setup.isManifestEditorEnabled()){
+			TrainPrintUtilities.openDesktopEditor(file);
+			return true;
+		}
 		String logoURL = "";
 		if (!getManifestLogoURL().equals(""))
 			logoURL = getManifestLogoURL();

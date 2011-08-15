@@ -163,13 +163,11 @@ public class Setup {
 	private static String dropEnginePrefix = BOX + rb.getString("SetOutPrefix");
 	private static String pickupCarPrefix = BOX + rb.getString("PickUpPrefix");
 	private static String dropCarPrefix = BOX + rb.getString("SetOutPrefix");
-	private static String localPrefix = BOX + rb.getString("LocalCarPrefix");
-	private static boolean tab = false;
+	private static String localPrefix = BOX + rb.getString("LocalCarPrefix");	
 	private static String miaComment = rb.getString("misplacedCars");
 	private static String logoURL ="";
 	private static String panelName ="Panel";
-	private static String buildReportLevel = BUILD_REPORT_NORMAL;
-	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
+	private static String buildReportLevel = BUILD_REPORT_NORMAL;	
 	private static int carSwitchTime = 3;		// how long it take to move a car
 	private static int travelTime = 4;// how long it take a train to move one location
 	private static String yearModeled = ""; 	// year being modeled
@@ -180,6 +178,9 @@ public class Setup {
 	private static String iconLocalColor ="";
 	private static String iconTerminateColor ="";
 	
+	private static boolean tab = false;
+	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
+	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
 		
@@ -455,6 +456,14 @@ public class Setup {
 	
 	public static String getBuildReportLevel(){
 		return buildReportLevel;
+	}
+	
+	public static void setManifestEditorEnabled(boolean enable){
+		manifestEditorEnabled = enable;
+	}
+	
+	public static boolean isManifestEditorEnabled(){
+		return manifestEditorEnabled;
 	}
 	
 	public static void setBuildReportEditorEnabled(boolean enable){
@@ -1117,6 +1126,9 @@ public class Setup {
     	e.addContent(values = new Element("tab"));
     	values.setAttribute("enabled", isTabEnabled()?"true":"false");
     	
+    	e.addContent(values = new Element("manifest"));
+    	values.setAttribute("useEditor", isBuildReportEditorEnabled()?"true":"false");
+    	
         if (getManifestLogoURL() != ""){
         	values = new Element("manifestLogo");
         	values.setAttribute("name", getManifestLogoURL());
@@ -1406,7 +1418,14 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("tab: "+enable);
         		setTabEnabled(enable.equals("true"));
         	}
-        }       
+        }
+        if ((operations.getChild("manifest") != null)){ 
+        	if((a = operations.getChild("manifest").getAttribute("useEditor"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest useEditor: "+enable);
+        		setManifestEditorEnabled(enable.equals("true"));
+        	}
+        }     
        	// get manifest logo
         if ((operations.getChild("manifestLogo") != null)){ 
         	if((a = operations.getChild("manifestLogo").getAttribute("name"))!= null){
@@ -1468,7 +1487,7 @@ public class Setup {
         	}
         	if ((a = operations.getChild("buildReport").getAttribute("useEditor")) != null) {
         		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("useEditor: "+enable);
+        		if (log.isDebugEnabled()) log.debug("build report useEditor: "+enable);
         		setBuildReportEditorEnabled(enable.equals("true"));
         	}
         }

@@ -17,7 +17,7 @@
 <!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
- | missingCarFormat | tab | comments)*>
+ | missingCarFormat | tab | manifest | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
@@ -39,6 +39,7 @@
 <!ELEMENT options (setupFrameOptions)*>
 <!ELEMENT setupFrameOptions EMPTY>
 <!ELEMENT tab EMPTY>
+<!ELEMENT manifest EMPTY>
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
@@ -70,9 +71,11 @@
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
 <!ATTLIST settings yearModeled		CDATA #IMPLIED> 
+
 <!ATTLIST panel name				CDATA #IMPLIED>
 <!ATTLIST panel trainIconXY			(true | false ) "true"> 
 <!ATTLIST panel trainIconAppend		(true | false ) "false"> 
+
 <!ATTLIST fontName name				CDATA #IMPLIED> 
 <!ATTLIST fontSize size				CDATA #IMPLIED>  
 <!ATTLIST pickupEngFormat prefix	CDATA #IMPLIED>
@@ -90,6 +93,7 @@
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
 <!ATTLIST manifestColors localColor	CDATA #IMPLIED>  
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>  
+
 <!ATTLIST buildOptions aggressive					(true | false ) "false">  
 <!ATTLIST buildOptions allowLocalInterchange		(true | false ) "false">
 <!ATTLIST buildOptions allowLocalSiding				(true | false ) "false">
@@ -98,10 +102,12 @@
 <!ATTLIST buildOptions promptStagingEnabled			(true | false ) "false">   
 <!ATTLIST buildOptions promptToStagingEnabled		(true | false ) "false">
 <!ATTLIST buildOptions generateCsvManifest			(true | false ) "false">  
-<!ATTLIST buildOptions generateCsvSwitchList		(true | false ) "false">     
+<!ATTLIST buildOptions generateCsvSwitchList		(true | false ) "false">  
+   
 <!ATTLIST buildReport level			CDATA #IMPLIED>    
 <!ATTLIST buildReport useEditor		(true | false ) "false">                                  
 <!ATTLIST owner name				CDATA #IMPLIED>
+
 <!ATTLIST iconColor north			CDATA #IMPLIED>    
 <!ATTLIST iconColor south			CDATA #IMPLIED> 
 <!ATTLIST iconColor east			CDATA #IMPLIED> 
@@ -115,6 +121,7 @@
 <!ATTLIST setupFrameOptions width	CDATA #IMPLIED> 
 
 <!ATTLIST tab enabled				(true | false ) "false">  
+<!ATTLIST manifest useEditor		(true | false ) "false"> 
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 

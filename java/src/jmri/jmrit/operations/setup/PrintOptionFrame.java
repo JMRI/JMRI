@@ -56,6 +56,7 @@ public class PrintOptionFrame extends OperationsFrame{
     
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
+    JCheckBox editManifestCheckBox = new JCheckBox(rb.getString("UseTextEditor"));
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
 	JCheckBox printRouteCommentsCheckBox = new JCheckBox(rb.getString("PrintRouteComments"));
@@ -107,7 +108,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		printLoadsEmptiesCheckBox.setToolTipText(rb.getString("LoadsEmptiesComment"));
 		printTimetableNameCheckBox.setToolTipText(rb.getString("ShowTimetableTip"));
 		use12hrFormatCheckBox.setToolTipText(rb.getString("Use12hrFormatTip"));
-		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFile"));
+		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFileTip"));
+		editManifestCheckBox.setToolTipText(rb.getString("UseTextEditorTip"));
 		
 		// Manifest panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -147,6 +149,10 @@ public class PrintOptionFrame extends OperationsFrame{
 		JPanel pFormat = new JPanel();
 		pFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFormat")));
 		pFormat.add(tabFormatCheckBox);
+		
+		JPanel pEdit = new JPanel();
+		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
+		pEdit.add(editManifestCheckBox);
 
 		p1.add(pFont);
 		p1.add(pFontSize);
@@ -154,6 +160,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		p1.add(pDropColor);
 		p1.add(pLocalColor);
 		p1.add(pFormat);
+		p1.add(pEdit);
 		
 		// engine message format
 		JPanel pEngPickup = new JPanel();
@@ -281,6 +288,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
 		use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
+		editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 		
 		updateLogoButtons();
 		dropComboBox.setSelectedItem(Setup.getDropTextColor());
@@ -396,6 +404,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
 			Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
 			Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
+			Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 			// Check font if user selected tab output
