@@ -724,109 +724,115 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
 
         if (advancedAspect!=null){
             String aspect = stopAspect;
-            aspect = advancedAspect[0];
-            ArrayList<Integer> divergAspects = new ArrayList<Integer>();
-            ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
-            ArrayList<Integer> eitherAspects = new ArrayList<Integer>();
-            if (advancedAspect.length>1) {                
-                float maxSigSpeed = -1;
-                float maxPathSpeed = destList.get(destination).getMinimumSpeed();
-                boolean divergRoute = destList.get(destination).turnoutThrown;
-                log.debug("Diverging route? " + divergRoute);
-                boolean divergFlagsAvailable = false;
-                    //We split the aspects into two lists, one with divering flag set, the other without.
-                for(int i = 0; i<advancedAspect.length; i++){
-                    String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
-                    if(div!=null){
-                        if (div.equals("Diverging")){
-                            log.debug("Aspect " + advancedAspect[i] + "added as Diverging Route");
-                            divergAspects.add(i);
-                            divergFlagsAvailable = true;
-                            log.debug("Using Diverging Flag");
-                        } else if (div.equals("Either")) {
-                            log.debug("Aspect " + advancedAspect[i] + "added as Both Diverging and Normal Route");
-                            nonDivergAspects.add(i);
-                            divergAspects.add(i);
-                            divergFlagsAvailable = true;
-                            eitherAspects.add(i);
-                            log.debug("Using Diverging Flag");
+            if(destList.get(destination).permissiveBlock) {
+                //if a block is in a permissive state then we set the permissive appearance
+                aspect = getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE);
+            } else {
+                aspect = advancedAspect[0];
+                ArrayList<Integer> divergAspects = new ArrayList<Integer>();
+                ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
+                ArrayList<Integer> eitherAspects = new ArrayList<Integer>();
+                if (advancedAspect.length>1) {                
+                    float maxSigSpeed = -1;
+                    float maxPathSpeed = destList.get(destination).getMinimumSpeed();
+                    boolean divergRoute = destList.get(destination).turnoutThrown;
+                    
+                    log.debug("Diverging route? " + divergRoute);
+                    boolean divergFlagsAvailable = false;
+                        //We split the aspects into two lists, one with divering flag set, the other without.
+                    for(int i = 0; i<advancedAspect.length; i++){
+                        String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
+                        if(div!=null){
+                            if (div.equals("Diverging")){
+                                log.debug("Aspect " + advancedAspect[i] + "added as Diverging Route");
+                                divergAspects.add(i);
+                                divergFlagsAvailable = true;
+                                log.debug("Using Diverging Flag");
+                            } else if (div.equals("Either")) {
+                                log.debug("Aspect " + advancedAspect[i] + "added as Both Diverging and Normal Route");
+                                nonDivergAspects.add(i);
+                                divergAspects.add(i);
+                                divergFlagsAvailable = true;
+                                eitherAspects.add(i);
+                                log.debug("Using Diverging Flag");
+                            } else {
+                                log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
+                                nonDivergAspects.add(i);
+                                log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
+                            }
                         } else {
-                            log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
                             nonDivergAspects.add(i);
                             log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
                         }
-                    } else {
-                        nonDivergAspects.add(i);
-                        log.debug("Aspect " + advancedAspect[i] + "added as Normal Route");
                     }
-                }
-                if((eitherAspects.equals(divergAspects)) && (divergAspects.size()<nonDivergAspects.size())){
-                    //There are no unique diverging aspects 
-                    log.debug("'Either' aspects equals divergAspects and is less than non-diverging aspects");
-                    divergFlagsAvailable = false;
-                }
-                log.debug("path max speed : " + maxPathSpeed);
-                for (int i = 0; i<advancedAspect.length; i++){
-                    String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
-                    if(log.isDebugEnabled())
-                        log.debug("Aspect Speed = " + strSpeed + " for aspect " + advancedAspect[i]);
-                    /*  if the diverg flags available is set and the diverg aspect 
-                        array contains the entry then we will check this aspect.
-                        
-                        If the diverg flag has not been set then we will check.
-                    */
-                    log.debug(advancedAspect[i]);
-                    if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable)||(!divergRoute)) && (nonDivergAspects.contains(i))){
-                        log.debug("In list");
-                        if ((strSpeed!=null) && (!strSpeed.equals(""))){
-                            float speed = 0.0f;
-                            try {
-                                speed = new Float(strSpeed);
-                            }catch (NumberFormatException nx) {
-                                try{
-                                    speed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(strSpeed);
-                                } catch (Exception ex){
-                                    //Considered Normal if the speed does not appear in the map
-                                }
-                            }
-                            //Integer state = Integer.parseInt(strSpeed);
-                            /* This pics out either the highest speed signal if there
-                             * is no block speed specified or the highest speed signal
-                             * that is under the minimum block speed.
-                             */
-                            if(log.isDebugEnabled())
-                                log.debug(destination.getDisplayName() + " signal state speed " + speed + " maxSigSpeed " + maxSigSpeed + " max Path Speed " + maxPathSpeed);
-                            if(maxPathSpeed==0){
-                                if (maxSigSpeed ==-1){
-                                    log.debug("min speed on this route is equal to 0 so will set this as our max speed");
-                                    maxSigSpeed=speed;
-                                    aspect = advancedAspect[i];
-                                    log.debug("Aspect to set is " + aspect);
-                                } else if (speed > maxSigSpeed){
-                                    log.debug("new speed is faster than old will use this");
-                                    maxSigSpeed=speed;
-                                    aspect = advancedAspect[i];
-                                    log.debug("Aspect to set is " + aspect);
-                                }
-                            }
-                            else if ((speed>maxSigSpeed) && (maxSigSpeed<maxPathSpeed) && (speed<=maxPathSpeed)){
-                                //Only set the speed to the lowest if the max speed is greater than the path speed
-                                //and the new speed is less than the last max speed
-                                log.debug("our minimum speed on this route is less than our state speed, we will set this as our max speed");
-                                maxSigSpeed = speed;
-                                aspect = advancedAspect[i];
-                                log.debug("Aspect to set is " + aspect);
-                            } else if ((maxSigSpeed>maxPathSpeed) && (speed<maxSigSpeed)){
-                                log.debug("our max signal speed is greater than our path speed on this route, our speed is less that the maxSigSpeed");
-                                maxSigSpeed = speed;
-                                aspect = advancedAspect[i];
-                                log.debug("Aspect to set is " + aspect);
+                    if((eitherAspects.equals(divergAspects)) && (divergAspects.size()<nonDivergAspects.size())){
+                        //There are no unique diverging aspects 
+                        log.debug("'Either' aspects equals divergAspects and is less than non-diverging aspects");
+                        divergFlagsAvailable = false;
+                    }
+                    log.debug("path max speed : " + maxPathSpeed);
+                    for (int i = 0; i<advancedAspect.length; i++){
+                        String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
+                        if(log.isDebugEnabled())
+                            log.debug("Aspect Speed = " + strSpeed + " for aspect " + advancedAspect[i]);
+                        /*  if the diverg flags available is set and the diverg aspect 
+                            array contains the entry then we will check this aspect.
                             
-                            } else if (maxSigSpeed == -1){
-                                log.debug("maxSigSpeed returned as -1");
-                                maxSigSpeed = speed;
-                                aspect = advancedAspect[i];
-                                log.debug("Aspect to set is " + aspect);
+                            If the diverg flag has not been set then we will check.
+                        */
+                        log.debug(advancedAspect[i]);
+                        if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable)||(!divergRoute)) && (nonDivergAspects.contains(i))){
+                            log.debug("In list");
+                            if ((strSpeed!=null) && (!strSpeed.equals(""))){
+                                float speed = 0.0f;
+                                try {
+                                    speed = new Float(strSpeed);
+                                }catch (NumberFormatException nx) {
+                                    try{
+                                        speed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(strSpeed);
+                                    } catch (Exception ex){
+                                        //Considered Normal if the speed does not appear in the map
+                                    }
+                                }
+                                //Integer state = Integer.parseInt(strSpeed);
+                                /* This pics out either the highest speed signal if there
+                                 * is no block speed specified or the highest speed signal
+                                 * that is under the minimum block speed.
+                                 */
+                                if(log.isDebugEnabled())
+                                    log.debug(destination.getDisplayName() + " signal state speed " + speed + " maxSigSpeed " + maxSigSpeed + " max Path Speed " + maxPathSpeed);
+                                if(maxPathSpeed==0){
+                                    if (maxSigSpeed ==-1){
+                                        log.debug("min speed on this route is equal to 0 so will set this as our max speed");
+                                        maxSigSpeed=speed;
+                                        aspect = advancedAspect[i];
+                                        log.debug("Aspect to set is " + aspect);
+                                    } else if (speed > maxSigSpeed){
+                                        log.debug("new speed is faster than old will use this");
+                                        maxSigSpeed=speed;
+                                        aspect = advancedAspect[i];
+                                        log.debug("Aspect to set is " + aspect);
+                                    }
+                                }
+                                else if ((speed>maxSigSpeed) && (maxSigSpeed<maxPathSpeed) && (speed<=maxPathSpeed)){
+                                    //Only set the speed to the lowest if the max speed is greater than the path speed
+                                    //and the new speed is less than the last max speed
+                                    log.debug("our minimum speed on this route is less than our state speed, we will set this as our max speed");
+                                    maxSigSpeed = speed;
+                                    aspect = advancedAspect[i];
+                                    log.debug("Aspect to set is " + aspect);
+                                } else if ((maxSigSpeed>maxPathSpeed) && (speed<maxSigSpeed)){
+                                    log.debug("our max signal speed is greater than our path speed on this route, our speed is less that the maxSigSpeed");
+                                    maxSigSpeed = speed;
+                                    aspect = advancedAspect[i];
+                                    log.debug("Aspect to set is " + aspect);
+                                
+                                } else if (maxSigSpeed == -1){
+                                    log.debug("maxSigSpeed returned as -1");
+                                    maxSigSpeed = speed;
+                                    aspect = advancedAspect[i];
+                                    log.debug("Aspect to set is " + aspect);
+                                }
                             }
                         }
                     }
@@ -835,8 +841,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if ((aspect!=null) && (!aspect.equals(""))){
                 log.debug("set mast aspect called from set appearance");
                 getSourceMast().setAspect(aspect);
+                return;
             }
-            return;
         }
         log.debug("aspect returned is not valid");
         getSourceMast().setAspect(stopAspect);
@@ -894,6 +900,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         //Blocks is used for user defined blocks between two signalmasts
         Hashtable<Block, Integer> blocks = new Hashtable<Block, Integer>(0);
         boolean turnoutThrown = false;
+        boolean permissiveBlock = false;
         
         ArrayList<LevelXing> blockInXings = new ArrayList<LevelXing>();
         
@@ -1416,6 +1423,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         void checkStateDetails() {
             turnoutThrown=false;
+            permissiveBlock=false;
             if(disposing){
                 log.error("checkStateDetails called even though this has been disposed of");
                 return;
@@ -1507,14 +1515,22 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                if(log.isDebugEnabled())
                     log.debug(key.getDisplayName() + " " + key.getState() + " " + autoBlocks.get(key));
                if (key.getState()!=autoBlocks.get(key)){
-                   if (blocks.containsKey(key)){
+                    if (blocks.containsKey(key)){
                         if(blocks.get(key)!=0x03) {
                             if(key.getState()!=blocks.get(key)){
-                                state=false;
+                                if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
+                                    permissiveBlock=true;
+                                } else {
+                                    state=false;
+                                }
                             }
                         }
                     } else {
-                       state = false;
+                        if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
+                            permissiveBlock=true;
+                        } else {
+                            state = false;
+                        }
                     }
                }
             }
@@ -1522,14 +1538,28 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             blockKeys = blocks.keys();
             while ( blockKeys.hasMoreElements() )
             {
-               Block key = blockKeys.nextElement();
+                Block key = blockKeys.nextElement();
                 if(blocks.get(key)!=0x03){
-                    if (key.getState()!=blocks.get(key))
-                        state=false;
+                    if (key.getState()!=blocks.get(key)) {
+                        if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
+                            permissiveBlock=true;
+                        } else {
+                            state=false;
+                        }
+                    }
                 }
             }
-            if(!state)
+            if (permissiveBlock){
+                /*If a block has been found to be permissive, but the source signalmast
+                does not support a call-on/permissive aspect then the route can not be set*/
+                if(getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE)==null)
+                    state = false;
+            }
+            if(!state){
                 turnoutThrown = false;
+                permissiveBlock=false;
+            }
+
             active=state;
             setSignalAppearance();
         }
@@ -1539,6 +1569,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
 
             active=false;
             turnoutThrown=false;
+            permissiveBlock=false;
             if((useLayoutEditor) && (autoTurnouts.size()==0) && (autoBlocks.size()==0) && (autoMasts.size()==0)){
                 return;
             }
@@ -1630,10 +1661,18 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                if (key.getState()!=autoBlocks.get(key)){
                     if (blocks.containsKey(key)){
                         if(key.getState()!=blocks.get(key)){
-                            routeclear = false;
+                            if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
+                                permissiveBlock=true;
+                            } else {
+                                routeclear=false;
+                            }
                         }
                     } else {
-                        routeclear = false;
+                        if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
+                            permissiveBlock=true;
+                        } else {
+                            routeclear = false;
+                        }
                     }
                 }
             }
@@ -1643,14 +1682,25 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             {
                Block key = blockKeys.nextElement();
                key.addPropertyChangeListener(propertyBlockListener);
-               if (key.getState()!=blocks.get(key))
-                   routeclear = false;
+               if (key.getState()!=blocks.get(key)){
+                    if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
+                        permissiveBlock=true;
+                    } else {
+                        routeclear=false;
+                    }
+                }
             }
-            //destination.addPropertyChangeListener(propertyDestinationMastListener);
+            if (permissiveBlock){
+                /*If a block has been found to be permissive, but the source signalmast
+                does not support a call-on/permissive aspect then the route can not be set*/
+                if(getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE)==null)
+                    routeclear = false;
+            }
             if (routeclear){
                 active=true;
                 setSignalAppearance();
             } else {
+                permissiveBlock=false;
                 turnoutThrown =false;
             }
             destMastInit = true;
@@ -2138,7 +2188,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             log.debug(destination.getDisplayName() + " in manual block");
                             log.debug(getBlockState(block) + "  " + now);
                         }
-                        if (getBlockState(block) != now){
+                        /*if (getBlockState(block) != now){
                             if(log.isDebugEnabled()){
                                 log.debug("Block " + block.getDisplayName() + " caused the signalmast to be set");
                                 log.debug(destination.getDisplayName() + " Block " + block.getDisplayName() + " caused the signalmast to be set");
@@ -2151,13 +2201,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             if(log.isDebugEnabled())
                                 log.debug(destination.getDisplayName() + " block " + block.getDisplayName() + " triggers a calculation of change");
                             checkState();
-                        }
+                        }*/
+                        checkState();
                     } else if (autoBlocks.containsKey(block)){
                         if(log.isDebugEnabled()){
                             log.debug(destination.getDisplayName() + " in auto block");
                             log.debug(getAutoBlockState(block) + "  " + now);
                         }
-                        if (getAutoBlockState(block) != now){
+                        /*if (getAutoBlockState(block) != now){
                             if(log.isDebugEnabled()){
                                 log.debug("Block " + block.getDisplayName() + " caused the signalmast to be set");
                                 log.debug(destination.getDisplayName() + " auto Block " + block.getDisplayName() + " caused the signalmast to be set");
@@ -2171,7 +2222,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             if(log.isDebugEnabled())
                                 log.debug(destination.getDisplayName() + " auto block " + block.getDisplayName() + " triggers a calculation of change");
                             checkState();
-                        }
+                        }*/
+                        checkState();
                     } else if(log.isDebugEnabled()) {
                         log.debug(destination.getDisplayName() + " Not found");
                     }
