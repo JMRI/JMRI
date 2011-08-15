@@ -1,0 +1,241 @@
+package jmri.util.swing;
+
+import jmri.Manager;
+import jmri.NamedBean;
+
+import java.util.HashMap;
+import javax.swing.JComboBox;
+import java.util.List;
+
+public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyChangeListener{
+
+    /*
+    * Create a default Jmri Combo box for the given bean manager
+    * @param manager the jmri manager that is used to populate the combo box
+    */
+    public JmriBeanComboBox(jmri.Manager manager){
+        this(manager, null, DISPLAYNAME);
+    }
+
+    /*
+    * Create a Jmri Combo box for the given bean manager, with the Namedbean already selected and the items displayed and ordered
+    * @param manager the jmri manager that is used to populate the combo box
+    * @param nBean the namedBean that should automatically be selected
+    * @param displayOrder the way in which the namedbeans should be displayed as
+    */
+    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, int displayOrder){
+        String selectedItem = "";
+        _displayOrder = displayOrder;
+        _manager = manager;
+        if(nBean!=null){
+            switch(_displayOrder){
+                case DISPLAYNAME :
+                        selectedItem = nBean.getDisplayName();
+                        break;
+                        
+                case USERNAME : 
+                        selectedItem = nBean.getUserName();
+                        break;
+                       
+                case SYSTEMNAME :
+                        selectedItem = nBean.getSystemName();
+                        break;
+                        
+                case USERNAMESYSTEMNAME :
+                        if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
+                            selectedItem = nBean.getUserName() + " - " + nBean.getSystemName();
+                        else
+                            selectedItem = nBean.getSystemName();
+                        break;
+                            
+                case SYSTEMNAMEUSERNAME : 
+                        if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
+                            selectedItem = nBean.getSystemName() + " - " + nBean.getUserName();
+                        else 
+                            selectedItem = nBean.getSystemName();
+                        break;
+                            
+                default : 
+                        selectedItem = nBean.getDisplayName();
+            }
+        }
+        _lastSelected = selectedItem;
+        updateComboBox(_lastSelected);
+        
+        _manager.addPropertyChangeListener(this);
+    }
+    
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("length")) {
+            // a new NamedBean is available in the manager
+            _lastSelected = (String)getSelectedItem();
+            updateComboBox(_lastSelected);
+            log.debug("Update triggered in name list");
+        }
+    }
+    
+    String _lastSelected = "";
+    int _displayOrder;
+    boolean _firstBlank = false;
+    
+    jmri.Manager _manager;
+    
+    HashMap<String, NamedBean> displayToBean = new HashMap<String, NamedBean>();
+    
+    void updateComboBox(String select){
+        displayToBean = new HashMap<String, NamedBean>();
+        removeAllItems();
+        String[] nameList = _manager.getSystemNameArray();
+        String[] displayList = new String[nameList.length];
+        
+        if(_displayOrder==SYSTEMNAME){
+            displayList = nameList;
+        } else {
+            for(int i = 0; i<nameList.length; i++){
+                NamedBean nBean = null;
+                nBean = _manager.getBeanBySystemName(nameList[i]);
+                
+                if (nBean!=null){
+                    switch(_displayOrder){
+                        case DISPLAYNAME : 
+                                displayList[i] = nBean.getDisplayName();
+                                break;
+                                
+                        case USERNAME :
+                                if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
+                                    displayList[i] = nBean.getUserName();
+                                else
+                                    displayList[i] = nameList[i];
+                                break;
+                                
+                        case USERNAMESYSTEMNAME :
+                                if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
+                                    displayList[i] = nBean.getUserName() + " - " + nameList[i];
+                                else
+                                    displayList[i] = nameList[i];
+                                break;
+                               
+                        case SYSTEMNAMEUSERNAME : 
+                                if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
+                                    displayList[i] = nameList[i] + " - " + nBean.getUserName();
+                                else 
+                                    displayList[i] = nameList[i];
+                                break;
+                                
+                        default : 
+                                displayList[i] = nBean.getDisplayName();
+                    }
+                    displayToBean.put(displayList[i], nBean);
+                }
+            }
+        }
+        java.util.Arrays.sort(displayList);
+
+        for(int i = 0; i<displayList.length; i++){
+            addItem(displayList[i]);
+            if ((select!=null) && (displayList[i].equals(select))){
+                setSelectedIndex(i);
+            }
+        }
+        if(_firstBlank){
+            super.insertItemAt("",0);
+            if (_lastSelected.equals("")){
+                setSelectedIndex(0);
+            }
+        }
+    }
+    
+    /**
+    * Get the User name of the selected namedBean
+    * @return the user name of the selected bean or null if there is no selection
+    */
+    public String getSelectedUserName(){
+        String selectedName = (String)super.getSelectedItem();
+        NamedBean nBean = displayToBean.get(selectedName);
+        if(nBean!=null)
+            return nBean.getDisplayName();
+        return null;
+    
+    }
+    
+   /**
+    * Get the system name of the selected namedBean
+    * @return the system name of the selected bean or null if there is no selection
+    */
+    public String getSelectedSystemName(){
+        String selectedName = (String)super.getSelectedItem();
+        NamedBean nBean = displayToBean.get(selectedName);
+        if(nBean!=null)
+            return nBean.getSystemName();
+        return null;
+    }
+    
+    /**
+    * Get the display name of the selected namedBean
+    * @return the display name of the selected bean or null if there is no selection
+    */
+    public String getSelectedDisplayName(){
+        String selectedName = (String)super.getSelectedItem();
+        NamedBean nBean = displayToBean.get(selectedName);
+        if(nBean!=null)
+            return nBean.getDisplayName();
+        return null;
+    }
+    
+    /**
+    * Insert a blank entry at the top of the list
+    * @param blank true to insert, false to remove
+    */ 
+    public void setFirstItemBlank(boolean blank){
+        if(_firstBlank == blank)
+            return; // no Change to make
+        if(_firstBlank)
+            super.removeItemAt(0);
+        else {
+            super.insertItemAt("", 0);
+            if (_lastSelected.equals("")){
+                setSelectedIndex(0);
+            }
+        }
+        _firstBlank = blank;
+    }
+    
+    
+    public NamedBean getSelectedBean(){
+        String selectedName = (String)super.getSelectedItem();
+        return displayToBean.get(selectedName);
+    }
+    
+    /**
+    * constant used to format the entries in the combo box using the displayname
+    */ 
+    public final static int DISPLAYNAME = 0x00;
+    /**
+    * Constant used to format the entries in the combo box using the username
+    * if the username value is blank for a bean then the system name is used
+    */ 
+    public final static int USERNAME = 0x01;
+    
+    /**
+    * constant used to format the entries in the combo box using the systemname
+    */ 
+    public final static int SYSTEMNAME = 0x02;
+    
+    /**
+    * constant used to format the entries in the combo box with the username
+    * followed by the systemname
+    */ 
+    public final static int USERNAMESYSTEMNAME = 0x03;
+    
+    /**
+    * constant used to format the entries in the combo box with the systemname
+    * followed by the userame
+    */ 
+    public final static int SYSTEMNAMEUSERNAME = 0x04;
+    
+    public void dispose(){
+        _manager.removePropertyChangeListener(this);
+    }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriBeanComboBox.class.getName());
+}
