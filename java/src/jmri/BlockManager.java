@@ -97,6 +97,15 @@ public class BlockManager extends AbstractManager
         return createNewBlock(b.toString(), userName);
     }
     
+    public Block provideBlock(String name) {
+        Block b = getBlock(name);
+        if (b!=null) return b;
+        if (name.startsWith(getSystemPrefix()+typeLetter()))
+            return createNewBlock(name, null);
+        else
+            return createNewBlock(makeSystemName(name), null);
+    }
+    
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     int lastAutoBlockRef = 0;
