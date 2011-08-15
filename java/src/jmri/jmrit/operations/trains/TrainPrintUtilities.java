@@ -285,7 +285,10 @@ public class TrainPrintUtilities {
 		log.info("Open file using editor not supported yet!  Requires Java 1.6");
 		String path = file.getAbsolutePath();
 		JOptionPane.showMessageDialog(null,
-				"Open file using editor not available, file path: "+path, "Build Report File Created",
+				"Open file using editor not available, file path: "+path +
+				"\n If you want to use this feature, download replacement jmri.jar file from:" +
+				"\n http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar",
+				"Requires custom jmri.jar file and Java 1.6",
 				JOptionPane.INFORMATION_MESSAGE);
 		return;
 	}
