@@ -849,7 +849,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F4",
                                          Boolean.valueOf(this.f4),
                                          Boolean.valueOf(this.f4 = true));
-	} else if ((b4 &0x08)==0x00 && getF4()==true) {
+	} else if ((b3 &0x08)==0x00 && getF4()==true) {
             notifyPropertyChangeListener("F4",
                                          Boolean.valueOf(this.f4),
                                          Boolean.valueOf(this.f4 = false));
@@ -946,8 +946,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F13",
                                          Boolean.valueOf(this.f13),
                                          Boolean.valueOf(this.f13 = true));
-	} else if ((b3 &0x01)==0x00 && getF14()==true) {
-            notifyPropertyChangeListener("F14",
+	} else if ((b3 &0x01)==0x00 && getF13()==true) {
+            notifyPropertyChangeListener("F13",
                                          Boolean.valueOf(this.f13),
                                          Boolean.valueOf(this.f13 = false));
 	}
@@ -976,7 +976,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F16",
                                          Boolean.valueOf(this.f16),
                                          Boolean.valueOf(this.f16 = true));
-	} else if ((b4 &0x08)==0x00 && getF16()==true) {
+	} else if ((b3 &0x08)==0x00 && getF16()==true) {
             notifyPropertyChangeListener("F16",
                                          Boolean.valueOf(this.f16),
                                          Boolean.valueOf(this.f16 = false));
@@ -986,7 +986,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F17",
                                          Boolean.valueOf(this.f17),
                                          Boolean.valueOf(this.f17 = true));
-	} else if ((b4 &0x10)==0x00 && getF17()==true) {
+	} else if ((b3 &0x10)==0x00 && getF17()==true) {
             notifyPropertyChangeListener("F17",
                                          Boolean.valueOf(this.f17),
                                          Boolean.valueOf(this.f17 = false));
@@ -996,7 +996,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F18",
                                          Boolean.valueOf(this.f18),
                                          Boolean.valueOf(this.f18 = true));
-	} else if ((b4 &0x20)==0x00 && getF18()==true) {
+	} else if ((b3 &0x20)==0x00 && getF18()==true) {
             notifyPropertyChangeListener("F18",
                                          Boolean.valueOf(this.f18),
                                          Boolean.valueOf(this.f18 = false));
@@ -1006,7 +1006,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F19",
                                          Boolean.valueOf(this.f19),
                                          Boolean.valueOf(this.f19 = true));
-	} else if ((b4 &0x40)==0x00 && getF19()==true) {
+	} else if ((b3 &0x40)==0x00 && getF19()==true) {
             notifyPropertyChangeListener("F19",
                                          Boolean.valueOf(this.f19),
                                          Boolean.valueOf(this.f19 = false));
@@ -1016,7 +1016,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F20",
                                          Boolean.valueOf(this.f20),
                                          Boolean.valueOf(this.f20 = true));
-	} else if ((b4 &0x80)==0x00 && getF20()==true) {
+	} else if ((b3 &0x80)==0x00 && getF20()==true) {
             notifyPropertyChangeListener("F20",
                                          Boolean.valueOf(this.f20),
                                          Boolean.valueOf(this.f20 = false));
@@ -1152,7 +1152,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F4Momentary",
                                          Boolean.valueOf(this.f4Momentary),
                                          Boolean.valueOf(this.f4Momentary = true));
-	} else if ((b4 &0x08)==0x00 && this.f4Momentary==true) {
+	} else if ((b3 &0x08)==0x00 && this.f4Momentary==true) {
             notifyPropertyChangeListener("F4Momentary",
                                          Boolean.valueOf(this.f4Momentary),
                                          Boolean.valueOf(this.f4Momentary = false));
@@ -1280,7 +1280,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             notifyPropertyChangeListener("F16Momentary",
                                          Boolean.valueOf(this.f16Momentary),
                                          Boolean.valueOf(this.f16Momentary = true));
-	} else if ((b4 &0x08)==0x00 && this.f16Momentary==true) {
+	} else if ((b3 &0x08)==0x00 && this.f16Momentary==true) {
             notifyPropertyChangeListener("F16Momentary",
                                          Boolean.valueOf(this.f16Momentary),
                                          Boolean.valueOf(this.f16Momentary = false));
