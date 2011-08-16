@@ -4,6 +4,7 @@ package jmri.jmrit.audio;
 
 import jmri.implementation.AbstractAudio;
 import jmri.util.FileUtil;
+import java.io.InputStream;
 
 /**
  * Base implementation of the AudioBuffer class.
@@ -25,7 +26,7 @@ import jmri.util.FileUtil;
  * for more details.
  * <p>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris  copyright (c) 2009, 2011
  * @version $Revision$
  */
 public abstract class AbstractAudioBuffer extends AbstractAudio implements AudioBuffer {
@@ -115,11 +116,27 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
             log.debug("Set url of Buffer " + this.getSystemName() + " to " + url);
     }
 
+    public void setInputStream(InputStream stream) {
+	this._url = "stream";
+
+	loadBuffer(stream);
+        if (log.isDebugEnabled())
+            log.debug("Set inputstream of Buffer " + this.getSystemName() + " to stream");
+    }
+
     /**
      * Method used to load the actual sound data into the buffer
      * @return True if successful; False if not
      */
     abstract protected boolean loadBuffer();
+    
+    /**
+     * Method used to load the actual sound data from an InputStream 
+     * into the buffer
+     * @param s InputStream containing sound data
+     * @return True if successful; False if not
+     */
+    abstract protected boolean loadBuffer(InputStream s);
 
     public void setStartLoopPoint(long startLoopPoint) {
         this.setStartLoopPoint(startLoopPoint, true);

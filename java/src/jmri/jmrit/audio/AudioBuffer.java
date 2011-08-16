@@ -3,6 +3,7 @@
 package jmri.jmrit.audio;
 
 import jmri.Audio;
+import java.io.InputStream;
 
 
 /**
@@ -36,7 +37,7 @@ import jmri.Audio;
  * for more details.
  * <P>
  *
- * @author  Matthew Harris  copyright (c) 2009
+ * @author  Matthew Harris  copyright (c) 2009, 2011
  * @version $Revision$
  */
 public interface AudioBuffer extends Audio {
@@ -153,9 +154,20 @@ public interface AudioBuffer extends Audio {
      * <ul>
      * <li>Buffer
      * </ul>
-     * @param pUrl
+     * @param pUrl URL for location containing sound sample data
      */
     public void setURL(String pUrl);
+
+    /**
+     * Sets the input stream of the sound sample
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Buffer
+     * </ul>
+     * @param stream InputStream containing sound sample data
+     */
+    public void setInputStream(InputStream stream);
 
     /**
      * Retrieves the format of the sound sample stored in this buffer

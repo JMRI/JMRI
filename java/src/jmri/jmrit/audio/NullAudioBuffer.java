@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import java.io.InputStream;
+
 /**
  * Null implementation of the Audio Buffer sub-class.
  * <P>
@@ -22,7 +24,7 @@ package jmri.jmrit.audio;
  * for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris  copyright (c) 2009, 2011
  * @version $Revision$
  */
 public class NullAudioBuffer extends AbstractAudioBuffer {
@@ -57,6 +59,11 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         }
     }
 
+    protected boolean loadBuffer(InputStream stream) {
+        // No need to do this for the NullAudioBuffer - it's always successful ;-)
+        return true;        
+    }
+    
     protected boolean loadBuffer() {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;

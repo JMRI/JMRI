@@ -12,6 +12,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import jmri.util.FileUtil;
+import java.io.InputStream;
 
 /**
  * JavaSound implementation of the Audio Buffer sub-class.
@@ -36,7 +37,7 @@ import jmri.util.FileUtil;
  * for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris  copyright (c) 2009, 2011
  * @version $Revision$
  */
 public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
@@ -136,6 +137,28 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         }
     }
 
+    protected boolean loadBuffer(InputStream stream) {
+	if (!_initialised) {
+	    return false;
+	}
+
+        // Reinitialise
+        init();
+
+        // Create the input stream for the audio file
+        try {
+            _audioInputStream = AudioSystem.getAudioInputStream(stream);
+        } catch (UnsupportedAudioFileException ex) {
+            log.error("Unsupported audio file format when loading buffer:" + ex);
+            return false;
+        } catch (IOException ex) {
+            log.error("Error loading buffer:" + ex);
+            return false;
+        }
+
+	return(this.processBuffer());
+    }
+
     protected boolean loadBuffer() {
         if (!_initialised) {
             return false;
@@ -160,6 +183,14 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             log.error("Error loading buffer:" + ex);
             return false;
         }
+	
+	return(this.processBuffer());
+    }
+
+    private boolean processBuffer() {
+
+        // Temporary storage buffer
+        byte[] buffer;
 
         // Get the AudioFormat
         _audioFormat = _audioInputStream.getFormat();

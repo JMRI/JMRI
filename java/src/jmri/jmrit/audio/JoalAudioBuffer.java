@@ -7,6 +7,7 @@ import jmri.util.FileUtil;
 import net.java.games.joal.AL;
 import net.java.games.joal.ALException;
 import net.java.games.joal.util.ALut;
+import java.io.InputStream;
 
 /**
  * JOAL implementation of the Audio Buffer sub-class.
@@ -64,7 +65,7 @@ import net.java.games.joal.util.ALut;
  * for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris  copyright (c) 2009, 2011
  * @version $Revision$
  */
 public class JoalAudioBuffer extends AbstractAudioBuffer {
@@ -187,6 +188,28 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return "unknown format";
     }
 
+    protected boolean loadBuffer(InputStream stream) {
+        if (!_initialised) {
+            return false;
+        }
+        // Reset buffer state
+        // Use internal methods to postpone loop buffer generation
+        setStartLoopPoint(0, false);
+        setEndLoopPoint(0, false);
+        this.setState(STATE_EMPTY);
+
+        // Load the specified .wav file into data arrays
+        try {
+            ALut.alutLoadWAVFile(stream, _format, _data, _size, _freq, _loop);
+        }
+        catch (ALException e) {
+            log.warn("Error loading JoalAudioBuffer: " + e.getMessage());
+            return false;
+        }
+
+	return(this.processBuffer());
+    }
+    
     protected boolean loadBuffer() {
         if (!_initialised) {
             return false;
@@ -206,6 +229,12 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             log.warn("Error loading JoalAudioBuffer: " + e.getMessage());
             return false;
         }
+
+	return(this.processBuffer());
+    }
+
+    private boolean processBuffer() {
+	// Processing steps common to both loadBuffer(InputStream) and loadBuffer()
 
         // Store the actual data in the buffer
         al.alBufferData(_dataStorageBuffer[0], _format[0], _data[0], _size[0], _freq[0]);
