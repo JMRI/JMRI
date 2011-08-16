@@ -93,8 +93,16 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     
     public int getOnAppearance() {return mOnAppearance;}
     public int getOffAppearance() {return mOffAppearance;}
-    public void setOnAppearance(int on) {mOnAppearance = on;}
-    public void setOffAppearance(int off) {mOffAppearance = off;}
+    public void setOnAppearance(int on) { 
+        int old = on;
+        mOnAppearance = on;
+        firePropertyChange("ValidStatesChanged", old, on);
+    }
+    public void setOffAppearance(int off) {
+        int old = off;
+        mOffAppearance = off;
+        firePropertyChange("ValidStatesChanged", old, off);
+    }
     
     public NamedBeanHandle<Turnout> getOutput() {return mOutput;}
 
@@ -102,7 +110,13 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     
     public int[] getValidStates() {
         int [] validStates;
-        if (mOnAppearance == DARK || mOffAppearance == DARK){
+        if(mOnAppearance == mOffAppearance){
+            validStates = new int[2];
+            validStates[0]=mOnAppearance;
+            validStates[1]=mOffAppearance;
+            return validStates;
+        }
+        else if (mOnAppearance == DARK || mOffAppearance == DARK){
             validStates = new int[3];
         }
         else {
@@ -120,12 +134,17 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
         if (mOnAppearance == DARK){
             validStates[x] = (mOffAppearance * 2);  // makes flashing
         }
-//        int [] validStates = new int[] { mOnAppearance, mOffAppearance};
         return validStates;
     }
     
     public String[] getValidStateNames() {
         String [] validStateName;
+        if(mOnAppearance == mOffAppearance){
+            validStateName = new String[2];
+            validStateName[0]=getSignalColour(mOnAppearance);
+            validStateName[1]=getSignalColour(mOffAppearance);
+            return validStateName;
+        }
         if (mOnAppearance == DARK || mOffAppearance == DARK){
             validStateName = new String[3];
         }
