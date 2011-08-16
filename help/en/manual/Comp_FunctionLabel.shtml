@@ -33,11 +33,11 @@ DecoderPro&reg; Comprehensive Programmer
 </div>
 
 <hr>
-<p>This  Pane is a new edition and is still being worked on by the developers.</p>
 <p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed.&nbsp; It also interacts  with the <a href="Ops_Throttle.shtml">JMRI throttle</a>. </p>
 <p>When you  use the roster pull-down on the JMRI throttle to select a loco from your  roster, the function buttons will be marked with the descriptions you have  entered for those functions in this pane. </p>
+<p>You may also set the text in the Function Labels from the button propertes of an active JMRI throttle when you save them to the Roster. Subsequent uses of the throttle will use the new labels.</p>
 <p><img src="images/Function_Labels.png" alt="function labels" width="922" height="627"></p>
-<p>It is planned to have it possible  to enter these button labels from an active JMRI throttle.&nbsp; You then have to save the throttle and also  save the throttle information to your roster.&nbsp;  This capability is under development, as of the writing of this manual  (1/2009).
+<p>
 <hr>
 
 <div align=right>

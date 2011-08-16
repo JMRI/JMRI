@@ -52,7 +52,7 @@
 <p align="left">If you want to set up a loco for switching you can set a start speed  that is the same for the first portion of the throttle revolution and  lower the top speed for use in the yard as shown below:</p>
 <h1><img src="images/Speed_Table_Constant.png" alt="Speed Table - Constant Ratio Curve" border=5 height=270 width=800></h1>
 <p align="center"><strong>Switcher Speed Curve</strong></p>
-<p>if you don't desire a strait-line response curve ther are other options available. The Contant ratio curve gives you a response that increases slowly in the low end and rapidly at high throttle. This function will also draw the curve between preset end points.</p>
+<p>if you don't desire a strait-line response curve there are other options available. The Constant ratio curve gives you a response that increases slowly in the low end and rapidly at high throttle. This function will also draw the curve between preset end points.</p>
 <h1><img src="images/Speed_Table_Switcher.png" width="807" height="335" alt="switcher"></h1>
 <p align="center"><strong>Constant Ratio Curve</strong></p>
 <p>
@@ -70,8 +70,8 @@
 <h1><img src="images/Speed_Table_ShiftLeft.png" width="840" height="369" alt="shift left"></h1>
 <p align="center"><strong>Curve Shifted Left</strong></p>
 <p>The 
-  <input type="button" name="button4" id="button4" value="Shft left">
-move the entire speed table the right one space with each click on the button. The example below shows a linear 0-255 speed table that has been <b>Shifted right</b> three times. </p>
+  <input type="button" name="button4" id="button4" value="Shft right">
+move the entire speed table to the right one space with each click on the button. The example below shows a linear 0-255 speed table that has been <b>Shifted right</b> three times. </p>
 <h1><img src="images/Speed_Table_ShiftRight.png" width="824" height="331" alt="shift right"></h1>
 <p align="center"><strong>Curve Shifted Right</strong></p>
 <p>Of course, you can enter the numbers individually or move  the sliders one at a time to 

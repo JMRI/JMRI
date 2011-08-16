@@ -83,9 +83,9 @@
   <p><img src="images/Main_Debug02.png" width="525" height="85" alt="log entry"></p>
   <p><strong>Message</strong>: Type your message and then click the 
     <input type="button" name="button4" id="button4" value="Add">
-  to add to the log file.</p>
+  to add the message to the log file.</p>
 </blockquote>
-<p><strong>Display Message L:og</strong></p>
+<p><strong>Display Message Log</strong></p>
 <p>Displays  window with Log messages displayed.</p>
 <p><strong>Display Log Categories</strong></p>
 <p>Displays the <strong>Display Log Categories</strong> window which displays a list of all the jmri log message categories.<br>

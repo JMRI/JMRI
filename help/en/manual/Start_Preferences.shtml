@@ -38,8 +38,12 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <h3>&nbsp;</h3>
 <p>
  Click on the Edit menu and then Preferences... option
-in the screen above, which opens the Preferences window. (This window may open automatically the first time you
+in the screen below, which opens the Preferences window. (This window may open automatically the first time you
 run the program.) 
+<p>As a first time user the most  important information is the <strong>Connections</strong> screen where you describe how the  computer will talk to the command station.&nbsp;  Most of rest you can leave at the initial or &ldquo;default&rdquo; settings until  you find a need to change things to suit your fancy.
+<p><strong>Most importantly, you must click  
+  <input type="button" name="button9" id="button9" value="Save">
+   to finalize your settings and then re-start the program to have them  take effect.</strong>
 <p>The Preferences window provides  access to the basic  configuration information to connect your computer to your DCC system.&nbsp; You will be using that system to  actually&nbsp; program and operate  trains equipped with DCC decoders. 
 <p>The window is split into two panes, on the left side is a list of   preference groups that may be set. Clicking on one of the items opens   the options that may be set in the right side pane. No selection have been made
 <h1><img src="images/Preferences.png" width="753" height="432" alt="Preferences"></h1>
@@ -109,7 +113,7 @@ run the program.)
   <tr>
     <td rowspan="4">Settings:</td>
     <td width="22%">Serial Port:</td>
-    <td width="57%">Drop-down list to select the serial port to which your DCC interface is   connected. If you do not know, check your system hardware configuration   manual.    A second drop-down list may include a selection if there are   more than one possibilityDrop-down list to select the serial port to which your DCC interface is   connected. If you do not know, check your system hardware configuration   manual.    A second drop-down list may include a selection if there are   more than one possibility</td>
+    <td width="57%">Drop-down list to select the serial port to which your DCC interface is   connected. If you do not know, check your system hardware configuration   manual.    A second drop-down list may include a selection if there are   more than one possibility. possibilityDrop-down list to select the serial port to which your DCC  interface is connected. If you do not know, check your system hardware  configuration manual. A second drop-down list may include a selection if there  are more than one possibility</td>
   </tr>
   <tr>
     <td>Command station type:</td>
@@ -117,7 +121,7 @@ run the program.)
   </tr>
   <tr>
     <td>Connection prefix</td>
-    <td>nclude the prefix for your connection, in the case shown the "L" is default</td>
+    <td>Include the prefix for your connection, in the case shown the "L" is default</td>
   </tr>
   <tr>
     <td>Connection name</td>

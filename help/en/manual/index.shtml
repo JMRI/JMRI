@@ -43,13 +43,7 @@ http://java.sun.com/getjava/</a>
 <p><a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
   to get an overview of what we&rsquo;re about to cover..
   
-<p>
-<span class="ACCENT">
-Note that all screen shots in this manual are from a Windows machine using the
- "Metal" User Interface option. While your screens will probably differ
-in some layout details, they will be essentially the same.</span>
-
-<p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be digitrax, except for sound examples.</p>
+<p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be digitrax, except for sound examples.
 <p>Note: This entire manual has been updated to   correspond to DecoderPro 2.12, and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
 <p>
   <a name="index"></a>

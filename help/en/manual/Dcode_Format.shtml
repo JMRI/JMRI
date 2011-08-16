@@ -34,7 +34,7 @@
 <p>The easiest way to create a new decoder definition is to edit  one that already exists that has parameters similar to  your new decoder.&nbsp;  Hundreds of decoder definitions are available in JMRI, so you should be able to find one that is similar as a starting point.&nbsp; Don&rsquo;t feel bad about standing on someone  else&rsquo;s shoulders, that&rsquo;s the spirit of JMRI and open source software in  general.&nbsp; Although you can call this new  file anything you like, it will work best if you use the same convention as the  provided files. That is &quot;<strong>manufacturer  name</strong>&quot;_&quot;<strong>decoder family</strong>&quot;.xml, for example: <strong>Digitrax_1x2.xml</strong>  and <strong>Atlas_DualMode.xml</strong>.&nbsp; </p>
 <p>Now that you have located a Decoder Definition file as a starting point  open the file with an XML editor 
 (editors recommended by jmri are discussed on a separate page 
-<a href="../help/en/html/doc/Technical/XmlEditors.shtml">separate page</a> ) or your favorite text editor.
+<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlDtdUsage.shtml">separate page</a> ) or your favorite text editor.
 <strong>DO NOT</strong> try an advanced word processor like  Word.
 Use a basic text file editor like  Notepad, or an XML editor, XML Marker is a good one and it&rsquo;s free.</p>
 <p>The beginning XML lines deal with the Header:</p>

@@ -34,7 +34,9 @@ DecoderPro&reg; Main Window
 <p><span id="product-desc">The DCC Pocket Tester is  portable, reliable, and accurate way to test and verify the DCC   Protocol. It can be connected to your serial port to monitor traffic from DecoderPro.</span></p>
 <h4>Pocket Connection Tester dialog</h4>
 <p><img src="images/Main_PRICOM_01.png" alt="pocket tester connection" width="342" height="73" border="4"></p>
-<p>With the pocket tester connected to your COM n port, you may select the that COM port from the S<strong>serial port </strong>drop-down list. The speed that you want to use for testing can be selected from the <strong>Speed </strong>drop-down list. click on the <strong>Open</strong> button to open the connection. This opens the Pocket Tester Connection window.</p>
+<p>With the pocket tester connected to your COM n port, you may select that COM port from the <strong>Serial port </strong>drop-down list. The speed that you want to use for testing can be selected from the <strong>Speed </strong>drop-down list. Click on the <strong>
+  <input type="button" name="button" id="button" value="Open">
+</strong> to open the connection. This opens the Pocket Tester Connection window.</p>
 <p><img src="images/Main_PRICOM_02.png" alt="Pocket Tester Connection" width="430" height="209" border="4"></p>
 <p>The middle pane shows options to select the packets that you wish to view.</p>
 <p>

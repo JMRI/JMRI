@@ -70,10 +70,9 @@ With a  few exceptions it is not possible to read from a CV on the Main.  If rea
 <strong>Writing  to your decoder on the main:</strong> <br>
 <br>
 Program  on the Main writes are often called a &quot;blind write&quot; because there is  no response from the decoder that the write was successful.&nbsp; POM is very useful for tuning loco  performance while it is operating and the ack is the change in performance.<br>
-The decoder  is first addressed by the Command Station, then the CV is addressed and then  the data that is to be written into that CV of that decoder is sent. An  exception is if address zero is used,(or you forget to enter an address when  you start). &nbsp;Then <strong>ALL</strong> decoders  on the main will write that data into the appropriate CV which usually is an &ldquo;unintended  consequence&rdquo;.</blockquote>
-<p>Some command stations will only  &quot;broadcast&quot; programming commands, which can mean every locomotive on  the layout gets the same programming! If in doubt, check your documentation. <br>
+The decoder  is first addressed by the Command Station, then the CV is addressed and then  the data that is to be written into that CV of that decoder is sent. An  exception is if address zero is used,(or you forget to enter an address when  you start). &nbsp;Then <strong>ALL</strong> decoders  on the main will write that data into the appropriate CV which usually is an &ldquo;unintended  consequence&rdquo;.<br>
   <br>
-The other two buttons are:</p>
+The other two buttons are:</blockquote>
 <ol start="3">
   <li><strong>Help     </strong>- Accesses the help files<br>
     <br>
@@ -131,7 +130,7 @@ below:</p>
 </div>
 <p>Most of these fields are self-explanatory.  However, note that the first field (<strong>ID</strong>) becomes the 
 file name in the Roster for the locomotive you are programming. Set up a  schema to identify your locomotive to its decoder program. i.e. Mfr, Loco Type, and &nbsp;Address (Kato_SD40-2_5645). Spaces in the ID field will be  changed to underscores (_) when the file is written.&nbsp; In a club environment, often the ID begins  with the owner&rsquo;s name, or  member number. This way the Roster (which is sorted alphabetically) will keep  all of an owner's locomotives listed together. </p>
-
+<p>The <strong>Throttle Speed Limit(%)</strong> entry will set the top  speed of a locomotive as a percentage of its normal maximum.&nbsp; Good for grandkids, but only works with JMRI  throttles, not system throttles (i.e. NCE or Digitrax).</p>
 <p> The  <strong>Comment</strong> field is a good place 
   to add the date you purchased the locomotive, price, or  any other information you might 
 feel is important to record. </p>
