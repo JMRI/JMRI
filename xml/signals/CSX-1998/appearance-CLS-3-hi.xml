@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
@@ -180,4 +179,4 @@
     </aspectMapping>
 
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

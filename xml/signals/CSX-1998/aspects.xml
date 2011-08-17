@@ -67,7 +67,7 @@
       <rule>Rule 281-D</rule>
       <indication>Limited Speed through turnouts, crossovers, sidings and over power-operated switches; then proceed, prepared to stop at next signal.</indication>
       <speed>Limited</speed>
-      <speed2>Normal</speed2>
+      <speed2>Slow</speed2>
       <route>Diverging</route>
     </aspect>
 
@@ -85,7 +85,7 @@
       <rule>Rule 282-A</rule>
       <indication>Proceed prepared to stop at second signal.</indication>
       <speed>Normal</speed>
-      <speed2>Medium</speed2>
+      <speed2>Limited</speed2>
       <route>Normal</route>
     </aspect>
 
@@ -200,8 +200,10 @@
   </aspects>
 
   <appearancefiles>
+    <appearancefile href="appearance-CLS-1-3-2-hi.xml"/>
     <appearancefile href="appearance-CLS-1-3-hi.xml"/>
     <appearancefile href="appearance-CLS-1-3-lo.xml"/>
+    <appearancefile href="appearance-CLS-3-2-2-hi.xml"/>
     <appearancefile href="appearance-CLS-3-2-hi.xml"/>
     <appearancefile href="appearance-CLS-3-3-2-hi.xml"/>
     <appearancefile href="appearance-CLS-3-3-3-hi.xml"/>
