@@ -217,12 +217,12 @@ public class DefaultRoute extends AbstractNamedBean
     
     /**
      * Add an output Turnout to this Route
-     * @param turnoutSystemName The turnout system name
+     * @param turnoutName The turnout system name
      * @param turnoutState must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, 
      *      which determines how the Turnout is to be switched when this Route is set
      */
-    public boolean addOutputTurnout(String turnoutSystemName, int turnoutState) {
-        OutputTurnout outputTurnout = new OutputTurnout(turnoutSystemName);
+    public boolean addOutputTurnout(String turnoutName, int turnoutState) {
+        OutputTurnout outputTurnout = new OutputTurnout(turnoutName);
         if (!outputTurnout.setState(turnoutState) ) {
             return false;
         }
@@ -242,7 +242,7 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
-     * Method to get a Route Turnout System Name by Index
+     * Method to get a Route Turnout Name by Index
      *  Returns null if there is no turnout with that index
      */
     public String getOutputTurnoutByIndex(int index) {
@@ -315,12 +315,12 @@ public class DefaultRoute extends AbstractNamedBean
 
     /**
      * Add an output Sensor to this Route
-     * @param systemName The sensor system name
+     * @param sensorName The sensor name either system or user
      * @param state must be Sensor.ACTIVE, Sensor.INACTIVE, or Route.TOGGLE, 
      *      which determines how the Sensor is to be set when this Route is set
      */
-    public boolean addOutputSensor(String systemName, int state) {
-        OutputSensor outputSensor = new OutputSensor(systemName);
+    public boolean addOutputSensor(String sensorName, int state) {
+        OutputSensor outputSensor = new OutputSensor(sensorName);
         if (!outputSensor.setState(state) ) {
             return false;
         }
@@ -340,7 +340,7 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
-     * Method to get an ouput Sensor system name by Index
+     * Method to get an ouput Sensor name by Index
      *  Returns null if there is no sensor with that index
      */
     public String getOutputSensorByIndex(int index) {
@@ -354,8 +354,8 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Method to inquire if a Sensor is included in this Route
      */
-    public boolean isOutputSensorIncluded(String systemName) {
-        Sensor s1 = InstanceManager.sensorManagerInstance().provideSensor(systemName);
+    public boolean isOutputSensorIncluded(String sensorName) {
+        Sensor s1 = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         for (int i=0; i<_outputSensorList.size(); i++) {
             if ( _outputSensorList.get(i).getSensor() == s1 ) {
                 // Found turnout
@@ -438,10 +438,10 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Method to set turnouts aligned sensor
      */
-    public void setTurnoutsAlignedSensor(String sensorSystemName){
-        if (log.isDebugEnabled()) log.debug("setTurnoutsAlignedSensor "+getSystemName()+" "+sensorSystemName);
+    public void setTurnoutsAlignedSensor(String sensorName){
+        if (log.isDebugEnabled()) log.debug("setTurnoutsAlignedSensor "+getSystemName()+" "+sensorName);
         
-        mTurnoutsAlignedSensor = sensorSystemName;
+        mTurnoutsAlignedSensor = sensorName;
         if( mTurnoutsAlignedSensor==null || mTurnoutsAlignedSensor.equals("")){
             mTurnoutsAlignedNamedSensor = null;
             return;
@@ -490,17 +490,16 @@ public class DefaultRoute extends AbstractNamedBean
     
     /**
      * Method to add a Sensor to the list of control Sensors for this Route.
-     * @param sensorSystemName nominally a system name, we'll try to
-     * convert this to a system name if it's not already one
+     * @param sensorName either a system or username of a sensor
      */
-    public boolean addSensorToRoute(String sensorSystemName, int mode) {
+    public boolean addSensorToRoute(String sensorName, int mode) {
         if (_controlSensorList.size() >= MAX_CONTROL_SENSORS) {
             // reached maximum
             log.warn("Reached maximum number of control Sensors for Route: "+
                                                             getSystemName() );
         }
-        ControlSensor sensor = new ControlSensor(sensorSystemName);
-        if (log.isDebugEnabled()) log.debug("addSensorToRoute "+getSystemName()+" "+sensorSystemName);
+        ControlSensor sensor = new ControlSensor(sensorName);
+        if (log.isDebugEnabled()) log.debug("addSensorToRoute "+getSystemName()+" "+sensorName);
         if (!sensor.setState(mode) )
         {
             return false;
@@ -510,7 +509,7 @@ public class DefaultRoute extends AbstractNamedBean
     }
     
     /**
-     * Method to get the SystemName of a control Sensor in this Route
+     * Method to get the Name of a control Sensor in this Route
      *  'index' is the index in the Sensor array of the requested 
      *      Sensor.  
      *  If there is no Sensor with that 'index', or if 'index'
@@ -556,8 +555,8 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Method to set the Name of a control Turnout for this Route
      */
-    public void setControlTurnout(String turnoutSystemName) {
-        mControlTurnout = turnoutSystemName;
+    public void setControlTurnout(String turnoutName) {
+        mControlTurnout = turnoutName;
         if( mControlTurnout==null || mControlTurnout.equals("")){
             mControlNamedTurnout = null;
             return;
@@ -597,8 +596,8 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Method to set the Name of a lock control Turnout for this Route
      */
-    public void setLockControlTurnout(String turnoutSystemName) {
-        mLockControlTurnout = turnoutSystemName;
+    public void setLockControlTurnout(String turnoutName) {
+        mLockControlTurnout = turnoutName;
         if( mLockControlTurnout==null || mLockControlTurnout.equals("")){
             mLockControlNamedTurnout = null;
             return;
