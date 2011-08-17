@@ -35,8 +35,11 @@ import java.util.Iterator;
 import jmri.jmrit.roster.*;
 import java.io.IOException;
 import java.io.File;
+import java.util.ResourceBundle;
 
 public class VSDConfigPanel extends JmriPanel {
+
+    private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
 
     VSDecoder decoder;
     VSDecoderManager decoder_mgr;
@@ -192,6 +195,7 @@ public class VSDConfigPanel extends JmriPanel {
 		}
 	    });
 	rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
+	rosterSaveButton.setToolTipText(vsdecoderBundle.getString("RosterSaveButtonToolTip"));
 	rosterPanel.add(rosterSaveButton);
 
         addressTextBox = new javax.swing.JTextField(5);
@@ -236,6 +240,7 @@ public class VSDConfigPanel extends JmriPanel {
 	    });
 	addressTextBox.setEnabled(false);
 	addressSetButton.setEnabled(false);
+	addressSetButton.setToolTipText("AddressSetButtonToolTip");
 
     }
 
