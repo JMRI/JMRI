@@ -41,7 +41,7 @@ manufacturer's website.
 
 <h3>JMRI Configuration</h3>
 <a href="Panel.png">
-<img src="Panel.png" align="right" height="191" width="183" alt="LDT add panel"></a>
+<img src="Panel.png" align="right" height="708" width="331" alt="LDT add panel"></a>
 <p>
 You have to add each LDT signal using the 
 <a href="../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Signal Add/Edit Window</a>
