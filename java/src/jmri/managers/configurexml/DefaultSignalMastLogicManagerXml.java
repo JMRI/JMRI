@@ -98,14 +98,14 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(blockElement);
                             }
-                            ArrayList<Turnout> turnouts = sm.getTurnouts(dest);
+                            ArrayList<NamedBeanHandle<Turnout>> turnouts = sm.getNamedTurnouts(dest);
                             if (turnouts.size()>0){
                                 Element turnoutElement = new Element("turnouts");
                                 for(int j = 0; j<turnouts.size(); j++){
                                     Element turn = new Element("turnout");
-                                    turn.addContent(new Element("turnoutName").addContent(turnouts.get(j).getDisplayName()));
+                                    turn.addContent(new Element("turnoutName").addContent(turnouts.get(j).getName()));
                                     String turnState = "thrown";
-                                    if (sm.getTurnoutState(turnouts.get(j),dest)==Turnout.CLOSED)
+                                    if (sm.getTurnoutState(turnouts.get(j).getBean(),dest)==Turnout.CLOSED)
                                         turnState = "closed";
                                     turn.addContent(new Element("turnoutState").addContent(turnState));
                                     turnoutElement.addContent(turn);
@@ -231,7 +231,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                 if(turnoutElem!=null){
                     List<Element> turnoutList = turnoutElem.getChildren("turnout");
                     if (turnoutList.size()>0){
-                        Hashtable<Turnout, Integer> list = new Hashtable<Turnout, Integer>();
+                        Hashtable<NamedBeanHandle<Turnout>, Integer> list = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
                         for (Element t : turnoutList){
                             String turnout = t.getChild("turnoutName").getText();
                             String state = t.getChild("turnoutState").getText();
@@ -239,9 +239,10 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             if (state.equals("thrown"))
                                 value = Turnout.THROWN;
                             Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnout);
-                            if(turn!=null)
-                                list.put(turn, value);
-                            else if (debug)
+                            if(turn!=null){
+                                NamedBeanHandle namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
+                                list.put(namedTurnout, value);
+                            } else if (debug)
                                 log.debug("Unable to add Turnout " + turnout + " as it does not exist in the panel file");
 
                         }

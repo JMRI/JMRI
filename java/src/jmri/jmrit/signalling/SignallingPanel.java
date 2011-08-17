@@ -829,10 +829,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
         sml.setBlocks(hashBlocks, destMast);
         
-        Hashtable<Turnout, Integer> hashTurnouts = new Hashtable<Turnout, Integer>();
+        Hashtable<NamedBeanHandle<Turnout>, Integer> hashTurnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
         for(int i = 0; i<_includedManualTurnoutList.size(); i++){
-            Turnout blk = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_includedManualTurnoutList.get(i).getSysName());
-            hashTurnouts.put(blk, _includedManualTurnoutList.get(i).getState());
+            String turnoutName = _includedManualTurnoutList.get(i).getDisplayName();
+            Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_includedManualTurnoutList.get(i).getDisplayName());
+            NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnoutName, turnout);
+            hashTurnouts.put(namedTurnout, _includedManualTurnoutList.get(i).getState());
         }
         sml.setTurnouts(hashTurnouts, destMast);
         

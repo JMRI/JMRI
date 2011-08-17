@@ -125,6 +125,8 @@ public interface SignalMastLogic {
     public int getTurnoutState(Turnout turnout, SignalMast destination);
 
     ArrayList<Turnout> getTurnouts(SignalMast destination);
+    
+    public ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination);
 
     public void initialise();
 
@@ -240,7 +242,7 @@ public interface SignalMastLogic {
      * Sets the states that each turnout must be in for signal not to be set at a stop aspect
      * @param turnouts
      */
-    public void setTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination);
+    public void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination);
 
     public void setupLayoutEditorDetails();
 

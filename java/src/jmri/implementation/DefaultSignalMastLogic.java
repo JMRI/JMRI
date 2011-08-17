@@ -359,7 +359,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      * Sets the states that each turnout must be in for signal not to be set at a stop aspect
      * @param turnouts
      */
-    public void setTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination){
+    public void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination){
         if(!destList.containsKey(destination)){
             return;
         }
@@ -454,6 +454,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return new ArrayList<Turnout>();
         }
         return destList.get(destination).getTurnouts();
+    }
+    
+    public ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(SignalMast destination){
+        if(!destList.containsKey(destination)){
+            return new ArrayList<NamedBeanHandle<Turnout>>();
+        }
+        return destList.get(destination).getNamedTurnouts();
     }
     
     public ArrayList<Turnout> getAutoTurnouts(SignalMast destination){
@@ -890,7 +897,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     class DestinationMast{
         LayoutBlock destinationBlock = null;
         
-        Hashtable<Turnout, Integer> turnouts = new Hashtable<Turnout, Integer>(0);
+        Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>(0);
         Hashtable<Turnout, Integer> autoTurnouts = new Hashtable<Turnout, Integer>(0);
         //Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
         //Hashtable<Turnout, Boolean> autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
@@ -993,18 +1000,18 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return blocks.get(block);
         }
         
-        void setTurnouts(Hashtable<Turnout, Integer> turnouts){
+        void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts){
                 if(this.turnouts!=null){
-                Enumeration<Turnout> keys = this.turnouts.keys();
+                Enumeration<NamedBeanHandle<Turnout>> keys = this.turnouts.keys();
                 while ( keys.hasMoreElements() )
                 {
-                   Turnout key = keys.nextElement();
+                   Turnout key = keys.nextElement().getBean();
                    key.removePropertyChangeListener(propertyTurnoutListener);
                 }
             }
             destMastInit = false;
             if(turnouts==null){
-                this.turnouts = new Hashtable<Turnout, Integer>(0);
+                this.turnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>(0);
             } else {
                 this.turnouts=turnouts;
             }
@@ -1239,7 +1246,16 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         ArrayList<Turnout> getTurnouts(){
             ArrayList<Turnout> out = new ArrayList<Turnout>();
-            Enumeration<Turnout> en = turnouts.keys();
+            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
+            while (en.hasMoreElements()) {
+                out.add(en.nextElement().getBean());
+            }
+            return out;
+        }
+        
+        ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(){
+            ArrayList<NamedBeanHandle<Turnout>> out = new ArrayList<NamedBeanHandle<Turnout>>();
+            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
             while (en.hasMoreElements()) {
                 out.add(en.nextElement());
             }
@@ -1312,7 +1328,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         boolean isTurnoutIncluded(Turnout turnout){
-            return turnouts.containsKey(turnout);
+            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
+            while (en.hasMoreElements()) {
+                if(en.nextElement().getBean()==turnout)
+                    return true;
+            }
+            return false;
         }
         
         boolean isSensorIncluded(Sensor sensor){
@@ -1353,8 +1374,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         int getTurnoutState(Turnout turnout){
             if(turnouts==null)
                 return -1;
-            if(turnouts.containsKey(turnout))
-                return turnouts.get(turnout);
+            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
+            while (en.hasMoreElements()) {
+                NamedBeanHandle namedTurnout = en.nextElement();
+                if (namedTurnout.getBean()==turnout)
+                    return turnouts.get(namedTurnout);
+            }
             return -1;
         }
         
@@ -1444,8 +1469,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                Turnout key = keys.nextElement();
                if (key.getKnownState()!=autoTurnouts.get(key)){
                     if (key.getState()!=autoTurnouts.get(key)){
-                        if (turnouts.containsKey(key)){
-                            if(key.getState()!=turnouts.get(key)){
+                        if (isTurnoutIncluded(key)){
+                            if(key.getState()!=getTurnoutState(key)){
                                 state=false;
                             } else if (key.getState()==Turnout.THROWN){
                                 turnoutThrown=true;
@@ -1459,10 +1484,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     turnoutThrown=true;
                 }
             }
-            keys = turnouts.keys();
-            while ( keys.hasMoreElements() )
+            
+            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
+            while ( turnoutKeys.hasMoreElements() )
             {
-               Turnout key = keys.nextElement();
+               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
+               Turnout key = namedTurnout.getBean();
                if (key.getKnownState()!=turnouts.get(key))
                    state=false;
                 else if (key.getState()==Turnout.THROWN){
@@ -1584,9 +1611,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
 
                if (key.getKnownState()!=autoTurnouts.get(key)){
                     if (key.getState()!=autoTurnouts.get(key)){
-                        if (turnouts.containsKey(key)){
-                            if(key.getState()!=turnouts.get(key)){
-                                routeclear = false;
+                        if (isTurnoutIncluded(key)){
+                            if(key.getState()!=getTurnoutState(key)){
+                                routeclear=false;
                             } else if (key.getState()==Turnout.THROWN){
                                 turnoutThrown=true;
                             }
@@ -1599,15 +1626,15 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                }
             }
 
-            keys = turnouts.keys();
-            while ( keys.hasMoreElements() )
+            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
+            while ( turnoutKeys.hasMoreElements() )
             {
-               Turnout key = keys.nextElement();
-               key.addPropertyChangeListener(propertyTurnoutListener);
-
+               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
+               Turnout key = namedTurnout.getBean();
+               key.addPropertyChangeListener(propertyTurnoutListener, namedTurnout.getName(), "Signal Mast Logic:" + source.getDisplayName() + " to " + destination.getDisplayName());
                if (key.getKnownState()!=turnouts.get(key))
-                   routeclear = false;
-                else if (key.getKnownState()==Turnout.THROWN){
+                   routeclear=false;
+                else if (key.getState()==Turnout.THROWN){
                     turnoutThrown=true;
                 }
             }
@@ -1993,13 +2020,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 return;
                 
             
-            Enumeration<Turnout> keys =autoTurnouts.keys();
-            while ( keys.hasMoreElements() )
+            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
+            while ( turnoutKeys.hasMoreElements() )
             {
-               Turnout key = keys.nextElement();
+               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
+               Turnout key = namedTurnout.getBean();
                key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, true);
             }
-            keys = turnouts.keys();
+            Enumeration<Turnout> keys = autoTurnouts.keys();
             while ( keys.hasMoreElements() )
             {
                 Turnout key = keys.nextElement();
@@ -2013,16 +2041,18 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if((!lockTurnouts) && (!active))
                 return;
                 
-            Enumeration<Turnout> keys =autoTurnouts.keys();
-            while ( keys.hasMoreElements() )
-            {
-               Turnout key = keys.nextElement();
-               key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, false);
-            }
-            keys = turnouts.keys();
+            Enumeration<Turnout> keys = autoTurnouts.keys();
             while ( keys.hasMoreElements() )
             {
                 Turnout key = keys.nextElement();
+               key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, false);
+            }
+            
+            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
+            while ( turnoutKeys.hasMoreElements() )
+            {
+               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
+               Turnout key = namedTurnout.getBean();
                 key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, false);
             }
         }
@@ -2053,10 +2083,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                 }
             }
-            keys = turnouts.keys();
-            while ( keys.hasMoreElements() )
+            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
+            while ( turnoutKeys.hasMoreElements() )
             {
-               Turnout key = keys.nextElement();
+               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
+               Turnout key = namedTurnout.getBean();
                if (key.getState()==Turnout.CLOSED){
                     if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
                         minimumBlockSpeed = key.getStraightLimit();
@@ -2134,7 +2165,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     //Need to check this against the manual list vs auto list
                     //The manual list should over-ride the auto list
                     int now = ((Integer) e.getNewValue()).intValue();
-                    if(turnouts.containsKey(turn)){
+                    if(isTurnoutIncluded(turn)){
                         if (getTurnoutState(turn)!=now){
                             if(log.isDebugEnabled()){
                                 log.debug("Turnout " + turn.getDisplayName() + " caused the signalmast to be set");
