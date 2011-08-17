@@ -93,8 +93,8 @@ To log messages
 from a class named MyClass, add this to the bottom of the class file:
 <code>
 <PRE>
-	static org.apache.log4j.Category log 
-	        = org.apache.log4j.Category.getInstance(MyClass.class.getName());
+	private static final org.apache.log4j.Logger log 
+	        = org.apache.log4j.Logger.getLogger(MyClass.class.getName());
 </PRE>
 </code>
 Then for each message to log insert a line like:
@@ -110,7 +110,7 @@ If the message is not just an explicit string, you should use
 this form instead:
 <code>
 <PRE>
-	if (log.isDebugEnabled()) log.debug("Found "+numberEntrie());
+	if (log.isDebugEnabled()) log.debug("Found "+numberEntries());
 </PRE>
 </code>
 so the program doesn't waste time forming the message string (in this
