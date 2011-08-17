@@ -116,24 +116,14 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
 
     public void setXml(Element e) {
 	log.warn("FloatTrigger.setXml()");
+
+	//Get common stuff
+	super.setXml(e);
+
 	if (e.getAttributeValue("type").equals("FLOAT")) {
-	    trigger_name = e.getAttributeValue("name");
-	    event_name = e.getChild("event-name").getValue();
 	    match_value = Float.parseFloat(e.getChild("match").getValue() + "f");
 
 	    compare_type = Trigger.CompareType.valueOf(e.getChild("compare-type").getValue().toUpperCase());
-	    try {
-		this.setTargetAction(Trigger.TargetAction.valueOf(e.getChild("action").getValue()));
-	    } catch(IllegalArgumentException iea) {
-		this.setTargetAction(Trigger.TargetAction.NOTHING);
-	    } catch(NullPointerException npe) {
-		this.setTargetAction(Trigger.TargetAction.NOTHING);
-	    }
-	    
-	    String tn = e.getChild("target-name").getValue();
-	    this.setTargetName(tn);
-
-	    
 	}
     }
 
