@@ -50,8 +50,8 @@ choices for how the signal head is connected:
   <p>
   For each connection, enter the appropriate JMRI
   turnout for the electrical connection on the layout,
-  either as a number (1,2,3) or as a JMRI
-  name (system name like LT1, CT2 or an already-defined user name). 
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
   They need not be consecutive or in any particular order.
   <p>
   If you need to debug one of these signal heads, start by
@@ -76,9 +76,9 @@ choices for how the signal head is connected:
   they're just electrical outputs.
   <p>
   For each connection, enter the appropriate JMRI
-  turnout for the electrical connection on the layout, 
-  either as a number (1,2) or as a JMRI
-  name (system name like LT1, CT2 or an already-defined user name). 
+  turnout for the electrical connection on the layout,
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
   They need not be consecutive or in any particular order.
   <p>
   If you need to debug one of these signal heads, start by
@@ -104,8 +104,8 @@ choices for how the signal head is connected:
   <p>
   For each connection, enter the appropriate JMRI
   turnout for the electrical connection on the layout,
-  either as a number (1,2,3) or as a JMRI
-  name (system name like LT1, CT2 or an already-defined user name). 
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
   They need not be consecutive or in any particular order.
   <p>
   If you need to debug one of these signal heads, start by
@@ -129,9 +129,9 @@ choices for how the signal head is connected:
   This type could also be used to control mechanically operated signals that only
   have two appearances and therefore always have an appearance.
   It is possible to gain a third "flashing" appearance.  
-  If you have Dark and a colour selected, then the end result is an additional flash color option
-  If there are two colours selected, then you are given flash for both colours, however this will 
-  either flash option will result in the colours flashing alternatively.
+  If you have Dark and a colour selected, then the end result is an additional flash colour option
+  If there are two colours selected, then you are given flash for both colours,  
+  however this will result in the colours flashing alternatively.
   <p>
   These connections are controlled via the JMRI Turnout
   logic, and therefore appear in the Turnout Table.
@@ -140,9 +140,8 @@ choices for how the signal head is connected:
   <p>
   For each connection, enter the appropriate JMRI
   turnout for the electrical connection on the layout,
-  either as a number (1,2,3) or as a JMRI
-  name (system name like LT1, CT2 or an already-defined user name). 
-  They need not be consecutive or in any particular order.
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
   <p>
   If you need to debug one of these signal heads, start by
   checking whether the Turnout connections work. You can
@@ -176,16 +175,17 @@ choices for how the signal head is connected:
   <p>
   In the "Turnout number" field, enter the appropriate DCC address 
   of the SE8c output as a number.  For example,
-  the 1st signal head on the 1st SE8c, as configured from the Digitrax
-  factory, is addressed by putting a "257" here. See e.g. page
-  5 and 7 of the Digitrax SE8c manual 
+  the 1st signal head on the 1st SE8c, as configured from the Digitrax factory, 
+  is "257" by selecting "create turnout", then selecting "LocoNet" in the drop down box,
+  enter in "257" in the field next to it.
+  See e.g. page 5 and 7 of the Digitrax SE8c manual 
   (<a href="http://www.digitrax.com/ftp/se8c.pdf">http://www.digitrax.com/ftp/se8c.pdf</a>).
-  In this case, don't enter anything in the "Second Turnout" field.
+  Do the same in the second turnout field, but entering in "258".
   <p>
-  Alternately, if you're using more than one hardware type, you might need
-  to specify a full user or system name.  In that case, put the name for the 
-  lower turnout address, e.g. NT257, in the "turnout number" field,
-  and the upper turnout address, e.g. NT258, in the "Second Turnout" field.
+  Alternately, if you're using more than one hardware type, you can 
+  either select a turnout from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
+  They need not be consecutive or in any particular order.
   </dd>
 
 <dt>LDT LS-DEC</dt>
@@ -199,10 +199,10 @@ choices for how the signal head is connected:
   DP2N decoder.
   <p>
   These controllers use seven DCC turnout (accessory decoder) addresses to specify
-  the seven possible appearances of the signal.  Enter those, either as 
-  numbers (1,2,3,...) or as JMRI turnout 
-  names (system names like LT1, CT2 and/or already-defined user names),
-  in the appropriate text fields.
+  the seven possible appearances of the signal.  Enter those, 
+  either from the drop down list of already-defined turnouts
+  or by creating a new turnout for a particular connection.
+  They need not be consecutive or in any particular order.
   <p>
   For more information on configuring these signals, see
   the 
