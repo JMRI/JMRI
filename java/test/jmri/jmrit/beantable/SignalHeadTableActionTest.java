@@ -79,6 +79,7 @@ public class SignalHeadTableActionTest extends TestCase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
     }
     
     protected void tearDown() throws Exception { 

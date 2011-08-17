@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class BeanSelectCreatePanel extends JPanel{
     ButtonGroup selectcreate = new ButtonGroup();
     
     JmriBeanComboBox existingCombo;
-    JTextField hardwareAddress = new JTextField(10);
+    JTextField hardwareAddress = new JTextField(8);
     JComboBox prefixBox = new JComboBox();
     jmri.UserPreferencesManager p;
     String systemSelectionCombo = this.getClass().getName()+".SystemSelected";
@@ -61,9 +62,15 @@ public class BeanSelectCreatePanel extends JPanel{
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
         existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+        //If the combo list is empty we go straight to creation.
+        if (existingCombo.getItemCount()==0) {
+            newItem.setSelected(true);
+        }
         existingCombo.setFirstItemBlank(true);
         JPanel radio = new JPanel();
+        radio.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         JPanel bean = new JPanel();
+        bean.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         radio.add(existingItem);
         radio.add(newItem);
         
@@ -103,6 +110,7 @@ public class BeanSelectCreatePanel extends JPanel{
         bean.add(existingCombo);
         bean.add(prefixBox);
         bean.add(hardwareAddress);
+        hardwareAddress.setToolTipText("Enter in the Hardware address");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(radio);
         add(bean);
@@ -123,6 +131,10 @@ public class BeanSelectCreatePanel extends JPanel{
         }
     }
     
+    /**
+    * get the display name of the bean that has either been selected in the drop down list or
+    * has been created
+    */
     public String getDisplayName(){
         if(existingItem.isSelected()){
             return existingCombo.getSelectedDisplayName();
@@ -135,6 +147,11 @@ public class BeanSelectCreatePanel extends JPanel{
             }
         }
     }
+    
+    /**
+    * get the named bean that has either been selected in the drop down list or
+    * has been created
+    */
     
     public NamedBean getNamedBean() throws jmri.JmriException {
         if(existingItem.isSelected()){
@@ -196,17 +213,29 @@ public class BeanSelectCreatePanel extends JPanel{
         }
         if (nBean==null)
             throw new jmri.JmriException("Unable to create bean");
-        if (_reference!=null && (nBean.getUserName()==null || !nBean.getUserName().equals("")))
-            nBean.setUserName(_reference);
+        if ((_reference!=null || !_reference.equals("")) && (nBean.getComment()==null || !nBean.getComment().equals("")))
+            nBean.setComment(_reference);
+        setDefaultNamedBean(nBean);
         return nBean;
     }
 
     /**
-    * Set a reference that can be set against the userName for a bean, only if
-    * the bean has no previous username.
+    * Set a reference that can be set against the comment for a bean, only if
+    * the bean has no previous comment.
     */
     public void setReference(String ref){
         _reference = ref;
+    }
+    
+    /**
+    * Sets the default selected item in the combo box, when this is set the 
+    * combo box becomes active and the add hardware box details are then hidden
+    */
+    public void setDefaultNamedBean(NamedBean nBean){
+        _defaultSelect = nBean;
+        existingCombo.setSelectedBean(_defaultSelect);
+        existingItem.setSelected(true);
+        update();
     }
     
     public void dispose(){

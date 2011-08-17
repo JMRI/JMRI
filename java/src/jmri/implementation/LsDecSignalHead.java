@@ -30,7 +30,7 @@ import jmri.*;
  */
 public class LsDecSignalHead extends DefaultSignalHead {
     
-    public LsDecSignalHead(String sys, String user, Turnout t1, int s1, Turnout t2, int s2, Turnout t3, int s3, Turnout t4, int s4, Turnout t5, int s5, Turnout t6, int s6, Turnout t7, int s7) {
+    public LsDecSignalHead(String sys, String user, NamedBeanHandle<Turnout> t1, int s1, NamedBeanHandle<Turnout> t2, int s2, NamedBeanHandle<Turnout> t3, int s3, NamedBeanHandle<Turnout> t4, int s4, NamedBeanHandle<Turnout> t5, int s5, NamedBeanHandle<Turnout> t6, int s6, NamedBeanHandle<Turnout> t7, int s7) {
         super(sys, user);
         mGreen = t1;
         mYellow = t2;
@@ -48,7 +48,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
         mDarkState = s7;
     }
 
-    public LsDecSignalHead(String sys, Turnout t1, int s1, Turnout t2, int s2, Turnout t3, int s3, Turnout t4, int s4, Turnout t5, int s5, Turnout t6, int s6, Turnout t7, int s7) {
+    public LsDecSignalHead(String sys, NamedBeanHandle<Turnout> t1, int s1, NamedBeanHandle<Turnout> t2, int s2, NamedBeanHandle<Turnout> t3, int s3, NamedBeanHandle<Turnout> t4, int s4, NamedBeanHandle<Turnout> t5, int s5, NamedBeanHandle<Turnout> t6, int s6, NamedBeanHandle<Turnout> t7, int s7) {
         super(sys);
         mGreen = t1;
         mYellow = t2;
@@ -97,33 +97,33 @@ public class LsDecSignalHead extends DefaultSignalHead {
 	protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
 	if (mLit == false) {
-            mDark.setCommandedState(mDarkState);
+            mDark.getBean().setCommandedState(mDarkState);
             return;
         } else {
             switch (mAppearance) {
                 case RED:
-                    mRed.setCommandedState(mRedState);
+                    mRed.getBean().setCommandedState(mRedState);
                     break;
         	case FLASHRED:
-                    mFlashRed.setCommandedState(mFlashRedState);
+                    mFlashRed.getBean().setCommandedState(mFlashRedState);
                     break;
         	case YELLOW:
-                    mYellow.setCommandedState(mYellowState);
+                    mYellow.getBean().setCommandedState(mYellowState);
                     break;
         	case FLASHYELLOW:
-                    mFlashYellow.setCommandedState(mFlashYellowState);
+                    mFlashYellow.getBean().setCommandedState(mFlashYellowState);
                     break;
         	case GREEN:
-                    mGreen.setCommandedState(mGreenState);
+                    mGreen.getBean().setCommandedState(mGreenState);
                     break;
         	case FLASHGREEN:
-                    mFlashGreen.setCommandedState(mFlashGreenState);
+                    mFlashGreen.getBean().setCommandedState(mFlashGreenState);
                     break;
         	default:
                     log.warn("Unexpected new appearance: "+mAppearance);
                 // go dark by falling through
         	case DARK:
-                    mDark.setCommandedState(mDarkState);
+                    mDark.getBean().setCommandedState(mDarkState);
                     break;
             }
         }
@@ -144,13 +144,13 @@ public class LsDecSignalHead extends DefaultSignalHead {
         super.dispose();
     }
 
-    Turnout mRed;
-    Turnout mYellow;
-    Turnout mGreen;
-    Turnout mFlashRed;
-    Turnout mFlashYellow;
-    Turnout mFlashGreen;
-    Turnout mDark;
+    NamedBeanHandle<Turnout> mRed;
+    NamedBeanHandle<Turnout> mYellow;
+    NamedBeanHandle<Turnout> mGreen;
+    NamedBeanHandle<Turnout> mFlashRed;
+    NamedBeanHandle<Turnout> mFlashYellow;
+    NamedBeanHandle<Turnout> mFlashGreen;
+    NamedBeanHandle<Turnout> mDark;
 
     int mRedState;
     int mYellowState;
@@ -160,13 +160,13 @@ public class LsDecSignalHead extends DefaultSignalHead {
     int mFlashGreenState;
     int mDarkState;
 
-    public Turnout getRed() {return mRed;}
-    public Turnout getYellow() {return mYellow;}
-    public Turnout getGreen() {return mGreen;}
-    public Turnout getFlashRed() {return mFlashRed;}
-    public Turnout getFlashYellow() {return mFlashYellow;}
-    public Turnout getFlashGreen() {return mFlashGreen;}
-    public Turnout getDark() {return mDark;}
+    public NamedBeanHandle<Turnout> getRed() {return mRed;}
+    public NamedBeanHandle<Turnout> getYellow() {return mYellow;}
+    public NamedBeanHandle<Turnout> getGreen() {return mGreen;}
+    public NamedBeanHandle<Turnout> getFlashRed() {return mFlashRed;}
+    public NamedBeanHandle<Turnout> getFlashYellow() {return mFlashYellow;}
+    public NamedBeanHandle<Turnout> getFlashGreen() {return mFlashGreen;}
+    public NamedBeanHandle<Turnout> getDark() {return mDark;}
     public int getRedState() {return mRedState;}
     public int getYellowState() {return mYellowState;}
     public int getGreenState() {return mGreenState;}
@@ -174,13 +174,13 @@ public class LsDecSignalHead extends DefaultSignalHead {
     public int getFlashYellowState() {return mFlashYellowState;}
     public int getFlashGreenState() {return mFlashGreenState;}
     public int getDarkState() {return mDarkState;}
-    public void setRed(Turnout t) {mRed = t;}
-    public void setYellow(Turnout t) {mYellow = t;}
-    public void setGreen(Turnout t) {mGreen = t;}
-    public void setFlashRed(Turnout t) {mFlashRed = t;}
-    public void setFlashYellow(Turnout t) {mFlashYellow = t;}
-    public void setFlashGreen(Turnout t) {mFlashGreen = t;}
-    public void setDark(Turnout t) {mDark = t;}
+    public void setRed(NamedBeanHandle<Turnout> t) {mRed = t;}
+    public void setYellow(NamedBeanHandle<Turnout> t) {mYellow = t;}
+    public void setGreen(NamedBeanHandle<Turnout> t) {mGreen = t;}
+    public void setFlashRed(NamedBeanHandle<Turnout> t) {mFlashRed = t;}
+    public void setFlashYellow(NamedBeanHandle<Turnout> t) {mFlashYellow = t;}
+    public void setFlashGreen(NamedBeanHandle<Turnout> t) {mFlashGreen = t;}
+    public void setDark(NamedBeanHandle<Turnout> t) {mDark = t;}
     public void setRedState(int i) {mRedState = i;}
     public void setYellowState(int i) {mYellowState = i;}
     public void setGreenState(int i) {mGreenState = i;}

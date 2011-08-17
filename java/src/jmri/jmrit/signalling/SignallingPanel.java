@@ -11,6 +11,7 @@ import jmri.SignalMastLogic;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.JmriBeanComboBox;
 
 import java.beans.PropertyChangeListener;
 
@@ -40,8 +41,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
     
-    JComboBox sourceMastBox = new JComboBox();
-    JComboBox destMastBox = new JComboBox();
+    JmriBeanComboBox sourceMastBox;
+    JmriBeanComboBox destMastBox;
     JLabel fixedSourceMastLabel = new JLabel();
     JLabel fixedDestMastLabel = new JLabel();
     JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast"));
@@ -103,8 +104,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     mastSpeed.setText(rb.getString("PathSpeed") + " : " + Float.toString(pathSpeed));
             }
         }
-        signalMastCombo(sourceMastBox, sourceMast);
-        signalMastCombo(destMastBox, destMast);
+        
+        sourceMastBox = new JmriBeanComboBox(smm, sourceMast, JmriBeanComboBox.DISPLAYNAME);
+        destMastBox = new JmriBeanComboBox(smm, destMast, JmriBeanComboBox.DISPLAYNAME);
+        //signalMastCombo(sourceMastBox, sourceMast);
+        //signalMastCombo(destMastBox, destMast);
         
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout());
@@ -128,8 +132,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             public void actionPerformed(ActionEvent e) {
                 if (useLayoutEditor.isSelected()){
                     try {
-                        boolean valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest(smm.getSignalMast((String)sourceMastBox.getSelectedItem()), 
-                            smm.getSignalMast((String)destMastBox.getSelectedItem()));
+                        boolean valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest((SignalMast)sourceMastBox.getSelectedBean(), 
+                            (SignalMast)destMastBox.getSelectedBean());
                         if(!valid)
                             JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                     }
@@ -183,8 +187,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                             JOptionPane.showMessageDialog(null, je.toString());
                         }
                         try {
-                            valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest(smm.getSignalMast((String)sourceMastBox.getSelectedItem()), 
-                                smm.getSignalMast((String)destMastBox.getSelectedItem()));
+                            valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest((SignalMast)sourceMastBox.getSelectedBean(), 
+                                (SignalMast)destMastBox.getSelectedBean());
                             if(!valid){
                                 JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                             }
@@ -195,8 +199,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     }
                 } else if((sml!=null) && (!valid)){
                     try {
-                        valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest(smm.getSignalMast((String)sourceMastBox.getSelectedItem()), 
-                            smm.getSignalMast((String)destMastBox.getSelectedItem()));
+                        valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest((SignalMast)sourceMastBox.getSelectedBean(), 
+                            (SignalMast)destMastBox.getSelectedBean());
                         if(!valid)
                             JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                     }
@@ -768,14 +772,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
     
     void updatePressed(ActionEvent e){
-        sourceMast = smm.getSignalMast((String)sourceMastBox.getSelectedItem());
-        destMast = smm.getSignalMast((String)destMastBox.getSelectedItem());
+        sourceMast = (SignalMast)sourceMastBox.getSelectedBean();
+        destMast = (SignalMast)destMastBox.getSelectedBean();
         
         if((sml==null) && (useLayoutEditor.isSelected())){
             boolean valid = false;
             try {
-                valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest(smm.getSignalMast((String)sourceMastBox.getSelectedItem()), 
-                    smm.getSignalMast((String)destMastBox.getSelectedItem()));
+                valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest(sourceMast, 
+                    destMast);
                 if(!valid){
                     JOptionPane.showMessageDialog(null,  rb.getString("ErrorUnReachableDestination"));
                     return;

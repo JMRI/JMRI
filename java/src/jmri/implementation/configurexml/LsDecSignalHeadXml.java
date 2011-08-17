@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.LsDecSignalHead;
 import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 import java.util.List;
 import org.jdom.Element;
@@ -51,25 +52,22 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
 
         storeCommon(p, element);
         
-        element.addContent(addTurnoutElement(p.getGreen(), p.getGreenState()));
-        element.addContent(addTurnoutElement(p.getYellow(), p.getYellowState()));
-        element.addContent(addTurnoutElement(p.getRed(), p.getRedState()));
-        element.addContent(addTurnoutElement(p.getFlashGreen(), p.getFlashGreenState()));
-        element.addContent(addTurnoutElement(p.getFlashYellow(), p.getFlashYellowState()));
-        element.addContent(addTurnoutElement(p.getFlashRed(), p.getFlashRedState()));
-        element.addContent(addTurnoutElement(p.getDark(), p.getDarkState()));
+        element.addContent(addTurnoutElement(p.getGreen().getName(), p.getGreenState()));
+        element.addContent(addTurnoutElement(p.getYellow().getName(), p.getYellowState()));
+        element.addContent(addTurnoutElement(p.getRed().getName(), p.getRedState()));
+        element.addContent(addTurnoutElement(p.getFlashGreen().getName(), p.getFlashGreenState()));
+        element.addContent(addTurnoutElement(p.getFlashYellow().getName(), p.getFlashYellowState()));
+        element.addContent(addTurnoutElement(p.getFlashRed().getName(), p.getFlashRedState()));
+        element.addContent(addTurnoutElement(p.getDark().getName(), p.getDarkState()));
         
         return element;
     }
 
-    Element addTurnoutElement(Turnout to, int s) {
-        String user = to.getUserName();
-        String sys = to.getSystemName();
+    Element addTurnoutElement(String name, int s) {
         int state = s;
         
         Element el = new Element("turnout");
-        el.setAttribute("systemName", sys);
-        if (user!=null) el.setAttribute("userName", user);
+        el.setAttribute("systemName", name);
         if (state == Turnout.THROWN) {
             el.setAttribute("state","THROWN");
         }
@@ -88,13 +86,13 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
     @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
         List<Element> l = element.getChildren("turnout");
-        Turnout green = loadTurnout(l.get(0));
-        Turnout yellow = loadTurnout(l.get(1));
-        Turnout red = loadTurnout(l.get(2));
-        Turnout flashgreen = loadTurnout(l.get(3));
-        Turnout flashyellow = loadTurnout(l.get(4));
-        Turnout flashred = loadTurnout(l.get(5));
-        Turnout dark = loadTurnout(l.get(6));
+        NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
+        NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
+        NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
+        NamedBeanHandle<Turnout> flashgreen = loadTurnout(l.get(3));
+        NamedBeanHandle<Turnout> flashyellow = loadTurnout(l.get(4));
+        NamedBeanHandle<Turnout> flashred = loadTurnout(l.get(5));
+        NamedBeanHandle<Turnout> dark = loadTurnout(l.get(6));
         int greenstatus = loadTurnoutStatus(l.get(0));
         int yellowstatus = loadTurnoutStatus(l.get(1));
         int redstatus = loadTurnoutStatus(l.get(2));
@@ -117,13 +115,12 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }
-
-    Turnout loadTurnout(Object o) {
+    
+    NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element)o;
-
-        // we don't create the Turnout, we just look it up.
-        String sys = e.getAttribute("systemName").getValue();
-        return InstanceManager.turnoutManagerInstance().getBySystemName(sys);
+        String name = e.getAttribute("systemName").getValue();
+        Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(name);
+        return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
     }
 
     int loadTurnoutStatus(Object o) {

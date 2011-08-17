@@ -24,43 +24,9 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     * @param displayOrder the way in which the namedbeans should be displayed as
     */
     public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, int displayOrder){
-        String selectedItem = "";
         _displayOrder = displayOrder;
         _manager = manager;
-        if(nBean!=null){
-            switch(_displayOrder){
-                case DISPLAYNAME :
-                        selectedItem = nBean.getDisplayName();
-                        break;
-                        
-                case USERNAME : 
-                        selectedItem = nBean.getUserName();
-                        break;
-                       
-                case SYSTEMNAME :
-                        selectedItem = nBean.getSystemName();
-                        break;
-                        
-                case USERNAMESYSTEMNAME :
-                        if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
-                            selectedItem = nBean.getUserName() + " - " + nBean.getSystemName();
-                        else
-                            selectedItem = nBean.getSystemName();
-                        break;
-                            
-                case SYSTEMNAMEUSERNAME : 
-                        if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
-                            selectedItem = nBean.getSystemName() + " - " + nBean.getUserName();
-                        else 
-                            selectedItem = nBean.getSystemName();
-                        break;
-                            
-                default : 
-                        selectedItem = nBean.getDisplayName();
-            }
-        }
-        _lastSelected = selectedItem;
-        updateComboBox(_lastSelected);
+        setSelectedBean(nBean);
         
         _manager.addPropertyChangeListener(this);
     }
@@ -204,6 +170,44 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     public NamedBean getSelectedBean(){
         String selectedName = (String)super.getSelectedItem();
         return displayToBean.get(selectedName);
+    }
+    
+    public void setSelectedBean(NamedBean nBean){
+        String selectedItem = "";
+        if(nBean!=null){
+            switch(_displayOrder){
+                case DISPLAYNAME :
+                        selectedItem = nBean.getDisplayName();
+                        break;
+                        
+                case USERNAME : 
+                        selectedItem = nBean.getUserName();
+                        break;
+                       
+                case SYSTEMNAME :
+                        selectedItem = nBean.getSystemName();
+                        break;
+                        
+                case USERNAMESYSTEMNAME :
+                        if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
+                            selectedItem = nBean.getUserName() + " - " + nBean.getSystemName();
+                        else
+                            selectedItem = nBean.getSystemName();
+                        break;
+                            
+                case SYSTEMNAMEUSERNAME : 
+                        if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
+                            selectedItem = nBean.getSystemName() + " - " + nBean.getUserName();
+                        else 
+                            selectedItem = nBean.getSystemName();
+                        break;
+                            
+                default : 
+                        selectedItem = nBean.getDisplayName();
+            }
+        }
+        _lastSelected = selectedItem;
+        updateComboBox(_lastSelected);
     }
     
     /**
