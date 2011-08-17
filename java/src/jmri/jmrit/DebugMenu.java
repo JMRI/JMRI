@@ -47,7 +47,7 @@ public class DebugMenu extends JMenu {
         add(new JSeparator());
         add(new jmri.jmrit.beantable.ListedTableAction("Listed Table Access"));
         add(new jmri.jmrit.beantable.ListedTableAction("Listed Table Access - Direct to Routes", "jmri.jmrit.beantable.RouteTableAction"));
-	add(new jmri.jmrix.vsdecoder.VSDecoderCreationAction("Virtual Sound Decoder"));
+	add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("Virtual Sound Decoder"));
 
 
     }
