@@ -255,8 +255,6 @@ public class VSDConfigPanel extends JmriPanel {
      * Set the RosterEntry for this decoder.
      */
     public void setRosterEntry(RosterEntry entry){
-	ExtraRosterEntryInfo erei;
-	VSDRosterInfo vri;
 	String vsd_path;
 	String vsd_profile;
 
