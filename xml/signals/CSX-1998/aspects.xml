@@ -200,12 +200,16 @@
   </aspects>
 
   <appearancefiles>
-    <appearancefile href="appearance-CLS-1-3-2-hi.xml"/>
+    <appearancefile href="appearance-CLS-1-3-2A-hi.xml"/>
+    <appearancefile href="appearance-CLS-1-3-2R-hi.xml"/>
     <appearancefile href="appearance-CLS-1-3-hi.xml"/>
     <appearancefile href="appearance-CLS-1-3-lo.xml"/>
-    <appearancefile href="appearance-CLS-3-2-2-hi.xml"/>
-    <appearancefile href="appearance-CLS-3-2-hi.xml"/>
-    <appearancefile href="appearance-CLS-3-3-2-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-2-2A-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-2-2R-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-2A-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-2R-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-3-2A-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-3-2R-hi.xml"/>
     <appearancefile href="appearance-CLS-3-3-3-hi.xml"/>
     <appearancefile href="appearance-CLS-3-3-hi.xml"/>
     <appearancefile href="appearance-CLS-3-3-lo.xml"/>
