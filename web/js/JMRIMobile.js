@@ -139,8 +139,10 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						$("#settings #footer").find('[data-role="button"]').not('.ui-btn').buttonMarkup();
 
 						//render the changes to settings page, and then the new page
-						$("#settings").page();
+//						$("#settings").page();
+						$("#settings").trigger("create");
 						$("#type-" + $type).page();
+						$("#type-" + $type).trigger("create");
 
 						//copy footer from settings to all pages
 						$("div#footer").html($("div#settings div#footer").html());
