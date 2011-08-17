@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
 public class VSDecoderBundle {
 
     static public final ResourceBundle b
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.vsdecoder.VSDecoderBundle");
+            = java.util.ResourceBundle.getBundle("jmri.jmrit.vsdecoder.VSDecoderBundle");
 
     static public ResourceBundle bundle() { return b; }
     
