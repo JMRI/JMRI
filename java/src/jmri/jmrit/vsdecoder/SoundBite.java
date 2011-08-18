@@ -19,7 +19,10 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import jmri.jmrit.audio.*;
+import jmri.AudioException;
+import jmri.AudioManager;
+import jmri.jmrit.audio.AudioBuffer;
+import jmri.jmrit.audio.AudioSource;
 
 class SoundBite extends VSDSound {
 
@@ -49,20 +52,24 @@ class SoundBite extends VSDSound {
     public String getUserName() { return(user_name); }
     public boolean isInitialized() { return(initialized); }
 
-    public boolean init(VSDFile vf) {
-	jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory();
+    public final boolean init(VSDFile vf) {
+        AudioManager am = jmri.InstanceManager.audioManagerInstance();
 	if (!initialized) {
-	    sound_src = af.createNewSource(SrcSysNamePrefix+system_name, 
-					   BufUserNamePrefix+user_name);
-	    sound_buf = af.createNewBuffer(BufSysNamePrefix+system_name,
-					   BufUserNamePrefix+user_name);
-	    if (vf == null) {
-		sound_buf.setURL(vsd_file_base + filename);
-	    } else {
-		sound_buf.setInputStream(vf.getInputStream(filename));
-	    }
-	    sound_src.setAssignedBuffer(sound_buf);
-	    setLooped(false);
+            try {
+                sound_src = (AudioSource) am.provideAudio(SrcSysNamePrefix+system_name);
+                sound_src.setUserName(BufUserNamePrefix+user_name);
+                sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix+system_name);
+                sound_buf.setUserName(BufUserNamePrefix+user_name);
+                if (vf == null) {
+                    sound_buf.setURL(vsd_file_base + filename);
+                } else {
+                    sound_buf.setInputStream(vf.getInputStream(filename));
+                }
+                sound_src.setAssignedBuffer(sound_buf);
+                setLooped(false);
+            } catch (AudioException ex) {
+                log.warn("Problem creating SoundBite: " + ex);
+            }
 	}
 	return(true);
     }
@@ -82,9 +89,9 @@ class SoundBite extends VSDSound {
     */
 
     public void setLooped(boolean loop, int minloops, int maxloops) {
-	looped = loop;
-	minloops = minloops;
-	maxloops = maxloops;
+	this.looped = loop;
+	this.minloops = minloops;
+	this.maxloops = maxloops;
 	sound_src.setLooped(looped);
 	sound_src.setMinLoops(minloops);
 	sound_src.setMaxLoops(maxloops);
@@ -136,6 +143,6 @@ class SoundBite extends VSDSound {
 	    
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundBite.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundBite.class.getName());
 }    
 	

@@ -19,9 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Content;
 
 abstract class VSDSound {
     
@@ -87,6 +85,6 @@ abstract class VSDSound {
 	// Default: do nothing
     } 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDSound.class.getName());
+    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDSound.class.getName());
 
 }

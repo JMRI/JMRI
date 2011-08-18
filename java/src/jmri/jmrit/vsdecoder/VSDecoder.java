@@ -98,7 +98,7 @@ class VSDecoder {
     }
 
     public VSDecoder(String name)  throws AudioException {
-	jmri.InstanceManager.audioManagerInstance().provideAudio("IAS");
+//	jmri.InstanceManager.audioManagerInstance().provideAudio("IAS");
 
 	profile_name = name;
 
@@ -423,6 +423,6 @@ class VSDecoder {
 	
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoder.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoder.class.getName());
 
 }
