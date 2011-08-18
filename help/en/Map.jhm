@@ -950,6 +950,8 @@
 
 <mapID target="manual.Ops_AddStaging" url="manual/Ops_AddStaging.shtml"/>
 
+<mapID target="package.jmri.jmrit.vsdecoder.VSDecoderFrame" url="package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml"/>
+
 <mapID target="package.jmri.jmrit.signalling.SignallingSourceFrame" url="package/jmri/jmrit/signalling/SignallingSourceFrame.shtml"/>
 
 <mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
