@@ -198,6 +198,8 @@
 
 <mapID target="manual.index_Advanced Programmer" url="manual/index.shtml#Advanced Programmer"/>
 
+<mapID target="manual.Start_Preferences_Defaults" url="manual/Start_Preferences.shtml#Defaults"/>
+
 <mapID target="html.tools.throttle.ThrottleChapter3_EditFrameProperties" url="html/tools/throttle/ThrottleChapter3.shtml#EditFrameProperties"/>
 
 <mapID target="html.hardware.xap.index" url="html/hardware/xap/index.shtml"/>
@@ -258,8 +260,6 @@
 
 <mapID target="html.hardware.powerline.index" url="html/hardware/powerline/index.shtml"/>
 
-<mapID target="manual.Main_LocoNet_LocoIO" url="manual/Main_LocoNet.shtml#LocoIO"/>
-
 <mapID target="manual.Ops_ImportCarsFile" url="manual/Ops_ImportCarsFile.shtml"/>
 
 <mapID target="manual.Main_Debug_Top" url="manual/Main_Debug.shtml#Top"/>
@@ -278,11 +278,13 @@
 
 <mapID target="manual.Main_Panels_Top" url="manual/Main_Panels.shtml#Top"/>
 
+<mapID target="manual.Start_Preferences_Messages" url="manual/Start_Preferences.shtml#Messages"/>
+
 <mapID target="html.doc.Technical.TechRoadMap" url="html/doc/Technical/TechRoadMap.shtml"/>
 
-<mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_SwitchList" url="package/jmri/jmrit/operations/Operations.shtml#SwitchList"/>
+
+<mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml"/>
 
 <mapID target="html.hardware.nce.NCE_AIU" url="html/hardware/nce/NCE.shtml#AIU"/>
 
@@ -292,6 +294,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_Yards" url="package/jmri/jmrit/operations/Operations.shtml#Yards"/>
 
+<mapID target="manual.Start_Preferences_Connections" url="manual/Start_Preferences.shtml#Connections"/>
+
 <mapID target="html.hardware.secsi.index" url="html/hardware/secsi/index.shtml"/>
 
 <mapID target="html.hardware.nce.NCE_phpro" url="html/hardware/nce/NCE.shtml#phpro"/>
@@ -300,9 +304,9 @@
 
 <mapID target="manual.Main_CMRI_RunDiagnostices" url="manual/Main_CMRI.shtml#RunDiagnostices"/>
 
-<mapID target="package.jmri.jmrit.display.MultiSensorIconDefaultsFrame" url="package/jmri/jmrit/display/MultiSensorIconDefaultsFrame.shtml"/>
-
 <mapID target="package.jmri.jmrit.sendpacket.SendPacketFrame" url="package/jmri/jmrit/sendpacket/SendPacketFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.display.MultiSensorIconDefaultsFrame" url="package/jmri/jmrit/display/MultiSensorIconDefaultsFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml"/>
 
@@ -322,9 +326,13 @@
 
 <mapID target="html.hardware.raildriver.details" url="html/hardware/raildriver/details.shtml"/>
 
+<mapID target="manual.Installing_JMRI_Top" url="manual/Installing_JMRI.shtml#Top"/>
+
 <mapID target="manual.index_Basic Programmer" url="manual/index.shtml#Basic Programmer"/>
 
 <mapID target="html.hardware.openlcb.Names" url="html/hardware/openlcb/Names.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_MaximumTrainLength" url="package/jmri/jmrit/operations/Operations.shtml#MaximumTrainLength"/>
 
 <mapID target="html.tools.signaling.Logic" url="html/tools/signaling/Logic.shtml"/>
 
@@ -400,13 +408,13 @@
 
 <mapID target="html.doc.Technical.CATS" url="html/doc/Technical/CATS.shtml"/>
 
-<mapID target="manual.Main_Tool_Preferences" url="manual/Main_Tool.shtml#Preferences"/>
-
 <mapID target="manual.Main_Debug" url="manual/Main_Debug.shtml"/>
 
 <mapID target="package.jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame_Other Tabs" url="package/jmri/jmrit/symbolicprog/tabbedframe/PaneProgFrame.shtml#Other Tabs"/>
 
 <mapID target="package.jmri.jmrit.display.EditLayoutTurnout" url="package/jmri/jmrit/display/EditLayoutTurnout.shtml"/>
+
+<mapID target="manual.Start_Preferences_MiniServer" url="manual/Start_Preferences.shtml#MiniServer"/>
 
 <mapID target="manual.Adv_start" url="manual/Adv_start.shtml"/>
 
@@ -516,6 +524,8 @@
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_intro" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#intro"/>
 
+<mapID target="manual.Start_Preferences_Roster" url="manual/Start_Preferences.shtml#Roster"/>
+
 <mapID target="html.doc.Technical.Jython" url="html/doc/Technical/Jython.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_StagingAndCarLoads" url="package/jmri/jmrit/operations/Operations.shtml#StagingAndCarLoads"/>
@@ -590,6 +600,8 @@
 
 <mapID target="manual.Main_Window" url="manual/Main_Window.shtml"/>
 
+<mapID target="manual.Start_Preferences_FileLocations" url="manual/Start_Preferences.shtml#FileLocations"/>
+
 <mapID target="package.jmri.jmrit.display.CircuitBuilder" url="package/jmri/jmrit/display/CircuitBuilder.shtml"/>
 
 <mapID target="manual.Ops_ImportEngines" url="manual/Ops_ImportEngines.shtml"/>
@@ -633,6 +645,8 @@
 <mapID target="manual.Ops_AddYard_Top" url="manual/Ops_AddYard.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TroubleShootingBuildingTrains" url="package/jmri/jmrit/operations/Operations.shtml#TroubleShootingBuildingTrains"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_ManifestComments" url="package/jmri/jmrit/operations/Operations.shtml#ManifestComments"/>
 
 <mapID target="manual.index_Setting up" url="manual/index.shtml#Setting up"/>
 
@@ -698,6 +712,8 @@
 
 <mapID target="package.jmri.jmrit.display.ScaleTrackDiagram" url="package/jmri/jmrit/display/ScaleTrackDiagram.shtml"/>
 
+<mapID target="manual.index_Installing" url="manual/index.shtml#Installing"/>
+
 <mapID target="manual.Ops_TripThruOperations" url="manual/Ops_TripThruOperations.shtml"/>
 
 <mapID target="manual.Main_XpressNet_LV100CM" url="manual/Main_XpressNet.shtml#LV100CM"/>
@@ -709,6 +725,8 @@
 <mapID target="manual.Comp_Speed_Talble_Top" url="manual/Comp_Speed_Talble.shtml#Top"/>
 
 <mapID target="html.tools.throttle.ToolsMenuThrottleEntry" url="html/tools/throttle/ToolsMenuThrottleEntry.shtml"/>
+
+<mapID target="html.doc.Technical.SVNFAQ" url="html/doc/Technical/SVNFAQ.shtml"/>
 
 <mapID target="html.hardware.grapevine.index" url="html/hardware/grapevine/index.shtml"/>
 
@@ -764,9 +782,9 @@
 
 <mapID target="Acknowledgements_P" url="Acknowledgements.shtml#P"/>
 
-<mapID target="Acknowledgements_Q" url="Acknowledgements.shtml#Q"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_BuildingTrains" url="package/jmri/jmrit/operations/Operations.shtml#BuildingTrains"/>
+
+<mapID target="Acknowledgements_Q" url="Acknowledgements.shtml#Q"/>
 
 <mapID target="manual.Comp_SoundFX" url="manual/Comp_SoundFX.shtml"/>
 
@@ -868,6 +886,8 @@
 
 <mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml"/>
 
+<mapID target="html.hardware.jmriclient.index" url="html/hardware/jmriclient/index.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_RouteFeatures" url="package/jmri/jmrit/operations/Operations.shtml#RouteFeatures"/>
 
 <mapID target="webindex" url="webindex.shtml"/>
@@ -952,6 +972,8 @@
 
 <mapID target="manual.Main_XpressNet_Database" url="manual/Main_XpressNet.shtml#Database"/>
 
+<mapID target="manual.Main_Panels_Control" url="manual/Main_Panels.shtml#Control"/>
+
 <mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml"/>
 
 <mapID target="package.jmri.jmrix.maple.serialmon.SerialMonFrame" url="package/jmri/jmrix/maple/serialmon/SerialMonFrame.shtml"/>
@@ -962,9 +984,9 @@
 
 <mapID target="html.hardware.grapevine.Names" url="html/hardware/grapevine/Names.shtml"/>
 
-<mapID target="manual.Main_SPROG" url="manual/Main_SPROG.shtml"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_SwitcherService" url="package/jmri/jmrit/operations/Operations.shtml#SwitcherService"/>
+
+<mapID target="manual.Main_SPROG" url="manual/Main_SPROG.shtml"/>
 
 <mapID target="manual.Main_NCE" url="manual/Main_NCE.shtml"/>
 
@@ -1004,6 +1026,8 @@
 
 <mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml"/>
 
+<mapID target="manual.Installing_JMRI_InstallJMRI" url="manual/Installing_JMRI.shtml#InstallJMRI"/>
+
 <mapID target="manual.Ops_Start_Top" url="manual/Ops_Start.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Sidings" url="package/jmri/jmrit/operations/Operations.shtml#Sidings"/>
@@ -1033,6 +1057,8 @@
 <mapID target="package.jmri.jmrit.beantable.TurnoutAddEdit" url="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleToolBar" url="html/tools/throttle/ThrottleToolBar.shtml"/>
+
+<mapID target="html.doc.Technical.getoldcode" url="html/doc/Technical/getoldcode.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_BuildReportDetails" url="package/jmri/jmrit/operations/Operations.shtml#BuildReportDetails"/>
 
@@ -1087,6 +1113,8 @@
 <mapID target="manual.Ops_CarAttributes_Top" url="manual/Ops_CarAttributes.shtml#Top"/>
 
 <mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_RouteComment" url="package/jmri/jmrit/operations/Operations.shtml#RouteComment"/>
 
 <mapID target="html.tools.signaling.SimpleSignalExample_definesignals" url="html/tools/signaling/SimpleSignalExample.shtml#definesignals"/>
 
@@ -1186,9 +1214,17 @@
 
 <mapID target="package.jmri.jmrit.beantable.LogixAddEdit" url="package/jmri/jmrit/beantable/LogixAddEdit.shtml"/>
 
+<mapID target="manual.Start_Preferences_StartUp" url="manual/Start_Preferences.shtml#StartUp"/>
+
 <mapID target="package.jmri.jmrit.beantable.SensorTable_Debounce" url="package/jmri/jmrit/beantable/SensorTable.shtml#Debounce"/>
 
 <mapID target="manual.Multi_Decoder_Control" url="manual/Multi_Decoder_Control.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_TypeRoadLoadRestrictionsStaging" url="package/jmri/jmrit/operations/Operations.shtml#TypeRoadLoadRestrictionsStaging"/>
+
+<mapID target="manual.Installing_JMRI" url="manual/Installing_JMRI.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_PromptArrivalTrack" url="package/jmri/jmrit/operations/Operations.shtml#PromptArrivalTrack"/>
 
 <mapID target="html.tools.signaling.IntroToSignalingYourMRR" url="html/tools/signaling/IntroToSignalingYourMRR.html"/>
 
@@ -1236,9 +1272,9 @@
 
 <mapID target="manual.Ops_Routes" url="manual/Ops_Routes.shtml"/>
 
-<mapID target="html.apps.PanelPro.AdvIcons" url="html/apps/PanelPro/AdvIcons.shtml"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_TrainMove" url="package/jmri/jmrit/operations/Operations.shtml#TrainMove"/>
+
+<mapID target="html.apps.PanelPro.AdvIcons" url="html/apps/PanelPro/AdvIcons.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.ViewSpecialActions" url="package/jmri/jmrit/beantable/ViewSpecialActions.shtml"/>
 
@@ -1340,6 +1376,8 @@
 
 <mapID target="manual.Comp_Speed_Top" url="manual/Comp_Speed.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Pools" url="package/jmri/jmrit/operations/Operations.shtml#Pools"/>
+
 <mapID target="html.apps.DecoderPro.Debug" url="html/apps/DecoderPro/Debug.shtml"/>
 
 <mapID target="manual.Main_RPS_PollingControl" url="manual/Main_RPS.shtml#PollingControl"/>
@@ -1436,6 +1474,10 @@
 
 <mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_AllowLocalCarMovements" url="package/jmri/jmrit/operations/Operations.shtml#AllowLocalCarMovements"/>
+
+<mapID target="package.apps.gui3.dp3.StatusAndToDo" url="package/apps/gui3/dp3/StatusAndToDo.shtml"/>
+
 <mapID target="manual.Main_LocoNet_SoundDownloader" url="manual/Main_LocoNet.shtml#SoundDownloader"/>
 
 <mapID target="manual.Main_NCE_Editconsist" url="manual/Main_NCE.shtml#Editconsist"/>
@@ -1446,9 +1488,11 @@
 
 <mapID target="manual.Main_Throttle_MenuBar" url="manual/Main_Throttle.shtml#MenuBar"/>
 
-<mapID target="manual.Simple_Programmer" url="manual/Simple_Programmer.shtml"/>
+<mapID target="manual.Start_Preferences_Throttle" url="manual/Start_Preferences.shtml#Throttle"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainOptions" url="package/jmri/jmrit/operations/Operations.shtml#TrainOptions"/>
+
+<mapID target="manual.Simple_Programmer" url="manual/Simple_Programmer.shtml"/>
 
 <mapID target="html.hardware.zimo.Zimo" url="html/hardware/zimo/Zimo.shtml"/>
 
@@ -1512,9 +1556,9 @@
 
 <mapID target="html.tools.tracker.index" url="html/tools/tracker/index.shtml"/>
 
-<mapID target="package.jmri.jmrit.operations.Operations_Routes" url="package/jmri/jmrit/operations/Operations.shtml#Routes"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_TrainRoadNames" url="package/jmri/jmrit/operations/Operations.shtml#TrainRoadNames"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_Routes" url="package/jmri/jmrit/operations/Operations.shtml#Routes"/>
 
 <mapID target="manual.Main_Panels_Thead" url="manual/Main_Panels.shtml#Thead"/>
 
@@ -1523,6 +1567,8 @@
 <mapID target="package.jmri.jmrit.dispatcher.NewTrain_loadsave" url="package/jmri/jmrit/dispatcher/NewTrain.shtml#loadsave"/>
 
 <mapID target="manual.Main_Operations" url="manual/Main_Operations.shtml"/>
+
+<mapID target="manual.Start_Preferences_Display" url="manual/Start_Preferences.shtml#Display"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CarsEdit" url="package/jmri/jmrit/operations/Operations.shtml#CarsEdit"/>
 
@@ -1636,6 +1682,8 @@
 
 <mapID target="manual.Main_Powerline" url="manual/Main_Powerline.shtml"/>
 
+<mapID target="manual.Start_Preferences_WiThrottle" url="manual/Start_Preferences.shtml#WiThrottle"/>
+
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback"/>
 
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.shtml"/>
@@ -1715,8 +1763,6 @@
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_window" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_MouseControl" url="html/tools/throttle/ThrottleChapter2.shtml#MouseControl"/>
-
-<mapID target="manual.Main_Debug_logMessage" url="manual/Main_Debug.shtml#logMessage"/>
 
 <mapID target="manual.Main_XpressNet_LZV100" url="manual/Main_XpressNet.shtml#LZV100"/>
 
@@ -1823,8 +1869,6 @@
 <mapID target="html.tools.signaling.ldt.output3_html_258f4a97" url="html/tools/signaling/ldt/output3_html_258f4a97.png"/>
 
 <mapID target="html.tools.signaling.ldt.output3_html_40375239" url="html/tools/signaling/ldt/output3_html_40375239.png"/>
-
-<mapID target="manual.images.Main_Throttle_toolbar_new" url="manual/images/Main_Throttle_toolbar_new.png"/>
 
 <mapID target="images.tracksegments.WhiteTO" url="images/tracksegments/WhiteTO.gif"/>
 
