@@ -99,7 +99,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             _state2nameMap.put(Integer.valueOf(Turnout.CLOSED), "TurnoutStateClosed");
             _state2nameMap.put(Integer.valueOf(Turnout.THROWN), "TurnoutStateThrown");
             displayState(turnoutState());
-            getTurnout().addPropertyChangeListener(this);
+            getTurnout().addPropertyChangeListener(this, namedTurnout.getName(), "Panel Editor Turnout Icon");
         } 
     }
 

@@ -100,7 +100,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                             namedTurnoutWest = to;
                             if (namedTurnoutWest != null) {
                                 displayState(turnoutState());
-                                getTurnout(WEST).addPropertyChangeListener(this);
+                                getTurnout(WEST).addPropertyChangeListener(this, namedTurnoutWest.getName(), "Panel Editor Turnout");
                             }
                             break;
             case EAST:      if (namedTurnoutEast != null) {
@@ -109,7 +109,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                             namedTurnoutEast = to;
                             if (namedTurnoutEast != null) {
                                 displayState(turnoutState());
-                                getTurnout(EAST).addPropertyChangeListener(this);
+                                getTurnout(EAST).addPropertyChangeListener(this, namedTurnoutEast.getName(), "Panel Editor Turnout");
                             }
                             break;
             case LOWERWEST: if (namedTurnoutWestLower != null) {
@@ -118,7 +118,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                             namedTurnoutWestLower = to;
                             if (namedTurnoutWestLower != null) {
                                 displayState(turnoutState());
-                                getTurnout(LOWERWEST).addPropertyChangeListener(this);
+                                getTurnout(LOWERWEST).addPropertyChangeListener(this, namedTurnoutWestLower.getName(), "Panel Editor Turnout");
                             }
                             break;
             case LOWEREAST: if (namedTurnoutEastLower != null) {
@@ -127,7 +127,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                             namedTurnoutEastLower = to;
                             if (namedTurnoutEastLower != null) {
                                 displayState(turnoutState());
-                                getTurnout(LOWEREAST).addPropertyChangeListener(this);
+                                getTurnout(LOWEREAST).addPropertyChangeListener(this, namedTurnoutEastLower.getName(), "Panel Editor Turnout");
                             }
                             break;
         }

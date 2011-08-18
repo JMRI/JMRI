@@ -3121,7 +3121,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             _turnouts = new Hashtable<Turnout, Integer>(turnouts.size());
             for(int i = 0; i<turnouts.size(); i++){
                 _turnouts.put(turnouts.get(i).getTurnout(), turnoutSettings.get(i));
-                turnouts.get(i).getTurnout().addPropertyChangeListener(this);
+                turnouts.get(i).getTurnout().addPropertyChangeListener(this, turnouts.get(i).getTurnoutName(), "Layout Block Routing");
             }
         }
         
