@@ -105,7 +105,8 @@ public class LayoutTurnout
 													// turnouts - no signals at throat
 
 	// operational instance variables (not saved between sessions)
-	private Turnout turnout = null;
+	//private Turnout turnout = null;
+    private NamedBeanHandle<Turnout> namedTurnout = null;
 	private LayoutBlock block = null;
 	private LayoutBlock blockB = null;  // Xover - second block, if there is one
 	private LayoutBlock blockC = null;  // Xover - third block, if there is one
@@ -163,7 +164,7 @@ public class LayoutTurnout
     public LayoutTurnout(String id, int t, Point2D c, double rot, 
 								double xFactor, double yFactor, LayoutEditor myPanel) {
 		instance = this;
-		turnout = null;
+		namedTurnout = null;
 		turnoutName = "";
 		mTurnoutListener = null;
 		disabled = false;
@@ -248,7 +249,11 @@ public class LayoutTurnout
 	*/
 	public String getName() {return ident;}
     public boolean useBlockSpeed() { return useBlockSpeed; }
-	public String getTurnoutName() {return turnoutName;}
+	public String getTurnoutName() {
+        if (namedTurnout!=null)
+            return namedTurnout.getName();
+        return turnoutName;
+    }
 	public String getBlockName() {return blockName;}
 	public String getBlockBName() {return blockBName;}
 	public String getBlockCName() {return blockCName;}
@@ -299,6 +304,7 @@ public class LayoutTurnout
             sensorANamed=null;
         }
     }
+    
 	public String getSensorB() {
         if(sensorBNamed!=null)
             return sensorBNamed.getName();
@@ -368,32 +374,34 @@ public class LayoutTurnout
 	public Object getConnectB() {return connectB;}
 	public Object getConnectC() {return connectC;}
 	public Object getConnectD() {return connectD;}
+    
 	public Turnout getTurnout() {
-		if (turnout==null) {
+		if (namedTurnout==null) {
 			// set physical turnout if possible and needed
-			turnout = jmri.InstanceManager.turnoutManagerInstance().
-							getTurnout(turnoutName);
-			if (turnout!=null) activateTurnout();
+			setTurnout(turnoutName);
+            if (namedTurnout==null)
+                return null;
 		}
-		return turnout;
+		return namedTurnout.getBean();
 	}
+    
 	public int getContinuingSense() {return continuingSense;}
-	public void setTurnout(String tName) {
-		if (turnout!=null) deactivateTurnout();
+	
+    public void setTurnout(String tName) {
+		if (namedTurnout!=null) deactivateTurnout();
 		turnoutName = tName;
-		turnout = jmri.InstanceManager.turnoutManagerInstance().
+		Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().
                             getTurnout(turnoutName);
 		if (turnout!=null) {
+            namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
 			activateTurnout();
-			if (turnoutName.toUpperCase().equals(turnout.getSystemName())) {
-				// Adjust case of turnout name if needed
-				turnoutName = turnout.getSystemName();
-			}
 		}
 		else {
 			turnoutName = "";
+            namedTurnout = null;
 		}
 	}
+    
 	public void setContinuingSense(int sense) {continuingSense=sense;}
 	public void setDisabled(boolean state) {disabled = state;}
 	public boolean isDisabled() {return disabled;}
@@ -879,18 +887,18 @@ public class LayoutTurnout
 	 * Activate/Deactivate turnout to redraw when turnout state changes
 	 */
 	private void activateTurnout() {
-		if (turnout!=null) {
-			turnout.addPropertyChangeListener(mTurnoutListener =
+		if (namedTurnout!=null) {
+			namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener =
 								new java.beans.PropertyChangeListener() {
 				public void propertyChange(java.beans.PropertyChangeEvent e) {
 					layoutEditor.redrawPanel();
 				}
-			});
+			}, namedTurnout.getName(), "Layout Editor Turnout");
 		}
 	}
 	private void deactivateTurnout() {
 		if (mTurnoutListener!=null) {
-			turnout.removePropertyChangeListener(mTurnoutListener);
+			namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
 			mTurnoutListener = null;
 		}
 	}
@@ -900,7 +908,7 @@ public class LayoutTurnout
 	 *    not disabled
 	 */
 	public void toggleTurnout() {
-        if ((turnout!=null) && (!disabled)) {
+        if ((getTurnout()!=null) && (!disabled)) {
             if (disableWhenOccupied){
                 if(disableOccupiedTurnout()){
                     log.debug("Turnout not changed as Block is Occupied");
@@ -908,10 +916,10 @@ public class LayoutTurnout
                 }
             }
 			// toggle turnout
-			if (turnout.getKnownState()==jmri.Turnout.CLOSED)
-				turnout.setCommandedState(jmri.Turnout.THROWN);
+			if (getTurnout().getKnownState()==jmri.Turnout.CLOSED)
+				getTurnout().setCommandedState(jmri.Turnout.THROWN);
 			else
-				turnout.setCommandedState(jmri.Turnout.CLOSED);
+				getTurnout().setCommandedState(jmri.Turnout.CLOSED);
 		}
     }
     
@@ -925,7 +933,7 @@ public class LayoutTurnout
         }
         if ((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER)){
             //If the turnout is set for straigh over, we need to deal with the straight over connecting blocks
-            if (turnout.getKnownState()==jmri.Turnout.CLOSED){
+            if (getTurnout().getKnownState()==jmri.Turnout.CLOSED){
                 if ((block.getOccupancy()==block.OCCUPIED) && (blockB.getOccupancy()==block.OCCUPIED)){
                     log.debug("Blocks " + blockName + " & " + blockBName + " are Occupied");
                     return true;
@@ -938,7 +946,7 @@ public class LayoutTurnout
         
         }
         if ((type==DOUBLE_XOVER)||(type==LH_XOVER)){
-            if (turnout.getKnownState()==jmri.Turnout.THROWN){
+            if (getTurnout().getKnownState()==jmri.Turnout.THROWN){
                 if ((blockB.getOccupancy()==block.OCCUPIED) && (blockD.getOccupancy()==block.OCCUPIED)){
                     log.debug("Blocks " + blockBName + " & " + blockDName + " are Occupied");
                     return true;
@@ -947,7 +955,7 @@ public class LayoutTurnout
         }
         
         if ((type==DOUBLE_XOVER)||(type==RH_XOVER)){
-            if (turnout.getKnownState()==jmri.Turnout.THROWN){
+            if (getTurnout().getKnownState()==jmri.Turnout.THROWN){
                 if ((block.getOccupancy()==block.OCCUPIED) && (blockC.getOccupancy()==block.OCCUPIED)) {
                     log.debug("Blocks " + block + " & " + blockCName + " are Occupied");
                     return true;
@@ -1021,16 +1029,18 @@ public class LayoutTurnout
 			}
 		}
 		if (tTurnoutName.length()>0) {
-			turnout = jmri.InstanceManager.turnoutManagerInstance().
-													getTurnout(tTurnoutName);
-			if (turnout!=null) {
-				turnoutName = tTurnoutName;
-				activateTurnout();
-			}
-			else {
+            Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().
+                                getTurnout(tTurnoutName);
+            if (turnout!=null) {
+                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tTurnoutName, turnout);
+                turnoutName = tTurnoutName;
+                activateTurnout();
+            }
+            else {
 				log.error("bad turnoutname '"+tTurnoutName+"' in layoutturnout "+ident);
-				turnoutName = "";
-			}
+                turnoutName = "";
+                namedTurnout = null;
+            }
 		}
 	}
 
@@ -1068,7 +1078,7 @@ public class LayoutTurnout
 				popup.add(rb.getString("LHXOverTurnout"));
 				break;
 		}
-		if (turnout==null) popup.add(rb.getString("NoTurnout"));
+		if (getTurnout()==null) popup.add(rb.getString("NoTurnout"));
 		else popup.add(rb.getString("Turnout")+": "+turnoutName);
 		// Rotate if there are no track connections
 		if ( (connectA==null) && (connectB==null) &&
@@ -1153,7 +1163,7 @@ public class LayoutTurnout
 					}
 				}
 			});
-		if (turnout!=null) {
+		if (getTurnout()!=null) {
 			popup.add(new AbstractAction(rb.getString("SetSignals")) {
 				public void actionPerformed(ActionEvent e) {
 					if (tools == null) {
@@ -1675,7 +1685,7 @@ public class LayoutTurnout
 				setTurnout(newName);
 			}
 			else {
-				turnout = null;
+				namedTurnout = null;
 				turnoutName = "";
 				turnoutNameField.setText("");
 			}
