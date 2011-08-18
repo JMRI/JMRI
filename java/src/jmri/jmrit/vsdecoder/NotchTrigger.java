@@ -23,9 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 // XML stuff
-import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Content;
 
 
 class NotchTrigger extends Trigger implements PropertyChangeListener {
@@ -52,7 +50,6 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
     }
 
     public void propertyChange(PropertyChangeEvent event) {
-	int prev, next;
 
 	// Validate
 	// If no target, or not a name match, or no trigger, or no action
@@ -88,6 +85,7 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
 	*/
     }
 
+    @Override
     public Element getXml() {
 	Element me = new Element("Trigger");
 	me.setAttribute("name", this.getName());
@@ -96,6 +94,7 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
 	return(me);
     }
 
+    @Override
     public void setXml(Element e) {
 	//Get common stuff
 	super.setXml(e);
@@ -105,7 +104,7 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchTrigger.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchTrigger.class.getName());
 
 
 }

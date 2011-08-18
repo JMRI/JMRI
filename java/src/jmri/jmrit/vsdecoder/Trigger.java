@@ -24,14 +24,14 @@ import java.beans.PropertyChangeListener;
 
 import org.jdom.Element;
 
-abstract class Trigger implements PropertyChangeListener {
+abstract public class Trigger implements PropertyChangeListener {
 
     
 
-    public enum TriggerType { BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT };
-    public enum TargetAction { PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, NOTHING };
-    public enum CompareType { EQ, GT, LT, GTE, LTE };
-    public enum CompareValueType { INT, FLOAT };
+    public enum TriggerType { BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT }
+    public enum TargetAction { PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, NOTHING }
+    public enum CompareType { EQ, GT, LT, GTE, LTE }
+    public enum CompareValueType { INT, FLOAT }
 
     String trigger_name; // Name for the trigger object
     String event_name;  // event to respond to
@@ -133,6 +133,6 @@ abstract class Trigger implements PropertyChangeListener {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Trigger.class.getName());
+    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Trigger.class.getName());
     
 }

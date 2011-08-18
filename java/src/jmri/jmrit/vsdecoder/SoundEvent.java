@@ -22,24 +22,16 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.jdom.Attribute;
-import org.jdom.Content;
 import org.jdom.Element;
 
-import javax.swing.JButton;
-import javax.swing.JToggleButton;
 import javax.swing.JComponent;
 import javax.swing.AbstractButton;
-import java.util.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class SoundEvent implements PropertyChangeListener {
 
-    public enum ButtonType { MOMENTARY, TOGGLE, ENGINE, NONE };
+    public enum ButtonType { MOMENTARY, TOGGLE, ENGINE, NONE }
 
     String name;
     String button_label;
@@ -146,7 +138,7 @@ public class SoundEvent implements PropertyChangeListener {
     }
 
     public Trigger getTrigger(String s) {
-	return((Trigger)trigger_list.get(s));
+	return trigger_list.get(s);
     }
 
     public void setSound(VSDSound v) {
@@ -169,9 +161,6 @@ public class SoundEvent implements PropertyChangeListener {
 	for (Trigger t : trigger_list.values()) {
 	    t.propertyChange(event);
 	}
-    }
-
-    private void mouseDown() {
     }
 
     // What's wrong here:
@@ -319,6 +308,6 @@ public class SoundEvent implements PropertyChangeListener {
 
     }  // end setXml()
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundEvent.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundEvent.class.getName());
     
 }

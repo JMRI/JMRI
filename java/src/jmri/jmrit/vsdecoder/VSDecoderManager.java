@@ -37,7 +37,7 @@ import org.jdom.Element;
 
 class VSDecoderManager {
 
-    public static enum EventType { NONE, DECODER_LIST_CHANGE };
+    public static enum EventType { NONE, DECODER_LIST_CHANGE }
 
     private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
 
@@ -45,7 +45,7 @@ class VSDecoderManager {
 
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    private static VSDecoderManager instance = null;
+    //private static VSDecoderManager instance = null;
     private static VSDecoderManagerThread thread = null;
 
     private VSDecoderPreferences vsdecoderPrefs;
@@ -67,7 +67,7 @@ class VSDecoderManager {
 	if (thread == null) {
 	    thread = VSDecoderManagerThread.instance(true);
 	}
-	return(thread.manager());
+	return(VSDecoderManagerThread.manager());
 
 	/*
 	if (instance == null)
@@ -166,7 +166,7 @@ class VSDecoderManager {
     }
 
     void fireMyEvent(VSDManagerEvent evt) {
-	Object[] listeners = listenerList.getListenerList();
+	//Object[] listeners = listenerList.getListenerList();
 
 	for (VSDManagerListener l : listenerList.getListeners(VSDManagerListener.class)) {
 	    l.eventAction(evt);
@@ -174,6 +174,7 @@ class VSDecoderManager {
     }
 
     public void loadVSDecoders(Element root, VSDFile vf) {
+        @SuppressWarnings("unchecked")
 	List<Element> profiles = root.getChildren("vsdecoder");
 	if ((profiles != null) && (profiles.size() > 0)) {
 	    // Create a new VSDecoder object for each Profile in the XML file.
@@ -192,6 +193,6 @@ class VSDecoderManager {
 	fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());
 
 }

@@ -19,23 +19,13 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.jdom.Attribute;
-import org.jdom.Content;
 import org.jdom.Element;
 
-import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import javax.swing.JComponent;
-import javax.swing.AbstractButton;
-import java.util.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.util.Collection;
 
 public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListener {
 
@@ -60,6 +50,7 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	button = null;
     }
 
+    @Override
     public boolean hasButton() {
 	if ((buttontype == ButtonType.NONE) || (buttontype == ButtonType.ENGINE) || (button == null))
 	    return(false);
@@ -71,21 +62,22 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	button = b;
     }
 
+    @Override
     public JComponent getButton() {
 	return(button);
     }
 
+    @Override
     public void setButtonLabel(String bl) {
 	button.setText(bl);
     }
 
+    @Override
     public String getButtonLabel() {
 	return(button.getText());
     }
 
-    private void mouseDown() {
-    }
-
+    @Override
     protected ButtonTrigger setupButtonAction(Element te) {
 	bt = new ButtonTrigger(te.getAttributeValue("name"));
 	button_trigger_list.put(bt.getName(), bt);
@@ -98,6 +90,7 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	return(bt);
     }
 
+    @Override
     public Element getXml() {
 	Element me = new Element("SoundEvent");
 	me.setAttribute("name", name);
@@ -109,14 +102,13 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	return(me);
     }
 
+    @Override
     public void setXml(Element el) {
 	this.setXml(el, null);
     }
 
     @Override
     public void setXml(Element el, VSDFile vf) {
-	Element te;
-	String bav;
 
 	// Create the button first... (put this in constructor?)
 	button = new JToggleButton();
@@ -140,6 +132,6 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 
     }  // end setXml()
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToggleSoundEvent.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToggleSoundEvent.class.getName());
     
 }

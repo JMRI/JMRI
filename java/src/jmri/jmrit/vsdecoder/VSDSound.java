@@ -21,7 +21,7 @@ package jmri.jmrit.vsdecoder;
 
 import org.jdom.Element;
 
-abstract class VSDSound {
+abstract public class VSDSound {
     
     public static String SrcSysNamePrefix = "IAS$VSD:";
     public static String BufSysNamePrefix = "IAB$VSD:";
@@ -34,10 +34,6 @@ abstract class VSDSound {
     boolean is_playing;
     String name;
 
-    private VSDSound() {
-	is_playing = false;
-    }
-    
     // Don't think anything uses this...
     /*
     @Deprecated

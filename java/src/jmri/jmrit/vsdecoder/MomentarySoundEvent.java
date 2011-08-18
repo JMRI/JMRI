@@ -19,23 +19,13 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.jdom.Attribute;
-import org.jdom.Content;
 import org.jdom.Element;
 
 import javax.swing.JButton;
-import javax.swing.JToggleButton;
 import javax.swing.JComponent;
-import javax.swing.AbstractButton;
-import java.util.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.util.Collection;
 
 public class MomentarySoundEvent extends SoundEvent implements PropertyChangeListener {
 
@@ -59,6 +49,7 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 	button = null;
     }
 
+    @Override
     public boolean hasButton() {
 	if ((buttontype == ButtonType.NONE) || (buttontype == ButtonType.ENGINE) || (button == null))
 	    return(false);
@@ -70,23 +61,23 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 	button = b;
     }
 
+    @Override
     public JComponent getButton() {
 	return(button);
     }
 
+    @Override
     public void setButtonLabel(String bl) {
 	button.setText(bl);
     }
 
+    @Override
     public String getButtonLabel() {
 	return(button.getText());
     }
 
-    private void mouseDown() {
-    }
-
+    @Override
     protected ButtonTrigger setupButtonAction(Element te) {
-	MouseListener ml;
 	bt = new ButtonTrigger(te.getAttributeValue("name"));
 	button_trigger_list.put(bt.getName(), bt);
 	log.debug("new ButtonTrigger " + bt.getName() + " type " + buttontype.toString());
@@ -94,6 +85,7 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 	return(bt);  // cast OK since we just instantiated it up above.
     }
 
+    @Override
     public Element getXml() {
 	Element me = new Element("SoundEvent");
 	me.setAttribute("name", name);
@@ -105,14 +97,13 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 	return(me);
     }
 
+    @Override
     public void setXml(Element el) {
 	this.setXml(el, null);
     }
 
     @Override
     public void setXml(Element el, VSDFile vf) {
-	Element te;
-	String bav;
 
 	// Create the button first (put this in constructor?)
 	button = new JButton();
@@ -136,6 +127,6 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 
     }  // end setXml()
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MomentarySoundEvent.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MomentarySoundEvent.class.getName());
     
 }

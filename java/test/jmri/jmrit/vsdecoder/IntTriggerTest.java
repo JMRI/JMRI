@@ -90,7 +90,7 @@ public class IntTriggerTest extends TestCase {
 	uut.setCallback(new TriggerListener() {
 		public void takeAction() {
 		    Assert.assertTrue("callback called", true);
-		};
+		}
 		public void takeAction(int i) {
 		    Assert.fail("wrong callback called");
 		}

@@ -46,9 +46,10 @@ class VSDecoderManagerThread extends Thread {
     }
 
     public static VSDecoderManager manager() {
-	return(VSDecoderManagerThread.instance().manager);
+	return(VSDecoderManagerThread.manager);
     }
 
+    @Override
     public void run() {
 	is_running = true;
 	while (is_running) {

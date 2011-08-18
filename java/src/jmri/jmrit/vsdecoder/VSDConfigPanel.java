@@ -19,23 +19,18 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import jmri.jmrit.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import jmri.ThrottleListener;
-import jmri.DccThrottle;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.util.swing.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
-import jmri.jmrit.roster.*;
-import java.io.IOException;
-import java.io.File;
 import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JPanel;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.util.swing.JmriPanel;
 
 public class VSDConfigPanel extends JmriPanel {
 
@@ -99,18 +94,18 @@ public class VSDConfigPanel extends JmriPanel {
 
     public void init() {}
 
+    @Override
     public void initContext(Object context) {
 	initComponents();
     }
 
     public void setProfileList(ArrayList<String> s) {
-	DefaultComboBoxModel cbm;
 	VSDecoder vsd;
 	boolean default_set = false;
 
 	log.warn("updating the profile list.");
 	
-	profileComboBox.setModel((cbm = new javax.swing.DefaultComboBoxModel()));
+	profileComboBox.setModel(new DefaultComboBoxModel());
 	Iterator itr = s.iterator();
 	while (itr.hasNext()) {
 
@@ -146,6 +141,7 @@ public class VSDConfigPanel extends JmriPanel {
 	repaint();
     }
 
+    @Override
     public void initComponents() {
 
 	// Connect to the VSDecoderManager, so we know when the Profile list changes.
@@ -245,6 +241,7 @@ public class VSDConfigPanel extends JmriPanel {
     }
 
     static class NullComboBoxItem {
+        @Override
 	public String toString() {
 	    //return rb.getString("NoLocoSelected");
 	    return("NoLocoSelected");
@@ -358,7 +355,7 @@ public class VSDConfigPanel extends JmriPanel {
 		    this.main_pane.setDecoder(decoder);
 		addressSetButton.setEnabled(true);
 		addressTextBox.setEnabled(true);
-	    };
+	    }
 	    // Do something.
 	} else {
 	    log.warn("NULL POINTER returned from VSDecoderManager.");
@@ -383,6 +380,6 @@ public class VSDConfigPanel extends JmriPanel {
 	} 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDConfigPanel.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDConfigPanel.class.getName());
     
 }

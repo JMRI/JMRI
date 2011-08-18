@@ -39,10 +39,10 @@ import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Content;
 
-class VSDecoder {
+public class VSDecoder {
 
-    private static final boolean bootstrap = false;
-    private BoolTrigger t;  // used only for bootstrap
+//    private static final boolean bootstrap = false;
+//    private BoolTrigger t;  // used only for bootstrap
 
     private String vsd_path;
     private String vsd_filename;

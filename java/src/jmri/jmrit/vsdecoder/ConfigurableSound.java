@@ -20,15 +20,11 @@ package jmri.jmrit.vsdecoder;
  */
 
 // JMRI and Java stuff
-import jmri.jmrit.Sound;
-import java.awt.event.*;
-import jmri.jmrit.audio.*;
-import java.io.File;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // XML stuff
-import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Content;
 
 // Usage:
 // HornSound() : constructor
@@ -102,6 +98,7 @@ class ConfigurableSound extends VSDSound {
 	return(true);
     }
     
+    @Override
     public boolean isPlaying() {
         return(is_playing);
     }
@@ -176,9 +173,9 @@ class ConfigurableSound extends VSDSound {
 	this.stop();
     }
     
+    @Override
     public Element getXml() {
 	Element me = new Element("sound");
-	Boolean b;
 	Integer i;
 
 	log.debug("Configurable Sound:");
@@ -220,6 +217,7 @@ class ConfigurableSound extends VSDSound {
 	return(me);
     }
 
+    @Override
     public void setXml(Element e) {
 	this.setXml(e, null);
     }

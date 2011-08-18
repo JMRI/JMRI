@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder;
 import java.util.zip.*;
 import java.io.*;
 
-class VSDFile extends ZipFile {
+public class VSDFile extends ZipFile {
 
     ZipInputStream zis;
 

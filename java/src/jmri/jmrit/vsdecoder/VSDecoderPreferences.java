@@ -39,7 +39,7 @@ public class VSDecoderPreferences {
     private boolean _autoLoadDefaultVSDFile = false; // Automatically load a VSD file.
 
     // Other internal variables
-    private Dimension _winDim = new Dimension(800,600);
+    //private Dimension _winDim = new Dimension(800,600);
     private String prefFile;
     private ArrayList<PropertyChangeListener> listeners;
     
@@ -71,7 +71,6 @@ public class VSDecoderPreferences {
     {
     	if (e==null) return;
     	org.jdom.Attribute a;
-    	org.jdom.Attribute b;
 	org.jdom.Element c;
     	if ((a = e.getAttribute("isAutoStartingEngine")) != null )  setAutoStartEngine( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isAutoLoadingDefaultVSDFile")) != null )  setAutoLoadDefaultVSDFile( a.getValue().compareTo("true") == 0 );

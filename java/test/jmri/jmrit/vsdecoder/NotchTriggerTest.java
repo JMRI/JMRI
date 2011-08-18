@@ -89,7 +89,7 @@ public class NotchTriggerTest extends TestCase {
 	uut.setCallback(new TriggerListener() {
 		public void takeAction() {
 		    Assert.fail("wrong callback called");
-		};
+		}
 		public void takeAction(int i) {
 		    Assert.assertTrue("callback called", true);
 		}

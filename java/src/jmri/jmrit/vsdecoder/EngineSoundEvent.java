@@ -22,20 +22,9 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.jdom.Attribute;
-import org.jdom.Content;
 import org.jdom.Element;
 
-import javax.swing.JButton;
-import javax.swing.JToggleButton;
 import javax.swing.JComponent;
-import javax.swing.AbstractButton;
-import java.util.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
-import java.util.Collection;
 
 public class EngineSoundEvent extends SoundEvent implements PropertyChangeListener {
 
@@ -59,6 +48,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 	engine_pane = null;
     }
 
+    @Override
     public boolean hasButton() {
 	if ((buttontype == ButtonType.NONE) || (buttontype == ButtonType.ENGINE) || (button == null))
 	    return(false);
@@ -66,6 +56,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 	    return(true);
     }
 
+    @Override
     public boolean hasEnginePane() {
 	if ((buttontype == ButtonType.ENGINE) && (engine_pane != null))
 	    return(true);
@@ -73,32 +64,35 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 	    return(false);
     }
 
+    @Override
     public JComponent getButton() {
 	log.debug("engine getButton() called.");
 	return(engine_pane);
     }
 
+    @Override
     public EnginePane getEnginePane() {
 	return(engine_pane);
     }
 
+    @Override
     public void setEnginePane(EnginePane e) {
 	engine_pane = e;
     }
 
+    @Override
     public void setButtonLabel(String bl) {
 	// can't do this.  Yet.
     }
 
+    @Override
     public String getButtonLabel() {
 	// can't do this. Yet.
 	//return(engine_pane.getText());
 	return("Text");
     }
 
-    private void mouseDown() {
-    }
-
+    @Override
     protected ButtonTrigger setupButtonAction(Element te) {
 	/*
 	MouseListener ml;
@@ -121,9 +115,9 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 
     public void guiAction(PropertyChangeEvent evt) {
 	if (evt.getPropertyName().equals("throttle")) {
-	    log.debug("GUI throttle changed.  New value = " + (Integer)evt.getNewValue());
+	    log.debug("GUI throttle changed.  New value = " + evt.getNewValue());
 	} else if (evt.getPropertyName().equals("start")) {
-	    log.debug("GUI Start button changed. New value = " + (Boolean)evt.getNewValue());
+	    log.debug("GUI Start button changed. New value = " + evt.getNewValue());
 	    if ((Boolean)evt.getNewValue() == true) {
 		((EngineSound)parent.getSound("ENGINE")).startEngine();
 	    } else {
@@ -132,8 +126,8 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 	}
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
-	int th;
 	super.propertyChange(event);
 	if (event.getPropertyName().equals("SpeedSetting"))
 	    engine_pane.setThrottle(VSDecoder.calcEngineNotch((Float)event.getNewValue()));
@@ -141,6 +135,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 
 
 
+    @Override
     public Element getXml() {
 	Element me = new Element("SoundEvent");
 	me.setAttribute("name", name);
@@ -152,14 +147,13 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 	return(me);
     }
 
+    @Override
     public void setXml(Element el) {
 	this.setXml(el, null);
     }
 
     @Override
     public void setXml(Element el, VSDFile vf) {
-	Element te;
-	String bav;
 
 	// Create the "button"  (should this be in constructor)
 	log.debug("Creating DieselPane");
@@ -188,6 +182,6 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 	}
     }  // end setXml()
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundEvent.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundEvent.class.getName());
     
 }

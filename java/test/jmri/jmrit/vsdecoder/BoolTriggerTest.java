@@ -2,19 +2,13 @@
 
 package jmri.jmrit.vsdecoder;
 
-import jmri.jmrit.vsdecoder.TriggerListener;
-import jmri.jmrit.vsdecoder.Trigger;
-import jmri.jmrit.vsdecoder.BoolTrigger;
-import jmri.jmrit.vsdecoder.ConfigurableSound;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrit.vsdecoder.VSDSound;
 import org.jdom.Element;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 
 
@@ -90,7 +84,7 @@ public class BoolTriggerTest extends TestCase {
 	uut.setCallback(new TriggerListener() {
 		public void takeAction() {
 		    Assert.assertTrue("callback called", true);
-		};
+		}
 		public void takeAction(int i) {
 		    Assert.fail("wrong callback called");
 		}

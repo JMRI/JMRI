@@ -24,7 +24,7 @@ import jmri.util.swing.JmriPanel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-class EnginePane extends JPanel {
+public class EnginePane extends JPanel {
     // Superclass for Diesel, Steam, Electric panes.
     // Doesn't really do anything.
 
@@ -84,7 +84,7 @@ class EnginePane extends JPanel {
     }
 
     void firePropertyChangeEvent(PropertyChangeEvent evt) {
-	Object[] listeners = listenerList.getListenerList();
+	//Object[] listeners = listenerList.getListenerList();
 
 	for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
 	    l.propertyChange(evt);

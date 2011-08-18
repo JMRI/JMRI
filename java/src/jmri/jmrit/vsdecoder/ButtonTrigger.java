@@ -26,15 +26,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
-import org.jdom.Attribute;
-import org.jdom.Content;
 import org.jdom.Element;
 
 import javax.swing.AbstractButton;
 
-class ButtonTrigger extends Trigger implements PropertyChangeListener, ActionListener, MouseListener {
+public class ButtonTrigger extends Trigger implements PropertyChangeListener, ActionListener, MouseListener {
 
-    enum ButtonAction { };
+    enum ButtonAction { }
 
     boolean match_value;
     boolean state;
@@ -101,6 +99,7 @@ class ButtonTrigger extends Trigger implements PropertyChangeListener, ActionLis
     public void mouseClicked(MouseEvent e) { }
 
 
+    @Override
     public Element getXml() {
 	Element me = new Element("Trigger");
 
@@ -131,6 +130,6 @@ class ButtonTrigger extends Trigger implements PropertyChangeListener, ActionLis
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ButtonTrigger.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ButtonTrigger.class.getName());
 
 }

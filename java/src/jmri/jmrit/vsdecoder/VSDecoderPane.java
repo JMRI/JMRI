@@ -46,7 +46,7 @@ import java.util.ArrayList;
  */
 public class VSDecoderPane extends JmriPanel {
 
-    private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
+    //private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
 
     VSDecoder decoder;
     VSDecoderManager decoder_mgr;
@@ -66,7 +66,7 @@ public class VSDecoderPane extends JmriPanel {
 
     private static String VSDecoderFileLocation = null;
 
-    private List<JMenu> menuList;
+    //private List<JMenu> menuList;
     
 
     public VSDecoderPane(VSDecoderFrame p) {

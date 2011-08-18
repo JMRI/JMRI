@@ -25,19 +25,14 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import jmri.util.NoArchiveFileFilter;
-import jmri.util.FileChooserFilter;
 
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
-import java.io.IOException;
 
 
 import org.jdom.Element;
 
-import java.util.zip.*;
+import java.util.zip.ZipEntry;
 
 
 /**
@@ -115,7 +110,7 @@ public class LoadVSDFileAction extends AbstractAction {
 	    log.debug("VSD File name = " + vsdfile.getName());
 	    
 	    // Debug: List all the top-level contents in the file.
-	    Enumeration entries = vsdfile.entries();
+	    Enumeration<? extends ZipEntry> entries = vsdfile.entries();
 	    while(entries.hasMoreElements()) {
 		ZipEntry z = (ZipEntry)entries.nextElement();
 		log.debug("Entry: " + z.getName());
@@ -166,7 +161,7 @@ public class LoadVSDFileAction extends AbstractAction {
 	    f = new File(fp);
 	    return(loadVSDFile(f));
 	} catch (java.io.IOException ioe) {
-	    log.warn("IO Error auto-loading VSD File: " + f.getAbsolutePath() + " ", ioe);
+	    log.warn("IO Error auto-loading VSD File: " + (f==null?"(null)":f.getAbsolutePath()) + " ", ioe);
 	    return(false);
 	} catch (NullPointerException npe) {
 	    log.warn("NP Error auto-loading VSD File: FP = " + fp, npe);

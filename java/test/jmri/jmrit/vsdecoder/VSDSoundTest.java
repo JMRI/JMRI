@@ -35,7 +35,6 @@ public class VSDSoundTest extends TestCase {
     }
 
     public void TestSetGet() {
-	VSDSound target;
 	VSDSound uut = new SoundBite("unitUnderTest");
 	uut.setName("new name");
 	Assert.assertEquals("set name", "new name", uut.getName());
