@@ -1490,7 +1490,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             {
                NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
                Turnout key = namedTurnout.getBean();
-               if (key.getKnownState()!=turnouts.get(key))
+               if (key.getKnownState()!=turnouts.get(namedTurnout))
                    state=false;
                 else if (key.getState()==Turnout.THROWN){
                     turnoutThrown=true;
@@ -1632,7 +1632,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
                Turnout key = namedTurnout.getBean();
                key.addPropertyChangeListener(propertyTurnoutListener, namedTurnout.getName(), "Signal Mast Logic:" + source.getDisplayName() + " to " + destination.getDisplayName());
-               if (key.getKnownState()!=turnouts.get(key))
+               if (key.getKnownState()!=turnouts.get(namedTurnout))
                    routeclear=false;
                 else if (key.getState()==Turnout.THROWN){
                     turnoutThrown=true;
@@ -2102,7 +2102,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                 }
 
-               if (key.getKnownState()!=turnouts.get(key))
+               if (key.getKnownState()!=turnouts.get(namedTurnout))
                    routeclear = false;
             }
             

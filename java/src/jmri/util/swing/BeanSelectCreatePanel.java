@@ -213,7 +213,7 @@ public class BeanSelectCreatePanel extends JPanel{
         }
         if (nBean==null)
             throw new jmri.JmriException("Unable to create bean");
-        if ((_reference!=null || !_reference.equals("")) && (nBean.getComment()==null || !nBean.getComment().equals("")))
+        if ((_reference!=null && !_reference.equals("")) && (nBean.getComment()==null || !nBean.getComment().equals("")))
             nBean.setComment(_reference);
         setDefaultNamedBean(nBean);
         return nBean;
