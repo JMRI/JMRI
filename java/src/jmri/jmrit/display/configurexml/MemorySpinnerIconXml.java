@@ -28,7 +28,7 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         Element element = new Element("memoryicon");
 
         // include attributes
-        element.setAttribute("memory", p.getMemory().getName());
+        element.setAttribute("memory", p.getNamedMemory().getName());
         storeCommonAttributes(p, element);
         storeTextInfo(p, element);
         

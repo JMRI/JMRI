@@ -34,7 +34,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     int _nCols; 
     
     // the associated Memory object
-    Memory memory = null;
+    //Memory memory = null;
     private NamedBeanHandle<Memory> namedMemory;
     
     
@@ -66,7 +66,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     public Positionable finishClone(Positionable p) {
         MemoryInputIcon pos = (MemoryInputIcon)p;
-        pos.setMemory(getMemory().getName());
+        pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
 
@@ -82,15 +82,17 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      public void setMemory(String pName) {
          if (debug) log.debug("setMemory for memory= "+pName);
          if (InstanceManager.memoryManagerInstance()!=null) {
-             memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
+            Memory memory = InstanceManager.memoryManagerInstance().
+                 provideMemory(pName);
              if (memory != null) {
-                 setMemory(new NamedBeanHandle<Memory>(pName, memory));
+                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
              } else {
                  log.error("Memory '"+pName+"' not available, icon won't see changes");
              }
          } else {
              log.error("No MemoryManager for this protocol, icon won't see changes");
          }
+         updateSize();
      }
 
     /**
@@ -98,14 +100,14 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      * @param m The Memory object
      */
     public void setMemory(NamedBeanHandle<Memory> m) {
-        if (memory != null) {
-            memory.removePropertyChangeListener(this);
+        if (namedMemory != null) {
+            getMemory().removePropertyChangeListener(this);
         }
-        memory = InstanceManager.memoryManagerInstance().provideMemory(m.getName());
-        if (memory != null) {
+        namedMemory = m;
+        if (namedMemory != null) {
+            getMemory().addPropertyChangeListener(this, namedMemory.getName(), "Memory Input Icon");
             displayState();
-            memory.addPropertyChangeListener(this);
-            namedMemory = m;
+            setName(namedMemory.getName());
         }
     }
 
@@ -114,7 +116,15 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _nCols = nCols;
     }
 
-    public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
+    public NamedBeanHandle<Memory> getNamedMemory() { return namedMemory; }
+    
+    public Memory getMemory() {
+        if (namedMemory==null) {
+            return null;
+        }
+        return namedMemory.getBean();
+    }
+    
     public int getNumColumns() { return _nCols; }
     
     // update icon as state of Memory changes
@@ -126,11 +136,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     public String getNameString() {
         String name;
-        if (memory == null) name = rb.getString("NotConnected");
-        else if (memory.getUserName()!=null)
-            name = memory.getUserName()+" ("+memory.getSystemName()+")";
+        if (namedMemory == null) name = rb.getString("NotConnected");
+        else if (getMemory().getUserName()!=null)
+            name = getMemory().getUserName()+" ("+getMemory().getSystemName()+")";
         else
-            name = memory.getSystemName();
+            name = getMemory().getSystemName();
         return name;
     }
 
@@ -139,9 +149,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     boolean selectable = false;
     
     private void updateMemory() {
-        if (memory == null) return;
+        if (namedMemory == null) return;
         String str = _textBox.getText();
-        memory.setValue(str);
+        getMemory().setValue(str);
     }
 
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
@@ -184,7 +194,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         };
         _iconEditor.makeIconPanel();
         _iconEditor.complete(addIconAction, false, true, true);
-        _iconEditor.setSelection(memory);
+        _iconEditor.setSelection(getMemory());
     }
     void editMemory() {
         setMemory(_iconEditor.getTableSelection().getDisplayName());
@@ -203,10 +213,10 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      */
     public void displayState() {
         if (debug) log.debug("displayState");
-    	if (memory == null) {  // leave alone if not connected yet
+    	if (namedMemory == null) {  // leave alone if not connected yet
     		return;
     	}
-        Object show = memory.getValue();
+        Object show = getMemory().getValue();
         if (show!=null)
             _textBox.setText(show.toString());
         else
@@ -214,15 +224,15 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     void cleanup() {
-        if (memory!=null) {
-            memory.removePropertyChangeListener(this);
+        if (namedMemory!=null) {
+            getMemory().removePropertyChangeListener(this);
         }
         if (_textBox!=null) {
             _textBox.removeMouseMotionListener(this);
             _textBox.removeMouseListener(this);
             _textBox = null;
         }
-        memory = null;
+        namedMemory = null;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryInputIcon.class.getName());

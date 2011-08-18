@@ -37,6 +37,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
                 root = this;
             }
         };
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         Assert.assertNotNull("Instance exists", i );
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("data");
         to.setMemory("IM1");
@@ -62,6 +63,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
                 root = this;
             }
         };
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         Assert.assertNotNull("Instance exists", i );
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
         to.setMemory("IM2");
@@ -87,6 +89,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
                 root = this;
             }
         };
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         Assert.assertNotNull("Instance exists", i );
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
         to.setMemory("IM3");

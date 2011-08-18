@@ -2,6 +2,7 @@ package jmri.jmrit.tracker;
 
 import jmri.Block;
 import jmri.Memory;
+import jmri.NamedBeanHandle;
 
 
 /**
@@ -20,8 +21,9 @@ public class MemoryTracker  {
         block = b;
         
         // make sure Memory objects exist & remember it
-        m = jmri.InstanceManager.memoryManagerInstance()
+        Memory m = jmri.InstanceManager.memoryManagerInstance()
             .provideMemory(namePrefix+block.getSystemName());
+        namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(namePrefix+block.getSystemName(), m);
         // set listener in the block
         block.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
             public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -37,10 +39,11 @@ public class MemoryTracker  {
         if (log.isDebugEnabled() && (block.getValue()!=null)) log.debug("set value "+block.getValue()+" in block "+block.getSystemName());
         Object o = block.getValue();
         if (o!=null) o = o.toString();
-        m.setValue(o);
+        namedMemory.getBean().setValue(o);
     }
     
-    Memory m;
+    NamedBeanHandle<Memory> namedMemory;
+    //Memory m;
     Block block;
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryTracker.class.getName());

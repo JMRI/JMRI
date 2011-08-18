@@ -678,24 +678,26 @@ public class DefaultLogix extends AbstractNamedBean
         String msg = "(unknown type number "+listener.getType()+")";
         /* If all are converted to NamedBeanHandles, do we have to go through this switch, 
         the only reason for doing so would be the error message */
+        NamedBean nb;
+        NamedBeanHandle<?> namedBeanHandle;
 		switch (listener.getType()) {
 			case LISTENER_TYPE_SENSOR:
-				NamedBeanHandle<?> namedBeanHandle = listener.getNamedBean();
+				namedBeanHandle = listener.getNamedBean();
 				if (namedBeanHandle==null) {
 					msg = "sensor";
 					break;
   				}
-                NamedBean nb= (NamedBean) namedBeanHandle.getBean();
+                nb = (NamedBean) namedBeanHandle.getBean();
 				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
 				return;
 			case LISTENER_TYPE_TURNOUT:
-				Turnout t = InstanceManager.turnoutManagerInstance().
-										provideTurnout(listener.getDevName());
-				if (t==null) {
+                namedBeanHandle = listener.getNamedBean();
+				if (namedBeanHandle==null) {
 					msg = "turnout";
 					break;
 				}
-				t.addPropertyChangeListener (listener);
+                nb = (NamedBean) namedBeanHandle.getBean();
+				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
 				return;
 			case LISTENER_TYPE_LIGHT:
 				Light lgt = InstanceManager.lightManagerInstance().
@@ -734,14 +736,15 @@ public class DefaultLogix extends AbstractNamedBean
 				f.addPropertyChangeListener (listener);
 				return;
 			case LISTENER_TYPE_MEMORY:
-				Memory m = InstanceManager.memoryManagerInstance().
-										provideMemory(listener.getDevName());
-				if (m==null) {
-					msg= "memory";
+                namedBeanHandle = listener.getNamedBean();
+				if (namedBeanHandle==null) {
+					msg = "memory";
 					break;
 				}
-				m.addPropertyChangeListener (listener);
+                nb = (NamedBean) namedBeanHandle.getBean();
+				nb.addPropertyChangeListener (listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
 				return;
+                
             case LISTENER_TYPE_WARRANT:
 				Warrant w = InstanceManager.warrantManagerInstance().
 										provideWarrant(listener.getDevName());

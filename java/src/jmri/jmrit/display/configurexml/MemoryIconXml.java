@@ -35,7 +35,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         Element element = new Element("memoryicon");
 
         // include attributes
-        element.setAttribute("memory", p.getMemory().getName());
+        element.setAttribute("memory", p.getNamedMemory().getName());
         storeCommonAttributes(p, element);
         storeTextInfo(p, element);
         
@@ -114,7 +114,7 @@ public class MemoryIconXml extends PositionableLabelXml {
 
         Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
         if (m!=null) {
-            l.setMemory(new NamedBeanHandle<Memory>(name, m));
+            l.setMemory(name);
         } else {
             log.error("Memory named '"+attr.getValue()+"' not found.");
             ed.loadFailed();

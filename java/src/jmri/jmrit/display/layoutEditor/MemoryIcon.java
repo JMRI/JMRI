@@ -29,12 +29,12 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     public void displayState() {
         log.debug("displayState");
-    	if (memory == null) {  // use default if not connected yet
+    	if (getMemory() == null) {  // use default if not connected yet
             setText(defaultText);
     		updateSize();
     		return;
     	}
-		Object key = memory.getValue();
+		Object key = getMemory().getValue();
 		if (key != null) {
             java.util.HashMap<String, NamedIcon> map = getMap();
 		    if (map == null) {
@@ -64,7 +64,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     _icon = false;
     		        updateSize();
                     return;
-                } else log.warn("can't display current value of "+memory.getSystemName()+
+                } else log.warn("can't display current value of "+getNamedMemory().getName()+
                                 ", val= "+val+" of Class "+val.getClass().getName());
 		    } else {
 		        // map exists, use it

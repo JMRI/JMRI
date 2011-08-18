@@ -254,7 +254,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         MemoryIcon memIcon = _editor.putMemory();
         Assert.assertNotNull(memIcon);
-        Memory memory = memIcon.getMemory().getBean();
+        Memory memory = memIcon.getMemory();
         Assert.assertNotNull(memory);
 
         int x = 20;
@@ -280,7 +280,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         MemorySpinnerIcon memSpinIcon = _editor.addMemorySpinner();
         Assert.assertNotNull(memSpinIcon);
-        memory = memSpinIcon.getMemory().getBean();
+        memory = memSpinIcon.getMemory();
         Assert.assertNotNull(memory);
 
         x = 70;
@@ -306,7 +306,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         MemoryInputIcon memInputIcon = _editor.addMemoryInputBox();
         Assert.assertNotNull(memInputIcon);
-        memory = memInputIcon.getMemory().getBean();
+        memory = memInputIcon.getMemory();
         Assert.assertNotNull(memory);
 
         x = 150;

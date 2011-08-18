@@ -44,6 +44,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
                 root = this;
             }
         };
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         Assert.assertNotNull("Instance exists", i );
         tos1.setMemory("IM1");
         tos2.setMemory("IM1");
@@ -90,7 +91,9 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp();
+    }
     protected void tearDown() { 
        // now close panel window
         java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();

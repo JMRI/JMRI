@@ -29,7 +29,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
 	NamedIcon defaultIcon = null;
     // the associated Memory object
-    protected Memory memory = null;
+    //protected Memory memory = null;
     // the map of icons
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Memory> namedMemory;
@@ -61,7 +61,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     public Positionable finishClone(Positionable p) {
         MemoryIcon pos = (MemoryIcon)p;
-        pos.setMemory(getMemory().getName());
+        pos.setMemory(namedMemory.getName());
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map!=null) {
 		    java.util.Iterator<String> iterator = map.keySet().iterator();
@@ -96,11 +96,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
       * @param pName Used as a system/user name to lookup the Memory object
      */
      public void setMemory(String pName) {
+     
          if (InstanceManager.memoryManagerInstance()!=null) {
-             memory = InstanceManager.memoryManagerInstance().
+            Memory memory = InstanceManager.memoryManagerInstance().
                  provideMemory(pName);
              if (memory != null) {
-                 setMemory(new NamedBeanHandle<Memory>(pName, memory));
+                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
              } else {
                  log.error("Memory '"+pName+"' not available, icon won't see changes");
              }
@@ -115,18 +116,26 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * @param m The Memory object
      */
     public void setMemory(NamedBeanHandle<Memory> m) {
-        if (memory != null) {
-            memory.removePropertyChangeListener(this);
+        if (namedMemory != null) {
+            getMemory().removePropertyChangeListener(this);
         }
-        memory = InstanceManager.memoryManagerInstance().provideMemory(m.getName());
-        if (memory != null) {
-            memory.addPropertyChangeListener(this);
+        namedMemory = m;
+        if (namedMemory != null) {
+            getMemory().addPropertyChangeListener(this, namedMemory.getName(), "Memory Icon");
             displayState();
-            namedMemory = m;
+            setName(namedMemory.getName());
         }
     }
     
-    public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
+    public NamedBeanHandle<Memory> getNamedMemory() { return namedMemory; }
+    
+    public Memory getMemory() {
+        if (namedMemory==null) {
+            return null;
+        }
+        return namedMemory.getBean();
+    
+    }
 
     public java.util.HashMap<String, NamedIcon> getMap() { return map; }
 
@@ -153,11 +162,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     public String getNameString() {
         String name;
-        if (memory == null) name = rb.getString("NotConnected");
-        else if (memory.getUserName()!=null)
-            name = memory.getUserName()+" ("+memory.getSystemName()+")";
+        if (namedMemory == null) name = rb.getString("NotConnected");
+        else if (getMemory().getUserName()!=null)
+            name = getMemory().getUserName()+" ("+getMemory().getSystemName()+")";
         else
-            name = memory.getSystemName();
+            name = getMemory().getSystemName();
         return name;
     }
 
@@ -177,7 +186,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 popup.add(new AbstractAction(key) {
                     public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
-                        memory.setValue(key);
+                        getMemory().setValue(key);
                     }
                 });
             }
@@ -205,12 +214,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      */
     public void displayState() {
         if (log.isDebugEnabled()) log.debug("displayState");
-    	if (memory == null) {  // use default if not connected yet
+    	if (namedMemory == null) {  // use default if not connected yet
             setIcon(defaultIcon);
     		updateSize();
     		return;
     	}
-		Object key = memory.getValue();
+		Object key = getMemory().getValue();
 		if (key != null) {
 		    if (map == null) {
 		        // no map, attempt to show object directly
@@ -249,7 +258,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setIcon(null);
                     _icon = false;
                     _text = true;
-                } else log.warn("can't display current value of "+memory.getSystemName()+
+                } else log.warn("can't display current value of "+namedMemory.getName()+
                                 ", val= "+val+" of Class "+val.getClass().getName());
 		    } else {
 		        // map exists, use it
@@ -346,7 +355,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             }
         };
         _iconEditor.complete(addIconAction, false, true, true);
-        _iconEditor.setSelection(memory);
+        _iconEditor.setSelection(getMemory());
     }
     void editMemory() {
         setMemory(_iconEditor.getTableSelection().getDisplayName());
@@ -358,8 +367,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     public void dispose() {
-        memory.removePropertyChangeListener(this);
-        memory = null;
+        getMemory().removePropertyChangeListener(this);
+        namedMemory = null;
         super.dispose();
     }
     
@@ -371,16 +380,16 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     
     private void editMemoryValue(){
         JTextField newMemory = new JTextField(20);
-        if (memory.getValue()!=null)
-            newMemory.setText(memory.getValue().toString());
+        if (getMemory().getValue()!=null)
+            newMemory.setText(getMemory().getValue().toString());
         Object[] options = {"Cancel", "OK", newMemory};
         int retval = JOptionPane.showOptionDialog(this,
-                                                  "Edit Current Memory Value", memory.getSystemName(),
+                                                  "Edit Current Memory Value", namedMemory.getName(),
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
                                                   options, options[2] );
 
         if (retval != 1) return;
-        memory.setValue(newMemory.getText());
+        getMemory().setValue(newMemory.getText());
         updateSize();
     }
 

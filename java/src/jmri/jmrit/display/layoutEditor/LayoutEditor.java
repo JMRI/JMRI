@@ -4932,7 +4932,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
         MemoryIcon l = new MemoryIcon("   ", this);
         l.setMemory(textMemory.getText().trim());
-		Memory xMemory = l.getMemory().getBean();
+		Memory xMemory = l.getMemory();
 		if (xMemory != null) {
 			if ( (xMemory.getUserName() == null) || 
 					(!(xMemory.getUserName().equals(textMemory.getText().trim())))  ) {

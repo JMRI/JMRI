@@ -112,12 +112,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         String systemName = bean.getSystemName();
         String userName = bean.getUserName();
         renameBean(userName, systemName, bean);
-        /*for (NamedBeanHandle h : namedBeanHandles ) {
-            if (h.getBean().equals(bean)){
-                h.setName(systemName);
-            }
-        }
-        updateListenerRef(userName, systemName, bean);*/
     }
     
     public void updateBeanFromSystemToUser(NamedBean bean) throws JmriException{
@@ -129,11 +123,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
             throw new JmriException("UserName is empty, can not update items to use UserName");
         }
         renameBean(systemName, userName, bean);
-        /*for (NamedBeanHandle h : namedBeanHandles ) {
-            if (h.getBean().equals(bean))
-                h.setName(userName);
-        }
-        updateListenerRef(systemName, userName, bean);*/
     }
     
     public <T> boolean inUse(String name, T bean){

@@ -70,6 +70,13 @@ public class DefaultConditionalAction implements ConditionalAction {
                         return;
                     }
                     break;
+                case Conditional.ITEM_TYPE_MEMORY:
+                    bean = InstanceManager.memoryManagerInstance().provideMemory(_deviceName);
+                    if (bean == null) {
+                        log.error("invalid memory name= \""+_deviceName+"\" in conditional action");
+                        return;
+                    }
+                    break;
             }
         } catch (java.lang.NumberFormatException ex){
             //Can be considered normal if the logixs are loaded prior to any other beans
@@ -124,6 +131,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ITEM_TYPE_TURNOUT:
                     bean = InstanceManager.turnoutManagerInstance().provideTurnout(_deviceName);
+                    break;
+                case Conditional.ITEM_TYPE_MEMORY:
+                    bean = InstanceManager.memoryManagerInstance().provideMemory(_deviceName);
                     break;
             }
         } catch (java.lang.NumberFormatException ex){

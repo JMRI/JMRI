@@ -83,6 +83,23 @@ public class ConditionalVariable {
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, sn);
+                    break;
+                case Conditional.ITEM_TYPE_TURNOUT:
+                    Turnout tn = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
+                    if (tn == null) {
+                        log.error("invalid turnout name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, tn);
+                    break;
+                case Conditional.ITEM_TYPE_MEMORY:
+                    Memory my = InstanceManager.memoryManagerInstance().provideMemory(_name);
+                    if (my == null) {
+                        log.error("invalid memory name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, my);
+                    break;
             }
         } catch (java.lang.NumberFormatException ex) {
             //Can be Considered Normal where the logix is loaded prior to any other beans
@@ -143,6 +160,9 @@ public class ConditionalVariable {
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:
                 bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
+                break;
+            case Conditional.ITEM_TYPE_MEMORY:
+                bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
                 break;
         }
 

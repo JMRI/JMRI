@@ -19,6 +19,7 @@ public class MemoryTrackerTest extends TestCase {
 
 	public void testDirectCreate() {
 	    MemoryManager m = InstanceManager.memoryManagerInstance();
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
 	    m.provideMemory("dummy");
 	    // check for exception in ctor
         new MemoryTracker(new Block("dummy"),"");

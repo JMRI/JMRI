@@ -63,7 +63,6 @@ public class BeanSettingTest extends TestCase {
         super.setUp();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.setUp();
-        //InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
     
     protected void tearDown() throws Exception  { 

@@ -32,7 +32,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     int _max = 100;
     JSpinner spinner = new JSpinner(new SpinnerNumberModel(0,_min,_max,1));
     // the associated Memory object
-    Memory memory = null;    
+    //Memory memory = null;    
     private NamedBeanHandle<Memory> namedMemory;
     
     public MemorySpinnerIcon(Editor editor) {
@@ -55,7 +55,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
 
     public Positionable finishClone(Positionable p) {
         MemorySpinnerIcon pos = (MemorySpinnerIcon)p;
-        pos.setMemory(getMemory().getName());
+        pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
 
@@ -79,15 +79,17 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
      public void setMemory(String pName) {
          if (debug) log.debug("setMemory for memory= "+pName);
          if (InstanceManager.memoryManagerInstance()!=null) {
-            Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
+            Memory memory = InstanceManager.memoryManagerInstance().
+                 provideMemory(pName);
              if (memory != null) {
-                 setMemory(new NamedBeanHandle<Memory>(pName, memory));
+                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
              } else {
                  log.error("Memory '"+pName+"' not available, icon won't see changes");
              }
          } else {
              log.error("No MemoryManager for this protocol, icon won't see changes");
          }
+         updateSize();
      }
 
     /**
@@ -95,24 +97,31 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
      * @param m The Memory object
      */
     public void setMemory(NamedBeanHandle<Memory> m) {
-        if (memory != null) {
-            memory.removePropertyChangeListener(this);
+        if (namedMemory != null) {
+            getMemory().removePropertyChangeListener(this);
         }
-        memory = InstanceManager.memoryManagerInstance().provideMemory(m.getName());
-        if (memory != null) {
-            memory.addPropertyChangeListener(this);
+        namedMemory = m;
+        if (namedMemory != null) {
+            getMemory().addPropertyChangeListener(this, namedMemory.getName(), "Memory Spinner Icon");
             displayState();
-            namedMemory = m;
+            setName(namedMemory.getName());
         }
     }
 
-    public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
+    public NamedBeanHandle<Memory> getNamedMemory() { return namedMemory; }
     
     // update icon as state of Memory changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("value")) {
                 displayState();
         }
+    }
+    
+    public Memory getMemory() {
+        if (namedMemory==null) {
+            return null;
+        }
+        return namedMemory.getBean();
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -121,11 +130,11 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
 
     public String getNameString() {
         String name;
-        if (memory == null) name = rb.getString("NotConnected");
-        else if (memory.getUserName()!=null)
-            name = memory.getUserName()+" ("+memory.getSystemName()+")";
+        if (namedMemory == null) name = rb.getString("NotConnected");
+        else if (getMemory().getUserName()!=null)
+            name = getMemory().getUserName()+" ("+getMemory().getSystemName()+")";
         else
-            name = memory.getSystemName();
+            name = getMemory().getSystemName();
         return name;
     }
 
@@ -152,7 +161,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
             }
         };
         _iconEditor.complete(addIconAction, false, true, true);
-        _iconEditor.setSelection(memory);
+        _iconEditor.setSelection(getMemory());
     }
     void editMemory() {
         setMemory(_iconEditor.getTableSelection().getDisplayName());
@@ -172,18 +181,18 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     	if (namedMemory == null) {  // leave alone if not connected yet
     		return;
     	}
-        if (memory.getValue() == null) return;
+        if (getMemory().getValue() == null) return;
         Integer num = null;
-        if (memory.getValue().getClass() == String.class) {
+        if (getMemory().getValue().getClass() == String.class) {
             try {
-                num =Integer.valueOf((String)memory.getValue());
+                num =Integer.valueOf((String)getMemory().getValue());
             } catch (NumberFormatException e) {
                 return;
             }
-        } else if (memory.getValue().getClass() == Integer.class) {
-            num = ((Number)memory.getValue()).intValue();
-        } else if (memory.getValue().getClass() == Float.class) {
-            num = Integer.valueOf(Math.round((Float)memory.getValue()));
+        } else if (getMemory().getValue().getClass() == Integer.class) {
+            num = ((Number)getMemory().getValue()).intValue();
+        } else if (getMemory().getValue().getClass() == Float.class) {
+            num = Integer.valueOf(Math.round((Float)getMemory().getValue()));
             if (debug) log.debug("num= "+num.toString());
         } else {
             //spinner.setValue(getMemory().getValue());
@@ -206,17 +215,17 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
 
     protected void spinnerUpdated() {
         if (namedMemory == null) return;
-        if (memory.getValue() == null) {
-            memory.setValue(spinner.getValue());
+        if (getMemory().getValue() == null) {
+            getMemory().setValue(spinner.getValue());
             return;
         }
         // Spinner is always an Integer, but memory can contain Integer or String
-        if (memory.getValue().getClass() == String.class) {
+        if (getMemory().getValue().getClass() == String.class) {
             String newValue = ""+spinner.getValue();
-            if (!memory.getValue().equals(newValue))
-                memory.setValue(newValue);
+            if (!getMemory().getValue().equals(newValue))
+                getMemory().setValue(newValue);
         } else {
-            memory.setValue(spinner.getValue());
+            getMemory().setValue(spinner.getValue());
         }
     }
 
@@ -225,8 +234,8 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     }
     
     void cleanup() {
-        if (memory!=null) {
-            memory.removePropertyChangeListener(this);
+        if (namedMemory!=null) {
+            getMemory().removePropertyChangeListener(this);
         }
         if (spinner!=null) {
             spinner.removeChangeListener(this);
@@ -234,7 +243,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
             ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().removeMouseListener(this);
         }
         spinner = null;
-        memory = null;
+        namedMemory = null;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemorySpinnerIcon.class.getName());
