@@ -109,7 +109,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             // store the audios
             while (iter.hasNext()) {
                 String sname = iter.next();
-                if (sname==null) log.error("System name null during store");
+                if (sname==null) { 
+                    log.error("System name null during store");
+                    continue;
+                }
                 if (log.isDebugEnabled()) log.debug("system name is "+sname);
                 
                 if (sname.length()>=8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
