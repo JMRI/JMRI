@@ -205,7 +205,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
         ((MultiSensorIconAdder)_iconEditor).setMultiIcon(entries);
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(false);
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {

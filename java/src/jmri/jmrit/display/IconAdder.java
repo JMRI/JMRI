@@ -93,6 +93,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     CatalogPanel    _catalog;
     JFrame          _parent;
     boolean         _allowDeletes;
+    boolean			_update;				// updating existing icon from popup
 
     public IconAdder() {
         _userDefaults = false;
@@ -113,10 +114,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
         closeCatalog();
         if (_defaultIcons != null) {
-            _iconMap = new HashMap <String, JToggleButton>(10);
-            _order = new ArrayList <String>();
-            makeIcons(_defaultIcons);
-            makeIconPanel();
+            makeIconPanel(true);
         }
         this.validate();
     }
@@ -143,16 +141,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             }
         }
         if (log.isDebugEnabled()) log.debug("initDefaultIcons: type= "+_type+", defaultIcons= "+_defaultIcons);
-    }
-
-    public void setDefaultIcons() {
-        if (_defaultIcons!=null) {
-            return;
-        }
-        getDefaultIconNodeFromMap();
-        // caller now may set icons
-        _iconMap = new HashMap <String, JToggleButton>(10);
-        _order = new ArrayList <String>();
     }
 
     public CatalogTreeNode getDefaultIconNodeFromMap() {
@@ -184,6 +172,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     private void makeIcons(CatalogTreeNode n) {
         if (log.isDebugEnabled()) log.debug("makeIcons from node= "+n.toString()+", numChildren= "+
                                             n.getChildCount()+", NumLeaves= "+n.getNumLeaves());
+        _iconMap = new HashMap <String, JToggleButton>(10);
+        _order = new ArrayList <String>();
         ArrayList <CatalogTreeLeaf> list = n.getLeaves();
         for (int i=0; i<list.size(); i++) {
             CatalogTreeLeaf leaf = list.get(i);
@@ -239,10 +229,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     *   @param order - (reverse) order of display, (0 last, to N first)
     */
     public void setIcon(int order, String label, String name) {
-        if (!_userDefaults) {
-            if (log.isDebugEnabled()) log.debug("setIcon: order= "+ order+", label= "+label+", name= "+name);
-            this.setIcon(order, label, new NamedIcon(name, name));
-        }
+        if (log.isDebugEnabled()) log.debug("setIcon: order= "+ order+", label= "+label+", name= "+name);
+        this.setIcon(order, label, new NamedIcon(name, name));
     }
 
     public void setParent(JFrame parent) {
@@ -257,24 +245,28 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         return _iconMap.size();
     }    
 
-   static int STRUT_SIZE = 5;
+   static int STRUT_SIZE = 3;
     /**
     * After all the calls to setIcon(...) are made, make the icon
     * display.   Two columns to save space for subsequent panels.
     */
-    public void makeIconPanel() {
-        if (_userDefaults) {
+    public void makeIconPanel(boolean useDefaults) {
+        if (useDefaults && _userDefaults) {
             makeIcons(_defaultIcons);
         }
+        clearIconPanel();
         doIconPanel();
     }
-
-    public void doIconPanel() {
+    
+    private void clearIconPanel() {
         if (_iconPanel != null) {
             this.remove(_iconPanel);
         }
         _iconPanel = new JPanel();
-        _iconPanel.setLayout(new BoxLayout(_iconPanel, BoxLayout.Y_AXIS));
+        _iconPanel.setLayout(new BoxLayout(_iconPanel, BoxLayout.Y_AXIS));    	
+    }
+
+    protected void doIconPanel() {
         JPanel panel = null;
         int cnt=0;
         for (int i=_order.size()-1; i>=0; i--) {
@@ -306,8 +298,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _iconPanel.add(panel);
             _iconPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         }
-        this.add(_iconPanel,0);
-        pack();
+        this.add(_iconPanel, 0);
     }
 
     /**
@@ -361,14 +352,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (row >= 0) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
-            makeIconMap(_pickListModel.getBeanAt(row));
+            if (_type!=null && _type.equals("SignalHead")){
+                makeIconMap(_pickListModel.getBeanAt(row));
+            	clearIconPanel();
+            	doIconPanel();
+            }
 
         } else {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
-            makeIconMap(null);
         }
-        doIconPanel();
+        validate();
     }
 
     void makeIconMap(NamedBean bean) {
@@ -446,8 +440,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _table.clearSelection();
             _addButton.setEnabled(false);
             _addButton.setToolTipText(null);
-            makeIconMap(b);
-            doIconPanel();
+            if (_type!=null && _type.equals("SignalHead")){
+                makeIconMap(b);
+            	clearIconPanel();
+            	doIconPanel();
+            }
             this.validate();
             if (log.isDebugEnabled()) log.debug("getTableSelection: row= "+row+", bean= "+b.getDisplayName());
             return b;
@@ -494,6 +491,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     */
     public void complete(ActionListener addIconAction, boolean changeIcon,
                          boolean addToTable, boolean update) {
+    	_update = update;
         if (_buttonPanel!=null) {
             this.remove(_buttonPanel);
         }
@@ -720,12 +718,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                             button.setText(null);
                         }
                         _iconMap.put(key, button);
-                        _defaultIcons.deleteLeaf(key, oldIcon.getURL());
-                        _defaultIcons.addLeaf(key, newIcon.getURL());
-                        e.dropComplete(true);
-                        if (_type != null) {
+                        if (!_update){
+                            _defaultIcons.deleteLeaf(key, oldIcon.getURL());
+                            _defaultIcons.addLeaf(key, newIcon.getURL());                        	
                             ImageIndexEditor.indexChanged(true);
                         }
+                        e.dropComplete(true);                       
                         if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+key+
                                                              ", "+newIcon.getURL());
                     } else {

@@ -116,17 +116,11 @@ public class MultiSensorIconAdder extends IconAdder {
     *   If not, then look to change the icon image (super). 
     */
     @SuppressWarnings("null")
-    public void makeIconPanel() {
-        if (_iconPanel != null) {
-            this.remove(_iconPanel);
-        }
-        if (log.isDebugEnabled()) log.debug("makeIconPanel: Sizes: _iconMap= "+_iconMap.size()+
+    protected void doIconPanel() {
+        if (log.isDebugEnabled()) log.debug("doIconPanel: Sizes: _iconMap= "+_iconMap.size()+
                                             " _order.size()= "+_order.size()+
                                             ", _sensorMap.size()= "+_sensorMap.size());
         Dimension dim = null;
-        _iconPanel = new JPanel();
-        _iconPanel.setLayout(new BoxLayout(_iconPanel, BoxLayout.Y_AXIS));
-
         JPanel rowPanel = null;
         int cnt=0;
         for (int i=3; i<_order.size(); i++) {
@@ -315,7 +309,7 @@ public class MultiSensorIconAdder extends IconAdder {
             }
         }
         valueChanged(null);
-        makeIconPanel();
+        makeIconPanel(_update);
         this.invalidate();
     }
 
@@ -348,7 +342,7 @@ public class MultiSensorIconAdder extends IconAdder {
         _sensorMap.remove(key);
         _order.remove(index);
         _lastIndex--;
-        makeIconPanel();
+        makeIconPanel(_update);
     }
 
     /**
@@ -459,7 +453,7 @@ public class MultiSensorIconAdder extends IconAdder {
                         JPanel panel = (JPanel)target.getComponent();
                         JComponent comp = (JLabel)panel.getComponent(0);
                         if (putSensor(comp.getName(), sensor)) { 
-                            makeIconPanel();
+                            makeIconPanel(_update);
                         }
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) log.debug("DropPanel.drop COMPLETED for "+

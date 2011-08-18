@@ -384,7 +384,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         makeIconEditorFrame(this, "Icon", false, null);
         NamedIcon icon = new NamedIcon(_namedIcon);
         _iconEditor.setIcon(0, "plainIcon", icon);
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(false);
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {

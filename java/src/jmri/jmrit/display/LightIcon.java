@@ -199,7 +199,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         _iconEditor.setIcon(2, "LightStateOn", on);
         _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(false);
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {

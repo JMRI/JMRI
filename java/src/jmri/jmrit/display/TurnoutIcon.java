@@ -371,7 +371,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             Integer key = e.nextElement();
             _iconEditor.setIcon(i++, _state2nameMap.get(key), _iconMap.get(key));
         }
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(false);
 
         // set default icons, then override with this turnout's icons
         ActionListener addIconAction = new ActionListener() {

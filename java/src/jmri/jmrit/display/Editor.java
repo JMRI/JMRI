@@ -1308,7 +1308,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addTurnoutR();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1333,7 +1333,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addTurnoutL();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1362,7 +1362,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addSlip();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.SlipTurnoutIcon", true);
     }
@@ -1387,7 +1387,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 putSensor();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1428,7 +1428,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 putSignalHead();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1446,7 +1446,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 putSignalMast();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1499,7 +1499,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JFrameItem frame = makeAddIconFrame("Memory", true, true, editor);
         _iconEditorFrame.put("Memory", frame);
         editor.setPickList(PickListModel.memoryPickModelInstance());
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, false, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1514,7 +1514,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JFrameItem frame = makeAddIconFrame("Reporter", true, true, editor);
         _iconEditorFrame.put("Reporter", frame);
         editor.setPickList(PickListModel.reporterPickModelInstance());
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, false, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1539,7 +1539,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addLight();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1556,7 +1556,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 putBackground();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
@@ -1587,7 +1587,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addMultiSensor();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, true, false);
         return frame;
     }
@@ -1603,7 +1603,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 putIcon();
             }
         };
-        editor.makeIconPanel();
+        editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }

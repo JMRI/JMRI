@@ -192,7 +192,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 editMemory();
             }
         };
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(false);
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(getMemory());
     }

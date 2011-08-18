@@ -384,7 +384,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             _iconEditor.setIcon(i++, key, new NamedIcon(_iconMap.get(key)));
         }
         _saveMap = _iconMap;
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(false);
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -392,6 +392,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             }
         };
         _iconEditor.complete(addIconAction, true, false, true);
+        _iconEditor.setSelection(getSignalHead());
     }
 
     Hashtable<String, NamedIcon> _saveMap;

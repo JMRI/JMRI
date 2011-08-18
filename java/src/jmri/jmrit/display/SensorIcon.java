@@ -456,7 +456,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             String key = e.nextElement();
             _iconEditor.setIcon(i++, /*_state2nameMap.get(key)*/ key, _iconMap.get(key));
         }
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(false);
 
         // set default icons, then override with this turnout's icons
         ActionListener addIconAction = new ActionListener() {
