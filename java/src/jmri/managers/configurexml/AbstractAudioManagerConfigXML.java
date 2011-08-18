@@ -41,7 +41,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris  copyright (c) 2009, 2011
  * @version $Revision$
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
@@ -71,8 +71,36 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
             // also, don't store if we don't have any Sources or Buffers
             // (no need to store the automatically created Listener object by itself)
-            if (am.getSystemNameList(Audio.SOURCE).size()==0 &&
-                am.getSystemNameList(Audio.BUFFER).size()==0) return null;
+            if (am.getSystemNameList(Audio.SOURCE).isEmpty() &&
+                am.getSystemNameList(Audio.BUFFER).isEmpty()) return null;
+            
+            // finally, don't store if the only Sources and Buffers are for the
+            // virtual sound decoder (VSD)
+            int vsdObjectCount = 0;
+            
+            // count all VSD objects
+            for(String sname: am.getSystemNameList()) {
+                if (log.isDebugEnabled())
+                    log.debug("Check if " + sname + " is a VSD object");
+                if (sname.length()>=8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
+                    log.debug("...yes");   
+                    vsdObjectCount++;
+                }
+            }
+            
+            if (log.isDebugEnabled())
+                log.debug("Found " + vsdObjectCount + " VSD objects of "
+                        + am.getSystemNameList(Audio.SOURCE).size()
+                        + am.getSystemNameList(Audio.BUFFER).size()
+                        + " objects");
+            
+            // check if the total number of Sources and Buffers is equal to
+            // the number of VSD objects - if so, exit.
+            if (am.getSystemNameList(Audio.SOURCE).size() +
+                am.getSystemNameList(Audio.BUFFER).size() == vsdObjectCount) {
+                log.debug("Only VSD objects - nothing to store");
+                return null;
+            }
             
             // store global information
             audio.setAttribute("distanceattenuated",
@@ -82,7 +110,14 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             while (iter.hasNext()) {
                 String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
-                log.debug("system name is "+sname);
+                if (log.isDebugEnabled()) log.debug("system name is "+sname);
+                
+                if (sname.length()>=8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
+                    if (log.isDebugEnabled())
+                        log.debug("Skipping storage of VSD object " + sname);
+                    continue;
+                }
+                
                 Audio a = am.getBySystemName(sname);
 
                 // Transient objects for current element and any children
@@ -479,6 +514,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         }
     }
     
+    @Override
     public int loadOrder(){
         return InstanceManager.audioManagerInstance().getXMLOrder();
     }
