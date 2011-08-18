@@ -112,7 +112,7 @@ public class LoadVSDFileAction extends AbstractAction {
 	    // Debug: List all the top-level contents in the file.
 	    Enumeration<? extends ZipEntry> entries = vsdfile.entries();
 	    while(entries.hasMoreElements()) {
-		ZipEntry z = (ZipEntry)entries.nextElement();
+		ZipEntry z = entries.nextElement();
 		log.debug("Entry: " + z.getName());
 	    }
 
