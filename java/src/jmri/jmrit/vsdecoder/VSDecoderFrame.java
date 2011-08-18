@@ -78,6 +78,7 @@ class VSDecoderFrame extends JmriJFrame {
 
 	this.setJMenuBar(new JMenuBar());
 	this.getJMenuBar().add(fileMenu);
+	this.addHelpMenu("package.jmri.jmrit.vsdecoder.VSDecoderFrame", true);
 	
     }
 

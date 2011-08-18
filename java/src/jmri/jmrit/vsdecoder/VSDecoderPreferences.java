@@ -143,7 +143,8 @@ public class VSDecoderPreferences {
 
     	try {
     		Element root = new Element("vsdecoder-preferences");
-    		Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+"vsdecoder-preferences.dtd");
+    		//Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+"vsdecoder-preferences.dtd");
+    		Document doc = XmlFile.newDocument(root);
     		// add XSLT processing instruction
     		// <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
 /*TODO    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
