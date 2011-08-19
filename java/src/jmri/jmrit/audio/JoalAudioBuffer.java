@@ -238,7 +238,6 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
         // Store the actual data in the buffer
         al.alBufferData(_dataStorageBuffer[0], _format[0], _data[0], _size[0], _freq[0]);
-        this.setState(STATE_LOADED);
 
         // Set initial loop points
         // Use internal methods to postpone loop buffer generation
@@ -246,6 +245,8 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         setEndLoopPoint(_size[0], false);
         generateLoopBuffers(LOOP_POINT_BOTH);
 
+        // All done
+        this.setState(STATE_LOADED);
         if (log.isDebugEnabled()) {
             log.debug("Loaded buffer: " + this.getSystemName());
             log.debug(" from file: " + this.getURL());
@@ -318,6 +319,14 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return FORMAT_16BIT_7DOT1;
         else
             return FORMAT_UNKNOWN;
+    }
+    
+    public long getLength() {
+        return (long) this._size[0] / this.getFrameSize();
+    }
+    
+    public int getFrequency() {
+        return this._freq[0];
     }
 
     protected void cleanUp() {

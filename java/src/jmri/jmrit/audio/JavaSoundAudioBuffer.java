@@ -56,6 +56,8 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
      * Frequency of this AudioBuffer. Used to calculate pitch changes
      */
     private int _freq;
+    
+    private long _size;
 
     /**
      * Reference to the AudioInputStream used to read sound data from the file
@@ -99,6 +101,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         this._audioFormat = null;
         _dataStorageBuffer = null;
         this._freq = 0;
+        this._size = 0;
         this.setStartLoopPoint(0, false);
         this.setEndLoopPoint(0, false);
         this.setState(STATE_EMPTY);
@@ -166,9 +169,6 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
         // Reinitialise
         init();
-
-        // Temporary storage buffer
-        byte[] buffer;
 
         // Retrieve filename of specified .wav file
         File file = new File(FileUtil.getExternalFilename(this.getURL()));
@@ -241,6 +241,9 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         this.setStartLoopPoint(0, false);
         this.setEndLoopPoint(_audioInputStream.getFrameLength(), false);
         this.generateLoopBuffers(LOOP_POINT_BOTH);
+        
+        // Store length of sample
+        this._size = _audioInputStream.getFrameLength();
 
         this.setState(STATE_LOADED);
         if (log.isDebugEnabled()) {
@@ -291,6 +294,14 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             }
         }
         return FORMAT_UNKNOWN;
+    }
+    
+    public long getLength() {
+        return this._size;
+    }
+    
+    public int getFrequency() {
+        return this._freq;
     }
 
     /**

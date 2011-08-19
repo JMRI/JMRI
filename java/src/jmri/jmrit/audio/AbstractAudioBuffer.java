@@ -123,6 +123,37 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         if (log.isDebugEnabled())
             log.debug("Set inputstream of Buffer " + this.getSystemName() + " to stream");
     }
+    
+    public int getFrameSize() {
+        switch (this.getFormat()) {
+            case AudioBuffer.FORMAT_8BIT_MONO:
+                return 1;
+            case AudioBuffer.FORMAT_8BIT_STEREO:
+                return 2;
+            case AudioBuffer.FORMAT_8BIT_QUAD:
+                return 4;
+            case AudioBuffer.FORMAT_8BIT_5DOT1:
+                return 6;
+            case AudioBuffer.FORMAT_8BIT_6DOT1:
+                return 7;
+            case AudioBuffer.FORMAT_8BIT_7DOT1:
+                return 8;
+            case AudioBuffer.FORMAT_16BIT_MONO:
+                return 2;
+            case AudioBuffer.FORMAT_16BIT_STEREO:
+                return 4;
+            case AudioBuffer.FORMAT_16BIT_QUAD:
+                return 8;
+            case AudioBuffer.FORMAT_16BIT_5DOT1:
+                return 12;
+            case AudioBuffer.FORMAT_16BIT_6DOT1:
+                return 14;
+            case AudioBuffer.FORMAT_16BIT_7DOT1:
+                return 16;
+            default: //AudioBuffer.FORMAT_UNKNOWN:
+                return 0;
+        }
+    }
 
     /**
      * Method used to load the actual sound data into the buffer

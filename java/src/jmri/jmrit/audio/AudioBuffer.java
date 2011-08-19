@@ -179,6 +179,39 @@ public interface AudioBuffer extends Audio {
      * @return constant representing format
      */
     public int getFormat();
+    
+    /**
+     * Retrieves the length of the sound sample stored in this buffer
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Buffer
+     * </ul>
+     * @return length of sound sample in bytes
+     */
+    public long getLength();
+    
+    /**
+     * Retrieves the frequency of the sound sample stored in this buffer
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Buffer
+     * </ul>
+     * @return frequency of sound sample in Hz
+     */
+    public int getFrequency();
+    
+    /**
+     * Retrieves the length of a sound sample frame stored in this buffer
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Buffer
+     * </ul>
+     * @return length of sound sample frame in bytes
+     */
+    public int getFrameSize();
 
     /**
      * Sets the start loop point of the sound sample stored in this buffer

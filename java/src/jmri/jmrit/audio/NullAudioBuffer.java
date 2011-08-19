@@ -85,6 +85,16 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     public int getFormat() {
         return FORMAT_UNKNOWN;
     }
+    
+    public long getLength() {
+        // Nothing stored for the NullAudioBuffer - always zero
+        return 0;
+    }
+
+    public int getFrequency() {
+        // Nothing stored for the NullAudioBuffer - always zero
+        return 0;
+    }
 
     /**
      * Internal method to return a string representation of the audio format
