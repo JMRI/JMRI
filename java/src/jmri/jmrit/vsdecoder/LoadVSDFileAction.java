@@ -29,7 +29,6 @@ import javax.swing.JFileChooser;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
 
-
 import org.jdom.Element;
 
 import java.util.zip.ZipEntry;
@@ -57,7 +56,7 @@ public class LoadVSDFileAction extends AbstractAction {
     }
     
     public LoadVSDFileAction() {
-	this("Load VSD File"); // Shouldn't this be in the resource bundle?
+	this(rb.getString("LoadVSDFileChoserTitle")); // Shouldn't this be in the resource bundle?
     }
     
     JFileChooser fileChooser;
@@ -73,7 +72,7 @@ public class LoadVSDFileAction extends AbstractAction {
 	    String default_dir = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
 	    log.debug("Default path: " + default_dir);
 	    fileChooser = new JFileChooser(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath());
-	    jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("VSD Files");
+	    jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(rb.getString("LoadVSDFileChooserFilterLabel"));
 	    filt.addExtension("vsd");
 	    filt.addExtension("zip");
 	    fileChooser.setFileFilter(filt);
@@ -86,76 +85,59 @@ public class LoadVSDFileAction extends AbstractAction {
 	    // give up if no file selected
 	}
 
-	try {
-	    loadVSDFile(fileChooser.getSelectedFile());
-	} catch (java.io.IOException e1) {
-	    log.warn("Exception while reading file", e1);
-	}
+	loadVSDFile(fileChooser.getSelectedFile());
     }
     
-    /**
-     *  Parse the XML file and create ThrottleFrames.
-     *  Returns true if throttle loaded successfully.
-     *
-     * @param  f  The XML file containing throttles.
-     */
+    
     @SuppressWarnings("unchecked")
-	public static boolean loadVSDFile(java.io.File f) throws java.io.IOException {
-
-	VSDecoderPrefs prefs = new VSDecoderPrefs();
-
+    public static boolean loadVSDFile(java.io.File f) {
+	VSDFile vsdfile;
+	// Create a VSD (zip) file.
 	try {
-	    // Create a VSD (zip) file.
-	    VSDFile vsdfile = new VSDFile(f);
+	    vsdfile = new VSDFile(f);
 	    log.debug("VSD File name = " + vsdfile.getName());
-	    
-	    // Debug: List all the top-level contents in the file.
-	    Enumeration<? extends ZipEntry> entries = vsdfile.entries();
-	    while(entries.hasMoreElements()) {
-		ZipEntry z = entries.nextElement();
-		log.debug("Entry: " + z.getName());
+	    if (vsdfile.isInitialized()) {	
+		Element root = vsdfile.getRoot();
+		VSDecoderManager.instance().loadProfiles(vsdfile);
 	    }
-
-	    // Look up the config.xml file
-	    ZipEntry config = vsdfile.getEntry(rb.getString("VSD_XMLFileName"));
-	    log.debug("ZipEntry : " + config.getName());
-
-	    // Get the root XML element from the config.xml file
-	    File f2 = new File(vsdfile.getURL(rb.getString("VSD_XMLFileName")));
-	    log.debug("Extracted file : " + f2.getPath());
-	    Element root = prefs.rootFromFile(f2);
-
-	    // WARNING: This may be out of sync with the Store... the root element is <VSDecoderConfig>
-	    // not sure, must investigate.  See what XmlFile.rootFromFile(f) does...
-
-	    VSDecoderManager.instance().loadVSDecoders(root, vsdfile);
-
 	    // Cleanup and close files.
 	    vsdfile.close();
 
-	} catch (org.jdom.JDOMException ex) {
-	    log.warn("Loading VSDecoder Profile exception",ex);
-	    return false;
-	} catch (java.util.zip.ZipException ex) {
-	    log.warn("Loading VSD File exception", ex);
-	    return false;
+	    return(vsdfile.isInitialized());
+
+	} catch (java.util.zip.ZipException ze) {
+	    log.error("ZipException opening file " + f.toString(), ze);
+	    return(false);
+	} catch (java.io.IOException ze) {
+	    log.error("IOException opening file " + f.toString(), ze);
+	    return(false);
 	}
-	return true;
     }
     
-	/**
-	 * An extension of the abstract XmlFile. No changes made to that class.
-	 * 
-	 * @author glen
-	 * @version $Revision$
-	 */
-	static class VSDecoderPrefs extends XmlFile {}
-
-    public static boolean loadVSDFile(String fp, String fn) {
-	return(loadVSDFile(fp + File.separator + fn));
-    }
-
     public static boolean loadVSDFile(String fp) {
+	VSDFile vsdfile;
+
+	try {
+	    // Create a VSD (zip) file.
+	    vsdfile = new VSDFile(fp);
+	    log.debug("VSD File name = " + vsdfile.getName());
+	    if (vsdfile.isInitialized()) {	
+	    Element root = vsdfile.getRoot();
+	    VSDecoderManager.instance().loadProfiles(vsdfile);
+	}
+	    // Cleanup and close files.
+	    vsdfile.close();
+	    
+	    return(vsdfile.isInitialized());
+	} catch (java.util.zip.ZipException ze) {
+	    log.error("ZipException opening file " + fp, ze);
+	    return(false);
+	} catch (java.io.IOException ze) {
+	    log.error("IOException opening file " + fp, ze);
+	    return(false);
+	}
+
+	/*
 	File f = null;
 	try {
 	    f = new File(fp);
@@ -167,10 +149,10 @@ public class LoadVSDFileAction extends AbstractAction {
 	    log.warn("NP Error auto-loading VSD File: FP = " + fp, npe);
 	    return(false);
 	}
-
+	*/
     }
 
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadXmlVSDecoderAction.class.getName());
+	private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadVSDFileAction.class.getName());
 
 }

@@ -36,6 +36,10 @@ import jmri.jmrit.XmlFile;
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.Arrays;
 
 
 /**
@@ -48,7 +52,17 @@ public class VSDecoderPane extends JmriPanel {
 
     //private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
 
-    VSDecoder decoder;
+    public static enum PropertyChangeID { ADDRESS_CHANGE, PROFILE_SELECT }
+
+    private static final Map<PropertyChangeID, String> PCIDMap;
+    static {
+	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
+	aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange");
+	aMap.put(PropertyChangeID.PROFILE_SELECT, "ProfileSelect");
+	PCIDMap = Collections.unmodifiableMap(aMap);
+    }
+
+    String decoder_id;
     VSDecoderManager decoder_mgr;
 
     final static String BASICPANEL = "Basic";
@@ -67,7 +81,6 @@ public class VSDecoderPane extends JmriPanel {
     private static String VSDecoderFileLocation = null;
 
     //private List<JMenu> menuList;
-    
 
     public VSDecoderPane(VSDecoderFrame p) {
         super();
@@ -75,8 +88,9 @@ public class VSDecoderPane extends JmriPanel {
 	decoder_mgr = VSDecoderManager.instance();
     }
 
-    /*
+    
     public String getHelpTarget() { return "package.jmri.jmrix.vsdecoder.VSDecoderPane"; }
+    /*
     public String getTitle() { 
         return LocoNetBundle.bundle().getString("MenuItemVirtualSoundDecoder");
     }
@@ -115,14 +129,14 @@ public class VSDecoderPane extends JmriPanel {
 	//-------------------------------------------------------------------
 	// configPanel
 	// The configPanel holds the stuff for addressing and configuration.
-        configPanel = new VSDConfigPanel(decoder, this);
+        configPanel = new VSDConfigPanel(decoder_id, this);
 
 	tabbedPane.addTab("Config", configPanel);
 
 	//-------------------------------------------------------------------
 	// soundsPanel
 	// The optionPanel holds controls for selecting sound options.
-	optionPanel = new VSDOptionPanel(decoder, this);
+	optionPanel = new VSDOptionPanel(decoder_id, this);
 
 	tabbedPane.addTab("Options", optionPanel);
 	
@@ -130,22 +144,74 @@ public class VSDecoderPane extends JmriPanel {
 	//-------------------------------------------------------------------
 	// soundsPanel
 	// The soundsPanel holds buttons for specific sounds.
-        soundsPanel = new VSDSoundsPanel(decoder);
+        soundsPanel = new VSDSoundsPanel(decoder_id, this);
 	tabbedPane.addTab("Sounds", soundsPanel);
+    }
+
+    // PROPERTY CHANGE EVENT FUNCTIONS
+
+    // VSDecoderManager Events
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+	List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
+	if (!l.contains(listener))
+	    listenerList.add(PropertyChangeListener.class, listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+	listenerList.remove(PropertyChangeListener.class, listener);
+    }
+
+    public void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
+	String pcname;
+
+	// map the property change ID
+	pcname = PCIDMap.get(id);
+	// Fire the actual PropertyChangeEvent
+	firePropertyChange(new PropertyChangeEvent(this, pcname, oldProp, newProp));
+    }
+
+    void firePropertyChange(PropertyChangeEvent evt) {
+	//Object[] listeners = listenerList.getListenerList();
+
+	for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
+	    l.propertyChange(evt);
+	}
+    }
+
+    public VSDecoder getDecoder() {
+	VSDecoder d = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
+	addPropertyChangeListener(d);
+	return(d);
+    }
+
+    public VSDecoder getDecoder(String profile) {
+	VSDecoder d = VSDecoderManager.instance().getVSDecoder(profile);
+	addPropertyChangeListener(d);
+	return(d);
     }
 
     public void setDecoder(VSDecoder dec) {
 	if (dec != null) {
 	    // Store the new decoder
-	    decoder = dec;
+	    decoder_id = dec.getID();
+	    log.debug("Decoder ID = " + decoder_id + " Decoder = " + dec);
 	    // Update the sounds pane
 	    tabbedPane.remove(soundsPanel);
-	    soundsPanel = new VSDSoundsPanel(decoder);
+	    soundsPanel = new VSDSoundsPanel(decoder_id, this);
 	    tabbedPane.addTab("Sounds", soundsPanel);
 	    tabbedPane.revalidate();
 	    tabbedPane.repaint();
 	}
 	
+    }
+
+    public void setAddress(DccLocoAddress a) {
+	if (a != null) {
+	    VSDecoder decoder = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
+	    decoder.setAddress(a);
+	    decoder.enable();
+	    this.setTitle(a);
+	}
     }
 
     public void setTitle(DccLocoAddress a) {

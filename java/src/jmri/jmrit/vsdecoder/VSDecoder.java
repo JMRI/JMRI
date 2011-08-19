@@ -19,66 +19,37 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import javax.swing.Timer;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jmri.ThrottleListener;
-import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.*;
 import jmri.AudioException;
-import java.util.List;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Content;
 
-public class VSDecoder {
+public class VSDecoder implements PropertyChangeListener {
 
-//    private static final boolean bootstrap = false;
-//    private BoolTrigger t;  // used only for bootstrap
-
-    private String vsd_path;
-    private String vsd_filename;
-					     
-
-    String profile_name;           // Name used in the "profiles" combo box to select this decoder.
+    private String my_id;          // Unique ID for this VSDecoder
+    private String vsd_path;       // Path to VSD file used
+    private String profile_name;   // Name used in the "profiles" combo box
+                                   // to select this decoder.
     DccLocoAddress address;        // Currently assigned loco address
-    boolean initialized = false;   // Flag indicating whether this decoder has been initialized
-    boolean enabled = false;
-    private boolean is_default = false;
+    boolean initialized = false;   // This decoder has been initialized
+    boolean enabled = false;       // This decoder is enabled
+    private boolean is_default = false;  // This decoder is the default for its file
 
-    HashMap<String, VSDSound> sound_list;
-
-    // Trigger objects
-    FloatTrigger engine_stop_trigger;
-    NotchTrigger engine_notch_trigger;
-
-    HashMap<String, Trigger> trigger_list;
-
-    HashMap<String, SoundEvent> event_list;
+    HashMap<String, VSDSound> sound_list;   // list of sounds
+    HashMap<String, Trigger> trigger_list;  // list of triggers
+    HashMap<String, SoundEvent> event_list; // list of events
     
-    // Engine Control
-    // engine_is_running indicates whether the engine is off or idling/running
-    // engine_notch indicates the speed notch.
-    // engine_notch = 0 && engine_is_running : engine at idle
-    // engien_notch > 0 && engine_is_running : engine running at speed.
-    boolean engine_is_running = false;
-    int engine_notch = 0;
-
-    //DccThrottle throttle;
-
-    // Temp stuff for debugging VSDecoderManager.
-    String bell_fname = "F1";
-    String horn_fname = "F2";
-
-
     static final public int calcEngineNotch(final float throttle) {
 	// This will convert to a value 0-8.
 	int notch = (int) Math.rint(throttle * 8);
@@ -97,34 +68,50 @@ public class VSDecoder {
 
     }
 
-    public VSDecoder(String name)  throws AudioException {
-//	jmri.InstanceManager.audioManagerInstance().provideAudio("IAS");
+    public VSDecoder(String id, String name) {
 
 	profile_name = name;
-
+	my_id = id;
+	
 	sound_list = new HashMap<String, VSDSound>();
 	trigger_list = new HashMap<String, Trigger>();
 	event_list = new HashMap<String, SoundEvent>();
-
+	    
 	// Force re-initialization
 	initialized = _init();
     }
 
-    public VSDecoder(String name, int address, boolean isLong) throws AudioException {
-        this(name);
-        setAddress(address, isLong);
-    }
+    public VSDecoder(String id, String name, String path) {
+	this(id, name);
 
-    private void buildElements() {
-	// does nothing now.
+	vsd_path = path;
+
+	try {
+	    VSDFile vsdfile = new VSDFile(path);
+	    if (vsdfile.isInitialized()) {
+		log.debug("Constructor: vsdfile init OK, loading XML...");
+		this.setXml(vsdfile, name);
+	    } else {
+		log.debug("Constructor: vsdfile init FAILED.");
+		initialized = false;
+	    }
+	} catch (java.util.zip.ZipException e) {
+	    log.error("ZipException loading VSDecoder from " + path);
+	    // would be nice to pop up a dialog here...
+	} catch (java.io.IOException ioe) {
+	    log.error("IOException loading VSDecoder from " + path);
+	    // would be nice to pop up a dialog here...
+	}
     }
 
     private boolean _init() {
-
-	buildElements();
-
+	// Do nothing for now
 	return(true);
     }
+
+    public String getID() { return(my_id); }
+
+    public boolean isInitialized() { return(initialized); }
 
     public void setVSDFilePath(String p) {
 	vsd_path = p;
@@ -132,14 +119,6 @@ public class VSDecoder {
 
     public String getVSDFilePath() {
 	return(vsd_path);
-    }
-
-    public void setVSDFileName(String p) {
-	vsd_filename = p;
-    }
-
-    public String getVSDFileName() {
-	return(vsd_filename);
     }
 
     public void throttlePropertyChange(PropertyChangeEvent event) {
@@ -192,6 +171,13 @@ public class VSDecoder {
 
     public DccLocoAddress getAddress() {
 	return(address);
+    }
+
+    public void propertyChange(PropertyChangeEvent evt) {
+	// Respond to events from the GUI.
+	if (evt.getPropertyName().equals("AddressChange")) {
+	    this.setAddress((DccLocoAddress)evt.getNewValue());
+	}
     }
 
     public VSDSound getSound(String name) {
@@ -289,13 +275,23 @@ public class VSDecoder {
 	return(me);
     }
 
+    @Deprecated
     public void setXml(Element e) {
 	this.setXml(e, null);
     }
 
+    @Deprecated
     public void setXml(Element e, VSDFile vf) {
+	this.setXml(vf);
+    }
+
+    @Deprecated
+    public void setXml(VSDFile vf) { };
+
+    public void setXml(VSDFile vf, String pn) {
 	Iterator itr;
-	Element el;
+	Element e = null;
+	Element el = null;
 	SoundEvent se;
 	
 	// Set filename and path
@@ -303,8 +299,17 @@ public class VSDecoder {
 	    log.debug("VSD File Name = " + vf.getName());
 	    // need to choose one.
 	    this.setVSDFilePath(vf.getName());
-	    this.setVSDFileName(vf.getName());
 	}
+
+	// Find the <profile/> element that matches the name pn
+	List<Element> profiles = vf.getRoot().getChildren("profile");
+	java.util.Iterator<Element> i = profiles.iterator();
+	while (i.hasNext()) {
+	    e = i.next();
+	    if (e.getAttributeValue("name").equals(pn))
+		break;
+	}
+	// E is now the first <profile/> in vsdfile that matches pn.
 
 	// Set this decoder's name.
 	this.setProfileName(e.getAttributeValue("name"));
@@ -384,41 +389,6 @@ public class VSDecoder {
 	    event_list.put(se.getName(), se);
 	}
 
-	/*
-	// Now, grab any loose triggers
-	// This may become obsolete...
-	itr = (e.getChildren("trigger")).iterator();
-	while(itr.hasNext() && false) {
-	    el = (Element)itr.next();
-	    Trigger t = null;
-	    Trigger.TriggerType tt = Trigger.TriggerType.valueOf(el.getAttributeValue("type"));
-	    switch(tt) {
-	    case BOOLEAN:
-		t = new BoolTrigger(el.getAttributeValue("name"));
-		break;
-	    case FLOAT:
-		t = new FloatTrigger(el.getAttributeValue("name"), 0.0f, Trigger.CompareType.EQ); break;
-	    case NOTCH:
-		t = new NotchTrigger(el.getAttributeValue("name"));
-		break;
-	    case INT:
-		t = new IntTrigger(el.getAttributeValue("name"));
-		break;
-	    case STRING:
-		//t = new StringTrigger(el.getAttributeValue("name"));
-		log.warn("Don't have StringTriggers yet...");
-		t = null;
-		break;
-	    case NONE:
-	    default:
-		break;
-	    }
-	    if (t != null) {
-		t.setXml(el);
-		trigger_list.put(el.getAttributeValue("name"), t);
-	    }
-	}
-	*/
 	// Handle other types of children similarly here.
 	
     }

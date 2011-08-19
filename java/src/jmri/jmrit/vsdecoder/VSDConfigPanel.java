@@ -31,15 +31,18 @@ import javax.swing.JPanel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriPanel;
+import jmri.DccLocoAddress;
 
 public class VSDConfigPanel extends JmriPanel {
 
     private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
 
-    VSDecoder decoder;
-    VSDecoderManager decoder_mgr;
-    VSDecoderPane main_pane;
+    // Local References
+    VSDecoderManager decoder_mgr; // local reference to the VSDecoderManager instance
+    VSDecoderPane main_pane;      // local reference to the parent VSDecoderPane
+    private RosterEntry rosterEntry; // local reference to the selected RosterEntry
 
+    // GUI Elements
     private javax.swing.JLabel addressLabel;
     private javax.swing.JTextField addressTextBox;
     private javax.swing.JButton addressSetButton;
@@ -49,39 +52,27 @@ public class VSDConfigPanel extends JmriPanel {
     private javax.swing.JComboBox profileComboBox;
     private javax.swing.JLabel profileLabel;
 
+    // Panels for the tabbed pane.
     private javax.swing.JPanel rosterPanel;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JPanel addressPanel;
 
-    private boolean profile_selected;
+    // Local variables
+    private boolean profile_selected;  // true if a user has selected a Profile
+    private NullComboBoxItem loadProfilePrompt; // dummy profileComboBox entry
 
-    private RosterEntry rosterEntry;
+    // CONSTRUCTORS
 
     public VSDConfigPanel() {
 	this(null, null);
     }
 
-    public VSDConfigPanel(VSDecoder dec, VSDecoderPane dad) {
+    public VSDConfigPanel(String dec, VSDecoderPane dad) {
 	super();
-	decoder = dec;
 	main_pane = dad;
 	profile_selected = false;
 	decoder_mgr = VSDecoderManager.instance();
 	initComponents();
-    }
-
-    public void handleDecoderListChange() {
-	log.warn("Handling the decoder list change");
-	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
-	this.setProfileList(sl);
-    }
-
-    public void setDecoder(VSDecoder dec) {
-	decoder = dec;
-    }
-
-    public VSDecoder getDecoder() {
-	return(decoder);
     }
 
     public void setMainPane(VSDecoderPane dad) {
@@ -99,6 +90,31 @@ public class VSDConfigPanel extends JmriPanel {
 	initComponents();
     }
 
+
+
+    // Read the addressTextBox and update the VSDecoder's address.
+    protected void updateAddress() {
+	// Simulates the clicking of the address Set button
+	VSDecoder dec = main_pane.getDecoder();
+	try {
+	    int addr = Integer.parseInt(addressTextBox.getText());
+	    main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
+			       dec.getAddress(), new DccLocoAddress(addr, true));
+	} catch(NumberFormatException e) {
+	    // Address box does not contain an integer... do nothing.
+	}
+    }
+
+    // GUI EVENT HANDLING METHODS
+
+    // Respond to a change in the VSDecoderManager's profile list.
+    public void handleDecoderListChange() {
+	log.warn("Handling the decoder list change");
+	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
+	this.setProfileList(sl);
+    }
+
+    // Perform the actual work of changing the profileComboBox's contents
     public void setProfileList(ArrayList<String> s) {
 	VSDecoder vsd;
 	boolean default_set = false;
@@ -112,16 +128,18 @@ public class VSDConfigPanel extends JmriPanel {
 	    String st = (String)itr.next();
 	    log.debug("added item " + st);
 	    profileComboBox.addItem(st);
-	    vsd = VSDecoderManager.instance().getVSDecoder(st);
-	    log.debug("decoder " + st + " : " + vsd);
-	    if (((vsd = VSDecoderManager.instance().getVSDecoder(st)) != null) && vsd.isDefault()) {
+	    // A decoder is already selected, and is the default decoder...
+	    if (((vsd = main_pane.getDecoder()) != null) && vsd.isDefault()) {
+		log.debug("decoder " + st + " : " + vsd);
 		log.debug("item is default " + st);
 		profileComboBox.setSelectedItem(st);
+		profileComboBox.removeItem(loadProfilePrompt);
 		default_set = true;
 		profile_selected = true;
 		// Imitate a button click.  Don't care the contents of the ActionEvent - the called
 		// function doesn't use the contents.
-		profileComboBoxActionPerformed(new ActionEvent(profileComboBox, 0, null));
+		
+		updateAddress();
 	    }
 
 	} 
@@ -147,9 +165,8 @@ public class VSDConfigPanel extends JmriPanel {
 	// Connect to the VSDecoderManager, so we know when the Profile list changes.
 	VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
 		public void eventAction(VSDManagerEvent e) {
-		    log.warn("Caught Event from VSDManager");
 		    if (e.getType() == VSDecoderManager.EventType.DECODER_LIST_CHANGE) {
-			log.warn("It's a DECODER_LIST_CHANGE");
+			log.debug("Received Decoder List Change Event");
 			handleDecoderListChange();
 		    }
 		}
@@ -202,7 +219,8 @@ public class VSDConfigPanel extends JmriPanel {
 	
 
 
-        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "No Profiles Loaded"}));
+        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
+	profileComboBox.addItem((loadProfilePrompt = new NullComboBoxItem()));
 	profile_selected = false;
 	profileComboBox.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,48 +272,39 @@ public class VSDConfigPanel extends JmriPanel {
     public void setRosterEntry(RosterEntry entry){
 	String vsd_path;
 	String vsd_profile;
+	VSDecoder dec;
 
-	rosterComboBox.setSelectedItem(entry);
-	//addrSelector.setAddress(entry.getDccLocoAddress());
+	// Update the roster entry local var.
 	rosterEntry = entry;
-	// Check to see if we have to load a new VSD File
+
+	// Get VSD info from Roster.
 	vsd_path = rosterEntry.getAttribute("VSDecoder_Path");
 	vsd_profile = rosterEntry.getAttribute("VSDecoder_Profile");
+
+	log.debug("Roster entry: profile = " + vsd_profile + " path = " + vsd_path);
+
+	// If the roster entry has VSD info stored, load it.
 	if ((vsd_path != null) && (vsd_profile != null)) {
-	    // VSD Attributes stored in the roster entry.
-	    // Try to see if the profile is already loaded
-	    VSDecoder v = VSDecoderManager.instance().getVSDecoder(vsd_profile);
-	    if (v == null) {
-		// Profile not loaded.  Load from file
-		LoadVSDFileAction.loadVSDFile(vsd_path);
-		// Try again with the profile
-		v = VSDecoderManager.instance().getVSDecoder(vsd_profile);
-	    } else {
-		// nothing to do.  We found the profile already loaded.
-		// note that if you have two VSDfiles with the same profile,
-		// this might not pick the right one.
-	    }
-	    // Note: an else doesn't apply here.  This needs to be run 
-	    // regardless of the if above.
-	    if (v != null) {
-		log.debug("VSDecoder loaded from file: " + v.getProfileName());
-		decoder = v;
-		profileComboBox.setSelectedItem(v.getProfileName());
+	    // Load the indicated VSDecoder Profile and update the Profile combo box
+	    dec = VSDecoderManager.instance().getVSDecoder(vsd_profile, vsd_path);
+	    if (dec != null) {
+		log.debug("VSDecoder loaded from file: " + dec.getProfileName());
+		main_pane.setDecoder(dec);
+		profileComboBox.setSelectedItem(dec.getProfileName());
+		profileComboBox.setEnabled(true);
 		profile_selected = true;
-		// Imitate a button click.  Don't care the contents of the ActionEvent - the called
-		// function doesn't use the contents.
-		profileComboBoxActionPerformed(new ActionEvent(profileComboBox, 0, null));
 	    }
 	}
 
-	//changeOfAddress();
-	if (decoder != null) {
-	    decoder.setAddress(entry.getDccLocoAddress());
-	    decoder.enable();
-	    this.getMainPane().setTitle(decoder.getAddress());
-	    addressTextBox.setText(""+entry.getDccLocoAddress().getNumber());
-	} 
+	// Update the roster combo box
+	//rosterComboBox.setSelectedItem(entry);
+	//addrSelector.setAddress(entry.getDccLocoAddress());
 
+	// Set the Address box from the Roster entry
+	main_pane.setAddress(entry.getDccLocoAddress());
+	addressTextBox.setText(""+entry.getDccLocoAddress().getNumber());
+	addressTextBox.setEnabled(true);
+	addressSetButton.setEnabled(true);
     }
 
     // using Roster combo box
@@ -312,50 +321,42 @@ public class VSDConfigPanel extends JmriPanel {
 	String rosterEntryTitle = rosterComboBox.getSelectedItem().toString();
 	RosterEntry r = Roster.instance().entryFromTitle(rosterEntryTitle);
 	if (r != null) {
-	    r.putAttribute("VSDecoder_Path", decoder.getVSDFilePath());
+	    r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
 	    r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
 	}
     }
 
-    // Note - this gets called directly from setProfileList() when a default profile
-    // is loaded from a file.  The contents of the evt parameter in that call are junk.
-    // If you change this function to look at the contents of evt, better revise
-    // setProfileList() to send useful data.
+    // User chose a Profile from the profileComboBox.
     private void profileComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
 	int addr;
+	VSDecoder dec;
 
+	// If the user selected an item, remove the load prompt item
 	if (!profile_selected)
-	    if (profileComboBox.getSelectedIndex() == 0) {
+	    if (profileComboBox.getSelectedItem() == loadProfilePrompt) {
 		// User has selected the "Choose" entry, which doesn't exist
 		return;
 	    } else {
 		// User has chosen a profile for the first time.
-		profileComboBox.removeItemAt(0);  // remove the "choose" thing.
+		profileComboBox.removeItem(loadProfilePrompt);  // remove the "choose" thing.
 		profile_selected = true;
 	}
 
-	log.debug("Profile selected. New = " + profileComboBox.getSelectedItem() + "Decoder = " + decoder);
-	if (decoder != null) {
-	    decoder.disable();  // disable the previous decoder
+	dec = main_pane.getDecoder();
+	log.debug("Profile selected. New = " + profileComboBox.getSelectedItem() + "Decoder = " + dec);
+	if (dec != null) {
+	    dec.disable();  // disable the previous decoder
 	}
 	log.debug("Getting selected decoder from VSDecoderManager.");
-	decoder = decoder_mgr.getVSDecoder(profileComboBox.getSelectedItem().toString(), false);
-	log.debug("Decoder = " + decoder);
-	if (decoder != null) {
-	    log.debug("Decoder name: " + decoder.getProfileName());
-	    try {
-		addr = Integer.parseInt(addressTextBox.getText());
-		decoder.setAddress(addr, true);
-		decoder.enable();
-	    } catch(NumberFormatException e) {
-	    // Address not set.  Do nothing. 
-	    } finally {
-		// Either way, set the sounds pane.
-		if (decoder != null)
-		    this.main_pane.setDecoder(decoder);
-		addressSetButton.setEnabled(true);
-		addressTextBox.setEnabled(true);
-	    }
+	dec = main_pane.getDecoder(profileComboBox.getSelectedItem().toString());
+	main_pane.setDecoder(dec);
+	log.debug("Decoder = " + dec);
+	if (dec != null) {
+	    log.debug("Decoder name: " + dec.getProfileName());
+	    updateAddress();
+	    // Either way, enable the address text box and set button.
+	    addressSetButton.setEnabled(true);
+	    addressTextBox.setEnabled(true);
 	    // Do something.
 	} else {
 	    log.warn("NULL POINTER returned from VSDecoderManager.");
@@ -363,21 +364,13 @@ public class VSDConfigPanel extends JmriPanel {
     }
 
     private void addressBoxActionPerformed(java.awt.event.ActionEvent evt) {
-        String address_text = addressTextBox.getText();
-        decoder.setAddress(Integer.parseInt(address_text), true);
+	// Don't do anything just yet...
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void addressSetButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	VSDecoder dec;
 	String address_text = addressTextBox.getText();
-	if (decoder != null) {
-	    try {
-		decoder.setAddress(Integer.parseInt(address_text), true);
-		decoder.enable();
-		this.getMainPane().setTitle(decoder.getAddress());
-	    } catch(NumberFormatException e) {
-		// Un-set or invalid address value.  Do nothing
-	    }
-	} 
+	updateAddress();
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDConfigPanel.class.getName());

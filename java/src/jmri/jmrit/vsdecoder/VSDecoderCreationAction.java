@@ -50,16 +50,13 @@ public class VSDecoderCreationAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
 	String fp = null, fn = null;
-	log.debug("actionPerformed()");
     	VSDecoderFrame tf = new VSDecoderFrame();
 	if (VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile()) {
 	    // Force load of a VSD file
 	    fp = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
 	    fn = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFileName();
 	    log.debug("Loading VSD File: " + fp + File.separator + fn);
-	    LoadVSDFileAction.loadVSDFile(fp, fn);
-	    //f = new File(fp + File.separator + fn);
-	    //LoadVSDFileAction.loadVSDFile(f);
+	    LoadVSDFileAction.loadVSDFile(fp + File.separator + fn);
 	}
 	tf.toFront();
     }

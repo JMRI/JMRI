@@ -35,28 +35,19 @@ public class VSDOptionPanel extends JmriPanel {
 
     private javax.swing.JComboBox hornOptionComboBox;
 
-    VSDecoder decoder;
+    String decoder_id;
     VSDecoderPane main_frame;
 
     public VSDOptionPanel() {
 	this(null, null);
     }
 
-    public VSDOptionPanel(VSDecoder dec, VSDecoderPane dad) {
+    public VSDOptionPanel(String dec, VSDecoderPane dad) {
 	super();
-	decoder = dec;
+	decoder_id = dec;
 	main_frame = dad;
 	initComponents();
     }
-
-    public void setDecoder(VSDecoder dec) {
-	decoder = dec;
-    }
-
-    public VSDecoder getDecoder() {
-	return(decoder);
-    }
-
 
     public void init() {}
 
@@ -84,6 +75,7 @@ public class VSDOptionPanel extends JmriPanel {
 	this.add(y);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionPanel.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionPanel.class.getName());
+
     
 }

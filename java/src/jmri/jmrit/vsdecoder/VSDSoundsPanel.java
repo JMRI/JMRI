@@ -45,25 +45,19 @@ public class VSDSoundsPanel extends JmriPanel {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JButton uncoupleButton;
 
-    VSDecoder decoder;
+    String decoder_id;
+    VSDecoderPane main_pane;
 
     public VSDSoundsPanel() {
-	this(null);
+	super();
     }
 
-    public VSDSoundsPanel(VSDecoder dec) {
+    public VSDSoundsPanel(String dec, VSDecoderPane dad) {
 	super();
-	decoder = dec;
+	decoder_id = dec;
+	main_pane = dad;
 	initComponents();
 
-    }
-
-    public void setDecoder(VSDecoder dec) {
-	decoder = dec;
-    }
-
-    public VSDecoder getDecoder() {
-	return(decoder);
     }
 
     public void init() {}
@@ -76,55 +70,36 @@ public class VSDSoundsPanel extends JmriPanel {
 
 	this.setLayout(new GridLayout(0, 3));
 
-	if (decoder == null) {
+	if (main_pane.getDecoder() == null) {
+	    log.debug("No decoder!");
 	    return;
 	}
 	
-	ArrayList<SoundEvent> elist = new ArrayList<SoundEvent>(decoder.getEventList());
+	ArrayList<SoundEvent> elist = new ArrayList<SoundEvent>(main_pane.getDecoder().getEventList());
 	for (SoundEvent e : elist) {
 	    if (e.getButton() != null)
 		log.debug("adding button " + e.getButton().toString());
 		this.add(e.getButton());
 	}
-	
-	//this.invalidate();
-	//JPanel test = new DieselPane();
-	/*
-	JButton testb = new JButton();
-	JSlider tests = new JSlider(JSlider.HORIZONTAL, 1, 8, 1);
-	tests.setMajorTickSpacing(1);
-	tests.setPaintTicks(true);
-	testb.setText("Test");
-	test.setVisible(true);
-	testb.setVisible(true);
-	test.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-	test.add(testb);
-	test.add(tests);
-	*/
-	//this.add(test);
-	
-	//revalidate();
-	//setVisible(true);
-	//repaint();
     }
 
     private void bellButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        decoder.toggleBell();
+        main_pane.getDecoder().toggleBell();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void hornButtonPressed(java.awt.event.MouseEvent evt) {
 	log.debug("hornButtonPressed");
-        decoder.playHorn();
+        main_pane.getDecoder().playHorn();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void hornButtonReleased(java.awt.event.MouseEvent evt) {
 	log.debug("hornButtonReleased");
-        decoder.stopHorn();
+        main_pane.getDecoder().stopHorn();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void hornButtonClicked(java.awt.event.MouseEvent evt) {
 	log.debug("hornButtonClicked");
-        decoder.shortHorn();
+        main_pane.getDecoder().shortHorn();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void brakeButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +114,6 @@ public class VSDSoundsPanel extends JmriPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDSoundsPanel.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDSoundsPanel.class.getName());
 
 }
