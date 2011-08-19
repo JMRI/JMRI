@@ -98,6 +98,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         return true;
     }
 
+    @SuppressWarnings("SleepWhileInLoop")
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // First check we've been initialised
         if (!_initialised) {

@@ -236,34 +236,42 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         int checkMultiChannel;
 
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_QUAD8");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_QUAD8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_QUAD16");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_QUAD16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_51CHN8");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_51CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_51CHN16");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_51CHN16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_61CHN8");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_61CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_61CHN16");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_61CHN16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_71CHN8");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_71CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_71CHN16");
+        checkALError();
         if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_71CHN16 = checkMultiChannel;
         }

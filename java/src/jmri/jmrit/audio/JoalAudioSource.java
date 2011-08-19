@@ -216,14 +216,6 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    public void setDopplerFactor(float dopplerFactor) {
-        super.setDopplerFactor(dopplerFactor);
-        if (_initialised) {
-            al.alSourcef(_source[0], AL.AL_DOPPLER_FACTOR, dopplerFactor);
-        }
-    }
-
-    @Override
     public int getState() {
         int old = _alState[0];
         al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, _alState, 0);
