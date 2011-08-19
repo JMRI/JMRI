@@ -460,18 +460,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
     boolean monitorProcessMemory(String name, Element item) {
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
 
+        String s = (b.getValue() != null) ? b.getValue().toString() : "";
         // check for value element, which means compare
+        // return true if strings are different
         if (item.getAttributeValue("value") != null) {
-            return (!b.getValue().toString().equals(item.getAttributeValue("value")));
-        } else {
-        Element v = item.getChild("value");
-        if (v!=null) {
-            return (!b.getValue().toString().equals(v.getText()));  //return true if strings are different
-        }
+            return (!s.equals(item.getAttributeValue("value")));
+        } else if (item.getChild("value") != null) {
+            return (!s.equals(item.getChildText("value")));
         }
         return false;  // no difference
     }
-    
+
     /*** Return true if there is a difference   */
     boolean monitorProcessRoute(String name, Element item) {
 
@@ -660,17 +659,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // get memory
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
 
+        String s = (b.getValue() != null) ? b.getValue().toString() : "";
         if (useAttributes) {
-            item.setAttribute("value", b.getValue().toString());
+            item.setAttribute("value", s);
         } else {
-        Element v = item.getChild("value");
+            Element v = item.getChild("value");
 
-        // Start read: ensure value element
-        if (v == null) item.addContent(v = new Element("value"));
-        
-        // set result
-        v.setText(""+b.getValue());
-    }
+            // Start read: ensure value element
+            if (v == null) item.addContent(v = new Element("value"));
+
+            // set result
+            v.setText(s);
+        }
     }
     
     void immediateReadRoute(String name, Element item) {
