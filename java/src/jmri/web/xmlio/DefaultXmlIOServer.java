@@ -471,22 +471,20 @@ public class DefaultXmlIOServer implements XmlIOServer {
         return false;  // no difference
     }
 
-    /*** Return true if there is a difference   */
+    /** Return true if there is a difference   */
     boolean monitorProcessRoute(String name, Element item) {
+        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
+        Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
+        int newState = (routeAligned != null) ? routeAligned.getKnownState() : 0;  //default to unknown
+        int state;
 
         // check for value element, which means compare
-        Element v = item.getChild("value");
-        if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
-            Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
-            int newState = 0;  //default to unknown
-            if (routeAligned != null){
-            	newState = routeAligned.getKnownState();
-            }
-            return  (newState != state);
+        if (item.getAttributeValue("value") != null) {
+            state = Integer.parseInt(item.getAttributeValue("value"));
+        } else {
+            state = (item.getChild("value") != null) ? Integer.parseInt(item.getChildText("value")) : 0; // default to unknown
         }
-        return false;  // no difference
+        return (newState != state); // return true if states are different
     }
     
     /**
@@ -677,23 +675,20 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
- 
-        if (useAttributes) {
-            // 0 is the "unknown" state
-            item.setAttribute("value", Integer.toString((routeAligned != null) ? routeAligned.getKnownState() : 0));
-        } else {
-        Element v = item.getChild("value");
-
-        // Start read: ensure value element
-        if (v == null) item.addContent(v = new Element("value"));
+        // 0 is the "unknown" state
+        String state = Integer.toString((routeAligned != null) ? routeAligned.getKnownState() : 0);
         
-        int state = 0;  //default to unknown
-        if (routeAligned != null){
-        	state = routeAligned.getKnownState();
+        if (useAttributes) {
+            item.setAttribute("value", state);
+        } else {
+            Element v = item.getChild("value");
+
+            // Start read: ensure value element
+            if (v == null) item.addContent(v = new Element("value"));
+
+            // set result
+            v.setText(state);
         }
-        // set result
-        v.setText(""+state);
-    }
     }
     
     void immediateReadSensor(String name, Element item) {
