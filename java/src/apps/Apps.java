@@ -197,7 +197,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+(configOK||configDeferredLoadOK));
         if (!configOK||!configDeferredLoadOK) {
-            jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigBaseErrorPage");
+            jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
             doPreferences();
         }
         log.debug("Done with doPreferences, start statusPanel");
