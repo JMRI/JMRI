@@ -12,8 +12,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrit.vsdecoder.VSDSound;
-import org.jdom.Element;
-import jmri.AudioException;
 
 /**
  * Tests for the Trigger class

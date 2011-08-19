@@ -19,7 +19,6 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;

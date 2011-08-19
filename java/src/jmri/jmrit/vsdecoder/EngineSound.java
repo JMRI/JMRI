@@ -19,15 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import jmri.jmrit.Sound;
 import java.awt.event.*;
-import java.io.File;
-import jmri.jmrit.audio.*;
-import javax.swing.Timer;
-
-import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Content;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;

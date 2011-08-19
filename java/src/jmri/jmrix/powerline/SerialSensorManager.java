@@ -3,7 +3,6 @@
 package jmri.jmrix.powerline;
 
 import jmri.Sensor;
-import jmri.JmriException;
 
 /**
  * Manage the system-specific Sensor implementation.

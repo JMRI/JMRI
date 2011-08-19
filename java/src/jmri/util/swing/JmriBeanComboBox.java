@@ -1,11 +1,9 @@
 package jmri.util.swing;
 
-import jmri.Manager;
 import jmri.NamedBean;
 
 import java.util.HashMap;
 import javax.swing.JComboBox;
-import java.util.List;
 
 public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyChangeListener{
 

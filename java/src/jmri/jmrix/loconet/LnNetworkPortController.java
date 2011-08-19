@@ -2,9 +2,6 @@
 
 package jmri.jmrix.loconet;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Kevin Dickerson    Copyright (C) 2011

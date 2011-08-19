@@ -22,10 +22,7 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-// XML stuff
-import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Content;
 
 class FloatTrigger extends Trigger implements PropertyChangeListener {
 

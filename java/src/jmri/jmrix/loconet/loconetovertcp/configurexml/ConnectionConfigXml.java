@@ -5,11 +5,6 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.loconet.loconetovertcp.ConnectionConfig;
 import jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import org.jdom.Element;
-
 /**
  * Handle XML persistance of layout connections by persistening
  * the LnTcpDriverAdapter (and connections).

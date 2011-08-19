@@ -22,18 +22,13 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.jmrit.audio.*;
-import jmri.AudioException;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Content;
 
 public class VSDecoder implements PropertyChangeListener {
 

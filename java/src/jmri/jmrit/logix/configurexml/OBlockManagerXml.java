@@ -10,7 +10,6 @@ import org.jdom.Attribute;
 import jmri.InstanceManager;
 import jmri.BeanSetting;
 import jmri.Path;
-import jmri.Sensor;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrit.logix.OBlock;

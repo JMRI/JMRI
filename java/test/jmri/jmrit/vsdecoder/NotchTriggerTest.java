@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
 import jmri.jmrit.vsdecoder.VSDSound;
 import org.jdom.Element;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 
 

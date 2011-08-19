@@ -20,7 +20,6 @@ package jmri.jmrit.vsdecoder;
  */
 
 import javax.swing.JPanel;
-import jmri.util.swing.JmriPanel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 

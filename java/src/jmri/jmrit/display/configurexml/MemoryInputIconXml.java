@@ -3,7 +3,6 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryInputIcon;
-import jmri.NamedBeanHandle;
 import jmri.Memory;
 import org.jdom.Element;
 import org.jdom.Attribute;

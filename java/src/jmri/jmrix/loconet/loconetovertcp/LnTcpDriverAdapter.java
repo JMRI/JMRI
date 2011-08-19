@@ -5,8 +5,6 @@ package jmri.jmrix.loconet.loconetovertcp;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.*;
 
-import java.util.Vector;
-
 /**
  * Implements SerialPortAdapter for the LocoNetOverTcp system network connection.
  * <P>This connects

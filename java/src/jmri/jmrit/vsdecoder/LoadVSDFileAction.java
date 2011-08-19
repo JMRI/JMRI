@@ -19,7 +19,6 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -27,11 +26,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 import java.util.ResourceBundle;
-import java.util.Enumeration;
-
 import org.jdom.Element;
-
-import java.util.zip.ZipEntry;
 
 
 /**

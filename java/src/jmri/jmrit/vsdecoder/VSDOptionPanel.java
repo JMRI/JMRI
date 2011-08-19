@@ -21,14 +21,6 @@ package jmri.jmrit.vsdecoder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import jmri.jmrit.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import jmri.ThrottleListener;
-import jmri.DccThrottle;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.util.swing.*;
 
 public class VSDOptionPanel extends JmriPanel {

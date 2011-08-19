@@ -4,7 +4,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryIcon;
-import jmri.NamedBeanHandle;
 import jmri.Memory;
 import org.jdom.Attribute;
 import org.jdom.Element;

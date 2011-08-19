@@ -1,6 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 

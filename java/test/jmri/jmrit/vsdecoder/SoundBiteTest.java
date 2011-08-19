@@ -9,8 +9,6 @@ import junit.framework.TestSuite;
 
 import jmri.jmrit.vsdecoder.SoundBite;
 import org.jdom.Element;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 
 

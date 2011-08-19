@@ -19,20 +19,9 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import jmri.jmrit.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import jmri.ThrottleListener;
-import jmri.DccThrottle;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.util.swing.*;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VSDSoundsPanel extends JmriPanel {
 

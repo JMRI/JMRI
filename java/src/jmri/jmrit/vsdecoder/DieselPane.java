@@ -19,7 +19,6 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.BorderFactory;
@@ -29,7 +28,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 class DieselPane extends EnginePane {

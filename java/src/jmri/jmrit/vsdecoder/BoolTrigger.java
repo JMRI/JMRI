@@ -22,8 +22,6 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.jdom.Attribute;
-import org.jdom.Content;
 import org.jdom.Element;
 
 
