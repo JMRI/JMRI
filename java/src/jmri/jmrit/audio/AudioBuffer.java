@@ -187,7 +187,8 @@ public interface AudioBuffer extends Audio {
      * <ul>
      * <li>Buffer
      * </ul>
-     * @return length of sound sample in bytes
+     * @return length of sound sample in frames
+     * @see #getFrameSize()
      */
     public long getLength();
     
