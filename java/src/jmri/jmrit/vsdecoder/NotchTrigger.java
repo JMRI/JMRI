@@ -60,21 +60,21 @@ class NotchTrigger extends Trigger implements PropertyChangeListener {
 	    return;
 	}
 	if (event.getPropertyName().equals(this.getEventName()) != true) {
-	    log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
+	    //log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
 	    return;
 	}
 	if (this.getTriggerType() == TriggerType.NONE) {
-	    log.debug("Quit.  TriggerType = NONE");
+	    //log.debug("Quit.  TriggerType = NONE");
 	    return;
 	}
 	if (this.getTargetAction() == TargetAction.NOTHING) {
-	    log.debug("Quit.  TargetAction = NOTHING");
+	    //log.debug("Quit.  TargetAction = NOTHING");
 	    return;
 	}
 
 	// Compare
 	prev_notch = current_notch;
-	current_notch = VSDecoder.calcEngineNotch((Float)event.getNewValue());
+	current_notch = EngineSound.calcEngineNotch((Float)event.getNewValue());
 
 	log.debug("Notch Trigger prev_notch = " + prev_notch + " current_notch = " + current_notch);
 	this.callback.takeAction(current_notch);

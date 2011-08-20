@@ -34,6 +34,7 @@ class SoundBite extends VSDSound {
     boolean buf_loaded = false;
     int minloops;
     int maxloops;
+    long length;
 
     public SoundBite(String name) {
 	super(name);
@@ -74,6 +75,12 @@ class SoundBite extends VSDSound {
 	return(true);
     }
 
+    // Direct access to the underlying source.  use with caution.
+    public AudioSource getSource() { return(sound_src); }
+    // WARNING: This will go away when we go to shared buffers... or at least it will
+    // have to do the name lookup on behalf of the caller...
+    public AudioBuffer getBuffer() { return(sound_buf); }
+
     // These can(?) be used to get the underlying AudioSource and AudioBuffer objects
     // from the DefaultAudioManager.
     public String getSourceSystemName() { return(SrcSysNamePrefix+system_name); }
@@ -107,6 +114,15 @@ class SoundBite extends VSDSound {
 
     public boolean isLooped() { return(looped); }
 
+    public int getFadeInTime() { return(sound_src.getFadeIn()); }
+    public int getFadeOutTime() { return(sound_src.getFadeOut()); }
+    public void setFadeInTime(int t) { sound_src.setFadeIn(t); }
+    public void setFadeOutTime(int t) { sound_src.setFadeOut(t); }
+    public void setFadeTimes(int in, int out) {
+	sound_src.setFadeIn(in);
+	sound_src.setFadeOut(out);
+    }
+
     public void play() {
 	sound_src.play();
 	is_playing = false;
@@ -133,8 +149,8 @@ class SoundBite extends VSDSound {
     }
 
     public void fadeIn() {
-	//sound_src.fadeIn();
-	sound_src.play();
+	sound_src.fadeIn();
+	//sound_src.play();
     }
 
     public void setURL(String filename) {
@@ -142,6 +158,40 @@ class SoundBite extends VSDSound {
 	sound_buf.setURL(vsd_file_base + filename);
 	    
     }
+
+    public long getLength() { return(length); }
+    public int getLengthAsInt() {
+	// Note:  this only works for positive lengths...
+	int l;
+	// Timer only takes an int... cap the length at MAXINT
+	if (length > Integer.MAX_VALUE)
+	    return(Integer.MAX_VALUE);
+	else
+	    // small enough to safely cast.
+	    return((int)length);
+    }
+    public void setLength(long p) { length = p; } 
+    public void setLength() {
+	length = calcLength(this);
+    }
+
+    public static long calcLength(SoundBite s) {
+	// Assumes later getBuffer() will find the buffer from AudioManager instead
+	// of the current local reference... that's why I'm not directly using sound_buf here.
+
+	// Required buffer functions not yet implemented
+	AudioBuffer buf = s.getBuffer();
+
+	long num_frames = buf.getLength();
+	int frequency = buf.getFrequency();
+	/*
+	long num_frames = 1;
+	long frequency = 125;
+	*/
+
+	return((1000 * num_frames) / frequency);
+    }
+
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundBite.class.getName());
 }    

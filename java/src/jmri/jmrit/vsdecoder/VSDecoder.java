@@ -45,24 +45,6 @@ public class VSDecoder implements PropertyChangeListener {
     HashMap<String, Trigger> trigger_list;  // list of triggers
     HashMap<String, SoundEvent> event_list; // list of events
     
-    static final public int calcEngineNotch(final float throttle) {
-	// This will convert to a value 0-8.
-	int notch = (int) Math.rint(throttle * 8);
-	if (notch < 0) { notch = 0; }
-	log.warn("Throttle: " + throttle + " Notch: " + notch);
-	return(notch+1);
-
-    }
-
-    static final public int calcEngineNotch(final double throttle) {
-	// This will convert from a % to a value 0-8.
-	int notch = (int) Math.rint(throttle * 8);
-	if (notch < 0) { notch = 0; }
-	//log.warn("Throttle: " + throttle + " Notch: " + notch);
-	return(notch+1);
-
-    }
-
     public VSDecoder(String id, String name) {
 
 	profile_name = name;
@@ -125,8 +107,10 @@ public class VSDecoder implements PropertyChangeListener {
 	Object newValue = event.getNewValue();
 
 	// Skip this if disabled
-	if (!enabled)
+	if (!enabled) {
+	    log.debug("VSDecoder disabled. Take no action.");
 	    return;
+	}
 
 	log.warn("VSDecoderPane throttle property change: " + eventName);
 
@@ -158,6 +142,7 @@ public class VSDecoder implements PropertyChangeListener {
 	address = a;
 	jmri.InstanceManager.throttleManagerInstance().attachListener(address, new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent event) {
+		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
 		    throttlePropertyChange(event);
 		}
 	    });
@@ -172,6 +157,7 @@ public class VSDecoder implements PropertyChangeListener {
 	// Respond to events from the GUI.
 	if (evt.getPropertyName().equals("AddressChange")) {
 	    this.setAddress((DccLocoAddress)evt.getNewValue());
+	    this.enable();
 	}
     }
 

@@ -22,6 +22,8 @@ package jmri.jmrit.vsdecoder;
 // JMRI and Java stuff
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Timer;
+import java.lang.Math;
 
 // XML stuff
 import org.jdom.Element;
@@ -89,15 +91,23 @@ class ConfigurableSound extends VSDSound {
 		short_sound = new SoundBite(vf, short_file, name+"_Short", name+"_Short");
 		short_sound.setLooped(false);
 	    }
-	    t = new javax.swing.Timer(start_sound_duration, new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-			handleTimerPop(e);
-		    }
-		});
+	    
 	}
 	return(true);
     }
     
+    protected Timer newTimer(int time, boolean repeat) {
+	time = Math.max(1, time);  // make sure the time is > zero
+	t = new Timer(time, new ActionListener() { 
+		public void actionPerformed(ActionEvent e) {
+		    handleTimerPop(e);
+		}
+	    });
+	t.setInitialDelay(time);
+	t.setRepeats(repeat);
+	return(t);
+    }
+
     @Override
     public boolean isPlaying() {
         return(is_playing);
@@ -109,9 +119,9 @@ class ConfigurableSound extends VSDSound {
 	    is_playing = false; // short sound, won't be playing long...
 	} else {
 	    if (use_start_sound) {
+		t = newTimer(start_sound.getLengthAsInt(), false);
 		start_sound.play();
 		if (use_mid_sound) {
-		    t.setRepeats(false); // timer pop only once to trigger the sustain sound.
 		    t.start();
 		    is_playing = true;
 		}
@@ -126,7 +136,7 @@ class ConfigurableSound extends VSDSound {
 	if (use_start_sound) {
 	    start_sound.setLooped(false);
 	    start_sound.play();
-	    t.setInitialDelay(start_sound_duration);
+	    t = newTimer(start_sound.getLengthAsInt() - 100, false);
 	    t.setRepeats(false); // timer pop only once to trigger the sustain sound.
 	    t.start();
 	} else if (use_mid_sound) {
@@ -157,7 +167,8 @@ class ConfigurableSound extends VSDSound {
 	if (use_mid_sound) {
 	    mid_sound.stop();
 	}
-	t.stop();
+	if (t != null)
+	    t.stop();
 	if (use_end_sound) {
 	    end_sound.setLooped(false);
 	    end_sound.play();
@@ -196,20 +207,6 @@ class ConfigurableSound extends VSDSound {
 	    me.addContent(new Element("end-file").addContent(end_file));
 	if (use_short_sound)
 	    me.addContent(new Element("short-file").addContent(short_file));
-	/*
-	b = use_start_sound;
-	log.debug("  use_start_file = " + b.toString());
-	me.addContent(new Element("use-start-sound").addContent(b.toString()));
-	b = use_mid_sound;
-	log.debug("  use_mid_file = " + b.toString());
-	me.addContent(new Element("use-mid-sound").addContent(b.toString()));
-	b = use_end_sound;
-	log.debug("  use_end_file = " + b.toString());
-	me.addContent(new Element("use-end-sound").addContent(b.toString()));
-	b = use_short_sound;
-	log.debug("  use_short_file = " + b.toString());
-	me.addContent(new Element("use-short-sound").addContent(b.toString()));
-	*/
 	i = start_sound_duration;
 	log.debug("  duration = " + i.toString());
 	me.addContent(new Element("start-sound-duration").addContent(i.toString()));

@@ -94,7 +94,10 @@ public class VSDFile extends ZipFile {
 	try {
 	    return(getInputStream(this.getEntry(name)));
 	} catch (IOException e) {
-	    log.warn("IOException caught " + e);
+	    log.error("IOException caught " + e);
+	    return(null);
+	} catch(NullPointerException ne) {
+	    log.error("Null Pointer Exception caught. name=" +name, ne);
 	    return(null);
 	}
     }

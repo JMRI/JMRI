@@ -94,7 +94,6 @@ class DieselPane extends EnginePane {
     }
 
     public void throttleChange(ChangeEvent e) {
-	log.debug(e.toString());
 	firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle",
 						        throttle_setting,
 							throttle_slider.getValue()));
@@ -102,7 +101,6 @@ class DieselPane extends EnginePane {
     }
 
     public void startButtonChange(ActionEvent e) {
-	log.debug(e.toString());
 	firePropertyChangeEvent(new PropertyChangeEvent(this, "start",
 							engine_started, 
 							start_button.isSelected()));

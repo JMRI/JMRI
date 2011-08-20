@@ -24,6 +24,9 @@ import org.jdom.Element;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 
 // Usage:
@@ -37,25 +40,23 @@ class EngineSound extends VSDSound {
     // Engine Sounds
     HashMap<Integer, SoundBite> notch_sounds;
     ArrayList<SoundBite> notchup_sounds;
+    ArrayList<NotchTransition> transition_sounds;
     SoundBite notchup_sound;
     SoundBite start_sound;
     SoundBite shutdown_sound;
+    NotchTransition notch_transition; // used for changing notches
 
-    int current_notch = 0;
+    int current_notch = 1;
     boolean initialized = false;
     boolean engine_started = false;
     boolean auto_start_engine = false;
+
+    int fade_length = 100;
 
     javax.swing.Timer t;
 
     public EngineSound(String name) {
 	super(name);
-
-	t = new javax.swing.Timer(136, new ActionListener() { 
-		public void actionPerformed(ActionEvent e) {
-		    handleTimerPop(e);
-		}
-	    });
 	is_playing = false;
 	engine_started = false;
 	initialized = init();
@@ -66,8 +67,6 @@ class EngineSound extends VSDSound {
 	auto_start_engine = VSDecoderManager.instance().getVSDecoderPreferences().isAutoStartingEngine();
 	return(true);
     }
-
-    public void handleTimerPop(ActionEvent e) { }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     public void play() {
@@ -107,28 +106,94 @@ class EngineSound extends VSDSound {
 	return(current_notch);
     }
 
+    static final public int calcEngineNotch(final float throttle) {
+	// This will convert to a value 0-8.
+	int notch = ((int) Math.rint(throttle * 8)) + 1;
+	if (notch < 1) { notch = 1; }
+	log.warn("Throttle: " + throttle + " Notch: " + notch);
+	return(notch);
+
+    }
+
+    static final public int calcEngineNotch(final double throttle) {
+	// This will convert from a % to a value 0-8.
+	int notch = ((int) Math.rint(throttle * 8)) + 1;
+	if (notch < 1) { notch = 1; }
+	//log.warn("Throttle: " + throttle + " Notch: " + notch);
+	return(notch);
+
+    }
+
     public void changeNotch(int new_notch) {
-	log.debug("EngineSound.changeNotch() current = " + current_notch + " new notch = " + new_notch);
-	if (notch_sounds.containsKey(current_notch) && (engine_started || auto_start_engine))
-	    notch_sounds.get(current_notch).fadeOut();
-	if (notch_sounds.containsKey(new_notch) && (engine_started || auto_start_engine))
-	    notch_sounds.get(new_notch).fadeIn();
-	current_notch = new_notch;
+	log.debug("EngineSound.changeNotch() current = " + current_notch + 
+		  " new notch = " + new_notch);
+	if (new_notch != current_notch) {
+	    if (notch_sounds.containsKey(current_notch) && (engine_started || auto_start_engine))
+		notch_sounds.get(current_notch).fadeOut();
+
+	    notch_transition = findNotchTransient(current_notch, new_notch);
+	    if (notch_transition != null) {
+		log.debug("notch transition: name = " + notch_transition.getFileName() + " length = " + notch_transition.getLengthAsInt() +
+			  "fade_length = " + fade_length);
+		// Handle notch transition...
+		Timer t = newTimer(notch_transition.getLengthAsInt() - notch_sounds.get(new_notch).getFadeInTime(), false,
+				   new ActionListener() {
+				       public void actionPerformed(ActionEvent e) {
+					   handleNotchTimerPop(e);
+				       }
+				   });
+		t.start();
+		notch_transition.fadeIn();
+	    } else {
+		log.debug("notch transition not found!");
+		if (notch_sounds.containsKey(new_notch) && (engine_started || auto_start_engine))
+		    notch_sounds.get(new_notch).fadeIn();
+	    }
+	    current_notch = new_notch;
+	}
+    }
+
+    protected void handleNotchTimerPop(ActionEvent e) {
+	// notch value has already been changed
+	log.debug("Notch timer pop. nt.next_notch = " + notch_transition.getNextNotch() +
+		  "file = " + notch_sounds.get(notch_transition.getNextNotch()).getFileName());
+	if (notch_sounds.containsKey(notch_transition.getNextNotch()) && (engine_started || auto_start_engine)) {
+	    notch_sounds.get(notch_transition.getNextNotch()).fadeIn();
+	}
+	notch_transition.fadeOut();
+    }
+
+    protected Timer newTimer(int time, boolean repeat, ActionListener al) {
+	t = new Timer(time, al);
+	t.setRepeats(repeat);
+	return(t);
+    }
+
+    private NotchTransition findNotchTransient(int prev, int next) {
+	log.debug("Looking for Transient: prev = " + prev + " next = " + next);
+	for (NotchTransition nt : transition_sounds) {
+	    log.debug("searching: nt.prev = " + nt.getPrevNotch() + " nt.next = " + nt.getNextNotch());
+	    if ((nt.getPrevNotch() == prev) && (nt.getNextNotch() == next)) {
+		log.debug("Found transient: prev = " + nt.getPrevNotch() + " next = " + nt.getNextNotch());
+		return(nt);
+	    }
+	}
+	// If we loop out, there's no transition that matches.
+	return(null);
     }
 
     public void startEngine() {
 	// This doesn't really work yet.  Needs to auto-transition to notch[0]
 	// at the end of the start sound.
 	start_sound.play();
-	current_notch = VSDecoder.calcEngineNotch(0.0f);
-	t.setInitialDelay(4500);
-	t.setDelay(4500);
-	t.setRepeats(false);
-	t.addActionListener(new ActionListener() { 
+	current_notch = calcEngineNotch(0.0f);
+	t = newTimer(4500, false, new ActionListener() { 
 		public void actionPerformed(ActionEvent e) {
 		    startToIdleAction(e);
 		}
-	    });
+	    } );
+	t.setInitialDelay(4500);
+	t.setRepeats(false);
 	log.debug("Starting Engine");
 	t.start();
     }
@@ -140,7 +205,7 @@ class EngineSound extends VSDSound {
     }
 
     private void startToIdleAction(ActionEvent e) {
-	log.debug("Starting idle sound");
+	log.debug("Starting idle sound notch = " + current_notch + " sound = " + notch_sounds.get(current_notch));
 	notch_sounds.get(current_notch).loop();
 	engine_started = true;
     }
@@ -176,18 +241,38 @@ class EngineSound extends VSDSound {
 	}
 
 	notch_sounds = new HashMap<Integer, SoundBite>();
+	transition_sounds = new ArrayList<NotchTransition>();
 
 	// Get the notch sounds
 	Iterator itr = (e.getChildren("notch-sound")).iterator();
 	int i = 0; 
 	while(itr.hasNext()) {
 	    el =(Element)itr.next();
-	    fn = el.getChild("file").getValue();
-	    int nn = Integer.parseInt(el.getChild("notch").getValue());
+	    fn = el.getChildText("file");
+	    int nn = Integer.parseInt(el.getChildText("notch"));
 	    log.debug("Notch: " + nn + " File: " + fn);
 	    sb = new SoundBite(vf, fn, "Engine_n" + i, "Engine_" + i);
 	    sb.setLooped(true);
+	    sb.setFadeTimes(100, 100);
 	    notch_sounds.put(nn, sb);
+	    i++;
+	}
+
+	// Get the notch transitions
+	itr = (e.getChildren("notch-transition")).iterator();
+	i = 0;
+	NotchTransition nt;
+	while(itr.hasNext()) {
+	    el = (Element)itr.next();
+	    fn = el.getChildText("file");
+	    nt = new NotchTransition(vf, fn, "Engine_nt" + i, "Engine_nt" + i);
+	    nt.setPrevNotch(Integer.parseInt(el.getChildText("prev-notch")));
+	    nt.setNextNotch(Integer.parseInt(el.getChildText("next-notch")));
+	    log.debug("Transition: prev=" + nt.getPrevNotch() + " next=" + nt.getNextNotch() + " File: " + fn);
+	    nt.setLength();
+	    nt.setLooped(false);
+	    nt.setFadeTimes(10, 100);
+	    transition_sounds.add(nt);
 	    i++;
 	}
 
@@ -226,6 +311,6 @@ class EngineSound extends VSDSound {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSound.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSound.class.getName());
 
 }
