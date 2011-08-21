@@ -213,8 +213,8 @@ The Basic Programmer</h4>
       <li>USS CTC Tools <img src="images/arrow.gif" width="20" height="9" alt="arrow">(not covered in this manual)</li>
       <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
         <ul>
-          <li><a href="Ops_Settings.shtml">Settings</a></li>
-          <li><a href="Ops_Locations.shtml">Locations</a></li>
+          <li><a href="Ops_Settings.shtml">Settings</a> </li>
+          <li><a href="Ops_Locations.shtml">Locations</a> </li>
           <li><a href="Ops_Cars.shtml">Cars</a></li>
           <li><a href="Ops_Engines.shtml">locomotives</a></li>
           <li><a href="Ops_Routes.shtml">Routes</a></li>
@@ -268,8 +268,33 @@ The Basic Programmer</h4>
   </li>
   <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
     <ul>
-      <li><a href="Ops_Settings.shtml">Settings</a></li>
-      <li><a href="Ops_Locations.shtml">Locations</a></li>
+      <li><a href="Ops_Settings.shtml">Settings</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li><strong><a href="Ops_Settings.shtml#Options">Options</a></strong></li>
+              <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong></li>
+              <li>Backup</li>
+              <li>Restore</li>
+              <li>Load Demo Files</li>
+              <li>Reset Database</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Locations.shtml">Locations</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li>Print</li>
+              <li>Preview</li>
+              <li><a href="Ops_schedule.shtml">Schedules</a></li>
+              <li><a href="Ops_Locations_byCar.html">Modify Locations by Car Type</a></li>
+              <li><a href="Ops_Locations_ShowCars.shtml">Show Cars</a>          </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
       <li><a href="Ops_Cars.shtml">Cars</a></li>
       <li><a href="Ops_Engines.shtml">Locomotives</a></li>
       <li><a href="Ops_Routes.shtml">Routes</a></li>
@@ -369,16 +394,22 @@ The Basic Programmer</h4>
   </li>
   <li><a href="Ops_Locations.shtml">Locations</a>
     <ul>
-      <li><a href="Ops_AddSiding.shtml">Add Siding Track</a></li>
+      <li><a href="Ops_AddSiding.shtml">Add Spurs Track</a></li>
       <li><a href="Ops_AddYard.shtml">Add Yard Track</a></li>
       <li><a href="Ops_AddInterchange.shtml">Add Interchange Track</a></li>
       <li><a href="Ops_AddStaging.shtml">Add Staging Track</a></li>
+      <li><a href="Ops_Locations_byCar.shtml">Modify Location by Car Type</a></li>
+      <li><a href="Ops_Locations_setCars.shtml">Set Cars</a></li>
     </ul>
   </li>
   <li><a href="Ops_Cars.shtml">Cars</a></li>
   <li><a href="Ops_Engines.shtml">Locomotives</a></li>
   <li><a href="Ops_Routes.shtml">Routes</a></li>
-  <li><a href="Ops_Trains.shtml">Trains</a></li>
+  <li><a href="Ops_Trains.shtml">Trains</a>
+    <ul>
+      <li><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></li>
+    </ul>
+  </li>
   <li><a href="Ops_TripThruOperations.shtml">A Trip Through Operations</a></li>
 </ul>
 <h4><a NAME="DecoderDefinition"></a>Creating a Decoder Definition </h4>
