@@ -123,6 +123,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
             m.addEntry(e.sensor.getText(), e.ed.getIcon(0));
         }
         m.setUpDown(updown.isSelected());
+        m.setDisplayLevel(jmri.jmrit.display.Editor.SENSORS);
 
         layoutEditor.addMultiSensor(m);
     
