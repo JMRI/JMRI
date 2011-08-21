@@ -289,7 +289,7 @@ The Basic Programmer</h4>
               <li>Print</li>
               <li>Preview</li>
               <li><a href="Ops_schedule.shtml">Schedules</a></li>
-              <li><a href="Ops_Locations_byCar.html">Modify Locations by Car Type</a></li>
+              <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
               <li><a href="Ops_Locations_ShowCars.shtml">Show Cars</a>          </li>
             </ul>
           </li>

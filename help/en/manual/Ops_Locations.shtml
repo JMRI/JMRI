@@ -56,10 +56,10 @@ opens system printer dialog.<br>
       <input type="button" name="button11" id="button11" value="Okay"> 
       opens the print previw window showing Location information.<br>
     </li>
-    <li><a href="Ops_Schedule.shtml"><strong>Schedules</strong></a><br>
+    <li><a href="Ops_schedule.shtml"><strong>Schedules</strong></a><br>
       Opens the <strong>Schedules</strong> panel. &nbsp;If you would like to see  cars delivered in a particular sequence, or with a specific load for delivery  or shipping, the program allows you to apply a schedule to a siding. This is an  optional feature and shouldn't be used until you become very familiar with how  the program generates manifests and switch lists. </li>
   
-    <li><a href="Ops_Locations_byCar.html"><strong>Modify Locations by Car Type</strong></a><br>
+    <li><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a><br>
     Opens the <strong>Modify Locations by Car Type </strong></li>
   </ul>
   <ul>
