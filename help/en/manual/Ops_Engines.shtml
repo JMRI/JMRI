@@ -23,7 +23,7 @@
 <a NAME="Top"></a>
 
 <h1>Using DecoderPro&reg; to Operate Trains</h1>
-<h1>Operations Engines Window</h1>
+<h1>Operations Locomotive Window</h1>
 
 <div align=right>
 <p><a href="Ops_Cars.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
@@ -31,35 +31,41 @@
 </div>
 
 <hr>
-<p>The engines panel allows you to edit your engine roster. You can enter  an engine's number, road, model, type, and length. You can optionally  add the engine's build date and owner. If you want a group of engines to  be assigned as a unit, you can create a "consist". The engine type is  used by the program to determine where engines are picked up and or  stored at the various locations on your layout. Some of default engine  types are electric, diesel, gas turbine, and steam.</p>
-<p><img src="images/Ops_Engine.png" width="922" height="238" alt="Engine"></p>
+<p>The Locomotives window allows you to edit your engine roster. You can enter  an engine's number, road, model, type, and length. You can optionally  add the engine's build date and owner. If you want a group of engines to  be assigned as a unit, you can create a "consist". The engine type is  used by the program to determine where engines are picked up and or  stored at the various locations on your layout. Some of default engine  types are electric, diesel, gas turbine, and steam.</p>
+<p><img src="images/Ops_Engine.png" width="900" height="453" alt="engine"></p>
 <p><strong>Menu Bar</strong></p>
-<p><img src="images/Ops_EngineMenu.png" width="400" height="198" alt="Engines Menu"></p>
+<p><img src="images/Ops_EngineMenu.png" width="437" height="226" alt="engine menu"></p>
 <p><strong>Tools </strong></p>
 <ul>
   <li><strong>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
       <li><a href="Ops_ImportEngines.shtml">Import from JMRI roster</a></li>
       <li><a href="Ops_ImportEngines.shtml">Import from file</a></li>
-      <li><strong>Delete all engines</strong> -- Opens the <strong>Delete all engines?</strong> confirmation dialog box.</li>
-      <li><strong>Print</strong> -- Opens your computers <strong>Print</strong> window and will print your engine roster.</li>
-      <li><strong>Preview</strong> -- Opens your computers <strong>Print</strong> window and when you click <strong>OK</strong> will show the preview of your engine roster.</li>
+      <li>Export to file<br>
+        <img src="images/Ops_Engine_ExportFile.png" width="742" height="122" alt="export"><br>
+      </li>
+      <li><strong>Delete all locomotives</strong> -- Opens the <strong>Delete all locomotives?</strong> confirmation dialog box.<br>
+        <img src="images/Ops_Engine_deleteRoster.png" width="446" height="122" alt="delete"><br>
+      </li>
+      <li><strong>Print</strong> -- Opens your computers <strong>Print</strong> window and will print your locomotive roster.</li>
+      <li><strong>Preview</strong> -- Opens your computers <strong>Print Preview </strong> window and shows the preview of your locomotive roster.</li>
     </ul>
 </ul>
 <p><strong>Window</strong> -- same as other DecoderPro&reg; menus.</p>
 <p><strong>Help</strong> -- same as other DecoderPro&reg; menus.</p>
 <p><strong><em>Body of window</em></strong></p>
-<p><strong>Sort by</strong> -- select the element in the roster by which you would like to sort your engine roster, we will use engine
-  <input name="radio" type="radio" id="radio" value="radio" checked>
-  <strong>Number </strong>selection.</p>
-<p>(number) <strong>engines</strong> --shows number of engines in your roster.</p>
+<p><strong>Sort by</strong> -- select the radio button for the attribute you wish to sort by.</p>
 <p>
   <input type="submit" name="button" id="button" value="Add">
-  when selected opens the <a href="Ops_AddEngine.shtml">Add Engine</a> window.</p>
+when selected opens the <a href="Ops_AddEngine.shtml">Add Locomotive </a> window.</p>
+<p>
+  <input type="button" name="button3" id="button3" value="Save"> 
+  Saves the locomotive roster to disk.
+</p>
 <p>
   <input type="submit" name="button2" id="button2" value="Find">
   <input type="text" name="textfield" id="textfield">
-  Locate an engine in your roster, when you type the road number into the text box. </p>
+  Locate a locomotive in your roster, when you type the road number into the text box. </p>
 <hr>
 
 <div align=right>

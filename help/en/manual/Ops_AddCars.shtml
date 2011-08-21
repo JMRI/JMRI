@@ -31,10 +31,12 @@
 
 <p>&nbsp;</p>
 <hr>
-<p>The <strong>Add Car</strong> window is opened.</p>
+<p>The <strong>Add Car</strong> window or <strong>Edit Car</strong> window is opened. Window are identical except for title.</p>
 <table width="90%" border="0" align="center" cellpadding="2" cellspacing="1">
   <tr>
-    <td width="49%" align="left" valign="top"><img src="images/Ops_CarMenu.png" width="475" height="91" alt="Car Menu"></td>
+    <td width="49%" align="left" valign="top"><img src="images/Ops_CarMenu.png" width="475" height="91" alt="Car Menu"><br>
+    <br>
+    <img src="images/Ops_CarMenu01.png" width="461" height="106" alt="menu"></td>
     <td width="51%" align="left" valign="top"><p><strong><em>Menu</em></strong></p>
     <p><strong>Window</strong>-- Same as other DecoderPro menus</p>
     <p><strong>Help</strong> -- Same as other DecoderPro Menus</p></td>

@@ -22,34 +22,34 @@
 
 <a NAME="Top"></a>
 <h1>Using DecoderPro&reg; to Operate Trains</h1>
-<h1>Importing Engines </h1>
+<h1>Importing Locomotives </h1>
 <div align=right>
   <p><a href="Ops_Cars.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <hr>
-<h4>Import Engines from roster</h4>
-<p>If you already have a <a href="Comp_Setup_Roster.shtml">DecoderPro® roster</a> created when programming decoders, you may import them into the Operations program. All engines that are not already in your Operations roster will be imported and a message will be displayed informing you of how many engines were imported. This way you can use this  tool any time you add engines to your DecoderPro&reg; engine roster. The DecoderPro&reg; engine  roster doesn't have the engines length, so a default length is entered for  you. You should correct the engine length if you want the program to  correctly calculate your train lengths.</p>
-<h4>Import Engines from a File</h4>
-The import from file function requires an ACSII text file, with one line  for each engine. The import order is engine number, engine road name,  engine model, and engine length. The following shows two examples of the  correct format:
+<h4>Import locomotives from roster</h4>
+<p>If you already have a <a href="Comp_Setup_Roster.shtml">DecoderPro® roster</a> created when programming decoders, you may import them into the Operations program. All locomotives that are not already in your Operations roster will be imported and a message will be displayed informing you of how many locomotives were imported. This way you can use this  tool any time you add locomotives to your DecoderPro&reg; locomotive roster. The DecoderPro&reg; locomotive  roster doesn't have the locomotives length, so a default length is entered for  you. You should correct the locomotive length if you want the program to  correctly calculate your train lengths.</p>
+<h4>Import locomotives from a File</h4>
+The import from file function requires an ACSII text file, with one line  for each locomotive. The import order is locomotive number, locomotive road name,  locomotive model, and locomotive length. The following shows two examples of the  correct format:
 <p>236 UP RS4 40 <br>
 5578 SP SW1200 42</p>
 <p>Each line can start with a space and multiple spaces between  fields is okay. Optionally you can include additional information in the  following order, owner name, date built, and location. The location can  have two fields, the location name followed by the location's siding or  yard name separated by a hyphen. The following shows two examples of the  correct format:</p>
 <br>
-236 UP RS4 40 AT 1930 Home Town USA - Engine Terminal <br>
-5578 SP SW1200 42 DB 1934 York - York Engine Yard
-<p>If you prefer to use comma delimiters instead of spaces, place  the word "comma" at the start of your import file and use commas instead  of spaces. The following are two examples of importing engines with  comma deliminters.</p>
+236 UP RS4 40 AT 1930 Home Town USA - locomotive Terminal <br>
+5578 SP SW1200 42 DB 1934 York - York locomotive Yard
+<p>If you prefer to use comma delimiters instead of spaces, place  the word "comma" at the start of your import file and use commas instead  of spaces. The following are two examples of importing locomotives with  comma deliminters.</p>
 <p>comma <br>
-  236,UP,RS 4,40,AT,1930,Home Town USA,-,Engine Terminal <br>
-  5578,SP,SW 1200,42,DB,1934,Town of York,-,York Engine Yard</p>
+  236,UP,RS 4,40,AT,1930,Home Town USA,-,locomotive Terminal <br>
+  5578,SP,SW 1200,42,DB,1934,Town of York,-,York locomotive Yard</p>
 <p>You need to be very careful with spaces when importing a comma  delimitated file. The program will include leading and trailing spaces  if they exist between the commas.</p>
-<p> Note that the program will only add engines that  don't exist in the program's engine roster. It the engine already  exists, it will be skipped by the program.</p>
-<p>After importing your engines, you must save them if you want to  keep them as part of your roster. Select any engine in the <strong>Engine</strong> window by pressing 
+<p> Note that the program will only add locomotives that  don't exist in the program's locomotive roster. It the locomotive already  exists, it will be skipped by the program.</p>
+<p>After importing your locomotives, you must save them if you want to  keep them as part of your roster. Select any locomotive in the <strong>locomotive</strong> window by pressing 
   <input type="submit" name="button" id="button" value="Edit">
 and then press 
 <input type="submit" name="button2" id="button2" value="Save">
-that can be found at the bottom  right of the <strong>Edit Engine</strong> window</p>
+that can be found at the bottom  right of the <strong>Edit locomotive</strong> window</p>
 <hr>
 
 <div align=right>

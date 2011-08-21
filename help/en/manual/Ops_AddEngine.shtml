@@ -33,22 +33,22 @@
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
     <td align="left" valign="top"><img src="images/Ops_AddEngineMenu.png" width="471" height="88" alt="Add Engine Menu"></td>
-    <td align="left" valign="top"><p>The Add Engine Window and Help menus are the standard DecoderPro&reg; menus used on most windows.</p></td>
+    <td align="left" valign="top"><p>The Add Locomotive's Window and Help menus are the standard DecoderPro&reg; menus used on most windows.</p></td>
   </tr>
   <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarRoad.png" width="473" height="71" alt="Engine Road"></td>
+    <td align="left" valign="top"><img src="images/Ops_AddEngineRoad.png" width="457" height="113" alt="road"></td>
     <td align="left" valign="top"><p>Select the Road 
       <select name="select" id="select">
         <option>AA</option>
       </select>
       for the  engine. If the desired road doesn't exist, press
       <input type="submit" name="button" id="button" value="Edit">
-Opens the <a href="Ops_EngineAttributes.shtml">Edit Engine Attributes</a> dialog for Road. </p></td>
+Opens the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Road. </p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarNumber.png" width="474" height="81" alt="Engine number"></td>
-    <td align="left" valign="top"><p>Type the Engine's Road Number 
-      <input name="textfield" type="text" id="textfield" size="12">
+    <td align="left" valign="top"><p>Type the Locomotive's Road Number 
+        <input name="textfield" type="text" id="textfield" size="12">
     use 
     <input type="submit" name="button2" id="button2" value="Clear">
     to remove your entry if you make a typing error.</p></td>
@@ -61,58 +61,58 @@ Opens the <a href="Ops_EngineAttributes.shtml">Edit Engine Attributes</a> dialog
       </select>
     if the model you need is not in the list then press 
     <input type="submit" name="button3" id="button3" value="Edit">
-    and the <a href="Ops_EngineAttributes.shtml">Edit Engine Attributes</a> dialog for Model will open. </p>
-    <p>The program allows you organize your engines by model. Each model can  only have one engine type, length, weight and horsepower rating associated with  it. For example, if you assign the model name "RS11" to a set of  engines, when you change the length of one of the "RS11"s, the length  will also change for the others</p></td>
+    and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Model will open. </p>
+    <p>The program allows you organize your engines by model. Each model can  only have one engine type, length, weight and horsepower rating associated with  it. For example, if you assign the model name "RS11" to a set of  locomotives, when you change the length of one of the "RS11"s, the length  will also change for the others</p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_EngineType.png" width="471" height="93" alt="Engine Type"></td>
-    <td align="left" valign="top"><p>Now select the engine's <strong>Type</strong>
-<select name="select3" id="select3">
+    <td align="left" valign="top"><p>Now select the locomotive's <strong>Type</strong>
+        <select name="select3" id="select3">
   <option>Diesel</option>
 </select>
     if the type you need is not in the list then press 
     <input type="submit" name="button4" id="button4" value="Edit">
-and the <a href="Ops_EngineAttributes.shtml">Edit Engine Attributes</a> dialog for type will open. </p></td>
+and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for type will open. </p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarLength.png" width="470" height="104" alt="Engine Length"></td>
-    <td align="left" valign="top"><p>Now select the engine's <strong>Length</strong>
+    <td align="left" valign="top"><p>Now select the locomotive's <strong>Length</strong>
         <select name="select4" id="select4">
           <option>60</option>
         </select>
 if the length you need is not in the list then press
 <input type="submit" name="button5" id="button5" value="Edit">
-and the <a href="Ops_EngineAttributes.shtml">Edit Engine Attributes</a> dialog for Length will open. </p></td>
+and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dialog for Length will open. </p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_Engine_LocationTrack.png" width="459" height="128" alt="location and track"></td>
+    <td align="left" valign="top">Select the locomotive's location 
+      <select name="select21" id="select21">
+    </select> 
+      and the locomotive's track 
+      <select name="select22" id="select22">
+      </select></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><img src="images/Ops_Engine_weight.png" width="461" height="134" alt="weight"></td>
+    <td align="left" valign="top">Optional: Enter the weight of the locomotive in tons</td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_EngineHP.png" width="474" height="83" alt="Engine Horsepower"></td>
     <td align="left" valign="top"><p>Now enter the engine's <strong>Horsepower</strong>
       <input name="textfield2" type="text" id="textfield2" size="15">
-    . The engine's horsepower, the train's  weight, and track grade is used by the program to calculate how many  engines are required when using the "Auto" feature when building trains. </p></td>
+    . The locomotive's horsepower, the train's  weight, and track grade is used by the program to calculate how many  engines are required when using the "Auto" feature when building trains. </p></td>
   </tr>
   <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarLocation.png" width="471" height="100" alt="Engine location"></td>
-    <td align="left" valign="top"><p>Now set the engine's <strong>Location </strong>
-      <select name="select5" id="select5">
-        <option>Red Rock Junction</option>
-      </select>
-    and the track 
-    <select name="select6" id="select6">
-      <option>Food Depot</option>
-    </select>
-    on the layout that you created in <a href="Ops_Locations.shtml">Locations.</a> </p>
-    <p>If the engine is off  the layout, set the location to none (blank space).</p></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_EngineConsist.png" width="472" height="100" alt="consists"></td>
+    <td align="left" valign="top"><img src="images/Ops_EngineConsist.png" width="460" height="124" alt="consist"></td>
     <td align="left" valign="top"> <p>If wish this engine  to be part of an <strong>Optional Consist
           <select name="select7" id="select7">
           </select>
     </strong>, press 
       <input type="submit" name="button6" id="button6" value="Edit">
-which opens the <a href="Ops_EngineAttributes.shtml">Edit Engine Consist </a>Attribute dialog where you may enter a  consist name. Then select the consist name from the menu box.</p>
+which opens the <a href="Ops_EngineAttributes.shtml">Edit Locomove Consist </a>Attribute dialog where you may enter a  consist name. Then select the consist name from the menu box.</p>
       <h4>Synchronize with NCE Consists</h4>
-If you are using NCE as your DCC command station, you can have the  program synchronize your consist numbers with your engines. The program  will read all of the consists out of the NCE system and then will search  for matching engines in your operations roster. The program will assign  the consist name nce_xxx where xxx is the consist number. To synchronize  your consists, select "Synchronize with NCE Consists" under the "Tools"  menu.
+If you are using NCE as your DCC command station, you can have the  program synchronize your consist numbers with your locomotives. The program  will read all of the consists out of the NCE system and then will search  for matching locomotives in your operations roster. The program will assign  the consist name nce_xxx where xxx is the consist number. To synchronize  your consists, select "Synchronize with NCE Consists" under the "Tools"  menu.
 <p>&nbsp;</p></td>
   </tr>
   <tr>
@@ -128,7 +128,7 @@ If you are using NCE as your DCC command station, you can have the  program sync
       </select>
     </strong>, if the owner's name is not in the list press
     <input type="submit" name="button7" id="button7" value="Edit">
-which opens the <a href="Ops_EngineAttributes.shtml">Edit Engine Owner </a>Attribute dialog where you may enter the owner's name. Then select the Owner name from the menu box.</td>
+which opens the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Owner </a>Attribute dialog where you may enter the owner's name. Then select the Owner name from the menu box.</td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarComment.png" width="475" height="97" alt="comments"></td>
@@ -161,7 +161,7 @@ which opens the <a href="Ops_EngineAttributes.shtml">Edit Engine Owner </a>Attri
 to the right of the engine that you wish to edit and the <strong>Edit Engine</strong> window is opened</p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="49%" align="left" valign="top"><img src="images/Ops_EditEngine.png" width="465" height="663" alt="Edit Engine"></td>
+    <td width="49%" align="left" valign="top"><img src="images/Ops_EditEngine.png" width="450" height="708" alt="edit engine"></td>
     <td width="51%" align="left" valign="top"><p>I now edit the <strong>Road</strong> to
       <select name="select9" id="select9">
         <option>UP</option>
@@ -186,7 +186,7 @@ to the right of the engine that you wish to edit and the <strong>Edit Engine</st
     <p><strong>Horsepower</strong> was not imported, so set to 
       <input name="textfield5" type="text" id="textfield5" value="5000" size="15">
     as this model was basically two 2500 HP units on a single frame.</p>
-    <p><strong>Location</strong> is not imported from the Roster, So I located the engine at 
+    <p><strong>Location</strong> is not imported from the Roster, So I located the locomotive at 
       <select name="select13" id="select13">
         <option>North Yard</option>
       </select>
@@ -203,53 +203,66 @@ to the right of the engine that you wish to edit and the <strong>Edit Engine</st
         <option>DaleTripp</option>
       </select>
     .</p>
-    <p>No <strong>Comment</strong> for this engine</p>
+    <p>No <strong>Comment</strong> for this locomotive</p>
     <p>Now to store press 
       <input type="submit" name="button13" id="button13" value="Save">
     and this will add the edits to any edited menu item.</p>
     <p>
       <input type="submit" name="button14" id="button14" value="Add ">
-    updates your Operations Engine Roster.</p>
+    updates your Operations Locomotive Roster.</p>
     <p>&nbsp;</p>
-    <p>Take a look at the Edited Operations Engine Roster, note the highlighted entry which we just edited.</p>
+    <p>Take a look at the Edited Operations Locomotive Roster, note the highlighted entry which we just edited.</p>
     <p>&nbsp;</p></td>
   </tr>
 </table>
 <p><img src="images/Ops_EditEngineUpdated.png" width="922" height="300" alt="Engine Roster updated"></p>
 <p>The
   <input type="submit" name="button16" id="button16" value="Set">
-to the right of selected engine, when pressed, opens the Set Engine Location panel and allows you to override the program and set an engine at a location that is defined in your Operations data base.</p>
+to the right of selected locomotie, when pressed, opens the Set Locomotive Location window and allows you to override the program and set an locomotive at a location that is defined in your Operations data base. Dialog preceeds the Set Locomotive window</p>
+<p><img src="images/Ops_Engine_Release.png" width="449" height="122" alt="release"></p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="47%"><img src="images/Ops_SetEngineLocation.png" width="450" height="371" alt="Set Engine Location"></td>
+    <td valign="top" width="47%"><img src="images/set_Engine_location.png" width="500" height="400" alt="set locations"></td>
     <td width="53%" align="left" valign="top"><p><strong>Menu</strong> is standard for DecoderPro&reg;.</p>
-      <p><strong>Engine </strong>displays the selected engine.</p>
-      <p><strong>Location</strong> using <strong>Name
+      <p><strong>Locomotive </strong>displays the selected engine.</p>
+      <p><strong>Type</strong> is displayed</p>
+      <p>Status<br>
+        <input type="checkbox" name="checkbox" id="checkbox">
+        Out of Service<br>
+        Takes the Locomotive out of service and will not be assigned by the build program<br>
+      </p>
+      <p><strong>Location</strong><br>
+        <strong>Name
         <select name="select16" id="select16">
-          <option>North Yard</option>
+          <option>Susanville</option>
         </select>
         </strong> and <strong>Track
-          <select name="select16" id="select17">
-            <option>Track 2</option>
+        <select name="select16" id="select17">
+            <option>#83 Yard Track</option>
           </select>
-        </strong>you can set the engine at any defined location on your layout.</p>
-      <p><strong>Optional</strong></p>
+        </strong>you can set the locomotive at any defined location on your layout.<br>
+        <input type="checkbox" name="checkbox2" id="checkbox2">
+        <strong>        Auto
+        </strong>limits selections to valid locations<br>
+      </p>
+      <p><strong>Optional--Normally Set by Program--</strong></p>
       <p><strong>Destination </strong>optionally set the <strong>Name</strong><strong>
         <select name="select16" id="select18">
-          <option>North Yard</option>
+          <option>Lakeview</option>
         </select>
         </strong> of location and the <strong>Track
           <select name="select16" id="select19">
-            <option>Track 2</option>
+            <option>#94 Yard Track</option>
           </select>
         </strong>.</p>
       <p><strong>Train</strong>
         <select name="select16" id="select20">
+          <option>SL</option>
         </select>
         optionally set the train.</p>
       <p>
         <input type="submit" name="button17" id="button17" value="Save">
-    press to save the car locations that you have set.</p>
+    press to save the locomotive locations that you have set.</p>
     <p>Close the window when completed.</p></td>
   </tr>
 </table>

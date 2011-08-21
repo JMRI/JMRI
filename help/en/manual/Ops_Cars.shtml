@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright ($Author$) 2009 -->
 <!-- $Id$ -->
-<title>Operations-Cars</title>
+<title>Operations-Locations</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -16,54 +16,92 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <a NAME="Top"></a>
+
 <h1>Using DecoderPro&reg; to Operate Trains</h1>
 <h1>Operations Cars Window</h1>
 
 <div align=right>
-<p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<div align="right">
+  <p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
+  <p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<p><a href="Ops_Locations.shtml"></a></p>
 </div>
 
 <hr>
-<p>The cars window allows you to edit your car roster. You can enter a car's  number, road, type, and length. The program will automatically calculate the  car's weight based on length and the scale you are modeling. You can  optionally add the car's color, build date, load and owner. If you want  a group of cars to be switched as a unit, you can create a "kernel". You  can assign any number of cars to a kernel but the type of the first car  assigned will be used by the program to determine if the kernel is  allowed at a location. The entire length of the kernel is used to  determine if the cars in the kernel will fit. Note that the program also  includes space for the car's couplers when calculating the length of a  kernel. </p>
-<p><img src="images/Ops_Cars01.png" width="922" height="222" alt="Cars window"></p>
-<p><strong><em>Menu Bar</em></strong></p>
-<p><img src="images/Ops_Cars02.png" width="242" height="219" alt="Operations Cars"></p>
-<p><strong>Tools
-</strong></p>
-<ul>
-  <li><strong>Roster &raquo;  </strong>
-<ul>
-      <li><a href="Ops_ImportCarsFile.shtml">Import from file</a> -- opens windows <strong>Open</strong> dialog box.</li>
-      <li>Delete all cars -- Opens the <strong>Delete all cars?</strong> confirmation dialog box.</li>
-      <li>Print -- Opens your computers <strong>Print</strong> window and will print your car roster.</li>
-      <li>Preview -- Opens your computers <strong>Print</strong> window and when you click <strong>OK</strong> will show the preview of your car roster.</li>
-  </ul>
-  </ul>
-<p><strong>Window</strong> --same as other DecoderPro menus.</p>
-<p><strong>Help</strong> -- same as other DecoderPro menus.</p>
-<p><strong><em>Body of window</em></strong></p>
-<p><strong>Sort by</strong> -- select the element in the roster by which you would like to sort your car roster, we will use car 
-  <input name="radio" type="radio" id="radio" value="radio" checked> 
-<strong>Number </strong></p>
-<p>(number) <strong>cars</strong> -- only shows number of cars in your roster.</p>
+<p>This window is opened from the <strong>Location</strong> Window <strong>Tools</strong> menu, <strong>Show Cars.</strong></p>
+<p>The cars window allows you to edit your car roster. You can enter a car's number, road, type, length. The program will automatically calculate the car's weight based on length and the scale you are modeling. Optionally the car's color, build date, load and owner can ber added. You may want to switch a group of cars as a unit, then you create a &quot;kernel&quot;. You can assign any number of cars to a kernel but the type of the first car assigned will be used by the program to determine if the kernel is allowed at a location. The entire length of the kernel is used to determine if the cars in the kernel will fit. Note that the program also includes space for the car's couplers when calculating the length of a kernel.</p>
+<p>The complete roster of cars is displayed. At the bottom of the page is a series of radio buttons that allow you to select the sort order.</p>
 <p>
-  <input type="submit" name="button" id="button" value="Add"> 
-when selected opens the <a href="Ops_AddCars.shtml">Add Car</a> window.</p>
+  <input type="button" name="button2" id="button2" value="Add"> 
+Opens the<strong><a href="Ops_AddCars.shtml">Add Car</a></strong> window and allows you to add a new car. </p>
 <p>
-  <input type="submit" name="button2" id="button2" value="Find"> 
-  <input type="text" name="textfield" id="textfield">
-Locate a car in your roster, when you type the road number into the text box. </p>
-<hr>
+  <input type="button" name="button3" id="button3" value="Save"> 
+  Saves the car roster to disk.
+</p>
+<p>
+  <input type="button" name="button4" id="button4" value="Find"> 
+  <input name="textfield" type="text" id="textfield" size="10">
+Used to find a car by its road number.   The wild card may be used &quot;*&quot; when entering a car number. for example, if you want to find all the cars with a number ending in 345 , enter *345 then press 
+<input type="button" name="button5" id="button5" value="Find">
+each time pressed the next car with the 345 ending will be displayed..
+</p>
+<p>To the right of each car entry:</p>
+<p>
+  <input type="button" name="button6" id="button6" value="Set">
+opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></strong>Window.</p>
+<p>
+  <input type="button" name="button7" id="button7" value="Edit">
+  opens
+  the <a href="Ops_AddCars.shtml">Edit Car </a>window, similar to the <strong>Add Car </strong>Window</p>
+<p><img src="images/Ops_location_showCars.png" width="900" height="529" alt="cars"></p>
+<h3>Menu Bar</h3>
 
+ <strong>Tools </strong>
+ <ul>
+    <li><strong>Roster --&gt;
+      </strong>
+      <ul>
+        <li><strong>Import from File<br>
+        </strong>Opens the Open dialog box, to import roster of cars if you already have a list of cars in a database. The import function requires and ACSII text file, with one line for each car. The car import requires four attributes and the order is car number, road name, type, and length. An example of a correct format:</li>
+      </ul>
+      <blockquote>
+        <p><strong>336 GCR Flat 40<br>
+        655579 UP Boxcar 40
+      </strong></p>
+        <p>Optionally you may include additional attributes in the following order: weight, color, owner name, date built, and location. Check the Windows help file for further information.</p>
+      </blockquote>
+      <ul>
+        <li><strong>Export to File<br>
+          <img src="images/Ops_Export_carRoster.png" width="712" height="122" alt="export roster"><br>
+        </strong></li>
+      </ul>
+      <ul>
+        <li><strong>Delete all Cars<br>
+          <img src="images/Ops_delete_cars_roster.png" width="403" height="122" alt="delete"><br>
+        </strong></li>
+        <li><strong>Print</strong><br>
+          <br>
+        <img src="images/Ops_carRoster_printOptions.png" width="260" height="326" alt="print options">        </li>
+        <li><strong>Print Preview</strong><br>
+          Print options dialog displays, 
+          <input type="button" name="button" id="button" value="OK"> 
+          opens output in printer preview window.
+        </li>
+      </ul>
+    </li>
+    <li><strong><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></strong></li>
+    <li><strong><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></strong></li>
+    <li><strong><a href="Ops_Locations_setCars.shtml">Set Cars</a></strong></li>
+  </ul>
+ <p>&nbsp;</p>
 <div align=right>
-<p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+  <p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
+  <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

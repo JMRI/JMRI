@@ -63,7 +63,7 @@ opens system printer dialog.<br>
     Opens the <strong>Modify Locations by Car Type </strong></li>
   </ul>
   <ul>
-    <li><strong><a href="Ops_Locations_ShowCars.shtml">Show Cars</a></strong><br>
+    <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>
     Opens Cars window which lists cars for this location</li>
   </ul>
   <li><strong>Window</strong></li>
