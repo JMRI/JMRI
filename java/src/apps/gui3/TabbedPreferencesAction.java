@@ -1,9 +1,7 @@
 package apps.gui3;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
-import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
@@ -88,7 +86,8 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         
         f.setVisible(true);
     }
-        
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }
