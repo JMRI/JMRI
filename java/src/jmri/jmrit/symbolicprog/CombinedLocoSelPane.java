@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -193,25 +194,26 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Initialize the GUI
      */
     protected void init() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BorderLayout());
 
         JPanel pane2a = layoutRosterSelection();
-        if (pane2a != null) add(pane2a);
+        if (pane2a != null) add(pane2a, BorderLayout.NORTH);
 
 
-        add(layoutDecoderSelection());
-
+        add(layoutDecoderSelection(), BorderLayout.CENTER);
+        JPanel progFormat = new JPanel();
         JPanel pane3a = new JPanel();
-        pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
-        pane3a.add(new JLabel(rbt.getString("PROGRAMMER FORMAT: ")));
+        pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.Y_AXIS));
+        progFormat.setLayout(new BoxLayout(progFormat, BoxLayout.X_AXIS));
+        progFormat.add(new JLabel(rbt.getString("PROGRAMMER FORMAT: ")));
 
         // create the programmer box
         programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
         if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
-        pane3a.add(programmerBox);
-        pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-        add(pane3a);
+        progFormat.add(programmerBox);
+        progFormat.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 
         go2 = new JButton(rbt.getString("OPEN PROGRAMMER"));
         go2.addActionListener( new ActionListener() {
@@ -223,7 +225,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         go2.setEnabled(false);
         go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
-        add(go2);
+        pane3a.add(progFormat);
+        pane3a.add(go2);
+        add(pane3a, BorderLayout.SOUTH);
         setBorder(new EmptyBorder(6,6,6,6));
     }
 

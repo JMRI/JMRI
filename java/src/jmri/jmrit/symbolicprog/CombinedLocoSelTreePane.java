@@ -22,6 +22,7 @@ import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.BorderLayout;
 
 import java.util.List;
 
@@ -59,9 +60,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
      * Create the panel used to select the decoder
      */
     protected JPanel layoutDecoderSelection() {
-        JPanel pane1a = new JPanel();
-        pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
-        pane1a.add(new JLabel(rbt.getString("LabelDecoderInstalled")));
+        JPanel pane1a = new JPanel(new BorderLayout());
+        pane1a.add(new JLabel(rbt.getString("LabelDecoderInstalled")), BorderLayout.WEST);
         // create the list of manufacturers; get the list of decoders, and add elements
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
@@ -150,7 +150,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         }  // end of loop over decoders
 
         // build the tree GUI
-        pane1a.add(new JScrollPane(dTree));
+        pane1a.add(new JScrollPane(dTree), BorderLayout.CENTER);
         dTree.expandPath(new TreePath(dRoot));
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
@@ -202,8 +202,14 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
         // add button
         iddecoder = addDecoderIdentButton();
-        if (iddecoder!=null) pane1a.add(iddecoder);
-        pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
+        if (iddecoder!=null) {
+            JPanel buttonHolder = new JPanel();
+            buttonHolder.setLayout(new BoxLayout(buttonHolder, BoxLayout.X_AXIS));
+            buttonHolder.add(iddecoder);
+            buttonHolder.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
+            buttonHolder.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+            pane1a.add(buttonHolder, BorderLayout.EAST);
+        }
         return pane1a;
     }
 
