@@ -3,6 +3,10 @@ package apps.gui3;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
     /**
      * Tabbed Preferences Action for dealing with all the preferences in a single view
@@ -12,7 +16,7 @@ import javax.swing.SwingUtilities;
      * @version	$Revision$
      */
 
-public class TabbedPreferencesAction extends AbstractAction {
+public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
      * Create an action with a specific title.
@@ -40,6 +44,26 @@ public class TabbedPreferencesAction extends AbstractAction {
     }
     
     public TabbedPreferencesAction() { this("Listed Table Access");}
+    
+    public TabbedPreferencesAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public TabbedPreferencesAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
+    
+    public TabbedPreferencesAction(String s, WindowInterface wi, String category, String subCategory) {
+    	super(s, wi);
+        preferencesItem = category;
+        preferenceSubCat = subCategory;
+    }
+     
+ 	public TabbedPreferencesAction(String s, Icon i, WindowInterface wi, String category) {
+    	super(s, i, wi);
+        preferencesItem = category;
+    }
+
     
     static TabbedPreferencesFrame f;
     String preferencesItem = null;
@@ -74,6 +98,11 @@ public class TabbedPreferencesAction extends AbstractAction {
     
     String helpTarget() {
         return "package.apps.TabbedPreferences";
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
     
 }
