@@ -38,18 +38,25 @@
     <a href="http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a>
     on the 
     <a href="http://www.sprog-dcc.co.uk/">SPROG web site</a>.
+	
 	<p>Note that there are several different versions
 	of the SPROG hardware, and even more versions of the 
-	SPROG software. If you're trying to attach an SPROG
-	that has been sitting in a drawer for a while, you 
-	should probably update it's software to a current version (see below).</P>
+	SPROG software.</P>
 
 	<H3>Setup</H3>
 
 	  <ol>
 	  <li> Original SPROGs were connected via a 9-pin serial cable. Current SPROGs
           are available as USB only. Connect your SPROG using the appropriate cable
-          and power it up.
+          and power it up. 
+      
+      <li>USB-connected SPROGs on Windows may need to have a 
+          driver installed. For more information on that, see
+          the <a href="http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">SPROG manual</a>
+          on the 
+          <a href="http://www.sprog-dcc.co.uk/">SPROG web site</a>.
+          Windows 7 users may also be interested in 
+          <a href="http://www.youtube.com/watch?v=JUG7dsXi2cI">this video</a>.
 
 	  <li> Make sure you have the latest version of JMRI, then go to the preferences
           panel of a JMRI-based program.  This
