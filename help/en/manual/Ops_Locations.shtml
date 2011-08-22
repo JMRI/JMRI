@@ -22,7 +22,7 @@
 
 <a NAME="Top"></a>
 
-<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Operations Locations Window</h1>
 
 <div align=right>
@@ -89,17 +89,6 @@ Press to add a location</p>
 at  the bottom of the panel. The various fields that were disabled should  be enabled.</p>
 <p><img src="images/Ops_AddLocation01.png" width="760" height="650" alt="location"></p>
 <p>Each location can have several yard, spurs, interchange or  staging tracks. Yards are where cars and engines are placed for  temporary storage. A spur can be an industry or any place where a car  is loaded or unloaded. For a train to service a location, there must be  at least one track for that location. See below how to add tracks to  your location.</p>
-<p>This l<strong>ocation serviced by trains traveling</strong></p>
-<blockquote>
-  <p>
-    <strong>
-  <input name="checkbox5" type="checkbox" id="checkbox5" checked>
-  East  
-  <input name="checkbox6" type="checkbox" id="checkbox6" checked>
-  West</strong></p>
-</blockquote>
-<p>You can decide which train direction the location can service. If only East bound trains can service the location, the check East. Otherwise check all directions in which the location may be serviced. Remember, the directions of travel on your railroad were set in the preferences in Settings.</p>
-<p>&nbsp;</p>
 <p><strong>Select the rolling stock serviced by this location</strong></p>
 <p>The tables show the length of the tracks, the amount of track  that is occupied (Used) by cars and engines, the total number of cars  and engines (Rolling Stock) at each location, the number of cars and  engines that will be picked up (Pickups) by trains, and the number of  cars and engines that will be delivered (Drops) by trains.</p>
 <p><strong>This Location is Serviced by Trains Traveling</strong> 
@@ -146,7 +135,7 @@ Press the
 <input type="submit" name="button8" id="button8" value="Save Location">
 to save your work. The program will create a  file (OperationsLocationRoster.xml) in your JMRI directory in a folder  called "operations". The program will also create a backup file  containing the last settings for all of your locations. <a name="Sidings"></a>
 <h3>&nbsp;</h3>
-<p>Sidings are very similar  to <a href="Ops_AddYard.shtml">Yards</a>, so see above for more information.  You can if  you wish schedule the order that cars will be delivered to a siding.  See <a href="Ops_shedule.shtml">Schedules</a> below for more information.
+<p>Sidings are very similar  to <a href="Ops_AddYard.shtml">Yards</a>, so see above for more information.  You can if  you wish schedule the order that cars will be delivered to a siding.  See <a href="Ops_schedule.shtml">Schedules</a> below for more information.
 </p>
 <hr>
 

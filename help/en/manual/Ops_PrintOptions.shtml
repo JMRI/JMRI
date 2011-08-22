@@ -21,7 +21,7 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Operations Print Options</h1>
 
 <div align=right>
@@ -31,7 +31,7 @@
 <hr>
 <p><img src="images/Ops_Print.png" width="949" height="585" alt="print">&nbsp;</p>
 <p>You can modify the how the program prints the train manifests and the amount of detail  that the build report provides.  </p>
-<h3><strong>Manifest Printer Options</strong><br>
+<h3><strong>Manifest  Options</strong><br>
   <br>
 </h3>
 <table width="90%" border="1" cellspacing="1" cellpadding="2">
@@ -82,11 +82,7 @@
   <input type="button" name="button4" id="button4" value="Add Logo"> 
 and select a file with the image you want to display. Each train in your roster may have a different logo, this is set in <strong><a href="Ops_Trains.shtml">Trains Setup</a></strong> </p>
 <p>Missplaced Cars Comment</p>
-<p>&nbsp;</p>
-<p>Build Reports Options</p>
-<p>&nbsp;</p>
-<p><br>
-  <strong>Build Report Options </strong><br>
+<p><strong>Build Report Options </strong><br>
   <br>
   <strong>Detail Level </strong>You can adjust the amount of information that the build report will  show. Select one of the four levels.  The program  when generating the build reports stores the <strong>Very Detailed</strong> information  to disk. <br>
   <br>
@@ -104,12 +100,7 @@ and select a file with the image you want to display. Each train in your roster 
   <br>
   Be sure and  press 
   <input type="submit" name="button" id="button" value="Save">
-  after changing the build report selection.</p>
-<h4>Build Report Details</h4>
-<p>You can adjust the amount of information that the build report will  show. Select one of the four levels using the radio buttons. The program  when generating the build reports stores the "Very Detailed" information  to disk. The radio buttons control how much of that data is actually  printed. The "Minimal" radio button provides the least amount of  information and "Very Detailed" provides the most. If you're only  interested why a train won't build, the "Minimal" setting can provide  you with this information. The "Normal" setting shows which engines and  cars are being excluded from the train, and which engines and cars are  being picked up and dropped. The "Detailed" setting will generate quite  a few pages depending on the size of your railroad. It will show all  available cars and engines, and a bit how the program finds destinations  for the cars and engines. The "Very Detailed" setting produces the most  pages, and will show why cars are not picked up or dropped. Be sure and  press 
-  <input type="submit" name="button2" id="button2" value="Save">
-  after changing the build report selection.
-</p>
+after changing the build report selection.</p>
 <hr>
 
 <div align=right>

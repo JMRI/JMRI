@@ -22,7 +22,7 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Operations Add Spurs </h1>
 
 <div align=right>
@@ -33,8 +33,8 @@
 <hr>
 <p align="left">A spur is used to service an industry. To add a spur, press 
   <input type="button" name="button17" id="button17" value="Add Spur"> 
-. Spurs are very similar to <strong><a href="Ops_AddYard.shtml">Yards</a> . </strong>You can if you wisth schedule the order that cars will be delivered to a spur, or demand cars with certain loads using <strong><a href="Ops_schedule.shtml">Schedules</a>.</strong></p>
-<p align="left">When a car is placed at a spur the car's load status is modified. The program provides two load names for all cars. the default emplt or <strong>E</strong>  and the default load or <strong>L</strong>. If a car has one of these loads when it arrives at a spur, the load will change to the other, i.e. <strong>E</strong> becomes <strong>L</strong> and <strong>L</strong> becomes <strong>E</strong>.</p>
+. Spurs are very similar to <strong><a href="Ops_AddYard.shtml">Yards</a> . </strong>You can if you with schedule the order that cars will be delivered to a spur, or demand cars with certain loads using <strong><a href="Ops_schedule.shtml">Schedules</a>.</strong></p>
+<p align="left">When a car is placed at a spur the car's load status is modified. The program provides two load names for all cars. The default <strong>Empty</strong> or <strong>E</strong>  and the default <strong>load</strong> or <strong>L</strong>. If a car has one of these loads when it arrives at a spur, the load will change to the other, i.e. <strong>E</strong> becomes <strong>L</strong> and <strong>L</strong> becomes <strong>E</strong>.</p>
 <p align="center"><img src="images/Ops_AddSiding.png" width="703" height="620" alt="Add Siding"></p>
 <p><br> 
   To add a location as a spur, in the <strong>Add Location</strong> window, type the<strong> Name</strong>
@@ -140,7 +140,7 @@ Default accepts any load</p>
     <input type="radio" name="radio4" id="radio7" value="radio4">
     <strong>Accept only<br>
     </strong>Allows you to list the loads that this location will accept.<br>
-    <img src="images/Ops_Select_loads.png" width="756" height="165" alt="loads"> Select type of load from first drop-down list (Based on the type of rolling stock accepted). From second droop-down list select either Empty or  Load, the press 
+    <img src="images/Ops_Select_loads.png" width="756" height="165" alt="loads"> Select type of load from first drop-down list (Based on the type of rolling stock accepted). From second drop-down list select either Empty or  Load, the press 
     <input type="button" name="button22" id="button22" value="Add Load">
     to list of acceptable loads. Repeat as necessary. Select a load then press 
     <input type="button" name="button23" id="button23" value="Delete Load">
@@ -180,10 +180,10 @@ Default accepts any load</p>
 <h3><strong>Optional Schedule</strong></h3>
 <blockquote>
   <p><img src="images/Ops_Select_schedule.png" width="756" height="199" alt="schedule"><br>
-    Optiionally, a schedule may be selected from the drop-down list.
+    Optionally, a schedule may be selected from the drop-down list.
       Press 
       <input type="button" name="button27" id="button27" value="Edit">
-  to open Add Scheule for Spur Tank Facility. <strong><a href="Ops_schedule.shtml">Schedule</a></strong></p>
+  to open Add Schedule for Spur Tank Facility. <strong><a href="Ops_schedule.shtml">Schedule</a></strong></p>
 </blockquote>
 <h3><strong>Comment</strong></h3>
 <p>You may now press
