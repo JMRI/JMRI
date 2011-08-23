@@ -202,19 +202,25 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 
 
         add(layoutDecoderSelection(), BorderLayout.CENTER);
-        JPanel progFormat = new JPanel();
+        
+        add(createProgrammerSelection(), BorderLayout.SOUTH);
+        setBorder(new EmptyBorder(6,6,6,6));
+    }
+    
+    protected JPanel createProgrammerSelection(){
         JPanel pane3a = new JPanel();
         pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.Y_AXIS));
+        // create the programmer box
+        JPanel progFormat = new JPanel();
         progFormat.setLayout(new BoxLayout(progFormat, BoxLayout.X_AXIS));
         progFormat.add(new JLabel(rbt.getString("PROGRAMMER FORMAT: ")));
+        progFormat.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 
-        // create the programmer box
         programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
         if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         progFormat.add(programmerBox);
-        progFormat.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-
+        
         go2 = new JButton(rbt.getString("OPEN PROGRAMMER"));
         go2.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -227,10 +233,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
         pane3a.add(progFormat);
         pane3a.add(go2);
-        add(pane3a, BorderLayout.SOUTH);
-        setBorder(new EmptyBorder(6,6,6,6));
+        return pane3a;
     }
-
+    
     /**
      * Reference to an external (not in this pane) JLabel that should
      * be updated with status information as identification happens.
