@@ -76,7 +76,7 @@ public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
                                     top,
                                     bottom);
         upDownSplitPane.setOneTouchExpandable(true);
-        upDownSplitPane.setResizeWeight(0.5);  // emphasize top part
+        upDownSplitPane.setResizeWeight(1.0);  // emphasize top part
         
         add(upDownSplitPane, BorderLayout.CENTER);
     }

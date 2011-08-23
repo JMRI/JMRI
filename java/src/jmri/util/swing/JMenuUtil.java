@@ -64,7 +64,7 @@ public class JMenuUtil extends GuiUtilBase {
     
     static int convertStringToKeyEvent(String st){
     	char a = (st.toLowerCase()).charAt(0);
-        int kcode = (int) a - 32;
+        int kcode = a - 32;
         return kcode;
     }
     

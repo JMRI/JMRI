@@ -24,6 +24,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import javax.swing.border.Border;
 
 
 /**
@@ -56,27 +57,48 @@ public class DecoderPro3Window
     	        new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));  // no toolbar
     	add(createToolBarPanel(), BorderLayout.NORTH);
     	getTop().add(createTop());
+        getBottom().setMinimumSize(new Dimension(0, 250));
         getBottom().add(createBottom());
         getToolBar().add(createToolBarPanel());
-        statusField.setFont(statusField.getFont().deriveFont(10f));
-        statusField.setText("idle");
-        getStatus().add(statusField);
+        statusBar();
         systemsMenu();
         helpMenu(getMenu(), this);
         setSize(getMaximumSize());
         setVisible(true);
+        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            System.out.println(jmri.managers.ManagerDefaultSelector.instance.getDefault(jmri.ProgrammerManager.class));
+            System.out.println(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer());
+        }
     }
     
-     /**
-     * Show only active systems in the menu bar.
-     * <P>
-     * Alternately, you might want to do
-     * <PRE>
-     *    menuBar.add(new jmri.jmrix.SystemsMenu());
-     * </PRE>
-     * @param menuBar
-     * @param frame
-     */
+    void statusBar(){
+        Border blackline = BorderFactory.createMatteBorder(0,0,0,1,Color.black);
+        JLabel programmerLabel = new JLabel();
+        //programmerLabel.setBorder(blackline);
+        Font statusBarFont = programmerLabel.getFont().deriveFont(10f);
+        programmerLabel.setFont(statusBarFont);
+        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            programmerLabel.setText ("Programmer " + "Is Available");
+            programmerLabel.setForeground(Color.green);
+        } else {
+            programmerLabel.setText("No Programmer Available");
+            programmerLabel.setForeground(Color.red);
+        }
+        getStatus().add(programmerLabel);
+        getStatus().add(Box.createHorizontalGlue());
+        JLabel spacerLabel = new JLabel("   ");
+        spacerLabel.setBorder(blackline);
+        getStatus().add(spacerLabel);
+        JLabel statusTitle = new JLabel("Programmer Status : ");
+        statusTitle.setFont(statusBarFont);
+        getStatus().add(statusTitle);
+        statusField.setFont(statusBarFont);
+        statusField.setText("idle");
+        getStatus().add(statusField);
+    }
+    
     protected void systemsMenu() {
         jmri.jmrix.ActiveSystemsMenu.addItems(getMenu());
         getMenu().add(new jmri.util.WindowMenu(this));
@@ -110,7 +132,7 @@ public class DecoderPro3Window
         //retval.add(createToolBarPanel(), BorderLayout.NORTH);
         // set up roster table
          
-        rtable = new RosterTable(true);
+        rtable = new RosterTable(false);
         retval.add(rtable, BorderLayout.CENTER);
         // add selection listener
         rtable.getTable().getSelectionModel().addListSelectionListener(
@@ -366,6 +388,7 @@ public class DecoderPro3Window
         model.setText(re.getModel());
         owner.setText(re.getOwner());
         locoImage.setImagePath(re.getImagePath());
+        //locoImage = new ResizableImagePanel(re.getImagePath(), 320, 240);
         if(re!=null){
             basicProg.setEnabled(true);
             compProg.setEnabled(true);
@@ -373,8 +396,12 @@ public class DecoderPro3Window
             rosterMedia.setEnabled(true);
             throttleLaunch.setEnabled(true);
             modePane.setEnabled(true);
-            service.setEnabled(true);
-            ops.setEnabled(true);
+            if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+                service.setEnabled(true);
+                ops.setEnabled(true);
+            } else 
+                edit.setSelected(true);
             edit.setEnabled(true);
         }
     
@@ -382,7 +409,7 @@ public class DecoderPro3Window
     
     JRadioButton service = new JRadioButton("<HTML>Service Mode<br>(programming track)</HTML>");
     JRadioButton ops = new JRadioButton("<HTML>Operations Mode<br>(Programming On Main)</HTML>");
-    JRadioButton edit = new JRadioButton("Edit Only");
+    JRadioButton edit = new JRadioButton("<HTML>Edit Only</HTML>");
     
     jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
     
@@ -399,6 +426,12 @@ public class DecoderPro3Window
             };
             
     void updateProgMode(){
+        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            service.setEnabled(true);
+            ops.setEnabled(true);
+        } else 
+            edit.setSelected(true);
         modePane.setEnabled(false);
         if(service.isSelected()){
             modePane.setEnabled(true);
@@ -499,6 +532,12 @@ public class DecoderPro3Window
      */
      //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
+        if (jmri.InstanceManager.programmerManagerInstance()==null ||
+                        !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            log.error("Identify loco called when no service mode programmer is available");
+            JOptionPane.showMessageDialog(null, "Identify loco called when no service mode programmer is available");
+            return;
+        }
         // start identifying a loco
         final DecoderPro3Window me = this;
         IdentifyLoco id = new IdentifyLoco() {

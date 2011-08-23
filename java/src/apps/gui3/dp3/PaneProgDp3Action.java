@@ -76,14 +76,6 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
     
     void init(){
         statusLabel = new JLabel(rbt.getString("StateIdle"));
-
-        // disable ourself if programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-            setEnabled(false);
-            // This needs to return, so we don't start the xmlThread
-            return;
-        }
     }
     
     public void actionPerformed(ActionEvent e) {
@@ -91,7 +83,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
         if (log.isDebugEnabled()) log.debug("Pane programmer requested");
 
         // create the initial frame that steers
-        final JmriJFrame f = new JmriJFrame(rbt.getString("FrameServiceProgrammerSetup"));
+        final JmriJFrame f = new JmriJFrame("Create New Loco"); //rbt.getString("FrameServiceProgrammerSetup")
         f.getContentPane().setLayout(new BorderLayout());
         // ensure status line is cleared on close so it is normal if re-opened
         f.addWindowListener(new WindowAdapter(){
@@ -150,6 +142,14 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
                     progModePane.add(serviceModeProg);
                     progModePane.add(editModeProg);
                     serviceModeProg.setSelected(true);
+                    
+                    if (jmri.InstanceManager.programmerManagerInstance()==null ||
+                        !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+                        editModeProg.setSelected(true);
+                        serviceModeProg.setEnabled(false);
+                        iddecoder.setVisible(false);
+                        modePane.setVisible(false);
+                    }
                     
                     serviceModeProg.addActionListener(new ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent e) {
