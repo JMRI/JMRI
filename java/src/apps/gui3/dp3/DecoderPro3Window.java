@@ -462,7 +462,7 @@ public class DecoderPro3Window
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
                     edit.setSelected(true);
-                    startProgrammer(null, re, "ThrottleLabels");
+                    startProgrammer(null, re, "dp3"+File.separator+"ThrottleLabels");
             }
         });
         rosterMedia.setEnabled(false);
@@ -470,7 +470,7 @@ public class DecoderPro3Window
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
                     edit.setSelected(true);
-                    startProgrammer(null, re, "MediaPane");
+                    startProgrammer(null, re, "dp3"+File.separator+"MediaPane");
             }
         });
         
