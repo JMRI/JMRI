@@ -69,8 +69,8 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         dataScroll.getViewport().setPreferredSize(dataTableSize);
  	    
         // set preferred scrolling options
-        dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
         // set to single selection
         dataTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
