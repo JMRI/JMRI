@@ -135,7 +135,9 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         
         try{
+            log.debug("Creating input stream reader");
             in = new BufferedReader(new InputStreamReader(device.getInputStream(),"UTF8"));
+            log.debug("Creating output stream writer");
             out = new PrintStream(device.getOutputStream(),true, "UTF8");
 
         } catch (IOException e){

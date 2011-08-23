@@ -284,10 +284,12 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
         while (isListen){ //Create DeviceServer threads
             DeviceServer device;
             try{
+                log.debug("Creating new DeviceServer(socket)");
                 device = new DeviceServer(socket.accept());
 
                 Thread t = new Thread(device);
                 device.addDeviceListener(this);
+                log.debug("Starting DeviceListener thread");
                 t.start();
             } catch (IOException e3){
                 if (isListen)log.error("Listen Failed on port " + port);
