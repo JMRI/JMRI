@@ -6,7 +6,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 ><name>Windows</name>
-
+    <mnemonic>w</mnemonic>
     <node><name>Active</name>
         <node><name>Sample Window 1</name>
         </node>

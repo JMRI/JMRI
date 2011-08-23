@@ -6,7 +6,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 ><name>Help</name>
-
+<mnemonic>h</mnemonic>
     <node><name>General</name>
         <help>index</help>
     </node>
@@ -18,9 +18,15 @@
     <node><name>Locations</name>
     </node>
     <node><name>Context</name>
+        <adapter>apps.ReportContextAction</adapter>
     </node>
     <node><name>Upload Debugging Info</name>
     </node>
+    <node><name>System Console</name>
+        <adapter>apps.SystemConsoleAction</adapter>
+    </node>
+    
+    
 
 </node>
   
