@@ -27,7 +27,11 @@ public class JMenuUtil extends GuiUtilBase {
         
         int i = 0;
         for (Object child : root.getChildren("node")) {
-            retval[i++] = jMenuFromElement((Element)child, wi, context);
+            JMenu menuItem = jMenuFromElement((Element)child, wi, context);
+            retval[i++] = menuItem;
+            if(((Element)child).getChild("mnemonic")!=null && menuItem!=null){
+                menuItem.setMnemonic(convertStringToKeyEvent(((Element)child).getChild("mnemonic").getText()));
+            }
         }
         return retval;
     }
@@ -39,15 +43,29 @@ public class JMenuUtil extends GuiUtilBase {
         JMenu menu = new JMenu(name);
         
         for (Object item : main.getChildren("node")) {
+            JMenuItem menuItem = null;
             Element child = (Element) item;
             if (child.getChildren("node").size() == 0) {  // leaf
-                Action act = actionFromNode(child, wi, context);
-                menu.add(new JMenuItem(act));
+                if (child.getText().equals("separator"))
+                    menu.addSeparator();
+                else {
+                    Action act = actionFromNode(child, wi, context);
+                    menu.add(menuItem = new JMenuItem(act));
+                }
             } else {
-                menu.add(jMenuFromElement(child, wi, context)); // not leaf
+                menu.add(menuItem = jMenuFromElement(child, wi, context)); // not leaf
+            }
+            if(menuItem!=null && child.getChild("mnemonic")!=null){
+               menuItem.setMnemonic(convertStringToKeyEvent(child.getChild("mnemonic").getText()));
             }
         }
         return menu;
+    }
+    
+    static int convertStringToKeyEvent(String st){
+    	char a = (st.toLowerCase()).charAt(0);
+        int kcode = (int) a - 32;
+        return kcode;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMenuUtil.class.getName());
