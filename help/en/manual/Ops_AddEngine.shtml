@@ -16,16 +16,15 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <a NAME="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Add Engine</h1>
+<h1>Add Locomotive</h1>
 
 <div align=right>
-<p><a href="Ops_Cars.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
@@ -33,7 +32,7 @@
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
     <td align="left" valign="top"><img src="images/Ops_AddEngineMenu.png" width="471" height="88" alt="Add Engine Menu"></td>
-    <td align="left" valign="top"><p>The Add Locomotive's Window and Help menus are the standard DecoderPro&reg; menus used on most windows.</p></td>
+    <td align="left" valign="top"><p>The Add Locomotive's Window and Help menus are the standard JMRI&reg; menus used on most windows.</p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_AddEngineRoad.png" width="457" height="113" alt="road"></td>
@@ -105,13 +104,15 @@ and the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Attributes</a> dial
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_EngineConsist.png" width="460" height="124" alt="consist"></td>
-    <td align="left" valign="top"> <p>If wish this engine  to be part of an <strong>Optional Consist
+    <td align="left" valign="top"> <p>If wish this locomotive  to be part of an <strong>Optional Consist
           <select name="select7" id="select7">
           </select>
     </strong>, press 
       <input type="submit" name="button6" id="button6" value="Edit">
-which opens the <a href="Ops_EngineAttributes.shtml">Edit Locomove Consist </a>Attribute dialog where you may enter a  consist name. Then select the consist name from the menu box.</p>
-      <h4>Synchronize with NCE Consists</h4>
+which opens the<br>
+<br>
+<img src="images/Ops_AddEngine_consist.png" width="275" height="151" alt="consist">     where you may enter a  consist name. Then select the consist name from the drop-down List.</p>
+<h4>Synchronize with NCE Consists</h4>
 If you are using NCE as your DCC command station, you can have the  program synchronize your consist numbers with your locomotives. The program  will read all of the consists out of the NCE system and then will search  for matching locomotives in your operations roster. The program will assign  the consist name nce_xxx where xxx is the consist number. To synchronize  your consists, select "Synchronize with NCE Consists" under the "Tools"  menu.
 <p>&nbsp;</p></td>
   </tr>
@@ -123,12 +124,14 @@ If you are using NCE as your DCC command station, you can have the  program sync
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarOwner.png" width="475" height="92" alt="owner"></td>
-    <td align="left" valign="top">Optional <strong>Owner
+    <td align="left" valign="top"><strong>Owner
         <select name="select8" id="select8">
+          <option>SF</option>
       </select>
     </strong>, if the owner's name is not in the list press
     <input type="submit" name="button7" id="button7" value="Edit">
-which opens the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Owner </a>Attribute dialog where you may enter the owner's name. Then select the Owner name from the menu box.</td>
+which opens<img src="images/Ops_AddEngine_owner.png" width="275" height="151" alt="owner"> <br>
+where you may enter the owner's name. Then select the Owner name from the drop-down list.</td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarComment.png" width="475" height="97" alt="comments"></td>
@@ -152,125 +155,12 @@ which opens the <a href="Ops_EngineAttributes.shtml">Edit Locomotive Owner </a>A
     <p></p></td>
   </tr>
 </table>
-<p>Now lets add the engines in the DecoderPro&reg; Roster created when we programmed our engines.<a href="Ops_ImportEngines.shtml"> Import from roster</a></p>
-<p>Now we should have engines in the Operations Engine roster.</p>
-<p><img src="images/Ops_EngineRoster.png" width="922" height="301" alt="Engine Roster"></p>
-<p>These engines were imported from JMRI Roster, so we will need to edit them to set the correct length, Consist, Location as required.<br>
-  Press
-<input type="submit" name="button8" id="button8" value="Edit"> 
-to the right of the engine that you wish to edit and the <strong>Edit Engine</strong> window is opened</p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="49%" align="left" valign="top"><img src="images/Ops_EditEngine.png" width="450" height="708" alt="edit engine"></td>
-    <td width="51%" align="left" valign="top"><p>I now edit the <strong>Road</strong> to
-      <select name="select9" id="select9">
-        <option>UP</option>
-      </select>
-      was in the roster as Union Pacific</p>
-    <p><strong>Road Number</strong> was imported correctly.</p>
-    <p><strong>Model</strong> was imported correctly</p>
-    <p><strong>Type </strong>was not in Roster so set to 
-      <select name="select10" id="select10">
-        <option>Diesel</option>
-      </select>
-    </p>
-    <p><strong>Length</strong> was set to default
-<select name="select11" id="select11">
-        <option>50</option>
-      </select>
-    so edit to 
-    <select name="select12" id="select12">
-      <option>95</option>
-    </select>
-    which is the correct length of body not including couplers.</p>
-    <p><strong>Horsepower</strong> was not imported, so set to 
-      <input name="textfield5" type="text" id="textfield5" value="5000" size="15">
-    as this model was basically two 2500 HP units on a single frame.</p>
-    <p><strong>Location</strong> is not imported from the Roster, So I located the locomotive at 
-      <select name="select13" id="select13">
-        <option>North Yard</option>
-      </select>
-    and set on 
-    <select name="select14" id="select14">
-      <option>Track2</option>
-    </select>
-    .</p>
-    <p><strong>Optional </strong></p>
-    <p><strong>Consist </strong>not set.</p>
-    <p><strong>Built </strong>not entered.</p>
-    <p><strong>Owner</strong> is not imported, so selected 
-      <select name="select15" id="select15">
-        <option>DaleTripp</option>
-      </select>
-    .</p>
-    <p>No <strong>Comment</strong> for this locomotive</p>
-    <p>Now to store press 
-      <input type="submit" name="button13" id="button13" value="Save">
-    and this will add the edits to any edited menu item.</p>
-    <p>
-      <input type="submit" name="button14" id="button14" value="Add ">
-    updates your Operations Locomotive Roster.</p>
-    <p>&nbsp;</p>
-    <p>Take a look at the Edited Operations Locomotive Roster, note the highlighted entry which we just edited.</p>
-    <p>&nbsp;</p></td>
-  </tr>
-</table>
-<p><img src="images/Ops_EditEngineUpdated.png" width="922" height="300" alt="Engine Roster updated"></p>
-<p>The
-  <input type="submit" name="button16" id="button16" value="Set">
-to the right of selected locomotie, when pressed, opens the Set Locomotive Location window and allows you to override the program and set an locomotive at a location that is defined in your Operations data base. Dialog preceeds the Set Locomotive window</p>
-<p><img src="images/Ops_Engine_Release.png" width="449" height="122" alt="release"></p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td valign="top" width="47%"><img src="images/set_Engine_location.png" width="500" height="400" alt="set locations"></td>
-    <td width="53%" align="left" valign="top"><p><strong>Menu</strong> is standard for DecoderPro&reg;.</p>
-      <p><strong>Locomotive </strong>displays the selected engine.</p>
-      <p><strong>Type</strong> is displayed</p>
-      <p>Status<br>
-        <input type="checkbox" name="checkbox" id="checkbox">
-        Out of Service<br>
-        Takes the Locomotive out of service and will not be assigned by the build program<br>
-      </p>
-      <p><strong>Location</strong><br>
-        <strong>Name
-        <select name="select16" id="select16">
-          <option>Susanville</option>
-        </select>
-        </strong> and <strong>Track
-        <select name="select16" id="select17">
-            <option>#83 Yard Track</option>
-          </select>
-        </strong>you can set the locomotive at any defined location on your layout.<br>
-        <input type="checkbox" name="checkbox2" id="checkbox2">
-        <strong>        Auto
-        </strong>limits selections to valid locations<br>
-      </p>
-      <p><strong>Optional--Normally Set by Program--</strong></p>
-      <p><strong>Destination </strong>optionally set the <strong>Name</strong><strong>
-        <select name="select16" id="select18">
-          <option>Lakeview</option>
-        </select>
-        </strong> of location and the <strong>Track
-          <select name="select16" id="select19">
-            <option>#94 Yard Track</option>
-          </select>
-        </strong>.</p>
-      <p><strong>Train</strong>
-        <select name="select16" id="select20">
-          <option>SL</option>
-        </select>
-        optionally set the train.</p>
-      <p>
-        <input type="submit" name="button17" id="button17" value="Save">
-    press to save the locomotive locations that you have set.</p>
-    <p>Close the window when completed.</p></td>
-  </tr>
-</table>
+<p>&nbsp;</p>
 <p>Now that you have your engines stored in the roster, you will need to add  <a href="Ops_Routes.shtml">Routes  </a> that your trains will use to  operate on your layout.</p>
 <hr>
 
 <div align=right>
-<p><a href="Ops_Cars.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 

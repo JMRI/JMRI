@@ -74,7 +74,7 @@ opens system printer dialog.<br>
   <input name="radio" type="radio" id="radio" value="radio" checked> 
   Name  
   <input type="radio" name="radio2" id="radio2" value="radio2"> 
-Id Sets </strong>the sort order for the locations</p>
+Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>Sets the sort order for the locations</p>
 <p>
   <input type="submit" name="button" id="button" value="Add"> 
 Press to add a location</p>
@@ -135,7 +135,7 @@ Press the
 <input type="submit" name="button8" id="button8" value="Save Location">
 to save your work. The program will create a  file (OperationsLocationRoster.xml) in your JMRI directory in a folder  called "operations". The program will also create a backup file  containing the last settings for all of your locations. <a name="Sidings"></a>
 <h3>&nbsp;</h3>
-<p>Sidings are very similar  to <a href="Ops_AddYard.shtml">Yards</a>, so see above for more information.  You can if  you wish schedule the order that cars will be delivered to a siding.  See <a href="Ops_schedule.shtml">Schedules</a> below for more information.
+<p>Spurs are very similar  to <a href="Ops_AddYard.shtml">Yards</a>, so see above for more information.  You can if  you wish schedule the order that cars will be delivered to a spur.  See <a href="Ops_schedule.shtml">Schedules</a> below for more information.
 </p>
 <hr>
 

@@ -20,8 +20,8 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>JMRI&reg; to Operate Trains</h1>
-<h1>Add Cars Window</h1>
+<h1>How to Use JMRI&reg; to Operate Trains</h1>
+<h1>Add Cars (Edit Cars) Window</h1>
 
 <div align=right>
 <p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
@@ -37,8 +37,8 @@
     <br>
     <img src="images/Ops_CarMenu01.png" width="461" height="106" alt="menu"></td>
     <td width="51%" align="left" valign="top"><p><strong><em>Menu</em></strong></p>
-    <p><strong>Window</strong>-- Same as other DecoderPro menus</p>
-    <p><strong>Help</strong> -- Same as other DecoderPro Menus</p></td>
+    <p><strong>Window</strong>-- Same as other JMRI menus</p>
+    <p><strong>Help</strong> -- Same as other JMRI Menus</p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarRoad.png" width="473" height="71" alt="Car's Road"></td>
@@ -48,7 +48,7 @@
       </select>
       if your road is not listed then press
   <input type="submit" name="button" id="button" value="Edit">
-      and the <a href="Ops_CarAttributes.shtml">Edit Car Road </a>dialog box will display. Here is a reference for the <a href="http://www.pwrr.org/rrm/rrmb.shtml" target="_blank">Railroad Reporting Marks.</a></p></td>
+      and the <a href="Ops_CarAttributes.shtml">Edit Car Road </a>dialog box will display. Here is a reference for the <a href="http://www.railserve.com/aar_railroad_reporting_marks.html" target="_blank">Railroad Reporting Marks.</a></p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarNumber.png" width="474" height="81" alt="Car Number"></td>
@@ -64,12 +64,12 @@
       <strong>FRED</strong> (Flashing Rear End Device), or is
       <input type="checkbox" name="checkbox3" id="checkbox3">
     <strong>Hazardous</strong>, select the proper box. The program uses the caboose and FRED  functions to place the car at the end of a train when the train requires  a caboose or car with FRED. The hazardous checkbox will cause the  program to add a note to the switch list that the car is transporting  hazardous materials. Your railroad's policy regarding hazardous  materials can than be applied to this car! <br></td>
-    <td width="51%" align="left" valign="top"><p>Select the car's <strong>Type</strong>
+    <td width="51%" align="left" valign="top"><p><strong>Type</strong>
       <select name="select2" id="select2">
         <option>Baggage</option>
       </select>
-      if your type is not listed then press
-  <input type="submit" name="button3" id="button3" value="Edit">
+      from drop-down list. if your type is not listed then press
+      <input type="submit" name="button3" id="button3" value="Edit">
       and the <a href="Ops_CarAttributes.shtml">Edit Car Type</a> dialog box will display. </p>
     <p>The program supports the ability to add a subType to  your car types. Adding a "-subType" to your car type will create a new  type of car. The "-subType" is not printed on the manifest or switch  lists. For example you might have coal cars with loads and coal cars  that are empty. If you enter the car type as HopCoal-C for your cars  with coal, and HopCoal-E for the empties, the program can use this  information to assign and deliver cars to their appropriate trains and  locations respectively. </p></td>
   </tr>
@@ -131,12 +131,15 @@ to create your own car loads, but there are  restrictions. Only sidings with <a 
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarKernel.png" width="471" height="93" alt="Car Kernel"></td>
-    <td width="51%" align="left" valign="top">If wish this car to be part of a kernel which is a group of cars that  you want to switch as one unit, press
-      <input type="submit" name="button7" id="button7" value="Edit">
-across from <strong>Kernal </strong>
-<select name="select6" id="select6">
-</select>
-and  enter a <a href="Ops_CarAttributes.shtml">kernel name.</a> Then select the kernel from the menu box.</td>
+    <td width="51%" align="left" valign="top"><p><strong>Kernel</strong></p>
+      <p>If wish this car to be part of a kernel which is a group of cars that  you want to switch as one unit, select 
+        <select name="select6" id="select6">
+          <option>Coal Empty</option>
+        </select> 
+        kernel from drop-down list. If the kernel you want is not there 
+        press
+        <input type="submit" name="button7" id="button7" value="Edit">
+      and  enter a <a href="Ops_CarAttributes.shtml">kernel name.</a> to add to the list. Then select the kernel from the Drop-down list.</p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarBuilt.png" width="474" height="91" alt="Car Built"></td>
@@ -199,7 +202,7 @@ when pressed, opens the Set Car Location panel and allows you to override the pr
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
     <td width="47%"><img src="images/Ops_SetCarLocation.png" width="448" height="369" alt="Set Car Location"></td>
-    <td width="53%" align="left" valign="top"><p><strong>Menu</strong> is standard for DecoderPro&reg;.</p>
+    <td width="53%" align="left" valign="top"><p><strong>Menu</strong> is standard for JMRI&reg;.</p>
     <p><strong>Car </strong>displays the selected car.</p>
     <p><strong>Location</strong> using <strong>Name
       <select name="select10" id="select10">

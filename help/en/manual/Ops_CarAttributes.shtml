@@ -30,9 +30,9 @@
 </div>
 
 <hr>
-<p>To the right of each of the car attributes (<strong>Road</strong>, <strong>Type</strong>, <strong>Length</strong>, <strong>Color</strong>,  <strong>Kernel</strong>, <strong>Load</strong>, <strong>Owner</strong>) 
+<p>To the right of each of the car attributes (<strong>Road</strong>, <strong>Type</strong>, <strong>Length</strong>, <strong>Color</strong>,  <strong>Kernel</strong>, <strong>Load</strong>, <strong>Owner</strong>)there is an 
   <input type="submit" name="button" id="button" value="Edit">
-  dialog to allow you to edit the list of attributes available to us for Car definition. Use this to 
+  that displays the Edit (attribute) dialog to allow you to edit the list of attributes available to use for Car definition. Use this to 
   <input type="submit" name="button2" id="button2" value="Add">
   ,
   <input type="submit" name="button3" id="button3" value="Delete">

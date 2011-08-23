@@ -41,18 +41,23 @@
     <ul>
       <li><a href="Ops_ImportEngines.shtml">Import from JMRI roster</a></li>
       <li><a href="Ops_ImportEngines.shtml">Import from file</a></li>
-      <li>Export to file<br>
+      <li>Export to file</li>
+    </ul>
+    <blockquote>
+      <p>Displays the Export complete dialog. The file is exported automatically as a .csv file.<br>
         <img src="images/Ops_Engine_ExportFile.png" width="742" height="122" alt="export"><br>
-      </li>
-      <li><strong>Delete all locomotives</strong> -- Opens the <strong>Delete all locomotives?</strong> confirmation dialog box.<br>
+      </p>
+    </blockquote>
+    <ul>
+      <li><strong>Delete all locomotives</strong> -- Opens the <strong>Delete all locomotives?</strong> OK will delete all locomotives in the Operations Roster , cancel will abort the deletion.<br>
         <img src="images/Ops_Engine_deleteRoster.png" width="446" height="122" alt="delete"><br>
       </li>
       <li><strong>Print</strong> -- Opens your computers <strong>Print</strong> window and will print your locomotive roster.</li>
       <li><strong>Preview</strong> -- Opens your computers <strong>Print Preview </strong> window and shows the preview of your locomotive roster.</li>
     </ul>
 </ul>
-<p><strong>Window</strong> -- same as other DecoderPro&reg; menus.</p>
-<p><strong>Help</strong> -- same as other DecoderPro&reg; menus.</p>
+<p><strong>Window</strong> -- same as other JMRI&reg; menus.</p>
+<p><strong>Help</strong> -- same as other JMRI&reg; menus.</p>
 <p><strong><em>Body of window</em></strong></p>
 <p><strong>Sort by</strong> -- select the radio button for the attribute you wish to sort by.</p>
 <p>
