@@ -603,7 +603,15 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // add the Info tab
-        tabPane.addTab(rbt.getString("ROSTER ENTRY"), makeInfoPane(r));
+        if (root.getChild("programmer").getAttribute("showRosterPane")!=null){
+            if (root.getChild("programmer").getAttribute("showRosterPane").getValue().equals("no")){
+                makeInfoPane(r);
+            } else {
+                tabPane.addTab(rbt.getString("ROSTER ENTRY"), makeInfoPane(r));
+            }
+        } else {
+            tabPane.addTab(rbt.getString("ROSTER ENTRY"), makeInfoPane(r));
+        }
 
         // add the Function Label tab
         if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")) {
