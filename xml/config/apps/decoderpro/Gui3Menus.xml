@@ -8,32 +8,46 @@
 >
 
   <node><name>File</name>
+    <mnemonic>f</mnemonic>
     <node><name>New DecoderPro Window</name>
+        <mnemonic>n</mnemonic>
     </node>
-    <node><name>New Loco...</name>
+    <node><name>Import Roster</name>
     </node>
-    <node><name>Identify Loco...</name>
+    <node><name>Import Roster Entry</name>
+        <adapter>jmri.jmrit.roster.ImportRosterItemAction</adapter>
     </node>
-    <node><name>New Throttle</name>
+    <node><name>Import Decoder File</name>
     </node>
-    <node><name>Save Loco</name>
+    <node><name>Import Decoder URL</name>
     </node>
-    <node><name>Print Roster Setup...</name>
+    <node>separator</node>
+    <node><name>Export Roster Entry</name>
+        <adapter>jmri.jmrit.roster.ExportRosterItemAction</adapter>
     </node>
-    <node><name>Print Loco Setup...</name>
+    <node><name>Export Complete Roster</name>
+        <adapter>jmri.jmrit.roster.rosterExportAction</adapter>
     </node>
-    <node><name>Print Roster...</name>
+    <node>separator</node>
+    <node><name>Print Roster Summary</name>
     </node>
-    <node><name>Print Loco...</name>
+    <node><name>Print Roster Entry</name>
+        <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
     </node>
-    <node><name>Print...</name>
+    <node><name>Print Preview Roster Summary</name>
     </node>
+    <node><name>Print Preview Roster Entry</name>
+        <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
+    </node>
+    <node>separator</node>
     <node><name>Quit</name>
+        <mnemonic>q</mnemonic>
         <adapter>apps.gui3.paned.QuitAction</adapter>
     </node>
   </node>
 
   <node><name>Edit</name>
+    <mnemonic>e</mnemonic>
     <node><name>Cut</name>
     </node>
     <node><name>Copy</name>
@@ -42,58 +56,82 @@
     </node>
     <node><name>Duplicate Loco</name>
     </node>
+    <node>separator</node>
     <node><name>Preferences</name>
-        <panel>apps.gui3.TabbedPreferences</panel>
+        <adapter>apps.gui3.TabbedPreferencesAction</adapter>
+        <mnemonic>p</mnemonic>
     </node>
   </node>
 
-  <node><name>View</name>
-    <node><name>Restore View</name>
+  <node><name>Settings</name>
+    <mnemonic>s</mnemonic>
+    <node><name>Summary Pane</name>
     </node>
-    <node><name>Show/Hide Raw CVs</name>
+    <node><name>Reset Window Sizes</name>
     </node>
-    <node><name>Show Roster Groups</name>
+    <node><name>Hide/Show Roster Image</name>
     </node>
-    <node><name>Basic Programmer Format</name>
+    <node>separator</node>
+    <node><name>Programming</name>
+        <mnemonic>p</mnemonic>
+        <node><name>Service Mode</name></node>
+        <node><name>Operations Mode</name></node>
+        <node><name>Edit Mode</name></node>
     </node>
-    <node><name>Comprehensive Programmer Format</name>
+    <node>separator</node>
+    <node><name>Create Roster Group</name>
     </node>
-    <node><name>Other Programmer Format</name>
-        <node><name>Sample Format 1</name></node>
-        <node><name>Sample Format 2</name></node>
+    <node><name>Delete Roster Group</name>
     </node>
-    <node><name>Show Throttle Keys</name>
+    <node><name>Set Active Roster Group</name>
     </node>
-    <node><name>Show Roster Media</name>
+    <node><name>Roster Group Table Association</name>
     </node>
   </node>
 
-  <node><name>Program</name>
-    <node><name>[] Service Mode/Programming Track</name>
+  
+  
+  <node><name>Actions</name>
+    <mnemonic>a</mnemonic>
+    <node><name>Basic Programmer</name>
     </node>
-    <node><name>Operations Mode/Main Track</name>
+    <node><name>Comprehencise Programmer</name>
     </node>
-    <node><name>[]Direct Bit</name>
+    <node><name>Single CV Programmer</name>
     </node>
-    <node><name>Direct Byte</name>
+    <node><name>Edit Throttle Labels</name>
     </node>
-    <node><name>Register Mode</name>
+    <node><name>Edit Roster Media</name>
     </node>
-    <node><name>Page Mode</name>
+    <node>separator</node>
+    <node><name>New Throttle</name>
+        <adapter>jmri.jmrit.throttle.ThrottleCreationAction</adapter>
     </node>
-    <node><name>Address Mode</name>
+    <node><name>Consisting Tool</name>
+        <adapter>jmri.jmrit.consisttool.ConsistToolAction</adapter>
     </node>
-    <node><name>Service Programmer</name>
-        <node><name>Sample Connection 1</name></node>
-        <node><name>Sample Connection 2</name></node>
+    <node>separator</node>
+    <node><name>Start WiThrottle Server</name>
+        <adapter>jmri.jmrit.withrottle.WiThrottleCreationAction</adapter>
     </node>
-    <node><name>Operations Programmer</name>
-        <node><name>Sample Connection 1</name></node>
-        <node><name>Sample Connection 2</name></node>
+    <node><name>Start Mini WebServer</name>
+        <adapter>jmri.web.miniserver.MiniServerAction</adapter>
+    </node>
+    <node>separator</node>
+    <node><name>Recreate Roster Index</name>
+        <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
+    </node>
+    <node><name>Recreate Decoder Index</name>
+        <adapter>jmri.jmrit.decoderdefn.DecoderIndexCreateAction</adapter>
+    </node>
+    <node>separator</node>
+    <node><name>Run Script</name>
+        <adapter>jmri.jmrit.jython.RunJythonScript</adapter>
     </node>
   </node>
-  <xi:include href="http://jmri.org/xml/config/parts/WindowsMenu.xml"/>
-  <xi:include href="http://jmri.org/xml/config/parts/HelpMenu.xml"/>
+
+<!---  <xi:include href="http://jmri.org/xml/config/parts/WindowsMenu.xml"/>
+  <xi:include href="http://jmri.org/xml/config/parts/HelpMenu.xml"/>-->
 
 </nodes>
   
