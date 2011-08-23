@@ -61,10 +61,10 @@ public class GuiUtilBase {
                     }
                 }
                 log.warn("Did not find suitable ctor for "+classname+(icon!=null?" with":" without")+" icon");
-                return null;
+                return createEmptyMenuItem(icon, name);
             } catch (Exception e) {
                 log.warn("failed to load GUI adapter class: "+classname+" due to: "+e);
-                return null;
+                return createEmptyMenuItem(icon, name);
             }
         } else if ( child.getChild("panel") != null) {
             try {
@@ -78,12 +78,17 @@ public class GuiUtilBase {
             } catch (Exception ex) {
                 log.warn("could not load toolbar adapter class: "+child.getChild("panel").getText()
                         +" due to "+ex);
-                return null;
+                return createEmptyMenuItem(icon, name);
             }
         } else if ( child.getChild("help") != null) {
             String reference = child.getChild("help").getText();
             return jmri.util.HelpUtil.getHelpAction(name,icon, reference);
         } else { // make from icon or text without associated function
+            return createEmptyMenuItem(icon, name);
+        }
+    }
+    
+    static Action createEmptyMenuItem(Icon icon, String name){
             if (icon != null) {
                 AbstractAction act = new AbstractAction(name, icon){
                     public void actionPerformed(java.awt.event.ActionEvent e) {}
@@ -99,9 +104,7 @@ public class GuiUtilBase {
                 act.setEnabled(false);
                 return act;
             }
-        }
     }
-    
 
     /**
      * Get root element from XML file, handling errors locally.
