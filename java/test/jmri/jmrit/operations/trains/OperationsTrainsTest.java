@@ -1755,25 +1755,22 @@ public class OperationsTrainsTest extends TestCase {
 		train1.addLoadName("L");
 		train1.setLoadOption(Train.INCLUDELOADS);
 		train1.build();
-		Assert.assertEquals("Train 1 After include load L", true, train1.isBuilt());
+		// build should fail, cars in staging have E loads
+		Assert.assertEquals("Train 1 After include load L", false, train1.isBuilt());
 		
-		Assert.assertEquals("car C10099 in staging should be assigned to train", train1, c1.getTrain());
-		Assert.assertEquals("car X1001 in staging should be assigned to train", train1, c3.getTrain());
-		Assert.assertEquals("car X1002 in staging should be assigned to train", train1, c4.getTrain());
-		
-		Assert.assertEquals("car 888 at siding has load E, excluded", null, c8.getTrain());
-		
+		train1.deleteLoadName("L");
+		c8.setLoad("L");			// this car shouldn't be picked up.
 		train1.addLoadName("E");
 		train1.build();
-		Assert.assertEquals("Train 1 After include load L", true, train1.isBuilt());
+		Assert.assertEquals("Train 1 After include load E", true, train1.isBuilt());
 		
 		Assert.assertEquals("car C10099 in staging should be assigned to train", train1, c1.getTrain());
 		Assert.assertEquals("car X1001 in staging should be assigned to train", train1, c3.getTrain());
 		Assert.assertEquals("car X1002 in staging should be assigned to train", train1, c4.getTrain());
 		
-		Assert.assertEquals("car 888 at siding has load E, now included", train1, c8.getTrain());
+		Assert.assertEquals("car 888 at siding has load L, excluded", null, c8.getTrain());
 		
-		train1.setLoadOption(Train.EXCLUDELOADS);
+		train1.addLoadName("L");
 		train1.build();
 		Assert.assertEquals("Train 1 After include load L", true, train1.isBuilt());
 		
@@ -1781,7 +1778,23 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("car X1001 in staging should be assigned to train", train1, c3.getTrain());
 		Assert.assertEquals("car X1002 in staging should be assigned to train", train1, c4.getTrain());
 		
-		Assert.assertEquals("car 888 at siding has load E, now excluded", null, c8.getTrain());
+		Assert.assertEquals("car 888 at siding has load L, now included", train1, c8.getTrain());
+		
+		train1.setLoadOption(Train.EXCLUDELOADS);
+		// cars in staging have E loads, so build should fail
+		train1.build();
+		Assert.assertEquals("Train 1 After exclude loads", false, train1.isBuilt());
+		
+		// allow train to carry E loads
+		train1.deleteLoadName("E");
+		train1.build();
+		Assert.assertEquals("Train 1 After exclude loads L", true, train1.isBuilt());
+		
+		Assert.assertEquals("car C10099 in staging should be assigned to train", train1, c1.getTrain());
+		Assert.assertEquals("car X1001 in staging should be assigned to train", train1, c3.getTrain());
+		Assert.assertEquals("car X1002 in staging should be assigned to train", train1, c4.getTrain());
+		
+		Assert.assertEquals("car 888 at siding has load L, now excluded", null, c8.getTrain());
 		
 		//done
 		train1.setLoadOption(Train.ALLLOADS);
@@ -1973,7 +1986,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c5 load after Terminate", "E", c5.getLoad());
 		Assert.assertEquals("Car c6 load after Terminate", "E", c6.getLoad());
 		Assert.assertEquals("Car c7 load after Terminate", "E", c7.getLoad());
-		Assert.assertEquals("Car c8 load after Terminate", "E", c8.getLoad());
+		Assert.assertEquals("Car c8 load after Terminate", "L", c8.getLoad());
 		Assert.assertEquals("Car c9 load after Terminate", "E", c9.getLoad());	
 		
 		// reset train 2
@@ -2137,7 +2150,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c5 load after Terminate Train 2", "E", c5.getLoad());
 		Assert.assertEquals("Car c6 load after Terminate Train 2", "E", c6.getLoad());
 		Assert.assertEquals("Car c7 load after Terminate Train 2", "E", c7.getLoad());
-		Assert.assertEquals("Car c8 load after Terminate Train 2", "E", c8.getLoad());
+		Assert.assertEquals("Car c8 load after Terminate Train 2", "L", c8.getLoad());
 		Assert.assertEquals("Car c9 load after Terminate Train 2", "E", c9.getLoad());	
 		
 		// try building again

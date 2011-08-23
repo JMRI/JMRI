@@ -615,7 +615,7 @@ public class TrainBuilder extends TrainCommon{
 				// Keep only lead engines in consist if required number is correct.
 				if (!engine.getConsist().isLead(engine)){
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildEnginePartConsist"),new Object[]{engine.toString(), engine.getConsist().getName(), engine.getConsist().getEngines().size()}));
-					if (engine.getConsist().getSize() != numberOfEngines)
+					if (engine.getConsist().getSize() != numberOfEngines && numberOfEngines != 0)
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeEngConsistNumber"),new Object[]{engine.toString(), engine.getConsist().getName(), engine.getConsist().getSize()}));
 					// remove non-lead engines
 					engineList.remove(indexEng);
@@ -1440,7 +1440,7 @@ public class TrainBuilder extends TrainCommon{
 	
 	/**
 	 * Check departure staging track to see if engines and cars are available to
-	 * a new train.  Also confirms that the engine and car type and road are accepted by the train.
+	 * a new train.  Also confirms that the engine and car type, load, road, etc. are accepted by the train.
 	 * 
 	 * @return true is there are engines and cars available.
 	 */
@@ -1503,6 +1503,8 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 		}
+		boolean foundCaboose = false;
+		boolean foundFRED = false;
 		if (departStageTrack.getNumberCars()>0){
 			List<String> cars = carManager.getByIdList();
 			for (int i=0; i<cars.size(); i++){
@@ -1526,6 +1528,12 @@ public class TrainBuilder extends TrainCommon{
 								new Object[]{departStageTrack.getName(), car.toString(), car.getRoad(), train.getName()}));
 						return false;
 					}
+					// does the train accept the car load from the staging track?
+					if (!train.acceptsLoadName(car.getLoad())){
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarLoad"),
+								new Object[]{departStageTrack.getName(), car.toString(), car.getLoad(), train.getName()}));
+						return false;
+					}
 					// does the train accept the car owner from the staging track?
 					if (!train.acceptsOwnerName(car.getOwner())){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarOwner"),
@@ -1547,8 +1555,24 @@ public class TrainBuilder extends TrainCommon{
 							return false;
 						}
 					}
+					// is this car a caboose with the correct road for this train?
+					if (car.isCaboose() && (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(car.getRoad())))
+						foundCaboose = true;
+					// is this car have a FRED with the correct road for this train?
+					if (car.hasFred() && (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(car.getRoad())))
+						foundFRED = true;
 				}
 			}
+		}
+		// does the train require a caboose and did we find one from staging?
+		if ((train.getRequirements() & Train.CABOOSE) == Train.CABOOSE && !foundCaboose){
+			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingNoCaboose"),new Object[]{departStageTrack.getName(), train.getCabooseRoad()}));
+			return false;
+		}
+		// does the train require a car with FRED and did we find one from staging?
+		if ((train.getRequirements() & Train.FRED) == Train.FRED && !foundFRED){
+			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingNoCarFRED"),new Object[]{departStageTrack.getName(), train.getCabooseRoad()}));
+			return false;
 		}
 		return true;
 	}
@@ -1724,7 +1748,7 @@ public class TrainBuilder extends TrainCommon{
 			return;
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
-				new Object[]{car.toString(), car.getType(), car.getLoad()}));
+				new Object[]{car.toString(), car.getType(), car.getLoad(), ""}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
 		log.debug("Found "+tracks.size()+" spurs");
 		for (int i=0; i<tracks.size(); i++){
@@ -2155,7 +2179,7 @@ public class TrainBuilder extends TrainCommon{
 							&& car.getTrack().isAddLoadsEnabled() 
 							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
-								new Object[]{car.toString(), car.getType(), car.getLoad()}));
+								new Object[]{car.toString(), car.getType(), car.getLoad(), testTrack.getName()}));
 						String carLoad = car.getLoad(); // save the car's load
 						ScheduleItem si = getScheduleItem(car, testTrack);
 						if (si != null){				
