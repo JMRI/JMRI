@@ -41,9 +41,9 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     // Main entry point
     public static void main(String args[]) {
-
         // do processing needed immediately, before
         // we attempt anything else
+        setConfigFilename("DecoderProConfig3.xml", args);
         preInit();
         
         // create the program object

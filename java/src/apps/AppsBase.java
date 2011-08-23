@@ -46,7 +46,7 @@ public abstract class AppsBase {
                                     justification="not a library pattern")                                    
     protected static String nameString = "JMRI Base";
 
-    protected static final String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
+    protected static String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
     boolean configOK;
     
     /**
@@ -117,6 +117,8 @@ public abstract class AppsBase {
         if (!file.exists()) {
             configOK = false;
             log.info("No pre-existing preferences settings");
+            ((jmri.configurexml.ConfigXmlManager)InstanceManager.configureManagerInstance())
+                    .setPrefsLocation(file);
             return;
         }
         try {
@@ -161,6 +163,55 @@ public abstract class AppsBase {
      */
     protected void postInit() {
         log.debug("main initialization done");
+    }
+    
+            /**
+     * Set up the configuration file name at startup.
+     * <P>
+     * The static configFilename variable holds the name 
+     * used to load the configuration file during later startup
+     * processing.  Applications invoke this method 
+     * to handle the usual startup hierarchy:
+     *<UL>
+     *<LI>If an absolute filename was provided on the command line, use it
+     *<LI>If a filename was provided that's not absolute, consider it to
+     *    be in the preferences directory
+     *<LI>If no filename provided, use a default name (that's application
+     *    specific)
+     *</UL>
+     *This name will be used for reading and writing the preferences. It
+     * need not exist when the program first starts up.
+     *
+     * @param def Default value if no other is provided
+     * @param args Argument array from the main routine
+     */
+    static protected void setConfigFilename(String def, String args[]) {
+        // save the configuration filename if present on the command line
+        if (args.length>=1 && args[0]!=null) {
+            configFilename = args[0];
+            setJmriSystemProperty("configFilename", configFilename);
+            log.debug("Config file was specified as: "+configFilename);
+        } else{
+            configFilename = def;
+        }
+    }
+    
+    static public String getConfigFileName(){
+        return configFilename;
+    }
+    
+    static protected void setJmriSystemProperty(String key, String value) {
+        try {
+            String current = System.getProperty("org.jmri.Apps-"+key);
+            if ( current == null)
+                System.setProperty("org.jmri.apps.Apps."+key, value);
+            else if (!current.equals(value))
+                log.warn("JMRI property "+key+" already set to "+current+
+                        ", skipping reset to "+value);
+        } catch (Exception e) {
+            log.error("Unable to set JMRI property "+key+" to "+value+
+                        "due to exception: "+e);
+        }
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppsBase.class.getName());
