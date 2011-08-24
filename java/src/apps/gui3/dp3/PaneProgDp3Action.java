@@ -15,7 +15,6 @@ import java.io.File;
 
 import  jmri.jmrit.symbolicprog.tabbedframe.*;
 
-import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;

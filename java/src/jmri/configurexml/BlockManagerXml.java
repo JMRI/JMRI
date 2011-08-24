@@ -7,10 +7,7 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Path;
-import jmri.Sensor;
 import jmri.Turnout;
-import jmri.NamedBeanHandle;
-
 import java.util.List;
 import jmri.Reporter;
 

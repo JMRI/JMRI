@@ -26,7 +26,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18233 $
  */
 
-import jmri.jmrit.audio.*;
+
 
 class NotchTransition extends SoundBite {
     private int prev_notch;

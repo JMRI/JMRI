@@ -9,21 +9,17 @@ import java.io.File;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.ResizableImagePanel;
-import jmri.util.swing.JToolBarUtil;
 import jmri.jmrit.decoderdefn.DecoderFile;
 
 // for ugly code
 import jmri.Programmer;
 import jmri.progdebugger.*;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.roster.swing.*;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import javax.swing.border.Border;
 

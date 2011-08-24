@@ -19,7 +19,6 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.awt.event.*;
 import org.jdom.Element;
 import java.util.HashMap;
 import java.util.ArrayList;

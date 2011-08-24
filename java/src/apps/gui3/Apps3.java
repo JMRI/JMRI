@@ -2,12 +2,10 @@
 
 package apps.gui3;
 
-import apps.GuiLafConfigPane;
 import apps.SplashWindow;
 import apps.SystemConsole;
 
 import jmri.*;
-import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 
 import java.awt.*;
