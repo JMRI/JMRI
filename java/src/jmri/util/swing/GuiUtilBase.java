@@ -83,8 +83,74 @@ public class GuiUtilBase {
         } else if ( child.getChild("help") != null) {
             String reference = child.getChild("help").getText();
             return jmri.util.HelpUtil.getHelpAction(name,icon, reference);
+        } else if (child.getChild("current") !=null){
+            String method[] = {child.getChild("current").getText()};
+            return createActionInCallingWindow(context, method, name, icon);
+            //Relates to the instance that has called it 
         } else { // make from icon or text without associated function
             return createEmptyMenuItem(icon, name);
+        }
+    }
+    
+    /**
+     * Create an action against the object that invoked the creation of the GUIBase, a string array is used
+     * so that in the future further options can be specified to be passed.
+     */
+    static Action createActionInCallingWindow(Object obj, String args[], String name, Icon icon){
+        java.lang.reflect.Method method = null;
+        try{
+            method = obj.getClass().getDeclaredMethod("remoteCalls", String[].class);
+        } catch (java.lang.NullPointerException e) {
+            log.error("Null object passed");
+            return createEmptyMenuItem(icon, name);
+        } catch (SecurityException e) {
+            log.error("security exception unable to find remoteCalls for " + obj.getClass().getName());
+            createEmptyMenuItem(icon, name);
+        } catch (NoSuchMethodException e) {
+            log.error("No such method remoteCalls for " + obj.getClass().getName());
+            return createEmptyMenuItem(icon, name);
+        }
+        CallingAbstractAction act = new CallingAbstractAction(name, icon);
+        act.setMethod(method);
+        act.setArgs(args);
+        act.setObject(obj);
+        act.setEnabled(true);
+        return act;
+    
+    }
+    
+    static class CallingAbstractAction extends javax.swing.AbstractAction{
+        public CallingAbstractAction(String name, Icon icon){
+            super(name, icon);
+        }
+        
+        java.lang.reflect.Method method;
+        Object obj;
+        Object args;
+        
+        public void setArgs(Object args[]){
+            //args = stringArgs.getClass();
+            this.args = args;
+        }
+        
+        public void setMethod(java.lang.reflect.Method method){
+            this.method = method;
+        }
+        
+        public void setObject(Object obj){
+            this.obj = obj;
+        }
+        
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            try {
+              method.invoke(obj, args);
+            } catch (IllegalArgumentException ex) {
+                System.out.println("IllegalArgument " + ex);
+            } catch (IllegalAccessException ex) {
+                System.out.println("IllegalAccess");
+            } catch (java.lang.reflect.InvocationTargetException ex) {
+                System.out.println("InvocationTarget");
+            }
         }
     }
     

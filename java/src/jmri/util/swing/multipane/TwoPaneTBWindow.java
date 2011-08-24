@@ -19,7 +19,7 @@ import jmri.util.swing.*;
  * @version $Revision: 17977 $
  */
 
-public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
+abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
 
     /**
      * Create and initialize a multi-pane GUI window.
@@ -88,7 +88,7 @@ public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     protected void addMainMenuBar(File menuFile) {
         if (menuFile == null) return;
         
-        JMenu[] menus = JMenuUtil.loadMenu(menuFile, topBottomWI, null);
+        JMenu[] menus = JMenuUtil.loadMenu(menuFile, topBottomWI, this);
         for (JMenu j : menus) 
             menuBar.add(j);
 
@@ -103,11 +103,13 @@ public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     protected void addMainToolBar(File toolBarFile) {
         if (toolBarFile == null) return;
           
-        toolBar = JToolBarUtil.loadToolBar(toolBarFile, topBottomWI, null);
+        toolBar = JToolBarUtil.loadToolBar(toolBarFile, topBottomWI, this);
 
         // this takes up space at the top until pulled to floating
         add(toolBar, BorderLayout.NORTH);
     }
+    
+    abstract public void remoteCalls(String args[]);
     
     protected void addMainStatusBar(){
     statusBar.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 0));

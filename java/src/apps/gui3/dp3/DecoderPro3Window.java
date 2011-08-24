@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.ResizableImagePanel;
+import jmri.util.swing.JToolBarUtil;
 import jmri.jmrit.decoderdefn.DecoderFile;
 
 // for ugly code
@@ -55,11 +56,11 @@ public class DecoderPro3Window
         super("DecoderPro", 
     	        new File("xml/config/apps/decoderpro/Gui3Menus.xml"), 
     	        new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));  // no toolbar
-    	add(createToolBarPanel(), BorderLayout.NORTH);
+    	//add(createToolBarPanel(), BorderLayout.NORTH);
     	getTop().add(createTop());
         getBottom().setMinimumSize(new Dimension(0, 250));
         getBottom().add(createBottom());
-        getToolBar().add(createToolBarPanel());
+        //getToolBar().add(createToolBarPanel());
         statusBar();
         systemsMenu();
         helpMenu(getMenu(), this);
@@ -103,7 +104,6 @@ public class DecoderPro3Window
         jmri.jmrix.ActiveSystemsMenu.addItems(getMenu());
         getMenu().add(new jmri.util.WindowMenu(this));
     }
-    
     
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         try {
@@ -163,9 +163,9 @@ public class DecoderPro3Window
         RosterEntry re = Roster.instance().entryFromTitle(id);
         
         updateDetails(re);
-        repaint();
-        rosterDetailPanel.revalidate();
-        sp.revalidate();
+        //repaint();
+        //rosterDetailPanel.revalidate();
+        //sp.revalidate();
     }
     
     JPanel paneSpace = new JPanel(); // place where the panes go
@@ -177,7 +177,7 @@ public class DecoderPro3Window
         
     JComponent createBottom(){
         
-        locoImage = new ResizableImagePanel(null, 320, 240);
+        locoImage = new ResizableImagePanel(null, 240, 160);
         locoImage.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         locoImage.setOpaque(true);
 		locoImage.setRespectAspectRatio(true);
@@ -185,12 +185,13 @@ public class DecoderPro3Window
         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
         rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
         rosterDetailPanel.add(bottomRight(), BorderLayout.EAST);
-        sp = new JScrollPane(rosterDetailPanel);
+        //sp = new JScrollPane(rosterDetailPanel);
+        return rosterDetailPanel;
         
-        return sp;
+        //return sp;
     }
     
-    JComponent createToolBarPanel(){
+    /*JComponent createToolBarPanel(){
         ((JToolBar) getToolBar()).setFloatable(false);
         JPanel retval = new JPanel();
         retval.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 0));
@@ -208,25 +209,25 @@ public class DecoderPro3Window
     }
     
     JButton identifyButton;
-    JButton newLocoButton;
+    JButton newLocoButton;*/
     
     JLabel statusField = new JLabel();
     
     final ResourceBundle rbroster = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
     
-    JLabel filename 		= new JLabel();
-    JLabel dateUpdated   	= new JLabel();
-    JLabel decoderModel 	= new JLabel();
-    JLabel decoderFamily 	= new JLabel();
+    JTextPane filename 		= new JTextPane();
+    JTextPane dateUpdated   	= new JTextPane();
+    JTextPane decoderModel 	= new JTextPane();
+    JTextPane decoderFamily 	= new JTextPane();
     
-    JLabel id 		= new JLabel();
-    JLabel roadName 	= new JLabel();
-    JLabel maxSpeed		= new JLabel();
+    JTextPane id 		= new JTextPane();
+    JTextPane roadName 	= new JTextPane();
+    JTextPane maxSpeed		= new JTextPane();
  
-    JLabel roadNumber 	= new JLabel();
-    JLabel mfg 		= new JLabel();
-    JLabel model		= new JLabel();
-    JLabel owner		= new JLabel();
+    JTextPane roadNumber 	= new JTextPane();
+    JTextPane mfg 		= new JTextPane();
+    JTextPane model		= new JTextPane();
+    JTextPane owner		= new JTextPane();
     
     ResizableImagePanel locoImage;
     
@@ -235,7 +236,7 @@ public class DecoderPro3Window
         GridBagLayout gbLayout = new GridBagLayout();
         GridBagConstraints cL = new GridBagConstraints();
         GridBagConstraints cR = new GridBagConstraints();
-        Dimension minFieldDim = new Dimension(150,20);
+        Dimension minFieldDim = new Dimension(30,20);
         cL.gridx = 0;
         cL.gridy = 0;
         cL.ipadx = 3;
@@ -251,6 +252,7 @@ public class DecoderPro3Window
         cR.anchor = GridBagConstraints.WEST;
         id.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(id,cR);
+        formatTextAreaAsLabel(id);
         panel.add(id);
 
         cL.gridy = 1;
@@ -261,6 +263,7 @@ public class DecoderPro3Window
         cR.gridy = 1;
         roadName.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(roadName,cR);
+        formatTextAreaAsLabel(roadName);
         panel.add(roadName);
 
         cL.gridy = 2;
@@ -271,8 +274,9 @@ public class DecoderPro3Window
         cR.gridy = 2;
         roadNumber.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(roadNumber,cR);
+        formatTextAreaAsLabel(roadNumber);
         panel.add(roadNumber);
-
+        
         cL.gridy = 3;
         JLabel row3Label = new JLabel(rbroster.getString("FieldManufacturer"));
         gbLayout.setConstraints(row3Label,cL);
@@ -281,6 +285,7 @@ public class DecoderPro3Window
         cR.gridy = 3;
         mfg.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(mfg,cR);
+        formatTextAreaAsLabel(mfg);
         panel.add(mfg);
 
         cL.gridy = 4;
@@ -291,6 +296,7 @@ public class DecoderPro3Window
         cR.gridy = 4;
         owner.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(owner,cR);
+        formatTextAreaAsLabel(owner);
         panel.add(owner);
 
         cL.gridy = 5;
@@ -301,16 +307,12 @@ public class DecoderPro3Window
         cR.gridy = 5;
         model.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(model,cR);
+        formatTextAreaAsLabel(model);
         panel.add(model);
 
         cL.gridy = 6;
-        /*JLabel row6Label = new JLabel(rbroster.getString("FieldDCCAddress"));
-        gbLayout.setConstraints(row6Label,cL);
-        add(row6Label);*/
 
         cR.gridy = 6;
-        /*gbLayout.setConstraints(selPanel,cR);
-        add(selPanel);*/
 
         cL.gridy = 7;
 
@@ -331,6 +333,7 @@ public class DecoderPro3Window
         cR.gridy = 9;
         decoderFamily.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(decoderFamily,cR);
+        formatTextAreaAsLabel(decoderFamily);
         panel.add(decoderFamily);
 
         cL.gridy = 10;
@@ -341,6 +344,7 @@ public class DecoderPro3Window
         cR.gridy = 10;
         decoderModel.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(decoderModel,cR);
+        formatTextAreaAsLabel(decoderModel);
         panel.add(decoderModel);
 
         cL.gridy = 11;
@@ -355,6 +359,7 @@ public class DecoderPro3Window
         cR.gridy = 12;
         filename.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(filename,cR);
+        formatTextAreaAsLabel(filename);
         panel.add(filename);
 
         cL.gridy = 13;
@@ -366,12 +371,21 @@ public class DecoderPro3Window
         filename.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(dateUpdated,cR);
         panel.add(dateUpdated);
+        formatTextAreaAsLabel(dateUpdated);
         JPanel retval = new JPanel(new FlowLayout(FlowLayout.LEFT));
         retval.add(panel);
         return retval;
     }
     
+    void formatTextAreaAsLabel(JTextPane pane){
+        pane.setOpaque(false);
+        pane.setEditable(false);
+        pane.setBorder(null);
+    }
+    
     void updateDetails(RosterEntry _re){
+        //System.out.println("Doing update");
+        //modePane.setVisible(true);
         re=_re;
     
         filename.setText(re.getFileName());
@@ -395,7 +409,7 @@ public class DecoderPro3Window
             throttleLabels.setEnabled(true);
             rosterMedia.setEnabled(true);
             throttleLaunch.setEnabled(true);
-            modePane.setEnabled(true);
+            modePanel.setEnabled(true);
             if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
                 service.setEnabled(true);
@@ -407,11 +421,11 @@ public class DecoderPro3Window
     
     }
     
-    JRadioButton service = new JRadioButton("<HTML>Service Mode<br>(programming track)</HTML>");
+    JRadioButton service = new JRadioButton("<HTML>Service Mode<br>(Programming Track)</HTML>");
     JRadioButton ops = new JRadioButton("<HTML>Operations Mode<br>(Programming On Main)</HTML>");
     JRadioButton edit = new JRadioButton("<HTML>Edit Only</HTML>");
     
-    jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
+    jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
     
     JButton basicProg = new JButton("Basic Programmer");
     JButton compProg = new JButton("Comprehensive Programmer");
@@ -432,10 +446,11 @@ public class DecoderPro3Window
             ops.setEnabled(true);
         } else 
             edit.setSelected(true);
-        modePane.setEnabled(false);
+        modePanel.setEnabled(false);
         if(service.isSelected()){
-            modePane.setEnabled(true);
+            modePanel.setEnabled(true);
         }
+        modePanel.setVisible(true);
     }
     
     JPanel bottomRight(){
@@ -462,7 +477,7 @@ public class DecoderPro3Window
         service.setSelected(true);
         
         panel.add(progModePanel);
-        panel.add(modePane);
+        panel.add(modePanel);
         
         JPanel buttonHolder = new JPanel();
         GridLayout buttonLayout = new GridLayout(3, 2, 5, 5);
@@ -517,7 +532,7 @@ public class DecoderPro3Window
             }
         });
         
-        modePane.setEnabled(false);
+        modePanel.setEnabled(false);
 
         return panel;
     }
@@ -604,7 +619,7 @@ public class DecoderPro3Window
                                          pProg, false){
                                         
                 protected JPanel getModePane() {
-                    return modePane;
+                    return modePanel;
                 }
             };
         }
@@ -624,6 +639,15 @@ public class DecoderPro3Window
     public void windowClosing(java.awt.event.WindowEvent e) {
         super.windowClosing(e);
         jmri.InstanceManager.shutDownManagerInstance().shutdown();
+    }
+
+    //Matches the first argument in the array against a locally know method
+    public void remoteCalls(String args[]){
+        args[0] = args[0].toLowerCase();
+        if(args[0].equals("identifyloco"))
+            startIdentifyLoco();
+        else
+            log.error ("method " + args[0] + " not found");
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3Window.class.getName());
