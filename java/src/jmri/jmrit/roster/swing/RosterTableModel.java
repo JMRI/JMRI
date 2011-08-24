@@ -5,6 +5,8 @@ package jmri.jmrit.roster.swing;
 import jmri.jmrit.roster.*;
 import javax.swing.ImageIcon;
 
+import java.beans.PropertyChangeListener;
+
 /**
  * Table data model for display of Roster variable values.
  *<P>
@@ -18,7 +20,7 @@ import javax.swing.ImageIcon;
  * @version             $Revision$
  * @since 2.7.5
  */
-public class RosterTableModel extends javax.swing.table.AbstractTableModel {
+public class RosterTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     public static final int IDCOL = 0;
     static final int ADDRESSCOL = 1;
@@ -40,6 +42,15 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
     
     public RosterTableModel(boolean editable) {
         this.editable = editable;
+        Roster.instance().addPropertyChangeListener(this);
+    }
+    
+    public void propertyChange(java.beans.PropertyChangeEvent e){
+        if(e.getPropertyName().equals("add")){
+            fireTableDataChanged();
+        } else if (e.getPropertyName().equals("remove")){
+            fireTableDataChanged();
+        }
     }
     
     public int getRowCount() {
