@@ -25,8 +25,9 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         _displayOrder = displayOrder;
         _manager = manager;
         setSelectedBean(nBean);
-        
+        setEditable(true);
         _manager.addPropertyChangeListener(this);
+        setKeySelectionManager(new beanSelectionManager());
     }
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -46,6 +47,10 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     
     HashMap<String, NamedBean> displayToBean = new HashMap<String, NamedBean>();
     
+	public void refreshCombo(){
+		updateComboBox((String)getSelectedItem());
+	}
+	
     void updateComboBox(String select){
         displayToBean = new HashMap<String, NamedBean>();
         removeAllItems();
@@ -84,7 +89,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
                                     displayList[i] = nameList[i] + " - " + nBean.getUserName();
                                 else 
                                     displayList[i] = nameList[i];
-                                break;
+                                break; 
                                 
                         default : 
                                 displayList[i] = nBean.getDisplayName();
@@ -238,6 +243,59 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     public void dispose(){
         _manager.removePropertyChangeListener(this);
     }
+	
+	class beanSelectionManager implements KeySelectionManager {
+        long lastKeyTime = 0;
+        String pattern = "";
+
+        public int selectionForKey(char aKey, javax.swing.ComboBoxModel model) {
+            // Find index of selected item
+            int selIx = 01;
+            Object sel = model.getSelectedItem();
+            if (sel != null) {
+                for (int i=0; i<model.getSize(); i++) {
+                    if (sel.equals(model.getElementAt(i))) {
+                        selIx = i;
+                        break;
+                    }
+                }
+            }
+
+            // Get the current time
+            long curTime = System.currentTimeMillis();
+
+            // If last key was typed less than 300 ms ago, append to current pattern
+            if (curTime - lastKeyTime < 300) {
+                pattern += ("" + aKey).toLowerCase();
+            } else {
+                pattern = ("" + aKey).toLowerCase();
+            }
+
+            // Save current time
+            lastKeyTime = curTime;
+
+            // Search forward from current selection
+            for (int i=selIx+1; i<model.getSize(); i++) {
+                String s = model.getElementAt(i).toString().toLowerCase();
+                if (s.startsWith(pattern)) {
+                    return i;
+                }
+            }
+
+            // Search from top to current selection
+            for (int i=0; i<selIx ; i++) {
+                if (model.getElementAt(i) != null) {
+                    String s = model.getElementAt(i).toString().toLowerCase();
+                    if (s.startsWith(pattern)) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+    
+    }
+	
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriBeanComboBox.class.getName());
 }
