@@ -170,13 +170,16 @@ public class TrainSwitchLists extends TrainCommon {
 		fileOut.close();
 	}
 
-	public void printSwitchList(Location location, boolean preview) {
+	public void printSwitchList(Location location, boolean isPreview) {
 		File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
-		TrainPrintUtilities.printReport(buildFile, rb.getString("SwitchList")
-				+ " " + location.getName(), preview, Setup.getFontName(),
-				false, Setup.getManifestLogoURL(), location.getDefaultPrinterName());
+		if (isPreview && Setup.isManifestEditorEnabled())
+			TrainPrintUtilities.openDesktopEditor(buildFile);
+		else
+			TrainPrintUtilities.printReport(buildFile, rb.getString("SwitchList")
+					+ " " + location.getName(), isPreview, Setup.getFontName(),
+					false, Setup.getManifestLogoURL(), location.getDefaultPrinterName());
 	}
-	
+
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(TrainSwitchLists.class.getName());
 }
