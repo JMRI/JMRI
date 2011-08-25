@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>Operations- Printer Options</title>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_TrainsModify.shtml 18257 2011-08-22 08:50:56Z dat7719 $ -->
+<title>Operations-Modify Trains</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,7 +21,7 @@
 <div id="mainContent">
 
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Printer Options Dialog for Printing Manifests</h1>
+<h1>Trains Timetable</h1>
 
 <div align=right>
 <p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
@@ -29,8 +29,22 @@
 </div>
 
 <hr>
-<p>content here</p>
-
+<p>Opened from the <strong>Trains</strong> Window <strong>Tool</strong> menu. The Timetable tool allows you to define which trains will run on any given day/</p>
+<p><img src="images/Ops_TainTimetalbe.png" width="794" height="331" alt="timetable"></p>
+<h3>Menu Bar</h3>
+<ul>
+  <li><strong>Tools
+    </strong>
+    <ul>
+      <li><strong>Edit Timetable</strong><br>
+        <img src="images/Ops_EditTimetable.png" width="274" height="122" alt="edit timetable">        <br>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Window</strong> - standard JMRI&reg; menu</li>
+  <li><strong>Help</strong> - standard JMRI &reg;menu</li>
+</ul>
+<p>&nbsp;</p>
 <hr>
 
 <div align=right>

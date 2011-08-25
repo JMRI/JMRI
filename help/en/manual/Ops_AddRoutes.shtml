@@ -21,7 +21,9 @@
 
 <a NAME="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Add Route Window</h1>
+<h1>Add Route Window<br>
+  Edit Route Window
+</h1>
 
 <div align=right>
 <p><a href="Ops_Engines.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
@@ -29,7 +31,9 @@
 </div>
 
 <hr>
-<p>The Add Route Window opens and now you can add a route to your Operations data base.</p>
+<p>The <strong>Add Route</strong> Window opens and now you can add a route to your Operations data base.</p>
+<p>The Edit Route Window opens and allows you to edit one of the routes. only Title bar is different</p>
+<p><img src="images/Ops_AddTrainEditRoute.png" width="1035" height="159" alt="edit route"></p>
 <p><img src="images/Ops_AddRoute.png" width="900" height="239" alt="add route"></p>
 <h4>Menu Bar<br>
 <img src="images/Ops_AddRoute_menu.png" width="328" height="189" alt="route menu"></h4>
