@@ -90,9 +90,10 @@ public class VSDConfigPanel extends JmriPanel {
 	initComponents();
     }
 
-
-
-    // Read the addressTextBox and update the VSDecoder's address.
+    // updateAddress()
+    //
+    // Read the addressTextBox and broadcast the new address to
+    // any listeners.
     protected void updateAddress() {
 	// Simulates the clicking of the address Set button
 	VSDecoder dec = main_pane.getDecoder();
@@ -107,13 +108,18 @@ public class VSDConfigPanel extends JmriPanel {
 
     // GUI EVENT HANDLING METHODS
 
+    // handleDecoderListChange()
+    //
     // Respond to a change in the VSDecoderManager's profile list.
+    // Event listener on VSDecoderManager's profile list.
     public void handleDecoderListChange() {
 	log.warn("Handling the decoder list change");
 	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
 	this.setProfileList(sl);
     }
 
+    // setProfileList()
+    //
     // Perform the actual work of changing the profileComboBox's contents
     public void setProfileList(ArrayList<String> s) {
 	VSDecoder vsd;
@@ -139,7 +145,7 @@ public class VSDConfigPanel extends JmriPanel {
 		// Imitate a button click.  Don't care the contents of the ActionEvent - the called
 		// function doesn't use the contents.
 		
-		updateAddress();
+		updateAddress();  // why this? Who's listening?  Profile select doesn't change the address...
 	    }
 
 	} 
@@ -159,6 +165,9 @@ public class VSDConfigPanel extends JmriPanel {
 	repaint();
     }
 
+    // initComponents()
+    //
+    // Build the GUI components and initialize them.
     @Override
     public void initComponents() {
 
@@ -192,7 +201,7 @@ public class VSDConfigPanel extends JmriPanel {
 	rosterComboBox.setToolTipText("tool tip for roster box");
 	rosterComboBox.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    rosterItemSelected();
+		    rosterItemSelectAction(e);
 		}
 	    });
         rosterPanel.add(rosterComboBox);
@@ -258,6 +267,9 @@ public class VSDConfigPanel extends JmriPanel {
 
     }
 
+    // class NullComboBoxItem
+    //
+    // little object to insert into profileComboBox when it's empty
     static class NullComboBoxItem {
         @Override
 	public String toString() {
@@ -266,9 +278,9 @@ public class VSDConfigPanel extends JmriPanel {
 	}
     }
 
-    /**
-     * Set the RosterEntry for this decoder.
-     */
+    // setRosterEntry()
+    //
+    // Respond to the user choosing an entry from the rosterComboBox
     public void setRosterEntry(RosterEntry entry){
 	String vsd_path;
 	String vsd_profile;
@@ -276,6 +288,12 @@ public class VSDConfigPanel extends JmriPanel {
 
 	// Update the roster entry local var.
 	rosterEntry = entry;
+
+	// Set the Address box from the Roster entry
+	main_pane.setAddress(entry.getDccLocoAddress());
+	addressTextBox.setText(""+entry.getDccLocoAddress().getNumber());
+	addressTextBox.setEnabled(true);
+	addressSetButton.setEnabled(true);
 
 	// Get VSD info from Roster.
 	vsd_path = rosterEntry.getAttribute("VSDecoder_Path");
@@ -296,26 +314,24 @@ public class VSDConfigPanel extends JmriPanel {
 	    }
 	}
 
-	// Update the roster combo box
-	//rosterComboBox.setSelectedItem(entry);
-	//addrSelector.setAddress(entry.getDccLocoAddress());
-
-	// Set the Address box from the Roster entry
-	main_pane.setAddress(entry.getDccLocoAddress());
-	addressTextBox.setText(""+entry.getDccLocoAddress().getNumber());
-	addressTextBox.setEnabled(true);
-	addressSetButton.setEnabled(true);
     }
 
-    // using Roster combo box
-    private void rosterItemSelected() {
+    // rosterItemSelectAction()
+    //
+    // ActionEventListener function for rosterComboBox
+    // Chooses a RosterEntry from the list and loads its relevant info.
+    private void rosterItemSelectAction(ActionEvent e) {
 	if (!(rosterComboBox.getSelectedItem() instanceof NullComboBoxItem)) {
 	    log.debug("Roster Item Selected...");
 	    String rosterEntryTitle = rosterComboBox.getSelectedItem().toString();
 	    setRosterEntry(Roster.instance().entryFromTitle(rosterEntryTitle));
 	}
     }
-
+    
+    // rosterSaveButtonAction()
+    //
+    // ActionEventListener method for rosterSaveButton
+    // Writes VSDecoder info to the RosterEntry.
     private void rosterSaveButtonAction(ActionEvent e) {
 	log.debug("rosterSaveButton pressed");
 	String rosterEntryTitle = rosterComboBox.getSelectedItem().toString();
@@ -323,9 +339,13 @@ public class VSDConfigPanel extends JmriPanel {
 	if (r != null) {
 	    r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
 	    r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
+
+	    // Need to write RosterEntry to file.
 	}
     }
 
+    // profileComboBoxActionPerformed()
+    //
     // User chose a Profile from the profileComboBox.
     private void profileComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
 	int addr;
@@ -341,7 +361,8 @@ public class VSDConfigPanel extends JmriPanel {
 		profileComboBox.removeItem(loadProfilePrompt);  // remove the "choose" thing.
 		profile_selected = true;
 	}
-
+	
+	// Get the existing decoder from the main pane...
 	dec = main_pane.getDecoder();
 	log.debug("Profile selected. New = " + profileComboBox.getSelectedItem() + "Decoder = " + dec);
 	if (dec != null) {
@@ -363,10 +384,19 @@ public class VSDConfigPanel extends JmriPanel {
 	}
     }
 
+    // addressBoxActionPerformed()
+    //
+    // ActionEventListener for addressSetButton
+    // Does nothing.
     private void addressBoxActionPerformed(java.awt.event.ActionEvent evt) {
 	// Don't do anything just yet...
+	// Probably don't do anything ever...
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    // addressSetButtonActionPerformed()
+    //
+    // ActionEventListener for addressSetButton
+    // User just pressed "set" on a new address.
     private void addressSetButtonActionPerformed(java.awt.event.ActionEvent evt) {
 	VSDecoder dec;
 	String address_text = addressTextBox.getText();

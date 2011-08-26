@@ -82,13 +82,21 @@ public class VSDecoderPane extends JmriPanel {
     }
 
     
+    // getHelpTarget()
+    //
+    // Return a reference to the help file
     public String getHelpTarget() { return "package.jmri.jmrix.vsdecoder.VSDecoderPane"; }
-    /*
-    public String getTitle() { 
-        return LocoNetBundle.bundle().getString("MenuItemVirtualSoundDecoder");
-    }
-    */
 
+    // getTitle()
+    //
+    // Return a suggested title for the enclosing frame.
+    public String getTitle() { 
+        return VSDecoderBundle.bundle().getString("WindowTitle");
+    }
+
+    // getDefaultVSDecoderFolder()
+    //
+    // Return a string default default path for the VSD files
     public static String getDefaultVSDecoderFolder() {
         if (VSDecoderFileLocation == null)
             return XmlFile.prefsDir()+"vsdecoder"+File.separator ;
@@ -97,17 +105,17 @@ public class VSDecoderPane extends JmriPanel {
 
 
 
-    public void init() {}
+    public void init() {
+	// Does nothing.  Here for completeness.
+    }
     
     public void initContext(Object context) {
-	//initComponents();
-	/*
-        if (context instanceof LocoNetSystemConnectionMemo ) {
-            initComponents((LocoNetSystemConnectionMemo) context);
-        }
-	*/
+	// Does nothing.  Here for completeness.
     }
 
+    // initComponents()
+    //
+    // initialzies the GUI components.
     public void initComponents() {
 	log.debug("initComponents()");
 	//buildMenu();
@@ -171,18 +179,28 @@ public class VSDecoderPane extends JmriPanel {
 	}
     }
 
+    // getDecoder()
+    //
+    // Looks up the currently referenced decoder and returns it.
     public VSDecoder getDecoder() {
 	VSDecoder d = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
 	addPropertyChangeListener(d);
 	return(d);
     }
 
+
+    // getDecoder(String)
+    //
+    // Looks up a decoder profile by name and returns that decoder.
     public VSDecoder getDecoder(String profile) {
 	VSDecoder d = VSDecoderManager.instance().getVSDecoder(profile);
 	addPropertyChangeListener(d);
 	return(d);
     }
 
+    // setDecoder()
+    //
+    // set the Decoder ID and update the soundsPanel
     public void setDecoder(VSDecoder dec) {
 	if (dec != null) {
 	    // Store the new decoder
@@ -198,6 +216,9 @@ public class VSDecoderPane extends JmriPanel {
 	
     }
 
+    // setAddress()
+    //
+    // Update the Decoder's address...
     public void setAddress(DccLocoAddress a) {
 	if (a != null) {
 	    VSDecoder decoder = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
@@ -207,6 +228,9 @@ public class VSDecoderPane extends JmriPanel {
 	}
     }
 
+    // setTitle();
+    //
+    // Update the window title with the given address.
     public void setTitle(DccLocoAddress a) {
 	if (a != null) {
 	    parent.setTitle("VSDecoder - " + a.toString());
@@ -214,5 +238,5 @@ public class VSDecoderPane extends JmriPanel {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPane.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPane.class.getName());
 }

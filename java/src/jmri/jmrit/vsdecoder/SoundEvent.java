@@ -245,23 +245,29 @@ public class SoundEvent implements PropertyChangeListener {
 	log.debug("target name " + t.getTargetName() + " sound " + parent.getSound(t.getTargetName()));
 	t.setTarget(parent.getSound(t.getTargetName()));
 	log.debug("target " + t.getTarget());
-
+       
+	if (t.getTarget() == null) {
+	    // If the target is missing, set up a do-nothing operation.
+	    // Protects against errors in the XML file.
+	    // Should probably post a warning, though.
+	    t.setTargetAction(Trigger.TargetAction.NOTHING);
+	}
 	switch(t.getTargetAction()) {
 	case PLAY:
 	case FADEIN:
 	    log.debug("PLAY");
-	    t.setCallback(new TriggerListener() {
-		    public void takeAction() { t.getTarget().play(); }
-		    public void takeAction(int i) {}
-		});
-	    break;
+		t.setCallback(new TriggerListener() {
+			public void takeAction() { t.getTarget().play(); }
+			public void takeAction(int i) {}
+		    });
+		break;
 	case LOOP:
-	    log.debug("LOOP");
-	    t.setCallback(new TriggerListener() {
-		    public void takeAction() { t.getTarget().loop(); }
-		    public void takeAction(int i) {}
-		});
-	    break;
+		log.debug("LOOP");
+		t.setCallback(new TriggerListener() {
+			public void takeAction() { t.getTarget().loop(); }
+			public void takeAction(int i) {}
+		    });
+		break;
 	case STOP:
 	case FADEOUT:
 	    log.debug("STOP");
@@ -282,6 +288,13 @@ public class SoundEvent implements PropertyChangeListener {
 		});
 	    break;
 	case NOTHING:
+	    // Used for when the target sound is missing.
+	    log.debug("NOTHING");
+	    t.setCallback(new TriggerListener() {
+		    public void takeAction() { } // do nothing
+		    public void takeAction(int i) { } // do nothing
+		});
+	    break;
 	default:
 	    // do nothing.
 	    break;

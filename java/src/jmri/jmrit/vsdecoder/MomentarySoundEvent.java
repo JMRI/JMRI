@@ -116,8 +116,15 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 
 	for (ButtonTrigger bt : button_trigger_list.values()) {
 	    log.debug("Button Trigger: " + bt.getName());
-	    log.debug("  Target: " + bt.getTarget().getName());
-	    log.debug("  Action: " + bt.getTargetAction().toString());
+	    if (bt.getTarget() != null)
+		log.debug("  Target: " + bt.getTarget().getName());
+	    else
+		log.debug("  Target: null");
+	    if (bt.getTargetAction() != null)
+		log.debug("  Action: " + bt.getTargetAction().toString());
+	    else
+		log.debug("  Target Action: null");
+
 	} 
 
 	MouseListener [] listeners = button.getListeners(MouseListener.class);
