@@ -124,6 +124,26 @@ public class Roster extends XmlFile {
      * @return Number of entries in the Roster.
      */
     public int numEntries() { return _list.size(); }
+    
+    /**
+     * @return The Number of roster entries that are in the currently selected group.
+     */
+    public int numGroupEntries() {
+        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
+        int num = 0;
+        for (int i = 0; i < l.size(); i++) {
+            RosterEntry r = l.get(i);
+            if(_rostergroup!=null){
+                if(r.getAttribute(getRosterGroupWP())!=null){
+                    if(r.getAttribute(getRosterGroupWP()).equals("yes"))
+                        num++;
+                }
+            }
+            else
+                num++;
+        }
+        return num;
+    }
 
     /**
      * Return a JComboBox containing the entire roster, if a roster group
@@ -243,6 +263,31 @@ public class Roster extends XmlFile {
      */
     public RosterEntry getEntry(int i ) {
         return _list.get(i);
+    }
+    
+    /**
+     * @return The Number of roster entries that are in the currently selected group.
+     */
+    public RosterEntry getGroupEntry(int i) {
+        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
+        int num = 0;
+        for (int j = 0; j < l.size(); j++) {
+            RosterEntry r = l.get(j);
+            if(_rostergroup!=null){
+                if(r.getAttribute(getRosterGroupWP())!=null){
+                    if(r.getAttribute(getRosterGroupWP()).equals("yes")){
+                        if(num==i)
+                            return r;
+                        num++;
+                    }
+                }
+            } else {
+                if(num==i)
+                    return r;
+                num++;
+            }
+        }
+        return null;
     }
 
     /**
@@ -717,21 +762,43 @@ public class Roster extends XmlFile {
         
     static String _rostergroup = null;
     
-    public static void setRosterGroup(String group){
+    public void setRosterGroup(String group){
+        String oldGroup = _rostergroup;
+        String newGroup = group;
         if (group==null) _rostergroup=null;
         else if (group.equals("Global"))
             _rostergroup=null;
         else
             _rostergroup = group;
+        if(oldGroup==null)
+            oldGroup="Global";
+        if(newGroup==null)
+            newGroup="Global";
+        firePropertyChange("ActiveRosterGroup", oldGroup, newGroup);
     }
     
     public static String getRosterGroup(){
         return _rostergroup;
     }
     
+    public static String getRosterGroupName(){
+        if(_rostergroup==null)
+            return "Global";
+        return _rostergroup;
+    }
+    
     public static String getRosterGroupWP(){
         String group = _rosterGroupPrefix+_rostergroup;
         return group;
+    }
+    
+    
+    /**
+     * This is here so that when a roster entry is added to a group via the table entry,
+     * a propertyChangeEvent is fired off.  Not Ideal but it works.
+     */ 
+    public void rosterGroupEntryChanged(){
+        firePropertyChange("ActiveRosterGroup", null, null);
     }
 
     

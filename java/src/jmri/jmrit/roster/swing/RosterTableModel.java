@@ -50,11 +50,13 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
             fireTableDataChanged();
         } else if (e.getPropertyName().equals("remove")){
             fireTableDataChanged();
+        } else if (e.getPropertyName().equals("ActiveRosterGroup")){
+            fireTableDataChanged();
         }
     }
     
     public int getRowCount() {
-        return Roster.instance().numEntries();
+        return Roster.instance().numGroupEntries();
     }
 
     public int getColumnCount( ){
@@ -109,10 +111,10 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
      */
     public Object getValueAt(int row, int col) {
         // get roster entry for row
-        RosterEntry re = Roster.instance().getEntry(row);
+        RosterEntry re = Roster.instance().getGroupEntry(row);
         if (re == null){
         	log.debug("roster entry is null!");
-        	return "Error";
+        	return null;
         }    
         switch (col) {
         case IDCOL:         return re.getId();

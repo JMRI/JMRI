@@ -22,6 +22,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import java.awt.event.ActionListener;
 import javax.swing.border.Border;
+import java.beans.PropertyChangeListener;
 
 
 /**
@@ -73,6 +74,12 @@ public class DecoderPro3Window
             hideSummary=true;
             
         }
+        Roster.instance().addPropertyChangeListener( new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                activeRosterGroupField.setText(Roster.getRosterGroupName());
+            }
+        });
+        activeRosterGroupField.setText(Roster.getRosterGroupName());
     }
     
     jmri.UserPreferencesManager p;
@@ -102,6 +109,14 @@ public class DecoderPro3Window
         statusField.setFont(statusBarFont);
         statusField.setText("idle");
         getStatus().add(statusField);
+        spacerLabel = new JLabel("   ");
+        spacerLabel.setBorder(blackline);
+        getStatus().add(spacerLabel);
+        statusTitle = new JLabel("Active Roster Group : ");
+        statusTitle.setFont(statusBarFont);
+        getStatus().add(statusTitle);
+        activeRosterGroupField.setFont(statusBarFont);
+        getStatus().add(activeRosterGroupField);
     }
     
     protected void systemsMenu() {
@@ -191,6 +206,7 @@ public class DecoderPro3Window
     }
     
     JLabel statusField = new JLabel();
+    JLabel activeRosterGroupField = new JLabel();
     
     final ResourceBundle rbroster = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
     

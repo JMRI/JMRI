@@ -76,7 +76,7 @@ public class SelectRosterGroupAction extends JmriAbstractAction {
         if (retval != 1) return;
         String entry = (String) selections.getSelectedItem();
 
-        Roster.setRosterGroup(entry);
+        Roster.instance().setRosterGroup(entry);
     }
     
     // never invoked, because we overrode actionPerformed above

@@ -63,7 +63,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         frame = new JmriJFrame("DisAssociate Loco from Group");
         Roster roster = Roster.instance();
         curRosterGroup = Roster.getRosterGroup();
-        Roster.setRosterGroup(null);
+        Roster.instance().setRosterGroup(null);
         rosterBox = roster.fullRosterComboBox();
         groupBox = roster.rosterGroupBox();
         updateRosterEntry((String) groupBox.getSelectedItem());
@@ -98,7 +98,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         frame.pack();
         frame.setVisible(true);
 
-        Roster.setRosterGroup(curRosterGroup);
+        Roster.instance().setRosterGroup(curRosterGroup);
     }
 
     /**
@@ -128,14 +128,15 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     }
     
     public void dispose(){
-        Roster.setRosterGroup(curRosterGroup);
+        Roster.instance().setRosterGroup(curRosterGroup);
         frame.dispose();
     
     }
     
     public void updateRosterEntry(String group) {
-        Roster.setRosterGroup(group);
+        Roster.instance().setRosterGroup(group);
         Roster.instance().updateComboBox(rosterBox);
+        Roster.instance().rosterGroupEntryChanged();
         frame.pack();
     }
 }

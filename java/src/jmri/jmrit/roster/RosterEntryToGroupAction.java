@@ -51,7 +51,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         
         roster = Roster.instance();
         String curRosterGroup = Roster.getRosterGroup();
-        Roster.setRosterGroup(null);
+        Roster.instance().setRosterGroup(null);
 
         selections = roster.rosterGroupBox();
         if (lastGroupSelect!=null){
@@ -71,7 +71,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
                   +selections.getSelectedItem()+ ", " + rosterEntry.getSelectedIndex()+":" + rosterEntry.getSelectedItem());
         if (retval != 1) {
-            Roster.setRosterGroup(curRosterGroup);
+            Roster.instance().setRosterGroup(curRosterGroup);
             return;
         }
         
@@ -82,7 +82,8 @@ public class RosterEntryToGroupAction extends AbstractAction {
         re.putAttribute(selGroup, "yes");
         Roster.writeRosterFile();
         re.updateFile();
-        Roster.setRosterGroup(curRosterGroup);
+        Roster.instance().setRosterGroup(curRosterGroup);
+        Roster.instance().rosterGroupEntryChanged();
         actionPerformed(event);
     }
 
