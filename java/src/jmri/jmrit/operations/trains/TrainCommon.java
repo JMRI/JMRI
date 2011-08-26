@@ -191,7 +191,7 @@ public class TrainCommon {
 			return (car.isCaboose() || car.isPassenger())? tabString("", CarLoads.instance().getCurMaxNameLength()+1) 
 					: " "+tabString(car.getLoad(), CarLoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.HAZARDOUS))
-			return (car.isHazardous()? " ("+rb.getString("Hazardous")+")" : "");
+			return (car.isHazardous()? " "+Setup.getHazardousMsg() : "");
 		else if (attribute.equals(Setup.DROP_COMMENT))
 			return " "+car.getDropComment();
 		else if (attribute.equals(Setup.PICKUP_COMMENT))

@@ -165,6 +165,7 @@ public class Setup {
 	private static String dropCarPrefix = BOX + rb.getString("SetOutPrefix");
 	private static String localPrefix = BOX + rb.getString("LocalCarPrefix");	
 	private static String miaComment = rb.getString("misplacedCars");
+	private static String hazardousMsg = "("+rb.getString("Hazardous")+")";
 	private static String logoURL ="";
 	private static String panelName ="Panel";
 	private static String buildReportLevel = BUILD_REPORT_NORMAL;	
@@ -369,6 +370,15 @@ public class Setup {
 	public static void setRailroadName(String name){
 		railroadName = name;
 	}
+	
+	public static String getHazardousMsg(){
+		return hazardousMsg;
+	}
+	
+	public static void setHazardousMsg(String message){
+		hazardousMsg = message;
+	}
+	
 	
 	public static String getMiaComment(){
 		return miaComment;
@@ -1128,6 +1138,7 @@ public class Setup {
     	
     	e.addContent(values = new Element("manifest"));
     	values.setAttribute("useEditor", isBuildReportEditorEnabled()?"true":"false");
+    	values.setAttribute("hazardousMsg", getHazardousMsg());
     	
         if (getManifestLogoURL() != ""){
         	values = new Element("manifestLogo");
@@ -1424,6 +1435,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("manifest useEditor: "+enable);
         		setManifestEditorEnabled(enable.equals("true"));
+        	}
+          	if((a = operations.getChild("manifest").getAttribute("hazardousMsg"))!= null){
+        		String message = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest hazardousMsg: "+message);
+        		setHazardousMsg(message);
         	}
         }     
        	// get manifest logo

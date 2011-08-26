@@ -122,6 +122,7 @@
 
 <!ATTLIST tab enabled				(true | false ) "false">  
 <!ATTLIST manifest useEditor		(true | false ) "false"> 
+<!ATTLIST manifest hazardousMsg		CDATA #IMPLIED> 
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
