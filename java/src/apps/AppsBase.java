@@ -202,16 +202,17 @@ public abstract class AppsBase {
     
     static protected void setJmriSystemProperty(String key, String value) {
         try {
-            String current = System.getProperty("org.jmri.Apps-"+key);
-            if ( current == null)
-                System.setProperty("org.jmri.apps.Apps-"+key, value);
-            else if (!current.equals(value))
+            String current = System.getProperty("org.jmri.Apps."+key);
+            if ( current == null){
+                System.setProperty("org.jmri.Apps."+key, value);
+            }else if (!current.equals(value))
                 log.warn("JMRI property "+key+" already set to "+current+
                         ", skipping reset to "+value);
         } catch (Exception e) {
             log.error("Unable to set JMRI property "+key+" to "+value+
                         "due to exception: "+e);
         }
+        System.out.println(System.getProperty("org.jmri.Apps."+key));
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppsBase.class.getName());

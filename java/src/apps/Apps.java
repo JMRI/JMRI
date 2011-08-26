@@ -594,9 +594,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
  
     static protected void setJmriSystemProperty(String key, String value) {
         try {
-            String current = System.getProperty("org.jmri.Apps-"+key);
+            String current = System.getProperty("org.jmri.Apps."+key);
             if ( current == null)
-                System.setProperty("org.jmri.apps.Apps."+key, value);
+                System.setProperty("org.jmri.Apps."+key, value);
             else if (!current.equals(value))
                 log.warn("JMRI property "+key+" already set to "+current+
                         ", skipping reset to "+value);
