@@ -53,6 +53,7 @@ public class DecoderPro3Window
     	        new File("xml/config/apps/decoderpro/Gui3Menus.xml"), 
     	        new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));  // no toolbar
     	//add(createToolBarPanel(), BorderLayout.NORTH);
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     	getTop().add(createTop());
         getBottom().setMinimumSize(new Dimension(0, 250));
         getBottom().add(createBottom());
@@ -67,7 +68,14 @@ public class DecoderPro3Window
             //System.out.println(jmri.managers.ManagerDefaultSelector.instance.getDefault(jmri.ProgrammerManager.class));
             //System.out.println(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer());
         }
+        if(p.getSimplePreferenceState(DecoderPro3Window.class.getName()+"hideSummary")){
+            hideBottomPane(true);
+            hideSummary=true;
+            
+        }
     }
+    
+    jmri.UserPreferencesManager p;
     
     void statusBar(){
         Border blackline = BorderFactory.createMatteBorder(0,0,0,1,Color.black);
@@ -161,9 +169,6 @@ public class DecoderPro3Window
         updateDetails();
     }
     
-    JPanel paneSpace = new JPanel(); // place where the panes go
-    JScrollPane sp;
-    
     ProgDebugger programmer = new ProgDebugger();
         
     JPanel rosterDetailPanel = new JPanel();
@@ -178,31 +183,12 @@ public class DecoderPro3Window
         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
         rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
         rosterDetailPanel.add(bottomRight(), BorderLayout.EAST);
-        //sp = new JScrollPane(rosterDetailPanel);
+        if(p.getSimplePreferenceState(DecoderPro3Window.class.getName()+"hideRosterImage")){
+            locoImage.setVisible(false);
+            hideRosterImage=true;
+        }
         return rosterDetailPanel;
-        
-        //return sp;
     }
-    
-    /*JComponent createToolBarPanel(){
-        ((JToolBar) getToolBar()).setFloatable(false);
-        JPanel retval = new JPanel();
-        retval.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 0));
-
-        retval.add(identifyButton = new JButton(rb.getString("IdentifyButton"), new ImageIcon("resources/icons/misc/gui3/IdentifyButton.png")));
-        identifyButton.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isDebugEnabled()) log.debug("Start Identify Pressed");
-                    startIdentifyLoco();
-                }
-            });
-        identifyButton.setHorizontalAlignment(JButton.LEFT);
-        identifyButton.setAlignmentX(0.0f);
-        return retval;
-    }
-    
-    JButton identifyButton;
-    JButton newLocoButton;*/
     
     JLabel statusField = new JLabel();
     
@@ -224,7 +210,7 @@ public class DecoderPro3Window
     
     ResizableImagePanel locoImage;
     
-    boolean showRosterImage = true;
+    boolean hideRosterImage = false;
     
     JPanel rosterDetails(){
         JPanel panel = new JPanel();
@@ -409,10 +395,10 @@ public class DecoderPro3Window
             model.setText(re.getModel());
             owner.setText(re.getOwner());
             locoImage.setImagePath(re.getImagePath());
-            if(showRosterImage)
-                locoImage.setVisible(true);
-            else
+            if(hideRosterImage)
                 locoImage.setVisible(false);
+            else
+                locoImage.setVisible(true);
                 
             basicProg.setEnabled(true);
             compProg.setEnabled(true);
@@ -688,11 +674,13 @@ public class DecoderPro3Window
     }
     
     protected void hideRosterImage(){
-        showRosterImage=!showRosterImage;
-        if(showRosterImage)
-            locoImage.setVisible(true);
-        else
+        hideRosterImage=!hideRosterImage;
+        p.setSimplePreferenceState(DecoderPro3Window.class.getName()+"hideRosterImage",hideRosterImage);
+        if(hideRosterImage){
             locoImage.setVisible(false);
+        } else {
+            locoImage.setVisible(true);
+        }
     }
     
     protected void exportLoco(){
@@ -728,6 +716,7 @@ public class DecoderPro3Window
     boolean hideSummary=false;
     protected void hideSummary(){
         hideSummary=!hideSummary;
+        p.setSimplePreferenceState(DecoderPro3Window.class.getName()+"hideSummary",hideSummary);
         hideBottomPane(hideSummary);
     }
     

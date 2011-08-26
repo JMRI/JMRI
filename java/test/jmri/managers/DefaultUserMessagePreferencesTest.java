@@ -50,6 +50,7 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp(); 
+        System.setProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 

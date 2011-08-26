@@ -1192,7 +1192,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
 
     File file;
     public void readUserPreferences() {
-        //System.out.println(jmri.InstanceManager.configureManagerInstance().getPrefsLocation());
         File configFileName = new File(System.getProperty("org.jmri.Apps.configFilename"));
         String userprefsfilename;
         if (!configFileName.isAbsolute()) {
