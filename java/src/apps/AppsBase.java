@@ -46,7 +46,7 @@ public abstract class AppsBase {
                                     justification="not a library pattern")                                    
     protected static String nameString = "JMRI Base";
 
-    private static String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
+    private final static String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
     boolean configOK;
     
     /**
@@ -88,7 +88,7 @@ public abstract class AppsBase {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         InstanceManager.setConfigureManager(cm);
-        cm.setPrefsLocation(new File(configFilename));
+        cm.setPrefsLocation(new File(getConfigFileName()));
         log.debug("config manager installed");
         // Install Config Manager error handler
         jmri.configurexml.ConfigXmlManager.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
@@ -106,12 +106,12 @@ public abstract class AppsBase {
 
     protected void setAndLoadPreferenceFile() {
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(configFilename);
+        File file = new File(getConfigFileName());
         // decide whether name is absolute or relative
         if (!file.isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
+            file = new File(XmlFile.prefsDir()+ getConfigFileName());
         }
         // don't try to load if doesn't exist, but mark as not OK
         if (!file.exists()) {
@@ -165,10 +165,10 @@ public abstract class AppsBase {
         log.debug("main initialization done");
     }
     
-            /**
+    /**
      * Set up the configuration file name at startup.
      * <P>
-     * The static configFilename variable holds the name 
+     * The Configuration File name variable holds the name 
      * used to load the configuration file during later startup
      * processing.  Applications invoke this method 
      * to handle the usual startup hierarchy:
@@ -188,15 +188,17 @@ public abstract class AppsBase {
     static protected void setConfigFilename(String def, String args[]) {
         // save the configuration filename if present on the command line
         if (args.length>=1 && args[0]!=null) {
-            configFilename = args[0];
-            setJmriSystemProperty("configFilename", configFilename);
-            log.debug("Config file was specified as: "+configFilename);
+            setJmriSystemProperty("configFilename", args[0]);
+            log.debug("Config file was specified as: "+args[0]);
         } else{
-            configFilename = def;
+            setJmriSystemProperty("configFilename", def);
         }
     }
     
+    // We will use the value stored in the system property 
     static public String getConfigFileName(){
+        if(System.getProperty("org.jmri.Apps.configFilename")!=null)
+            return System.getProperty("org.jmri.Apps.configFilename");
         return configFilename;
     }
     
@@ -212,7 +214,6 @@ public abstract class AppsBase {
             log.error("Unable to set JMRI property "+key+" to "+value+
                         "due to exception: "+e);
         }
-        System.out.println(System.getProperty("org.jmri.Apps."+key));
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppsBase.class.getName());
