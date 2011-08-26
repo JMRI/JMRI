@@ -3,6 +3,9 @@
 package jmri.jmrit.decoderdefn;
 
 import java.awt.event.ActionEvent;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.AbstractAction;
 
@@ -13,7 +16,15 @@ import javax.swing.AbstractAction;
  * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  */
-public class DecoderIndexCreateAction extends AbstractAction {
+public class DecoderIndexCreateAction extends JmriAbstractAction {
+
+    public DecoderIndexCreateAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public DecoderIndexCreateAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
 
     public DecoderIndexCreateAction(String s) {
         super(s);
@@ -22,7 +33,12 @@ public class DecoderIndexCreateAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         DecoderIndexFile.forceCreationOfNewIndex();
     }
-
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderIndexCreateAction.class.getName());
 

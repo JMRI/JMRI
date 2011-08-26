@@ -3,8 +3,11 @@
 package jmri.util.swing;
 
 import javax.swing.*;
+import java.util.HashMap;
 import java.io.File;
 import org.jdom.*;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * Common utility methods for working with GUI items
@@ -19,11 +22,21 @@ public class GuiUtilBase {
         String name = null;
         Icon icon = null;
         
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        
         if (child.getChild("name") != null) {
             name = child.getChild("name").getText();
         }
         if (child.getChild("icon") != null) {
             icon = new ImageIcon(child.getChild("icon").getText());
+        }
+        //This bit does not size very well, but it works for now.
+        if(child.getChild("option") !=null){
+            for (Object item : child.getChildren("option")) {
+                String setting = ((Element)item).getAttribute("setting").getValue();
+                String setMethod = ((Element)item).getText();
+                parameters.put(setMethod, setting);
+            }
         }
         
         if (child.getChild("adapter") != null) {
@@ -46,6 +59,7 @@ public class GuiUtilBase {
                         a = (JmriAbstractAction) ct.newInstance(new Object[]{name, wi});
                         a.setName(name);
                         a.setContext(context);
+                        setParameters(a, parameters);
                         return a;
                     } else {
                         Class<?>[] parms = ct.getParameterTypes();
@@ -57,6 +71,7 @@ public class GuiUtilBase {
                         a = (JmriAbstractAction) ct.newInstance(new Object[]{name, icon, wi});
                         a.setName(name);
                         a.setContext(context);
+                        setParameters(a, parameters);
                         return a;
                     }
                 }
@@ -74,6 +89,7 @@ public class GuiUtilBase {
                 else
                      act = new JmriNamedPaneAction(name, icon, wi, child.getChild("panel").getText());
                 act.setContext(context);
+                setParameters(act, parameters);
                 return act;
             } catch (Exception ex) {
                 log.warn("could not load toolbar adapter class: "+child.getChild("panel").getText()
@@ -99,6 +115,7 @@ public class GuiUtilBase {
     static Action createActionInCallingWindow(Object obj, String args[], String name, Icon icon){
         java.lang.reflect.Method method = null;
         try{
+            
             method = obj.getClass().getDeclaredMethod("remoteCalls", String[].class);
         } catch (java.lang.NullPointerException e) {
             log.error("Null object passed");
@@ -116,7 +133,6 @@ public class GuiUtilBase {
         act.setObject(obj);
         act.setEnabled(true);
         return act;
-    
     }
     
     static class CallingAbstractAction extends javax.swing.AbstractAction{
@@ -147,31 +163,37 @@ public class GuiUtilBase {
             } catch (IllegalArgumentException ex) {
                 System.out.println("IllegalArgument " + ex);
             } catch (IllegalAccessException ex) {
-                System.out.println("IllegalAccess");
+                System.out.println("IllegalAccess " + ex);
             } catch (java.lang.reflect.InvocationTargetException ex) {
-                System.out.println("InvocationTarget");
+                System.out.println("InvocationTarget " + ex.toString());
             }
         }
     }
     
     static Action createEmptyMenuItem(Icon icon, String name){
-            if (icon != null) {
-                AbstractAction act = new AbstractAction(name, icon){
-                    public void actionPerformed(java.awt.event.ActionEvent e) {}
-                    public String toString() { return (String) getValue(javax.swing.Action.NAME); }
-                };
-                act.setEnabled(false);
-                return act;
-            } else { // then name must be present
-                AbstractAction act = new AbstractAction(name){
-                    public void actionPerformed(java.awt.event.ActionEvent e) {}
-                    public String toString() { return (String) getValue(javax.swing.Action.NAME); }
-                };
-                act.setEnabled(false);
-                return act;
-            }
+        if (icon != null) {
+            AbstractAction act = new AbstractAction(name, icon){
+                public void actionPerformed(java.awt.event.ActionEvent e) {}
+                public String toString() { return (String) getValue(javax.swing.Action.NAME); }
+            };
+            act.setEnabled(false);
+            return act;
+        } else { // then name must be present
+            AbstractAction act = new AbstractAction(name){
+                public void actionPerformed(java.awt.event.ActionEvent e) {}
+                public String toString() { return (String) getValue(javax.swing.Action.NAME); }
+            };
+            act.setEnabled(false);
+            return act;
+        }
     }
 
+    static void setParameters(JmriAbstractAction act, HashMap<String, String> parameters){
+        for (Map.Entry<String, String> map : parameters.entrySet()) {
+            act.setParameter(map.getKey(), map.getValue());
+        }
+    }
+    
     /**
      * Get root element from XML file, handling errors locally.
      *

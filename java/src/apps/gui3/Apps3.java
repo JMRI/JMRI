@@ -47,7 +47,6 @@ public abstract class Apps3 extends apps.AppsBase {
         apps.SystemConsole.init();
 
         // TODO Launch splash screen: splash(true)
-        
         apps.AppsBase.preInit();
 
 
@@ -247,7 +246,7 @@ public abstract class Apps3 extends apps.AppsBase {
         }
     }
     
-    protected static String nameString = "JMRI program";
+    static String nameString = "JMRI program";
     
     static public String startupInfo(String program) {
         setApplication(program);

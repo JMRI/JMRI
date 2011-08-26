@@ -9,11 +9,21 @@
  */
 
 package jmri.jmrit.simpleturnoutctrl;
-
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-public class SimpleTurnoutCtrlAction 			extends AbstractAction {
+public class SimpleTurnoutCtrlAction 			extends JmriAbstractAction {
+
+    public SimpleTurnoutCtrlAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public SimpleTurnoutCtrlAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
 
     public SimpleTurnoutCtrlAction(String s) { 
 	super(s);
@@ -34,6 +44,12 @@ public class SimpleTurnoutCtrlAction 			extends AbstractAction {
 		f.setVisible(true);
 
 	}
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
+    
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTurnoutCtrlAction.class.getName());
 }
 

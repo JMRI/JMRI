@@ -64,8 +64,8 @@ public class DecoderPro3Window
         setVisible(true);
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            System.out.println(jmri.managers.ManagerDefaultSelector.instance.getDefault(jmri.ProgrammerManager.class));
-            System.out.println(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer());
+            //System.out.println(jmri.managers.ManagerDefaultSelector.instance.getDefault(jmri.ProgrammerManager.class));
+            //System.out.println(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer());
         }
     }
     
@@ -156,12 +156,9 @@ public class DecoderPro3Window
     void locoSelected(String id) {
         log.debug("locoSelected ID "+id);
         // convert to roster entry
-        RosterEntry re = Roster.instance().entryFromTitle(id);
+        re = Roster.instance().entryFromTitle(id);
         
-        updateDetails(re);
-        //repaint();
-        //rosterDetailPanel.revalidate();
-        //sp.revalidate();
+        updateDetails();
     }
     
     JPanel paneSpace = new JPanel(); // place where the panes go
@@ -226,6 +223,8 @@ public class DecoderPro3Window
     JTextPane owner		= new JTextPane();
     
     ResizableImagePanel locoImage;
+    
+    boolean showRosterImage = true;
     
     JPanel rosterDetails(){
         JPanel panel = new JPanel();
@@ -379,27 +378,42 @@ public class DecoderPro3Window
         pane.setBorder(null);
     }
     
-    void updateDetails(RosterEntry _re){
-        //System.out.println("Doing update");
-        //modePane.setVisible(true);
-        re=_re;
-    
-        filename.setText(re.getFileName());
-        dateUpdated.setText(re.getDateUpdated());
-        decoderModel.setText(re.getDecoderModel());
-        decoderFamily.setText(re.getDecoderFamily());
-        
-        
-        id.setText(re.getId());
-        roadName.setText(re.getRoadName());
-     
-        roadNumber.setText(re.getRoadNumber());
-        mfg.setText(re.getMfg());
-        model.setText(re.getModel());
-        owner.setText(re.getOwner());
-        locoImage.setImagePath(re.getImagePath());
-        //locoImage = new ResizableImagePanel(re.getImagePath(), 320, 240);
-        if(re!=null){
+    void updateDetails(){
+        if(re==null){
+            filename.setText("");
+            dateUpdated.setText("");
+            decoderModel.setText("");
+            decoderFamily.setText("");
+            
+            
+            id.setText("");
+            roadName.setText("");
+         
+            roadNumber.setText("");
+            mfg.setText("");
+            model.setText("");
+            owner.setText("");
+            locoImage.setImagePath("");
+        } else {
+            filename.setText(re.getFileName());
+            dateUpdated.setText(re.getDateUpdated());
+            decoderModel.setText(re.getDecoderModel());
+            decoderFamily.setText(re.getDecoderFamily());
+            
+            
+            id.setText(re.getId());
+            roadName.setText(re.getRoadName());
+            
+            roadNumber.setText(re.getRoadNumber());
+            mfg.setText(re.getMfg());
+            model.setText(re.getModel());
+            owner.setText(re.getOwner());
+            locoImage.setImagePath(re.getImagePath());
+            if(showRosterImage)
+                locoImage.setVisible(true);
+            else
+                locoImage.setVisible(false);
+                
             basicProg.setEnabled(true);
             compProg.setEnabled(true);
             throttleLabels.setEnabled(true);
@@ -414,7 +428,6 @@ public class DecoderPro3Window
                 edit.setSelected(true);
             edit.setEnabled(true);
         }
-    
     }
     
     JRadioButton service = new JRadioButton("<HTML>Service Mode<br>(Programming Track)</HTML>");
@@ -535,38 +548,6 @@ public class DecoderPro3Window
     
     //current selected loco
     RosterEntry re;
-
-    
-    /**
-     * Identify loco button pressed, start the identify operation
-     * This defines what happens when the identify is done.
-     */
-     //taken out of CombinedLocoSelPane
-    protected void startIdentifyLoco() {
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-                        !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            log.error("Identify loco called when no service mode programmer is available");
-            JOptionPane.showMessageDialog(null, "Identify loco called when no service mode programmer is available");
-            return;
-        }
-        // start identifying a loco
-        final DecoderPro3Window me = this;
-        IdentifyLoco id = new IdentifyLoco() {
-                private DecoderPro3Window who = me;
-                protected void done(int dccAddress) {
-                    // if Done, updated the selected decoder
-                    who.selectLoco(dccAddress);
-                }
-                protected void message(String m) {
-                    statusField.setText(m);
-                }
-                protected void error() {
-                    // raise the button again
-                    //idloco.setSelected(false);
-                }
-            };
-        id.start();
-    }
     
         /**
      * Identify locomotive complete, act on it by setting the GUI.
@@ -582,12 +563,12 @@ public class DecoderPro3Window
                                                 null, null, null, null);
         if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
         if (l.size() > 0) {
-            RosterEntry r = l.get(0);
-            updateDetails(r);
+            re = l.get(0);
+            updateDetails();
             JTable table = rtable.getTable();
             int entires = table.getRowCount();
             for (int i = 0; i<entires; i++){
-                if(table.getValueAt(i, 0).equals(r.getId())){
+                if(table.getValueAt(i, 0).equals(re.getId())){
                     table.addRowSelectionInterval(i,i);
                 }
             }
@@ -619,7 +600,7 @@ public class DecoderPro3Window
                 }
             };
         }
-        if(ops.isSelected()){
+        else if(ops.isSelected()){
             int address = Integer.parseInt(re.getDccAddress());
             boolean longAddr = re.isLongAddress();
             pProg = jmri.InstanceManager.programmerManagerInstance()
@@ -640,10 +621,122 @@ public class DecoderPro3Window
     //Matches the first argument in the array against a locally know method
     public void remoteCalls(String args[]){
         args[0] = args[0].toLowerCase();
-        if(args[0].equals("identifyloco"))
+        
+        if(args[0].equals("identifyloco")){
             startIdentifyLoco();
-        else
+        } else if(args[0].equals("printloco")){
+            if (checkIfEntrySelected()) printLoco(false);
+        } else if(args[0].equals("printpreviewloco")){
+             if (checkIfEntrySelected()) printLoco(true);
+        } else if(args[0].equals("exportloco")){
+             if (checkIfEntrySelected()) exportLoco();
+        } else if(args[0].equals("basicprogrammer")){
+             if (checkIfEntrySelected()) startProgrammer(null, re, "Basic");
+        } else if(args[0].equals("comprehensiveprogrammer")){
+             if (checkIfEntrySelected()) startProgrammer(null, re, "Comprehensive");
+        } else if(args[0].equals("editthrottlelabels")){
+             if (checkIfEntrySelected()) startProgrammer(null, re, "dp3"+File.separator+"ThrottleLabels");
+        } else if(args[0].equals("editrostermedia")){
+             if (checkIfEntrySelected()) startProgrammer(null, re, "dp3"+File.separator+"MediaPane");
+        } else if(args[0].equals("hiderosterimage")){
+            hideRosterImage();
+        } else if(args[0].equals("summarypane")){
+            hideSummary();
+        } else if(args[0].equals("copyloco")){
+            if (checkIfEntrySelected()) copyLoco();
+        } else
             log.error ("method " + args[0] + " not found");
+    }
+    
+    boolean checkIfEntrySelected(){
+        if (re == null){
+            JOptionPane.showMessageDialog(null, "Please select a loco from the roster first");
+            return false;
+        }
+        return true;
+    }
+    
+        /**
+     * Identify loco button pressed, start the identify operation
+     * This defines what happens when the identify is done.
+     */
+     //taken out of CombinedLocoSelPane
+    protected void startIdentifyLoco() {
+        if (jmri.InstanceManager.programmerManagerInstance()==null ||
+                        !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            log.error("Identify loco called when no service mode programmer is available");
+            JOptionPane.showMessageDialog(null, "Identify loco called when no service mode programmer is available");
+            return;
+        }
+        // start identifying a loco
+        final DecoderPro3Window me = this;
+        IdentifyLoco id = new IdentifyLoco() {
+                private DecoderPro3Window who = me;
+                protected void done(int dccAddress) {
+                    // if Done, updated the selected decoder
+                    who.selectLoco(dccAddress);
+                }
+                protected void message(String m) {
+                    statusField.setText(m);
+                }
+                protected void error() {
+                    // raise the button again
+                    //idloco.setSelected(false);
+                }
+            };
+        id.start();
+    }
+    
+    protected void hideRosterImage(){
+        showRosterImage=!showRosterImage;
+        if(showRosterImage)
+            locoImage.setVisible(true);
+        else
+            locoImage.setVisible(false);
+    }
+    
+    protected void exportLoco(){
+        ExportRosterItem act = new ExportRosterItem("Export", this, re);
+        act.actionPerformed(null);
+    }
+    
+    static class ExportRosterItem extends jmri.jmrit.roster.ExportRosterItemAction{
+        ExportRosterItem(String pName, Component pWho, RosterEntry re) {
+            super(pName, pWho);
+            setExistingEntry(re);
+        }
+        protected boolean selectFrom(){ return true;}
+    }
+    
+    protected void copyLoco(){
+        CopyRosterItem act = new CopyRosterItem("Copy", this, re);
+        act.actionPerformed(null);
+    }
+    
+    static class CopyRosterItem extends jmri.jmrit.roster.CopyRosterItemAction{
+        CopyRosterItem(String pName, Component pWho, RosterEntry re) {
+            super(pName, pWho);
+            setExistingEntry(re);
+        }
+        protected boolean selectFrom(){ return true;}
+    }
+
+    protected void printLoco(boolean boo){
+    
+    }
+    
+    boolean hideSummary=false;
+    protected void hideSummary(){
+        hideSummary=!hideSummary;
+        hideBottomPane(hideSummary);
+    }
+    
+    public Object getRemoteObject(String value){
+        value=value.toLowerCase();
+        if(value.equals("hidesummary")){
+            return hideSummary;
+        }
+        return null;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3Window.class.getName());

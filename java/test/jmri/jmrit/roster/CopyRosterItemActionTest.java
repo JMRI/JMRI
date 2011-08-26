@@ -24,8 +24,8 @@ public class CopyRosterItemActionTest extends TestCase {
         Roster.instance();
 
         // copy the item
-        CopyRosterItemAction a = new CopyRosterItemAction("copy", null){
-            boolean selectFrom() {
+        CopyRosterItemAction a = new CopyRosterItemAction("copy", new javax.swing.JFrame()){
+            protected boolean selectFrom() {
                 return false;  // aborts operation
             }
         };

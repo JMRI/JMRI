@@ -6,6 +6,9 @@ import java.io.*;
 
 import javax.swing.*;
 import java.net.URL;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 
 /**
@@ -16,6 +19,14 @@ import java.net.URL;
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
+
+    public InstallDecoderFileAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public InstallDecoderFileAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
     
     public InstallDecoderFileAction(String s) {
         super(s);
@@ -48,6 +59,11 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
             log.debug("cancelled in open dialog");
             return null;
         }
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
     
     // initialize logging

@@ -4,6 +4,9 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
@@ -29,8 +32,16 @@ import javax.swing.JOptionPane;
  * @author	Kevin Dickerson   Copyright (C) 2009
  * @version	$Revision$
  */
-public class SelectRosterGroupAction extends AbstractAction {
+public class SelectRosterGroupAction extends JmriAbstractAction {
 
+    public SelectRosterGroupAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public SelectRosterGroupAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
+    
     /**
      * @param s Name of this action, e.g. in menus
      * @param who Component that action is associated with, used
@@ -66,6 +77,11 @@ public class SelectRosterGroupAction extends AbstractAction {
         String entry = (String) selections.getSelectedItem();
 
         Roster.setRosterGroup(entry);
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 
 

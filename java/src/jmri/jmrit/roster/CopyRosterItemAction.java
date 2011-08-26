@@ -6,6 +6,9 @@ import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.Action;
 
@@ -33,11 +36,19 @@ import org.jdom.Element;
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
 
+    public CopyRosterItemAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public CopyRosterItemAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
+
     public CopyRosterItemAction(String pName, Component pWho) {
         super(pName, pWho);
     }
 
-    boolean selectFrom() {
+    protected boolean selectFrom() {
         return selectExistingFromEntry();
     }
 
@@ -110,7 +121,12 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         // log.info("CopyRosterItemAction starts");
 
         // fire the action
-        Action a = new CopyRosterItemAction("Copy Roster Item", null);
+        Action a = new CopyRosterItemAction("Copy Roster Item", new javax.swing.JFrame());
         a.actionPerformed(new ActionEvent(a, 0, "dummy"));
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 }

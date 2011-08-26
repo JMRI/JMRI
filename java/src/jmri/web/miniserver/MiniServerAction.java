@@ -4,6 +4,9 @@ package jmri.web.miniserver;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +26,15 @@ import jmri.util.zeroconf.ZeroConfService;
  * @author	    Bob Jacobsen    Copyright (C) 2004
  * @version         $Revision$
  */
-public class MiniServerAction extends AbstractAction {
+public class MiniServerAction extends JmriAbstractAction {
+
+    public MiniServerAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public MiniServerAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
 
     int port = Integer.parseInt(MiniServerManager.miniServerPreferencesInstance().getPort());
     ResourceBundle htmlStrings;
@@ -111,6 +122,11 @@ public class MiniServerAction extends AbstractAction {
             // this line won't be reached, 
             // as the MiniServer ctor is the service loop
         }
+    }
+
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MiniServerAction.class.getName());

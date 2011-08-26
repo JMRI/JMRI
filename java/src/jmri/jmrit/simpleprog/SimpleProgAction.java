@@ -2,6 +2,9 @@
 
  package jmri.jmrit.simpleprog;
 
+ import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -11,8 +14,15 @@ import java.awt.event.ActionEvent;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @version			$Revision$
- */public class SimpleProgAction 			extends AbstractAction {
+ */public class SimpleProgAction 			extends JmriAbstractAction {
 
+    public SimpleProgAction(String s, WindowInterface wi) {
+        super(s, wi);
+    }
+     
+    public SimpleProgAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
+    }
      public SimpleProgAction(String s) {
          super(s);
 
@@ -34,6 +44,11 @@ import java.awt.event.ActionEvent;
          f.setVisible(true);
          
      }
+     
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
  }
 
 /* @(#)SimpleProgAction.java */

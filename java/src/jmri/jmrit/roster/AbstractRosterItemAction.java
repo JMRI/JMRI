@@ -5,6 +5,8 @@ package jmri.jmrit.roster;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
@@ -21,17 +23,25 @@ import javax.swing.JOptionPane;
  * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  */
-abstract public class AbstractRosterItemAction extends AbstractAction {
+abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstractAction {
 
     public AbstractRosterItemAction(String pName, Component pWho) {
         super(pName);
         mParent = pWho;
     }
+    
+    public AbstractRosterItemAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public AbstractRosterItemAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
 
     Component mParent;
 
     public void actionPerformed(ActionEvent event) {
-
+        
         // select the "from" entry/file
         if (!selectFrom()) return;
         // select the "to" entry/file
@@ -44,7 +54,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         return;
     }
 
-    abstract boolean selectFrom();
+    protected abstract boolean selectFrom();
     abstract boolean selectTo();
     abstract boolean doTransfer();
 
@@ -90,6 +100,17 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         mFullFromFilename = LocoFile.getFileLocation()+mFromFilename;
         log.debug(" from resolves to \""+mFromFilename+"\", \""+mFullFromFilename+"\"");
         return true;
+    }
+    
+    /**
+     * method added for DP3 where the existing roster entry is selected from a table
+     */
+    
+    public void setExistingEntry(RosterEntry mFromEntry){
+        this.mFromEntry = mFromEntry;
+        mFromID = mFromEntry.titleString();
+        mFromFilename = mFromEntry.getFileName();
+        mFullFromFilename = LocoFile.getFileLocation()+mFromFilename;
     }
 
     boolean selectNewToEntryID() {
@@ -162,6 +183,11 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         Roster.writeRosterFile();
     }
 
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
+    
     // initialize logging
     static org.apache.log4j.Logger log
         = org.apache.log4j.Logger.getLogger(AbstractRosterItemAction.class.getName());

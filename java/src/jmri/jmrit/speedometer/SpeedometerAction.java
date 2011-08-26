@@ -1,6 +1,9 @@
 // SpeedometerAction.java
 
 package jmri.jmrit.speedometer;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
@@ -13,7 +16,15 @@ import java.awt.event.ActionEvent;
  * @version			$Revision$
  */
 
-public class SpeedometerAction 			extends AbstractAction {
+public class SpeedometerAction 			extends JmriAbstractAction {
+
+    public SpeedometerAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public SpeedometerAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
 
     public SpeedometerAction(String s) {
         super(s);
@@ -35,7 +46,11 @@ public class SpeedometerAction 			extends AbstractAction {
         f.setVisible(true);
 
     }
-
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
 }
 
 /* @(#)SpeedometerAction.java */

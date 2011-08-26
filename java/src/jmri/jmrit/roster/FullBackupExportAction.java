@@ -9,6 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -22,11 +25,18 @@ import javax.swing.JFileChooser;
  *
  */
 public class FullBackupExportAction
-        extends AbstractAction {
+        extends JmriAbstractAction {
 
     private static final long serialVersionUID = 1L;
     // parent component for GUI
 
+    public FullBackupExportAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public  FullBackupExportAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
     private Component _parent;
 
     /**
@@ -143,5 +153,10 @@ public class FullBackupExportAction
         }
 
         zipper.closeEntry();
+    }
+    
+        // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 }

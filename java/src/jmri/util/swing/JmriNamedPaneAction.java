@@ -51,7 +51,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
             return null;
         }      
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriNamedPaneAction.class.getName());
 }
 

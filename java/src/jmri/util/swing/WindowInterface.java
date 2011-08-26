@@ -59,6 +59,8 @@ public interface WindowInterface {
 
     public void dispose();
     
+    //public void runMethod(String method, Object args[]);
+    
     /**
      * Suggested location for subsequent panels
      */

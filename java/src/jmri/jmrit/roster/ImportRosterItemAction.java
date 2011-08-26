@@ -6,10 +6,14 @@ import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.Action;
 
 import org.jdom.Element;
+
 
 /**
  * Import a locomotive XML file as a new RosterEntry.
@@ -35,11 +39,19 @@ import org.jdom.Element;
  */
 public class ImportRosterItemAction extends AbstractRosterItemAction  {
 
+    public ImportRosterItemAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public ImportRosterItemAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
+    
     public ImportRosterItemAction(String pName, Component pWho) {
         super(pName, pWho);
     }
 
-    boolean selectFrom() {
+    protected boolean selectFrom() {
         return selectNewFromFile();
     }
 
@@ -94,6 +106,11 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
 
         return true;
     }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ImportRosterItemAction.class.getName());
@@ -121,7 +138,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
         // log.info("CopyRosterItemAction starts");
 
         // fire the action
-        Action a = new ImportRosterItemAction("Import Roster Item", null);
+        Action a = new ImportRosterItemAction("Import Roster Item", new javax.swing.JFrame());
         a.actionPerformed(new ActionEvent(a, 0, "dummy"));
     }
 }

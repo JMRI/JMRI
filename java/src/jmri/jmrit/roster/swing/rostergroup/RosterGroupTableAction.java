@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
@@ -17,8 +19,16 @@ import javax.swing.JLabel;
      * @version	$Revision$
      */
 
-public class RosterGroupTableAction extends AbstractAction {
+public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
 
+
+    public RosterGroupTableAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public RosterGroupTableAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
     /**
      * Create an action with a specific title.
      * <P>
@@ -123,6 +133,10 @@ public class RosterGroupTableAction extends AbstractAction {
         m.setGroup(roster.getRosterGroupPrefix()+group);
         m.fireTableDataChanged();
     
+    }
+    
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
     
 }

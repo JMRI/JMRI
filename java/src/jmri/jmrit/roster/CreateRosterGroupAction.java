@@ -2,13 +2,13 @@
 
 package jmri.jmrit.roster;
 
-//import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-// import java.io.File;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.AbstractAction;
-//import javax.swing.Action;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
@@ -32,8 +32,15 @@ import javax.swing.JOptionPane;
  * @author	Kevin Dickerson   Copyright (C) 2009
  * @version	$Revision$
  */
-public class CreateRosterGroupAction extends AbstractAction {
+public class CreateRosterGroupAction extends JmriAbstractAction {
 
+    public CreateRosterGroupAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public CreateRosterGroupAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
     /**
      * @param s Name of this action, e.g. in menus
      * @param who Component that action is associated with, used
@@ -64,6 +71,11 @@ public class CreateRosterGroupAction extends AbstractAction {
 
         roster.addRosterGroupList(entry);
         Roster.writeRosterFile();
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
     
     // initialize logging

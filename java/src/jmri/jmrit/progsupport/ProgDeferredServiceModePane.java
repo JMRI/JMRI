@@ -161,6 +161,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
 
     // no longer needed, disconnect if still connected
     public void dispose() {
+        System.out.println("This dispose called");
         if (connected) {
             if (InstanceManager.programmerManagerInstance() != null
                 && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null)

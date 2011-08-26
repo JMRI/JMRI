@@ -2,6 +2,9 @@ package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 /**
  * Create a new throttle.
@@ -9,8 +12,16 @@ import javax.swing.AbstractAction;
  * @author			Glen Oberhauser
  * @version     $Revision$
  */
-public class ThrottleCreationAction extends AbstractAction {
+public class ThrottleCreationAction extends JmriAbstractAction {
 
+    public ThrottleCreationAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public ThrottleCreationAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
+    
     /**
      * Constructor
      * @param s Name for the action.
@@ -34,5 +45,10 @@ public class ThrottleCreationAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
     	ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
 		tf.toFront();
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 }

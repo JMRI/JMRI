@@ -5,6 +5,9 @@ package jmri.jmrit.roster;
 import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import javax.swing.AbstractAction;
 
@@ -18,10 +21,18 @@ import org.jdom.Element;
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @version	$Revision$
  */
-public class RecreateRosterAction extends AbstractAction {
+public class RecreateRosterAction extends JmriAbstractAction {
+
+    public RecreateRosterAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public RecreateRosterAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
 
     public RecreateRosterAction(String s) {
-        super(s, null);
+        super(s);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -117,6 +128,11 @@ public class RecreateRosterAction extends AbstractAction {
                 log.debug("      "+sbox[i]);
         }
         return sbox;
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 
     // initialize logging

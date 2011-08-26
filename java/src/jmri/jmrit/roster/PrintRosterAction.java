@@ -22,18 +22,32 @@ import java.util.List;
  * @author  Dennis Miller  Copyright (C) 2005
  * @version     $Revision$
  */
-public class PrintRosterAction  extends AbstractAction {
+public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
 
+    public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {
+    	super(s, wi);
+        isPreview = true;
+    }
+     
+ 	public PrintRosterAction(String s, javax.swing.Icon i, jmri.util.swing.WindowInterface wi) {
+    	super(s, i, wi);
+        isPreview = true;
+    }
+    
     public PrintRosterAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
+        isPreview = preview;
+    }
+    
+    public void setPreview(boolean preview){
         isPreview = preview;
     }
 
     /**
      * Frame hosting the printing
      */
-    Frame mFrame;
+    Frame mFrame = new Frame();
     /**
      * Variable to set whether this is to be printed or previewed
      */
@@ -92,6 +106,22 @@ public class PrintRosterAction  extends AbstractAction {
 
         // and force completion of the printing
         writer.close();
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
+    
+    public void setParameter(String parameter, String value){
+        parameter = parameter.toLowerCase();
+        value = value.toLowerCase();
+        if(parameter.equals("ispreview")){
+            if(value.equals("true"))
+                isPreview=true;
+            else
+                isPreview=false;
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintRosterAction.class.getName());

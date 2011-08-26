@@ -3,6 +3,9 @@
 package jmri.jmrit.decoderdefn;
 
 import jmri.jmrit.*;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 import java.awt.event.*;
 import java.io.*;
 
@@ -20,7 +23,15 @@ import org.jdom.*;
  * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
-public class InstallDecoderURLAction extends AbstractAction {
+public class InstallDecoderURLAction extends JmriAbstractAction {
+
+    public InstallDecoderURLAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public InstallDecoderURLAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
     
     public InstallDecoderURLAction(String s) {
         super(s);
@@ -169,7 +180,11 @@ public class InstallDecoderURLAction extends AbstractAction {
         return xf.rootFromURL(url);
         
     }
-
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstallDecoderURLAction.class.getName());
 }

@@ -43,8 +43,8 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     public static void main(String args[]) {
         // do processing needed immediately, before
         // we attempt anything else
-        setConfigFilename("DecoderProConfig3.xml", args);
         preInit();
+        setConfigFilename("DecoderProConfig3.xml", args);
         
         // create the program object
         DecoderPro3 app = new DecoderPro3();

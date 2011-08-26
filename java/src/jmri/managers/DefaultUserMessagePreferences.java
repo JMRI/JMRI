@@ -1210,6 +1210,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
                 jmri.InstanceManager.configureManagerInstance().load(file, true);
             } catch (jmri.JmriException e) {
                 log.error("Unhandled problem loading configuration: "+e);
+            } catch (java.lang.NullPointerException e){
+                log.error("NPE when trying to load user pref " + file);
             }
         } else {
             log.info("No saved user preferences file");

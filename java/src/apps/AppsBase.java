@@ -46,7 +46,7 @@ public abstract class AppsBase {
                                     justification="not a library pattern")                                    
     protected static String nameString = "JMRI Base";
 
-    protected static String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
+    private static String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
     boolean configOK;
     
     /**
@@ -204,7 +204,7 @@ public abstract class AppsBase {
         try {
             String current = System.getProperty("org.jmri.Apps-"+key);
             if ( current == null)
-                System.setProperty("org.jmri.apps.Apps."+key, value);
+                System.setProperty("org.jmri.apps.Apps-"+key, value);
             else if (!current.equals(value))
                 log.warn("JMRI property "+key+" already set to "+current+
                         ", skipping reset to "+value);

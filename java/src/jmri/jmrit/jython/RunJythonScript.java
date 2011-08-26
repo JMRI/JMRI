@@ -6,6 +6,9 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import java.io.*;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 /**
  * This Action runs a script by invoking a Jython interpreter.
@@ -25,8 +28,15 @@ import java.io.*;
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007
  * @version     $Revision$
  */
-public class RunJythonScript extends AbstractAction {
-
+public class RunJythonScript extends JmriAbstractAction {
+    
+    public  RunJythonScript(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public  RunJythonScript(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
     /**
      * Constructor that, when action is invoked, opens a JFileChooser
      * to select file to invoke.
@@ -100,6 +110,11 @@ public class RunJythonScript extends AbstractAction {
 
     void invoke(File file) {
         jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(file.toString()));
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
     
     // initialize logging

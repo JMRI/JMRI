@@ -6,6 +6,9 @@ import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
+
 import javax.swing.Action;
 
 import org.jdom.Element;
@@ -30,7 +33,7 @@ import org.jdom.Element;
  * <P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Gene  ral Public License 
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
@@ -43,8 +46,8 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
     public ExportRosterItemAction(String pName, Component pWho) {
         super(pName, pWho);
     }
-
-    boolean selectFrom() {
+    
+    protected boolean selectFrom() {
         return selectExistingFromEntry();
     }
 
@@ -115,7 +118,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         // log.info("CopyRosterItemAction starts");
 
         // fire the action
-        Action a = new ExportRosterItemAction("Export Roster Item", null);
+        Action a = new ExportRosterItemAction("Export Roster Item", new javax.swing.JFrame());
         a.actionPerformed(new ActionEvent(a, 0, "dummy"));
     }
 }
