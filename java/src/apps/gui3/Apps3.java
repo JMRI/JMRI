@@ -246,7 +246,7 @@ public abstract class Apps3 extends apps.AppsBase {
         }
     }
     
-    static String nameString = "JMRI program";
+    protected static String nameString = "JMRI program";
     
     static public String startupInfo(String program) {
         setApplication(program);
