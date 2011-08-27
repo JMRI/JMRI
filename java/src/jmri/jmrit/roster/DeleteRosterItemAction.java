@@ -7,7 +7,10 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-import javax.swing.AbstractAction;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
+
 import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -38,8 +41,15 @@ import javax.swing.JOptionPane;
  * @version	$Revision$
  * @see         jmri.jmrit.XmlFile
  */
-public class DeleteRosterItemAction extends AbstractAction {
+public class DeleteRosterItemAction extends JmriAbstractAction {
 
+    public DeleteRosterItemAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+
+ 	public DeleteRosterItemAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
     /**
      * @param s Name of this action, e.g. in menus
      * @param who Component that action is associated with, used
@@ -55,21 +65,11 @@ public class DeleteRosterItemAction extends AbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         Roster roster = Roster.instance();
-
+        String entry = selectRosterEntry();
+        if (entry==null) return;
         // get parent object if there is one
         //Component parent = null;
         //if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
-
-        // create a dialog to select the roster entry
-        JComboBox selections = roster.fullRosterComboBox();
-        int retval = JOptionPane.showOptionDialog(_who,
-                                                  "Select one roster entry", "Delete roster entry",
-                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
-                                                  new Object[]{"Cancel", "OK", selections}, null );
-        log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
-                  +selections.getSelectedItem());
-        if (retval != 1) return;
-        String entry = (String) selections.getSelectedItem();
 
         // find the file for the selected entry
         String filename = roster.fileFromTitle(entry);
@@ -112,6 +112,20 @@ public class DeleteRosterItemAction extends AbstractAction {
 
     }
 
+    protected String selectRosterEntry(){
+        // create a dialog to select the roster entry
+        JComboBox selections = Roster.instance().fullRosterComboBox();
+        int retval = JOptionPane.showOptionDialog(_who,
+                                                  "Select one roster entry", "Delete roster entry",
+                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                                                  new Object[]{"Cancel", "OK", selections}, null );
+        log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
+                  +selections.getSelectedItem());
+        if (retval != 1) return null;
+        String entry = (String) selections.getSelectedItem();
+        return entry;
+    }
+
     /**
      * Can provide some mechanism to prompt for user for one
      * last chance to change his/her mind
@@ -150,7 +164,12 @@ public class DeleteRosterItemAction extends AbstractAction {
         // log.info("DeleteRosterItemAction starts");
 
         // fire the action
-        Action a = new DeleteRosterItemAction("Delete Roster Item", null);
+        Action a = new DeleteRosterItemAction("Delete Roster Item", new javax.swing.JFrame());
         a.actionPerformed(new ActionEvent(a, 0, "dummy"));
+    }
+
+    // never invoked, because we overrode actionPerformed above
+    public jmri.util.swing.JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 }
