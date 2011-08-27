@@ -646,7 +646,10 @@ public class DecoderPro3Window
             hideSummary();
         } else if(args[0].equals("copyloco")){
             if (checkIfEntrySelected()) copyLoco();
-        } else
+        }  else if(args[0].equals("deleteloco")){
+            if (checkIfEntrySelected()) deleteLoco();
+        }
+        else
             log.error ("method " + args[0] + " not found");
     }
     
@@ -724,6 +727,24 @@ public class DecoderPro3Window
         }
         protected boolean selectFrom(){ return true;}
     }
+
+    protected void deleteLoco(){
+        DeleteRosterItem act = new DeleteRosterItem("Delete", this, re);
+        act.actionPerformed(null);
+    }
+
+
+    static class DeleteRosterItem extends jmri.jmrit.roster.DeleteRosterItemAction{
+        DeleteRosterItem(String pName, Component pWho, RosterEntry re) {
+            super(pName, pWho);
+            this.re = re;
+        }
+        RosterEntry re;
+        protected String selectRosterEntry(){
+            return re.getId();
+        }
+    }
+
 
     protected void printLoco(boolean boo){
     
