@@ -72,6 +72,9 @@
     <node><name>Duplicate Loco</name>
         <current>copyloco</current>
     </node>
+    <node><name>Delete Loco</name>
+        <current>deleteloco</current>
+    </node>
     <node>separator</node>
     <node><name>Preferences</name>
         <adapter>apps.gui3.TabbedPreferencesAction</adapter>
