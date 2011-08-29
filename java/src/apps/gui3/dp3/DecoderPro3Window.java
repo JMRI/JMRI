@@ -56,6 +56,7 @@ public class DecoderPro3Window
     	//add(createToolBarPanel(), BorderLayout.NORTH);
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     	getTop().add(createTop());
+        getToolBar().add(apps.gui3.Apps3.buttonSpace());
         getBottom().setMinimumSize(new Dimension(0, 250));
         getBottom().add(createBottom());
         //getToolBar().add(createToolBarPanel());

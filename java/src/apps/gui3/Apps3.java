@@ -39,6 +39,7 @@ public abstract class Apps3 extends apps.AppsBase {
     static public void preInit() {
         nameString = "JMRI GUI3 Demo";
         splash(true);
+        setButtonSpace();
         // need to call ConfigXmlManager.setPrefsLocation(someFile) somewhere
         
         // Initialise system console
@@ -73,6 +74,28 @@ public abstract class Apps3 extends apps.AppsBase {
         // set to min size for demo
         displayMainFrame(mainFrame.getMaximumSize());  // or new Dimension(800, 600));
     }
+    
+        /**
+    * For compatability with adding in buttons to the toolbar using the existing createbuttonmodel
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                                                    justification="only one application at a time")
+    protected static void setButtonSpace() {
+        _buttonSpace = new JPanel();
+        _buttonSpace.setLayout(new FlowLayout(FlowLayout.LEFT));
+    }
+    
+    /**
+     * Provide access to a place where applications
+     * can expect the configurion code to build run-time
+     * buttons.
+     * @see apps.CreateButtonPanel
+     * @return null if no such space exists
+     */
+    static public JComponent buttonSpace() {
+        return _buttonSpace;
+    }
+    static JComponent _buttonSpace = null;
         
     protected JmriJFrame mainFrame;
     
