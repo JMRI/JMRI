@@ -27,6 +27,8 @@ import java.io.File;
  */
 public class MDI extends apps.gui3.Apps3 {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                                                    justification="only one application at a time")
     protected void createMainFrame() {
         // create and populate main window
         nameString = "JMRI GUI3 Demo";

@@ -831,9 +831,11 @@ public class Roster extends XmlFile {
     
     public JComboBox rosterGroupBox() {
         JComboBox b = new JComboBox();
+        b.insertItemAt("Global",0);
         for (int i = 0; i < _rosterGroupList.size(); i++) {
             b.addItem(_rosterGroupList.get(i));
         }
+        b.setSelectedItem(_rostergroup);
         return b;
     }
     
@@ -842,6 +844,8 @@ public class Roster extends XmlFile {
         for (int i = 0; i < _rosterGroupList.size(); i++) {
             box.addItem(_rosterGroupList.get(i));
         }
+        box.insertItemAt("Global",0);
+        box.setSelectedItem(_rostergroup);
     }
     
     // initialize logging

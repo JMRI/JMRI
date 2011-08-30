@@ -2,6 +2,10 @@
 
 package apps.gui3.dp3;
 
+import java.io.File;
+import jmri.jmrit.XmlFile;
+import javax.swing.*;
+
 
 /**
  * The JMRI application for developing the DecoderPro 3 GUI
@@ -27,7 +31,32 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     protected void createMainFrame() {
         // create and populate main window
-        mainFrame = new DecoderPro3Window();
+        File menuFile = new File("dp3/Gui3Menus.xml");
+        // decide whether name is absolute or relative
+        if (!menuFile.isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            menuFile = new File(XmlFile.prefsDir()+"dp3/Gui3Menus.xml");
+        }
+        if (!menuFile.exists()) {
+            menuFile = new File("xml/config/apps/decoderpro/Gui3Menus.xml");
+        } else {
+            log.info("Found user created menu structure this will be used instead of the system default");
+        }
+        
+        File toolbarFile = new File("dp3/Gui3MainToolBar.xml");
+        // decide whether name is absolute or relative
+        if (!toolbarFile.isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            toolbarFile = new File(XmlFile.prefsDir()+"dp3/Gui3MainToolBar.xml");
+        }
+        if (!toolbarFile.exists()) {
+            toolbarFile = new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml");
+        } else {
+           log.info("Found user created toolbar structure this will be used instead of the system default");
+        }
+        mainFrame = new DecoderPro3Window(menuFile, toolbarFile);
     }
     
     /**
@@ -52,6 +81,19 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         // do final post initialization processing
         app.postInit();
         
+        if((!app.configOK) || (!app.configDeferredLoadOK)){
+            if(app.preferenceFileExists){
+                //if the preference file already exists then we will launch the normal preference window
+                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
+                prefsAction.actionPerformed(null);
+            } else {
+                //if this is down to the preference file missing then we do something else!
+                //would like to create a wizard for setting this up at some point.
+                jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
+                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
+                prefsAction.actionPerformed(null);
+            }
+        }
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());

@@ -43,10 +43,6 @@ public class GuiUtilBase {
             String classname = child.getChild("adapter").getText();
             JmriAbstractAction a = null;
             try {
-                //JmriAbstractAction a =
-                //    (JmriAbstractAction)Class.forName(classname).newInstance();
-                //if (wi != null)
-                //    a.setWindowInterface(wi);
                 Class<?> c = Class.forName(classname);
                 for (java.lang.reflect.Constructor<?> ct : c.getConstructors()) {
                     // look for one with right arguments

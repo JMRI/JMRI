@@ -58,7 +58,6 @@ public class TabbedPreferences extends AppConfigBase {
     
     /* static */ ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
     /* static */ ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
-    final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
     JPanel buttonpanel;
     /* static */ JList list;
     JScrollPane listScroller;
@@ -94,7 +93,6 @@ public class TabbedPreferences extends AppConfigBase {
         throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
         withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
         miniserverPrefsPanel = new jmri.web.miniserver.MiniServerPrefsPanel();
-        pref.disallowSave();
         list = new JList();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
@@ -120,7 +118,6 @@ public class TabbedPreferences extends AppConfigBase {
                     miniserverPrefsPanel.storeValues();
                     apps.FileLocationPane.save();
                     savePressed();
-                    pref.allowSave();
                 }
             });
         
@@ -500,7 +497,6 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     void newConnectionTab(){
-        pref.disallowSave();
         JComponent p = new JPanel();
         p.add(Box.createVerticalGlue());
 
@@ -517,7 +513,6 @@ public class TabbedPreferences extends AppConfigBase {
     //Unable to do remove tab, via a component in 1.5 but is supported in 1.6
     //left here until a move is made to 1.6 or an alternative method is used.
     private void removeTab(ActionEvent e, JComponent c, int x){
-        pref.disallowSave();
         int i;
         // indexOfTabComponent is not supported in java 1.5
         //i = connectionPanel.indexOfTabComponent(c);

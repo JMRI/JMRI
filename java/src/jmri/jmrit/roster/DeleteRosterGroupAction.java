@@ -64,6 +64,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
 
         // create a dialog to select the roster entry
         JComboBox selections = roster.rosterGroupBox();
+        selections.removeItem("Global");
         int retval = JOptionPane.showOptionDialog(_who,
                                                   "Select one roster Group\nThis does not delete the roster entries within a group", "Delete roster group entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,

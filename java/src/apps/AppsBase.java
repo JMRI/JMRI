@@ -47,7 +47,9 @@ public abstract class AppsBase {
     protected final static String nameString = "JMRI Base";
 
     private final static String configFilename = "/JmriConfig3.xml";
-    boolean configOK;
+    protected boolean configOK;
+    protected boolean configDeferredLoadOK;
+    protected boolean preferenceFileExists;
     
     /**
      * Create and initialize the application object.
@@ -108,21 +110,25 @@ public abstract class AppsBase {
 
     protected void setAndLoadPreferenceFile() {
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(getConfigFileName());
+        final File file;
         // decide whether name is absolute or relative
-        if (!file.isAbsolute()) {
+        if (!new File(configFilename).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
             file = new File(XmlFile.prefsDir()+ getConfigFileName());
+        } else {
+            file = new File(getConfigFileName());
         }
         // don't try to load if doesn't exist, but mark as not OK
         if (!file.exists()) {
+            preferenceFileExists = false;
             configOK = false;
             log.info("No pre-existing preferences settings");
             ((jmri.configurexml.ConfigXmlManager)InstanceManager.configureManagerInstance())
                     .setPrefsLocation(file);
             return;
         }
+        preferenceFileExists = true;
         try {
             ((jmri.configurexml.ConfigXmlManager)InstanceManager.configureManagerInstance())
                                 .setPrefsLocation(file);
@@ -131,6 +137,37 @@ public abstract class AppsBase {
         } catch (Exception e) {
             configOK = false;
         }
+        
+        // To avoid possible locks, deferred load should be
+        // performed on the Swing thread
+        if (SwingUtilities.isEventDispatchThread()) {
+            configDeferredLoadOK = doDeferredLoad(file);
+        } else {
+            try {
+                // Use invokeAndWait method as we don't want to
+                // return until deferred load is completed
+                SwingUtilities.invokeAndWait(new Runnable() {
+                    public void run() {
+                        configDeferredLoadOK = doDeferredLoad(file);
+                    }
+                });
+            } catch (Exception ex) {
+                log.error("Exception creating system console frame: "+ex);
+            }
+        }
+    }
+    
+    private boolean doDeferredLoad(File file) {
+        boolean result;
+        log.debug("start deferred load from config");
+        try {
+            result = InstanceManager.configureManagerInstance().loadDeferred(file);
+        } catch (JmriException e) {
+            log.error("Unhandled problem loading deferred configuration: "+e);
+            result = false;
+        }
+        log.debug("end deferred load from config file, OK="+result);
+        return result;
     }
     
     protected void installShutDownManager() {

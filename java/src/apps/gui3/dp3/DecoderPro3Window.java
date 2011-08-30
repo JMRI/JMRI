@@ -50,11 +50,28 @@ public class DecoderPro3Window
         extends jmri.util.swing.multipane.TwoPaneTBWindow {
 
     static int openWindowInstances = 0;
-        
-    public DecoderPro3Window() {
+    
+    /**
+    * Loads Decoder Pro 3 with the default set of menus and toolbars
+    */ 
+    public DecoderPro3Window(){
         super("DecoderPro", 
-    	        new File("xml/config/apps/decoderpro/Gui3Menus.xml"), 
-    	        new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));  // no toolbar
+                 new File("xml/config/apps/decoderpro/Gui3Menus.xml"),
+                 new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));
+        buildWindow();
+    }
+    
+    /**
+    * Loads Decoder Pro 3 with specific menu and toolbar files
+    */ 
+    public DecoderPro3Window(File menuFile, File toolbarFile) {
+        super("DecoderPro", 
+    	        menuFile, 
+    	        toolbarFile);
+        buildWindow();
+    }
+    
+    protected void buildWindow(){
         openWindowInstances++;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     	getTop().add(createTop());
@@ -90,7 +107,7 @@ public class DecoderPro3Window
             }
         });
         activeRosterGroupField.setText(Roster.getRosterGroupName());
-
+        getToolBar().add(new jmri.jmrit.roster.SelectRosterGroupPanelAction("Select Group").makePanel());
     }
     
     jmri.UserPreferencesManager p;
@@ -141,7 +158,6 @@ public class DecoderPro3Window
     
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         try {
-
             // create menu and standard items
             JMenu helpMenu = jmri.util.HelpUtil.makeHelpMenu("package.apps.Apps", true);
             
@@ -183,7 +199,7 @@ public class DecoderPro3Window
                 }
             }
         );
-
+        
         return retval;
     }
     
@@ -431,8 +447,8 @@ public class DecoderPro3Window
             else
                 locoImage.setVisible(true);
                 
-            basicProg.setEnabled(true);
-            compProg.setEnabled(true);
+            prog1Button.setEnabled(true);
+            prog2Button.setEnabled(true);
             throttleLabels.setEnabled(true);
             rosterMedia.setEnabled(true);
             throttleLaunch.setEnabled(true);
@@ -453,8 +469,8 @@ public class DecoderPro3Window
     
     jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
     
-    JButton basicProg = new JButton("Basic Programmer");
-    JButton compProg = new JButton("Comprehensive Programmer");
+    JButton prog1Button = new JButton("Basic Programmer");
+    JButton prog2Button = new JButton("Comprehensive Programmer");
     JButton throttleLabels = new JButton("Throttle Labels");
     JButton rosterMedia = new JButton("Roster Media");
     JButton throttleLaunch = new JButton("Launch Throttle");
@@ -478,6 +494,23 @@ public class DecoderPro3Window
         }
         modePanel.setVisible(true);
     }
+    /**
+    * Simple method to change over the programmer buttons, this should be impliemented button
+    * with the buttons in their own class etc, but this will work for now.
+    * Basic button is button Id 1, comprehensive button is button id 2
+    */
+    public void setProgrammerLaunch(int buttonId, String programmer, String buttonText){
+        if(buttonId == 1){
+            programmer1 = programmer;
+            prog1Button.setText(buttonText);
+        } else if (buttonId == 2){
+            programmer2 = programmer;
+            prog2Button.setText(buttonText);
+        }
+    }
+    
+    String programmer1 = "Basic";
+    String programmer2 = "Comprehensive";
     
     JPanel bottomRight(){
         JPanel panel = new JPanel();
@@ -509,26 +542,26 @@ public class DecoderPro3Window
         GridLayout buttonLayout = new GridLayout(3, 2, 5, 5);
         buttonHolder.setLayout(buttonLayout);
         
-        buttonHolder.add(basicProg);
-        buttonHolder.add(compProg);
+        buttonHolder.add(prog1Button);
+        buttonHolder.add(prog2Button);
         buttonHolder.add(throttleLabels);
         buttonHolder.add(rosterMedia);
         buttonHolder.add(throttleLaunch);
         
         panel.add(buttonHolder);
         
-        basicProg.setEnabled(false);
-        basicProg.addActionListener( new ActionListener() {
+        prog1Button.setEnabled(false);
+        prog1Button.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                        startProgrammer(null, re, "Basic");
+                        startProgrammer(null, re, programmer1);
                 }
             });
-        compProg.setEnabled(false);
-        compProg.addActionListener( new ActionListener() {
+        prog2Button.setEnabled(false);
+        prog2Button.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                    startProgrammer(null, re, "Comprehensive");
+                    startProgrammer(null, re, programmer2);
             }
         });
         throttleLabels.setEnabled(false);
@@ -675,8 +708,7 @@ public class DecoderPro3Window
             if (checkIfEntrySelected()) copyLoco();
         }  else if(args[0].equals("deleteloco")){
             if (checkIfEntrySelected()) deleteLoco();
-        }
-        else
+        } else
             log.error ("method " + args[0] + " not found");
     }
     
