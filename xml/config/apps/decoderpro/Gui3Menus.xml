@@ -11,7 +11,7 @@
     <mnemonic>f</mnemonic>
     <node><name>New DecoderPro Window</name>
         <mnemonic>n</mnemonic>
-        <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
+        <adapter>apps.gui3.dp3.DecoderPro3Action</adapter>
     </node>
     <node><name>Import Roster</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
