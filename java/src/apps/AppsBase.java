@@ -7,6 +7,7 @@ import jmri.jmrit.XmlFile;
 
 import java.io.File;
 import javax.swing.*;
+import java.util.Enumeration;
 
 /**
  * Base class for the core of JMRI applications.
@@ -35,18 +36,17 @@ public abstract class AppsBase {
      * applications main() routine.
      */
     static public void preInit() {
-        // TODO Launch splash screen: splash(true)
-
-        jmri.util.Log4JUtil.initLog4J();
+        if (!log4JSetUp) initLog4J();
+        
+        //jmri.util.Log4JUtil.initLog4J();
         log.info(jmri.util.Log4JUtil.startupInfo("Gui3IDE"));
-
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT",
-                                    justification="not a library pattern")                                    
-    protected static String nameString = "JMRI Base";
+                                    justification="not a library pattern")
+    protected final static String nameString = "JMRI Base";
 
-    private final static String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
+    private final static String configFilename = "/JmriConfig3.xml";
     boolean configOK;
     
     /**
@@ -55,7 +55,9 @@ public abstract class AppsBase {
      * Expects initialization from preInit() to already be done.
      */
     public AppsBase() {
-
+        
+        if (!log4JSetUp) initLog4J();
+        
         installConfigurationManager();
 
         installShutDownManager();
@@ -215,6 +217,55 @@ public abstract class AppsBase {
                         "due to exception: "+e);
         }
     }
+    
+    static boolean log4JSetUp = false;
+    
+    static protected void initLog4J() {
+    	if (log4JSetUp){
+    		log.debug("initLog4J already initialized!");
+    		return;
+    	}
+        // Initialise JMRI System Console
+        // Need to do this before initialising log4j so that the new
+        // stdout and stderr streams are set-up and usable by the ConsoleAppender
+        SystemConsole.init();
+
+        log4JSetUp = true;
+        // initialize log4j - from logging control file (lcf) only
+        // if can find it!
+        String logFile = "default.lcf";
+        try {
+            if (new java.io.File(logFile).canRead()) {
+                org.apache.log4j.PropertyConfigurator.configure(logFile);
+            } else {
+                org.apache.log4j.BasicConfigurator.configure();
+                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.WARN);
+            }
+        }
+        catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
+        // install default exception handlers
+        System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
+        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
+    
+        // first log entry
+    	log.info(jmriLog);
+
+        // now indicate logging locations
+        @SuppressWarnings("unchecked")
+        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
+       
+        while ( e.hasMoreElements() ) {
+            org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
+            if ( a instanceof org.apache.log4j.RollingFileAppender ) {
+                log.info("This log is stored in file: "+((org.apache.log4j.RollingFileAppender)a).getFile());
+            }
+            else if ( a instanceof org.apache.log4j.FileAppender ) {
+                log.info("This log is stored in file: "+((org.apache.log4j.FileAppender)a).getFile());
+            }
+        }
+    }
+    
+    private static final String jmriLog ="****** JMRI log *******";
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppsBase.class.getName());
 }

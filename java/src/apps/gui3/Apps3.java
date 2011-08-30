@@ -11,7 +11,7 @@ import jmri.util.JmriJFrame;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.Enumeration;
+
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -38,17 +38,17 @@ public abstract class Apps3 extends apps.AppsBase {
      */
     static public void preInit() {
         nameString = "JMRI GUI3 Demo";
-        splash(true);
-        setButtonSpace();
-        // need to call ConfigXmlManager.setPrefsLocation(someFile) somewhere
+        
+        apps.AppsBase.preInit();
         
         // Initialise system console
         // Put this here rather than in apps.AppsBase as this is only relevant
         // for GUI applications - non-gui apps will use STDOUT & STDERR
         apps.SystemConsole.init();
-
-        // TODO Launch splash screen: splash(true)
-        apps.AppsBase.preInit();
+        
+        splash(true);
+        
+        setButtonSpace();
 
 
     }
@@ -165,7 +165,6 @@ public abstract class Apps3 extends apps.AppsBase {
     static boolean debugmsg=false;
     
     static protected void splash(boolean show, boolean debug) {
-        if (!log4JSetUp) initLog4J();
         if (debugListener == null && debug) {
 			// set a global listener for debug options
 			debugFired = false;
@@ -222,54 +221,7 @@ public abstract class Apps3 extends apps.AppsBase {
         debugmsg=false;
     }
     
-    static boolean log4JSetUp = false;
-    
-    static protected void initLog4J() {
-    	if (log4JSetUp){
-    		log.debug("initLog4J already initialized!");
-    		return;
-    	}
-        // Initialise JMRI System Console
-        // Need to do this before initialising log4j so that the new
-        // stdout and stderr streams are set-up and usable by the ConsoleAppender
-        SystemConsole.init();
-
-        log4JSetUp = true;
-        // initialize log4j - from logging control file (lcf) only
-        // if can find it!
-        String logFile = "default.lcf";
-        try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure(logFile);
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.WARN);
-            }
-        }
-        catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
-        // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
-        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
-    
-        // first log entry
-    	log.info(jmriLog);
-
-        // now indicate logging locations
-        @SuppressWarnings("unchecked")
-        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
-       
-        while ( e.hasMoreElements() ) {
-            org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
-            if ( a instanceof org.apache.log4j.RollingFileAppender ) {
-                log.info("This log is stored in file: "+((org.apache.log4j.RollingFileAppender)a).getFile());
-            }
-            else if ( a instanceof org.apache.log4j.FileAppender ) {
-                log.info("This log is stored in file: "+((org.apache.log4j.FileAppender)a).getFile());
-            }
-        }
-    }
-    
-    protected static String nameString = "JMRI program";
+    static String nameString = "JMRI program";
     
     static public String startupInfo(String program) {
         setApplication(program);
@@ -297,8 +249,6 @@ public abstract class Apps3 extends apps.AppsBase {
             log.warn("Unable to set application name " + ex);
         }
     }
-    
-    private static final String jmriLog ="****** JMRI log *******";
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps3.class.getName());
     

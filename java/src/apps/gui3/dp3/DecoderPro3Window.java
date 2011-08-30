@@ -49,17 +49,20 @@ import java.beans.PropertyChangeListener;
 public class DecoderPro3Window 
         extends jmri.util.swing.multipane.TwoPaneTBWindow {
 
+    static int openWindowInstances = 0;
+        
     public DecoderPro3Window() {
         super("DecoderPro", 
     	        new File("xml/config/apps/decoderpro/Gui3Menus.xml"), 
     	        new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));  // no toolbar
-    	//add(createToolBarPanel(), BorderLayout.NORTH);
+        openWindowInstances++;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     	getTop().add(createTop());
-        getToolBar().add(apps.gui3.Apps3.buttonSpace());
+        //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
+        if(apps.gui3.Apps3.buttonSpace()!=null)
+            getToolBar().add(apps.gui3.Apps3.buttonSpace());
         getBottom().setMinimumSize(new Dimension(0, 250));
         getBottom().add(createBottom());
-        //getToolBar().add(createToolBarPanel());
         statusBar();
         systemsMenu();
         helpMenu(getMenu(), this);
@@ -73,18 +76,29 @@ public class DecoderPro3Window
         if(p.getSimplePreferenceState(DecoderPro3Window.class.getName()+"hideSummary")){
             hideBottomPane(true);
             hideSummary=true;
-            
         }
+        
+        String rosterGroup = p.getComboBoxLastSelection(rosterGroupSelectionCombo);
+        Roster.instance().setRosterGroup(rosterGroup);
         Roster.instance().addPropertyChangeListener( new PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                activeRosterGroupField.setText(Roster.getRosterGroupName());
+                if (e.getPropertyName().equals("ActiveRosterGroup")){
+                    String activeGroup = ((String)e.getNewValue());
+                    p.addComboBoxLastSelection(rosterGroupSelectionCombo, activeGroup);
+                    activeRosterGroupField.setText(activeGroup);
+                }
             }
         });
         activeRosterGroupField.setText(Roster.getRosterGroupName());
+
     }
     
     jmri.UserPreferencesManager p;
+    final String rosterGroupSelectionCombo = this.getClass().getName()+".rosterGroupSelected";
     
+    /*
+    * This status bar needs sorting out properly
+    */
     void statusBar(){
         Border blackline = BorderFactory.createMatteBorder(0,0,0,1,Color.black);
         JLabel programmerLabel = new JLabel();
@@ -94,7 +108,7 @@ public class DecoderPro3Window
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             programmerLabel.setText ("Programmer " + "Is Available");
-            programmerLabel.setForeground(Color.green);
+            programmerLabel.setForeground(new Color(0, 128, 0));
         } else {
             programmerLabel.setText("No Programmer Available");
             programmerLabel.setForeground(Color.red);
@@ -616,9 +630,21 @@ public class DecoderPro3Window
 
     }
     
+    boolean allowQuit = true;
+    
+    /**
+    * For use when the DP3 window is called from another JMRI instance, set this to prevent the DP3 from shutting down
+    * JMRI when the window is closed.
+    */
+    protected void allowQuit(boolean allowQuit){
+        this.allowQuit=allowQuit;
+    }
+    
     public void windowClosing(java.awt.event.WindowEvent e) {
         super.windowClosing(e);
-        jmri.InstanceManager.shutDownManagerInstance().shutdown();
+        openWindowInstances--;
+        if (allowQuit && openWindowInstances==0)
+            jmri.InstanceManager.shutDownManagerInstance().shutdown();
     }
 
     //Matches the first argument in the array against a locally know method
@@ -734,7 +760,6 @@ public class DecoderPro3Window
         act.actionPerformed(null);
     }
 
-
     static class DeleteRosterItem extends jmri.jmrit.roster.DeleteRosterItemAction{
         DeleteRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
@@ -745,7 +770,6 @@ public class DecoderPro3Window
             return re.getId();
         }
     }
-
 
     protected void printLoco(boolean boo){
     

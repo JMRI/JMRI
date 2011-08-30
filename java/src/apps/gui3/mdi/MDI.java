@@ -29,11 +29,14 @@ public class MDI extends apps.gui3.Apps3 {
 
     protected void createMainFrame() {
         // create and populate main window
+        nameString = "JMRI GUI3 Demo";
         mainFrame = new MdiMainFrame(nameString, 
                 new File("xml/config/apps/demo/Gui3LeftTree.xml"), 
     	        new File("xml/config/apps/demo/Gui3Menus.xml"), 
     	        new File("xml/config/apps/demo/Gui3MainToolBar.xml"));
     }
+    
+    static String nameString = "JMRI program";
     
     // Main entry point
     public static void main(String args[]) {
