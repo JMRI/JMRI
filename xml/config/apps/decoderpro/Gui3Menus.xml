@@ -149,6 +149,9 @@
     <node><name>Turnout Control</name>
         <adapter>jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction</adapter>
     </node>
+    <node><name>Power Control</name>
+        <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
+    </node>
     <node><name>SpeedoMeter</name>
         <adapter>jmri.jmrit.speedometer.SpeedometerAction</adapter>
     </node>
