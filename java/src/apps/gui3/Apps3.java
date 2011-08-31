@@ -11,6 +11,8 @@ import jmri.util.JmriJFrame;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
 
 
 /**
@@ -49,8 +51,7 @@ public abstract class Apps3 extends apps.AppsBase {
         splash(true);
         
         setButtonSpace();
-
-
+        
     }
     
     /**
@@ -61,12 +62,8 @@ public abstract class Apps3 extends apps.AppsBase {
     public Apps3() {
         // pre-GUI work
         super();
-        
-        // create test dummy objects
-        //createDemoScaffolding();
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-        jmri.InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
-        
+
+        addToActionModel();
         // create GUI
         initializeHelpSystem();
         createMainFrame();
@@ -131,6 +128,24 @@ public abstract class Apps3 extends apps.AppsBase {
     }
 
     abstract protected void createMainFrame();
+    
+    abstract protected ResourceBundle getActionModelResourceBundle();
+    
+    protected void addToActionModel(){
+        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        ResourceBundle rb = getActionModelResourceBundle();
+        if (rb==null || bm==null)
+            return;
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            try {
+                bm.addAction(key, rb.getString(key));
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class "+key);
+            }
+        }
+    }
         
     /**
      * Set a toolbar to be initially floating.

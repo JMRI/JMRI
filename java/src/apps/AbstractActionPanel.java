@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.beans.PropertyChangeListener;
 
 import java.util.List;
 
@@ -92,6 +93,19 @@ abstract public class AbstractActionPanel extends JPanel {
             // create the list of possibilities
             selections = new JComboBox(AbstractActionModel.nameList());
             add(selections);
+            jmri.InstanceManager.getDefault(apps.CreateButtonModel.class).addPropertyChangeListener( new PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals("length")){
+                        String current = (String)selections.getSelectedItem();
+                        selections.removeAllItems();
+                        String[] items = AbstractActionModel.nameList();
+                        for(int i = 0; i<items.length; i++){
+                            selections.addItem(items[i]);
+                        }
+                        selections.setSelectedItem(current);
+                    }
+                }
+            });
         }
         Item(AbstractActionModel m) {
             this();

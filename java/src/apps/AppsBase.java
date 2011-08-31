@@ -3,6 +3,7 @@
 package apps;
 
 import jmri.*;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 
 import java.io.File;
@@ -100,12 +101,19 @@ public abstract class AppsBase {
     
     protected void installManagers() {
         // Install a history manager
-        jmri.InstanceManager.store(new jmri.jmrit.revhistory.FileHistory(), jmri.jmrit.revhistory.FileHistory.class);
+        InstanceManager.store(new jmri.jmrit.revhistory.FileHistory(), jmri.jmrit.revhistory.FileHistory.class);
         // record startup
-        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
+        InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
         
         // Install a user preferences manager
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);        
+        InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);        
+        
+        // install the abstract action model that allows items to be added to the, both 
+        // CreateButton and Perform Action Model use a common Abstract class
+        InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
+        
+        // install preference manager
+        InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
     }
 
     protected void setAndLoadPreferenceFile() {
@@ -156,6 +164,8 @@ public abstract class AppsBase {
             }
         }
     }
+    
+    //abstract protected void addToActionModel();
     
     private boolean doDeferredLoad(File file) {
         boolean result;

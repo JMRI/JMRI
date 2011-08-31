@@ -6,6 +6,9 @@ import java.io.File;
 import jmri.jmrit.XmlFile;
 import javax.swing.*;
 
+import java.util.ResourceBundle;
+import java.util.Enumeration;
+
 
 /**
  * The JMRI application for developing the DecoderPro 3 GUI
@@ -67,6 +70,10 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         mainFrame.setSize(new java.awt.Dimension(1024, 600));
         mainFrame.setVisible(true);
     }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3ActionListBundle");
+    }
 
     // Main entry point
     public static void main(String args[]) {
@@ -77,9 +84,9 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         
         // create the program object
         DecoderPro3 app = new DecoderPro3();
-        
         // do final post initialization processing
         app.postInit();
+        //app.addToActionModel();
         
         if((!app.configOK) || (!app.configDeferredLoadOK)){
             if(app.preferenceFileExists){
@@ -94,6 +101,8 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
                 prefsAction.actionPerformed(null);
             }
         }
+        app.addToActionModel();
+        
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());

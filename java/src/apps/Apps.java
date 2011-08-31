@@ -101,6 +101,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         // install preference manager
         InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
+        
+       //Install abstractActionModel
+       jmri.InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
+       addToActionModel();
         // find preference file and set location in configuration manager
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         // Needs to be declared final as we might need to
@@ -221,6 +225,20 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         }
         log.debug("end deferred load from config file, OK="+result);
         return result;
+    }
+    
+    protected void addToActionModel(){
+        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            try {
+                bm.addAction(key, rb.getString(key));
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class "+key);
+            }
+        }
     }
     
     /**

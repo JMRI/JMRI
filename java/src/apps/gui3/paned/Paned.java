@@ -4,6 +4,7 @@ package apps.gui3.paned;
 
 import jmri.util.swing.multipane.MultiPaneWindow;
 import java.io.File;
+import java.util.ResourceBundle;
 
 /**
  * The JMRI application for developing the 3rd GUI
@@ -53,6 +54,10 @@ public class Paned extends apps.gui3.Apps3 {
         // do final post initialization processing
         app.postInit();
         
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return null;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Paned.class.getName());
