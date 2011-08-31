@@ -64,7 +64,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
 
         // create a dialog to select the roster entry
         JComboBox selections = roster.rosterGroupBox();
-        selections.removeItem("Global");
+        selections.removeItem(Roster.ALLENTRIES);
         int retval = JOptionPane.showOptionDialog(_who,
                                                   "Select one roster Group\nThis does not delete the roster entries within a group", "Delete roster group entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
@@ -73,7 +73,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
                   +selections.getSelectedItem());
         if (retval != 1) return;
         String entry = (String) selections.getSelectedItem();
-        if(entry == null || entry.equals("Global")){
+        if(entry == null || entry.equals(Roster.ALLENTRIES)){
             return;
         }
         // prompt for one last chance

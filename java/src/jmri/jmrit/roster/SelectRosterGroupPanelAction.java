@@ -1,4 +1,4 @@
-// SelectRosterGroupAction.java
+//SelectRosterGroupAction.java
 
 package jmri.jmrit.roster;
 
@@ -14,6 +14,7 @@ import jmri.util.swing.JmriPanel;
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import java.beans.PropertyChangeListener;
 
 /**
  * Selects a Roster group to work with
@@ -58,31 +59,52 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
     
     public JmriPanel makePanel() {
         
-                Roster roster = Roster.instance();
+        final Roster roster = Roster.instance();
 
         // get parent object if there is one
         //Component parent = null;
         //if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
-        JmriPanel container = new JmriPanel();
+        final JmriPanel container = new JmriPanel();
         container.add(new JLabel("Select Roster Group"));
         
         // create a dialog to select the roster entry
-        JComboBox selections = roster.rosterGroupBox();
+        final JComboBox selections = roster.rosterGroupBox();
         container.add(selections);
         
-        selections.addActionListener(
-            new ActionListener() {
+        selections.addActionListener(comboListener);
+        
+        roster.addPropertyChangeListener(  new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if ((e.getPropertyName().equals("RosterGroupRemoved")) || 
+                        (e.getPropertyName().equals("RosterGroupAdded"))){
+                    selections.removeActionListener(comboListener);
+                    roster.updateGroupBox(selections);
+                    if(selections.getItemCount()<=1)
+                        container.setVisible(false);
+                    else{
+                        container.setVisible(true);
+                        selections.addActionListener(comboListener);
+                    }
+                    
+                } 
+            }
+        });
+        
+        if(selections.getItemCount()<=1)
+            container.setVisible(false);
+        else
+            container.setVisible(true);
+        
+        return container;
+    }
+    
+    ActionListener comboListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {    
                     JComboBox combo = (JComboBox)e.getSource();
                     String entry = (String)combo.getSelectedItem();
                     Roster.instance().setRosterGroup(entry);
                 }
-            }
-        
-        );
-        
-        return container;
-    }
+            };
 
 
     // initialize logging

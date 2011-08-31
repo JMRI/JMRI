@@ -65,7 +65,7 @@ public class SelectRosterGroupAction extends JmriAbstractAction {
         // create a dialog to select the roster entry
         JComboBox selections = roster.rosterGroupBox();
         String currentgroup = Roster.getRosterGroup();
-        if (currentgroup==null) currentgroup = "Global";
+        if (currentgroup==null) currentgroup = Roster.ALLENTRIES;
         int retval = JOptionPane.showOptionDialog(_who,
                                                   "Select one roster group to work with\nCurrent Active Group is " + currentgroup, "Select roster group",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,

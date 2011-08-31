@@ -65,7 +65,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
 
         if (retval != 1) return;
         String entry = _newGroup.getText();
-        if(entry.equals("Global")){
+        if(entry.equals(Roster.ALLENTRIES)){
             return;
         }
 

@@ -69,6 +69,7 @@ public class Roster extends XmlFile {
             } catch (Exception e) {
                 log.error("Exception during roster reading: "+e);
             }
+            ALLENTRIES = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ALLENTRIES");
         }
         if (log.isDebugEnabled()) log.debug("Roster returns instance "+_instance);
         return _instance;
@@ -481,7 +482,7 @@ public class Roster extends XmlFile {
             Element rosterGroup = new Element("rosterGroup");
             for (int i=0; i<_rosterGroupList.size(); i++){
                 Element group = new Element("group");
-                if(!_rosterGroupList.get(i).toString().equals("Global")){
+                if(!_rosterGroupList.get(i).toString().equals(ALLENTRIES)){
                     group.addContent(_rosterGroupList.get(i).toString());
                     rosterGroup.addContent(group);
                 }
@@ -766,14 +767,14 @@ public class Roster extends XmlFile {
         String oldGroup = _rostergroup;
         String newGroup = group;
         if (group==null) _rostergroup=null;
-        else if (group.equals("Global"))
+        else if (group.equals(ALLENTRIES))
             _rostergroup=null;
         else
             _rostergroup = group;
         if(oldGroup==null)
-            oldGroup="Global";
+            oldGroup=ALLENTRIES;
         if(newGroup==null)
-            newGroup="Global";
+            newGroup=ALLENTRIES;
         firePropertyChange("ActiveRosterGroup", oldGroup, newGroup);
     }
     
@@ -783,7 +784,7 @@ public class Roster extends XmlFile {
     
     public static String getRosterGroupName(){
         if(_rostergroup==null)
-            return "Global";
+            return ALLENTRIES;
         return _rostergroup;
     }
     
@@ -814,6 +815,7 @@ public class Roster extends XmlFile {
                 return;
         }
         _rosterGroupList.add(str);
+        firePropertyChange("RosterGroupAdded", null, str);
     }
     
     public void delRosterGroupList(String str) {
@@ -823,6 +825,7 @@ public class Roster extends XmlFile {
         for(int i=0; i<groupentries.size();i++){
             groupentries.get(i).deleteAttribute(str);
         }
+        firePropertyChange("RosterGroupRemoved", str, null);
     }
     
     public void getRosterGroupList(int i) {
@@ -831,11 +834,14 @@ public class Roster extends XmlFile {
     
     public JComboBox rosterGroupBox() {
         JComboBox b = new JComboBox();
-        b.insertItemAt("Global",0);
+        b.insertItemAt(ALLENTRIES,0);
         for (int i = 0; i < _rosterGroupList.size(); i++) {
             b.addItem(_rosterGroupList.get(i));
         }
-        b.setSelectedItem(_rostergroup);
+        if(_rostergroup==null)
+            box.setSelectedIndex(0);
+        else
+            box.setSelectedItem(_rostergroup);
         return b;
     }
     
@@ -844,9 +850,14 @@ public class Roster extends XmlFile {
         for (int i = 0; i < _rosterGroupList.size(); i++) {
             box.addItem(_rosterGroupList.get(i));
         }
-        box.insertItemAt("Global",0);
-        box.setSelectedItem(_rostergroup);
+        box.insertItemAt(ALLENTRIES,0);
+        if(_rostergroup==null)
+            box.setSelectedIndex(0);
+        else
+            box.setSelectedItem(_rostergroup);
     }
+    
+    static String ALLENTRIES = "All Entries";
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Roster.class.getName());
