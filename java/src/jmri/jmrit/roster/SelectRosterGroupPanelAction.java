@@ -76,7 +76,8 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
         roster.addPropertyChangeListener(  new PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if ((e.getPropertyName().equals("RosterGroupRemoved")) || 
-                        (e.getPropertyName().equals("RosterGroupAdded"))){
+                        (e.getPropertyName().equals("RosterGroupAdded")) ||
+                           (e.getPropertyName().equals("ActiveRosterGroup"))){
                     selections.removeActionListener(comboListener);
                     roster.updateGroupBox(selections);
                     if(selections.getItemCount()<=1)
@@ -85,8 +86,7 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
                         container.setVisible(true);
                         selections.addActionListener(comboListener);
                     }
-                    
-                } 
+                }
             }
         });
         
