@@ -839,9 +839,9 @@ public class Roster extends XmlFile {
             b.addItem(_rosterGroupList.get(i));
         }
         if(_rostergroup==null)
-            box.setSelectedIndex(0);
+            b.setSelectedIndex(0);
         else
-            box.setSelectedItem(_rostergroup);
+            b.setSelectedItem(_rostergroup);
         return b;
     }
     
