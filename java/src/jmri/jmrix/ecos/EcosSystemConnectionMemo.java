@@ -1,6 +1,7 @@
 // EcosSystemConnectionMemo.java
 
 package jmri.jmrix.ecos;
+import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
 
@@ -71,8 +72,12 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         sensorManager = new jmri.jmrix.ecos.EcosSensorManager(getTrafficController(), getSystemPrefix());
         jmri.InstanceManager.setSensorManager(sensorManager);
+        
     }
     
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.ecos.EcosActionListBundle");
+    }
 
     private EcosSensorManager sensorManager;
     private EcosTurnoutManager turnoutManager;
@@ -141,8 +146,11 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.deregister(this, EcosSystemConnectionMemo.class);
         if (cf != null) 
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        
         super.dispose();
     }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSystemConnectionMemo.class.getName());
 }
 
 

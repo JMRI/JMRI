@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
+
+import java.util.ResourceBundle;
+import java.util.Enumeration;
+
 /**
  * Lightweight abstract class to denote that a system is active,
  * and provide general information.
@@ -36,6 +40,7 @@ abstract public class SystemConnectionMemo {
                 }
             }
         }
+        addToActionList();
     }
     
     private static boolean initialised = false;
@@ -151,6 +156,7 @@ abstract public class SystemConnectionMemo {
     }
     
     public void dispose(){
+        removeFromActionList();
         removeUserName(userName);
         removeSystemPrefix(prefix);
         jmri.InstanceManager.deregister(this, SystemConnectionMemo.class);
@@ -198,9 +204,49 @@ abstract public class SystemConnectionMemo {
             client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
         }
     }
+    
+    // TODO This should be abstract, but until the majority are updated then leave as is
+    protected ResourceBundle getActionModelResourceBundle(){
+        return null;
+    }
+    
+    protected void addToActionList(){
+        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        ResourceBundle rb = getActionModelResourceBundle();
+        if (rb==null || bm==null)
+            return;
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            try {
+                bm.addAction(key, rb.getString(key));
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class "+key);
+            }
+        }
+    }
+    
+    protected void removeFromActionList(){
+        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ecos.EcosActionListBundle");
+        if (rb==null || bm==null)
+            return;
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            System.out.println(key + " " + rb.getString(key));
+            try {
+                bm.removeAction(key);
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class "+key);
+            }
+        }
+    }
 
     // data members to hold contact with the property listeners
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemConnectionMemo.class.getName());
 }
 
 
