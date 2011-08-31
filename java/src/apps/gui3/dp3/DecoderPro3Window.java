@@ -554,7 +554,7 @@ public class DecoderPro3Window
         prog1Button.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                        startProgrammer(null, re, programmer1);
+                    startProgrammer(null, re, programmer1);
                 }
             });
         prog2Button.setEnabled(false);
@@ -641,13 +641,9 @@ public class DecoderPro3Window
         if(service.isSelected()){
             pProg = jmri.InstanceManager.programmerManagerInstance()
                                     .getGlobalProgrammer();
-            p = new PaneProgFrame(decoderFile, re,
+            p = new PaneServiceProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+filename+".xml",
-                                         pProg, false){
-                                        
-                protected JPanel getModePane() {
-                    return modePanel;
-                }
+                                         modePanel.getProgrammer()){
             };
         }
         else if(ops.isSelected()){
