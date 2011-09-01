@@ -627,6 +627,7 @@ public class DecoderPro3Window
             JOptionPane.showMessageDialog(null, "No Such loco in the Roster");
         }
     }
+
     protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                     String filename) {
         //String title = rbt.getString("FrameNewEntryTitle");
@@ -639,8 +640,6 @@ public class DecoderPro3Window
             };
         
         if(service.isSelected()){
-            pProg = jmri.InstanceManager.programmerManagerInstance()
-                                    .getGlobalProgrammer();
             p = new PaneServiceProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+filename+".xml",
                                          modePanel.getProgrammer()){
@@ -656,7 +655,6 @@ public class DecoderPro3Window
         }
         p.pack();
         p.setVisible(true);
-
     }
     
     boolean allowQuit = true;
