@@ -107,7 +107,9 @@ public class DecoderPro3Window
             }
         });
         activeRosterGroupField.setText(Roster.getRosterGroupName());
+        getToolBar().add(modePanel);
         getToolBar().add(new jmri.jmrit.roster.SelectRosterGroupPanelAction("Select Group").makePanel());
+
     }
     
     jmri.UserPreferencesManager p;
@@ -452,7 +454,6 @@ public class DecoderPro3Window
             throttleLabels.setEnabled(true);
             rosterMedia.setEnabled(true);
             throttleLaunch.setEnabled(true);
-            modePanel.setEnabled(true);
             if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
                 service.setEnabled(true);
@@ -488,11 +489,6 @@ public class DecoderPro3Window
             ops.setEnabled(true);
         } else 
             edit.setSelected(true);
-        modePanel.setEnabled(false);
-        if(service.isSelected()){
-            modePanel.setEnabled(true);
-        }
-        modePanel.setVisible(true);
     }
     /**
     * Simple method to change over the programmer buttons, this should be impliemented button
@@ -536,7 +532,6 @@ public class DecoderPro3Window
         service.setSelected(true);
         
         panel.add(progModePanel);
-        panel.add(modePanel);
         
         JPanel buttonHolder = new JPanel();
         GridLayout buttonLayout = new GridLayout(3, 2, 5, 5);
@@ -591,8 +586,6 @@ public class DecoderPro3Window
             }
         });
         
-        modePanel.setEnabled(false);
-
         return panel;
     }
     
