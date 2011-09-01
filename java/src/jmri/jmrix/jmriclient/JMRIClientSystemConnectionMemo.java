@@ -3,6 +3,7 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.*;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active
@@ -70,6 +71,11 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.jmriclient.JMRIClientSensorManager(this));
         jmri.InstanceManager.setLightManager(new jmri.jmrix.jmriclient.JMRIClientLightManager(this));
         jmri.InstanceManager.setReporterManager(new jmri.jmrix.jmriclient.JMRIClientReporterManager(this));
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        //No actions that can be loaded at startup
+        return null;
     }
 
 }

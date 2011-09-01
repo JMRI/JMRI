@@ -3,6 +3,7 @@
 package jmri.jmrix.acela;
 
 import jmri.InstanceManager;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -61,6 +62,10 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         AcelaTurnoutManager t;
         jmri.InstanceManager.setTurnoutManager(t = jmri.jmrix.acela.AcelaTurnoutManager.instance());
         AcelaTrafficController.instance().setTurnoutManager(t);	
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.acela.AcelaActionListBundle");
     }
     
     public void dispose(){

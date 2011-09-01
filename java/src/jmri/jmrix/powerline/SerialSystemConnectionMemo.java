@@ -3,6 +3,7 @@
 package jmri.jmrix.powerline;
 
 import jmri.*;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -110,6 +111,10 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     public void  setTurnoutManager(SerialTurnoutManager m) { turnoutManager = m; }
     public void  setLightManager(SerialLightManager m) { lightManager = m; }
     public void  setSensorManager(SerialSensorManager m) { sensorManager = m; }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.powerline.PowerlineActionListBundle");
+    }
     
     public void dispose() {
     	SerialTrafficController = null;

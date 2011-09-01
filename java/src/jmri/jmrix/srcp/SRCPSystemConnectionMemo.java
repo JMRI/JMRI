@@ -4,6 +4,7 @@ package jmri.jmrix.srcp;
 
 import jmri.InstanceManager;
 import jmri.*;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -159,13 +160,10 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private TurnoutManager turnoutManager=null;
 
-
-
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.srcp.SrcpActionListBundle");
+    }
    
-
-
-
- 
     public void dispose(){
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);

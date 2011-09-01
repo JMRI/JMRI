@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.*;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -272,6 +273,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (consistManager == null)
             consistManager = new jmri.jmrix.loconet.LocoNetConsistManager(this);
         return consistManager;
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
     }
     
     public void dispose() {

@@ -3,6 +3,7 @@
 package jmri.jmrix.bachrus;
 
 import jmri.InstanceManager;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -52,6 +53,11 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
      */
     public void configureManagers() {
         //None to configure
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        //No Actions at start up to return
+        return null;
     }
     
     public void dispose(){

@@ -3,6 +3,7 @@
 package jmri.jmrix.nce;
 
 import jmri.*;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -159,6 +160,10 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public NceSensorManager  getSensorManager() { return sensorManager; }
     public NceThrottleManager  getThrottleManager() { return throttleManager; }
     public NceClockControl  getClockControl() { return clockManager; }
+    
+        protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
+    }
     
     public void dispose() {
     	nceTrafficController = null;

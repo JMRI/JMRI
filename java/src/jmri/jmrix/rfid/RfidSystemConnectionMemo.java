@@ -5,6 +5,7 @@ package jmri.jmrix.rfid;
 import jmri.InstanceManager;
 import jmri.jmrix.rfid.swing.RfidComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -100,6 +101,10 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T) getReporterManager();
         // nothing, by default
         return null;
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.rfid.RfidActionListBundle");
     }
 
     @Override

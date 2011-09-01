@@ -3,6 +3,7 @@
 package jmri.jmrix.lenz;
 
 import jmri.*;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active
@@ -214,7 +215,9 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
          return null; // nothing, by default
      }
 
-
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.lenz.XNetActionListBundle");
+    }
 
     public void dispose() {
         xt = null;
@@ -224,10 +227,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-
-
-
-        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSystemConnectionMemo.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSystemConnectionMemo.class.getName());
 
 
 }

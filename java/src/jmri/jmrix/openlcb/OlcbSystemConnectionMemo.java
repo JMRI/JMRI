@@ -3,6 +3,7 @@
 package jmri.jmrix.openlcb;
 
 import jmri.*;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -76,6 +77,11 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 //         InstanceManager.addClockControl(
 //             new jmri.jmrix.loconet.LnClockControl(getSlotManager(), getLnTrafficController()));
 
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        //No actions that can be loaded at startup
+        return null;
     }
     
     public void dispose() {

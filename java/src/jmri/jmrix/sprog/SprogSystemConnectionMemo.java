@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -157,6 +158,11 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             case OPS :      return sprogCSThrottleManager;
             case SERVICE :  return sprogThrottleManager;
         }
+        return null;
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        //No actions that can be loaded at startup
         return null;
     }
     

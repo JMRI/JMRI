@@ -3,6 +3,7 @@
 package jmri.jmrix.easydcc;
 
 import jmri.InstanceManager;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -67,6 +68,10 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());
 
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.easydcc.EasyDccActionListBundle");
     }
     
     public void dispose(){

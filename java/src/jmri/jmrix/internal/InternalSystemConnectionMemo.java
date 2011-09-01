@@ -3,6 +3,7 @@
 package jmri.jmrix.internal;
 
 import jmri.InstanceManager;
+import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -94,6 +95,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (T.equals(jmri.TurnoutManager.class))
             return (T)getTurnoutManager();
         return null; // nothing, by default
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        //No actions to add at start up
+        return null;
     }
     
     public void dispose() { 

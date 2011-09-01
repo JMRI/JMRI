@@ -205,10 +205,7 @@ abstract public class SystemConnectionMemo {
         }
     }
     
-    // TODO This should be abstract, but until the majority are updated then leave as is
-    protected ResourceBundle getActionModelResourceBundle(){
-        return null;
-    }
+    abstract protected ResourceBundle getActionModelResourceBundle();
     
     protected void addToActionList(){
         apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
@@ -228,13 +225,12 @@ abstract public class SystemConnectionMemo {
     
     protected void removeFromActionList(){
         apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ecos.EcosActionListBundle");
+         ResourceBundle rb = getActionModelResourceBundle();
         if (rb==null || bm==null)
             return;
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            System.out.println(key + " " + rb.getString(key));
             try {
                 bm.removeAction(key);
             } catch (ClassNotFoundException ex) {
