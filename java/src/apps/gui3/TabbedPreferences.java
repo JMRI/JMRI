@@ -385,6 +385,15 @@ public class TabbedPreferences extends AppConfigBase {
         return -1;
     }
     
+    public void disablePreferenceItem(String selection, String subCategory){
+        if(subCategory==null || subCategory.equals("")){
+          // need to do something here like just disable the item
+          
+        } else {
+            preferencesArray.get(getCategoryIndexFromString(selection)).disableSubCategory(subCategory);
+        }
+    }
+    
     protected ArrayList<String> getChoices() {
         ArrayList<String> choices = new ArrayList<String>();
         for(int x=0; x<preferencesArray.size(); x++){
@@ -569,7 +578,8 @@ public class TabbedPreferences extends AppConfigBase {
         
         String itemText;
         String prefItem;
-        JTabbedPane tabbedPane;
+        JTabbedPane tabbedPane = new JTabbedPane();
+        ArrayList<String> disableItemsList = new ArrayList<String>();
         
         ArrayList<tabDetails> tabDetailsArray = new ArrayList<tabDetails>();
         
@@ -585,7 +595,16 @@ public class TabbedPreferences extends AppConfigBase {
                     return;
                 }
             }
-            tabDetailsArray.add(new tabDetails(labelkey, title,  item, tooltip, store));
+            tabDetails tab = new tabDetails(labelkey, title,  item, tooltip, store);
+            tabDetailsArray.add(tab);
+            tabbedPane.addTab(tab.getTitle(), null, tab.getPanel(), tab.getToolTip());
+            
+            for(int i =0; i<disableItemsList.size(); i++){
+                if(item.getClass().getName().equals(disableItemsList.get(i))){
+                    tabbedPane.setEnabledAt(tabbedPane.indexOfTab(tab.getTitle()), false);
+                    return;
+                }
+            }
         }
         
         String getPrefItem(){
@@ -611,11 +630,6 @@ public class TabbedPreferences extends AppConfigBase {
             if(tabDetailsArray.size()==1){
                 return tabDetailsArray.get(0).getPanel();
             } else {
-                tabbedPane = new JTabbedPane();
-                for (int i = 0; i<tabDetailsArray.size(); i++){
-                    tabDetails tab = tabDetailsArray.get(i);
-                    tabbedPane.addTab(tab.getTitle(), null, tab.getPanel(), tab.getToolTip());
-                }
                 return tabbedPane;
             }
         }
@@ -626,6 +640,20 @@ public class TabbedPreferences extends AppConfigBase {
             for (int i = 0; i<tabDetailsArray.size(); i++){
                 if (tabDetailsArray.get(i).getTitle().equals(sub)){
                     tabbedPane.setSelectedIndex(i);
+                    return;
+                }
+            }
+        }
+        
+        void disableSubCategory(String sub){
+            if(tabDetailsArray.size()==0){
+                //So the tab preferences might not have been initialised when the call to disable an item is called therefore store it for later on
+                disableItemsList.add(sub);
+                return;
+            }
+            for (int i = 0; i<tabDetailsArray.size(); i++){
+                if ((tabDetailsArray.get(i).getItem()).getClass().getName().equals(sub)){
+                    tabbedPane.setEnabledAt(i, false);
                     return;
                 }
             }
@@ -673,6 +701,9 @@ public class TabbedPreferences extends AppConfigBase {
             JPanel getPanel() { return tabPanel;}
             
             void addToStore() { if(store) items.add(tabItem);}
+            
+            JComponent getItem() { return tabItem; }
+            
         }
     }
     /*Unable to do remove tab, via a component in 1.5 but is supported in 1.6

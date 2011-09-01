@@ -86,10 +86,17 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         DecoderPro3 app = new DecoderPro3();
         // do final post initialization processing
         app.postInit();
-        //app.addToActionModel();
+    
+    }
+    
+    /**
+     * Final actions before releasing control of app to user
+     */
+    protected void postInit() {
+        super.postInit();
         
-        if((!app.configOK) || (!app.configDeferredLoadOK)){
-            if(app.preferenceFileExists){
+        if((!configOK) || (!configDeferredLoadOK)){
+            if(preferenceFileExists){
                 //if the preference file already exists then we will launch the normal preference window
                 AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
                 prefsAction.actionPerformed(null);
@@ -101,8 +108,9 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
                 prefsAction.actionPerformed(null);
             }
         }
-        app.addToActionModel();
+        addToActionModel();
         
+        jmri.InstanceManager.tabbedPreferencesInstance().disablePreferenceItem("STARTUP", "apps.PerformFilePanel");
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());
