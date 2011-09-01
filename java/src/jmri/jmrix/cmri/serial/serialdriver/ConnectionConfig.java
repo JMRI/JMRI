@@ -3,6 +3,8 @@
 package jmri.jmrix.cmri.serial.serialdriver;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
+
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**
@@ -44,6 +46,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 						
 		b.addActionListener(new NodeConfigAction());		
         
+    }
+    
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
 
     public String name() { return "Serial"; }

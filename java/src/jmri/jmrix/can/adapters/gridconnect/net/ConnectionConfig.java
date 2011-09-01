@@ -3,6 +3,7 @@
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
 import jmri.jmrix.JmrixConfigPane;
 
@@ -13,7 +14,8 @@ import jmri.jmrix.JmrixConfigPane;
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+//TODO At some point this should probably be refactored to use the AbstractNetworkConnectionConfig
+ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
 	public final static String NAME = "CAN via GridConnect Network Interface";
     /**
@@ -116,6 +118,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     protected void setInstance() {
         log.error("Unexpected call to setInstance");
         new Exception().printStackTrace();
+    }
+    
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 }
 

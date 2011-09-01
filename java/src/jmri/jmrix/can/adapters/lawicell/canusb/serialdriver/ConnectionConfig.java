@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
+import java.util.ResourceBundle;
+
 /**
  * Definition of objects to handle configuring a layout connection
  * via a Canusb CanUsbDriverAdapter object.
@@ -27,6 +29,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     public String name() { return "CAN via Lawicell CANUSB"; }
+    
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
+    }
 
     protected void setInstance() { adapter = CanUsbDriverAdapter.instance(); }
 }

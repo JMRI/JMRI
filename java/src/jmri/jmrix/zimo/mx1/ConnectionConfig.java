@@ -1,7 +1,7 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.zimo.mx1;
-
+import java.util.ResourceBundle;
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
@@ -26,6 +26,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.zimo.ZimoActionListBundle");
+    }
+    
     public String name() { return "MX-1"; }
 
     protected void setInstance() { adapter = Mx1Adapter.instance(); }

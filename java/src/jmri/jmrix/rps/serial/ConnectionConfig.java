@@ -2,6 +2,8 @@
 
 package jmri.jmrix.rps.serial;
 
+import java.util.ResourceBundle;
+
 
 /**
  * Definition of objects to handle configuring an RPS layout connection.
@@ -27,6 +29,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "RPS Base Station"; }
 
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.rps.RpsActionListBundle");
+    }
+    
     protected void setInstance() { 
         adapter = SerialAdapter.instance();
     }

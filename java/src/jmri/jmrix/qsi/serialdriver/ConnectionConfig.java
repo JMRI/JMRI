@@ -2,6 +2,8 @@
 
 package jmri.jmrix.qsi.serialdriver;
 
+import java.util.ResourceBundle;
+
 
 /**
  * Definition of objects to handle configuring a layout connection
@@ -28,6 +30,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "Quantum Programmer"; }
 
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.qsi.QsiActionListBundle");
+    }
+    
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
 

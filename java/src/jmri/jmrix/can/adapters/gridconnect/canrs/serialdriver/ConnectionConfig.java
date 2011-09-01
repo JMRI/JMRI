@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
+import java.util.ResourceBundle;
+
 /**
  * Definition of objects to handle configuring a layout connection
  * via a Canrs SerialDriverAdapter object.
@@ -29,6 +31,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String name() { return "CAN via MERG CAN-RS or CAN-USB"; }
     
     public boolean isOptList2Advanced() { return false; }
+    
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
+    }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }

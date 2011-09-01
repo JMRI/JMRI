@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.util.Vector;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -37,6 +39,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         adapter = p;
+        addToActionList();
     }
     
     public jmri.jmrix.SerialPortAdapter getAdapter() { return adapter; }
@@ -47,6 +50,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     public AbstractSerialConnectionConfig() {
         adapter = null;
+        addToActionList();
     }
 
     boolean init = false;
@@ -441,6 +445,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             adapter.dispose();
             adapter=null;
         }
+        removeFromActionList();
     }
     
     class ComboBoxRenderer extends JLabel
@@ -486,6 +491,46 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             //setFont(list.getFont());
             
             return this;
+        }
+    }
+    
+    /**
+    * This is purely here for systems that do not impliement the SystemConnectionMemo
+    * Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo & RPS and can be removed one they have been migrated
+    */
+    protected ResourceBundle getActionModelResourceBundle(){
+        return null;
+    }
+    
+    protected void addToActionList(){
+        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        ResourceBundle rb = getActionModelResourceBundle();
+        if (rb==null || bm==null)
+            return;
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            try {
+                bm.addAction(key, rb.getString(key));
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class "+key);
+            }
+        }
+    }
+    
+    protected void removeFromActionList(){
+        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        ResourceBundle rb = getActionModelResourceBundle();
+        if (rb==null || bm==null)
+            return;
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            try {
+                bm.removeAction(key);
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class "+key);
+            }
         }
     }
 

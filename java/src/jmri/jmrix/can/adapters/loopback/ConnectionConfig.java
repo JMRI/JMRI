@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.adapters.loopback;
 
+import java.util.ResourceBundle;
+
 /**
  * Definition of objects to handle configuring a layout connection
  * via a LocoNet hexfile emulator
@@ -29,6 +31,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     protected void setInstance() {
         adapter = new Port();
+    }
+    
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 }
 

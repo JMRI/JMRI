@@ -161,7 +161,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public NceThrottleManager  getThrottleManager() { return throttleManager; }
     public NceClockControl  getClockControl() { return clockManager; }
     
-        protected ResourceBundle getActionModelResourceBundle(){
+    protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
     }
     

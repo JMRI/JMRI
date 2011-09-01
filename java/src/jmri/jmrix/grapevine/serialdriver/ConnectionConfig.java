@@ -5,6 +5,8 @@ package jmri.jmrix.grapevine.serialdriver;
 import javax.swing.*;
 import jmri.jmrix.grapevine.nodeconfig.*;
 
+import java.util.ResourceBundle;
+
 /**
  * Definition of objects to handle configuring a Grapevine layout connection
  *
@@ -45,6 +47,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         
     }
     public String name() { return "Grapevine (ProTrak) Layout Bus"; }
+    
+    @Override
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineActionListBundle");
+    }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
