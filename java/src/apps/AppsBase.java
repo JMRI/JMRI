@@ -120,7 +120,7 @@ public abstract class AppsBase {
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         final File file;
         // decide whether name is absolute or relative
-        if (!new File(configFilename).isAbsolute()) {
+        if (!new File(getConfigFileName()).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
             file = new File(XmlFile.prefsDir()+ getConfigFileName());
