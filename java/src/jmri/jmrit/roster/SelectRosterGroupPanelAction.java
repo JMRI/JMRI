@@ -57,45 +57,51 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
 
     }
     
+    JComboBox selections;
+    JmriPanel container;
+    boolean init = false;
+    
     public JmriPanel makePanel() {
-        
-        final Roster roster = Roster.instance();
+        if(!init){
+            Roster roster = Roster.instance();
 
-        // get parent object if there is one
-        //Component parent = null;
-        //if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
-        final JmriPanel container = new JmriPanel();
-        container.add(new JLabel("Select Roster Group"));
-        
-        // create a dialog to select the roster entry
-        final JComboBox selections = roster.rosterGroupBox();
-        container.add(selections);
-        
-        selections.addActionListener(comboListener);
-        
-        roster.addPropertyChangeListener(  new PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ((e.getPropertyName().equals("RosterGroupRemoved")) || 
-                        (e.getPropertyName().equals("RosterGroupAdded")) ||
-                           (e.getPropertyName().equals("ActiveRosterGroup"))){
-                    selections.removeActionListener(comboListener);
-                    roster.updateGroupBox(selections);
-                    if(selections.getItemCount()<=1)
-                        container.setVisible(false);
-                    else{
-                        container.setVisible(true);
-                        selections.addActionListener(comboListener);
+            container = new JmriPanel();
+            container.add(new JLabel("Select Roster Group"));
+            
+            // create a dialog to select the roster entry
+            selections = roster.rosterGroupBox();
+            container.add(selections);
+            
+            selections.addActionListener(comboListener);
+            
+            roster.addPropertyChangeListener(  new PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if ((e.getPropertyName().equals("RosterGroupRemoved")) || 
+                            (e.getPropertyName().equals("RosterGroupAdded")) ||
+                               (e.getPropertyName().equals("ActiveRosterGroup"))){
+                        updateComboBox();
                     }
                 }
-            }
-        });
-        
+            });
+            
+            if(selections.getItemCount()<=1)
+                container.setVisible(false);
+            else
+                container.setVisible(true);
+            init = true;
+        }
+        return container;
+    }
+    
+    void updateComboBox(){
+        selections.removeActionListener(comboListener);
+        Roster.instance().updateGroupBox(selections);
         if(selections.getItemCount()<=1)
             container.setVisible(false);
-        else
+        else{
             container.setVisible(true);
-        
-        return container;
+            selections.addActionListener(comboListener);
+        }
     }
     
     ActionListener comboListener = new ActionListener() {
