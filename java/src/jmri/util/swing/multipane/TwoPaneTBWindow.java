@@ -28,6 +28,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         super(name);
         buildGUI(menubarFile, toolbarFile);
         pack();
+        //buildBars(menubarFile, toolbarFile);
     }
     
     JSplitPane      upDownSplitPane;
@@ -62,6 +63,11 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         addMainMenuBar(menubarFile);
         addMainToolBar(toolbarFile);
         addMainStatusBar();
+    }
+    
+    protected void buildBars(File menubarFile, File toolbarFile) {
+        addMainMenuBar(menubarFile);
+        addMainToolBar(toolbarFile);
     }
     
     protected void configureFrame() {
@@ -131,6 +137,23 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     public void dispose() {
         topBottomWI.dispose();
         super.dispose();
+    }
+    
+    /*
+    The property change listener is located here so that the menus can interact with the front end
+    */
+    
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+    protected void firePropertyChange(String p, Object old, Object n) {
+        if (pcs==null)
+            return;
+        pcs.firePropertyChange(p,old,n);
     }
     
 }

@@ -8,6 +8,7 @@ import java.io.File;
 import org.jdom.*;
 import java.util.Enumeration;
 import java.util.Map;
+import java.beans.PropertyChangeListener;
 
 /**
  * Common utility methods for working with GUI items
@@ -108,10 +109,9 @@ public class GuiUtilBase {
      * Create an action against the object that invoked the creation of the GUIBase, a string array is used
      * so that in the future further options can be specified to be passed.
      */
-    static Action createActionInCallingWindow(Object obj, String args[], String name, Icon icon){
+    static Action createActionInCallingWindow(Object obj, final String args[], String name, Icon icon){
         java.lang.reflect.Method method = null;
         try{
-            
             method = obj.getClass().getDeclaredMethod("remoteCalls", String[].class);
         } catch (java.lang.NullPointerException e) {
             log.error("Null object passed");
@@ -123,7 +123,9 @@ public class GuiUtilBase {
             log.error("No such method remoteCalls for " + obj.getClass().getName());
             return createEmptyMenuItem(icon, name);
         }
+        
         CallingAbstractAction act = new CallingAbstractAction(name, icon);
+
         act.setMethod(method);
         act.setArgs(args);
         act.setObject(obj);

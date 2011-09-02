@@ -47,7 +47,7 @@ import java.beans.PropertyChangeListener;
  */
  
 public class DecoderPro3Window 
-        extends jmri.util.swing.multipane.TwoPaneTBWindow {
+        extends jmri.util.swing.multipane.TwoPaneTBWindow{
 
     static int openWindowInstances = 0;
     
@@ -109,7 +109,6 @@ public class DecoderPro3Window
         activeRosterGroupField.setText(Roster.getRosterGroupName());
         getToolBar().add(modePanel);
         getToolBar().add(new jmri.jmrit.roster.SelectRosterGroupPanelAction("Select Group").makePanel());
-
     }
     
     jmri.UserPreferencesManager p;
@@ -462,13 +461,14 @@ public class DecoderPro3Window
             throttleLabels.setEnabled(true);
             rosterMedia.setEnabled(true);
             throttleLaunch.setEnabled(true);
-            if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+            /*if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
                 service.setEnabled(true);
                 ops.setEnabled(true);
             } else 
                 edit.setSelected(true);
-            edit.setEnabled(true);
+            edit.setEnabled(true);*/
+            updateProgMode();
         }
     }
     
@@ -487,6 +487,7 @@ public class DecoderPro3Window
     ActionListener programModeListener = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     updateProgMode();
+                    //firePropertyChange("something", null, true);
                 }
             };
             
@@ -495,8 +496,20 @@ public class DecoderPro3Window
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             service.setEnabled(true);
             ops.setEnabled(true);
-        } else 
+            firePropertyChange("setprogservice", "setEnabled", true);
+            firePropertyChange("setprogops", "setEnabled", true);
+        } else {
             edit.setSelected(true);
+        }
+        edit.setEnabled(true);
+        firePropertyChange("setprogedit", "setEnabled", true);
+        
+        String progMode = "setprogservice";
+        if(ops.isSelected())
+            progMode = "setprogops";
+        else if (edit.isSelected())
+            progMode = "setprogedit";
+        firePropertyChange(progMode, "setSelected", true);
     }
     /**
     * Simple method to change over the programmer buttons, this should be impliemented button
@@ -527,6 +540,9 @@ public class DecoderPro3Window
         service.setEnabled(false);
         ops.setEnabled(false);
         edit.setEnabled(false);
+        firePropertyChange("setprogservice", "setEnabled", false);
+        firePropertyChange("setprogops", "setEnabled", false);
+        firePropertyChange("setprogedit", "setEnabled", false);
 
         JPanel progModePanel = new JPanel();
         progModePanel.add(service);
@@ -709,9 +725,16 @@ public class DecoderPro3Window
             hideSummary();
         } else if(args[0].equals("copyloco")){
             if (checkIfEntrySelected()) copyLoco();
-        }  else if(args[0].equals("deleteloco")){
+        } else if(args[0].equals("deleteloco")){
             if (checkIfEntrySelected()) deleteLoco();
-        } else
+        } else if(args[0].equals("setprogservice")){
+            service.setSelected(true);
+        } else if(args[0].equals("setprogops")){
+            ops.setSelected(true);
+        } else if(args[0].equals("setprogedit")){
+            edit.setSelected(true);
+        }
+        else
             log.error ("method " + args[0] + " not found");
     }
     
