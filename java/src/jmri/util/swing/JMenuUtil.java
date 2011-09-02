@@ -84,7 +84,7 @@ public class JMenuUtil extends GuiUtilBase {
             JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem(act);
             group.add(menuItem);
             menu.add(menuItem);
-            if(menuItem!=null && elem.getChild("current") != null){
+            if(elem.getChild("current") != null){
                 setMenuItemInterAction(context, elem.getChild("current").getText(), menuItem);
             }
         }
