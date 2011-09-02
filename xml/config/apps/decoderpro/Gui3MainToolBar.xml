@@ -17,7 +17,7 @@
         <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
     </node>
     
-    <node><name>Identifiy</name>
+    <node><name>Identify</name>
         <current>identifyloco</current>
         <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
     </node>
