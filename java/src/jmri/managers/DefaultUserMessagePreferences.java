@@ -643,6 +643,30 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         return list;
     }
     
+    public void setProperty(String strClass, Object key, Object value) {
+        if(strClass.equals("jmri.util.JmriJFrame"))
+            return;
+        if(!windowDetails.containsKey(strClass)){
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setProperty(key, value);
+    }
+    
+    public Object getProperty(String strClass, Object key) {
+        if(windowDetails.containsKey(strClass)){
+            return windowDetails.get(strClass).getProperty(key);
+        }
+        return null;
+    }
+
+    public java.util.Set<Object> getPropertyKeys(String strClass) {
+        if(windowDetails.containsKey(strClass)){
+            return windowDetails.get(strClass).getPropertyKeys();
+        }
+        return null;
+    }
+    
+    
     public boolean isWindowPositionSaved(String strClass){
         return windowDetails.containsKey(strClass);
     }
@@ -996,8 +1020,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         return 0;
     }
     
-
-    
     /**
      * Holds details about the speific class.
      */
@@ -1187,6 +1209,24 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
             this.size = size;
             saveSize=true;
         }
+        
+        void setProperty(Object key, Object value) {
+            if (parameters == null) 
+                parameters = new HashMap<Object, Object>();
+            parameters.put(key, value);
+        }
+        
+        Object getProperty(Object key) {
+            if (parameters == null) return null;
+            return parameters.get(key);
+        }
+
+        java.util.Set<Object> getPropertyKeys() {
+            if (parameters == null) return null;
+            return parameters.keySet();
+        }
+
+        HashMap<Object, Object> parameters = null;
     
     }
 

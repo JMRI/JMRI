@@ -2,6 +2,7 @@ package jmri.managers.configurexml;
 
 import org.jdom.Element;
 import java.util.List;
+import java.lang.reflect.*;
 
 public class DefaultUserMessagePreferencesXml extends jmri.configurexml.AbstractXmlAdapter{
 
@@ -91,46 +92,70 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         }
         
         java.util.ArrayList<String> windowList = p.getWindowList();
-        for(int i = 0; i<windowList.size(); i++){
-            String strClass = windowList.get(i);
-            Element windowElement = new Element("windowDetails");
-            windowElement.setAttribute("class", strClass);
-            boolean set = false;
-            if(p.getSaveWindowLocation(strClass)){
-                try {
-                    double x = p.getWindowLocation(strClass).getX();
-                    double y = p.getWindowLocation(strClass).getY();
-                    Element loc = new Element("locX");
-                    loc.addContent(Double.toString(x));
-                    windowElement.addContent(loc);
-                    loc = new Element("locY");
-                    windowElement.addContent(loc);
-                    loc.addContent(Double.toString(y));
-                    set=true;
-                } catch (NullPointerException ex){
-                    //Considered normal if the window hasn't been closed or all of the information hasn't been set
-                }
-            }
-            if(p.getSaveWindowSize(strClass)){
-                try {
-                    double width=p.getWindowSize(strClass).getWidth();
-                    double height=p.getWindowSize(strClass).getHeight();
-                    //We do not want to save the width or height if it is set to zero!
-                    if (!(width==0.0 && height==0.0)){
-                        Element size = new Element("width");
-                        size.addContent(Double.toString(width));
-                        windowElement.addContent(size);
-                        size = new Element("height");
-                        size.addContent(Double.toString(height));
-                        windowElement.addContent(size);
+        if (windowList != null && windowList.size() != 0){
+            for (String strClass : windowList) {
+                Element windowElement = new Element("windowDetails");
+                windowElement.setAttribute("class", strClass);
+                boolean set = false;
+                if(p.getSaveWindowLocation(strClass)){
+                    try {
+                        double x = p.getWindowLocation(strClass).getX();
+                        double y = p.getWindowLocation(strClass).getY();
+                        Element loc = new Element("locX");
+                        loc.addContent(Double.toString(x));
+                        windowElement.addContent(loc);
+                        loc = new Element("locY");
+                        windowElement.addContent(loc);
+                        loc.addContent(Double.toString(y));
                         set=true;
+                    } catch (NullPointerException ex){
+                        //Considered normal if the window hasn't been closed or all of the information hasn't been set
                     }
-                } catch (NullPointerException ex){
-                    //Considered normal if the window hasn't been closed
                 }
+                if(p.getSaveWindowSize(strClass)){
+                    try {
+                        double width=p.getWindowSize(strClass).getWidth();
+                        double height=p.getWindowSize(strClass).getHeight();
+                        //We do not want to save the width or height if it is set to zero!
+                        if (!(width==0.0 && height==0.0)){
+                            Element size = new Element("width");
+                            size.addContent(Double.toString(width));
+                            windowElement.addContent(size);
+                            size = new Element("height");
+                            size.addContent(Double.toString(height));
+                            windowElement.addContent(size);
+                            set=true;
+                        }
+                    } catch (NullPointerException ex){
+                        //Considered normal if the window hasn't been closed
+                    }
+                }
+                java.util.Set<Object> s = p.getPropertyKeys(strClass);
+                if (s != null && s.size() != 0){
+                    Element ret = new Element("properties");
+                    windowElement.addContent(ret);
+                    for (Object key : s) {
+                        Object value = p.getProperty(strClass, key);
+                        Element prop = new Element("property");
+                        ret.addContent(prop);
+                        prop.addContent(new Element("key")
+                                        .setAttribute("class", key.getClass().getName())
+                                        .setText(key.toString())
+                                    );
+                        if (value != null) {
+                            prop.addContent(new Element("value")
+                                        .setAttribute("class", value.getClass().getName())
+                                        .setText(value.toString())
+                                        );
+                        }
+                    }
+                    set=true;
+                }
+
+                
+                if (set)
+                    messages.addContent(windowElement);
             }
-            if (set)
-                messages.addContent(windowElement);
         }
         return messages;
     }
@@ -245,6 +270,35 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                 }
             }
             p.setWindowSize(strClass, new java.awt.Dimension((int)width, (int)height));
+            
+            Element prop = windowList.get(k).getChild("properties");
+            if (prop != null){
+                for (Object next : prop.getChildren("property")) {
+                    Element e = (Element) next;
+                    
+                    try {
+                        Class<?> cl;
+                        Constructor<?> ctor;
+                        // create key object
+                        cl = Class.forName(e.getChild("key").getAttributeValue("class"));
+                        ctor = cl.getConstructor(new Class<?>[] {String.class});
+                        Object key = ctor.newInstance(new Object[] {e.getChild("key").getText()});
+
+                        // create value object
+                        Object value = null;
+                        if (e.getChild("value") != null) {
+                            cl = Class.forName(e.getChild("value").getAttributeValue("class"));
+                            ctor = cl.getConstructor(new Class<?>[] {String.class});
+                            value = ctor.newInstance(new Object[] {e.getChild("value").getText()});
+                        }
+                        
+                        // store
+                        p.setProperty(strClass, key, value);
+                    } catch (Exception ex) {
+                        log.error("Error loading properties", ex);
+                    }
+                }
+            }
         
         }
         p.finishLoading();

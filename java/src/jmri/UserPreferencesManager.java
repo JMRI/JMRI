@@ -7,6 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Point;
+import java.util.List;
 
 /**
  * Interface for the User Preferences Manager.
@@ -367,6 +368,26 @@ public interface UserPreferencesManager {
     public void setSaveWindowSize(String strClass, boolean b);
     
     public void setSaveWindowLocation(String strClass, boolean b);
+    
+    /**
+     * Attach a key/value pair to the 
+     * given class, which can be retrieved later.
+     * These are not bound properties as yet, 
+     * and don't throw events on modification.
+     * Key must not be null.
+     */
+    public void setProperty(String strClass, Object key, Object value);
+    
+    /**
+     * Retrieve the value associated with a key in a given class
+     * If no value has been set for that key, returns null.
+     */
+    public Object getProperty(String strClass, Object key);
+
+    /**
+     * Retrieve the complete current set of keys for a given class.
+     */
+    public java.util.Set<Object> getPropertyKeys(String strClass);
     
     /*
         Example informational message dialog box.

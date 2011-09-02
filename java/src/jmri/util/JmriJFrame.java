@@ -227,7 +227,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     
     String windowFrameRef;
     
-    String getWindowFrameRef(){ return windowFrameRef; }
+    protected String getWindowFrameRef(){ return windowFrameRef; }
     
     /**
      * By default, Swing components should be 
