@@ -2,9 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.DccLocoAddressSelector;
-import jmri.DccLocoAddress;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -16,7 +13,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -46,7 +42,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     JTextField mfg 		= new JTextField(30);
     JTextField model		= new JTextField(30);
     JTextField owner		= new JTextField(30);
-    DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
+    JLabel addrLoco		= new JLabel();
     
     JTextArea comment		= new JTextArea(3,30);
     //JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
@@ -73,15 +69,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         id.setText(r.getId());
         filename.setText(r.getFileName());
 
-        if (r.getDccAddress().equals("")) {
-            // null address, so clear selector
-            addrSel.reset();
-        } else {
-            // non-null address, so load
-            DccLocoAddress tempAddr = new DccLocoAddress(
-                Integer.parseInt(r.getDccAddress()), r.isLongAddress());
-            addrSel.setAddress(tempAddr);
-        }
+        addrLoco.setText(makeAddrLocoString(r));
         
         // fill contents
         updateGUI(r);
@@ -92,10 +80,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         // add options
         id.setToolTipText(rb.getString("ToolTipID"));
 
-        addrSel.setEnabled(false);
-        addrSel.setLocked(false);
-        JPanel selPanel = addrSel.getCombinedJPanel();
-        selPanel.setToolTipText(rb.getString("ToolTipDccAddress"));
         decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
         decoderFamily.setToolTipText(rb.getString("ToolTipDecoderFamily"));
         filename.setToolTipText(rb.getString("ToolTipFilename"));
@@ -191,8 +175,8 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(row6Label);
 
         cR.gridy = 6;
-        gbLayout.setConstraints(selPanel,cR);
-        add(selPanel);
+        gbLayout.setConstraints(addrLoco,cR);
+        add(addrLoco);
 
         cL.gridy = 7;
         JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit"));
@@ -285,14 +269,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         if (!r.getDecoderComment().equals(decoderComment.getText()) ) return true;
         if (!r.getId().equals(id.getText()) ) return true;
         if (r.getMaxSpeedPCT() != ((Integer) maxSpeedSpinner.getValue()).intValue()) return true;
-
-        DccLocoAddress a = addrSel.getAddress();
-        if (a==null) {
-            if (!r.getDccAddress().equals("")) return true;
-        } else {
-            if (! r.getDccAddress().equals(""+a.getNumber()) ) return true;
-            if (!r.isLongAddress()==(a.isLongAddress()) ) return true;
-        }
         return false;
     }
 
@@ -321,11 +297,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         r.setMfg(mfg.getText());
         r.setOwner(owner.getText());
         r.setModel(model.getText());
-        DccLocoAddress a = addrSel.getAddress();
-        if (a != null) {
-            r.setDccAddress(""+a.getNumber());
-            r.setLongAddress(a.isLongAddress());
-        }
         r.setComment(comment.getText());
         
         JComponent editor = maxSpeedSpinner.getEditor();
@@ -350,20 +321,20 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         decoderComment.setText(r.getDecoderComment());
         dateUpdated.setText(r.getDateUpdated());
         maxSpeedSpinner.setValue(Integer.valueOf(r.getMaxSpeedPCT()));
+        addrLoco.setText(makeAddrLocoString(r));
     }
     
-    public void setDccAddress(String a) {
-        DccLocoAddress addr = addrSel.getAddress();
-        boolean m = true;
-        if (addr!=null) m = addr.isLongAddress();
-        addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), m));
-    }
-    public void setDccAddressLong(boolean m) { 
-        DccLocoAddress addr = addrSel.getAddress();
-        int n = 0;
-        if (addr!=null) n = addr.getNumber();
-        addrSel.setAddress(new DccLocoAddress(n, m));
-    }
+    private String makeAddrLocoString(RosterEntry r) {
+    	String s = "";
+        if (!r.getDccAddress().equals("")) {
+        	if (r.isLongAddress()) {
+            	s = r.getDccAddress() + " (" + rb.getString("AddrLocoTypeLong") + ")";
+        	} else {
+            	s = r.getDccAddress() + " (" + rb.getString("AddrLocoTypeShort") + ")";
+        	}
+        }
+    	return(s);
+	}
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
