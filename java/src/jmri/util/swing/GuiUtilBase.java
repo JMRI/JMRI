@@ -6,9 +6,7 @@ import javax.swing.*;
 import java.util.HashMap;
 import java.io.File;
 import org.jdom.*;
-import java.util.Enumeration;
 import java.util.Map;
-import java.beans.PropertyChangeListener;
 
 /**
  * Common utility methods for working with GUI items

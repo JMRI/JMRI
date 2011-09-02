@@ -6,9 +6,6 @@ import apps.AppConfigBase;
 import apps.GuiLafConfigPane;
 
 import jmri.jmrix.JmrixConfigPane;
-import jmri.UserPreferencesManager;
-import jmri.InstanceManager;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ChangeListener;

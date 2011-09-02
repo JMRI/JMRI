@@ -8,7 +8,6 @@ import java.io.File;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
-import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;

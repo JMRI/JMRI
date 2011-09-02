@@ -7,8 +7,6 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
-import javax.swing.AbstractAction;
-
 /**
  * Check the names in an XML decoder file against the names.xml definitions
  *

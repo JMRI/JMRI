@@ -2,7 +2,6 @@
 
 package jmri.jmrit.jython;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import java.io.*;

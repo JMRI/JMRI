@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.Point;
-import java.util.List;
 
 /**
  * Interface for the User Preferences Manager.

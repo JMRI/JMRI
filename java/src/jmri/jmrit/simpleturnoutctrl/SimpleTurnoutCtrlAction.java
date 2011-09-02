@@ -12,7 +12,6 @@ package jmri.jmrit.simpleturnoutctrl;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
 public class SimpleTurnoutCtrlAction 			extends JmriAbstractAction {

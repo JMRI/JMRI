@@ -7,7 +7,6 @@ import jmri.jmrit.XmlFile;
 import javax.swing.*;
 
 import java.util.ResourceBundle;
-import java.util.Enumeration;
 
 
 /**

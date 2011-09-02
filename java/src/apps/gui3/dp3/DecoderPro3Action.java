@@ -2,7 +2,6 @@
 
 package apps.gui3.dp3;
 
-import java.io.File;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 

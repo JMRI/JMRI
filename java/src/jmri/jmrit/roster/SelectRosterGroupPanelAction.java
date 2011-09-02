@@ -2,7 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.util.swing.JmriAbstractAction;
@@ -11,9 +10,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import jmri.util.swing.JmriPanel;
 
-import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import java.beans.PropertyChangeListener;
 
 /**

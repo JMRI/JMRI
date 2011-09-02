@@ -10,7 +10,6 @@ package jmri.jmrit.withrottle;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;

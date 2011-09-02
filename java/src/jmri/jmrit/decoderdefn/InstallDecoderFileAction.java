@@ -6,7 +6,6 @@ import java.io.*;
 
 import javax.swing.*;
 import java.net.URL;
-import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 

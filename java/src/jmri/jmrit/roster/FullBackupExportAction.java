@@ -13,7 +13,6 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
-import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 /**

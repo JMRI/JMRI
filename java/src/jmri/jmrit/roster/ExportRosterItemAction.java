@@ -6,9 +6,6 @@ import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
-import jmri.util.swing.WindowInterface;
-import javax.swing.Icon;
-
 import javax.swing.Action;
 
 import org.jdom.Element;
