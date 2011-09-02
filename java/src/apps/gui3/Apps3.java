@@ -66,6 +66,8 @@ public abstract class Apps3 extends apps.AppsBase {
         initializeHelpSystem();
         createMainFrame();
         
+        //A Shutdown manager handles the quiting of the application
+        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         // set to min size for demo
         displayMainFrame(mainFrame.getMaximumSize());  // or new Dimension(800, 600));
     }

@@ -2,17 +2,43 @@
 
  package apps.gui3.dp3;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+
 import java.io.File;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import jmri.util.swing.ResizableImagePanel;
-import jmri.jmrit.decoderdefn.DecoderFile;
 
-// for ugly code
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import javax.swing.JTextPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.beans.PropertyChangeListener;
+
 import jmri.Programmer;
 import jmri.progdebugger.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
@@ -20,10 +46,8 @@ import jmri.jmrit.roster.*;
 import jmri.jmrit.roster.swing.*;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-import java.awt.event.ActionListener;
-import javax.swing.border.Border;
-import java.beans.PropertyChangeListener;
-
+import jmri.util.swing.ResizableImagePanel;
+import jmri.jmrit.decoderdefn.DecoderFile;
 
 /**
  * Standalone DecoderPro3 Window (new GUI)
@@ -650,14 +674,14 @@ public class DecoderPro3Window
         //String title = rbt.getString("FrameNewEntryTitle");
         String title = re.getId();
         Programmer pProg = null;
-        JFrame p = new PaneProgFrame(decoderFile, re,
+        JFrame progFrame = new PaneProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+filename+".xml",
                                          null, false){
                 protected JPanel getModePane() { return null; }
             };
         
         if(service.isSelected()){
-            p = new PaneServiceProgFrame(decoderFile, re,
+            progFrame = new PaneServiceProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+filename+".xml",
                                          modePanel.getProgrammer()){
             };
@@ -667,11 +691,11 @@ public class DecoderPro3Window
             boolean longAddr = re.isLongAddress();
             pProg = jmri.InstanceManager.programmerManagerInstance()
                                     .getAddressedProgrammer(longAddr, address);
-            p = new PaneOpsProgFrame(decoderFile, re, title, "programmers"+File.separator+filename+".xml",
+            progFrame = new PaneOpsProgFrame(decoderFile, re, title, "programmers"+File.separator+filename+".xml",
                     pProg);
         }
-        p.pack();
-        p.setVisible(true);
+        progFrame.pack();
+        progFrame.setVisible(true);
     }
     
     boolean allowQuit = true;
@@ -692,11 +716,21 @@ public class DecoderPro3Window
             //But conversion back on the headers is a pain.
             p.setProperty(getWindowFrameRef(), i, rtable.getModel().getSortingStatus(i));
         }
-        super.windowClosing(e);
-        openWindowInstances--;
-
-        if (allowQuit && openWindowInstances==0)
-            jmri.InstanceManager.shutDownManagerInstance().shutdown();
+        //Okay only allow the shutdown if we are the last window instance and quit has been allowed
+        if (allowQuit && openWindowInstances==1){
+            log.debug("Start handleQuit");
+            try {
+                jmri.InstanceManager.shutDownManagerInstance().shutdown();
+            } catch (Exception ex) {
+                log.error("Continuing after error in handleQuit",ex);
+            }
+        } else {
+            //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
+            openWindowInstances--;
+            super.windowClosing(e);
+            jmri.util.JmriJFrame frame = (jmri.util.JmriJFrame) e.getSource();
+            frame.dispose();
+        }
     }
     
     //Matches the first argument in the array against a locally know method
@@ -760,7 +794,7 @@ public class DecoderPro3Window
         }
         // start identifying a loco
         final DecoderPro3Window me = this;
-        IdentifyLoco id = new IdentifyLoco() {
+        IdentifyLoco ident = new IdentifyLoco() {
                 private DecoderPro3Window who = me;
                 protected void done(int dccAddress) {
                     // if Done, updated the selected decoder
@@ -774,7 +808,7 @@ public class DecoderPro3Window
                     //idloco.setSelected(false);
                 }
             };
-        id.start();
+        ident.start();
     }
     
     protected void hideRosterImage(){
@@ -797,6 +831,7 @@ public class DecoderPro3Window
             super(pName, pWho);
             setExistingEntry(re);
         }
+        @Override
         protected boolean selectFrom(){ return true;}
     }
     
@@ -810,6 +845,7 @@ public class DecoderPro3Window
             super(pName, pWho);
             setExistingEntry(re);
         }
+        @Override
         protected boolean selectFrom(){ return true;}
     }
 
@@ -824,6 +860,7 @@ public class DecoderPro3Window
             this.re = re;
         }
         RosterEntry re;
+        @Override
         protected String selectRosterEntry(){
             return re.getId();
         }

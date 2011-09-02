@@ -4,6 +4,7 @@ package apps.gui3.dp3;
 
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import javax.swing.WindowConstants;
 
 import java.awt.event.ActionEvent;
 
@@ -34,11 +35,13 @@ public class DecoderPro3Action extends jmri.util.swing.JmriAbstractAction
     
     boolean allowQuit = true;
     
+    @Override
     public void actionPerformed(ActionEvent event) {
         mainFrame = new DecoderPro3Window();
         mainFrame.setSize(new java.awt.Dimension(1024, 600));
         mainFrame.setVisible(true);
         mainFrame.allowQuit(allowQuit);
+        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
     
     // never invoked, because we overrode actionPerformed above
@@ -47,6 +50,5 @@ public class DecoderPro3Action extends jmri.util.swing.JmriAbstractAction
     }
     
     DecoderPro3Window mainFrame;
-    
 }
 

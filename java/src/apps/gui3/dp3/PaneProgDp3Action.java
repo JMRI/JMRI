@@ -4,7 +4,6 @@ package apps.gui3.dp3;
 
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.CombinedLocoSelTreePane;
 import jmri.jmrit.symbolicprog.*;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriPanel;
@@ -86,6 +85,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
         f.getContentPane().setLayout(new BorderLayout());
         // ensure status line is cleared on close so it is normal if re-opened
         f.addWindowListener(new WindowAdapter(){
+            @Override
             public void windowClosing(WindowEvent we){
             	statusLabel.setText(rbt.getString("StateIdle"));
             	f.windowClosing(we);}});
@@ -101,6 +101,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
 
         // new Loco on programming track
         JPanel pane1 = new CombinedLocoSelTreePane(statusLabel){
+            @Override
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
                     String title = java.text.MessageFormat.format(rbt.getString("FrameServiceProgrammerTitle"),
@@ -121,11 +122,13 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
                     p.setVisible(true);
                 }
 
+            @Override
                 protected JPanel layoutRosterSelection() { return null; }
                 
                 JRadioButton serviceModeProg;
                 JRadioButton editModeProg;
                 
+            @Override
                 protected JPanel createProgrammerSelection(){
                     serviceModeProg = new JRadioButton("<HTML>Service Mode<br>(programming track)</HTML>");
                     editModeProg = new JRadioButton("Edit Only");

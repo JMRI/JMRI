@@ -4,9 +4,9 @@ package apps.gui3.dp3;
 
 import java.io.File;
 import jmri.jmrit.XmlFile;
-import javax.swing.*;
 
 import java.util.ResourceBundle;
+import javax.swing.AbstractAction;
 
 
 /**
@@ -65,6 +65,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
      * Force our test size. Superclass method set to max size, filling
      * real window.
      */
+    @Override
     protected void displayMainFrame(java.awt.Dimension d) {
         mainFrame.setSize(new java.awt.Dimension(1024, 600));
         mainFrame.setVisible(true);
@@ -91,6 +92,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     /**
      * Final actions before releasing control of app to user
      */
+    @Override
     protected void postInit() {
         super.postInit();
         
