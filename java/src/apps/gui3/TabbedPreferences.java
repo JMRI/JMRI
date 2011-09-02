@@ -155,7 +155,7 @@ public class TabbedPreferences extends AppConfigBase {
             new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), false, null);
         
         addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutProgrammer"), rb.getString("LabelTabbedLayoutProgrammer"), 
-            new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);        
+            new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
         addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutRoster"),
             rb.getString("LabelTabbedLayoutRoster"), new jmri.jmrit.roster.RosterConfigPane(), true, null);
         

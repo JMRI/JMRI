@@ -78,7 +78,7 @@ public class DecoderPro3Window
         //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
         if(apps.gui3.Apps3.buttonSpace()!=null)
             getToolBar().add(apps.gui3.Apps3.buttonSpace());
-        getBottom().setMinimumSize(new Dimension(0, 250));
+        getBottom().setMinimumSize(new Dimension(0, 170));
         getBottom().add(createBottom());
         statusBar();
         systemsMenu();
@@ -201,6 +201,14 @@ public class DecoderPro3Window
                 }
             }
         );
+        
+        int count = rtable.getModel().getColumnCount();
+        for (int i = 0; i <count; i++){
+            if(p.getProperty(getWindowFrameRef(), i)!=null){
+                int sort = (Integer) p.getProperty(getWindowFrameRef(), i);
+                rtable.getModel().setSortingStatus(i, sort);
+            }
+        }
         
         return retval;
     }
@@ -661,12 +669,20 @@ public class DecoderPro3Window
     }
     
     public void windowClosing(java.awt.event.WindowEvent e) {
+        //Method to save table sort status
+        int count = rtable.getModel().getColumnCount();
+        for (int i = 0; i <count; i++){
+            //This should probably store the sort with real names rather than numbers
+            //But conversion back on the headers is a pain.
+            p.setProperty(getWindowFrameRef(), i, rtable.getModel().getSortingStatus(i));
+        }
         super.windowClosing(e);
         openWindowInstances--;
+
         if (allowQuit && openWindowInstances==0)
             jmri.InstanceManager.shutDownManagerInstance().shutdown();
     }
-
+    
     //Matches the first argument in the array against a locally know method
     public void remoteCalls(String args[]){
         args[0] = args[0].toLowerCase();
