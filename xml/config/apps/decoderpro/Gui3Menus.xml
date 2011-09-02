@@ -95,11 +95,20 @@
         <current>hiderosterimage</current>
     </node>
     <node>separator</node>
-    <node><name>Programming</name>
+    <node>group<name>Programming</name>
         <mnemonic>p</mnemonic>
-        <node><name>Service Mode</name></node>
-        <node><name>Operations Mode</name></node>
-        <node><name>Edit Mode</name></node>
+        <node>
+            <name>Service Mode</name>
+            <current>setprogservice</current>
+        </node>
+        <node>
+            <name>Operations Mode</name>
+            <current>setprogops</current>
+        </node>
+        <node>
+            <name>Edit Mode</name>
+            <current>setprogedit</current>
+        </node>
     </node>
     <node>separator</node>
     <node><name>Create Roster Group</name>
@@ -119,8 +128,6 @@
         <adapter>jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction</adapter>
     </node>
   </node>
-
-  
   
   <node><name>Actions</name>
     <mnemonic>a</mnemonic>
