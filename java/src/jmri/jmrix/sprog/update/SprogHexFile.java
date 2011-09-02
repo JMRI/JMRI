@@ -291,7 +291,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
    *
    * @return byte   the record type
    */
-  public int getType() {
+  public int getRecordType() {
     return type;
   }
 

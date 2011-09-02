@@ -41,7 +41,7 @@ public class ItemDialog extends JDialog {
         return false;
     }
 
-    protected String getType() {
+    protected String getDialogType() {
         return _type;
     }
     
