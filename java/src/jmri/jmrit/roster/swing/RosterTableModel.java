@@ -52,6 +52,9 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
             fireTableDataChanged();
         } else if (e.getPropertyName().equals("ActiveRosterGroup")){
             fireTableDataChanged();
+        } else if(e.getPropertyName().equals("saved")){
+            //TODO This really needs to do something like find the index of the roster entry here
+            fireTableDataChanged();
         }
     }
     
