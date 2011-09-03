@@ -674,13 +674,15 @@ public class DecoderPro3Window
         //String title = rbt.getString("FrameNewEntryTitle");
         String title = re.getId();
         Programmer pProg = null;
-        JFrame progFrame = new PaneProgFrame(decoderFile, re,
+        JFrame progFrame=null;
+        if(edit.isSelected())
+            progFrame = new PaneProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+filename+".xml",
                                          null, false){
                 protected JPanel getModePane() { return null; }
             };
         
-        if(service.isSelected()){
+        else if(service.isSelected()){
             progFrame = new PaneServiceProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+filename+".xml",
                                          modePanel.getProgrammer()){
@@ -693,6 +695,9 @@ public class DecoderPro3Window
                                     .getAddressedProgrammer(longAddr, address);
             progFrame = new PaneOpsProgFrame(decoderFile, re, title, "programmers"+File.separator+filename+".xml",
                     pProg);
+        }
+        if(progFrame==null){
+            return;
         }
         progFrame.pack();
         progFrame.setVisible(true);
