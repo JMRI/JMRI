@@ -242,9 +242,14 @@ public class DecoderPro3Window
      */
     void locoSelected(String id) {
         log.debug("locoSelected ID "+id);
+        
+        if(re!=null){
+            //We remove the propertychangelistener if we had a previoulsy selected entry;
+            re.removePropertyChangeListener(rosterEntryUpdateListener);
+        }
         // convert to roster entry
         re = Roster.instance().entryFromTitle(id);
-        
+        re.addPropertyChangeListener(rosterEntryUpdateListener);
         updateDetails();
     }
     
@@ -514,6 +519,13 @@ public class DecoderPro3Window
                     //firePropertyChange("something", null, true);
                 }
             };
+
+    PropertyChangeListener rosterEntryUpdateListener = new PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    updateDetails();
+                    //firePropertyChange("something", null, true);
+                }
+            };
             
     void updateProgMode(){
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
@@ -650,11 +662,16 @@ public class DecoderPro3Window
         // raise the button again
         //idloco.setSelected(false);
         // locate that loco
+        if(re!=null){
+            //We remove the propertychangelistener if we had a previoulsy selected entry;
+            re.removePropertyChangeListener(rosterEntryUpdateListener);
+        }
         List<RosterEntry> l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
                                                 null, null, null, null);
         if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
         if (l.size() > 0) {
             re = l.get(0);
+            re.addPropertyChangeListener(rosterEntryUpdateListener);
             updateDetails();
             JTable table = rtable.getTable();
             int entires = table.getRowCount();
