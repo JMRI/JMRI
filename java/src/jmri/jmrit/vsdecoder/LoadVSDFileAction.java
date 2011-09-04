@@ -92,7 +92,6 @@ public class LoadVSDFileAction extends AbstractAction {
 	    vsdfile = new VSDFile(f);
 	    log.debug("VSD File name = " + vsdfile.getName());
 	    if (vsdfile.isInitialized()) {	
-		Element root = vsdfile.getRoot();
 		VSDecoderManager.instance().loadProfiles(vsdfile);
 	    }
 	    // Cleanup and close files.
@@ -117,7 +116,6 @@ public class LoadVSDFileAction extends AbstractAction {
 	    vsdfile = new VSDFile(fp);
 	    log.debug("VSD File name = " + vsdfile.getName());
 	    if (vsdfile.isInitialized()) {	
-	    Element root = vsdfile.getRoot();
 	    VSDecoderManager.instance().loadProfiles(vsdfile);
 	}
 	    // Cleanup and close files.

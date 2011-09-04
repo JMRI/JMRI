@@ -31,7 +31,6 @@ package jmri.jmrit.vsdecoder;
 class NotchTransition extends SoundBite {
     private int prev_notch;
     private int next_notch;
-    private int length;
 
     public NotchTransition(String name) {
 	super(name);

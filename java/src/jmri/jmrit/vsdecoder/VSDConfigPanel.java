@@ -348,7 +348,6 @@ public class VSDConfigPanel extends JmriPanel {
     //
     // User chose a Profile from the profileComboBox.
     private void profileComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
-	int addr;
 	VSDecoder dec;
 
 	// If the user selected an item, remove the load prompt item
@@ -398,8 +397,6 @@ public class VSDConfigPanel extends JmriPanel {
     // ActionEventListener for addressSetButton
     // User just pressed "set" on a new address.
     private void addressSetButtonActionPerformed(java.awt.event.ActionEvent evt) {
-	VSDecoder dec;
-	String address_text = addressTextBox.getText();
 	updateAddress();
     }
 

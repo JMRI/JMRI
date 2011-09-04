@@ -44,8 +44,6 @@ class DieselPane extends EnginePane {
     Integer throttle_setting;
     Boolean engine_started;
 
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
-
     public DieselPane(String n) {
 	super(n);
 	initComponents();
@@ -62,6 +60,8 @@ class DieselPane extends EnginePane {
     }
 
     public void initComponents() {
+        listenerList = new javax.swing.event.EventListenerList();
+        
 	this.setLayout(new GridLayout(2, 0));
 
 	//Setup the throttle slider.

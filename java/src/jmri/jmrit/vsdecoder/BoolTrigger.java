@@ -82,14 +82,14 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	log.debug("  trigger_name = " + this.getName());
 	log.debug("  event_name = " + this.event_name);
 	log.debug("  target_name = " + target.getName());
-	log.debug("  match = " + new Boolean(match_value).toString());
+	log.debug("  match = " + Boolean.valueOf(match_value).toString());
 	log.debug("  action = " + this.getTriggerType().toString());
 
 	me.setAttribute("name", this.getName());
 	me.setAttribute("type", "BOOLEAN");
 	me.addContent(new Element("event-name").addContent(event_name));
 	me.addContent(new Element("target-name").addContent(target.getName()));
-	me.addContent(new Element("match").addContent(new Boolean(match_value).toString()));
+	me.addContent(new Element("match").addContent(Boolean.valueOf(match_value).toString()));
 	me.addContent(new Element("action").addContent(this.getTriggerType().toString()));
 	
 	return(me);

@@ -29,7 +29,7 @@ import jmri.jmrit.XmlFile;
 public class VSDFile extends ZipFile {
     
     // Dummy class just used to instantiate
-    class VSDXmlFile extends XmlFile { }
+    private static class VSDXmlFile extends XmlFile { }
 
     static final ResourceBundle rb = VSDecoderBundle.bundle();
 

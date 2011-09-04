@@ -25,15 +25,6 @@ import java.util.ArrayList;
 
 public class VSDSoundsPanel extends JmriPanel {
 
-    private javax.swing.JButton bellButton;
-    private javax.swing.JButton coupleButton;
-    private javax.swing.JButton hornButton;
-    private javax.swing.JButton brakeButton;
-    private javax.swing.JButton dynamicBrakeButton;
-    private javax.swing.JButton airReleaseButton;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JButton uncoupleButton;
-
     String decoder_id;
     VSDecoderPane main_pane;
 
@@ -71,37 +62,6 @@ public class VSDSoundsPanel extends JmriPanel {
 		this.add(e.getButton());
 	}
     }
-
-    private void bellButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        main_pane.getDecoder().toggleBell();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void hornButtonPressed(java.awt.event.MouseEvent evt) {
-	log.debug("hornButtonPressed");
-        main_pane.getDecoder().playHorn();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void hornButtonReleased(java.awt.event.MouseEvent evt) {
-	log.debug("hornButtonReleased");
-        main_pane.getDecoder().stopHorn();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void hornButtonClicked(java.awt.event.MouseEvent evt) {
-	log.debug("hornButtonClicked");
-        main_pane.getDecoder().shortHorn();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void brakeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void dynamicBrakeButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void airReleaseButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDSoundsPanel.class.getName());
 

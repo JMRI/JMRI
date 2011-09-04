@@ -23,10 +23,10 @@ import org.jdom.Element;
 
 abstract public class VSDSound {
     
-    public static String SrcSysNamePrefix = "IAS$VSD:";
-    public static String BufSysNamePrefix = "IAB$VSD:";
-    public static String SrcUserNamePrefix = "IVSDS_";
-    public static String BufUserNamePrefix = "IVSDB_";
+    public final static String SrcSysNamePrefix = "IAS$VSD:";
+    public final static String BufSysNamePrefix = "IAB$VSD:";
+    public final static String SrcUserNamePrefix = "IVSDS_";
+    public final static String BufUserNamePrefix = "IVSDB_";
 
 
     protected String vsd_file_base = "resource:resources/sounds/vsd/";

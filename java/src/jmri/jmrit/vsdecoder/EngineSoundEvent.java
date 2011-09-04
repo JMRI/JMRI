@@ -30,10 +30,13 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 
     EnginePane engine_pane;
 
+    /*
     Trigger t; // used in setXml as a temporary holder for creating the
                // event listener class.
+
     ButtonTrigger bt; // used in setupButtonAction() as a temporary holder
                       // for creating the button listeners.
+     */
 
     public EngineSoundEvent() {
 	this(null, null);

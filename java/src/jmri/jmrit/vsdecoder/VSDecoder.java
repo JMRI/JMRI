@@ -214,7 +214,7 @@ public class VSDecoder implements PropertyChangeListener {
 	enabled = false;
     }
 
-    public Collection getEventList() {
+    public Collection<SoundEvent> getEventList() {
 	return(event_list.values());
     }
     
@@ -267,36 +267,41 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     @Deprecated
-    public void setXml(VSDFile vf) { };
+    public void setXml(VSDFile vf) { }
 
     public void setXml(VSDFile vf, String pn) {
 	Iterator itr;
 	Element e = null;
 	Element el = null;
 	SoundEvent se;
+        
+        if (vf == null) {
+            log.debug("Null VSD File Name");
+            return;
+        }
 	
-	// Set filename and path
-	if (vf != null) {
-	    log.debug("VSD File Name = " + vf.getName());
-	    // need to choose one.
-	    this.setVSDFilePath(vf.getName());
-	}
+        log.debug("VSD File Name = " + vf.getName());
+	// need to choose one.
+	this.setVSDFilePath(vf.getName());
 
 	// Find the <profile/> element that matches the name pn
-	List<Element> profiles = vf.getRoot().getChildren("profile");
-	java.util.Iterator<Element> i = profiles.iterator();
+	List profiles = vf.getRoot().getChildren("profile");
+	java.util.Iterator i = profiles.iterator();
 	while (i.hasNext()) {
-	    e = i.next();
+	    e = (Element) i.next();
 	    if (e.getAttributeValue("name").equals(pn))
 		break;
 	}
 	// E is now the first <profile/> in vsdfile that matches pn.
 
+        if (e == null) {
+            return;
+        }
+        
 	// Set this decoder's name.
 	this.setProfileName(e.getAttributeValue("name"));
 	log.debug("Decoder Name = " + e.getAttributeValue("name"));
-	if(vf != null) {
-	}
+
 
 	// Read and create all of its components.
 

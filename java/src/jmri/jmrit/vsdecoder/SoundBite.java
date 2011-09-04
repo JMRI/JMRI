@@ -162,7 +162,6 @@ class SoundBite extends VSDSound {
     public long getLength() { return(length); }
     public int getLengthAsInt() {
 	// Note:  this only works for positive lengths...
-	int l;
 	// Timer only takes an int... cap the length at MAXINT
 	if (length > Integer.MAX_VALUE)
 	    return(Integer.MAX_VALUE);

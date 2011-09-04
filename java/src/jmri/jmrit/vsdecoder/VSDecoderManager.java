@@ -37,7 +37,7 @@ import org.jdom.Element;
 
 class VSDecoderManager {
 
-    public static enum EventType { NONE, DECODER_LIST_CHANGE };  // propertyChangeEvents fired by the Manager.
+    public static enum EventType { NONE, DECODER_LIST_CHANGE }  // propertyChangeEvents fired by the Manager.
 
     private static final ResourceBundle rb = VSDecoderBundle.bundle();
 
@@ -100,7 +100,7 @@ class VSDecoderManager {
     private String getNextVSDecoderID() {
 	// vsdecoderID initialized to zero, pre-incremented before return...
 	// first returned ID value is 1.
-	return(new String("IAD:VSD:VSDecoderID" + (++vsdecoderID)));
+	return("IAD:VSD:VSDecoderID" + (++vsdecoderID));
     }
 
     // New version (now)
@@ -203,11 +203,11 @@ class VSDecoderManager {
 	if ((root = vf.getRoot()) == null)
 	    return;
 
-	List<Element> profiles = root.getChildren("profile");
+	List profiles = root.getChildren("profile");
 	if ((profiles != null) && (profiles.size() > 0)) {
 	    // New version: Create a profile name / file name map for each Profile
-	    for (java.util.Iterator<Element> i = profiles.iterator(); i.hasNext();) {
-		Element e = i.next();
+	    for (java.util.Iterator i = profiles.iterator(); i.hasNext();) {
+		Element e = (Element) i.next();
 		log.debug(e.toString());
 		if (e.getAttributeValue("name") != null)
 		    profiletable.put(e.getAttributeValue("name"), vf.getName());
@@ -219,11 +219,11 @@ class VSDecoderManager {
 
     @Deprecated
     public void loadVSDProfiles(Element root, String path) {
-	List<Element> profiles = root.getChildren("profile");
+	List profiles = root.getChildren("profile");
 	if ((profiles != null) && (profiles.size() > 0)) {
 	    // New version: Create a profile name / file name map for each Profile
-	    for (java.util.Iterator<Element> i = profiles.iterator(); i.hasNext();) {
-		Element e = i.next();
+	    for (java.util.Iterator i = profiles.iterator(); i.hasNext();) {
+		Element e = (Element) i.next();
 		log.debug(e.toString());
 		if (e.getAttributeValue("name") != null)
 		    profiletable.put(e.getAttributeValue("name"), path);
@@ -242,12 +242,12 @@ class VSDecoderManager {
 	if ((root = vf.getRoot()) == null)
 	    return;
 
-	List<Element> profiles = root.getChildren("profile");
+	List profiles = root.getChildren("profile");
 	if ((profiles != null) && (profiles.size() > 0)) {
 	    // Create a new VSDecoder object for each Profile in the XML file.
 	    this.setDefaultVSDecoder(null);
-	    for (java.util.Iterator<Element> i = profiles.iterator(); i.hasNext();) {
-		Element e = i.next();
+	    for (java.util.Iterator i = profiles.iterator(); i.hasNext();) {
+		Element e = (Element) i.next();
 		log.debug(e.toString());
 		VSDecoder vsd = this.getVSDecoder(e.getAttribute("name").getValue(), true);
 		vsd.setXml(e, vf);

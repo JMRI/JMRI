@@ -30,14 +30,14 @@ public class EnginePane extends JPanel {
     String name;
 
     EngineSoundEvent engine;
-
-    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
-
+    
+ 
 
     public EnginePane(String n, EngineSoundEvent e) {
 	super();
 	name = n;
 	engine = e;
+        listenerList = new javax.swing.event.EventListenerList();
     }
 
     public EnginePane(String n) {
@@ -48,7 +48,9 @@ public class EnginePane extends JPanel {
 	this(null, null);
     }
 
-    public void init() {}
+    public void init() {
+        
+    }
 
     public void initContext(Object context) {
 	initComponents();
