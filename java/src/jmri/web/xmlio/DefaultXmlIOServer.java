@@ -48,93 +48,108 @@ public class DefaultXmlIOServer implements XmlIOServer {
             useAttributes = (type != null);
             if (!useAttributes) {
                 type = list.getChild("type").getText();
-            }
-            if (type.equals("turnout")) {
-                // add an element for each turnout
-                TurnoutManager m = InstanceManager.turnoutManagerInstance();
-                List<String> names = m.getSystemNameList();
-                for (String name : names) {
-                    Turnout t = m.getTurnout(name);
-                    Element n = new Element((useAttributes) ? "turnout" : "item");
-                    if (useAttributes) {
-                        n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
-                        n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
-                    } else {
-                    n.addContent(new Element("type").addContent("turnout"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
-                    n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                if (type.equals("turnout")) {
+                    // add an element for each turnout
+                    TurnoutManager m = InstanceManager.turnoutManagerInstance();
+                    List<String> names = m.getSystemNameList();
+                    for (String name : names) {
+                        Turnout t = m.getTurnout(name);
+                        Element n = new Element((useAttributes) ? "turnout" : "item");
+                        if (useAttributes) {
+                            n.setAttribute("name", name);
+                            if (t.getUserName() != null) {
+                                n.setAttribute("userName", t.getUserName());
+                            }
+                            if (t.getComment() != null) {
+                                n.setAttribute("comment", t.getComment());
+                            }
+                            n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
+                        } else {
+                            n.addContent(new Element("type").addContent("turnout"));
+                            n.addContent(new Element("name").addContent(name));
+                            n.addContent(new Element("userName").addContent(t.getUserName()));
+                            n.addContent(new Element("comment").addContent(t.getComment()));
+                            n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                        }
+                        e.addContent(n);
                     }
-                    e.addContent(n);
-                }
-            } else if (type.equals("memory")) {
-                // add an element for each memory
-            	MemoryManager m = InstanceManager.memoryManagerInstance();
-                List<String> names = m.getSystemNameList();
-                for (String name : names) {
-                    Memory t = m.getMemory(name);
-                    Element n = new Element((useAttributes) ? "memory" : "item");
-                    if (useAttributes) {
-                        n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
-                    } else {
-                    n.addContent(new Element("type").addContent("memory"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
+                } else if (type.equals("memory")) {
+                    // add an element for each memory
+                    MemoryManager m = InstanceManager.memoryManagerInstance();
+                    List<String> names = m.getSystemNameList();
+                    for (String name : names) {
+                        Memory t = m.getMemory(name);
+                        Element n = new Element((useAttributes) ? "memory" : "item");
+                        if (useAttributes) {
+                            n.setAttribute("name", name);
+                            if (t.getUserName() != null) {
+                                n.setAttribute("userName", t.getUserName());
+                            }
+                            if (t.getComment() != null) {
+                                n.setAttribute("comment", t.getComment());
+                            }
+                        } else {
+                            n.addContent(new Element("type").addContent("memory"));
+                            n.addContent(new Element("name").addContent(name));
+                            n.addContent(new Element("userName").addContent(t.getUserName()));
+                            n.addContent(new Element("comment").addContent(t.getComment()));
+                        }
+                        e.addContent(n);
                     }
-                    e.addContent(n);
-                }
-            } else if (type.equals("route")) {
-                // add an element for each route
-                RouteManager m = InstanceManager.routeManagerInstance();
-                List<String> names = m.getSystemNameList();
-                for (String name : names) {
-                    Route t = m.getRoute(name);
-                    Element n = new Element((useAttributes) ? "route" : "item");
-                    if (useAttributes) {
-                        n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
-                    } else {
-                    n.addContent(new Element("type").addContent("route"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
+                } else if (type.equals("route")) {
+                    // add an element for each route
+                    RouteManager m = InstanceManager.routeManagerInstance();
+                    List<String> names = m.getSystemNameList();
+                    for (String name : names) {
+                        Route t = m.getRoute(name);
+                        Element n = new Element((useAttributes) ? "route" : "item");
+                        if (useAttributes) {
+                            n.setAttribute("name", name);
+                            if (t.getUserName() != null) {
+                                n.setAttribute("userName", t.getUserName());
+                            }
+                            if (t.getComment() != null) {
+                                n.setAttribute("comment", t.getComment());
+                            }
+                        } else {
+                            n.addContent(new Element("type").addContent("route"));
+                            n.addContent(new Element("name").addContent(name));
+                            n.addContent(new Element("userName").addContent(t.getUserName()));
+                            n.addContent(new Element("comment").addContent(t.getComment()));
+                        }
+                        e.addContent(n);
                     }
-                    e.addContent(n);
-                }
-            } else if (type.equals("sensor")) {
-                // add an element for each sensor
-                SensorManager m = InstanceManager.sensorManagerInstance();
-                List<String> names = m.getSystemNameList();
-                for (String name : names) {
-                    Sensor t = m.getSensor(name);
-                    Element n = new Element((useAttributes) ? "sensor" : "item");
-                    if (useAttributes) {
-                        n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
-                        n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
-                    } else {
-                    n.addContent(new Element("type").addContent("sensor"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
-                    n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                } else if (type.equals("sensor")) {
+                    // add an element for each sensor
+                    SensorManager m = InstanceManager.sensorManagerInstance();
+                    List<String> names = m.getSystemNameList();
+                    for (String name : names) {
+                        Sensor t = m.getSensor(name);
+                        Element n = new Element((useAttributes) ? "sensor" : "item");
+                        if (useAttributes) {
+                            n.setAttribute("name", name);
+                            if (t.getUserName() != null) {
+                                n.setAttribute("userName", t.getUserName());
+                            }
+                            if (t.getComment() != null) {
+                                n.setAttribute("comment", t.getComment());
+                            }
+                            n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
+                        } else {
+                            n.addContent(new Element("type").addContent("sensor"));
+                            n.addContent(new Element("name").addContent(name));
+                            n.addContent(new Element("userName").addContent(t.getUserName()));
+                            n.addContent(new Element("comment").addContent(t.getComment()));
+                            n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                        }
+                        e.addContent(n);
                     }
-                    e.addContent(n);
-                }            
-            } else if (type.equals("roster")) {
-            	// add an element for each roster entry
-            	List <RosterEntry> rlist = Roster.instance().matchingList(null, null, null, null, null, null, null);
-            	for (int i = 0; i < rlist.size(); i++) {
-            		RosterEntry entry = rlist.get(i);
-            		Element n = new Element((useAttributes) ? "roster" : "item");
+                } else if (type.equals("roster")) {
+                    // add an element for each roster entry
+                    List<RosterEntry> rlist = Roster.instance().matchingList(null, null, null, null, null, null, null);
+                    for (int i = 0; i < rlist.size(); i++) {
+                        RosterEntry entry = rlist.get(i);
+                        Element n = new Element((useAttributes) ? "roster" : "item");
                         if (useAttributes) {
                             n.setAttribute("name", entry.getId());
                             n.setAttribute("dccAddress", entry.getDccAddress());
@@ -160,82 +175,84 @@ public class DefaultXmlIOServer implements XmlIOServer {
                                 }
                             }
                         } else {
-            		n.addContent(new Element("type").addContent("roster"));
-            		n.addContent(new Element("name").addContent(entry.getId()));
-            		n.addContent(new Element("dccAddress").addContent(entry.getDccAddress()));
-            		n.addContent(new Element("addressLength").addContent(entry.isLongAddress() ? "L" : "S"));
-            		n.addContent(new Element("roadName").addContent(entry.getRoadName()));
-            		n.addContent(new Element("roadNumber").addContent(entry.getRoadNumber()));
-            		n.addContent(new Element("mfg").addContent(entry.getMfg()));
-            		n.addContent(new Element("model").addContent(entry.getModel()));
-            		n.addContent(new Element("comment").addContent(entry.getComment()));
-            		n.addContent(new Element("maxSpeedPct").addContent(Integer.valueOf(entry.getMaxSpeedPCT()).toString()));
-            		File file = new File(entry.getImagePath());
-            		n.addContent(new Element("imageFileName").addContent(file.getName()));
-            		file = new File(entry.getIconPath());
-            		n.addContent(new Element("imageIconName").addContent(file.getName()));
-        			Element f = new Element("functionLabels");
-        			Element g = new Element("functionLockables");
-                	for (int j = 0; j < entry.getMAXFNNUM(); j++) {
-                		if (entry.getFunctionLabel(j) != null) {
-                    		f.addContent(new Element("F" + j).addContent(entry.getFunctionLabel(j)));
-                    		g.addContent(new Element("F" + j).addContent(Boolean.valueOf(entry.getFunctionLockable(j)).toString()));
-                		}
-            		}
-        			n.addContent(f);
-        			n.addContent(g);
+                            n.addContent(new Element("type").addContent("roster"));
+                            n.addContent(new Element("name").addContent(entry.getId()));
+                            n.addContent(new Element("dccAddress").addContent(entry.getDccAddress()));
+                            n.addContent(new Element("addressLength").addContent(entry.isLongAddress() ? "L" : "S"));
+                            n.addContent(new Element("roadName").addContent(entry.getRoadName()));
+                            n.addContent(new Element("roadNumber").addContent(entry.getRoadNumber()));
+                            n.addContent(new Element("mfg").addContent(entry.getMfg()));
+                            n.addContent(new Element("model").addContent(entry.getModel()));
+                            n.addContent(new Element("comment").addContent(entry.getComment()));
+                            n.addContent(new Element("maxSpeedPct").addContent(Integer.valueOf(entry.getMaxSpeedPCT()).toString()));
+                            File file = new File(entry.getImagePath());
+                            n.addContent(new Element("imageFileName").addContent(file.getName()));
+                            file = new File(entry.getIconPath());
+                            n.addContent(new Element("imageIconName").addContent(file.getName()));
+                            Element f = new Element("functionLabels");
+                            Element g = new Element("functionLockables");
+                            for (int j = 0; j < entry.getMAXFNNUM(); j++) {
+                                if (entry.getFunctionLabel(j) != null) {
+                                    f.addContent(new Element("F" + j).addContent(entry.getFunctionLabel(j)));
+                                    g.addContent(new Element("F" + j).addContent(Boolean.valueOf(entry.getFunctionLockable(j)).toString()));
+                                }
+                            }
+                            n.addContent(f);
+                            n.addContent(g);
                         }
-        			e.addContent(n);
-            	}
+                        e.addContent(n);
+                    }
 
-            } else if (type.equals("panel")) {
-            	// list panels, (open JMRI windows)
-            	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
-            	int framesNumber = framesList.size();
-            	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
-            		JmriJFrame iFrame = framesList.get(i);
-            		String frameTitle = iFrame.getTitle();
-            		if (!frameTitle.equals("")) {
+                } else if (type.equals("panel")) {
+                    // list panels, (open JMRI windows)
+                    List<JmriJFrame> framesList = JmriJFrame.getFrameList();
+                    int framesNumber = framesList.size();
+                    for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
+                        JmriJFrame iFrame = framesList.get(i);
+                        String frameTitle = iFrame.getTitle();
+                        if (!frameTitle.equals("")) {
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
                                 n.setAttribute("name", frameTitle.replaceAll(" ", "%20"));
                                 n.setAttribute("userName", frameTitle);
                             } else {
-                        n.addContent(new Element("type").addContent("panel"));
-                        //get rid of spaces in name
-            			n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ","%20")));
-            			n.addContent(new Element("userName").addContent(frameTitle)); 
+                                n.addContent(new Element("type").addContent("panel"));
+                                //get rid of spaces in name
+                                n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ", "%20")));
+                                n.addContent(new Element("userName").addContent(frameTitle));
                             }
-            			e.addContent(n);
-            		}
-            	}
+                            e.addContent(n);
+                        }
+                    }
 
-            } else if (type.equals("power")) {
-            	// add a power element
-                Element n = new Element((useAttributes) ? "power" : "item");
-                if (useAttributes) {
-                    n.setAttribute("name", "power");
-                } else {
-                n.addContent(new Element("type").addContent("power"));
-                n.addContent(new Element("name").addContent("power"));
-                }
-                e.addContent(n);
-            } else if (type.equals("metadata")) {
-                // list meta data elements
-                List<String> metaNames = Metadata.getSystemNameList();
-                for (String mn : metaNames) {
-                    Element n = new Element((useAttributes) ? "metadata" : "item");
+                } else if (type.equals("power")) {
+                    // add a power element
+                    Element n = new Element((useAttributes) ? "power" : "item");
                     if (useAttributes) {
-                        n.setAttribute("name", mn);
+                        n.setAttribute("name", "power");
                     } else {
-                    n.addContent(new Element("type").addContent("metadata"));
-                    n.addContent(new Element("name").addContent("" + mn));
+                        n.addContent(new Element("type").addContent("power"));
+                        n.addContent(new Element("name").addContent("power"));
                     }
                     e.addContent(n);
+                } else if (type.equals("metadata")) {
+                    // list meta data elements
+                    List<String> metaNames = Metadata.getSystemNameList();
+                    for (String mn : metaNames) {
+                        Element n = new Element((useAttributes) ? "metadata" : "item");
+                        if (useAttributes) {
+                            n.setAttribute("name", mn);
+                        } else {
+                            n.addContent(new Element("type").addContent("metadata"));
+                            n.addContent(new Element("name").addContent("" + mn));
+                        }
+                        e.addContent(n);
+                    }
+                } else {
+                    log.warn("Unexpected type in list element: " + type);
                 }
-            } else log.warn("Unexpected type in list element: " + type);
+            }
         }
-        
         // handle everything else
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
