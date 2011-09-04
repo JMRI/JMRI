@@ -64,7 +64,7 @@ public class ZeroConfService {
      * @param port
      */
     public static ZeroConfService create(String type, int port) {
-        return create(type, port, new HashMap());
+        return create(type, port, new HashMap<String,String>());
     }
 
     /**
@@ -102,7 +102,7 @@ public class ZeroConfService {
             if (log.isDebugEnabled()) log.debug("Using existing ZeroConfService " + s.key());
         } else {
             props.put("jmri", jmri.Version.name());
-            s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, new Hashtable((Map)props)));
+            s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, new Hashtable<String,String>(props)));
             if (log.isDebugEnabled()) log.debug("Creating new ZeroConfService " + s.key());
         }
         return s;

@@ -124,7 +124,7 @@ public class FacelessApp {
             // as the MiniServer ctor is the service loop
         }
         }.start();
-        jmri.util.zeroconf.ZeroConfService.create("_http._tcp.local.", port, new java.util.HashMap(){{put("path","/index.html");}}).publish();
+        jmri.util.zeroconf.ZeroConfService.create("_http._tcp.local.", port, new java.util.HashMap<String,String>(){{put("path","/index.html");}}).publish();
 
         log.info("Up!");
 	}

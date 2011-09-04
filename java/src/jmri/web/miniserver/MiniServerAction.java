@@ -52,7 +52,7 @@ public class MiniServerAction extends JmriAbstractAction {
         startServer();
         
         // advertise via zeroconf
-        ZeroConfService.create("_http._tcp.local.", port, new HashMap(){{put("path","/index.html");}}).publish();
+        ZeroConfService.create("_http._tcp.local.", port, new HashMap<String,String>(){{put("path","/index.html");}}).publish();
         }
     
     public void ensureIndexPage() {
