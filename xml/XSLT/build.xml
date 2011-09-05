@@ -71,6 +71,12 @@
       		<include name="decoder-config.dtd"/>
     	</fileset>
   	</copy> 
+  	<mkdir dir="xml"/>
+	<copy todir="xml" >
+    	<fileset dir="${fromDTD}" >
+      		<include name="decoderIndex-config.dtd"/>
+    	</fileset>
+  	</copy> 
   </target>
   
   <target name="copyXML" 
