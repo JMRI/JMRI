@@ -151,7 +151,11 @@ In the next section, we need to work through automation of version number values
 ( ) Any time after "ant packages" is complete, create and upload the JavaDocs
     and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
     
-	ant -f dist.xml -Drelease=Release-2-11-8 -Dnumber=2.11.8 release3
+	ant javadoc-uml
+	ant uploadjavadoc
+	cd xml/XSLT
+	ant
+	ant upload
 	
 	Set ~/.ant/ant.conf back to Java 1.5 afterwards
 	
