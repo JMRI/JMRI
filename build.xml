@@ -268,7 +268,7 @@
 
     <target name="compile"
             description="compile source, omitting tests"
-            depends="init, javacc-compile">
+            depends="init, copyfiles, javacc-compile">
         <!-- Compile the java code from ${source} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${source}" />
@@ -281,7 +281,7 @@
     <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
     <target name="debug"
             description="compile source with debugging on, omitting tests"
-            depends="init, javacc-compile">
+            depends="init, copyfiles, javacc-compile">
         <!-- Compile the java code from ${source} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${source}" />
