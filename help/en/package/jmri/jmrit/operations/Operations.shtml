@@ -1972,6 +1972,26 @@ of the various track statuses.</P>
 		<td>Based on the train's departure direction, the track doesn't
 		allow set outs or pick ups</td>
 	</tr>
+	<tr>
+		<td>X (Schedule Timetable)</td>
+		<td>The spur's schedule <A HREF="#Schedules">timetable</A> selection prevents the car from being serviced.</td>
+	</tr>
+	<tr>
+		<td>X (Schedule Type)</td>
+		<td>The spur's schedule does not allow the car's type to be serviced.</td>
+	</tr>
+	<tr>
+		<td>X (Schedule Load)</td>
+		<td>The spur's schedule does not allow the car's load to be serviced.</td>
+	</tr>
+	<tr>
+		<td>X (Schedule Road)</td>
+		<td>The spur's schedule does not allow the car's road to be serviced.</td>
+	</tr>
+	<tr>
+		<td>X (Schedule)</td>
+		<td>The spur's schedule does not allow the combination of the car's type, load, and road.</td>
+	</tr>
 </table>
 
 <A NAME="ModifyTrainsByCarType"></A>
