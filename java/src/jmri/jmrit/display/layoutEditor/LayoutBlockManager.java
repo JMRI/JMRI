@@ -1404,9 +1404,9 @@ public class LayoutBlockManager extends AbstractManager {
      * Method to return the LayoutBlock that a given sensor is protecting.
      */
     public LayoutBlock getProtectedBlockBySensor(Sensor sensor, LayoutEditor panel){
-        LayoutBlock pro = getProtectedBlockByMast(sensor.getUserName(), panel);
+        LayoutBlock pro = getProtectedBlockBySensor(sensor.getUserName(), panel);
         if(pro == null)
-            pro = getProtectedBlockByMast(sensor.getSystemName(), panel);
+            pro = getProtectedBlockBySensor(sensor.getSystemName(), panel);
         return pro;
     }
      
@@ -1476,9 +1476,9 @@ public class LayoutBlockManager extends AbstractManager {
      * Method to return the LayoutBlock that a given sensor is facing.
      */
     public LayoutBlock getFacingBlockBySensor(Sensor sensor, LayoutEditor panel){
-        LayoutBlock facing = getFacingBlockByMast(sensor.getUserName(), panel);
+        LayoutBlock facing = getFacingBlockBySensor(sensor.getUserName(), panel);
         if(facing == null)
-            facing = getFacingBlockByMast(sensor.getSystemName(), panel);
+            facing = getFacingBlockBySensor(sensor.getSystemName(), panel);
         return facing;
     }
     
@@ -1688,11 +1688,14 @@ public class LayoutBlockManager extends AbstractManager {
         if(!validateOnly){
             if (canLBlockBeUsed(protectingLayoutBlock)){
                 blocksInRoute.add(new BlocksTested(protectingLayoutBlock));
-
             } else {
                 lastErrorMessage = "Block we are protecting is already occupied or reserved";
                 log.debug(lastErrorMessage);
-                JOptionPane.showMessageDialog(null, lastErrorMessage);
+                throw new jmri.JmriException(lastErrorMessage);
+            }
+            if (!canLBlockBeUsed(destinationLayoutBlock)){
+                lastErrorMessage = "Destination Block is already occupied or reserved";
+                log.debug(lastErrorMessage);
                 throw new jmri.JmriException(lastErrorMessage);
             }
         } else {
