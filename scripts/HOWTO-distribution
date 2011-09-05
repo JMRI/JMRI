@@ -2,7 +2,7 @@ This is the HOWTO file to make a complete SourceForge downloadable
 distribution.  ($Revision$)
 
 You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
-    
+
 Start with a development directory that is at (or at least near) the HEAD of SVN
 
 Make sure SVN is up-to-date:
@@ -108,36 +108,28 @@ In the next section, we need to work through automation of version number values
     sed -i '' s/2.11.8/2.11.9/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
 
+( ) Update the release number in the build.xml file. This is in three lines on the 1st page:
+    <property name="release.major" value="2" />
+    <property name="release.minor" value="13" />
+    <property name="release.build" value="1" />
+
 ====================================================================================
     
+    Tests before the actual build:
+    
+    ( ) run "ant alltests"; make sure they all pass
+    
+    ( ) run "ant decoderpro"; check for no startup errors, right version, help index present and working OK.
+        
+====================================================================================
 
-( ) Start the actual build!
+    Start the actual build!
 
-	ant -f dist.xml -Drelease=Release-2-11-8 -Dnumber=2.11.8 release1
+( ) ant -Dnsis.home="" packages
 	
-	(the -Drelease-Release-2-11-8 option specifies the CVS tag to extract
-	 and build; the -Dnumber=2.11.8 specifies the release number to append
-	 to filenames, etc.)
-	
-	This will run "alltests"; make sure they all pass
-	
-	This will run DecoderPro; check for no startup errors, right version,
-	help index present and working OK.
-
     Ant will do the various builds, construct the distribution
     directories, and finally construct the Linux, MacOS X and Windows
-    distribution files.
-    
-    (If you need to, you can do the steps individually, but don't 
-     do this if you're really building a release to distribute:
-          ant x-rel-base-build
-          ant x-rel-create-windows
-          ant x-rel-installer-windows
-          ant x-rel-create-osx
-          ant x-rel-installer-osx
-          ant x-rel-create-linux
-          ant x-rel-installer-linux
-     with the options present, of course)
+    distribution files in dist/releases/
 	
 ( ) The next few steps can be done in parallel.
 
@@ -147,14 +139,6 @@ In the next section, we need to work through automation of version number values
     take a quick look, send an email, and WAIT FOR SOME REPLIES
     
 ( ) Upload the Linux, Mac OS X and Windows files
-
-    (The dist.xml file needs to have "test\ release" vs "production\ release"
-    edited as needed in dist.xml - this should be automated)
-
-    ant -f dist.xml -Drelease=Release-2-11-8 -Dnumber=2.11.8 -Duser.name=jacobsen release2
-
-    (The user.name only needs to be provided if your SourceForge.net ID 
-     is different than your current login ID)
      
     Manually:
     scp JMRI.2.11.8.tgz jacobsen,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
@@ -164,7 +148,7 @@ In the next section, we need to work through automation of version number values
     
     Ask JMRI-developers for a quick look _AND_ _WAIT_ _FOR_ _IT_!!
 
-( ) Any time after release1 is complete, create and upload the JavaDocs
+( ) Any time after "ant packages" is complete, create and upload the JavaDocs
     and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
     
 	ant -f dist.xml -Drelease=Release-2-11-8 -Dnumber=2.11.8 release3
