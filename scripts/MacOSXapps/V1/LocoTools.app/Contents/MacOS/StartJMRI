@@ -174,10 +174,18 @@ if [ "${ALTPORTS}" ]
 then
   ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
 fi
-[ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 
-[ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
-java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+RESTART_CODE=100
+EXIT_STATUS=${RESTART_CODE}
+while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]; do
+  [ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 
+  [ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
+  java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+  EXIT_STATUS=$?
+  [ "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
+done
+
+exit $EXIT_STATUS
 
