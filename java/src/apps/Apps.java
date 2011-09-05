@@ -751,6 +751,18 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         }
     }
     
+    /**
+     * The application decided to restart, handle that.
+     */
+    static public void handleRestart() {
+        log.debug("Start handleRestart");
+        try {
+            InstanceManager.shutDownManagerInstance().restart();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleRestart",e);
+        }
+    }
+
     static boolean log4JSetUp = false;
     
     static protected void initLog4J() {

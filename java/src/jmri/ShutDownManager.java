@@ -49,8 +49,17 @@ public interface ShutDownManager {
     public void deregister(ShutDownTask s);
     
     /**
-     * Run the shutdown tasks, and 
-     * then terminate the program if not aborted.
+     * Run the shutdown tasks, and
+     * then terminate the program with status 100 if not aborted.
+     * Does not return under normal circumstances.
+     * Does return if the shutdown was aborted by the user,
+     * in which case the program should continue to operate.
+     */
+    public void restart();
+
+    /**
+     * Run the shutdown tasks, and
+     * then terminate the program with status 0 if not aborted.
      * Does not return under normal circumstances.
      * Does return if the shutdown was aborted by the user,
      * in which case the program should continue to operate.

@@ -203,7 +203,7 @@ public class AppConfigBase extends JmriPanel {
         			}
         			dialog.dispose();
         			dispose();
-        			Apps.handleQuit();
+        			Apps.handleRestart();
         		}
         	});
         	container.add(remember);

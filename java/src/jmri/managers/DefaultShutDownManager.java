@@ -60,14 +60,45 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
     
     /**
-     * Run the shutdown tasks, and 
-     * then terminate the program if not aborted.
+     * Run the shutdown tasks, and
+     * then terminate the program with status 0 if not aborted.
      * Does not return under normal circumstances.
      * Does return if the shutdown was aborted by the user,
      * in which case the program should continue to operate.
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
     public void shutdown() {
+        shutdown(0);
+    }
+
+    /**
+     * Run the shutdown tasks, and
+     * then terminate the program with status 100 if not aborted.
+     * Does not return under normal circumstances.
+     * Does return if the shutdown was aborted by the user,
+     * in which case the program should continue to operate.
+     *
+     * By exiting the program with status 100, the batch file (MS Windows)
+     * or shell script (Linux/Mac OS X/UNIX) can catch the exit status and
+     * restart the java program.
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
+    public void restart() {
+        shutdown(100);
+    }
+
+
+    /**
+     * Run the shutdown tasks, and
+     * then terminate the program if not aborted.
+     * Does not return under normal circumstances.
+     * Does return if the shutdown was aborted by the user,
+     * in which case the program should continue to operate.
+     *
+     * @param status Integer status returned on program exit
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
+    protected void shutdown(int status) {
         for (int i = tasks.size()-1; i>=0; i--) {
             try {
                 ShutDownTask t = tasks.get(i);
@@ -84,9 +115,9 @@ public class DefaultShutDownManager implements ShutDownManager {
         // success
         log.info("Normal termination complete");
         // and now terminate forcefully
-        System.exit(0);
+        System.exit(status);
     }
-    
+
     ArrayList<ShutDownTask> tasks = new ArrayList<ShutDownTask>();
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultShutDownManager.class.getName());
