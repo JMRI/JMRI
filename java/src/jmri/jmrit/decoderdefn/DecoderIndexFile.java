@@ -420,7 +420,8 @@ public class DecoderIndexFile extends XmlFile {
 
         // create root element and document
         Element root = new Element("decoderIndex-config");
-        Document doc = newDocument(root, dtdLocation+"decoderIndex-config.dtd");
+        // Replacement DTD location, temporary until this is changed to schema
+        Document doc = newDocument(root, "../xml/"+"decoderIndex-config.dtd");
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
