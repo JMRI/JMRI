@@ -777,6 +777,7 @@
   <!-- is the doclet clause referencing the UML generator, the   -->
   <!-- use of the public option in the main task definition, and -->
   <!-- the execution of "dot" at the bottom.                     -->
+  <!-- Requires Graphviz from http://www.graphviz.org            -->
     <target name="javadoc-uml" depends="init, jjdoc" description="create JavaDocs with UML; requires java 1.6">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
