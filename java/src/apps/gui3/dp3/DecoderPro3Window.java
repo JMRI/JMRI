@@ -271,6 +271,13 @@ public class DecoderPro3Window
             locoImage.setVisible(false);
             hideRosterImage=true;
         }
+        
+        rosterEntryUpdateListener = new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                updateDetails();
+            }
+        };
+            
         return rosterDetailPanel;
     }
     
@@ -513,20 +520,10 @@ public class DecoderPro3Window
     JButton rosterMedia = new JButton("Roster Media");
     JButton throttleLaunch = new JButton("Launch Throttle");
     
-    ActionListener programModeListener = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    updateProgMode();
-                    //firePropertyChange("something", null, true);
-                }
-            };
+    ActionListener programModeListener;
 
-    PropertyChangeListener rosterEntryUpdateListener = new PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    updateDetails();
-                    //firePropertyChange("something", null, true);
-                }
-            };
-            
+    PropertyChangeListener rosterEntryUpdateListener;
+    
     void updateProgMode(){
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
@@ -584,6 +581,12 @@ public class DecoderPro3Window
         progModePanel.add(service);
         progModePanel.add(ops);
         progModePanel.add(edit);
+        
+        programModeListener = new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                updateProgMode();
+            }
+        };
         
         service.addActionListener(programModeListener);
         ops.addActionListener(programModeListener);

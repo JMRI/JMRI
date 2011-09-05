@@ -69,6 +69,14 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
             selections = roster.rosterGroupBox();
             container.add(selections);
             
+            comboListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {    
+                    JComboBox combo = (JComboBox)e.getSource();
+                    String entry = (String)combo.getSelectedItem();
+                    Roster.instance().setRosterGroup(entry);
+                }
+            };
+            
             selections.addActionListener(comboListener);
             
             roster.addPropertyChangeListener(  new PropertyChangeListener() {
@@ -101,14 +109,7 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
         }
     }
     
-    ActionListener comboListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) {    
-                    JComboBox combo = (JComboBox)e.getSource();
-                    String entry = (String)combo.getSelectedItem();
-                    Roster.instance().setRosterGroup(entry);
-                }
-            };
-
+    ActionListener comboListener;
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SelectRosterGroupAction.class.getName());
