@@ -6,7 +6,6 @@ import jmri.jmrix.ecos.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.symbolicprog.*;
 import jmri.Programmer;
 
@@ -33,7 +32,6 @@ public class EcosLocoToRoster implements EcosListener {
     EcosLocoAddressManager ecosManager;
     EcosLocoAddress ecosLoco;
     RosterEntry re;
-    DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
     String              filename        = null;    
     DecoderFile              pDecoderFile = null;
     DecoderIndexFile decoderind = DecoderIndexFile.instance();
