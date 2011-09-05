@@ -1003,6 +1003,17 @@
         <copy todir="${dist.macosx}/JMRI/lib/macosx">
             <fileset dir="${libdir}/macosx" />
         </copy>
+        <chmod perm="ugo+rx">
+            <fileset dir="${dist.macosx}/JMRI">
+                <include name="CornwallRR.app/Contents/MacOS/StartJMRI"/>
+                <include name="DecoderPro.app/Contents/MacOS/StartJMRI"/>
+                <include name="DecoderPro3.app/Contents/MacOS/StartJMRI"/>
+                <include name="JmriDemo.app/Contents/MacOS/StartJMRI"/>
+                <include name="LocoTools.app/Contents/MacOS/StartJMRI"/>
+                <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
+                <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
+            </fileset>
+        </chmod>
         <mkdir dir="${dist.release}" />
         <exec executable="${scriptdir}/diskimage.sh" osFamily="unix">
             <arg line="-t ${release} -v ${number} -o ${dist.release}/JMRI.${number}.dmg -d ${dist.macosx}"/>
