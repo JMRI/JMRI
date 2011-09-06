@@ -2,6 +2,7 @@
 
 package apps;
 
+import jmri.Application;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
@@ -165,21 +166,21 @@ public class AppConfigBase extends JmriPanel {
         p.resetChangeMade();
         if (p.getMultipleChoiceOption(getClassName(),"quitAfterSave") == 0) {
         	final JDialog dialog = new JDialog();
-        	dialog.setTitle(rb.getString("MessageShortQuitWarning"));
+        	dialog.setTitle(MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()));
         	dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         	JPanel container = new JPanel();
         	container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         	container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         	Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-        	JLabel question = new JLabel(rb.getString("MessageLongQuitWarning"));
+        	JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
         	question.setAlignmentX(Component.CENTER_ALIGNMENT);
         	question.setIcon(icon);
         	container.add(question);
         	final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
         	remember.setFont(remember.getFont().deriveFont(10.0F));
         	remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-        	JButton yesButton = new JButton(rb.getString("Yes"));
-        	JButton noButton = new JButton(rb.getString("No"));
+        	JButton yesButton = new JButton(rb.getString("RestartNow"));
+        	JButton noButton = new JButton(rb.getString("RestartLater"));
         	JPanel button = new JPanel();
         	button.setAlignmentX(Component.CENTER_ALIGNMENT);
         	button.add(yesButton);
