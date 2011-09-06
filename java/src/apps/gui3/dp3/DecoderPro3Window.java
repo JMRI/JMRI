@@ -1,6 +1,6 @@
 // DecoderPro3Window.java
 
- package apps.gui3.dp3;
+package apps.gui3.dp3;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,6 +12,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,10 +42,12 @@ import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.beans.PropertyChangeListener;
+import javax.swing.DropMode;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+import javax.swing.TransferHandler;
 
 import jmri.Programmer;
 import jmri.progdebugger.*;
@@ -74,36 +79,36 @@ import jmri.jmrit.decoderdefn.DecoderFile;
  * @author		Bob Jacobsen Copyright (C) 2010
  * @version		$Revision$
  */
- 
-public class DecoderPro3Window 
+
+public class DecoderPro3Window
         extends jmri.util.swing.multipane.TwoPaneTBWindow{
 
     static int openWindowInstances = 0;
-    
+
     /**
-    * Loads Decoder Pro 3 with the default set of menus and toolbars
-    */ 
+     * Loads Decoder Pro 3 with the default set of menus and toolbars
+     */
     public DecoderPro3Window(){
-        super("DecoderPro", 
-                 new File("xml/config/apps/decoderpro/Gui3Menus.xml"),
-                 new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));
+        super("DecoderPro",
+                new File("xml/config/apps/decoderpro/Gui3Menus.xml"),
+                new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));
         buildWindow();
     }
-    
+
     /**
-    * Loads Decoder Pro 3 with specific menu and toolbar files
-    */ 
+     * Loads Decoder Pro 3 with specific menu and toolbar files
+     */
     public DecoderPro3Window(File menuFile, File toolbarFile) {
-        super("DecoderPro", 
-    	        menuFile, 
-    	        toolbarFile);
+        super("DecoderPro",
+                menuFile,
+                toolbarFile);
         buildWindow();
     }
-    
+
     protected void buildWindow(){
         openWindowInstances++;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-    	getTop().add(createTop());
+        getTop().add(createTop());
         //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
         if(apps.gui3.Apps3.buttonSpace()!=null)
             getToolBar().add(apps.gui3.Apps3.buttonSpace());
@@ -123,7 +128,7 @@ public class DecoderPro3Window
             hideBottomPane(true);
             hideSummary=true;
         }
-        
+
         String rosterGroup = p.getComboBoxLastSelection(rosterGroupSelectionCombo);
         Roster.instance().setRosterGroup(rosterGroup);
         Roster.instance().addPropertyChangeListener( new PropertyChangeListener() {
@@ -139,13 +144,13 @@ public class DecoderPro3Window
         getToolBar().add(modePanel);
         getToolBar().add(new jmri.jmrit.roster.SelectRosterGroupPanelAction("Select Group").makePanel());
     }
-    
+
     jmri.UserPreferencesManager p;
     final String rosterGroupSelectionCombo = this.getClass().getName()+".rosterGroupSelected";
-    
+
     /*
-    * This status bar needs sorting out properly
-    */
+     * This status bar needs sorting out properly
+     */
     void statusBar(){
         Border blackline = BorderFactory.createMatteBorder(0,0,0,1,Color.black);
         JLabel programmerLabel = new JLabel();
@@ -180,35 +185,35 @@ public class DecoderPro3Window
         activeRosterGroupField.setFont(statusBarFont);
         getStatus().add(activeRosterGroupField);
     }
-    
+
     protected void systemsMenu() {
         jmri.jmrix.ActiveSystemsMenu.addItems(getMenu());
         getMenu().add(new jmri.util.WindowMenu(this));
     }
-    
+
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         try {
             // create menu and standard items
             JMenu helpMenu = jmri.util.HelpUtil.makeHelpMenu("package.apps.Apps", true);
-            
+
             // tell help to use default browser for external types
             javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-                
+
             // use as main help menu 
             menuBar.add(helpMenu);
-            
+
         } catch (java.lang.Throwable e3) {
             log.error("Unexpected error creating help: "+e3);
         }
 
     }
-    
+
     jmri.jmrit.roster.swing.RosterTable rtable;
     ResourceBundle rb = ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
     JSplitPane rosterGroupPane;
     JList groupsList;
     ListSelectionListener groupsListListener;
-    
+
     JComponent createTop() {
         JPanel rosters = new JPanel();
         JPanel groups = new JPanel();
@@ -216,25 +221,25 @@ public class DecoderPro3Window
         groups.setLayout(new BorderLayout());
 
         // set up roster table
-         
+
         rtable = new RosterTable(false);
         rosters.add(rtable, BorderLayout.CENTER);
         // add selection listener
         rtable.getTable().getSelectionModel().addListSelectionListener(
-            new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent e) {
                     if (! e.getValueIsAdjusting()) {
-                        for (int i = e.getFirstIndex(); i <= e.getLastIndex(); i++) {
-                            if (rtable.getTable().getSelectionModel().isSelectedIndex(i)) {
-                                locoSelected(rtable.getModel().getValueAt(i, RosterTableModel.IDCOL).toString());
-                                break;
+                            for (int i = e.getFirstIndex(); i <= e.getLastIndex(); i++) {
+                                if (rtable.getTable().getSelectionModel().isSelectedIndex(i)) {
+                                    locoSelected(rtable.getModel().getValueAt(i, RosterTableModel.IDCOL).toString());
+                                    break;
+                                }
                             }
-                        }    
+                        }
                     }
-                }
             }
         );
-        
+
         int count = rtable.getModel().getColumnCount();
         for (int i = 0; i <count; i++){
             if(p.getProperty(getWindowFrameRef(), i)!=null){
@@ -242,6 +247,23 @@ public class DecoderPro3Window
                 rtable.getModel().setSortingStatus(i, sort);
             }
         }
+
+        rtable.getTable().setDragEnabled(true);
+        rtable.getTable().setTransferHandler(new TransferHandler() {
+
+            public int getSourceActions(JComponent c) {
+                return COPY;
+            }
+
+            public Transferable createTransferable(JComponent c) {
+                // should return a RosterSelection object which contains the roster ID
+                return new StringSelection(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
+            }
+
+            public void exportDone(JComponent c, Transferable t, int action) {
+                // nothing to do
+            }
+        });
 
         // set up groups list
         // use our own groups list instead of SelectRosterGroupPanelAction.makeListPanel
@@ -268,6 +290,44 @@ public class DecoderPro3Window
             }
         });
 
+        groupsList.setDragEnabled(true);
+        groupsList.setDropMode(DropMode.ON);
+        groupsList.setTransferHandler(new TransferHandler() {
+
+            public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
+                for (int i = 0; i < transferFlavors.length; i++) {
+                    if (DataFlavor.stringFlavor.equals(transferFlavors[i])) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            public boolean importData(JComponent c, Transferable t) {
+                JList l = (JList) c;
+                if (canImport(c, t.getTransferDataFlavors())) {
+                    // getDropLocation is null unless canImport is true
+                    int i = l.getDropLocation().getIndex();
+                    if (i == 0 || i == l.getSelectedIndex()) {
+                        return false;
+                    }
+                    try {
+                        RosterEntry re = Roster.instance().entryFromTitle(t.getTransferData(DataFlavor.stringFlavor).toString());
+                        if (re == null) {
+                            log.warn("Attempted to create RosterEntry from invalid title: " + t.getTransferData(DataFlavor.stringFlavor).toString());
+                            return false;
+                        }
+                        re.putAttribute(Roster.instance().getRosterGroupPrefix() + l.getModel().getElementAt(i).toString(), "yes");
+                        re.updateFile();
+                        Roster.writeRosterFile();
+                        Roster.instance().rosterGroupEntryChanged();
+                    } catch (Exception e) {
+                        log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
+                    }
+                }
+                return false;
+            }
+        });
         // groups list controls
 
         JToolBar controls = new JToolBar();
@@ -296,7 +356,7 @@ public class DecoderPro3Window
         rosterGroupPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
         rosterGroupPane.setOneTouchExpandable(true);
         rosterGroupPane.setResizeWeight(0); // emphasis rosters
-        
+
         return rosterGroupPane;
         // return rosters;   // uncomment to return a single table of roster entries
     }
@@ -307,7 +367,7 @@ public class DecoderPro3Window
      */
     void locoSelected(String id) {
         log.debug("locoSelected ID "+id);
-        
+
         if(re!=null){
             //We remove the propertychangelistener if we had a previoulsy selected entry;
             re.removePropertyChangeListener(rosterEntryUpdateListener);
@@ -317,17 +377,17 @@ public class DecoderPro3Window
         re.addPropertyChangeListener(rosterEntryUpdateListener);
         updateDetails();
     }
-    
+
     ProgDebugger programmer = new ProgDebugger();
-        
+
     JPanel rosterDetailPanel = new JPanel();
-        
+
     JComponent createBottom(){
-        
+
         locoImage = new ResizableImagePanel(null, 240, 160);
         locoImage.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         locoImage.setOpaque(true);
-		locoImage.setRespectAspectRatio(true);
+        locoImage.setRespectAspectRatio(true);
         rosterDetailPanel.setLayout(new BorderLayout());
         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
         rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
@@ -336,39 +396,39 @@ public class DecoderPro3Window
             locoImage.setVisible(false);
             hideRosterImage=true;
         }
-        
+
         rosterEntryUpdateListener = new PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 updateDetails();
             }
         };
-            
+
         return rosterDetailPanel;
     }
-    
+
     JLabel statusField = new JLabel();
     JLabel activeRosterGroupField = new JLabel();
-    
+
     final ResourceBundle rbroster = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-    
+
     JTextPane filename 		= new JTextPane();
     JTextPane dateUpdated   	= new JTextPane();
     JTextPane decoderModel 	= new JTextPane();
     JTextPane decoderFamily 	= new JTextPane();
-    
+
     JTextPane id 		= new JTextPane();
     JTextPane roadName 	= new JTextPane();
     JTextPane maxSpeed		= new JTextPane();
- 
+
     JTextPane roadNumber 	= new JTextPane();
     JTextPane mfg 		= new JTextPane();
     JTextPane model		= new JTextPane();
     JTextPane owner		= new JTextPane();
-    
+
     ResizableImagePanel locoImage;
-    
+
     boolean hideRosterImage = false;
-    
+
     JPanel rosterDetails(){
         JPanel panel = new JPanel();
         GridBagLayout gbLayout = new GridBagLayout();
@@ -414,7 +474,7 @@ public class DecoderPro3Window
         gbLayout.setConstraints(roadNumber,cR);
         formatTextAreaAsLabel(roadNumber);
         panel.add(roadNumber);
-        
+
         cL.gridy = 3;
         JLabel row3Label = new JLabel(rbroster.getString("FieldManufacturer"));
         gbLayout.setConstraints(row3Label,cL);
@@ -456,7 +516,7 @@ public class DecoderPro3Window
 
         cR.gridy = 7;
 
-        
+
         cL.gridy = 8;
 
 
@@ -514,24 +574,24 @@ public class DecoderPro3Window
         retval.add(panel);
         return retval;
     }
-    
+
     void formatTextAreaAsLabel(JTextPane pane){
         pane.setOpaque(false);
         pane.setEditable(false);
         pane.setBorder(null);
     }
-    
+
     void updateDetails(){
         if(re==null){
             filename.setText("");
             dateUpdated.setText("");
             decoderModel.setText("");
             decoderFamily.setText("");
-            
-            
+
+
             id.setText("");
             roadName.setText("");
-         
+
             roadNumber.setText("");
             mfg.setText("");
             model.setText("");
@@ -542,11 +602,11 @@ public class DecoderPro3Window
             dateUpdated.setText(re.getDateUpdated());
             decoderModel.setText(re.getDecoderModel());
             decoderFamily.setText(re.getDecoderFamily());
-            
-            
+
+
             id.setText(re.getId());
             roadName.setText(re.getRoadName());
-            
+
             roadNumber.setText(re.getRoadNumber());
             mfg.setText(re.getMfg());
             model.setText(re.getModel());
@@ -556,39 +616,39 @@ public class DecoderPro3Window
                 locoImage.setVisible(false);
             else
                 locoImage.setVisible(true);
-                
+
             prog1Button.setEnabled(true);
             prog2Button.setEnabled(true);
             throttleLabels.setEnabled(true);
             rosterMedia.setEnabled(true);
             throttleLaunch.setEnabled(true);
             /*if (jmri.InstanceManager.programmerManagerInstance()!=null &&
-                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-                service.setEnabled(true);
-                ops.setEnabled(true);
+            jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            service.setEnabled(true);
+            ops.setEnabled(true);
             } else 
-                edit.setSelected(true);
+            edit.setSelected(true);
             edit.setEnabled(true);*/
             updateProgMode();
         }
     }
-    
+
     JRadioButton service = new JRadioButton("<HTML>Service Mode<br>(Programming Track)</HTML>");
     JRadioButton ops = new JRadioButton("<HTML>Operations Mode<br>(Programming On Main)</HTML>");
     JRadioButton edit = new JRadioButton("<HTML>Edit Only</HTML>");
-    
+
     jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
-    
+
     JButton prog1Button = new JButton("Basic Programmer");
     JButton prog2Button = new JButton("Comprehensive Programmer");
     JButton throttleLabels = new JButton("Throttle Labels");
     JButton rosterMedia = new JButton("Roster Media");
     JButton throttleLaunch = new JButton("Launch Throttle");
-    
+
     ActionListener programModeListener;
 
     PropertyChangeListener rosterEntryUpdateListener;
-    
+
     void updateProgMode(){
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
@@ -601,7 +661,7 @@ public class DecoderPro3Window
         }
         edit.setEnabled(true);
         firePropertyChange("setprogedit", "setEnabled", true);
-        
+
         String progMode = "setprogservice";
         if(ops.isSelected())
             progMode = "setprogops";
@@ -610,10 +670,10 @@ public class DecoderPro3Window
         firePropertyChange(progMode, "setSelected", true);
     }
     /**
-    * Simple method to change over the programmer buttons, this should be impliemented button
-    * with the buttons in their own class etc, but this will work for now.
-    * Basic button is button Id 1, comprehensive button is button id 2
-    */
+     * Simple method to change over the programmer buttons, this should be impliemented button
+     * with the buttons in their own class etc, but this will work for now.
+     * Basic button is button Id 1, comprehensive button is button id 2
+     */
     public void setProgrammerLaunch(int buttonId, String programmer, String buttonText){
         if(buttonId == 1){
             programmer1 = programmer;
@@ -623,10 +683,10 @@ public class DecoderPro3Window
             prog2Button.setText(buttonText);
         }
     }
-    
+
     String programmer1 = "Basic";
     String programmer2 = "Comprehensive";
-    
+
     JPanel bottomRight(){
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -634,7 +694,7 @@ public class DecoderPro3Window
         progMode.add(service);
         progMode.add(ops);
         progMode.add(edit);
-        
+
         service.setEnabled(false);
         ops.setEnabled(false);
         edit.setEnabled(false);
@@ -646,52 +706,52 @@ public class DecoderPro3Window
         progModePanel.add(service);
         progModePanel.add(ops);
         progModePanel.add(edit);
-        
+
         programModeListener = new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateProgMode();
             }
         };
-        
+
         service.addActionListener(programModeListener);
         ops.addActionListener(programModeListener);
         edit.addActionListener(programModeListener);
-        
+
         service.setSelected(true);
-        
+
         panel.add(progModePanel);
-        
+
         JPanel buttonHolder = new JPanel();
         GridLayout buttonLayout = new GridLayout(3, 2, 5, 5);
         buttonHolder.setLayout(buttonLayout);
-        
+
         buttonHolder.add(prog1Button);
         buttonHolder.add(prog2Button);
         buttonHolder.add(throttleLabels);
         buttonHolder.add(rosterMedia);
         buttonHolder.add(throttleLaunch);
-        
+
         panel.add(buttonHolder);
-        
+
         prog1Button.setEnabled(false);
         prog1Button.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                    startProgrammer(null, re, programmer1);
-                }
-            });
+                startProgrammer(null, re, programmer1);
+            }
+        });
         prog2Button.setEnabled(false);
         prog2Button.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                    startProgrammer(null, re, programmer2);
+                startProgrammer(null, re, programmer2);
             }
         });
         throttleLabels.setEnabled(false);
         throttleLabels.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                    edit.setSelected(true);
+                edit.setSelected(true);
                     startProgrammer(null, re, "dp3"+File.separator+"ThrottleLabels");
             }
         });
@@ -699,11 +759,11 @@ public class DecoderPro3Window
         rosterMedia.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                    edit.setSelected(true);
+                edit.setSelected(true);
                     startProgrammer(null, re, "dp3"+File.separator+"MediaPane");
             }
         });
-        
+
         throttleLaunch.setEnabled(false);
         throttleLaunch.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -713,14 +773,14 @@ public class DecoderPro3Window
                 tf.getAddressPanel().setRosterEntry(re);
             }
         });
-        
+
         return panel;
     }
-    
+
     //current selected loco
     RosterEntry re;
-    
-        /**
+
+    /**
      * Identify locomotive complete, act on it by setting the GUI.
      * This will fire "GUI changed" events which will reset the
      * decoder GUI.
@@ -735,7 +795,7 @@ public class DecoderPro3Window
             re.removePropertyChangeListener(rosterEntryUpdateListener);
         }
         List<RosterEntry> l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
-                                                null, null, null, null);
+                null, null, null, null);
         if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
         if (l.size() > 0) {
             re = l.get(0);
@@ -755,7 +815,7 @@ public class DecoderPro3Window
     }
 
     protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                                    String filename) {
+            String filename) {
         //String title = rbt.getString("FrameNewEntryTitle");
         String title = re.getId();
         Programmer pProg = null;
@@ -766,7 +826,7 @@ public class DecoderPro3Window
                                          null, false){
                 protected JPanel getModePane() { return null; }
             };
-        
+
         else if(service.isSelected()){
             progFrame = new PaneServiceProgFrame(decoderFile, re,
                                          title, "programmers"+File.separator+filename+".xml",
@@ -787,17 +847,17 @@ public class DecoderPro3Window
         progFrame.pack();
         progFrame.setVisible(true);
     }
-    
+
     boolean allowQuit = true;
-    
+
     /**
-    * For use when the DP3 window is called from another JMRI instance, set this to prevent the DP3 from shutting down
-    * JMRI when the window is closed.
-    */
+     * For use when the DP3 window is called from another JMRI instance, set this to prevent the DP3 from shutting down
+     * JMRI when the window is closed.
+     */
     protected void allowQuit(boolean allowQuit){
         this.allowQuit=allowQuit;
     }
-    
+
     public void windowClosing(java.awt.event.WindowEvent e) {
         //Method to save table sort status
         int count = rtable.getModel().getColumnCount();
@@ -822,11 +882,11 @@ public class DecoderPro3Window
             frame.dispose();
         }
     }
-    
+
     //Matches the first argument in the array against a locally know method
     public void remoteCalls(String args[]){
         args[0] = args[0].toLowerCase();
-        
+
         if(args[0].equals("identifyloco")){
             startIdentifyLoco();
         } else if(args[0].equals("printloco")){
@@ -861,7 +921,7 @@ public class DecoderPro3Window
         else
             log.error ("method " + args[0] + " not found");
     }
-    
+
     boolean checkIfEntrySelected(){
         if (re == null){
             JOptionPane.showMessageDialog(null, "Please select a loco from the roster first");
@@ -869,12 +929,12 @@ public class DecoderPro3Window
         }
         return true;
     }
-    
-        /**
+
+    /**
      * Identify loco button pressed, start the identify operation
      * This defines what happens when the identify is done.
      */
-     //taken out of CombinedLocoSelPane
+    //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
                         !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
@@ -885,22 +945,22 @@ public class DecoderPro3Window
         // start identifying a loco
         final DecoderPro3Window me = this;
         IdentifyLoco ident = new IdentifyLoco() {
-                private DecoderPro3Window who = me;
-                protected void done(int dccAddress) {
-                    // if Done, updated the selected decoder
-                    who.selectLoco(dccAddress);
-                }
-                protected void message(String m) {
-                    statusField.setText(m);
-                }
-                protected void error() {
-                    // raise the button again
-                    //idloco.setSelected(false);
-                }
-            };
+            private DecoderPro3Window who = me;
+            protected void done(int dccAddress) {
+                // if Done, updated the selected decoder
+                who.selectLoco(dccAddress);
+            }
+            protected void message(String m) {
+                statusField.setText(m);
+            }
+            protected void error() {
+                // raise the button again
+                //idloco.setSelected(false);
+            }
+        };
         ident.start();
     }
-    
+
     protected void hideRosterImage(){
         hideRosterImage=!hideRosterImage;
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+"hideRosterImage",hideRosterImage);
@@ -910,12 +970,12 @@ public class DecoderPro3Window
             locoImage.setVisible(true);
         }
     }
-    
+
     protected void exportLoco(){
         ExportRosterItem act = new ExportRosterItem("Export", this, re);
         act.actionPerformed(null);
     }
-    
+
     static class ExportRosterItem extends jmri.jmrit.roster.ExportRosterItemAction{
         ExportRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
@@ -923,13 +983,13 @@ public class DecoderPro3Window
         }
         @Override
         protected boolean selectFrom(){ return true;}
-    }
-    
+        }
+
     protected void copyLoco(){
         CopyRosterItem act = new CopyRosterItem("Copy", this, re);
         act.actionPerformed(null);
     }
-    
+
     static class CopyRosterItem extends jmri.jmrit.roster.CopyRosterItemAction{
         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
@@ -937,7 +997,7 @@ public class DecoderPro3Window
         }
         @Override
         protected boolean selectFrom(){ return true;}
-    }
+        }
 
     protected void deleteLoco(){
         DeleteRosterItem act = new DeleteRosterItem("Delete", this, re);
@@ -957,16 +1017,16 @@ public class DecoderPro3Window
     }
 
     protected void printLoco(boolean boo){
-    
+
     }
-    
+
     boolean hideSummary=false;
     protected void hideSummary(){
         hideSummary=!hideSummary;
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+"hideSummary",hideSummary);
         hideBottomPane(hideSummary);
     }
-    
+
     public Object getRemoteObject(String value){
         value=value.toLowerCase();
         if(value.equals("hidesummary")){
@@ -974,7 +1034,7 @@ public class DecoderPro3Window
         }
         return null;
     }
-    
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3Window.class.getName());
 }
 
