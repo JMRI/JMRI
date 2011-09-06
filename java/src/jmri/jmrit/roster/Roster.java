@@ -111,7 +111,9 @@ public class Roster extends XmlFile {
      */
     public void removeEntry(RosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Remove entry "+e);
-        if(_rostergroup!=null){
+        /*If there is a current roster group set then we need to make sure that the entry is complete, 
+        this can be check as there should be a file name assocated with the entry*/
+        if((_rostergroup!=null) && (e.getFileName()!=null)){
             e.deleteAttribute(getRosterGroupWP());
             e.updateFile();
         }
