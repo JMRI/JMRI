@@ -136,6 +136,21 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    public void testGuiChanged5() {
+        RosterEntryPane p = new RosterEntryPane(rNew);
+        
+        // copy to a new entry
+                
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rNew));
+        
+        // change the roster address type entry and check
+        rNew.setDccAddress("12");
+        p.setDccAddressLong(false);
+        Assert.assertTrue("detects change", p.guiChanged(rNew));
+
+    }
+
     public void testNotDuplicate() {
         RosterEntryPane p = new RosterEntryPane(rNew);
         // reset Roster
