@@ -857,6 +857,26 @@ public class Roster extends XmlFile {
             box.setSelectedItem(_rostergroup);
     }
     
+    public JList rosterGroupList() {
+        JList l = new JList();
+        updateGroupList(l);
+        l.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        return l;
+    }
+
+    public void updateGroupList(JList l) {
+        l.removeAll();
+        ArrayList<String> data = new ArrayList<String>();
+        data.add(ALLENTRIES);
+        data.addAll(_rosterGroupList);
+        l.setListData(data.toArray());
+        if (_rostergroup == null) {
+            l.setSelectedIndex(0);
+        } else {
+            l.setSelectedValue(_rostergroup, true);
+        }
+    }
+
     static String ALLENTRIES = "All Entries";
     
     // initialize logging
