@@ -12,6 +12,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.File;
@@ -38,6 +39,10 @@ import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.beans.PropertyChangeListener;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 
 import jmri.Programmer;
 import jmri.progdebugger.*;
@@ -200,15 +205,20 @@ public class DecoderPro3Window
     
     jmri.jmrit.roster.swing.RosterTable rtable;
     ResourceBundle rb = ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
+    JSplitPane rosterGroupPane;
+    JList groupsList;
+    ListSelectionListener groupsListListener;
     
     JComponent createTop() {
-        JPanel retval = new JPanel();
-        retval.setLayout(new BorderLayout());
-        //retval.add(createToolBarPanel(), BorderLayout.NORTH);
+        JPanel rosters = new JPanel();
+        JPanel groups = new JPanel();
+        rosters.setLayout(new BorderLayout());
+        groups.setLayout(new BorderLayout());
+
         // set up roster table
          
         rtable = new RosterTable(false);
-        retval.add(rtable, BorderLayout.CENTER);
+        rosters.add(rtable, BorderLayout.CENTER);
         // add selection listener
         rtable.getTable().getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
@@ -232,10 +242,65 @@ public class DecoderPro3Window
                 rtable.getModel().setSortingStatus(i, sort);
             }
         }
+
+        // set up groups list
+        // use our own groups list instead of SelectRosterGroupPanelAction.makeListPanel
+        // because the JmriPanel packs incorrectly
+        groupsList = Roster.instance().rosterGroupList();
+
+        groupsListListener = new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                JList list = (JList)e.getSource();
+                String entry = (String)list.getSelectedValue();
+                Roster.instance().setRosterGroup(entry);
+            }
+        };
+
+        Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if ((e.getPropertyName().equals("RosterGroupRemoved")) ||
+                        (e.getPropertyName().equals("RosterGroupAdded")) ||
+                        (e.getPropertyName().equals("ActiveRosterGroup"))) {
+                    groupsList.removeListSelectionListener(groupsListListener);
+                    Roster.instance().updateGroupList(groupsList);
+                    groupsList.addListSelectionListener(groupsListListener);
+                }
+            }
+        });
+
+        // groups list controls
+
+        JToolBar controls = new JToolBar();
+        controls.setLayout(new GridLayout(1,0,0,0));
+        controls.setFloatable(false);
+        JButton addGroup = new JButton("+"); // TODO: need nice + (plus) image here
+        JButton delGroup = new JButton("-"); // TODO: need nice - (minus) image here
+        addGroup.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CreateRosterGroupAction("", getTop()).actionPerformed(e);
+            }
+        });
+        delGroup.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new DeleteRosterGroupAction("", getTop()).actionPerformed(e);
+            }
+        });
+        controls.add(addGroup);
+        controls.add(delGroup);
+
+        groups.add(new JLabel("Roster Groups", JLabel.CENTER), BorderLayout.NORTH); // TODO: I18N
+        groups.add(new JScrollPane(groupsList), BorderLayout.CENTER);
+        groups.add(controls, BorderLayout.SOUTH);
+
+        // assemble roster/groups splitpane
+        rosterGroupPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
+        rosterGroupPane.setOneTouchExpandable(true);
+        rosterGroupPane.setResizeWeight(0); // emphasis rosters
         
-        return retval;
+        return rosterGroupPane;
+        // return rosters;   // uncomment to return a single table of roster entries
     }
-    
+
     /**
      * An entry has been selected in the Roster Table, 
      * activate the bottom part of the window
