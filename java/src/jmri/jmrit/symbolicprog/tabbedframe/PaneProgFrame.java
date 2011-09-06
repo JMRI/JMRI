@@ -834,6 +834,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     VariableValue addMode = null;
 
     void updateDccAddress() {
+        boolean longMode = false;
         if (log.isDebugEnabled())
             log.debug("updateDccAddress: short "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
                       " long "+(extendAddr==null?"<null>":extendAddr.getValueString())+
@@ -841,13 +842,21 @@ abstract public class PaneProgFrame extends JmriJFrame
         String newAddr = null;
         if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
             // short address mode
+            longMode = false;
             if (primaryAddr != null && !primaryAddr.getValueString().equals(""))
                 newAddr = primaryAddr.getValueString();
         }
         else {
             // long address
             if (extendAddr != null && !extendAddr.getValueString().equals(""))
+                longMode = true;
                 newAddr = extendAddr.getValueString();
+        }
+        // update if needed
+        if (newAddr!=null) {
+            // store DCC address, type
+            _rPane.setDccAddress(newAddr);
+            _rPane.setDccAddressLong(longMode);
         }
     }
 
