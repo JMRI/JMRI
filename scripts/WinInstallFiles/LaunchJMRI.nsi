@@ -25,6 +25,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.14.0
+; - Modification to monitor launched Java process for a return code that
+; - signals a re-launch of JMRI
+; - Tidied up source code
+; -------------------------------------------------------------------------
 ; - Version 0.1.13.0
 ; - Modification to enable the process name in Windows Task Manager to
 ; - match the JMRI application being launched
@@ -105,7 +110,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2011 JMRI Community"   ; Copyright string
-!define VER        "0.1.13.0"                     ; Launcher version
+!define VER        "0.1.14.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -126,7 +131,6 @@ Var JEXEPATH   ; holds the path to the temporary JAVA exe used
 Var CLASSPATH  ; holds the class path for JMRI .jars
 Var CLASS      ; holds the class to launch
 Var APPNAME    ; holds the application name
-#Var EXESTRING  ; holds the whole exe string
 Var OPTIONS    ; holds the JRE options
 Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
 Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
@@ -306,7 +310,6 @@ Section "Main"
   ReadEnvStr $JMRIOPTIONS "JMRI_OPTIONS"
 
   StrCpy $OPTIONS "$JMRIOPTIONS -noverify"
-#  StrCpy $OPTIONS "$OPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
@@ -331,7 +334,7 @@ Section "Main"
   ClearErrors
   ReadEnvStr $JMRIUSERHOME "JMRI_USERHOME"
   ; -- If defined, set user.home property
-  IfErrors CheckUserHome #ReadPrefsDir
+  IfErrors CheckUserHome
     DetailPrint "Set user.home to JMRI_USERHOME: $JMRIUSERHOME"
     StrCpy $OPTIONS `$OPTIONS -Duser.home="$JMRIUSERHOME"`
     Goto ReadPrefsDir
@@ -371,13 +374,9 @@ Section "Main"
   StrCmp $PROFILE "" OptionsDone
     IfFileExists "$JMRIPREFS\systemfiles\*.*" SetPaths
       CreateDirectory "$JMRIPREFS\systemfiles"
-#    IfFileExists "$PROFILE\JMRI\systemfiles\*.*" SetPaths
-#      CreateDirectory "$PROFILE\JMRI\systemfiles"
     SetPaths:
     StrCpy $OPTIONS '$OPTIONS -Dpython.home="$JMRIPREFS\systemfiles"'
     StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$JMRIPREFS\systemfiles\\"'
-#    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$PROFILE\JMRI\systemfiles"'
-#    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$PROFILE\JMRI\systemfiles\\"'
     ; -- jmri.log.path needs a double trailing backslash to ensure a valid command-line
   OptionsDone:
   DetailPrint "Options: $OPTIONS"
@@ -394,7 +393,6 @@ Section "Main"
   ; -- Build the ClassPath
   StrCpy $CLASSPATH ".;classes"
   StrCpy $0 "$JMRIHOME" ; normally 'C:\Program Files\JMRI'
-#  StrCpy $0 "$EXEDIR" ; normally 'C:\Program Files\JMRI'
   StrCpy $3 "jmri.jar" ; set to jmri.jar to skip jmri.jar
   StrCpy $4 "" ; no prefix required
   Call GetClassPath
@@ -404,75 +402,29 @@ Section "Main"
   StrCpy $3 "" ; set to blank to include all .jar files
   StrCpy $4 "lib\" ; lib prefix
   StrCpy $0 "$JMRIHOME\lib" ; normally 'C:\Program Files\JMRI\lib'
-#  StrCpy $0 "$EXEDIR\lib" ; normally 'C:\Program Files\JMRI\lib'
   Call GetClassPath
   StrCmp $9 "" +2 0
   StrCpy $CLASSPATH "$CLASSPATH;$9"
   DetailPrint "ClassPath: $CLASSPATH"
 
-#  StrCpy $EXESTRING '$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS'
-#  DetailPrint "Exestring: $EXESTRING"
   DetailPrint "MaxLen: ${NSIS_MAX_STRLEN}"
   DetailPrint `ExeString: "$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS`
 
   ; -- Finally get ready to run the application
   SetOutPath $JMRIHOME
-#  SetOutPath $EXEDIR
+
   ; -- Launch the Java class.
-#  Exec `$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS`
-  
-  ; -- use $5 to hold STARTUPINFO structure
-  ; -- use $6 to hold PROCESS_INFORMATION structure
+  LaunchJMRI:
+  DetailPrint "Launching JMRI"
   ; -- use $7 to hold return value
+  ExecWait `"$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS` $7
 
-  ; -- create STARTUPINFO structure
-  System::Alloc /NOUNLOAD 68 ; 4*16 + 2*2
-  Pop $5
-  System::Call /NOUNLOAD '*$5(i 68)'
-  ; -- create PROCESS_INFORMATION structure
-  System::Call /NOUNLOAD '*(i, i, i, i)i .r6'
-  ; -- create the process
-  System::Call /NOUNLOAD `kernel32::CreateProcess(i, t $\`"$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS$\`, i, i, i 0, i 0, i, i, i r5, i r6)i .r7`
-  System::Call /NOUNLOAD '*$6(i,i,i .r7,i)'
-  DetailPrint "ProcessID: $7"
-  System::Free /NOUNLOAD $5
-  System::Free $6
-
-#  ; -- Check if we should minimise the java console
-#  StrCmp $NOISY SW_NORMAL Exit
-#
-#  ; -- Loop through Console windows to find one linked to this new process
-#  ; -- This may loop several times as java process can take time to
-#  ;    create its console window
-#  DetailPrint "Search for console window to minimise..."
-#  StrCpy $4 0
-#  winloop:
-#    ; -- Sleep for 60 ms to ensure process doesn't run away with resources
-#    Sleep 60
-#    ; -- Increment loop counter
-#    IntOp $4 $4 + 1
-#    ; -- If the console window for this new process still hasn't opened
-#    ;    after 1000 iterations (~1 minute) exit anyway.
-#    IntCmp $4 1000 winloopexit
-#    ; -- Find top-most ConsoleWindowClass window (for Win2000 and later)
-#    FindWindow $1 "ConsoleWindowClass"
-#    ; -- Find the process that owns this window
-#    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
-#    ; -- If it is owned by the process we launched earlier, end loop - if not, loop
-#    StrCmp $3 $7 winfound
-#    ; -- Find top-most tty window (for Win98)
-#    FindWindow $1 "tty"
-#    ; -- Find the process that owns this window
-#    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
-#    ; -- If it is owned by the process we launched earlier, end loop - if not, loop
-#    StrCmp $3 $7 winfound winloop
-#  winfound:
-#    ; -- We've found the window, so minimise it
-#    DetailPrint "Found console window - minimising..."
-#    Sleep 60
-#    ShowWindow $1 ${SW_MINIMIZE}
-#  winloopexit:
-
+  ; -- We're no longer active
+  DetailPrint "Return code from process: $7"
+  
+  ; -- Check the return code is 100 - if so, re-launch
+  StrCmp $7 100 LaunchJMRI
+  
   Exit:
   DetailPrint "To copy this text to the clipboard, right click then choose"
   DetailPrint "  'Copy Details To Clipboard'"
@@ -502,11 +454,6 @@ Function .onInit
   StrCmp $2 "/" cmdlineOptsGet cmdlineOptsDone
   cmdlineOptsGet:
   ; -- Process the possible commandline options
-  ; -- At the moment this is implemented in a rather lazy way
-  ;    to work with 5 character options only
-  ; -- It would need updating to handle different option lengths
-  ;    in the future if so required
-;  StrCpy $1 $0 6
   StrCmp $1 "/debug" optsDebug
   StrCmp $1 "/noisy" optsNoisy
   ; -- If we've got here, the commandline option is not known so give an error.
@@ -575,17 +522,14 @@ Function GetSystemMemoryStatus
 ; -------------------------------------------------------------------------
 
   ; -- Allocate memory
-  System::Alloc /NOUNLOAD 32 ; -- comment out for > 2Gb
-  ;System::Alloc /NOUNLOAD 64 ; -- uncomment for > 2Gb
+  System::Alloc /NOUNLOAD 32
   Pop $1
   ; -- Initialise
   System::Call /NOUNLOAD "*$1(i64)"
   ; -- Make system call
-  System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatus(i r1)" ; -- comment out for > 2Gb
-  ;System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatusEx(i r1)"  ; -- uncomment for > 2Gb
+  System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatus(i r1)"
   ; -- Move returned info into NSIS variables
-  System::Call /NOUNLOAD "*$1(i.r2, i.r3, i.r4, i.r5, i.r6, i.r7, i.r8, i.r9, i.r10)" ; -- comment out for > 2Gb
-  ;System::Call /NOUNLOAD "*$1(i.r2, i.r3, l.r4, l.r5, l.r6, l.r7, l.r8, l.r9, l.r10)" ; -- uncomment for > 2Gb
+  System::Call /NOUNLOAD "*$1(i.r2, i.r3, i.r4, i.r5, i.r6, i.r7, i.r8, i.r9, i.r10)"
   ; -- Free allocated memory
   System::Free $1
 FunctionEnd
@@ -614,17 +558,14 @@ Function GetSystemMemoryStatus64
 ; -------------------------------------------------------------------------
 
   ; -- Allocate memory
-  ;System::Alloc /NOUNLOAD 32 ; -- comment out for > 2Gb
-  System::Alloc /NOUNLOAD 64 ; -- uncomment for > 2Gb
+  System::Alloc /NOUNLOAD 64
   Pop $1
   ; -- Initialise
   System::Call /NOUNLOAD "*$1(i64)"
   ; -- Make system call
-  ;System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatus(i r1)" ; -- comment out for > 2Gb
-  System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatusEx(i r1)"  ; -- uncomment for > 2Gb
+  System::Call /NOUNLOAD "Kernel32::GlobalMemoryStatusEx(i r1)"
   ; -- Move returned info into NSIS variables
-  ;System::Call /NOUNLOAD "*$1(i.r2, i.r3, i.r4, i.r5, i.r6, i.r7, i.r8, i.r9, i.r10)" ; -- comment out for > 2Gb
-  System::Call /NOUNLOAD "*$1(i.r2, i.r3, l.r4, l.r5, l.r6, l.r7, l.r8, l.r9, l.r10)" ; -- uncomment for > 2Gb
+  System::Call /NOUNLOAD "*$1(i.r2, i.r3, l.r4, l.r5, l.r6, l.r7, l.r8, l.r9, l.r10)"
   ; -- Free allocated memory
   System::Free $1
 FunctionEnd
