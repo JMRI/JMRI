@@ -94,6 +94,10 @@
         <mnemonic>i</mnemonic>
         <current>hiderosterimage</current>
     </node>
+    <node><name>Hide/Show Roster Groups</name>
+        <current>groupspane</current>
+        <type>checkbox</type>
+    </node>
     <node>separator</node>
     <node>group<name>Programming</name>
         <mnemonic>p</mnemonic>

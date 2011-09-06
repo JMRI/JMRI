@@ -278,6 +278,8 @@ public class DecoderPro3Window
             }
         };
 
+        groupsList.addListSelectionListener(groupsListListener);
+        
         Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if ((e.getPropertyName().equals("RosterGroupRemoved")) ||
@@ -356,6 +358,15 @@ public class DecoderPro3Window
         rosterGroupPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
         rosterGroupPane.setOneTouchExpandable(true);
         rosterGroupPane.setResizeWeight(0); // emphasis rosters
+
+        if (p.getSimplePreferenceState(DecoderPro3Window.class.getName() + "hideGroups")) {
+            hideGroupsPane(true);
+            hideGroups = true;
+        }
+        Object w = p.getProperty(DecoderPro3Window.class.getName(), "rosterGroupPaneDividerLocation");
+        if (w != null) {
+            rosterGroupPane.setDividerLocation(Integer.getInteger((String) w));
+        }
 
         return rosterGroupPane;
         // return rosters;   // uncomment to return a single table of roster entries
@@ -866,6 +877,7 @@ public class DecoderPro3Window
             //But conversion back on the headers is a pain.
             p.setProperty(getWindowFrameRef(), i, rtable.getModel().getSortingStatus(i));
         }
+        p.setProperty(DecoderPro3Window.class.getName(), "rosterGroupPaneDividerLocation", rosterGroupPane.getDividerLocation());
         //Okay only allow the shutdown if we are the last window instance and quit has been allowed
         if (allowQuit && openWindowInstances==1){
             log.debug("Start handleQuit");
@@ -917,6 +929,8 @@ public class DecoderPro3Window
             ops.setSelected(true);
         } else if(args[0].equals("setprogedit")){
             edit.setSelected(true);
+        } else if (args[0].equals("groupspane")) {
+            hideGroups();
         }
         else
             log.error ("method " + args[0] + " not found");
@@ -1025,6 +1039,21 @@ public class DecoderPro3Window
         hideSummary=!hideSummary;
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+"hideSummary",hideSummary);
         hideBottomPane(hideSummary);
+    }
+
+    boolean hideGroups = false;
+    protected void hideGroups() {
+        hideGroups = !hideGroups;
+        p.setSimplePreferenceState(DecoderPro3Window.class.getName() + "hideGroups", hideGroups);
+        hideGroupsPane(hideGroups);
+    }
+
+    public void hideGroupsPane(boolean hide) {
+        if (hide) {
+            rosterGroupPane.setDividerLocation(0);
+        } else {
+            rosterGroupPane.resetToPreferredSizes();
+        }
     }
 
     public Object getRemoteObject(String value){
