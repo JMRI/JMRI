@@ -44,9 +44,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
         List<Element> lists = new ArrayList(e.getChildren("list"));
         for (Element list : lists) {
             e.removeContent(list);
+            // if there is no attribute named "type", type is null
             String type = list.getAttributeValue("type");
+            // if type is not null, use the attribute-based syntax
             useAttributes = (type != null);
             if (!useAttributes) {
+                // if type is null, set type from a child element named "type"
                 type = list.getChild("type").getText();
             }
             if (type.equals("turnout")) {
@@ -513,15 +516,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // get power manager
         PowerManager b = InstanceManager.powerManagerInstance();
 
+        if (b == null) {
+            return true; // immediately reply if there is no PowerManager
+        }
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {
             return (b.getPower() != Integer.parseInt(item.getAttributeValue("value")));
         } else {
-        Element v = item.getChild("value");
-        if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            return  (b.getPower() != state);
-        }
+            Element v = item.getChild("value");
+            if (v!=null) {
+                int state = Integer.parseInt(v.getText());
+                return  (b.getPower() != state);
+            }
         }
         return false;  // no difference
     }
@@ -550,16 +556,27 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
         // check for set element, which means write
         if (item.getAttributeValue("set") != null) {
-            b.setValue(item.getAttributeValue("set"));
+            if (item.getAttribute("isNull") != null &&
+                    item.getAttributeValue("isNull").equals(Boolean.toString(true))) {
+                b.setValue(null);
+            } else {
+                b.setValue(item.getAttributeValue("set"));
+            }
             item.removeAttribute("set");
+            item.removeAttribute("isNull");
         } else {
-        Element v = item.getChild("set");
-        if (v!=null) {
-            String state = v.getText();
-            b.setValue(state);
-            item.removeContent(v);
+            Element v = item.getChild("set");
+            if (v != null) {
+                if (item.getAttribute("isNull") != null &&
+                        item.getAttributeValue("isNull").equals(Boolean.toString(true))) {
+                    b.setValue(null);
+                } else {
+                    String state = v.getText();
+                    b.setValue(state);
+                }
+                item.removeContent(v);
+            }
         }
-    }
     }
 
     void immediateWriteSensor(String name, Element item) throws JmriException {
@@ -602,26 +619,25 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // get power manager
         PowerManager b = InstanceManager.powerManagerInstance();
 
-        // check for set element, which means write
-        if (item.getAttributeValue("set") != null) {
-            b.setPower(Integer.parseInt(item.getAttributeValue("set")));
-            item.removeAttribute("set");
-            //item.setAttribute("value", Integer.toString(b.getPower()));
-        } else {
-        Element v = item.getChild("set");
-        if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            b.setPower(state);
-            // remove set element
-            item.removeContent(v);
+        // if the PowerManager is null, quietly do nothing, since
+        // immediateReadPower(name, item) assembles a message for the
+        // client indicating that the PowerManager is null
+        if (b != null) {
+            // check for set element, which means write
+            if (item.getAttributeValue("set") != null) {
+                b.setPower(Integer.parseInt(item.getAttributeValue("set")));
+                item.removeAttribute("set");
+                //item.setAttribute("value", Integer.toString(b.getPower()));
+            } else {
+                Element v = item.getChild("set");
+                if (v!=null) {
+                    int state = Integer.parseInt(v.getText());
+                    b.setPower(state);
+                    // remove set element
+                    item.removeContent(v);
+                }
+            }
         }
-
-            // why set value in power and not anywhere else?
-            //v = item.getChild("value");
-            //if (v == null) item.addContent(v = new Element("value"));
-        // set result
-            //v.setText(""+b.getPower());
-    }
     }
     
     void immediateWriteRoster(String name, Element item) throws JmriException {
@@ -660,6 +676,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
         String s = (b.getValue() != null) ? b.getValue().toString() : "";
         if (useAttributes) {
             item.setAttribute("value", s);
+            if (b.getValue() == null) {
+                item.setAttribute("isNull", "true");
+            }
         } else {
             Element v = item.getChild("value");
 
@@ -668,6 +687,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
             // set result
             v.setText(s);
+            if (b.getValue() == null) {
+                v.setAttribute("isNull", "true");
+            }
         }
     }
     
@@ -712,17 +734,22 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // get power manager
         PowerManager b = InstanceManager.powerManagerInstance();
 
+        String p = (b != null) ? Integer.toString(b.getPower()) : "";
         if (useAttributes) {
-            item.setAttribute("value", Integer.toString(b.getPower()));
+            item.setAttribute("value", p);
+            if (b == null) {
+                item.setAttribute("isNull", Boolean.toString(true));
+            }
         } else {
-        Element v = item.getChild("value");
+            Element v = item.getChild("value");
 
-        // Start read: ensure value element
-        if (v == null) item.addContent(v = new Element("value"));
-        
-        // set result
-        v.setText(""+b.getPower());
-    }
+            // Start read: ensure value element
+            if (v == null) item.addContent(v = new Element("value"));
+
+            // set result
+            v.setText(p);
+            if (b == null) item.setAttribute("isNull", Boolean.toString(true));
+        }
     }
     
     void immediateReadMetadata(String name, Element item) throws JmriException {
