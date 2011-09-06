@@ -20,7 +20,7 @@ public class RosterEntryTest extends TestCase {
     public void testCreate() {
         RosterEntry r = new RosterEntry("file here");
         Assert.assertEquals("file name ", "file here", r.getFileName());
-        Assert.assertEquals("DCC Address ", "", r.getDccAddress());
+        Assert.assertEquals("DCC Address ", "3", r.getDccAddress());
         Assert.assertEquals("road name ", "", r.getRoadName());
         Assert.assertEquals("road number ", "", r.getRoadNumber());
         Assert.assertEquals("manufacturer ", "", r.getMfg());
@@ -69,7 +69,7 @@ public class RosterEntryTest extends TestCase {
         };
         // check
         Assert.assertEquals("file name ", "file here", r.getFileName());
-        Assert.assertEquals("DCC Address ", "", r.getDccAddress());
+        Assert.assertEquals("DCC Address ", "3", r.getDccAddress());
         Assert.assertEquals("road name ", "", r.getRoadName());
         Assert.assertEquals("road number ", "", r.getRoadNumber());
         Assert.assertEquals("manufacturer ", "", r.getMfg());
