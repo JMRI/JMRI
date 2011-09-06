@@ -61,7 +61,7 @@ public class RosterEntry {
     protected String _mfg = "";
     protected String _owner = _defaultOwner;
     protected String _model = "";
-    protected String _dccAddress = "";
+    protected String _dccAddress = "3";
     protected boolean _isLongAddress = false;
     protected String _comment = "";
     protected String _decoderModel = "";
