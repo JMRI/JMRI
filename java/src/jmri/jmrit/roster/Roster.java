@@ -849,7 +849,7 @@ public class Roster extends XmlFile {
      * @return ArrayList<String>
      */
     public ArrayList<String> getRosterGroupList() {
-        return (ArrayList<String>)_rosterGroupList.clone();
+        return new ArrayList<String>(_rosterGroupList);
     }
 
     public JComboBox rosterGroupBox() {
