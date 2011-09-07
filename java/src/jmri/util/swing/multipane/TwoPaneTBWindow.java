@@ -28,7 +28,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         super(name);
         buildGUI(menubarFile, toolbarFile);
         pack();
-        //buildBars(menubarFile, toolbarFile);
     }
     
     JSplitPane      upDownSplitPane;
@@ -63,11 +62,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         addMainMenuBar(menubarFile);
         addMainToolBar(toolbarFile);
         addMainStatusBar();
-    }
-    
-    protected void buildBars(File menubarFile, File toolbarFile) {
-        addMainMenuBar(menubarFile);
-        addMainToolBar(toolbarFile);
     }
     
     protected void configureFrame() {
@@ -113,7 +107,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         return menuBar;
     }
     
-
     protected void addMainToolBar(File toolBarFile) {
         if (toolBarFile == null) return;
           

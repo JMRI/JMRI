@@ -122,14 +122,17 @@
     <node><name>Delete Roster Group</name>
         <mnemonic>d</mnemonic>
         <adapter>jmri.jmrit.roster.DeleteRosterGroupAction</adapter>
+        <current>deletegroup</current>
     </node>
     <node><name>Set Active Roster Group</name>
         <mnemonic>a</mnemonic>
         <adapter>jmri.jmrit.roster.SelectRosterGroupAction</adapter>
+        <current>activegroup</current>
     </node>
     <node><name>Roster Group Table Association</name>
         <mnemonic>t</mnemonic>
         <adapter>jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction</adapter>
+        <current>grouptable</current>
     </node>
   </node>
   
