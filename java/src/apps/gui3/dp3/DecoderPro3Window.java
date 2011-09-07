@@ -194,7 +194,7 @@ public class DecoderPro3Window
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         try {
             // create menu and standard items
-            JMenu helpMenu = jmri.util.HelpUtil.makeHelpMenu("package.apps.Apps", true);
+            JMenu helpMenu = jmri.util.HelpUtil.makeHelpMenu("package.apps.gui3.dp3.DecoderPro3", true);
 
             // tell help to use default browser for external types
             javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
