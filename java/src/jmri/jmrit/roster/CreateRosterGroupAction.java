@@ -52,23 +52,21 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
 
     Component _who;
 
+    @Override
     public void actionPerformed(ActionEvent event) {
 
-        Roster roster = Roster.instance();
-
-        JTextField _newGroup = new JTextField(20);
-        int retval = JOptionPane.showOptionDialog(_who,
-                                                  "Create new roster Group", "Create new roster group",
-                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
-                                                  new Object[]{"Cancel", "OK", _newGroup}, null );
-
-        if (retval != 1) return;
-        String entry = _newGroup.getText();
-        if(entry.equals(Roster.ALLENTRIES)){
+        String entry = (String)JOptionPane.showInputDialog(_who,
+                                     "<html><b>Create new roster group.</b><br>Roster group names cannot be changed once created.",
+                                     "New Roster Group",
+                                     JOptionPane.INFORMATION_MESSAGE,
+                                     null, // icon
+                                     null, // initial values
+                                     null);// preselected initial value
+        if(entry == null || entry.equals(Roster.ALLENTRIES)){
             return;
         }
 
-        roster.addRosterGroupList(entry);
+        Roster.instance().addRosterGroupList(entry);
         Roster.writeRosterFile();
     }
     

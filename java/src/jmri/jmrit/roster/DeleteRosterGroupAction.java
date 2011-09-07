@@ -4,6 +4,7 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
@@ -53,33 +54,24 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
 
     Component _who;
 
+    @Override
     public void actionPerformed(ActionEvent event) {
 
-        Roster roster = Roster.instance();
-
-        // get parent object if there is one
-        //Component parent = null;
-        //if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
-
-        // create a dialog to select the roster entry
-        JComboBox selections = roster.rosterGroupBox();
-        selections.removeItem(Roster.ALLENTRIES);
-        int retval = JOptionPane.showOptionDialog(_who,
-                                                  "Select one roster Group\nThis does not delete the roster entries within a group", "Delete roster group entry",
-                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
-                                                  new Object[]{"Cancel", "OK", selections}, null );
-        log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
-                  +selections.getSelectedItem());
-        if (retval != 1) return;
-        String entry = (String) selections.getSelectedItem();
-        if(entry == null || entry.equals(Roster.ALLENTRIES)){
+        String entry = (String)JOptionPane.showInputDialog(_who,
+                "<html><b>Delete roster group</b><br>Roster entries in the group are not deleted.",
+                "Delete Roster Group",
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                Roster.instance().getRosterGroupList().toArray(),
+                Roster.getRosterGroup());
+        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
             return;
         }
         // prompt for one last chance
         if (!userOK(entry)) return;
 
         // delete the roster grouping
-        roster.delRosterGroupList(entry);
+        Roster.instance().delRosterGroupList(entry);
         Roster.writeRosterFile();
 
     }
@@ -90,10 +82,18 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
      * @return true if user says to continue
      */
     boolean userOK(String entry) {
-        return ( JOptionPane.YES_OPTION ==
-                 JOptionPane.showConfirmDialog(_who,
-                                               "Delete roster group "+entry ,
-                                               "Delete roster group "+entry+"?", JOptionPane.YES_NO_OPTION));
+        String[] titles = {"Delete", "Cancel"};
+        // TODO: I18N
+        // TODO: replace "Are you sure..." string with JPanel containing string
+        //       and checkbox silencing this message in the future
+        return (JOptionPane.YES_OPTION == JOptionPane.showOptionDialog(_who,
+                "Are you sure you want to delete roster group \"" + entry + "\"?",
+                "Delete Roster Group \"" + entry + "\"",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                titles,
+                null));
     }
     
     // never invoked, because we overrode actionPerformed above

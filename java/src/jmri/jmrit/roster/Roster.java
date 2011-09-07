@@ -822,6 +822,10 @@ public class Roster extends XmlFile {
     
     public void delRosterGroupList(String str) {
         _rosterGroupList.remove(str);
+        // if deleting active group, set active group to all entries
+        if (str.equals(_rostergroup)) {
+            setRosterGroup(null);
+        }
         str=_rosterGroupPrefix+str;
         List<RosterEntry> groupentries = getEntriesWithAttributeKey(str);
         for(int i=0; i<groupentries.size();i++){
@@ -829,11 +833,25 @@ public class Roster extends XmlFile {
         }
         firePropertyChange("RosterGroupRemoved", str, null);
     }
-    
+
+    // What does this do? Should this return the group at i?
     public void getRosterGroupList(int i) {
         _rosterGroupList.get(i);
     }
-    
+
+    /**
+     * Get a list of the user defined roster groups.
+     *
+     * This list is a shallow copy of the system-wide list of roster groups.
+     * Strings are immutable, so deleting an item from the copy should not
+     * affect the system-wide list of roster groups.
+     *
+     * @return ArrayList<String>
+     */
+    public ArrayList<String> getRosterGroupList() {
+        return (ArrayList<String>)_rosterGroupList.clone();
+    }
+
     public JComboBox rosterGroupBox() {
         JComboBox b = new JComboBox();
         b.insertItemAt(ALLENTRIES,0);
