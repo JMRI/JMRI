@@ -71,9 +71,11 @@ enabled. To install subversion do the following:
 	<LI>Now select
 	"http://download.eclipse.org/technology/subversive/0.7/update-site/" in
 	the "Work with:" selection menu, and then select all of the checkboxes,
-	followed by pressing the "Next" button.</LI>
-	<LI>Now complete the subversion installation by selecting a
-	connector or connectors.</LI>
+	followed by pressing the "Next" button, and complete the SVN installation
+	as prompted by the program.</LI>
+	<LI>You will be asked to restart the program, do so, and then complete the subversion installation by selecting a
+	connector or connectors, and again you will be asked to restart the program when the install of the connectors is
+	complete.</LI>
 </OL>
 
 <h2>Getting the JMRI Source using Subversion</h2>
@@ -91,13 +93,7 @@ the following:
 	otherwise leave them blank. The id and password are only necessary if
 	you're going to commit your work back to the repository.</LI>
 	<LI>Click "Next" then "Finish"</LI>
-	<LI>You should now see a window called "Check Out As"</LI>
-	<LI>Select "Check out as a project configured using the New
-	Project Wizard", then press "Finish"</LI>
-	<LI>In the New Project - Select a wizard window, select "Java"
-	then "Java Project", then press "Next"</LI>
-	<LI>In the New Java Project - Create a Java Project window, enter
-	"jmri" as the project name, then press "Finish".</LI>
+	<LI>You should now see a window called "Check Out As", click ""Finish"</LI>
 	<LI>If all is well, the check out should begin. It might take a
 	few minutes to download all of the JMRI files.</LI>
 </OL>
@@ -105,18 +101,27 @@ the following:
 <P>After the download is complete the Eclipse Package Explorer
 should look like this:</P>
 <img src="images/EclipsePackageExplorer.png">
+<P>After the download is complete, Eclipse will be reporting an
+error: Project 'jmri' is missing required source folder: 'java/tmp'.
+This will be fixed by running the ant build as described below.
 
 <h2>Building and running JMRI using Ant</h2>
 
 We recommend that before you try and build and run one of the
 applications within Eclipse that you run the ant build.xml within Eclipse. This will
-create the necessary directories and create some Java files using
+create the necessary directories, load some resource icons, and create needed Java files using
 JavaCC. To run the ant build.xml you need to do the following: 
 
 <OL>
+<li>Ant needs a JDK (Java Development Kit) in order to run the supplied "build.xml" file. The Eclipse
+download doesn't include a JDK, so you must download and install a JDK, and then configure ant to
+use the JDK.
 <li>Select the build.xml file using the Package Explorer, then right click, and a menu should
 appear.</li>
-<li>Now select "Run As" then "1 Ant Build".</li>
+<li>Now select "Run As" then "2 Ant Build".</li>
+<Li>Confirm that under the menu tab JRE that you've selected a JDK.</Li>
+<LI>Select "Targets", and then select "Copy Resources", leave the other targets selected.</LI>
+<LI>Now press the "Run" button, this should start the ant build.
 </OL>
 
 <P>If the ant build fails, most likely it is because you need a JDK (Java
@@ -127,10 +132,13 @@ the "Separate JRE:" radio button, and then press the "Installed JREs"
 button. If you don't see a JDK, you need to add one.</P>
 
 <P>If the ant build succeeds, you can now launch any of the JMRI applications from ant, and create a jmri.jar file
-if you wish.  Instead of using "1 Ant Build" use "2 Ant Build" and in the window select the "Targets" tab, and
+if you wish.  Use the "2 Ant Build" and in the window select the "Targets" tab, and
 use the appropriate checkbox to generate what you want.</P>
 
 <h2>Building and running JMRI using Eclipse</h2>
+
+<P>After completing the ant build as described above, you need to refresh the jmri directory.  Right click on the jmri directory name
+and select "Refresh".  The refresh operation should trigger a build of the workspace and the build should complete without error. 
 
 <P>To run an application do the following:</P>
 <ol>
