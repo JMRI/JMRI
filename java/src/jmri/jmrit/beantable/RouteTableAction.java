@@ -59,6 +59,7 @@ public class RouteTableAction extends AbstractTableAction {
      * resulting frame.  Perhaps this should be changed?
      * @param s
      */
+	@SuppressWarnings("all")
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
