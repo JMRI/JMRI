@@ -60,7 +60,7 @@
 </blockquote>
 <ul>
   <li><strong>Set Train Icons Coordinates</strong><br>
-    This tool is used to set the default X and Y coordinates of your train icons for each location. The tool allows you to specify the icon coordinates based on the trains direction. You can also update all of your existing routes and locations with these new coordinates. As an alternative, you can use a route's a route's <strong>Tools--&gt;Set Train Icon Coordinates for this Route</strong> to create coordinates unique to a specific route.<br>
+    This tool is used to set the default X and Y coordinates of your train icons for each location. The tool allows you to specify the icon coordinates based on the trains direction. You can also update all of your existing routes and locations with these new coordinates. As an alternative, you can use a route's  <strong>Tools--&gt;Set Train Icon Coordinates for this Route</strong> to create coordinates unique to a specific route.<br>
     <table width="90%" border="0" cellspacing="1" cellpadding="2">
       <tr>
         <td width="53%" valign="top"><img src="images/Ops_Routes_SetTrainIcons.png" width="350" height="294" alt="Set Icons"></td>

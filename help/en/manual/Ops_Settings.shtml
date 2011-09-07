@@ -166,7 +166,7 @@
         <input type="radio" name="radio4" id="radio4" value="radio4">
         Aggressive<br>
       </strong>There are two build train options, normal and aggressive. Normal is recommended when you are beginning, as Normal builds guarantee that when a car is delivered(set out) by a train that there will be track space available for the car.</p>
-      <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for a pickup. </p>
+      <p>Aggressive build makes the car's track space available as soon as a car is scheduled for a pickup. </p>
       <p>Note that once you've built a train, the build option can not be changed until all trains are terminated or reset.</p></td>
     </tr>
     <tr>
@@ -182,14 +182,14 @@
     <tr>
       <td><input type="checkbox" name="checkbox6" id="checkbox6">
       <strong>Prompt for Departure Track from Staging<br>
-      </strong>If you would like the program to ask you which track a train shoule depart from staging during the train build, select this option. Normally, during the train build the program would select teh least recently used track when determining the track to depart from. Note that the program will only prompt you if there are two or more trains availabe in staging that meet the train's requirements.</td>
+      </strong>If you would like the program to ask you which track a train should depart from staging during the train build, select this option. Normally, during the train build the program would select the least recently used track when determining the track to depart from. Note that the program will only prompt you if there are two or more trains availabe in staging that meet the train's requirements.</td>
     </tr>
     <tr>
       <td width="66%" valign="top"><img src="images/Ops_Setting_tool_options02.png" width="411" height="125" alt="option02"></td>
       <td valign="top"><p>
         <input name="checkbox7" type="checkbox" id="checkbox7" checked> 
         <strong>Enable Car Routing<br>
-        </strong>When car routing is enabled, the program will use multiple trains to deliver a car to its final destination.  It is recommended that you leave the option enabled. With car routing enabled, you can use a <strong><a href="Ops_schedule.shtml">Schedule</a></strong> to deliver a car to a specific location.  The car routing algorithm will search for the most efficient rout for the car to travel. The algorithm will try to find a route using a maximum of five trains to complete the car move. Note that the program never gives up trying to route a car. If a car has been assigned a &quot;Final Destination&quot; tlhe program will try and route the car after every move.</p></td>
+        </strong>When car routing is enabled, the program will use multiple trains to deliver a car to its final destination.  It is recommended that you leave the option enabled. With car routing enabled, you can use a <strong><a href="Ops_schedule.shtml">Schedule</a></strong> to deliver a car to a specific location.  The car routing algorithm will search for the most efficient rout for the car to travel. The algorithm will try to find a route using a maximum of five trains to complete the car move. Note that the program never gives up trying to route a car. If a car has been assigned a &quot;Final Destination&quot; the program will try and route the car after every move.</p></td>
     </tr>
     <tr>
       <td width="66%" valign="top"><img src="images/Ops_Setting_tool_options04.png" width="411" height="167" alt="option 4"></td>
@@ -332,7 +332,7 @@
             <p><a href="http://groups.yahoo.com/group/jmriusers/files/Operations" target="_blank">Examples of custom manifests</a></p></td>
           </tr>
       </table></td>
-      <td valign="top">To create your own custom manifest using a comma separated value (.csv) file, select this option. You can use a program like Excel to create a manifest to your liking. The manifest is located in the operations directory in a directory called csvManifests.Each line of the file starts with a tw or three letter code. followed by the code's description, an then any prarameters associated with the code. </td>
+      <td valign="top">To create your own custom manifest using a comma separated value (.csv) file, select this option. You can use a program like Excel to create a manifest to your liking. The manifest is located in the operations directory in a directory called <strong>csvManifests. </strong>Each line of the file starts with a <strong>tw</strong> or three letter code, followed by the code's description, and then any parameters associated with the code. </td>
     </tr>
   </table>
   <p>&nbsp;</p>
