@@ -854,22 +854,31 @@ public class Roster extends XmlFile {
 
     public JComboBox rosterGroupBox() {
         JComboBox b = new JComboBox();
-        b.insertItemAt(ALLENTRIES,0);
-        for (int i = 0; i < _rosterGroupList.size(); i++) {
-            b.addItem(_rosterGroupList.get(i));
+        updateGroupBox(b);
+        /*b.insertItemAt(ALLENTRIES,0);
+        
+        String[] displayList = _rosterGroupList.toArray(new String[_rosterGroupList.size()]);
+        java.util.Arrays.sort(displayList);
+        for (int i = 0; i < displayList.length; i++) {
+            b.addItem(displayList[i]);
         }
         if(_rostergroup==null)
             b.setSelectedIndex(0);
         else
-            b.setSelectedItem(_rostergroup);
+            b.setSelectedItem(_rostergroup);*/
         return b;
     }
     
     public void updateGroupBox(JComboBox box){
         box.removeAllItems();
-        for (int i = 0; i < _rosterGroupList.size(); i++) {
-            box.addItem(_rosterGroupList.get(i));
+        
+        String[] displayList = _rosterGroupList.toArray(new String[_rosterGroupList.size()]);
+        Arrays.sort(displayList);
+        
+        for(String e : displayList){
+            box.addItem(e);
         }
+        
         box.insertItemAt(ALLENTRIES,0);
         if(_rostergroup==null)
             box.setSelectedIndex(0);
@@ -888,8 +897,13 @@ public class Roster extends XmlFile {
         l.removeAll();
         ArrayList<String> data = new ArrayList<String>();
         data.add(ALLENTRIES);
-        data.addAll(_rosterGroupList);
+        
+        String[] displayList = _rosterGroupList.toArray(new String[_rosterGroupList.size()]);
+        Arrays.sort(displayList);
+        
+        data.addAll(Arrays.asList(displayList));
         l.setListData(data.toArray());
+        
         if (_rostergroup == null) {
             l.setSelectedIndex(0);
         } else {
