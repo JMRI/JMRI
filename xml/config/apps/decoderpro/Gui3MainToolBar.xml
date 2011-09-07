@@ -9,7 +9,7 @@
   <name>DecoderPro</name>
 
    <node><name>Help</name>
-     <help>index</help>
+     <help>package.apps.gui3.dp3.DecoderPro3</help>
    </node>
   
     <node><name>New Loco</name>
