@@ -47,7 +47,12 @@ The Java Developer's Guide to Eclipse</a>).</p>
 
 <P>JMRI developers use subversion (SVN) for source control as of
 July 2011. Previously we used CVS for source control, and using CVS is
-no longer supported.</P>
+no longer supported. If you were already using Eclipse and CVS it is
+strongly recommended that you start fresh and download the latest
+version of Eclipse and create a new workspace before using SVN to get
+the latest files.</P>
+
+<P>These instructions were developed and tested using "Eclipse IDE for Java Developers" version "Indigo Release".
 
 <h2>Setting up Eclipse for building JMRI using Subversion</h2>
 
@@ -126,10 +131,6 @@ if you wish.  Instead of using "1 Ant Build" use "2 Ant Build" and in the window
 use the appropriate checkbox to generate what you want.</P>
 
 <h2>Building and running JMRI using Eclipse</h2>
-
-After a successful ant build you need to replace the .classpath and
-.project files in the jmri directory with ones from ?? (For now contact the developers for the
-appropriate files at jmri-developers@lists.sourceforge.net).
 
 <P>To run an application do the following:</P>
 <ol>
