@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.18.0
+; - Remove DecoderPro3 from Tools and Demos and place in main JMRI start
+; - menu along with Desktop shortcut
+; -------------------------------------------------------------------------
 ; - Version 0.1.17.0
 ; - Change branding text
 ; -------------------------------------------------------------------------
@@ -187,7 +191,7 @@
   !define RELEASEDIR ".."
 !endif
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.17.0"                    ; Installer version
+!define INST_VER  "0.1.18.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -553,12 +557,18 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     CreateDirectory "$SMPROGRAMS\$SMFOLDER"
     ; -- Remove any shortcuts to deprecated components
     Delete "$SMPROGRAMS\$SMFOLDER\Tools and Demos\LocoTools.lnk"
+    Delete "$SMPROGRAMS\$SMFOLDER\Tools and Demos\DecoderPro3.lnk"
     ; -- Create shortcuts for standard JMRI components
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.DecoderPro.DecoderPro" \
                    "$INSTDIR\decpro5.ico" 0 "" "" \
                    "Start Decoder Pro"
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro3.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.gui3.dp3.DecoderPro3" \
+                   "$INSTDIR\dp3.ico" 0 "" "" \
+                   "Start Decoder Pro 3"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\PanelPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.PanelPro.PanelPro" \
@@ -575,11 +585,6 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "" \
                    "$INSTDIR\InstallTest80x80.ico" 0 "" "" \
                    "Start JMRI Install Test"
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\DecoderPro3.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.gui3.dp3.DecoderPro3" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start Decoder Pro 3"
     StrCmp $PROFILE "" 0 Win2k+ ; -- prior to Win2k this is blank
     ; -- Create a preferences directory for this user
     IfFileExists "$WINDIR\JMRI\*.*" +2
@@ -636,6 +641,15 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "$INSTDIR\decpro5.ico" 0 "" "" \
                    "Start Decoder Pro"
   SectionEnd ; SEC_DPDTSC
+
+  Section "DecoderPro3" SEC_DP3DTSC
+    SectionIn 1 2
+    CreateShortcut "$DESKTOP\DecoderPro3.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.gui3.dp3.DecoderPro3" \
+                   "$INSTDIR\dp3.ico" 0 "" "" \
+                   "Start Decoder Pro 3"
+  SectionEnd ; SEC_DP3DTSC
 
   Section "PanelPro" SEC_PPDTSC
     SectionIn 1 2
@@ -774,6 +788,7 @@ LangString DESC_SEC_SCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for Dec
 LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for JMRI Demo and CornwallRR"
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
+LangString DESC_SEC_DP3DTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro3"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"
 LangString DESC_SEC_SPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for SoundPro"
 LangString DESC_SEC_CRUNINST ${LANG_ENGLISH} "Creates an Uninstaller for ${APP}"
@@ -794,6 +809,7 @@ LangString MESSAGE_INVALID_DIRECTORY ${LANG_ENGLISH} "This not a valid installat
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_OCSMSC} $(DESC_SEC_OCSMSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DTSC} $(DESC_SEC_DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DPDTSC} $(DESC_SEC_DPDTSC)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DP3DTSC} $(DESC_SEC_DP3DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_PPDTSC} $(DESC_SEC_PPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SPDTSC} $(DESC_SEC_SPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CRUNINST} $(DESC_SEC_CRUNINST)
