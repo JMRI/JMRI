@@ -25,6 +25,7 @@ public class RouteTest extends TestCase {
     /**
      * The following equalities are needed so that old files can be read
      */
+	@SuppressWarnings("all")
 	public void testRouteAndTurnoutConstants() {
 	    Assert.assertTrue("CLOSED is ONCLOSED", Turnout.CLOSED == Route.ONCLOSED);
 	    Assert.assertTrue("THROWN is ONTHROWN", Turnout.THROWN == Route.ONTHROWN);
@@ -89,6 +90,7 @@ public class RouteTest extends TestCase {
     // There's a comment in DefaultRoute that says the following
     // are "constraints due to implementation", so let's test those here
     //
+    @SuppressWarnings("all")
     public void testImplementationConstraint() {
         // check a constraint required by this implementation!
         Assert.assertTrue("ONACTIVE", Route.ONACTIVE == 0);

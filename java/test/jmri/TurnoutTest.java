@@ -14,6 +14,7 @@ import junit.framework.TestSuite;
  */
 public class TurnoutTest extends TestCase {
 
+	@SuppressWarnings("all")
     public void testStateConstants() {
 	    Assert.assertTrue("Thrown and Closed differ", (Turnout.THROWN & Turnout.CLOSED) == 0);
 	    Assert.assertTrue("Thrown and Unknown differ", (Turnout.THROWN & Turnout.UNKNOWN) == 0);

@@ -14,6 +14,7 @@ import junit.framework.TestSuite;
  */
 public class LightTest extends TestCase {
 
+	@SuppressWarnings("all")
     public void testStateConstants() {
 	    Assert.assertTrue("On and Off differ", (Light.ON&Light.OFF) == 0);
 	    Assert.assertTrue("On and Unknown differ", (Light.ON&Light.UNKNOWN) == 0);
@@ -22,6 +23,7 @@ public class LightTest extends TestCase {
 	    Assert.assertTrue("Off and Inconsistent differ", (Light.OFF&Light.INCONSISTENT) == 0);
     }
     
+	@SuppressWarnings("all")
 	public void testTransitionConstants() {
 	    Assert.assertTrue("On and INTERMEDIATE are bits", (Light.ON&Light.INTERMEDIATE) == 0);
         

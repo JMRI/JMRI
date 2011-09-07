@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 public class PathTest extends TestCase {
-
+	@SuppressWarnings("all")
 	public void testCreate() {
 	    Path p = new Path();
 	    Assert.assertTrue("default to direction", p.getToBlockDirection()==Path.NONE);
