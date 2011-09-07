@@ -30,9 +30,6 @@
 <div id="mainContent"><!-- -------- --> <!--  Teaser  --> <!-- Optional -->
 <!-- -------- -->
 
-<h1>Warning: this page needs updating to reflect the change
-to <a href="getcode.shtml">Subversion</a></h1>
-
 
 <H1>JMRI: Building with JBuilder</H1>
 
@@ -42,70 +39,11 @@ JBuilder extends the Eclipse open source framework and can be downloaded
 for free. However many developers would recommend using <A
 	HREF="NetBeans.shtml">NetBeans</a>, <A HREF="XCode.shtml">XCode</a>, <A
 	HREF="Eclipse.shtml">Eclipse</a>, or even just bare <A HREF="Ant.shtml">Ant</a>.
-<P>The Personal Edition of JBuilder is available for free download
-at <A HREF="http://www.borland.com/jbuilder/personal/">http://www.borland.com/jbuilder/personal/</A>.
+<P>A free download trial copy of JBuilder is available from
+<A HREF="http://www.embarcadero.com/products/jbuilder">http://www.embarcadero.com/products/jbuilder</A>.
 
-<P>After downloading and activating your copy of JBuilder 2008 do
-the following to import the JMRI code base.</P>
-
-Under the JBuilder "File" menu select "Import". A new window should pop
-up, select "CVS->Projects" from CVS, then press "Next". A new window
-asking for repository location information should appear. Enter the
-following for Host, Path and User.
-
-<P>Host: jmri.cvs.sourceforge.net <BR>
-Path: /cvsroot/jmri <BR>
-User: anonymous
-<P>Leave the password blank and then press "Next". A new window
-should appear, select "Use an existing module". A list of JMRI modules
-should appear, select "all" and press "Finish".</P>
-<P>This should start the download of the JMRI code base. Once it
-completes you should be able to build a new jmri jar file using an ant
-build. To do this select "Run->External Tools->Open External Tools
-Dialog.."</P>
-<P>Select Ant Build and use the "Browse Workspace.." button to
-select the java->build.xml file. Now press "Apply".
-<P>To build a jmri.jar file, select "Targets" and select only the
-"dist" check box, and then press "Run". After a few minutes new jmri.jar
-file will be created in the JBuilder->workspace folder.
-<P>If you're interested in building and running the JMRI code within
-the JBuilder environment you need to do the following. "Select Run->Open
-Run Dialog.." and then select "Java Application". Enter DecoderPro for
-the Name, and then press Browse and select "java" for the Project:, and
-then press the "Search" button and then find and select DecoderPro for
-the Main class.
-<P>Now under the "(x) = Arguments" tab, enter the Program arguments:
-%1%2%2%4%4%6%7%8%9.
-<P>And enter the following VM arguments:
-<P>
--Xms10m<Br>
--Xmx300m <Br>
--noverify <Br>
--Dsun.java2d.d3d=false <Br>
--Djava.security.policy=security.policy <Br>
--Djava.library.path=.;lib;lib/windows/x86 <Br>
--Djava.rmi.server.codebase=file:java/classes/ <Br>
--Dsun.java2d.noddraw
-<p>
-Note if you're using a 64 bit windows system change the library path to:
-<p>
--Djava.library.path=.;lib;lib/windows/x64
-
-<P>Now change the working directory to ${workspace_loc} by selecting
-the "Other" radio button and searching using the "Variables.." button.
-
-<P>You should now be completely operational. If you want debug
-messages sent to your console window, install a modified default.lcf
-file to the JBuilder->workspace directory. Now have some fun making
-changes to the JMRI code!
-
-
-<H2>JavaCC</H2>
-
-In March of 2010 JMRI developers started using JavaCC (Java Compiler
-Compiler) to generate code. Currently the compiler places the output
-files in the "tmp" directory under "java". The easiest way to create and
-populate the "tmp" directory is to use the ant build.
+<P>After downloading and activating your copy of JBuilder you can use the directions
+from the <A HREF="Eclipse.shtml">Eclipse</a> installation to configure JBuilder.
 
 </body>
 </html>
