@@ -212,6 +212,8 @@ public class DecoderPro3Window
     ResourceBundle rb = ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
     JSplitPane rosterGroupPane;
     JList groupsList;
+    JButton addGroupBtn;
+    JButton delGroupBtn;
     ListSelectionListener groupsListListener;
 
     JComponent createTop() {
@@ -289,6 +291,18 @@ public class DecoderPro3Window
                     Roster.instance().updateGroupList(groupsList);
                     groupsList.addListSelectionListener(groupsListListener);
                 }
+                if (e.getPropertyName().equals("RosterGroupAdded") &&
+                        groupsList.getModel().getSize() == 2) {
+                    // if the pane is hidden, show it when 1st group is created
+                    hideGroupsPane(false);
+                    delGroupBtn.setEnabled(true);
+                }
+                if (e.getPropertyName().equals("RosterGroupRemoved") &&
+                        groupsList.getModel().getSize() == 1) {
+                    // do not hide the pane, since the user may be intending to
+                    // add another group, and the pane includes a button to do so.
+                    delGroupBtn.setEnabled(false);
+                }
             }
         });
 
@@ -335,20 +349,23 @@ public class DecoderPro3Window
         JToolBar controls = new JToolBar();
         controls.setLayout(new GridLayout(1,0,0,0));
         controls.setFloatable(false);
-        JButton addGroup = new JButton("+"); // TODO: need nice + (plus) image here
-        JButton delGroup = new JButton("-"); // TODO: need nice - (minus) image here
-        addGroup.addActionListener(new ActionListener() {
+        addGroupBtn = new JButton("+"); // TODO: need nice + (plus) image here
+        delGroupBtn = new JButton("-"); // TODO: need nice - (minus) image here
+        addGroupBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new CreateRosterGroupAction("", getTop()).actionPerformed(e);
             }
         });
-        delGroup.addActionListener(new ActionListener() {
+        delGroupBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new DeleteRosterGroupAction("", getTop()).actionPerformed(e);
             }
         });
-        controls.add(addGroup);
-        controls.add(delGroup);
+        if (groupsList.getModel().getSize() == 1) {
+            delGroupBtn.setEnabled(false);
+        }
+        controls.add(addGroupBtn);
+        controls.add(delGroupBtn);
 
         groups.add(new JLabel("Roster Groups", JLabel.CENTER), BorderLayout.NORTH); // TODO: I18N
         groups.add(new JScrollPane(groupsList), BorderLayout.CENTER);
@@ -359,13 +376,14 @@ public class DecoderPro3Window
         rosterGroupPane.setOneTouchExpandable(true);
         rosterGroupPane.setResizeWeight(0); // emphasis rosters
 
-        if (p.getSimplePreferenceState(DecoderPro3Window.class.getName() + "hideGroups")) {
-            hideGroupsPane(true);
-            hideGroups = true;
-        }
         Object w = p.getProperty(DecoderPro3Window.class.getName(), "rosterGroupPaneDividerLocation");
         if (w != null) {
             rosterGroupPane.setDividerLocation(Integer.getInteger((String) w));
+        }
+        if (p.getSimplePreferenceState(DecoderPro3Window.class.getName() + "hideGroups")
+                || groupsList.getModel().getSize() == 1) {
+            hideGroupsPane(true);
+            hideGroups = true;
         }
 
         return rosterGroupPane;
