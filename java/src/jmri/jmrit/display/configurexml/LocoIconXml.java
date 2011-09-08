@@ -34,6 +34,7 @@ public class LocoIconXml extends PositionableLabelXml {
 
         // include contents
         element.setAttribute("text", p.getText());
+        storeTextInfo(p, element);
         element.setAttribute("icon", "yes");
         element.addContent(storeIcon("icon", (NamedIcon)p.getIcon()));
         RosterEntry entry = p.getRosterEntry();
@@ -97,7 +98,8 @@ public class LocoIconXml extends PositionableLabelXml {
 		}
         ed.putLocoIcon(l, textName);
         // load individual item's option settings after editor has set its global settings
-        loadCommonAttributes(l, Editor.MARKERS, element);        
+        loadCommonAttributes(l, Editor.MARKERS, element);
+        loadTextInfo(l, element);
      }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIconXml.class.getName());
