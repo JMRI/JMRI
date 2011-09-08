@@ -142,50 +142,55 @@ and select "Refresh".  The refresh operation should trigger a build of the works
 
 <P>To run an application do the following:</P>
 <ol>
-        
-    <LI>From the "Run" menu, select "Run..."  We'll use the window
-        that opens to configure which program(s) to run.  (If the Run menu
-        does not have a "Run..." entry, be sure you selected the java directory
-        in the navigation pane above - Eclipse menus are context sensitive)
-        
-    <LI>On the left side, highlight "Java Application", then press 
-        the "New" icon above it. The icon looks like a document
-        with a plus sign on the upper-right.
-    
-    <LI>You should now have a new "Main" tab highlighted.  Above that,
-        replace "New_configuration" with "DecoderPro". Below it, 
-        enter "jmri" (lower case important) for "Project:" and
-        "apps.DecoderPro.DecoderPro" for "Main class:".
-    
-    <LI>Select the "Arguments" tab, and under VM argments enter (You should probably cut and paste):
-    <BR>
-    
-<PRE>
+
+<LI>You need to configure the Java complier to not scrub the output
+folders, otherwise some of the resources files that are loaded by the
+ant build will disappear. To stop the scrub, select under the main
+control bar "Window-&gt;Preferences". Then in the preferences window,
+select "Java-&gt;Complier-&gt;Building". In the building window deselect
+"Scrub output folders when cleaning projects", then "OK".</LI>
+
+<LI>Then run the ant build again to load the output folders.</LI>
+
+<LI>From the "Run" menu, select "Run..." We'll use the window that
+opens to configure which program(s) to run. (If the Run menu does not
+have a "Run..." entry, be sure you selected the java directory in the
+navigation pane above - Eclipse menus are context sensitive)</LI>
+
+<LI>On the left side, highlight "Java Application", then press the
+"New" icon above it. The icon looks like a document with a plus sign on
+the upper-right.</LI>
+
+<LI>You should now have a new "Main" tab highlighted. Above that,
+replace "New_configuration" with "DecoderPro". Below it, enter "jmri"
+(lower case important) for "Project:" and "apps.DecoderPro.DecoderPro"
+for "Main class:".</LI>
+
+<LI>Select the "Arguments" tab, and under VM argments enter (You
+should probably cut and paste): 
+<BR> <PRE>
 -Xms10m
 -Xmx300m
 -Djava.security.policy=lib/security.policy 
 -Dapple.laf.useScreenMenuBar=true
-</PRE>
-If you're using a 32 bit windows system add the library path:
-<PRE>
+</PRE> If you're using a 32 bit windows system add the library path: <PRE>
 -Djava.library.path=.;lib;lib/windows/x86 
-</PRE>
-Note if you're using a 64 bit windows system change the library path to:
-<PRE>
+</PRE> Note if you're using a 64 bit windows system change the library path
+to: <PRE>
 -Djava.library.path=.;lib;lib/windows/x64
-</PRE>
-        
-    <LI>Select the "Common" tab, the section on "Display in favorites menu",
-        check the boxes next to "Run" and "Debug"
+</PRE></LI>
+
+<LI>Optional, select the "Common" tab, the section on "Display in favorites menu",
+        check the boxes next to "Run" and "Debug"</LI>
     
     <LI>If you'd like to create targets to make it easy to 
         run PanelPro and AllTests, repeat the above steps
         to create a new "Java Application"
         except specifying "apps.PanelPro.PanelPro" and
-        "apps.tests.AllTest" respectively.        
+        "apps.tests.AllTest" respectively.</LI>  
         
     <LI>Click "Apply", then "Close"  (You could click "Run" at this point, but
-        we've got a little more to do)
+        we've got a little more to do)</LI>
         
     <LI>You should now be back to the usual Eclipse navigator view, 
         where most development work is done. To see some particular
@@ -229,7 +234,6 @@ JavaCC plug-in.  Here's the steps:
 
       </div>
       <!-- closes #mainContent-->
-    </div>
     <!-- closes #mBody-->
 
 </body>
