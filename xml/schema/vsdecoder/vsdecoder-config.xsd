@@ -155,6 +155,7 @@ Top Level Elements not brought over from DTD
 	<xs:element name="end-file" type="xs:string"/>
 	<xs:element name="short-file" type="xs:string"/>
 	<xs:element name="start-sound-duration" type="xs:integer"/>
+	<xs:element name="gain" type="xs:float"/>
       </xs:sequence>
 
       <!-- or engine-sound -->
@@ -163,6 +164,7 @@ Top Level Elements not brought over from DTD
 	    <xs:complexType>
 	      <xs:all>
 		<xs:element name="file" type="xs:string"/>
+		<xs:element name="gain" type="xs:float"/>
 	      </xs:all>
 	    </xs:complexType>
 	  </xs:element>
@@ -170,25 +172,38 @@ Top Level Elements not brought over from DTD
 	    <xs:complexType>
 	      <xs:all>
 		<xs:element name="file" type="xs:string"/>
+		<xs:element name="gain" type="xs:float"/>
 	      </xs:all>
 	    </xs:complexType>
 	  </xs:element>
-	<xs:element name="notch-up-sound" minOccurs="0" maxOccurs="unbounded">
-	  <xs:complexType>
-	    <xs:all>
-	      <xs:element name="file" type="xs:string"/>
-	    </xs:all>
-	</xs:complexType>
-	</xs:element>
-	<xs:element name="notches" minOccurs="1" maxOccurs="1" type="xs:integer">
-	<xs:element name="notch-sound" minOccurs="0" maxOccurs="unbounded">
-	  <xs:complexType>
-	    <xs:all>
-	      <xs:element name="notch" type="xs:integer"/>
-	      <xs:element name="file" type="xs:string"/>
-	    </xs:all>
-	  </xs:complexType>
-	</xs:element>
+	  <xs:element name="notch-up-sound" minOccurs="0" maxOccurs="unbounded">
+	    <xs:complexType>
+	      <xs:all>
+		<xs:element name="file" type="xs:string"/>
+		<xs:element name="gain" type="xs:float"/>
+	      </xs:all>
+	    </xs:complexType>
+	  </xs:element>
+	  <xs:element name="notches" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+	  <xs:element name="notch-sound" minOccurs="0" maxOccurs="unbounded">
+	    <xs:complexType>
+	      <xs:all>
+		<xs:element name="notch" type="xs:integer"/>
+		<xs:element name="file" type="xs:string"/>
+		<xs:element name="gain" type="xs:float"/>
+	      </xs:all>
+	    </xs:complexType>
+	  </xs:element>
+	  <xs:element name="notch-transition" minOccurs="0" maxOccurs="unbounded">
+	    <xs:complexType>
+	      <xs:all>
+		<xs:element name="prev-notch" type="xs:integer"/>
+		<xs:element name="next-notch" type="xs:integer"/>
+		<xs:element name="file" type="xs:string"/>
+		<xs:element name="gain" type="xs:float"/>
+	      </xs:all>
+	    </xs:complexType>
+	  </xs:element>
       </xs:sequence>
     </xs:choice>
     
