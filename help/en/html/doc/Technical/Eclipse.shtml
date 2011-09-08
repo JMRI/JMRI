@@ -229,6 +229,26 @@ JavaCC plug-in.  Here's the steps:
 <p>
 5) Confirm that the "Java Build Path" includes the tmp directory (see Project Properties).
 
+<H2>Complier Errors and Warnings</H2>
+
+The default Eclipse complier configuration produces many unnecessary warnings.  You can adjust the warnings to match the screen shots as
+shown below by going to Window-&gt;Preferences and selecting "Java-&gt;Complier-&gt;Errors/Warnings"
+
+<P>
+<img src="images/ErrorsWarningsCodeStyle.png">
+</P>
+<P>
+<img src="images/ErrorsWarningsPotential.png">
+</P>
+<P>
+<img src="images/ErrorsWarningsName.png">
+</P>
+<P>
+<img src="images/ErrorsWarningsUnnecessary.png">
+</P>
+<P>
+<img src="images/ErrorsWarningsAnnotations.png">
+</P>
 
 <!--#include virtual="/Footer" -->
 
