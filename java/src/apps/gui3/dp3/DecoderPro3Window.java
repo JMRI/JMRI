@@ -487,7 +487,7 @@ public class DecoderPro3Window
         cL.ipadx = 3;
         cL.anchor = GridBagConstraints.EAST;
         cL.insets = new Insets (0,0,0,15);
-        JLabel row0Label = new JLabel(rbroster.getString("FieldID"), JLabel.LEFT);
+        JLabel row0Label = new JLabel(rbroster.getString("FieldID")+":", JLabel.LEFT);
         gbLayout.setConstraints(row0Label,cL);
         panel.setLayout(gbLayout);
         panel.add(row0Label);
@@ -501,7 +501,7 @@ public class DecoderPro3Window
         panel.add(id);
 
         cL.gridy = 1;
-        JLabel row1Label = new JLabel(rbroster.getString("FieldRoadName"), JLabel.LEFT);
+        JLabel row1Label = new JLabel(rbroster.getString("FieldRoadName")+":", JLabel.LEFT);
         gbLayout.setConstraints(row1Label,cL);
         panel.add(row1Label);
 
@@ -512,7 +512,7 @@ public class DecoderPro3Window
         panel.add(roadName);
 
         cL.gridy = 2;
-        JLabel row2Label = new JLabel(rbroster.getString("FieldRoadNumber"));
+        JLabel row2Label = new JLabel(rbroster.getString("FieldRoadNumber")+":");
         gbLayout.setConstraints(row2Label,cL);
         panel.add(row2Label);
 
@@ -523,7 +523,7 @@ public class DecoderPro3Window
         panel.add(roadNumber);
 
         cL.gridy = 3;
-        JLabel row3Label = new JLabel(rbroster.getString("FieldManufacturer"));
+        JLabel row3Label = new JLabel(rbroster.getString("FieldManufacturer")+":");
         gbLayout.setConstraints(row3Label,cL);
         panel.add(row3Label);
 
@@ -534,7 +534,7 @@ public class DecoderPro3Window
         panel.add(mfg);
 
         cL.gridy = 4;
-        JLabel row4Label = new JLabel(rbroster.getString("FieldOwner"));
+        JLabel row4Label = new JLabel(rbroster.getString("FieldOwner")+":");
         gbLayout.setConstraints(row4Label,cL);
         panel.add(row4Label);
 
@@ -545,7 +545,7 @@ public class DecoderPro3Window
         panel.add(owner);
 
         cL.gridy = 5;
-        JLabel row5Label = new JLabel(rbroster.getString("FieldModel"));
+        JLabel row5Label = new JLabel(rbroster.getString("FieldModel")+":");
         gbLayout.setConstraints(row5Label,cL);
         panel.add(row5Label);
 
@@ -571,7 +571,7 @@ public class DecoderPro3Window
 
 
         cL.gridy = 9;
-        JLabel row9Label = new JLabel(rbroster.getString("FieldDecoderFamily"));
+        JLabel row9Label = new JLabel(rbroster.getString("FieldDecoderFamily")+":");
         gbLayout.setConstraints(row9Label,cL);
         panel.add(row9Label);
 
@@ -582,7 +582,7 @@ public class DecoderPro3Window
         panel.add(decoderFamily);
 
         cL.gridy = 10;
-        JLabel row10Label = new JLabel(rbroster.getString("FieldDecoderModel"));
+        JLabel row10Label = new JLabel(rbroster.getString("FieldDecoderModel")+":");
         gbLayout.setConstraints(row10Label,cL);
         panel.add(row10Label);
 
@@ -597,7 +597,7 @@ public class DecoderPro3Window
         cR.gridy = 11;
 
         cL.gridy = 12;
-        JLabel row12Label = new JLabel(rbroster.getString("FieldFilename"));
+        JLabel row12Label = new JLabel(rbroster.getString("FieldFilename")+":");
         gbLayout.setConstraints(row12Label,cL);
         panel.add(row12Label);
 
@@ -608,7 +608,7 @@ public class DecoderPro3Window
         panel.add(filename);
 
         cL.gridy = 13;
-        JLabel row13Label = new JLabel(rbroster.getString("FieldDateUpdated"));
+        JLabel row13Label = new JLabel(rbroster.getString("FieldDateUpdated")+":");
         gbLayout.setConstraints(row13Label,cL);
         panel.add(row13Label);
 

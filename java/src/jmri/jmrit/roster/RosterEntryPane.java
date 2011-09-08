@@ -124,7 +124,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         cL.ipadx = 3;
         cL.anchor = GridBagConstraints.NORTHWEST;
         cL.insets = new Insets (0,0,0,15);
-        JLabel row0Label = new JLabel(rb.getString("FieldID"));
+        JLabel row0Label = new JLabel(rb.getString("FieldID")+":");
         gbLayout.setConstraints(row0Label,cL);
         add(row0Label);
 
@@ -136,7 +136,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(id);
 
         cL.gridy = 1;
-        JLabel row1Label = new JLabel(rb.getString("FieldRoadName"));
+        JLabel row1Label = new JLabel(rb.getString("FieldRoadName")+":");
         gbLayout.setConstraints(row1Label,cL);
         add(row1Label);
 
@@ -146,7 +146,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(roadName);
 
         cL.gridy = 2;
-        JLabel row2Label = new JLabel(rb.getString("FieldRoadNumber"));
+        JLabel row2Label = new JLabel(rb.getString("FieldRoadNumber")+":");
         gbLayout.setConstraints(row2Label,cL);
         add(row2Label);
 
@@ -156,7 +156,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(roadNumber);
 
         cL.gridy = 3;
-        JLabel row3Label = new JLabel(rb.getString("FieldManufacturer"));
+        JLabel row3Label = new JLabel(rb.getString("FieldManufacturer")+":");
         gbLayout.setConstraints(row3Label,cL);
         add(row3Label);
 
@@ -166,7 +166,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(mfg);
 
         cL.gridy = 4;
-        JLabel row4Label = new JLabel(rb.getString("FieldOwner"));
+        JLabel row4Label = new JLabel(rb.getString("FieldOwner")+":");
         gbLayout.setConstraints(row4Label,cL);
         add(row4Label);
 
@@ -176,7 +176,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(owner);
 
         cL.gridy = 5;
-        JLabel row5Label = new JLabel(rb.getString("FieldModel"));
+        JLabel row5Label = new JLabel(rb.getString("FieldModel")+":");
         gbLayout.setConstraints(row5Label,cL);
         add(row5Label);
 
@@ -186,7 +186,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(model);
 
         cL.gridy = 6;
-        JLabel row6Label = new JLabel(rb.getString("FieldDCCAddress"));
+        JLabel row6Label = new JLabel(rb.getString("FieldDCCAddress")+":");
         gbLayout.setConstraints(row6Label,cL);
         add(row6Label);
 
@@ -195,7 +195,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(selPanel);
 
         cL.gridy = 7;
-        JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit"));
+        JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit")+":");
         gbLayout.setConstraints(row7Label,cL);
         add(row7Label);
 
@@ -210,7 +210,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(maxSpeedSpinner);
         
         cL.gridy = 8;
-        JLabel row8Label = new JLabel(rb.getString("FieldComment"));
+        JLabel row8Label = new JLabel(rb.getString("FieldComment")+":");
         gbLayout.setConstraints(row8Label,cL);
         add(row8Label);
 
@@ -220,7 +220,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(commentScroller);
 
         cL.gridy = 9;
-        JLabel row9Label = new JLabel(rb.getString("FieldDecoderFamily"));
+        JLabel row9Label = new JLabel(rb.getString("FieldDecoderFamily")+":");
         gbLayout.setConstraints(row9Label,cL);
         add(row9Label);
 
@@ -230,7 +230,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(decoderFamily);
 
         cL.gridy = 10;
-        JLabel row10Label = new JLabel(rb.getString("FieldDecoderModel"));
+        JLabel row10Label = new JLabel(rb.getString("FieldDecoderModel")+":");
         gbLayout.setConstraints(row10Label,cL);
         add(row10Label);
 
@@ -240,7 +240,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(decoderModel);
 
         cL.gridy = 11;
-        JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment"));
+        JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment")+":");
         gbLayout.setConstraints(row11Label,cL);
         add(row11Label);
 
@@ -250,7 +250,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(decoderCommentScroller);
 
         cL.gridy = 12;
-        JLabel row12Label = new JLabel(rb.getString("FieldFilename"));
+        JLabel row12Label = new JLabel(rb.getString("FieldFilename")+":");
         gbLayout.setConstraints(row12Label,cL);
         add(row12Label);
 
@@ -260,7 +260,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(filename);
 
         cL.gridy = 13;
-        JLabel row13Label = new JLabel(rb.getString("FieldDateUpdated"));
+        JLabel row13Label = new JLabel(rb.getString("FieldDateUpdated")+":");
         gbLayout.setConstraints(row13Label,cL);
         add(row13Label);
 

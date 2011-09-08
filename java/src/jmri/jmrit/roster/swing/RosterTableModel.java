@@ -6,6 +6,7 @@ import jmri.jmrit.roster.*;
 import javax.swing.ImageIcon;
 
 import java.beans.PropertyChangeListener;
+import java.util.ResourceBundle;
 
 /**
  * Table data model for display of Roster variable values.
@@ -22,6 +23,8 @@ import java.beans.PropertyChangeListener;
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+    
     public static final int IDCOL = 0;
     static final int ADDRESSCOL = 1;
     static final int ICONCOL = 2;
@@ -68,15 +71,15 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOL:         return "ID";
-        case ADDRESSCOL:    return "DCC Address";
-        case DECODERCOL:    return "Decoder";
-        case ROADNAMECOL:   return "Road Name";
-        case ROADNUMBERCOL: return "Road Number";
-        case MFGCOL:        return "Manufacturer";
-        case ICONCOL:       return "Icon";
-        case OWNERCOL:      return "Owner";
-        case DATEUPDATECOL: return "Last Updated";
+        case IDCOL:         return rb.getString("FieldID");
+        case ADDRESSCOL:    return rb.getString("FieldDCCAddress");
+        case DECODERCOL:    return rb.getString("FieldDecoderModel");
+        case ROADNAMECOL:   return rb.getString("FieldRoadName");
+        case ROADNUMBERCOL: return rb.getString("FieldRoadNumber");
+        case MFGCOL:        return rb.getString("FieldManufacturer");
+        case ICONCOL:       return rb.getString("FieldIcon");
+        case OWNERCOL:      return rb.getString("FieldOwner");
+        case DATEUPDATECOL: return rb.getString("FieldDateUpdated");
         default:            return "<UNKNOWN>";
         }
     }
