@@ -180,18 +180,16 @@ class VSDecoderManager {
 	if ((root = vf.getRoot()) == null)
 	    return;
 
-	List<Element> profiles = root.getChildren("profile");
-	if ((profiles != null) && (profiles.size() > 0)) {
-	    // New version: Create a profile name / file name map for each Profile
-	    for (java.util.Iterator i = profiles.iterator(); i.hasNext();) {
-		Element e = (Element) i.next();
-		log.debug(e.toString());
-		if (e.getAttributeValue("name") != null)
-		    profiletable.put(e.getAttributeValue("name"), vf.getName());
-	    }
-	    
-	    fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
+	//List<Element> profiles = root.getChildren("profile");
+	java.util.Iterator i = root.getChildren("profile").iterator();
+	while (i.hasNext()) {
+	    Element e = (Element) i.next();
+	    log.debug(e.toString());
+	    if (e.getAttributeValue("name") != null)
+		profiletable.put(e.getAttributeValue("name"), vf.getName());
 	}
+	    
+	fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());

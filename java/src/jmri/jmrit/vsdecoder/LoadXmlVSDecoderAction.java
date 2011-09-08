@@ -110,7 +110,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
 		for (java.util.Iterator<Element> i = profiles.iterator(); i.hasNext();) {
 		    Element e = i.next();
 		    log.debug(e.toString());
-		    VSDecoder vsd = VSDecoderManager.instance().getVSDecoder(e.getAttribute("name").getValue(), f.getPath());
+		    //VSDecoder vsd = VSDecoderManager.instance().getVSDecoder(e.getAttribute("name").getValue(), f.getPath());
 		}
 	    }
 

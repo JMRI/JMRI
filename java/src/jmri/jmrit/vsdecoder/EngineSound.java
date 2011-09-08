@@ -269,7 +269,7 @@ class EngineSound extends VSDSound {
 	transition_sounds = new ArrayList<NotchTransition>();
 
 	// Get the notch sounds
-	Iterator<Element> itr = (e.getChildren("notch-sound")).iterator();
+	Iterator itr =  (e.getChildren("notch-sound")).iterator();
 	int i = 0; 
 	while(itr.hasNext()) {
 	    el =(Element)itr.next();

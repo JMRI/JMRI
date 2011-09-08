@@ -303,8 +303,9 @@ public class VSDecoder implements PropertyChangeListener {
 	this.setVSDFilePath(vf.getName());
 
 	// Find the <profile/> element that matches the name pn
-	List<Element> profiles = vf.getRoot().getChildren("profile");
-	java.util.Iterator i = profiles.iterator();
+	//List<Element> profiles = vf.getRoot().getChildren("profile");
+	//java.util.Iterator i = profiles.iterator();
+	java.util.Iterator i = vf.getRoot().getChildren("profile").iterator();
 	while (i.hasNext()) {
 	    e = (Element) i.next();
 	    if (e.getAttributeValue("name").equals(pn))
