@@ -21,6 +21,7 @@ package jmri.jmrit.vsdecoder;
 
 import java.util.EventObject;
 
+@SuppressWarnings("serial")
 public class VSDManagerEvent extends EventObject {
 
     VSDecoderManager.EventType type;

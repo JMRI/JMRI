@@ -26,10 +26,8 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import org.jdom.Element;
-import java.awt.event.WindowEvent;
 
 public class VSDecoder implements PropertyChangeListener {
 
@@ -287,6 +285,7 @@ public class VSDecoder implements PropertyChangeListener {
     public void setXml(VSDFile vf) { }
     */
 
+    @SuppressWarnings("rawtypes")
     public void setXml(VSDFile vf, String pn) {
 	Iterator itr;
 	Element e = null;

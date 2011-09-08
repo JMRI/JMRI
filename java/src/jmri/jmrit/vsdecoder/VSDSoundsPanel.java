@@ -23,6 +23,7 @@ import java.awt.*;
 import jmri.util.swing.*;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class VSDSoundsPanel extends JmriPanel {
 
     String decoder_id;

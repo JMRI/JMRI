@@ -38,6 +38,7 @@ import org.jdom.output.*;
  * @author Daniel Boudreau (C) Copyright 2008
  * @version     $Revision$
  */
+@SuppressWarnings("serial")
 public class StoreXmlVSDecoderAction extends AbstractAction {
 
     static final ResourceBundle rb = VSDecoderBundle.bundle();

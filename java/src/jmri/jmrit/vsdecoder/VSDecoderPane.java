@@ -43,6 +43,7 @@ import java.awt.event.WindowListener;
  * @author	   Mark Underwood   Copyright (C) 2011
  * @version   $Revision$
  */
+@SuppressWarnings("serial")
 public class VSDecoderPane extends JmriPanel {
 
     //private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();

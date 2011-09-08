@@ -28,7 +28,6 @@ import javax.swing.JFrame;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.util.ResourceBundle;
-import java.util.List;
 import org.jdom.Element;
 
 // VSDecoderFactory
@@ -175,6 +174,7 @@ class VSDecoderManager {
 	}
     }
 
+    @SuppressWarnings("rawtypes")
     public void loadProfiles(VSDFile vf) {
 	Element root;
 	if ((root = vf.getRoot()) == null)

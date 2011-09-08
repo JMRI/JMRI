@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+@SuppressWarnings("serial")
 public class VSDecoderPreferencesAction extends AbstractAction {
     /**
      * Constructor

@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
+@SuppressWarnings("serial")
 public class EnginePane extends JPanel {
     // Superclass for Diesel, Steam, Electric panes.
     // Doesn't really do anything.

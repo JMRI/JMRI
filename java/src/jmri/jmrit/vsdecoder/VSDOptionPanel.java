@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import jmri.util.swing.*;
 
+@SuppressWarnings("serial")
 public class VSDOptionPanel extends JmriPanel {
 
     private javax.swing.JComboBox hornOptionComboBox;

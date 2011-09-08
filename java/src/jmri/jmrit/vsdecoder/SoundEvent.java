@@ -204,6 +204,7 @@ public class SoundEvent implements PropertyChangeListener {
 	this.setXml(el, null);
     }
 
+    @SuppressWarnings("cast")
     protected void addXmlTrigger(Element te, VSDFile vf) {
 	String tts;
 	Trigger.TriggerType tt;
@@ -313,6 +314,7 @@ public class SoundEvent implements PropertyChangeListener {
 	    buttontype = SoundEvent.ButtonType.NONE;
 
 	// Get the SoundEvent's Triggers and set them up.
+	@SuppressWarnings("rawtypes")
 	Iterator itr = (el.getChildren("trigger")).iterator();
 	while (itr.hasNext()) {
 	    te = (Element)itr.next();

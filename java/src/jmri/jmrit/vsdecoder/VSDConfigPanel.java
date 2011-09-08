@@ -33,6 +33,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriPanel;
 import jmri.DccLocoAddress;
 
+@SuppressWarnings("serial")
 public class VSDConfigPanel extends JmriPanel {
 
     private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
@@ -94,6 +95,7 @@ public class VSDConfigPanel extends JmriPanel {
     //
     // Read the addressTextBox and broadcast the new address to
     // any listeners.
+    @SuppressWarnings("cast")
     protected void updateAddress() {
 	// Simulates the clicking of the address Set button
 	VSDecoder dec = main_pane.getDecoder();
@@ -121,6 +123,7 @@ public class VSDConfigPanel extends JmriPanel {
     // setProfileList()
     //
     // Perform the actual work of changing the profileComboBox's contents
+    @SuppressWarnings("cast")
     public void setProfileList(ArrayList<String> s) {
 	VSDecoder vsd;
 	boolean default_set = false;
@@ -128,7 +131,7 @@ public class VSDConfigPanel extends JmriPanel {
 	log.warn("updating the profile list.");
 	
 	profileComboBox.setModel(new DefaultComboBoxModel());
-	Iterator itr = s.iterator();
+	Iterator<String> itr = s.iterator();
 	while (itr.hasNext()) {
 
 	    String st = (String)itr.next();

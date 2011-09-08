@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 
+@SuppressWarnings("serial")
 class DieselPane extends EnginePane {
     
     static final int THROTTLE_MIN = 1;

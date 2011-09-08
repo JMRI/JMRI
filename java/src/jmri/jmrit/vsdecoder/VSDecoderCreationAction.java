@@ -26,9 +26,10 @@ import java.io.File;
 /**
  * Create a new VSDecoder Pane.
  *
- * @author			Glen Oberhauser
+ * @author			Mark Underwood
  * @version     $Revision$
  */
+@SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {
 
     /**

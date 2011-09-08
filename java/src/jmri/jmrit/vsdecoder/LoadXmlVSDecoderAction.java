@@ -40,6 +40,7 @@ import org.jdom.Element;
  * @author     Mark Underwood 2011
  * @version     $Revision$
  */
+@SuppressWarnings("serial")
 public class LoadXmlVSDecoderAction extends AbstractAction {
     static final ResourceBundle rb = VSDecoderBundle.bundle();
     

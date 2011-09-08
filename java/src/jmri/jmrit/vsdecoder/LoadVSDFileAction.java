@@ -36,6 +36,7 @@ import java.util.ResourceBundle;
  * @author     Mark Underwood 2011
  * @version     $Revision$
  */
+@SuppressWarnings("serial")
 public class LoadVSDFileAction extends AbstractAction {
     static final ResourceBundle rb = VSDecoderBundle.bundle();
     
@@ -82,7 +83,6 @@ public class LoadVSDFileAction extends AbstractAction {
     }
     
     
-    @SuppressWarnings("unchecked")
     public static boolean loadVSDFile(java.io.File f) {
 	VSDFile vsdfile;
 	// Create a VSD (zip) file.

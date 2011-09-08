@@ -28,6 +28,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import java.awt.Dimension;
 
+@SuppressWarnings("serial")
 class VSDecoderFrame extends JmriJFrame {
 
     private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
