@@ -52,6 +52,7 @@ class NotchTransition extends SoundBite {
     public void setPrevNotch(int p) { prev_notch = p; } 
     public void setNextNotch(int p) { next_notch = p; }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchTransition.class.getName());
+    //Unused for now... commented out to hide the warning.
+    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchTransition.class.getName());
  
  }

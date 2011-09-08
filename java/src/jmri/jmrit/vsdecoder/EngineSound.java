@@ -216,7 +216,33 @@ class EngineSound extends VSDSound {
     public void setEngineStarted(boolean es) {
 	engine_started = es;
     }
-    
+
+    public void shutdown() {
+	for (SoundBite ns : notch_sounds.values()) {
+	    ns.stop();
+	}
+	for (SoundBite nus : notchup_sounds) {
+	    nus.stop();
+	}
+	for (NotchTransition nt : transition_sounds) {
+	    nt.stop();
+	}
+	if (notchup_sound != null) notchup_sound.stop();
+	if (start_sound != null) start_sound.stop();
+	if (shutdown_sound != null) shutdown_sound.stop();
+	
+    }
+
+    private float setXMLGain(Element e) {
+	String g = e.getChildText("gain");
+	log.debug("  gain: " + g);
+	if ((g != null) && !(g.equals("")))
+	    return(Float.parseFloat(g));
+	else
+	    return(default_gain);
+
+    }
+
     public Element getXml() {
 	Element me = new Element("sound");
 	me.setAttribute("name", this.getName());
@@ -243,7 +269,7 @@ class EngineSound extends VSDSound {
 	transition_sounds = new ArrayList<NotchTransition>();
 
 	// Get the notch sounds
-	Iterator itr = (e.getChildren("notch-sound")).iterator();
+	Iterator<Element> itr = (e.getChildren("notch-sound")).iterator();
 	int i = 0; 
 	while(itr.hasNext()) {
 	    el =(Element)itr.next();
@@ -253,6 +279,8 @@ class EngineSound extends VSDSound {
 	    sb = new SoundBite(vf, fn, "Engine_n" + i, "Engine_" + i);
 	    sb.setLooped(true);
 	    sb.setFadeTimes(100, 100);
+	    sb.setGain(setXMLGain(el));
+	    // Store in the list.
 	    notch_sounds.put(nn, sb);
 	    i++;
 	}
@@ -271,6 +299,8 @@ class EngineSound extends VSDSound {
 	    nt.setLength();
 	    nt.setLooped(false);
 	    nt.setFadeTimes(10, 100);
+	    // Handle gain
+	    nt.setGain(setXMLGain(el));
 	    transition_sounds.add(nt);
 	    i++;
 	}
@@ -282,6 +312,8 @@ class EngineSound extends VSDSound {
 	    log.debug("Start sound: " + fn);
 	    start_sound = new SoundBite(vf, fn, "Engine_start", 
 					"Engine_Start");
+	    // Handle gain
+	    start_sound.setGain(setXMLGain(el));
 	    start_sound.setLooped(false);
 	}
 	el = e.getChild("shutdown-sound");
@@ -291,6 +323,8 @@ class EngineSound extends VSDSound {
 	    shutdown_sound = new SoundBite(vf, fn, "Engine_shutdown",
 					   "Engine_Shutdown");
 	    shutdown_sound.setLooped(false);
+	    // Handle gain
+	    shutdown_sound.setGain(setXMLGain(el));
 	}
 	itr = e.getChildren("notch-up-sound").iterator();
 	i = 0;
@@ -305,6 +339,8 @@ class EngineSound extends VSDSound {
 	    SoundBite ns = new SoundBite(vf, fn, "Engine_notch_up_n" + i,
 					 "Engine_NotchUp_" + i);
 	    ns.setLooped(false);
+	    // Handle gain
+	    ns.setGain(setXMLGain(el));
 	    notchup_sounds.add(ns);
 	    i++;
 	}

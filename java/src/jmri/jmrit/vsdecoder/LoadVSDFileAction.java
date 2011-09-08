@@ -26,8 +26,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 import java.util.ResourceBundle;
-import org.jdom.Element;
-
 
 /**
  *  Load VSDecoder Profiles from XML

@@ -138,29 +138,6 @@ class VSDecoderManager {
 	return(decodertable.get(id));
     }
 
-    @Deprecated
-    public VSDecoder getVSDecoder(String profile_name, boolean create) {
-	VSDecoder rv = null;
-
-	// If the decoder is already in the hashmap, just return a pointer to it.
-	if (decodertable.containsKey(profile_name)) {
-		return(decodertable.get(profile_name));
-	} else if (create) {
-	    rv = new VSDecoder(getNextVSDecoderID(), profile_name);
-	    if (!rv.isInitialized()) {
-		return(null);
-	    } else {
-		decodertable.put(rv.getID(), rv);
-		return(rv);
-	    }
-	} else {
-	    // Not in hashmap.  Will need to load from file, or fail.
-	    // For now, create a new one and add it to the table.
-	    log.warn("Failed to find requested decoder: " + profile_name);
-	    return(null);
-	}
-    } 
-
     public void setDefaultVSDecoder(VSDecoder d) {
 	default_decoder = d;
     }
@@ -203,7 +180,7 @@ class VSDecoderManager {
 	if ((root = vf.getRoot()) == null)
 	    return;
 
-	List profiles = root.getChildren("profile");
+	List<Element> profiles = root.getChildren("profile");
 	if ((profiles != null) && (profiles.size() > 0)) {
 	    // New version: Create a profile name / file name map for each Profile
 	    for (java.util.Iterator i = profiles.iterator(); i.hasNext();) {
@@ -213,50 +190,6 @@ class VSDecoderManager {
 		    profiletable.put(e.getAttributeValue("name"), vf.getName());
 	    }
 	    
-	    fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
-	}
-    }
-
-    @Deprecated
-    public void loadVSDProfiles(Element root, String path) {
-	List profiles = root.getChildren("profile");
-	if ((profiles != null) && (profiles.size() > 0)) {
-	    // New version: Create a profile name / file name map for each Profile
-	    for (java.util.Iterator i = profiles.iterator(); i.hasNext();) {
-		Element e = (Element) i.next();
-		log.debug(e.toString());
-		if (e.getAttributeValue("name") != null)
-		    profiletable.put(e.getAttributeValue("name"), path);
-	    }
-	    fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
-	}
-    }
-
-    @Deprecated
-    public void loadVSDecoders(Element root, VSDFile vf) {
-	loadVSDecoders(vf);
-    }
-
-    public void loadVSDecoders(VSDFile vf) {
-	Element root;
-	if ((root = vf.getRoot()) == null)
-	    return;
-
-	List profiles = root.getChildren("profile");
-	if ((profiles != null) && (profiles.size() > 0)) {
-	    // Create a new VSDecoder object for each Profile in the XML file.
-	    this.setDefaultVSDecoder(null);
-	    for (java.util.Iterator i = profiles.iterator(); i.hasNext();) {
-		Element e = (Element) i.next();
-		log.debug(e.toString());
-		VSDecoder vsd = this.getVSDecoder(e.getAttribute("name").getValue(), true);
-		vsd.setXml(e, vf);
-		decodertable.put(vsd.getID(), vsd);
-		// Only set this as a default if it's the only (or first) one in the file.
-		if (vsd.isDefault() && (this.getDefaultVSDecoder() == null)) {
-		    setDefaultVSDecoder(vsd);
-		}
-	    }
 	    fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
 	}
     }

@@ -123,6 +123,8 @@ class SoundBite extends VSDSound {
 	sound_src.setFadeOut(out);
     }
 
+    public void shutdown() { }
+
     public void play() {
 	sound_src.play();
 	is_playing = false;
@@ -183,12 +185,19 @@ class SoundBite extends VSDSound {
 
 	long num_frames = buf.getLength();
 	int frequency = buf.getFrequency();
+
+	
 	/*
 	long num_frames = 1;
 	long frequency = 125;
 	*/
-
-	return((1000 * num_frames) / frequency);
+	if (frequency <= 0) {
+	    // Protect against divide-by-zero errors
+	    return(0l);
+	}
+	else {
+	    return((1000 * num_frames) / frequency);
+	}
     }
 
 

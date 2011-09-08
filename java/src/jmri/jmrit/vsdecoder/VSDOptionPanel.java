@@ -67,7 +67,8 @@ public class VSDOptionPanel extends JmriPanel {
 	this.add(y);
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionPanel.class.getName());
+    // Unused as yet.  Commented out to hide the compiler warning.
+    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionPanel.class.getName());
 
     
 }

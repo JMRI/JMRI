@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jdom.Element;
+import java.awt.event.WindowEvent;
 
 public class VSDecoder implements PropertyChangeListener {
 
@@ -96,6 +97,21 @@ public class VSDecoder implements PropertyChangeListener {
 
     public String getVSDFilePath() {
 	return(vsd_path);
+    }
+
+    public void windowChange(java.awt.event.WindowEvent e) {
+	log.debug("decoder.windowChange() - " + e.toString());
+	log.debug("param string = " + e.paramString());
+	//if (e.paramString().equals("WINDOW_CLOSING")) {
+	    // Shut down the sounds.
+	    log.debug("Shutting down sounds...");
+	    for (VSDSound vs : sound_list.values()) {
+		log.debug("Stopping sound: " + vs.getName());
+		vs.shutdown();
+	    }
+
+	    
+	    //}
     }
 
     public void throttlePropertyChange(PropertyChangeEvent event) {
@@ -256,6 +272,7 @@ public class VSDecoder implements PropertyChangeListener {
 	return(me);
     }
 
+    /*
     @Deprecated
     public void setXml(Element e) {
 	this.setXml(e, null);
@@ -268,6 +285,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     @Deprecated
     public void setXml(VSDFile vf) { }
+    */
 
     public void setXml(VSDFile vf, String pn) {
 	Iterator itr;
@@ -285,7 +303,7 @@ public class VSDecoder implements PropertyChangeListener {
 	this.setVSDFilePath(vf.getName());
 
 	// Find the <profile/> element that matches the name pn
-	List profiles = vf.getRoot().getChildren("profile");
+	List<Element> profiles = vf.getRoot().getChildren("profile");
 	java.util.Iterator i = profiles.iterator();
 	while (i.hasNext()) {
 	    e = (Element) i.next();

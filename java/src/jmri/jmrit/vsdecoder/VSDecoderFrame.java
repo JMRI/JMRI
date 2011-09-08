@@ -82,6 +82,17 @@ class VSDecoderFrame extends JmriJFrame {
 	
     }
 
+    public void windowClosing(java.awt.event.WindowEvent e) {
+	// Call the superclass function
+        super.windowClosing(e);
+
+	log.debug("VSDecoderFrame windowClosing() called... " + e.toString());
+
+	log.debug("Calling decpane.windowClosing() directly " + e.toString());
+	decpane.windowClosing(e);
+    }
+
+
     public List<JMenu> getMenus() { return menuList; }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderFrame.class.getName());

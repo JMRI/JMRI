@@ -28,21 +28,17 @@ abstract public class VSDSound {
     public final static String SrcUserNamePrefix = "IVSDS_";
     public final static String BufUserNamePrefix = "IVSDB_";
 
+    public final static float default_gain = 0.8f;
 
     protected String vsd_file_base = "resource:resources/sounds/vsd/";
 
     boolean is_playing;
     String name;
+    float gain;
 
-    // Don't think anything uses this...
-    /*
-    @Deprecated
-    public VSDSound(String name, String filename)  {
-	this(name);
-    }
-    */
     public VSDSound(String name) {
 	this.name = name;
+	gain = default_gain;
     }
     
 
@@ -50,12 +46,14 @@ abstract public class VSDSound {
 	return(is_playing);
     }
 
+
     // Required methods - abstract because all subclasses MUST implement
     abstract public void play();
     abstract public void loop();
     abstract public void stop();
     abstract public void fadeIn();
     abstract public void fadeOut();
+    abstract public void shutdown(); // called on window close.  Cease playing immediately.
 
     // Optional methods - overridden in subclasses where needed.  Do nothing otherwise
     public void changeNotch(int new_notch) {
@@ -67,6 +65,14 @@ abstract public class VSDSound {
 
     public String getName() {
 	return(name);
+    }
+
+    public float getGain() {
+	return(gain);
+    }
+
+    public void setGain (float g) {
+	gain = g;
     }
 
     public Element getXml() {

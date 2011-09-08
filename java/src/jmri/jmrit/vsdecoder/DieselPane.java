@@ -80,7 +80,7 @@ class DieselPane extends EnginePane {
 
 	// Setup the start button
 	start_button = new JToggleButton();
-	start_button.setLabel("Engine Start");
+	start_button.setText("Engine Start");
 	start_button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    startButtonChange(e);

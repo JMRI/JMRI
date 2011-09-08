@@ -33,6 +33,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.Arrays;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 
 /**
@@ -206,6 +208,19 @@ public class VSDecoderPane extends JmriPanel {
 	    // Store the new decoder
 	    decoder_id = dec.getID();
 	    log.debug("Decoder ID = " + decoder_id + " Decoder = " + dec);
+	    // Register the decoder as a listener on our frame... so it can react
+	    // to the window closing
+	    parent.addWindowListener(new WindowListener() {
+		    public void windowActivated(WindowEvent e) {}
+		    public void windowClosed(WindowEvent e) {}
+		    public void windowClosing(WindowEvent e) { 
+			VSDecoderManager.instance().getVSDecoderByID(decoder_id).windowChange(e); 
+		    }
+		    public void windowDeactivated(WindowEvent e) {}
+		    public void windowDeiconified(WindowEvent e) {}
+		    public void windowIconified(WindowEvent e) {}
+		    public void windowOpened(WindowEvent e) {}
+		});
 	    // Update the sounds pane
 	    tabbedPane.remove(soundsPanel);
 	    soundsPanel = new VSDSoundsPanel(decoder_id, this);
@@ -235,6 +250,10 @@ public class VSDecoderPane extends JmriPanel {
 	if (a != null) {
 	    parent.setTitle("VSDecoder - " + a.toString());
 	}
+    }
+
+    public void windowClosing(WindowEvent e) {
+	log.debug("VSDecoderPane windowClosing() called...");
     }
 
 

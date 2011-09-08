@@ -57,12 +57,7 @@ class ConfigurableSound extends VSDSound {
     
 
     javax.swing.Timer t;
-    /*
-    public ConfigurableSound() {
-	is_playing = false;
-	//initialized = init();
-    }
-    */
+
     public ConfigurableSound(String name) {
 	super(name);
 	is_playing = false;
@@ -78,18 +73,22 @@ class ConfigurableSound extends VSDSound {
 	    if (use_start_sound) {
 		start_sound = new SoundBite(vf, start_file, name+"_Start", name+"_Start");
 		start_sound.setLooped(false);
+		start_sound.setGain(gain);
 	    }
 	    if (use_mid_sound) {
 		mid_sound = new SoundBite(vf, mid_file, name+"_Mid", name+"_Mid");
 		mid_sound.setLooped(false);
+		mid_sound.setGain(gain);
 	    }
 	    if (use_end_sound) {
 		end_sound = new SoundBite(vf, end_file, name+"_End", name+"_End");
 		end_sound.setLooped(false);
+		end_sound.setGain(gain);
 	    }
 	    if (use_short_sound) {
 		short_sound = new SoundBite(vf, short_file, name+"_Short", name+"_Short");
 		short_sound.setLooped(false);
+		short_sound.setGain(gain);
 	    }
 	    
 	}
@@ -158,18 +157,28 @@ class ConfigurableSound extends VSDSound {
     }
 
     public void stop() {
-	//start_sound.stop();
-	//mid_sound.stop();
 	log.warn("Stopping");
+	// make sure the start sound is killed
 	if (use_start_sound) {
 	    start_sound.stop();
 	}
+
+	// If the mid sound is used, turn off the looping.
+	// this will allow it to naturally die.
 	if (use_mid_sound) {
-	    mid_sound.stop();
+	    mid_sound.setLooped(false);
+	    mid_sound.fadeOut();
 	}
+
+	// If the timer is running, stop it.
 	if (t != null)
 	    t.stop();
+	
+	// If we're using the end sound, stop the mid sound
+	// and play the end sound.
 	if (use_end_sound) {
+	    if (use_mid_sound)
+		mid_sound.stop();
 	    end_sound.setLooped(false);
 	    end_sound.play();
 	}
@@ -183,7 +192,18 @@ class ConfigurableSound extends VSDSound {
     public void fadeOut() {
 	this.stop();
     }
-    
+
+    public void shutdown() {
+	if (use_start_sound)
+	    start_sound.stop();
+	if (use_mid_sound)
+	    mid_sound.stop();
+	if (use_end_sound)
+	    end_sound.stop();
+	if (use_short_sound)
+	    short_sound.stop();
+    }
+
     @Override
     public Element getXml() {
 	Element me = new Element("sound");
@@ -250,26 +270,17 @@ class ConfigurableSound extends VSDSound {
 	else
 	    start_sound_duration = 0;
 
+	log.debug("  gain: " + e.getChildText("gain"));
+	String g = e.getChildText("gain");
+	if ((g != null) && !(g.equals("")))
+	    gain = Float.parseFloat(g);
+	else
+	    gain = default_gain;
+
 	log.debug("Use:  start = " + use_start_sound + 
 		  "mid = " + use_mid_sound +
 		  "end = " + use_end_sound +
 		  "short = " + use_short_sound);
-
-
-	/*
-	log.debug("  use start file: " + e.getChild("use-start-sound").getValue());
-	log.debug("     value = " + Boolean.parseBoolean(e.getChild("use-start-sound").getValue()));
-	use_start_sound = Boolean.parseBoolean(e.getChild("use-start-sound").getValue());
-	log.debug("  use mid file: " + e.getChild("use-mid-sound").getValue());
-	log.debug("     value = " + Boolean.parseBoolean(e.getChild("use-mid-sound").getValue()));
-	use_mid_sound = Boolean.parseBoolean(e.getChild("use-mid-sound").getValue());
-	log.debug("  use end file: " + e.getChild("use-end-sound").getValue());
-	log.debug("     value = " + Boolean.parseBoolean(e.getChild("use-end-sound").getValue()));
-	use_end_sound = Boolean.parseBoolean(e.getChild("use-end-sound").getValue());
-	log.debug("  use short file: " + e.getChild("use-short-sound").getValue());
-	log.debug("     value = " + Boolean.parseBoolean(e.getChild("use-short-sound").getValue()));
-	use_short_sound = Boolean.parseBoolean(e.getChild("use-short-sound").getValue());
-	*/
 
 	// Reboot the sound
 	initialized = false;
