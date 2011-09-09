@@ -106,6 +106,28 @@ abstract public class AbstractManager
     }
     
     /**
+     * Locate an instance based on a user name.  Returns null if no
+     * instance already exists.
+     * @param systemName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     */
+    public NamedBean getBeanByUserName(String userName){
+        return _tuser.get(userName);
+    }
+    
+    /**
+     * Locate an instance based on a name.  Returns null if no
+     * instance already exists.
+     * @param name System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     */
+    public NamedBean getNamedBean(String name){
+        NamedBean b = getBeanByUserName(name);
+        if(b!=null) return b;
+        return getBeanBySystemName(name);
+    }
+    
+    /**
      * Remember a NamedBean Object created outside the manager.
      * <P>
      * The non-system-specific SignalHeadManagers

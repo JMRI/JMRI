@@ -86,7 +86,23 @@ public interface Manager {
      * @return requested NamedBean object or null if none exists
      */
     public NamedBean getBeanBySystemName(String systemName);
-
+    
+    /**
+     * Locate an instance based on a user name.  Returns null if no
+     * instance already exists.
+     * @param systemName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     */
+    public NamedBean getBeanByUserName(String userName);
+    
+    /**
+     * Locate an instance based on a name.  Returns null if no
+     * instance already exists.
+     * @param name System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     */
+    public NamedBean getNamedBean(String name);
+    
 	/**
 	 * At a minimum,
  	 * subclasses must notify of changes to the list of available NamedBeans;

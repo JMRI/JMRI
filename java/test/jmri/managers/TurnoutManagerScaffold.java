@@ -86,6 +86,10 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     
     public NamedBean getBeanBySystemName(String systemName) { return null; }
     
+    public NamedBean getBeanByUserName(String userName) { return null; }
+    
+    public NamedBean getNamedBean(String name) { return null; }
+    
     public String createSystemName(String curAddress, String prefix) throws JmriException {return " "; }
 
 }

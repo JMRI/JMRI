@@ -1667,7 +1667,7 @@ public class LayoutBlockManager extends AbstractManager {
     *                            has not been enabled.
     */
     public ArrayList<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException{
-        lastErrorMessage= "";
+        lastErrorMessage= "Unknown Error Occured";
         if (!isAdvancedRoutingEnabled()){
             log.info("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
@@ -1827,7 +1827,7 @@ public class LayoutBlockManager extends AbstractManager {
         return true;
     }
     
-    String lastErrorMessage = "";
+    String lastErrorMessage = "Unknown Error Occured";
     //We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, int offSet, boolean validateOnly, int pathMethod){
         int blockindex = 0;

@@ -78,7 +78,7 @@ abstract public class AbstractProxyManager implements Manager {
      * @param name
      * @return Null if nothing by that name exists
      */
-    protected NamedBean getNamedBean(String name) {
+    public NamedBean getNamedBean(String name) {
         NamedBean t = getBeanByUserName(name);
         if (t != null) return t;
         return getBeanBySystemName(name);
@@ -121,7 +121,7 @@ abstract public class AbstractProxyManager implements Manager {
         return null;
     }
 
-    protected NamedBean getBeanByUserName(String userName) {
+    public NamedBean getBeanByUserName(String userName) {
         NamedBean t = null;
         for (int i=0; i<nMgrs(); i++) {
             t = (NamedBean)getMgr(i).getInstanceByUserName(userName);

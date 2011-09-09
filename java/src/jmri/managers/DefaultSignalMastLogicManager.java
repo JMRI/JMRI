@@ -174,6 +174,14 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+    public NamedBean getBeanByUserName(String userName){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public NamedBean getNamedBean(String name){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     @Deprecated
     public char systemLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
