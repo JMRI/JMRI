@@ -9,6 +9,7 @@ import jmri.ConditionalAction;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.Logix;
+import jmri.util.swing.JmriBeanComboBox;
 
 import java.awt.*;
 import java.awt.BorderLayout;
@@ -7014,14 +7015,16 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSensorsAtBoundaryFrame == null) {
-            westBoundSensor = new BeanDetails("Sensor");
-            eastBoundSensor = new BeanDetails("Sensor");
+            westBoundSensor = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            eastBoundSensor = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             
             setSensorsAtBoundaryFrame = new JmriJFrame( rb.getString("SensorsAtBoundary"), false, true );
             setSensorsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtBoundary", true);
             setSensorsAtBoundaryFrame.setLocation(70,30);
             Container theContentPane = setSensorsAtBoundaryFrame.getContentPane();  
-            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+            theContentPane.setLayout(new BorderLayout());
+            JPanel header = new JPanel();
+            header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
 			JPanel panel11 = new JPanel(); 
             panel11.setLayout(new FlowLayout());
 			if (boundaryFromMenu) {
@@ -7036,24 +7039,29 @@ public class LayoutEditorTools
 				panel11.add(block1NameField);
 				block1NameField.setToolTipText(rb.getString("SensorsBlockNameHint"));
 			}
-            theContentPane.add(panel11);
+            header.add(panel11);
 			JPanel panel12 = new JPanel(); 
             panel12.setLayout(new FlowLayout());
-			if (boundaryFromMenu) {
+			if ((boundaryFromMenu) && (boundary.getType()==PositionablePoint.ANCHOR)){
 				JLabel block2NameLabel = new JLabel( rb.getString("Block")+" 2 "+
 					rb.getString("Name")+" : "+boundary.getConnect2().getLayoutBlock().getID());
 				panel12.add(block2NameLabel);			
 			}
-			else {
+			else if (boundary.getType()==PositionablePoint.ANCHOR) {
 				JLabel block2NameLabel = new JLabel( rb.getString("Block")+" 2 "+
 																rb.getString("Name")+" : ");
 				panel12.add(block2NameLabel);
 				panel12.add(block2NameField);
 				block2NameField.setToolTipText(rb.getString("SensorsBlockNameHint"));
 			}
-            theContentPane.add(panel12);
-			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            header.add(panel12);
+            header.add(new JSeparator(JSeparator.HORIZONTAL));
+			theContentPane.add(header, BorderLayout.NORTH);
             JPanel panel2 = new JPanel();
+            
+            JPanel main = new JPanel();
+            main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+            
             panel2.setLayout(new FlowLayout());
 			JLabel shTitle = new JLabel(rb.getString("Sensors"));
 			panel2.add(shTitle);
@@ -7065,34 +7073,50 @@ public class LayoutEditorTools
 					}
 				});
             getAnchorSavedSensors.setToolTipText( rb.getString("GetSavedHint") );			
-			theContentPane.add(panel2);
+            if(boundary.getType()!=PositionablePoint.END_BUMPER)
+                main.add(panel2);
             
-            eastBoundSensor.setBoundaryTitle(rb.getString("East/SouthBound"));
-            if ((boundaryFromMenu)  && (boundary.getType()==PositionablePoint.ANCHOR)){
-                if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+            if(boundary.getType()!=PositionablePoint.END_BUMPER){
+                eastBoundSensor.setBoundaryTitle(rb.getString("East/SouthBound"));
+                if ((boundaryFromMenu)  && (boundary.getType()==PositionablePoint.ANCHOR)){
+                    if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
+                        eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    }
+                    else {
+                        eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    }
                 }
-                else {
-                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-                }
-            }
-            eastBoundSensor.getDetailsPanel().setBackground(new Color(255,255,200));
-            theContentPane.add(eastBoundSensor.getDetailsPanel());
-            
-            if (boundary.getType()==PositionablePoint.ANCHOR){
+                eastBoundSensor.getDetailsPanel().setBackground(new Color(255,255,200));
+                main.add(eastBoundSensor.getDetailsPanel());
+                
                 westBoundSensor.setBoundaryTitle(rb.getString("West/NorthBound"));
-                if ((boundaryFromMenu)  &&  (boundary.getType()==PositionablePoint.ANCHOR)){
+                if (boundaryFromMenu){
                     if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
                         westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     } else {
                         westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
                     }
                 }
-                if((boundary!=null) && (boundary.getType()!=PositionablePoint.ANCHOR))
-                    westBoundSensor.getDetailsPanel().setVisible(false);
+                westBoundSensor.getDetailsPanel().setBackground(new Color(200,255,255));
+                main.add(westBoundSensor.getDetailsPanel());
             }
-            westBoundSensor.getDetailsPanel().setBackground(new Color(200,255,255));
-            theContentPane.add(westBoundSensor.getDetailsPanel());
+            else {
+                if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary) && (boundaryFromMenu)){
+                    eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+                    eastBoundSensor.getDetailsPanel().setBackground(new Color(200,255,255));
+                    main.add(eastBoundSensor.getDetailsPanel());
+                } else if (boundaryFromMenu) {
+                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    westBoundSensor.getDetailsPanel().setBackground(new Color(255,255,200));
+                    main.add(westBoundSensor.getDetailsPanel());
+                }
+                /*if((boundary!=null) && (boundary.getType()!=PositionablePoint.ANCHOR))
+                    westBoundSensor.getDetailsPanel().setVisible(false);*/
+            }
+            main.add(new JSeparator(JSeparator.HORIZONTAL));
+            theContentPane.add(main, BorderLayout.CENTER);
+            /*westBoundSensor.getDetailsPanel().setBackground(new Color(200,255,255));
+            theContentPane.add(westBoundSensor.getDetailsPanel());*/
             
             JPanel panel6 = new JPanel();
             panel6.setLayout(new FlowLayout());
@@ -7118,7 +7142,7 @@ public class LayoutEditorTools
                 }
             });
             setSensorsAtBoundaryCancel.setToolTipText( rb.getString("CancelHint") );
-            theContentPane.add(panel6);
+            theContentPane.add(panel6, BorderLayout.SOUTH);
 			setSensorsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
 					setSensorsAtBoundaryCancelPressed(null);
@@ -7128,6 +7152,7 @@ public class LayoutEditorTools
 		} else {
             if (boundaryFromMenu) getSavedAnchorSensors(null);
         }
+        setSensorsAtBoundaryFrame.setPreferredSize(null);
         setSensorsAtBoundaryFrame.pack();
         setSensorsAtBoundaryFrame.setVisible(true);		
 		setSensorsAtBoundaryOpen = true;
@@ -7140,9 +7165,9 @@ public class LayoutEditorTools
 	 *      An error message also results if a sensor head with the entered name is not
 	 *      found in the SensorTable.
 	 */
-	public Sensor getSensorFromEntry(JTextField sensorName,boolean requireEntry,
+	public Sensor getSensorFromEntry(String sensorName,boolean requireEntry,
 					JmriJFrame frame) {
-		String str = sensorName.getText().trim();
+		String str = sensorName;
 		if ( (str==null) || (str.equals("")) ) {
 			if (requireEntry) {
 				JOptionPane.showMessageDialog(frame,rb.getString("SensorsError5"),
@@ -7157,11 +7182,6 @@ public class LayoutEditorTools
 						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 			return null ;
-		}
-		else if ( (head.getUserName()==null) || (head.getUserName().equals("")) ||
-									!head.getUserName().equals(str) ) {
-			str = str.toUpperCase();
-			sensorName.setText(str);
 		}
 		return (head);
 	}
@@ -7259,7 +7279,29 @@ public class LayoutEditorTools
 		if ( !getSimpleBlockInformation() ) return;
 		eastBoundSensor.setTextField(boundary.getEastBoundSensor());	
 		westBoundSensor.setTextField(boundary.getWestBoundSensor());
+        
+        if(boundary.getType()!=PositionablePoint.END_BUMPER){
+            if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
+                eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+            }
+            else {
+                eastBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+            }
+            if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
+                westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+            } else {
+                westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+            }
+        } else {
+            if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
+                westBoundSensor.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+            } else{
+                eastBoundSensor.setBoundaryLabelText("End of Block " + boundary.getConnect1().getLayoutBlock().getDisplayName());
+            }
+        }
+        
         setSensorsAtBoundaryFrame.setPreferredSize(null);
+        setSensorsAtBoundaryFrame.pack();
 	}
     
     private void setSensorsAtBoundaryCancelPressed (ActionEvent a) {
@@ -7270,8 +7312,8 @@ public class LayoutEditorTools
     
 	private void setSensorsAtBoundaryDonePressed (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
-		Sensor eastSensor = getSensorFromEntry(eastBoundSensor.getJTextField(),false,setSensorsAtBoundaryFrame);
-		Sensor westSensor = getSensorFromEntry(westBoundSensor.getJTextField(),false,setSensorsAtBoundaryFrame);
+		Sensor eastSensor = getSensorFromEntry(eastBoundSensor.getText(),false,setSensorsAtBoundaryFrame);
+		Sensor westSensor = getSensorFromEntry(westBoundSensor.getText(),false,setSensorsAtBoundaryFrame);
 		if ( (eastSensor==null) && (westSensor==null) ) {
 			JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
 							rb.getString("SensorsError12"),
@@ -7421,8 +7463,8 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (setSignalMastsAtBoundaryFrame == null) {
-            eastSignalMast = new BeanDetails("SignalMast");
-            westSignalMast = new BeanDetails("SignalMast");
+            eastSignalMast = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            westSignalMast = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
             setSignalMastsAtBoundaryFrame = new JmriJFrame( rb.getString("SignalMastsAtBoundary"), false, true );
             setSignalMastsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
             setSignalMastsAtBoundaryFrame.setLocation(70,30);
@@ -7557,9 +7599,9 @@ public class LayoutEditorTools
 	 *      An error message also results if a signalMast head with the entered name is not
 	 *      found in the SignalMastTable.
 	 */
-	public SignalMast getSignalMastFromEntry(JTextField signalMastName,boolean requireEntry,
+	public SignalMast getSignalMastFromEntry(String signalMastName,boolean requireEntry,
 					JmriJFrame frame) {
-		String str = signalMastName.getText().trim();
+		String str = signalMastName;
 		if ( (str==null) || (str.equals("")) ) {
 			if (requireEntry) {
 				JOptionPane.showMessageDialog(frame,rb.getString("SignalMastsError5"),
@@ -7574,11 +7616,6 @@ public class LayoutEditorTools
 						new Object[]{str}), rb.getString("Error"),
 							JOptionPane.ERROR_MESSAGE);
 			return null ;
-		}
-		else if ( (head.getUserName()==null) || (head.getUserName().equals("")) ||
-									!head.getUserName().equals(str) ) {
-			str = str.toUpperCase();
-			signalMastName.setText(str);
 		}
 		return (head);
 	}
@@ -7684,7 +7721,6 @@ public class LayoutEditorTools
         }
         setSignalMastsAtBoundaryFrame.setPreferredSize(null);
         setSignalMastsAtBoundaryFrame.pack();
-
 	}
     
     private void setSignalMastsAtBoundaryCancelPressed (ActionEvent a) {
@@ -7695,8 +7731,8 @@ public class LayoutEditorTools
     
 	private void setSignalMastsAtBoundaryDonePressed (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
-		SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getJTextField(),false,setSignalMastsAtBoundaryFrame);
-		SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getJTextField(),false,setSignalMastsAtBoundaryFrame);
+		SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getText(),false,setSignalMastsAtBoundaryFrame);
+		SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(),false,setSignalMastsAtBoundaryFrame);
         if(block1BoundSignalMast==null){
             removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
             removeSignalMastAssignment(jmri.InstanceManager.signalMastManagerInstance().getSignalMast(boundary.getEastBoundSignalMast()));
@@ -8412,10 +8448,10 @@ public class LayoutEditorTools
 			JPanel panel1 = new JPanel(); 
             panel1.setLayout(new FlowLayout());
             
-            turnoutSignalMastA = new BeanDetails("SignalMast");
-            turnoutSignalMastB = new BeanDetails("SignalMast");
-            turnoutSignalMastC = new BeanDetails("SignalMast");
-            turnoutSignalMastD= new BeanDetails("SignalMast");
+            turnoutSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            turnoutSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            turnoutSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            turnoutSignalMastD= new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
 			if (turnoutMastFromMenu) {
 				JLabel turnoutMastNameLabel = new JLabel( rb.getString("Turnout")+" "+
 					rb.getString("Name")+" : "+layoutTurnout.getTurnoutName());
@@ -8616,10 +8652,10 @@ public class LayoutEditorTools
 		// process turnout name
 		if ( !getTurnoutMastInformation() ) return;
 		// process signal head names
-        SignalMast turnoutMast = getSignalMastFromEntry(turnoutSignalMastA.getJTextField(),false,setSignalsFrame);
-		SignalMast turnoutMastB = getSignalMastFromEntry(turnoutSignalMastB.getJTextField(),false,setSignalsFrame);
-		SignalMast turnoutMastC = getSignalMastFromEntry(turnoutSignalMastC.getJTextField(),false,setSignalsFrame);
-		SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getJTextField(),false,setSignalsFrame);
+        SignalMast turnoutMast = getSignalMastFromEntry(turnoutSignalMastA.getText(),false,setSignalsFrame);
+		SignalMast turnoutMastB = getSignalMastFromEntry(turnoutSignalMastB.getText(),false,setSignalsFrame);
+		SignalMast turnoutMastC = getSignalMastFromEntry(turnoutSignalMastC.getText(),false,setSignalsFrame);
+		SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getText(),false,setSignalsFrame);
 		// place signals as requested
 		if (turnoutSignalMastA.addToPanel()) {
 			if (isSignalMastOnPanel(turnoutMast) &&
@@ -8670,17 +8706,17 @@ public class LayoutEditorTools
 				(turnoutMastB!=getSignalMastFromName(layoutTurnout.getSignalBMast()))) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
-						new Object[]{turnoutSignalMastB.getJTextField().getText().trim()}), 
+						new Object[]{turnoutSignalMastB.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			else {
 				removeSignalMastFromPanel(layoutTurnout.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                l.setSignalMast(turnoutSignalMastB.getJTextField().getText().trim());
+                l.setSignalMast(turnoutSignalMastB.getText());
 				placingBlockB(l, turnoutSignalMastB.isRightSelected(), 0.0);
 				removeAssignment(turnoutMastB);
-				layoutTurnout.setSignalBMast(turnoutSignalMastB.getJTextField().getText().trim());
+				layoutTurnout.setSignalBMast(turnoutSignalMastB.getText());
 				needRedraw = true;
 			}		
 		}
@@ -8691,14 +8727,14 @@ public class LayoutEditorTools
 									isSignalMastAssignedAnywhere(turnoutMastB) ) {
 					JOptionPane.showMessageDialog(setSignalsFrame,
 						java.text.MessageFormat.format(rb.getString("SignalsError8"),
-							new Object[]{turnoutSignalMastB.getJTextField().getText().trim()}), 
+							new Object[]{turnoutSignalMastB.getText()}), 
 								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return;
 				}		
 				else {
 					removeSignalMastFromPanel(layoutTurnout.getSignalBMast());
 					removeAssignment(turnoutMastB);
-					layoutTurnout.setSignalBMast(turnoutSignalMastB.getJTextField().getText().trim());
+					layoutTurnout.setSignalBMast(turnoutSignalMastB.getText());
 				}
 			}
 			else if (assigned!=A2) {
@@ -8715,17 +8751,17 @@ public class LayoutEditorTools
                     (turnoutMastC!=getSignalMastFromName(layoutTurnout.getSignalCMast()))) {
                     JOptionPane.showMessageDialog(setSignalsFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
-                            new Object[]{turnoutSignalMastC.getJTextField().getText().trim()}), 
+                            new Object[]{turnoutSignalMastC.getText()}), 
                                 rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 else {
                     removeSignalMastFromPanel(layoutTurnout.getSignalCMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                    l.setSignalMast(turnoutSignalMastC.getJTextField().getText().trim());
+                    l.setSignalMast(turnoutSignalMastC.getText());
                     placingBlockC(l, turnoutSignalMastC.isRightSelected(), 0.0);
                     removeAssignment(turnoutMastC);
-                    layoutTurnout.setSignalCMast(turnoutSignalMastC.getJTextField().getText().trim());
+                    layoutTurnout.setSignalCMast(turnoutSignalMastC.getText());
                     needRedraw = true;
                 }		
             }
@@ -8736,14 +8772,14 @@ public class LayoutEditorTools
                                         isSignalMastAssignedAnywhere(turnoutMastC) ) {
                         JOptionPane.showMessageDialog(setSignalsFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                new Object[]{turnoutSignalMastC.getJTextField().getText().trim()}), 
+                                new Object[]{turnoutSignalMastC.getText()}), 
                                     rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
                         return;
                     }		
                     else {
                         removeSignalMastFromPanel(layoutTurnout.getSignalCMast());
                         removeAssignment(turnoutMastC);
-                        layoutTurnout.setSignalCMast(turnoutSignalMastC.getJTextField().getText().trim());
+                        layoutTurnout.setSignalCMast(turnoutSignalMastC.getText());
                     }
                 }
                 else if (assigned!=A3) {
@@ -8768,10 +8804,10 @@ public class LayoutEditorTools
                 else {
                     removeSignalMastFromPanel(layoutTurnout.getSignalDMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                    l.setSignalMast(turnoutSignalMastD.getJTextField().getText().trim());
+                    l.setSignalMast(turnoutSignalMastD.getText());
                     placingBlockD(l, turnoutSignalMastD.isRightSelected(), 0.0);
                     removeAssignment(turnoutMastD);
-                    layoutTurnout.setSignalDMast(turnoutSignalMastD.getJTextField().getText().trim());
+                    layoutTurnout.setSignalDMast(turnoutSignalMastD.getText());
                     needRedraw = true;
                 }		
             }
@@ -8782,14 +8818,14 @@ public class LayoutEditorTools
                                         isSignalMastAssignedAnywhere(turnoutMastD) ) {
                         JOptionPane.showMessageDialog(setSignalsFrame,
                             java.text.MessageFormat.format(rb.getString("SignalsError8"),
-                                new Object[]{turnoutSignalMastD.getJTextField().getText().trim()}), 
+                                new Object[]{turnoutSignalMastD.getText()}), 
                                     rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
                         return;
                     }		
                     else {
                         removeSignalMastFromPanel(layoutTurnout.getSignalDMast());
                         removeAssignment(turnoutMastD);
-                        layoutTurnout.setSignalDMast(turnoutSignalMastD.getJTextField().getText().trim());
+                        layoutTurnout.setSignalDMast(turnoutSignalMastD.getText());
                     }
                 }
                 else if (assigned!=B1) {
@@ -8992,10 +9028,10 @@ public class LayoutEditorTools
 		}
 		// Initialize if needed
 		if (signalMastsAtXingFrame == null) {
-            xingSignalMastA = new BeanDetails("SignalMast");
-            xingSignalMastB = new BeanDetails("SignalMast");
-            xingSignalMastC = new BeanDetails("SignalMast");
-            xingSignalMastD = new BeanDetails("SignalMast");
+            xingSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            xingSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            xingSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            xingSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
             
             signalMastsAtXingFrame = new JmriJFrame( rb.getString("SignalMastsAtLevelXing"), false, true );
             signalMastsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
@@ -9238,10 +9274,10 @@ public class LayoutEditorTools
 	}
 	private void setXingSignalMastsDonePressed (ActionEvent a) {
 		if ( !getLevelCrossingMastInformation() ) return;
-        SignalMast aMast = getSignalMastFromEntry(xingSignalMastA.getJTextField(),false,signalMastsAtXingFrame);
-		SignalMast bMast = getSignalMastFromEntry(xingSignalMastB.getJTextField(),false,signalMastsAtXingFrame);
-		SignalMast cMast = getSignalMastFromEntry(xingSignalMastC.getJTextField(),false,signalMastsAtXingFrame);
-		SignalMast dMast = getSignalMastFromEntry(xingSignalMastD.getJTextField(),false,signalMastsAtXingFrame);
+        SignalMast aMast = getSignalMastFromEntry(xingSignalMastA.getText(),false,signalMastsAtXingFrame);
+		SignalMast bMast = getSignalMastFromEntry(xingSignalMastB.getText(),false,signalMastsAtXingFrame);
+		SignalMast cMast = getSignalMastFromEntry(xingSignalMastC.getText(),false,signalMastsAtXingFrame);
+		SignalMast dMast = getSignalMastFromEntry(xingSignalMastD.getText(),false,signalMastsAtXingFrame);
 		//if ( !getXingSignalMastInformation() ) return;
 		// place or update signals as requested
 		if ( (aMast!=null) && xingSignalMastA.addToPanel() ) {
@@ -9249,17 +9285,17 @@ public class LayoutEditorTools
 					(aMast!=getSignalMastFromName(levelXing.getSignalAMastName())) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
-						new Object[]{xingSignalMastA.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastA.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalAMastName());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                l.setSignalMast(xingSignalMastA.getJTextField().getText().trim());
+                l.setSignalMast(xingSignalMastA.getText());
 				placeXingAIcon(l, xingSignalMastA.isRightSelected(), 0.0);
 				removeAssignment(aMast);
-				levelXing.setSignalAMastName(xingSignalMastA.getJTextField().getText().trim());
+				levelXing.setSignalAMastName(xingSignalMastA.getText());
 				needRedraw = true;
 			}		
 		}
@@ -9271,14 +9307,14 @@ public class LayoutEditorTools
 			if (isSignalMastOnPanel(aMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
-						new Object[]{xingSignalMastA.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastA.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalAMastName());
 				removeAssignment(aMast);
-				levelXing.setSignalAMastName(xingSignalMastA.getJTextField().getText().trim());
+				levelXing.setSignalAMastName(xingSignalMastA.getText());
 			}
 		}
 		else if ( (aMast!=null) &&  
@@ -9296,17 +9332,17 @@ public class LayoutEditorTools
 					(bMast!=getSignalMastFromName(levelXing.getSignalBMastName()))) { 
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
-						new Object[]{xingSignalMastB.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastB.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalBMastName());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                l.setSignalMast(xingSignalMastB.getJTextField().getText().trim());
+                l.setSignalMast(xingSignalMastB.getText());
 				placeXingBIcon(l, xingSignalMastB.isRightSelected(), 0.0);
 				removeAssignment(bMast);
-				levelXing.setSignalBMastName(xingSignalMastB.getJTextField().getText().trim());
+				levelXing.setSignalBMastName(xingSignalMastB.getText());
 				needRedraw = true;
 			}		
 		}
@@ -9318,14 +9354,14 @@ public class LayoutEditorTools
 			if (isSignalMastOnPanel(bMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
-						new Object[]{xingSignalMastB.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastB.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalBMastName());
 				removeAssignment(bMast);
-				levelXing.setSignalBMastName(xingSignalMastB.getJTextField().getText().trim());
+				levelXing.setSignalBMastName(xingSignalMastB.getText());
 			}
 		}
 		else if ( (bMast!=null) &&  
@@ -9343,17 +9379,17 @@ public class LayoutEditorTools
 					(cMast!=getSignalMastFromName(levelXing.getSignalCMastName())) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
-						new Object[]{xingSignalMastC.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastC.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalCMastName());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                l.setSignalMast(xingSignalMastC.getJTextField().getText().trim());
+                l.setSignalMast(xingSignalMastC.getText());
 				placeXingCIcon(l, xingSignalMastA.isRightSelected(), 0.0);
 				removeAssignment(cMast);
-				levelXing.setSignalCMastName(xingSignalMastC.getJTextField().getText().trim());
+				levelXing.setSignalCMastName(xingSignalMastC.getText());
 				needRedraw = true;
 			}		
 		}
@@ -9365,14 +9401,14 @@ public class LayoutEditorTools
 			if (isSignalMastOnPanel(cMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
-						new Object[]{xingSignalMastC.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastC.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalCMastName());
 				removeAssignment(cMast);
-				levelXing.setSignalCMastName(xingSignalMastC.getJTextField().getText().trim());
+				levelXing.setSignalCMastName(xingSignalMastC.getText());
 			}
 		}
 		else if ( (cMast!=null) &&  
@@ -9390,17 +9426,17 @@ public class LayoutEditorTools
 					(dMast!=getSignalMastFromName(levelXing.getSignalDMastName())) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
-						new Object[]{xingSignalMastD.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastD.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalDMastName());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                l.setSignalMast(xingSignalMastD.getJTextField().getText().trim());
+                l.setSignalMast(xingSignalMastD.getText());
 				placeXingDIcon(l, xingSignalMastD.isRightSelected(), 0.0);
 				removeAssignment(dMast);
-				levelXing.setSignalDMastName(xingSignalMastD.getJTextField().getText().trim());
+				levelXing.setSignalDMastName(xingSignalMastD.getText());
 				needRedraw = true;
 			}		
 		}
@@ -9412,14 +9448,14 @@ public class LayoutEditorTools
 			if (isSignalMastOnPanel(dMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
-						new Object[]{xingSignalMastD.getJTextField().getText().trim()}), 
+						new Object[]{xingSignalMastD.getText()}), 
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}		
 			else {
 				removeSignalMastFromPanel(levelXing.getSignalDMastName());
 				removeAssignment(dMast);
-				levelXing.setSignalDMastName(xingSignalMastD.getJTextField().getText().trim());
+				levelXing.setSignalDMastName(xingSignalMastD.getText());
 			}
 		}
 		else if ( (dMast!=null) &&  
@@ -9584,10 +9620,10 @@ public class LayoutEditorTools
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 			JPanel panel1 = new JPanel(); 
             panel1.setLayout(new FlowLayout());
-            turnoutSensorA = new BeanDetails("Sensor");
-            turnoutSensorB = new BeanDetails("Sensor");
-            turnoutSensorC = new BeanDetails("Sensor");
-            turnoutSensorD = new BeanDetails("Sensor");
+            turnoutSensorA = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            turnoutSensorB = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            turnoutSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            turnoutSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             
 			if (turnoutSensorFromMenu) {
 				JLabel turnoutSensorNameLabel = new JLabel( rb.getString("Turnout")+" "+
@@ -9801,13 +9837,13 @@ public class LayoutEditorTools
 		if ( !getTurnoutSensorInformation() ) return;
 		// process signal head names
 		//if ( !getSensorTurnoutInformation() ) return;
-        Sensor sensorA = getSensorFromEntry(turnoutSensorA.getJTextField(),false,setSensorsFrame);
+        Sensor sensorA = getSensorFromEntry(turnoutSensorA.getText(),false,setSensorsFrame);
 		//if (turnoutSensor==null) return false;
-		Sensor sensorB = getSensorFromEntry(turnoutSensorB.getJTextField(),false,setSensorsFrame);
+		Sensor sensorB = getSensorFromEntry(turnoutSensorB.getText(),false,setSensorsFrame);
         //if (turnoutSensorB==null) return false;
-		Sensor sensorC = getSensorFromEntry(turnoutSensorC.getJTextField(),false,setSensorsFrame);
+		Sensor sensorC = getSensorFromEntry(turnoutSensorC.getText(),false,setSensorsFrame);
 		//if (turnoutSensorC==null) return false;
-		Sensor sensorD = getSensorFromEntry(turnoutSensorD.getJTextField(),false,setSensorsFrame);
+		Sensor sensorD = getSensorFromEntry(turnoutSensorD.getText(),false,setSensorsFrame);
 		// place signals as requested
 		if (turnoutSensorA.addToPanel()) {
 			if (isSensorOnPanel(sensorA) &&
@@ -10097,10 +10133,10 @@ public class LayoutEditorTools
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 			JPanel panel11 = new JPanel(); 
             panel11.setLayout(new FlowLayout());
-            xingSensorA = new BeanDetails("Sensor");
-            xingSensorB = new BeanDetails("Sensor");
-            xingSensorC = new BeanDetails("Sensor");
-            xingSensorD = new BeanDetails("Sensor");
+            xingSensorA = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            xingSensorB = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            xingSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            xingSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
 			if (xingSensorFromMenu) {
 				JLabel blockANameLabel = new JLabel( rb.getString("BlockAtA")+" "+
 							rb.getString("Name")+" : "+levelXing.getBlockNameAC());
@@ -10344,10 +10380,10 @@ public class LayoutEditorTools
 	}
 	private void setXingSensorsDonePressed (ActionEvent a) {
 		if ( !getLevelCrossingSensorInformation() ) return;
-        Sensor aSensor = getSensorFromEntry(xingSensorA.getJTextField(),false,sensorsAtXingFrame);
-		Sensor bSensor = getSensorFromEntry(xingSensorB.getJTextField(),false,sensorsAtXingFrame);
-		Sensor cSensor = getSensorFromEntry(xingSensorC.getJTextField(),false,sensorsAtXingFrame);
-		Sensor dSensor = getSensorFromEntry(xingSensorD.getJTextField(),false,sensorsAtXingFrame);
+        Sensor aSensor = getSensorFromEntry(xingSensorA.getText(),false,sensorsAtXingFrame);
+		Sensor bSensor = getSensorFromEntry(xingSensorB.getText(),false,sensorsAtXingFrame);
+		Sensor cSensor = getSensorFromEntry(xingSensorC.getText(),false,sensorsAtXingFrame);
+		Sensor dSensor = getSensorFromEntry(xingSensorD.getText(),false,sensorsAtXingFrame);
 		// place or update signals as requested
 		if ( (aSensor!=null) && xingSensorA.addToPanel() ) {
 			if (isSensorOnPanel(aSensor) && 
@@ -10586,27 +10622,31 @@ public class LayoutEditorTools
     }
     
     static class BeanDetails {
-        //String beanType;
         String beanString;
         JLabel textLabel;
         
         String boundaryLabelText = rb.getString("BoundaryOf");
         JLabel boundary = new JLabel(boundaryLabelText);
+        
+        jmri.Manager manager;
 
         JPanel detailsPanel = new JPanel();
-        JTextField textField = new JTextField(16);
         JRadioButton addBeanCheck = new JRadioButton(rb.getString("DoNotPlace"));
         JRadioButton left = new JRadioButton(rb.getString("LeftHandSide"));
         JRadioButton right = new JRadioButton(rb.getString("RightHandSide"));
         ButtonGroup buttonGroup = new ButtonGroup();
+        JmriBeanComboBox beanCombo;
         
         JLabel boundaryBlocks = new JLabel();
         
         Border blackline = BorderFactory.createLineBorder(Color.black);
         
-        BeanDetails(String beanType){
+        BeanDetails(String beanType, jmri.Manager manager){
+            beanCombo = new JmriBeanComboBox(manager);
+            beanCombo.setFirstItemBlank(true);
             beanString = rb.getString(beanType);
             textLabel = new JLabel(beanString);
+            this.manager = manager;
             //this.beanType = beanType;
             
             buttonGroup.add(addBeanCheck);
@@ -10626,22 +10666,17 @@ public class LayoutEditorTools
             boundaryDetails.add(boundary);
             boundaryDetails.add(boundaryBlocks);
             
-            
             detailsPanel.add(boundaryDetails, BorderLayout.PAGE_START);
             detailsPanel.add(addIconPanel(), BorderLayout.CENTER);
             detailsPanel.add(positionLeftRight(), BorderLayout.PAGE_END);
         }
         
         void setTextField(String value){
-            textField.setText(value);
+            beanCombo.setSelectedBean(manager.getNamedBean(value));
         }
         
         String getText(){
-            return textField.getText().trim();
-        }
-        
-        JTextField getJTextField(){
-            return textField;
+            return beanCombo.getSelectedUserName();
         }
         
         JPanel getDetailsPanel(){
@@ -10689,7 +10724,6 @@ public class LayoutEditorTools
                 
             left.setToolTipText(java.text.MessageFormat.format(rb.getString("PlaceLeftToolTip"),
                 new Object[]{beanString}));
-        //    placementPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
             return placementPanel;
         }
         
@@ -10699,8 +10733,7 @@ public class LayoutEditorTools
             addBeanPanel.setLayout(new FlowLayout());
             addBeanPanel.add(textLabel);
             textLabel.setOpaque(false);
-            addBeanPanel.add(textField);
-        //    addBeanPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            addBeanPanel.add(beanCombo);
             return addBeanPanel;
         }
     }
