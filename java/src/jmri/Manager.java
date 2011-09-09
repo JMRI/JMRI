@@ -90,7 +90,7 @@ public interface Manager {
     /**
      * Locate an instance based on a user name.  Returns null if no
      * instance already exists.
-     * @param systemName System Name of the required NamedBean
+     * @param userName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
     public NamedBean getBeanByUserName(String userName);
