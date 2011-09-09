@@ -25,7 +25,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         _displayOrder = displayOrder;
         _manager = manager;
         setSelectedBean(nBean);
-        setEditable(true);
+        //setEditable(true);
         _manager.addPropertyChangeListener(this);
         setKeySelectionManager(new beanSelectionManager());
     }
@@ -244,7 +244,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         _manager.removePropertyChangeListener(this);
     }
 	
-	static class beanSelectionManager implements KeySelectionManager {
+	class beanSelectionManager implements KeySelectionManager {
         long lastKeyTime = 0;
         String pattern = "";
 
@@ -293,7 +293,6 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
             }
             return -1;
         }
-    
     }
 	
     
