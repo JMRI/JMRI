@@ -174,16 +174,16 @@ class VSDecoderManager {
 	}
     }
 
-    @SuppressWarnings("rawtypes")
     public void loadProfiles(VSDFile vf) {
 	Element root;
 	if ((root = vf.getRoot()) == null)
 	    return;
 
 	//List<Element> profiles = root.getChildren("profile");
-	java.util.Iterator i = root.getChildren("profile").iterator();
+	@SuppressWarnings("unchecked")
+	java.util.Iterator<Element> i = root.getChildren("profile").iterator();
 	while (i.hasNext()) {
-	    Element e = (Element) i.next();
+	    Element e = i.next();
 	    log.debug(e.toString());
 	    if (e.getAttributeValue("name") != null)
 		profiletable.put(e.getAttributeValue("name"), vf.getName());

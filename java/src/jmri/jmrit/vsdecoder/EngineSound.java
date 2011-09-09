@@ -251,6 +251,7 @@ class EngineSound extends VSDSound {
 	return(me);
     }
 
+    @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	Element el;
 	int num_notches;
@@ -269,11 +270,10 @@ class EngineSound extends VSDSound {
 	transition_sounds = new ArrayList<NotchTransition>();
 
 	// Get the notch sounds
-	@SuppressWarnings("rawtypes")
-	Iterator itr =  (e.getChildren("notch-sound")).iterator();
+	Iterator<Element> itr =  (e.getChildren("notch-sound")).iterator();
 	int i = 0; 
 	while(itr.hasNext()) {
-	    el =(Element)itr.next();
+	    el = itr.next();
 	    fn = el.getChildText("file");
 	    int nn = Integer.parseInt(el.getChildText("notch"));
 	    log.debug("Notch: " + nn + " File: " + fn);
@@ -291,7 +291,7 @@ class EngineSound extends VSDSound {
 	i = 0;
 	NotchTransition nt;
 	while(itr.hasNext()) {
-	    el = (Element)itr.next();
+	    el = itr.next();
 	    fn = el.getChildText("file");
 	    nt = new NotchTransition(vf, fn, "Engine_nt" + i, "Engine_nt" + i);
 	    nt.setPrevNotch(Integer.parseInt(el.getChildText("prev-notch")));
@@ -331,7 +331,7 @@ class EngineSound extends VSDSound {
 	i = 0;
 	notchup_sounds = new ArrayList<SoundBite>();
 	while(itr.hasNext()) {
-	    el = (Element)itr.next();
+	    el = itr.next();
 	    // handle notch-up sounds... could be many.
 	    // Note, there's not enough info here to truly
 	    // do the notchup.  This is a placeholder.

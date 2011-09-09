@@ -314,10 +314,10 @@ public class SoundEvent implements PropertyChangeListener {
 	    buttontype = SoundEvent.ButtonType.NONE;
 
 	// Get the SoundEvent's Triggers and set them up.
-	@SuppressWarnings("rawtypes")
-	Iterator itr = (el.getChildren("trigger")).iterator();
+	@SuppressWarnings("unchecked")
+	Iterator<Element> itr = (el.getChildren("trigger")).iterator();
 	while (itr.hasNext()) {
-	    te = (Element)itr.next();
+	    te = itr.next();
 	    this.addXmlTrigger(te, vf);
 	} // end while
 

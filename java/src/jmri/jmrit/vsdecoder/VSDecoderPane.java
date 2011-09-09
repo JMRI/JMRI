@@ -152,6 +152,8 @@ public class VSDecoderPane extends JmriPanel {
 	tabbedPane.addTab("Sounds", soundsPanel);
     }
 
+    public VSDecoderFrame getParent() { return(parent); }
+
     // PROPERTY CHANGE EVENT FUNCTIONS
 
     // VSDecoderManager Events
@@ -200,6 +202,9 @@ public class VSDecoderPane extends JmriPanel {
 	addPropertyChangeListener(d);
 	return(d);
     }
+
+    
+
 
     // setDecoder()
     //

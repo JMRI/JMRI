@@ -32,6 +32,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriPanel;
 import jmri.DccLocoAddress;
+import javax.swing.SwingWorker;
 
 @SuppressWarnings("serial")
 public class VSDConfigPanel extends JmriPanel {
@@ -61,6 +62,8 @@ public class VSDConfigPanel extends JmriPanel {
     // Local variables
     private boolean profile_selected;  // true if a user has selected a Profile
     private NullComboBoxItem loadProfilePrompt; // dummy profileComboBox entry
+
+    private BusyDialog busy_dialog;
 
     // CONSTRUCTORS
 
@@ -371,8 +374,12 @@ public class VSDConfigPanel extends JmriPanel {
 	    dec.disable();  // disable the previous decoder
 	}
 	log.debug("Getting selected decoder from VSDecoderManager.");
-	dec = main_pane.getDecoder(profileComboBox.getSelectedItem().toString());
+
+	// Setup the progress monitor, in case this takes a while
+	//dec = main_pane.getDecoder(profileComboBox.getSelectedItem().toString());
+	dec = getNewDecoder();
 	main_pane.setDecoder(dec);
+	//bd.kill();
 	log.debug("Decoder = " + dec);
 	if (dec != null) {
 	    log.debug("Decoder name: " + dec.getProfileName());
@@ -384,6 +391,30 @@ public class VSDConfigPanel extends JmriPanel {
 	} else {
 	    log.warn("NULL POINTER returned from VSDecoderManager.");
 	}
+    }
+
+    protected VSDecoder getNewDecoder() {
+	VSDecoder rv;
+	busy_dialog = new BusyDialog(this.main_pane.getParent(), "Loading VSD Profile...", false);
+	// This takes a little while... so we'll use a SwingWorker
+	SwingWorker<VSDecoder, Object> sw = new SwingWorker<VSDecoder, Object>() {
+	    @Override
+	    public VSDecoder doInBackground() {
+		return(main_pane.getDecoder(profileComboBox.getSelectedItem().toString()));
+	    }
+	    protected void done() {
+		busy_dialog.finish();
+	    }
+	};
+	sw.execute();
+	busy_dialog.start();
+	try {
+	    rv = sw.get(); 
+	} catch (Exception e) {
+	    // Way too loose  Should be more specific about exceptions caught.
+	    rv = null;
+	}
+	return(rv);
     }
 
     // addressBoxActionPerformed()

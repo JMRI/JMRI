@@ -61,7 +61,7 @@ public class VSDFile extends ZipFile {
 
 	try {
 	    // Debug: List all the top-level contents in the file.
-		@SuppressWarnings("rawtypes")
+	    @SuppressWarnings("rawtypes")
 	    Enumeration entries = this.entries();
 	    while(entries.hasMoreElements()) {
 		ZipEntry z = (ZipEntry)entries.nextElement();

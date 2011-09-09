@@ -285,7 +285,6 @@ public class VSDecoder implements PropertyChangeListener {
     public void setXml(VSDFile vf) { }
     */
 
-    @SuppressWarnings("rawtypes")
     public void setXml(VSDFile vf, String pn) {
 	Iterator itr;
 	Element e = null;
@@ -304,9 +303,10 @@ public class VSDecoder implements PropertyChangeListener {
 	// Find the <profile/> element that matches the name pn
 	//List<Element> profiles = vf.getRoot().getChildren("profile");
 	//java.util.Iterator i = profiles.iterator();
-	java.util.Iterator i = vf.getRoot().getChildren("profile").iterator();
+	@SuppressWarnings("unchecked")
+	java.util.Iterator<Element> i = vf.getRoot().getChildren("profile").iterator();
 	while (i.hasNext()) {
-	    e = (Element) i.next();
+	    e = i.next();
 	    if (e.getAttributeValue("name").equals(pn))
 		break;
 	}
@@ -332,6 +332,7 @@ public class VSDecoder implements PropertyChangeListener {
 	    is_default = false;
 	}
 
+	// +++ DEBUG
 	// Log and print all of the child elements.
 	itr = (e.getChildren()).iterator();
 	while(itr.hasNext()) {
@@ -343,6 +344,7 @@ public class VSDecoder implements PropertyChangeListener {
 		log.debug("   type: " + el.getAttributeValue("type"));
 	    }
 	}
+	// --- DEBUG
 
 
 	// First, the sounds.
