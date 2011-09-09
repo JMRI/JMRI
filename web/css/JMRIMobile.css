@@ -10,11 +10,11 @@ body {
 	  max-width: 480px;
 	}
 .ui-content .ui-listview {
-  margin-bottom: 15px;
+  margin-bottom: 15px !important;
 }
-
-.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
-    padding-right: 25px;
+.roster-list .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+    padding-top: 0.1em !important;
+    padding-bottom: 0.1em !important;
 }
 a.ui-link-inherit.two-line-item {
     padding-top: 0.2em !important; 
@@ -25,3 +25,39 @@ a.ui-link-inherit.two-line-item {
   margin-top: auto;
   margin-bottom: auto;	
 }
+
+/* reported to improve speed, but I don't see it on my devices */
+.ui-shadow,
+.ui-btn-up-a,
+.ui-btn-hover-a,
+.ui-btn-down-a,
+.ui-body-b,
+.ui-btn-up-b,
+.ui-btn-hover-b,
+.ui-btn-down-b,
+.ui-bar-c,
+.ui-body-c,
+.ui-btn-up-c,
+.ui-btn-hover-c,
+.ui-btn-down-c,
+.ui-bar-c,
+.ui-body-d,
+.ui-btn-up-d,
+.ui-btn-hover-d,
+.ui-btn-down-d,
+.ui-bar-d,
+.ui-body-e,
+.ui-btn-up-e,
+.ui-btn-hover-e,
+.ui-btn-down-e,
+.ui-bar-e,
+.ui-overlay-shadow,
+.ui-shadow,
+.ui-btn-active,
+.ui-body-a,
+.ui-bar-a {
+ text-shadow: none !important;
+ box-shadow: none !important;
+ -webkit-box-shadow: none !important;
+}
+
