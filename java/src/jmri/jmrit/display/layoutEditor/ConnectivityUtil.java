@@ -1594,6 +1594,7 @@ public class ConnectivityUtil
 					}
 					else {
 						log.error("Error - Neither branch at track node leads to requested Block.(1)");
+                        tr = null;
 					}					
 				}
 				break;
@@ -1642,6 +1643,7 @@ public class ConnectivityUtil
 						}
 						else {
 							log.error("Error - Neither branch at track node leads to requested Block.(2)");
+                            tr = null;
 						}					
 					}
 				}
@@ -1697,6 +1699,7 @@ public class ConnectivityUtil
 						}
 						else {
 							log.error("Error - Neither branch at track node leads to requested Block.(3)");
+                            tr = null;
 						}					
 					}
 				}
@@ -1751,6 +1754,7 @@ public class ConnectivityUtil
 						}
 						else {
 							log.error("Error - Neither branch at track node leads to requested Block.(2)");
+                            tr = null;
 						}					
 					}
 				}
