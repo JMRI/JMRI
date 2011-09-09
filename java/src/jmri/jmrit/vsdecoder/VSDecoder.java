@@ -285,8 +285,9 @@ public class VSDecoder implements PropertyChangeListener {
     public void setXml(VSDFile vf) { }
     */
 
+    @SuppressWarnings("unchecked")
     public void setXml(VSDFile vf, String pn) {
-	Iterator itr;
+	Iterator<Element> itr;
 	Element e = null;
 	Element el = null;
 	SoundEvent se;
@@ -303,7 +304,6 @@ public class VSDecoder implements PropertyChangeListener {
 	// Find the <profile/> element that matches the name pn
 	//List<Element> profiles = vf.getRoot().getChildren("profile");
 	//java.util.Iterator i = profiles.iterator();
-	@SuppressWarnings("unchecked")
 	java.util.Iterator<Element> i = vf.getRoot().getChildren("profile").iterator();
 	while (i.hasNext()) {
 	    e = i.next();
