@@ -32,10 +32,11 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
     static final int ROADNAMECOL = 4;
     static final int ROADNUMBERCOL = 5;
     static final int MFGCOL = 6;
-    static final int OWNERCOL = 7;
-    static final int DATEUPDATECOL = 8;
+    static final int MODELCOL = 7;
+    static final int OWNERCOL = 8;
+    static final int DATEUPDATECOL = 9;
 
-    static final int NUMCOL = 8+1;
+    static final int NUMCOL = 9+1;
     
     boolean editable = false;
     
@@ -74,6 +75,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         case IDCOL:         return rb.getString("FieldID");
         case ADDRESSCOL:    return rb.getString("FieldDCCAddress");
         case DECODERCOL:    return rb.getString("FieldDecoderModel");
+        case MODELCOL:      return rb.getString("FieldModel");
         case ROADNAMECOL:   return rb.getString("FieldRoadName");
         case ROADNUMBERCOL: return rb.getString("FieldRoadNumber");
         case MFGCOL:        return rb.getString("FieldManufacturer");
@@ -126,6 +128,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         case IDCOL:         return re.getId();
         case ADDRESSCOL:    return Integer.valueOf(re.getDccLocoAddress().getNumber());
         case DECODERCOL:    return re.getDecoderModel();
+        case MODELCOL: return re.getModel();
         case ROADNAMECOL:   return re.getRoadName();
         case ROADNUMBERCOL: return re.getRoadNumber();
         case MFGCOL:        return re.getMfg();
@@ -149,6 +152,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         case ROADNAMECOL:   re.setRoadName((String)value); break;
         case ROADNUMBERCOL: re.setRoadNumber((String)value); break;
         case MFGCOL:        re.setMfg((String)value); break;
+        case MODELCOL:      re.setModel((String)value); break;
         case OWNERCOL:      re.setOwner((String)value); break;
         default:            log.error("invalid setValueAt column: "+col); return;
         }
