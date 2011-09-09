@@ -9559,7 +9559,8 @@ public class LayoutEditorTools
         sensorIconEditor = theEditor;
 		layoutTurnout = to;
 		turnout = to.getTurnout();
-		//turnoutSensorNameField.setText(to.getTurnoutName());
+        //turnoutMastNameField.setText(to.getTurnoutName());
+		turnoutSensorNameField.setText(to.getTurnoutName());
         turnoutSenBlocks = new String[4];
         for(int i = 0; i<blocks.length; i++){
             turnoutSenBlocks[i]=blocks[i];
