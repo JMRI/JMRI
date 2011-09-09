@@ -102,9 +102,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // install preference manager
         InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
         
-       //Install abstractActionModel
-       jmri.InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
-       addToActionModel();
+        // Install abstractActionModel
+        jmri.InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
+
         // find preference file and set location in configuration manager
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         // Needs to be declared final as we might need to
@@ -134,6 +134,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             log.info("No saved preferences, will open preferences window");
             configOK = false;
         }
+        
+        // Add actions to abstractActionModel
+        // Done here as initial non-GUI initialisation is completed
+        // and UI L&F has been set
+        addToActionModel();
 
 	// populate GUI
         log.debug("Start UI");
@@ -227,14 +232,14 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         return result;
     }
     
-    protected void addToActionModel(){
+    protected final void addToActionModel(){
         apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
-        ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
-        Enumeration<String> e = rb.getKeys();
+        ResourceBundle actionList = ResourceBundle.getBundle("apps.ActionListBundle");
+        Enumeration<String> e = actionList.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, rb.getString(key));
+                bm.addAction(key, actionList.getString(key));
             } catch (ClassNotFoundException ex) {
                 log.error("Did not find class "+key);
             }
@@ -628,7 +633,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     /**
      * Provide access to a place where applications
-     * can expect the configurion code to build run-time
+     * can expect the configuration code to build run-time
      * buttons.
      * @see apps.CreateButtonPanel
      * @return null if no such space exists
