@@ -11,6 +11,8 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
+import jmri.jmrix.nce.consist.NceConsistRoster;
+import jmri.jmrix.nce.consist.NceConsistRosterEntry;
 
 
 /**
@@ -43,15 +45,22 @@ public class ConsistController extends AbstractController implements ProgListene
  * Allows device to decide how to handle consisting.
  * Just selection or selection and Make & Break.
  * .size() indicates how many consists are being sent so the device can wait before displaying them
+ * Since users can have JMRI and NCE consists, this checks for both
  */
     public void sendConsistListType(){
         if (listeners == null) return;
         String message;
         
+        int numConsists = manager.getConsistList().size()  //number of JMRI consists found
+          + NceConsistRoster.instance().numEntries();      //  plus number of NCE consists found
+        if (log.isDebugEnabled()) {
+        	log.debug(numConsists+" consists found,"+manager.getConsistList().size()+" JMRI and "+NceConsistRoster.instance().numEntries()+" NCE");
+        }
+
         if (isConsistAllowed){  //  Allow Make & Break consists
-            message = ("RCC"+manager.getConsistList().size());  //  Roster Consist Controller
+            message = ("RCC"+numConsists);  //  Roster Consist Controller
         }else{  //  Just allow selection list
-            message = ("RCL"+manager.getConsistList().size());  //  Roster Consist List
+            message = ("RCL"+numConsists);  //  Roster Consist List
         }
 
         for (ControllerInterface listener : listeners){
@@ -60,10 +69,65 @@ public class ConsistController extends AbstractController implements ProgListene
     }
 
     public void sendAllConsistData(){
-        for (DccLocoAddress conAddr : manager.getConsistList()){
+        // Loop thru JMRI consists and send consist detail for each
+    	for (DccLocoAddress conAddr : manager.getConsistList()){
             sendDataForConsist(manager.getConsist(conAddr));
         }
         
+        // Loop through the NCE consists and send consist detail for each
+        NceConsistRoster r = NceConsistRoster.instance();
+        List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
+        int i=-1;
+        for (i = 0; i<l.size(); i++) {
+        	sendDataForNCEConsist(l.get(i));
+        }
+    }
+    
+    //send consist detail record for a single NCE consist, e.g. RCD}|{127(S)}|{2591]\[2591(L)}|{true]\[6318(L)}|{true]\[2608(L)}|{false
+    public void sendDataForNCEConsist(NceConsistRosterEntry con){
+        if (listeners == null) return;
+        StringBuilder list = new StringBuilder("RCD");  //  Roster Consist Data
+        list.append("}|{" + con.getConsistNumber());  //address
+        list.append("(S)}|{");  //consist address is always short
+        if (con.getId().length() > 0){  
+            list.append(con.getId());   //id
+        }
+        
+        //append entries for each loco (if set)
+        list.append("]\\[" + con.getLoco1DccAddress());  //loco address
+        list.append(con.isLoco1LongAddress() ? "(L)" : "(S)");  //include length
+        list.append("}|{" + (con.getLoco1Direction().equals("normal")));  //forward is true, reverse is false
+        if (!con.getLoco2DccAddress().equals("")) {
+        	list.append("]\\[" + con.getLoco2DccAddress());
+        	list.append(con.isLoco2LongAddress() ? "(L)" : "(S)");
+        	list.append("}|{" + (con.getLoco2Direction().equals("normal")));
+        }
+        if (!con.getLoco3DccAddress().equals("")) {
+        	list.append("]\\[" + con.getLoco3DccAddress());
+        	list.append(con.isLoco3LongAddress() ? "(L)" : "(S)");
+        	list.append("}|{" + (con.getLoco3Direction().equals("normal")));
+        }
+        if (!con.getLoco4DccAddress().equals("")) {
+        	list.append("]\\[" + con.getLoco4DccAddress());
+        	list.append(con.isLoco4LongAddress() ? "(L)" : "(S)");
+        	list.append("}|{" + (con.getLoco4Direction().equals("normal")));
+        }
+        if (!con.getLoco5DccAddress().equals("")) {
+        	list.append("]\\[" + con.getLoco5DccAddress());
+        	list.append(con.isLoco5LongAddress() ? "(L)" : "(S)");
+        	list.append("}|{" + (con.getLoco5Direction().equals("normal")));
+        }
+        if (!con.getLoco6DccAddress().equals("")) {
+        	list.append("]\\[" + con.getLoco6DccAddress());
+        	list.append(con.isLoco6LongAddress() ? "(L)" : "(S)");
+        	list.append("}|{" + (con.getLoco6Direction().equals("normal")));
+        }
+
+        String message = list.toString();
+
+        for (ControllerInterface listener : listeners){
+            listener.sendPacketToDevice(message);
+        }
     }
     
     public void sendDataForConsist(Consist con){
