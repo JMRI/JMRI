@@ -1789,15 +1789,27 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if(enableAddRouteLogging)
             log.info(block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
         Connection = new ConnectivityUtil(panel);
-        
-        ArrayList<LayoutTurnout> stod = Connection.getTurnoutList(block, srcBlock, dstBlock);
-        ArrayList<Integer> stodSet = Connection.getTurnoutSettingList();
+        ArrayList<LayoutTurnout> stod = new ArrayList<LayoutTurnout>();
+        ArrayList<Integer> stodSet = new ArrayList<Integer>();
+        try{
+            stod = Connection.getTurnoutList(block, srcBlock, dstBlock);
+            stodSet = Connection.getTurnoutSettingList();
+        } catch (java.lang.NullPointerException ex){
+            log.error("Exception caught while trying to dicover turnout connectivity\n"  + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
+        }
         
         if(!Connection.isTurnoutConnectivityComplete())
             layoutConnectivity=false;
         
-        ArrayList<LayoutTurnout> tmpdtos = Connection.getTurnoutList(block, dstBlock, srcBlock);
-        ArrayList<Integer> tmpdtosSet = Connection.getTurnoutSettingList();
+        ArrayList<LayoutTurnout> tmpdtos = new ArrayList<LayoutTurnout>();
+        ArrayList<Integer> tmpdtosSet = new ArrayList<Integer>();
+        
+        try{
+            tmpdtos = Connection.getTurnoutList(block, dstBlock, srcBlock);
+            tmpdtosSet = Connection.getTurnoutSettingList();
+        } catch (java.lang.NullPointerException ex){
+            log.error("Exception caught while trying to dicover turnout connectivity\n" + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
+        }
         
         if(!Connection.isTurnoutConnectivityComplete())
             layoutConnectivity=false;
