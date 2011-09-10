@@ -86,13 +86,14 @@
     <property name="tmptarget"    value="${basedir}/java/tmp"/>
 
     <!-- location for all generated java code -->
-    <property name="genjavasourcedir" 
-              value="${tmptarget}/"/>
+    <property name="genjavasrcdir" value="${tmptarget}/"/>
 
     <!-- this is the list of jar files and class path elements that are not
-         a part of the JMRI codebase itself
+         a part of the JMRI codebase itself but which are needed at runtime
+         for the various apps.  These will all be copied into the release
+         packages
     -->
-    <path id="external.class.path">
+    <path id="runtime.class.path">
         <pathelement location="${libdir}/MRJAdapter.jar" />
         <pathelement location="${libdir}/RXTXcomm.jar" />
         <pathelement location="${libdir}/Serialio.jar" />
@@ -116,16 +117,22 @@
         <pathelement location="${libdir}/xAPlib.jar" />
         <pathelement location="${libdir}/ExternalLinkContentViewerUI.jar" />
         <pathelement location="${libdir}/junit.jar" />
-        <pathelement location="/System/Library/Java" /> <!-- MacOS X -->
         <pathelement location="${libdir}/jfcunit.jar" />
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar" />
+    </path>
+
+    <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
+
+    <!-- jars that are needed at build time -->
+    <path id="compile.class.path">
+        <pathelement path="${runtime.class.jars}"/>
         <pathelement location="${libdir}/annotations.jar" /> <!-- findbugs build-time only-->
-        <pathelement location="${libdir}/jsr305.jar" /><!-- findbugs build-time only-->
+        <pathelement location="${libdir}/jsr305.jar" />      <!-- findbugs build-time only-->
     </path>
 
     <path id="project.class.path">
         <pathelement location="${jartarget}" />
-        <path        refid="external.class.path" />
+        <path        refid="runtime.class.path" />
         <pathelement location="${target}/" />  <!-- last to check for name collisions -->
     </path>
   
@@ -143,8 +150,8 @@
         <!-- Create the build directory structure used by compile -->
         <mkdir dir="${target}"/>
         <mkdir dir="${target}/resources" />
-        <mkdir dir="${genjavasourcedir}/jmri/jmris/srcp/parser"/>
-        <mkdir dir="${genjavasourcedir}/jmri/jmrix/srcp/parser"/>
+        <mkdir dir="${genjavasrcdir}/jmri/jmris/srcp/parser"/>
+        <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser"/>
     </target>
 
     <target name="realclean" 
@@ -166,7 +173,7 @@
             <fileset dir="${doctarget}"/>
             <fileset dir="${target}"/>
             <fileset dir="${dist}"/>
-            <fileset dir="${genjavasourcedir}"/>
+            <fileset dir="${genjavasrcdir}"/>
         </delete>
     </target>
 
@@ -194,15 +201,15 @@
             depends="init">
         <!-- Run JJTree -->
         <!-- Create the build directory structure used by compiler -->
-        <mkdir dir="${genjavasourcedir}/jmri/jmris/srcp/parser" />
+        <mkdir dir="${genjavasrcdir}/jmri/jmris/srcp/parser" />
         <jjtree
             target="${source}/jmri/jmris/srcp/SRCPParser.jjt"
-            outputdirectory="${genjavasourcedir}/jmri/jmris/srcp/parser"
+            outputdirectory="${genjavasrcdir}/jmri/jmris/srcp/parser"
             javacchome="${libdir}" />
-        <mkdir dir="${genjavasourcedir}/jmri/jmrix/srcp/parser" />
+        <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser" />
         <jjtree
             target="${source}/jmri/jmrix/srcp/SRCPClientParser.jjt"
-            outputdirectory="${genjavasourcedir}/jmri/jmrix/srcp/parser"
+            outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
             javacchome="${libdir}" />
     </target>
 
@@ -211,7 +218,7 @@
             description="create JJDoc BNF documentation"
             depends="init, javacc">
         <mkdir dir="${doctarget}/jmri/jmris/srcp/"/>
-        <jjdoc target="${genjavasourcedir}/jmri/jmris/srcp/parser/SRCPParser.jj"
+        <jjdoc target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmris/srcp/SRCPParser.html"/>
     </target>
@@ -222,12 +229,12 @@
             depends="jjtree">
         <!-- Run JavaCC -->
         <javacc
-            target="${genjavasourcedir}/jmri/jmris/srcp/parser/SRCPParser.jj"
-            outputdirectory="${genjavasourcedir}/jmri/jmris/srcp/parser"
+            target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
+            outputdirectory="${genjavasrcdir}/jmri/jmris/srcp/parser"
             javacchome="${libdir}" />
         <javacc
-            target="${genjavasourcedir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
-            outputdirectory="${genjavasourcedir}/jmri/jmrix/srcp/parser"
+            target="${genjavasrcdir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
+            outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
             javacchome="${libdir}" />
     </target>
 
@@ -248,7 +255,7 @@
                memorymaximumsize="256m"
                deprecation="${deprecation}"
                debug="${java.debugging}">
-            <classpath refid="project.class.path" />
+            <classpath refid="compile.class.path" />
             <compilerarg value="-Xlint:-serial" />
             <compilerarg value="-Xlint:-deprecation" />
         </javac>
@@ -258,9 +265,9 @@
     <target name="javacc-compile"
             description="compile JavaCC generated source"
             depends="javacc">
-        <!-- Compile the java code from ${genjavasourcedir} into ${target} -->
+        <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
         <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${genjavasourcedir}" />
+            <param name="java.source.directory" value="${genjavasrcdir}" />
             <param name="java.debugging" value="no" />
         </antcall>
     </target>
@@ -346,8 +353,7 @@
 
 
     <target name="rmic" 
-            description="build RMI stubs and compile"
-            depends="compile">
+            description="build RMI stubs and compile">
         <!-- Run rmic on specified classes -->
         <rmic includes="**/LnMessageBuffer.class, **/LnMessageServer.class"
               base="${target}" 
@@ -722,8 +728,9 @@
         </java>
     </target>
 
-    <target name="jar" depends="debug, rmic"  
-        description="create working jar file with current contents">
+    <target name="jar" 
+            description="create working jar file with current contents"
+            depends="compile, rmic">
         <jar jarfile="${jartarget}/jmri.jar" 
             basedir="${target}"
             manifest="java/manifest" 
@@ -895,9 +902,9 @@
   
     <!-- dist target forces the jar file to be built without test classes -->
     <!-- Note production builds should use compile, not debug, prereq  -->
-    <target name="dist" depends="clean, init, debug, rmic, jar"
-        description="create a distribution jar file" 
-    />
+    <target name="dist"
+            description="create a distribution jar file" 
+            depends="clean, init, compile, rmic, jar"/>
         
     <taskdef name="findbugs" 
     classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
@@ -959,17 +966,23 @@
        package for each of the three targets we currently support.  I suspect that Windows as a 
        host will only be able to create the Windows & Linux packages.  If there are HFS+ filesystem
        tools available for Windows, that's news to me.
-  -->
-    <target name="packages" depends="package-windows, package-macosx, package-linux">
 
-    </target>
+       Someone could get clever and put dependencies in place to make sure that the right targets
+       are used when on a limited OS (e.g., don't build Mac OS X packages on Windows).  Not me.
+  -->
+
+    <target name="packages" 
+            description="create all OS-specific release packages"
+            depends="package-windows, package-macosx, package-linux" />
 
     <property name="dist.release" value="${dist}/release" />
     <property name="dist.windows" value="${dist}/Windows" />
     <property name="dist.macosx"  value="${dist}/MacOSX" />
     <property name="dist.linux"   value="${dist}/Linux" />
 
-    <target name="package-windows" depends="jar">
+    <target name="package-windows" 
+            description="create a Windows release package"
+            depends="jar">
         <delete dir="${dist.windows}" />
         <mkdir dir="${dist.windows}/JMRI" />
         <copy todir="${dist.windows}/JMRI">
@@ -983,10 +996,11 @@
                  includes="*" />
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib" />
-        <copy todir="${dist.windows}/JMRI/lib">
-            <fileset dir="${libdir}" 
-                 includes="*.jar,security.policy"
-                 excludes="UmlGraph-*.jar,junit.jar,jfcunit.jar,Serialio.jar,ecj.jar" />
+        <copy todir="${dist.windows}/JMRI/lib" flatten="true">
+            <path>
+                <pathelement path="${runtime.class.jars}" />
+            </path>
+            <fileset file="${libdir}/security.policy"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib/windows" />
         <copy todir="${dist.windows}/JMRI/lib/windows">
@@ -999,7 +1013,9 @@
         </exec>
     </target>
 
-    <target name="package-macosx" depends="jar">
+    <target name="package-macosx" 
+            description="create a Mac OS X install package"
+            depends="jar">
         <delete dir="${dist.macosx}" />
         <mkdir dir="${dist.macosx}/JMRI" />
         <copy todir="${dist.macosx}/JMRI">
@@ -1013,10 +1029,11 @@
                  includes="default.lcf,COPYING" />
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib" />
-        <copy todir="${dist.macosx}/JMRI/lib">
-            <fileset dir="${libdir}" 
-                 includes="*.jar,security.policy"
-                 excludes="UmlGraph-*.jar,junit.jar,jfcunit.jar,Serialio.jar,ecj.jar" />
+        <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
+            <path>
+                <pathelement path="${runtime.class.jars}" />
+            </path>
+            <fileset file="${libdir}/security.policy"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib/macosx" />
         <copy todir="${dist.macosx}/JMRI/lib/macosx">
@@ -1039,7 +1056,9 @@
         </exec>
     </target>
 
-    <target name="package-linux" depends="jar">
+    <target name="package-linux" 
+            description="create a Linux release package"
+            depends="jar">
         <delete dir="${dist.linux}" />
         <mkdir dir="${dist.linux}/JMRI" />
         <copy todir="${dist.linux}/JMRI">
@@ -1051,10 +1070,11 @@
                  includes="default.lcf,COPYING" />
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib" />
-        <copy todir="${dist.linux}/JMRI/lib">
-            <fileset dir="${libdir}" 
-                 includes="*.jar,security.policy"
-                 excludes="UmlGraph-*.jar,junit.jar,jfcunit.jar,Serialio.jar,ecj.jar" />
+        <copy todir="${dist.linux}/JMRI/lib" flatten="true">
+            <path>
+                <pathelement path="${runtime.class.jars}" />
+            </path>
+            <fileset file="${libdir}/security.policy"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib/linux" />
         <copy todir="${dist.linux}/JMRI/lib/linux">
