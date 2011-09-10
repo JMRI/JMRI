@@ -4,12 +4,10 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,7 +56,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         String entry = (String)JOptionPane.showInputDialog(_who,
-                "<html><b>Delete roster group</b><br>Roster entries in the group are not deleted.",
+                "<html><b>Delete roster group.</b><br>Roster entries in the group are not deleted.</html>",
                 "Delete Roster Group",
                 JOptionPane.INFORMATION_MESSAGE,
                 null,

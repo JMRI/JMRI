@@ -8,7 +8,6 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
-import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
 /**
@@ -56,7 +55,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         String entry = (String)JOptionPane.showInputDialog(_who,
-                                     "<html><b>Create new roster group.</b><br>Roster group names cannot be changed once created.",
+                                     "<html><b>Create new roster group.</b><br>Roster group names cannot be changed once created.</html>",
                                      "New Roster Group",
                                      JOptionPane.INFORMATION_MESSAGE,
                                      null, // icon
