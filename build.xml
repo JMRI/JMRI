@@ -331,7 +331,7 @@
                 <pathelement path="${libdir}/ecj.jar" />
             </compilerclasspath>        
             <compilerarg value="@${basedir}/java/ecj.warning.options" />
-            <classpath refid="project.class.path" />
+            <classpath refid="compile.class.path" />
         </javac>
     </target>
 
