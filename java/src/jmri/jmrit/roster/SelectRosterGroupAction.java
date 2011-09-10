@@ -4,11 +4,11 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -55,24 +55,26 @@ public class SelectRosterGroupAction extends JmriAbstractAction {
 
     public void actionPerformed(ActionEvent event) {
 
-        Roster roster = Roster.instance();
-
         // get parent object if there is one
         //Component parent = null;
         //if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
 
-        // create a dialog to select the roster entry
-        JComboBox selections = roster.rosterGroupBox();
-        String currentgroup = Roster.getRosterGroup();
-        if (currentgroup==null) currentgroup = Roster.ALLENTRIES;
-        int retval = JOptionPane.showOptionDialog(_who,
-                                                  "Select one roster group to work with\nCurrent Active Group is " + currentgroup, "Select roster group",
-                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
-                                                  new Object[]{"Cancel", "OK", selections}, null );
-        log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
-                  +selections.getSelectedItem());
-        if (retval != 1) return;
-        String entry = (String) selections.getSelectedItem();
+        ArrayList<String> groups = Roster.instance().getRosterGroupList();
+        groups.add(0, Roster.ALLENTRIES);
+        String currentGroup = Roster.getRosterGroup();
+        if (currentGroup == null) {
+            currentGroup = Roster.ALLENTRIES;
+        }
+        String entry = (String)JOptionPane.showInputDialog(_who,
+                "<html><b>Select active roster group</b><br>You can work with locomotives in the active group.</html>",
+                "Active Roster Group",
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                groups.toArray(),
+                currentGroup);
+        if (entry == null) {
+            return;
+        }
 
         Roster.instance().setRosterGroup(entry);
     }
