@@ -13,7 +13,6 @@ import jmri.util.swing.JmriPanel;
 import javax.swing.JComboBox;
 import java.beans.PropertyChangeListener;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -107,12 +106,9 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
     public JmriPanel makeListPanel() {
         if (!init) {
             Roster roster = Roster.instance();
-            JScrollPane scroller = new JScrollPane();
 
             groupsList = roster.rosterGroupList();
             container = new JmriPanel();
-            scroller.add(groupsList);
-            //container.add(scroller);
             container.add(groupsList);
 
             listListener = new ListSelectionListener() {
