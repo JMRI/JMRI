@@ -42,6 +42,7 @@ import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import javax.swing.DropMode;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -135,6 +136,23 @@ public class DecoderPro3Window
             hideBottomPane(true);
             hideSummary=true;
         }
+        
+        PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
+          public void propertyChange(PropertyChangeEvent changeEvent) {
+            JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY)) {
+              int current = sourceSplitPane.getDividerLocation()+sourceSplitPane.getDividerSize();
+              int panesize = (int) (sourceSplitPane.getSize().getHeight());
+              if(panesize-current<=1)
+                hideSummary=true;
+              else
+                hideSummary=false;
+              p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
+            }
+          }
+        };
+        getSplitPane().addPropertyChangeListener(propertyChangeListener);
     }
     
     void additionsToToolBar(){
@@ -404,6 +422,29 @@ public class DecoderPro3Window
         } else {
             enableRosterGroupMenuItems(false);
         }
+        
+        PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
+          public void propertyChange(PropertyChangeEvent changeEvent) {
+            JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY)) {
+              int current = sourceSplitPane.getDividerLocation();
+              if(current<=1)
+                hideGroups=true;
+              else
+                hideGroups=false;
+              p.setSimplePreferenceState(DecoderPro3Window.class.getName() + ".showGroups", !hideGroups);
+              Integer last = (Integer) changeEvent.getNewValue();
+              if(current>=2)
+                groupSplitPaneLocation = current;
+              else if(last>=2)
+                groupSplitPaneLocation = last;
+            }
+          }
+        };
+
+        rosterGroupPane.addPropertyChangeListener(propertyChangeListener);
+    
         return rosterGroupPane;
         // return rosters;   // uncomment to return a single table of roster entries
     }
@@ -906,6 +947,7 @@ public class DecoderPro3Window
     }
 
     public void windowClosing(java.awt.event.WindowEvent e) {
+        p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
         //Method to save table sort status
         int count = rtable.getModel().getColumnCount();
         for (int i = 0; i <count; i++){
@@ -914,7 +956,7 @@ public class DecoderPro3Window
             p.setProperty(getWindowFrameRef(), i, rtable.getModel().getSortingStatus(i));
         }
         int rosterGroupPaneloc = rosterGroupPane.getDividerLocation();
-        if(rosterGroupPaneloc<=1)
+        if(rosterGroupPaneloc<=2)
             rosterGroupPaneloc = groupSplitPaneLocation;
             
         p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupPaneloc);
@@ -1077,8 +1119,8 @@ public class DecoderPro3Window
     boolean hideSummary=false;
     protected void hideSummary(){
         hideSummary=!hideSummary;
-        p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
         hideBottomPane(hideSummary);
+        p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
     }
 
     protected void enableRosterGroupMenuItems(boolean enable){
@@ -1092,15 +1134,15 @@ public class DecoderPro3Window
     boolean hideGroups = false;
     protected void hideGroups() {
         hideGroups = !hideGroups;
-        p.setSimplePreferenceState(DecoderPro3Window.class.getName() + "hideGroups", hideGroups);
         hideGroupsPane(hideGroups);
     }
     
     public void hideGroupsPane(boolean hide) {
         hideGroups = hide;
+        p.setSimplePreferenceState(DecoderPro3Window.class.getName() + ".showGroups", !hideGroups);
         if (hide) {
             groupSplitPaneLocation = rosterGroupPane.getDividerLocation();
-            rosterGroupPane.setDividerLocation(0);
+            rosterGroupPane.setDividerLocation(1);
             if(Roster.instance().getRosterGroupList().size()==0){
                 rosterGroupPane.setOneTouchExpandable(false);
                 rosterGroupPane.setDividerSize(0);
@@ -1108,7 +1150,7 @@ public class DecoderPro3Window
         } else {
             rosterGroupPane.setDividerSize(10);
             rosterGroupPane.setOneTouchExpandable(true);
-            if(groupSplitPaneLocation!=0)
+            if(groupSplitPaneLocation>=2)
                 rosterGroupPane.setDividerLocation(groupSplitPaneLocation);
             else
                 rosterGroupPane.resetToPreferredSizes();

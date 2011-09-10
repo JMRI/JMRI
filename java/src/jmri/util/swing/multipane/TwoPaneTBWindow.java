@@ -55,6 +55,10 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         return toolBar;
     }
     
+    public JComponent getSplitPane(){
+        return upDownSplitPane;
+    }
+    
     WindowInterface topBottomWI;
     
     protected void buildGUI(File menubarFile, File toolbarFile) {
