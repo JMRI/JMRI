@@ -113,7 +113,7 @@ public class DecoderPro3Window
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         getTop().add(createTop());
         
-        getBottom().setMinimumSize(new Dimension(0, 170));
+        getBottom().setMinimumSize(summaryPaneDim);
 
         getBottom().add(createBottom());
         statusBar();
@@ -133,6 +133,7 @@ public class DecoderPro3Window
             hideGroupsPane(true);
         }
         if(p.getSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary")){
+            hideBottomPane(false);
             hideBottomPane(true);
             hideSummary=true;
         }
@@ -1122,7 +1123,26 @@ public class DecoderPro3Window
         hideBottomPane(hideSummary);
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
     }
-
+    
+    /*@Override
+    public void hideBottomPane(boolean hide) {
+        hideSummary = hide;
+        if(hide){
+            getBottom().setMinimumSize(new Dimension());
+            getSplitPane().setDividerLocation(1.0d);
+        } else {
+            getBottom().setMinimumSize(summaryPaneDim);
+            //getSplitPane().setResizeWeight(1.0);
+            int current = (int) (summaryPaneDim.getHeight()+getSplitPane().getDividerSize());
+            int panesize = (int) (getSplitPane().getSize().getHeight());
+            //getSplitPane().setDividerLocation(panesize-current);
+            getSplitPane().setResizeWeight(1.0);
+            resetTopToPreferredSizes();
+        }
+    }*/
+    
+    Dimension summaryPaneDim = new Dimension(0, 170);
+    
     protected void enableRosterGroupMenuItems(boolean enable){
         firePropertyChange("groupspane", "setEnabled", enable);
         firePropertyChange("grouptable", "setEnabled", enable);
@@ -1143,6 +1163,7 @@ public class DecoderPro3Window
         if (hide) {
             groupSplitPaneLocation = rosterGroupPane.getDividerLocation();
             rosterGroupPane.setDividerLocation(1);
+            rosterGroupPane.getLeftComponent().setMinimumSize(new Dimension());
             if(Roster.instance().getRosterGroupList().size()==0){
                 rosterGroupPane.setOneTouchExpandable(false);
                 rosterGroupPane.setDividerSize(0);
@@ -1150,9 +1171,10 @@ public class DecoderPro3Window
         } else {
             rosterGroupPane.setDividerSize(10);
             rosterGroupPane.setOneTouchExpandable(true);
-            if(groupSplitPaneLocation>=2)
+            if(groupSplitPaneLocation>=2){
                 rosterGroupPane.setDividerLocation(groupSplitPaneLocation);
-            else
+            }
+                else
                 rosterGroupPane.resetToPreferredSizes();
         }
     }
