@@ -133,7 +133,7 @@ a copy of the web site files available to the server.
 <LI>You need to edit the Apache web server's configuration file. 
 <ul>
 <li>On MacOS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
-<li>On MacOS X 10.5 (Leopard), this is the /etc/apache2/httpd.conf file
+<li>On MacOS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
 </UL>
 Once you've located the file, open it with your favorite
 editor (You'll need to authenticate with the administrator password to 
