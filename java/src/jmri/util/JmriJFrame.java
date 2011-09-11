@@ -227,7 +227,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     
     String windowFrameRef;
     
-    protected String getWindowFrameRef(){ return windowFrameRef; }
+    public String getWindowFrameRef(){ return windowFrameRef; }
     
     /**
      * By default, Swing components should be 
@@ -502,25 +502,24 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         handleModified();
     }
     
-    public void componentHidden(java.awt.event.ComponentEvent e) { }
+    public void componentHidden(java.awt.event.ComponentEvent e) {}
     
     public void componentMoved(java.awt.event.ComponentEvent e) {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if ((p != null) && (reuseFrameSavedPosition)) {
+        if ((p != null) && (reuseFrameSavedPosition) && isVisible()) {
             p.setWindowLocation(windowFrameRef, this.getLocation());
         }
     }
     
     public void componentResized(java.awt.event.ComponentEvent e) {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if ((p != null) && (reuseFrameSavedSized)) {
+        if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
             p.setWindowSize(windowFrameRef, super.getPreferredSize());
         }
     }
     
     public void componentShown(java.awt.event.ComponentEvent e) { }
     
-
     private jmri.implementation.AbstractShutDownTask task = null;
     protected void setShutDownTask() {
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
