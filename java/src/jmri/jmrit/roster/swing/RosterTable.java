@@ -23,8 +23,13 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
     public RosterTable() {
         this(false);
     }
-    
+
     public RosterTable(boolean editable) {
+        // set to single selection
+        this(editable, ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public RosterTable(boolean editable, int selectionMode) {
         super();
         dataModel = new RosterTableModel(editable);
         sorter = new TableSorter(dataModel);
@@ -72,8 +77,7 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         //dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         //dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
-        // set to single selection
-        dataTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        dataTable.setSelectionMode(selectionMode);
 
     }
 	   

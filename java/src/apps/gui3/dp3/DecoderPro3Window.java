@@ -49,6 +49,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
+import javax.swing.ListSelectionModel;
 
 import jmri.Programmer;
 import jmri.progdebugger.*;
@@ -127,7 +128,7 @@ public class DecoderPro3Window
             //System.out.println(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer());
         }
         
-        if((p.getSimplePreferenceState(DecoderPro3Window.class.getName()+".showGroups")) && Roster.instance().getRosterGroupList().size()!=0){
+        if((p.getSimplePreferenceState(DecoderPro3Window.class.getName()+".showGroups")) && !Roster.instance().getRosterGroupList().isEmpty()){
             hideGroupsPane(false);
         } else {
             hideGroupsPane(true);
@@ -257,19 +258,18 @@ public class DecoderPro3Window
 
         // set up roster table
 
-        rtable = new RosterTable(false);
+        rtable = new RosterTable(false, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         rosters.add(rtable, BorderLayout.CENTER);
         // add selection listener
         rtable.getTable().getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent e) {
-                    if (! e.getValueIsAdjusting()) {
-                            for (int i = e.getFirstIndex(); i <= e.getLastIndex(); i++) {
-                                if (rtable.getTable().getSelectionModel().isSelectedIndex(i)) {
-                                    locoSelected(rtable.getModel().getValueAt(i, RosterTableModel.IDCOL).toString());
-                                    break;
-                                }
-                            }
+                        if (!e.getValueIsAdjusting()) {
+                            if (rtable.getTable().getSelectedRowCount() == 1) {
+                                locoSelected(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
+                            } else if (rtable.getTable().getSelectedRowCount() > 1) {
+                                locoSelected(null);
+                            } // leave last selected item visible if no selection
                         }
                     }
             }
@@ -292,7 +292,11 @@ public class DecoderPro3Window
 
             public Transferable createTransferable(JComponent c) {
                 // should return a RosterSelection object which contains the roster ID
-                return new StringSelection(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
+                String IDs = "";
+                for (int i = 0; i < rtable.getTable().getSelectedRowCount(); i++) {
+                    IDs = IDs + "#" + rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString();
+                }
+                return new StringSelection(IDs);
             }
 
             public void exportDone(JComponent c, Transferable t, int action) {
@@ -358,19 +362,25 @@ public class DecoderPro3Window
                 JList l = (JList) c;
                 if (canImport(c, t.getTransferDataFlavors())) {
                     // getDropLocation is null unless canImport is true
-                    int i = l.getDropLocation().getIndex();
-                    if (i == 0 || i == l.getSelectedIndex()) {
+                    int g = l.getDropLocation().getIndex();
+                    if (g == 0 || g == l.getSelectedIndex()) {
                         return false;
                     }
                     try {
-                        RosterEntry re = Roster.instance().entryFromTitle(t.getTransferData(DataFlavor.stringFlavor).toString());
-                        if (re == null) {
-                            log.warn("Attempted to create RosterEntry from invalid title: " + t.getTransferData(DataFlavor.stringFlavor).toString());
-                            return false;
+                        String[] IDs = t.getTransferData(DataFlavor.stringFlavor).toString().split("#");
+                        for (int i = 0; i < IDs.length; i++) {
+                            if (!"".equals(IDs[i])) {
+                                RosterEntry re = Roster.instance().entryFromTitle(IDs[i]);
+                                if (re == null) {
+                                    log.warn("Attempted to create RosterEntry from invalid title: " + IDs[i]);
+                                } else {
+                                    log.debug("Dragged RosterEntry " + IDs[i] + " onto group " + l.getModel().getElementAt(g).toString());
+                                    re.putAttribute(Roster.instance().getRosterGroupPrefix() + l.getModel().getElementAt(g).toString(), "yes");
+                                    re.updateFile();
+                                    Roster.writeRosterFile();
+                                }
+                            }
                         }
-                        re.putAttribute(Roster.instance().getRosterGroupPrefix() + l.getModel().getElementAt(i).toString(), "yes");
-                        re.updateFile();
-                        Roster.writeRosterFile();
                         Roster.instance().rosterGroupEntryChanged();
                     } catch (Exception e) {
                         log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
@@ -455,15 +465,20 @@ public class DecoderPro3Window
      * activate the bottom part of the window
      */
     void locoSelected(String id) {
-        log.debug("locoSelected ID "+id);
+        if (id != null) {
+            log.debug("locoSelected ID "+id);
 
-        if(re!=null){
-            //We remove the propertychangelistener if we had a previoulsy selected entry;
-            re.removePropertyChangeListener(rosterEntryUpdateListener);
+            if (re != null) {
+                //We remove the propertychangelistener if we had a previoulsy selected entry;
+                re.removePropertyChangeListener(rosterEntryUpdateListener);
+            }
+            // convert to roster entry
+            re = Roster.instance().entryFromTitle(id);
+            re.addPropertyChangeListener(rosterEntryUpdateListener);
+        } else {
+            log.debug("Multiple selection");
+            re = null;
         }
-        // convert to roster entry
-        re = Roster.instance().entryFromTitle(id);
-        re.addPropertyChangeListener(rosterEntryUpdateListener);
         updateDetails();
     }
 
@@ -672,20 +687,21 @@ public class DecoderPro3Window
 
     void updateDetails(){
         if(re==null){
-            filename.setText("");
-            dateUpdated.setText("");
-            decoderModel.setText("");
-            decoderFamily.setText("");
+            String value = (rtable.getTable().getSelectedRowCount() > 1) ? "Multiple Items Selected" : "";
+            filename.setText(value);
+            dateUpdated.setText(value);
+            decoderModel.setText(value);
+            decoderFamily.setText(value);
 
 
-            id.setText("");
-            roadName.setText("");
+            id.setText(value);
+            roadName.setText(value);
 
-            roadNumber.setText("");
-            mfg.setText("");
-            model.setText("");
-            owner.setText("");
-            locoImage.setImagePath("");
+            roadNumber.setText(value);
+            mfg.setText(value);
+            model.setText(value);
+            owner.setText(value);
+            locoImage.setImagePath(value);
         } else {
             filename.setText(re.getFileName());
             dateUpdated.setText(re.getDateUpdated());
