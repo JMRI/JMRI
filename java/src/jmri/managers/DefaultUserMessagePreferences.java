@@ -5,14 +5,10 @@ package jmri.managers;
 import jmri.UserPreferencesManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Point;
 import javax.swing.*;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.UIManager;
 import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -334,84 +330,48 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
      * @param item String value of the specific item this is used for
      * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be saved
-     * @param level Used to determine the type of messagebox that will be used.
+     * @param level Used to determine the type of message box that will be used.
      */
     public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, org.apache.log4j.Level level) {
         final UserPreferencesManager p;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        Icon icon= UIManager.getIcon("OptionPane.informationIcon");
-        if (level==org.apache.log4j.Level.ERROR){
-            icon = UIManager.getIcon("OptionPane.errorIcon");
+        int type = JOptionPane.INFORMATION_MESSAGE;
+        if (level == org.apache.log4j.Level.ERROR) {
+            type = JOptionPane.ERROR_MESSAGE;
         } else if (level == org.apache.log4j.Level.WARN) {
-            UIManager.getIcon("OptionPane.warningIcon");
+            type = JOptionPane.WARNING_MESSAGE;
         }
 
-        StringBuilder result = new StringBuilder();
-        result.append(strClass);
-        result.append(".");
-        result.append(item);
-        final String preference=result.toString();
+        final String preference = strClass + "." + item;
 
-        if(p.getSessionPreferenceState(preference)){
+        if (p.getSessionPreferenceState(preference)) {
             return;
         }
-        if (!p.getPreferenceState(strClass, item)){
-            final JDialog dialog = new JDialog();
-            dialog.setTitle(title);
-            //dialog.setLocationRelativeTo(null);
-            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+        if (!p.getPreferenceState(strClass, item)) {
             JPanel container = new JPanel();
-            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            
-            JLabel question = new JLabel(message, JLabel.CENTER);
-            question.setAlignmentX(Component.CENTER_ALIGNMENT);
-            question.setIcon(icon);
-            container.add(question);
-            
-            JButton okButton = new JButton("Okay");
-            JPanel button = new JPanel();
-            button.setAlignmentX(Component.CENTER_ALIGNMENT);
-            button.add(okButton);
-            container.add(button);
-            
+            container.add(new JLabel(message));
             final JCheckBox rememberSession = new JCheckBox("Skip message for this session only?");
-            if(sessionOnly){
-                rememberSession.setAlignmentX(Component.CENTER_ALIGNMENT);
+            if (sessionOnly) {
                 rememberSession.setFont(rememberSession.getFont().deriveFont(10f));
                 container.add(rememberSession);
             }
             final JCheckBox remember = new JCheckBox("Skip message in future?");
-            if(alwaysRemember){
-                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+            if (alwaysRemember) {
                 remember.setFont(remember.getFont().deriveFont(10f));
                 container.add(remember);
             }
-            okButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    if(remember.isSelected()){
-                        p.setPreferenceState(strClass, item, true);
-                    }
-                    if(rememberSession.isSelected()){
-                        p.setSessionPreferenceState(preference, true);
-                    }
-                    dialog.dispose();
-                }
-            });
-            
-            dialog.getContentPane().add(container);
-            dialog.pack();
-            int w = dialog.getSize().width;
-            int h = dialog.getSize().height;
-            int x = (getScreen().width-w)/2;
-            int y = (getScreen().height-h)/2;
+            JOptionPane.showMessageDialog(null, // center over parent component
+                    container,
+                    title,
+                    type);
+            if (remember.isSelected()) {
+                p.setPreferenceState(strClass, item, true);
+            }
+            if (rememberSession.isSelected()) {
+                p.setSessionPreferenceState(preference, true);
+            }
 
-        // Move the window
-            dialog.setLocation(x, y);
-
-            dialog.setModal(true);
-
-            dialog.setVisible(true);
         }
     }
     
