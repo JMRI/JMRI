@@ -103,6 +103,7 @@ public class CbusThrottle extends AbstractThrottle {
      public void setSpeedStepMode(int Mode) {
          int mode;
 	     speedStepMode = Mode;
+         super.setSpeedStepMode(speedStepMode);
          switch (speedStepMode) {
              case DccThrottle.SpeedStepMode28: mode = CbusConstants.CBUS_SS_28; break;
              case DccThrottle.SpeedStepMode14: mode = CbusConstants.CBUS_SS_14; break;
