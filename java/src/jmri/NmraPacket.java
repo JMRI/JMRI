@@ -441,7 +441,7 @@ public class NmraPacket {
             log.error("invalid data "+data);
             return null;
         }
-        if (cvNum<1 || cvNum>512) {
+        if (cvNum<1 || cvNum>1024) {
             log.error("invalid CV number "+cvNum);
             return null;
         }
