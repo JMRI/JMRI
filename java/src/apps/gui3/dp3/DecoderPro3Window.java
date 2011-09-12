@@ -120,8 +120,6 @@ public class DecoderPro3Window
         statusBar();
         systemsMenu();
         helpMenu(getMenu(), this);
-        setSize(getMaximumSize());
-        setVisible(true);
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             //System.out.println(jmri.managers.ManagerDefaultSelector.instance.getDefault(jmri.ProgrammerManager.class));
