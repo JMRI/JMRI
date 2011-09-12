@@ -67,7 +67,11 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
      */
     @Override
     protected void displayMainFrame(java.awt.Dimension d) {
-        mainFrame.setSize(new java.awt.Dimension(1024, 600));
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if(!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
+            mainFrame.setSize(new java.awt.Dimension(1024, 600));
+        }
+        
         mainFrame.setVisible(true);
     }
     
