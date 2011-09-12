@@ -1137,7 +1137,7 @@ public class Setup {
     	values.setAttribute("enabled", isTabEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("manifest"));
-    	values.setAttribute("useEditor", isBuildReportEditorEnabled()?"true":"false");
+    	values.setAttribute("useEditor", isManifestEditorEnabled()?"true":"false");
     	values.setAttribute("hazardousMsg", getHazardousMsg());
     	
         if (getManifestLogoURL() != ""){
