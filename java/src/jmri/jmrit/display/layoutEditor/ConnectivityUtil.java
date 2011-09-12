@@ -1566,15 +1566,15 @@ public class ConnectivityUtil
 					tr = (TrackSegment)lt.getConnectC();
 				}
 				// must stay in block after turnout - check if only one track continues in block
-				else if ((lt.getConnectB()!=null) && (lb==((TrackSegment)lt.getConnectB()).getLayoutBlock()) && 
-						 (lb!=((TrackSegment)lt.getConnectC()).getLayoutBlock())) {
+				else if ((lt.getConnectB()!=null) &&  (lb==((TrackSegment)lt.getConnectB()).getLayoutBlock()) && 
+						(lt.getConnectC()!=null) && (lb!=((TrackSegment)lt.getConnectC()).getLayoutBlock())) {
 					// continuing in block on continuing track only
 					prevConnectType = LayoutEditor.TURNOUT_B;
 					setting = Turnout.CLOSED;
 					tr = (TrackSegment)lt.getConnectB();
 				}
 				else if ((lt.getConnectC()!=null) && (lb==((TrackSegment)lt.getConnectC()).getLayoutBlock()) &&
-						 (lb!=((TrackSegment)lt.getConnectB()).getLayoutBlock())) {
+						(lt.getConnectB()!=null) && (lb!=((TrackSegment)lt.getConnectB()).getLayoutBlock())) {
 					// continuing in block on diverging track only
 					prevConnectType = LayoutEditor.TURNOUT_C;
 					tr = (TrackSegment)lt.getConnectC();
