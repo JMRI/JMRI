@@ -742,7 +742,10 @@ public class DecoderPro3Window
     JRadioButton ops = new JRadioButton("<HTML>Operations Mode<br>(Programming On Main)</HTML>");
     JRadioButton edit = new JRadioButton("<HTML>Edit Only</HTML>");
 
-    jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
+    // uncomment the following line and comment the line following that
+    // to restore Programming Mode selection in a window
+    // jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
+    jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
     JButton prog1Button = new JButton("Basic Programmer");
     JButton prog2Button = new JButton("Comprehensive Programmer");
