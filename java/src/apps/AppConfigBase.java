@@ -165,69 +165,48 @@ public class AppConfigBase extends JmriPanel {
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         p.resetChangeMade();
         if (p.getMultipleChoiceOption(getClassName(),"quitAfterSave") == 0) {
-        	final JDialog dialog = new JDialog();
-        	dialog.setTitle(MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()));
-        	dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        	JPanel container = new JPanel();
-        	container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        	container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        	Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-        	JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
-        	question.setAlignmentX(Component.CENTER_ALIGNMENT);
-        	question.setIcon(icon);
-        	container.add(question);
-        	final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
-        	remember.setFont(remember.getFont().deriveFont(10.0F));
-        	remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-        	JButton yesButton = new JButton(rb.getString("RestartNow"));
-        	JButton noButton = new JButton(rb.getString("RestartLater"));
-        	JPanel button = new JPanel();
-        	button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        	button.add(yesButton);
-        	button.add(noButton);
-        	container.add(button);
-        	noButton.addActionListener(new ActionListener() {
-
-        		public void actionPerformed(ActionEvent e) {
-        			if (remember.isSelected()) {
-                        p.setMultipleChoiceOption(getClassName(),"quitAfterSave", 0x01);
-        			}
-        			dialog.dispose();
-        		}
-        	});
-        	yesButton.addActionListener(new ActionListener() {
-
-        		public void actionPerformed(ActionEvent e) {
-        			if (remember.isSelected()) {
-        				p.setMultipleChoiceOption(getClassName(),"quitAfterSave", 0x02);
-        				saveContents();
-        			}
-        			dialog.dispose();
-        			dispose();
-        			Apps.handleRestart();
-        		}
-        	});
-        	container.add(remember);
-        	container.setAlignmentX(Component.CENTER_ALIGNMENT);
-        	container.setAlignmentY(Component.CENTER_ALIGNMENT);
-        	dialog.getContentPane().add(container);
-        	dialog.pack();
-        	dialog.setModal(true);
-        	int w = dialog.getSize().width;
-        	int h = dialog.getSize().height;
-        	int x = (p.getScreen().width - w) / 2;
-        	int y = (p.getScreen().height - h) / 2;
-        	dialog.setLocation(x, y);
-        	dialog.setVisible(true);
+            JPanel message = new JPanel();
+            JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
+            final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
+            remember.setFont(remember.getFont().deriveFont(10.0F));
+            message.setLayout(new BoxLayout(message, BoxLayout.Y_AXIS));
+            message.add(question);
+            message.add(remember);
+            Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
+            int retVal = JOptionPane.showOptionDialog(this,
+                    message,
+                    MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    null);
+            switch (retVal) {
+                case JOptionPane.YES_OPTION:
+                    if (remember.isSelected()) {
+                        p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x02);
+                        saveContents();
+                    }
+                    dispose();
+                    Apps.handleRestart();
+                    break;
+                case JOptionPane.NO_OPTION:
+                    if (remember.isSelected()) {
+                        p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x01);
+                    }
+                    break;
+                default:
+                    break;
+            }
         } else if (p.getMultipleChoiceOption(getClassName(),"quitAfterSave") == 2) {
-        	// end the program
+        	// restart the program
         	dispose();
         	// do orderly shutdown.  Note this
-        	// invokes Apps.handleQuit, even if this
+        	// invokes Apps.handleRestart, even if this
         	// panel hasn't been created by an Apps subclass.
-        	Apps.handleQuit();
+        	Apps.handleRestart();
         }
-        // don't end the program, just close the window
+        // don't restart the program, just close the window
         if (getTopLevelAncestor() != null) {
             ((JFrame) getTopLevelAncestor()).setVisible(false);
         }
