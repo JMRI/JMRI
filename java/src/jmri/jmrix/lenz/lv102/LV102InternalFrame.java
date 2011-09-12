@@ -67,6 +67,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         pane2.add(railComBox);
         pane2.add(new JLabel(rb.getString("LV102RailComMode")));
         pane2.add(railComModeBox);
+        pane2.add(new JLabel(rb.getString("LV102RailComTiming")));
+        pane2.add(railComTimingBox);
         pane2.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(pane2);
 
@@ -127,6 +129,15 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
            railComModeBox.addItem(validRailComMode[i]);
         }
 	railComModeBox.setSelectedIndex(2);
+
+	/* Configure the RailCom Timing selection box */
+        railComTimingBox.setVisible(true);
+        railComTimingBox.setToolTipText(rb.getString("LV102RailComTimingTip"));
+        for (int i=0; i<validRailComTiming.length;i++)
+        {
+           railComTimingBox.addItem(validRailComTiming[i]);
+        }
+	railComTimingBox.setSelectedIndex(4);
 
 	synchronized(CurrentStatus) {
           CurrentStatus.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -206,6 +217,19 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	);
 
 	// install a handler to set the status line when the selected item 
+	// changes in the RailComTiming box
+	railComTimingBox.addActionListener( new ActionListener() {
+		public void actionPerformed(ActionEvent a) {
+			synchronized(CurrentStatus) {
+			   CurrentStatus.setText(rb.getString("LV102StatusChanged"));
+	     		   if(log.isDebugEnabled()) 
+			      log.debug("Current Status: " + rb.getString("LV102StatusChanged"));
+			}
+		}
+	   }
+	);
+
+	// install a handler to set the status line when the selected item 
 	// changes in the volt box
 	voltBox.addActionListener( new ActionListener() {
 		public void actionPerformed(ActionEvent a) {
@@ -235,6 +259,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     JComboBox eLineBox = new javax.swing.JComboBox();
     JComboBox railComBox = new javax.swing.JComboBox();
     JComboBox railComModeBox = new javax.swing.JComboBox();
+    JComboBox railComTimingBox = new javax.swing.JComboBox();
 
     JLabel CurrentStatus = new JLabel(" ");
 
@@ -254,6 +279,9 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     protected String [] validRailComMode = new String[]{rb.getString("LV102RailCom3BitMode"),rb.getString("LV102RailCom4BitMode"),""};
     protected int [] validRailComModeValues = new int[]{94,95,0};
 
+    protected String [] validRailComTiming = new String[]{rb.getString("LV102RailComDefaultTiming"),rb.getString("LV102RailComNCETiming"),rb.getString("LV102RailComIncreaseTiming"),rb.getString("LV102RailComDecreaseTiming"),""};
+    protected int [] validRailComTimingValues = new int[]{88,89,70,71,0};
+
     //Send Power Station settings
     void writeLV102Settings() {
 
@@ -266,6 +294,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	writeELineSetting(opsProg);
 	writeRailComSetting(opsProg);
 	writeRailComModeSetting(opsProg);
+	writeRailComTimingSetting(opsProg);
 
         // we're done now, so we can release the programmer.
         jmri.InstanceManager.programmerManagerInstance()
@@ -518,6 +547,68 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 	  } // End of synchronized(CurrentStatus) block for RailCom Mode
         } else { 
     	        if(log.isDebugEnabled()) log.debug("No RailCom Mode Selected");
+        }
+    }
+
+    // Write the RailCom Mode setting
+    void writeRailComTimingSetting(Programmer opsProg) {
+        if((String)railComTimingBox.getSelectedItem()!="" &&
+           (String)railComTimingBox.getSelectedItem()!=null) {
+
+          if(log.isDebugEnabled()) log.debug("RailCom Timing Setting: " +railComTimingBox.getSelectedItem());
+	  synchronized(CurrentStatus) {
+	     CurrentStatus.setText(rb.getString("LV102StatusProgMode"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusProgMode"));
+	  
+	     /* Pause briefly to give the user a chance to see what is 
+                happening */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		    Thread.currentThread().interrupt(); // retain if needed later
+	     }
+
+             /* First, send the ops mode programing command to enter
+                programing mode */
+   	     try {
+                opsProg.writeCV(7,50,progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to give the booster a chance to change 
+	        into It's programming mode */
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie3) {
+		    Thread.currentThread().interrupt(); // retain if needed later
+	     }
+
+	     CurrentStatus.setText(rb.getString("LV102StatusWriteRailComMode"));
+	     CurrentStatus.doLayout();
+	     if(log.isDebugEnabled()) 
+		log.debug("Current Status: " + rb.getString("LV102StatusWriteRailComMode"));
+
+             /* Next, send the ops mode programing command for the RailCom 
+                Timing we want */
+    	     try {
+                opsProg.writeCV(7,validRailComTimingValues[railComTimingBox.getSelectedIndex()],progListener);
+             } catch(ProgrammerException e) {
+                // Don't do anything with this yet
+             }
+
+	     /* Pause briefly to wait for the programmer to send back a 
+		reply */ 
+	     try {
+		CurrentStatus.wait(waitValue);
+	     } catch(java.lang.InterruptedException ie1) {
+		    Thread.currentThread().interrupt(); // retain if needed later
+         }
+	  } // End of synchronized(CurrentStatus) block for RailCom Mode
+        } else { 
+    	        if(log.isDebugEnabled()) log.debug("No RailCom Timing Mode Selected");
         }
     }
 
