@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.border.Border;
+import javax.swing.border.BevelBorder;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -50,6 +51,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 import javax.swing.ListSelectionModel;
+import javax.swing.JSeparator;
 
 import jmri.Programmer;
 import jmri.progdebugger.*;
@@ -170,40 +172,28 @@ public class DecoderPro3Window
      * This status bar needs sorting out properly
      */
     void statusBar(){
-        Border blackline = BorderFactory.createMatteBorder(0,0,0,1,Color.black);
         JLabel programmerLabel = new JLabel();
-        //programmerLabel.setBorder(blackline);
-        Font statusBarFont = programmerLabel.getFont().deriveFont(10f);
-        programmerLabel.setFont(statusBarFont);
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            programmerLabel.setText ("Programmer " + "Is Available");
+            /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
+            but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
+            programmerLabel.setText ("Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
             programmerLabel.setForeground(new Color(0, 128, 0));
         } else {
             programmerLabel.setText("No Programmer Available");
             programmerLabel.setForeground(Color.red);
         }
-        getStatus().add(programmerLabel);
-        getStatus().add(Box.createHorizontalGlue());
-        JLabel spacerLabel = new JLabel("   ");
-        spacerLabel.setBorder(blackline);
-        getStatus().add(spacerLabel);
-        JLabel statusTitle = new JLabel("Programmer Status : ");
-        statusTitle.setFont(statusBarFont);
-        getStatus().add(statusTitle);
-        statusField.setFont(statusBarFont);
+        
+        addToStatusBox(programmerLabel, null);
+        
+        programmerLabel = new JLabel("Programmer Status : ");
         statusField.setText("idle");
-        getStatus().add(statusField);
-        spacerLabel = new JLabel("   ");
-        spacerLabel.setBorder(blackline);
-        getStatus().add(spacerLabel);
-        statusTitle = new JLabel("Active Roster Group : ");
-        statusTitle.setFont(statusBarFont);
-        getStatus().add(statusTitle);
-        activeRosterGroupField.setFont(statusBarFont);
-        getStatus().add(activeRosterGroupField);
+        addToStatusBox(programmerLabel, statusField);
+        
+        programmerLabel = new JLabel("Active Roster Group : ");
+        addToStatusBox(programmerLabel, activeRosterGroupField);
     }
-
+    
     protected void systemsMenu() {
         jmri.jmrix.ActiveSystemsMenu.addItems(getMenu());
         getMenu().add(new jmri.util.WindowMenu(this));

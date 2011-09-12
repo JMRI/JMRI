@@ -6,6 +6,7 @@ import java.awt.*;
 import java.io.File;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import jmri.util.swing.*;
 
@@ -45,10 +46,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     }
     public JComponent getBottom() {
         return bottom;
-    }
-    
-    public JComponent getStatus() {
-        return statusBar;
     }
     
     public JComponent getToolBar() {
@@ -123,8 +120,45 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     abstract public void remoteCalls(String args[]);
     
     protected void addMainStatusBar(){
-    statusBar.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 0));
+        statusBar.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 0));
+        statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        
+        statusBox = Box.createHorizontalBox();
+        statusBox.add(Box.createHorizontalGlue());
+        statusBar.add(statusBox);
+        
         add(statusBar, BorderLayout.SOUTH);
+    }
+    
+    public void addToStatusBox(JLabel title, JLabel value){
+        JPanel statusItemPanel = new JPanel();
+        statusItemPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        //Set the font size of the status bar text to be 2points less than the default configured
+        Font statusBarFont = title.getFont().deriveFont((float)(apps.GuiLafConfigPane.getFontSize()-2));
+        if(title!=null){
+            title.setFont(statusBarFont);
+            statusItemPanel.add(title);
+        }
+        if(value!=null){
+            value.setFont(statusBarFont);
+            statusItemPanel.add(value);
+        }
+        addToStatusBox(statusItemPanel);
+    }
+    
+    Box statusBox;
+    int statusBoxIndex = 0;	// index to insert extra stuff
+    static final int statusStrutWidth = 10;
+    
+    public void addToStatusBox(Component comp){
+        if(statusBoxIndex!=0){
+            statusBox.add(Box.createHorizontalStrut(statusStrutWidth), statusBoxIndex);
+            ++statusBoxIndex;
+            statusBox.add(new JSeparator(javax.swing.SwingConstants.VERTICAL),statusBoxIndex);
+            ++statusBoxIndex;
+        }
+        statusBox.add(comp, statusBoxIndex);
+        ++statusBoxIndex;
     }
     
     /**
