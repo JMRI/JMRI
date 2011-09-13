@@ -409,7 +409,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 .addContent(new Element("major").addContent(""+jmri.Version.major))
                 .addContent(new Element("minor").addContent(""+jmri.Version.minor))
                 .addContent(new Element("test").addContent(""+jmri.Version.test))
-                .addContent(new Element("modifier").addContent(jmri.Version.modifier))
+		.addContent(new Element("modifier").addContent(jmri.Version.getModifier()))
         );
     }
 

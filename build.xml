@@ -24,14 +24,25 @@
     <description>
     Provides build services for JMRI libraries and applications
     </description>
+ 
+    <property environment="env" />
 
-    <property name="release.major" value="2" />
-    <property name="release.minor" value="13" />
-    <property name="release.build" value="1" />
+    <property file="${basedir}/release.properties" />
+
+    <property name="release.build_user" value="${user.name}" />
 
     <property name="release" value="${release.major}.${release.minor}.${release.build}" />
-    <property name="number"  value="${release}"  />
 
+    <condition property="release.revision_id" value="${env.SVN_REVISION}">
+        <isset property="env.SVN_REVISION"/>
+    </condition>
+    <property name="release.revision_id" value="unknown"/>
+
+    <condition property="release.official" value="true" else="false">
+      <isset property="RELEASED"/>
+    </condition>
+
+    <property name="release.is_branched" value="false" />
   
     <!-- should compiler warn of use of deprecated APIs? (on/off) -->
     <property name="deprecation" value="off" />
@@ -83,6 +94,7 @@
     <property name="source"       value="${basedir}/java/src"/>
     <property name="target"       value="${basedir}/java/classes"/>
     <property name="test"         value="${basedir}/java/test"/>
+    <property name="templatedir"  value="${basedir}/java/template"/>
     <property name="tmptarget"    value="${basedir}/java/tmp"/>
 
     <!-- location for all generated java code -->
@@ -146,12 +158,53 @@
     <target name="init" 
             description="create needed directories">
         <!-- Create the time stamp properties -->
-        <tstamp/>
+        <tstamp>
+            <format property="TODAY" pattern="yyyyMMdd" timezone="GMT"/>
+            <format property="NOW"   pattern="HHmm"     timezone="GMT"/>
+        </tstamp>
+        <property name="release.build_date" value="${TODAY}-${NOW}"/>
         <!-- Create the build directory structure used by compile -->
         <mkdir dir="${target}"/>
         <mkdir dir="${target}/resources" />
         <mkdir dir="${genjavasrcdir}/jmri/jmris/srcp/parser"/>
         <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser"/>
+
+	<filterset id="release-information"
+		   begintoken="${"
+		   endtoken="}">
+	    <filter token="release.major"          value="${release.major}" />
+	    <filter token="release.minor"          value="${release.minor}" />
+	    <filter token="release.build"          value="${release.build}" />
+	    <filter token="release.revision_id"    value="${release.revision_id}" />
+	    <filter token="release.build_user"     value="${release.build_user}" />
+	    <filter token="release.official"       value="${release.official}" />
+	    <filter token="release.build_date"     value="${release.build_date}" />
+	    <filter token="release.is_branched"    value="${release.is_branched}" />
+	</filterset>
+    </target>
+
+
+    <target name="get-version-string"
+            description="Gets the current version string"
+            depends="compile-generated-source">
+        <java classname="jmri.Version" 
+              dir="${basedir}" 
+              fork="yes"
+              resultproperty="version-string.returncode"
+              outputproperty="release.version-string"
+              errorproperty="release.version-string-error">
+            <classpath>
+              <pathelement path="${target}"/>
+            </classpath>
+        </java>
+        <echo message="release version string is ${release.version-string}"/>
+        <fail message="error getting version string: ${version-string.returncode}">
+          <condition>
+            <not>
+              <equals arg1="${version-string.returncode}" arg2="0"/>
+            </not>
+          </condition>
+        </fail>
     </target>
 
     <target name="realclean" 
@@ -192,6 +245,20 @@
             <fileset dir="${source}" includes="**/*.properties"  /> 
         </copy>
     </target>
+
+
+    <!-- generated source code that uses keyword substitution -->
+
+
+    <target name="update-template-code"
+            description="create the substituted template java code"
+            depends="init">
+        <copy todir="${genjavasrcdir}" overwrite="true" >
+            <filterset refid="release-information" />
+            <fileset dir="${templatedir}" />
+        </copy>      
+    </target>
+
 
 
     <!-- jj* and javacc* targets are the javacc based generated source -->
@@ -262,9 +329,9 @@
     </target>
 
 
-    <target name="javacc-compile"
-            description="compile JavaCC generated source"
-            depends="javacc">
+    <target name="compile-generated-source"
+            description="compile all generated Java source"
+            depends="javacc, update-template-code">
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${genjavasrcdir}" />
@@ -275,7 +342,7 @@
 
     <target name="compile"
             description="compile source, omitting tests"
-            depends="init, copyfiles, javacc-compile">
+            depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${source}" />
@@ -288,7 +355,7 @@
     <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
     <target name="debug"
             description="compile source with debugging on, omitting tests"
-            depends="init, copyfiles, javacc-compile">
+            depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${source}" />
@@ -337,7 +404,7 @@
 
     <target name="warnings" 
             description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar"
-            depends="check-requirements, clean, init, copyfiles, javacc-compile">
+            depends="check-requirements, clean, init, copyfiles, compile-generated-source">
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${source}" />
         </antcall>
@@ -982,7 +1049,7 @@
 
     <target name="package-windows" 
             description="create a Windows release package"
-            depends="jar">
+            depends="get-version-string, jar">
         <delete dir="${dist.windows}" />
         <mkdir dir="${dist.windows}/JMRI" />
         <copy todir="${dist.windows}/JMRI">
@@ -1009,7 +1076,7 @@
         <mkdir dir="${dist.release}" />
         <exec executable="${nsis.home}makensis" dir="${dist.windows}/JMRI">
             <!-- RELEASEDIR below is relative because it's interpreted from the location of 'dir' in this exec -->
-            <arg line="-V2 -DJMRI_VER=${number} -DRELEASEDIR='../../release' InstallJMRI.nsi"/>
+            <arg line="-V2 -DJMRI_VER=${release.version-string} -DRELEASEDIR='../../release' InstallJMRI.nsi"/>
         </exec>
     </target>
 
@@ -1052,13 +1119,13 @@
         </chmod>
         <mkdir dir="${dist.release}" />
         <exec executable="${scriptdir}/diskimage.sh" osFamily="unix">
-            <arg line="-t ${release} -v ${number} -o ${dist.release}/JMRI.${number}.dmg -d ${dist.macosx}"/>
+            <arg line="-v ${release.version-string} -o ${dist.release}/JMRI.${release.version-string}.dmg -d ${dist.macosx}"/>
         </exec>
     </target>
 
     <target name="package-linux" 
             description="create a Linux release package"
-            depends="jar">
+            depends="get-version-string, jar">
         <delete dir="${dist.linux}" />
         <mkdir dir="${dist.linux}/JMRI" />
         <copy todir="${dist.linux}/JMRI">
@@ -1113,7 +1180,7 @@
         <mkdir dir="${dist.release}" />
         <tar 
         compression="gzip" 
-        destfile="${dist.release}/JMRI.${number}.tgz" >
+        destfile="${dist.release}/JMRI.${release.version-string}.tgz" >
             <tarfileset dir="${dist.linux}">
                 <include name="JMRI/**" />
                 <exclude name="JMRI/DecoderPro" />

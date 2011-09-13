@@ -20,8 +20,6 @@ eval set -- "$OPTS"
 while true
 do
   case "$1" in 
-    -t)
-	REL_TAG=$2; shift 2 ;;
     -v)
         REL_VER=$2; shift 2 ;;
     -o)
@@ -40,12 +38,6 @@ done
 if [ "$REL_VER" = "" ]
 then
   echo "Must set version with -v"
-  exit 1
-fi
-
-if [ "$REL_TAG" = "" ]
-then
-  echo "Must set tag with -t"
   exit 1
 fi
 
