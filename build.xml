@@ -985,7 +985,6 @@
                                                 outputFile="${jartarget}/jmri-fb.html" 
                                                 jvmargs="-Xmx1024m"
                                                 timeout="12000000">
-            <auxClasspath refid="findbugs.aux.class.path" />
             <sourcePath path="${source}/" />
             <class location="${jartarget}/jmri.jar" />
         </findbugs>
@@ -997,7 +996,6 @@
                 outputFile="findbugs.xml" 
                 jvmargs="-Xmx1024m"
                 timeout="12000000">
-            <auxClasspath refid="findbugs.aux.class.path" />
             <sourcePath path="${source}/" />
             <class location="${jartarget}/jmri.jar" />
         </findbugs>
