@@ -840,7 +840,7 @@
       <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
           
-            <classpath refid="project.class.path"    />
+            <classpath refid="compile.class.path"    />
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
             <bottom><![CDATA[<i>Copyright &copy; 1997 - 2011 JMRI Community. 
@@ -909,7 +909,7 @@
       <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
           
-            <classpath refid="project.class.path"    />
+            <classpath refid="compile.class.path"    />
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
             <bottom><![CDATA[<i>Copyright &copy; 1997 - 2011 JMRI Community. 
