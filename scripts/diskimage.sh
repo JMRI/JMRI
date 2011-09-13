@@ -9,7 +9,7 @@
 # Copyright 2007,2011 Bob Jacobsen, david d zuhn
 #
 
-OPTS=`getopt t:v:o:d: "$@"`
+OPTS=`getopt -o v:o:d: -- "$@"`
 if [ $? != 0 ]
 then
   echo "Bad option parsing" >&2
@@ -29,7 +29,7 @@ do
     --)
         shift; break ;;
     *)
-        echo "Unknown option '$1' [-t tag | -v vers | -o output ]" >&2
+        echo "Unknown option '$1' [-d inputdir | -v vers | -o outputfile ]" >&2
 	exit 1
 	;;
   esac

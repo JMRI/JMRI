@@ -1080,7 +1080,7 @@
 
     <target name="package-macosx" 
             description="create a Mac OS X install package"
-            depends="jar">
+            depends="get-version-string, jar">
         <delete dir="${dist.macosx}" />
         <mkdir dir="${dist.macosx}/JMRI" />
         <copy todir="${dist.macosx}/JMRI">
@@ -1117,7 +1117,12 @@
         </chmod>
         <mkdir dir="${dist.release}" />
         <exec executable="${scriptdir}/diskimage.sh" osFamily="unix">
-            <arg line="-v ${release.version-string} -o ${dist.release}/JMRI.${release.version-string}.dmg -d ${dist.macosx}"/>
+            <arg value="-v" />
+            <arg value="${release.version-string}" />
+            <arg value="-o" />
+            <arg path="${dist.release}/JMRI.${release.version-string}.dmg" />
+            <arg value="-d" />
+            <arg path="${dist.macosx}" />
         </exec>
     </target>
 
