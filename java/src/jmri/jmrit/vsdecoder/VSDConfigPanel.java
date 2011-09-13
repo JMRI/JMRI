@@ -395,7 +395,7 @@ public class VSDConfigPanel extends JmriPanel {
 
     protected VSDecoder getNewDecoder() {
 	VSDecoder rv;
-	busy_dialog = new BusyDialog(this.main_pane.getParent(), "Loading VSD Profile...", false);
+	busy_dialog = new BusyDialog(this.main_pane.getFrame(), "Loading VSD Profile...", false);
 	// This takes a little while... so we'll use a SwingWorker
 	SwingWorker<VSDecoder, Object> sw = new SwingWorker<VSDecoder, Object>() {
 	    @Override
