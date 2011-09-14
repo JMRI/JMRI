@@ -9,54 +9,15 @@
 # Copyright 2007,2011 Bob Jacobsen, david d zuhn
 #
 
-set -e   # bail on errors
-set -x   # show our work
+REL_VER=$1
+OUTPUT=$2
+INPUT=$3
 
-
-OPTS=`getopt -o v:o:d: -- "$@"`
-if [ $? != 0 ]
+if [ "$REL_VER" = "" -o "$OUTPUT" = "" -o "$INPUT" = "" ]
 then
-  echo "Bad option parsing" >&2
+  echo "usage: $0 VERSION OUTPUTFILE INPUTDIRECTORY" 1>&2
   exit 1
 fi
-
-eval set -- "$OPTS"
-while true
-do
-  case "$1" in 
-    -v)
-        REL_VER=$2; shift 2 ;;
-    -o)
-        OUTPUT=$2; shift 2 ;;
-    -d)
-        INPUT=$2; shift 2 ;;
-    --)
-        shift; break ;;
-    *)
-        echo "Unknown option '$1' [-d inputdir | -v vers | -o outputfile ]" >&2
-	exit 1
-	;;
-  esac
-done
-
-if [ "$REL_VER" = "" ]
-then
-  echo "Must set version with -v"
-  exit 1
-fi
-
-if [ "$OUTPUT" = "" ]
-then
-  echo "Must set output with -o"
-  exit 1
-fi
-
-if [ "$INPUT" = "" ]
-then
-  echo "Must set input directory with -d"
-  exit 1
-fi
-
 
 if [ -x /usr/bin/hdiutil ]
 then
