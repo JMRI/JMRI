@@ -27,6 +27,10 @@
  
     <property environment="env" />
 
+    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists --> 
+    <!-- this file should NEVER be checked-in to SVN, it is in the svn:ignore properties list -->
+    <property file="local.properties" />
+
     <property file="${basedir}/release.properties" />
 
     <property name="release.build_user" value="${user.name}" />
@@ -55,10 +59,10 @@
   
     <!-- JRE version (1.5 as of JMRI 2.5.1) -->
     <property name="jre_version" value="1.5" />
-    
-    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists --> 
-    <!-- this file should NEVER be checked-in to SVN, it is in the svn:ignore properties list -->
-    <property file="local.properties" />
+
+    <condition property="nsis.home" value="">
+        <not><isset property="nsis.home"/></not>
+    </condition>
 
     <!-- options you might want to change to match your environment -->
     <!-- but set them in the local.properties file, instead of here -->
