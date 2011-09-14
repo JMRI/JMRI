@@ -1121,11 +1121,9 @@
         </chmod>
         <mkdir dir="${dist.release}" />
         <exec executable="${scriptdir}/diskimage.sh" osFamily="unix">
-            <arg value="-v" />
+            <!-- ORDER MATTERS HERE -->
             <arg value="${release.version-string}" />
-            <arg value="-o" />
             <arg path="${dist.release}/JMRI.${release.version-string}.dmg" />
-            <arg value="-d" />
             <arg path="${dist.macosx}" />
         </exec>
     </target>
