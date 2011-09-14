@@ -37,6 +37,12 @@ public class Metadata {
     public static String getBySystemName(String name) {
         if (name.equalsIgnoreCase("JMRIVERSION")) {
             return jmri.Version.name();
+        } else if (name.equalsIgnoreCase("JMRIVERMAJOR")) {
+            return Integer.toString(jmri.Version.major);
+        } else if (name.equalsIgnoreCase("JMRIVERMINOR")) {
+            return Integer.toString(jmri.Version.minor);
+        } else if (name.equalsIgnoreCase("JMRIVERTEST")) {
+            return Integer.toString(jmri.Version.test);
         } else if (name.equalsIgnoreCase("JVMVERSION")) {
             return System.getProperty("java.version", "<unknown>");
         } else if (name.equalsIgnoreCase("JVMVENDOR")) {
@@ -52,7 +58,12 @@ public class Metadata {
      * @return String[]
      */
     public static String[] getSystemNameArray() {
-        String[] names = {"JMRIVERSION","JVMVERSION","JVMVENDOR"};
+        String[] names = {"JMRIVERSION",
+            "JMRIVERMAJOR",
+            "JMRIVERMINOR",
+            "JMRIVERTEST",
+            "JVMVERSION",
+            "JVMVENDOR"};
         return names;
     }
 
