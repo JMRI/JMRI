@@ -1,6 +1,6 @@
 // LZ100Frame.java
 
-package jmri.jmrix.lenz.lz100;
+package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.event.*;
 import javax.swing.*;
@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
-    //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
+    //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
 
     public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
 	    this("LZ100 Configuration Utility",memo);

@@ -1,6 +1,6 @@
 // LZ100InternalFrame.java
 
-package jmri.jmrix.lenz.lz100;
+package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.event.*;
 import java.util.ResourceBundle;
@@ -19,7 +19,7 @@ import jmri.jmrix.lenz.*;
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
+    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
 
     private boolean autoMode = false; // Holds Auto/Manual Startup Mode.
 

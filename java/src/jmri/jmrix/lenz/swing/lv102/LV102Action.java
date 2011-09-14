@@ -1,6 +1,6 @@
 // LV102Action.java
 
-package jmri.jmrix.lenz.lv102;
+package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.event.ActionEvent;
 
@@ -27,7 +27,7 @@ public class LV102Action extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // create an LV102Frame
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lv102.LV102Bundle");
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
         LV102Frame f = new LV102Frame(rb.getString("LV102Config"));
         f.setVisible(true);
     }

@@ -1,4 +1,4 @@
-package jmri.jmrix.lenz.lz100;
+package jmri.jmrix.lenz.swing.lzv100;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -9,41 +9,38 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
-
 /**
- * LZ100FrameTest.java
+ * LZV100FrameTest.java
  *
- * Description:	    tests for the jmri.jmrix.lenz.lz100.LZ100Frame class
+ * Description:	    tests for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
  * @author			Paul Bender
  * @version         $Revision$
  */
-public class LZ100FrameTest extends TestCase {
+public class LZV100FrameTest extends TestCase {
 
     public void testCtor() {
-
        // infrastructure objects
        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
-
-        LZ100Frame f = new LZ100Frame(new XNetSystemConnectionMemo(tc));
+        LZV100Frame f = new LZV100Frame(new XNetSystemConnectionMemo(tc));
         Assert.assertNotNull(f);
     }
 
 	// from here down is testing infrastructure
 
-	public LZ100FrameTest(String s) {
+	public LZV100FrameTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", LZ100FrameTest.class.getName()};
+		String[] testCaseName = {"-noloading", LZV100FrameTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(LZ100FrameTest.class);
+		TestSuite suite = new TestSuite(LZV100FrameTest.class);
 		return suite;
 	}
 
@@ -51,6 +48,6 @@ public class LZ100FrameTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZ100FrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZV100FrameTest.class.getName());
 
 }

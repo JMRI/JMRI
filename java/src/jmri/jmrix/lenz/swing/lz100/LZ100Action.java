@@ -1,6 +1,6 @@
 // LZ100Action.java
 
-package jmri.jmrix.lenz.lz100;
+package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.event.ActionEvent;
 
@@ -32,7 +32,7 @@ public class LZ100Action extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // create an LZ100Frame
- 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
+ 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
         LZ100Frame f = new LZ100Frame(rb.getString("LZ100Config"),_memo);
         f.setVisible(true);
     }

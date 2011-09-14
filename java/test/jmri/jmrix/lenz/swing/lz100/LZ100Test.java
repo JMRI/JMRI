@@ -1,14 +1,14 @@
 // LZ100Test.java
 
 
-package jmri.jmrix.lenz.lz100;
+package jmri.jmrix.lenz.swing.lz100;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.lenz.lz100 package
+ * Tests for the jmri.jmrix.lenz.swing.lz100 package
  * @author                      Paul Bender  
  * @version                     $Revision$
  */
@@ -28,7 +28,7 @@ public class LZ100Test extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.lenz.lz100.LZ100Test");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.lz100.LZ100Test");  // no tests in this class itself
         suite.addTest(new TestSuite(LZ100FrameTest.class));
         return suite;
     }

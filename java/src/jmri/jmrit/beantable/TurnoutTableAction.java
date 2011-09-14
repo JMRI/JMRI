@@ -682,7 +682,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     	if (t.getInhibitOperation()) {
             cb.setSelectedIndex(0);
     	} else if (t.getTurnoutOperation() == null) {
-            cb.setSelectedIndex(1);
+            cb.setSelectedIndex(0);
     	} else if (t.getTurnoutOperation().isNonce()) {
             cb.setSelectedIndex(2);
     	} else {

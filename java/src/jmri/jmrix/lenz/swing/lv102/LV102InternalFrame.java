@@ -1,6 +1,6 @@
 // LV102InternalFrame.java
 
-package jmri.jmrix.lenz.lv102;
+package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -25,7 +25,7 @@ import jmri.ProgrammerException;
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
-    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lv102.LV102Bundle");
+    private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
 
     private progReplyListener progListener = null;
     private Thread progListenerThread = null;

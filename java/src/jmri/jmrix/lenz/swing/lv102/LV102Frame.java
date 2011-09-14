@@ -1,6 +1,6 @@
 // LV102Frame.java
 
-package jmri.jmrix.lenz.lv102;
+package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.event.*;
 import javax.swing.*;
@@ -16,7 +16,7 @@ import javax.swing.*;
  */
 public class LV102Frame extends jmri.util.JmriJFrame {
 
-   //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lv102.LV102Bundle");
+   //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lv102.LV102Bundle");
 
    public LV102Frame() {
       this("LV102 Configuration Utility");
