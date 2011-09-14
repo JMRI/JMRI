@@ -9,52 +9,18 @@
 # Copyright 2007,2011 Bob Jacobsen, david d zuhn
 #
 
-OPTS=`getopt t:v:o:d: "$@"`
-if [ $? != 0 ]
-then
-  echo "Bad option parsing" >&2
-  exit 1
-fi
-
-eval set -- "$OPTS"
-while true
-do
-  case "$1" in 
-    -v)
-        REL_VER=$2; shift 2 ;;
-    -o)
-        OUTPUT=$2; shift 2 ;;
-    -d)
-        INPUT=$2; shift 2 ;;
-    --)
-        shift; break ;;
-    *)
-        echo "Unknown option '$1' [-t tag | -v vers | -o output ]" >&2
-	exit 1
-	;;
-  esac
-done
-
-if [ "$REL_VER" = "" ]
-then
-  echo "Must set version with -v"
-  exit 1
-fi
-
-if [ "$OUTPUT" = "" ]
-then
-  echo "Must set output with -o"
-  exit 1
-fi
-
-if [ "$INPUT" = "" ]
-then
-  echo "Must set input directory with -d"
-  exit 1
-fi
-
 set -e   # bail on errors
 set -x   # show our work
+
+REL_VER=$1
+OUTPUT=$2
+INPUT=$3
+
+if [ "$REL_VER" = "" -o "$OUTPUT" = "" -o "$INPUT" = "" ]
+then
+  echo "usage: $0 VERSION OUTPUTFILE INPUTDIRECTORY" 1>&2
+  exit 1
+fi
 
 if [ -x /usr/bin/hdiutil ]
 then
@@ -85,7 +51,7 @@ rm -f temp.dmg $IMAGEFILE
 if [ "$SYSTEM" = "MACOSX" ]
 then
     hdiutil create -size 100MB -fs HFS+ -layout SPUD -volname "JMRI ${REL_VER}" "$IMAGEFILE"
-    hdiutil attach $IMAGEFILE -mountpoint "$tmpdir" -nobrowse
+    hdiutil attach "$IMAGEFILE" -mountpoint "$tmpdir" -nobrowse
     trap '[ "$EJECTED" = 0 ] && hdiutil eject "$IMAGEFILE"' 0
 else
     dd if=/dev/zero of="$IMAGEFILE" bs=1M count=100
