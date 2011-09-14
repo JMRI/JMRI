@@ -9,6 +9,9 @@
 # Copyright 2007,2011 Bob Jacobsen, david d zuhn
 #
 
+set -e   # bail on errors
+set -x   # show our work
+
 REL_VER=$1
 OUTPUT=$2
 INPUT=$3
