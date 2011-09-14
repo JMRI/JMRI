@@ -9,6 +9,10 @@
 # Copyright 2007,2011 Bob Jacobsen, david d zuhn
 #
 
+set -e   # bail on errors
+set -x   # show our work
+
+
 OPTS=`getopt -o v:o:d: -- "$@"`
 if [ $? != 0 ]
 then
@@ -53,8 +57,6 @@ then
   exit 1
 fi
 
-set -e   # bail on errors
-set -x   # show our work
 
 if [ -x /usr/bin/hdiutil ]
 then
