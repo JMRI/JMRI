@@ -29,7 +29,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
      */
     protected JPanel getModePane() {
         // ensure initialization, even if invoked in ctor
-        if (modePane== null) modePane = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
+        if (modePane == null) modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
         log.debug("invoked getModePane");
         return modePane;
     }
