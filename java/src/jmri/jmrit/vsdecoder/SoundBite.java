@@ -125,6 +125,19 @@ class SoundBite extends VSDSound {
 
     public void shutdown() { }
 
+    public void mute(boolean m) {
+	if (m) {
+	    volume = sound_src.getGain();
+	    sound_src.setGain(0);
+	} else
+	    sound_src.setGain(volume);
+    }
+
+    public void setVolume(float v) {
+	volume = v*gain;
+	sound_src.setGain(volume);
+    }
+
     public void play() {
 	sound_src.play();
 	is_playing = false;

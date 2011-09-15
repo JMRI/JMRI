@@ -34,7 +34,8 @@ abstract public class VSDSound {
 
     boolean is_playing;
     String name;
-    float gain;
+    float gain;  // this is the (fixed) gain relative to the other sounds in this Profile
+    float volume; // this is the (active) volume level (product of fixed gain and volume slider).
 
     public VSDSound(String name) {
 	this.name = name;
@@ -53,6 +54,8 @@ abstract public class VSDSound {
     abstract public void stop();
     abstract public void fadeIn();
     abstract public void fadeOut();
+    abstract public void mute(boolean m);
+    abstract public void setVolume(float g);
     abstract public void shutdown(); // called on window close.  Cease playing immediately.
 
     // Optional methods - overridden in subclasses where needed.  Do nothing otherwise

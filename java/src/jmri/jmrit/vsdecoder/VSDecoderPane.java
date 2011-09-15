@@ -35,6 +35,11 @@ import java.util.Collections;
 import java.util.Arrays;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.border.TitledBorder;
 
 
 /**
@@ -48,13 +53,15 @@ public class VSDecoderPane extends JmriPanel {
 
     //private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
 
-    public static enum PropertyChangeID { ADDRESS_CHANGE, PROFILE_SELECT }
+    public static enum PropertyChangeID { ADDRESS_CHANGE, PROFILE_SELECT, MUTE, VOLUME_CHANGE }
 
     private static final Map<PropertyChangeID, String> PCIDMap;
     static {
 	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
 	aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange");
 	aMap.put(PropertyChangeID.PROFILE_SELECT, "ProfileSelect");
+	aMap.put(PropertyChangeID.MUTE, "Mute");
+	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VolumeChange");
 	PCIDMap = Collections.unmodifiableMap(aMap);
     }
 
@@ -73,6 +80,7 @@ public class VSDecoderPane extends JmriPanel {
     private VSDConfigPanel configPanel;
     private JPanel soundsPanel;
     private JPanel optionPanel;
+    private JPanel volumePanel;
 
     private static String VSDecoderFileLocation = null;
 
@@ -126,12 +134,13 @@ public class VSDecoderPane extends JmriPanel {
 	log.debug("initComponents()");
 	//buildMenu();
 
-	setLayout(new BorderLayout(10, 10));
+	setLayout(new BorderLayout(10, 0));
 	setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
 	// Add the tabbed pane to the VSDecoderPane.  The tabbedPane will contain all the other panes.
 	tabbedPane = new JTabbedPane();
-	add(tabbedPane);
+	tabbedPane.setMinimumSize(new Dimension(300, 300));
+	add(tabbedPane, BorderLayout.CENTER);
 
 	//-------------------------------------------------------------------
 	// configPanel
@@ -153,9 +162,62 @@ public class VSDecoderPane extends JmriPanel {
 	// The soundsPanel holds buttons for specific sounds.
         soundsPanel = new VSDSoundsPanel(decoder_id, this);
 	tabbedPane.addTab("Sounds", soundsPanel);
+
+	//-------------------------------------------------------------------
+	// volumePanel
+	// The volumePanel holds the master volume and mute controls.
+	volumePanel = new JPanel();
+	volumePanel.setLayout(new BorderLayout(10, 0));
+	TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Volume");
+	title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
+	//volumePanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+	volumePanel.setBorder(title);
+
+	JSlider volume = new JSlider(0, 100);
+	volume.setMinorTickSpacing(10);
+	volume.setPaintTicks(true);
+	volume.setValue(80);
+	volume.setPreferredSize(new Dimension(200, 20));
+	volume.addChangeListener(new ChangeListener() {
+		public void stateChanged(ChangeEvent e) {
+		    volumeChange(e);
+		}
+	    });
+	volumePanel.add(volume, BorderLayout.LINE_START);
+
+	JToggleButton mute_button = new JToggleButton("Mute");
+	mute_button.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    muteButtonPressed(e);
+		}
+		
+	    });
+	volumePanel.add(mute_button, BorderLayout.LINE_END);
+
+	volumePanel.setPreferredSize(new Dimension(300, 60));
+	add(volumePanel, BorderLayout.PAGE_END);
+
+	// Pack and set visible
+	parent.pack();
+	parent.setVisible(true);
     }
 
     // PROPERTY CHANGE EVENT FUNCTIONS
+
+    public void muteButtonPressed(ActionEvent e) {
+	JToggleButton b = (JToggleButton)e.getSource();
+	log.debug("Mute button pressed. value = " + b.isSelected());
+	firePropertyChange(PropertyChangeID.MUTE, !b.isSelected(), b.isSelected());
+	// do something.
+    }
+
+    public void volumeChange(ChangeEvent e) {
+	JSlider v = (JSlider)e.getSource();
+	log.debug("Volume slider moved. value = " + v.getValue());
+	firePropertyChange(PropertyChangeID.VOLUME_CHANGE, v.getValue(), v.getValue());
+
+	// do something
+    }
 
     // VSDecoderManager Events
     public void addPropertyChangeListener(PropertyChangeListener listener) {

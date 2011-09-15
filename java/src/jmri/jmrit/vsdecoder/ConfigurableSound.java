@@ -205,6 +205,30 @@ class ConfigurableSound extends VSDSound {
     }
 
     @Override
+    public void mute(boolean m) {
+	if (use_start_sound)
+	    start_sound.mute(m);
+	if (use_mid_sound)
+	    mid_sound.mute(m);
+	if (use_end_sound)
+	    end_sound.mute(m);
+	if (use_short_sound)
+	    short_sound.mute(m);
+    }
+
+    @Override
+    public void setVolume(float v) {
+	if (use_start_sound)
+	    start_sound.setVolume(v);
+	if (use_mid_sound)
+	    mid_sound.setVolume(v);
+	if (use_end_sound)
+	    end_sound.setVolume(v);
+	if (use_short_sound)
+	    short_sound.setVolume(v);
+    }
+
+    @Override
     public Element getXml() {
 	Element me = new Element("sound");
 	Integer i;

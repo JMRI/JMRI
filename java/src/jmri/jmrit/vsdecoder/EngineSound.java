@@ -233,6 +233,38 @@ class EngineSound extends VSDSound {
 	
     }
 
+    public void mute(boolean m) {
+	for (SoundBite ns : notch_sounds.values()) {
+	    ns.mute(m);
+	}
+	for (SoundBite nus : notchup_sounds) {
+	    nus.mute(m);
+	}
+	for (NotchTransition nt : transition_sounds) {
+	    nt.mute(m);
+	}
+	if (notchup_sound != null) notchup_sound.mute(m);
+	if (start_sound != null) start_sound.mute(m);
+	if (shutdown_sound != null) shutdown_sound.mute(m);
+	
+    }
+
+    public void setVolume(float v) {
+	for (SoundBite ns : notch_sounds.values()) {
+	    ns.setVolume(v);
+	}
+	for (SoundBite nus : notchup_sounds) {
+	    nus.setVolume(v);
+	}
+	for (NotchTransition nt : transition_sounds) {
+	    nt.setVolume(v);
+	}
+	if (notchup_sound != null) notchup_sound.setVolume(v);
+	if (start_sound != null) start_sound.setVolume(v);
+	if (shutdown_sound != null) shutdown_sound.setVolume(v);
+	
+    }
+
     private float setXMLGain(Element e) {
 	String g = e.getChildText("gain");
 	log.debug("  gain: " + g);
