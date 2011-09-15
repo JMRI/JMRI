@@ -244,7 +244,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         _manager.removePropertyChangeListener(this);
     }
 	
-	class beanSelectionManager implements KeySelectionManager {
+	static class beanSelectionManager implements KeySelectionManager {
         long lastKeyTime = 0;
         String pattern = "";
 
