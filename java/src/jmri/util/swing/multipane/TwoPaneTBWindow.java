@@ -55,7 +55,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     public JComponent getSplitPane(){
         return upDownSplitPane;
     }
-    
     WindowInterface topBottomWI;
     
     protected void buildGUI(File menubarFile, File toolbarFile) {
@@ -126,7 +125,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         statusBox = Box.createHorizontalBox();
         statusBox.add(Box.createHorizontalGlue());
         statusBar.add(statusBox);
-        
         add(statusBar, BorderLayout.SOUTH);
     }
     
@@ -134,13 +132,17 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         JPanel statusItemPanel = new JPanel();
         statusItemPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         //Set the font size of the status bar text to be 2points less than the default configured
-        Font statusBarFont = title.getFont().deriveFont((float)(apps.GuiLafConfigPane.getFontSize()-2));
+        int fontSize = apps.GuiLafConfigPane.getFontSize()-2;
         if(title!=null){
-            title.setFont(statusBarFont);
+            if(fontSize<=4)
+                fontSize = title.getFont().getSize()-2;
+            title.setFont(title.getFont().deriveFont((float)fontSize));
             statusItemPanel.add(title);
         }
         if(value!=null){
-            value.setFont(statusBarFont);
+            if(fontSize<=4)
+                fontSize = value.getFont().getSize()-2;
+            value.setFont(value.getFont().deriveFont((float)fontSize));
             statusItemPanel.add(value);
         }
         addToStatusBox(statusItemPanel);
