@@ -1,5 +1,4 @@
 // DeleteRosterGroupAction.java
-
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -11,11 +10,14 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 /**
- * Remove roster group.
+ * Duplicate roster group.
+ * <p>
+ * This action prevents a user from creating a new roster group with the same
+ * name as an existing roster group.
  * <p>
  * If performAction(event) is being called in a context where the name of the
- * group to be removed is already known, call setParameter("group", groupName)
- * prior to calling performAction(event) to bypass the group selection dialog.
+ * group to be duplicated is already known, call setContext(groupName) prior to
+ * calling performAction(event) to bypass the group selection dialog.
  *
  * <hr>
  * This file is part of JMRI.
@@ -32,39 +34,42 @@ import javax.swing.JOptionPane;
  * <P>
  * @author	Kevin Dickerson  Copyright (C) 2009
  * @version	$Revision$
-  */
-public class DeleteRosterGroupAction extends JmriAbstractAction {
+ */
+public class CopyRosterGroupAction extends JmriAbstractAction {
 
-    public DeleteRosterGroupAction(String s, WindowInterface wi) {
-    	super(s, wi);
+    public CopyRosterGroupAction(String s, WindowInterface wi) {
+        super(s, wi);
     }
-     
- 	public DeleteRosterGroupAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+
+    public CopyRosterGroupAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
-    
+
     /**
      * @param s Name of this action, e.g. in menus
      * @param who Component that action is associated with, used
      *              to ensure proper position in of dialog boxes
      */
-    public DeleteRosterGroupAction(String s, Component who) {
+    public CopyRosterGroupAction(String s, Component who) {
         super(s);
         _who = who;
     }
-
     Component _who;
     String group;
 
     /**
+     * Call setContext(oldName) prior to calling actionPerformed(event) to bypass
+     * the roster group selection dialog if the name of the group to copied is
+     * already known.
+     *
      * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {
         if (group == null) {
             group = (String) JOptionPane.showInputDialog(_who,
-                    "<html><b>Delete roster group</b><br>Roster entries in the group are not deleted.</html>",
-                    "Delete Roster Group",
+                    "<html><b>Duplicate roster group</b><br>Select the roster group to duplicate.</html>",
+                    "Duplicate Roster Group",
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     Roster.instance().getRosterGroupList().toArray(),
@@ -73,35 +78,28 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         if (group == null || group.equals(Roster.ALLENTRIES)) {
             return;
         }
-        // prompt for one last chance
-        if (!userOK(group)) return;
 
-        // delete the roster grouping
-        Roster.instance().delRosterGroupList(group);
-        Roster.writeRosterFile();
-
-    }
-
-    /**
-     * Can provide some mechanism to prompt for user for one
-     * last chance to change his/her mind
-     * @return true if user says to continue
-     */
-    boolean userOK(String entry) {
-        String[] titles = {"Delete", "Cancel"};
-        // TODO: I18N
-        // TODO: replace "Are you sure..." string with JPanel containing string
-        //       and checkbox silencing this message in the future
-        return (JOptionPane.YES_OPTION == JOptionPane.showOptionDialog(_who,
-                "Are you sure you want to delete roster group \"" + entry + "\"?",
-                "Delete Roster Group \"" + entry + "\"",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+        String entry = (String) JOptionPane.showInputDialog(_who,
+                "<html><b>Duplicate roster group</b><br>Enter the name for the new roster group.</html>",
+                "Duplicate Roster Group " + group,
+                JOptionPane.INFORMATION_MESSAGE,
                 null,
-                titles,
-                null));
+                null,
+                null);
+        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+            return;
+        } else if (Roster.instance().getRosterGroupList().contains(entry)) {
+            JOptionPane.showMessageDialog(_who,
+                    "<html><b>Unable to duplicate roster group</b><br>The roster group named \"" + entry + "\" already exists.",
+                    "Duplicate Roster Group " + group,
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        // rename the roster grouping
+        Roster.instance().copyRosterGroupList(group, entry);
+        Roster.writeRosterFile();
     }
-    
+
     // never invoked, because we overrode actionPerformed above
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
@@ -113,8 +111,6 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
             group = value;
         }
     }
-
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DeleteRosterGroupAction.class.getName());
-
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CopyRosterGroupAction.class.getName());
 }
