@@ -61,6 +61,9 @@ abstract public class VSDSound {
     // Optional methods - overridden in subclasses where needed.  Do nothing otherwise
     public void changeNotch(int new_notch) {
     }
+
+    public void changeThrottle(float t) {
+    }
     
     public void setName(String n) {
 	name = n;

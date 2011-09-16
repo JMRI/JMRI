@@ -235,6 +235,9 @@ public class SoundEvent implements PropertyChangeListener {
 	    log.warn("Don't have StringTriggers yet...");
 	    t = null;
 	    return;
+	case THROTTLE:
+	    t = new ThrottleTrigger(te.getAttributeValue("name"));
+	    break;
 	case NONE:
 	default:
 	    break;
@@ -257,24 +260,27 @@ public class SoundEvent implements PropertyChangeListener {
 	case PLAY:
 	case FADEIN:
 	    log.debug("PLAY");
-		t.setCallback(new TriggerListener() {
-			public void takeAction() { t.getTarget().play(); }
-			public void takeAction(int i) {}
-		    });
+	    t.setCallback(new TriggerListener() {
+		    public void takeAction() { t.getTarget().play(); }
+		    public void takeAction(int i) {}
+		    public void takeAction(float f) { } // do nothing
+		});
 		break;
 	case LOOP:
-		log.debug("LOOP");
-		t.setCallback(new TriggerListener() {
-			public void takeAction() { t.getTarget().loop(); }
-			public void takeAction(int i) {}
-		    });
-		break;
+	    log.debug("LOOP");
+	    t.setCallback(new TriggerListener() {
+		    public void takeAction() { t.getTarget().loop(); }
+		    public void takeAction(int i) {}
+		    public void takeAction(float f) { } // do nothing
+		});
+	    break;
 	case STOP:
 	case FADEOUT:
 	    log.debug("STOP");
 	    t.setCallback(new TriggerListener() {
 		    public void takeAction() { t.getTarget().stop(); }
 		    public void takeAction(int i) {}
+		    public void takeAction(float f) { } // do nothing
 		});
 	    break;
 	case NOTCH:
@@ -286,6 +292,19 @@ public class SoundEvent implements PropertyChangeListener {
 			t.getTarget().changeNotch(i); 
 		    }
 		    public void takeAction() {}
+		    public void takeAction(float f) { } // do nothing
+		});
+	    break;
+	case CHANGE:
+	    log.debug("CHANGE");
+	    log.debug("making callback t " + t + " target " + t.getTarget());
+	    t.setCallback(new TriggerListener() {
+		    public void takeAction() { } // do nothing
+		    public void takeAction(int i) { } // do nothing
+		    public void takeAction(float f) {
+			log.debug("Throttle Trigger Listener. t = " + t + " Target = " + t.getTarget() + " value = " + f);
+			t.getTarget().changeThrottle(f);
+		    }
 		});
 	    break;
 	case NOTHING:
@@ -294,6 +313,7 @@ public class SoundEvent implements PropertyChangeListener {
 	    t.setCallback(new TriggerListener() {
 		    public void takeAction() { } // do nothing
 		    public void takeAction(int i) { } // do nothing
+		    public void takeAction(float f) { } // do nothing
 		});
 	    break;
 	default:

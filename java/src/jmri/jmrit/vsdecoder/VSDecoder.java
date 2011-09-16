@@ -395,7 +395,12 @@ public class VSDecoder implements PropertyChangeListener {
 		sound_list.put(el.getAttributeValue("name"),cs);
 	    } else if (el.getAttributeValue("type").equals("diesel")) {
 		// Handle a Diesel Engine sound
-		EngineSound es = new EngineSound(el.getAttributeValue("name"));
+		DieselSound es = new DieselSound(el.getAttributeValue("name"));
+		es.setXml(el, vf);
+		sound_list.put(el.getAttributeValue("name"), es);
+	    } else if (el.getAttributeValue("type").equals("steam")) {
+		// Handle a Diesel Engine sound
+		SteamSound es = new SteamSound(el.getAttributeValue("name"));
 		es.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"), es);
 	    } else {
