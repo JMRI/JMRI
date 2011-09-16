@@ -38,6 +38,7 @@ public class DecoderPro3Action extends jmri.util.swing.JmriAbstractAction
     @Override
     public void actionPerformed(ActionEvent event) {
         mainFrame = new DecoderPro3Window();
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if(!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
             mainFrame.setSize(new java.awt.Dimension(1024, 600));
             mainFrame.setPreferredSize(new java.awt.Dimension(1024, 600));
