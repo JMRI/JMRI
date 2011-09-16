@@ -33,6 +33,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriPanel;
 import jmri.DccLocoAddress;
 import javax.swing.SwingWorker;
+import jmri.jmrit.DccLocoAddressSelector;
 
 @SuppressWarnings("serial")
 public class VSDConfigPanel extends JmriPanel {
@@ -48,6 +49,7 @@ public class VSDConfigPanel extends JmriPanel {
     private javax.swing.JLabel addressLabel;
     private javax.swing.JTextField addressTextBox;
     private javax.swing.JButton addressSetButton;
+    private DccLocoAddressSelector addressSelector;
     private javax.swing.JComboBox rosterComboBox;
     private javax.swing.JLabel rosterLabel;
     private javax.swing.JButton rosterSaveButton;
@@ -102,12 +104,21 @@ public class VSDConfigPanel extends JmriPanel {
     protected void updateAddress() {
 	// Simulates the clicking of the address Set button
 	VSDecoder dec = main_pane.getDecoder();
+	/*
 	try {
+	    int addr = Integer.parseInt(addressTextBox.getText());
+	    main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
+			       dec.getAddress(), new DccLocoAddress(addr, true));
 	    int addr = Integer.parseInt(addressTextBox.getText());
 	    main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
 			       dec.getAddress(), new DccLocoAddress(addr, true));
 	} catch(NumberFormatException e) {
 	    // Address box does not contain an integer... do nothing.
+	}
+	*/
+	if (addressSelector.getAddress() != null) {
+	    main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
+					 dec.getAddress(), addressSelector.getAddress());
 	}
     }
 
@@ -229,6 +240,8 @@ public class VSDConfigPanel extends JmriPanel {
         addressTextBox = new javax.swing.JTextField(5);
         addressLabel = new javax.swing.JLabel();
 	addressSetButton = new javax.swing.JButton();
+	addressSelector = new DccLocoAddressSelector();
+
 	profileComboBox = new javax.swing.JComboBox();
 	profileLabel = new javax.swing.JLabel();
 	
@@ -254,13 +267,13 @@ public class VSDConfigPanel extends JmriPanel {
             }
         });
 	addressTextBox.setMaximumSize(addressTextBox.getPreferredSize());
-        addressPanel.add(addressTextBox);
+        //addressPanel.add(addressTextBox);
 
         addressLabel.setText("Address");
 	addressLabel.setMaximumSize(addressLabel.getPreferredSize());
-        addressPanel.add(addressLabel);
+        //addressPanel.add(addressLabel);
 
-	addressPanel.add(addressSetButton);
+	//addressPanel.add(addressSetButton);
 	addressSetButton.setText("Set");
 	addressSetButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -270,6 +283,9 @@ public class VSDConfigPanel extends JmriPanel {
 	addressTextBox.setEnabled(false);
 	addressSetButton.setEnabled(false);
 	addressSetButton.setToolTipText("AddressSetButtonToolTip");
+	addressPanel.add(addressSelector.getCombinedJPanel());
+	addressPanel.add(addressSetButton);
+	addressPanel.add(addressLabel);
 
     }
 

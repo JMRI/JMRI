@@ -141,9 +141,13 @@ class SteamSound extends EngineSound {
     private int calcRPM(float t) {
 	// Speed = % of top_speed (mph)
 	// RPM = speed * ((inches/mile) / (minutes/hour)) / (pi * driver_diameter)
-	double rpm_f = t * top_speed * 1056 / (Math.PI * driver_diameter);
+	double rpm_f = speedCurve(t) * top_speed * 1056 / (Math.PI * driver_diameter);
 	log.debug("RPM Calculated: " + rpm_f + " (int) " + (int)Math.round(rpm_f));
 	return((int)Math.round(rpm_f));
+    }
+
+    private double speedCurve(float t) {
+	return(Math.pow(t, 2.0) / 1.0);
     }
 
     private int calcChuffInterval(int rpm) {
@@ -156,10 +160,11 @@ class SteamSound extends EngineSound {
 	// Yes, I'm checking to see if rps and current_rpm_sound are the *same object*
 	if (((rps = getRPMSound(calcRPM(t))) != null) && (rps != current_rpm_sound)){
 	    // Stop the current sound
-	    current_rpm_sound.sound.fadeOut();
-	    if (current_rpm_sound.use_chuff)
-		current_rpm_sound.stopChuff();
-
+	    if ((current_rpm_sound != null) && (current_rpm_sound.sound != null)) {
+		current_rpm_sound.sound.fadeOut();
+		if (current_rpm_sound.use_chuff)
+		    current_rpm_sound.stopChuff();
+	    }
 	    // Start the new sound.
 	    current_rpm_sound = rps;
 	    if (rps.use_chuff) {
