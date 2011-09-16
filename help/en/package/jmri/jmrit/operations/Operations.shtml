@@ -27,31 +27,34 @@
 <H2>JMRI Operations</H2>
 
 The operations program allows you to create computer generated train
-manifests for your railroad. A train manifest details the work that a
-train will perform during an operations session. The manifest provides a
-list of car pick up and set outs and shows where the car's are located
-and where they should be eventually positioned on the railroad. The
-program allows you to build a roster of cars, define locations on the
-railroad, and routes for trains to travel. The car roster includes
-information about the car, including road name, number, type of car,
-color, length, weight, load, date built, and owner. Trains are assigned routes
-that define locations where cars can be picked up or set out. Features
+manifests for your railroad. A train
+<A HREF="#PrintingManifests">manifest</A> details the work that a train
+will perform during an operations session. The manifest provides a list
+of car pick up and set outs and shows where the cars are located and
+where they should be eventually positioned on the railroad. The program
+allows you to build a roster of cars, define locations on the railroad,
+and routes for trains to travel. The car roster includes information
+about the car, including road name, number, type of car, color, length,
+weight, load, date built, and owner. Trains are assigned routes that
+define locations where cars can be picked up or set out. Features
 include the ability to control what car types, road names, and car loads
 a location can service, the available track space for a location, and
 the maximum length the train can be between any two locations on the
 train's route.
-<P>Locations can have spurs, yards, staging and interchange
-tracks. Spurs are used to service industries, and can optionally have
-custom schedules assigned to them. Trains can be configured to require a
-caboose or car with Flashing Rear End Device (FRED). The program
-generates manifests for each train and switch lists for any
-location. A switch list for a location shows the work for all of the
-trains that will visit that location. The program can also
-place icons representing trains on a JMRI panel. The icon can be taught
-to move in the panel along with the train from location to location.</P>
 <P>
-The operations program is included in the JMRI/DecoderPro suite of tools 
-and can be found under the main menu heading "Tools-&gt;Operations".</P>
+Locations can have spurs, yards, staging and interchange tracks. Spurs
+are used to service industries, and can optionally have custom <A
+HREF="#Schedules">schedules</A> assigned to them. Trains can be
+configured to require a caboose or car with Flashing Rear End Device
+(FRED). The program generates manifests for each train and switch lists
+for any location. A <A HREF="#Switchlist">switch list</A> for a location shows the work for all of
+the trains that will visit that location. The program can also place
+icons representing trains on a JMRI panel. The icon can be taught to
+move in the panel along with the train from location to location.
+</P>
+<P>The operations program is included in the JMRI/DecoderPro suite
+of tools and can be found under the main menu heading
+"Tools-&gt;Operations".</P>
 
 <P>
 <img src="images/MainMenuDecoderPro.png">
@@ -2172,6 +2175,7 @@ will use up to five trains to get the car to a destination.
 to use a text editor to search the report, the build reports can be
 found in the directory JMRI-&gt;operations-&gt;buildstatus.</P>
 
+<A NAME="PrintingManifests"></A>
 <H3>Printing Manifests</H3>
 
 After building a train, the "Build" button will become "Print" or
