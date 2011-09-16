@@ -29,33 +29,33 @@ public class Version {
      * Major number changes with large incompatible
      * changes in requirements or API.
      */
-    static final public int major = ${release.major};
+    static final public int major = @@release.major@@;
      
     /**
      * Minor number changes with each production release.
      * Odd is development, even is production.
      */
-    static final public int minor = ${release.minor};
+    static final public int minor = @@release.minor@@;
      
     /* Test number changes with individual releases,
      * general fastest for test releases. Set 0 for production
      */
-    static final public int test = ${release.build};
+    static final public int test = @@release.build@@;
 
     /* The user who built this release */
-    static final public String buildUser = "${release.build_user}";
+    static final public String buildUser = "@@release.build_user@@";
 
     /* The SVN revision ID for this release (if known) */
-    static final public String revisionId = "${release.revision_id}";
+    static final public String revisionId = "@@release.revision_id@@";
 
     /* The date/time of this build */
-    static final public String buildDate = "${release.build_date}";
+    static final public String buildDate = "@@release.build_date@@";
 
     /* Has this build been created as a possible "official" release? */
-    static final public boolean official = ${release.official};
+    static final public boolean official = @@release.official@@;
 
     /* Has this build been created from a branch in Subversion? */
-    static final public boolean branched = ${release.is_branched};
+    static final public boolean branched = @@release.is_branched@@;
 
     public static String getModifier() {
 	StringBuilder modifier = new StringBuilder("");
