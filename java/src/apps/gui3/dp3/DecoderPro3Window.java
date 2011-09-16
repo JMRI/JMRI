@@ -7,13 +7,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,10 +21,7 @@ import java.io.File;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.border.Border;
-import javax.swing.border.BevelBorder;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -44,6 +39,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import javax.swing.DropMode;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -51,7 +47,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 import javax.swing.ListSelectionModel;
-import javax.swing.JSeparator;
 
 import jmri.Programmer;
 import jmri.progdebugger.*;
@@ -62,6 +57,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.util.datatransfer.RosterEntrySelection;
 
 /**
  * Standalone DecoderPro3 Window (new GUI)
@@ -274,19 +270,21 @@ public class DecoderPro3Window
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
 
+            @Override
             public int getSourceActions(JComponent c) {
                 return COPY;
             }
 
+            @Override
             public Transferable createTransferable(JComponent c) {
-                // should return a RosterSelection object which contains the roster ID
-                String IDs = "";
+                ArrayList Ids = new ArrayList(rtable.getTable().getSelectedRowCount());
                 for (int i = 0; i < rtable.getTable().getSelectedRowCount(); i++) {
-                    IDs = IDs + "#" + rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString();
+                    Ids.add(rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString());
                 }
-                return new StringSelection(IDs);
+                return new RosterEntrySelection(Ids);
             }
 
+            @Override
             public void exportDone(JComponent c, Transferable t, int action) {
                 // nothing to do
             }
@@ -337,15 +335,17 @@ public class DecoderPro3Window
         groupsList.setDropMode(DropMode.ON);
         groupsList.setTransferHandler(new TransferHandler() {
 
+            @Override
             public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
-                for (int i = 0; i < transferFlavors.length; i++) {
-                    if (DataFlavor.stringFlavor.equals(transferFlavors[i])) {
+                for (DataFlavor flavor : transferFlavors) {
+                    if (RosterEntrySelection.rosterEntryFlavor.equals(flavor)) {
                         return true;
                     }
                 }
                 return false;
             }
 
+            @Override
             public boolean importData(JComponent c, Transferable t) {
                 JList l = (JList) c;
                 if (canImport(c, t.getTransferDataFlavors())) {
@@ -355,20 +355,12 @@ public class DecoderPro3Window
                         return false;
                     }
                     try {
-                        String[] IDs = t.getTransferData(DataFlavor.stringFlavor).toString().split("#");
-                        for (int i = 0; i < IDs.length; i++) {
-                            if (!"".equals(IDs[i])) {
-                                RosterEntry re = Roster.instance().entryFromTitle(IDs[i]);
-                                if (re == null) {
-                                    log.warn("Attempted to create RosterEntry from invalid title: " + IDs[i]);
-                                } else {
-                                    log.debug("Dragged RosterEntry " + IDs[i] + " onto group " + l.getModel().getElementAt(g).toString());
-                                    re.putAttribute(Roster.instance().getRosterGroupPrefix() + l.getModel().getElementAt(g).toString(), "yes");
-                                    re.updateFile();
-                                    Roster.writeRosterFile();
-                                }
-                            }
+                        ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
+                        for (RosterEntry re: REs) {
+                            re.putAttribute(Roster.instance().getRosterGroupPrefix() + l.getModel().getElementAt(g).toString(), "yes");
+                            re.updateFile();
                         }
+                        Roster.writeRosterFile();
                         Roster.instance().rosterGroupEntryChanged();
                     } catch (Exception e) {
                         log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
