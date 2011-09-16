@@ -58,6 +58,7 @@ public class TriggerTest extends TestCase {
 	TriggerListener tl = new TriggerListener() {
 		public void takeAction() { }
 		public void takeAction(int i) { }
+		public void takeAction(float f) { }
 	    };
 	uut.setCallback(tl);
 	Assert.assertSame("set callback", tl, uut.getCallback());

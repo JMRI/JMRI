@@ -63,6 +63,7 @@ public class FloatTriggerTest extends TestCase {
 	TriggerListener tl = new TriggerListener() {
 		public void takeAction() { }
 		public void takeAction(int i) { }
+		public void takeAction(float f) { }
 	    };
 	uut.setCallback(tl);
 	Assert.assertSame("set callback", tl, uut.getCallback());
@@ -80,6 +81,9 @@ public class FloatTriggerTest extends TestCase {
 		    Assert.assertTrue("callback called", true);
 		}
 		public void takeAction(int i) {
+		    Assert.fail("wrong callback called");
+		}
+		public void takeAction(float f) {
 		    Assert.fail("wrong callback called");
 		}
 	    });
