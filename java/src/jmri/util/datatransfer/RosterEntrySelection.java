@@ -87,7 +87,8 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     }
 
     public void lostOwnership(Clipboard clpbrd, Transferable t) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // if we need to take an action when something else if posted on the
+        // clipboard, we would do so now.
     }
 
     /**
