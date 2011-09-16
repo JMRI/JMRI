@@ -4,6 +4,7 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
@@ -50,7 +51,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     Component _who;
-    String[] IDs;
+    ArrayList<RosterEntry> rosterEntries;
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -65,18 +66,11 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
         if(entry == null || entry.equals(Roster.ALLENTRIES)){
             return;
         }
-        if (IDs != null) {
-            for (String ID : IDs) {
-                if (!"".equals(ID)) {
-                    RosterEntry re = Roster.instance().entryFromTitle(ID);
-                    if (re == null) {
-                        log.warn("Attempted to create RosterEntry from invalid title: " + ID);
-                    } else {
-                        log.debug("Adding RosterEntry " + ID + " to new group " + entry);
-                        re.putAttribute(Roster.instance().getRosterGroupPrefix() + entry, "yes");
-                        re.updateFile();
-                    }
-                }
+        if (rosterEntries != null) {
+            for (RosterEntry re : rosterEntries) {
+                log.debug("Adding RosterEntry " + re.getId() + " to new group " + entry);
+                re.putAttribute(Roster.instance().getRosterGroupPrefix() + entry, "yes");
+                re.updateFile();
             }
         }
         Roster.instance().addRosterGroupList(entry);
@@ -89,20 +83,20 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     /**
-     * Set a String parameter
+     * Set a parameter
      * <p>
      * This method accepts the following key, with the following value:
      * <dl>
-     * <dt>RosterEntryIDs</dt>
-     * <dd>A string of RosterEntry IDs separated by # characters.
+     * <dt>RosterEntries</dt>
+     * <dd>An ArrayList&lt;RosterEntry&gt; of roster entries.
      * </dl>
      * @param key
      * @param value
      */
     @Override
-    public void setParameter(String key, String value) {
-        if (key.equals("RosterEntryIDs")) {
-            IDs = value.split("#");
+    public void setParameter(String key, Object value) {
+        if (key.equals("RosterEntries") && value.getClass().equals(ArrayList.class)) {
+            rosterEntries = (ArrayList<RosterEntry>)value;
         }
     }
 
