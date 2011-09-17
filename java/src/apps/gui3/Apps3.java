@@ -61,6 +61,9 @@ public abstract class Apps3 extends apps.AppsBase {
         // pre-GUI work
         super();
 
+        // Prepare font lists
+        prepareFontLists();
+
         addToActionModel();
         // create GUI
         initializeHelpSystem();
@@ -246,6 +249,17 @@ public abstract class Apps3 extends apps.AppsBase {
         return nameString;
     }
     
+    private void prepareFontLists() {
+        // Prepare font lists
+        new Thread(new Runnable() {
+            public void run() {
+                log.debug("Prepare font lists...");
+                jmri.util.swing.FontComboUtil.prepareFontLists();
+                log.debug("...Font lists built");
+            }
+        }).start();
+    }
+
     protected static void setApplication(String name) {
         try {
             // Enable access to name field
