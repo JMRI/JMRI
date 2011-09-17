@@ -216,22 +216,22 @@ class SteamSound extends EngineSound {
 	String n = e.getChild("top-speed").getValue();
 	if (n != null) {
 	    top_speed = Integer.parseInt(n);
-	    log.debug("Top speed: " + top_speed + " MPH");
+	    //log.debug("Top speed: " + top_speed + " MPH");
 	}
 	n = e.getChildText("driver-diameter");
 	if (n != null) {
 	    driver_diameter = Integer.parseInt(n);
-	    log.debug("Driver diameter: " + driver_diameter + " inches");
+	    //log.debug("Driver diameter: " + driver_diameter + " inches");
 	}
 	n = e.getChildText("cylinders");
 	if (n != null) {
 	    num_cylinders = Integer.parseInt(n);
-	    log.debug("Num Cylinders: " + num_cylinders);
+	    //log.debug("Num Cylinders: " + num_cylinders);
 	}
 	n = e.getChild("rpm-steps").getValue();
 	if (n != null) {
 	    num_rpms = Integer.parseInt(n);
-	    log.debug("Number of rpm steps: " + num_rpms);
+	    //log.debug("Number of rpm steps: " + num_rpms);
 	}
 
 	

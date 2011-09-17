@@ -136,6 +136,10 @@ public class VSDConfigPanel extends JmriPanel {
     }
 
     public void updateProfileList(ArrayList<String> s) {
+
+	if (s == null)
+	    return;
+
 	// This is a bit tedious...
 	ArrayList<String> ce_list = new ArrayList<String>();
 	for (int i = 0; i < profileComboBox.getItemCount(); i++) {
@@ -343,8 +347,11 @@ public class VSDConfigPanel extends JmriPanel {
 
 	// Set the Address box from the Roster entry
 	main_pane.setAddress(entry.getDccLocoAddress());
-	addressTextBox.setText(""+entry.getDccLocoAddress().getNumber());
-	addressTextBox.setEnabled(true);
+	addressSelector.setAddress(entry.getDccLocoAddress());
+	addressSelector.setEnabled(true);
+
+	//addressTextBox.setText(""+entry.getDccLocoAddress().getNumber());
+	//addressTextBox.setEnabled(true);
 	addressSetButton.setEnabled(true);
 
 	// Get VSD info from Roster.

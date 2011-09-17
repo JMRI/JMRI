@@ -303,8 +303,10 @@ public class VSDecoderPane extends JmriPanel {
     public void setAddress(DccLocoAddress a) {
 	if (a != null) {
 	    VSDecoder decoder = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
-	    decoder.setAddress(a);
-	    decoder.enable();
+	    if (decoder != null) {
+		decoder.setAddress(a);
+		decoder.enable();
+	    }
 	    this.setTitle(a);
 	}
     }

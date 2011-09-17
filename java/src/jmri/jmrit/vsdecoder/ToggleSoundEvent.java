@@ -119,6 +119,7 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	// Get the SoundEvent's button type and create it.
 	button.setText(el.getAttributeValue("label"));
 
+	/*
 	for (ButtonTrigger bt : button_trigger_list.values()) {
 	    log.debug("Button Trigger: " + bt.getName());
 	    log.debug("  Target: " + bt.getTarget().getName());
@@ -129,7 +130,7 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	for (MouseListener l : listeners) {
 	    log.debug("Listener: " + l.toString());
 	}
-
+	*/
     }  // end setXml()
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToggleSoundEvent.class.getName());

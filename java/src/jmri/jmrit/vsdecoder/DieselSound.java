@@ -234,7 +234,7 @@ class DieselSound extends EngineSound {
 	String n = e.getChild("notches").getValue();
 	if (n != null) {
 	    num_notches = Integer.parseInt(n);
-	    log.debug("Number of notches: " + num_notches);
+	    //log.debug("Number of notches: " + num_notches);
 	}
 
 	notch_sounds = new HashMap<Integer, SoundBite>();
@@ -247,7 +247,7 @@ class DieselSound extends EngineSound {
 	    el = itr.next();
 	    fn = el.getChildText("file");
 	    int nn = Integer.parseInt(el.getChildText("notch"));
-	    log.debug("Notch: " + nn + " File: " + fn);
+	    //log.debug("Notch: " + nn + " File: " + fn);
 	    sb = new SoundBite(vf, fn, "Engine_n" + i, "Engine_" + i);
 	    sb.setLooped(true);
 	    sb.setFadeTimes(100, 100);
@@ -267,7 +267,7 @@ class DieselSound extends EngineSound {
 	    nt = new NotchTransition(vf, fn, "Engine_nt" + i, "Engine_nt" + i);
 	    nt.setPrevNotch(Integer.parseInt(el.getChildText("prev-notch")));
 	    nt.setNextNotch(Integer.parseInt(el.getChildText("next-notch")));
-	    log.debug("Transition: prev=" + nt.getPrevNotch() + " next=" + nt.getNextNotch() + " File: " + fn);
+	    //log.debug("Transition: prev=" + nt.getPrevNotch() + " next=" + nt.getNextNotch() + " File: " + fn);
 	    nt.setLength();
 	    nt.setLooped(false);
 	    nt.setFadeTimes(10, 100);
@@ -281,7 +281,7 @@ class DieselSound extends EngineSound {
 	el = e.getChild("start-sound");
 	if (el != null) {
 	    fn = el.getChild("file").getValue();
-	    log.debug("Start sound: " + fn);
+	    //log.debug("Start sound: " + fn);
 	    start_sound = new SoundBite(vf, fn, "Engine_start", 
 					"Engine_Start");
 	    // Handle gain
@@ -291,7 +291,7 @@ class DieselSound extends EngineSound {
 	el = e.getChild("shutdown-sound");
 	if (el != null) {
 	    fn = el.getChild("file").getValue();
-	    log.debug("Shutdown sound: " + fn);
+	    //log.debug("Shutdown sound: " + fn);
 	    shutdown_sound = new SoundBite(vf, fn, "Engine_shutdown",
 					   "Engine_Shutdown");
 	    shutdown_sound.setLooped(false);
@@ -307,7 +307,7 @@ class DieselSound extends EngineSound {
 	    // Note, there's not enough info here to truly
 	    // do the notchup.  This is a placeholder.
 	    fn = el.getChild("file").getValue();
-	    log.debug("Notchup sound: " + fn);
+	    //log.debug("Notchup sound: " + fn);
 	    SoundBite ns = new SoundBite(vf, fn, "Engine_notch_up_n" + i,
 					 "Engine_NotchUp_" + i);
 	    ns.setLooped(false);

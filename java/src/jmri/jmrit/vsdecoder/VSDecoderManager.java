@@ -120,13 +120,9 @@ class VSDecoderManager {
     }
 
     public VSDecoder getVSDecoder(String profile_name, String path) {
+	this.loadProfiles(path);
 	VSDecoder vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
 	decodertable.put(vsd.getID(), vsd); // poss. broken for duplicate profile names
-	// If this profile_name is not in the list, update it.
-	if (!(profiletable.containsKey(profile_name))) {
-	    profiletable.put(profile_name, path);
-	    fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
-	}
 	return(vsd);
     }
 
@@ -171,6 +167,21 @@ class VSDecoderManager {
 
 	for (VSDManagerListener l : listenerList.getListeners(VSDManagerListener.class)) {
 	    l.eventAction(evt);
+	}
+    }
+
+    private void loadProfiles(String path) {
+	try {
+	    VSDFile vsdfile = new VSDFile(path);
+	    if (vsdfile.isInitialized()) {
+		this.loadProfiles(vsdfile);
+	    }
+	} catch (java.util.zip.ZipException e) {
+	    log.error("ZipException loading VSDecoder from " + path);
+	    // would be nice to pop up a dialog here...
+	} catch (java.io.IOException ioe) {
+	    log.error("IOException loading VSDecoder from " + path);
+	    // would be nice to pop up a dialog here...
 	}
     }
 

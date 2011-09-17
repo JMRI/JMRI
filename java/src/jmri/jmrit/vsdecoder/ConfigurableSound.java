@@ -262,46 +262,47 @@ class ConfigurableSound extends VSDSound {
     public void setXml(Element e, VSDFile vf) {
 	this.setName(e.getAttributeValue("name"));
 	log.debug("ConfigurableSound: " + e.getAttributeValue("name"));
-	log.debug("  start file: " + e.getChildText("start-file"));
+	//log.debug("  start file: " + e.getChildText("start-file"));
 	if (((start_file = e.getChildText("start-file")) != null) && !(start_file.equals("")))
 	    use_start_sound = true;
 	else
 	    use_start_sound = false;
-	log.debug("  mid file: " + e.getChildText("mid-file"));
+	//log.debug("  mid file: " + e.getChildText("mid-file"));
 	if (((mid_file = e.getChildText("mid-file")) != null) && !(mid_file.equals("")))
 	    use_mid_sound = true;
 	else
 	    use_mid_sound = false;
-	log.debug("  end file: " + e.getChildText("end-file"));
+	//log.debug("  end file: " + e.getChildText("end-file"));
 	if (((end_file = e.getChildText("end-file")) != null) && !(end_file.equals("")))
 	    use_end_sound = true;
 	else
 	    use_end_sound = false;
-	log.debug("  short file: " + e.getChildText("short-file"));
+	//log.debug("  short file: " + e.getChildText("short-file"));
 	if (((short_file = e.getChildText("short-file")) != null) && !(short_file.equals("")))
 	    use_short_sound = true;
 	else
 	    use_short_sound = false;
 
-	log.debug("  start sound dur: " + e.getChildText("start-sound-duration"));
+	//log.debug("  start sound dur: " + e.getChildText("start-sound-duration"));
 	String ssd = e.getChildText("start-sound-duration");
 	if ((ssd != null) && !(ssd.equals("")))
 	    start_sound_duration = Integer.parseInt(ssd);
 	else
 	    start_sound_duration = 0;
 
-	log.debug("  gain: " + e.getChildText("gain"));
+	//log.debug("  gain: " + e.getChildText("gain"));
 	String g = e.getChildText("gain");
 	if ((g != null) && !(g.equals("")))
 	    gain = Float.parseFloat(g);
 	else
 	    gain = default_gain;
 
+	/*
 	log.debug("Use:  start = " + use_start_sound + 
 		  "mid = " + use_mid_sound +
 		  "end = " + use_end_sound +
 		  "short = " + use_short_sound);
-
+	*/
 	// Reboot the sound
 	initialized = false;
 	this.init(vf);
