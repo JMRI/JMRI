@@ -36,10 +36,10 @@ import org.jdom.Element;
 
 class ConfigurableSound extends VSDSound {
 
-    protected String start_file = "CSX_K5LA_Horn4_Start.wav";
-    protected String mid_file = "CSX_K5LA_Horn4_Sustain.wav";
-    protected String end_file = "CSX_K5LA_Horn4_End.wav";
-    protected String short_file = "CSX_K5LA_Horn4_Short.wav";
+    protected String start_file;
+    protected String mid_file;
+    protected String end_file;
+    protected String short_file;
 
     SoundBite start_sound;
     SoundBite mid_sound;
@@ -55,8 +55,6 @@ class ConfigurableSound extends VSDSound {
 
     int start_sound_duration = 136;
     
-
-    javax.swing.Timer t;
 
     public ConfigurableSound(String name) {
 	super(name);
@@ -95,18 +93,6 @@ class ConfigurableSound extends VSDSound {
 	return(true);
     }
     
-    protected Timer newTimer(int time, boolean repeat) {
-	time = Math.max(1, time);  // make sure the time is > zero
-	t = new Timer(time, new ActionListener() { 
-		public void actionPerformed(ActionEvent e) {
-		    handleTimerPop(e);
-		}
-	    });
-	t.setInitialDelay(time);
-	t.setRepeats(repeat);
-	return(t);
-    }
-
     @Override
     public boolean isPlaying() {
         return(is_playing);
@@ -118,7 +104,12 @@ class ConfigurableSound extends VSDSound {
 	    is_playing = false; // short sound, won't be playing long...
 	} else {
 	    if (use_start_sound) {
-		t = newTimer(start_sound.getLengthAsInt(), false);
+		t = newTimer(start_sound.getLengthAsInt(), false, 
+			     new ActionListener() { 
+				 public void actionPerformed(ActionEvent e) {
+				     handleTimerPop(e);
+				 }
+			     });
 		start_sound.play();
 		if (use_mid_sound) {
 		    t.start();
@@ -135,7 +126,12 @@ class ConfigurableSound extends VSDSound {
 	if (use_start_sound) {
 	    start_sound.setLooped(false);
 	    start_sound.play();
-	    t = newTimer(start_sound.getLengthAsInt() - 100, false);
+	    t = newTimer(start_sound.getLengthAsInt() - 100, false,
+			 new ActionListener() { 
+		    public void actionPerformed(ActionEvent e) {
+			handleTimerPop(e);
+		    }
+		});
 	    t.setRepeats(false); // timer pop only once to trigger the sustain sound.
 	    t.start();
 	} else if (use_mid_sound) {

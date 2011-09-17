@@ -119,12 +119,6 @@ class DieselSound extends EngineSound {
 	notch_transition.fadeOut();
     }
 
-    protected Timer newTimer(int time, boolean repeat, ActionListener al) {
-	t = new Timer(time, al);
-	t.setRepeats(repeat);
-	return(t);
-    }
-
     private NotchTransition findNotchTransient(int prev, int next) {
 	log.debug("Looking for Transient: prev = " + prev + " next = " + next);
 	for (NotchTransition nt : transition_sounds) {

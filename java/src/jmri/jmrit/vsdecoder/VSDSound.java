@@ -20,6 +20,9 @@ package jmri.jmrit.vsdecoder;
  */
 
 import org.jdom.Element;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 abstract public class VSDSound {
     
@@ -31,6 +34,8 @@ abstract public class VSDSound {
     public final static float default_gain = 0.8f;
 
     protected String vsd_file_base = "resource:resources/sounds/vsd/";
+
+    javax.swing.Timer t;
 
     boolean is_playing;
     String name;
@@ -47,6 +52,13 @@ abstract public class VSDSound {
 	return(is_playing);
     }
 
+    protected Timer newTimer(int time, boolean repeat, ActionListener al) {
+	time = Math.max(1, time);  // make sure the time is > zero
+	t = new Timer(time, al);
+	t.setInitialDelay(time);
+	t.setRepeats(repeat);
+	return(t);
+    }
 
     // Required methods - abstract because all subclasses MUST implement
     abstract public void play();
