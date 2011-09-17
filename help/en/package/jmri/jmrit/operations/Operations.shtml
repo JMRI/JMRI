@@ -47,7 +47,7 @@ are used to service industries, and can optionally have custom <A
 HREF="#Schedules">schedules</A> assigned to them. Trains can be
 configured to require a caboose or car with Flashing Rear End Device
 (FRED). The program generates manifests for each train and switch lists
-for any location. A <A HREF="#Switchlist">switch list</A> for a location shows the work for all of
+for any location. A <A HREF="#SwitchList">switch list</A> for a location shows the work for all of
 the trains that will visit that location. The program can also place
 icons representing trains on a JMRI panel. The icon can be taught to
 move in the panel along with the train from location to location.
@@ -2020,7 +2020,7 @@ checkbox, then select the type of car you want to modify, and press
 <H3>Switcher Service</H3>
 
 Many operators assign a locomotive to a location to do the local switching.
-Using the location's switchlist allows the person assigned to the
+Using the location's switch list allows the person assigned to the
 location to service all trains that stop at that location. However,
 there can be locations that don't get enough work servicing through or
 local trains and it would be nice to create some additional work for the
@@ -2031,7 +2031,7 @@ that will only service that location. Adjust the "Move" count in the
 route to control how many cars the switcher will service.
 
 <P>Some operators like to produce a train manifest that only shows
-set outs or pick ups from a yard or interchange, and then have a switchlist
+set outs or pick ups from a yard or interchange, and then have a switch list
 that shows moves between the yard and spurs. To eliminate tracks from
 showing up on a train's manifest, deselect all of the direction boxes
 for that track. Only a "switcher" will service a track that doesn't have
