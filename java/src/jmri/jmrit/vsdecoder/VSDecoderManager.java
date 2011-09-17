@@ -176,8 +176,11 @@ class VSDecoderManager {
 
     public void loadProfiles(VSDFile vf) {
 	Element root;
+	String pname;
 	if ((root = vf.getRoot()) == null)
 	    return;
+	
+	ArrayList<String> new_entries = new ArrayList<String>();
 
 	//List<Element> profiles = root.getChildren("profile");
 	@SuppressWarnings("unchecked")
@@ -185,11 +188,21 @@ class VSDecoderManager {
 	while (i.hasNext()) {
 	    Element e = i.next();
 	    log.debug(e.toString());
-	    if (e.getAttributeValue("name") != null)
-		profiletable.put(e.getAttributeValue("name"), vf.getName());
+	    if ((pname = e.getAttributeValue("name")) != null) {
+		profiletable.put(pname, vf.getName());
+		new_entries.add(pname);
+	    }
 	}
+
+	// debug
+	/*
+	for (String s : new_entries) {
+	    log.debug("New entry: " + s);
+	}
+	*/
+	// /debug
 	    
-	fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
+	fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE, new_entries));
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());

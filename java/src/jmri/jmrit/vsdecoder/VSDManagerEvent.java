@@ -25,14 +25,20 @@ import java.util.EventObject;
 public class VSDManagerEvent extends EventObject {
 
     VSDecoderManager.EventType type;
+    Object data;
 
     public VSDManagerEvent(VSDecoderManager source) {
-	this(source, VSDecoderManager.EventType.NONE);
+	this(source, VSDecoderManager.EventType.NONE, null);
     }
 
     public VSDManagerEvent(VSDecoderManager source, VSDecoderManager.EventType t) {
+	this(source, t, null);
+    }
+
+    public VSDManagerEvent(VSDecoderManager source, VSDecoderManager.EventType t, Object d) {
 	super(source);
 	type = t;
+	data = d;
     }
 
     public void setType(VSDecoderManager.EventType t) {
@@ -41,6 +47,10 @@ public class VSDManagerEvent extends EventObject {
 
     public VSDecoderManager.EventType getType() {
 	return(type);
+    }
+
+    public Object getData() {
+	return(data);
     }
 }
 

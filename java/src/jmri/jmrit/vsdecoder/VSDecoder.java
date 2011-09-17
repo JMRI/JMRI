@@ -346,6 +346,7 @@ public class VSDecoder implements PropertyChangeListener {
 	// E is now the first <profile/> in vsdfile that matches pn.
 
         if (e == null) {
+	    // No matching profile name found.
             return;
         }
         

@@ -128,10 +128,40 @@ public class VSDConfigPanel extends JmriPanel {
     //
     // Respond to a change in the VSDecoderManager's profile list.
     // Event listener on VSDecoderManager's profile list.
-    public void handleDecoderListChange() {
+    public void handleDecoderListChange(VSDManagerEvent e) {
 	log.warn("Handling the decoder list change");
-	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
-	this.setProfileList(sl);
+	//ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
+	//this.setProfileList(sl);
+	this.updateProfileList((ArrayList<String>) e.getData());
+    }
+
+    public void updateProfileList(ArrayList<String> s) {
+	// This is a bit tedious...
+	ArrayList<String> ce_list = new ArrayList<String>();
+	for (int i = 0; i < profileComboBox.getItemCount(); i++) {
+	    ce_list.add(profileComboBox.getItemAt(i).toString());
+	}
+
+	Iterator<String> itr = s.iterator();
+	while (itr.hasNext()) {
+	    String st = (String)itr.next();
+	    if (!ce_list.contains(st)) {
+		log.debug("added item " + st);
+		profileComboBox.addItem(st);
+	    }
+	}
+	//profileComboBox.removeItem(loadProfilePrompt);
+
+	if (profileComboBox.getItemCount() > 0) {
+	    profileComboBox.setEnabled(true);
+	    // Enable the roster save button if roster items are available.
+	    if (rosterComboBox.getItemCount() > 0)
+		rosterSaveButton.setEnabled(true);
+	}
+	
+	revalidate();
+	repaint();
+
     }
 
     // setProfileList()
@@ -193,7 +223,7 @@ public class VSDConfigPanel extends JmriPanel {
 		public void eventAction(VSDManagerEvent e) {
 		    if (e.getType() == VSDecoderManager.EventType.DECODER_LIST_CHANGE) {
 			log.debug("Received Decoder List Change Event");
-			handleDecoderListChange();
+			handleDecoderListChange(e);
 		    }
 		}
 	    });
