@@ -9,15 +9,24 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import jmri.util.JmriJFrame;
@@ -39,7 +48,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2010
+ * @author Matthew Harris  copyright (c) 2010, 2011
  * @version $Revision$
  */
 public class SystemConsole extends JTextArea {
@@ -57,6 +66,14 @@ public class SystemConsole extends JTextArea {
 
     private static JmriJFrame frame = null;
 
+    private static JPopupMenu popup = new JPopupMenu();
+
+    private static JMenu wrapMenu = null;
+    private static ButtonGroup wrapGroup = null;
+
+    private static JMenu schemeMenu = null;
+    private static ButtonGroup schemeGroup = null;
+
     static ArrayList<Schemes> schemes;
 
     private static int scheme = 0; // Green on Black
@@ -64,6 +81,8 @@ public class SystemConsole extends JTextArea {
     private static int fontSize = 12;
 
     private static int fontStyle = Font.PLAIN;
+
+    private static String fontFamily = "Monospaced";
 
     public static final int WRAP_STYLE_NONE = 0x00;
     public static final int WRAP_STYLE_LINE = 0x01;
@@ -73,7 +92,7 @@ public class SystemConsole extends JTextArea {
 
     /**
      * Initialise the system console ensuring both System.out and System.err
-     * streams are re-directed to the console's JTextArea
+     * streams are re-directed to the consoles JTextArea
      */
     public static void init() {
 
@@ -90,7 +109,7 @@ public class SystemConsole extends JTextArea {
             // Setup the console text area
             console.setRows(20);
             console.setColumns(120);
-            console.setFont(new Font("Monospaced", fontStyle, fontSize));
+            console.setFont(new Font(fontFamily, fontStyle, fontSize));
             console.setEditable(false);
             setScheme(scheme);
             setWrapStyle(wrapStyle);
@@ -173,6 +192,76 @@ public class SystemConsole extends JTextArea {
         });
         p.add(close);
 
+         // Define the pop-up menu
+        JMenuItem menuItem = new JMenuItem(rb.getString("ButtonCopyClip"));
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                StringSelection text = new StringSelection(console.getText());
+                clipboard.setContents(text, text);
+            }
+        });
+        popup.add(menuItem);
+
+        popup.add(new JSeparator());
+
+        JRadioButtonMenuItem rbMenuItem;
+
+        // Define the colour scheme sub-menu
+        schemeMenu = new JMenu("Colour scheme");
+        schemeGroup = new ButtonGroup();
+        for (final Schemes s: schemes) {
+            rbMenuItem = new JRadioButtonMenuItem(s.description);
+            rbMenuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setScheme(schemes.indexOf(s));
+                }
+            });
+            rbMenuItem.setSelected(getScheme()==schemes.indexOf(s));
+            schemeMenu.add(rbMenuItem);
+            schemeGroup.add(rbMenuItem);
+        }
+        popup.add(schemeMenu);
+
+        // Define the wrap style sub-menu
+        wrapMenu = new JMenu("Wrap style");
+        wrapGroup = new ButtonGroup();
+        rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleNone"));
+        rbMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                setWrapStyle(WRAP_STYLE_NONE);
+            }
+        });
+        rbMenuItem.setSelected(getWrapStyle()==WRAP_STYLE_NONE);
+        wrapMenu.add(rbMenuItem);
+        wrapGroup.add(rbMenuItem);
+
+        rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleLine"));
+        rbMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                setWrapStyle(WRAP_STYLE_LINE);
+            }
+        });
+        rbMenuItem.setSelected(getWrapStyle()==WRAP_STYLE_LINE);
+        wrapMenu.add(rbMenuItem);
+        wrapGroup.add(rbMenuItem);
+
+        rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleWord"));
+        rbMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                setWrapStyle(WRAP_STYLE_WORD);
+            }
+        });
+        rbMenuItem.setSelected(getWrapStyle()==WRAP_STYLE_WORD);
+        wrapMenu.add(rbMenuItem);
+        wrapGroup.add(rbMenuItem);
+
+        popup.add(wrapMenu);
+
+        // Bind pop-up to objects
+        MouseListener popupListener = new PopupListener();
+        console.addMouseListener(popupListener);
+        frame.addMouseListener(popupListener);
+
         // Add the button panel to the frame & then arrange everything
         frame.add(p, BorderLayout.SOUTH);
         frame.pack();
@@ -247,6 +336,10 @@ public class SystemConsole extends JTextArea {
         wrapStyle = style;
         console.setLineWrap(style!=WRAP_STYLE_NONE);
         console.setWrapStyleWord(style==WRAP_STYLE_WORD);
+
+        if (wrapGroup!=null) {
+            wrapGroup.setSelected(wrapMenu.getItem(style).getModel(), true);
+        }
     }
 
     /**
@@ -267,7 +360,7 @@ public class SystemConsole extends JTextArea {
      * @param size point size of font between 6 and 24 point
      */
     public static void setFontSize(int size) {
-        updateFont(fontStyle, (fontSize = size<6?6:size>24?24:size));
+        updateFont(fontFamily, fontStyle, (fontSize = size<6?6:size>24?24:size));
     }
 
     /**
@@ -289,7 +382,15 @@ public class SystemConsole extends JTextArea {
         } else {
             fontStyle = Font.PLAIN;
         }
-        updateFont(fontStyle, fontSize);
+        updateFont(fontFamily, fontStyle, fontSize);
+    }
+
+    public static void setFontFamily(String family) {
+        updateFont((fontFamily = family), fontStyle, fontSize);
+    }
+
+    public static String getFontFamily() {
+        return fontFamily;
     }
 
     /**
@@ -305,8 +406,8 @@ public class SystemConsole extends JTextArea {
      * @param style font style
      * @param size font size
      */
-    private static void updateFont(int style, int size) {
-        console.setFont(console.getFont().deriveFont(style, size));
+    private static void updateFont(String family, int style, int size) {
+        console.setFont(new Font(family, style, size));
     }
 
     /**
@@ -319,6 +420,12 @@ public class SystemConsole extends JTextArea {
         schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnBlack"), Color.WHITE, Color.BLACK));
         schemes.add(new Schemes(rbc.getString("ConsoleSchemeBlackOnWhite"), Color.BLACK, Color.WHITE));
         schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnBlue"), Color.WHITE, Color.BLUE));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeBlackOnLightGray"), Color.BLACK, Color.LIGHT_GRAY));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeBlackOnGray"), Color.BLACK, Color.GRAY));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnGray"), Color.WHITE, Color.GRAY));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnDarkGray"), Color.WHITE, Color.DARK_GRAY));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeGreenOnDarkGray"), Color.GREEN, Color.DARK_GRAY));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeOrangeOnDarkGray"), Color.ORANGE, Color.DARK_GRAY));
     }
 
     /**
@@ -344,6 +451,9 @@ public class SystemConsole extends JTextArea {
         console.setForeground(s.foreground);
         console.setBackground(s.background);
 
+        if (schemeGroup!=null) {
+            schemeGroup.setSelected(schemeMenu.getItem(scheme).getModel(), true);
+        }
     }
 
     /**
@@ -369,7 +479,28 @@ public class SystemConsole extends JTextArea {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemConsole.class.getName());
+    /**
+     * Class to deal with handling popup menu
+     */
+    public static final class PopupListener extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            maybeShowPopup(e);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            maybeShowPopup(e);
+        }
+
+        private void maybeShowPopup(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                popup.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
+    }
+
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemConsole.class.getName());
 
 }
 

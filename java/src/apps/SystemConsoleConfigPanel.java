@@ -15,7 +15,10 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.ListCellRenderer;
+import javax.swing.UIManager;
+import jmri.util.swing.FontComboUtil;
 
 /**
  * Allow certain elements of the System Console to be configured.
@@ -33,7 +36,7 @@ import javax.swing.ListCellRenderer;
  * for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2010
+ * @author Matthew Harris  copyright (c) 2010, 2011
  * @version $Revision$
  */
 public class SystemConsoleConfigPanel extends JPanel {
@@ -53,18 +56,6 @@ public class SystemConsoleConfigPanel extends JPanel {
         20,
         24 };
 
-    private static final Integer fontStyles[] = {
-        Font.PLAIN,
-        Font.BOLD,
-        Font.ITALIC,
-        (Font.BOLD|Font.ITALIC) };
-
-    private static final String fontStyleNames[] = {
-        rbc.getString("ConsoleFontStyleNormal"),
-        rbc.getString("ConsoleFontStyleBold"),
-        rbc.getString("ConsoleFontStyleItalic"),
-        rbc.getString("ConsoleFontStyleBoldItalic") };
-
     private static final Integer wrapStyles[] = {
         SystemConsole.WRAP_STYLE_NONE,
         SystemConsole.WRAP_STYLE_LINE,
@@ -79,6 +70,16 @@ public class SystemConsoleConfigPanel extends JPanel {
 
     private static final JCheckBox saveSize = new JCheckBox(rbc.getString("ConsoleWindowSaveSize"));
 
+    private static final JToggleButton fontStyleBold = new JToggleButton("B");
+
+    private static final JToggleButton fontStyleItalic = new JToggleButton("I");
+
+    private static final JComboBox scheme = new JComboBox(SystemConsole.schemes.toArray());
+
+    private static final JComboBox fontFamily = FontComboUtil.getFontCombo(FontComboUtil.MONOSPACED, 14);
+
+    private static final JComboBox fontSize = new JComboBox(fontSizes);
+
     public SystemConsoleConfigPanel() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -86,7 +87,6 @@ public class SystemConsoleConfigPanel extends JPanel {
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(rbc.getString("ConsoleScheme")));
 
-        final JComboBox scheme = new JComboBox(SystemConsole.schemes.toArray());
         scheme.setSelectedIndex(SystemConsole.getScheme());
         scheme.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -121,6 +121,11 @@ public class SystemConsoleConfigPanel extends JPanel {
                 l.setBackground(scheme.background);
                 p.add(l);
 
+                // 'Oribble hack as CDE/Motif JComboBox doesn't seem to like
+                // displaying JPanel objects in the JComboBox header
+                if(UIManager.getLookAndFeel().getName().equals("CDE/Motif") && index==-1 ) {
+                    return l;
+                }
                 return p;
             }
         });
@@ -129,34 +134,52 @@ public class SystemConsoleConfigPanel extends JPanel {
         add(p);
 
         p = new JPanel(new FlowLayout());
-        JComboBox fontSize = new JComboBox(fontSizes);
+        fontFamily.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SystemConsole.setFontFamily((String) ((JComboBox)e.getSource()).getSelectedItem());
+                scheme.repaint();
+            }
+        });
+        fontFamily.setSelectedItem(SystemConsole.getFontFamily());
+
+        JLabel fontFamilyLabel = new JLabel(rbc.getString("ConsoleFontStyle"));
+        fontFamilyLabel.setLabelFor(fontFamily);
+
+        p.add(fontFamilyLabel);
+        p.add(fontFamily);
+
         fontSize.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SystemConsole.setFontSize((Integer) ((JComboBox)e.getSource()).getSelectedItem());
             }
         });
+        fontSize.setToolTipText(rbc.getString("ConsoleFontSize"));
         fontSize.setSelectedItem(SystemConsole.getFontSize());
-        JLabel fontSizeLabel = new JLabel(rbc.getString("ConsoleFontSize"));
-        fontSizeLabel.setLabelFor(fontSize);
         JLabel fontSizeUoM = new JLabel(rbc.getString("ConsoleFontSizeUoM"));
 
-        p.add(fontSizeLabel);
         p.add(fontSize);
         p.add(fontSizeUoM);
-        add(p);
 
-        p = new JPanel(new FlowLayout());
-        final JComboBox fontStyle = new JComboBox(fontStyleNames);
-        fontStyle.addActionListener(new ActionListener() {
+        fontStyleBold.setFont(fontStyleBold.getFont().deriveFont(Font.BOLD));
+        fontStyleBold.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SystemConsole.setFontStyle(fontStyles[((JComboBox)e.getSource()).getSelectedIndex()]);
-                scheme.repaint();
+                doFontStyle();
             }
         });
-        fontStyle.setSelectedIndex(SystemConsole.getFontStyle());
+        fontStyleBold.setToolTipText(rbc.getString("ConsoleFontStyleBold"));
+        fontStyleBold.setSelected((SystemConsole.getFontStyle()&Font.BOLD)==Font.BOLD);
+        p.add(fontStyleBold);
 
-        p.add(new JLabel(rbc.getString("ConsoleFontStyle")));
-        p.add(fontStyle);
+        fontStyleItalic.setFont(fontStyleItalic.getFont().deriveFont(Font.ITALIC));
+        fontStyleItalic.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                doFontStyle();
+            }
+        });
+        fontStyleItalic.setSelected((SystemConsole.getFontStyle()&Font.ITALIC)==Font.ITALIC);
+        fontStyleItalic.setToolTipText(rbc.getString("ConsoleFontStyleItalic"));
+        p.add(fontStyleItalic);
+
         add(p);
 
         p = new JPanel(new FlowLayout());
@@ -178,6 +201,13 @@ public class SystemConsoleConfigPanel extends JPanel {
         p.add(saveSize);
         add(p);
 
+    }
+
+    private static void doFontStyle() {
+        SystemConsole.setFontStyle(
+                (fontStyleBold.isSelected()?Font.BOLD:Font.PLAIN)|
+                (fontStyleItalic.isSelected()?Font.ITALIC:Font.PLAIN));
+        scheme.repaint();
     }
 
     public static void setPositionSaved(boolean position) {
