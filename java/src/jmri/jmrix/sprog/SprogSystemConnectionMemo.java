@@ -153,7 +153,11 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public SprogPowerManager getPowerManager() { return powerManager; }
     
-    public ThrottleManager getThrottleManager() { 
+    public ThrottleManager getThrottleManager() {
+        if (sprogMode==null) {
+            log.error("Sprog Mode not set");
+            return null;
+        }
         switch (sprogMode){
             case OPS :      return sprogCSThrottleManager;
             case SERVICE :  return sprogThrottleManager;
