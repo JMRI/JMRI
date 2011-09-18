@@ -963,6 +963,14 @@
     />
     </target>
   
+    <target name="remakedecoderindex"
+            depends="debug"
+            description="rebuild the decoder index into the preferences directory">
+        <antcall target="-run-jmri-application">
+             <param name="application.classname" value="jmri.jmrit.decoderdefn.DecoderIndexCreateAction" />
+        </antcall>
+    </target>
+
     <target name="mark" depends="init" 
             description="mark the Version.java file with today's date">
         <replaceregexp file="${source}/jmri/Version.java"
