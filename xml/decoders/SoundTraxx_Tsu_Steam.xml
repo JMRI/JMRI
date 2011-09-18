@@ -18,6 +18,7 @@
 
   <version author="Jack Shall lcrr@bellsouth.net" version="5" lastUpdated="20090903"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="6" lastUpdated="20100828"/>
+  <version author="Jack Shall lcrr@bellsouth.net" version="7" lastUpdated="20110818"/>
 
 <!-- This file contains the "retail version" Tsunami definitions for ALL steam locomotives			-->
 
@@ -30,6 +31,7 @@
 <!-- version 6	Removed default="0003" from CV17 to solve bug found by M. Fournier.					-->
 <!--			Moved custom Pane formats to external files.  Added Rule 17 mode to FX5/FX6.		-->
 <!--			Special thanks to Michael Mosher for his assistance.								-->
+<!-- version 7	Added the TSU-4664N Challenger (826601) decoder.									-->
 
 
 <!-- Decoder Model information follows -->
@@ -157,6 +159,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
+
+
       <model model="TSU-1000 Light Steam" numOuts="4" numFns="14" connector="other"
 		productID="826101" comment="Model 826101">
         <versionCV lowVersionID="64"/>
@@ -278,6 +282,25 @@
       </model>
       <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" connector="other"
 		productID="826121" comment="Model 826121">
+        <versionCV lowVersionID="64"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Injector"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+
+
+      <model model="TSU-4664N Challenger" numOuts="4" numFns="14" connector="other"
+		productID="826601" comment="Model 826601">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -3436,6 +3459,74 @@
         </enumVal>
         <label>Alternate Whistle Select</label>
         <comment>(Southern Steam) Show these whistles for the models (productID) listed below</comment>
+      </variable>
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(4-6-6-4 Challenger) Show these whistles for the models (productID) listed below"
+			include="826601"
+			tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="UP Challenger #3985">
+            <choice>UP Challenger #3985</choice>
+          </enumChoice>
+          <enumChoice choice="UP Big Boy #4018">
+            <choice>UP Big Boy #4018</choice>
+          </enumChoice>
+          <enumChoice choice="Norfolk &amp; Western #1218">
+            <choice>Norfolk &amp; Western #1218</choice>
+          </enumChoice>
+          <enumChoice choice="Southern Pacific 6-Chime">
+            <choice>Southern Pacific 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="USRA 6-chime">
+            <choice>USRA 6-chime</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW 5-Chime">
+            <choice>D&amp;RGW 5-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Santa Fe Freight">
+            <choice>Santa Fe Freight</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+        <comment>(4-6-6-4 Challenger) Show these whistles for the models (productID) listed below</comment>
+      </variable>
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(4-6-6-4 Challenger) Show these whistles for the models (productID) listed below"
+			include="826601"
+			tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="UP Challenger #3985">
+            <choice>UP Challenger #3985</choice>
+          </enumChoice>
+          <enumChoice choice="UP Big Boy #4018">
+            <choice>UP Big Boy #4018</choice>
+          </enumChoice>
+          <enumChoice choice="Norfolk &amp; Western #1218">
+            <choice>Norfolk &amp; Western #1218</choice>
+          </enumChoice>
+          <enumChoice choice="Southern Pacific 6-Chime">
+            <choice>Southern Pacific 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="USRA 6-chime">
+            <choice>USRA 6-chime</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW 5-Chime">
+            <choice>D&amp;RGW 5-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Santa Fe Freight">
+            <choice>Santa Fe Freight</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+        <comment>(4-6-6-4 Challenger) Show these whistles for the models (productID) listed below</comment>
       </variable>
 
 <!-- End Whistle Selection -->
