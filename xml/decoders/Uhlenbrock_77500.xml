@@ -13,10 +13,50 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="2.0" lastUpdated="20110820"/>
   <version author="Simon Ginsburg" version="1" lastUpdated="20051018"/>
+<!--
+  This version was based on the original version 1 by Simon Ginsburg and updated using the English version
+  of the Uhlenbrock manual - IntelliDriveDeluxe 77 500 (web link was dated 14.07.2011) - and the PIKO German
+  manual - PIKO Multiprotokolldecoder with 36120-90-7002 in the lower left of the last page (courtesy of
+  CHAMPEX-LINDEN Modellspielwaren, http://www.champex-linden.de/cl_pi_piko.htm).
+
+  The PIKO manual did not list CVs 108-113.
+
+  Changes for Version 2.0 - 20 Aug 11
+                          - added CVs 13, 54, 55, 96-99, 103, 104, 108-113, 115
+                          - revised CV 51
+-->
   <decoder>
-    <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="1" highVersionID="20">
-      <model model="77500"/>
+    <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik">
+      <model model="77500" maxMotorCurrent="3 A (peak 5 A)"
+           maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="G" connector="other">
+        <output name="1" label="Front light" maxcurrent="1 A" connection="other"/>
+        <output name="2" label="Rear light " maxcurrent="1 A" connection="other"/>
+        <output name="3" label="   A1      " maxcurrent="1 A" connection="other"/>
+        <output name="4" label="   A2      " maxcurrent="1 A" connection="other"/>
+        <output name="5" label="   A3      " maxcurrent="1 A" connection="other"/>
+        <output name="6" label="   A4      " maxcurrent="1 A" connection="other"/>
+        <output name="7" label="   A5      " maxcurrent="1 A" connection="other"/>
+        <output name="8" label="   A6      " maxcurrent="1 A" connection="other"/>
+        <output name="9" label="   A7      " maxcurrent="1 A" connection="other"/>
+        <output name="10" label="   A8      " maxcurrent="1 A" connection="other"/>
+        <size length="58.5" width="28" height="12" units="mm"/>
+      </model>
+      <model model="PIKO 3612x Series" maxMotorCurrent="3 A (peak 5 A)"
+           maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="G" connector="other">
+        <output name="1" label="Front light" maxcurrent="1 A" connection="other"/>
+        <output name="2" label="Rear light " maxcurrent="1 A" connection="other"/>
+        <output name="3" label="   A1      " maxcurrent="1 A" connection="other"/>
+        <output name="4" label="   A2      " maxcurrent="1 A" connection="other"/>
+        <output name="5" label="   A3      " maxcurrent="1 A" connection="other"/>
+        <output name="6" label="   A4      " maxcurrent="1 A" connection="other"/>
+        <output name="7" label="   A5      " maxcurrent="1 A" connection="other"/>
+        <output name="8" label="   A6      " maxcurrent="1 A" connection="other"/>
+        <output name="9" label="   A7      " maxcurrent="1 A" connection="other"/>
+        <output name="10" label="   A8      " maxcurrent="1 A" connection="other"/>
+        <size length="58.5" width="28" height="12" units="mm"/>
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -58,6 +98,71 @@
         <decVal/>
         <label>Manufacturer ID: </label>
       </variable>
+	<variable label="F1 Function Output in Analog Mode" CV="13" mask="XXXXXXXV" default="0"
+		item="Analog Mode Function Status - F1"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+	<variable label="F2 Function Output in Analog Mode" CV="13" mask="XXXXXXVX" default="0"
+		item="Analog Mode Function Status - F2"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+	<variable label="F3 Function Output in Analog Mode" CV="13" mask="XXXXXVXX" default="0"
+		item="Analog Mode Function Status - F3"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+	<variable label="F4 Function Output in Analog Mode" CV="13" mask="XXXXVXXX" default="0"
+		item="Analog Mode Function Status - F4"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+	<variable label="F5 Function Output in Analog Mode" CV="13" mask="XXXVXXXX" default="0"
+		item="Analog Mode Function Status - F5"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+	<variable label="F6 Function Output in Analog Mode" CV="13" mask="XXVXXXXX" default="0"
+		item="Analog Mode Function Status - F6"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+	<variable label="F7 Function Output in Analog Mode" CV="13" mask="XVXXXXXX" default="0"
+		item="Analog Mode Function Status - F7"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+	<variable label="F8 Function Output in Analog Mode" CV="13" mask="VXXXXXXX" default="0"
+		item="Analog Mode Function Status - F8"
+		tooltip="(On if value set) CV13">
+		<enumVal>
+			<enumChoice choice="Off"/>
+			<enumChoice choice="On"/>
+		</enumVal>
+	</variable>
+
       <variable label="Extended Address" CV="17" item="Long Address">
         <longAddressVal/>
         <label>Extended Address</label>
@@ -88,7 +193,7 @@
         </enumVal>
         <label>Locomotive Direction</label>
       </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+      <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14 speed step format">
             <choice>14 speed step format</choice>
@@ -687,8 +792,8 @@
           <enumChoice choice="via NMRA-DDC CV33-38">
             <choice>via NMRA-DDC CV33-38</choice>
           </enumChoice>
-          <enumChoice choice="LGB-Puls Sequence for external modules">
-            <choice>LGB-Puls Sequence for external modules</choice>
+          <enumChoice choice="LGB-Pulse Sequence for external modules">
+            <choice>LGB-Pulse Sequence for external modules</choice>
           </enumChoice>
         </enumVal>
         <label>A1 Output</label>
@@ -752,22 +857,22 @@
         <decVal min="0" max="49"/>
         <label>Function output dimming</label>
       </variable>
-      <variable label="Analog/Digitalswitch" CV="51" default="3">
+      <variable label="Configuration of analog operation" CV="51" default="3">
         <enumVal>
           <enumChoice choice="Not used">
             <choice>Not used</choice>
           </enumChoice>
-          <enumChoice choice="Digital operation">
-            <choice>Digital operation</choice>
+          <enumChoice choice="AC operation only">
+            <choice>AC operation only</choice>
           </enumChoice>
-          <enumChoice choice="Analog operation">
-            <choice>Analog operation</choice>
+          <enumChoice choice="DC operation only">
+            <choice>DC operation only</choice>
           </enumChoice>
           <enumChoice choice="Auto Detection">
             <choice>Auto Detection</choice>
           </enumChoice>
         </enumVal>
-        <label>Analog/Digitalswitch</label>
+        <label>Configuration of analog operation</label>
       </variable>
       <variable label="End braking speed" CV="52" default="30" tooltip="Valid when CV49 Bit 2=1 and Bit 7=1">
         <decVal/>
@@ -776,6 +881,14 @@
       <variable label="Repetition rate" CV="53" default="150" tooltip="Value * 53 um; useful values 70-255">
         <decVal/>
         <label>Repetition rate</label>
+      </variable>
+      <variable label="Motor regulation parameter" CV="54" default="2" tooltip="Increases Motor potential">
+        <decVal/>
+        <label>Motor regulation parameter</label>
+      </variable>
+      <variable label="Motor starting potential" CV="55" default="0">
+        <decVal/>
+        <label>Motor starting potential</label>
       </variable>
       <variable label="Control Setpoint" CV="56" default="64" tooltip="Lower Value if top speed to low, Raise Value if Speed at Step 1 too fast">
         <decVal/>
@@ -828,6 +941,364 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
+      <variable label="Special function 1 switched off when traveling forwards" CV="96" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 2 switched off when traveling forwards" CV="96" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 3 switched off when traveling forwards" CV="96" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 4 switched off when traveling forwards" CV="96" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 5 switched off when traveling forwards" CV="96" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 6 switched off when traveling forwards" CV="96" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 7 switched off when traveling forwards" CV="96" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 8 switched off when traveling forwards" CV="96" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 1 switched off when traveling backwards" CV="97" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 2 switched off when traveling backwards" CV="97" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 3 switched off when traveling backwards" CV="97" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 4 switched off when traveling backwards" CV="97" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 5 switched off when traveling backwards" CV="97" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 6 switched off when traveling backwards" CV="97" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 7 switched off when traveling backwards" CV="97" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 8 switched off when traveling backwards" CV="97" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 1 switched on for only a limited time" CV="98" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 2 switched on for only a limited time" CV="98" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 3 switched on for only a limited time" CV="98" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 4 switched on for only a limited time" CV="98" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 5 switched on for only a limited time" CV="98" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 6 switched on for only a limited time" CV="98" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 7 switched on for only a limited time" CV="98" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 8 switched on for only a limited time" CV="98" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function cycle time" CV="99" default="5" tooltip="If CV 98 is active">
+        <decVal/>
+        <label>Special function cycle time</label>
+      </variable>
+      <variable label="Start inertia" CV="103" default="1" tooltip="When the delay is activated by special function key">
+        <decVal max="63"/>
+        <label>Start inertia</label>
+      </variable>
+      <variable label="Braking delay" CV="104" default="1" tooltip="With INDUSI or Emergency Stop">
+        <decVal max="63"/>
+        <label>Braking delay</label>
+      </variable>
+      <variable label="Assignment of function key to switch output 5" CV="108" default="5">
+        <enumVal>
+          <enumChoice choice="F0"/>
+          <enumChoice choice="F1"/>
+          <enumChoice choice="F2"/>
+          <enumChoice choice="F3"/>
+          <enumChoice choice="F4"/>
+          <enumChoice choice="F5"/>
+          <enumChoice choice="F6"/>
+          <enumChoice choice="F7"/>
+          <enumChoice choice="F8"/>
+          <enumChoice choice="F9"/>
+          <enumChoice choice="F10"/>
+          <enumChoice choice="F11"/>
+          <enumChoice choice="F12"/>
+          <enumChoice choice="F13"/>
+          <enumChoice choice="F14"/>
+          <enumChoice choice="F15"/>
+          <enumChoice choice="F16"/>
+          <enumChoice choice="F17"/>
+          <enumChoice choice="F18"/>
+          <enumChoice choice="F19"/>
+          <enumChoice choice="F20"/>
+          <enumChoice choice="F21"/>
+          <enumChoice choice="F22"/>
+          <enumChoice choice="F23"/>
+          <enumChoice choice="F24"/>
+          <enumChoice choice="F25"/>
+          <enumChoice choice="F26"/>
+          <enumChoice choice="F27"/>
+          <enumChoice choice="F28"/>
+          <enumChoice choice="not used"/>
+          <enumChoice choice="Driving bit"/>
+        </enumVal>
+      </variable>
+      <variable label="Assignment of function key to switch output 6" CV="109" default="6">
+        <enumVal>
+          <enumChoice choice="F0"/>
+          <enumChoice choice="F1"/>
+          <enumChoice choice="F2"/>
+          <enumChoice choice="F3"/>
+          <enumChoice choice="F4"/>
+          <enumChoice choice="F5"/>
+          <enumChoice choice="F6"/>
+          <enumChoice choice="F7"/>
+          <enumChoice choice="F8"/>
+          <enumChoice choice="F9"/>
+          <enumChoice choice="F10"/>
+          <enumChoice choice="F11"/>
+          <enumChoice choice="F12"/>
+          <enumChoice choice="F13"/>
+          <enumChoice choice="F14"/>
+          <enumChoice choice="F15"/>
+          <enumChoice choice="F16"/>
+          <enumChoice choice="F17"/>
+          <enumChoice choice="F18"/>
+          <enumChoice choice="F19"/>
+          <enumChoice choice="F20"/>
+          <enumChoice choice="F21"/>
+          <enumChoice choice="F22"/>
+          <enumChoice choice="F23"/>
+          <enumChoice choice="F24"/>
+          <enumChoice choice="F25"/>
+          <enumChoice choice="F26"/>
+          <enumChoice choice="F27"/>
+          <enumChoice choice="F28"/>
+          <enumChoice choice="not used"/>
+          <enumChoice choice="Driving bit"/>
+        </enumVal>
+      </variable>
+      <variable label="Assignment of function key to switch output 7" CV="110" default="7">
+        <enumVal>
+          <enumChoice choice="F0"/>
+          <enumChoice choice="F1"/>
+          <enumChoice choice="F2"/>
+          <enumChoice choice="F3"/>
+          <enumChoice choice="F4"/>
+          <enumChoice choice="F5"/>
+          <enumChoice choice="F6"/>
+          <enumChoice choice="F7"/>
+          <enumChoice choice="F8"/>
+          <enumChoice choice="F9"/>
+          <enumChoice choice="F10"/>
+          <enumChoice choice="F11"/>
+          <enumChoice choice="F12"/>
+          <enumChoice choice="F13"/>
+          <enumChoice choice="F14"/>
+          <enumChoice choice="F15"/>
+          <enumChoice choice="F16"/>
+          <enumChoice choice="F17"/>
+          <enumChoice choice="F18"/>
+          <enumChoice choice="F19"/>
+          <enumChoice choice="F20"/>
+          <enumChoice choice="F21"/>
+          <enumChoice choice="F22"/>
+          <enumChoice choice="F23"/>
+          <enumChoice choice="F24"/>
+          <enumChoice choice="F25"/>
+          <enumChoice choice="F26"/>
+          <enumChoice choice="F27"/>
+          <enumChoice choice="F28"/>
+          <enumChoice choice="not used"/>
+          <enumChoice choice="Driving bit"/>
+        </enumVal>
+      </variable>
+      <variable label="Assignment of function key to switch output 8" CV="111" default="8">
+        <enumVal>
+          <enumChoice choice="F0"/>
+          <enumChoice choice="F1"/>
+          <enumChoice choice="F2"/>
+          <enumChoice choice="F3"/>
+          <enumChoice choice="F4"/>
+          <enumChoice choice="F5"/>
+          <enumChoice choice="F6"/>
+          <enumChoice choice="F7"/>
+          <enumChoice choice="F8"/>
+          <enumChoice choice="F9"/>
+          <enumChoice choice="F10"/>
+          <enumChoice choice="F11"/>
+          <enumChoice choice="F12"/>
+          <enumChoice choice="F13"/>
+          <enumChoice choice="F14"/>
+          <enumChoice choice="F15"/>
+          <enumChoice choice="F16"/>
+          <enumChoice choice="F17"/>
+          <enumChoice choice="F18"/>
+          <enumChoice choice="F19"/>
+          <enumChoice choice="F20"/>
+          <enumChoice choice="F21"/>
+          <enumChoice choice="F22"/>
+          <enumChoice choice="F23"/>
+          <enumChoice choice="F24"/>
+          <enumChoice choice="F25"/>
+          <enumChoice choice="F26"/>
+          <enumChoice choice="F27"/>
+          <enumChoice choice="F28"/>
+          <enumChoice choice="not used"/>
+          <enumChoice choice="Driving bit"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 1 dimmed" CV="112" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 2 dimmed" CV="112" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 3 dimmed" CV="112" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 4 dimmed" CV="112" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 5 dimmed" CV="112" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 6 dimmed" CV="112" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 7 dimmed" CV="112" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Special function 8 dimmed" CV="112" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="Dimming value" CV="113" default="32" tooltip="(0=off, 63=100%">
+        <decVal max="63"/>
+        <label>Dimming value</label>
+      </variable>
+      <variable label="LISSY" CV="115" default="0">
+        <enumVal>
+          <enumChoice choice="Connector for SUSI Sound module"/>
+          <enumChoice choice="SUSI connector 1 for LISSY transmitter"/>
+          <enumChoice choice="SUSI connector 2 for LISSY transmitter"/>
+          <enumChoice choice="SUSI connector 3 for LISSY transmitter"/>
+          <enumChoice choice="SUSI connector 4 for LISSY transmitter"/>
+        </enumVal>
+        <label>LISSY</label>
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="59" default="1"/>
@@ -838,19 +1309,9 @@
     <row>
     <display item="Select Function remapping"/>
     <separator/>
-<!--    <column>
-		<label label="" />
-        <label label="Front light output" />
-        <label label="Back light output" />
-        <label label="Special function output 1" />
-        <label label="Special function output 2" />
-        <label label="Switching speed" />
-        <label label="Momentum" />
-		<label label="" />
-	</column> -->
     <column>
-      <label label="                             FL(f)">
-        <label>                             FL(f)</label>
+      <label label="                                                 FL(f)">
+        <label>                                                 FL(f)</label>
       </label>
       <display item="FL(f) controls front light output" format="checkbox" label="Front light output" tooltip="CV 33, bit 0">
         <label>Front light output</label>
@@ -864,11 +1325,11 @@
       <display item="FL(f) controls Special function output 2" format="checkbox" label="Special function output 2" tooltip="CV 33, bit 3">
         <label>Special function output 2</label>
       </display>
-      <display item="FL(f) controls Special function output 3" format="checkbox" label="Special function output 1" tooltip="CV 33, bit 4">
-        <label>Special function output 1</label>
+      <display item="FL(f) controls Special function output 3" format="checkbox" label="Special function output 3" tooltip="CV 33, bit 4">
+        <label>Special function output 3</label>
       </display>
-      <display item="FL(f) controls Special function output 4" format="checkbox" label="Special function output 2" tooltip="CV 33, bit 5">
-        <label>Special function output 2</label>
+      <display item="FL(f) controls Special function output 4" format="checkbox" label="Special function output 4" tooltip="CV 33, bit 5">
+        <label>Special function output 4</label>
       </display>
       <display item="FL(f) controls switching speed" format="checkbox" label="Switching speed" tooltip="CV 33, bit 6">
         <label>Switching speed</label>
@@ -1039,15 +1500,14 @@
       <display item="Data Format Motorola"/>
       <display item="Lightplugs"/>
       <display item="Braking with"/>
-      <label label="">
-        <label/>
-      </label>
     </column>
     <column>
-      <display item="Analog/Digitalswitch"/>
+      <display item="Configuration of analog operation"/>
       <display item="Function output dimming"/>
       <display item="End braking speed"/>
       <display item="Repetition rate"/>
+      <display item="Motor regulation parameter"/>
+      <display item="Motor starting potential"/>
       <display item="Control Setpoint"/>
       <display item="Step Response Characteristic"/>
       <display item="Initial Step Response"/>
@@ -1057,6 +1517,71 @@
       <display item="Offset Register"/>
       <display item="Page Register"/>
     </column>
+    <column>
+      <display item="Start inertia"/>
+      <display item="Braking delay"/>
+      <label label=""/>
+      <display item="LISSY"/>
+    </column>
     <name>Uhlenbrock</name>
+  </pane>
+  <pane name="Uhlenbrock Special Functions">
+    <column>
+      <label label="Special functions switched off"/>
+      <label label="   when traveling forwards"/>
+      <separator/>
+      <display item="Special function 1 switched off when traveling forwards" label="Special function 1"/>
+      <display item="Special function 2 switched off when traveling forwards" label="Special function 2"/>
+      <display item="Special function 3 switched off when traveling forwards" label="Special function 3"/>
+      <display item="Special function 4 switched off when traveling forwards" label="Special function 4"/>
+      <display item="Special function 5 switched off when traveling forwards" label="Special function 5"/>
+      <display item="Special function 6 switched off when traveling forwards" label="Special function 6"/>
+      <display item="Special function 7 switched off when traveling forwards" label="Special function 7"/>
+      <display item="Special function 8 switched off when traveling forwards" label="Special function 8"/>
+      <label label=" "/>
+      <label label="Special functions switched off"/>
+      <label label="   when traveling backwards"/>
+      <separator/>
+      <display item="Special function 1 switched off when traveling backwards" label="Special function 1"/>
+      <display item="Special function 2 switched off when traveling backwards" label="Special function 2"/>
+      <display item="Special function 3 switched off when traveling backwards" label="Special function 3"/>
+      <display item="Special function 4 switched off when traveling backwards" label="Special function 4"/>
+      <display item="Special function 5 switched off when traveling backwards" label="Special function 5"/>
+      <display item="Special function 6 switched off when traveling backwards" label="Special function 6"/>
+      <display item="Special function 7 switched off when traveling backwards" label="Special function 7"/>
+      <display item="Special function 8 switched off when traveling backwards" label="Special function 8"/>
+      <label label=""/>
+    </column>
+    <column>
+      <label label="Special functions switched on"/>
+      <label label="   for only a limited time"/>
+      <separator/>
+      <display item="Special function 1 switched on for only a limited time" label="Special function 1"/>
+      <display item="Special function 2 switched on for only a limited time" label="Special function 2"/>
+      <display item="Special function 3 switched on for only a limited time" label="Special function 3"/>
+      <display item="Special function 4 switched on for only a limited time" label="Special function 4"/>
+      <display item="Special function 5 switched on for only a limited time" label="Special function 5"/>
+      <display item="Special function 6 switched on for only a limited time" label="Special function 6"/>
+      <display item="Special function 7 switched on for only a limited time" label="Special function 7"/>
+      <display item="Special function 8 switched on for only a limited time" label="Special function 8"/>
+      <label label=" "/>
+      <display item="Special function cycle time"/>
+    </column>
+    <column>
+      <display item="Assignment of function key to switch output 5"/>
+      <display item="Assignment of function key to switch output 6"/>
+      <display item="Assignment of function key to switch output 7"/>
+      <display item="Assignment of function key to switch output 8"/>
+      <label label=" "/>
+      <display item="Special function 1 dimmed"/>
+      <display item="Special function 2 dimmed"/>
+      <display item="Special function 3 dimmed"/>
+      <display item="Special function 4 dimmed"/>
+      <display item="Special function 5 dimmed"/>
+      <display item="Special function 6 dimmed"/>
+      <display item="Special function 7 dimmed"/>
+      <display item="Special function 8 dimmed"/>
+      <display item="Dimming value"/>
+    </column>
   </pane>
 </decoder-config>

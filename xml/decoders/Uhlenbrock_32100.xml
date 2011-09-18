@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- $Id: Uhlenbrock_32100.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110820"/>
+<!--
+  This version was based on the English versions of the Uhlenbrock manuals - IntelliSoundModule 32 100
+  and IntelliSoundModule 32 400 (web links dated 23.06.2006) - and the PIKO German manual -
+  36193 PIKO Soundmodul with 36193-90-7000 in the lower left of the last page (courtesy of
+  CHAMPEX-LINDEN Modellspielwaren, http://www.champex-linden.de/cl_pi_piko.htm).
+
+  This decoder XML is meant to be used with the "Custom" programmer format as very few of the
+  SUSI variables have standard NMRA analogues.
+
+  Initial Version 1.0 - 20 Aug 11 
+
+-->
+  <decoder>
+    <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik">
+      <model model="32100">
+        <size length="20.8" width="10.8" height="5" units="mm"/>
+      </model>
+      <model model="32400">
+        <size length="20.8" width="10.8" height="5" units="mm"/>
+      </model>
+      <model model="PIKO 3619x Series">
+        <size length="25" width="15" height="5" units="mm"/>
+      </model>
+    </family>
+
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+
+    <variables>
+      <variable label="SUSI-range" CV="897" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached. CV897">
+        <enumVal>
+          <enumChoice choice="Not used">
+            <choice>Not used</choice>
+          </enumChoice>
+          <enumChoice choice="Range I (CVs 900-939)">
+            <choice>Range I (CVs 900-939)</choice>
+          </enumChoice>
+          <enumChoice choice="Range II (CVs 940-979)">
+            <choice>Range II (CVs 940-979)</choice>
+          </enumChoice>
+          <enumChoice choice="Range III (CVs 980-1019)">
+            <choice>Range III (CVs 980-1019)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>SUSI-range</label>
+      </variable>
+
+   <!-- Range I variables -->
+
+      <variable label="Range I Manufacturer ID" CV="900" readOnly="yes" item="Manufacturer" default="85" tooltip="CV900">
+        <decVal/>
+        <label>Range I Manufacturer ID</label>
+      </variable>
+      <variable label="Range I Software version" CV="901" readOnly="yes" item="Decoder Version" tooltip="CV901">
+        <decVal/>
+        <label>Range I Software version</label>
+      </variable>
+      <variable label="Range I Sound Volume" CV="902" default="255" tooltip="0-255 CV902">
+        <decVal/>
+        <label>Range I Software version</label>
+      </variable>
+                      <!-- Speculating that CV 903 is F0, not really clear from manuals -->
+      <variable label="Range I F0 activated sound" CV="903" default="0" tooltip="CV903">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F0 activated sound</label>
+      </variable>
+      <variable label="Range I F1 activated sound" CV="904" default="3" tooltip="CV904">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F1 activated sound</label>
+      </variable>
+      <variable label="Range I F2 activated sound" CV="905" default="2" tooltip="CV905">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F2 activated sound</label>
+      </variable>
+      <variable label="Range I F3 activated sound" CV="906" default="4" tooltip="CV906">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F3 activated sound</label>
+      </variable>
+      <variable label="Range I F4 activated sound" CV="907" default="1" tooltip="CV907">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F4 activated sound</label>
+      </variable>
+      <variable label="Range I F5 activated sound" CV="905" default="0" tooltip="CV905">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F5 activated sound</label>
+      </variable>
+      <variable label="Range I F6 activated sound" CV="909" default="0" tooltip="CV909">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F6 activated sound</label>
+      </variable>
+      <variable label="Range I F7 activated sound" CV="910" default="0" tooltip="CV910">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F7 activated sound</label>
+      </variable>
+      <variable label="Range I F8 activated sound" CV="911" default="8" tooltip="CV911">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F8 activated sound</label>
+      </variable>
+      <variable label="Range I F9 activated sound" CV="912" default="0" tooltip="CV912">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F9 activated sound</label>
+      </variable>
+      <variable label="Range I F10 activated sound" CV="913" default="0" tooltip="CV913">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F10 activated sound</label>
+      </variable>
+      <variable label="Range I F11 activated sound" CV="914" default="0" tooltip="CV914">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F11 activated sound</label>
+      </variable>
+      <variable label="Range I F12 activated sound" CV="915" default="0" tooltip="CV915">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Bell or Horn 1">
+            <choice>Bell or Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle or Horn 2">
+            <choice>Whistle or Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Operating sounds of the loco">
+            <choice>Operating sounds of the loco</choice>
+          </enumChoice>
+          <enumChoice choice="Uncoupling or door alarm">
+            <choice>Uncoupling or door alarm</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="All sounds on/off">
+            <choice>All sounds on/off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Range I F12 activated sound</label>
+      </variable>
+      <variable label="Range I Chuff Control" CV="920" mask="XXXXXXXV" default="1" tooltip="CV920 bit 0">
+        <enumVal>
+          <enumChoice choice="Wheel sensor only"/>
+          <enumChoice choice="Decoder data and wheel sensor"/>
+        </enumVal>
+      </variable>
+      <variable label="Range I End step" CV="920" mask="VXXXXXXX" default="1" tooltip="CV920 bit 7">
+        <enumVal>
+          <enumChoice choice="Always on"/>
+          <enumChoice choice="Off when sound is off"/>
+        </enumVal>
+      </variable>
+      <variable label="Range I Trigger level with load increase" CV="921" default="5" tooltip="0-128 128=tone change is off CV921">
+        <decVal max="128"/>
+        <label>Range I Trigger level with load increase</label>
+      </variable>
+      <variable label="Range I Trigger level with load decrease" CV="922" default="5" tooltip="0-128 128=tone change is off CV922">
+        <decVal max="128"/>
+        <label>Range I Trigger level with load decrease</label>
+      </variable>
+      <variable label="Range I Trigger level for cooling fan in E-lok" CV="923" default="128" tooltip="0-255 255=cooling fan sound off CV923">
+        <decVal/>
+        <label>Range I Trigger level for cooling fan in E-lok</label>
+      </variable>
+      <variable label="Range I Trigger level for brake screeching" CV="924" default="27" tooltip="0-255 255=brake screeching sound off CV924">
+        <decVal/>
+        <label>Range I Trigger level for brake screeching</label>
+      </variable>
+      <variable label="Range I Sensitivity to load change" CV="925" default="4" tooltip="1=reacts rapidly to 8=reacts slowly CV925">
+        <decVal max="8"/>
+        <label>Range I Sensitivity to load change</label>
+      </variable>
+      <variable label="Range I Time between two chuffs at max speed" CV="938" default="0" tooltip="CV938">
+        <decVal/>
+        <label>Range I  Time between two chuffs at max speed</label>
+      </variable>
+      <variable label="Range I Time between two chuffs at speed step 1" CV="939" default="255" tooltip="CV939">
+        <decVal/>
+        <label>Range I  Time between two chuffs at speed step 1</label>
+      </variable>
+    </variables>
+  </decoder>
+
+  <pane name="SUSI Address Range I">
+    <column>
+      <display item="SUSI-range" />
+      <label label=""/>
+      <display item="Range I Manufacturer ID" label="Manufacturer ID"/>
+      <display item="Range I " label=""/>
+      <display item="Range I Software version" label="Software version"/>
+    </column>
+    <column>
+      <display item="Range I Sound Volume" label="Sound Volume"/>
+      <label label=""/>
+      <display item="Range I F0 activated sound" label="F0 activated sound"/>
+      <display item="Range I F1 activated sound" label="F1 activated sound"/>
+      <display item="Range I F2 activated sound" label="F2 activated sound"/>
+      <display item="Range I F3 activated sound" label="F3 activated sound"/>
+      <display item="Range I F4 activated sound" label="F4 activated sound"/>
+      <display item="Range I F5 activated sound" label="F5 activated sound"/>
+      <display item="Range I F6 activated sound" label="F6 activated sound"/>
+      <display item="Range I F7 activated sound" label="F7 activated sound"/>
+      <display item="Range I F8 activated sound" label="F8 activated sound"/>
+      <display item="Range I F9 activated sound" label="F9 activated sound"/>
+      <display item="Range I F10 activated sound" label="F10 activated sound"/>
+      <display item="Range I F11 activated sound" label="F11 activated sound"/>
+      <display item="Range I F12 activated sound" label="F12 activated sound"/>
+    </column>
+    <column>
+      <display item="Range I Chuff Control" label="Chuff Control"/>
+      <display item="Range I End step" label="End step"/>
+      <display item="Range I Trigger level with load increase" label="Trigger level with load increase"/>
+      <display item="Range I Trigger level with load decrease" label="Trigger level with load decrease"/>
+      <display item="Range I Trigger level for cooling fan in E-lok" label="Trigger level for cooling fan in E-lok"/>
+      <display item="Range I Trigger level for brake screeching" label="Trigger level for brake screeching"/>
+      <display item="Range I Sensitivity to load change" label="Sensitivity to load change"/>
+      <display item="Range I Time between two chuffs at max speed" label="Time between two chuffs at max speed"/>
+      <display item="Range I Time between two chuffs at speed step 1" label="Time between two chuffs at speed step 1"/>
+    </column>
+  </pane>
+</decoder-config>
