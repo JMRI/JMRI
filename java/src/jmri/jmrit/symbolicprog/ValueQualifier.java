@@ -39,9 +39,14 @@ public class ValueQualifier extends AbstractQualifier {
 
         this.test = Test.decode(relation);
         this.value = value;
+        this.watchedVal = watchedVal;
         
-        setWatchedAvailable(availableStateFromObject(watchedVal.getValueObject()));
+        setWatchedAvailable(currentDesiredState());
 
+    }
+
+    boolean currentDesiredState() {
+        return availableStateFromObject(watchedVal.getValueObject());
     }
 
     protected boolean availableStateFromObject(Object o) {
@@ -68,5 +73,5 @@ public class ValueQualifier extends AbstractQualifier {
     }
 
     int value;
-    
+    VariableValue watchedVal;
 }
