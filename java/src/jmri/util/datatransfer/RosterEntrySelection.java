@@ -61,7 +61,6 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      * Create a transferable with a list of RosterEntries.
      *
      * @param rosterEntries - an ArrayList of RosterEntries
-     * @return
      */
     public static RosterEntrySelection createRosterEntrySelection(ArrayList<RosterEntry> rosterEntries) {
         ArrayList<String> Ids = new ArrayList(rosterEntries.size());
@@ -96,7 +95,6 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      *
      * @param t - a Transferable object. This should be a RosterEntrySelection,
      * but for simplicity, will accept any Transferable object.
-     * @return
      * @throws UnsupportedFlavorException
      * @throws IOException
      */
