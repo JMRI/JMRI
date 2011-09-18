@@ -753,18 +753,33 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
     
     void immediateReadMetadata(String name, Element item) throws JmriException {
-        
+
         if (useAttributes) {
             item.setAttribute("value", Metadata.getBySystemName(name));
+            if (name.equals("JMRIVERSION")) {
+                item.setAttribute("major", Metadata.getBySystemName("JMRIVERMAJOR"));
+                item.setAttribute("minor", Metadata.getBySystemName("JMRIVERMINOR"));
+                item.setAttribute("test", Metadata.getBySystemName("JMRIVERTEST"));
+            }
         } else {
-        Element v = item.getChild("value");
-        
-        // Start read: ensure value element
-        if (v == null) item.addContent(v = new Element("value"));
-        
-        // set result
-        v.setText("" + Metadata.getBySystemName(name));
-    }
+            Element v = item.getChild("value");
+
+            // Start read: ensure value element
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
+
+            // set result
+            v.setText("" + Metadata.getBySystemName(name));
+            if (name.equals("JMRIVERSION")) {
+                item.addContent(v = new Element("major"));
+                v.setText("" + Metadata.getBySystemName("JMRIVERMAJOR"));
+                item.addContent(v = new Element("minor"));
+                v.setText("" + Metadata.getBySystemName("JMRIVERMINOR"));
+                item.addContent(v = new Element("test"));
+                v.setText("" + Metadata.getBySystemName("JMRIVERTEST"));
+            }
+        }
     }
     
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();

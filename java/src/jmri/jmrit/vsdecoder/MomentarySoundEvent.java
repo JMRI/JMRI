@@ -114,6 +114,7 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 	// We know it's momentary, or this class wouldn't have been constructed.
 	button.setText(el.getAttributeValue("label"));
 
+	/*
 	for (ButtonTrigger bt : button_trigger_list.values()) {
 	    log.debug("Button Trigger: " + bt.getName());
 	    if (bt.getTarget() != null)
@@ -125,13 +126,15 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
 	    else
 		log.debug("  Target Action: null");
 
-	} 
+       	} 
+	*/
 
+	/*
 	MouseListener [] listeners = button.getListeners(MouseListener.class);
 	for (MouseListener l : listeners) {
 	    log.debug("Listener: " + l.toString());
 	}
-
+	*/
     }  // end setXml()
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MomentarySoundEvent.class.getName());

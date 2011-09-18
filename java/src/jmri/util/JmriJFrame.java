@@ -514,7 +514,11 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void componentResized(java.awt.event.ComponentEvent e) {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
-            p.setWindowSize(windowFrameRef, super.getPreferredSize());
+            //Windows sets the size parameter when resizing a frame, while Unix uses the preferredsize
+            if(System.getProperty("os.name").toLowerCase().contains("windows"))
+                p.setWindowSize(windowFrameRef, super.getSize());
+            else 
+                p.setWindowSize(windowFrameRef, super.getPreferredSize());
         }
     }
     
@@ -549,8 +553,12 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         if (p != null) {
             if (reuseFrameSavedPosition)
                 p.setWindowLocation(windowFrameRef, this.getLocation());
-            if (reuseFrameSavedSized)
-                p.setWindowSize(windowFrameRef, this.getSize());
+            if (reuseFrameSavedSized){
+                if(System.getProperty("os.name").toLowerCase().contains("windows"))
+                    p.setWindowSize(windowFrameRef, super.getSize());
+                else 
+                    p.setWindowSize(windowFrameRef, super.getPreferredSize());
+            }
         }
         log.debug("dispose "+getTitle());
         if (task != null) {

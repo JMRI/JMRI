@@ -418,7 +418,7 @@
             <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
             </xs:element>
-            <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="1" >
+            <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
               <xs:annotation><xs:documentation>
               Qualifies whether this variable will appear in the interface, depending
               on the value in other variables.
@@ -485,7 +485,7 @@
                   </xs:complexType>
                 </xs:element>
               </xs:choice>
-              <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="1" >
+              <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
                 <xs:annotation><xs:documentation>
                 Qualifies whether this variable will appear in the interface, depending
                 on the value in other variables.

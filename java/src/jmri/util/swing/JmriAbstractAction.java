@@ -102,10 +102,18 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     JmriPanel cache = null;
     
     //A crude method to set a parameter in a given window when loading from the xml file
-    public void setParameter(String paramter, String value){
+    public void setParameter(String parameter, String value) {
     
     }
     
+    // A method to allow named parameters to be passed in
+    // Note that if value is a String, setParameter(String, String) needs to be
+    // implemented (for reasons I do not understand jmri.util.swing.GuiUtilBase
+    // will not call this method with a String parameter for value)
+    public void setParameter(String parameter, Object value) {
+
+    }
+
     abstract public JmriPanel makePanel();
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriAbstractAction.class.getName());

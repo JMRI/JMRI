@@ -30,9 +30,9 @@
 
 <mapID target="html.tools.Sensors_Debounce" url="html/tools/Sensors.shtml#Debounce"/>
 
-<mapID target="manual.Getting_Started_What is DCC" url="manual/Getting_Started.shtml#What is DCC"/>
-
 <mapID target="manual.Main_LocoNet_Sounds" url="manual/Main_LocoNet.shtml#Sounds"/>
+
+<mapID target="manual.Ops_Locations_setCars_Top" url="manual/Ops_Locations_setCars.shtml#Top"/>
 
 <mapID target="html.tools.consisttool.ConsistTool" url="html/tools/consisttool/ConsistTool.shtml"/>
 
@@ -45,6 +45,10 @@
 <mapID target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame" url="package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml"/>
 
 <mapID target="manual.Basic_Programming_Read Data" url="manual/Basic_Programming.shtml#Read Data"/>
+
+<mapID target="manual.Ops_Trains_preview" url="manual/Ops_Trains.shtml#preview"/>
+
+<mapID target="manual.Ops_Trains_Timetable" url="manual/Ops_Trains_Timetable.shtml"/>
 
 <mapID target="manual.Main_LocoNet_LocoIOProgrammer" url="manual/Main_LocoNet.shtml#LocoIOProgrammer"/>
 
@@ -110,7 +114,7 @@
 
 <mapID target="html.hardware.tchtech.index" url="html/hardware/tchtech/index.shtml"/>
 
-<mapID target="manual.Ops_SelectRoads" url="manual/Ops_SelectRoads.shtml"/>
+<mapID target="manual.Ops_TrainsModify_PreviewTop" url="manual/Ops_TrainsModify.shtml#PreviewTop"/>
 
 <mapID target="package.jmri.jmrix.ecos.swing.packetgen.PacketGenFrame" url="package/jmri/jmrix/ecos/swing/packetgen/PacketGenFrame.shtml"/>
 
@@ -128,6 +132,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_automation" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#automation"/>
 
+<mapID target="package.apps.gui3.dp3.DecoderPro3_menubar" url="package/apps/gui3/dp3/DecoderPro3.shtml#menubar"/>
+
 <mapID target="manual.Programmer_OpsMode" url="manual/Programmer_OpsMode.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame" url="package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml"/>
@@ -138,6 +144,8 @@
 
 <mapID target="html.doc.Technical.Eclipse" url="html/doc/Technical/Eclipse.shtml"/>
 
+<mapID target="manual.Ops_Settings_OptionsMenu" url="manual/Ops_Settings.shtml#OptionsMenu"/>
+
 <mapID target="html.hardware.loconet.LocoBuffer" url="html/hardware/loconet/LocoBuffer.shtml"/>
 
 <mapID target="html.tools.Audio" url="html/tools/Audio.shtml"/>
@@ -145,6 +153,8 @@
 <mapID target="manual.Main_RPS_TrackingFrame" url="manual/Main_RPS.shtml#TrackingFrame"/>
 
 <mapID target="package.jmri.jmrit.display.MultiSensorIconFrame" url="package/jmri/jmrit/display/MultiSensorIconFrame.shtml"/>
+
+<mapID target="manual.Ops_Trains_switch" url="manual/Ops_Trains.shtml#switch"/>
 
 <mapID target="html.tools.fastclock.LocoNetClock" url="html/tools/fastclock/LocoNetClock.shtml"/>
 
@@ -252,6 +262,8 @@
 
 <mapID target="manual.Start_DCC_Systems_Top" url="manual/Start_DCC_Systems.shtml#Top"/>
 
+<mapID target="manual.Ops_TrainsModify_Preview" url="manual/Ops_TrainsModify.shtml#Preview"/>
+
 <mapID target="package.jmri.jmrit.logix.Warrant" url="package/jmri/jmrit/logix/Warrant.shtml"/>
 
 <mapID target="manual.Main_RPS_ReceiverControl" url="manual/Main_RPS.shtml#ReceiverControl"/>
@@ -309,8 +321,6 @@
 <mapID target="package.jmri.jmrit.display.MultiSensorIconDefaultsFrame" url="package/jmri/jmrit/display/MultiSensorIconDefaultsFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml"/>
-
-<mapID target="manual.Getting_Started" url="manual/Getting_Started.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.ItemPalette" url="package/jmri/jmrit/display/ItemPalette.shtml"/>
 
@@ -449,6 +459,8 @@
 <mapID target="package.jmri.jmrit.display.RpsIcon" url="package/jmri/jmrit/display/RpsIcon.shtml"/>
 
 <mapID target="package.jmri.jmrix.cmri.serial.serialmon.SerialMonFrame" url="package/jmri/jmrix/cmri/serial/serialmon/SerialMonFrame.shtml"/>
+
+<mapID target="manual.Ops_Trains_Build" url="manual/Ops_Trains.shtml#Build"/>
 
 <mapID target="html.tools.throttle.AdvancedThrottleControl_wii" url="html/tools/throttle/AdvancedThrottleControl.shtml#wii"/>
 
@@ -618,8 +630,6 @@
 
 <mapID target="manual.Ops_Start" url="manual/Ops_Start.shtml"/>
 
-<mapID target="manual.Ops_TrainsPrintOpt" url="manual/Ops_TrainsPrintOpt.shtml"/>
-
 <mapID target="package.jmri.jmrit.logix.OBlockEdit" url="package/jmri/jmrit/logix/OBlockEdit.shtml"/>
 
 <mapID target="html.apps.DecoderPro.MoreInfo" url="html/apps/DecoderPro/MoreInfo.shtml"/>
@@ -670,8 +680,6 @@
 
 <mapID target="manual.Main_NCE_EditMacro" url="manual/Main_NCE.shtml#EditMacro"/>
 
-<mapID target="manual.Getting_Started_Preferences" url="manual/Getting_Started.shtml#Preferences"/>
-
 <mapID target="package.jmri.jmrit.messager.MessageFrame" url="package/jmri/jmrit/messager/MessageFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CarLoad" url="package/jmri/jmrit/operations/Operations.shtml#CarLoad"/>
@@ -679,6 +687,8 @@
 <mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl_NCETurnoutLockFeature" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml#NCETurnoutLockFeature"/>
 
 <mapID target="manual.Main_Main" url="manual/Main_Main.shtml"/>
+
+<mapID target="manual.Ops_TrainsModify_Print" url="manual/Ops_TrainsModify.shtml#Print"/>
 
 <mapID target="html.apps.LocoTools.index_locomon" url="html/apps/LocoTools/index.shtml#locomon"/>
 
@@ -743,6 +753,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_TrainShowCarTypesServiced" url="package/jmri/jmrit/operations/Operations.shtml#TrainShowCarTypesServiced"/>
 
 <mapID target="manual.Start_DCC_Top" url="manual/Start_DCC.shtml#Top"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_PrintingManifests" url="package/jmri/jmrit/operations/Operations.shtml#PrintingManifests"/>
 
 <mapID target="manual.Start_DCC_Hardware" url="manual/Start_DCC_Hardware.shtml"/>
 
@@ -846,6 +858,8 @@
 
 <mapID target="manual.Ops_AddRoutes" url="manual/Ops_AddRoutes.shtml"/>
 
+<mapID target="manual.Ops_Settings_Options" url="manual/Ops_Settings.shtml#Options"/>
+
 <mapID target="html.tools.throttle.ThrottleChapter2_WinConfig" url="html/tools/throttle/ThrottleChapter2.shtml#WinConfig"/>
 
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
@@ -922,7 +936,11 @@
 
 <mapID target="html.tools.signaling.SimpleSignalExample_setup" url="html/tools/signaling/SimpleSignalExample.shtml#setup"/>
 
+<mapID target="package.apps.gui3.dp3.DecoderPro3_toolbar" url="package/apps/gui3/dp3/DecoderPro3.shtml#toolbar"/>
+
 <mapID target="manual.Comp_FMap_Top" url="manual/Comp_FMap.shtml#Top"/>
+
+<mapID target="manual.Ops_Locations_Modify_Trains" url="manual/Ops_Locations_Modify_Trains.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame" url="package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml"/>
 
@@ -994,6 +1012,8 @@
 
 <mapID target="html.hardware.can.scripting" url="html/hardware/can/scripting.shtml"/>
 
+<mapID target="manual.~$in_Panels" url="manual/~$in_Panels.shtml"/>
+
 <mapID target="html.doc.Technical.Ant" url="html/doc/Technical/Ant.shtml"/>
 
 <mapID target="html.hardware.nce.NCE_troubleShoot" url="html/hardware/nce/NCE.shtml#troubleShoot"/>
@@ -1002,11 +1022,11 @@
 
 <mapID target="manual.Ops_Engines_Top" url="manual/Ops_Engines.shtml#Top"/>
 
+<mapID target="manual.Ops_Locations_byCar_Top" url="manual/Ops_Locations_byCar.shtml#Top"/>
+
 <mapID target="html.tools.signaling.DefineNewAspects" url="html/tools/signaling/DefineNewAspects.shtml"/>
 
 <mapID target="html.doc.Technical.XmlSchema" url="html/doc/Technical/XmlSchema.shtml"/>
-
-<mapID target="manual.Getting_Started_DCC Hardware" url="manual/Getting_Started.shtml#DCC Hardware"/>
 
 <mapID target="html.doc.Technical.XmlEditors" url="html/doc/Technical/XmlEditors.shtml"/>
 
@@ -1044,8 +1064,6 @@
 
 <mapID target="html.hardware.tmcc.index" url="html/hardware/tmcc/index.shtml"/>
 
-<mapID target="manual.Ops_SelectRoads_Top" url="manual/Ops_SelectRoads.shtml#Top"/>
-
 <mapID target="html.apps.DecoderPro.FnMapping" url="html/apps/DecoderPro/FnMapping.shtml"/>
 
 <mapID target="html.apps.LocoTools.index_locoio" url="html/apps/LocoTools/index.shtml#locoio"/>
@@ -1069,6 +1087,8 @@
 <mapID target="html.hardware.loconet.DS54" url="html/hardware/loconet/DS54.shtml"/>
 
 <mapID target="html.tools.Sensors" url="html/tools/Sensors.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_CarTypeLengthWeight" url="package/jmri/jmrit/operations/Operations.shtml#CarTypeLengthWeight"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CabooseFredHazardous" url="package/jmri/jmrit/operations/Operations.shtml#CabooseFredHazardous"/>
 
@@ -1110,6 +1130,8 @@
 
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml"/>
 
+<mapID target="manual.Ops_Trains_switchList" url="manual/Ops_Trains.shtml#switchList"/>
+
 <mapID target="manual.Main_LocoNet_Packet" url="manual/Main_LocoNet.shtml#Packet"/>
 
 <mapID target="manual.Ops_CarAttributes_Top" url="manual/Ops_CarAttributes.shtml#Top"/>
@@ -1118,11 +1140,11 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_RouteComment" url="package/jmri/jmrit/operations/Operations.shtml#RouteComment"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Kernel" url="package/jmri/jmrit/operations/Operations.shtml#Kernel"/>
+
 <mapID target="html.tools.signaling.SimpleSignalExample_definesignals" url="html/tools/signaling/SimpleSignalExample.shtml#definesignals"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml"/>
-
-<mapID target="package.jmri.jmrit.operations.Operations_Kernel" url="package/jmri/jmrit/operations/Operations.shtml#Kernel"/>
 
 <mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.shtml"/>
 
@@ -1137,6 +1159,10 @@
 <mapID target="package.jmri.jmrit.beantable.BlockTable" url="package/jmri/jmrit/beantable/BlockTable.shtml"/>
 
 <mapID target="html.hardware.loconet.PR3" url="html/hardware/loconet/PR3.shtml"/>
+
+<mapID target="manual.Ops_Trains_PrintPreview" url="manual/Ops_Trains.shtml#PrintPreview"/>
+
+<mapID target="manual.Ops_TrainsModify_PrintTop" url="manual/Ops_TrainsModify.shtml#PrintTop"/>
 
 <mapID target="html.hardware.loconet.PR2" url="html/hardware/loconet/PR2.shtml"/>
 
@@ -1240,9 +1266,11 @@
 
 <mapID target="html.tools.throttle.ThrottleMain" url="html/tools/throttle/ThrottleMain.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Locomotives" url="package/jmri/jmrit/operations/Operations.shtml#Locomotives"/>
+
 <mapID target="html.tools.throttle.ThrottlesPreferencesPane" url="html/tools/throttle/ThrottlesPreferencesPane.shtml"/>
 
-<mapID target="package.jmri.jmrit.operations.Operations_Locomotives" url="package/jmri/jmrit/operations/Operations.shtml#Locomotives"/>
+<mapID target="manual.Ops_Trains_buildbtn" url="manual/Ops_Trains.shtml#buildbtn"/>
 
 <mapID target="package.jmri.jmrit.beantable.MemoryAddEdit" url="package/jmri/jmrit/beantable/MemoryAddEdit.shtml"/>
 
@@ -1304,7 +1332,7 @@
 
 <mapID target="package.jmri.jmrix.maple.assignment.ListFrame" url="package/jmri/jmrix/maple/assignment/ListFrame.shtml"/>
 
-<mapID target="manual.Getting_Started_DCC systems" url="manual/Getting_Started.shtml#DCC systems"/>
+<mapID target="manual.Ops_Locations_Modify_Trains_Top" url="manual/Ops_Locations_Modify_Trains.shtml#Top"/>
 
 <mapID target="package.jmri.jmrix.secsi.serialmon.SerialMonFrame" url="package/jmri/jmrix/secsi/serialmon/SerialMonFrame.shtml"/>
 
@@ -1313,8 +1341,6 @@
 <mapID target="manual.Main_CMRI" url="manual/Main_CMRI.shtml"/>
 
 <mapID target="manual.Main_FastClockSetup" url="manual/Main_FastClockSetup.shtml"/>
-
-<mapID target="manual.Ops_SelectTrainsRoutes_Top" url="manual/Ops_SelectTrainsRoutes.shtml#Top"/>
 
 <mapID target="package.apps.PanelPro.PanelPro" url="package/apps/PanelPro/PanelPro.shtml"/>
 
@@ -1442,6 +1468,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_SetCars" url="package/jmri/jmrit/operations/Operations.shtml#SetCars"/>
 
+<mapID target="manual.Ops_Locations_setCars" url="manual/Ops_Locations_setCars.shtml"/>
+
 <mapID target="manual.Main_LocoNet_SE8CProgrammer" url="manual/Main_LocoNet.shtml#SE8CProgrammer"/>
 
 <mapID target="manual.Main_PRICOM" url="manual/Main_PRICOM.shtml"/>
@@ -1505,6 +1533,8 @@
 <mapID target="manual.Ops_PrintOptions_Top" url="manual/Ops_PrintOptions.shtml#Top"/>
 
 <mapID target="html.tools.Routes" url="html/tools/Routes.shtml"/>
+
+<mapID target="manual.Ops_Trains_BuildOptions" url="manual/Ops_Trains_BuildOptions.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_SliderBar" url="html/tools/throttle/ThrottleChapter2.shtml#SliderBar"/>
 
@@ -1610,6 +1640,8 @@
 
 <mapID target="html.hardware.sprog.SPROG" url="html/hardware/sprog/SPROG.shtml"/>
 
+<mapID target="manual.Ops_Locations_byCar" url="manual/Ops_Locations_byCar.shtml"/>
+
 <mapID target="package.apps.SoundPro.SoundPro" url="package/apps/SoundPro/SoundPro.shtml"/>
 
 <mapID target="manual.index" url="manual/index.shtml"/>
@@ -1629,8 +1661,6 @@
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_arequests" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ChangeTrackType" url="package/jmri/jmrit/operations/Operations.shtml#ChangeTrackType"/>
-
-<mapID target="manual.Getting_Started_Start" url="manual/Getting_Started.shtml#Start"/>
 
 <mapID target="html.hardware.nce.NCE_vianetwork" url="html/hardware/nce/NCE.shtml#vianetwork"/>
 
@@ -1710,9 +1740,9 @@
 
 <mapID target="manual.Main_Help_Top" url="manual/Main_Help.shtml#Top"/>
 
-<mapID target="manual.Main_Throttle_AddressPanel" url="manual/Main_Throttle.shtml#AddressPanel"/>
+<mapID target="manual.Ops_Trains_BuildOptions_Top" url="manual/Ops_Trains_BuildOptions.shtml#Top"/>
 
-<mapID target="manual.Ops_SelectTrainsRoutes" url="manual/Ops_SelectTrainsRoutes.shtml"/>
+<mapID target="manual.Main_Throttle_AddressPanel" url="manual/Main_Throttle.shtml#AddressPanel"/>
 
 <mapID target="package.jmri.jmrit.display.SlipTurnoutIcon" url="package/jmri/jmrit/display/SlipTurnoutIcon.shtml"/>
 

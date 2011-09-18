@@ -41,19 +41,25 @@ public class NetworkServer {
    *  established, pass resulting Socket to handleConnection.
    */
   public void listen() {
-    int i=0;
-    try {
-      listener = new ServerSocket(port);
-      log.info(" Server starts on address: "+InetAddress.getLocalHost().getHostAddress()+" port "+port); 
-      notifyServerStarted();  
-      Socket server;
-      while((i++ < maxConnections) || (maxConnections == 0)) {
-        server = listener.accept();
-        handleConnection(server);
-      }
-    } catch (IOException ioe) {
-      log.error("IOException", ioe);
-    }
+	  int i=0;
+	  try {
+		  listener = new ServerSocket(port);
+		  String lh;
+		  try {
+			  lh = InetAddress.getLocalHost().getHostAddress();
+		  } catch (java.net.UnknownHostException uhe) {
+			  lh = "(unknown local host)";
+		  }
+		  log.info("Server starts on address: "+ lh +" port "+port); 
+		  notifyServerStarted();  
+		  Socket server;
+		  while((i++ < maxConnections) || (maxConnections == 0)) {
+			  server = listener.accept();
+			  handleConnection(server);
+		  }
+	  } catch (IOException ioe) {
+		  log.error("IOException", ioe);
+	  }
   }
 
   /** This is the method that provides the behavior to the

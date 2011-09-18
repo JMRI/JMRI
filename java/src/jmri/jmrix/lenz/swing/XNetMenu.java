@@ -36,11 +36,11 @@ public class XNetMenu extends JMenu {
         add(new jmri.jmrix.lenz.swing.stackmon.StackMonAction(rb.getString("MenuItemCSDatabaseManager"),memo));
         add(new jmri.jmrix.lenz.swing.li101.LI101Action(rb.getString("MenuItemLI101ConfigurationManager"),memo));
         add(new jmri.jmrix.lenz.swing.liusb.LIUSBConfigAction(rb.getString("MenuItemLIUSBConfigurationManager"),memo));
-        add(new jmri.jmrix.lenz.lz100.LZ100Action(rb.getString("MenuItemLZ100ConfigurationManager"),memo));
-        add(new jmri.jmrix.lenz.lzv100.LZV100Action(rb.getString("MenuItemLZV100ConfigurationManager"),memo));
+        add(new jmri.jmrix.lenz.swing.lz100.LZ100Action(rb.getString("MenuItemLZ100ConfigurationManager"),memo));
+        add(new jmri.jmrix.lenz.swing.lzv100.LZV100Action(rb.getString("MenuItemLZV100ConfigurationManager"),memo));
         // The LV102 configuration works with OpsModeProgramming, so does not
         // need the system connection memo.
-        add(new jmri.jmrix.lenz.lv102.LV102Action(rb.getString("MenuItemLV102ConfigurationManager")));
+        add(new jmri.jmrix.lenz.swing.lv102.LV102Action(rb.getString("MenuItemLV102ConfigurationManager")));
 
     }
 

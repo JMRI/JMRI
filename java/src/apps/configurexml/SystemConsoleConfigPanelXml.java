@@ -6,10 +6,11 @@ import apps.SystemConsole;
 import apps.SystemConsoleConfigPanel;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import jmri.util.swing.FontComboUtil;
 import org.jdom.Element;
 
 /**
- * Handle XML persistance of SystemConsoleConfigPanel objects.
+ * Handle XML persistence of SystemConsoleConfigPanel objects.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -44,6 +45,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         Element e = new Element("console");
         e.setAttribute("class", this.getClass().getName());
         e.setAttribute("scheme", ""+SystemConsole.getScheme());
+        e.setAttribute("fontfamily", ""+SystemConsole.getFontFamily());
         e.setAttribute("fontsize", ""+SystemConsole.getFontSize());
         e.setAttribute("fontstyle", ""+SystemConsole.getFontStyle());
         e.setAttribute("wrapstyle", ""+SystemConsole.getWrapStyle());
@@ -67,7 +69,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
     /**
      * Object should be loaded after basic GUI constructed
-     * @return true to defer loadng
+     * @return true to defer loading
      * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      */
@@ -89,6 +91,20 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         try {
             if ((value = e.getAttributeValue("scheme"))!=null) {
                 SystemConsole.setScheme(Integer.parseInt(value));
+            }
+
+            if ((value = e.getAttributeValue("fontfamily"))!=null) {
+                
+                // Check if stored font family exists
+                if (!FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(value)) {
+
+                    // No - reset to default
+                    log.warn("Stored console font is not compatible (" + value + ") - reset to default (Monospaced)");
+                    value = "Monospaced";
+                }
+
+                // Finally, set the font family
+                SystemConsole.setFontFamily(value);
             }
 
             if ((value = e.getAttributeValue("fontsize"))!=null) {
@@ -155,6 +171,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemConsoleConfigPanelXml.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemConsoleConfigPanelXml.class.getName());
 
 }

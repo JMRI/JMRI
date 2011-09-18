@@ -37,7 +37,7 @@ import org.jdom.ProcessingInstruction;
  * <P>
  * The roster is stored in a "Roster Index", which can be read or written.
  * Each individual entry (once stored) contains a filename which can
- * be used to retreive the locomotive information for that roster entry.
+ * be used to retrieve the locomotive information for that roster entry.
  * Note that the RosterEntry information is duplicated in both the Roster
  * (stored in the roster.xml file) and in the specific file for the entry.
  *
@@ -810,28 +810,128 @@ public class Roster extends XmlFile {
     static String _rosterGroupPrefix = "RosterGroup:";
     
     public String getRosterGroupPrefix(){ return _rosterGroupPrefix; }
-    
-    public void addRosterGroupList(String str){
-        for(int i=0; i<_rosterGroupList.size(); i++){
-            if (_rosterGroupList.get(i).toString().equals(str))
-                return;
+
+    /**
+     * Add a roster group, notifying all listeners of the change
+     * <p>
+     * This method fires the property change notification "RosterGroupAdded"
+     *
+     * @param str The group to be added
+     */
+    public void addRosterGroupList(String str) {
+        addRosterGroupList(str, true);
+    }
+
+    /**
+     * Add a roster group and optionally notify all listeners
+     *
+     * renameRosterGroupList(old, new) calls this method with notify=false
+     * The public version of this method calls this method with notify=true
+     * This method fires the property change notification "RosterGroupAdded"
+     *
+     * @param str The group to be added
+     * @param notify Flag to fire a property change
+     */
+    private void addRosterGroupList(String str, boolean notify) {
+        if (_rosterGroupList.contains(str)) {
+            return;
         }
         _rosterGroupList.add(str);
-        firePropertyChange("RosterGroupAdded", null, str);
+        Collections.sort(_rosterGroupList);
+        if (notify) {
+            firePropertyChange("RosterGroupAdded", null, str);
+        }
     }
-    
+
+    /**
+     * Delete a roster group, notifying all listeners of the change
+     * <p>
+     * This method fires the property change notification "RosterGroupDeleted"
+     *
+     * @param str The group to be deleted
+     */
     public void delRosterGroupList(String str) {
+        delRosterGroupList(str, true);
+    }
+
+    /**
+     * Delete a roster group and optionally notify all listeners
+     * <p>
+     * renameRosterGroupList(old, new) calls this method with notify=false
+     * The public version of this method calls this method with notify=true
+     * This method fires the property change notification "RosterGroupDeleted"
+     *
+     * @param str The group to be deleted
+     * @param notify Flag to fire a property change
+     */
+    private void delRosterGroupList(String str, boolean notify) {
         _rosterGroupList.remove(str);
         // if deleting active group, set active group to all entries
         if (str.equals(_rostergroup)) {
             setRosterGroup(null);
         }
-        str=_rosterGroupPrefix+str;
+        str = _rosterGroupPrefix + str;
         List<RosterEntry> groupentries = getEntriesWithAttributeKey(str);
-        for(int i=0; i<groupentries.size();i++){
+        for (int i = 0; i < groupentries.size(); i++) {
             groupentries.get(i).deleteAttribute(str);
         }
-        firePropertyChange("RosterGroupRemoved", str, null);
+        if (notify) {
+            firePropertyChange("RosterGroupRemoved", str, null);
+        }
+    }
+
+    /**
+     * Copy a roster group, adding every entry in the roster group to the new
+     * group.
+     * <p>
+     * If a roster group with the target name already exists, this method
+     * silently fails to rename the roster group. The GUI method
+     * CopyRosterGroupAction.performAction() catches this error and informs
+     * the user. This method fires the property change "RosterGroupAdded".
+     *
+     * @param oldName Name of the roster group to be copied
+     * @param newName Name of the new roster group
+     * @see RenameRosterGroupAction
+     */
+    public void copyRosterGroupList(String oldName, String newName) {
+        if (_rosterGroupList.contains(newName)) {
+            return;
+        }
+        String oldGroup = _rosterGroupPrefix + oldName;
+        String newGroup = _rosterGroupPrefix + newName;
+        List<RosterEntry> groupEntries = getEntriesWithAttributeKey(oldGroup);
+        for (RosterEntry re : groupEntries) {
+            re.putAttribute(newGroup, "yes");
+        }
+        addRosterGroupList(newName, true);
+    }
+
+    /**
+     * Rename a roster group, while keeping every entry in the roster group
+     * <p>
+     * If a roster group with the target name already exists, this method
+     * silently fails to rename the roster group. The GUI method
+     * RenameRosterGroupAction.performAction() catches this error and informs
+     * the user. This method fires the property change "RosterGroupRenamed".
+     *
+     * @param oldName Name of the roster group to be renamed
+     * @param newName New name for the roster group
+     * @see RenameRosterGroupAction
+     */
+    public void renameRosterGroupList(String oldName, String newName) {
+        if (_rosterGroupList.contains(newName)) {
+            return;
+        }
+        String oldGroup = _rosterGroupPrefix + oldName;
+        String newGroup = _rosterGroupPrefix + newName;
+        List<RosterEntry> groupEntries = getEntriesWithAttributeKey(oldGroup);
+        for (RosterEntry re : groupEntries) {
+            re.putAttribute(newGroup, "yes");
+            re.deleteAttribute(oldGroup);
+        }
+        addRosterGroupList(newName, false); // do not fire property change
+        delRosterGroupList(oldName, false); // do not fire property change
+        firePropertyChange("RosterGroupRenamed", oldName, newName);
     }
 
     // What does this do? Should this return the group at i?

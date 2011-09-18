@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE pane SYSTEM "xml/DTD/programmer-config.dtd">
 
-   <!-- version author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20100819"	-->
+   <!-- version  author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20100819"	-->
+   <!-- version  author="Mark Waters mark16w-jmri@yahoo.co.uk" version="3" lastUpdated="20110910"	-->
 
    <!-- Version 2 - added additional lighting options to functions 3 and 4	-->
+   <!-- Version 3 - added output 7 and 8 behavior 					-->
+
 
 <pane name="Lights">
     <column>
@@ -173,7 +176,9 @@
         <display item="Output 8 options"/>
         <label label=" "/>
         <display item="Output 9 effect generated"/>
+        <display item="Output 9 behavior"/>
         <label label=" "/>
         <display item="Output 10 effect generated"/>
+        <display item="Output 10 behavior"/>
     </column>
 </pane>

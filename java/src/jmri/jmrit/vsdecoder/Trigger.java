@@ -28,8 +28,8 @@ abstract public class Trigger implements PropertyChangeListener {
 
     
 
-    public enum TriggerType { BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT }
-    public enum TargetAction { PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, NOTHING }
+    public enum TriggerType { BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT, THROTTLE }
+    public enum TargetAction { PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING }
     public enum CompareType { EQ, GT, LT, GTE, LTE }
     public enum CompareValueType { INT, FLOAT }
 

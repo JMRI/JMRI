@@ -152,7 +152,7 @@
         <pathelement location="${target}/" />  <!-- last to check for name collisions -->
     </path>
   
-    <target name="check-requirements" 
+    <target name="check-ant-requirements" 
             description="check build system requirements">
       <antversion property="ant-version-ok" atleast="1.8.0" />
       <antversion property="ant-version-actual" />
@@ -174,8 +174,8 @@
         <mkdir dir="${genjavasrcdir}/jmri/jmrix/srcp/parser"/>
 
 	<filterset id="release-information"
-		   begintoken="${"
-		   endtoken="}">
+		   begintoken="@@"
+		   endtoken="@@">
 	    <filter token="release.major"          value="${release.major}" />
 	    <filter token="release.minor"          value="${release.minor}" />
 	    <filter token="release.build"          value="${release.build}" />
@@ -408,7 +408,7 @@
 
     <target name="warnings" 
             description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar"
-            depends="check-requirements, clean, init, copyfiles, compile-generated-source">
+            depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${source}" />
         </antcall>
@@ -416,7 +416,7 @@
 
     <target name="tests-warnings" 
             description="compile test sources with warning generation on; requires Ant 1.8 and ecj.jar"
-            depends="check-requirements, clean, init, copyfiles, warnings">
+            depends="check-ant-requirements, clean, init, copyfiles, warnings">
         <antcall target="-ecj-compile-internal">
           <param name="java.source.directory" value="${test}" />
         </antcall>
@@ -963,6 +963,14 @@
     />
     </target>
   
+    <target name="remakedecoderindex"
+            depends="debug"
+            description="rebuild the decoder index into the preferences directory">
+        <antcall target="-run-jmri-application">
+             <param name="application.classname" value="jmri.jmrit.decoderdefn.DecoderIndexCreateAction" />
+        </antcall>
+    </target>
+
     <target name="mark" depends="init" 
             description="mark the Version.java file with today's date">
         <replaceregexp file="${source}/jmri/Version.java"

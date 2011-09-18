@@ -235,6 +235,9 @@ public class SoundEvent implements PropertyChangeListener {
 	    log.warn("Don't have StringTriggers yet...");
 	    t = null;
 	    return;
+	case THROTTLE:
+	    t = new ThrottleTrigger(te.getAttributeValue("name"));
+	    break;
 	case NONE:
 	default:
 	    break;
@@ -243,9 +246,9 @@ public class SoundEvent implements PropertyChangeListener {
 	log.debug("Building trigger " + t.getName());
 	t.setXml(te);
 	trigger_list.put(te.getAttributeValue("name"), t);
-	log.debug("target name " + t.getTargetName() + " sound " + parent.getSound(t.getTargetName()));
+	//log.debug("target name " + t.getTargetName() + " sound " + parent.getSound(t.getTargetName()));
 	t.setTarget(parent.getSound(t.getTargetName()));
-	log.debug("target " + t.getTarget());
+	//log.debug("target " + t.getTarget());
        
 	if (t.getTarget() == null) {
 	    // If the target is missing, set up a do-nothing operation.
@@ -256,44 +259,61 @@ public class SoundEvent implements PropertyChangeListener {
 	switch(t.getTargetAction()) {
 	case PLAY:
 	case FADEIN:
-	    log.debug("PLAY");
-		t.setCallback(new TriggerListener() {
-			public void takeAction() { t.getTarget().play(); }
-			public void takeAction(int i) {}
-		    });
+	    //log.debug("PLAY");
+	    t.setCallback(new TriggerListener() {
+		    public void takeAction() { t.getTarget().play(); }
+		    public void takeAction(int i) {}
+		    public void takeAction(float f) { } // do nothing
+		});
 		break;
 	case LOOP:
-		log.debug("LOOP");
-		t.setCallback(new TriggerListener() {
-			public void takeAction() { t.getTarget().loop(); }
-			public void takeAction(int i) {}
-		    });
-		break;
+	    //log.debug("LOOP");
+	    t.setCallback(new TriggerListener() {
+		    public void takeAction() { t.getTarget().loop(); }
+		    public void takeAction(int i) {}
+		    public void takeAction(float f) { } // do nothing
+		});
+	    break;
 	case STOP:
 	case FADEOUT:
-	    log.debug("STOP");
+	    //log.debug("STOP");
 	    t.setCallback(new TriggerListener() {
 		    public void takeAction() { t.getTarget().stop(); }
 		    public void takeAction(int i) {}
+		    public void takeAction(float f) { } // do nothing
 		});
 	    break;
 	case NOTCH:
-	    log.debug("NOTCH");
+	    //log.debug("NOTCH");
 	    log.debug("making callback t " + t + " target " + t.getTarget());
 	    t.setCallback(new TriggerListener() {
 		    public void takeAction(int i) {
-			log.debug("Notch Trigger Listener. t = " + t + " Target = " + t.getTarget() + " notch = " + i);
+			//log.debug("Notch Trigger Listener. t = " + t + " Target = " + t.getTarget() + " notch = " + i);
 			t.getTarget().changeNotch(i); 
 		    }
 		    public void takeAction() {}
+		    public void takeAction(float f) { } // do nothing
+		});
+	    break;
+	case CHANGE:
+	    //log.debug("CHANGE");
+	    log.debug("making callback t " + t + " target " + t.getTarget());
+	    t.setCallback(new TriggerListener() {
+		    public void takeAction() { } // do nothing
+		    public void takeAction(int i) { } // do nothing
+		    public void takeAction(float f) {
+			//log.debug("Throttle Trigger Listener. t = " + t + " Target = " + t.getTarget() + " value = " + f);
+			t.getTarget().changeThrottle(f);
+		    }
 		});
 	    break;
 	case NOTHING:
 	    // Used for when the target sound is missing.
-	    log.debug("NOTHING");
+	    //log.debug("NOTHING");
 	    t.setCallback(new TriggerListener() {
 		    public void takeAction() { } // do nothing
 		    public void takeAction(int i) { } // do nothing
+		    public void takeAction(float f) { } // do nothing
 		});
 	    break;
 	default:

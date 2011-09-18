@@ -60,6 +60,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // Enable proper snapping of JSliders
         jmri.util.swing.SliderSnap.init();
 
+        // Prepare font lists
+        prepareFontLists();
+
         // install shutdown manager
         InstanceManager.setShutDownManager(
                 new jmri.managers.DefaultShutDownManager());
@@ -919,6 +922,17 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         } catch (SecurityException ex) {
             log.warn("Unable to set application name " + ex);
         }
+    }
+
+    private void prepareFontLists() {
+        // Prepare font lists
+        new Thread(new Runnable() {
+            public void run() {
+                log.debug("Prepare font lists...");
+                jmri.util.swing.FontComboUtil.prepareFontLists();
+                log.debug("...Font lists built");
+            }
+        }).start();
     }
 
     public void propertyChange(PropertyChangeEvent ev){

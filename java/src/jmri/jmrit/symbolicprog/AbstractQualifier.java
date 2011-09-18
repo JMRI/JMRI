@@ -40,6 +40,7 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
     
     abstract protected boolean availableStateFromObject(Object o);
     abstract protected boolean availableStateFromValue(int value);
+    abstract boolean currentDesiredState();
 
     VariableValue qualifiedVal;
     

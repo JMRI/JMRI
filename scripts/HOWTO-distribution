@@ -1,11 +1,11 @@
 This is the HOWTO file to make a complete SourceForge downloadable
 distribution.  ($Revision$)
 
-You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
+If you're building locally:
+    You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
 
-Start with a development directory that is at (or at least near) the HEAD of SVN
-
-Make sure SVN is up-to-date:
+================================================================================
+First, we merge in as much tentative content as possible to the SVN trunk.
 
 ( ) If it's a new year, update copyright dates (done for 2010):
     * build.xml (2) in the javadoc instructions
@@ -16,23 +16,24 @@ Make sure SVN is up-to-date:
         bbedit WinInstallFiles/InstallJMRI.nsi
     * Linux scripts
         bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
+    * Mac apps (two mentions)
+        bbedit MacOSXapps/V1/*.app/Contents/Info.plist
 
-( ) Bring in patches to date, including decoders
+( ) Bring in all possible sf.net patches, including decoders
 
-( ) Check if the decoder definitions have changed since the previous tag
+( ) Check if the decoder definitions have changed since the previous release (almost always true)
     If so, remake the decoder index. 
         Delete old index from preferences
-        Run program in your development dir, remake index
-        Make sure file is saved with Unix line ends.
+        ant remakedecoderindex
+        Change file to Unix line ends.
         Diff w file in SVN tree as a check.
         Copy the new file from preferences into the SVN tree.
-        Update the version number by hand, adding 2.
+        Update the internal version number by hand, adding 2.
         Commit.
     
 ( ) Update the help/en/Acknowledgements.shtml help page with any recent changes
 
-( ) Check for uncommitted changes in the web site directory, 
-    these can end up in help, xml, etc
+( ) Commit any changes in your local web site directory, these can end up in help, xml, etc
 
 ( ) Remake the help index  (need a command line approach, so can put in ant!)
     ./JHelpDev.csh   (See the doc page for setup)
@@ -51,34 +52,41 @@ Make sure SVN is up-to-date:
     
     Commit any changed files.
 
-( ) Confirm that all the above changes have been committed back to SVN
+( ) Confirm that all the above changes have been committed back to SVN trunk
 
 ( ) This is a good place to check that the JavaDocs generate without errors.
     If you fix anything, commit it back.
 
 ( ) This is a good place to check that the decoder XSLT transforms work
+        cd xml/XSLT
+        ant
     If you fix anything, commit it back.
 
-( ) Start the release by copying the current HEAD in SVN:
 
-    svn cp ${SVNREPO}/trunk/jmri ${SVNREPO}/releases/Release-2-13-1
+================================================================================
+Second, we build the release branch:
 
-    Move to the releases/ part of the SVN tree on your local machine
+( ) Start the release by copying the current HEAD onto a new SVN "release branch"
+
+    svn cp ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.1
+
+( ) Move to the releases/ part of the SVN tree on your local machine
     and update to get the release copy:
     
-    cd ../../releases
-    svn update Release-2-13-1
+    cd ../../branches/jmri/releases
+    svn update 2.13.1
     
-    
-    
-    
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.1")
+
+    ( to move later changes, svn merge -c <changeset#>   ^/trunk/jmri )
+
 ================================================================================
-In the next section, we need to work through automation of version number values
-================================================================================
+Third, we do any necessary release-specific updates.
+    (we need to work through automation of version number values)
 
 ( ) Check that the Version.java file has been updated (both version
     number in two places and copyright date), has released=true set
-    and has been committed to CVS
+    and has been committed to SVN on the branch
     
 ( ) Edit the version number into the top help page:
     bbedit help/en/index.html
@@ -86,22 +94,14 @@ In the next section, we need to work through automation of version number values
 ( ) Edit the "manifest" file in your development directory, and make sure that the
     version number is correct in four places (this file comes from java/, not scripts/)
         
-( ) Run "ant clean alltest" just to be sure
-
-( ) Update the MacOS X bundle version numbers:
+( ) Update the MacOS X bundle version numbers (three version refs):
     
     cd scripts
     bbedit MacOSXapps/V1/*.app/Contents/Info.plist
-    (three versions, two copyright years)
 
     sed -i '' s/2.11.8/2.11.9/g MacOSXapps/V1/*.app/Contents/Info.plist
 
-( ) Update copyright date in Windows installer script
-    (note version number and output filename now determined via dist.xml)
-
-    bbedit WinInstallFiles/InstallJMRI.nsi
-    
-( ) Update version numbers (and copyright dates) in Linux scripts
+( ) Update version numbers in Linux scripts
 
     bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
@@ -113,17 +113,18 @@ In the next section, we need to work through automation of version number values
     <property name="release.minor" value="13" />
     <property name="release.build" value="1" />
 
-====================================================================================
+( ) run "ant alltests"; make sure they all pass
     
-    Tests before the actual build:
-    
-    ( ) run "ant alltests"; make sure they all pass
-    
-    ( ) run "ant decoderpro"; check for no startup errors, right version, help index present and working OK.
+( ) run "ant decoderpro"; check for no startup errors, right version, help index present and working OK.
+
+( ) Commit back; if using CI builds, this will trigger them
+
+( ) Announce final file set to jmridevelopers with a download URL like:
+
+    http://jmri.svn.sourceforge.net/svnroot/jmri/branches/jmri/releases/2.13.1/
         
 ====================================================================================
-
-    Start the actual build!
+Start the actual build! (This is for local builds; CI builds will already be running)
 
 ( ) ant -Dnsis.home="" packages
 	
@@ -138,7 +139,10 @@ In the next section, we need to work through automation of version number values
 ( ) Put the Linux, Mac OS X and Windows files where developers can
     take a quick look, send an email, and WAIT FOR SOME REPLIES
     
-( ) Upload the Linux, Mac OS X and Windows files
+====================================================================================
+Final release steps:
+
+( ) Upload the Linux, Mac OS X and Windows files to sourceforge
      
     Manually:
     scp JMRI.2.11.8.tgz jacobsen,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
@@ -184,8 +188,6 @@ In the next section, we need to work through automation of version number values
     Subject is "Test version 2.11.8 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
-
-    You'll get a moderation message via email; handle it.
 
 ( ) News item from JMRI sourceforge page, Develop tab
 

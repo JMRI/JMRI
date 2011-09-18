@@ -31,6 +31,9 @@ public class WatchingLabel extends javax.swing.JLabel  {
             public void componentResized(java.awt.event.ComponentEvent e) {}
         
         });
+        
+        // set initial status
+        self.setVisible(c.isVisible());
     }
     
     javax.swing.JComponent comp;

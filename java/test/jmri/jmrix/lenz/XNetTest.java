@@ -62,8 +62,6 @@ public class XNetTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(jmri.jmrix.lenz.lz100.LZ100Test.suite());
-            suite.addTest(jmri.jmrix.lenz.lzv100.LZV100Test.suite());
             suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
         }
         

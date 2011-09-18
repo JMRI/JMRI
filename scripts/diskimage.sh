@@ -50,7 +50,10 @@ rm -f temp.dmg $IMAGEFILE
 
 if [ "$SYSTEM" = "MACOSX" ]
 then
-    hdiutil create -size 100MB -fs HFS+ -layout SPUD -volname "JMRI ${REL_VER}" "$IMAGEFILE"
+    jmrisize=`du -ms "$INPUT" | awk '{print $1}'`
+    imagesize=`expr $jmrisize + 5`
+    
+    hdiutil create -size ${imagesize}MB -fs HFS+ -layout SPUD -volname "JMRI ${REL_VER}" "$IMAGEFILE"
     hdiutil attach "$IMAGEFILE" -mountpoint "$tmpdir" -nobrowse
     trap '[ "$EJECTED" = 0 ] && hdiutil eject "$IMAGEFILE"' 0
 else

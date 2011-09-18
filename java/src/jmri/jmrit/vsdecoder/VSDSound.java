@@ -20,6 +20,9 @@ package jmri.jmrit.vsdecoder;
  */
 
 import org.jdom.Element;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 abstract public class VSDSound {
     
@@ -32,9 +35,12 @@ abstract public class VSDSound {
 
     protected String vsd_file_base = "resource:resources/sounds/vsd/";
 
+    javax.swing.Timer t;
+
     boolean is_playing;
     String name;
-    float gain;
+    float gain;  // this is the (fixed) gain relative to the other sounds in this Profile
+    float volume; // this is the (active) volume level (product of fixed gain and volume slider).
 
     public VSDSound(String name) {
 	this.name = name;
@@ -46,6 +52,13 @@ abstract public class VSDSound {
 	return(is_playing);
     }
 
+    protected Timer newTimer(int time, boolean repeat, ActionListener al) {
+	time = Math.max(1, time);  // make sure the time is > zero
+	t = new Timer(time, al);
+	t.setInitialDelay(time);
+	t.setRepeats(repeat);
+	return(t);
+    }
 
     // Required methods - abstract because all subclasses MUST implement
     abstract public void play();
@@ -53,10 +66,15 @@ abstract public class VSDSound {
     abstract public void stop();
     abstract public void fadeIn();
     abstract public void fadeOut();
+    abstract public void mute(boolean m);
+    abstract public void setVolume(float g);
     abstract public void shutdown(); // called on window close.  Cease playing immediately.
 
     // Optional methods - overridden in subclasses where needed.  Do nothing otherwise
     public void changeNotch(int new_notch) {
+    }
+
+    public void changeThrottle(float t) {
     }
     
     public void setName(String n) {

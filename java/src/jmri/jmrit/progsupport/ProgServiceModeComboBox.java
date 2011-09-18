@@ -44,7 +44,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
     // GUI member declarations
     JComboBox box;
     ActionListener boxListener;
-    ArrayList<Integer> modes = new ArrayList();
+    ArrayList<Integer> modes = new ArrayList<Integer>();
 
     /**
      * Get the configured programmer
@@ -110,7 +110,11 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
             public void actionPerformed(ActionEvent e) {
                 connect();
                 if (connected) {
-                    setProgrammerMode(modes.get(box.getSelectedIndex()));
+                    try {
+                        setProgrammerMode(modes.get(box.getSelectedIndex()));
+                    } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                        //Can be considered normal if there is no service mode programmer available
+                    }
                 }
             }
         };

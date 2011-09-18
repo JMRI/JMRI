@@ -60,6 +60,31 @@ There are also pages of the
 For more information on JMRI's use of FindBugs, see the
 <a href="FindBugs.shtml">separate FindBugs page</a>.
 </ul>
+
+<h2>Integration with NetBeans</h2>
+<p>If you are developing in the <a href="NetBeans.shtml">NetBeans 7.0</a> environment,
+it is possible to integrate feedback from the Jenkins Continuous Integration (CI) engine.
+<p>Within the NetBeans environment, reference is made to the Hudson CI engine - Jenkins
+is a <a href="http://en.wikipedia.org/wiki/Fork_(software_development)">"fork"</a>
+of the Hudson code and supports the same <a href="http://en.wikipedia.org/wiki/API">API</a>.
+<h3>Integration</h3>
+<p>Integration into NetBeans is achieved by executing the following steps:
+<ol>
+<li>Open NetBeans
+<li>Switch to the 'Services' window (shortcut key 'Ctrl+5')
+<li>Right-click (Ctrl-click on Mac) the entry 'Hudson Builders' and choose 'Add Hudson Instance...'
+    <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt="Add Hudson Instance...">
+<li>In the resulting pop-up, complete the following:
+    <dl>
+    <dt>Name</dt><dd>JMRI</dd>
+    <dt>URL</dt><dd>http://builds.jmri.org/jenkins/</dd>
+    <dt>Auto refresh every X minutes</dt><dd>60 (change from the default of 5 to avoid overloading the CI server)</dd>
+    </dl>
+    <img src="images/NetBeansJenkinsAddDialog.png" width="453" height="240" alt="Add Hudson Instance dialog">
+</ol>
+<p>From now on, the current status of the Jenkins builds can be reviewed in the 'Services'
+window by expanding the 'JMRI' entry under 'Hudson Builders'.
+<p><img src="images/NetBeansJenkinsOverview.png" width="342" height="452" alt="Jenkins Overview">
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->

@@ -35,6 +35,8 @@ public class SwingTest extends TestCase {
             suite.addTest(jmri.jmrix.lenz.swing.stackmon.StackMonTest.suite());
             suite.addTest(jmri.jmrix.lenz.swing.systeminfo.SystemInfoTest.suite());
             suite.addTest(jmri.jmrix.lenz.swing.packetgen.PacketGenTest.suite());
+            suite.addTest(jmri.jmrix.lenz.swing.lz100.LZ100Test.suite());
+            suite.addTest(jmri.jmrix.lenz.swing.lzv100.LZV100Test.suite());
         }
         
         return suite;

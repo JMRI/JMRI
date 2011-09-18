@@ -120,13 +120,9 @@ class VSDecoderManager {
     }
 
     public VSDecoder getVSDecoder(String profile_name, String path) {
+	this.loadProfiles(path);
 	VSDecoder vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
 	decodertable.put(vsd.getID(), vsd); // poss. broken for duplicate profile names
-	// If this profile_name is not in the list, update it.
-	if (!(profiletable.containsKey(profile_name))) {
-	    profiletable.put(profile_name, path);
-	    fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
-	}
 	return(vsd);
     }
 
@@ -174,10 +170,28 @@ class VSDecoderManager {
 	}
     }
 
+    private void loadProfiles(String path) {
+	try {
+	    VSDFile vsdfile = new VSDFile(path);
+	    if (vsdfile.isInitialized()) {
+		this.loadProfiles(vsdfile);
+	    }
+	} catch (java.util.zip.ZipException e) {
+	    log.error("ZipException loading VSDecoder from " + path);
+	    // would be nice to pop up a dialog here...
+	} catch (java.io.IOException ioe) {
+	    log.error("IOException loading VSDecoder from " + path);
+	    // would be nice to pop up a dialog here...
+	}
+    }
+
     public void loadProfiles(VSDFile vf) {
 	Element root;
+	String pname;
 	if ((root = vf.getRoot()) == null)
 	    return;
+	
+	ArrayList<String> new_entries = new ArrayList<String>();
 
 	//List<Element> profiles = root.getChildren("profile");
 	@SuppressWarnings("unchecked")
@@ -185,11 +199,21 @@ class VSDecoderManager {
 	while (i.hasNext()) {
 	    Element e = i.next();
 	    log.debug(e.toString());
-	    if (e.getAttributeValue("name") != null)
-		profiletable.put(e.getAttributeValue("name"), vf.getName());
+	    if ((pname = e.getAttributeValue("name")) != null) {
+		profiletable.put(pname, vf.getName());
+		new_entries.add(pname);
+	    }
 	}
+
+	// debug
+	/*
+	for (String s : new_entries) {
+	    log.debug("New entry: " + s);
+	}
+	*/
+	// /debug
 	    
-	fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE));
+	fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE, new_entries));
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());

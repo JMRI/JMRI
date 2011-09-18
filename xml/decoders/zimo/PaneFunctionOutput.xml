@@ -3,6 +3,9 @@
 
 
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 15 Aug 11 JES
+                 - added Dim function output 10-12
+-->
 
   <pane name="Function Output">
     <column>
@@ -65,6 +68,9 @@
               <display item="Dim function output 7" format="checkbox" tooltip="CV 152 bit 0"/>
               <display item="Dim function output 8" format="checkbox" tooltip="CV 152 bit 1"/>
               <display item="Dim function output 9" format="checkbox" tooltip="CV 152 bit 2"/>
+              <display item="Dim function output 10" format="checkbox" tooltip="CV 152 bit 3"/>
+              <display item="Dim function output 11" format="checkbox" tooltip="CV 152 bit 4"/>
+              <display item="Dim function output 12" format="checkbox" tooltip="CV 152 bit 5"/>
             </column>
         <column>
           <row>

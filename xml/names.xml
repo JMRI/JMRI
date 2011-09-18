@@ -464,7 +464,10 @@
 		<definition item="Output 8 options"/>
 
 		<definition item="Output 9 effect generated"/>
+		<definition item="Output 9 behavior"/>
+
 		<definition item="Output 10 effect generated"/>
+		<definition item="Output 10 behavior"/>
 
 	</definitiongroup>
 

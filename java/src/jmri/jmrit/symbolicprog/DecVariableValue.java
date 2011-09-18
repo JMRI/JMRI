@@ -167,6 +167,7 @@ public class DecVariableValue extends VariableValue
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.VERTICAL);
             sliders.add(b);
+            reps.add(b);
             updateRepresentation(b);
             return b;
         }
@@ -174,6 +175,7 @@ public class DecVariableValue extends VariableValue
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.HORIZONTAL);
             sliders.add(b);
+            reps.add(b);
             updateRepresentation(b);
             return b;
         }
@@ -182,6 +184,7 @@ public class DecVariableValue extends VariableValue
             if (getReadOnly() || getInfoOnly()) {
                 value.setEditable(false);
             }
+            reps.add(value);
             updateRepresentation(value);
             return value;
         }

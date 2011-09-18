@@ -29,14 +29,13 @@
 </p>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital
-  Command Control (DCC) decoders, (DecoderPro&reg;).</strong><strong><br>
+  Command Control (DCC) decoders, (DecoderPro&reg;).<br>
   Drawing computer based panels for depicting a  model railroad&nbsp;  layout , (PanelPro&reg;
-  )</strong><strong>.<br>
-Controlling the layout , (LayoutPro&reg;).<br>
-  </strong><strong>Creating train manifests for duplicating railroad  operations, Operations</strong><strong><br>
-  Controlling the signals on the layout,(<br>
-  SoundPro&reg;)</strong><strong>
-  Controlling&nbsp;  lighting and sound in the room, and so forth.</strong><strong></strong></p>
+  ).<br>
+Controlling the layout , (Layout Editor).<br>
+  Creating train manifests for duplicating railroad  operations, Operations<br>
+  Controlling the signals on the layout<br>
+Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)</strong></p>
 <p>All this capability is contained in one program (JMRI) which has  several &ldquo;start-up&rdquo; screens for the various applications. </p>
 <p>&nbsp;</p>
 
@@ -50,11 +49,11 @@ Controlling the layout , (LayoutPro&reg;).<br>
 <p>
   <a name="index"></a>
 <div align="right">
-<p>
-<a href="https://sourceforge.net/projects/jmri/files/manuals/DecoderProManual_2_12.pdf/download">
-Download a .PDF file of this manual.<br>
-(7 MB, 249 pages)
-</a></div>
+<h2>Download Print version of Manual (pdf format)
+</h2>
+<p><strong><a href="pdf/DecoderProManual_2_4.pdf" target="_blank">manual version 2.4</a></strong>
+<p><strong><a href="pdf/DecoderPro Man 2.8.pdf" target="_blank">manual version 2.8</a></strong>
+<p><a href="pdf/jmri_Man_2_12.pdf" target="_blank"><strong>manual version 2.12</strong></a></div>
 
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
@@ -489,7 +488,8 @@ are best submitted to the
     <td align="left" valign="top">2.12</td>
     <td align="left" valign="top">9/15/2011</td>
     <td align="left" valign="top">Dale A. Tripp<br>
-      Bruce Shanks</td>
+      Bruce Shanks<br>
+      Walter Thompson     <br></td>
     <td align="left" valign="top"><p>Updated to JMRI 2.12<br>
     Installation information added<br>
     Contents updated to current functions

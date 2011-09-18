@@ -48,7 +48,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
 
     Object o1, o2, o3, o4;
     JLabel statusLabel;
-    jmri.jmrit.progsupport.ProgModeSelector  modePane    = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
+    jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
     static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 

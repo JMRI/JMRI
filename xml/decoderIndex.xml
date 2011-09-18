@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.13.1+dev on Mon Sep 05 13:05:57 PDT 2011 $Id$-->
-  <decoderIndex version="214">
-    <mfgList nmraListDate="2011-04-09" updated="2011-06-11" lastadd="77">
+  <!--Written by JMRI version 20110918-2028-jake on Sun Sep 18 13:28:17 PDT 2011 $Id$-->
+  <decoderIndex version="216">
+    <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -2616,6 +2616,11 @@
           <size length="73.0" width="17.8" height="7.7" units="mm" />
         </model>
       </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_drop-in-1803.xml">
+        <model model="Synch Diesel Sound 1803 - HO  Proto 2000 PA/PB Locomotives" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+          <size length="" width="" height="" units="mm" />
+        </model>
+      </family>
       <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_lights1650.xml">
         <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes">
           <!-- note All functions are NMRA compatible -->
@@ -2912,6 +2917,9 @@
       <family name="MTH HO PS3" mfg="Mikes Train House" file="MTH.xml">
         <model model="MTH HO PS3" />
       </family>
+      <family name="Champex-Linden" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_CL_63000.xml">
+        <model model="Sound Module 63000" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="0" numFns="0" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+      </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" file="Massoth_LGB.xml">
         <model model="LGB MTS I 55020 loco decoders" lowVersionID="10" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other">
           <output name="1" label="Front light" maxcurrent="0.3 A" connection="other" />
@@ -2941,6 +2949,14 @@
           <output name="4" label="F2 " connection="other" />
         </model>
       </family>
+      <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB_22592.xml">
+        <model model="LGB MTS 22592 with onboard sound decoder" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="4" numFns="14" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Front light" connection="other" />
+          <output name="2" label="Rear light " connection="other" />
+          <output name="3" label="F1 " connection="other" />
+          <output name="4" label="F2 " connection="other" />
+        </model>
+      </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" file="Massoth_LGB_55027.xml">
         <model model="LGB MTS III 55027 loco decoders" lowVersionID="10" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="8" numFns="18" formFactor="G" connector="other">
           <output name="1" label="Front light" maxcurrent="0.3 A" connection="wire" />
@@ -2954,8 +2970,27 @@
           <size length="55" width="25" height="12" units="mm" />
         </model>
       </family>
-      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" file="Massoth_eMOTION_Motor.xml">
-        <model model="eMOTION M" lowVersionID="1" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.2 A" maxTotalCurrent="1.8 A" numOuts="8" numFns="18" formFactor="G" connector="other">
+      <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB_6500x.xml">
+        <model model="LGB MTS 6500x Sound Unit" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" maxMotorCurrent="? A" maxTotalCurrent="? A" numOuts="0" numFns="0" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="68" width="60" height="23" units="mm" />
+        </model>
+      </family>
+      <family name="Massoth PIKO" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_PIKO.xml">
+        <model model="PIKO 3612x" lowVersionID="20" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="8" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="50" width="32" height="12" units="mm" />
+          <output name="1" label="Front light" maxcurrent="600 mA" connection="other" />
+          <output name="2" label="Rear light " maxcurrent="600 mA" connection="other" />
+          <output name="3" label="F1 " maxcurrent="600 mA" connection="other" />
+          <output name="4" label="F2 " maxcurrent="600 mA" connection="other" />
+          <output name="5" label="F3 " maxcurrent="600 mA" connection="other" />
+          <output name="6" label="F4 " maxcurrent="600 mA" connection="other" />
+          <output name="7" label="F5 " maxcurrent="600 mA" connection="other" />
+          <output name="8" label="F6 " maxcurrent="600 mA" connection="other" />
+        </model>
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_eMOTION_Motor.xml">
+        <model model="eMOTION M" lowVersionID="1" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.2 A" maxTotalCurrent="1.8 A" numOuts="8" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="30" width="15" height="6" units="mm" />
           <output name="1" label="Front light" maxcurrent="500 mA" connection="solder" />
           <output name="2" label="Rear light " maxcurrent="500 mA" connection="solder" />
           <output name="3" label="F1 " maxcurrent="600 mA" connection="solder" />
@@ -2964,9 +2999,9 @@
           <output name="6" label="F4 " maxcurrent="50 mA" connection="solder" />
           <output name="7" label="F5 " maxcurrent="50 mA" connection="solder" />
           <output name="8" label="F6 " maxcurrent="50 mA" connection="solder" />
-          <size length="30" width="15" height="6" units="mm" />
         </model>
-        <model model="eMOTION L" lowVersionID="1" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="1.8 A" maxTotalCurrent="2.8 A" numOuts="8" numFns="18" formFactor="G" connector="other">
+        <model model="eMOTION L" lowVersionID="1" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.8 A" maxTotalCurrent="2.8 A" numOuts="8" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="55" width="25" height="14" units="mm" />
           <output name="1" label="Front light" maxcurrent="500 mA" connection="other" />
           <output name="2" label="Rear light " maxcurrent="500 mA" connection="other" />
           <output name="3" label="F1 " maxcurrent="500 mA" connection="other" />
@@ -2975,9 +3010,9 @@
           <output name="6" label="F4 " maxcurrent="50 mA" connection="solder" />
           <output name="7" label="F5 " maxcurrent="50 mA" connection="solder" />
           <output name="8" label="F6 " maxcurrent="50 mA" connection="solder" />
-          <size length="55" width="25" height="14" units="mm" />
         </model>
-        <model model="eMOTION XL" lowVersionID="1" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="9" numFns="18" formFactor="G" connector="other">
+        <model model="eMOTION XL" lowVersionID="1" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="9" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="50" width="32" height="12" units="mm" />
           <output name="1" label="Front light" maxcurrent="300 mA" connection="other" />
           <output name="2" label="Rear light " maxcurrent="300 mA" connection="other" />
           <output name="3" label="Interior light " maxcurrent="300 mA" connection="other" />
@@ -2987,9 +3022,9 @@
           <output name="7" label="F4 " maxcurrent="600 mA" connection="other" />
           <output name="8" label="F5 " maxcurrent="600 mA" connection="other" />
           <output name="9" label="F6 " maxcurrent="600 mA" connection="other" />
-          <size length="50" width="32" height="12" units="mm" />
         </model>
-        <model model="eMOTION XXL" lowVersionID="20" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="6 A" maxTotalCurrent="7 A" numOuts="9" numFns="18" formFactor="G" connector="other">
+        <model model="eMOTION XXL" lowVersionID="20" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="6 A" maxTotalCurrent="7 A" numOuts="9" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="65" width="33" height="16" units="mm" />
           <output name="1" label="Front light" maxcurrent="500 mA" connection="other" />
           <output name="2" label="Rear light " maxcurrent="500 mA" connection="other" />
           <output name="3" label="Interior light " maxcurrent="500 mA" connection="other" />
@@ -2999,11 +3034,27 @@
           <output name="7" label="F4 " maxcurrent="500 mA" connection="other" />
           <output name="8" label="F5 " maxcurrent="500 mA" connection="other" />
           <output name="9" label="F6 " maxcurrent="500 mA" connection="other" />
-          <size length="65" width="33" height="16" units="mm" />
         </model>
       </family>
-      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30" file="Massoth_eMOTION_Sound.xml">
-        <model model="eMOTION LS" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.7 A" numOuts="9" numFns="18" formFactor="G" connector="other">
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30" type="locomotive" file="Massoth_eMOTION_S.xml">
+        <model model="eMOTION S" lowVersionID="10" maxInputVolts="24 V" maxTotalCurrent="370 mA" numOuts="3" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="35" width="20" height="12" units="mm" />
+          <output name="1" label="A3" maxcurrent="70 mA" connection="solder" />
+          <output name="2" label="A7" maxcurrent="10 mA" connection="solder" />
+          <output name="3" label="A8" maxcurrent="10 mA" connection="solder" />
+        </model>
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30" type="locomotive" file="Massoth_eMOTION_S_SUSI.xml">
+        <model model="eMOTION S SUSI" lowVersionID="10" maxInputVolts="24 V" maxTotalCurrent="370 mA" numOuts="3" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="35" width="20" height="12" units="mm" />
+          <output name="1" label="A3" maxcurrent="70 mA" connection="solder" />
+          <output name="2" label="A7" maxcurrent="10 mA" connection="solder" />
+          <output name="3" label="A8" maxcurrent="10 mA" connection="solder" />
+        </model>
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" lowVersionID="1" highVersionID="30" type="locomotive" file="Massoth_eMOTION_Sound.xml">
+        <model model="eMOTION LS" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.7 A" numOuts="9" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="54" width="25" height="15" units="mm" />
           <output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
           <output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
           <output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
@@ -3013,9 +3064,9 @@
           <output name="7" label="F4 " maxcurrent="10 mA" connection="solder" />
           <output name="8" label="F7 " maxcurrent="10 mA" connection="solder" />
           <output name="9" label="F8 " maxcurrent="10 mA" connection="solder" />
-          <size length="54" width="25" height="15" units="mm" />
         </model>
-        <model model="eMOTION XLS" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="11" numFns="18" formFactor="G" connector="other">
+        <model model="eMOTION XLS" lowVersionID="10" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="11" numFns="18" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="60" width="32" height="18" units="mm" />
           <output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
           <output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
           <output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
@@ -3027,7 +3078,6 @@
           <output name="9" label="F6 " maxcurrent="20 mA" connection="other" />
           <output name="10" label="F7 " maxcurrent="20 mA" connection="solder" />
           <output name="11" label="F8 " maxcurrent="20 mA" connection="solder" />
-          <size length="60" width="32" height="18" units="mm" />
         </model>
       </family>
       <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" file="Massoth_function_lights.xml">
@@ -4961,6 +5011,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-750 EMD 567 (Dual Motors)" numOuts="2" numFns="14" connector="other" productID="827018" comment="Model 827018">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-750 EMD 645 (Turbo)" numOuts="2" numFns="14" connector="other" productID="827002" comment="Model 827002">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -5022,6 +5087,21 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-750 GE Cummins" numOuts="2" numFns="14" connector="other" productID="827014" comment="Model 827014">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-750 UP Gas Turbine" numOuts="2" numFns="14" connector="other" productID="827015" comment="Model 827015">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -5141,6 +5221,36 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-1000 EMD 567 (Dual Motors)" numOuts="4" numFns="14" connector="9pin" productID="827118" comment="Model 827118">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-1000 EMD 567D (Turbo)" numOuts="4" numFns="14" connector="9pin" productID="827119" comment="Model 827119">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-1000 EMD 645" numOuts="4" numFns="14" connector="9pin" productID="827102" comment="Model 827102">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -5217,6 +5327,21 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin" productID="827107" comment="Model 827107">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" connector="9pin" productID="827117" comment="Model 827117">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -5321,6 +5446,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-AT1000 Alco 251C (Supercharged)" numOuts="4" numFns="14" connector="other" productID="828037" comment="Model 828037">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-AT1000 Alco 539 (Turbo)" numOuts="4" numFns="14" connector="other" productID="828049" comment="Model 828049">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -5337,6 +5477,21 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828040" comment="Model 828040">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-AT1000 EMD 567D (Turbo)" numOuts="4" numFns="14" connector="other" productID="828039" comment="Model 828039">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -5412,6 +5567,21 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828046" comment="Model 828046">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-AT1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" connector="other" productID="828038" comment="Model 828038">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -5531,6 +5701,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-GN1000 EMD 710 G3C-T2" numOuts="4" numFns="14" connector="other" productID="828053" comment="Model 828053">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-GN1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828056" comment="Model 828056">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -5546,7 +5731,22 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
-        <model model="TSU-KT1000 Kato C44-9W" numOuts="4" numFns="14" connector="other" productID="828061" comment="Model 828061">
+        <model model="TSU-GN1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" connector="other" productID="828057" comment="Model 828057">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-KT1000 Kato C44-9W" numOuts="4" numFns="14" connector="other" productID="828061" comment="Model 828061 and 828066">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -5562,6 +5762,21 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato F40PH" numOuts="4" numFns="14" connector="other" productID="828064" comment="Model 828064">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-KT1000 Kato GP35" numOuts="4" numFns="14" connector="other" productID="828067" comment="Model 828067">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -6454,6 +6669,22 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" connector="other" productID="826121" comment="Model 826121">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-4664N Challenger" numOuts="4" numFns="14" connector="other" productID="826601" comment="Model 826601">
           <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -8070,6 +8301,17 @@
       <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" file="Trix_Modelleisenbahn_version_1.xml">
         <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" />
       </family>
+      <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_32100.xml">
+        <model model="32100">
+          <size length="20.8" width="10.8" height="5" units="mm" />
+        </model>
+        <model model="32400">
+          <size length="20.8" width="10.8" height="5" units="mm" />
+        </model>
+        <model model="PIKO 3619x Series">
+          <size length="25" width="15" height="5" units="mm" />
+        </model>
+      </family>
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" type="locomotive" file="Uhlenbrock_67800.xml">
         <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable Servo Decoder" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
@@ -8097,8 +8339,33 @@
         <model model="76400" />
         <model model="76420" />
       </family>
-      <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="1" highVersionID="20" file="Uhlenbrock_77500.xml">
-        <model model="77500" />
+      <family name="Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_77500.xml">
+        <model model="77500" maxMotorCurrent="3 A (peak 5 A)" maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="G" connector="other">
+          <output name="1" label="Front light" maxcurrent="1 A" connection="other" />
+          <output name="2" label="Rear light " maxcurrent="1 A" connection="other" />
+          <output name="3" label="   A1      " maxcurrent="1 A" connection="other" />
+          <output name="4" label="   A2      " maxcurrent="1 A" connection="other" />
+          <output name="5" label="   A3      " maxcurrent="1 A" connection="other" />
+          <output name="6" label="   A4      " maxcurrent="1 A" connection="other" />
+          <output name="7" label="   A5      " maxcurrent="1 A" connection="other" />
+          <output name="8" label="   A6      " maxcurrent="1 A" connection="other" />
+          <output name="9" label="   A7      " maxcurrent="1 A" connection="other" />
+          <output name="10" label="   A8      " maxcurrent="1 A" connection="other" />
+          <size length="58.5" width="28" height="12" units="mm" />
+        </model>
+        <model model="PIKO 3612x Series" maxMotorCurrent="3 A (peak 5 A)" maxTotalCurrent="3 A (peak 5 A)" numOuts="8" numFns="28" formFactor="G" connector="other">
+          <output name="1" label="Front light" maxcurrent="1 A" connection="other" />
+          <output name="2" label="Rear light " maxcurrent="1 A" connection="other" />
+          <output name="3" label="   A1      " maxcurrent="1 A" connection="other" />
+          <output name="4" label="   A2      " maxcurrent="1 A" connection="other" />
+          <output name="5" label="   A3      " maxcurrent="1 A" connection="other" />
+          <output name="6" label="   A4      " maxcurrent="1 A" connection="other" />
+          <output name="7" label="   A5      " maxcurrent="1 A" connection="other" />
+          <output name="8" label="   A6      " maxcurrent="1 A" connection="other" />
+          <output name="9" label="   A7      " maxcurrent="1 A" connection="other" />
+          <output name="10" label="   A8      " maxcurrent="1 A" connection="other" />
+          <size length="58.5" width="28" height="12" units="mm" />
+        </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">
         <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" />
@@ -10232,6 +10499,82 @@
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
       </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX648v28.xml">
+        <model model="MX648 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648R version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648F version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX648N version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX648v30.xml">
+        <model model="MX648 version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648R version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648F version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX648N version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+      </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX64Dv25.xml">
         <model model="MX64D version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="other" numOuts="8" numFns="14" productID="206">
           <output name="1" label="Front Light" />
@@ -10319,6 +10662,19 @@
           <size length="55" width="26" height="18" units="mm" />
         </model>
       </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX690Sv30.xml">
+        <model model="MX690S version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="208">
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <size length="55" width="26" height="18" units="mm" />
+        </model>
+      </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX690Vv25.xml">
         <model model="MX690V version 25+" lowVersionID="25" highVersionID="26" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="208">
           <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
@@ -10374,6 +10730,57 @@
           <output name="13" label="   FO 11   " comment="pin-15, right" maxcurrent="1.5 A total per group" connection="plug" />
           <output name="14" label="   FO 12   " comment="pin-16, right" maxcurrent="1.5 A total per group" connection="plug" />
           <size length="55" width="26" height="18" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX690Vv30.xml">
+        <model model="MX690V version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="208">
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="9" label="   FO  7   " comment="pin-12, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="10" label="   FO  8   " comment="pin-13, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="11" label="   FO  9   " comment="pin-14, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="12" label="   FO 10   " comment="pin-8,  right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="13" label="   FO 11   " comment="pin-15, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="14" label="   FO 12   " comment="pin-16, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <size length="55" width="26" height="18" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX695Sv30.xml">
+        <model model="MX695S version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
+          <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug" />
+          <size length="50" width="40" height="14" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX695Vv30.xml">
+        <model model="MX695V version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+          <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="9" label="   FO  7   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="10" label="   FO  8   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="11" label="   FO  9   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="12" label="   FO 10   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="13" label="   FO 11   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug" />
+          <size length="50" width="40" height="14" units="mm" />
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX69Lv25.xml">

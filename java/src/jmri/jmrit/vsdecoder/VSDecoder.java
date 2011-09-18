@@ -40,6 +40,8 @@ public class VSDecoder implements PropertyChangeListener {
     boolean enabled = false;       // This decoder is enabled
     private boolean is_default = false;  // This decoder is the default for its file
 
+    private float master_volume;
+
     HashMap<String, VSDSound> sound_list;   // list of sounds
     HashMap<String, Trigger> trigger_list;  // list of triggers
     HashMap<String, SoundEvent> event_list; // list of events
@@ -167,11 +169,42 @@ public class VSDecoder implements PropertyChangeListener {
 	return(address);
     }
 
+    public float getMasterVolume() {
+	return(master_volume);
+    }
+
+    public void setMasterVolume(float vol) {
+	log.debug("VSD: float volume = " + vol);
+	master_volume = vol;
+	for (VSDSound vs : sound_list.values()) {
+	    vs.setVolume(master_volume);
+	}
+    }
+
+    public boolean isMuted() {
+	return(false);
+    }
+
+    public void mute(boolean m) {
+	for (VSDSound vs : sound_list.values()) {
+	    vs.mute(m);
+	}
+    }
+
     public void propertyChange(PropertyChangeEvent evt) {
 	// Respond to events from the GUI.
-	if (evt.getPropertyName().equals("AddressChange")) {
+	String property = evt.getPropertyName();
+	if (property.equals("AddressChange")) {
 	    this.setAddress((DccLocoAddress)evt.getNewValue());
 	    this.enable();
+	} else if (property.equals("Mute")) {
+	    log.debug("VSD: Mute change. value = " + evt.getNewValue());
+	    Boolean b = (Boolean)evt.getNewValue();
+	    this.mute(b.booleanValue());
+	} else if (property.equals("VolumeChange")) {
+	    log.debug("VSD: Volume change. value = " + evt.getNewValue());
+	    // Slider gives integer 0-100.  Need to change that to a float 0.0-1.0
+	    this.setMasterVolume((1.0f * (Integer)evt.getNewValue())/100.0f);
 	}
     }
 
@@ -313,6 +346,7 @@ public class VSDecoder implements PropertyChangeListener {
 	// E is now the first <profile/> in vsdfile that matches pn.
 
         if (e == null) {
+	    // No matching profile name found.
             return;
         }
         
@@ -362,7 +396,12 @@ public class VSDecoder implements PropertyChangeListener {
 		sound_list.put(el.getAttributeValue("name"),cs);
 	    } else if (el.getAttributeValue("type").equals("diesel")) {
 		// Handle a Diesel Engine sound
-		EngineSound es = new EngineSound(el.getAttributeValue("name"));
+		DieselSound es = new DieselSound(el.getAttributeValue("name"));
+		es.setXml(el, vf);
+		sound_list.put(el.getAttributeValue("name"), es);
+	    } else if (el.getAttributeValue("type").equals("steam")) {
+		// Handle a Diesel Engine sound
+		SteamSound es = new SteamSound(el.getAttributeValue("name"));
 		es.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"), es);
 	    } else {

@@ -4,6 +4,7 @@ package jmri.jmrit.roster;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
@@ -50,12 +51,13 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     Component _who;
+    ArrayList<RosterEntry> rosterEntries;
 
     @Override
     public void actionPerformed(ActionEvent event) {
 
         String entry = (String)JOptionPane.showInputDialog(_who,
-                                     "<html><b>Create new roster group.</b><br>Roster group names cannot be changed once created.</html>",
+                                     "<html><b>Create new roster group</b></html>",
                                      "New Roster Group",
                                      JOptionPane.INFORMATION_MESSAGE,
                                      null, // icon
@@ -64,7 +66,13 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
         if(entry == null || entry.equals(Roster.ALLENTRIES)){
             return;
         }
-
+        if (rosterEntries != null) {
+            for (RosterEntry re : rosterEntries) {
+                log.debug("Adding RosterEntry " + re.getId() + " to new group " + entry);
+                re.putAttribute(Roster.instance().getRosterGroupPrefix() + entry, "yes");
+                re.updateFile();
+            }
+        }
         Roster.instance().addRosterGroupList(entry);
         Roster.writeRosterFile();
     }
@@ -73,7 +81,25 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    
+
+    /**
+     * Set a parameter
+     * <p>
+     * This method accepts the following key, with the following value:
+     * <dl>
+     * <dt>RosterEntries</dt>
+     * <dd>An ArrayList&lt;RosterEntry&gt; of roster entries.
+     * </dl>
+     * @param key
+     * @param value
+     */
+    @Override
+    public void setParameter(String key, Object value) {
+        if (key.equals("RosterEntries") && value.getClass().equals(ArrayList.class)) {
+            rosterEntries = (ArrayList<RosterEntry>)value;
+        }
+    }
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CreateRosterGroupAction.class.getName());
 }

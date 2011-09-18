@@ -88,6 +88,9 @@ public class ReportContext {
         addProperty("user.name");
         addProperty("user.home");
         addProperty("user.dir");
+        addProperty("user.country");
+        addProperty("user.language");
+        addProperty("user.timezone");
         addProperty("jmri.log.path");
 
         addScreenSize();

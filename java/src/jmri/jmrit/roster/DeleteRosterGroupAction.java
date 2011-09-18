@@ -12,7 +12,10 @@ import javax.swing.JOptionPane;
 
 /**
  * Remove roster group.
- *
+ * <p>
+ * If performAction(event) is being called in a context where the name of the
+ * group to be removed is already known, call setParameter("group", groupName)
+ * prior to calling performAction(event) to bypass the group selection dialog.
  *
  * <hr>
  * This file is part of JMRI.
@@ -51,25 +54,30 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     }
 
     Component _who;
+    String group;
 
+    /**
+     * @param event
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
-
-        String entry = (String)JOptionPane.showInputDialog(_who,
-                "<html><b>Delete roster group.</b><br>Roster entries in the group are not deleted.</html>",
-                "Delete Roster Group",
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                Roster.instance().getRosterGroupList().toArray(),
-                Roster.getRosterGroup());
-        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+        if (group == null) {
+            group = (String) JOptionPane.showInputDialog(_who,
+                    "<html><b>Delete roster group</b><br>Roster entries in the group are not deleted.</html>",
+                    "Delete Roster Group",
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    Roster.instance().getRosterGroupList().toArray(),
+                    Roster.getRosterGroup());
+        }
+        if (group == null || group.equals(Roster.ALLENTRIES)) {
             return;
         }
         // prompt for one last chance
-        if (!userOK(entry)) return;
+        if (!userOK(group)) return;
 
         // delete the roster grouping
-        Roster.instance().delRosterGroupList(entry);
+        Roster.instance().delRosterGroupList(group);
         Roster.writeRosterFile();
 
     }
@@ -97,6 +105,13 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     // never invoked, because we overrode actionPerformed above
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
+    }
+
+    @Override
+    public void setParameter(String key, String value) {
+        if (key.equals("group")) {
+            group = value;
+        }
     }
 
     // initialize logging

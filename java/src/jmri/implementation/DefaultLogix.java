@@ -360,7 +360,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 break;
                             case LISTENER_TYPE_TURNOUT:
                                 listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
-                                                                    varName, varType, conditional);
+                                                                    namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_CONDITIONAL:
                                 listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
@@ -372,7 +372,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 break;
                             case LISTENER_TYPE_MEMORY:
                                 listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_MEMORY, 
-                                                                          varName, varType, conditional);
+                                                                          namedBean, varType, conditional);
                                 break;
                             case LISTENER_TYPE_WARRANT:
                                 listener = new JmriSimplePropertyListener(null, LISTENER_TYPE_WARRANT, 

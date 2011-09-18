@@ -3,9 +3,12 @@
 
 
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 15 Aug 11 JES
+                 - added minOut
+-->
 
 <variables>
-      <variable label="FO9 directional setting" CV="152" mask="VXXXXXXX" default="0">
+      <variable label="FO9 directional setting" CV="152" mask="VXXXXXXX" default="0" minOut="11">
         <enumVal>
           <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
             <choice>Non Directional, normal NMRA mapping</choice>

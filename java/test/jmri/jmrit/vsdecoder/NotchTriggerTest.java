@@ -75,6 +75,7 @@ public class NotchTriggerTest extends TestCase {
 	TriggerListener tl = new TriggerListener() {
 		public void takeAction() { }
 		public void takeAction(int i) { }
+		public void takeAction(float f) { }
 	    };
 	uut.setCallback(tl);
 	Assert.assertSame("set callback", tl, uut.getCallback());
@@ -91,6 +92,9 @@ public class NotchTriggerTest extends TestCase {
 		}
 		public void takeAction(int i) {
 		    Assert.assertTrue("callback called", true);
+		}
+		public void takeAction(float f) {
+		    Assert.fail("wrong callback called");
 		}
 	    });
 	uut.setNotch(2); // 2/8 = 0.25

@@ -24,5 +24,6 @@ package jmri.jmrit.vsdecoder;
 public interface TriggerListener {
     public void takeAction();
     public void takeAction(int i);
+    public void takeAction(float f);
 
 }
