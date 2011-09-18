@@ -68,13 +68,13 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
-    svn cp ${SVNREPO}/trunk/jmri ${SVNREPO}/releases/Release-2-13-1
+    svn cp ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.1
 
 ( ) Move to the releases/ part of the SVN tree on your local machine
     and update to get the release copy:
     
-    cd ../../releases
-    svn update Release-2-13-1
+    cd ../../branches/jmri/releases
+    svn update 2.13.1
     
     ( to move later changes, svn merge -c <changeset#>   ^/trunk/jmri )
 
