@@ -24,7 +24,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 ( ) Check if the decoder definitions have changed since the previous release (almost always true)
     If so, remake the decoder index. 
         Delete old index from preferences
-        Run program in your development dir, remake index
+        ant remakedecoderindex
         Change file to Unix line ends.
         Diff w file in SVN tree as a check.
         Copy the new file from preferences into the SVN tree.
