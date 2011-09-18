@@ -320,7 +320,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             AbstractQualifier qual = new ValueQualifier(v, rowVector.get(index), Integer.parseInt(value), relation);
             qual.update(rowVector.get(index).getIntValue());    
         } else {
-            log.error("didn't find variable referenced: "+variableRef);
+            log.error("didn't find "+variableRef+" variable qualifying "+v.label(), new Exception());
         }
     }
 
