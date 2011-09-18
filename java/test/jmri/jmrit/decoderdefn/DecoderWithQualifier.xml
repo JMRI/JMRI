@@ -70,16 +70,21 @@
               comment="A value of 255 corresponds to 100%">
       <decVal/></variable>
 
-    <variable label="CV3" CV="3" item="Accel" >
+    <variable label="CV3" CV="3" item="CV3" >
       <decVal/></variable>
 
 
-    <ivariable label="iCV53.5.0" CVname="53.5.0" CV="53" PI="5" SI="0"
-               default="0" item="CV53.5.0">
+    <ivariable label="iCV53.5.0 qual cv3 gt 100" CVname="53.5.0" CV="53" PI="5" SI="0"
+               default="0" item="iCV53.5.0">
       <ienumVal>
         <ienumChoice choice="Off"/>
         <ienumChoice choice="On"/>
       </ienumVal>
+      <qualifier>
+        <variableref>CV3</variableref>
+        <relation>ge</relation>
+        <value>100</value>
+      </qualifier>
     </ivariable>
 
 
@@ -114,11 +119,20 @@
       </qualifier>
     </ivariable>
 
-    <variable label="CV4" CV="4" item="Decel" >
+    <variable label="CV4 qual cv3 ge 100" CV="4" item="CV4" >
       <decVal max="31"/>
       <qualifier>
         <variableref>CV3</variableref>
         <relation>ge</relation>
+        <value>100</value>
+      </qualifier>
+    </variable>
+
+    <variable label="CV5 qual cv3 le 100" CV="5" item="CV5" >
+      <decVal max="31"/>
+      <qualifier>
+        <variableref>CV3</variableref>
+        <relation>le</relation>
         <value>100</value>
       </qualifier>
     </variable>
