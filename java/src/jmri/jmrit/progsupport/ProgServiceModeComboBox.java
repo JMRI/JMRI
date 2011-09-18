@@ -66,9 +66,6 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
         return true;
     }
 
-    /**
-     * @param direction controls layout, either BoxLayout.X_AXIS or BoxLayout.Y_AXIS
-     */
     public ProgServiceModeComboBox() {
         box = new JComboBox();
 
