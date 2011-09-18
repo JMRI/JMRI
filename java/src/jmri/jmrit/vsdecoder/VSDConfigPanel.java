@@ -63,7 +63,7 @@ public class VSDConfigPanel extends JmriPanel {
 
     // Local variables
     private boolean profile_selected;  // true if a user has selected a Profile
-    private NullComboBoxItem loadProfilePrompt; // dummy profileComboBox entry
+    private NullProfileBoxItem loadProfilePrompt; // dummy profileComboBox entry
 
     private BusyDialog busy_dialog;
 
@@ -211,7 +211,7 @@ public class VSDConfigPanel extends JmriPanel {
 	    if (rosterComboBox.getItemCount() > 0)
 		rosterSaveButton.setEnabled(true);
 	}
-	
+
 	revalidate();
 	repaint();
     }
@@ -247,7 +247,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         //rosterComboBox = new javax.swing.JComboBox();
 	rosterComboBox = Roster.instance().fullRosterComboBox();
-	rosterComboBox.insertItemAt(new NullComboBoxItem(), 0);
+	rosterComboBox.insertItemAt(new NullRosterBoxItem(), 0);
 	rosterComboBox.setSelectedIndex(0);
 	rosterComboBox.setToolTipText("tool tip for roster box");
 	rosterComboBox.addActionListener(new ActionListener() {
@@ -282,14 +282,21 @@ public class VSDConfigPanel extends JmriPanel {
 
 
         profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
-	profileComboBox.addItem((loadProfilePrompt = new NullComboBoxItem()));
+	// Add any already-loaded profile names
+	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
+	if (sl.isEmpty())
+	    profileComboBox.setEnabled(false);
+	else
+	    profileComboBox.setEnabled(true);
+	updateProfileList(sl);
+	profileComboBox.addItem((loadProfilePrompt = new NullProfileBoxItem()));
+	profileComboBox.setSelectedItem(loadProfilePrompt);
 	profile_selected = false;
 	profileComboBox.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 		    profileComboBoxActionPerformed(evt);
 		}
 	    });
-	profileComboBox.setEnabled(false);
         profilePanel.add(profileComboBox);
 
         profileLabel.setText("Sound Profile");
@@ -326,11 +333,22 @@ public class VSDConfigPanel extends JmriPanel {
     // class NullComboBoxItem
     //
     // little object to insert into profileComboBox when it's empty
-    static class NullComboBoxItem {
+    static class NullRosterBoxItem {
         @Override
 	public String toString() {
 	    //return rb.getString("NoLocoSelected");
-	    return("NoLocoSelected");
+	    return("No Loco Selected");
+	}
+    }
+
+    // class NullComboBoxItem
+    //
+    // little object to insert into profileComboBox when it's empty
+    static class NullProfileBoxItem {
+        @Override
+	public String toString() {
+	    //return rb.getString("NoLocoSelected");
+	    return("Select a profile");
 	}
     }
 
@@ -367,6 +385,8 @@ public class VSDConfigPanel extends JmriPanel {
 	    if (dec != null) {
 		log.debug("VSDecoder loaded from file: " + dec.getProfileName());
 		main_pane.setDecoder(dec);
+		ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
+		updateProfileList(sl);
 		profileComboBox.setSelectedItem(dec.getProfileName());
 		profileComboBox.setEnabled(true);
 		profile_selected = true;
@@ -380,7 +400,7 @@ public class VSDConfigPanel extends JmriPanel {
     // ActionEventListener function for rosterComboBox
     // Chooses a RosterEntry from the list and loads its relevant info.
     private void rosterItemSelectAction(ActionEvent e) {
-	if (!(rosterComboBox.getSelectedItem() instanceof NullComboBoxItem)) {
+	if (!(rosterComboBox.getSelectedItem() instanceof NullRosterBoxItem)) {
 	    log.debug("Roster Item Selected...");
 	    String rosterEntryTitle = rosterComboBox.getSelectedItem().toString();
 	    setRosterEntry(Roster.instance().entryFromTitle(rosterEntryTitle));
