@@ -54,7 +54,8 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
 ( ) Confirm that all the above changes have been committed back to SVN trunk
 
-( ) This is a good place to check that the JavaDocs generate without errors.
+( ) This is a good place to check that the JavaDocs generate without errors
+    (though the CI system is routinely checking this).
     If you fix anything, commit it back.
 
 ( ) This is a good place to check that the decoder XSLT transforms work
@@ -78,7 +79,8 @@ Second, we build the release branch:
     
     ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.1")
 
-    ( to move later changes, svn merge -c <changeset#>   ^/trunk/jmri )
+    ( to merge everything to date: svn merge ^/trunk/jmri )
+    ( to merge a single later change: svn merge -c <changeset#>   ^/trunk/jmri )
 
 ================================================================================
 Third, we do any necessary release-specific updates.
@@ -87,6 +89,14 @@ Third, we do any necessary release-specific updates.
 ( ) Check that the Version.java file has been updated (both version
     number in two places and copyright date), has released=true set
     and has been committed to SVN on the branch
+    
+    (I think this item has actually been replaced by:
+    
+    Edit the top-level "release.properties file to say:
+    release.is_branched=true
+    
+    Edit the "release.build=" clause here and on trunk so that here
+    it's the current build number, and on trunk its the next number.
     
 ( ) Edit the version number into the top help page:
     bbedit help/en/index.html
@@ -99,16 +109,16 @@ Third, we do any necessary release-specific updates.
     cd scripts
     bbedit MacOSXapps/V1/*.app/Contents/Info.plist
 
-    sed -i '' s/2.11.8/2.11.9/g MacOSXapps/V1/*.app/Contents/Info.plist
+    sed -i '' s/2.12/2.13.1/g MacOSXapps/V1/*.app/Contents/Info.plist
 
 ( ) Update version numbers in Linux scripts
 
     bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
-    sed -i '' s/2.11.8/2.11.9/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
+    sed -i '' s/2.12/2.13.1/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
 
-( ) Update the release number in the build.xml file. This is in three lines on the 1st page:
+( ) Update the release number in the release.properties file.
     <property name="release.major" value="2" />
     <property name="release.minor" value="13" />
     <property name="release.build" value="1" />

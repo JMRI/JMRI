@@ -36,53 +36,72 @@ public class IndexedPairVariableValue extends VariableValue
                                      Vector<CvValue> v, JLabel status, String stdname,
                                      int secondCVrow, String pSecondCV, int pFactor, int pOffset, String uppermask) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
-        _row    = row;
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0",3);
-        _secondCVrow = secondCVrow;
-        _secondCV = pSecondCV;
-        _Factor = pFactor;
-        _Offset = pOffset;
-
+        _defaultColor = _value.getBackground();
+        _value.setBackground(COLOR_UNKNOWN);
+        mFactor = pFactor;
+        mOffset = pOffset;
+        // connect to the JTextField value, cv
+        _value.addActionListener(this);
+        _value.addFocusListener(this);
+        mSecondCVname = pSecondCV;
+        mSecondCVrow = secondCVrow;
+        
         lowerbitmask = maskVal(mask);
         lowerbitoffset = offsetVal(mask);
         upperbitmask = maskVal(uppermask);
+
+        // upper bit offset includes lower bit offset, and MSB bits missing from upper part
         upperbitoffset = offsetVal(uppermask);
+        String t = mask;
+        while (t.length()>0) {
+            if (!t.startsWith("V"))
+                upperbitoffset++;
+            t = t.substring(1);
+        }
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" upper mask "+uppermask+" had offsetVal="+offsetVal(uppermask)
+            +" so upperbitoffset="+upperbitoffset);
 
         // connect for notification
-        CvValue cv = (_cvVector.elementAt(_row));
+        CvValue cv = (_cvVector.elementAt(getCvNum()));
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
-        CvValue cv1 = (_cvVector.elementAt(_secondCVrow));
+        CvValue cv1 = (_cvVector.elementAt(getSecondCvNum()));
         cv1.addPropertyChangeListener(this);
         cv1.setState(CvValue.FROMFILE);
     }
 
     public CvValue[] usesCVs() {
         return new CvValue[]{
-             _cvVector.elementAt(_row),
-             _cvVector.elementAt(_secondCVrow)};
+             _cvVector.elementAt(getCvNum()),
+             _cvVector.elementAt(getSecondCvNum())};
     }
 
-    String _secondCV;
-    int _secondCVrow;
-    int _Factor;
-    int _Offset;
+    String mSecondCVname;  // string because 1.2.3 form
+    int mSecondCVrow;  // passed in from outside
+    int mFactor;
+    int mOffset;
+
+    public int getSecondCvNum() { return mSecondCVrow;}
 
     int lowerbitmask;
     int lowerbitoffset;
     int upperbitmask;
+    // number of bits to shift _left_ the 8-16 bits in 2nd CV
+    // e.g. multiply by 256, then shift by this
     int upperbitoffset;
-
-    int _row;
-    int _maxVal;
-    int _minVal;
 
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
     }
+
+    // the connection is to cvNum and cvNum+1
+
+    int _maxVal;
+    int _minVal;
 
     public Object rangeVal() {
         return "Split value";
@@ -106,62 +125,72 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     void updatedTextField() {
-        if (log.isDebugEnabled()) log.debug("enter updatedTextField");
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" enter updatedTextField in SplitVal");
         // called for new values - set the CV as needed
-        CvValue cvLow = _cvVector.elementAt(_row);
-        CvValue cvHigh = _cvVector.elementAt(_secondCVrow);
+        CvValue cv1 = _cvVector.elementAt(getCvNum());
+        CvValue cv2 = _cvVector.elementAt(getSecondCvNum());
 
         int newEntry;  // entered value
         try { newEntry = Integer.valueOf(_value.getText()).intValue(); }
         catch (java.lang.NumberFormatException ex) { newEntry = 0; }
 
         // calculate resulting number
-        int newHigh = (newEntry-_Offset)/_Factor;
-        int newLow  = newEntry - (newHigh * _Factor);
+        int newVal = (newEntry-mOffset)/mFactor;
 
-        if (log.isDebugEnabled()) log.debug("new value "+newEntry+" gives first="+newLow+" second="+newHigh);
+        // combine with existing values via mask
+        if (log.isDebugEnabled())
+            log.debug("CV "+getCvNum()+","+getSecondCvNum()+" lo cv was "+cv1.getValue()+" mask="+lowerbitmask+" offset="+lowerbitoffset);
+        int newCv1 = ( (newVal << lowerbitoffset) & lowerbitmask )
+                    | (~lowerbitmask & cv1.getValue());
+
+        if (log.isDebugEnabled())
+            log.debug("CV "+getCvNum()+","+getSecondCvNum()+" hi cv was "+cv2.getValue()+" mask="+upperbitmask+" offset="+upperbitoffset);
+        int newCv2 = (((newVal << upperbitoffset)>>8)&upperbitmask)
+                    | (~upperbitmask & cv2.getValue());
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" new value "+newVal+" gives first="+newCv1+" second="+newCv2);
 
         // cv updates here trigger updated property changes, which means
         // we're going to get notified sooner or later.
-        if (cvLow.getValue() != newLow || cvHigh.getValue() != newHigh) {
-            cvLow.setValue(newLow);
-            cvHigh.setValue(newHigh);
-        }
+        cv1.setValue(newCv1);
+        cv2.setValue(newCv2);
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" exit updatedTextField");
 
-        if (log.isDebugEnabled()) log.debug("exit updatedTextField");
     }
 
     /** ActionListener implementations */
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) log.debug("actionPerformed");
-        int newVal = ((Integer.valueOf(_value.getText()).intValue())-_Offset)/_Factor;
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" actionPerformed");
+        int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
         updatedTextField();
         prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
 
     /** FocusListener implementations */
     public void focusGained(FocusEvent e) {
-        if (log.isDebugEnabled()) log.debug("focusGained");
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" focusGained");
         enterField();
     }
 
     public void focusLost(FocusEvent e) {
-        if (log.isDebugEnabled()) log.debug("focusLost");
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" focusLost");
         exitField();
     }
 
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
     public String getValueString() {
-        int newVal = ((Integer.valueOf(_value.getText()).intValue())-_Offset)/_Factor;
-        return String.valueOf(newVal);
+        // until 2.13.1-dev, this was just the 1st CV value
+        //int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
+        return _value.getText();
     }
     public void setIntValue(int i) {
-        setValue((i-_Offset)/_Factor);
+        // until 2.13.1-dev, this was just the 1st CV value
+        //setValue((i-mOffset)/mFactor);
+        setValue(i);
     }
 
     public int getIntValue() {
-        return ((Integer.valueOf(_value.getText()).intValue())-_Offset)/_Factor;
+        return ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
     }
 
     public Object getValueObject() {
@@ -178,17 +207,17 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     public void setValue(int value) {
-        if (log.isDebugEnabled()) log.debug("setValue "+value);
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" enter setValue "+value);
         int oldVal;
         try {
-            oldVal = (Integer.valueOf(_value.getText()).intValue()-_Offset)/_Factor;
+            oldVal = (Integer.valueOf(_value.getText()).intValue()-mOffset)/mFactor;
         } catch (java.lang.NumberFormatException ex) { oldVal = -999; }
-        if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
-        if (oldVal != value) {
-            _value.setText(""+value);
-            updatedTextField();
-            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
-        }
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" setValue with new value "+value+" old value "+oldVal);
+        _value.setText(String.valueOf( value*mFactor + mOffset));
+        if (oldVal != value || getState() == VariableValue.UNKNOWN)
+            actionPerformed(null);
+        prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value*mFactor + mOffset));
+        if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" exit setValue "+value);
     }
 
     Color _defaultColor;
@@ -245,28 +274,13 @@ public class IndexedPairVariableValue extends VariableValue
      * @param state
      */
     public void setCvState(int state) {
-        (_cvVector.elementAt(_row)).setState(state);
-        (_cvVector.elementAt(_secondCVrow)).setState(state);
+        (_cvVector.elementAt(getCvNum())).setState(state);
     }
-
-    public void setToRead(boolean state) {
-        if (getInfoOnly() || getWriteOnly()) state = false;
-        (_cvVector.elementAt(_row)).setToRead(state);
-        (_cvVector.elementAt(_secondCVrow)).setToRead(state);
-    }
-    public boolean isToRead() { return (_cvVector.elementAt(_row)).isToRead(); }
-
-    public void setToWrite(boolean state) {
-        if (getInfoOnly() || getReadOnly()) state = false;
-        (_cvVector.elementAt(_row)).setToWrite(state);
-        (_cvVector.elementAt(_secondCVrow)).setToWrite(state);
-    }
-    public boolean isToWrite() { return (_cvVector.elementAt(_row)).isToWrite(); }
 
     public boolean isChanged() {
-        CvValue cvLow = (_cvVector.elementAt(_row));
-        CvValue cvHigh = (_cvVector.elementAt(_secondCVrow));
-        return (considerChanged(cvLow)||considerChanged(cvHigh));
+        CvValue cv1 = (_cvVector.elementAt(getCvNum()));
+        CvValue cv2 = (_cvVector.elementAt(getSecondCvNum()));
+        return (considerChanged(cv1)||considerChanged(cv2));
     }
 
     public void readChanges() {
@@ -282,7 +296,7 @@ public class IndexedPairVariableValue extends VariableValue
         setToRead(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         // lets skip the SI step if SI is not used
-        if ((_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).siVal() >= 0) {
+        if ((_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).siVal() >= 0) {
             _progState = WRITING_PI4R;
         }
         else {
@@ -291,7 +305,7 @@ public class IndexedPairVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV read");
         // to read any indexed CV we must write the PI
-        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writePI(_status);
+        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writePI(_status);
     }
 
     public void writeAll() {
@@ -302,7 +316,7 @@ public class IndexedPairVariableValue extends VariableValue
         setToWrite(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
         // lets skip the SI step if SI is not used
-        if ((_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).siVal() >= 0) {
+        if ((_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).siVal() >= 0) {
             _progState = WRITING_PI4W;
         } else {
             _progState = WRITING_SI4W;
@@ -310,7 +324,7 @@ public class IndexedPairVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV write");
         // to write any indexed CV we must write the PI
-        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writePI(_status);
+        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writePI(_status);
     }
     
     public void confirmAll() {
@@ -318,7 +332,7 @@ public class IndexedPairVariableValue extends VariableValue
         setToRead(false);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in confirm()");
         // lets skip the SI step if SI is not used
-        if ((_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).siVal() >= 0) {
+        if ((_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).siVal() >= 0) {
             _progState = WRITING_PI4C;
         }
         else {
@@ -327,7 +341,7 @@ public class IndexedPairVariableValue extends VariableValue
         retries = 0;
         if (log.isDebugEnabled()) log.debug("invoke PI write for CV confirm");
         // to read any indexed CV we must write the PI
-        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writePI(_status);
+        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writePI(_status);
     }
 
     // handle incoming parameter notification
@@ -348,11 +362,11 @@ public class IndexedPairVariableValue extends VariableValue
 
                     // check for success
                     if ((retries < RETRY_MAX)
-                        && ( (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.STORED) ) {
+                        && ( (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).getState() != CvValue.STORED) ) {
                         // need to retry on error; leave progState as it was
                         log.debug("retry");
                         retries++;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writePI(_status);
+                        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writePI(_status);
                         return;
                     }
                     // success, move on to next
@@ -364,7 +378,7 @@ public class IndexedPairVariableValue extends VariableValue
                     	_progState = WRITING_SI4C;
                     else
                     	_progState = WRITING_SI4W;
-                    (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writeSI(_status);
+                    (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writeSI(_status);
                     return;
                 case WRITING_SI4R:
                 case WRITING_SI4C:
@@ -373,11 +387,11 @@ public class IndexedPairVariableValue extends VariableValue
 
                     // check for success
                     if ((retries < RETRY_MAX)
-                        && ( (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.STORED) ) {
+                        && ( (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).getState() != CvValue.STORED) ) {
                         // need to retry on error; leave progState as it was
                         log.debug("retry");
                         retries++;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writeSI(_status);
+                        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writeSI(_status);
                         return;
                     }
                     // success, move on to next
@@ -385,13 +399,13 @@ public class IndexedPairVariableValue extends VariableValue
                     
                     if (_progState == WRITING_SI4R ) {
                         _progState = READING_CV;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).readIcV(_status);
+                        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).readIcV(_status);
                     } else if (_progState == WRITING_SI4C ) {
                         _progState = COMPARE_CV;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).confirmIcV(_status);
+                        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).confirmIcV(_status);
                     } else {
                         _progState = WRITING_CV;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writeIcV(_status);
+                        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writeIcV(_status);
                     }
                     return;
                 case READING_CV:  // now done with the read request
@@ -399,11 +413,11 @@ public class IndexedPairVariableValue extends VariableValue
 
                     // check for success
                     if ((retries < RETRY_MAX)
-                        && ( (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.READ) ) {
+                        && ( (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).getState() != CvValue.READ) ) {
                         // need to retry on error; leave progState as it was
                         log.debug("retry");
                         retries++;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).readIcV(_status);
+                        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).readIcV(_status);
                         return;
                     }
                     // success, move on to next
@@ -423,14 +437,14 @@ public class IndexedPairVariableValue extends VariableValue
 
                 	// check for success SAME or DIFF?
                 	if ((retries < RETRY_MAX)
-                			&& (( _cvVector.elementAt(programmingLow ? _row : _secondCVrow))
+                			&& (( _cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum()))
                 					.getState() != CvValue.SAME)
-                					&& (( _cvVector.elementAt(programmingLow ? _row : _secondCVrow))
+                					&& (( _cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum()))
                 							.getState() != CvValue.DIFF)) {
                 		// need to retry on error; leave progState as it was
                 		log.debug("retry");
                 		retries++;
-                		(_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).confirmIcV(_status);
+                		(_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).confirmIcV(_status);
                 	}
                 	return;
                 case WRITING_CV:  // now done with the write request
@@ -438,11 +452,11 @@ public class IndexedPairVariableValue extends VariableValue
 
                     // check for success
                     if ((retries < RETRY_MAX)
-                        && ( (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).getState() != CvValue.STORED) ) {
+                        && ( (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).getState() != CvValue.STORED) ) {
                         // need to retry on error; leave progState as it was
                         log.debug("retry");
                         retries++;
-                        (_cvVector.elementAt(programmingLow ? _row : _secondCVrow)).writeIcV(_status);
+                        (_cvVector.elementAt(programmingLow ? getCvNum() : getSecondCvNum())).writeIcV(_status);
                         return;
                     }
                     // success, move on to next
@@ -466,8 +480,8 @@ public class IndexedPairVariableValue extends VariableValue
         }
 
         else if (e.getPropertyName().equals("State")) {
-            CvValue cvLow = _cvVector.elementAt(_row);
-            CvValue cvHigh = _cvVector.elementAt(_secondCVrow);
+            CvValue cvLow = _cvVector.elementAt(getCvNum());
+            CvValue cvHigh = _cvVector.elementAt(getSecondCvNum());
             if (log.isDebugEnabled()) log.debug("CV State changed to "+cvLow.getState());
             if (cvHigh.getState() == VariableValue.UNKNOWN) {
                 if (cvLow.getState() == VariableValue.EDITED) {
@@ -481,21 +495,24 @@ public class IndexedPairVariableValue extends VariableValue
         }
         else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
-            CvValue cvLow = _cvVector.elementAt(_row);
-            CvValue cvHigh = _cvVector.elementAt(_secondCVrow);
-            int newVal = (cvLow.getValue() + (cvHigh.getValue()*_Factor));
+            CvValue cv0 = _cvVector.elementAt(getCvNum());
+            CvValue cv1 = _cvVector.elementAt(getSecondCvNum());
+            int newVal = ((cv0.getValue()&lowerbitmask) >> lowerbitoffset)
+                + (((cv1.getValue()&upperbitmask)*256)>>upperbitoffset);
             if (log.isDebugEnabled())
-                log.debug("set value to "+newVal+" based on cv0="+cvLow.getValue()+" cv1="+cvHigh.getValue());
+                log.debug("CV "+getCvNum()+","+getSecondCvNum()+" set value to "+newVal+" based on cv0="+cv0.getValue()+" cv1="+cv1.getValue());
             setValue(newVal);  // check for duplicate done inside setVal
+            if (log.isDebugEnabled())
+                log.debug("CV "+getCvNum()+","+getSecondCvNum()+" in property change after setValue call, cv0="+cv0.getValue()+" cv1="+cv1.getValue());
             // state change due to CV state change, so propagate that
-            if (cvHigh.getState() == VariableValue.UNKNOWN) {
-                if (cvLow.getState() == VariableValue.EDITED) {
+            if (cv1.getState() == VariableValue.UNKNOWN) {
+                if (cv0.getState() == VariableValue.EDITED) {
                     setState(VariableValue.EDITED);
                 } else {
                     setState(VariableValue.UNKNOWN);
                 }
             } else {
-                setState(cvLow.getState());
+                setState(cv0.getState());
             }
         }
     }
@@ -566,8 +583,8 @@ public class IndexedPairVariableValue extends VariableValue
             _value.removePropertyChangeListener(this);
             _value = null;
         }
-        (_cvVector.elementAt(_row)).removePropertyChangeListener(this);
-        (_cvVector.elementAt(_secondCVrow)).removePropertyChangeListener(this);
+        (_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+        (_cvVector.elementAt(getSecondCvNum())).removePropertyChangeListener(this);
     }
 
     // initialize logging
