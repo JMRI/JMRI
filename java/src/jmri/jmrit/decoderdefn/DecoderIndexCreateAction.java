@@ -8,7 +8,7 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
 /**
- * Check the names in an XML decoder file against the names.xml definitions
+ * Update the decoder index and store
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2011
  * @version	$Revision$
