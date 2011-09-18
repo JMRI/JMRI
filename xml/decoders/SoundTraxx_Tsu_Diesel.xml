@@ -23,6 +23,7 @@
   <version author="Jack Shall lcrr@bellsouth.net" version="7" lastUpdated="20100512"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="8" lastUpdated="20100830"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="9" lastUpdated="20110303"/>
+  <version author="Jack Shall lcrr@bellsouth.net" version="10" lastUpdated="20110818"/>
 
 <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
@@ -51,7 +52,11 @@
 <!--			lighting.  Added new lighting CVs 53, 54, 57 and 58.  Added Rule 17 mode to			-->
 <!--			FX5/FX6.  Moved custom Pane formats to external files.								-->
 <!--			Special thanks to Michael Mosher for his assistance.								-->
-<!-- version 9	Added new 1000 series decoders: EMD 710 G3C-T2 (828115), GE Gevo-12 (828116)		-->
+<!-- version 9	Added new 1000 series decoders: EMD 710 G3C-T2 (827115), GE Gevo-12 (827116)		-->
+<!-- version 10	Added decoders: EMD 567D (Turbo) (827119)(828039), EMD 567 (Dual) (827018)(827118),	-->
+<!--			GE FDL-16 (Modern) (827117)(828038)(828057), ALCO 251C (Supercharged) (828037).		-->
+<!--			Also added TSU-750 UP Gas Turbine (827015), TSU-GN1000 EMD 710 G3C-T2 (828053) and	-->
+<!--			TSU-KT1000 for KATO GP35 (828067)													-->
 
 
 <!-- Decoder Model information follows -->
@@ -110,6 +115,22 @@
       </model>
       <model model="TSU-750 EMD 567" numOuts="2" numFns="14" connector="other"
 		productID="827001" comment="Model 827001">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-750 EMD 567 (Dual Motors)" numOuts="2" numFns="14" connector="other"
+		productID="827018" comment="Model 827018">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -190,6 +211,22 @@
       </model>
       <model model="TSU-750 GE Cummins" numOuts="2" numFns="14" connector="other"
 		productID="827014" comment="Model 827014">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-750 UP Gas Turbine" numOuts="2" numFns="14" connector="other"
+		productID="827015" comment="Model 827015">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -318,6 +355,38 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+      <model model="TSU-1000 EMD 567 (Dual Motors)" numOuts="4" numFns="14" connector="9pin"
+		productID="827118" comment="Model 827118">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-1000 EMD 567D (Turbo)" numOuts="4" numFns="14" connector="9pin"
+		productID="827119" comment="Model 827119">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
       <model model="TSU-1000 EMD 645" numOuts="4" numFns="14" connector="9pin"
 		productID="827102" comment="Model 827102">
         <versionCV lowVersionID="64"/>
@@ -400,6 +469,22 @@
       </model>
       <model model="TSU-1000 GE FDL-16" numOuts="4" numFns="14" connector="9pin"
 		productID="827107" comment="Model 827107">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" connector="9pin"
+		productID="827117" comment="Model 827117">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -512,6 +597,22 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+      <model model="TSU-AT1000 Alco 251C (Supercharged)" numOuts="4" numFns="14" connector="other"
+		productID="828037" comment="Model 828037">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
       <model model="TSU-AT1000 Alco 539 (Turbo)" numOuts="4" numFns="14" connector="other"
 		productID="828049" comment="Model 828049">
         <versionCV lowVersionID="64"/>
@@ -530,6 +631,22 @@
       </model>
       <model model="TSU-AT1000 EMD 567" numOuts="4" numFns="14" connector="other"
 		productID="828040" comment="Model 828040">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-AT1000 EMD 567D (Turbo)" numOuts="4" numFns="14" connector="other"
+		productID="828039" comment="Model 828039">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -610,6 +727,22 @@
       </model>
       <model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" connector="other"
 		productID="828046" comment="Model 828046">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-AT1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" connector="other"
+		productID="828038" comment="Model 828038">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -740,8 +873,40 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+      <model model="TSU-GN1000 EMD 710 G3C-T2" numOuts="4" numFns="14" connector="other"
+		productID="828053" comment="Model 828053">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
       <model model="TSU-GN1000 GE FDL-16" numOuts="4" numFns="14" connector="other"
 		productID="828056" comment="Model 828056">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-GN1000 GE FDL-16 (Modern)" numOuts="4" numFns="14" connector="other"
+		productID="828057" comment="Model 828057">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -759,7 +924,7 @@
 
 
       <model model="TSU-KT1000 Kato C44-9W" numOuts="4" numFns="14" connector="other"
-		productID="828061" comment="Model 828061">
+		productID="828061" comment="Model 828061 and 828066">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -776,6 +941,22 @@
       </model>
       <model model="TSU-KT1000 Kato F40PH" numOuts="4" numFns="14" connector="other"
 		productID="828064" comment="Model 828064">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-KT1000 Kato GP35" numOuts="4" numFns="14" connector="other"
+		productID="828067" comment="Model 828067">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -3815,7 +3996,7 @@
       </variable>
 
       <variable label="Alternate Prime Mover Select" CV="112" mask="XXXXXVXX"
-			item="Sound Option 17" default="0" include="827114" comment="This CV bit for Gas Turbine only"
+			item="Sound Option 17" default="0" include="827015,827114" comment="This CV bit for Gas Turbine only"
 			tooltip="Select whether diesel engine remains running or shuts down during turbine operation">
         <enumVal>
           <enumChoice choice="Diesel engine remains on when turbine is on">
@@ -3829,7 +4010,7 @@
       </variable>
 
       <variable label="Backfire Enable" CV="112" mask="XXXVVXXX"
-			item="Sound Option 18" default="1" include="827114" comment="This CV bit for Gas Turbine only"
+			item="Sound Option 18" default="1" include="827015,827114" comment="This CV bit for Gas Turbine only"
 			tooltip="Select whether and when locomotive experiences a backfire">
         <enumVal>
           <enumChoice choice="Backfire is off">
@@ -3865,7 +4046,7 @@
 
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827011,827012,827014,827101,827104,827106,827108,827111,827112,827113,827114,828020,828023,828025,828040,828043,828045,828047,828049,828050,828065"
+			include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067"
 			tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco A2">
@@ -3923,7 +4104,7 @@
 
       <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827011,827012,827014,827101,827104,827106,827108,827111,827112,827113,827114,828020,828023,828025,828040,828043,828045,828047,828049,828050,828065"
+			include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short horn blast">
@@ -4097,7 +4278,7 @@
 
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
-			include="827002,827102,827107,827109,828026,828041,828046,828048,828051,828056,828061,828062,828063,828064"
+			include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828061,828062,828063,828064"
 			tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco E2">
@@ -4155,7 +4336,7 @@
 
       <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
-			include="827002,827102,827107,827109,828026,828041,828046,828048,828051,828056,828061,828062,828063,828064"
+			include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828061,828062,828063,828064"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short Horn">
@@ -4397,7 +4578,7 @@
 
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
-			include="827115"
+			include="827115,828053"
 			tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Nathan M3">
@@ -4455,7 +4636,7 @@
 
       <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
-			include="827115"
+			include="827115,828053"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short Horn">
@@ -4646,7 +4827,7 @@
       </variable>
 
       <variable label="Dynamic Brake Override" CV="116" mask="VVXXXXXX"
-			item="Sound Option 4" default="0" exclude="827114" comment="For all models except Gas Turbine"
+			item="Sound Option 4" default="0" exclude="827015,827114" comment="For all models except Gas Turbine"
 			tooltip="Controls how the dynamic brakes interact with the engine RPMs">
         <enumVal>
           <enumChoice choice="Dynamic Brakes operate independently of engine RPMs">
@@ -4666,7 +4847,7 @@
       </variable>
 
       <variable label="Dynamic Brake Mode" CV="116" mask="VVXXXXXX"
-			item="Sound Option 4" default="0" include="827114" comment="This version for Gas Turbine only"
+			item="Sound Option 4" default="0" include="827015,827114" comment="This version for Gas Turbine only"
 			tooltip="Controls how the dynamic brakes interact with the turbine and the diesel engine RPMs">
         <enumVal>
           <enumChoice choice="Dynamic brakes on with function F4">
@@ -5129,7 +5310,7 @@
       </variable>
 
       <variable label="Turbine Start Speed" CV="199"
-			item="Sound Group 3 Option 6" default="7" include="827114" comment="This CV for Gas Turbine only"
+			item="Sound Group 3 Option 6" default="7" include="827015,827114" comment="This CV for Gas Turbine only"
 			tooltip="&lt;html&gt;Specifies the throttle speed step where the turbine will turn on.  This also sets the&lt;br&gt;
 					maximum motor speed step while the Engine RPM Interlock bit is set (Bit 4, CV 116)&lt;/html&gt;">
         <decVal max="127"/>
@@ -5137,7 +5318,7 @@
       </variable>
 
       <variable label="Turbine Timeout" CV="200"
-			item="Sound Group 3 Option 7" default="10" include="827114" comment="This CV for Gas Turbine only"
+			item="Sound Group 3 Option 7" default="10" include="827015,827114" comment="This CV for Gas Turbine only"
 			tooltip="&lt;html&gt;A value of zero allows the turbine to be turned on using functions F9 and F10 in semi-automatic notching mode.&lt;br&gt;
 					Values of 1-255 specify the number of seconds before the turbine will turn off in automatic engine notching mode.&lt;/html&gt;">
         <decVal/>
