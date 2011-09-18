@@ -76,6 +76,8 @@ Second, we build the release branch:
     cd ../../branches/jmri/releases
     svn update 2.13.1
     
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.1")
+
     ( to move later changes, svn merge -c <changeset#>   ^/trunk/jmri )
 
 ================================================================================
