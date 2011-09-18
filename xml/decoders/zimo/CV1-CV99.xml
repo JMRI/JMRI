@@ -3,6 +3,9 @@
 
 
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 15 Aug 11 JES
+                 - added F9-F12 to CV 22
+-->
 
 <variables>
       <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
@@ -347,9 +350,53 @@
         </enumVal>
         <label>Consist Address Active For FL in Reverse</label>
       </variable>
+      <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F9</label>
+      </variable>
+      <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F10</label>
+      </variable>
       <variable label="Acceleration Trim" CV="23" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Acceleration Trim</label>
+      </variable>
+      <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F11</label>
+      </variable>
+      <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For F12</label>
       </variable>
       <variable label="Acceleration Trim Sign" CV="23" mask="VXXXXXXX">
         <enumVal>

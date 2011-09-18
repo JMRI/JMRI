@@ -3,6 +3,9 @@
 
 
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 2 Aug 11 JES
+                 - made item name for CV 133 more generic
+-->
 
 <pane name="Smoke">
 	<column>
@@ -48,7 +51,7 @@
       <label label=" ">
         <label> </label>
       </label>
-        <display item="Function Output 4 as virtual Cam or Smoke Fan" tooltip="CV 133"/>
+        <display item="Function Output as virtual Cam or Smoke Fan" tooltip="CV 133"/>
       <label label=" ">
         <label> </label>
       </label>
