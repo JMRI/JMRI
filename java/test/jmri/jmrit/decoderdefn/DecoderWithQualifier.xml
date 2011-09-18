@@ -58,6 +58,9 @@
     <ivariable label="Minor Version Number" CVname="56.254.6" CV="56" PI="254" SI="6"
                readOnly="no" item="CV56.254.6" default="0"> <indexedVal/> </ivariable>
 
+    <ivariable label="Major Version Number" CVname="56.254.7" CV="56" PI="254" SI="7"
+               readOnly="no" item="CV56.254.7" default="0"> <indexedVal/> </ivariable>
+
     <variable label="Primary Address" CV="1" comment="Short address"
               item="Short Address"  default="03">
       <shortAddressVal/></variable>
@@ -68,7 +71,7 @@
       <decVal/></variable>
 
     <variable label="CV3" CV="3" item="Accel" >
-      <decVal max="31"/></variable>
+      <decVal/></variable>
 
 
     <ivariable label="iCV53.5.0" CVname="53.5.0" CV="53" PI="5" SI="0"
@@ -81,7 +84,7 @@
 
 
     <ivariable item="iCV55.92.0" CVname="55.92.0" CV="55" PI="92" SI="0"
-               default="1" label="CV55.92.0 qual gt 100" mask="XXXXXXXV">
+               default="1" label="CV55.92.0 qual minor gt 100" mask="XXXXXXXV">
       <ienumVal>
         <ienumChoice choice="Off"/>
         <ienumChoice choice="On"/>
@@ -93,10 +96,28 @@
       </qualifier>
     </ivariable>
 
+    <ivariable item="iCV55.92.1" CVname="55.92.1" CV="55" PI="92" SI="1"
+               default="1" label="CV55.92.1 qual minor, major gt 100" mask="XXXXXXXV">
+      <ienumVal>
+        <ienumChoice choice="Off"/>
+        <ienumChoice choice="On"/>
+      </ienumVal>
+      <qualifier>
+        <variableref>Minor Version Number</variableref>
+        <relation>ge</relation>
+        <value>100</value>
+      </qualifier>
+      <qualifier>
+        <variableref>Major Version Number</variableref>
+        <relation>ge</relation>
+        <value>100</value>
+      </qualifier>
+    </ivariable>
+
     <variable label="CV4" CV="4" item="Decel" >
       <decVal max="31"/>
       <qualifier>
-        <variableref>Minor Version Number</variableref>
+        <variableref>CV3</variableref>
         <relation>ge</relation>
         <value>100</value>
       </qualifier>
