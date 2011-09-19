@@ -506,9 +506,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             if (val.contains("CONTROL_LOST")){
                                 retryControl();
                                 log.debug("We have no control over the ecos object, but will retry.");
-                                /*_haveControl = false;
-                                javax.swing.JOptionPane.showMessageDialog(null,"We do not have control of loco " + this.address + "\n" + "Press Release and try again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
-                                release();*/
                             }
                         }
                         else if (result.equals("speed")){
@@ -756,7 +753,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         else if (lines[lines.length-1].contains("<END 15 (NERROR_UNKNOWNID)>")){
             log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
             javax.swing.JOptionPane.showMessageDialog(null,"Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
-            release();
+            jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         }
         else log.debug("Last Message resulted in an END code we do not understand\n" + lines[lines.length-1]);
     }
@@ -773,10 +770,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     private void createEcosLoco() {
+        objEcosLoco.setEcosDescription("Created By JMRI");
+        objEcosLoco.setProtocol("DCC128");
         String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[DCC128], append)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
-    
     }
 
     private void retryControl(){
@@ -823,7 +821,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 notifyPropertyChangeListener("LostControl", 0, 0);
             } else
                 adaptermemo.getThrottleManager().throttleSetup(this, this.address, false);
-            release();
+            jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         }
     }
 

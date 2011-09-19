@@ -96,12 +96,16 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
 				&& getElement(2) >= 0x41 && getElement(2) <= 0x6F
 				&& getNumDataElements() == 3;
 	}
-    
+
+    //An event message is Unsolicited
     public boolean isUnsolicited() {
     	if (isSensorMessage()) {
     		setUnsolicited();
     		return true;
-    	} else {
+    	} else if (isEvent()) {
+            setUnsolicited();
+            return true;
+        } else {
     		return false;
     	}
     }
