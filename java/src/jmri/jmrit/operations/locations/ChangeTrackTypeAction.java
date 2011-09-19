@@ -59,6 +59,10 @@ class ChangeTrackFrame extends OperationsFrame{
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 	    
 	    _tef = tef;
+	    if (_tef._track == null){
+	    	log.debug("track is null, change track not possible");
+	    	return;
+	    }
 	    String trackName = _tef._track.getName();
 		
 		// load the panel

@@ -75,6 +75,10 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 	    
 	    _tef = tef;
 	    _track = _tef._track;
+	    if (_track == null){
+	    	log.debug("track is null, pools can not be created");
+	    	return;
+	    }
 	    _track.addPropertyChangeListener(this);
 	    _track.getLocation().addPropertyChangeListener(this);
 	    _pool = _track.getPool();

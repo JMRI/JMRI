@@ -108,7 +108,7 @@ public class OptionFrame extends OperationsFrame{
 		}
 
 		//	build menu		
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainOptions", true);
 
 		pack();
 		if (getWidth()<300)
