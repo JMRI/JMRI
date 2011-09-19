@@ -63,7 +63,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      * @param rosterEntries - an ArrayList of RosterEntries
      */
     public static RosterEntrySelection createRosterEntrySelection(ArrayList<RosterEntry> rosterEntries) {
-        ArrayList<String> Ids = new ArrayList(rosterEntries.size());
+        ArrayList<String> Ids = new ArrayList<String>(rosterEntries.size());
         for (RosterEntry re: rosterEntries) {
             Ids.add(re.getId());
         }
@@ -101,7 +101,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     public static ArrayList<RosterEntry> getRosterEntries(Transferable t) throws UnsupportedFlavorException, IOException {
         if (t.isDataFlavorSupported(rosterEntryFlavor)) {
             ArrayList<String> Ids = (ArrayList<String>) t.getTransferData(rosterEntryFlavor);
-            ArrayList<RosterEntry> REs = new ArrayList(Ids.size());
+            ArrayList<RosterEntry> REs = new ArrayList<RosterEntry>(Ids.size());
             for (String Id : Ids) {
                 RosterEntry re = Roster.instance().entryFromTitle(Id);
                 if (re != null) {
