@@ -116,9 +116,10 @@ class ConfigurableSound extends VSDSound {
 		    is_playing = true;
 		}
 	    }
-	    else if (use_mid_sound)
+	    else if (use_mid_sound) {
 		mid_sound.setLooped(true);
 		mid_sound.play();
+	    }
 	}
     }
 

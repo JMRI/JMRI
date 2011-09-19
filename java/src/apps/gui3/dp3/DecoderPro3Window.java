@@ -173,10 +173,24 @@ public class DecoderPro3Window
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            programmerLabel.setText ("Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
+            programmerLabel.setText ("Service Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
             programmerLabel.setForeground(new Color(0, 128, 0));
         } else {
-            programmerLabel.setText("No Programmer Available");
+            programmerLabel.setText("No Service Mode Programmer Available");
+            programmerLabel.setForeground(Color.red);
+        }
+        
+        addToStatusBox(programmerLabel, null);
+        
+        programmerLabel = new JLabel();
+        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+                        jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
+            /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
+            but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
+            programmerLabel.setText ("Operations Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
+            programmerLabel.setForeground(new Color(0, 128, 0));
+        } else {
+            programmerLabel.setText("No Operations Mode Programmer Available");
             programmerLabel.setForeground(Color.red);
         }
         
@@ -707,13 +721,7 @@ public class DecoderPro3Window
             throttleLabels.setEnabled(true);
             rosterMedia.setEnabled(true);
             throttleLaunch.setEnabled(true);
-            /*if (jmri.InstanceManager.programmerManagerInstance()!=null &&
-            jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            service.setEnabled(true);
-            ops.setEnabled(true);
-            } else 
-            edit.setSelected(true);
-            edit.setEnabled(true);*/
+
             updateProgMode();
         }
     }
@@ -724,7 +732,6 @@ public class DecoderPro3Window
 
     // uncomment the following line and comment the line following that
     // to restore Programming Mode selection in a window
-    // jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
     jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
     JButton prog1Button = new JButton("Basic Programmer");
@@ -738,23 +745,17 @@ public class DecoderPro3Window
     PropertyChangeListener rosterEntryUpdateListener;
 
     void updateProgMode(){
-        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
-                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            service.setEnabled(true);
-            ops.setEnabled(true);
-            firePropertyChange("setprogservice", "setEnabled", true);
-            firePropertyChange("setprogops", "setEnabled", true);
-        } else {
-            edit.setSelected(true);
+        String progMode;
+        if(service.isSelected()){
+            progMode = "setprogservice";
         }
-        edit.setEnabled(true);
-        firePropertyChange("setprogedit", "setEnabled", true);
-
-        String progMode = "setprogservice";
-        if(ops.isSelected())
+        else if(ops.isSelected()){
             progMode = "setprogops";
-        else if (edit.isSelected())
+        }
+        else{
             progMode = "setprogedit";
+        }
+
         firePropertyChange(progMode, "setSelected", true);
     }
     /**
@@ -804,9 +805,45 @@ public class DecoderPro3Window
         service.addActionListener(programModeListener);
         ops.addActionListener(programModeListener);
         edit.addActionListener(programModeListener);
-
-        service.setSelected(true);
-
+        
+        service.setVisible(false);
+        ops.setVisible(false);
+        
+        if (jmri.InstanceManager.programmerManagerInstance()!=null){
+            if(jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+                service.setEnabled(true);
+                service.setVisible(true);
+                firePropertyChange("setprogservice", "setEnabled", true);
+            }
+            if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
+                ops.setEnabled(true);
+                ops.setVisible(true);
+                firePropertyChange("setprogops", "setEnabled", true);
+            }
+        }
+        
+        edit.setEnabled(true);
+        firePropertyChange("setprogedit", "setEnabled", true);
+        
+        String strProgMode;
+        if(service.isEnabled()){
+            service.setSelected(true);
+            strProgMode = "setprogservice";
+            modePanel.setVisible(true);
+        }
+        else if(ops.isEnabled()){
+            ops.setSelected(true);
+            strProgMode = "setprogops";
+            modePanel.setVisible(false);
+        }
+        else{
+            edit.setSelected(true);
+            modePanel.setVisible(false);
+            strProgMode = "setprogedit";
+        }
+        
+        firePropertyChange(strProgMode, "setSelected", true);
+        
         panel.add(progModePanel);
 
         JPanel buttonHolder = new JPanel();
