@@ -66,7 +66,7 @@ public class RestoreFilesAction extends AbstractAction {
 			} catch (IllegalArgumentException e){
 				
 			}
-			Apps.handleQuit();
+			Apps.handleRestart();
 		} else {
 			JOptionPane.showMessageDialog(null, "Could not restore operation files",
 					"Restore failed!" ,

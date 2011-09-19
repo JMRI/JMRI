@@ -116,7 +116,7 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 				} catch (IllegalArgumentException e){
 					
 				}
-				Apps.handleQuit();
+				Apps.handleRestart();
 			} else {
 				JOptionPane.showMessageDialog(this, "Could not restore operation files",
 						"Restore failed!" ,
