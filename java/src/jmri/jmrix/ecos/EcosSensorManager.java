@@ -56,98 +56,113 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     public void reply(EcosReply m) {
         // is this a list of sensors?
         EcosSensor es;
-        int startobj;
-        int endobj;
+        //int startobj;
+        //int endobj;
 
         String msg = m.toString();
         String[] lines = msg.split("\n");
-        if (msg.contains("<REPLY queryObjects(26, ports)>")) {
-            for (int i = 1; i<lines.length-1; i++) {
-                if (lines[i].contains("ports[")) { // skip odd lines
-                    int start = 0;
-                    int end = lines[i].indexOf(' ');
-                    int object = Integer.parseInt(lines[i].substring(start, end));
-
-                    if ( (100<=object) && (object<200)) { // only physical sensors
-                        start = lines[i].indexOf('[')+1;
-                        end = lines[i].indexOf(']');
-                        int ports = Integer.parseInt(lines[i].substring(start, end));
-                        log.debug("Found sensor object "+object+" ports "+ports);
-                        
-                        if ((ports == 8) || (ports == 16)){
-                            Sensor s;
-                            String sensorSystemName;
-                            _sport.put(object, ports);
-                            for (int j=1; j<=ports; j++){
-                                StringBuilder sb = new StringBuilder();
-                                sb.append(prefix);
-                                sb.append("S");
-                                sb.append(object);
-                                sb.append(":");
-                                //Little work around to pad single digit address out.
-                                if (j<10)
-                                    sb.append("0");
-                                sb.append(j);
-                                sensorSystemName = sb.toString();
-                                s=getSensor(sensorSystemName);
-                                if(s==null){
-                                    es = (EcosSensor)provideSensor(sensorSystemName);
-                                    es.setObjectNumber(object);
-                                    _tecos.put(object, es);
-                                }
-                            }
-                            EcosMessage em = new EcosMessage("request("+object+", view)");
-                            tc.sendEcosMessage(em, this);
-                            
-                            em = new EcosMessage("get("+object+",state)");
-                            tc.sendEcosMessage(em, this);
-                        } else {
-                            log.debug("Invalid number of ports returned for Module " + object);
-                        }
-                    } 
-                }
+        if(m.getResultCode()==0){
+            int ecosObjectId = m.getEcosObjectId();
+            if((ecosObjectId!=26) && ((ecosObjectId<100) || (ecosObjectId>200))){
+                log.debug("message receieved that is not within the valid Sensor object range");
+                return;
             }
-        } else if (lines[0].contains("<REPLY get(") ){
-            /*
-            Potentially we could have received a message that is for a Loco or sensor
-            rather than for a sensor or route
-            We therefore need to extract the object number to check.
-             */
-            startobj=lines[0].indexOf("(")+1;
-            endobj=(lines[0].substring(startobj)).indexOf(",")+startobj;
-            //The first part of the messages is always the object id.
-            int object = Integer.parseInt(lines[0].substring(startobj, endobj));
-            if ((100<=object) && (object<200)){
-                //es = _tecos.get(object);
-                if(lines[0].contains("state")){
+            if (m.isUnsolicited()){ //<Event Messages are unsolicited
+                //So long as the event information is for a sensor we will determine
+                //which sensor it is for and let that deal with the message.
+                //startobj=lines[0].indexOf(" ")+1;
+                //endobj=(lines[0].substring(startobj)).indexOf(">")+startobj;
+                //The first part of the messages is always the object id.
+                //int object = Integer.parseInt(lines[0].substring(startobj, endobj));
+                //if ((100<=object) && (object<200)){
+                    //es = _tecos.get(object);
                     int startstate = msg.indexOf("state[");
                     int endstate = msg.indexOf("]");
+                    //int newstate = UNKNOWN;
                     if (startstate>0 && endstate >0) {
                         String val = msg.substring(startstate+8, endstate);
                         int intState = Integer.valueOf(val,16).intValue();
-                        EcosSensorState(object, intState);
+                        EcosSensorState(ecosObjectId, intState);
                     }
-                } 
-            }
-        } else if (lines[0].contains("<EVENT ")){
-            //So long as the event information is for a sensor we will determine
-            //which sensor it is for and let that deal with the message.
-            startobj=lines[0].indexOf(" ")+1;
-            endobj=(lines[0].substring(startobj)).indexOf(">")+startobj;
-            //The first part of the messages is always the object id.
-            int object = Integer.parseInt(lines[0].substring(startobj, endobj));
-            if ((100<=object) && (object<200)){
-                //es = _tecos.get(object);
-                int startstate = msg.indexOf("state[");
-                int endstate = msg.indexOf("]");
-                //int newstate = UNKNOWN;
-                if (startstate>0 && endstate >0) {
-                    String val = msg.substring(startstate+8, endstate);
-                    int intState = Integer.valueOf(val,16).intValue();
-                    EcosSensorState(object, intState);
+                //}
+                //With the sensor manager we don't keep an eye on the manager, which we proabaly need to do.
+            } else {
+                String replyType = m.getReplyType();
+                if(replyType.equals("queryObjects")){
+                    if (msg.contains("<REPLY queryObjects(26, ports)>")) {
+                        for (int i = 1; i<lines.length-1; i++) {
+                            if (lines[i].contains("ports[")) { // skip odd lines
+                                int start = 0;
+                                int end = lines[i].indexOf(' ');
+                                int object = Integer.parseInt(lines[i].substring(start, end));
+
+                                if ( (100<=object) && (object<200)) { // only physical sensors
+                                    start = lines[i].indexOf('[')+1;
+                                    end = lines[i].indexOf(']');
+                                    int ports = Integer.parseInt(lines[i].substring(start, end));
+                                    log.debug("Found sensor object "+object+" ports "+ports);
+                                    
+                                    if ((ports == 8) || (ports == 16)){
+                                        Sensor s;
+                                        String sensorSystemName;
+                                        _sport.put(object, ports);
+                                        for (int j=1; j<=ports; j++){
+                                            StringBuilder sb = new StringBuilder();
+                                            sb.append(prefix);
+                                            sb.append("S");
+                                            sb.append(object);
+                                            sb.append(":");
+                                            //Little work around to pad single digit address out.
+                                            if (j<10)
+                                                sb.append("0");
+                                            sb.append(j);
+                                            sensorSystemName = sb.toString();
+                                            s=getSensor(sensorSystemName);
+                                            if(s==null){
+                                                es = (EcosSensor)provideSensor(sensorSystemName);
+                                                es.setObjectNumber(object);
+                                                _tecos.put(object, es);
+                                            }
+                                        }
+                                        EcosMessage em = new EcosMessage("request("+object+", view)");
+                                        tc.sendEcosMessage(em, this);
+                                        
+                                        em = new EcosMessage("get("+object+",state)");
+                                        tc.sendEcosMessage(em, this);
+                                    } else {
+                                        log.debug("Invalid number of ports returned for Module " + object);
+                                    }
+                                } 
+                            }
+                        }
+                    }
+                }
+                else if (replyType.equals("get")){
+                //else if (lines[0].contains("<REPLY get(") ){
+                    /*
+                    Potentially we could have received a message that is for a Loco or sensor
+                    rather than for a sensor or route
+                    We therefore need to extract the object number to check.
+                     */
+                    //startobj=lines[0].indexOf("(")+1;
+                    //endobj=(lines[0].substring(startobj)).indexOf(",")+startobj;
+                    //The first part of the messages is always the object id.
+                    //int object = Integer.parseInt(lines[0].substring(startobj, endobj));
+                    //if ((100<=object) && (object<200)){
+                        //es = _tecos.get(object);
+                        if(lines[0].contains("state")){
+                            int startstate = msg.indexOf("state[");
+                            int endstate = msg.indexOf("]");
+                            if (startstate>0 && endstate >0) {
+                                String val = msg.substring(startstate+8, endstate);
+                                int intState = Integer.valueOf(val,16).intValue();
+                                EcosSensorState(ecosObjectId, intState);
+                            }
+                        } 
+                    //}
                 }
             }
-        } 
+        }
     }
     
 

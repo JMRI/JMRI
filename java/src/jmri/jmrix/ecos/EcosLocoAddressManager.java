@@ -499,29 +499,111 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         String msg = m.toString();
         String[] lines = msg.split("\n");
         log.debug("found "+(lines.length)+" response from Ecos");
-        if (lines[lines.length-1].contains("<END 0 (OK)>")){
-            //This needs restructuring it processes the list of locos
-            if (lines[0].startsWith("<REPLY queryObjects(10)>")){
-                //System.out.println("A return of a simple list of objects");
-                checkLocoList(lines);
-            } 
-            else if (lines[0].startsWith("<REPLY queryObjects(10")){
-                //System.out.println("Reply " + m + " " + getSystemPrefix() + " " + this);
-                //First line is the response header, the last line is the OK
-                for (int i = 1; i<lines.length-1; i++) {
-                    if (lines[i].contains("addr[")) { // skip odd lines
-                        String[] objectdetail = lines[i].split(" ");
-                        EcosLocoAddress tmploco;
-                        //The first part of the messages is always the object id.
-                        strde = objectdetail[0];
-                        int object = Integer.parseInt(strde);
-                        if ( (1000<=object) && (object<2000)) {
-                            tmploco = provideByEcosObject(strde);
-                            if(tmploco.getCV7()==null){
-                                tmploco.setCV7("0");
-                                getEcosCVs(tmploco);
+        if (m.getResultCode()==0){
+            int ecosObjectId = m.getEcosObjectId();
+            if((ecosObjectId!=10) && ((ecosObjectId<1000) || (ecosObjectId>2000))){
+                log.debug("message receieved that is not within th evlaid loco object range");
+                return;
+            }
+            if (m.isUnsolicited()){
+                if(ecosObjectId==10){
+                    log.debug("We have received notification of a change in the Loco list");
+                    if (lines.length==2){
+                        EcosMessage mout = new EcosMessage("queryObjects(10)");
+                        tc.sendEcosMessage(mout, this);
+                        //Version 3.0.1 of the software has an issue in that it stops sending updates on the 
+                        //loco objects when a delete has happened, we therefore need to release the old view
+                        //then re-request it.
+                        mout = new EcosMessage("release(10, view)");
+                        tc.sendEcosMessage(mout, this);
+                        mout = new EcosMessage("request(10, view)");
+                        tc.sendEcosMessage(mout, this);
+                    } else if (lines[1].contains("msg[LIST_CHANGED]")){
+                        EcosMessage mout = new EcosMessage("queryObjects(10)");
+                        tc.sendEcosMessage(mout, this);
+                    }
+                } else {
+                    EcosLocoAddress tmploco;
+                    //So long as the event information is for a turnout we will determine
+                    //which turnout it is for and let that deal with the message.
+                    //int object = m.getEcosObjectId();
+                    //if ((1000<=ecosObjectId) && (ecosObjectId<2000)){
+                        log.debug("Forwarding on State change for " + ecosObjectId);
+                        String strLocoObject = Integer.toString(ecosObjectId);
+                        tmploco = _tecos.get(strLocoObject);
+                        if (tmploco!=null){
+                            tmploco.reply(m);
+                        }
+                    //}
+                } 
+            } else {
+                String replyType = m.getReplyType();
+                if(replyType.equals("queryObjects")){
+                    //This needs restructuring it processes the list of locos
+                    if (lines[0].startsWith("<REPLY queryObjects(10)>")){
+                        //System.out.println("A return of a simple list of objects");
+                        checkLocoList(lines);
+                    } 
+                    else if (lines[0].startsWith("<REPLY queryObjects(10")){
+                        //System.out.println("Reply " + m + " " + getSystemPrefix() + " " + this);
+                        //First line is the response header, the last line is the OK
+                        for (int i = 1; i<lines.length-1; i++) {
+                            if (lines[i].contains("addr[")) { // skip odd lines
+                                String[] objectdetail = lines[i].split(" ");
+                                EcosLocoAddress tmploco;
+                                //The first part of the messages is always the object id.
+                                strde = objectdetail[0];
+                                int object = Integer.parseInt(strde);
+                                if ( (1000<=object) && (object<2000)) {
+                                    tmploco = provideByEcosObject(strde);
+                                    if(tmploco.getCV7()==null){
+                                        tmploco.setCV7("0");
+                                        getEcosCVs(tmploco);
+                                    }
+                                } else return;
+                                if (lines[i].contains("addr")){
+                                    tmploco.setEcosLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(lines[i], "addr[", "]"));
+                                }
+                                if (lines[i].contains("name")){
+                                    tmploco.setEcosDescription(getName(lines[i]));
+                                }
+                                if (lines[i].contains("protocol")){
+                                    tmploco.setProtocol(getProtocol(lines[i]));
+                                }
+                                register(tmploco);
+                             }
+                        }
+                    }
+                } else if (replyType.equals("get")){
+                //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
+                //identify the loco correctly
+                    EcosLocoAddress tmploco;
+
+                    //int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
+                    //if ( (1000<=object) && (object<2000)) {
+                    tmploco = provideByEcosObject(""+ecosObjectId);
+                    if(tmploco.getCV7()==null){
+                        tmploco.setCV7("0");
+                        getEcosCVs(tmploco);
+                    }
+                    //} else return;
+                    for(int i =1; i<lines.length-1; i++) {
+                        if(lines[i].contains("cv[")){
+                            int startcvnum = lines[i].indexOf("[")+1;
+                            int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
+                            int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
+                            
+                            int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
+                            int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
+                            String cvval = lines[i].substring(startcvval, endcvval);
+                            switch(cvnum){
+                                case 7 :    tmploco.setCV7(cvval);
+                                            break;
+                                case 8  :   tmploco.setCV8(cvval);
+                                            checkInRoster(tmploco);
+                                            break;
                             }
-                        } else return;
+                        }
                         if (lines[i].contains("addr")){
                             tmploco.setEcosLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(lines[i], "addr[", "]"));
                         }
@@ -532,82 +614,9 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                             tmploco.setProtocol(getProtocol(lines[i]));
                         }
                         register(tmploco);
-                     }
-                }
+                    }
+                } 
             }
-            //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
-            //identify the loco correctly
-            else if (lines[0].startsWith("<REPLY get(")){
-                EcosLocoAddress tmploco;
-
-                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
-                if ( (1000<=object) && (object<2000)) {
-                    tmploco = provideByEcosObject(""+object);
-                    if(tmploco.getCV7()==null){
-                        tmploco.setCV7("0");
-                        getEcosCVs(tmploco);
-                    }
-                } else return;
-                for(int i =1; i<lines.length-1; i++) {
-                    if(lines[i].contains("cv[")){
-                        int startcvnum = lines[i].indexOf("[")+1;
-                        int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
-                        int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
-                        
-                        int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
-                        int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
-                        String cvval = lines[i].substring(startcvval, endcvval);
-                        switch(cvnum){
-                            case 7 :    tmploco.setCV7(cvval);
-                                        break;
-                            case 8  :   tmploco.setCV8(cvval);
-                                        checkInRoster(tmploco);
-                                        break;
-                        }
-                    }
-                    if (lines[i].contains("addr")){
-                        tmploco.setEcosLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(lines[i], "addr[", "]"));
-                    }
-                    if (lines[i].contains("name")){
-                        tmploco.setEcosDescription(getName(lines[i]));
-                    }
-                    if (lines[i].contains("protocol")){
-                        tmploco.setProtocol(getProtocol(lines[i]));
-                    }
-                    register(tmploco);
-                }
-            } 
-            else if(lines[0].contains("<EVENT 10>")){
-                log.debug("We have received notification of a change in the Loco list");
-                if (lines.length==2){
-                    EcosMessage mout = new EcosMessage("queryObjects(10)");
-                    tc.sendEcosMessage(mout, this);
-                    //Version 3.0.1 of the software has an issue in that it stops sending updates on the 
-                    //loco objects when a delete has happened, we therefore need to release the old view
-                    //then re-request it.
-                    mout = new EcosMessage("release(10, view)");
-                    tc.sendEcosMessage(mout, this);
-                    mout = new EcosMessage("request(10, view)");
-                    tc.sendEcosMessage(mout, this);
-                } else if (lines[1].contains("msg[LIST_CHANGED]")){
-                    EcosMessage mout = new EcosMessage("queryObjects(10)");
-                    tc.sendEcosMessage(mout, this);
-                }
-            }
-            else if (lines[0].startsWith("<EVENT")){
-                EcosLocoAddress tmploco;
-                //So long as the event information is for a turnout we will determine
-                //which turnout it is for and let that deal with the message.
-                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
-                if ((1000<=object) && (object<2000)){
-                    log.debug("Forwarding on State change for " + object);
-                    String strLocoObject = Integer.toString(object);
-                    tmploco = _tecos.get(strLocoObject);
-                    if (tmploco!=null){
-                        tmploco.reply(m);
-                    }
-                }
-            } 
         }
     }
     

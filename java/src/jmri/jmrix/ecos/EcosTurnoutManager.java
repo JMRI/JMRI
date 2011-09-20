@@ -75,157 +75,165 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         int end;
         String msg = m.toString();
         String[] lines = msg.split("\n");
-        if (lines[lines.length-1].contains("<END 0 (OK)>")){
-            if (lines[0].startsWith("<REPLY queryObjects(11)>")) {
-                checkTurnoutList(lines);
+        if (m.getResultCode()==0){
+            int ecosObjectId = m.getEcosObjectId();
+            if((ecosObjectId!=11) && ((ecosObjectId<20000) || (ecosObjectId>30000))){
+                log.debug("message receieved that is not within the valid turnout object range");
+                return;
             }
-            else if (lines[0].startsWith("<REPLY queryObjects(11, addr)>")) {
-                // yes, make sure TOs exist
-                log.debug("found "+(lines.length-2)+" turnout objects");
-                for (int i = 1; i<lines.length-1; i++) {
-                    if (lines[i].contains("addr[")) { // skip odd lines
-                        int object = GetEcosObjectNumber.getEcosObjectNumber(lines[i], null, " ");
-                        if ( (20000<=object) && (object<30000)) { // only physical turnouts
-                            int addr = GetEcosObjectNumber.getEcosObjectNumber(lines[i], "[", "]");
-                            log.debug("Found turnout object "+object+" addr "+addr);
-                            
-                            if ( addr > 0 ) {
-                                Turnout t = getTurnout(prefix+"T"+addr);
-                                if (t == null) {
-                                    et = (EcosTurnout)provideTurnout(prefix+"T"+addr);
-                                    et.setObjectNumber(object);
-                                    _tecos.put(object, et);
-                                    // listen for changes
+            if (m.isUnsolicited()){
+                if(ecosObjectId==11){
+                //if (lines[0].startsWith("<EVENT 11>")){
+                    //Creation or removal of a turnout from the Ecos.
+                    if (lines[1].contains("msg[LIST_CHANGED]")){
+                        log.debug("We have received notification of a change in the Turnout list");
+                        EcosMessage mout = new EcosMessage("queryObjects(11)");
+                        tc.sendEcosMessage(mout, this);
+                    }
+                    //Creation or removal of a turnout from the Ecos.
+                } else {
+                //else if (lines[0].startsWith("<EVENT")){
+                    //So long as the event information is for a turnout we will determine
+                    //which turnout it is for and let that deal with the message.
+                    //int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
+                    //if ((20000<=object) && (object<40000)){
+                        log.debug("Forwarding on State change for " + ecosObjectId);
+                        et = _tecos.get(ecosObjectId);
+                        if (et!=null){
+                            et.reply(m);
+                            //As the event will come from one object, we shall check to see if it is an extended address,
+                            // if it is we also forward the message onto the slaved address.
+                            if(et.getExtended()!=0){
+                                log.debug("This is also an extended turnout so forwarding on change to " + et.getSlaveAddress());
+                                EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
+                                etx.reply(m);
+                            }
+                        }
+                   // }
+                }
+            
+            } else {
+                String replyType = m.getReplyType();
+                if(replyType.equals("queryObjects")){
+                    if (lines[0].startsWith("<REPLY queryObjects(11)>")) {
+                        checkTurnoutList(lines);
+                    }
+                    else if (lines[0].startsWith("<REPLY queryObjects(11, addr)>")) {
+                        // yes, make sure TOs exist
+                        log.debug("found "+(lines.length-2)+" turnout objects");
+                        for (int i = 1; i<lines.length-1; i++) {
+                            if (lines[i].contains("addr[")) { // skip odd lines
+                                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[i], null, " ");
+                                if ( (20000<=object) && (object<30000)) { // only physical turnouts
+                                    int addr = GetEcosObjectNumber.getEcosObjectNumber(lines[i], "[", "]");
+                                    log.debug("Found turnout object "+object+" addr "+addr);
+                                    
+                                    if ( addr > 0 ) {
+                                        Turnout t = getTurnout(prefix+"T"+addr);
+                                        if (t == null) {
+                                            et = (EcosTurnout)provideTurnout(prefix+"T"+addr);
+                                            et.setObjectNumber(object);
+                                            _tecos.put(object, et);
+                                            // listen for changes
+                                        }
+                                        /*EcosMessage em = new EcosMessage("request("+object+",view)");
+                                        tc.sendEcosMessage(em, null);
+                                        
+                                        // get initial state
+                                        em = new EcosMessage("get("+object+",state)");
+                                        tc.sendEcosMessage(em, null);*/
+                                    }
+                                } else if (( 30000<=object) && (object<40000)){  //This is a ecos route
+                                    log.debug("Found route object " + object);
+
+                                    Turnout t = getTurnout(prefix+"T"+object);
+                                    if (t==null) {
+                                        et = (EcosTurnout)provideTurnout(prefix+"T"+object);
+                                        et.setObjectNumber(object);
+                                        _tecos.put(object, et);
+                                    }
+                                    // get initial state#
+                                    /*EcosMessage em = new EcosMessage("request("+object+",view)");
+                                    tc.sendEcosMessage(em, null);
+                                    EcosMessage em = new EcosMessage("get("+object+",state)");
+                                    tc.sendEcosMessage(em, null);*/
                                 }
-                                /*EcosMessage em = new EcosMessage("request("+object+",view)");
-                                tc.sendEcosMessage(em, null);
-                                
-                                // get initial state
-                                em = new EcosMessage("get("+object+",state)");
-                                tc.sendEcosMessage(em, null);*/
+                                if ( (20000<=object) && (object<40000)){
+                                    EcosMessage em = new EcosMessage("request("+object+",view)");
+                                    tc.sendEcosMessage(em, null);
+                                    em = new EcosMessage("get("+object+",state)");
+                                    tc.sendEcosMessage(em, null);
+                                }
                             }
-                        } else if (( 30000<=object) && (object<40000)){  //This is a ecos route
-                            log.debug("Found route object " + object);
-
-                            Turnout t = getTurnout(prefix+"T"+object);
-                            if (t==null) {
-                                et = (EcosTurnout)provideTurnout(prefix+"T"+object);
-                                et.setObjectNumber(object);
-                                _tecos.put(object, et);
-                            }
-                            // get initial state#
-                            /*EcosMessage em = new EcosMessage("request("+object+",view)");
-                            tc.sendEcosMessage(em, null);
-                            EcosMessage em = new EcosMessage("get("+object+",state)");
-                            tc.sendEcosMessage(em, null);*/
                         }
-                        if ( (20000<=object) && (object<40000)){
-                            EcosMessage em = new EcosMessage("request("+object+",view)");
-                            tc.sendEcosMessage(em, null);
-                            em = new EcosMessage("get("+object+",state)");
-                            tc.sendEcosMessage(em, null);
+                    } else if (lines[0].startsWith("<REPLY queryObjects(11, addrext)>")){
+                        for (int i = 1; i<lines.length-1; i++) {
+                            if (lines[i].contains("addrext[")) { // skip odd lines
+                                turnoutAddressDetails(lines[i]);
+                            }
                         }
                     }
                 }
-            } 
-            else if (lines[0].startsWith("<REPLY get(") ) {
-                /*
-                Potentially we could have received a message that is for a Loco or sensor
-                rather than for a turnout or route
-                We therefore need to extract the object number to check.
-                 */
-                
-                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
-                if ((20000<=object) && (object<40000)){
-                    //et = _tecos.get(object);
-                    et = (EcosTurnout) getByEcosObject(object);
-                    if(lines[0].contains("state")){
-                        //As this is in response to a change in state we shall forward
-                        //it straight on to the ecos turnout to deal with.
-                        et.reply(m);
-                        //As the event will come from one object, we shall check to see if it is an extended address,
-                        // if it is we also forward the message onto the slaved address.
-                        if(et.getExtended()!=0){
-                            EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
-                            etx.reply(m);
-                        }
-
-                    } else if (lines[0].contains("symbol")){
-                    //Extract symbol number and set on turnout.
-                        int symbol = GetEcosObjectNumber.getEcosObjectNumber(lines[1], "[", "]");
-                        et.setExtended(symbol);
-                        et.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
-                        if((symbol==2)||(symbol==4)){
-                            
-                            EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
-                            etx.setExtended(symbol);
-                            etx.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
-                            switch(symbol) {
-                                case 2 : et.setComment("Three Way Point with " + et.getSlaveAddress());
-                                        break;
-                                case 4 : et.setComment("Double Slip with " + et.getSlaveAddress());
-                                        break;
-                            }
-                        }
-                        // get initial state
-                        EcosMessage em = new EcosMessage("get("+object+",state)");
-                        tc.sendEcosMessage(em, null);
+                else if(replyType.equals("get")){
+                //else if (lines[0].startsWith("<REPLY get(") ) {
                     
-                    } else if (lines[0].contains("addrext")){
-                        turnoutAddressDetails(lines[1]);
-                    }
-                    else {
-                        String name = null;
-                        for(int i = 1; i<lines.length-1;i++){
-                            if (lines[i].contains("name")){
-                                start=lines[i].indexOf("[")+2;
-                                end=lines[i].indexOf("]")-1;
-                                if ((name!=null) && (start!=end))
-                                    name = name + " " + lines[i].substring(start, end);
-                                else if (name==null)
-                                    name = lines[i].substring(start, end);
-                                //name = name + " " +
-                                //et.setUserName(name);
+                    //int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
+                    //if ((20000<=object) && (object<40000)){
+                        //et = _tecos.get(object);
+                        et = (EcosTurnout) getByEcosObject(ecosObjectId);
+                        if(lines[0].contains("state")){
+                            //As this is in response to a change in state we shall forward
+                            //it straight on to the ecos turnout to deal with.
+                            et.reply(m);
+                            //As the event will come from one object, we shall check to see if it is an extended address,
+                            // if it is we also forward the message onto the slaved address.
+                            if(et.getExtended()!=0){
+                                EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
+                                etx.reply(m);
                             }
+
+                        } else if (lines[0].contains("symbol")){
+                        //Extract symbol number and set on turnout.
+                            int symbol = GetEcosObjectNumber.getEcosObjectNumber(lines[1], "[", "]");
+                            et.setExtended(symbol);
+                            et.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                            if((symbol==2)||(symbol==4)){
+                                
+                                EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
+                                etx.setExtended(symbol);
+                                etx.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                                switch(symbol) {
+                                    case 2 : et.setComment("Three Way Point with " + et.getSlaveAddress());
+                                            break;
+                                    case 4 : et.setComment("Double Slip with " + et.getSlaveAddress());
+                                            break;
+                                }
+                            }
+                            // get initial state
+                            EcosMessage em = new EcosMessage("get("+ecosObjectId+",state)");
+                            tc.sendEcosMessage(em, null);
+                        
+                        } else if (lines[0].contains("addrext")){
+                            turnoutAddressDetails(lines[1]);
                         }
-                        if (name!=null)
-                            et.setUserName(name);
-                    }
-                }
-            } 
-            else if (lines[0].startsWith("<EVENT 11>")){
-                //Creation or removal of a turnout from the Ecos.
-                if (lines[1].contains("msg[LIST_CHANGED]")){
-                    log.debug("We have received notification of a change in the Turnout list");
-                    EcosMessage mout = new EcosMessage("queryObjects(11)");
-                    tc.sendEcosMessage(mout, this);
-                }
-                //Creation or removal of a turnout from the Ecos.
-            }
-            else if (lines[0].startsWith("<EVENT")){
-                //So long as the event information is for a turnout we will determine
-                //which turnout it is for and let that deal with the message.
-                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
-                if ((20000<=object) && (object<40000)){
-                    log.debug("Forwarding on State change for " + object);
-                    et = _tecos.get(object);
-                    if (et!=null){
-                        et.reply(m);
-                        //As the event will come from one object, we shall check to see if it is an extended address,
-                        // if it is we also forward the message onto the slaved address.
-                        if(et.getExtended()!=0){
-                            log.debug("This is also an extended turnout so forwarding on change to " + et.getSlaveAddress());
-                            EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
-                            etx.reply(m);
+                        else {
+                            String name = null;
+                            for(int i = 1; i<lines.length-1;i++){
+                                if (lines[i].contains("name")){
+                                    start=lines[i].indexOf("[")+2;
+                                    end=lines[i].indexOf("]")-1;
+                                    if ((name!=null) && (start!=end))
+                                        name = name + " " + lines[i].substring(start, end);
+                                    else if (name==null)
+                                        name = lines[i].substring(start, end);
+                                    //name = name + " " +
+                                    //et.setUserName(name);
+                                }
+                            }
+                            if (name!=null)
+                                et.setUserName(name);
                         }
-                    }
-                }
-            } 
-            else if (lines[0].startsWith("<REPLY queryObjects(11, addrext)>")){
-                for (int i = 1; i<lines.length-1; i++) {
-                    if (lines[i].contains("addrext[")) { // skip odd lines
-                        turnoutAddressDetails(lines[i]);
-                    }
+                    //}
                 }
             }
         }

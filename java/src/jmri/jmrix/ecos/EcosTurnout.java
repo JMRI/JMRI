@@ -220,13 +220,13 @@ public class EcosTurnout extends AbstractTurnout
             } else {
             
                 EcosMessage m = new EcosMessage("request("+objectNumber+", control)");
-                tc.sendEcosMessage(m, null);
+                tc.sendEcosMessage(m, this);
                 // set state
                 m = new EcosMessage("set("+objectNumber+", state["+setState+"])");
-                tc.sendEcosMessage(m, null);
+                tc.sendEcosMessage(m, this);
                 // release control
                 m = new EcosMessage("release("+objectNumber+", control)");
-                tc.sendEcosMessage(m, null);
+                tc.sendEcosMessage(m, this);
             }
         }
         
@@ -236,8 +236,10 @@ public class EcosTurnout extends AbstractTurnout
     public void reply(EcosReply m) {
         
         String msg = m.toString();
-        if (!msg.contains("<END 0 (OK)>")) return; //The result is not valid therefore we can not set it.
-        if (msg.startsWith("<REPLY get("+objectNumber+",") || msg.startsWith("<EVENT "+objectNumber+">")) {
+        if (m.getResultCode()!=0) return; //The result is not valid therefore we can not set it.
+        if (m.getEcosObjectId()!=objectNumber) return; //message is not for our turnout address
+        if((m.isUnsolicited()) || (m.getReplyType().equals("get"))){
+        //if (msg.startsWith("<REPLY get("+objectNumber+",") || msg.startsWith("<EVENT "+objectNumber+">")) {
             int start = msg.indexOf("state[");
             int end = msg.indexOf("]");
             int newstate = UNKNOWN;

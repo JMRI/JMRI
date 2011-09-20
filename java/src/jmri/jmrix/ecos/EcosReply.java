@@ -81,7 +81,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         try {
             return Integer.parseInt(resultCode);
         } catch (java.lang.NumberFormatException ex) {
-            log.error("Unable to conver result code to a number");
+            log.error("Unable to convert result code to a number " + resultCode);
             return -1;
         }
     }
