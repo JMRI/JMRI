@@ -270,7 +270,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             if (!listenerOnly.containsKey(la))
                 listenerOnly.put(la, new ArrayList<PropertyChangeListener>());
 
-		// get the corresponding list to check length
+		    // get the corresponding list to check length
             ArrayList<PropertyChangeListener> a = listenerOnly.get(la);
             a.add(p);
             //Only request that the throttle is set up if it hasn't already been
@@ -288,7 +288,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             return;
         }
         p.propertyChange(new PropertyChangeEvent(this, "throttleNotFoundInRemoval", la, null));
-        disposeThrottle(addressThrottles.get(la).getThrottle(), null);
     }
     
     public boolean addressStillRequired(DccLocoAddress la){
