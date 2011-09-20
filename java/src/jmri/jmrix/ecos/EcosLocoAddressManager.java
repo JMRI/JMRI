@@ -1,4 +1,3 @@
-
 package jmri.jmrix.ecos;
 
 import jmri.jmrix.ecos.utilities.*;
@@ -184,15 +183,17 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     
     public void monitorLocos(boolean monitor){
         monitorState = monitor;
-        String command = "request(";
-        if(!monitor){
-            command = "release(";
-        }
         List<String> objects = getEcosObjectList();
-        EcosMessage m;
+
         for(int x = 0; x < objects.size(); x++){
-            m = new EcosMessage(command+objects.get(x)+",view)");
-            tc.sendEcosMessage(m, this);
+            boolean isLongAddress = false;
+            if(getByEcosObject(objects.get(x)).getEcosLocoAddress()>128)
+                isLongAddress = true;
+            jmri.DccLocoAddress la = new jmri.DccLocoAddress(getByEcosObject(objects.get(x)).getEcosLocoAddress(), isLongAddress);
+            if(monitor)
+                adaptermemo.getThrottleManager().attachListener(la, this);
+            else
+                adaptermemo.getThrottleManager().removeListener(la, this);
         }
     }
     
@@ -491,6 +492,13 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 }
             }
             _re=null;
+        } else if (e.getPropertyName().equals("throttleAssigned")){
+            jmri.DccLocoAddress la = (jmri.DccLocoAddress)e.getNewValue();
+            EcosLocoAddress ela = getByDccAddress(la.getNumber());
+            EcosMessage m = new EcosMessage("get("+ela.getEcosObject() + ", speed)");
+            tc.sendEcosMessage(m, this);
+            m = new EcosMessage("get("+ela.getEcosObject() + ", dir)");
+            tc.sendEcosMessage(m, this);
         }
     }
 
@@ -502,7 +510,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         if (m.getResultCode()==0){
             int ecosObjectId = m.getEcosObjectId();
             if((ecosObjectId!=10) && ((ecosObjectId<1000) || (ecosObjectId>2000))){
-                log.debug("message receieved that is not within th evlaid loco object range");
+                log.debug("message receieved that is not within the valid loco object range");
                 return;
             }
             if (m.isUnsolicited()){
@@ -578,6 +586,15 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
                 //identify the loco correctly
                     EcosLocoAddress tmploco;
+                    if((lines[0].contains("speed[")) || (lines[0].contains("dir["))){
+                        log.debug("Forwarding on State change for " + ecosObjectId);
+                        String strLocoObject = Integer.toString(ecosObjectId);
+                        tmploco = _tecos.get(strLocoObject);
+                        if (tmploco!=null){
+                            tmploco.reply(m);
+                        }
+                        return;
+                    }
 
                     //int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
                     //if ( (1000<=object) && (object<2000)) {
@@ -850,7 +867,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         
         private void waitForPrefLoad() {
             try {
-                    Thread.sleep(1000);
+                Thread.sleep(1000);
             } catch (Exception e) {System.out.println(e.toString());}
             wait = p.getPreferencesLoaded();
             if (x>=100){
@@ -863,14 +880,11 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     }
     
     public void refreshItems(){
-            // ask to be notified about newly created turnouts on the layout.
+        // ask to be notified about newly created turnouts on the layout.
         EcosMessage m = new EcosMessage("request(10, view)");
         tc.sendEcosMessage(m, this);
         monitorLocos(monitorState);
-        
     }
-
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoAddressManager.class.getName());
-
 }
