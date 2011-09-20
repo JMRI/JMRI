@@ -250,7 +250,7 @@ public class TrainPrintUtilities {
 		} else {
 			log.debug("ERROR first characters of build report not valid ("
 					+ line + ")");
-			return "ERROR";
+			return "ERROR " + line;
 		}
 	}
 	
