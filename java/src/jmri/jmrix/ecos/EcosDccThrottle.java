@@ -56,7 +56,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         this.f11           = false;
         this.f12           = false;
         
-                // extended values
+        // extended values
         this.f8           = false;
         this.f9           = false;
         this.f10          = false;
@@ -99,7 +99,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     
     private void getControl(){
         String message;
-
+        setSpeedStepMode(objEcosLoco.getSpeedStepMode());
         message = "get("+this.objectNumber+", speed)";
         EcosMessage  m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -388,7 +388,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         if (value>0) value = value+1;  // skip estop
         if (value>128) value = 128;    // max possible speed
         if (value<0) value = 0;        // emergency stop
-        speedSetting = value;
+        //speedSetting = value;
         if (value >0) {
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
@@ -400,13 +400,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
         }
-        super.setSpeedSetting(speed);
     }
 
     EcosTrafficController tc;
 
     public void setIsForward(boolean forward) {
-        super.setIsForward(forward);
+        //super.setIsForward(forward);
         if(!_haveControl) return;
         //isForward = forward;
         int dir=1;
@@ -446,8 +445,36 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         String msg = m.toString();
         String[] lines = msg.split("\n");
         log.debug("found "+(lines.length)+" response from Ecos");
-        if (lines[lines.length-1].contains("<END 0 (OK)>")){
-            if (lines[0].startsWith("<REPLY set("+this.objectNumber+",")){// || msg.startsWith("<EVENT "+this.objectNumber+">")) {
+        if (m.getResultCode()==0){
+            if(m.getReplyType().equals("create")){
+                for(int i =1; i<lines.length-1; i++) {
+                    if(lines[i].contains("10 id[")){
+                        start = lines[i].indexOf("[")+1;
+                        end = lines[i].indexOf("]");
+                        String EcosAddr = lines[i].substring(start, end);
+                        objEcosLoco.setEcosObject(EcosAddr);
+                        objEcosLocoManager.deregister(objEcosLoco);
+                        objEcosLocoManager.register(objEcosLoco);
+                        objEcosLoco.setEcosTempEntry(true);
+                        objEcosLoco.doNotAddToRoster();
+                        this.objectNumber=EcosAddr;
+                        getControl();
+                    }
+                }
+                return;
+            }
+            
+            if (lines[lines.length-1].contains("<END 0 (NERROR_OK)>")){
+                //Need to investigate this a bit futher to see what the significance of the message is
+                //we may not have to worry much about it.
+                log.info("Loco has been created on the ECoS Sucessfully.");
+                return;
+            }
+            if(m.getEcosObjectId()!=objEcosLoco.getEcosObjectAsInt()){
+                log.debug("message is not for us");
+                return;
+            }
+            if(m.getReplyType().equals("set")){
                 //log.debug("The last command was accepted by the ecos");
                 //This might need to use speedstep, rather than speed
                 //This is for standard response to set and request.
@@ -460,13 +487,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     if (tmpstart>0 && tmpend >0) {
                         String result = msg.substring(tmpstart+2, tmpend);
                         if (result.equals("speed")){
-                            val = (msg.substring(start+1, end));
-                             Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
-                             this.speedSetting = newSpeed;
-                             if (this.speedSetting != newSpeed){
-                                 notifyPropertyChangeListener("SpeedSetting", this.speedSetting, newSpeed);
-                                 log.debug("new Speed "+ val +", " + newSpeed + " for "+this.address);
-                             }
+                            val = msg.substring(start+1, end);
+                            super.setSpeedSetting(new Float ( floatSpeed(Integer.parseInt(val) ) ));
                         }
                         else if(result.equals("stop")){
                             this.speedSetting = Float.valueOf(0).floatValue();
@@ -477,14 +499,13 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             boolean newDirection;
                             if (val.equals("0")) newDirection=true;
                             else newDirection = false;
-                            notifyPropertyChangeListener("IsForward", this.isForward, newDirection);
-                            this.isForward = newDirection;
-                            log.debug("new direction "+ this.isForward +" for "+this.address);
+                            super.setIsForward(newDirection);
                         }
                     }
                 }
             }
-            else if(lines[0].startsWith("<REPLY get("+this.objectNumber+",")||lines[0].startsWith("<EVENT "+this.objectNumber+">")){
+            //Treat gets and events as the same.
+            else if((m.getReplyType().equals("get")) || (m.isUnsolicited())){
                 //log.debug("The last command was accepted by the ecos");
                 for (int i =1; i<lines.length-1; i++){
                     String object = this.objectNumber;
@@ -509,28 +530,15 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             }
                         }
                         else if (result.equals("speed")){
-                             val = (lines[i].substring(start+1, end));
-                             Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
-                             log.debug("set new speed "+val+" for "+this.address);
-                             if (this.speedSetting != newSpeed){
-                                notifyPropertyChangeListener("SpeedSetting", this.speedSetting, newSpeed);
-                                this.speedSetting = newSpeed;
-                                log.debug("see new Speed "+ val +", " + newSpeed + " for "+this.address);
-                             }
-                             else
-                                log.debug("Speed has not changed for "+this.address);
+                            val = lines[i].substring(start+1, end);
+                            super.setSpeedSetting(new Float ( floatSpeed(Integer.parseInt(val) ) ));
                         }
                         else if(result.equals("dir")){
                             val = (lines[i].substring(start+1, end));
                             boolean newDirection;
                             if (val.equals("0")) newDirection = true;
                             else newDirection = false;
-                            if (newDirection != this.isForward){
-                                notifyPropertyChangeListener("IsForward", this.isForward, newDirection);
-                                log.debug("see new direction "+ newDirection +" for "+this.address);
-                                this.isForward = newDirection;
-                            }
-                            log.debug("direction has not changed for "+this.address);
+                            super.setIsForward(newDirection);
                         }
                         else if (lines[i].contains("func[")) {
                             int funcstart = lines[i].indexOf("[")+1;
@@ -694,29 +702,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 }
 
             }
-            else if (lines[0].startsWith("<REPLY create(10, addr")){
-                //String object = Integer.toString(this.objectNumber);
-                //log.debug("found "+(lines.length)+" response from Ecos for Create");
-                for(int i =1; i<lines.length-1; i++) {
-                    if(lines[i].contains("10 id[")){
-                        start = lines[i].indexOf("[")+1;
-                        end = lines[i].indexOf("]");
-                        String EcosAddr = lines[i].substring(start, end);
-                        objEcosLoco.setEcosObject(EcosAddr);
-                        objEcosLocoManager.deregister(objEcosLoco);
-                        objEcosLocoManager.register(objEcosLoco);
-                        objEcosLoco.setEcosTempEntry(true);
-                        objEcosLoco.doNotAddToRoster();
-                        this.objectNumber=EcosAddr;
-                        getControl();
-                    }
-                }
-            }
-            else if (lines[0].startsWith("<REPLY release("+this.objectNumber)){
+            else if(m.getReplyType().equals("release")){
                 log.debug("Released "+this.objectNumber +" from the Ecos");
                 _haveControl = false;
             }
-            else if (lines[0].startsWith("<REPLY request("+this.objectNumber)){
+            else if(m.getReplyType().equals("request")){
                 log.debug("We have control over "+this.objectNumber +" from the Ecos");
                 ecosretry=0;
                 if(_control)
@@ -724,14 +714,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 if (!_hadControl){
                     adaptermemo.getThrottleManager().throttleSetup(this, this.address, true);
                 }
+                getInitialStates();
             }
         }
-        else if (lines[lines.length-1].contains("<END 0 (NERROR_OK)>")){
-            //Need to investigate this a bit futher to see what the significance of the message is
-            //we may not have to worry much about it.
-            log.info("Loco has been created on the ECoS Sucessfully.");
-        }
-        else if (lines[lines.length-1].contains("<END 35 (NERROR_NOAPPEND)>")){
+        else if (m.getResultCode()==35){
             /**
             * This message occurs when have already created a loco, but have not appended it to
             * the database.  The Ecos will not allow another loco to be created until the previous
@@ -742,7 +728,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             log.info("Another loco create operation is already taking place unable to create another.");
 
         }
-        else if (lines[lines.length-1].contains("<END 25 (NERROR_NOCONTROL)>")){
+        else if (m.getResultCode()==25){
             /**
             * This section deals with no longer having control over the ecos loco object.
             * we try three times to request control, on the fourth attempt we try a forced
@@ -750,7 +736,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             */
             retryControl();
         }
-        else if (lines[lines.length-1].contains("<END 15 (NERROR_UNKNOWNID)>")){
+        else if (m.getResultCode()==15){
             log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
             javax.swing.JOptionPane.showMessageDialog(null,"Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
@@ -824,7 +810,21 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         }
     }
-
+    
+    void getInitialStates(){
+        String message = "get("+this.objectNumber+", speed)";
+        EcosMessage m = new EcosMessage(message);
+        tc.sendEcosMessage(m, this);        
+        message = "get("+this.objectNumber+", dir)";
+        m = new EcosMessage(message);
+        tc.sendEcosMessage(m, this);
+        for(int i=0; i<=28; i++){
+            message = "get("+this.objectNumber+", func["+i+"])";
+            m = new EcosMessage(message);
+            tc.sendEcosMessage(m, this);
+        }
+    }
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosDccThrottle.class.getName());
 

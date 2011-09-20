@@ -3,6 +3,7 @@ package jmri.jmrix.ecos;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import java.util.List;
+import jmri.DccThrottle;
 /**
  * Stores all the loco information from the Ecos into JMRI
  *
@@ -62,8 +63,11 @@ public class EcosLocoAddress {
     }
 
     public String getEcosObject(){
-
         return _ecosObject;
+    }
+    
+    public int getEcosObjectAsInt(){
+        return Integer.parseInt(_ecosObject);
     }
 
     public void doNotAddToRoster(){
@@ -125,6 +129,21 @@ public class EcosLocoAddress {
     public String getProtocol(){
         return _protocol;
     }
+    
+    public int getSpeedStepMode(){
+        if(_protocol.equals("DCC128"))
+            return DccThrottle.SpeedStepMode128;
+        if(_protocol.equals("DCC28"))
+            return DccThrottle.SpeedStepMode28;
+        if(_protocol.equals("DCC14"))
+            return DccThrottle.SpeedStepMode14;
+        if(_protocol.equals("MM14"))
+            return DccThrottle.SpeedStepMode14;
+        if(_protocol.equals("MM28"))
+            return DccThrottle.SpeedStepMode28;
+        //ESU does also support MM27, SX32, MMFKT, not sure how these shouldbe handled
+        return DccThrottle.SpeedStepMode128;
+    }
 
     public void setProtocol(String protocol){
         _protocol = protocol;
@@ -149,7 +168,7 @@ public class EcosLocoAddress {
     
     public void reply(EcosReply m) {
         String msg = m.toString();
-        if (!msg.contains("<END 0 (OK)>")) return; //The result is not valid therefore we can not set it.
+        if (m.getResultCode()!=0) return; //The result is not valid therefore we can not set it.
         if (msg.startsWith("<REPLY get("+_ecosObject+",") || msg.startsWith("<EVENT "+_ecosObject+">")) {
             if (msg.contains("speed")){
                 setSpeed(getSpeed(msg));

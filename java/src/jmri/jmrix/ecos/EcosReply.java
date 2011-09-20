@@ -41,6 +41,9 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     	}
     }
 
+    //knowing where the end is we can then determine the error code
+    int endAtElement = -1;
+    
     /**
      * Check for last line starts with 
      * "<END "
@@ -52,20 +55,35 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
                  (getElement(i+2) == 'E') &&
                  (getElement(i+3) == 'N') &&
                  (getElement(i+4) == 'D') &&
-                 (getElement(i+5) == ' ') )
+                 (getElement(i+5) == ' ') ){
+                    endAtElement = i;
                     return true;
+            }
         }
         return false;
     }
     /**
-     * Extract poll values from binary reply
-     */
-     
-    public int pollValue() {  // integer value of first two bytes
-        int first = 0xFF & ((byte)getElement(0));
-        int second = 0xFF & ((byte)getElement(1));
+    * returns -1 if the end code has not been found.
+    */
+    public int getResultCode(){
+        if(!containsEnd()){
+            log.error("Trying to get message end code before message is complete");
+            return -1;
+        }
+        if(endAtElement==-1){
+            //just a double check incase endAtElement never got set.
+            return -1;
+        }
+        String resultCode =  Character.toString((char)(getElement(endAtElement+6)));
+        resultCode = resultCode + (char)(getElement(endAtElement+7));
+        resultCode = resultCode.trim();
         
-        return first*256 + second;
+        try {
+            return Integer.parseInt(resultCode);
+        } catch (java.lang.NumberFormatException ex) {
+            log.error("Unable to conver result code to a number");
+            return -1;
+        }
     }
     
     /**
@@ -82,34 +100,57 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         if (getElement(6)!=' ') return false;
         return true;
     }
-    
-    /**
-	 * Examine message to see if it is an asynchronous sensor (AIU) state report
-	 * 
-	 * @return true if message asynch sensor message 
-	 * Boudreau: Improved detection to check three bytes and message length
-	 * of exactly 3
-	 */
-    
-    public boolean isSensorMessage() {
-		return getElement(0) == 0x61 && getElement(1) >= 0x30
-				&& getElement(2) >= 0x41 && getElement(2) <= 0x6F
-				&& getNumDataElements() == 3;
-	}
 
     //An event message is Unsolicited
     public boolean isUnsolicited() {
-    	if (isSensorMessage()) {
-    		setUnsolicited();
-    		return true;
-    	} else if (isEvent()) {
+        if (isEvent()) {
             setUnsolicited();
             return true;
         } else {
     		return false;
     	}
     }
+
+    public boolean isReply(){
+        if (getNumDataElements()<8) return false;
+        if (getElement(0)!='<') return false;
+        if (getElement(1)!='R') return false;
+        if (getElement(2)!='E') return false;
+        if (getElement(3)!='P') return false;
+        if (getElement(4)!='L') return false;
+        if (getElement(5)!='Y') return false;
+        if (getElement(6)!=' ') return false;
+        return true;
+    }
+
+    public String getReplyType(){
+        if(!isReply()) return "";
+        
+        StringBuilder sb = new StringBuilder();
+        for(int i = 7; i<getNumDataElements(); i++){
+            if(getElement(i) =='('){
+                break;
+            }
+            sb.append((char)getElement(i));
+        }
+        return sb.toString();
+    }
     
+    public int getEcosObjectId(){
+        StringBuilder sb = new StringBuilder();
+        int iOffSet = 7 + getReplyType().length();
+        if(!isEvent())
+            iOffSet = iOffSet+1;
+        for(int i = iOffSet; i<getNumDataElements(); i++){
+            if(getElement(i) =='>'){
+                break;
+            } else if (getElement(i)==','){
+                break;
+            }
+            sb.append((char)getElement(i));
+        }
+        return Integer.parseInt(sb.toString());
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosReply.class.getName());
 
 }
