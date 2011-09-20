@@ -444,6 +444,7 @@ public class VSDConfigPanel extends JmriPanel {
 	dec = main_pane.getDecoder();
 	log.debug("Profile selected. New = " + profileComboBox.getSelectedItem() + "Decoder = " + dec);
 	if (dec != null) {
+	    dec.shutdown();
 	    dec.disable();  // disable the previous decoder
 	}
 	log.debug("Getting selected decoder from VSDecoderManager.");

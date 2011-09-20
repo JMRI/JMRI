@@ -104,14 +104,17 @@ public class VSDecoder implements PropertyChangeListener {
 	log.debug("param string = " + e.paramString());
 	//if (e.paramString().equals("WINDOW_CLOSING")) {
 	    // Shut down the sounds.
-	    log.debug("Shutting down sounds...");
-	    for (VSDSound vs : sound_list.values()) {
-		log.debug("Stopping sound: " + vs.getName());
-		vs.shutdown();
-	    }
-
+	    this.shutdown();
 	    
-	    //}
+	//}
+    }
+
+    public void shutdown() {
+	log.debug("Shutting down sounds...");
+	for (VSDSound vs : sound_list.values()) {
+	    log.debug("Stopping sound: " + vs.getName());
+	    vs.shutdown();
+	}
     }
 
     public void throttlePropertyChange(PropertyChangeEvent event) {
