@@ -445,8 +445,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         String msg = m.toString();
         String[] lines = msg.split("\n");
         log.debug("found "+(lines.length)+" response from Ecos");
-        if (m.getResultCode()==0){
-            if(m.getReplyType().equals("create")){
+        int resultCode = m.getResultCode();
+        if (resultCode==0){
+            String replyType = m.getReplyType();
+            if(replyType.equals("create")){
                 for(int i =1; i<lines.length-1; i++) {
                     if(lines[i].contains("10 id[")){
                         start = lines[i].indexOf("[")+1;
@@ -474,7 +476,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 log.debug("message is not for us");
                 return;
             }
-            if(m.getReplyType().equals("set")){
+            if(replyType.equals("set")){
                 //log.debug("The last command was accepted by the ecos");
                 //This might need to use speedstep, rather than speed
                 //This is for standard response to set and request.
@@ -505,7 +507,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 }
             }
             //Treat gets and events as the same.
-            else if((m.getReplyType().equals("get")) || (m.isUnsolicited())){
+            else if((replyType.equals("get")) || (m.isUnsolicited())){
                 //log.debug("The last command was accepted by the ecos");
                 for (int i =1; i<lines.length-1; i++){
                     String object = this.objectNumber;
@@ -702,11 +704,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 }
 
             }
-            else if(m.getReplyType().equals("release")){
+            else if(replyType.equals("release")){
                 log.debug("Released "+this.objectNumber +" from the Ecos");
                 _haveControl = false;
             }
-            else if(m.getReplyType().equals("request")){
+            else if(replyType.equals("request")){
                 log.debug("We have control over "+this.objectNumber +" from the Ecos");
                 ecosretry=0;
                 if(_control)
@@ -717,7 +719,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 getInitialStates();
             }
         }
-        else if (m.getResultCode()==35){
+        else if (resultCode==35){
             /**
             * This message occurs when have already created a loco, but have not appended it to
             * the database.  The Ecos will not allow another loco to be created until the previous
@@ -728,7 +730,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             log.info("Another loco create operation is already taking place unable to create another.");
 
         }
-        else if (m.getResultCode()==25){
+        else if (resultCode==25){
             /**
             * This section deals with no longer having control over the ecos loco object.
             * we try three times to request control, on the fourth attempt we try a forced
@@ -736,7 +738,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             */
             retryControl();
         }
-        else if (m.getResultCode()==15){
+        else if (resultCode==15){
             log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
             javax.swing.JOptionPane.showMessageDialog(null,"Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
