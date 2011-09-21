@@ -51,7 +51,7 @@ public class ReportContextAction extends AbstractAction {
         frame.add(scroll, BorderLayout.CENTER);
         
         ReportContext r = new ReportContext();
-        addString(r.getReport());
+        addString(r.getReport(true));
         
         pane.append("\n"); // add a little space at bottom
 

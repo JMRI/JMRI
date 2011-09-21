@@ -6,6 +6,12 @@ import java.awt.*;
 import javax.swing.*;
 import jmri.util.JmriInsets;
 import apps.Apps;
+import java.net.SocketException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collection;
+import java.util.Enumeration;
+import jmri.util.zeroconf.ZeroConfService;
 
 
 /**
@@ -27,7 +33,13 @@ public class ReportContext {
 
     String report = "";
     
-    public String getReport() {
+    /**
+     * Provide a report of the current JMRI context
+     * @param reportNetworkInfo true if network connection and zeroconf service
+     *                          information to be included
+     * @return current JMRI context
+     */
+    public String getReport(boolean reportNetworkInfo) {
         
         addString("JMRI Version: "+jmri.Version.name()+"  ");	 
         addString("JMRI configuration file name: "
@@ -94,6 +106,8 @@ public class ReportContext {
         addProperty("jmri.log.path");
 
         addScreenSize();
+        
+        if (reportNetworkInfo) addNetworkInfo();
         
         return report;
 	
@@ -176,6 +190,48 @@ public class ReportContext {
         catch (Throwable e) {
             addString("Exception getting JmriInsets" + e.getMessage());
         }
+    }
+    
+    /**
+     * Add network connection and running service information
+     */
+    private void addNetworkInfo() {
+        try {
+            // This code is based on that in jmri.jmrit.withrottle.UserInterface which,
+            // itself, was adapted from http://www.rgagnon.com/javadetails/java-0390.html
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+                while (inetAddresses.hasMoreElements()) {
+                    InetAddress inetAddress = inetAddresses.nextElement();
+                    String hostAddress = inetAddress.getHostAddress();
+                    if (!hostAddress.equals("0.0.0.0") && !hostAddress.regionMatches(0, "127", 0, 3) && !hostAddress.contains(":")) {
+                        addString("Network Interface: " + networkInterface.getName());
+                        addString(" Long Name: " + networkInterface.getDisplayName());
+                        addString(" Host Name: " + inetAddress.getHostName());
+                        addString(" IP address: " + hostAddress);
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            addString("Unable to enumerate Network Interfaces");
+        }
+                    
+        Collection<ZeroConfService> services = ZeroConfService.allServices();
+        addString("ZeroConfService host: " + ZeroConfService.hostName() + " running " + services.size() + " service(s)");
+        if (services.size()>0) {
+            for (ZeroConfService service: services) {
+                addString("ZeroConfService: " + service.serviceInfo().getQualifiedName() + "  ");
+                addString(" Name: " + service.name() + "  ");
+                addString(" Address: " + service.serviceInfo().getHostAddress() + "  ");
+                addString(" Port: " + service.serviceInfo().getPort() + "  ");
+                addString(" Server: " + service.serviceInfo().getServer() + "  ");
+                addString(" Type: " + service.type() + "  ");
+                addString(" URL: " + service.serviceInfo().getURL() + "  ");
+                addString(" Published: " + (service.isPublished()?"yes":"no"));
+            }
+        }        
     }
 }
 

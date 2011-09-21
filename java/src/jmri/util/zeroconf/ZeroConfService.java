@@ -50,7 +50,7 @@ import jmri.implementation.QuietShutDownTask;
  * <P>
  *
  * @author      Randall Wood Copyright (C) 2011
- * @version	$Revision: $
+ * @version	$Revision$
  * @see         javax.jmdns.JmDNS
  * @see         javax.jmdns.ServiceInfo
  */
@@ -213,7 +213,7 @@ public class ZeroConfService {
      * A list of published ZeroConfServices 
      * 
      */
-    public Collection<ZeroConfService> allServices() {
+    public static Collection<ZeroConfService> allServices() {
         return ZeroConfService.services().values();
     }
 

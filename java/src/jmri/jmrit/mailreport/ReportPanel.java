@@ -28,6 +28,7 @@ public class ReportPanel extends JPanel {
     JTextField summaryField = new JTextField(40);
     JTextArea descField = new JTextArea(8,40);
     JCheckBox checkContext;
+    JCheckBox checkNetwork;
     JCheckBox checkLog;
 
     public ReportPanel() {
@@ -70,7 +71,16 @@ public class ReportPanel extends JPanel {
         p1.setLayout(new FlowLayout());
         checkContext = new JCheckBox(rb.getString("CheckContext"));
         checkContext.setSelected(true);
+        checkContext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                checkNetwork.setEnabled(checkContext.isSelected());
+            }
+        });
         p1.add(checkContext);
+        
+        checkNetwork = new JCheckBox(rb.getString("CheckNetwork"));
+        checkNetwork.setSelected(true);
+        p1.add(checkNetwork);        
         
         checkLog = new JCheckBox(rb.getString("CheckLog"));
         checkLog.setSelected(true);
@@ -108,7 +118,7 @@ public class ReportPanel extends JPanel {
         // add the context if OK
         if (checkContext.isSelected()) {
             String report = "=========================================================\n"
-                        +(new ReportContext()).getReport();
+                        +(new ReportContext()).getReport(checkNetwork.isSelected() && checkNetwork.isEnabled());
             msg.setText(report);
         }
         
