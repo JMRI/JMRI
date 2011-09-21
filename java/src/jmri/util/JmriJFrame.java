@@ -7,6 +7,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
 import java.awt.*;
@@ -271,9 +272,90 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, stdMask), "close");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close");
+        //im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close");
     }
-        
+
+    private static String escapeKeyAction = "escapeKeyAction";
+    private boolean escapeKeyActionClosesWindow = false;
+
+    /**
+     * Bind an action to the Escape key.
+     * <p>
+     * Binds an AbstractAction to the Escape key. If an action is already
+     * bound to the Escape key, that action will be replaced. Passing 
+     * <code>null</code> unbinds any existing actions from the Escape key.
+     * <p>
+     * Note that binding the Escape key to any action may break expected or
+     * standardized behaviors. See <a href="http://java.sun.com/products/jlf/ed2/book/Appendix.A.html">Keyboard
+     * Shortcuts, Mnemonics, and Other Keyboard Operations</a> in the Java Look
+     * and Feel Design Guidelines for standardized behaviors.
+     * @param action The AbstractAction to bind to.
+     * @see #getEscapeKeyAction()
+     * @see #setEscapeKeyClosesWindow(boolean)
+     */
+    public void setEscapeKeyAction(AbstractAction action) {
+        JRootPane root = this.getRootPane();
+        KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+        escapeKeyActionClosesWindow = false; // setEscapeKeyClosesWindow will set to true as needed
+        if (action != null) {
+            root.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, escapeKeyAction);
+            root.getActionMap().put(escapeKeyAction, action);
+        } else {
+            root.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).remove(escape);
+            root.getActionMap().remove(escapeKeyAction);
+        }
+    }
+
+    /**
+     * The action associated with the Escape key.
+     *
+     * @return An AbstractAction or null if no action is bound to the
+     * Escape key.
+     * @see #setEscapeKeyAction(javax.swing.AbstractAction)
+     * @see javax.swing.AbstractAction
+     */
+    public AbstractAction getEscapeKeyAction() {
+        return (AbstractAction) this.getRootPane().getActionMap().get(escapeKeyAction);
+    }
+
+    /**
+     * Bind the Escape key to an action that closes the window.
+     * <p>
+     * If closesWindow is true, this method creates an action that triggers the
+     * "window is closing" event; otherwise this method removes any actions from
+     * the Escape key.
+     *
+     * @param closesWindow Create or destroy an action to close the window.
+     * @see java.awt.event.WindowEvent#WINDOW_CLOSING
+     * @see #setEscapeKeyAction(javax.swing.AbstractAction)
+     */
+    public void setEscapeKeyClosesWindow(boolean closesWindow) {
+        if (closesWindow) {
+            setEscapeKeyAction(new AbstractAction() {
+
+                public void actionPerformed(ActionEvent ae) {
+                    JmriJFrame.this.processWindowEvent(
+                            new java.awt.event.WindowEvent(JmriJFrame.this,
+                            java.awt.event.WindowEvent.WINDOW_CLOSING));
+                }
+            });
+        } else {
+            setEscapeKeyAction(null);
+        }
+        escapeKeyActionClosesWindow = closesWindow;
+    }
+
+    /**
+     * Does the Escape key close the window?
+     * @return <code>true</code> if Escape key is bound to action created by
+     * setEscapeKeyClosesWindow, <code>false</code> in all other cases.
+     * @see #setEscapeKeyClosesWindow
+     * @see #setEscapeKeyAction
+     */
+    public boolean getEscapeKeyClosesWindow() {
+        return (escapeKeyActionClosesWindow && getEscapeKeyAction() != null);
+    }
+
     JmriJFrame self;
     
     /**
