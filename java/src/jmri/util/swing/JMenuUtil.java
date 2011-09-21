@@ -2,6 +2,7 @@
 
 package jmri.util.swing;
 
+import java.util.ArrayList;
 import java.io.File;
 import javax.swing.*;
 import org.jdom.*;
@@ -27,11 +28,18 @@ public class JMenuUtil extends GuiUtilBase {
         JMenu[] retval = new JMenu[n];
         
         int i = 0;
+        ArrayList<Integer> mnemonicList = new ArrayList<Integer>();
         for (Object child : root.getChildren("node")) {
             JMenu menuItem = jMenuFromElement((Element)child, wi, context);
             retval[i++] = menuItem;
             if(((Element)child).getChild("mnemonic")!=null && menuItem!=null){
-                menuItem.setMnemonic(convertStringToKeyEvent(((Element)child).getChild("mnemonic").getText()));
+                int mnemonic = convertStringToKeyEvent(((Element)child).getChild("mnemonic").getText());
+                if(mnemonicList.contains(mnemonic)){
+                   log.error("Menu item '" + menuItem.getLabel() + "' Mnemonic '" + ((Element)child).getChild("mnemonic").getText() + "' has already been assigned");
+                } else {
+                    menuItem.setMnemonic(mnemonic);
+                    mnemonicList.add(mnemonic);
+                }
             }
         }
         return retval;
@@ -42,7 +50,7 @@ public class JMenuUtil extends GuiUtilBase {
         Element e = main.getChild("name");
         if (e != null) name = e.getText();
         JMenu menu = new JMenu(name);
-        
+        ArrayList<Integer> mnemonicList = new ArrayList<Integer>();
         for (Object item : main.getChildren("node")) {
             JMenuItem menuItem = null;
             Element child = (Element) item;
@@ -66,7 +74,13 @@ public class JMenuUtil extends GuiUtilBase {
             
             }
             if(menuItem!=null && child.getChild("mnemonic")!=null){
-               menuItem.setMnemonic(convertStringToKeyEvent(child.getChild("mnemonic").getText()));
+                int mnemonic = convertStringToKeyEvent(((Element)child).getChild("mnemonic").getText());
+                if(mnemonicList.contains(mnemonic)){
+                   log.error("Menu Item '" + menuItem.getLabel() + "' Mnemonic '" + ((Element)child).getChild("mnemonic").getText() + "' has already been assigned");
+                } else {
+                    menuItem.setMnemonic(mnemonic);
+                    mnemonicList.add(mnemonic);
+                }
             }
         }
         return menu;
