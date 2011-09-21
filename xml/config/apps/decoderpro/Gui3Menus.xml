@@ -11,7 +11,7 @@
     <mnemonic>f</mnemonic>
     <node><name>New DecoderPro Window</name>
         <mnemonic>n</mnemonic>
-        <adapter>apps.gui3.dp3.DecoderPro3Action</adapter>
+        <current>newwindow</current>
     </node>
     <node><name>Import Roster</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
@@ -31,6 +31,11 @@
     </node>
     <node><name>Export Complete Roster</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
+    </node>
+    <node>separator</node>
+    <node><name>Close Window</name>
+        <mnemonic>c</mnemonic>
+        <current>closewindow</current>
     </node>
     <node>separator</node>
     <node><name>Print Roster</name>
@@ -54,7 +59,7 @@
     <node>separator</node>
     <node><name>Quit</name>
         <mnemonic>q</mnemonic>
-        <adapter>apps.gui3.paned.QuitAction</adapter>
+        <current>quit</current>
     </node>
   </node>
 
