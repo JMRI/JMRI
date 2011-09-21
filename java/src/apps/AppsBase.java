@@ -312,6 +312,30 @@ public abstract class AppsBase {
         }
     }
     
+    /**
+     * The application decided to quit, handle that.
+     */
+    static public void handleQuit() {
+        log.debug("Start handleQuit");
+        try {
+            InstanceManager.shutDownManagerInstance().shutdown();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleQuit",e);
+        }
+    }
+    
+    /**
+     * The application decided to restart, handle that.
+     */
+    static public void handleRestart() {
+        log.debug("Start handleRestart");
+        try {
+            InstanceManager.shutDownManagerInstance().restart();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleRestart",e);
+        }
+    }
+    
     private static final String jmriLog ="****** JMRI log *******";
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppsBase.class.getName());

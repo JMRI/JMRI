@@ -109,6 +109,10 @@ public class DecoderPro3Window
         //Additions to the toolbar need to be added first otherwise when trying to hide bits up during the initialisation they remain on screen
         additionsToToolBar();
         openWindowInstances++;
+        if(openWindowInstances>1)
+            firePropertyChange("closewindow", "setEnabled", true);
+        else
+            firePropertyChange("closewindow", "setEnabled", false);
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         getTop().add(createTop());
         
@@ -941,7 +945,6 @@ public class DecoderPro3Window
 
     protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
             String filename) {
-        //String title = rbt.getString("FrameNewEntryTitle");
         String title = re.getId();
         Programmer pProg = null;
         JFrame progFrame=null;
@@ -981,9 +984,18 @@ public class DecoderPro3Window
      */
     protected void allowQuit(boolean allowQuit){
         this.allowQuit=allowQuit;
+        firePropertyChange("quit", "setEnabled", allowQuit);
+        //if we are not allowing quit, ie opened from JMRI classic
+        //then we must at least allow the window to be closed
+        if(!allowQuit)
+            firePropertyChange("closewindow", "setEnabled", true);
     }
 
     public void windowClosing(java.awt.event.WindowEvent e) {
+        closeWindow(e);
+    }
+    
+    void closeWindow(java.awt.event.WindowEvent e){
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
         //Method to save table sort status
         int count = rtable.getModel().getColumnCount();
@@ -999,19 +1011,24 @@ public class DecoderPro3Window
         p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupPaneloc);
         //Okay only allow the shutdown if we are the last window instance and quit has been allowed
         if (allowQuit && openWindowInstances==1){
-            log.debug("Start handleQuit");
-            try {
-                jmri.InstanceManager.shutDownManagerInstance().shutdown();
-            } catch (Exception ex) {
-                log.error("Continuing after error in handleQuit",ex);
-            }
+            handleQuit(e);
         } else {
             //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
             openWindowInstances--;
             super.windowClosing(e);
-            jmri.util.JmriJFrame frame = (jmri.util.JmriJFrame) e.getSource();
-            frame.dispose();
+            dispose();
+            if((openWindowInstances==1) && (allowQuit))
+                firePropertyChange("closewindow", "setEnabled", false);
         }
+    }
+    
+    void handleQuit(java.awt.event.WindowEvent e){
+        if (JOptionPane.showConfirmDialog(null,
+                    rb.getString("MessageLongCloseWarning"),
+                    rb.getString("MessageShortCloseWarning"),
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                apps.AppsBase.handleQuit();
+            }
     }
 
     //Matches the first argument in the array against a locally know method
@@ -1050,6 +1067,12 @@ public class DecoderPro3Window
             edit.setSelected(true);
         } else if (args[0].equals("groupspane")) {
             hideGroups();
+        } else if (args[0].equals("quit")){
+            handleQuit(null);
+        } else if (args[0].equals("closewindow")){
+            closeWindow(null);
+        } else if (args[0].equals("newwindow")){
+            newWindow();
         }
         else
             log.error ("method " + args[0] + " not found");
@@ -1149,6 +1172,11 @@ public class DecoderPro3Window
         }
     }
 
+    protected void newWindow(){
+        DecoderPro3Action act = new DecoderPro3Action(getTitle(), allowQuit);
+        act.actionPerformed(null);
+        firePropertyChange("closewindow", "setEnabled", true);
+    }
     protected void printLoco(boolean boo){
 
     }
@@ -1159,23 +1187,6 @@ public class DecoderPro3Window
         hideBottomPane(hideSummary);
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary",hideSummary);
     }
-    
-    /*@Override
-    public void hideBottomPane(boolean hide) {
-        hideSummary = hide;
-        if(hide){
-            getBottom().setMinimumSize(new Dimension());
-            getSplitPane().setDividerLocation(1.0d);
-        } else {
-            getBottom().setMinimumSize(summaryPaneDim);
-            //getSplitPane().setResizeWeight(1.0);
-            int current = (int) (summaryPaneDim.getHeight()+getSplitPane().getDividerSize());
-            int panesize = (int) (getSplitPane().getSize().getHeight());
-            //getSplitPane().setDividerLocation(panesize-current);
-            getSplitPane().setResizeWeight(1.0);
-            resetTopToPreferredSizes();
-        }
-    }*/
     
     Dimension summaryPaneDim = new Dimension(0, 170);
     
