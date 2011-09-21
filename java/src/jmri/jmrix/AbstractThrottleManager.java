@@ -330,8 +330,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     
     protected boolean addressReleased(DccLocoAddress la, ThrottleListener l){
         if (addressThrottles.containsKey(la)){
-            addressThrottles.get(la).decrementUse();
-            addressThrottles.get(la).removeListener(l);
+            if(addressThrottles.get(la).containsListener(l)){
+                addressThrottles.get(la).decrementUse();
+                addressThrottles.get(la).removeListener(l);
+            }
         }
         if (addressThrottles.containsKey(la)){
             if(addressThrottles.get(la).getUseCount()>0)
@@ -492,6 +494,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
         void removeListener(ThrottleListener l){
             listeners.remove(l);
+        }
+        
+        boolean containsListener(ThrottleListener l){
+            return listeners.contains(l);
         }
     }
     
