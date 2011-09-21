@@ -51,7 +51,7 @@ rm -f temp.dmg $IMAGEFILE
 if [ "$SYSTEM" = "MACOSX" ]
 then
     jmrisize=`du -ms "$INPUT" | awk '{print $1}'`
-    imagesize=`expr $jmrisize + 5`
+    imagesize=`expr $jmrisize + 10`
     
     hdiutil create -size ${imagesize}MB -fs HFS+ -layout SPUD -volname "JMRI ${REL_VER}" "$IMAGEFILE"
     hdiutil attach "$IMAGEFILE" -mountpoint "$tmpdir" -nobrowse
