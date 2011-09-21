@@ -364,6 +364,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JTable blockTable = new DnDJTable(_oBlockModel, new int[] {OBlockTableModel.EDIT_COL, 
                                                                 OBlockTableModel.DELETE_COL,
                                                                 OBlockTableModel.UNITSCOL});
+        _oBlockModel.makeSorter(blockTable);
         blockTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
