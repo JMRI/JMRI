@@ -116,7 +116,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     String _saveBlockName;
     public Object getValueAt(int row, int col) 
     {
-        if (super.getRowCount() == row) {
+/*        if (super.getRowCount() <= row) {
             if (_saveBlockName!=null && _parent.getBlockTablePane()!=null) {
                 //String sysName = tempRow[SYSNAMECOL];
                 if (!_saveBlockName.startsWith("OB")) {
@@ -130,13 +130,30 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 }
             }
             return tempRow[col];
-        }
+        }*/
         OBlock b = (OBlock)getBeanAt(row);
         if (b == null) {
+            if (_saveBlockName!=null && _parent.getBlockTablePane()!=null) {
+                //String sysName = tempRow[SYSNAMECOL];
+                if (!_saveBlockName.startsWith("OB")) {
+                    _saveBlockName = "OB"+_saveBlockName;
+                }
+                b = manager.provideOBlock(_saveBlockName.toUpperCase());
+                if (b!=null) {
+                    int idx =  getIndexOf(b);
+                    _parent.getBlockTablePane().getVerticalScrollBar().setValue(idx*TableFrames.ROW_HEIGHT);
+                    _saveBlockName = null;
+                }
+            }
+            return tempRow[col];
             //log.debug("requested getValueAt(\""+row+"\"), Block doesn't exist");
-            return "(no Block)";
+//            return "(no Block)";
         }
         switch (col) {
+        	case SYSNAMECOL:
+        		return b.getSystemName();
+        	case USERNAMECOL:
+        		return b.getUserName();
             case COMMENTCOL:
                 return b.getComment();
             case SENSORCOL:

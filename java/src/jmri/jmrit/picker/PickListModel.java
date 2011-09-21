@@ -57,6 +57,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     protected ArrayList <NamedBean> _pickList;
     protected String _name;
     private JTable  _table;       // table using this model
+    protected TableSorter _sorter;
 
     public static final int SNAME_COLUMN = 0;
     public static final int UNAME_COLUMN = 1;
@@ -90,10 +91,19 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         makePickList();
     }
 
+    /**
+     * If table has been sorted table row no longer is the same as array index
+     * @param index = row of table
+     * @return
+     */
     public NamedBean getBeanAt(int index) {
+    	index = _sorter.modelIndex(index);
+    	if (index >=_pickList.size()) {
+    		return null;
+    	}
         return _pickList.get(index);
     }
-
+    
     public int getIndexOf(NamedBean bean) {
         for (int i=0; i<_pickList.size(); i++) {
             if (_pickList.get(i).equals(bean)) {
@@ -216,9 +226,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     public JTable makePickTable() {
         this.init();
         try {   // following might fail due to a missing method on Mac Classic
-            TableSorter sorter = new TableSorter(this);
-            _table = jmri.util.JTableUtil.sortableDataModel(sorter);
-            sorter.setTableHeader(_table.getTableHeader());
+        	_sorter = new TableSorter(this);
+            _table = jmri.util.JTableUtil.sortableDataModel(_sorter);
+            _sorter.setTableHeader(_table.getTableHeader());
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             log.error("makePickTable: Unexpected error: "+e);
             _table = new JTable(this);
@@ -242,6 +252,15 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         //uNameColumnT.setMaxWidth(300);
 
         return _table;
+    }
+    
+    public void makeSorter(JTable table) {
+        try {   // following might fail due to a missing method on Mac Classic
+        	_sorter = new TableSorter(this);
+            _sorter.setTableHeader(table.getTableHeader());
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            log.error("makePickTable: Unexpected error: "+e);
+        }
     }
 
     public JTable getTable() {

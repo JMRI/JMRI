@@ -53,11 +53,12 @@ public class DnDJTable extends JTable implements DropTargetListener,
 
      Point _dropPoint;
      int[] _skipCols = new int[0];
+     TableSorter sorter;
 
      DnDJTable (TableModel model, int[] skipCols) {
          super (model);
          try {   // following might fail due to a missing method on Mac Classic
-             TableSorter sorter;
+//             TableSorter sorter;
              sorter = new TableSorter(model);
              setModel(sorter);
              sorter.setTableHeader(getTableHeader());
