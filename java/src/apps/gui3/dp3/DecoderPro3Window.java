@@ -1009,8 +1009,8 @@ public class DecoderPro3Window
             rosterGroupPaneloc = groupSplitPaneLocation;
             
         p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupPaneloc);
-        //Okay only allow the shutdown if we are the last window instance and quit has been allowed
-        if (allowQuit && openWindowInstances==1){
+
+        if (allowQuit){
             handleQuit(e);
         } else {
             //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
@@ -1023,12 +1023,16 @@ public class DecoderPro3Window
     }
     
     void handleQuit(java.awt.event.WindowEvent e){
-        if (JOptionPane.showConfirmDialog(null,
-                    rb.getString("MessageLongCloseWarning"),
-                    rb.getString("MessageShortCloseWarning"),
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                apps.AppsBase.handleQuit();
-            }
+        if(openWindowInstances>1){
+            if (JOptionPane.showConfirmDialog(null,
+                        rb.getString("MessageLongCloseWarning"),
+                        rb.getString("MessageShortCloseWarning"),
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    apps.AppsBase.handleQuit();
+                }
+        } else {
+            apps.AppsBase.handleQuit();
+        }
     }
 
     //Matches the first argument in the array against a locally know method
