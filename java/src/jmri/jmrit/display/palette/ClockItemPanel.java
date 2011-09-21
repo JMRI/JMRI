@@ -52,6 +52,7 @@ public class ClockItemPanel extends IconItemPanel {
     }
 
     protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+        _iconPanel = new JPanel();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
            Entry<String, NamedIcon> entry = it.next();
@@ -76,6 +77,7 @@ public class ClockItemPanel extends IconItemPanel {
            }
            _iconPanel.add(panel);
         }
+        add(_iconPanel, 1);
     }
     /**
     *  SOUTH Panel

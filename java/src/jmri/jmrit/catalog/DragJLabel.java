@@ -34,7 +34,7 @@ import java.io.IOException;
  */
  public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {    
 
-     DataFlavor _dataFlavor;
+     protected DataFlavor _dataFlavor;
      public DragJLabel(DataFlavor flavor) {
          super();
          DragSource dragSource = DragSource.getDefaultDragSource();
