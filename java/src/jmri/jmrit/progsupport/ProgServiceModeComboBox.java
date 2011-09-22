@@ -1,4 +1,4 @@
-// ProgServiceModePane.java
+// ProgServiceModeComboBox.java
 package jmri.jmrit.progsupport;
 
 import java.awt.event.ActionEvent;
@@ -152,7 +152,9 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
 
     // set the programmer to the current mode
     private void setProgrammerMode(int mode) {
-        log.debug("Setting programmer to mode " + mode);
+        if (log.isDebugEnabled()) {
+            log.debug("Setting programmer to mode " + mode);
+        }
         if (InstanceManager.programmerManagerInstance() != null
                 && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
             InstanceManager.programmerManagerInstance().getGlobalProgrammer().setMode(mode);
