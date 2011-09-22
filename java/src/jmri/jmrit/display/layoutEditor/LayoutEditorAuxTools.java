@@ -1129,6 +1129,11 @@ public class LayoutEditorAuxTools
 					typeCurConnection = LayoutEditor.TRACK;
 				}
 			}
+			else {
+				// catch when some new type got added
+				log.error("found unknown track type! " + curConnection.toString() + " type: " + typeCurConnection);
+				break;
+			}
 		}
 	}
 
