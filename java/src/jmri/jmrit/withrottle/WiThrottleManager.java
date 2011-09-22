@@ -24,7 +24,10 @@ public class WiThrottleManager {
         turnoutController = new TurnoutController();
         routeController = new RouteController();
         consistController = new ConsistController();
-        withrottlePreferences = new WiThrottlePreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "WiThrottlePreferences.xml");
+        if(jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class)==null){
+            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
+        }
+        withrottlePreferences = jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class);
     }
 
     static private WiThrottleManager instance() {

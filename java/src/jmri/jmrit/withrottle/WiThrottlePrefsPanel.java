@@ -21,6 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import jmri.jmrit.XmlFile;
+import java.io.File;
+
 public class WiThrottlePrefsPanel extends JPanel{
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
     
@@ -45,8 +48,12 @@ public class WiThrottlePrefsPanel extends JPanel{
     boolean enableSave;
 
     public WiThrottlePrefsPanel(){
+        if(jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class)==null){
+            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
+        }
+        localPrefs = jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class);
         //  set local prefs to match instance prefs
-        localPrefs.apply(WiThrottleManager.withrottlePreferencesInstance());
+        //localPrefs.apply(WiThrottleManager.withrottlePreferencesInstance());
         initGUI();
         setGUI();
     }
