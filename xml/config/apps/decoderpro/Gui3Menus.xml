@@ -124,11 +124,19 @@
         <mnemonic>c</mnemonic>
         <adapter>jmri.jmrit.roster.CreateRosterGroupAction</adapter>
     </node>
+    <node><name>Rename Roster Group</name>
+        <mnemonic>r</mnemonic>
+        <adapter>jmri.jmrit.roster.RenameRosterGroupAction</adapter>
+        </node>
+    <node><name>Duplicate Roster Group</name>
+        <adapter>jmri.jmrit.roster.CopyRosterGroupAction</adapter>
+        </node>
     <node><name>Delete Roster Group</name>
         <mnemonic>d</mnemonic>
         <adapter>jmri.jmrit.roster.DeleteRosterGroupAction</adapter>
         <current>deletegroup</current>
     </node>
+    <node>separator</node>
     <node><name>Set Active Roster Group</name>
         <mnemonic>a</mnemonic>
         <adapter>jmri.jmrit.roster.SelectRosterGroupAction</adapter>
