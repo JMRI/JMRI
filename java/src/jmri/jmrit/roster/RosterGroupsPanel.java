@@ -273,10 +273,8 @@ public class RosterGroupsPanel extends JPanel {
         if (group == null || group.equals(Roster.ALLENTRIES) || group.equals("")) {
             _tree.setSelectionPath(new TreePath(_model.getPathToRoot(_groups.getFirstChild())));
         } else {
-            log.debug("Setting selection to " + group);
             for (Enumeration<DefaultMutableTreeNode> e = _groups.children(); e.hasMoreElements();) {
                 DefaultMutableTreeNode n = e.nextElement();
-                log.debug("Comparing " + group + " to " + n.toString());
                 if (n.toString().equals(group)) {
                     _tree.setSelectionPath(new TreePath(_model.getPathToRoot(n)));
                 }
