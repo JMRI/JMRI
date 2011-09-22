@@ -492,7 +492,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSavePosition(boolean save){
         reuseFrameSavedPosition=save;
-        p.setSaveWindowLocation(windowFrameRef, save);
+        if (p == null) {
+            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        }
+        if (p != null) {
+            p.setSaveWindowLocation(windowFrameRef, save);
+        } else {
+            log.warn("setSavePosition() UserPreferencesManager() not initialised" );
+        }
     }
 
     /**
@@ -500,13 +507,23 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSaveSize(boolean save){
         reuseFrameSavedSized=save;
-        p.setSaveWindowSize(windowFrameRef, save);
+        if (p == null) {
+            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        }
+        if (p != null) {
+            p.setSaveWindowSize(windowFrameRef, save);
+        } else {
+            log.warn("setSaveSize() UserPreferencesManager() not initialised" );
+        }
     }
 
     /**
      * Returns if the frame Position is saved or not
      */
     public boolean getSavePosition(){
+        if (p == null) {
+            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        }
         return reuseFrameSavedPosition;
     }
 
