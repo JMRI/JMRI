@@ -12,9 +12,6 @@ import jmri.util.swing.JmriPanel;
 
 import javax.swing.JComboBox;
 import java.beans.PropertyChangeListener;
-import javax.swing.JList;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  * Selects a Roster group to work with
@@ -46,15 +43,12 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
     	super(s, wi);
     }
      
- 	public SelectRosterGroupPanelAction(String s, Icon i, WindowInterface wi) {
+    public SelectRosterGroupPanelAction(String s, Icon i, WindowInterface wi) {
     	super(s, i, wi);
     }
-    
-    
 
     public void actionPerformed(ActionEvent event) {
         throw new IllegalArgumentException("Should not be invoked");
-
     }
     
     JComboBox selections;
@@ -101,50 +95,6 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
         return container;
     }
 
-    JList groupsList;
-
-    public JmriPanel makeListPanel() {
-        if (!init) {
-            Roster roster = Roster.instance();
-
-            groupsList = roster.rosterGroupList();
-            container = new JmriPanel();
-            container.add(groupsList);
-
-            listListener = new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    JList list = (JList)e.getSource();
-                    String entry = (String)list.getSelectedValue();
-                    Roster.instance().setRosterGroup(entry);
-                }
-            };
-
-            groupsList.addListSelectionListener(listListener);
-
-            roster.addPropertyChangeListener(new PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if ((e.getPropertyName().equals("RosterGroupRemoved")) ||
-                            (e.getPropertyName().equals("RosterGroupAdded")) ||
-                            (e.getPropertyName().equals("ActiveRosterGroup"))) {
-                        updateGroupList();
-                    }
-                }
-            });
-            init = true;
-        }
-        return container;
-    }
-
-    /**
-     * Allow direct manipulation of the JList contained in the JmriPanel returned
-     * by makeListPanel
-     * 
-     * @return JList
-     */
-    public JList getList() {
-        return groupsList;
-    }
-
     void updateComboBox(){
         selections.removeActionListener(comboListener);
         Roster.instance().updateGroupBox(selections);
@@ -156,14 +106,7 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
         }
     }
 
-    void updateGroupList() {
-        groupsList.removeListSelectionListener(listListener);
-        Roster.instance().updateGroupList(groupsList);
-        groupsList.addListSelectionListener(listListener);
-    }
-
     ActionListener comboListener;
-    ListSelectionListener listListener;
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SelectRosterGroupAction.class.getName());

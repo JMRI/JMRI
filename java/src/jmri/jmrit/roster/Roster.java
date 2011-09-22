@@ -955,17 +955,6 @@ public class Roster extends XmlFile {
     public JComboBox rosterGroupBox() {
         JComboBox b = new JComboBox();
         updateGroupBox(b);
-        /*b.insertItemAt(ALLENTRIES,0);
-        
-        String[] displayList = _rosterGroupList.toArray(new String[_rosterGroupList.size()]);
-        java.util.Arrays.sort(displayList);
-        for (int i = 0; i < displayList.length; i++) {
-            b.addItem(displayList[i]);
-        }
-        if(_rostergroup==null)
-            b.setSelectedIndex(0);
-        else
-            b.setSelectedItem(_rostergroup);*/
         return b;
     }
     
@@ -986,31 +975,6 @@ public class Roster extends XmlFile {
             box.setSelectedItem(_rostergroup);
     }
     
-    public JList rosterGroupList() {
-        JList l = new JList();
-        updateGroupList(l);
-        l.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        return l;
-    }
-
-    public void updateGroupList(JList l) {
-        l.removeAll();
-        ArrayList<String> data = new ArrayList<String>();
-        data.add(ALLENTRIES);
-        
-        String[] displayList = _rosterGroupList.toArray(new String[_rosterGroupList.size()]);
-        Arrays.sort(displayList);
-        
-        data.addAll(Arrays.asList(displayList));
-        l.setListData(data.toArray());
-        
-        if (_rostergroup == null) {
-            l.setSelectedIndex(0);
-        } else {
-            l.setSelectedValue(_rostergroup, true);
-        }
-    }
-
     static String ALLENTRIES = "All Entries";
     
     // initialize logging
