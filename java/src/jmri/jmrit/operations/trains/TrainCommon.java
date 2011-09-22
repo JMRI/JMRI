@@ -36,6 +36,7 @@ public class TrainCommon {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String TAB = "    ";
+	protected static final String NEW_LINE = "\n";
 	private static final boolean pickup = true;
 	private static final boolean local = true;
 	EngineManager engineManager = EngineManager.instance();
@@ -116,8 +117,11 @@ public class TrainCommon {
 	protected void addLine (PrintWriter file, String level, String string){
 		if(log.isDebugEnabled())
 			log.debug(string);
-		if (file != null)
-			file.println(level +"- " + string);
+		if (file != null){
+			String[] msg = string.split(NEW_LINE);
+			for (int i=0; i<msg.length; i++)
+				file.println(level +"- " + msg[i]);
+		}
 	}
 	
 	// writes string to console and file

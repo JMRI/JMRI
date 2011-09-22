@@ -94,7 +94,7 @@ public class TrainBuilder extends TrainCommon{
 		try {
 			build();
 		} catch (BuildFailedException e){
-			buildFailed(e.getMessage());
+			buildFailed(e);
 		}
 	}
 	
@@ -1179,7 +1179,7 @@ public class TrainBuilder extends TrainCommon{
 					// build failure if car departing staging without a destination and a train
 					if (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
 							(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
-						throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorCarStageDest"),
+						addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildErrorCarStageDest"),
 								new Object[]{car.toString()}));
 					}
 					// are there still moves available?
@@ -1197,7 +1197,32 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
 				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
 		}
+		checkDepartureForStaging();
 		return;
+	}
+	
+	private void checkDepartureForStaging() throws BuildFailedException{
+		// is train departing staging?
+		if (departStageTrack == null)
+			return; //no
+		int carCount = 0;
+		StringBuffer buf = new StringBuffer();
+		// confirm that all cars in staging are departing
+		for (carIndex=0; carIndex<carList.size(); carIndex++){
+			Car car = carManager.getById(carList.get(carIndex));
+			// build failure if car departing staging without a destination and a train
+			if (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
+					(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
+				carCount++;
+				buf.append(NEW_LINE + car.toString());
+			}
+		}
+		if (carCount > 0){
+			log.debug(carCount +" cars stuck in staging");
+			String msg = MessageFormat.format(rb.getString("buildStagingCouldNotFindDest"),new Object[]{carCount, departStageTrack.getLocation().getName(), departStageTrack.getName()});
+			throw new BuildFailedException(msg + buf.toString(), BuildFailedException.STAGING);
+		}
+		
 	}
 	
 	private boolean addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track){
@@ -2307,22 +2332,47 @@ public class TrainBuilder extends TrainCommon{
 		return false;	// no build errors, but car not given destination
 	}
 
-	private void buildFailed(String string){
+	private void buildFailed(BuildFailedException e){
+		String msg = e.getMessage();
 		train.setStatus(Train.BUILDFAILED);
 		train.setBuildFailed(true);
 		if(log.isDebugEnabled())
-			log.debug(string);
+			log.debug(msg);
 		if(TrainManager.instance().isBuildMessagesEnabled()){
-			JOptionPane.showMessageDialog(null, string,
-					MessageFormat.format(rb.getString("buildErrorMsg"),new Object[]{train.getName(), train.getDescription()}),
-					JOptionPane.ERROR_MESSAGE);
+			if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
+				JOptionPane.showMessageDialog(null, msg,
+						MessageFormat.format(rb.getString("buildErrorMsg"),new Object[]{train.getName(), train.getDescription()}),
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				// build error, could not find destinations for cars departing staging
+				Object[] options = { rb.getString("buttonRemoveCars"), "OK" };
+				int results = JOptionPane.showOptionDialog(null, msg,
+						MessageFormat.format(rb.getString("buildErrorMsg"),new Object[]{train.getName(), train.getDescription()}),
+						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
+				if (results == 0){
+					log.debug("User requested that cars be removed from staging track");
+					removeCarsFromStaging();
+				}
+			}
 		}
 		if (buildReport != null){
-			addLine(buildReport, ONE, string);
+			addLine(buildReport, ONE, msg);
 			// Write to disk and close buildReport
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFailedMsg"),new Object[]{train.getName()}));
 			buildReport.flush();
 			buildReport.close();
+		}
+	}
+	
+	private void removeCarsFromStaging(){
+		if (departStageTrack == null)
+			return;
+		for (carIndex=0; carIndex<carList.size(); carIndex++){
+			Car car = carManager.getById(carList.get(carIndex));
+			// remove cars from departure staging track that haven't been assigned to this train
+			if (car.getTrack().equals(departStageTrack) && car.getTrain() == null){
+				car.setLocation(car.getLocation(), null);
+			}
 		}
 	}
 	
@@ -2332,8 +2382,23 @@ public class TrainBuilder extends TrainCommon{
 }
 
 class BuildFailedException extends Exception {
+	
+	public final static String NORMAL = "normal";
+	public final static String STAGING = "staging";
+	private String type = NORMAL;
+	
+	public BuildFailedException(String s, String type){
+		super(s);
+		this.type = type;		
+	}
+	
 	public BuildFailedException(String s){
 		super(s);
 	}
+	
+	public String getExceptionType(){
+		return type;
+	}
+	
 }
 
