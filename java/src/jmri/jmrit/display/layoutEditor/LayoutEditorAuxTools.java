@@ -1131,7 +1131,7 @@ public class LayoutEditorAuxTools
 			}
 			else {
 				// catch when some new type got added
-				log.error("found unknown track type! " + curConnection.toString() + " type: " + typeCurConnection);
+				log.error("Layout Block: " + layoutBlock.getDisplayName() + " found unknown track type: " + typeCurConnection + " to Block: " + p.getBlock().getDisplayName());
 				break;
 			}
 		}
