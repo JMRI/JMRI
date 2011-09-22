@@ -28,9 +28,10 @@ public class ThrottlesPreferences {
     private String prefFile;
 	private ArrayList<PropertyChangeListener> listeners;
     
-    public ThrottlesPreferences(String sfile)
-    {
-    	prefFile = sfile;
+    public ThrottlesPreferences(){
+		String dirname = XmlFile.prefsDir()+ "throttle" +File.separator;
+		XmlFile.ensurePrefsPresent(dirname);
+        prefFile = dirname+ "ThrottlesPreferences.xml";
 		ThrottlesPrefsXml prefs = new ThrottlesPrefsXml();
 		File file = new File(prefFile );
    		Element root;
@@ -46,8 +47,6 @@ public class ThrottlesPreferences {
 		if (root != null)
 			load(root.getChild("throttlesPreferences"));
     }
-    
-    public ThrottlesPreferences() {   }
     
     public void load(org.jdom.Element e)
     {

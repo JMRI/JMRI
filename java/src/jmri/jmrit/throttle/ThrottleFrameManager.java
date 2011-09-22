@@ -45,9 +45,10 @@ public class ThrottleFrameManager
 	{
 		throttleCycler = new ThrottleCyclingKeyListener();
 		throttleWindows = new ArrayList<ThrottleWindow>(0);
-		String dirname = XmlFile.prefsDir()+ "throttle" +File.separator;
-		XmlFile.ensurePrefsPresent(dirname);
-		throttlesPref = new ThrottlesPreferences(dirname+ "ThrottlesPreferences.xml");
+        if(jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottlesPreferences.class)==null){
+            jmri.InstanceManager.store(new jmri.jmrit.throttle.ThrottlesPreferences(), jmri.jmrit.throttle.ThrottlesPreferences.class);
+        }
+        throttlesPref = jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottlesPreferences.class);
 		buildThrottleListFrame();
 	}
 
@@ -192,7 +193,7 @@ public class ThrottleFrameManager
 	
 	private void buildThrottlePreferencesFrame() {
 		throttlePreferencesFrame = new JmriJFrame(throttleBundle.getString("ThrottlePreferencesFrameTitle"));
-		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane(throttlesPref);
+		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane();
 		throttlePreferencesFrame.add(tpP);
 		tpP.setContainer(throttlePreferencesFrame);
 		throttlePreferencesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

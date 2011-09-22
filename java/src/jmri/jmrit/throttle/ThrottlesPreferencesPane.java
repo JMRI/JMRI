@@ -45,15 +45,15 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     private JFrame m_container = null;
        
     /** Creates new form ThrottlesPreferencesPane */
-    public ThrottlesPreferencesPane(ThrottlesPreferences tp) {
+    public ThrottlesPreferencesPane() {
+        if(jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottlesPreferences.class)==null){
+            jmri.InstanceManager.store(new jmri.jmrit.throttle.ThrottlesPreferences(), jmri.jmrit.throttle.ThrottlesPreferences.class);
+        }
+        ThrottlesPreferences tp = jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottlesPreferences.class);
         initComponents();
         setComponents(tp);
         checkConsistancy();
         tp.addPropertyChangeListener(this);
-    }
-    
-    public ThrottlesPreferencesPane() {
-	    this ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences() );
 	}
 
     private void initComponents() {
