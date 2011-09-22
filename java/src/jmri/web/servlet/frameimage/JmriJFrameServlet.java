@@ -122,7 +122,7 @@ public class JmriJFrameServlet implements Servlet {
         // Find the frame
         JmriJFrame frame = JmriJFrame.getFrame(frameName);
         if (frame == null) {
-            handleError("Can't find frame ["+frameName+"]", res);
+            handleError("Can't find frame ["+frameName+"]", 404, res);
             return;
         }
         if (!frameName.equals(frame.getTitle())) {
@@ -152,7 +152,7 @@ public class JmriJFrameServlet implements Servlet {
         else if (suffix.toLowerCase().equals("html"))
             htmlReply(frameName, out, frame, res, click);
         else
-            handleError("Can't handle suffix ["+suffix+"], use .png or .html", res);
+            handleError("Can't handle suffix ["+suffix+"], use .png or .html", 400, res);
     }
     
     void imageReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res ) 
@@ -299,12 +299,30 @@ public class JmriJFrameServlet implements Servlet {
     /**
      * Handle an error by returning an error message
      */
-    void handleError(String error, ServletResponse res) 
+    void handleError(String error, int statusCode, ServletResponse res)
             throws java.io.IOException {
         PrintWriter out = res.getWriter();
 
+        String statusDescription;
+        switch (statusCode) {
+            case 400:
+                statusDescription = "Bad Request";
+                break;
+            case 404:
+                statusDescription = "Not Found";
+                break;
+            case 503:
+                statusDescription = "Service Unavailable";
+                break;
+            case 200:
+                statusDescription = "OK";
+                break;
+            default:
+                statusDescription = "";
+                break;
+        }
         out.println
-            ("HTTP/1.1 200 OK\r\n" +
+            ("HTTP/1.1 " + statusCode + " " + statusDescription + "\r\n" +
              "Server: " + serverName + "\r\n" +
              "Content-Type: text/html\r\n" +
              "\r\n" +
