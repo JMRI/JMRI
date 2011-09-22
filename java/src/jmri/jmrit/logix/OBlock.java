@@ -162,13 +162,15 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         
         if (jmri.InstanceManager.sensorManagerInstance()!=null) {
-            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(pName);
+            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(pName);
             if (sensor != null) {
                 _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
                 getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
             } else {
                 _errNamedSensor = null;
-                log.error("Sensor '"+pName+"' not available");
+                if (pName!=null && pName.length()>0) {
+                    log.error("Sensor '"+pName+"' not available");                	
+                }
             }
         } else {
             log.error("No SensorManager for this protocol");
@@ -320,9 +322,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public String deAllocate(Warrant warrant) {
         if (log.isDebugEnabled()) log.debug("deAllocate \""+_pathName+"\" in block \""
                                             +getSystemName());
-        if (_warrant!=null && !_warrant.equals(warrant)) {
-            return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
-                "\" owns block \""+getDisplayName()+"\"!";
+        if (_warrant!=null) {
+        	if (!_warrant.equals(warrant)) {
+        		return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
+        					"\" owns block \""+getDisplayName()+"\"!";
+        	}
+            removePropertyChangeListener(_warrant);
         }
         if (_pathName!=null) {
             OPath path = getPathByName(_pathName);
@@ -331,7 +336,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 path.setTurnouts(0, false, lockState, false);
             }
         }
-        removePropertyChangeListener(warrant);
         _warrant = null;
         _pathName = null;
         setValue(null);
