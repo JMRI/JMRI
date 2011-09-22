@@ -11,9 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.File;
@@ -40,13 +38,10 @@ import javax.swing.event.ListSelectionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import javax.swing.DropMode;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
 import javax.swing.TransferHandler;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 
 import jmri.Programmer;
 import jmri.progdebugger.*;
@@ -232,11 +227,7 @@ public class DecoderPro3Window
 
     jmri.jmrit.roster.swing.RosterTable rtable;
     ResourceBundle rb = ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
-    JSplitPane rosterGroupPane;
-    JList groupsList;
-    JButton addGroupBtn;
-    JButton delGroupBtn;
-    ListSelectionListener groupsListListener;
+    JSplitPane rosterGroupSplitPane;
 
     JComponent createTop() {
         
@@ -254,9 +245,8 @@ public class DecoderPro3Window
         activeRosterGroupField.setText(Roster.getRosterGroupName());
         
         JPanel rosters = new JPanel();
-        JPanel groups = new JPanel();
+        JPanel groups = new RosterGroupsPanel();
         rosters.setLayout(new BorderLayout());
-        groups.setLayout(new BorderLayout());
 
         // set up roster table
 
@@ -295,7 +285,7 @@ public class DecoderPro3Window
 
             @Override
             public Transferable createTransferable(JComponent c) {
-                ArrayList Ids = new ArrayList(rtable.getTable().getSelectedRowCount());
+                ArrayList Ids = new ArrayList<String>(rtable.getTable().getSelectedRowCount());
                 for (int i = 0; i < rtable.getTable().getSelectedRowCount(); i++) {
                     Ids.add(rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString());
                 }
@@ -308,123 +298,35 @@ public class DecoderPro3Window
             }
         });
 
-        // set up groups list
-        // use our own groups list instead of SelectRosterGroupPanelAction.makeListPanel
-        // because the JmriPanel packs incorrectly
-        groupsList = Roster.instance().rosterGroupList();
-
-        groupsListListener = new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                JList list = (JList)e.getSource();
-                String entry = (String)list.getSelectedValue();
-                Roster.instance().setRosterGroup(entry);
-            }
-        };
-
-        groupsList.addListSelectionListener(groupsListListener);
-        
         Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
+
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ((e.getPropertyName().equals("RosterGroupRemoved")) ||
-                        (e.getPropertyName().equals("RosterGroupAdded")) ||
-                        (e.getPropertyName().equals("ActiveRosterGroup"))) {
-                    groupsList.removeListSelectionListener(groupsListListener);
-                    Roster.instance().updateGroupList(groupsList);
-                    groupsList.addListSelectionListener(groupsListListener);
-                }
-                if (e.getPropertyName().equals("RosterGroupAdded") &&
-                        groupsList.getModel().getSize() == 2) {
+                if (e.getPropertyName().equals("RosterGroupAdded")
+                        && Roster.instance().getRosterGroupList().size() == 1) {
                     // if the pane is hidden, show it when 1st group is created
                     hideGroupsPane(false);
-                    delGroupBtn.setEnabled(true);
                     enableRosterGroupMenuItems(true);
                 }
-                if (e.getPropertyName().equals("RosterGroupRemoved") &&
-                        groupsList.getModel().getSize() == 1) {
+                if (e.getPropertyName().equals("RosterGroupRemoved")
+                        && Roster.instance().getRosterGroupList().isEmpty()) {
                     // do not hide the pane, since the user may be intending to
                     // add another group, and the pane includes a button to do so.
-                    delGroupBtn.setEnabled(false);
                     enableRosterGroupMenuItems(false);
                 }
             }
         });
 
-        groupsList.setDragEnabled(true);
-        groupsList.setDropMode(DropMode.ON);
-        groupsList.setTransferHandler(new TransferHandler() {
-
-            @Override
-            public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
-                for (DataFlavor flavor : transferFlavors) {
-                    if (RosterEntrySelection.rosterEntryFlavor.equals(flavor)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public boolean importData(JComponent c, Transferable t) {
-                JList l = (JList) c;
-                if (canImport(c, t.getTransferDataFlavors())) {
-                    // getDropLocation is null unless canImport is true
-                    int g = l.getDropLocation().getIndex();
-                    if (g == 0 || g == l.getSelectedIndex()) {
-                        return false;
-                    }
-                    try {
-                        ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
-                        for (RosterEntry re: REs) {
-                            re.putAttribute(Roster.instance().getRosterGroupPrefix() + l.getModel().getElementAt(g).toString(), "yes");
-                            re.updateFile();
-                        }
-                        Roster.writeRosterFile();
-                        Roster.instance().rosterGroupEntryChanged();
-                    } catch (Exception e) {
-                        log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
-                    }
-                }
-                return false;
-            }
-        });
-        // groups list controls
-
-        JToolBar controls = new JToolBar();
-        controls.setLayout(new GridLayout(1,0,0,0));
-        controls.setFloatable(false);
-        addGroupBtn = new JButton("+"); // TODO: need nice + (plus) image here
-        delGroupBtn = new JButton("-"); // TODO: need nice - (minus) image here
-        addGroupBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new CreateRosterGroupAction("", getTop()).actionPerformed(e);
-            }
-        });
-        delGroupBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new DeleteRosterGroupAction("", getTop()).actionPerformed(e);
-            }
-        });
-        if (groupsList.getModel().getSize() == 1) {
-            delGroupBtn.setEnabled(false);
-        }
-        controls.add(addGroupBtn);
-        controls.add(delGroupBtn);
-
-        groups.add(new JLabel("Roster Groups", JLabel.CENTER), BorderLayout.NORTH); // TODO: I18N
-        groups.add(new JScrollPane(groupsList), BorderLayout.CENTER);
-        groups.add(controls, BorderLayout.SOUTH);
-
         // assemble roster/groups splitpane
-        rosterGroupPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
-        rosterGroupPane.setOneTouchExpandable(true);
-        rosterGroupPane.setResizeWeight(0); // emphasis rosters
+        rosterGroupSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
+        rosterGroupSplitPane.setOneTouchExpandable(true);
+        rosterGroupSplitPane.setResizeWeight(0); // emphasis rosters
        
         Object w = p.getProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation");
         if (w != null) {
             groupSplitPaneLocation = (Integer) w;
-            rosterGroupPane.setDividerLocation(groupSplitPaneLocation);
+            rosterGroupSplitPane.setDividerLocation(groupSplitPaneLocation);
         }
-        if (groupsList.getModel().getSize() > 1){
+        if (!Roster.instance().getRosterGroupList().isEmpty()) {
             if (p.getSimplePreferenceState(DecoderPro3Window.class.getName()+ ".showGroups")){
                 hideGroupsPane(false);
             }
@@ -452,10 +354,9 @@ public class DecoderPro3Window
           }
         };
 
-        rosterGroupPane.addPropertyChangeListener(propertyChangeListener);
+        rosterGroupSplitPane.addPropertyChangeListener(propertyChangeListener);
     
-        return rosterGroupPane;
-        // return rosters;   // uncomment to return a single table of roster entries
+        return rosterGroupSplitPane;
     }
 
     /**
@@ -734,8 +635,6 @@ public class DecoderPro3Window
     JRadioButton ops = new JRadioButton("<HTML>Operations Mode<br>(Programming On Main)</HTML>");
     JRadioButton edit = new JRadioButton("<HTML>Edit Only</HTML>");
 
-    // uncomment the following line and comment the line following that
-    // to restore Programming Mode selection in a window
     jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
     JButton prog1Button = new JButton("Basic Programmer");
@@ -1004,7 +903,7 @@ public class DecoderPro3Window
             //But conversion back on the headers is a pain.
             p.setProperty(getWindowFrameRef(), i, rtable.getModel().getSortingStatus(i));
         }
-        int rosterGroupPaneloc = rosterGroupPane.getDividerLocation();
+        int rosterGroupPaneloc = rosterGroupSplitPane.getDividerLocation();
         if(rosterGroupPaneloc<=2)
             rosterGroupPaneloc = groupSplitPaneLocation;
             
@@ -1212,21 +1111,21 @@ public class DecoderPro3Window
         hideGroups = hide;
         p.setSimplePreferenceState(DecoderPro3Window.class.getName() + ".showGroups", !hideGroups);
         if (hide) {
-            groupSplitPaneLocation = rosterGroupPane.getDividerLocation();
-            rosterGroupPane.setDividerLocation(1);
-            rosterGroupPane.getLeftComponent().setMinimumSize(new Dimension());
-            if(Roster.instance().getRosterGroupList().size()==0){
-                rosterGroupPane.setOneTouchExpandable(false);
-                rosterGroupPane.setDividerSize(0);
+            groupSplitPaneLocation = rosterGroupSplitPane.getDividerLocation();
+            rosterGroupSplitPane.setDividerLocation(1);
+            rosterGroupSplitPane.getLeftComponent().setMinimumSize(new Dimension());
+            if (Roster.instance().getRosterGroupList().isEmpty()) {
+                rosterGroupSplitPane.setOneTouchExpandable(false);
+                rosterGroupSplitPane.setDividerSize(0);
             }
         } else {
-            rosterGroupPane.setDividerSize(10);
-            rosterGroupPane.setOneTouchExpandable(true);
-            if(groupSplitPaneLocation>=2){
-                rosterGroupPane.setDividerLocation(groupSplitPaneLocation);
+            rosterGroupSplitPane.setDividerSize(UIManager.getInt("SplitPane.dividerSize"));
+            rosterGroupSplitPane.setOneTouchExpandable(true);
+            if (groupSplitPaneLocation >= 2) {
+                rosterGroupSplitPane.setDividerLocation(groupSplitPaneLocation);
+            } else {
+                rosterGroupSplitPane.resetToPreferredSizes();
             }
-                else
-                rosterGroupPane.resetToPreferredSizes();
         }
     }
 
