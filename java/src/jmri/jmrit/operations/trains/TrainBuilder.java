@@ -1214,7 +1214,8 @@ public class TrainBuilder extends TrainCommon{
 			if (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
 					(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
 				carCount++;
-				buf.append(NEW_LINE + car.toString());
+				if (carCount < 21)
+					buf.append(NEW_LINE + car.toString());
 			}
 		}
 		if (carCount > 0){

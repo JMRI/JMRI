@@ -572,14 +572,14 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	List<String> _skipLocationsList = new ArrayList<String>();
 
-	private String[] getTrainSkipsLocations(){
+	protected String[] getTrainSkipsLocations(){
 		String[] locationIds = new String[_skipLocationsList.size()];
 		for (int i=0; i<_skipLocationsList.size(); i++)
 			locationIds[i] = _skipLocationsList.get(i);
 		return locationIds;
 	}
 
-	private void setTrainSkipsLocations(String[] locationIds){
+	protected void setTrainSkipsLocations(String[] locationIds){
 		if (locationIds.length == 0) return;
 		jmri.util.StringUtil.sort(locationIds);
 		for (int i=0; i<locationIds.length; i++)
@@ -620,7 +620,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * Get's the type names of rolling stock this train will service
      * @return The type names for cars and or engines
      */
-    public String[] getTypeNames(){
+    protected String[] getTypeNames(){
       	String[] types = new String[_typeList.size()];
      	for (int i=0; i<_typeList.size(); i++)
      		types[i] = _typeList.get(i);
@@ -632,7 +632,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * Cars and Engines.
      * @param types The type names for cars and or engines
      */
-    public void setTypeNames(String[] types){
+    protected void setTypeNames(String[] types){
     	if (types.length == 0) return;
     	jmri.util.StringUtil.sort(types);
  		for (int i=0; i<types.length; i++)
@@ -695,7 +695,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     List<String> _roadList = new ArrayList<String>();
-    private void setRoadNames(String[] roads){
+    protected void setRoadNames(String[] roads){
     	if (roads.length == 0) return;
     	jmri.util.StringUtil.sort(roads);
  		for (int i=0; i<roads.length; i++){
@@ -793,7 +793,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     List<String> _loadList = new ArrayList<String>();
-    private void setLoadNames(String[] loads){
+    protected void setLoadNames(String[] loads){
     	if (loads.length == 0) return;
     	jmri.util.StringUtil.sort(loads);
  		for (int i=0; i<loads.length; i++){
@@ -878,7 +878,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     List<String> _ownerList = new ArrayList<String>();
-    private void setOwnerNames(String[] owners){
+    protected void setOwnerNames(String[] owners){
     	if (owners.length == 0) return;
     	jmri.util.StringUtil.sort(owners);
  		for (int i=0; i<owners.length; i++){

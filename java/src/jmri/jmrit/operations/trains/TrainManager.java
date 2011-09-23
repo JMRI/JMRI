@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 /**
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
  * @version	$Revision$
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
@@ -610,6 +610,69 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * @return Number of trains
      */
     public int numEntries() { return _trainHashTable.size(); }
+    
+    /**
+     * Makes a copy of an existing train.  Only the train's description isn't
+     * copied.
+     * @param train the train to copy
+     * @param trainName the name of the new train
+     * @return
+     */
+    public Train copyTrain(Train train, String trainName){
+    	Train newTrain = newTrain(trainName);
+    	// route, departure time and types
+    	newTrain.setRoute(train.getRoute());
+    	newTrain.setTrainSkipsLocations(train.getTrainSkipsLocations());
+    	newTrain.setDepartureTime(train.getDepartureTimeHour(), train.getDepartureTimeMinute());
+    	newTrain._typeList.clear();	// remove all types loaded by create
+    	newTrain.setTypeNames(train.getTypeNames());
+    	// set road, load, and owner options
+    	newTrain.setRoadOption(train.getRoadOption());
+    	newTrain.setRoadNames(train.getRoadNames());
+    	newTrain.setLoadOption(train.getLoadOption());
+    	newTrain.setLoadNames(train.getLoadNames());
+    	newTrain.setOwnerOption(train.getOwnerOption());
+    	newTrain.setOwnerNames(train.getOwnerNames());
+    	// build dates
+    	newTrain.setBuiltStartYear(train.getBuiltStartYear());
+    	newTrain.setBuiltEndYear(train.getBuiltEndYear());
+    	// locos start of route
+    	newTrain.setNumberEngines(train.getNumberEngines());
+    	newTrain.setEngineModel(train.getEngineModel());
+    	newTrain.setEngineRoad(train.getEngineRoad());
+    	newTrain.setRequirements(train.getRequirements());
+    	newTrain.setCabooseRoad(train.getCabooseRoad());
+    	// second leg
+    	newTrain.setSecondLegNumberEngines(train.getSecondLegNumberEngines());
+    	newTrain.setSecondLegEngineModel(train.getSecondLegEngineModel());
+    	newTrain.setSecondLegEngineRoad(train.getSecondLegEngineRoad());
+    	newTrain.setSecondLegOptions(train.getSecondLegOptions());
+    	newTrain.setSecondLegCabooseRoad(train.getSecondLegCabooseRoad());
+    	newTrain.setSecondLegStartLocation(train.getSecondLegStartLocation());
+    	newTrain.setSecondLegEndLocation(train.getSecondLegEndLocation());
+    	// third leg
+    	newTrain.setThirdLegNumberEngines(train.getThirdLegNumberEngines());
+    	newTrain.setThirdLegEngineModel(train.getThirdLegEngineModel());
+    	newTrain.setThirdLegEngineRoad(train.getThirdLegEngineRoad());
+    	newTrain.setThirdLegOptions(train.getThirdLegOptions());
+    	newTrain.setThirdLegCabooseRoad(train.getThirdLegCabooseRoad());
+    	newTrain.setThirdLegStartLocation(train.getThirdLegStartLocation());
+    	newTrain.setThirdLegEndLocation(train.getThirdLegEndLocation());
+    	// scripts
+    	for (int i=0; i<train.getBuildScripts().size(); i++)
+    		newTrain.addBuildScript(train.getBuildScripts().get(i));
+       	for (int i=0; i<train.getMoveScripts().size(); i++)
+    		newTrain.addMoveScript(train.getMoveScripts().get(i));
+       	for (int i=0; i<train.getTerminationScripts().size(); i++)
+    		newTrain.addTerminationScript(train.getTerminationScripts().get(i));
+       	// options
+       	newTrain.setRailroadName(train.getRailroadName());
+       	newTrain.setManifestLogoURL(train.getManifestLogoURL());
+       	// comment
+       	newTrain.setComment(train.getComment());
+    	
+    	return newTrain;
+    }
     
     public void options (Element values) {
     	if (log.isDebugEnabled()) log.debug("ctor from element "+values);

@@ -230,13 +230,15 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
-		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
-		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));
-		toolMenu.add(new TrainsScriptAction(rb.getString("MenuItemScripts"), this));
+		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));	
 		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
 		toolMenu.add(new TrainsByCarTypeAction(rb.getString("TitleModifyTrains")));
 		toolMenu.add(new TrainsScheduleAction(rb.getString("TitleTimeTableTrains")));
+		toolMenu.add(new TrainCopyAction(rb.getString("TitleTrainCopy")));
+		toolMenu.add(new TrainsScriptAction(rb.getString("MenuItemScripts"), this));
+		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
+		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
+
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
     
