@@ -63,7 +63,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         String[] lines = msg.split("\n");
         if(m.getResultCode()==0){
             int ecosObjectId = m.getEcosObjectId();
-            if((ecosObjectId!=26) && ((ecosObjectId<100) || (ecosObjectId>200))){
+            if((ecosObjectId!=26) && ((ecosObjectId<100) || (ecosObjectId>300))){
                 log.debug("message receieved that is not within the valid Sensor object range");
                 return;
             }
@@ -96,7 +96,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 int end = lines[i].indexOf(' ');
                                 int object = Integer.parseInt(lines[i].substring(start, end));
 
-                                if ( (100<=object) && (object<200)) { // only physical sensors
+                                if ( (100<=object) && (object<300)) { // only physical sensors
                                     start = lines[i].indexOf('[')+1;
                                     end = lines[i].indexOf(']');
                                     int ports = Integer.parseInt(lines[i].substring(start, end));
