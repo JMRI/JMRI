@@ -42,23 +42,23 @@ public class TabbedPreferences extends AppConfigBase {
     public String getTitle() { return rb.getString("TitlePreferences"); }
     @Override
     public boolean isMultipleInstances() { return false; }  // only one of these!
-    /* static */ ArrayList<Element> preferencesElements = new ArrayList<Element>();
+    ArrayList<Element> preferencesElements = new ArrayList<Element>();
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
 
     JPanel detailpanel = new JPanel();
-    final JTabbedPane connectionPanel = new JTabbedPane();
+    JTabbedPane connectionPanel = new JTabbedPane();
     jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences;
     jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel;
     jmri.web.miniserver.MiniServerPrefsPanel miniserverPrefsPanel;
     
-    /* static */ ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
-    /* static */ ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
+    ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
+    ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
     JPanel buttonpanel;
-    /* static */ JList list;
+    JList list;
     JScrollPane listScroller;
-    boolean inital = false;
+    int initalisationState = 0x00;
     
     public TabbedPreferences(){
         
@@ -83,10 +83,17 @@ public class TabbedPreferences extends AppConfigBase {
         preferencesArray.add(new preferencesCatItems("WITHROTTLE", rb.getString("MenuWiThrottle")));
 
         preferencesArray.add(new preferencesCatItems("MINISERVER", rb.getString("MenuMiniServer")));
-
     }
     
-    public void init(){
+    static final int UNINITIALISED = 0x00;
+    static final int INITIALISING = 0x01;
+    static final int INITIALISED = 0x02;
+    
+    public int init(){
+        if(initalisationState!=UNINITIALISED)
+            return initalisationState;
+        initalisationState=INITIALISING;
+
         throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
         withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
         miniserverPrefsPanel = new jmri.web.miniserver.MiniServerPrefsPanel();
@@ -177,7 +184,8 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.add(save);
         list.setSelectedIndex(0);
         selection(preferencesArray.get(0).getPrefItem());
-        inital = true;
+        initalisationState = INITIALISED;
+        return initalisationState;
     }
     
     Hashtable<Class<?>, Object> saveHook = new Hashtable<Class<?>, Object>();
@@ -267,7 +275,7 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             }
         }
-        /**By default 4 sets of jmrixconfigpanes are created at start up.  However
+        /**By default in classic 4 sets of jmrixconfigpanes are created at start up.  However
          * if there are more than 4 connections, the 5+ connections do not have
          * a jmrixconfigpane instance created, thus we need to pick those up.
          */
@@ -335,7 +343,7 @@ public class TabbedPreferences extends AppConfigBase {
             itemBeingAdded = new preferencesCatItems(prefItem, itemText);
             preferencesArray.add(itemBeingAdded);
             //As this is a new item in the selection list, we need to update the JList.
-            if (inital)
+            if (initalisationState==INITIALISED)
                 updateJList();
         }
         if (tabtitle==null)

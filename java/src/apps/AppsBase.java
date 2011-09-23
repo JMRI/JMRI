@@ -70,7 +70,19 @@ public abstract class AppsBase {
         installManagers();
 
         setAndLoadPreferenceFile();
-
+        /*Once all the preferences have been loaded we can initial the preferences
+        doing it in a thread at this stage means we can let it work in the background*/
+        Runnable r = new Runnable() {
+          public void run() {
+            try {
+                 jmri.InstanceManager.tabbedPreferencesInstance().init();
+            } catch (Exception ex) {
+                log.error(ex.toString());
+            }
+          }
+        };
+        Thread thr = new Thread(r);
+        thr.start();
     }
         
     protected void createDemoScaffolding() {
@@ -106,7 +118,7 @@ public abstract class AppsBase {
         InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
         
         // Install a user preferences manager
-        InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);        
+        InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         
         // install the abstract action model that allows items to be added to the, both 
         // CreateButton and Perform Action Model use a common Abstract class

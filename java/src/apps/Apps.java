@@ -206,6 +206,19 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             configDeferredLoadOK = false;
         }
 
+        /*Once all the preferences have been loaded we can initial the preferences
+        doing it in a thread at this stage means we can let it work in the background*/
+        Runnable r = new Runnable() {
+          public void run() {
+            try {
+                 jmri.InstanceManager.tabbedPreferencesInstance().init();
+            } catch (Exception ex) {
+                log.error(ex.toString());
+            }
+          }
+        };
+        Thread thr = new Thread(r);
+        thr.start();
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+(configOK||configDeferredLoadOK));
         if (!configOK||!configDeferredLoadOK) {

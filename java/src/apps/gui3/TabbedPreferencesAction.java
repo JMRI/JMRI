@@ -66,21 +66,46 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
     static TabbedPreferencesFrame f;
     String preferencesItem = null;
     String preferenceSubCat = null;
-    
+    static boolean inWait = false;
 
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
         // create the frame
-        if (f==null){
-            jmri.InstanceManager.tabbedPreferencesInstance().init();
-            f = new TabbedPreferencesFrame(){
-            };
-            // Update the GUI Look and Feel
-            // This is needed as certain controls are instantiated
-            // prior to the setup of the Look and Feel
-            SwingUtilities.updateComponentTreeUI(f);
+        if(inWait) {
+            log.info("We are already waiting for the preferences to be displayed");
+            return;
         }
         
+        if (f==null){
+            f = new TabbedPreferencesFrame(){
+            };
+              Runnable r = new Runnable() {
+              public void run() {
+                try {
+                    inWait = true;
+                    while(jmri.InstanceManager.tabbedPreferencesInstance().init()!=0x02){
+                        Thread.sleep(50);
+                    }
+                    SwingUtilities.updateComponentTreeUI(f);
+                    showPreferences();
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    inWait=false;
+                }
+              }
+            };
+            Thread thr = new Thread(r);
+            thr.start();
+        } else {
+            showPreferences();
+        }
+    }
+    
+    private void showPreferences(){
+        // Update the GUI Look and Feel
+        // This is needed as certain controls are instantiated
+        // prior to the setup of the Look and Feel
+        inWait = false;
         f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
         f.pack();
         
@@ -103,5 +128,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferencesAction.class.getName());
     
 }
