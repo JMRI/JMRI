@@ -5,9 +5,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -365,7 +371,17 @@ public class RosterGroupsPanel extends JPanel {
             _TSL = new TreeSelectionListener();
             _tree.addTreeSelectionListener(_TSL);
             _tree.setDragEnabled(true);
-            _tree.setDropMode(DropMode.ON);
+            try {
+                // Java 1.6
+                _tree.setDropMode(DropMode.ON);
+            } catch (java.lang.NoClassDefFoundError ex) {
+                // Java 1.5
+                log.warn("Failed to set DropMode. Falling back on setting DropTarget.");
+                _tree.setDropTarget(new DropTarget(_tree,
+                        DnDConstants.ACTION_COPY,
+                        new DropTargetListener(),
+                        true));
+            }
             _tree.setTransferHandler(new TransferHandler());
             _tree.addMouseListener(new MouseAdapter());
             setSelectionToGroup(selectedRosterGroup);
@@ -428,6 +444,42 @@ public class RosterGroupsPanel extends JPanel {
         for (String g : groups) {
             root.add(new DefaultMutableTreeNode(g));
         }
+    }
+
+    // This class is required only for Java 1.5 support.
+    class DropTargetListener implements java.awt.dnd.DropTargetListener {
+
+        public void dragEnter(DropTargetDragEvent dtde) {
+            //throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void dragOver(DropTargetDragEvent dtde) {
+            //throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void dropActionChanged(DropTargetDragEvent dtde) {
+            //throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void dragExit(DropTargetEvent dte) {
+            //throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void drop(DropTargetDropEvent dtde) {
+            TransferHandler th = new TransferHandler();
+            if (dtde.isLocalTransfer() && th.canImport(_tree, dtde.getCurrentDataFlavors())) {
+                Point l = dtde.getLocation();
+                int closestRow = _tree.getClosestRowForLocation(l.x, l.y);
+                Rectangle closestRowBounds = _tree.getRowBounds(closestRow);
+                if (l.getY() >= closestRowBounds.getY()
+                        && l.getY() < closestRowBounds.getY() + closestRowBounds.getHeight()) {
+                    th.importData(_tree, dtde.getTransferable(), _tree.getPathForRow(closestRow));
+                } else {
+                    th.importData(_tree, dtde.getTransferable(), null);
+                }
+            }
+        }
+
     }
 
     class MenuActionListener implements ActionListener {
@@ -539,34 +591,38 @@ public class RosterGroupsPanel extends JPanel {
 
         @Override
         public boolean importData(JComponent c, Transferable t) {
-            JTree l = (JTree) c;
             if (canImport(c, t.getTransferDataFlavors())) {
                 // getDropLocation is null unless dropping on an existing path
-                TreePath p = l.getDropLocation().getPath();
-                if (p != null) {
-                    TreePath g = new TreePath(_model.getPathToRoot(_groups));
-                    // drag onto existing user defined group, but not onto current selection
-                    if (g.isDescendant(p) && !p.isDescendant(g) && !p.isDescendant(l.getSelectionPath())) {
-                        try {
-                            ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
-                            for (RosterEntry re : REs) {
-                                re.putAttribute(Roster.instance().getRosterGroupPrefix() + p.getLastPathComponent().toString(), "yes");
-                                re.updateFile();
-                            }
-                            Roster.writeRosterFile();
-                            Roster.instance().rosterGroupEntryChanged();
-                        } catch (Exception e) {
-                            log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
-                        }
-                    }
-                } else {
+                return importData(c, t, ((JTree) c).getDropLocation().getPath());
+            }
+            return false;
+        }
+
+        public boolean importData(JComponent c, Transferable t, TreePath p) {
+            JTree l = (JTree) c;
+            if (p != null) {
+                TreePath g = new TreePath(_model.getPathToRoot(_groups));
+                // drag onto existing user defined group, but not onto current selection
+                if (g.isDescendant(p) && !p.isDescendant(g) && !p.isDescendant(l.getSelectionPath())) {
                     try {
-                        JmriAbstractAction a = new CreateRosterGroupAction("Create From Selection", scrollPane.getTopLevelAncestor());
-                        a.setParameter("RosterEntries", RosterEntrySelection.getRosterEntries(t));
-                        a.actionPerformed(null);
+                        ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
+                        for (RosterEntry re : REs) {
+                            re.putAttribute(Roster.instance().getRosterGroupPrefix() + p.getLastPathComponent().toString(), "yes");
+                            re.updateFile();
+                        }
+                        Roster.writeRosterFile();
+                        Roster.instance().rosterGroupEntryChanged();
                     } catch (Exception e) {
-                        log.warn("Exception creating RosterGroups from selection: " + e);
+                        log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
                     }
+                }
+            } else {
+                try {
+                    JmriAbstractAction a = new CreateRosterGroupAction("Create From Selection", scrollPane.getTopLevelAncestor());
+                    a.setParameter("RosterEntries", RosterEntrySelection.getRosterEntries(t));
+                    a.actionPerformed(null);
+                } catch (Exception e) {
+                    log.warn("Exception creating RosterGroups from selection: " + e);
                 }
             }
             return false;
