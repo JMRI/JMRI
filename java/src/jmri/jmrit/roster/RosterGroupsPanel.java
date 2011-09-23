@@ -376,7 +376,7 @@ public class RosterGroupsPanel extends JPanel {
                 _tree.setDropMode(DropMode.ON);
             } catch (java.lang.NoClassDefFoundError ex) {
                 // Java 1.5
-                log.warn("Failed to set DropMode. Falling back on setting DropTarget.");
+                log.info("Failed to set DropMode. Falling back on setting DropTarget.");
                 _tree.setDropTarget(new DropTarget(_tree,
                         DnDConstants.ACTION_COPY,
                         new DropTargetListener(),
