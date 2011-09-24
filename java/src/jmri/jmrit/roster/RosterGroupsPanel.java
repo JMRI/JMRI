@@ -20,7 +20,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
@@ -439,9 +438,7 @@ public class RosterGroupsPanel extends JPanel {
     private void setRosterGroups(DefaultMutableTreeNode root) {
         root.removeAllChildren();
         root.add(new DefaultMutableTreeNode(Roster.ALLENTRIES));
-        String[] groups = Roster.instance()._rosterGroupList.toArray(new String[Roster.instance()._rosterGroupList.size()]);
-        Arrays.sort(groups);
-        for (String g : groups) {
+        for (String g : Roster.instance().getRosterGroupList()) {
             root.add(new DefaultMutableTreeNode(g));
         }
     }
@@ -607,7 +604,7 @@ public class RosterGroupsPanel extends JPanel {
                     try {
                         ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
                         for (RosterEntry re : REs) {
-                            re.putAttribute(Roster.instance().getRosterGroupPrefix() + p.getLastPathComponent().toString(), "yes");
+                            re.putAttribute(Roster.getRosterGroupProperty(p.getLastPathComponent().toString()), "yes");
                             re.updateFile();
                         }
                         Roster.writeRosterFile();
