@@ -205,6 +205,25 @@ Top Level Elements not brought over from DTD
 	    </xs:complexType>
 	  </xs:element>
       </xs:sequence>
+
+      <!-- or Steam sound -->
+      <xs:sequence>
+	<xs:element name="top-speed" type="xs:integer"/>
+	<xs:element name="driver-diameter" type="xs:integer"/>
+	<xs:element name="cylinders" type="xs:integer"/>
+	<xs:element name="rpm-steps" type="xs:integer"/>
+	<xs:element name="rpm-step" minOccurs="1" maxOccurs="unbounded">6	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="min-rpm" type="xs:integer"/>
+	      <xs:element name="max-rpm" type="xs:integer"/>
+	      <xs:element name="gain" type="xs:float"/>
+	      <xs:element name="use-chuff-gen" minOccurs="0" maxOccurs="1"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+      </xs:sequence>
+
     </xs:choice>
     
     <xs:attribute name="name" type="xs:string" use="required"/>
@@ -213,6 +232,7 @@ Top Level Elements not brought over from DTD
 	<xs:restriction base="xs:string">
 	  <xs:enumeration value="configurable"/>
 	  <xs:enumeration value="diesel"/>
+	  <xs:enumeration value="steam"/>
 	</xs:restriction>
       </xs:simpleType>
     </xs:attribute>
