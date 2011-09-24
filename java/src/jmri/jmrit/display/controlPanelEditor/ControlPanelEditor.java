@@ -789,10 +789,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _anchorY = event.getY();
         _lastX = _anchorX;
         _lastY = _anchorY;
+        _currentSelection = getCurrentSelection(event);
 
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
           /*  if (!event.isControlDown()) */{
-                _currentSelection = getCurrentSelection(event);
                 if (_currentSelection!=null) {
                     if (!event.isControlDown()) {
                         _currentSelection.doMousePressed(event);
@@ -815,7 +815,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             }
         } else {
-            _selectionGroup = null;
+            if (_currentSelection==null || (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
+            	_selectionGroup = null;
+            }
         }
         //if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+//") _dragging="+_dragging);
         //                      " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
