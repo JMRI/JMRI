@@ -476,8 +476,8 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     private void clearLeadLoco(){
         if (useLeadLocoF){
-            functionThrottle.removePropertyChangeListener(this);
             leadLocoF.dispose();
+            functionThrottle.removePropertyChangeListener(this);
             if (throttle != null){
                 setFunctionThrottle(throttle);
             }
