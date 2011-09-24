@@ -48,6 +48,7 @@ The JMRI "Debug" menu contains the following items:
   <li>Load Logixs Disabled</li>
   <li>Log Message</li>
   <li>Display Message Log</li>
+  <li><a href="vsdecoder/VSDecoderFrame.shtml">Virtual Sound Decoder</a></li>
   <li>PRICOM</li>
   <li>USB Input Control</li>
   <li>USB Device Viewer</li>
