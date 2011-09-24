@@ -791,10 +791,18 @@ public class Roster extends XmlFile {
     }
     
     public static String getRosterGroupWP(){
-        String group = _rosterGroupPrefix+_rostergroup;
-        return group;
+        return getRosterGroupProperty(_rostergroup);
     }
-    
+
+    /**
+     * Get the string for a RosterGroup property in a RosterEntry
+     *
+     * @param name The name of the rosterGroup
+     * @return The full property string
+     */
+    public static String getRosterGroupProperty(String name) {
+        return _rosterGroupPrefix + name;
+    }
     
     /**
      * This is here so that when a roster entry is added to a group via the table entry,
@@ -804,7 +812,7 @@ public class Roster extends XmlFile {
         firePropertyChange("ActiveRosterGroup", null, null);
     }
 
-    
+
     protected ArrayList<String> _rosterGroupList = new ArrayList<String>();
     
     static String _rosterGroupPrefix = "RosterGroup:";
