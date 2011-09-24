@@ -68,14 +68,12 @@ DecoderPro 3
 </ul>
 
 <h4>
-<a NAME="Setting up"></a>Using DecoderPro&reg;</h4>
+<a NAME="Setting up"></a>Using DecoderPro3&reg;</h4>
 <ul>
   <li><a href="Programmer_Setup.shtml">How do I set up to program
     a decoder?</a></li>
-  <li><a href="Programmer_Start.shtml">What are the Programming
-    Modes?</a></li>
 </ul>
-<h4>DecoderPro&reg; Programming Modes</h4>
+<h4>DecoderPro3&reg; Programming Modes</h4>
 <ul>
   <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
   <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
