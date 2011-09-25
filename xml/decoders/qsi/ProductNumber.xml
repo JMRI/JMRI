@@ -15,12 +15,12 @@
 
 <!-- standard model number definition ivariables-->
 
-<ivariables>
+<variables>
 <!-- CV 56.254 About Quantum Decoder -->
-      <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="no" comment="QSI" item="CV56.254.4">
+      <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="yes" comment="QSI" item="CV56.254.4">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="no" comment="QSI" item="CV56.254.5">
+      <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" comment="QSI" item="CV56.254.5">
         <indexedVal/>
       </ivariable>
       <ivariable label="Firmware Build Number" CVname="56.254.8" CV="56" PI="254" SI="8" readOnly="yes" comment="QSI" item="CV56.254.8">
@@ -37,7 +37,7 @@
       </ivariable>
 
 <!-- QSI Product ID -->
-      <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="no" item="Product Number">
+      <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
         <indexedPairVal highCVname="56.254.4" />
       </ivariable>     
- </ivariables>	  	 
+ </variables>	  	 
