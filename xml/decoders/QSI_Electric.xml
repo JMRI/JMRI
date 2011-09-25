@@ -3236,9 +3236,6 @@
           <label label=" ">
             <label> </label>
           </label>
-          <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1">
-            <label>If nothing shows up in this tab, upgrade to JMRI 1.7.1</label>
-          </label>
           <label label="When programming in Ops-mode, see note on QSI Misc. tab">
             <label>When programming in Ops-mode, see note on QSI Misc. tab</label>
           </label>
@@ -3325,9 +3322,6 @@
           <label label=" ">
             <label> </label>
           </label>
-          <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1">
-            <label>If nothing shows up in this tab, upgrade to JMRI 1.7.1</label>
-          </label>
           <label label="When programming in Ops-mode, see note on QSI Misc. tab">
             <label>When programming in Ops-mode, see note on QSI Misc. tab</label>
           </label>
@@ -3397,9 +3391,6 @@
     <column>
       <label label=" ">
         <label> </label>
-      </label>
-      <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1">
-        <label>If nothing shows up in this tab, upgrade to JMRI 1.7.1</label>
       </label>
       <label label="When programming in Ops-mode, see note on QSI Misc. tab">
         <label>When programming in Ops-mode, see note on QSI Misc. tab</label>

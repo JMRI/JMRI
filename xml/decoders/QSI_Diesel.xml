@@ -3010,29 +3010,11 @@
         <indexedVal max="128"/>
       </ivariable>
 <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
+
 <!-- CV 56.254 About Quantum Decoder -->
-      <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="yes" comment="QSI" item="CV56.254.4">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" comment="QSI" item="CV56.254.5">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Number" CVname="56.254.8" CV="56" PI="254" SI="8" readOnly="yes" comment="QSI" item="CV56.254.8">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Month" CVname="56.254.10" CV="56" PI="254" SI="10" readOnly="yes" comment="QSI" item="CV56.254.10">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Day" CVname="56.254.11" CV="56" PI="254" SI="11" readOnly="yes" comment="QSI" item="CV56.254.11">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12" readOnly="yes" comment="QSI" item="CV56.254.12">
-        <indexedVal/>
-      </ivariable>
 <!-- QSI Product ID -->
-      <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
-        <indexedPairVal highCVname="56.254.4" factor="256"/>
-      </ivariable>
+    <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
+
 <!-- CV 56.255 Play Build Information (for ops mode) -->
       <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" comment="QSI" item="CV56.255_0" default="0">
         <indexedVal/>
@@ -3061,9 +3043,6 @@
         <column>
           <label label=" ">
             <label> </label>
-          </label>
-          <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1">
-            <label>If nothing shows up in this tab, upgrade to JMRI 1.7.1</label>
           </label>
           <label label="When programming in Ops-mode, see note on QSI Misc. tab">
             <label>When programming in Ops-mode, see note on QSI Misc. tab</label>
@@ -3161,9 +3140,6 @@
           <label label=" ">
             <label> </label>
           </label>
-          <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1">
-            <label>If nothing shows up in this tab, upgrade to JMRI 1.7.1</label>
-          </label>
           <label label="When programming in Ops-mode, see note on QSI Misc. tab">
             <label>When programming in Ops-mode, see note on QSI Misc. tab</label>
           </label>
@@ -3235,9 +3211,6 @@
         <column>
           <label label=" ">
             <label> </label>
-          </label>
-          <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1">
-            <label>If nothing shows up in this tab, upgrade to JMRI 1.7.1</label>
           </label>
           <label label="When programming in Ops-mode, see note on QSI Misc. tab">
             <label>When programming in Ops-mode, see note on QSI Misc. tab</label>

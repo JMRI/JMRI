@@ -4247,24 +4247,6 @@
       <ivariable label="Hardware Low Byte" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="CV56.254.3">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="yes" item="CV56.254.4">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="CV56.254.5">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build" CVname="56.254.8" CV="56" PI="254" SI="8" readOnly="yes" item="CV56.254.8">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Month" CVname="56.254.10" CV="56" PI="254" SI="10" readOnly="yes" item="CV56.254.10">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Day" CVname="56.254.11" CV="56" PI="254" SI="11" readOnly="yes" item="CV56.254.11">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12" readOnly="yes" item="CV56.254.12">
-        <indexedVal/>
-      </ivariable>
       <ivariable label="Sound Set" CVname="56.254.14" CV="56" PI="254" SI="14" include="200" readOnly="yes" item="CV56.254.14">
         <indexedVal/>
       </ivariable>
@@ -4283,9 +4265,11 @@
       <ivariable label="Firmware Modified Date.Year" CVname="56.254.18" CV="56" PI="254" SI="18" include="2000,2001,2050" readOnly="yes" item="CV56.254.18">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
-        <indexedPairVal highCVname="56.254.4" factor="256"/>
-      </ivariable>
+
+<!-- CV 56.254 About Quantum Decoder -->
+<!-- QSI Product ID -->
+    <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
+
       <ivariable label="Hardware Profile" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="Hardware Profile">
         <indexedPairVal highCVname="56.254.2" factor="256"/>
       </ivariable>
