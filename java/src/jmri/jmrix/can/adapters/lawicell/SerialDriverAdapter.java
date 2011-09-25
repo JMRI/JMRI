@@ -160,8 +160,8 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         return validSpeedValues;
     }
     
-    protected String [] validSpeeds = new String[]{"57,600", "115,200", "250,000", "333,333", "460,800", "500,000"};
-    protected int [] validSpeedValues = new int[]{57600, 115200, 250000, 333333, 460800, 500000};
+    protected String [] validSpeeds = new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800", "500,000"};
+    protected int [] validSpeedValues = new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     
     /**
      * Option 1 is CAN-based protocol
