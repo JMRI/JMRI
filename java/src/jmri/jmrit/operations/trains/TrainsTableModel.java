@@ -2,8 +2,11 @@
 
 package jmri.jmrit.operations.trains;
 
+import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.MessageFormat;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -297,25 +300,46 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      	}
     }
     
-    // one of three buttons, report, move, terminate
+    // one of four buttons: Report, Move, Conductor or Terminate
     private synchronized void actionTrain (int row){
     	Train train = manager.getTrainById(sysList.get(row));
-    	// move button become report if failure
+    	// move button becomes report if failure
     	if (train.getBuildFailed()){
     		train.printBuildReport();
+    	} else if (!train.isBuilt()){
+			JOptionPane.showMessageDialog(null, 
+					MessageFormat.format(rb.getString("TrainNeedsBuild"),new Object[] { train.getName() }), 
+					rb.getString("CanNotPerformAction"), JOptionPane.INFORMATION_MESSAGE);
     	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
        		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
      		train.move();
     	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)){
        		if (log.isDebugEnabled()) log.debug("Terminate train ("+train.getName()+")");
 			int status = JOptionPane.showConfirmDialog(null,
-					"Terminate Train ("+train.getName()+") "+train.getDescription()+"?",
-					"Do you want to terminate train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);
+					MessageFormat.format(rb.getString("TerminateTrain"),new Object[]{train.getName(), train.getDescription()}),
+					MessageFormat.format(rb.getString("DoYouWantToTermiate"),new Object[]{train.getName()}), JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION)
 				train.terminate();
     	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)){
-       		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
-       		train.reset();
+    		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
+    		train.reset();
+
+    	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)){
+    		if (log.isDebugEnabled()) log.debug("Enable conductor for train ("+train.getName()+")");
+    		lauchConductor(train);
+    	}
+    }
+    
+    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<String, TrainConductorFrame>();
+    private void lauchConductor(Train train){
+    	TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
+       	// create a copy train frame
+    	if (f == null || !f.isVisible()) {
+    		f = new TrainConductorFrame();
+    		f.initComponents(train);
+    		_trainConductorHashTable.put(train.getId(), f);
+    	} else {
+    		f.setExtendedState(Frame.NORMAL); 
     	}
     }
 

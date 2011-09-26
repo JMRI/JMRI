@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
  
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -54,6 +55,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	public static final String MOVE = rb.getString("Move");
 	public static final String TERMINATE = rb.getString("Terminate");
 	public static final String RESET = rb.getString("Reset");
+	public static final String CONDUCTOR = rb.getString("Conductor");
+
 
 	CarManagerXml carManagerXml = CarManagerXml.instance();	// load cars
 	EngineManagerXml engineManagerXml = EngineManagerXml.instance(); // load engines
@@ -76,6 +79,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JRadioButton moveRB = new JRadioButton(MOVE);
     JRadioButton terminateRB = new JRadioButton(TERMINATE);
     JRadioButton resetRB = new JRadioButton(RESET);
+    JRadioButton conductorRB = new JRadioButton(CONDUCTOR);
         
 	// major buttons
 	JButton addButton = new JButton(rb.getString("Add"));
@@ -88,7 +92,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	// check boxes
 	JCheckBox buildMsgBox = new JCheckBox(rb.getString("BuildMessages"));
 	JCheckBox buildReportBox = new JCheckBox(rb.getString("BuildReport"));
-	JCheckBox printPreviewBox = new JCheckBox(rb.getString("PrintPreview"));
+	JCheckBox printPreviewBox = new JCheckBox(rb.getString("Preview"));
 	JCheckBox showAllBox = new JCheckBox(rb.getString("ShowAllTrains"));
 
     public TrainsTableFrame() {
@@ -131,8 +135,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	JPanel action = new JPanel();
     	action.setBorder(BorderFactory.createTitledBorder(rb.getString("Action")));
     	action.add(moveRB);
+    	action.add(conductorRB);
     	action.add(terminateRB);
-    	action.add(resetRB);
+    	action.add(resetRB);    	
     	
     	cp1.add(sortBy);
     	cp1.add(messages);
@@ -198,8 +203,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	
     	ButtonGroup actionGroup = new ButtonGroup();
     	actionGroup.add(moveRB);
+    	actionGroup.add(conductorRB);
     	actionGroup.add(terminateRB);
-    	actionGroup.add(resetRB);
+    	actionGroup.add(resetRB);    	
     	
     	addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortByName);
@@ -212,6 +218,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		addRadioButtonAction(moveRB);
 		addRadioButtonAction(terminateRB);
 		addRadioButtonAction(resetRB);
+		addRadioButtonAction(conductorRB);
 		
 		buildMsgBox.setSelected(trainManager.isBuildMessagesEnabled());
     	buildReportBox.setSelected(trainManager.isBuildReportEnabled());
@@ -289,6 +296,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (ae.getSource() == resetRB){
 			trainManager.setTrainsFrameTrainAction(RESET);
 		}
+		if (ae.getSource() == conductorRB){
+			trainManager.setTrainsFrameTrainAction(CONDUCTOR);
+		}
 	}
 	
 	TrainSwitchListEditFrame tslef;
@@ -316,11 +326,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
 				if(train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()){
-					String string = "Need to build train (" +train.getName()+ ") before printing manifest";
-					JOptionPane.showMessageDialog(null, string,
-							"Can not print manifest",
+					JOptionPane.showMessageDialog(null, 
+							MessageFormat.format(rb.getString("NeedToBuildBeforePrinting"),new Object[]{train.getName(), (trainManager.isPrintPreviewEnabled()?rb.getString("preview"):rb.getString("print"))}),
+							MessageFormat.format(rb.getString("CanNotPrintManifest"),new Object[]{trainManager.isPrintPreviewEnabled()?rb.getString("preview"):rb.getString("print")}),
 							JOptionPane.ERROR_MESSAGE);
-
 				}
 			}
 		}
@@ -339,8 +348,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				}
 				else if (train.isBuildEnabled() && train.isBuilt() && !train.getPrinted()){
 					int status = JOptionPane.showConfirmDialog(null,
-							"Warning, train manifest hasn't been printed!",
-							"Terminate Train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);
+							rb.getString("WarningTrainManifestNotPrinted"),
+							MessageFormat.format(rb.getString("TerminateTrain"),new Object[]{train.getName(), train.getDescription()}),
+							JOptionPane.YES_NO_OPTION);
 					if (status == JOptionPane.YES_OPTION) 
 						train.terminate();
 					// Quit?
@@ -430,6 +440,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			moveRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE));
 			terminateRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE));
 			resetRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET));
+			conductorRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR));
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {

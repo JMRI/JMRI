@@ -45,7 +45,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private Point _framePosition = new Point();
 	*/
 	// Train frame table column widths (12), starts with Time column and ends with Edit
-	private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 80, 70};
+	private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
 	
 	// Edit Train frame attributes
 	/* all JMRI window position and size are now saved
