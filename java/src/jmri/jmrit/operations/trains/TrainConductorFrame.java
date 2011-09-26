@@ -37,7 +37,6 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainConductorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	static final ResourceBundle rbr = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
 	Train _train = null;
 	CarManager carManager = CarManager.instance();
@@ -127,7 +126,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	
        	// row 4 (train comment)
        	JPanel pTrainComment = new JPanel();
-       	pTrainComment.setBorder(BorderFactory.createTitledBorder("Train Comment"));
+       	pTrainComment.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainComment")));
        	pTrainComment.add(textTrainComment);
        	
        	// row 6
@@ -136,11 +135,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	
        	// row 6a (train route comment)
        	JPanel pTrainRouteComment = new JPanel();
-       	pTrainRouteComment.setBorder(BorderFactory.createTitledBorder("Route Comment"));
+       	pTrainRouteComment.setBorder(BorderFactory.createTitledBorder(rb.getString("RouteComment")));
        	pTrainRouteComment.add(textTrainRouteComment);
        		
        	// row 6b (train route location comment)
-       	pTrainRouteLocationComment.setBorder(BorderFactory.createTitledBorder("Route Location Comment"));
+       	pTrainRouteLocationComment.setBorder(BorderFactory.createTitledBorder(rb.getString("RouteLocationComment")));
        	pTrainRouteLocationComment.add(textTrainRouteLocationComment);
        	
        	pRow6.add(pTrainRouteComment);
@@ -156,12 +155,12 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	pLocationName.add(textLocationName);
        	
        	// row 10b (location comment)
-       	pLocationComment.setBorder(BorderFactory.createTitledBorder("Location Comment"));
+       	pLocationComment.setBorder(BorderFactory.createTitledBorder(rb.getString("LocationComment")));
        	pLocationComment.add(textLocationComment);
        	
       	// row 10c (next location name)
        	JPanel pNextLocationName = new JPanel();
-       	pNextLocationName.setBorder(BorderFactory.createTitledBorder("Next Location"));
+       	pNextLocationName.setBorder(BorderFactory.createTitledBorder(rb.getString("NextLocation")));
        	pNextLocationName.add(textNextLocationName);
        	
        	pRow10.add(pLocationName);
@@ -186,14 +185,14 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	// row 14a
       	JPanel pWork = new JPanel();
       	pWork.setLayout(new GridBagLayout());
-      	pWork.setBorder(BorderFactory.createTitledBorder("Work"));      	
+      	pWork.setBorder(BorderFactory.createTitledBorder(rb.getString("Work")));      	
        	addItem(pWork, selectButton, 0, 0);
        	addItem(pWork, clearButton, 1, 0);
        	
        	// row 14b
       	JPanel pButtons = new JPanel();
       	pButtons.setLayout(new GridBagLayout());
-      	pButtons.setBorder(BorderFactory.createTitledBorder("Train"));
+      	pButtons.setBorder(BorderFactory.createTitledBorder(rb.getString("Train")));
        	addItem(pButtons, moveButton, 1, 0);
        	
        	pRow14.add(pWork);
