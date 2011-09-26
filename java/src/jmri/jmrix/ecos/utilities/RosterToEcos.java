@@ -69,7 +69,7 @@ public class RosterToEcos implements EcosListener{
         int end;
         String msg = m.toString();
         String[] lines = msg.split("\n");
-        if (lines[lines.length-1].contains("<END 0 (OK)>")){
+        if (m.getResultCode()==0){
             if (lines[0].startsWith("<REPLY create(10, addr")){
                 //System.out.println(msg);
                 for(int i =1; i<lines.length-1; i++) {
