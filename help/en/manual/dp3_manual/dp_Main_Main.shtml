@@ -182,7 +182,7 @@
   </tr>
   <tr>
     <td><img src="images/toolbar03.png" width="92" height="36" alt="toolbar"></td>
-    <td>Opens the new locomotive window to program a decoder</td>
+    <td>Opens the<strong><a href="Programmer_Setup.shtml#newLoco"> new locomotive</a></strong> window to program a decoder</td>
   </tr>
   <tr>
     <td><img src="images/toolbar02.png" width="78" height="32" alt="toolbar"></td>
@@ -190,7 +190,7 @@
   </tr>
   <tr>
     <td><img src="images/toolbar01.png" width="244" height="113" alt="toolbar"></td>
-    <td>Allows you to select the Programming Mode</td>
+    <td>Allows you to select the <strong><a href="Basic_Mode.shtml">Programming Mode</a></strong></td>
   </tr>
 </table>
 </p>
@@ -206,34 +206,36 @@ Contains a list of decoders in your Roster.  The entries can be highlighted with
   </tr>
   <tr>
     <td valign="top"><img src="images/decoder_program_mode.png" width="429" height="96" alt="programming mode"></td>
-    <td valign="top">You may select the progamming mode</td>
+    <td valign="top"><p>You may select the progamming mode:<br>
+        <strong><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></strong><br>
+        <strong><a href="Programmer_OpsMode.shtml">Operations Mode Programmer </a></strong><br>
+        <strong><a href="#">Edit Only</a></strong></p></td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_basic_programmer.png" width="202" height="29" alt="button"></td>
-    <td valign="top">Opens the Basic Programmer for the selected decoder in the Roster List</td>
+    <td valign="top">Opens the<strong> <a href="Basic_Start.shtml">Basic Programme</a></strong><a href="Basic_Start.shtml">r</a> for the selected decoder in the Roster List</td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_comprehensive_programmer.png" width="199" height="35" alt="comprehensive"></td>
-    <td valign="top">Opens the Comprehensive Programmer for the selected decoder in the Roster List</td>
+    <td valign="top">Opens the <strong><a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a></strong> for the selected decoder in the Roster List</td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_throttle_labels.png" width="201" height="30" alt="labels"></td>
-    <td valign="top">Opens the Functions labels window and allows you to label throttle function buttons</td>
+    <td valign="top">Opens the<strong> <a href="Adv_FunctionLabel.shtml">Functions labels</a></strong> window and allows you to label throttle function buttons</td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_roster_media.png" width="203" height="33" alt="roster media"></td>
-    <td valign="top">Opens the Roster Media window and allows you to assign an image to the roster entry</td>
+    <td valign="top">Opens the <strong><a href="RosterMedia.shtml">Roster Media</a></strong> window and allows you to assign an image to the roster entry</td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_lanch_throttle.png" width="198" height="30" alt="throttle"></td>
-    <td valign="top">Opens a throttle tool for the selected loco in the Roster List.</td>
+    <td valign="top">Opens a <strong><a href="Throttle.shtml">throttle</a></strong> tool for the selected loco in the Roster List.</td>
   </tr>
 </table>
 <p><br>
 </p>
 <h3><strong>Status bar</strong></h3>
-<h3></strong>
-<img src="images/status_bar.png" width="900" height="45" alt="status bar"></h3>
+<h3></strong><img src="images/status_bar.png" width="900" height="45" alt="status bar"></h3>
 <p>Displays message, so that you can determine the state of DecoderPro3 during operation.</p>
 <p align="left">&nbsp;</p>
 <div align=right>

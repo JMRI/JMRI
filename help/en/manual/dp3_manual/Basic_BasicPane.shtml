@@ -25,7 +25,7 @@
 <h1>Basic Pane</h1>
 
 <div align=right>
-  <p><a href="Basic_Start.shtml"> Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a></p>
+  <p><a href="Basic_Start.shtml"> Previous |</a></p>
 <p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
 </div>
 
@@ -75,12 +75,15 @@ to  write the new values in the decoder. </p>
 </strong>. Your new decoder  settings have now been written not only 
   to the decoder, but also saved to a computer file where  they may be recalled in the future. </p>
 <p>I have programmed the address for this locomotive and clicked on the Write full sheet button to send the address to the command station to program the decoder. Note that the status line keeps you updated as to what is writing and should finish with OK, which is good or an error message which usually meand the write was not completed.  All the entries are now in white color as they match the decoder.</p>
-  <p align="center"><img src="images/Basic_Address.png" width="636" height="556" alt="basic address"><br>
+<p align="center"><img src="images/Basic_Address.png" width="636" height="556" alt="basic address"><br>
 </p>
 <p><strong>Comprehensive </strong>Programmer with the Advanced feature is the only other programmer that DecoderPro3 offers .</p>
-<p> So now we&rsquo;ve narrowed our &ldquo;real&rdquo; choices down to&nbsp; <strong>Basic</strong> and <strong>Comprehensive and </strong> we&rsquo;ve already  covered <strong>Basic</strong>, let's explore the <a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a>! </p>
+<p> Now that we have entered the Roster data and set thedesired address, lets return to DecoderPro3 Main window by closing the Programming window.</p>
+<p>Notice that we now have a list of all the locomotives programmed so far that are in our roster.</p>
+<p><img src="images/Main_01b_main.png" width="900" height="521" alt="main window"></p>
+<p>&nbsp;</p>
 <div align="right">
-  <p><a href="Basic_Start.shtml">Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a><a href="Comp_Setup_Roster.shtml"></a></p>
+  <p><a href="Basic_Start.shtml">Previous |</a></p>
 <p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
 </div>
 

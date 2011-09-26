@@ -169,8 +169,9 @@ will delete all the connection settings. </p>
   <tr>
     <td width="17%"><strong>Buttons TAB</strong></td>
     <td><input type="submit" name="button4" id="button4" value="Add Button ">
-    to the Splash Screen</td>
-    <td><img src="images/Preferences8.png" width="333" height="188" alt="buttons"></td>
+    to the toolbar of DecoderPro3</td>
+    <td><p><img src="images/Preferences8.png" width="333" height="188" alt="buttons"></p>
+    <p><img src="images/preferences_button.png" width="444" height="137" alt="button"></p></td>
   </tr>
   <tr>
     <td width="17%"><strong>Files TAB</strong></td>
