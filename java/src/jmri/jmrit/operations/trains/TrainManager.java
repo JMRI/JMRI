@@ -616,7 +616,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * copied.
      * @param train the train to copy
      * @param trainName the name of the new train
-     * @return
+     * @return a copy of train
      */
     public Train copyTrain(Train train, String trainName){
     	Train newTrain = newTrain(trainName);
