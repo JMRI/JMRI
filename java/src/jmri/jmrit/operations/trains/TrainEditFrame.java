@@ -372,6 +372,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			toolMenu.add(new TrainCopyAction(rb.getString("TitleTrainCopy"), _train.getName()));
 		toolMenu.add(new TrainScriptAction(rb.getString("MenuItemScripts"), this));
 		toolMenu.add(new TrainByCarTypeAction(rb.getString("MenuItemShowCarTypes"), this));
+		if (_train != null)
+			toolMenu.add(new TrainConductorAction(rb.getString("TitleTrainConductor"), _train));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
 		toolMenu.add(new PrintTrainManifestAction(rb.getString("MenuItemPrintManifest"), false, this));

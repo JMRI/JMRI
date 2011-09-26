@@ -92,6 +92,16 @@ public class TrainCommon {
 		addLine(file, buf.toString());
 	}
 	
+	protected String pickupCar(Car car){
+		StringBuffer buf = new StringBuffer();
+		String[] format = Setup.getPickupCarMessageFormat();
+		for (int i=0; i<format.length; i++){
+			String s = getCarAttribute(car, format[i], pickup, !local);
+			buf.append(s);
+		}
+		return buf.toString();
+	}
+	
 	protected void dropCar(PrintWriter file, Car car){
 		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
 		String[] format = Setup.getDropCarMessageFormat();
@@ -111,6 +121,16 @@ public class TrainCommon {
 			buf.append(s);
 		}
 		addLine(file, buf.toString());
+	}
+	
+	protected String dropCar(Car car){
+		StringBuffer buf = new StringBuffer();
+		String[] format = Setup.getDropCarMessageFormat();
+		for (int i=0; i<format.length; i++){
+			String s = getCarAttribute(car, format[i], !pickup, local);
+			buf.append(s);
+		}
+		return buf.toString();
 	}
 	
 	// writes string with level to console and file
