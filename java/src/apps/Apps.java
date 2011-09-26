@@ -47,6 +47,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                                                     justification="only one application at a time")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SC_START_IN_CTOR",
+        justification="The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public Apps(JFrame frame) {
 
         super(true);
