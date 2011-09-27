@@ -7,6 +7,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.util.PhysicalLocation;
+import jmri.util.PhysicalLocationPanel;
 
 import java.awt.*;
 
@@ -86,6 +88,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	
 	// combo boxes
 
+        // other
+        jmri.util.PhysicalLocationPanel physLocPanel = new PhysicalLocationPanel("Physical Location (optional)");
+
 	public static final String NAME = rb.getString("Name");
 	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_LOCATION_NAME;
 	public static final String DISPOSE = "dispose" ;
@@ -157,6 +162,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 				stageRadioButton.setSelected(true);
 			}
 			setTrainDirectionBoxes();
+			physLocPanel.setValue(_location.getPhysicalLocation());
 		} else {
 			enableButtons(false);
 			sidingRadioButton.setSelected(true);
@@ -232,6 +238,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
        	getContentPane().add(addInterchangeButton);
        	getContentPane().add(stagingPane);
        	getContentPane().add(addStagingButton);
+        getContentPane().add(physLocPanel);
        	getContentPane().add(pC);
        	getContentPane().add(pB);
 		
@@ -427,6 +434,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (stageRadioButton.isSelected()){
 			_location.setLocationOps(Location.STAGING);
 		}
+		_location.setPhysicalLocation(physLocPanel.getValue());
 		/* all JMRI window position and size are now saved
 		// save frame size and position
 		manager.setLocationEditFrame(this);

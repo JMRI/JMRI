@@ -13,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.PhysicalLocation;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -46,6 +47,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected Point _trainIconNorth = new Point();
 	protected Point _trainIconSouth = new Point();
 	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
+        protected PhysicalLocation _physicalLocation = new PhysicalLocation();
 	
 	// Pool
 	protected int _idPoolNumber = 0;
@@ -106,6 +108,14 @@ public class Location implements java.beans.PropertyChangeListener {
 	public String getName() {
 		return _name;
 	}
+
+        public PhysicalLocation getPhysicalLocation() {
+	    return(_physicalLocation);
+        }
+
+        public void setPhysicalLocation(PhysicalLocation l) {
+	    _physicalLocation = l;
+        }
 
 	/**
 	 * Set total length of all tracks for this location
@@ -742,6 +752,7 @@ public class Location implements java.beans.PropertyChangeListener {
         	setTrainIconSouth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }      
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
+	if ((a = e.getAttribute("physicalLocation")) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());
         if ((a = e.getAttribute("carTypes")) != null ) {
         	String names = a.getValue();
            	String[] Types = names.split("%%");
@@ -810,6 +821,9 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         e.setAttribute("carTypes", buf.toString());
         
+	if (_physicalLocation != null)
+	    e.setAttribute("physicalLocation", _physicalLocation.toString());
+
         e.setAttribute("comment", getComment());
         
         List<String> tracks = getTracksByIdList();
