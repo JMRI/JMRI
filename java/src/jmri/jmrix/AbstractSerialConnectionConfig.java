@@ -153,11 +153,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     String invalidPort=null;
     
     public void refreshPortBox() {
-        /*this flag has been added and set as once in a while if the serial port is invalid, this procedure
-         would be called twice and could result in either an error or the serial combo box not being displayed*/
-        if(currentlyRefreshing)
-            return;
-        currentlyRefreshing = true;*/
         if (!init){
             v = adapter.getPortNames();
             portBox.setRenderer(new ComboBoxRenderer());
