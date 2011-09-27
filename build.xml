@@ -802,7 +802,7 @@
 
     <target name="jar" 
             description="create working jar file with current contents"
-            depends="compile, rmic">
+            depends="debug, rmic">
         <jar jarfile="${jartarget}/jmri.jar" 
             basedir="${target}"
             manifest="java/manifest" 
@@ -981,10 +981,9 @@
     </target>
   
     <!-- dist target forces the jar file to be built without test classes -->
-    <!-- Note production builds should use compile, not debug, prereq  -->
     <target name="dist"
             description="create a distribution jar file" 
-            depends="clean, init, compile, rmic, jar"/>
+            depends="clean, init, debug, rmic, jar"/>
 
     <target name="dist-debug"
             description="create a distribution jar file" 
