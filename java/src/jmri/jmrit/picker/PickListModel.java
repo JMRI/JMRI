@@ -228,6 +228,8 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         	_sorter = new TableSorter(this);
             _table = jmri.util.JTableUtil.sortableDataModel(_sorter);
             _sorter.setTableHeader(_table.getTableHeader());
+            _sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+            _table.setModel(_sorter);
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             log.error("makePickTable: Unexpected error: "+e);
             _table = new JTable(this);
@@ -257,6 +259,8 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         try {   // following might fail due to a missing method on Mac Classic
         	_sorter = new TableSorter(this);
             _sorter.setTableHeader(table.getTableHeader());
+            _sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+            table.setModel(_sorter);
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             log.error("makePickTable: Unexpected error: "+e);
         }
