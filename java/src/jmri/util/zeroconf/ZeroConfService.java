@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Hashtable; // JmDNS.ServiceInfo 3.0 objects are created with a Hashtable.
 import java.util.HashMap;
-import java.util.Map;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import jmri.ShutDownTask;
@@ -20,6 +19,7 @@ import jmri.implementation.QuietShutDownTask;
  * query service state. Typical usage would be:
  * <pre>
  * ZeroConfService myService = ZeroConfService.create("_withrottle._tcp.local.", port);
+ * myService.publish();
  * </pre>
  * or, if you do not wish to retain the ZeroConfService object:
  * <pre>
@@ -30,7 +30,8 @@ import jmri.implementation.QuietShutDownTask;
  * should remain small, but it could include information such as the XMLIO path
  * (for a web server), the default path (also for a web server), a specific 
  * protocol version, or other information. Note that all service advertisements
- * include the JMRI version, using the key "jmri".
+ * include the JMRI version, using the key "version", and the JMRI version numbers
+ * in a string "major.minor.test" with the key "jmri"
  * <P>
  * All ZeroConfServices are automatically stopped when the JMRI application 
  * shuts down. A collection of all ZeroConfService objects is available with:
@@ -60,8 +61,8 @@ public class ZeroConfService {
      * Create a ZeroConfService with the minimal required settings. This method
      * calls <pre>create(type, port, props)</pre> with an empty props HashMap.
      * 
-     * @param type
-     * @param port
+     * @param type The service protocol
+     * @param port The port the service runs over
      */
     public static ZeroConfService create(String type, int port) {
         return create(type, port, new HashMap<String,String>());
@@ -73,36 +74,44 @@ public class ZeroConfService {
      * with the name "<em>hostName</em>" with dots and dashes replaced
      * with spaces.
      * 
-     * @param type
-     * @param port
-     * @param props
+     * @param type The service protocol
+     * @param port The port the service runs over
+     * @param properties Additional information to be listed in service advertisement
      */
-    public static ZeroConfService create(String type, int port, HashMap<String, String> props) {
-        return create(type, ZeroConfService.hostName(), port, 0, 0, props);
+    public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
+        return create(type, ZeroConfService.hostName(), port, 0, 0, properties);
     }
 
     /**
-     * Create a ZeroConfService. The TXT record property "jmri" is added or
-     * replaced with the current JMRI version as its value. If a service with
-     * the same key as the new service is already published, that service is
-     * returned instead of a new object.
+     * Create a ZeroConfService. The property <i>version</i> is added or
+     * replaced with the current JMRI version as its value. The property
+     * <i>jmri</i> is added or replaced with the JMRI major.minor.test version
+     * string as its value.
+     * <p>
+     * If a service with the same key as the new service is already published,
+     * that service is returned unmodified instead of a new object.
+     * <!-- after upgrading to JmDNS 3.4 this should change, since 3.4 advertises changes to text properties on a service -->
      * 
-     * @param name
-     * @param type
-     * @param port
-     * @param weight
-     * @param priority
-     * @param props
+     * @param name The name of service listed on client devices
+     * @param type The service protocol
+     * @param port The port the service runs over
+     * @param weight Default value is 0
+     * @param priority Default value is 0
+     * @param properties Additional information to be listed in service advertisement
      */
     @SuppressWarnings("UseOfObsoleteCollectionType") // JmDNS 3.0 uses Hashtables, upgrade to JmDNS 3.4 and this is not required
-    public static ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> props) {
+    public static ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> properties) {
         ZeroConfService s = null;
         if (ZeroConfService.services().containsKey(ZeroConfService.key(type, name))) {
             s = ZeroConfService.services().get(ZeroConfService.key(type, name));
             if (log.isDebugEnabled()) log.debug("Using existing ZeroConfService " + s.key());
         } else {
-            props.put("jmri", jmri.Version.name());
-            s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, new Hashtable<String,String>(props)));
+            properties.put("version", jmri.Version.name());
+            // use the major.minor.test version string for jmri since we have potentially
+            // tight space constraints in terms of the number of bytes that properties 
+            // can use, and there are some unconstrained properties that we would like to use.
+            properties.put("jmri", jmri.Version.major + "." + jmri.Version.minor + "." + jmri.Version.test);
+            s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, new Hashtable<String,String>(properties)));
             if (log.isDebugEnabled()) log.debug("Creating new ZeroConfService " + s.key());
         }
         return s;
@@ -206,7 +215,7 @@ public class ZeroConfService {
     public static void stopAll() {
         ZeroConfService.jmdns().unregisterAllServices();
         ZeroConfService.services().clear();
-        if (log.isDebugEnabled()) log.debug("Stopping all ZeroConfServices");
+        log.debug("Stopping all ZeroConfServices");
     }
     
     /**
@@ -255,7 +264,10 @@ public class ZeroConfService {
      * 
      */
     public static String hostName() {
+        // getHostName returns the FQDN or "computer" for the host
         String hostName = ZeroConfService.jmdns().getHostName() + ".";
+        // we would have to check for the existance of . if we did not add .
+        // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
     }
 
