@@ -877,7 +877,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location e1", "Foxboro", e1.getLocationName());
 		Assert.assertEquals("Location e2", "Foxboro", e2.getLocationName());
 		
-		// move c8 to Foxboro to help test kernels
+		// move c7 & c8 to Foxboro to help test kernels
+		Assert.assertEquals("Place c7", Track.OKAY, c7.setLocation(l1, l1s1));
 		Assert.assertEquals("Place c8", Track.OKAY, c8.setLocation(l1, l1s1));
 		// now test kernels
 		Kernel k1 = cmanager.newKernel("group of cars");
@@ -991,6 +992,12 @@ public class OperationsTrainsTest extends TestCase {
 		l2.setTrainDirections(Location.EAST + Location.SOUTH + Location.WEST);	// train is north bound
 		t1.build();
 		
+		// build should fail, cars c3 and c7 which is part of c8 kernel are on the wrong track
+		Assert.assertFalse("Train direction test", t1.isBuilt());
+		c3.setLocation(l2, l2s1);	// place c3 Action Siding 1
+		c7.setLocation(l2, l2s1);	// place c7 Action Siding 1
+		
+		t1.build();
 		Assert.assertTrue("Train direction test", t1.isBuilt());
 		Assert.assertEquals("CP 1000 destination is now Nashua", "Nashua", c10.getDestinationName());
 		Assert.assertEquals("CP 30 at Acton, not serviced", null, c3.getTrain());
@@ -1012,6 +1019,7 @@ public class OperationsTrainsTest extends TestCase {
 		c3.setKernel(null);
 		c3.setLocation(l2, l2s1);	// place car in Action Siding 1	
 		c8.setLocation(l2, l2s2);	// place lead car in Action Yard
+		c7.setLocation(l2, l2s2);	// place c7 in Action Yard
 		t1.build();
 		
 		Assert.assertEquals("CP 1000 destination track", "Acton Siding 1", c1.getDestinationTrackName());

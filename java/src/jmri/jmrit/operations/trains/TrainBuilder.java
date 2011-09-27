@@ -1043,7 +1043,7 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, FIVE, rb.getString("buildOnlyFirst500Cars"));
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null){
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{c.toString(), c.getKernelName()}));
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{c.toString(), c.getKernelName(), c.getKernel().getSize()}));
 				if (c.getKernel().isLead(c)){
 					checkKernel(c);
 				} else {
@@ -1206,10 +1206,10 @@ public class TrainBuilder extends TrainCommon{
 				// don't use this location again
 				//rl.setCarMoves(rl.getMaxCarMoves());
 			}
+			checkDepartureForStaging();
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
 				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
-		}
-		checkDepartureForStaging();
+		}	
 		return;
 	}
 	
