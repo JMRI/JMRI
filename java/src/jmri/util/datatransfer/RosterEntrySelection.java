@@ -100,6 +100,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      */
     public static ArrayList<RosterEntry> getRosterEntries(Transferable t) throws UnsupportedFlavorException, IOException {
         if (t.isDataFlavorSupported(rosterEntryFlavor)) {
+            @SuppressWarnings("unchecked")
             ArrayList<String> Ids = (ArrayList<String>) t.getTransferData(rosterEntryFlavor);
             ArrayList<RosterEntry> REs = new ArrayList<RosterEntry>(Ids.size());
             for (String Id : Ids) {
