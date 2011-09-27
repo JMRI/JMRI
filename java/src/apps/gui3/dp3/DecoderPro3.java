@@ -4,6 +4,7 @@ package apps.gui3.dp3;
 
 import java.io.File;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -111,11 +112,23 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
                 //would like to create a wizard for setting this up at some point.
                 jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
                 AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
+                //AbstractAction prefsAction = new apps.gui3.FirstTimeStartUpWizardAction("Start Up Wizard");
                 prefsAction.actionPerformed(null);
             }
         }
         addToActionModel();
         
+        Runnable r = new Runnable() {
+          public void run() {
+            try {
+                DecoderIndexFile.instance();
+            } catch (Exception ex) {
+                log.error("Error in trying to setup preferences " + ex.toString());
+            }
+          }
+        };
+        Thread thr = new Thread(r);
+        thr.start();
         jmri.InstanceManager.tabbedPreferencesInstance().disablePreferenceItem("STARTUP", "apps.PerformFilePanel");
     }
     

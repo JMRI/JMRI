@@ -8,6 +8,7 @@ import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.JmriJFrame;
@@ -121,7 +122,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             file = new File(configFilename);
         }
         cm.setPrefsLocation(file);
-        
         // load config file if it exists
         if (file.exists()) {
             log.debug("start load config file");
@@ -212,12 +212,25 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             try {
                  jmri.InstanceManager.tabbedPreferencesInstance().init();
             } catch (Exception ex) {
-                log.error(ex.toString());
+                log.error("Error in trying to setup preferences " + ex.toString());
             }
           }
         };
         Thread thr = new Thread(r);
         thr.start();
+        
+        //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
+        r = new Runnable() {
+          public void run() {
+            try {
+                DecoderIndexFile.instance();
+            } catch (Exception ex) {
+                log.error("Error in trying to setup preferences " + ex.toString());
+            }
+          }
+        };
+        Thread thr2 = new Thread(r);
+        thr2.start();
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+(configOK||configDeferredLoadOK));
         if (!configOK||!configDeferredLoadOK) {
@@ -231,9 +244,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         add(buttonSpace());
         add(_jynstrumentSpace);
         log.debug("End constructor");
-        
-    }
 
+    }
+    
     private boolean doDeferredLoad(File file) {
         boolean result;
         log.debug("start deferred load from config");
