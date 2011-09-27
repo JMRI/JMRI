@@ -46,6 +46,18 @@ public class JmrixConfigPane extends JPanel {
     public static JmrixConfigPane instance(int index) {
         JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
         if (retval != null) return retval;
+        return createPanel(index);
+    }
+    /*
+    * Create panel is seperated off from the instance and synchronized, so that only
+    * one connection can be configured at once, this prevents multiple threads from
+    * trying to create the same panel at the same time.
+    */
+    private static synchronized JmrixConfigPane createPanel(int index){
+        JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
+        if (retval != null){
+            return retval;
+        }
         Object c = InstanceManager.configureManagerInstance()
                                 .findInstance(ConnectionConfig.class, 0);
         log.debug("findInstance returned "+c);

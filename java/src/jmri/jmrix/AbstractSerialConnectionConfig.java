@@ -152,12 +152,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     Vector<String> originalList;
     String invalidPort=null;
     
-    
     public void refreshPortBox() {
+        /*this flag has been added and set as once in a while if the serial port is invalid, this procedure
+         would be called twice and could result in either an error or the serial combo box not being displayed*/
+        if(currentlyRefreshing)
+            return;
+        currentlyRefreshing = true;*/
         if (!init){
             v = adapter.getPortNames();
-            // commented out daboudreau 11/26/2010 JComboBox looks poor on windows 7
-            //portBox.setRenderer(new ComboBoxRenderer());
+            portBox.setRenderer(new ComboBoxRenderer());
         }
         else {
             
@@ -468,28 +471,26 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                                            int index,
                                            boolean isSelected,
                                            boolean cellHasFocus) {
-            //Get the selected index. (The index param isn't
-            //always valid, so just use the value.)
-            String port = (String) value;
+
+            String port = value.toString();
             if (value ==null)
                 return this;
 
-            if (isSelected) {
-                list.setSelectionForeground(Color.black);
-                setForeground(list.getSelectionForeground());
-            }
-            //portBox.setForeground(Color.black);
-            setForeground(Color.black);
-            if (port.equals(invalidPort)){
-                if (isSelected)
-                    list.setSelectionForeground(Color.red);
-                setForeground(Color.red);
+            if(isSelected){
+                setBackground(list.getSelectionBackground());
+                setForeground(Color.black);
+            } else {
+                setBackground(list.getBackground());
+                setForeground(Color.black);
             }
 
-            //Set the icon and text.  If icon was null, say so.
+            if (port.equals(invalidPort)){
+                setForeground(Color.red);
+                list.setSelectionForeground(Color.red);
+            }
+
             setText(port);
-            //setFont(list.getFont());
-            
+
             return this;
         }
     }
