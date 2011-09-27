@@ -52,7 +52,7 @@ public class PrintTrainManifestAction  extends AbstractAction {
     	if (!train.printManifest(isPreview)){
     		String string = MessageFormat.format(rb.getString("NeedToBuildTrainBeforePrinting"), new Object[]{train.getName()});
     		JOptionPane.showMessageDialog(null, string,
-    				rb.getString("CanNotPrintManifest"),
+    				MessageFormat.format(rb.getString("CanNotPrintManifest"),new Object[]{rb.getString("print")}),
     				JOptionPane.ERROR_MESSAGE);
     		return;
     	}
