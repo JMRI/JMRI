@@ -94,7 +94,6 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     /**
      * If table has been sorted table row no longer is the same as array index
      * @param index = row of table
-     * @return
      */
     public NamedBean getBeanAt(int index) {
     	index = _sorter.modelIndex(index);
