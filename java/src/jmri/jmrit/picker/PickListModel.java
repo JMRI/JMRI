@@ -262,7 +262,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             _sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
             table.setModel(_sorter);
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makePickTable: Unexpected error: "+e);
+            log.error("makeSorter: Unexpected error: "+e);
         }
     }
 
