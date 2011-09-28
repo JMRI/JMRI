@@ -1622,13 +1622,39 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void build(){
 		reset();
 		// run any build scripts
-		for (int i=0; i<getBuildScripts().size(); i++){
-			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getBuildScripts().get(i)));
-		}
+		runScripts();
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);
 		setPrinted(false);
 		setSwitchListStatus(UNKNOWN);
+	}
+	
+	/**
+	 * Run build scripts, waits for completion before returning.
+	 */
+	private synchronized void runScripts(){
+		// find the number of active threads
+		ThreadGroup root = Thread.currentThread().getThreadGroup();
+		int numberOfThreads = root.activeCount();		
+		for (int i=0; i<getBuildScripts().size(); i++){
+			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getBuildScripts().get(i)));
+		}
+		if (getBuildScripts().size()> 0){
+			// need to wait for scripts to complete or 2 seconds maximum
+			int count = 0;
+			while (root.activeCount() > numberOfThreads){
+				synchronized (this) {
+					log.debug("Number of active threads: "+root.activeCount());
+					try {
+						wait(20);
+					} catch (InterruptedException e) {
+						Thread.currentThread().interrupt(); // retain if needed later
+					}
+					if (count++ > 100)
+						break;
+				}
+			}
+		}
 	}
 	
 	public void printBuildReport(){
