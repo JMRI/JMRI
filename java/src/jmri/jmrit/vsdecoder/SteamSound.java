@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import java.lang.Math;
+import jmri.util.PhysicalLocation;
 
 
 // Usage:
@@ -194,6 +195,13 @@ class SteamSound extends EngineSound {
     public void setVolume(float v) {
 	for (RPMSound rps : rpm_sounds) {
 	    rps.sound.setVolume(v);
+	}
+    }
+
+    @Override
+    public void setPosition(PhysicalLocation p) {
+	for (RPMSound rps : rpm_sounds) {
+	    rps.sound.setPosition(p);
 	}
     }
 

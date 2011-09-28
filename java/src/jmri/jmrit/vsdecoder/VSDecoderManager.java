@@ -29,6 +29,8 @@ import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.util.ResourceBundle;
 import org.jdom.Element;
+import jmri.DccLocoAddress;
+import jmri.util.PhysicalLocation;
 
 // VSDecoderFactory
 //
@@ -55,6 +57,8 @@ class VSDecoderManager {
     private VSDecoder default_decoder = null;  // shortcut pointer to the default decoder (do we need this?)
 
     private static int vsdecoderID = 0;
+
+    private PhysicalLocation listener_position;
 
     // constructor - for kicking off by the VSDecoderManagerThread...
     // WARNING: Should only be called from static instance()
@@ -92,6 +96,7 @@ class VSDecoderManager {
 	if (vsdecoderPreferencesFrame == null) {
 	    buildVSDecoderPreferencesFrame();
 	}
+	vsdecoderPreferencesFrame.pack();
 	vsdecoderPreferencesFrame.setVisible(true);
 	vsdecoderPreferencesFrame.requestFocus();
     }
@@ -151,6 +156,25 @@ class VSDecoderManager {
 
     public Collection<VSDecoder> getVSDecoderList() {
 	return(decodertable.values());
+    }
+
+    public void setDecoderPositionByID(String id, PhysicalLocation p) {
+	VSDecoder d = decodertable.get(id);
+	if (d != null)
+	    d.setPosition(p);
+    }
+
+    public void setDecoderPositionByAddr(DccLocoAddress a, PhysicalLocation p) {
+	// Find the addressed decoder
+	// This is a bit hokey.  Need a better way to index decoder by address
+	for ( VSDecoder d : decodertable.values()) {
+	    if (d.getAddress().equals(a)) {
+		d.setPosition(p);
+		return;
+	    }
+	}
+	// decoder not found.  Do nothing.
+	return;
     }
 
     // VSDecoderManager Events

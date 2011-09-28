@@ -23,6 +23,7 @@ import org.jdom.Element;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import jmri.util.PhysicalLocation;
 
 abstract public class VSDSound {
     
@@ -41,6 +42,8 @@ abstract public class VSDSound {
     String name;
     float gain;  // this is the (fixed) gain relative to the other sounds in this Profile
     float volume; // this is the (active) volume level (product of fixed gain and volume slider).
+
+    PhysicalLocation myposition;
 
     public VSDSound(String name) {
 	this.name = name;
@@ -69,6 +72,13 @@ abstract public class VSDSound {
     abstract public void mute(boolean m);
     abstract public void setVolume(float g);
     abstract public void shutdown(); // called on window close.  Cease playing immediately.
+
+    public void setPosition(PhysicalLocation p) {
+	myposition = p;
+    }
+    public PhysicalLocation getPosition() {
+	return(myposition);
+    }
 
     // Optional methods - overridden in subclasses where needed.  Do nothing otherwise
     public void changeNotch(int new_notch) {

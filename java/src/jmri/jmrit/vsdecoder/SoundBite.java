@@ -23,6 +23,7 @@ import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioSource;
+import jmri.util.PhysicalLocation;
 
 class SoundBite extends VSDSound {
 
@@ -166,6 +167,12 @@ class SoundBite extends VSDSound {
     public void fadeIn() {
 	sound_src.fadeIn();
 	//sound_src.play();
+    }
+
+    @Override
+    public void setPosition(PhysicalLocation v) {
+	super.setPosition(v);
+	sound_src.setPosition(v);
     }
 
     public void setURL(String filename) {
