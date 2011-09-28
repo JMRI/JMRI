@@ -524,6 +524,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         ArrayList<String> friendlyName = new ArrayList<String>();
         try {
             List regentry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE,path);
+            if(regentry==null)
+                return;
             for(int i = 0; i<regentry.size(); i++){
                 List regSubEntry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i));
                 if(regSubEntry!=null){
