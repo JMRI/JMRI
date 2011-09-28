@@ -205,8 +205,21 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             configDeferredLoadOK = false;
         }
         
-        //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
+        /*Once all the preferences have been loaded we can initial the preferences
+        doing it in a thread at this stage means we can let it work in the background*/
         Runnable r = new Runnable() {
+          public void run() {
+            try {
+                 jmri.InstanceManager.tabbedPreferencesInstance().init();
+            } catch (Exception ex) {
+                log.error("Error in trying to setup preferences " + ex.toString());
+            }
+          }
+        };
+        Thread thr = new Thread(r);
+        thr.start();
+        //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
+        r = new Runnable() {
           public void run() {
             try {
                 DecoderIndexFile.instance();
@@ -230,21 +243,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         add(buttonSpace());
         add(_jynstrumentSpace);
 
-        /*Once all the preferences have been loaded we can initial the preferences
-        doing it in a thread at this stage means we can let it work in the background*/
-        r = new Runnable() {
-          public void run() {
-            try {
-                 jmri.InstanceManager.tabbedPreferencesInstance().init();
-            } catch (Exception ex) {
-                log.error("Error in trying to setup preferences " + ex.toString());
-            }
-          }
-        };
-        Thread thr = new Thread(r);
-        thr.start();
         log.debug("End constructor");
-
     }
     
     private boolean doDeferredLoad(File file) {
@@ -614,9 +613,17 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // add listerner for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 0)!=null)
         buildLine4(pane2);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 1)!=null)
         buildLine5(pane2);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 2)!=null)
         buildLine6(pane2);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 3)!=null)
         buildLine7(pane2);
 
         pane2.add(new JLabel(line8()));

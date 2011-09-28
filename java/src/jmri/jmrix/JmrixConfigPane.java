@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -59,13 +60,32 @@ public class JmrixConfigPane extends JPanel {
             return retval;
         }
         Object c = InstanceManager.configureManagerInstance()
-                                .findInstance(ConnectionConfig.class, 0);
+                                .findInstance(ConnectionConfig.class, index);
         log.debug("findInstance returned "+c);
         retval = new JmrixConfigPane((ConnectionConfig)c);
         configPaneTable.put(Integer.valueOf(index), retval);
-        InstanceManager.configureManagerInstance().registerPref(retval);
-        InstanceManager.configureManagerInstance().deregister(c);
         return retval;
+    }
+    
+    /**
+     * Get access to a new pane for creating new connections.
+    */
+    public static JmrixConfigPane createNewPanel(){
+        
+        int lastIndex = -1;
+        ArrayList<Object> conlist = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
+        
+        if(conlist!=null){
+            lastIndex = conlist.size();
+        }
+        Enumeration<Integer> e = configPaneTable.keys();
+        while(e.hasMoreElements()){
+            int keyValue = e.nextElement();
+            if(keyValue>lastIndex)
+                lastIndex = keyValue;
+        }
+        lastIndex++;
+        return createPanel(lastIndex);
     }
     
     public static int getNumberOfInstances() { return configPaneTable.size(); }
@@ -76,17 +96,37 @@ public class JmrixConfigPane extends JPanel {
             log.debug("no instance found therefore can not dispose of it!");
             return;
         }
-
-        if (retval.ccCurrent!=null) {
+        
+        dispose(retval);
+        /*if (retval.ccCurrent!=null) {
             try {
                 retval.ccCurrent.dispose();
             } catch (Exception ex){
                 log.error("Error Occured while disposing connection " + ex.toString());
             }
         }
-
         InstanceManager.configureManagerInstance().deregister(retval);
-        configPaneTable.remove(Integer.valueOf(index));
+        InstanceManager.configureManagerInstance().deregister(retval.ccCurrent);
+        configPaneTable.remove(Integer.valueOf(index));*/
+    }
+    
+    public static void dispose(JmrixConfigPane confPane){
+        if(confPane == null){
+            log.debug("no instance found therefore can not dispose of it!");
+            return;
+        }
+        
+        if (confPane.ccCurrent!=null) {
+            try {
+                confPane.ccCurrent.dispose();
+            } catch (Exception ex){
+                log.error("Error Occured while disposing connection " + ex.toString());
+            }
+        }
+        InstanceManager.configureManagerInstance().deregister(confPane);
+        InstanceManager.configureManagerInstance().deregister(confPane.ccCurrent);
+        
+        configPaneTable.remove(Integer.valueOf(getInstanceNumber(confPane)));
     }
     
     public static int getInstanceNumber(JmrixConfigPane confPane){
@@ -98,6 +138,10 @@ public class JmrixConfigPane extends JPanel {
                 return keyValue;
         }
         return -1;
+    }
+    
+    public static ArrayList<JmrixConfigPane> getListOfConfigPanes(){
+        return new ArrayList<JmrixConfigPane>(configPaneTable.values());
     }
 
     static final java.util.Hashtable<Integer, JmrixConfigPane> configPaneTable 
