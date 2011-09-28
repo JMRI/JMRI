@@ -56,6 +56,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
+import jmri.util.com.sun.TableSorter;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -409,6 +410,15 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalModel = new PortalTableModel(this);
         _portalModel.init();
         JTable portalTable = new DnDJTable(_portalModel, new int[] {PortalTableModel.DELETE_COL});
+        try {   // following might fail due to a missing method on Mac Classic
+        	TableSorter sorter = new TableSorter(portalTable.getModel());
+            sorter.setTableHeader(portalTable.getTableHeader());
+            sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+            portalTable.setModel(sorter);
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            log.error("makePortalFrame: Unexpected error: "+e);
+        }
+        
         portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         //portalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
