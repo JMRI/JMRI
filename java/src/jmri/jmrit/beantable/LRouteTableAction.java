@@ -878,12 +878,14 @@ public class LRouteTableAction extends AbstractTableAction {
             _newRouteButton.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e) {
                         _newRouteType = true;
+                        _systemName.setEnabled(true);
                     }
                 });
             oldRoute.setToolTipText(rbx.getString("OldRouteHint"));
             oldRoute.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e) {
                         _newRouteType = false;
+                        _systemName.setEnabled(true);
                     }
                 });
             _initializeButton.setToolTipText(rbx.getString("InitializeHint"));
@@ -1307,7 +1309,7 @@ public class LRouteTableAction extends AbstractTableAction {
             return logix;
         }
         String uName = _userName.getText();
-        if (uName.length()==0) {
+        if (uName.length()!=0) {
             logix = _logixManager.getByUserName(uName);
             if (logix != null) {
                 return logix;
@@ -1436,6 +1438,8 @@ public class LRouteTableAction extends AbstractTableAction {
                         actionType = state & ~OFFSET;
                     }
                     break;
+                default:
+                	log.debug("updatePressed: Unknown action type "+elt.getType());
             }
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, 
                                   actionType, name, state, params));
@@ -1467,7 +1471,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     opern = Conditional.OPERATOR_NONE;
                 }
                 int state = elt.getState();
-                vetoList.add(new ConditionalVariable(true, opern, (state&~VETO), name, _newRouteType));
+                if (VETO < state) {
+                	vetoList.add(new ConditionalVariable(true, opern, (state&~VETO), name, _newRouteType));
+                }
             }
         }
 
@@ -1501,6 +1507,8 @@ public class LRouteTableAction extends AbstractTableAction {
                             case SIGNAL_TYPE:
                                 type = Conditional.TYPE_SIGNAL_HEAD_LIT;
                                 break;
+                            default:
+                            	log.debug("updatePressed: Unknown state variable type "+elt.getType());
                         }
                         twoTriggerList.add(new ConditionalVariable(false, opern, type, name, true));
                     } else {
@@ -1557,9 +1565,9 @@ public class LRouteTableAction extends AbstractTableAction {
         if (_newRouteType) {
             numConds = makeRouteConditional(numConds, /*false,*/ actionList, oneTriggerList, 
                                                vetoList, logix, sName, uName, "T");
-            if (!_initialize) {
+            if (!_initialize && twoTriggerList.size()>0) {
                 numConds = makeRouteConditional(numConds, /*true, actionList,*/ onChangeList, twoTriggerList, 
-                                                   vetoList, logix, sName, uName, "T");
+                                                   null, logix, sName, uName, "T");
             }
         } else {
             for (int i=0; i<oneTriggerList.size(); i++) {
@@ -1690,6 +1698,8 @@ public class LRouteTableAction extends AbstractTableAction {
                                 break;
                         }
                         break;
+                    default:
+                    	log.debug("updatePressed: Unknown Alignment state variable type "+elt.getType());
                 }
                 if (add && !_initialize) {
                     String eltName = elt.getUserName();
@@ -1766,7 +1776,7 @@ public class LRouteTableAction extends AbstractTableAction {
         if(log.isDebugEnabled()) {
             log.debug("makeRouteConditional: numConds= "+numConds+", triggerList.size()= "+triggerList.size());
         }
-        if (triggerList.size()==0 && vetoList.size()==0) {
+        if (triggerList.size()==0 && (vetoList==null || vetoList.size()==0)) {
             return numConds;
         }
         StringBuffer antecedent = new StringBuffer();
@@ -1790,8 +1800,8 @@ public class LRouteTableAction extends AbstractTableAction {
             }
         } else {
         }
-        int vSize = vetoList.size();
-        if (vSize > 0) {
+        if (vetoList!=null && vetoList.size()>0) {
+            int vSize = vetoList.size();
             if (tSize > 0) {
                 antecedent.append(" AND ");
             }
@@ -2440,8 +2450,6 @@ public class LRouteTableAction extends AbstractTableAction {
                 _state = Conditional.TYPE_SENSOR_INACTIVE;
             } else if (ON_ACTIVE.equals(state)) {
                 _state = Conditional.TYPE_SENSOR_ACTIVE;
-            } else if (ON_CHANGE.equals(state)) {
-                _state = Route.ONCHANGE;
             } else if (ON_CHANGE.equals(state)) {
                 _state = Route.ONCHANGE;
             } else if (VETO_ON_INACTIVE.equals(state)) {
