@@ -204,23 +204,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         } else {
             configDeferredLoadOK = false;
         }
-
-        /*Once all the preferences have been loaded we can initial the preferences
-        doing it in a thread at this stage means we can let it work in the background*/
-        Runnable r = new Runnable() {
-          public void run() {
-            try {
-                 jmri.InstanceManager.tabbedPreferencesInstance().init();
-            } catch (Exception ex) {
-                log.error("Error in trying to setup preferences " + ex.toString());
-            }
-          }
-        };
-        Thread thr = new Thread(r);
-        thr.start();
         
         //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
-        r = new Runnable() {
+        Runnable r = new Runnable() {
           public void run() {
             try {
                 DecoderIndexFile.instance();
@@ -243,6 +229,20 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
         add(_jynstrumentSpace);
+
+        /*Once all the preferences have been loaded we can initial the preferences
+        doing it in a thread at this stage means we can let it work in the background*/
+        r = new Runnable() {
+          public void run() {
+            try {
+                 jmri.InstanceManager.tabbedPreferencesInstance().init();
+            } catch (Exception ex) {
+                log.error("Error in trying to setup preferences " + ex.toString());
+            }
+          }
+        };
+        Thread thr = new Thread(r);
+        thr.start();
         log.debug("End constructor");
 
     }
