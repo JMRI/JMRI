@@ -43,6 +43,8 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
     LocationManager locationManager = LocationManager.instance();
+
+    Location _location;
     
     // labels
     
@@ -60,8 +62,11 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     //Spinners	 
     PhysicalLocationPanel physicalLocation; 
 
-    public SetPhysicalLocationFrame() {
+    public SetPhysicalLocationFrame(Location l) {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle").getString("MenuSetPhysicalLocation"));
+
+	// Store the location (null if called from the list view)
+	_location = l;
         
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -72,9 +77,12 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         //      Set up the panels
         JPanel pLocation = new JPanel();
         pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+	if (_location != null)
+	    locationBox.setSelectedItem(_location);
         pLocation.add(locationBox);
 
 	physicalLocation = new PhysicalLocationPanel(rb.getString("PhysicalLocation"));
+	physicalLocation.setToolTipText(rb.getString("PhysicalLocationToolTip"));
 	physicalLocation.setVisible(true);
         
         JPanel pControl = new JPanel();

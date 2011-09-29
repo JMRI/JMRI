@@ -17,15 +17,18 @@ import javax.swing.AbstractAction;
  */
 public class SetPhysicalLocationAction extends AbstractAction {
 
-    public SetPhysicalLocationAction(String s) {
+    Location _location;
+
+    public SetPhysicalLocationAction(String s, Location location) {
     	super(s);
+	_location = location;
     }
 
     SetPhysicalLocationFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
     	if (f == null || !f.isVisible()){
-    		f = new SetPhysicalLocationFrame();
+    		f = new SetPhysicalLocationFrame(_location);
     	}
     	f.setExtendedState(Frame.NORMAL);
     }
