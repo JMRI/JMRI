@@ -169,10 +169,13 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 	log.debug("Load spinners location "+l.getName());
 	physicalLocation.setValue(l.getPhysicalLocation());
     }
-	
+
+    // Unused. Carried over from SetTrainIconPosition or whatever it was called...
+    /*
     private void spinnersEnable(boolean enable){
 	physicalLocation.setEnabled(enable);
     }
+    */
     
     private void saveSpinnerValues(Location l){
 	log.debug("Save train icons coordinates for location "+l.getName());

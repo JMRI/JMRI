@@ -380,7 +380,7 @@ public class VSDecoder implements PropertyChangeListener {
     public void setXml(VSDFile vf) { }
     */
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "cast"})
     public void setXml(VSDFile vf, String pn) {
 	Iterator<Element> itr;
 	Element e = null;
@@ -433,7 +433,7 @@ public class VSDecoder implements PropertyChangeListener {
 	itr = (e.getChildren()).iterator();
 	while(itr.hasNext()) {
 	    // Pull each element from the XML file.
-	    el = (Element)itr.next();
+	    el = itr.next();
 	    log.debug("Element: " + el.toString());
 	    if (el.getAttribute("name") != null) {
 		log.debug("  Name: " + el.getAttributeValue("name"));

@@ -58,7 +58,8 @@ class VSDecoderManager {
 
     private static int vsdecoderID = 0;
 
-    private PhysicalLocation listener_position;
+    // Unused?
+    //private PhysicalLocation listener_position;
 
     // constructor - for kicking off by the VSDecoderManagerThread...
     // WARNING: Should only be called from static instance()

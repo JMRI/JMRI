@@ -261,6 +261,8 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
 			checkConsistency();
 		}
 	}
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPreferencesPane.class.getName());
+
+    // Unused - yet.
+    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPreferencesPane.class.getName());
 
 }

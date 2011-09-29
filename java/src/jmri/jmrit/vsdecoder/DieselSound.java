@@ -239,7 +239,7 @@ class DieselSound extends EngineSound {
     @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	Element el;
-	int num_notches;
+	//int num_notches;
 	String fn;
 	SoundBite sb;
 
@@ -247,12 +247,14 @@ class DieselSound extends EngineSound {
 	super.setXml(e, vf);
 	
 	log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
+	// Element "notches" is deprecated.  Just ignore it for now.
+	/*
 	String n = e.getChild("notches").getValue();
 	if (n != null) {
 	    num_notches = Integer.parseInt(n);
 	    //log.debug("Number of notches: " + num_notches);
 	}
-
+	*/
 	notch_sounds = new HashMap<Integer, SoundBite>();
 	transition_sounds = new ArrayList<NotchTransition>();
 
