@@ -83,7 +83,7 @@ public class ThrottleFrameManager
 	 * @return The newly created ThrottleFrame
 	 */
 	public ThrottleFrame createThrottleFrame() {
-		return createThrottleWindow().getCurentThrottleFrame() ;
+		return createThrottleWindow().getCurrentThrottleFrame() ;
 	}
 	
 	/**
@@ -158,7 +158,7 @@ public class ThrottleFrameManager
 		tf.toFront();
 	}
 	
-	public ThrottleWindow getCurentThrottleFrame() {
+	public ThrottleWindow getCurrentThrottleFrame() {
 		if (throttleWindows == null) return null;
 		if (throttleWindows.size() == 0) return null;
 		return throttleWindows.get(activeFrame);

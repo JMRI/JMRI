@@ -785,7 +785,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	}
 
 	public void componentShown(ComponentEvent e) {
-		throttleWindow.setCurentThrottleFrame(this);
+		throttleWindow.setCurrentThrottleFrame(this);
 		if (willSwitch)
 			switchMode();
 		throttleWindow.updateGUI();
