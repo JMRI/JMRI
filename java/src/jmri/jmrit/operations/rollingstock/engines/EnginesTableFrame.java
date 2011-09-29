@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
@@ -29,6 +30,7 @@ import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Frame for adding and editing the engine roster for operations.
@@ -41,8 +43,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
-	EnginesTableModel enginesModel = new EnginesTableModel();
-	javax.swing.JTable enginesTable = new javax.swing.JTable(enginesModel);
+	EnginesTableModel enginesModel;
+	TableSorter sorter;
+	javax.swing.JTable enginesTable;
 	JScrollPane enginesPane;
 	EngineManager engineManager = EngineManager.instance();
 	
@@ -82,6 +85,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the jtable in a Scroll Pane..
+        enginesModel = new EnginesTableModel();
+        sorter = new TableSorter(enginesModel);
+        enginesTable = new JTable(sorter);
+        sorter.setTableHeader(enginesTable.getTableHeader());  
     	enginesPane = new JScrollPane(enginesTable);
     	enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	enginesModel.initTable(enginesTable);

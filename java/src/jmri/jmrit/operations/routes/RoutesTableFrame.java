@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.JRadioButton;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.util.com.sun.TableSorter;
 
 
 
@@ -53,7 +55,9 @@ public class RoutesTableFrame extends OperationsFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the jtable in a Scroll Pane..
-    	javax.swing.JTable routesTable = new javax.swing.JTable(routesModel);
+        TableSorter sorter = new TableSorter(routesModel);
+    	JTable routesTable = new JTable(sorter);
+    	sorter.setTableHeader(routesTable.getTableHeader());
     	JScrollPane routesPane = new JScrollPane(routesTable);
     	routesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	routesModel.initTable(routesTable);
