@@ -118,9 +118,9 @@ The Basic Programmer</h4>
 <h4><a name="Main"></a>DecoderPro 3&reg; Main Window</h4>
 <ul>
   <li><a href="dp_Main_Main.shtml">Main Window</a></li>
-  <li><a href="Main_Menu.shtml">Menu Overview</a></li>
-  <li><a href="Main_File.shtml">File Menu</a>
-    <ul>
+  <li><a href="dp_Main_Menu.shtml">Menubar</a></li>
+  <li>File Menu
+<ul>
       <li>New DecoderPro Window</li>
       <li>Import Roster</li>
       <li>Import Roster Entry</li>
@@ -146,8 +146,8 @@ The Basic Programmer</h4>
       <li>Quit</li>
     </ul>
   </li>
-  <li><a href="Main_Edit.shtml">Edit Menu</a>
-    <ul>
+  <li>Edit Menu
+<ul>
       <li>Cut</li>
       <li>Copy</li>
       <li>Paste</li>
@@ -157,8 +157,8 @@ The Basic Programmer</h4>
       <li>Preferences</li>
     </ul>
   </li>
-  <li><a href="Main_Tool.shtml">Settings Menu</a>
-    <ul>
+  <li>Settings Menu
+<ul>
       <li>Hide/Show Summary Pane</li>
       <li>Reset Window Sizes</li>
       <li>Hide/Show Roster Image</li>
@@ -167,8 +167,8 @@ The Basic Programmer</h4>
       <li>Programming</li>
       <li>___________________
         <ul>
-    <li><a href="Programmer_ServiceMode.shtml">Service Mode</a></li>
-    <li><a href="Programmer_OpsMode.shtml">Operations Mode</a></li>
+    <li>Service Mode</li>
+    <li>Operatons Mode</li>
     <li>Edit Mode</li>
   </ul>
       </li>
@@ -178,10 +178,10 @@ The Basic Programmer</h4>
       <li>Register Group Table Association</li>
     </ul>
   </li>
-  <li><a href="Main_Roster.shtml">Action  Menu</a>  
-    <ul>
-      <li><a href="Main_Roster.shtml#CreateRoster">Basic Programmer</a></li>
-      <li><a href="Main_Roster.shtml#EditRoster">Comprehensive Programmer</a></li>
+  <li>Action  Menu
+<ul>
+      <li>Basic Programmer</li>
+      <li>Comprehensive Programmer</li>
       <li>Single CV Programmer</li>
       <li>Edit Throttle Labels</li>
       <li>Edit Roster Media</li>
@@ -201,7 +201,7 @@ The Basic Programmer</h4>
       <li>Run Script </li>
     </ul>
   </li>
-  <li><a href="Main_Menu.shtml#System">System dependent menu </a>
+  <li>System dependent menu 
     <ul>
       <li><a href="Main_acela.shtml">Acela</a></li>
       <li><a href="Main_CMRI.shtml">CMRI</a></li>
@@ -221,8 +221,8 @@ The Basic Programmer</h4>
       <li><a href="Main_Zimo.shtml">Zimo</a>  </li>
     </ul>
   </li>
-  <li><a href="Main_Window.shtml">Window Menu</a>
-    <ul>
+  <li>Window Menu
+<ul>
       <li>Minimize</li>
     </ul>
     <p>(lists all DecoderPro windows that are open)</p>
