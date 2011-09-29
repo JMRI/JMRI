@@ -54,6 +54,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	JLabel textLocationComment = new JLabel();
 	JLabel textLocationName = new JLabel();
 	JLabel textNextLocationName = new JLabel();
+	JLabel textStatus = new JLabel();
 
 	// major buttons
 	JButton moveButton = new JButton(rb.getString("Move"));
@@ -172,11 +173,15 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	pRow12.setLayout(new BoxLayout(pRow12,BoxLayout.X_AXIS));
 
        	pPickups.setLayout(new BoxLayout(pPickups,BoxLayout.Y_AXIS));
-       	//pPickups.setPreferredSize(new Dimension(200, 200));
        	pSetouts.setLayout(new BoxLayout(pSetouts,BoxLayout.Y_AXIS));
-       	//pSetouts.setPreferredSize(new Dimension(200, 200));
        	pRow12.add(pickupPane);
        	pRow12.add(setoutPane);
+       	
+       	// row 13
+      	JPanel pStatus = new JPanel();
+      	pStatus.setLayout(new GridBagLayout());
+      	pStatus.setBorder(BorderFactory.createTitledBorder(""));
+       	addItem(pStatus, textStatus, 0, 0);
        	
        	// row 14
        	JPanel pRow14 = new JPanel();
@@ -197,7 +202,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	
        	pRow14.add(pWork);
        	pRow14.add(pButtons);
-       	
+       	       	
        	update();
 		
 		getContentPane().add(pRow2);
@@ -205,8 +210,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		getContentPane().add(pRow6);
 		getContentPane().add(pRow10);
 		getContentPane().add(pRow12);
-		//getContentPane().add(pickupPane);
-		getContentPane().add(pRow14);
+		getContentPane().add(pStatus);
+		getContentPane().add(pRow14);		
 		
 		// setup buttons
        	addButtonAction(selectButton);
@@ -289,6 +294,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	private void update(){
 		carCheckBoxes.clear();
 		if (_train != null && _train.getRoute() != null){
+			pPickups.removeAll();
+			pSetouts.removeAll();
 			RouteLocation rl = _train.getCurrentLocation();
 			if (rl != null){
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
@@ -301,7 +308,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				// now update the car pick ups and set outs
 				List<String> carList = carManager.getByTrainDestinationList(_train);
 				List<String> routeList = _train.getRoute().getLocationsBySequenceList();
-				pPickups.removeAll();
+				
 				TrainCommon tc = new TrainCommon();
 				// block pick ups by destination
 				for (int j = 0; j < routeList.size(); j++) {
@@ -320,7 +327,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				}
 				pPickups.repaint();
 				// set outs
-				pSetouts.removeAll();
+				
 				for (int j=0; j<carList.size(); j++){
 					Car car = carManager.getById(carList.get(j));
 					if (car.getRouteDestination() == rl){
@@ -332,8 +339,28 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 					}
 				}
 				pSetouts.repaint();
+				textStatus.setText(getStatus(rl));
+			} else {
+				textStatus.setText(rb.getString("TrainTerminatesIn")+ " " + _train.getTrainTerminatesName());
+				moveButton.setEnabled(false);
 			}
+			selectButton.setEnabled(carCheckBoxes.size()>0);
+			clearButton.setEnabled(carCheckBoxes.size()>0);
 		}
+	}
+	
+	private String getStatus(RouteLocation rl){
+		StringBuffer buf = new StringBuffer(rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirectionString()
+				+ rb.getString("boundWith") +" ");
+		/*
+		if (Setup.isPrintLoadsAndEmptiesEnabled())
+			buf.append((_train.getNumberCarsInTrain()-emptyCars)+" "+rb.getString("Loads")+", "+emptyCars+" "+rb.getString("Empties")+", ");
+		else
+		*/
+			buf.append(_train.getNumberCarsInTrain() +" "+rb.getString("cars")+", ");
+		String s = _train.getTrainLength()+" "+rb.getString("feet")+", "+_train.getTrainWeight()+" "+rb.getString("tons");
+		buf.append(s);
+		return buf.toString();
 	}
     
     private void packFrame(){
