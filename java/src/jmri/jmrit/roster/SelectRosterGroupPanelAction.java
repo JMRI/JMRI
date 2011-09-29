@@ -60,7 +60,7 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
             Roster roster = Roster.instance();
 
             container = new JmriPanel();
-            container.add(new JLabel("Select Roster Group"));
+            container.add(new JLabel("Active Roster Group"));
             
             // create a dialog to select the roster entry
             selections = roster.rosterGroupBox();
