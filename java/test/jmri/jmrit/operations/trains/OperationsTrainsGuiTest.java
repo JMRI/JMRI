@@ -50,7 +50,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		TrainsTableFrame f = new TrainsTableFrame();
 		f.setVisible(true);
 		f.setLocation(10,20);
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortByName ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		// frame location can move just a bit on MacOS
@@ -65,7 +64,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("Build Report", tmanager.isBuildReportEnabled());
 		Assert.assertFalse("Print Review", tmanager.isPrintPreviewEnabled());
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortByTime ) );
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.showTime ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildReportBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
@@ -79,7 +78,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		//f.setLocation(20,10);
 		//f.validate();
 		
-		Assert.assertEquals("sort by time", TrainsTableFrame.TIME, tmanager.getTrainsFrameSortBy());
+		Assert.assertEquals("sort by time", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
 		Assert.assertFalse("Build Messages 2", tmanager.isBuildMessagesEnabled());
 		Assert.assertTrue("Build Report 2", tmanager.isBuildReportEnabled());
 		Assert.assertFalse("Print Review 2", tmanager.isPrintPreviewEnabled());
@@ -89,7 +88,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("location check", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size check", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
 		*/
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortById ) );
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.showId ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.printPreviewBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
@@ -98,7 +97,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// frame location can move just a bit on MacOS
 		//p = f.getLocation();
 		
-		Assert.assertEquals("sort by id", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
+		Assert.assertEquals("sort by id", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
 		/* all JMRI window position and size are now saved
 		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 3", new Dimension(1010,250), tmanager.getTrainsFrameSize());

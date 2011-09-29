@@ -29,6 +29,7 @@
 <!ATTLIST trainOptions height			CDATA #IMPLIED>
 <!ATTLIST trainOptions width			CDATA #IMPLIED>
 <!ATTLIST trainOptions sortBy			CDATA #IMPLIED>
+<!ATTLIST trainOptions sortStatus		CDATA #IMPLIED>
 <!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
 <!ATTLIST trainOptions columnWidths		CDATA #IMPLIED>
 

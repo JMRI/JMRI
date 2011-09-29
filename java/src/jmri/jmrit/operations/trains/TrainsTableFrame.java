@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
 
@@ -29,6 +30,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Frame for adding and editing the train roster for operations.
@@ -63,11 +65,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	TrainManager trainManager = TrainManager.instance();
 	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 
-	TrainsTableModel trainsModel = new TrainsTableModel();
-	javax.swing.JTable trainsTable = new javax.swing.JTable(trainsModel);
+	TrainsTableModel trainsModel;
+	TableSorter sorter;
+	JTable trainsTable;
 	JScrollPane trainsPane;
 	
 	// radio buttons
+	/*
     JRadioButton sortByName = new JRadioButton(NAME);
     JRadioButton sortByTime = new JRadioButton(TIME);
     JRadioButton sortByDeparts = new JRadioButton(DEPARTS);
@@ -75,6 +79,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JRadioButton sortByRoute = new JRadioButton(ROUTE);
     JRadioButton sortByStatus = new JRadioButton(STATUS);
     JRadioButton sortById = new JRadioButton(ID);
+    */
+	JRadioButton showTime = new JRadioButton(TIME);
+	JRadioButton showId = new JRadioButton(ID);
     
     JRadioButton moveRB = new JRadioButton(MOVE);
     JRadioButton terminateRB = new JRadioButton(TERMINATE);
@@ -107,6 +114,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the jtable in a Scroll Pane..
+        trainsModel = new TrainsTableModel();
+        sorter = new TableSorter(trainsModel);
+        trainsTable = new JTable(sorter);
+        sorter.setTableHeader(trainsTable.getTableHeader());   
     	trainsPane = new JScrollPane(trainsTable);
        	trainsModel.initTable(trainsTable, this);
      	
@@ -115,15 +126,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	JPanel cp1 = new JPanel();
     	cp1.setLayout(new BoxLayout(cp1,BoxLayout.X_AXIS));
     	
-    	JPanel sortBy = new JPanel();
-    	sortBy.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
-    	sortBy.add(sortByTime);
-    	sortBy.add(sortByName);
-    	sortBy.add(sortByRoute);
-    	sortBy.add(sortByDeparts);
-    	sortBy.add(sortByTerminates);
-    	sortBy.add(sortByStatus);
-    	sortBy.add(sortById);
+    	JPanel show = new JPanel();
+    	show.setBorder(BorderFactory.createTitledBorder(rb.getString("ShowClickToSort")));
+    	show.add(showTime);
+    	show.add(showId);
     	
        	JPanel messages = new JPanel();
        	messages.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));   	
@@ -139,7 +145,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	action.add(terminateRB);
     	action.add(resetRB);    	
     	
-    	cp1.add(sortBy);
+    	cp1.add(show);
     	cp1.add(messages);
     	cp1.add(action);
     	
@@ -191,15 +197,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		addButtonAction(terminateButton);
 		addButtonAction(saveButton);
 		
-	   	ButtonGroup sortGroup = new ButtonGroup();
-	   	sortGroup.add(sortByTime);
-    	sortGroup.add(sortByName);
-    	sortGroup.add(sortByDeparts);
-    	sortGroup.add(sortByTerminates);
-    	sortGroup.add(sortByRoute);
-    	sortGroup.add(sortByStatus);
-    	sortGroup.add(sortById);
-    	sortByName.setSelected(true);
+	   	ButtonGroup showGroup = new ButtonGroup();
+	   	showGroup.add(showTime);
+    	showGroup.add(showId);
+    	showTime.setSelected(true);
     	
     	ButtonGroup actionGroup = new ButtonGroup();
     	actionGroup.add(moveRB);
@@ -207,13 +208,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	actionGroup.add(terminateRB);
     	actionGroup.add(resetRB);    	
     	
-    	addRadioButtonAction(sortByTime);
-		addRadioButtonAction(sortByName);
-		addRadioButtonAction(sortByDeparts);
-		addRadioButtonAction(sortByTerminates);
-		addRadioButtonAction(sortByRoute);
-		addRadioButtonAction(sortByStatus);
-		addRadioButtonAction(sortById);
+    	addRadioButtonAction(showTime);
+		addRadioButtonAction(showId);
 		
 		addRadioButtonAction(moveRB);
 		addRadioButtonAction(terminateRB);
@@ -257,7 +253,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	setSize(trainManager.getTrainsFrameSize());
     	setLocation(trainManager.getTrainsFramePosition());
     	*/
-    	setSortBy(trainManager.getTrainsFrameSortBy());
+    	setSortBy(trainManager.getTrainsFrameSortBy(), trainManager.getTrainsFrameSortStatus());
     	
     	// listen for timetable changes
     	trainManager.addPropertyChangeListener(this);
@@ -266,26 +262,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
-		if (ae.getSource() == sortByName){
-			trainsModel.setSort(trainsModel.SORTBYNAME);
-		}
-		if (ae.getSource() == sortById){
+
+		if (ae.getSource() == showId){
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
-		if (ae.getSource() == sortByTime){
+		if (ae.getSource() == showTime){
 			trainsModel.setSort(trainsModel.SORTBYTIME);
-		}
-		if (ae.getSource() == sortByDeparts){
-			trainsModel.setSort(trainsModel.SORTBYDEPARTS);
-		}
-		if (ae.getSource() == sortByTerminates){
-			trainsModel.setSort(trainsModel.SORTBYTERMINATES);
-		}
-		if (ae.getSource() == sortByRoute){
-			trainsModel.setSort(trainsModel.SORTBYROUTE);
-		}
-		if (ae.getSource() == sortByStatus){
-			trainsModel.setSort(trainsModel.SORTBYSTATUS);
 		}
 		if (ae.getSource() == moveRB){
 			trainManager.setTrainsFrameTrainAction(MOVE);
@@ -375,47 +357,39 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
-	private void setSortBy(String sortBy){
+	private void setSortBy(String sortBy, int status){
 		if(sortBy.equals(TIME)){
-			sortByTime.setSelected(true);
+			showTime.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYTIME);
 		}
 		if(sortBy.equals(ID)){
-			sortById.setSelected(true);
+			showId.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
-		if(sortBy.equals(DEPARTS)){
-			sortByDeparts.setSelected(true);
-			trainsModel.setSort(trainsModel.SORTBYDEPARTS);
-		}
-		if(sortBy.equals(TERMINATES)){
-			sortByTerminates.setSelected(true);
-			trainsModel.setSort(trainsModel.SORTBYTERMINATES);
-		}
-		if(sortBy.equals(ROUTE)){
-			sortByRoute.setSelected(true);
-			trainsModel.setSort(trainsModel.SORTBYROUTE);
-		}
-		if(sortBy.equals(STATUS)){
-			sortByStatus.setSelected(true);
-			trainsModel.setSort(trainsModel.SORTBYSTATUS);
+		for (int i=0; i<sorter.getColumnCount(); i++){
+			if (sorter.getColumnName(i).equals(sortBy)){
+				log.debug("Set sort column ("+sortBy+")");
+				sorter.setSortingStatus(i, status);
+			}
 		}
 	}
 	
+	int _status = TableSorter.ASCENDING;
 	private String getSortBy(){
+		// set the defaults
 		String sortBy = NAME;
-		if (sortById.isSelected())
-			sortBy = ID;
-		else if (sortByTime.isSelected())
-			sortBy = TIME;
-		else if (sortByDeparts.isSelected())
-			sortBy = DEPARTS;
-		else if (sortByTerminates.isSelected())
-			sortBy = TERMINATES;
-		else if (sortByRoute.isSelected())
-			sortBy = ROUTE;
-		else if (sortByStatus.isSelected())
-			sortBy = STATUS;
+		_status = TableSorter.ASCENDING;
+		// now look to see if a sort is active
+		for (int i=0; i<sorter.getColumnCount(); i++){
+			String name = sorter.getColumnName(i);
+			int status = sorter.getSortingStatus(i);			
+			log.debug("Column "+name+" status "+status);
+			if (status != TableSorter.NOT_SORTED && !name.equals("")){
+				sortBy = name;
+				_status = status;
+				break;
+			}
+		}
 		return sortBy;
 	}
 
@@ -467,6 +441,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		*/
 		trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainsFrameSortBy(getSortBy());		//save how the table is sorted
+		trainManager.setTrainsFrameSortStatus(_status);
 		trainManager.save();
 		setModifiedFlag(false);
 	}
