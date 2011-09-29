@@ -71,15 +71,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JScrollPane trainsPane;
 	
 	// radio buttons
-	/*
-    JRadioButton sortByName = new JRadioButton(NAME);
-    JRadioButton sortByTime = new JRadioButton(TIME);
-    JRadioButton sortByDeparts = new JRadioButton(DEPARTS);
-    JRadioButton sortByTerminates = new JRadioButton(TERMINATES);
-    JRadioButton sortByRoute = new JRadioButton(ROUTE);
-    JRadioButton sortByStatus = new JRadioButton(STATUS);
-    JRadioButton sortById = new JRadioButton(ID);
-    */
 	JRadioButton showTime = new JRadioButton(TIME);
 	JRadioButton showId = new JRadioButton(ID);
     
@@ -304,7 +295,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			build.start();		
 		}
 		if (ae.getSource() == printButton){
-			List<String> trains = trainsModel.getSelectedTrainList();
+			List<String> trains = getSortByList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
 				if(train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()){
@@ -322,7 +313,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			tslef.initComponents();
 		}
 		if (ae.getSource() == terminateButton){
-			List<String> trains = trainsModel.getSelectedTrainList();
+			List<String> trains = getSortByList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
 				if (train.isBuildEnabled() && train.isBuilt() && train.getPrinted()){
@@ -350,7 +341,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	 * A thread is used to allow train table updates during builds.
 	 */
 	private void buildTrains(){
-		List<String> trains = trainsModel.getSelectedTrainList();
+		List<String> trains = getSortByList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = trainManager.getTrainById(trains.get(i));
 			train.buildIfSelected();
@@ -394,7 +385,23 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 
 	public List<String> getSortByList(){
-		return trainsModel.getSelectedTrainList();
+		List<String> sysList;
+		String sortBy = getSortBy();
+		if (sortBy.equals(TrainsTableModel.IDCOLUMNNAME))
+			sysList = trainManager.getTrainsByIdList();
+		else if (sortBy.equals(TrainsTableModel.TIMECOLUMNNAME))
+			sysList = trainManager.getTrainsByTimeList();
+		else if (sortBy.equals(TrainsTableModel.DEPARTSCOLUMNNAME))
+			sysList = trainManager.getTrainsByDepartureList();
+		else if (sortBy.equals(TrainsTableModel.TERMINATESCOLUMNNAME))
+			sysList = trainManager.getTrainsByTerminatesList();
+		else if (sortBy.equals(TrainsTableModel.ROUTECOLUMNNAME))
+			sysList = trainManager.getTrainsByRouteList();
+		else if (sortBy.equals(TrainsTableModel.STATUSCOLUMNNAME))
+			sysList = trainManager.getTrainsByStatusList();
+		else
+			sysList = trainManager.getTrainsByNameList();
+		return sysList;
 	}
 	
 	// Modifies button text and tool tips 

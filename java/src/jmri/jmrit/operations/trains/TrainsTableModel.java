@@ -94,6 +94,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	
 		if (_sort == SORTBYID)
 			sysList = manager.getTrainsByIdList();
+		else
+			sysList = manager.getTrainsByNameList();
+		/*
 		else if (_sort == SORTBYNAME)
 			sysList = manager.getTrainsByNameList();
 		else if (_sort == SORTBYTIME)
@@ -106,6 +109,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			sysList = manager.getTrainsByRouteList();
 		else if (_sort == SORTBYSTATUS)
 			sysList = manager.getTrainsByStatusList();
+			*/
 		
 		if (!_showAll){
 			// filter out trains not checked
@@ -120,10 +124,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		// and add listeners back in
 		addPropertyChangeTrains();
 	}
-    
-    public synchronized List<String> getSelectedTrainList(){
-		return sysList;
-    }
 
 	List<String> sysList = null;
 	JTable table = null;
@@ -155,24 +155,36 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public synchronized int getRowCount() { return sysList.size(); }
 
     public int getColumnCount( ){ return HIGHESTCOLUMN;}
+    
+    public static final String IDCOLUMNNAME = rb.getString("Id");
+    public static final String TIMECOLUMNNAME = rb.getString("Time");
+    public static final String BUILDCOLUMNNAME = rb.getString("Build");
+    public static final String NAMECOLUMNNAME = rb.getString("Name");
+    public static final String DESCRIPTIONCOLUMNNAME = rb.getString("Description");
+    public static final String ROUTECOLUMNNAME = rb.getString("Route");
+    public static final String DEPARTSCOLUMNNAME = rb.getString("Departs");
+    public static final String CURRENTCOLUMNNAME = rb.getString("Current");
+    public static final String TERMINATESCOLUMNNAME = rb.getString("Terminates");
+    public static final String STATUSCOLUMNNAME = rb.getString("Status");
+    public static final String ACTIONCOLUMNNAME = rb.getString("Action");
 
     public String getColumnName(int col) {
         switch (col) {
         case IDCOLUMN: synchronized(this){
         	if (_sort == SORTBYID)
-        		return rb.getString("Id");
-        	return rb.getString("Time");
+        		return IDCOLUMNNAME;
+        	return TIMECOLUMNNAME;
         }
-        case BUILDBOXCOLUMN: return rb.getString("Build");
+        case BUILDBOXCOLUMN: return BUILDCOLUMNNAME;
         case BUILDCOLUMN: return "";
-        case NAMECOLUMN: return rb.getString("Name");
-        case DESCRIPTIONCOLUMN: return rb.getString("Description");
-        case ROUTECOLUMN: return rb.getString("Route");
-        case DEPARTSCOLUMN: return rb.getString("Departs");
-        case CURRENTCOLUMN: return rb.getString("Current");
-        case TERMINATESCOLUMN: return rb.getString("Terminates");
-        case STATUSCOLUMN: return rb.getString("Status");
-        case ACTIONCOLUMN: return rb.getString("Action");
+        case NAMECOLUMN: return NAMECOLUMNNAME;
+        case DESCRIPTIONCOLUMN: return DESCRIPTIONCOLUMNNAME;
+        case ROUTECOLUMN: return ROUTECOLUMNNAME;
+        case DEPARTSCOLUMN: return DEPARTSCOLUMNNAME;
+        case CURRENTCOLUMN: return CURRENTCOLUMNNAME;
+        case TERMINATESCOLUMN: return TERMINATESCOLUMNNAME;
+        case STATUSCOLUMN: return STATUSCOLUMNNAME;
+        case ACTIONCOLUMN: return ACTIONCOLUMNNAME;
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
