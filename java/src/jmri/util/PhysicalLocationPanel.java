@@ -33,6 +33,11 @@ public class PhysicalLocationPanel extends JPanel {
 
     JTextField xt, yt, zt;
     TitledBorder tb;
+    JSpinner xs, ys, zs;
+    SpinnerNumberModel spinnerModel;
+
+    static final double min_spin = -1000.0;
+    static final double max_spin = 1000.0;
 
     public PhysicalLocationPanel() {
 	super();
@@ -44,6 +49,20 @@ public class PhysicalLocationPanel extends JPanel {
 	initComponents(title);
     }
 
+    private GridBagConstraints setConstraints(int x, int y, boolean fill) {
+	GridBagConstraints gbc1 = new GridBagConstraints();
+	gbc1.insets = new Insets(2, 2, 2, 2);
+	gbc1.gridx = GridBagConstraints.RELATIVE;
+	gbc1.gridy = y;
+	gbc1.weightx = 100.0;
+	gbc1.weighty = 100.0;
+	gbc1.gridwidth = 1;
+	gbc1.anchor = GridBagConstraints.LINE_START;
+	if (fill && false)
+	    gbc1.fill = GridBagConstraints.HORIZONTAL;
+	return(gbc1);
+    }
+
     protected void initComponents(String title) {
 
 	//tb = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), title);
@@ -52,7 +71,8 @@ public class PhysicalLocationPanel extends JPanel {
 	tb.setTitlePosition(TitledBorder.DEFAULT_POSITION);
 	this.setBorder(tb);
 
-	this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+	//this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+	this.setLayout(new GridBagLayout());
 	
 	xt = new JTextField(20);
 	xt.setColumns(20);
@@ -61,13 +81,36 @@ public class PhysicalLocationPanel extends JPanel {
 	zt = new JTextField(20);
 	zt.setColumns(20);
 
-	this.add(new JLabel("X"));
-	this.add(xt);
-	this.add(new JLabel("Y"));
-	this.add(yt);
-	this.add(new JLabel("Z"));
-	this.add(zt);
+	xs = new JSpinner(new SpinnerNumberModel(0.0, min_spin, max_spin, 0.1));
+	ys = new JSpinner(new SpinnerNumberModel(0.0,  min_spin, max_spin, 0.1));
+	zs = new JSpinner(new SpinnerNumberModel(0.0,  min_spin, max_spin, 0.1));
+	xs.setMaximumSize(new Dimension(10, xs.getHeight()));
+	ys.setMaximumSize(new Dimension(10, ys.getHeight()));
+	zs.setMaximumSize(new Dimension(10, zs.getHeight()));
+	
+	JLabel xl = new JLabel("X");
+	xl.setMaximumSize(new Dimension(10, xl.getHeight()));
+	JLabel yl = new JLabel("Y");
+	yl.setMaximumSize(new Dimension(10, yl.getHeight()));
+	JLabel zl = new JLabel("Z");
+	zl.setMaximumSize(new Dimension(10, zl.getHeight()));
 
+
+	//this.add(new JLabel("X"), setConstraints(0,0, false));
+	//this.add(xt);
+	this.add(xl, setConstraints(0,0, false));
+	this.add(xs, setConstraints(1,0, true));
+	//this.add(new JLabel("Y"), setConstraints(2,0, false));
+	//this.add(yt);
+	this.add(yl, setConstraints(2,0, false));
+	this.add(ys, setConstraints(3,0, true));
+	//this.add(new JLabel("Z"), setConstraints(4,0, false));
+	//this.add(zt);
+	this.add(zl, setConstraints(3,0, false));
+	this.add(zs, setConstraints(5,0, true));
+
+	this.setPreferredSize(new Dimension(300, xl.getHeight()+100));
+	this.setMaximumSize(new Dimension(350, xl.getHeight()+100));
 	this.setVisible(true);
 	log.debug("initComponents() complete");
     }
@@ -81,9 +124,14 @@ public class PhysicalLocationPanel extends JPanel {
     }
 
     public void setValue(PhysicalLocation p) {
+	/*
 	xt.setText("" + p.getX());
 	yt.setText("" + p.getY());
 	zt.setText("" + p.getZ());
+	*/
+	xs.setValue((new Float(p.getX())).doubleValue());
+	ys.setValue((new Float(p.getY())).doubleValue());
+	zs.setValue((new Float(p.getZ())).doubleValue());
     }
 
     public void setValue(String s) {
@@ -94,9 +142,15 @@ public class PhysicalLocationPanel extends JPanel {
     }
     
     public PhysicalLocation getValue() {
+	/*
 	return(new PhysicalLocation(Float.parseFloat(xt.getText()),
 				    Float.parseFloat(yt.getText()),
 				    Float.parseFloat(zt.getText()))
+	       );
+	*/
+	return(new PhysicalLocation(((Double)xs.getValue()).floatValue(),
+				    ((Double)ys.getValue()).floatValue(),
+				    ((Double)zs.getValue()).floatValue())
 	       );
     }
 
