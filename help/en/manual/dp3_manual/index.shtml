@@ -117,92 +117,17 @@ The Basic Programmer</h4>
 </ul>
 <h4><a name="Main"></a>DecoderPro 3&reg; Main Window</h4>
 <ul>
-  <li><a href="dp_Main_Main.shtml">Main Window</a></li>
-  <li><a href="dp_menubar.html">Menubar</a></li>
-  <li>File Menu
-<ul>
-      <li>New DecoderPro Window</li>
-      <li>Import Roster</li>
-      <li>Import Roster Entry</li>
-      <li>Import Decoder File</li>
-      <li>Import Decoder URL</li>
-      <li>_________________</li>
-      <li>Export Roster Entry</li>
-      <li>Export Complete Roster</li>
-      <li>__________________</li>
-      <li>Print Roster
-        <ul>
-          <li>Entry</li>
-          <li>Summary</li>
-        </ul>
-      </li>
-      <li>Print Preview Roster
-        <ul>
-          <li>Entry</li>
-          <li>Summary</li>
-        </ul>
-      </li>
-      <li>__________________</li>
-      <li>Quit</li>
-    </ul>
-  </li>
-  <li>Edit Menu
-<ul>
-      <li>Cut</li>
-      <li>Copy</li>
-      <li>Paste</li>
-      <li>Duplicate Loco</li>
-      <li>Delete Loco</li>
-      <li>___________________</li>
-      <li>Preferences</li>
-    </ul>
-  </li>
-  <li>Settings Menu
-<ul>
-      <li>Hide/Show Summary Pane</li>
-      <li>Reset Window Sizes</li>
-      <li>Hide/Show Roster Image</li>
-      <li>Hide/Show Roster Groups</li>
-      <li>___________________</li>
-      <li>Programming</li>
-      <li>___________________
-        <ul>
-    <li>Service Mode</li>
-    <li>Operatons Mode</li>
-    <li>Edit Mode</li>
-  </ul>
-      </li>
-      <li>Create Roster Group</li>
-      <li>Delete Roster Group</li>
-      <li>Set Active Roster Group</li>
-      <li>Register Group Table Association</li>
-    </ul>
-  </li>
-  <li>Action  Menu
-<ul>
-      <li>Basic Programmer</li>
-      <li>Comprehensive Programmer</li>
-      <li>Single CV Programmer</li>
-      <li>Edit Throttle Labels</li>
-      <li>Edit Roster Media</li>
-      <li>________________</li>
-      <li>New Throttle</li>
-      <li>Consisting Tool</li>
-      <li>Turnout Control</li>
-      <li>Power Control</li>
-      <li>Speedometer</li>
-      <li>________________</li>
-      <li>Start WiThrottle Server</li>
-      <li>Start Mini Web Server</li>
-      <li>_________________</li>
-      <li>Recreate Roster Index</li>
-      <li>Recreate Decoder Index</li>
-      <li>_________________</li>
-      <li>Run Script </li>
-    </ul>
-  </li>
-  <li>System dependent menu 
+  <li><a href="dp3_Main_Main.shtml"><strong>Main Window</strong></a>
     <ul>
+      <li><strong><a href="dp3_menubar.html">Menubar</a></strong></li>
+      <li><strong><a href="dp3_toobar.shtml">Toolbar</a></strong></li>
+      <li><strong><a href="dp3_rosterTable.shtml">Roster Table</a></strong></li>
+      <li><strong><a href="dp3_decoderInfo.shtml">Decoder Information</a></strong></li>
+      <li><strong><a href="dp3_Main_Main.shtml#status">Status Bar</a></strong></li>
+    </ul>
+  </li>
+  <li><strong>System dependent menu </strong>
+<ul>
       <li><a href="Main_acela.shtml">Acela</a></li>
       <li><a href="Main_CMRI.shtml">CMRI</a></li>
       <li><a href="Main_EasyDCC.shtml">EasyDCC</a></li>
@@ -219,34 +144,6 @@ The Basic Programmer</h4>
       <li><a href="Main_wangrow.shtml">wangrow</a></li>
       <li><a href="Main_XpressNet.shtml">XpressNet</a></li>
       <li><a href="Main_Zimo.shtml">Zimo</a>  </li>
-    </ul>
-  </li>
-  <li>Window Menu
-<ul>
-      <li>Minimize</li>
-    </ul>
-    <p>(lists all DecoderPro windows that are open)</p>
-    <ul>
-      <li>
-        <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
-        DecoderPro</li>
-      <li> <strong>
-        <input name="checkbox2" id="checkbox2" type="checkbox">
-        </strong>LocoNet Traffic</li>
-      <li> <strong>
-        <input name="checkbox3" id="checkbox3" type="checkbox">
-      </strong>        Power Control</li>
-    </ul>
-  </li>
-  <li><a href="Main_Help.shtml">Help Menu</a>
-    <ul>
-      <li>Window Help...</li>
-      <li>General Help...</li>
-      <li>License...</li>
-      <li>Locations...</li>
-      <li>Context....</li>
-      <li>System Console...</li>
-      <li>Upload Debugging info...</li>
     </ul>
   </li>
 </ul>
@@ -275,17 +172,17 @@ are best submitted to the
     Revisions
   </caption>
   <tr>
-    <th width="8%" scope="col">Version</th>
-    <th width="8%" scope="col">Revision Date</th>
-    <th width="13%" scope="col">Editors</th>
-    <th width="71%" scope="col">Major Revisions</th>
+    <th width="9%" scope="col">Version</th>
+    <th width="10%" scope="col">Revision Date</th>
+    <th width="20%" scope="col">Editors</th>
+    <th width="61%" scope="col">Major Revisions</th>
   </tr>
   <tr>
     <td align="left" valign="top">2.13</td>
     <td align="left" valign="top">x/x/2011</td>
     <td align="left" valign="top">Dale A. Tripp<br>
       Bruce Shanks<br>
-      Walter Thompson     <br></td>
+      <br></td>
     <td align="left" valign="top"><p>Create DecoderPro 3&reg; User's Guide</p></td>
   </tr>
 </table>
