@@ -159,6 +159,14 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				if (finalDestTrackBox.getSelectedItem() != null 
 						&& !finalDestTrackBox.getSelectedItem().equals(""))
 					finalDestTrack = (Track)finalDestTrackBox.getSelectedItem();
+				if (finalDestTrack != null && car.getNextDestTrack() != finalDestTrack && finalDestTrack.getLocType().equals(Track.STAGING)){
+					log.debug ("Destination track ("+finalDestTrack.getName()+") is staging");
+					JOptionPane.showMessageDialog(this,
+							getRb().getString("rsDoNotSelectStaging"),
+							getRb().getString("rsCanNotFinal"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}	
 				String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
 				if (!status.equals(Track.OKAY)){
 					JOptionPane.showMessageDialog(this,
@@ -179,7 +187,16 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				car.setReturnWhenEmptyDestTrack(null);
 			} else {
 				if (trackReturnWhenEmptyBox.getSelectedItem() != null 
-						&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")){	
+						&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")){
+					Track rwe = (Track)trackReturnWhenEmptyBox.getSelectedItem();
+					if (rwe != null && rwe.getLocType().equals(Track.STAGING)){
+						log.debug ("Return when empty track ("+rwe.getName()+") is staging");
+						JOptionPane.showMessageDialog(this,
+								getRb().getString("rsDoNotSelectStaging"),
+								getRb().getString("rsCanNotRWE"),
+								JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
 					String status = car.testDestination((Location) destReturnWhenEmptyBox.getSelectedItem(), (Track)trackReturnWhenEmptyBox.getSelectedItem());
 					if (!status.equals(Track.OKAY)){
 						JOptionPane.showMessageDialog(this,
