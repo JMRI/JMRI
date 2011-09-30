@@ -1206,7 +1206,8 @@ public class TrainBuilder extends TrainCommon{
 				// don't use this location again
 				//rl.setCarMoves(rl.getMaxCarMoves());
 			}
-			checkDepartureForStaging();
+			if (routeIndex == 0)
+				checkDepartureForStaging();
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
 				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
 		}	
