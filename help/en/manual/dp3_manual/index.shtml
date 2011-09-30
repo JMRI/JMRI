@@ -118,7 +118,7 @@ The Basic Programmer</h4>
 <h4><a name="Main"></a>DecoderPro 3&reg; Main Window</h4>
 <ul>
   <li><a href="dp_Main_Main.shtml">Main Window</a></li>
-  <li><a href="dp_Main_Menu.shtml">Menubar</a></li>
+  <li><a href="dp_menubar.html">Menubar</a></li>
   <li>File Menu
 <ul>
       <li>New DecoderPro Window</li>

@@ -33,7 +33,7 @@
 <p align="center"><img src="images/start_dp_main01.png" width="900" height="521" alt="main window"></p>
 <ol>
   <li>
-    <h3 align="left"><a href="dp_Main_Menu.shtml">Menu Bar</a></h3>
+    <h3 align="left"><a href="dp_menubar.html">Menu Bar</a></h3>
   </li>
   <li>
     <h3 align="left"><strong>Tool Bar</strong></h3>
