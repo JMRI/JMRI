@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.locations;
  
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -12,22 +10,15 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocationPanel;
 import jmri.util.PhysicalLocation;
 
-import java.awt.Color;
 import java.awt.GridBagLayout;
-import java.awt.Point;
-import java.awt.event.ComponentListener;
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import java.awt.Dimension;
 
 /**
