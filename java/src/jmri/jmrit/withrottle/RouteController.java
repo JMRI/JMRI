@@ -115,11 +115,14 @@ public class RouteController extends AbstractController implements PropertyChang
             list.append("}|{");
             if (r.getUserName() != null) list.append(r.getUserName());
             list.append("}|{");
-            Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(r.getTurnoutsAlignedSensor());
-            if (routeAligned != null){
-                list.append(routeAligned.getKnownState());
-            }
-            
+    		String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+    		if (turnoutsAlignedSensor != "") {  //only set if found
+    			Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+    			if (routeAligned != null){
+    				list.append(routeAligned.getKnownState());
+    			}
+    		}
+
 
         }
         String message = list.toString();
@@ -152,22 +155,24 @@ public class RouteController extends AbstractController implements PropertyChang
             }
         }
     }
-/**
- * Register this as a listener of each managed route's aligned sensor
- */
+    /**
+     * Register this as a listener of each managed route's aligned sensor
+     */
     public void register(){
-        for (String sysName : sysNameList){
-            Route r = manager.getBySystemName(sysName);
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(r.getTurnoutsAlignedSensor());
-            NamedBeanHandle<Sensor> routeAligned = nbhm.getNamedBeanHandle(r.getTurnoutsAlignedSensor(), sensor);
-            if (routeAligned != null){
-                indication.put(routeAligned, r);
-                sensor.addPropertyChangeListener(this, routeAligned.getName(), "Wi Throttle Route Controller");
-                if (log.isDebugEnabled()) log.debug("Add listener to Sensor: "+routeAligned.getName()+" for Route: "+r.getSystemName());
-            }
+    	for (String sysName : sysNameList){
+    		Route r = manager.getBySystemName(sysName);
+    		String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+    		if (turnoutsAlignedSensor != "") {  //only set if found
+    			Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+    			NamedBeanHandle<Sensor> routeAligned = nbhm.getNamedBeanHandle(turnoutsAlignedSensor, sensor);
+    			if (routeAligned != null){
+    				indication.put(routeAligned, r);
+    				sensor.addPropertyChangeListener(this, routeAligned.getName(), "Wi Throttle Route Controller");
+    				if (log.isDebugEnabled()) log.debug("Add listener to Sensor: "+routeAligned.getName()+" for Route: "+r.getSystemName());
+    			}
+    		}
 
-
-        }
+    	}
     }
 
 /**
