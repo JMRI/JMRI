@@ -318,6 +318,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	// move button becomes report if failure
     	if (train.getBuildFailed()){
     		train.printBuildReport();
+    	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)){
+    		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
+			if(!train.reset())			
+				JOptionPane.showMessageDialog(null,
+						MessageFormat.format(rb.getString("TrainIsInRoute"),new Object[] {train.getTrainTerminatesName()}), rb.getString("CanNotResetTrain"),
+						JOptionPane.ERROR_MESSAGE);
     	} else if (!train.isBuilt()){
 			JOptionPane.showMessageDialog(null, 
 					MessageFormat.format(rb.getString("TrainNeedsBuild"),new Object[] { train.getName() }), 
@@ -332,10 +338,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 					MessageFormat.format(rb.getString("DoYouWantToTermiate"),new Object[]{train.getName()}), JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION)
 				train.terminate();
-    	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)){
-    		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
-    		train.reset();
-
     	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)){
     		if (log.isDebugEnabled()) log.debug("Enable conductor for train ("+train.getName()+")");
     		lauchConductor(train);

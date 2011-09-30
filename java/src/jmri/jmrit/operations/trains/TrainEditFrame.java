@@ -481,7 +481,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			if (_train != null)
 				if(!_train.reset())			
 					JOptionPane.showMessageDialog(this,
-							"Train is in route to "+_train.getTrainTerminatesName(), "Can not reset train!",
+							MessageFormat.format(rb.getString("TrainIsInRoute"),new Object[] {_train.getTrainTerminatesName()}), rb.getString("CanNotResetTrain"),
 							JOptionPane.ERROR_MESSAGE);
 		}
 		if (ae.getSource() == addRoadButton){
