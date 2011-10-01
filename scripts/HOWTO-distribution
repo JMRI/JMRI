@@ -54,10 +54,6 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
 ( ) Confirm that all the above changes have been committed back to SVN trunk
 
-( ) This is a good place to check that the JavaDocs generate without errors
-    (though the CI system is routinely checking this).
-    If you fix anything, commit it back.
-
 ( ) This is a good place to check that the decoder XSLT transforms work
         cd xml/XSLT
         ant
@@ -69,7 +65,9 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
-    svn cp ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.1
+    svn cp ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.2
+    
+( ) If using the CI system, set up CI builds for that branch
 
 ( ) Move to the releases/ part of the SVN tree on your local machine
     and update to get the release copy:
@@ -86,18 +84,16 @@ Second, we build the release branch:
 Third, we do any necessary release-specific updates.
     (we need to work through automation of version number values)
 
-( ) Check that the Version.java file has been updated (both version
-    number in two places and copyright date), has released=true set
-    and has been committed to SVN on the branch
-    
-    (I think this item has actually been replaced by:
-    
-    Edit the top-level "release.properties file to say:
+( ) Edit the top-level "release.properties file to say:
     release.is_branched=true
     
     Edit the "release.build=" clause here and on trunk so that here
     it's the current build number, and on trunk its the next number.
-    
+
+    <property name="release.major" value="2" />
+    <property name="release.minor" value="13" />
+    <property name="release.build" value="1" />
+
 ( ) Edit the version number into the top help page:
     bbedit help/en/index.html
                    
@@ -116,12 +112,6 @@ Third, we do any necessary release-specific updates.
     bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
     sed -i '' s/2.12/2.13.1/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
-
-
-( ) Update the release number in the release.properties file.
-    <property name="release.major" value="2" />
-    <property name="release.minor" value="13" />
-    <property name="release.build" value="1" />
 
 ( ) run "ant alltests"; make sure they all pass
     
@@ -154,14 +144,14 @@ Final release steps:
 
 ( ) Upload the Linux, Mac OS X and Windows files to sourceforge
      
-    Manually:
-    scp JMRI.2.11.8.tgz jacobsen,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
+    Download from CI, check integrity (make sure compressed files not expanded), then
+    scp JMRI.2.13.1.* jacobsen,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
 
+    (bandwidth limit at CI engine, so this is fine)
+    
     Wait until the downloads have propagated to the mirrors; check 
     by trying to download each file
     
-    Ask JMRI-developers for a quick look _AND_ _WAIT_ _FOR_ _IT_!!
-
 ( ) Any time after "ant packages" is complete, create and upload the JavaDocs
     and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
     
