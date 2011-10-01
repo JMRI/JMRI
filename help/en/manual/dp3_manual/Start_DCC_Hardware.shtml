@@ -32,7 +32,7 @@
 
 <hr>
 
-<p>You will need, a means to connect between your computer and the track on which the  locomotive rests, that will take serial instructions and generate DCC packets  on the rails. At a minimum, a command station/booster( your DCC system will probably suffice),
+<p>You will need, a means to connect between your computer and the track on which the  locomotive rests, that will take serial instructions and generate DCC packets  on the rails. At a minimum, a command station/booster (your DCC system will probably suffice),
 an additional hardware interface to send commands from your computer to the command station (this could be as simple as a serial cable), and a programming track set up according to the manufacturer's instructions.</p>
 <p> For some systems, you will also need an additional hardware interface to
   send the commands from your computer to the command station, and from there
