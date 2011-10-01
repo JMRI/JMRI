@@ -972,14 +972,6 @@
         </antcall>
     </target>
 
-    <target name="mark" depends="init" 
-            description="mark the Version.java file with today's date">
-        <replaceregexp file="${source}/jmri/Version.java"
-            match="static final public String modifier = (.*)"
-            replace="static final public String modifier = &quot; Build ${DSTAMP}${TSTAMP} ${user.name}&quot;; // automatically inserted by mark target in ant build"
-        />
-    </target>
-  
     <!-- dist target forces the jar file to be built without test classes -->
     <target name="dist"
             description="create a distribution jar file" 
