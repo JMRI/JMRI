@@ -166,7 +166,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     	+ (printCarKernel.isSelected()?rb.getString("Kernel")+ "       ":"")
     	+ (printCarOwner.isSelected()?padAttribute(rb.getString("Owner"),ownerMaxLen):"")
     	+ (printCarBuilt.isSelected()?rb.getString("Built")+" ":"")
-    	+ (printCarValue.isSelected()?rb.getString("Value")+"        ":"")
+    	+ (printCarValue.isSelected()?Setup.getValueLabel()+"        ":"")
     	+ rb.getString("Location")
     	+ newLine;
     	writer.write(s);

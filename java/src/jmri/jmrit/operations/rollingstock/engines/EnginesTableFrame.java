@@ -67,8 +67,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));    
     JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
     JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
-    JRadioButton sortByValue = new JRadioButton(rb.getString("Value"));
-    JRadioButton sortByRfid = new JRadioButton(rb.getString("Rfid"));
+    JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
+    JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons

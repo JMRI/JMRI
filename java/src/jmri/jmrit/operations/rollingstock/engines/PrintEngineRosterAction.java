@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -83,7 +84,7 @@ public class PrintEngineRosterAction  extends AbstractAction {
 					+ "\t" + rb.getString("Model") + "\t     "
 					+ rb.getString("Type") + "      " + rb.getString("Length")
 					+ " " + (panel.sortByConsist.isSelected()?rb.getString("Consist")+"     ":rb.getString("Owner"))
-					+ " " + (panel.sortByValue.isSelected()?rb.getString("Value")+"       ":rb.getString("Built"))
+					+ " " + (panel.sortByValue.isSelected()?Setup.getValueLabel()+"       ":rb.getString("Built"))
 					+ " " + rb.getString("Location")
 					+ newLine;
         	writer.write(s);
