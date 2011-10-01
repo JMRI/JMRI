@@ -23,6 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import jmri.util.PhysicalLocation;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -36,6 +37,7 @@ public class VSDecoderPreferences {
     private String _defaultVSDFilePath = null;
     private String _defaultVSDFileName = null;
     private boolean _autoLoadDefaultVSDFile = false; // Automatically load a VSD file.
+    private PhysicalLocation _listenerPosition;
 
     // Other internal variables
     //private Dimension _winDim = new Dimension(800,600);
@@ -54,6 +56,7 @@ public class VSDecoderPreferences {
 	    // Set default values
 	    _defaultVSDFilePath = FileUtil.getExternalFilename("program:resources/vsdecoder");
 	    _defaultVSDFileName = "example.vsd";
+	    _listenerPosition = new PhysicalLocation(); // default to 0, 0, 0
             log.info("Did not find VSDecoder preferences file.  This is normal if you haven't save the preferences before");
             root = null;
 	} catch (Exception e) {
@@ -75,6 +78,10 @@ public class VSDecoderPreferences {
     	if ((a = e.getAttribute("isAutoLoadingDefaultVSDFile")) != null )  setAutoLoadDefaultVSDFile( a.getValue().compareTo("true") == 0 );
 	if ((c = e.getChild("DefaultVSDFilePath")) != null) setDefaultVSDFilePath(c.getValue());
 	if ((c = e.getChild("DefaultVSDFileName")) != null) setDefaultVSDFileName(c.getValue());
+	if ((c = e.getChild("ListenerPosition")) != null)
+	    setListenerPosition(c.getValue());
+	else
+	    setListenerPosition(new PhysicalLocation());
     }
     
     /**
@@ -89,10 +96,13 @@ public class VSDecoderPreferences {
 	e.setAttribute("isAutoStartingEngine", ""+isAutoStartingEngine());
 	e.setAttribute("isAutoLoadingDefaultVSDFile", ""+isAutoLoadingDefaultVSDFile());
 	ec = new Element("DefaultVSDFilePath");
-	ec.setText(""+getDefaultVSDFilePath());
+	ec.setText("" + getDefaultVSDFilePath());
 	e.addContent(ec);
 	ec = new Element("DefaultVSDFileName");
-	ec.setText(""+getDefaultVSDFileName());
+	ec.setText("" + getDefaultVSDFileName());
+	e.addContent(ec);
+	ec = new Element("ListenerPosition");
+	ec.setText("" + _listenerPosition.toString());
 	e.addContent(ec);
     	return e;
     }
@@ -103,6 +113,7 @@ public class VSDecoderPreferences {
     	setAutoLoadDefaultVSDFile (tp.isAutoLoadingDefaultVSDFile() );
     	setDefaultVSDFilePath(tp.getDefaultVSDFilePath() );
     	setDefaultVSDFileName(tp.getDefaultVSDFileName() );
+	setListenerPosition(tp.getListenerPosition());
     	
     	if (listeners != null)
     		for (int i = 0; i < listeners.size(); i++) {
@@ -117,7 +128,8 @@ public class VSDecoderPreferences {
     	return( isAutoStartingEngine() != tp.isAutoStartingEngine() ||
 		isAutoLoadingDefaultVSDFile() != tp.isAutoLoadingDefaultVSDFile() ||
 		!(getDefaultVSDFilePath().equals(tp.getDefaultVSDFilePath())) ||
-		!(getDefaultVSDFileName().equals(tp.getDefaultVSDFileName()))
+		!(getDefaultVSDFileName().equals(tp.getDefaultVSDFileName())) ||
+		!(getListenerPosition().equals(tp.getListenerPosition()))
 		);
     }
     
@@ -188,6 +200,24 @@ public class VSDecoderPreferences {
 
     public void setAutoLoadDefaultVSDFile(boolean b) {
 	_autoLoadDefaultVSDFile = b;
+    }
+
+    public PhysicalLocation getListenerPosition() {
+	log.debug("getListenerPosition() : " + _listenerPosition.toString());
+	return(_listenerPosition);
+    }
+
+    public void setListenerPosition(PhysicalLocation p) {
+	_listenerPosition = p;
+    }
+
+    public void setListenerPosition(String pos) {
+	PhysicalLocation p = PhysicalLocation.parse(pos);
+	if (p != null) {
+	    this.setListenerPosition(p);
+	} else {
+	    this.setListenerPosition(new PhysicalLocation());
+	}
     }
 
     /**

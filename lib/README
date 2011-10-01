@@ -149,6 +149,10 @@ ecj.jar
     Eclipse compiler 3.5.1 from 
     http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.5.1-200909170800/ecj-3.5.1.jar
     
+WinRegistry4-4.jar
+    Version 4.4
+    https://sourceforge.net/projects/java-registry/
+    
 xAPlib.jar
     xAP automation protocol support
     From http://patrick.lidstone.net/html/dev_tools.html

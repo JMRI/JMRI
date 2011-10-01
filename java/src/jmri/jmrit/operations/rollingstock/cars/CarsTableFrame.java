@@ -33,19 +33,21 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Frame for adding and editing the car roster for operations.
  *
- * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision$
+ * @author Bob Jacobsen   Copyright (C) 2001
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
+ * @version $Revision$
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
 	CarsTableModel carsModel;
+	TableSorter sorter;
 	JTable carsTable;
 	boolean showAllCars;
 	String locationName;
@@ -95,7 +97,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
     	// Set up the table in a Scroll Pane..
         carsModel = new CarsTableModel(showAllCars, locationName, trackName);
-        carsTable = new JTable(carsModel);
+        sorter = new TableSorter(carsModel);
+        carsTable = new JTable(sorter);
+        sorter.setTableHeader(carsTable.getTableHeader());        
         JScrollPane carsPane = new JScrollPane(carsTable);
     	carsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	carsModel.initTable(carsTable);

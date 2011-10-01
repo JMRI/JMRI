@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import java.lang.Math;
+import jmri.util.PhysicalLocation;
+
 
 // XML stuff
 import org.jdom.Element;
@@ -223,6 +225,19 @@ class ConfigurableSound extends VSDSound {
 	    end_sound.setVolume(v);
 	if (use_short_sound)
 	    short_sound.setVolume(v);
+    }
+
+    @Override
+    public void setPosition(PhysicalLocation p) {
+	super.setPosition(p);
+	if (use_start_sound)
+	    start_sound.setPosition(p);
+	if (use_mid_sound)
+	    mid_sound.setPosition(p);
+	if (use_end_sound)
+	    end_sound.setPosition(p);
+	if (use_short_sound)
+	    short_sound.setPosition(p);
     }
 
     @Override

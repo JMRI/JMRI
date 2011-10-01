@@ -53,7 +53,7 @@ public class TabbedPreferences extends AppConfigBase {
     jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel;
     jmri.web.miniserver.MiniServerPrefsPanel miniserverPrefsPanel;
     
-    ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
+    ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<JmrixConfigPane>();
     ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
     JPanel buttonpanel;
     JList list;
@@ -261,38 +261,16 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     void setUpConnectionPanel(){
-        ArrayList<Object> connList=null;
-        int count = 0;
-        connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.JmrixConfigPane.class);
-        if(connList!=null){
-            for (int x = 0; x<connList.size(); x++){
-                int newinstance = jmri.jmrix.JmrixConfigPane.getInstanceNumber((jmri.jmrix.JmrixConfigPane)connList.get(x));
-                /*This extra check is here a some of the original code automatically created four connection instances
-                therefore we need to filter out those that are set to none.*/
-                if(!((jmri.jmrix.JmrixConfigPane)connList.get(x)).getCurrentProtocolName().equals(JmrixConfigPane.NONE)){
-                    addConnection(count, newinstance);
-                    count++;
-                }
-            }
-        }
-        /**By default in classic 4 sets of jmrixconfigpanes are created at start up.  However
-         * if there are more than 4 connections, the 5+ connections do not have
-         * a jmrixconfigpane instance created, thus we need to pick those up.
-         */
-        connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
         if (connList!=null){
             for (int x = 0; x<connList.size(); x++){
                 /*This extra check is here a some of the original code automatically created four connection instances
                 therefore we need to filter out those that are set to none.*/
-                if(!(jmri.jmrix.JmrixConfigPane.instance(count).getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
-                    addConnection(count, count);
-                    count++;
-                }
+                JmrixConfigPane configPane = jmri.jmrix.JmrixConfigPane.instance(x);
+                addConnection(x, configPane);
             }
-        }
-
-        if (count==0){
-            addConnection(0,0);
+        } else {
+            addConnection(0,JmrixConfigPane.createNewPanel());
         }
         connectionPanel.addChangeListener(addTabListener);
         newConnectionTab();
@@ -427,11 +405,10 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.add(listScroller);    
     }
     
-    void addConnection(int tabPosition, final int instance){
+    void addConnection(int tabPosition, final JmrixConfigPane configPane){
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-        
-        p.add(JmrixConfigPane.instance(instance));
+        p.add(configPane);
         p.add(Box.createVerticalGlue());
         JPanel b = new JPanel();
         b.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
@@ -447,10 +424,10 @@ public class TabbedPreferences extends AppConfigBase {
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         final JCheckBox disable = new JCheckBox("Disable Connection");
-        disable.setSelected(JmrixConfigPane.instance(instance).getDisabled());
+        disable.setSelected(configPane.getDisabled());
         disable.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                JmrixConfigPane.instance(instance).setDisabled(disable.isSelected());
+                configPane.setDisabled(disable.isSelected());
             }
         });
         c.add(disable);
@@ -461,10 +438,10 @@ public class TabbedPreferences extends AppConfigBase {
         p.add(p1);
         String title;
 
-        if (JmrixConfigPane.instance(instance).getConnectionName()!=null){
-            title=JmrixConfigPane.instance(instance).getConnectionName();
-        } else if((JmrixConfigPane.instance(instance).getCurrentProtocolName()!=null) && (!JmrixConfigPane.instance(instance).getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
-            title = JmrixConfigPane.instance(instance).getCurrentProtocolName();
+        if (configPane.getConnectionName()!=null){
+            title=configPane.getConnectionName();
+        } else if((configPane.getCurrentProtocolName()!=null) && (!configPane.getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
+            title = configPane.getCurrentProtocolName();
         } else {
             title = rb.getString("TabbedLayoutConnection")+(tabPosition+1);
             if (connectionPanel.indexOfTab(title)!=-1){
@@ -476,37 +453,31 @@ public class TabbedPreferences extends AppConfigBase {
             }
         }
 
-        if(JmrixConfigPane.instance(instance).getDisabled()){
+        if(configPane.getDisabled()){
             title = "(" + title + ")";
         }
-        connectionTabInstance.add(instance);
+        connectionTabInstance.add(configPane);
         connectionPanel.add(title, p);
         connectionPanel.setTitleAt(tabPosition, title);
         connectionPanel.setToolTipTextAt(tabPosition, title);
 
-        if(jmri.jmrix.ConnectionStatus.instance().isConnectionOk(JmrixConfigPane.instance(instance).getCurrentProtocolInfo())){
+        if(jmri.jmrix.ConnectionStatus.instance().isConnectionOk(configPane.getCurrentProtocolInfo())){
             connectionPanel.setForegroundAt(tabPosition, Color.black);
         } else {
             connectionPanel.setForegroundAt(tabPosition, Color.red);
         }
-        if(JmrixConfigPane.instance(instance).getDisabled()){
+        if(configPane.getDisabled()){
             connectionPanel.setForegroundAt(tabPosition, Color.ORANGE);
         }
         //The following is not supported in 1.5, but is in 1.6 left here for future use.
 //        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
 
-        items.add(JmrixConfigPane.instance(instance));
+        items.add(configPane);
     }
-    
     
     void addConnectionTab(){
         connectionPanel.removeTabAt(connectionPanel.indexOfTab("+"));
-        int newinstance;
-        if (connectionTabInstance.isEmpty())
-            newinstance = 0;
-        else
-            newinstance = connectionTabInstance.get(connectionTabInstance.size()-1)+1;
-        addConnection(connectionTabInstance.size(), newinstance);
+        addConnection(connectionTabInstance.size(), JmrixConfigPane.createNewPanel());
         newConnectionTab();
     }
     
@@ -542,13 +513,15 @@ public class TabbedPreferences extends AppConfigBase {
                 return;
             if(connectionPanel.getChangeListeners().length >0)
                 connectionPanel.removeChangeListener(connectionPanel.getChangeListeners()[0]);
-            int jmrixinstance = connectionTabInstance.get(i);
+            //int jmrixinstance = connectionTabInstance.get(i);
+            JmrixConfigPane configPane = connectionTabInstance.get(i);
             
             connectionPanel.removeChangeListener(addTabListener);
             connectionPanel.remove(i);  //was x
-            items.remove(JmrixConfigPane.instance(jmrixinstance));
+            items.remove(configPane);
             try{
-                JmrixConfigPane.dispose(jmrixinstance);
+                //JmrixConfigPane.dispose(jmrixinstance);
+                JmrixConfigPane.dispose(configPane);
             } catch (java.lang.NullPointerException ex) {log.error("Caught Null Pointer Exception while removing connection tab"); }
             connectionTabInstance.remove(i);
             if(connectionPanel.getTabCount()==1){

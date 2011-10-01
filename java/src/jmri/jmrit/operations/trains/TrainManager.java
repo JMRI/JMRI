@@ -22,6 +22,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Manages trains.
@@ -32,7 +33,8 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
 	// Train frame attributes
-	private String _sortBy = "";				// Trains frame sort radio button
+	private String _sortBy = "";				// Trains frame sort
+	private int _sortStatus = TableSorter.ASCENDING;	// Trains frame sort status
 	private String _trainAction = TrainsTableFrame.MOVE;	// Trains frame table button action
 	private boolean _buildMessages = true;	// when true, show build messages
 	private boolean _buildReport = false;		// when true, print/preview build reports
@@ -45,7 +47,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private Point _framePosition = new Point();
 	*/
 	// Train frame table column widths (12), starts with Time column and ends with Edit
-	private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 80, 70};
+	private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
 	
 	// Edit Train frame attributes
 	/* all JMRI window position and size are now saved
@@ -155,6 +157,14 @@ public class TrainManager implements java.beans.PropertyChangeListener {
    
     public void setTrainsFrameSortBy(String sortBy){
     	_sortBy = sortBy;
+    }
+    
+    public int getTrainsFrameSortStatus (){
+    	return _sortStatus;
+    }
+   
+    public void setTrainsFrameSortStatus(int status){
+    	_sortStatus = status;
     }
     
     public String getTrainsFrameTrainAction (){
@@ -616,7 +626,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * copied.
      * @param train the train to copy
      * @param trainName the name of the new train
-     * @return
+     * @return a copy of train
      */
     public Train copyTrain(Train train, String trainName){
     	Train newTrain = newTrain(trainName);
@@ -681,6 +691,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	if (e != null){   		
     		if ((a = e.getAttribute("sortBy")) != null)
     			_sortBy = a.getValue();
+    		if ((a = e.getAttribute("sortStatus")) != null)
+    			_sortStatus = Integer.parseInt(a.getValue());
     		if ((a = e.getAttribute("buildMessages")) != null)
     			_buildMessages = a.getValue().equals("true");
     		if ((a = e.getAttribute("buildReport")) != null)
@@ -804,6 +816,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	Element values = new Element("options");
         Element e = new Element("trainOptions");
         e.setAttribute("sortBy", getTrainsFrameSortBy());
+        e.setAttribute("sortStatus", Integer.toString(getTrainsFrameSortStatus()));
         e.setAttribute("buildMessages", isBuildMessagesEnabled()?"true":"false");
         e.setAttribute("buildReport", isBuildReportEnabled()?"true":"false");
         e.setAttribute("printPreview", isPrintPreviewEnabled()?"true":"false");

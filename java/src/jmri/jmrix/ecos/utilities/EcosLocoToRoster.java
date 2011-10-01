@@ -90,8 +90,8 @@ public class EcosLocoToRoster implements EcosListener {
         //String strde;
         String msg = m.toString();
         String[] lines = msg.split("\n");
-        if (lines[lines.length-1].contains("<END 0 (OK)>")){
-                if (lines[0].startsWith("<REPLY get(")){
+        if (m.getResultCode()==0){
+            if (lines[0].startsWith("<REPLY get("+_ecosObject+", cv[")){
                 startval=lines[0].indexOf("(")+1;
                 endval=(lines[0].substring(startval)).indexOf(",")+startval;
                 //The first part of the messages is always the object id.
@@ -109,6 +109,64 @@ public class EcosLocoToRoster implements EcosListener {
                         }
                      }
                 }
+            } else if (lines[0].startsWith("<REPLY get("+_ecosObject+", funcdesc")){
+                startval = lines[1].indexOf("[")+1;
+                endval = (lines[1].substring(startval)).indexOf(",")+startval;
+                boolean moment = true;
+                int functNo = Integer.parseInt(lines[1].substring(startval, endval));
+                startval = endval + 1;
+                endval = (lines[1].substring(startval)).indexOf(",")+startval;
+                if(endval == -1){
+                    endval = (lines[1].substring(startval)).indexOf("]")+startval;
+                    moment = false;
+                }
+                if(lines[1].contains("moment"))
+                    moment=true;
+                int functDesc = Integer.parseInt(lines[1].substring(startval, endval));
+                
+                String functionLabel = "";
+                switch(functDesc){
+                //Default descriptions for ESU function icons
+                   case 2: functionLabel = "function"; break;
+                   case 3: functionLabel = "light"; break;
+                   case 4: functionLabel = "light_0"; break;
+                   case 5: functionLabel = "light_1"; break;
+                   case 7: functionLabel = "sound"; break;
+                   case 8: functionLabel = "music"; break;
+                   case 9: functionLabel = "announce"; break;
+                   case 10: functionLabel = "routing_speed"; break;
+                   case 11: functionLabel = "abv"; break;
+                   case 32: functionLabel = "coupler"; break;
+                   case 33: functionLabel = "steam"; break;
+                   case 34: functionLabel = "panto"; break;
+                   case 35: functionLabel = "highbeam"; break;
+                   case 36: functionLabel = "bell"; break;
+                   case 37: functionLabel = "horn"; break;
+                   case 38: functionLabel = "whistle"; break;
+                   case 39: functionLabel = "door_sound"; break;
+                   case 40: functionLabel = "fan"; break;
+                   case 42: functionLabel = "shovel_work_sound"; break;
+                   case 44: functionLabel = "shift"; break;
+                   case 260: functionLabel = "interior_lighting"; break;
+                   case 261: functionLabel = "plate_light"; break;
+                   case 263: functionLabel = "brakesound"; break;
+                   case 299: functionLabel = "crane_raise_lower"; break;
+                   case 555: functionLabel = "hook_up_down"; break;
+                   case 773: functionLabel = "wheel_light"; break;
+                   case 811: functionLabel = "turn"; break;
+                   case 1031: functionLabel = "steam-blow"; break;
+                   case 1033: functionLabel = "radio_sound"; break;
+                   case 1287: functionLabel = "coupler_sound"; break;
+                   case 1543: functionLabel = "track_sound"; break;
+                   case 1607: functionLabel = "notch_up"; break;
+                   case 1608: functionLabel = "notch_down"; break;
+                   case 2055: functionLabel = "thunderer_whistle"; break;
+                   case 3847: functionLabel = "buffer_sound"; break;
+                }
+                
+                re.setFunctionLabel(functNo, functionLabel);
+                re.setFunctionLockable(functNo, !moment);
+                getFunctionDetails(functNo+1);
             }
         }
     }
@@ -247,6 +305,7 @@ public class EcosLocoToRoster implements EcosListener {
             variableModel.findVar("Speed Step Mode").setIntValue(1);
         
         re.writeFile(cvModel, iCvModel, variableModel );
+        getFunctionDetails(0);
         JOptionPane.showMessageDialog(frame, "Loco Added to the JMRI Roster");
     }
     
@@ -408,23 +467,6 @@ public class EcosLocoToRoster implements EcosListener {
         this.selectDecoder(ecosLoco.getCV8(), ecosLoco.getCV7());
         return pane1a;
     }
-    /*JToggleButton addDecoderIdentButton() {
-        JToggleButton iddecoder = new JToggleButton("ButtonReadType");
-        iddecoder.setToolTipText("TipSelectType");
-            if (jmri.InstanceManager.programmerManagerInstance()!= null
-                    && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer()!=null
-                    && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
-            // can't read, disable the button
-            iddecoder.setEnabled(false);
-            iddecoder.setToolTipText("TipNoRead");
-        }
-        iddecoder.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                        //startIdentifyDecoder();
-                }
-        });
-        return iddecoder;
-    }*/
         // from http://www.codeguru.com/java/articles/143.shtml
     static class DecoderTreeNode extends DefaultMutableTreeNode {
         private String toolTipText;
@@ -625,6 +667,17 @@ public class EcosLocoToRoster implements EcosListener {
             log.error("xml file top element is not programmer");
             return;
         }
+    }
+    
+    boolean getFunctionSupported = true;
+    
+    void getFunctionDetails(int func){
+        //Only gets information for function numbers upto 28
+        if(func>=29)
+            return;
+        String message = "get("+_ecosObject+", funcdesc["+ func +"])";
+        EcosMessage m = new EcosMessage(message);
+        adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoToRoster.class.getName());

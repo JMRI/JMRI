@@ -807,8 +807,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     }
                     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
                     }
-                });
-
+            });
         } else {
             log.debug("process active throttle");
             // set speed, etc, as needed
@@ -1034,7 +1033,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
                                     t.getF12() ? "true" : "false"
                                 ));
             }
-            
+            // The speedStepMode is sent every time since a XMLIO client may
+            // reuse an existing throttle context and not be aware of the mode
+            // if the mode is only sent when the throttle context is created.
+            // This will only be sent as an attribute of a throttle element
+            // to prevent clients that don't know what to do with unknown
+            // elements from crashing.
+            item.setAttribute("SSM", Integer.toString(t.getSpeedStepMode()));
         }
     }
 

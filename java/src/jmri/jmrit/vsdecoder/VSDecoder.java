@@ -26,6 +26,10 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import jmri.util.PhysicalLocation;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.locations.Location;
 
 import org.jdom.Element;
 
@@ -41,6 +45,8 @@ public class VSDecoder implements PropertyChangeListener {
     private boolean is_default = false;  // This decoder is the default for its file
 
     private float master_volume;
+
+    private PhysicalLocation my_position;
 
     HashMap<String, VSDSound> sound_list;   // list of sounds
     HashMap<String, Trigger> trigger_list;  // list of triggers
@@ -194,6 +200,17 @@ public class VSDecoder implements PropertyChangeListener {
 	}
     }
 
+    public void setPosition(PhysicalLocation p) {
+	my_position = p;
+	for (VSDSound s : sound_list.values()) {
+	    s.setPosition(p);
+	}
+    }
+
+    public PhysicalLocation getPosition() {
+	return(my_position);
+    }
+
     public void propertyChange(PropertyChangeEvent evt) {
 	// Respond to events from the GUI.
 	String property = evt.getPropertyName();
@@ -208,7 +225,49 @@ public class VSDecoder implements PropertyChangeListener {
 	    log.debug("VSD: Volume change. value = " + evt.getNewValue());
 	    // Slider gives integer 0-100.  Need to change that to a float 0.0-1.0
 	    this.setMasterVolume((1.0f * (Integer)evt.getNewValue())/100.0f);
+	} else if (property.equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+	    PhysicalLocation p = getTrainPosition((Train)evt.getSource());
+	    if (p != null)
+		this.setPosition(getTrainPosition((Train)evt.getSource()));
+	    else {
+		log.debug("Train has null position");
+		this.setPosition(new PhysicalLocation());
+	    }
+	} else if (property.equals(Train.STATUS_CHANGED_PROPERTY))  {
+	    String status = (String)evt.getNewValue();
+	    log.debug("Train status changed: " + status);
+	    log.debug("New Location: " + getTrainPosition((Train)evt.getSource()));
+	    if ((status.startsWith(Train.BUILT)) || (status.startsWith(Train.PARTIALBUILT))){ 
+		log.debug("Train built. status = " + status);
+		PhysicalLocation p = getTrainPosition((Train)evt.getSource());
+		if (p != null)
+		    this.setPosition(getTrainPosition((Train)evt.getSource()));
+		else {
+		    log.debug("Train has null position");
+		    this.setPosition(new PhysicalLocation());
+		}
+	    }
 	}
+    }
+
+    // Take a train and get its physical position
+    // Returns null if anything is undefined.
+    protected PhysicalLocation getTrainPosition(Train t) {
+	if (t == null) {
+	    log.debug("Train is null.");
+	    return(null);
+	}
+	RouteLocation rloc = t.getCurrentLocation();
+	if (rloc == null) {
+	    log.debug("RouteLocation is null.");
+	    return(null);
+	}
+	Location loc = rloc.getLocation();
+	if (loc == null) {
+	    log.debug("Location is null.");
+	    return(null);
+	}
+	return(loc.getPhysicalLocation());
     }
 
     public VSDSound getSound(String name) {
@@ -321,7 +380,7 @@ public class VSDecoder implements PropertyChangeListener {
     public void setXml(VSDFile vf) { }
     */
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "cast"})
     public void setXml(VSDFile vf, String pn) {
 	Iterator<Element> itr;
 	Element e = null;
@@ -374,7 +433,7 @@ public class VSDecoder implements PropertyChangeListener {
 	itr = (e.getChildren()).iterator();
 	while(itr.hasNext()) {
 	    // Pull each element from the XML file.
-	    el = (Element)itr.next();
+	    el = itr.next();
 	    log.debug("Element: " + el.toString());
 	    if (el.getAttribute("name") != null) {
 		log.debug("  Name: " + el.getAttributeValue("name"));

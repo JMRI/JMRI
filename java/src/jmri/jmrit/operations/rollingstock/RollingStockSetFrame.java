@@ -484,6 +484,14 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						&& !trackDestinationBox.getSelectedItem().equals("")){
 					destTrack = (Track)trackDestinationBox.getSelectedItem();
 				}
+				if (destTrack != null && rs.getDestinationTrack() != destTrack && destTrack.getLocType().equals(Track.STAGING)){
+					log.debug ("Destination track ("+destTrack.getName()+") is staging");
+					JOptionPane.showMessageDialog(this,
+							getRb().getString("rsDoNotSelectStaging"),
+							getRb().getString("rsCanNotDest"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}	
 				String status = rs.setDestination((Location) destinationBox.getSelectedItem(), destTrack);
 				if (!status.equals(Track.OKAY)){
 					log.debug ("Can't set rs's destination because of "+ status);
@@ -492,7 +500,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 							getRb().getString("rsCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return false;
-				}
+				}	
 			}
 		}
 		return true;

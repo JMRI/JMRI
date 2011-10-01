@@ -8,6 +8,7 @@ import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.JmriJFrame;
@@ -45,8 +46,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     boolean onMac = (System.getProperty("mrj.version") != null);
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                                                    justification="only one application at a time")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD","SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
     public Apps(JFrame frame) {
 
         super(true);
@@ -122,7 +122,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             file = new File(configFilename);
         }
         cm.setPrefsLocation(file);
-        
         // load config file if it exists
         if (file.exists()) {
             log.debug("start load config file");
@@ -205,7 +204,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         } else {
             configDeferredLoadOK = false;
         }
-
+        
         /*Once all the preferences have been loaded we can initial the preferences
         doing it in a thread at this stage means we can let it work in the background*/
         Runnable r = new Runnable() {
@@ -213,12 +212,24 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             try {
                  jmri.InstanceManager.tabbedPreferencesInstance().init();
             } catch (Exception ex) {
-                log.error(ex.toString());
+                log.error("Error in trying to setup preferences " + ex.toString());
             }
           }
         };
         Thread thr = new Thread(r);
         thr.start();
+        //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
+        r = new Runnable() {
+          public void run() {
+            try {
+                DecoderIndexFile.instance();
+            } catch (Exception ex) {
+                log.error("Error in trying to setup preferences " + ex.toString());
+            }
+          }
+        };
+        Thread thr2 = new Thread(r);
+        thr2.start();
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+(configOK||configDeferredLoadOK));
         if (!configOK||!configDeferredLoadOK) {
@@ -231,10 +242,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
         add(_jynstrumentSpace);
-        log.debug("End constructor");
-        
-    }
 
+        log.debug("End constructor");
+    }
+    
     private boolean doDeferredLoad(File file) {
         boolean result;
         log.debug("start deferred load from config");
@@ -602,9 +613,17 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // add listerner for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 0)!=null)
         buildLine4(pane2);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 1)!=null)
         buildLine5(pane2);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 2)!=null)
         buildLine6(pane2);
+        if (InstanceManager.configureManagerInstance()
+                        .findInstance(jmri.jmrix.ConnectionConfig.class, 3)!=null)
         buildLine7(pane2);
 
         pane2.add(new JLabel(line8()));

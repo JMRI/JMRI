@@ -85,7 +85,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
         public void reply(JMRIClientReply m) {
                String message=m.toString();
                log.debug("Message Received: " +m);
-               if(!message.contains(getSystemName())) return; // not for us
+               if(!message.contains(getSystemName()+" ")) return; // not for us
 
                if(m.toString().contains("INACTIVE"))
                   setOwnState(!getInverted()?jmri.Sensor.INACTIVE:jmri.Sensor.ACTIVE);

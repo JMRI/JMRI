@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import jmri.util.PhysicalLocation;
 
 
 // Usage:
@@ -209,6 +210,21 @@ class DieselSound extends EngineSound {
 	
     }
 
+    @Override
+    public void setPosition(PhysicalLocation p) {
+	for (SoundBite ns : notch_sounds.values()) {
+	    ns.setPosition(p);
+	}
+	for (SoundBite nus : notchup_sounds) {
+	    nus.setPosition(p);
+	}
+	for (NotchTransition nt : transition_sounds) {
+	    nt.setPosition(p);
+	}
+	if (notchup_sound != null) notchup_sound.setPosition(p);
+	if (start_sound != null) start_sound.setPosition(p);
+	if (shutdown_sound != null) shutdown_sound.setPosition(p);
+    }
 
     @Override
     public Element getXml() {
@@ -223,7 +239,7 @@ class DieselSound extends EngineSound {
     @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	Element el;
-	int num_notches;
+	//int num_notches;
 	String fn;
 	SoundBite sb;
 
@@ -231,12 +247,14 @@ class DieselSound extends EngineSound {
 	super.setXml(e, vf);
 	
 	log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
+	// Element "notches" is deprecated.  Just ignore it for now.
+	/*
 	String n = e.getChild("notches").getValue();
 	if (n != null) {
 	    num_notches = Integer.parseInt(n);
 	    //log.debug("Number of notches: " + num_notches);
 	}
-
+	*/
 	notch_sounds = new HashMap<Integer, SoundBite>();
 	transition_sounds = new ArrayList<NotchTransition>();
 

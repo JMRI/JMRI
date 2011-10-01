@@ -339,6 +339,7 @@ The Basic Programmer</h4>
           <li>Display Log Categories</li>
           <li>Listed Table Access</li>
           <li>Listed Table Access-Direct to Routes</li>
+	  <li><a href="Main_VSD.shtml">Virtual Sound Decoder</a></li>
           <li>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow">
             <ul>
               <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">

@@ -32,6 +32,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
    public JMRIClientSystemConnectionMemo(){
      super("J","JMRIClient");
+     this.jt=new JMRIClientTrafficController();
      register(); // registers general type
      InstanceManager.store(this,JMRIClientSystemConnectionMemo.class); // also register as specific type
 

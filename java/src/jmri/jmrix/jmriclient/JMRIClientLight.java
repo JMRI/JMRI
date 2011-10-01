@@ -83,7 +83,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
        // to listen for status changes from JMRIClient system
         public synchronized void reply(JMRIClientReply m) {
                String message=m.toString();
-               if(!message.contains(getSystemName())) return; // not for us
+               if(!message.contains(getSystemName()+" ")) return; // not for us
 
                if(m.toString().contains("OFF"))
                   notifyStateChange(mState,jmri.Light.OFF);

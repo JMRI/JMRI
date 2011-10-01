@@ -53,19 +53,9 @@ public class DnDJTable extends JTable implements DropTargetListener,
 
      Point _dropPoint;
      int[] _skipCols = new int[0];
-     TableSorter sorter;
 
      DnDJTable (TableModel model, int[] skipCols) {
          super (model);
-         try {   // following might fail due to a missing method on Mac Classic
-//             TableSorter sorter;
-             sorter = new TableSorter(model);
-             setModel(sorter);
-             sorter.setTableHeader(getTableHeader());
-         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-             log.error("DnDJTable ctor: Unexpected error: "+e);
-         }
-
          this.setTransferHandler(new DnDHandler(this));
          _skipCols = skipCols;
          DragSource dragSource = DragSource.getDefaultDragSource();

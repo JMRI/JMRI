@@ -134,6 +134,7 @@
         <pathelement location="${libdir}/ExternalLinkContentViewerUI.jar" />
         <pathelement location="${libdir}/junit.jar" />
         <pathelement location="${libdir}/jfcunit.jar" />
+        <pathelement location="${libdir}/WinRegistry-4.4.jar" />
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar" />
     </path>
 
@@ -801,7 +802,7 @@
 
     <target name="jar" 
             description="create working jar file with current contents"
-            depends="compile, rmic">
+            depends="debug, rmic">
         <jar jarfile="${jartarget}/jmri.jar" 
             basedir="${target}"
             manifest="java/manifest" 
@@ -980,10 +981,13 @@
     </target>
   
     <!-- dist target forces the jar file to be built without test classes -->
-    <!-- Note production builds should use compile, not debug, prereq  -->
     <target name="dist"
             description="create a distribution jar file" 
-            depends="clean, init, compile, rmic, jar"/>
+            depends="clean, init, debug, rmic, jar"/>
+
+    <target name="dist-debug"
+            description="create a distribution jar file" 
+            depends="clean, init, debug, rmic, jar"/>
         
     <taskdef name="findbugs" 
     classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
@@ -991,7 +995,7 @@
     classpath="${findbugs.home}/lib/findbugs.jar"
     />
         
-    <target name="findbugs" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
                 output="html"
                                                 outputFile="${jartarget}/jmri-fb.html" 
@@ -1002,7 +1006,7 @@
         </findbugs>
     </target>
                  
-    <target name="findbugs-ci" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs-ci" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
                 output="xml:withMessages"
                 outputFile="findbugs.xml" 
@@ -1050,7 +1054,8 @@
 
     <target name="packages" 
             description="create all OS-specific release packages"
-            depends="package-windows, package-macosx, package-linux" />
+            depends="package-windows, package-macosx, package-linux">
+    </target>
 
     <property name="dist.release" value="${dist}/release" />
     <property name="dist.windows" value="${dist}/Windows" />
@@ -1084,7 +1089,9 @@
             <fileset dir="${libdir}/windows" />
         </copy>
         <mkdir dir="${dist.release}" />
-        <exec executable="${nsis.home}makensis" dir="${dist.windows}/JMRI">
+        <exec executable="${nsis.home}makensis" 
+              dir="${dist.windows}/JMRI"
+              failonerror="true">
             <!-- RELEASEDIR below is relative because it's interpreted from the location of 'dir' in this exec -->
             <arg line="-V2 -DJMRI_VER=${release.version-string} -DRELEASEDIR='../../release' InstallJMRI.nsi"/>
         </exec>
@@ -1128,7 +1135,9 @@
             </fileset>
         </chmod>
         <mkdir dir="${dist.release}" />
-        <exec executable="${scriptdir}/diskimage.sh" osFamily="unix">
+        <exec executable="${scriptdir}/diskimage.sh" 
+              osFamily="unix"
+              failonerror="true">
             <!-- ORDER MATTERS HERE -->
             <arg value="${release.version-string}" />
             <arg path="${dist.release}/JMRI.${release.version-string}.dmg" />

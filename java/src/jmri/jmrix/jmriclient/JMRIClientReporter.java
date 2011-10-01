@@ -60,7 +60,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
                String message=m.toString();
                log.debug("Message Received: " +m );
                log.debug("length "+ message.length() );
-               if(!message.contains(getSystemName())) return; // not for us
+               if(!message.contains(getSystemName()+" ")) return; // not for us
 	       else {
 		String text="REPORTER "+ getSystemName() +"\n";
 		 if(!message.equals(text)) {

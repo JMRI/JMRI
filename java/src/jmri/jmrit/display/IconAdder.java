@@ -310,6 +310,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         tableModel.init();
         _pickListModel = tableModel;
         _table = new JTable(tableModel);
+        _pickListModel.makeSorter(_table);
 
         _table.setRowSelectionAllowed(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

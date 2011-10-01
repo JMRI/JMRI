@@ -306,6 +306,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     protected void processModifierElements(Element e, VariableValue v) {
         // currently only looks for one instance and one type
+        @SuppressWarnings("unchecked")
         List<Element> le = e.getChildren("qualifier");
         ArrayList<ValueQualifier> lq = new ArrayList<ValueQualifier>();
         for (Element q : le) {

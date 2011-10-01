@@ -65,7 +65,7 @@ public class RosterGroupsPanel extends JPanel {
      * Property change listeners can listen for property changes with this name
      * from this object to take action when a user selects a roster group.
      */
-    public static String ROSTER_GROUP_SELECTED_EVENT = "RosterGroupSelected";
+    public final static String ROSTER_GROUP_SELECTED_EVENT = "RosterGroupSelected";
     private static int GROUPS_MENU = 1;
     private static int ALL_ENTRIES_MENU = 2;
     private JScrollPane scrollPane;
@@ -626,7 +626,7 @@ public class RosterGroupsPanel extends JPanel {
         }
     }
 
-    public class TreeCellRenderer extends DefaultTreeCellRenderer {
+    static public class TreeCellRenderer extends DefaultTreeCellRenderer {
     }
 
     public class TreeSelectionListener implements javax.swing.event.TreeSelectionListener {
@@ -668,7 +668,7 @@ public class RosterGroupsPanel extends JPanel {
         }
     }
 
-    public class TreeUI extends BasicTreeUI {
+    static public class TreeUI extends BasicTreeUI {
 
         @Override
         public void paint(Graphics g, JComponent c) {

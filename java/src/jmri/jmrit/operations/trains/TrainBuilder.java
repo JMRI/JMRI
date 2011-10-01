@@ -1043,8 +1043,10 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, FIVE, rb.getString("buildOnlyFirst500Cars"));
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null){
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{c.toString(), c.getKernelName()}));
-				if (!c.getKernel().isLead(c)){
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{c.toString(), c.getKernelName(), c.getKernel().getSize()}));
+				if (c.getKernel().isLead(c)){
+					checkKernel(c);
+				} else {
 					carList.remove(c.getId());		// remove this car from the list
 					carIndex--;
 					continue;
@@ -1071,6 +1073,16 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		return;
+	}
+	
+	private void checkKernel(Car car) throws BuildFailedException{
+		List<Car> cars = car.getKernel().getCars();
+		for (int i=0; i<cars.size(); i++){
+			Car c = cars.get(i);
+			if (car.getLocation() != c.getLocation() || car.getTrack() != c.getTrack())
+				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorCarKernelLocation"),
+						new Object[]{c.toString(), car.getKernelName(), car.toString()}));
+		}
 	}
 	
 	boolean multipass = false;
@@ -1194,10 +1206,11 @@ public class TrainBuilder extends TrainCommon{
 				// don't use this location again
 				//rl.setCarMoves(rl.getMaxCarMoves());
 			}
+			if (routeIndex == 0)
+				checkDepartureForStaging();
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
 				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
-		}
-		checkDepartureForStaging();
+		}	
 		return;
 	}
 	

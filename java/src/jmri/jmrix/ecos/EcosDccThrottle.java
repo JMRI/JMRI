@@ -490,7 +490,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                         String result = msg.substring(tmpstart+2, tmpend);
                         if (result.equals("speed")){
                             val = msg.substring(start+1, end);
-                            super.setSpeedSetting(new Float ( floatSpeed(Integer.parseInt(val) ) ));
+                            Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
+                            super.setSpeedSetting(newSpeed);
                         }
                         else if(result.equals("stop")){
                             this.speedSetting = Float.valueOf(0).floatValue();
@@ -533,7 +534,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                         }
                         else if (result.equals("speed")){
                             val = lines[i].substring(start+1, end);
-                            super.setSpeedSetting(new Float ( floatSpeed(Integer.parseInt(val) ) ));
+                            Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
+                            super.setSpeedSetting(newSpeed);
                         }
                         else if(result.equals("dir")){
                             val = (lines[i].substring(start+1, end));

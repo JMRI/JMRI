@@ -90,7 +90,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
        // to listen for status changes from JMRIClient system
         public void reply(JMRIClientReply m) {
                String message=m.toString();
-               if(!message.contains(getSystemName())) return; // not for us
+               if(!message.contains(getSystemName()+ " ")) return; // not for us
 
                if(m.toString().contains("THROWN"))
                   newKnownState(!getInverted()?jmri.Turnout.THROWN:jmri.Turnout.CLOSED);

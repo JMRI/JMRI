@@ -269,6 +269,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocation"), location));
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
+		toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), _location));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);

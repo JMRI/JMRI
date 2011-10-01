@@ -57,6 +57,8 @@ public abstract class AppsBase {
      *<p>
      * Expects initialization from preInit() to already be done.
      */
+     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SC_START_IN_CTOR",
+                                justification="The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public AppsBase() {
         
         if (!log4JSetUp) initLog4J();

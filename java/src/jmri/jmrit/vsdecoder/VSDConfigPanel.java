@@ -128,10 +128,11 @@ public class VSDConfigPanel extends JmriPanel {
     //
     // Respond to a change in the VSDecoderManager's profile list.
     // Event listener on VSDecoderManager's profile list.
+    @SuppressWarnings("unchecked")
     public void handleDecoderListChange(VSDManagerEvent e) {
 	log.warn("Handling the decoder list change");
-	//ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
-	//this.setProfileList(sl);
+	//ArrayList<String> sl = (ArrayList<String>)e.getData();
+	//this.updateProfileList(sl);
 	this.updateProfileList((ArrayList<String>) e.getData());
     }
 
@@ -148,7 +149,7 @@ public class VSDConfigPanel extends JmriPanel {
 
 	Iterator<String> itr = s.iterator();
 	while (itr.hasNext()) {
-	    String st = (String)itr.next();
+	    String st = itr.next();
 	    if (!ce_list.contains(st)) {
 		log.debug("added item " + st);
 		profileComboBox.addItem(st);
@@ -237,13 +238,13 @@ public class VSDConfigPanel extends JmriPanel {
 	
 	rosterPanel = new JPanel();
 	rosterPanel.setLayout(new BoxLayout(rosterPanel, BoxLayout.LINE_AXIS));
-	this.add(rosterPanel, BorderLayout.PAGE_START);
 	profilePanel = new JPanel();
 	profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.LINE_AXIS));
-	this.add(profilePanel, BorderLayout.CENTER);
         addressPanel = new JPanel();
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.LINE_AXIS));
-	this.add(addressPanel, BorderLayout.PAGE_END);
+	this.add(profilePanel, BorderLayout.PAGE_START);
+	this.add(addressPanel, BorderLayout.CENTER);
+	this.add(rosterPanel, BorderLayout.PAGE_END);
 
         //rosterComboBox = new javax.swing.JComboBox();
 	rosterComboBox = Roster.instance().fullRosterComboBox();

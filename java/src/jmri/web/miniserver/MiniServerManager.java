@@ -15,7 +15,10 @@ public class MiniServerManager {
     private MiniServerPreferences MiniServerPreferences = null;
     
     public MiniServerManager() {
-        MiniServerPreferences = new MiniServerPreferences(XmlFile.prefsDir()+ "miniserver" +File.separator+ "MiniServerPreferences.xml");
+        if(jmri.InstanceManager.getDefault(jmri.web.miniserver.MiniServerPreferences.class)==null){
+            jmri.InstanceManager.store(new MiniServerPreferences(XmlFile.prefsDir()+ "miniserver" +File.separator+ "MiniServerPreferences.xml"),jmri.web.miniserver.MiniServerPreferences.class);
+        }
+        MiniServerPreferences = jmri.InstanceManager.getDefault(jmri.web.miniserver.MiniServerPreferences.class);
     }
 
     static private MiniServerManager instance() {

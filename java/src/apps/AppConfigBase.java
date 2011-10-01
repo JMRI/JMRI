@@ -79,34 +79,34 @@ public class AppConfigBase extends JmriPanel {
      * @return true if OK, false if duplicates present.
      */
     private boolean checkDups() {
-    
-        Map<String, List<Integer>> ports = new HashMap<String, List<Integer>>();
-        int maxSize = JmrixConfigPane.getNumberOfInstances();
-        for (int count = 0; count < maxSize; count++) {
-            if (!getDisabled(count)) {
-		        String port = getPort(count);
+        Map<String, List<JmrixConfigPane>> ports = new HashMap<String, List<JmrixConfigPane>>();
+        ArrayList<JmrixConfigPane> configPaneList = JmrixConfigPane.getListOfConfigPanes();
+    	for (int i=0; i<configPaneList.size(); i++){
+            JmrixConfigPane configPane = configPaneList.get(i);
+            if (!configPane.getDisabled()) {
+		        String port = configPane.getCurrentProtocolInfo();
 		        /*We need to test to make sure that the connection port is not set to (none)
 		        If it is set to none, then it is likely a simulator.*/
 		        if(!port.equals(JmrixConfigPane.NONE)){
 		            if (!ports.containsKey(port)){
-		            	List<Integer> arg1 = new ArrayList<Integer>();
-		            	arg1.add(count);
+		            	List<JmrixConfigPane> arg1 = new ArrayList<JmrixConfigPane>();
+		            	arg1.add(configPane);
 						ports.put(port, arg1);
 		            } else {
-		            	ports.get(port).add(count);
+		            	ports.get(port).add(configPane);
 		            }
 		        }
             }
         }
         boolean ret = true;
         /* one or more dups or NONE, lets see if it is dups */
-        for (Map.Entry<String, List<Integer>> e : ports.entrySet()) {
+        for (Map.Entry<String, List<JmrixConfigPane>> e : ports.entrySet()) {
         	if (e.getValue().size() > 1) {
         		/* dup port found */
         		ret = false;
         		StringBuilder nameB = new StringBuilder();
         		for (int n = 0; n < e.getValue().size(); n++) {
-        			nameB.append(getManufacturerName(e.getValue().get(n)));
+                    nameB.append(e.getValue().get(n).getCurrentManufacturerName());
         			nameB.append("|");
         		}
         		String instanceNames = new String(nameB);
@@ -123,9 +123,11 @@ public class AppConfigBase extends JmriPanel {
      * @return true if okay
      */
     private boolean checkPortNames() {
-    	for (int i=0; i<items.size(); i++){
-    		if (getPort(i).equals(JmrixConfigPane.NONE_SELECTED) || getPort(i).equals(JmrixConfigPane.NO_PORTS_FOUND)) {
-    	           if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{getPort(i), getConnection(i)}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION)
+        ArrayList<JmrixConfigPane> configPane = JmrixConfigPane.getListOfConfigPanes();
+    	for (int i=0; i<configPane.size(); i++){
+            String port = configPane.get(i).getCurrentProtocolInfo();
+    		if (port.equals(JmrixConfigPane.NONE_SELECTED) || port.equals(JmrixConfigPane.NO_PORTS_FOUND)) {
+    	           if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{port, configPane.get(i).getCurrentProtocolName()}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION)
     			return false;
     		}
     	}

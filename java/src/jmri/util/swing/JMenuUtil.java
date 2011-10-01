@@ -74,9 +74,9 @@ public class JMenuUtil extends GuiUtilBase {
             
             }
             if(menuItem!=null && child.getChild("mnemonic")!=null){
-                int mnemonic = convertStringToKeyEvent(((Element)child).getChild("mnemonic").getText());
+                int mnemonic = convertStringToKeyEvent(child.getChild("mnemonic").getText());
                 if(mnemonicList.contains(mnemonic)){
-                   log.error("Menu Item '" + menuItem.getLabel() + "' Mnemonic '" + ((Element)child).getChild("mnemonic").getText() + "' has already been assigned");
+                   log.error("Menu Item '" + menuItem.getLabel() + "' Mnemonic '" + child.getChild("mnemonic").getText() + "' has already been assigned");
                 } else {
                     menuItem.setMnemonic(mnemonic);
                     mnemonicList.add(mnemonic);

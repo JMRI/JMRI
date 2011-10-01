@@ -65,6 +65,7 @@
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
+      <show>yellow</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantDanger.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger-sema-h-d.gif</imagelink>
     </appearance>

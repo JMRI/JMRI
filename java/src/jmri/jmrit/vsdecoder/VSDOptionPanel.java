@@ -22,11 +22,18 @@ package jmri.jmrit.vsdecoder;
 import javax.swing.*;
 import java.awt.*;
 import jmri.util.swing.*;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.Train;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class VSDOptionPanel extends JmriPanel {
 
     private javax.swing.JComboBox hornOptionComboBox;
+    private javax.swing.JComboBox opsTrainComboBox;
+
+    private Train selected_train;
 
     String decoder_id;
     VSDecoderPane main_frame;
@@ -39,6 +46,7 @@ public class VSDOptionPanel extends JmriPanel {
 	super();
 	decoder_id = dec;
 	main_frame = dad;
+	selected_train = null;
 	initComponents();
     }
 
@@ -54,9 +62,20 @@ public class VSDOptionPanel extends JmriPanel {
 
 	this.setLayout(new GridLayout(0,2));
 
+	JLabel x = new JLabel();
+	x.setText("Operations Train: ");
+	this.add(x);
+	opsTrainComboBox = TrainManager.instance().getComboBox();
+	this.add(opsTrainComboBox);
+	opsTrainComboBox.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    opsTrainSelectAction(e);
+		}
+	    });
+
 	hornOptionComboBox = new javax.swing.JComboBox();
 	hornOptionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "3-Chime Leslie", "5-Chime Leslie", "4-Chime Nathan" }));
-	JLabel x = new JLabel();
+	x = new JLabel();
 	x.setText("Horn Option: ");
 	this.add(x);
 	this.add(hornOptionComboBox);
@@ -66,6 +85,17 @@ public class VSDOptionPanel extends JmriPanel {
 	JComboBox y = new javax.swing.JComboBox();
 	y.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Non-Turbo", "Turbo" }));
 	this.add(y);
+    }
+
+    public void opsTrainSelectAction(ActionEvent e) {
+	if (opsTrainComboBox.getSelectedItem() != null) {
+	    if (selected_train != null) {
+		selected_train.removePropertyChangeListener(main_frame.getDecoder());
+	    }
+	    String opsTrain = opsTrainComboBox.getSelectedItem().toString();
+	    if ((selected_train = TrainManager.instance().getTrainByName(opsTrain)) != null)
+		selected_train.addPropertyChangeListener(main_frame.getDecoder());
+	}
     }
 
     // Unused as yet.  Commented out to hide the compiler warning.

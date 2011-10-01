@@ -43,7 +43,7 @@ public class WiThrottlePrefsPanel extends JPanel{
     JButton saveB;
     JButton cancelB;
 
-    WiThrottlePreferences localPrefs = new WiThrottlePreferences();
+    WiThrottlePreferences localPrefs;
     JFrame parentFrame = null;
     boolean enableSave;
 

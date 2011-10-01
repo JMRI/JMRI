@@ -43,12 +43,13 @@ public class TrainIcon extends LocoIcon {
      */
 	public boolean showPopUp(JPopupMenu popup) {
 		if (train != null){
-			popup.add(new AbstractAction("Move") {
+			popup.add(new AbstractAction(rb.getString("Move")) {
 				public void actionPerformed(ActionEvent e) {
 					train.move();
 				}
 			});
 			popup.add(makeTrainRouteMenu()); 
+			popup.add(new TrainConductorAction(rb.getString("TitleTrainConductor"), train));
             if (!isEditable()) {
                 popup.add(new AbstractAction("Set X&Y") {
                     public void actionPerformed(ActionEvent e) {

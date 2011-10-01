@@ -23,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import jmri.jmrit.XmlFile;
+import java.io.File;
 
 public class MiniServerPrefsPanel extends JPanel{
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.miniserver.MiniServerBundle");
@@ -38,13 +40,17 @@ public class MiniServerPrefsPanel extends JPanel{
     JButton saveB;
     JButton cancelB;
 
-    MiniServerPreferences localPrefs = new MiniServerPreferences();
+    MiniServerPreferences localPrefs;
     JFrame parentFrame = null;
     boolean enableSave;
 
     public MiniServerPrefsPanel(){
+        if(jmri.InstanceManager.getDefault(jmri.web.miniserver.MiniServerPreferences.class)==null){
+            jmri.InstanceManager.store(new MiniServerPreferences(XmlFile.prefsDir()+ "miniserver" +File.separator+ "MiniServerPreferences.xml"),jmri.web.miniserver.MiniServerPreferences.class);
+        }
+        localPrefs = jmri.InstanceManager.getDefault(jmri.web.miniserver.MiniServerPreferences.class);
         //  set local prefs to match instance prefs
-        localPrefs.apply(MiniServerManager.miniServerPreferencesInstance());
+        //localPrefs.apply(MiniServerManager.miniServerPreferencesInstance());
         initGUI();
         setGUI();
     }

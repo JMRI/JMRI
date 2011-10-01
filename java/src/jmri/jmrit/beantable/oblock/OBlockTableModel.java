@@ -112,25 +112,21 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     public int getRowCount () {
         return super.getRowCount() + 1;
     }
+    
+    /** override
+     * @see jmri.jmrit.picker.PickListModel#getBeanAt(int)
+     * TableSorter uses this call
+     */
+    public NamedBean getBeanAt(int index) {
+    	if (index >=_pickList.size()) {
+    		return null;
+    	}
+       return _pickList.get(index);
+    }
 
     String _saveBlockName;
     public Object getValueAt(int row, int col) 
     {
-/*        if (super.getRowCount() <= row) {
-            if (_saveBlockName!=null && _parent.getBlockTablePane()!=null) {
-                //String sysName = tempRow[SYSNAMECOL];
-                if (!_saveBlockName.startsWith("OB")) {
-                    _saveBlockName = "OB"+_saveBlockName;
-                }
-                OBlock b = manager.provideOBlock(_saveBlockName.toUpperCase());
-                if (b!=null) {
-                    int idx =  getIndexOf(b);
-                    _parent.getBlockTablePane().getVerticalScrollBar().setValue(idx*TableFrames.ROW_HEIGHT);
-                    _saveBlockName = null;
-                }
-            }
-            return tempRow[col];
-        }*/
         OBlock b = (OBlock)getBeanAt(row);
         if (b == null) {
             if (_saveBlockName!=null && _parent.getBlockTablePane()!=null) {
@@ -260,7 +256,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
             }
             return;
         }
-        OBlock block = (OBlock)super.getBeanAt(row);
+        OBlock block = (OBlock)getBeanAt(row);
         switch (col) {
             case USERNAMECOL:
                 OBlock b = manager.provideOBlock((String)value);

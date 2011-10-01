@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import java.lang.Math;
+import jmri.util.PhysicalLocation;
 
 
 // Usage:
@@ -197,6 +198,13 @@ class SteamSound extends EngineSound {
 	}
     }
 
+    @Override
+    public void setPosition(PhysicalLocation p) {
+	for (RPMSound rps : rpm_sounds) {
+	    rps.sound.setPosition(p);
+	}
+    }
+
     public Element getXml() {
 	// OUT OF DATE
 	return(super.getXml());
@@ -206,7 +214,7 @@ class SteamSound extends EngineSound {
     @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	Element el;
-	int num_rpms;
+	//int num_rpms;
 	String fn;
 	SoundBite sb;
 
@@ -228,11 +236,14 @@ class SteamSound extends EngineSound {
 	    num_cylinders = Integer.parseInt(n);
 	    //log.debug("Num Cylinders: " + num_cylinders);
 	}
+	// For now, num_rpms is not used.  
+	/*
 	n = e.getChild("rpm-steps").getValue();
 	if (n != null) {
 	    num_rpms = Integer.parseInt(n);
 	    //log.debug("Number of rpm steps: " + num_rpms);
 	}
+	*/
 
 	
 
@@ -255,7 +266,7 @@ class SteamSound extends EngineSound {
 	    boolean chuff = false;
 	    Element c;
 	    if ((c = el.getChild("use-chuff-gen")) != null) {
-		log.debug("Use Chuff Generator");
+		log.debug("Use Chuff Generator " + c.toString());
 		chuff = true;
 	    }
 

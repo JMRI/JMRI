@@ -89,6 +89,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return DELETED;
 	}
 	
+	public Location getLocation(){
+		return _location;
+	}
+	
 	public int getSequenceId(){
 		return _sequenceId;
 	}

@@ -2,8 +2,11 @@
 
 package jmri.jmrit.operations.trains;
 
+import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.MessageFormat;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -91,6 +94,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	
 		if (_sort == SORTBYID)
 			sysList = manager.getTrainsByIdList();
+		else
+			sysList = manager.getTrainsByNameList();
+		/*
 		else if (_sort == SORTBYNAME)
 			sysList = manager.getTrainsByNameList();
 		else if (_sort == SORTBYTIME)
@@ -103,6 +109,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			sysList = manager.getTrainsByRouteList();
 		else if (_sort == SORTBYSTATUS)
 			sysList = manager.getTrainsByStatusList();
+			*/
 		
 		if (!_showAll){
 			// filter out trains not checked
@@ -117,10 +124,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		// and add listeners back in
 		addPropertyChangeTrains();
 	}
-    
-    public synchronized List<String> getSelectedTrainList(){
-		return sysList;
-    }
 
 	List<String> sysList = null;
 	JTable table = null;
@@ -152,24 +155,36 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public synchronized int getRowCount() { return sysList.size(); }
 
     public int getColumnCount( ){ return HIGHESTCOLUMN;}
+    
+    public static final String IDCOLUMNNAME = rb.getString("Id");
+    public static final String TIMECOLUMNNAME = rb.getString("Time");
+    public static final String BUILDCOLUMNNAME = rb.getString("Build");
+    public static final String NAMECOLUMNNAME = rb.getString("Name");
+    public static final String DESCRIPTIONCOLUMNNAME = rb.getString("Description");
+    public static final String ROUTECOLUMNNAME = rb.getString("Route");
+    public static final String DEPARTSCOLUMNNAME = rb.getString("Departs");
+    public static final String CURRENTCOLUMNNAME = rb.getString("Current");
+    public static final String TERMINATESCOLUMNNAME = rb.getString("Terminates");
+    public static final String STATUSCOLUMNNAME = rb.getString("Status");
+    public static final String ACTIONCOLUMNNAME = rb.getString("Action");
 
     public String getColumnName(int col) {
         switch (col) {
         case IDCOLUMN: synchronized(this){
         	if (_sort == SORTBYID)
-        		return rb.getString("Id");
-        	return rb.getString("Time");
+        		return IDCOLUMNNAME;
+        	return TIMECOLUMNNAME;
         }
-        case BUILDBOXCOLUMN: return rb.getString("Build");
+        case BUILDBOXCOLUMN: return BUILDCOLUMNNAME;
         case BUILDCOLUMN: return "";
-        case NAMECOLUMN: return rb.getString("Name");
-        case DESCRIPTIONCOLUMN: return rb.getString("Description");
-        case ROUTECOLUMN: return rb.getString("Route");
-        case DEPARTSCOLUMN: return rb.getString("Departs");
-        case CURRENTCOLUMN: return rb.getString("Current");
-        case TERMINATESCOLUMN: return rb.getString("Terminates");
-        case STATUSCOLUMN: return rb.getString("Status");
-        case ACTIONCOLUMN: return rb.getString("Action");
+        case NAMECOLUMN: return NAMECOLUMNNAME;
+        case DESCRIPTIONCOLUMN: return DESCRIPTIONCOLUMNNAME;
+        case ROUTECOLUMN: return ROUTECOLUMNNAME;
+        case DEPARTSCOLUMN: return DEPARTSCOLUMNNAME;
+        case CURRENTCOLUMN: return CURRENTCOLUMNNAME;
+        case TERMINATESCOLUMN: return TERMINATESCOLUMNNAME;
+        case STATUSCOLUMN: return STATUSCOLUMNNAME;
+        case ACTIONCOLUMN: return ACTIONCOLUMNNAME;
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -297,25 +312,48 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      	}
     }
     
-    // one of three buttons, report, move, terminate
+    // one of four buttons: Report, Move, Conductor or Terminate
     private synchronized void actionTrain (int row){
     	Train train = manager.getTrainById(sysList.get(row));
-    	// move button become report if failure
+    	// move button becomes report if failure
     	if (train.getBuildFailed()){
     		train.printBuildReport();
+    	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)){
+    		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
+			if(!train.reset())			
+				JOptionPane.showMessageDialog(null,
+						MessageFormat.format(rb.getString("TrainIsInRoute"),new Object[] {train.getTrainTerminatesName()}), rb.getString("CanNotResetTrain"),
+						JOptionPane.ERROR_MESSAGE);
+    	} else if (!train.isBuilt()){
+			JOptionPane.showMessageDialog(null, 
+					MessageFormat.format(rb.getString("TrainNeedsBuild"),new Object[] { train.getName() }), 
+					rb.getString("CanNotPerformAction"), JOptionPane.INFORMATION_MESSAGE);
     	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
        		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
      		train.move();
     	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)){
        		if (log.isDebugEnabled()) log.debug("Terminate train ("+train.getName()+")");
 			int status = JOptionPane.showConfirmDialog(null,
-					"Terminate Train ("+train.getName()+") "+train.getDescription()+"?",
-					"Do you want to terminate train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);
+					MessageFormat.format(rb.getString("TerminateTrain"),new Object[]{train.getName(), train.getDescription()}),
+					MessageFormat.format(rb.getString("DoYouWantToTermiate"),new Object[]{train.getName()}), JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION)
 				train.terminate();
-    	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)){
-       		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
-       		train.reset();
+    	} else if (train.isBuilt() && manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)){
+    		if (log.isDebugEnabled()) log.debug("Enable conductor for train ("+train.getName()+")");
+    		lauchConductor(train);
+    	}
+    }
+    
+    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<String, TrainConductorFrame>();
+    private void lauchConductor(Train train){
+    	TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
+       	// create a copy train frame
+    	if (f == null || !f.isVisible()) {
+    		f = new TrainConductorFrame();
+    		f.initComponents(train);
+    		_trainConductorHashTable.put(train.getId(), f);
+    	} else {
+    		f.setExtendedState(Frame.NORMAL); 
     	}
     }
 
