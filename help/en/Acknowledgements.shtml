@@ -141,6 +141,7 @@
 	    created a script tool for setting Zimo function options,
 	    designed the DecoderPro3 GUI,
 	    and created a DCC Concepts decoder definition.
+    <li>John Clutterbuck helped with Fleischman decoder definitions
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
