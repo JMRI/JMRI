@@ -73,12 +73,12 @@ Second, we build the release branch:
     and update to get the release copy:
     
     cd ../../branches/jmri/releases
-    svn update 2.13.1
+    svn update 2.13.2
     
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.1")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.2")
 
     ( to merge everything to date: svn merge ^/trunk/jmri )
-    ( to merge a single later change: svn merge -c <changeset#>   ^/trunk/jmri )
+    ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
 
 ================================================================================
 Third, we do any necessary release-specific updates.
