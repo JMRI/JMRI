@@ -157,6 +157,7 @@
 	has generously contributed lots of time for SPROG users,
 	and worked on the CAN and CBUS support
 <a name="D"></A>
+    <LI>Mark Dance provided train order signal icons in resources/icons/smallschematics/trainorder
 	<LI>Mike Davison, who got the Linux serial connection working with Java 1.4, 
 	has helped with the EasyDCC code, helped debug the Ant compilation process,
 	and has been working on decoder files
