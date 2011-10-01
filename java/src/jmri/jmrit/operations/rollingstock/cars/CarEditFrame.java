@@ -242,7 +242,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if(Setup.isValueEnabled()){
 			JPanel pValue = new JPanel();
 			pValue.setLayout(new GridBagLayout());
-			pValue.setBorder(BorderFactory.createTitledBorder(rb.getString("Value")));
+			pValue.setBorder(BorderFactory.createTitledBorder(Setup.getValueLabel()));
 			addItem(pValue, valueTextField, 1, 0);
 			pOptional.add(pValue);
 		}
@@ -251,7 +251,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if(Setup.isRfidEnabled()){
 			JPanel pRfid = new JPanel();
 			pRfid.setLayout(new GridBagLayout());
-			pRfid.setBorder(BorderFactory.createTitledBorder(rb.getString("Rfid")));
+			pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
 			addItem(pRfid, rfidTextField, 1, 0);
 			pOptional.add(pRfid);
 		}

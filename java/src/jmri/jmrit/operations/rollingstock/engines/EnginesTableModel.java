@@ -13,6 +13,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -251,9 +252,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         	else if (showMoveCol == SHOWOWNER)
         		return rb.getString("Owner");
           	else if (showMoveCol == SHOWVALUE)
-        		return rb.getString("Value");
+        		return Setup.getValueLabel();
           	else if (showMoveCol == SHOWRFID)
-        		return rb.getString("Rfid");
+        		return Setup.getRfidLabel();
         	else
         		return rb.getString("Moves");
         }

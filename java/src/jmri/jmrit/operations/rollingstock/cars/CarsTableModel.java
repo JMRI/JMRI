@@ -16,6 +16,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
@@ -322,9 +323,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	else if (showMoveCol == SHOWOWNER)
         		return rb.getString("Owner");
            	else if (showMoveCol == SHOWVALUE)
-        		return rb.getString("Value");
+        		return Setup.getValueLabel();
            	else if (showMoveCol == SHOWRFID)
-        		return rb.getString("Rfid");
+        		return Setup.getRfidLabel();
         	else
         		return rb.getString("Moves");
         }

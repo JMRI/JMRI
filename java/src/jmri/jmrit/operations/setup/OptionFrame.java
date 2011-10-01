@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -56,6 +57,8 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(rb.getString("GenerateCsvSwitchList"));
 	
 	// text field
+	JTextField rfidTextField = new JTextField(10);
+	JTextField valueTextField = new JTextField(10);
 	
 	// combo boxes
 
@@ -82,6 +85,10 @@ public class OptionFrame extends OperationsFrame{
 		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
 		generateCvsSwitchListCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
+		
+		// load text fields
+		rfidTextField.setText(Setup.getRfidLabel());
+		valueTextField.setText(Setup.getValueLabel());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
@@ -140,7 +147,9 @@ public class OptionFrame extends OperationsFrame{
 		addItemLeft (pOption, generateCvsManifestCheckBox, 1,0);
 		addItemLeft (pOption, generateCvsSwitchListCheckBox, 1,1);
 		addItemLeft (pOption, valueCheckBox, 1,2);
+		addItemLeft (pOption, valueTextField, 2,2);
 		addItemLeft (pOption, rfidCheckBox, 1,3);
+		addItemLeft (pOption, rfidTextField, 2,3);
 		
 		// row 11
 		JPanel pControl = new JPanel();
@@ -211,7 +220,9 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
 			Setup.setValueEnabled(valueCheckBox.isSelected());
+			Setup.setValueLabel(valueTextField.getText());
 			Setup.setRfidEnabled(rfidCheckBox.isSelected());
+			Setup.setRfidLabel(rfidTextField.getText());
 			// Logging enabled?		
 			Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
 			Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());

@@ -37,17 +37,19 @@ the most significant in improving the performance of your locomotive fleet.
 
 <p>Let's look first at the top of the pane: You now have the option of using Basic Speed Control (this pane) or Speed Table to control your locomotive's speed.  Which ever one you select last and write to your decoder will be the method used for speed control.  To select this pane:
 <p>Click on the <strong>Use Vstart, Vmid, Vhigh</strong> radio button.
+What appears in the body of this panel is dependent  on what is available from your decoder manufacturer.&nbsp; Most have something similar to what is shown,  but the Soundtraxx Tsunami series is very limited.&nbsp; We&rsquo;ll show you a way around this limitation  when we get to the Speed Table screen.
 <p>Three important CVs are programmed in this pane Vstart, Vmid and Vhigh. They work together to make a very basic three point speed table. On some decoders these settings may be labeled differently and all three may not be available.  Decoder Pro will show the correct options for your selected decoder.  
 <p>
 <b>Vstart</b>(<strong>Start Voltage</strong>) is the voltage at the first speed step. If your locomotive
 didn't start moving until there were three volts on the track with analog
 power, this lets you set up the decoder to give it 2.99 volts right away,
-so it will start moving when you advance the throttle.
+so it will start moving when you advance your DCC throttle.
 <p>
 <b>Vhigh(Top Voltage, Max Voltage, Maximum Voltage)</b> is the maximum amount of power the locomotive will
 get from the decoder. If your locomotive looks like Chuck Yeager's X-1
 at full throttle, then you can trim the top speed down to a more reasonable scale 
 level.
+A similar looking limit can be set on the Roster  Entry screen, but it only apples to JMRI Throttles.
 <p>
 <b>Vmid</b>(<strong>Mid Voltage, Midpoint Voltage) </strong>lets you configure the slope between <b>Vstart</b>
 and <b>Vhigh</b> a bit, so that if your locomotive reaches full speed

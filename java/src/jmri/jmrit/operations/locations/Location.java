@@ -47,7 +47,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected Point _trainIconNorth = new Point();
 	protected Point _trainIconSouth = new Point();
 	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
-        protected PhysicalLocation _physicalLocation = new PhysicalLocation();
+	protected PhysicalLocation _physicalLocation = new PhysicalLocation();
 	
 	// Pool
 	protected int _idPoolNumber = 0;
@@ -109,13 +109,13 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _name;
 	}
 
-        public PhysicalLocation getPhysicalLocation() {
-	    return(_physicalLocation);
-        }
+	public PhysicalLocation getPhysicalLocation() {
+		return(_physicalLocation);
+	}
 
-        public void setPhysicalLocation(PhysicalLocation l) {
-	    _physicalLocation = l;
-        }
+	public void setPhysicalLocation(PhysicalLocation l) {
+		_physicalLocation = l;
+	}
 
 	/**
 	 * Set total length of all tracks for this location
@@ -727,7 +727,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * @param e  Consist XML element
      */
     public Location(Element e) {
-//        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
+    	//if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in location element when reading operations");
@@ -752,18 +752,18 @@ public class Location implements java.beans.PropertyChangeListener {
         	setTrainIconSouth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }      
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-	if ((a = e.getAttribute("physicalLocation")) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());
+        if ((a = e.getAttribute("physicalLocation")) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());
         if ((a = e.getAttribute("carTypes")) != null ) {
         	String names = a.getValue();
-           	String[] Types = names.split("%%");
-//        	if (log.isDebugEnabled()) log.debug("rolling stock types: "+names);
+        	String[] Types = names.split("%%");
+        	//if (log.isDebugEnabled()) log.debug("rolling stock types: "+names);
         	setTypeNames(Types);
         }
         // early version of operations called tracks "secondary"
         if (e.getChildren("secondary") != null) {
         	@SuppressWarnings("unchecked")
             List<Element> l = e.getChildren("secondary");
-            if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
+            //if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
             for (int i=0; i<l.size(); i++) {
                 register(new Track(l.get(i), this));
             }
@@ -820,9 +820,9 @@ public class Location implements java.beans.PropertyChangeListener {
     			buf.append(types[i]+"%%");
         }
         e.setAttribute("carTypes", buf.toString());
-        
-	if (_physicalLocation != null)
-	    e.setAttribute("physicalLocation", _physicalLocation.toString());
+
+        if (_physicalLocation != null)
+        	e.setAttribute("physicalLocation", _physicalLocation.toString());
 
         e.setAttribute("comment", getComment());
         

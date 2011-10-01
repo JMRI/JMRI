@@ -56,7 +56,7 @@
     <td>Sets &quot;virtual&quot; funtion key for software throttle. The &quot;lock&quot; option also needs to be set simultaneously with the &quot;shunt&quot; virtual function key activation. When this Function key is pressed the throttle speed slider on the software throttle changes to &quot;center off&quot; style for shunting, rather than the &quot;full-range with separate direction key&quot;</td>
   </tr>
 </table>
-<p>You may drag and drop icons into the off or on space holder herer or in the Throttle Function pane properties.
+<p>You may drag and drop icons into the off or on space holder here or in the Throttle Function pane properties.
 <p>You  may also edit the function button text in the <strong><a href="Main_Throttle.shtml">JMRI Throttle</a></strong> and save those changes to the selected Roster entry. To use these changed entries in the future, make  sure you click on the
   <input type="submit" name="button" id="button" value="Save to Roster"> 
   to save these values into the Roster entry that is in use.

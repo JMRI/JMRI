@@ -30,17 +30,19 @@
 </div>
 
 <hr>
-<p>The Comprehensive Programmer begins the same way as the Basic Programmer, with  a Programmer Setup Pane and a Roster Pane.  The content  are identical, so they will not be repeated here. Just be sure to select the Comprehensive Programmer in DecoderPro3 decoder information area.
-<p>We have programmed the Zepher in the Basic Programmer, it is on the roster list and has been addressed. If we want to add the extra features of the decoder, we will select the locomotive from the roster list then click on the Comprehensive Programmer button.  Programmer window will open. All programmers, Basic and Comprehensive, open
-  to the Roster Entry pane, which will be similar to that shown below for the Zepher.<h1><img src="images/dp3_roster_list.png" width="900" height="521" alt="list"></h1>
-  <p>The programmer opens at the roster entry page is filled in. Note that there are now a whole lot more TABs at the top of the page, allowing us to program more features.</p>
-  <p align="center"><img src="images/Comp_Roste_02.png" width="900" height="683" alt="roster"></p>
+<p>The Comprehensive Programmer begins the same way as the Basic Programmer, with  a Programmer Setup Pane and a Roster Pane.  The content  are identical, so they will not be repeated here. Just be sure that you select the Comprehensive Programmer in the DecoderPro3 initial screen decoder information area.
+<h1><img src="images/dp3_roster_list.png" width="900" height="521" alt="list"></h1>
+  <p>We have programmed the Zepher in the Basic Programmer, it is on the roster list and has been addressed. If we want to add the extra features of the decoder, we will select the locomotive from the roster list then click on the Comprehensive Programmer button.</p>
+<p>Programmer window will open as shown below. All programmers, Basic and Comprehensive, open
+    to the Roster Entry pane, which will be similar to that shown below for the Zepher.</p>
+  <p>The programmer opens with  the roster entry page filled in because we selected the loco from the roster panel in the previous  screen..  Note that there are now a whole lot more TABs at the top of the page, allowing us to program more features.</p>
+<p align="center"><img src="images/Comp_Roste_02.png" width="900" height="683" alt="roster"></p>
   <p align="center">&nbsp;</p>
 
 <p>
 Note that the <b>Roster</b> pane is essentially unchanged from the <b>Basic</b>
 programmer, but the window has a LOT more options in the <b>Tabs</b>
-at the top! If you are unsure how to handle the <b>Roster</b> information,
+at the top. If you are unsure how to handle the <b>Roster</b> information,
 go back to that section in the <a href="Basic_Programming.shtml#Roster"><strong>Basic
 Programmer</strong></a>. If you're ready to move on to bigger and better things,
 let's go to the next tab, the <a href="Comp_Basic.shtml"><strong>Expanded Basic

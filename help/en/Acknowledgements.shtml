@@ -141,6 +141,7 @@
 	    created a script tool for setting Zimo function options,
 	    designed the DecoderPro3 GUI,
 	    and created a DCC Concepts decoder definition.
+    <li>John Clutterbuck helped with Fleischman decoder definitions
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
@@ -157,6 +158,7 @@
 	has generously contributed lots of time for SPROG users,
 	and worked on the CAN and CBUS support
 <a name="D"></A>
+    <LI>Mark Dance provided train order signal icons in resources/icons/smallschematics/trainorder
 	<LI>Mike Davison, who got the Linux serial connection working with Java 1.4, 
 	has helped with the EasyDCC code, helped debug the Ant compilation process,
 	and has been working on decoder files
@@ -324,8 +326,10 @@
 	has done a lot of work to improve the decoder definitions for NCE, Soundtraxx 
 	and Atlas decoders, provided new definitions for TCS, MRC and (lots of!) QSI 
 	and Zimo decoders; a real hero of decoder definition distinction
-    <li>Gert Muller fixed some issues with international characters
-        and improved the layout of the on-screen throttle when running Linux
+    <li>Gert Muller fixed some issues with international characters,
+        improved the layout of the on-screen throttle when running Linux,
+        added improved alignment options to the PanelEditor,
+        and 
 	<li>Robert Myers provided 
 	<a href="http://jmri.org/install/OLPC_XO.shtml">instructions for installing JMRI on an OLPC XO laptop</a>
 <a name="N"></A>

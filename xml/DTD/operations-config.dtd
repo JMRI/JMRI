@@ -55,7 +55,9 @@
 <!ATTLIST settings showCarLoad			(true | false ) "false">  
 <!ATTLIST settings showCarDestination 	(true | false ) "false">  
 <!ATTLIST settings showValue 			(true | false ) "false">  
-<!ATTLIST settings showRfid 			(true | false ) "false">  
+<!ATTLIST settings showRfid 			(true | false ) "false"> 
+<!ATTLIST settings valueLabel			CDATA #IMPLIED> 
+<!ATTLIST settings rfidLabel			CDATA #IMPLIED> 
 <!ATTLIST settings carRoutingEnabled 	(true | false ) "true"> 
 <!ATTLIST settings carRoutingViaStaging (true | false ) "false">
 <!ATTLIST settings forwardToYard 		(true | false ) "true">

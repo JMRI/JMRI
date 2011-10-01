@@ -932,12 +932,22 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JMenu edit = new JMenu(rb.getString("EditAlignment"));
             edit.add(new AbstractAction(rb.getString("AlignX")) {
                 public void actionPerformed(ActionEvent e) {
-                    alignGroup(true);
+                    alignGroup(true,false);
                 }
             });
             edit.add(new AbstractAction(rb.getString("AlignY")) {
                 public void actionPerformed(ActionEvent e) {
-                    alignGroup(false);
+                    alignGroup(false,false);
+                }
+            });
+            edit.add(new AbstractAction(rb.getString("AlignXFirst")) {
+                public void actionPerformed(ActionEvent e) {
+                    alignGroup(true,true);
+                }
+            });
+            edit.add(new AbstractAction(rb.getString("AlignYFirst")) {
+                public void actionPerformed(ActionEvent e) {
+                    alignGroup(false,true);
                 }
             });
             popup.add(edit);
@@ -2357,23 +2367,38 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected void alignGroup(boolean alignX) {
+    protected void alignGroup(boolean alignX, boolean alignToFirstSelected) {
         if (_selectionGroup==null) {
             return;
         }
         int sum = 0;
         int cnt = 0;
+        int ave = 0;
+        
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable comp = _selectionGroup.get(i);
             if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                sum += comp.getX();
-            } else {
-                sum += comp.getY();
-            }
+            if (alignToFirstSelected) {
+                if (alignX) {
+                        ave = comp.getX();
+                    } else {
+                        ave = comp.getY();
+                    }
+                    break;
+                } else {
+                    if (alignX) {
+                    sum += comp.getX();
+                } else {
+                    sum += comp.getY();
+                }
             cnt++;
+            }
         }
-        int ave = Math.round((float)sum/cnt);
+
+        if (!alignToFirstSelected) {
+            ave = Math.round((float) sum / cnt);
+        }
+
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable comp = _selectionGroup.get(i);
             if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }

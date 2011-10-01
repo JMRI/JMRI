@@ -188,7 +188,9 @@ public class Setup {
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean closeWindowOnSave = false;	//when true, close window when save button is activated
 	private static boolean enableValue = false;			//when true show value fields for rolling stock
+	private static String labelValue = rb.getString("Value");
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
+	private static String labelRfid = rb.getString("RFID");
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full
@@ -259,6 +261,14 @@ public class Setup {
 		enableValue = enabled;
 	}
 	
+	public static String getValueLabel(){
+		return labelValue;
+	}
+	
+	public static void setValueLabel(String label){
+		labelValue = label;
+	}
+	
 	public static boolean isRfidEnabled(){
 		return enableRfid;
 	}
@@ -266,6 +276,15 @@ public class Setup {
 	public static void setRfidEnabled(boolean enabled){
 		enableRfid = enabled;
 	}
+	
+	public static String getRfidLabel(){
+		return labelRfid;
+	}
+	
+	public static void setRfidLabel(String label){
+		labelRfid = label;
+	}
+	
 	
 	public static boolean isCarRoutingEnabled(){
 		return carRoutingEnabled;
@@ -1056,7 +1075,9 @@ public class Setup {
     	values.setAttribute("switchTime", Integer.toString(getSwitchTime()));
     	values.setAttribute("travelTime", Integer.toString(getTravelTime()));
     	values.setAttribute("showValue", isValueEnabled()?"true":"false");
+    	values.setAttribute("valueLabel", getValueLabel());
     	values.setAttribute("showRfid", isRfidEnabled()?"true":"false");
+    	values.setAttribute("rfidLabel", getRfidLabel());
     	values.setAttribute("carRoutingEnabled", isCarRoutingEnabled()?"true":"false");
     	values.setAttribute("carRoutingViaStaging", isCarRoutingViaStagingEnabled()?"true":"false");
     	values.setAttribute("forwardToYard", isForwardToYardEnabled()?"true":"false");
@@ -1266,10 +1287,20 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("showValue: "+enable);
         		setValueEnabled(enable.equals("true"));
         	}
+        	if ((a = operations.getChild("settings").getAttribute("valueLabel"))!= null){
+        		String label = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("valueLabel: "+label);
+        		setValueLabel(label);
+        	}
            	if ((a = operations.getChild("settings").getAttribute("showRfid"))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
         		setRfidEnabled(enable.equals("true"));
+        	}
+           	if ((a = operations.getChild("settings").getAttribute("rfidLabel"))!= null){
+        		String label = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("rfidLabel: "+label);
+        		setRfidLabel(label);
         	}
            	if ((a = operations.getChild("settings").getAttribute("carRoutingEnabled"))!= null){
         		String enable = a.getValue();

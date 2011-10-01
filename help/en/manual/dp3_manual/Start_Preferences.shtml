@@ -45,6 +45,7 @@ run the program.)
   <input type="button" name="button9" id="button9" value="Save">
    to finalize your settings and then re-start the program to have them  take effect.</strong>
 <p>The Preferences window provides  access to the basic  configuration information to connect your computer to your DCC system.&nbsp; You will be using that system to  actually&nbsp; program and operate  trains equipped with DCC decoders. 
+An important concept to keep in mind is that JMRI is  nothing more than a very smart throttle.&nbsp;  If you can do something with your throttle you can probably do it faster  and easier with JMRI.&nbsp; However, if your  system can&rsquo;t do what you want, either because your system is not connected  properly (it&rsquo;s broken) or the system manufacturer did not incorporate that  capability, then JMRI will not be able to do it either.&nbsp; In the latter case JMRI will probably give  you an error message or have the command &ldquo;greyed out&rdquo; to help you identify why  it can&rsquo;t accomplish your request.
 <p>The window is split into two panes, on the left side is a list of   preference groups that may be set. Clicking on one of the items opens   the options that may be set in the right side pane. No selection have been made
 <h1><img src="images/Preferences.png" width="753" height="432" alt="Preferences"></h1>
 
@@ -53,7 +54,7 @@ run the program.)
 <table width="80%" border="1" align="center" cellpadding="1" cellspacing="1" class="BOXIT">
   <tr>
     <td width="22%" align="left" valign="top"><strong><a href="#Connections">Connections</a><a href="#Connectorss"></a></strong></td>
-    <td width="78%" align="left" valign="top">Allows you to select the system connection that you are using for controlling DCC and the connection to your computer.</td>
+    <td width="78%" align="left" valign="top">Allows you to select the system connection that you are using for controlling DCC and the connection to your computer. This is the only required preferences to define your DCC system. The rest of the features are used to customize your specific system.</td>
   </tr>
   <tr>
     <td align="left" valign="top"><strong><a href="#Defaults">Defaults</a></strong></td>

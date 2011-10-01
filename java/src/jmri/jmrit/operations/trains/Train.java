@@ -1622,7 +1622,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void build(){
 		reset();
 		// run any build scripts
-		runScripts();
+		runScripts(getBuildScripts());
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);
 		setPrinted(false);
@@ -1630,19 +1630,19 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Run build scripts, waits for completion before returning.
+	 * Run train scripts, waits for completion before returning.
 	 */
-	private synchronized void runScripts(){
-		// find the number of active threads
-		ThreadGroup root = Thread.currentThread().getThreadGroup();
-		int numberOfThreads = root.activeCount();		
-		for (int i=0; i<getBuildScripts().size(); i++){
-			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getBuildScripts().get(i)));
-		}
-		if (getBuildScripts().size()> 0){
+	private synchronized void runScripts(List<String> scripts) {
+		if (scripts.size() > 0) {
+			// find the number of active threads
+			ThreadGroup root = Thread.currentThread().getThreadGroup();
+			int numberOfThreads = root.activeCount();		
+			for (int i=0; i<scripts.size(); i++) {
+				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scripts.get(i)));
+			}
 			// need to wait for scripts to complete or 2 seconds maximum
 			int count = 0;
-			while (root.activeCount() > numberOfThreads){
+			while (root.activeCount() > numberOfThreads) {
 				synchronized (this) {
 					log.debug("Number of active threads: "+root.activeCount());
 					try {
@@ -1651,7 +1651,7 @@ public class Train implements java.beans.PropertyChangeListener {
 						Thread.currentThread().interrupt(); // retain if needed later
 					}
 					if (count++ > 100)
-						break;
+						break;	// 2 seconds maximum 20*100 = 2000
 				}
 			}
 		}
@@ -1941,17 +1941,13 @@ public class Train implements java.beans.PropertyChangeListener {
 					+" "+getTrainLength()+" "+rb.getString("feet")
 					+", "+getTrainWeight()+" "+rb.getString("tons"));
 			// run move scripts
-			for (int i=0; i<getMoveScripts().size(); i++){
-				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getMoveScripts().get(i)));
-			}
+			runScripts(getMoveScripts());
 		}else{
 			log.debug("Train ("+getName()+")terminated");
 			setStatus(TERMINATED);
 			setBuilt(false);
 			// run termination scripts
-			for (int i=0; i<getTerminationScripts().size(); i++){
-				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getTerminationScripts().get(i)));
-			}
+			runScripts(getTerminationScripts());
 		}
 	}
 	
