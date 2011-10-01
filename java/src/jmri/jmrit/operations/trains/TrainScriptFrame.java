@@ -20,6 +20,7 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.FileUtil;
 
 
 /**
@@ -235,7 +236,7 @@ public class TrainScriptFrame extends OperationsFrame {
 				log.debug("train add build script button actived");
 				File f = selectFile();
 				if (f != null){
-					_train.addBuildScript(f.getAbsolutePath());
+					_train.addBuildScript(FileUtil.getPortableFilename(f));
 					updateBuildScriptPanel();
 					packFrame();
 				}
@@ -244,7 +245,7 @@ public class TrainScriptFrame extends OperationsFrame {
 				log.debug("train add move script button actived");
 				File f = selectFile();
 				if (f != null){
-					_train.addMoveScript(f.getAbsolutePath());
+					_train.addMoveScript(FileUtil.getPortableFilename(f));
 					updateMoveScriptPanel();
 					packFrame();
 				}
@@ -253,7 +254,7 @@ public class TrainScriptFrame extends OperationsFrame {
 				log.debug("train add termination script button actived");
 				File f = selectFile();
 				if (f != null){
-					_train.addTerminationScript(f.getAbsolutePath());
+					_train.addTerminationScript(FileUtil.getPortableFilename(f));
 					updateTerminationScriptPanel();
 					packFrame();
 				}
