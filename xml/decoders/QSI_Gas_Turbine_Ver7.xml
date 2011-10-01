@@ -13,6 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="13" lastUpdated="20110922"/>
+  <version author="Michael Mosher" version="12" lastUpdated="20110708"/>
   <version author="Michael Mosher" version="11" lastUpdated="20101228"/>
   <version author="Michael Mosher" version="10" lastUpdated="20100323"/>
   <version author="Michael Mosher" version="9" lastUpdated="20100115"/>
@@ -36,12 +38,18 @@
 <!-- version 9 - Use nested files & CV 55.PI.15, CV 55.PI.16 & add stobe with bell for ditch lights -->
 <!-- version 10 - Use subversion CV display (Q1a & Q2 have differing subversions) -->
 <!-- version 11 - Add hoot/fancy ending bit to CV55.154.x -->
+<!-- version 12 - add models 5048,5049 -->
+<!-- version 13 - add models 5048,5049 -->
   <decoder>
     <family name="QSI Gas Turbine Ver. 7" mfg="QSIndustries" lowVersionID="7" highVersionID="7">
       <model model="QSI Revolution Turbine" numFns="14" numOuts="0" productID="5050">
       </model>
       <model model="QSI Magnum Turbine" numFns="14" numOuts="0" productID="5000">
       </model>
+      <model model="Q1 Pot" numFns="14" numOuts="0" productID="5048">
+	  </model>
+      <model model="Q1 Reed" numFns="14" numOuts="0" productID="5049">
+	  </model>
       <model model="Lionel Veranda Turbine" numFns="14" numOuts="14" productID="500">
         <output name="1" label="" connection="other"/>
         <output name="2" label="" connection="other"/>
@@ -413,1235 +421,451 @@
         <label>Address Format</label>
       </variable>
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 1</label>
       </variable>
       <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 2</label>
       </variable>
       <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 3</label>
       </variable>
       <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 4</label>
       </variable>
       <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 5</label>
       </variable>
       <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 6</label>
       </variable>
       <variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 7</label>
       </variable>
       <variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 8</label>
       </variable>
       <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 1</label>
       </variable>
       <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 2</label>
       </variable>
       <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 3</label>
       </variable>
       <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 4</label>
       </variable>
       <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 5</label>
       </variable>
       <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 6</label>
       </variable>
       <variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 7</label>
       </variable>
       <variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 8</label>
       </variable>
       <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 1</label>
       </variable>
       <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 2</label>
       </variable>
       <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 3</label>
       </variable>
       <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 4</label>
       </variable>
       <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 5</label>
       </variable>
       <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 6</label>
       </variable>
       <variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 7</label>
       </variable>
       <variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 8</label>
       </variable>
       <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 1</label>
       </variable>
       <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 2</label>
       </variable>
       <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 3</label>
       </variable>
       <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 4</label>
       </variable>
       <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 5</label>
       </variable>
       <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 6</label>
       </variable>
       <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 7</label>
       </variable>
       <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 8</label>
       </variable>
       <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 1</label>
       </variable>
       <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 2</label>
       </variable>
       <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 3</label>
       </variable>
       <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 4</label>
       </variable>
       <variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 5</label>
       </variable>
       <variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 6</label>
       </variable>
       <variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 7</label>
       </variable>
       <variable label="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 8</label>
       </variable>
       <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 4</label>
       </variable>
       <variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 5</label>
       </variable>
       <variable label="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 6</label>
       </variable>
       <variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 7</label>
       </variable>
       <variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 8</label>
       </variable>
       <variable label="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 9</label>
       </variable>
       <variable label="F4 controls output 10" CV="38" mask="XVXXXXXX" minOut="10" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 10</label>
       </variable>
       <variable label="F4 controls output 11" CV="38" mask="VXXXXXXX" minOut="11" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 11</label>
       </variable>
       <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 4</label>
       </variable>
       <variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 5</label>
       </variable>
       <variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 6</label>
       </variable>
       <variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 7</label>
       </variable>
       <variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 8</label>
       </variable>
       <variable label="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 9</label>
       </variable>
       <variable label="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 10</label>
       </variable>
       <variable label="F5 controls output 11" CV="39" mask="VXXXXXXX" minOut="11" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 11</label>
       </variable>
       <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 4</label>
       </variable>
       <variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 5</label>
       </variable>
       <variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 6</label>
       </variable>
       <variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 7</label>
       </variable>
       <variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 8</label>
       </variable>
       <variable label="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 9</label>
       </variable>
       <variable label="F6 controls output 10" CV="40" mask="XVXXXXXX" minOut="10" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 10</label>
       </variable>
       <variable label="F6 controls output 11" CV="40" mask="VXXXXXXX" minOut="11" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 11</label>
       </variable>
       <variable label="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 4</label>
       </variable>
       <variable label="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 5</label>
       </variable>
       <variable label="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 6</label>
       </variable>
       <variable label="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 7</label>
       </variable>
       <variable label="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 8</label>
       </variable>
       <variable label="F7 controls output 9" CV="41" mask="XXVXXXXX" minOut="9" minFn="7" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 9</label>
       </variable>
       <variable label="F7 controls output 10" CV="41" mask="XVXXXXXX" minOut="10" minFn="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 10</label>
       </variable>
       <variable label="F7 controls output 11" CV="41" mask="VXXXXXXX" minOut="11" minFn="7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 11</label>
       </variable>
       <variable label="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 4</label>
       </variable>
       <variable label="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 5</label>
       </variable>
       <variable label="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 6</label>
       </variable>
       <variable label="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 7</label>
       </variable>
       <variable label="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 8</label>
       </variable>
       <variable label="F8 controls output 9" CV="42" mask="XXVXXXXX" minOut="9" minFn="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 9</label>
       </variable>
       <variable label="F8 controls output 10" CV="42" mask="XVXXXXXX" minOut="10" minFn="8" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 10</label>
       </variable>
       <variable label="F8 controls output 11" CV="42" mask="VXXXXXXX" minOut="11" minFn="8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 11</label>
       </variable>
       <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 7</label>
       </variable>
       <variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 8</label>
       </variable>
       <variable label="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 9</label>
       </variable>
       <variable label="F9 controls output 10" CV="43" mask="XXXXVXXX" minOut="10" minFn="9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 10</label>
       </variable>
       <variable label="F9 controls output 11" CV="43" mask="XXXVXXXX" minOut="11" minFn="9" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 11</label>
       </variable>
       <variable label="F9 controls output 12" CV="43" mask="XXVXXXXX" minOut="12" minFn="9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 12</label>
       </variable>
       <variable label="F9 controls output 13" CV="43" mask="XVXXXXXX" minOut="13" minFn="9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 13</label>
       </variable>
       <variable label="F9 controls output 14" CV="43" mask="VXXXXXXX" minOut="14" minFn="9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 14</label>
       </variable>
       <variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 7</label>
       </variable>
       <variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 8</label>
       </variable>
       <variable label="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 9</label>
       </variable>
       <variable label="F10 controls output 10" CV="44" mask="XXXXVXXX" minOut="10" minFn="10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 10</label>
       </variable>
       <variable label="F10 controls output 11" CV="44" mask="XXXVXXXX" minOut="11" minFn="10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 11</label>
       </variable>
       <variable label="F10 controls output 12" CV="44" mask="XXVXXXXX" minOut="12" minFn="10" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 12</label>
       </variable>
       <variable label="F10 controls output 13" CV="44" mask="XVXXXXXX" minOut="13" minFn="10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 13</label>
       </variable>
       <variable label="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 14</label>
       </variable>
       <variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 7</label>
       </variable>
       <variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 8</label>
       </variable>
       <variable label="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 9</label>
       </variable>
       <variable label="F11 controls output 10" CV="45" mask="XXXXVXXX" minOut="10" minFn="11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 10</label>
       </variable>
       <variable label="F11 controls output 11" CV="45" mask="XXXVXXXX" minOut="11" minFn="11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 11</label>
       </variable>
       <variable label="F11 controls output 12" CV="45" mask="XXVXXXXX" minOut="12" minFn="11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 12</label>
       </variable>
       <variable label="F11 controls output 13" CV="45" mask="XVXXXXXX" minOut="13" minFn="11" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 13</label>
       </variable>
       <variable label="F11 controls output 14" CV="45" mask="VXXXXXXX" minOut="14" minFn="11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 14</label>
       </variable>
       <variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 7</label>
       </variable>
       <variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 8</label>
       </variable>
       <variable label="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 9</label>
       </variable>
       <variable label="F12 controls output 10" CV="46" mask="XXXXVXXX" minOut="10" minFn="12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 10</label>
       </variable>
       <variable label="F12 controls output 11" CV="46" mask="XXXVXXXX" minOut="11" minFn="12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 11</label>
       </variable>
       <variable label="F12 controls output 12" CV="46" mask="XXVXXXXX" minOut="12" minFn="12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 12</label>
       </variable>
       <variable label="F12 controls output 13" CV="46" mask="XVXXXXXX" minOut="13" minFn="12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 13</label>
       </variable>
       <variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 14</label>
       </variable>
       <variable label="Programming Verbal Acknowledgement" CV="62" mask="XXXXXXXV" comment="CV62" item="CV62 Verbal Ack" default="1">
@@ -1697,46 +921,19 @@
         <indexedVal max="63"/>
       </ivariable>
       <ivariable label="Horn Triggered Doppler" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Doppler" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Coded Horn for Gas Turbine Startup" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Turbine" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Alt Horn Selection Feedback" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Horn" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Heavy Load Feedback" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Heavy" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0" include="500" comment="QSI" item="CV51.5">
+      <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0" 
+			include="500" comment="QSI" item="CV51.5">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1744,7 +941,8 @@
           <value>19</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0" include="5000,5050" comment="QSI" item="CV51.5">
+      <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0" 
+			include="5000,5050" comment="QSI" item="CV51.5">
         <indexedVal/>
       </ivariable>
 <!-- Sound volumes -->
@@ -1778,6 +976,10 @@
       <ivariable label="Squealing Brakes" CVname="52.24" CV="52" PI="24" default="11" comment="QSI" item="CV52.24">
         <indexedVal max="15"/>
       </ivariable>
+      <ivariable label="Generator" CVname="52.26" CV="52" PI="26" default="11" comment="QSI" item="CV52.26" 
+			include="5000,5048,5049,5050">
+        <indexedVal max="15"/>
+      </ivariable>
       <ivariable label="Dynamic Brakes" CVname="52.28" CV="52" PI="28" default="11" comment="QSI" item="CV52.28">
         <indexedVal max="15"/>
       </ivariable>
@@ -1787,10 +989,12 @@
       <ivariable label="Air Brakes" CVname="52.37" CV="52" PI="37" default="11" comment="QSI" item="CV52.37">
         <indexedVal max="15"/>
       </ivariable>
-      <ivariable label="Alt Horn" CVname="52.40" CV="52" PI="40" default="11" comment="QSI" item="CV52.40" include="5000,5050">
+      <ivariable label="Alt Horn" CVname="52.40" CV="52" PI="40" default="11" comment="QSI" item="CV52.40" 
+			include="5000,5048,5049,5050">
         <indexedVal max="15"/>
       </ivariable>
-      <ivariable label="Other" CVname="52.46" CV="52" PI="46" default="11" comment="QSI" item="CV52.46" include="5000,5050">
+      <ivariable label="Other" CVname="52.46" CV="52" PI="46" default="11" comment="QSI" item="CV52.46" 
+			include="5000,5048,5049,5050">
         <indexedVal max="15"/>
       </ivariable>
       <ivariable label="Output 1 - Forward/Reverse Only" CVname="53.1.0" CV="53" PI="1" SI="0" default="136" item="CV53.1.0">
@@ -1877,7 +1081,8 @@
       <ivariable label=" - Neutral Only" CVname="53.14.1" CV="53" PI="14" SI="1" default="138" item="CV53.14.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
       </ivariable>
-      <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0" include="500" default="10" item="CV53.15.0">
+      <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0" 
+			include="500" default="10" item="CV53.15.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1885,21 +1090,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0" include="5000,5050" default="10" item="CV53.15.0">
+      <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.15.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0" include="500" default="10" item="CV53.16.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0" include="5000,5050" default="10" item="CV53.16.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" include="500" default="10" item="CV53.17.0">
+      <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0" 
+			include="500" default="10" item="CV53.16.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1907,21 +1103,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" include="5000,5050" default="10" item="CV53.17.0">
+      <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.16.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0" include="500" default="10" item="CV53.18.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0" include="5000,5050" default="10" item="CV53.18.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0" include="500" default="10" item="CV53.19.0">
+      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" 
+			include="500" default="10" item="CV53.17.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1929,21 +1116,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0" include="5000,5050" default="10" item="CV53.19.0">
+      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.17.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0" include="500" default="10" item="CV53.20.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0" include="5000,5050" default="10" item="CV53.20.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0" include="500" default="10" item="CV53.21.0">
+      <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0" 
+			include="500" default="10" item="CV53.18.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1951,21 +1129,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0" include="5000,5050" default="10" item="CV53.21.0">
+      <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.18.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0" include="500" default="10" item="CV53.22.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0" include="5000,5050" default="10" item="CV53.22.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0" include="500" default="10" item="CV53.23.0">
+      <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0" 
+			include="500" default="10" item="CV53.19.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1973,21 +1142,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0" include="5000,5050" default="10" item="CV53.23.0">
+      <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.19.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0" include="500" default="10" item="CV53.24.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0" include="5000,5050" default="10" item="CV53.24.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0" include="500" default="10" item="CV53.25.0">
+      <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0" 
+			include="500" default="10" item="CV53.20.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1995,21 +1155,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0" include="5000,5050" default="10" item="CV53.25.0">
+      <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.20.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0" include="500" default="10" item="CV53.26.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0" include="5000,5050" default="10" item="CV53.26.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0" include="500" default="10" item="CV53.27.0">
+      <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0" 
+			include="500" default="10" item="CV53.21.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2017,21 +1168,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0" include="5000,5050" default="10" item="CV53.27.0">
+      <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.21.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0" include="500" default="10" item="CV53.28.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0" include="5000,5050" default="10" item="CV53.28.0">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0" include="500" default="10" item="CV53.29.0">
+      <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0" 
+			include="500" default="10" item="CV53.22.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2039,10 +1181,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0" include="5000,5050" default="10" item="CV53.29.0">
+      <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0" 
+			include="55000,5048,5049,5050" default="10" item="CV53.22.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0" include="500" default="10" item="CV53.30.0">
+      <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0" 
+			include="500" default="10" item="CV53.23.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2050,16 +1194,111 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0" include="5000,5050" default="10" item="CV53.30.0">
+      <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.23.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Max Bell" CVname="55.3.0" CV="55" PI="3" SI="0" include="500" default="1" item="CV55.3.0" readOnly="yes">
+      <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0" 
+			include="500" default="10" item="CV53.24.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.24.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </ivariable>
+      <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0" 
+			include="500" default="10" item="CV53.25.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.25.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </ivariable>
+      <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0" 
+			include="500" default="10" item="CV53.26.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.26.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </ivariable>
+      <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0" 
+			include="500" default="10" item="CV53.27.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.27.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </ivariable>
+      <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0" 
+			include="500" default="10" item="CV53.28.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.28.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </ivariable>
+      <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0" 
+			include="500" default="10" item="CV53.29.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.29.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </ivariable>
+      <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0" 
+			include="500" default="10" item="CV53.30.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV53.30.0">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </ivariable>
+      <ivariable label="Max Bell" CVname="55.3.0" CV="55" PI="3" SI="0" 
+			include="500" default="1" item="CV55.3.0" readOnly="yes">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Bell Select" CVname="55.3.1" CV="55" PI="3" SI="1" include="500" default="1" item="CV55.3.1">
+      <ivariable label="Bell Select" CVname="55.3.1" CV="55" PI="3" SI="1" 
+			include="500" default="1" item="CV55.3.1">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Automatic Bell" CVname="55.3.5" CV="55" PI="3" SI="5" include="500" default="0" item="CV55.3.5 Auto" mask="VXXXXXXX">
+      <ivariable label="Automatic Bell" CVname="55.3.5" CV="55" PI="3" SI="5" 
+			include="500" default="0" item="CV55.3.5 Auto" mask="VXXXXXXX">
         <ienumVal>
           <ienumChoice choice="Disable">
             <choice>Disable</choice>
@@ -2074,7 +1313,8 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Automatic Bell" CVname="55.3.5" CV="55" PI="3" SI="5" include="5050" default="0" item="CV55.3.5 Auto" mask="VXXXXXXX">
+      <ivariable label="Automatic Bell" CVname="55.3.5" CV="55" PI="3" SI="5" 
+			include="5000,5048,5049,5050" default="0" item="CV55.3.5 Auto" mask="VXXXXXXX">
         <ienumVal>
           <ienumChoice choice="Disable">
             <choice>Disable</choice>
@@ -2084,7 +1324,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Automatic Bell Hold Time" CVname="55.3.5" CV="55" PI="3" SI="5" include="500" default="5" item="CV55.3.5 Hold" mask="XVVVVVVV">
+      <ivariable label="Automatic Bell Hold Time" CVname="55.3.5" CV="55" PI="3" SI="5" 
+			include="500" default="5" item="CV55.3.5 Hold" mask="XVVVVVVV">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2092,10 +1333,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Automatic Bell Hold Time" CVname="55.3.5" CV="55" PI="3" SI="5" include="5050" default="5" item="CV55.3.5 Hold" mask="XVVVVVVV">
+      <ivariable label="Automatic Bell Hold Time" CVname="55.3.5" CV="55" PI="3" SI="5" 
+			include="5000,5048,5049,5050" default="5" item="CV55.3.5 Hold" mask="XVVVVVVV">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Speed Steps per Notch" CVname="55.21.0" CV="55" PI="21" SI="0" include="500" default="10" item="CV55.21.0">
+      <ivariable label="Speed Steps per Notch" CVname="55.21.0" CV="55" PI="21" SI="0" 
+			include="500" default="10" item="CV55.21.0">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2103,7 +1346,8 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Speed Steps per Notch" CVname="55.21.0" CV="55" PI="21" SI="0" include="5050" default="10" item="CV55.21.0">
+      <ivariable label="Speed Steps per Notch" CVname="55.21.0" CV="55" PI="21" SI="0" 
+			include="5000,5048,5049,5050" default="10" item="CV55.21.0">
         <indexedVal/>
       </ivariable>
       <ivariable label="Headlight Initial State" CVname="55.70.0" CV="55" PI="70" SI="0" default="1" item="CV55.70.0">
@@ -2174,16 +1418,20 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10" default="64" item="CV55.70.10" include="5000,5050">
+      <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10" default="64" item="CV55.70.10" 
+			include="5000,5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12" default="255" item="CV55.70.12" include="5000,5050">
+      <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12" default="255" item="CV55.70.12" 
+			include="5000,5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Headlight Ramp Up Rate" CVname="55.70.15" CV="55" PI="70" SI="15" default="25" item="CV55.70.15" include="5050">
+      <ivariable label="Headlight Ramp Up Rate" CVname="55.70.15" CV="55" PI="70" SI="15" default="25" item="CV55.70.15" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Headlight Ramp Down Rate" CVname="55.70.16" CV="55" PI="70" SI="16" default="25" item="CV55.70.16" include="5050">
+      <ivariable label="Headlight Ramp Down Rate" CVname="55.70.16" CV="55" PI="70" SI="16" default="25" item="CV55.70.16" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
       <ivariable label="Reverse Light Initial State" CVname="55.73.0" CV="55" PI="73" SI="0" default="1" item="CV55.73.0">
@@ -2254,16 +1502,20 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Reverse Light Dim Intensity" CVname="55.73.10" CV="55" PI="70" SI="10" default="32" item="CV55.73.10" include="5000,5050">
+      <ivariable label="Reverse Light Dim Intensity" CVname="55.73.10" CV="55" PI="70" SI="10" default="32" item="CV55.73.10" 
+			include="5000,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Reverse Light Max Intensity" CVname="55.73.12" CV="55" PI="73" SI="12" default="255" item="CV55.73.12" include="5000,5050">
+      <ivariable label="Reverse Light Max Intensity" CVname="55.73.12" CV="55" PI="73" SI="12" default="255" item="CV55.73.12" 
+			include="5000,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Reverse Light Ramp Up Rate" CVname="55.73.15" CV="55" PI="73" SI="15" default="25" item="CV55.73.15" include="5050">
+      <ivariable label="Reverse Light Ramp Up Rate" CVname="55.73.15" CV="55" PI="73" SI="15" default="25" item="CV55.73.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Reverse Light Ramp Down Rate" CVname="55.73.16" CV="55" PI="73" SI="16" default="25" item="CV55.73.16" include="5050">
+      <ivariable label="Reverse Light Ramp Down Rate" CVname="55.73.16" CV="55" PI="73" SI="16" default="25" item="CV55.73.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
       <ivariable label="Mars Light Initial State" CVname="55.76.0" CV="55" PI="76" SI="0" default="1" item="CV55.76.0">
@@ -2349,7 +1601,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6" default="100" item="CV55.76.6" include="500">
+      <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6" default="100" item="CV55.76.6" 
+			include="500">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2357,10 +1610,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6" default="100" item="CV55.76.6" include="5050">
+      <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6" default="100" item="CV55.76.6" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10" include="500" default="0" item="CV55.76.10">
+      <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10" 
+			include="500" default="0" item="CV55.76.10">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2368,21 +1623,12 @@
           <value>7</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10" include="5000,5050" default="0" item="CV55.76.10">
+      <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10" 
+			include="5000,5048,5049,5050" default="0" item="CV55.76.10">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Mars Light Min Intensity" CVname="55.76.11" CV="55" PI="76" SI="11" include="500" default="4" item="CV55.76.11">
-        <indexedVal/>
-        <qualifier>
-          <variableref>Minor Version</variableref>
-          <relation>ge</relation>
-          <value>40</value>
-        </qualifier>
-      </ivariable>
-      <ivariable label="Mars Light Min Intensity" CVname="55.76.11" CV="55" PI="76" SI="11" include="5050" default="4" item="CV55.76.11">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Max Intensity" CVname="55.76.12" CV="55" PI="76" SI="12" include="500" default="255" item="CV55.76.12">
+      <ivariable label="Mars Light Min Intensity" CVname="55.76.11" CV="55" PI="76" SI="11" 
+			include="500" default="4" item="CV55.76.11">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2390,10 +1636,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Mars Light Max Intensity" CVname="55.76.12" CV="55" PI="76" SI="12" default="255" item="CV55.76.12" include="5050">
+      <ivariable label="Mars Light Min Intensity" CVname="55.76.11" CV="55" PI="76" SI="11" 
+			include="5048,5049,5050" default="4" item="CV55.76.11">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Mars Light Mid Intensity" CVname="55.76.13" CV="55" PI="76" SI="13" default="32" item="CV55.76.13" include="500">
+      <ivariable label="Mars Light Max Intensity" CVname="55.76.12" CV="55" PI="76" SI="12" 
+			include="500" default="255" item="CV55.76.12">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -2401,16 +1649,33 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Mars Light Mid Intensity" CVname="55.76.13" CV="55" PI="76" SI="13" default="32" item="CV55.76.13" include="5050">
+      <ivariable label="Mars Light Max Intensity" CVname="55.76.12" CV="55" PI="76" SI="12" default="255" item="CV55.76.12" 
+			include="5000,5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Mars Light Ramp Up Rate" CVname="55.76.15" CV="55" PI="76" SI="15" default="25" item="CV55.76.15" include="5050">
+      <ivariable label="Mars Light Mid Intensity" CVname="55.76.13" CV="55" PI="76" SI="13" default="32" item="CV55.76.13" 
+			include="500">
+        <indexedVal/>
+        <qualifier>
+          <variableref>Minor Version</variableref>
+          <relation>ge</relation>
+          <value>40</value>
+        </qualifier>
+      </ivariable>
+      <ivariable label="Mars Light Mid Intensity" CVname="55.76.13" CV="55" PI="76" SI="13" default="32" item="CV55.76.13" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Mars Light Ramp Down Rate" CVname="55.76.16" CV="55" PI="76" SI="16" default="25" item="CV55.76.16" include="5050">
+      <ivariable label="Mars Light Ramp Up Rate" CVname="55.76.15" CV="55" PI="76" SI="15" default="25" item="CV55.76.15" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Mars Light Initial State" CVname="55.80.0" CV="55" PI="80" SI="0" default="1" item="CV55.80.0" include="5050">
+      <ivariable label="Mars Light Ramp Down Rate" CVname="55.76.16" CV="55" PI="76" SI="16" default="25" item="CV55.76.16" 
+			include="5048,5049,5050">
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Rear Mars Light Initial State" CVname="55.80.0" CV="55" PI="80" SI="0" default="1" item="CV55.80.0" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -2429,7 +1694,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Mars Light FWD" CVname="55.80.1" CV="55" PI="80" SI="1" default="3" item="CV55.80.1" include="5050">
+      <ivariable label="Auto Rear Mars Light FWD" CVname="55.80.1" CV="55" PI="80" SI="1" default="3" item="CV55.80.1" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2445,7 +1711,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Mars Light NFF" CVname="55.80.2" CV="55" PI="80" SI="2" default="1" item="CV55.80.2" include="5050">
+      <ivariable label="Auto Rear Mars Light NFF" CVname="55.80.2" CV="55" PI="80" SI="2" default="1" item="CV55.80.2" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2461,7 +1728,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Mars Light REV" CVname="55.80.3" CV="55" PI="80" SI="3" default="1" item="CV55.80.3" include="5050">
+      <ivariable label="Auto Rear Mars Light REV" CVname="55.80.3" CV="55" PI="80" SI="3" default="1" item="CV55.80.3" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2477,7 +1745,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Mars Light NFR" CVname="55.80.4" CV="55" PI="80" SI="4" default="1" item="CV55.80.4" include="5050">
+      <ivariable label="Auto Rear Mars Light NFR" CVname="55.80.4" CV="55" PI="80" SI="4" default="1" item="CV55.80.4" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2493,25 +1762,32 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Rear Mars Light Dim Intensity" CVname="55.80.10" CV="55" PI="80" SI="10" default="0" item="CV55.80.10" include="5050">
+      <ivariable label="Rear Mars Light Dim Intensity" CVname="55.80.10" CV="55" PI="80" SI="10" default="0" item="CV55.80.10" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Mars Light Min Intensity" CVname="55.80.11" CV="55" PI="80" SI="11" default="4" item="CV55.80.11" include="5050">
+      <ivariable label="Rear Mars Light Min Intensity" CVname="55.80.11" CV="55" PI="80" SI="11" default="4" item="CV55.80.11" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Mars Light Max Intensity" CVname="55.80.12" CV="55" PI="80" SI="12" default="255" item="CV55.80.12" include="5050">
+      <ivariable label="Rear Mars Light Max Intensity" CVname="55.80.12" CV="55" PI="80" SI="12" default="255" item="CV55.80.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Mars Light Mid Intensity" CVname="55.80.13" CV="55" PI="80" SI="13" default="32" item="CV55.80.13" include="5050">
+      <ivariable label="Rear Mars Light Mid Intensity" CVname="55.80.13" CV="55" PI="80" SI="13" default="32" item="CV55.80.13" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Mars Light Ramp Up Rate" CVname="55.80.15" CV="55" PI="80" SI="15" default="25" item="CV55.80.15" include="5050">
+      <ivariable label="Rear Mars Light Ramp Up Rate" CVname="55.80.15" CV="55" PI="80" SI="15" default="25" item="CV55.80.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Mars Light Ramp Down Rate" CVname="55.80.16" CV="55" PI="80" SI="16" default="25" item="CV55.80.16" include="5050">
+      <ivariable label="Rear Mars Light Ramp Down Rate" CVname="55.80.16" CV="55" PI="80" SI="16" default="25" item="CV55.80.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Ditch Lights Initial State" CVname="55.84.0" CV="55" PI="84" SI="0" default="1" item="CV55.84.0" mask="XXXXVVVV" include="5000,5050">
+      <ivariable label="Ditch Lights Initial State" CVname="55.84.0" CV="55" PI="84" SI="0" default="1" item="CV55.84.0" mask="XXXXVVVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -2530,27 +1806,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.0" CV="55" PI="84" SI="0" default="1" item="CV55.84.0 Horn" mask="XXXVXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.84.0" CV="55" PI="84" SI="0" default="1" item="CV55.84.0 Horn" mask="XXXVXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.0" CV="55" PI="84" SI="0" default="0" item="CV55.84.0 Bell" mask="XXVXXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.84.0" CV="55" PI="84" SI="0" default="0" item="CV55.84.0 Bell" mask="XXVXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights FWD" CVname="55.84.1" CV="55" PI="84" SI="1" default="2" item="CV55.84.1" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Auto Ditch Lights FWD" CVname="55.84.1" CV="55" PI="84" SI="1" default="2" item="CV55.84.1" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2566,27 +1831,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.1" CV="55" PI="84" SI="1" default="1" item="CV55.84.1 Horn" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.84.1" CV="55" PI="84" SI="1" default="1" item="CV55.84.1 Horn" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.1" CV="55" PI="84" SI="1" default="0" item="CV55.84.1 Bell" mask="XXXXVXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.84.1" CV="55" PI="84" SI="1" default="0" item="CV55.84.1 Bell" mask="XXXXVXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights NFF" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Auto Ditch Lights NFF" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2602,27 +1856,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Horn" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Horn" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Bell" mask="XXXXVXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Bell" mask="XXXXVXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights REV" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Auto Ditch Lights REV" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2638,27 +1881,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Horn" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Horn" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Bell" mask="XXXXVXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Bell" mask="XXXXVXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights NFR" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Auto Ditch Lights NFR" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2674,48 +1906,44 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Horn" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Horn" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Bell" mask="XXXXVXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Bell" mask="XXXXVXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Ditch Lights Strobe Hold Time" CVname="55.84.5" CV="55" PI="84" SI="5" default="5" item="CV55.84.5" include="5000,5050">
+      <ivariable label="Ditch Lights Strobe Hold Time" CVname="55.84.5" CV="55" PI="84" SI="5" default="5" item="CV55.84.5" 
+			include="5000,5048,5049,5050">
         <indexedVal max="31"/>
       </ivariable>
-      <ivariable label="Ditch Lights Strobe Period" CVname="55.84.6" CV="55" PI="84" SI="6" default="100" item="CV55.84.6" include="5050">
+      <ivariable label="Ditch Lights Strobe Period" CVname="55.84.6" CV="55" PI="84" SI="6" default="100" item="CV55.84.6" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Ditch Lights Intensity" CVname="55.84.10" CV="55" PI="84" SI="10" default="32" item="CV55.84.10" include="5000,5050">
+      <ivariable label="Ditch Lights Intensity" CVname="55.84.10" CV="55" PI="84" SI="10" default="32" item="CV55.84.10" 
+			include="5000,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Ditch Lights Max Intensity" CVname="55.84.11" CV="55" PI="84" SI="11" default="255" item="CV55.84.11" include="5050">
+      <ivariable label="Ditch Lights Max Intensity" CVname="55.84.11" CV="55" PI="84" SI="11" default="255" item="CV55.84.11" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Ditch Lights Min Intensity" CVname="55.84.12" CV="55" PI="84" SI="12" default="0" item="CV55.84.12" include="5050">
+      <ivariable label="Ditch Lights Min Intensity" CVname="55.84.12" CV="55" PI="84" SI="12" default="0" item="CV55.84.12" 
+			include="5000,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Ditch Lights Ramp Up Rate" CVname="55.84.15" CV="55" PI="84" SI="15" default="25" item="CV55.70.15" include="5050">
+      <ivariable label="Ditch Lights Ramp Up Rate" CVname="55.84.15" CV="55" PI="84" SI="15" default="25" item="CV55.70.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Ditch Lights Ramp Down Rate" CVname="55.84.16" CV="55" PI="84" SI="16" default="25" item="CV55.84.16" include="5050">
+      <ivariable label="Ditch Lights Ramp Down Rate" CVname="55.84.16" CV="55" PI="84" SI="16" default="25" item="CV55.84.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Initial State" CVname="55.88.0" CV="55" PI="88" SI="0" default="1" item="CV55.88.0" mask="XXXXVVVV" include="5050">
+      <ivariable label="Rear Ditch Lights Initial State" CVname="55.88.0" CV="55" PI="88" SI="0" default="1" item="CV55.88.0" mask="XXXXVVVV" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -2734,27 +1962,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.88.0" CV="55" PI="88" SI="0" default="0" item="CV55.88.0 Horn" mask="XXXVXXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.88.0" CV="55" PI="88" SI="0" default="0" item="CV55.88.0 Horn" mask="XXXVXXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.88.0" CV="55" PI="88" SI="0" default="0" item="CV55.88.0 Bell" mask="XXVXXXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.88.0" CV="55" PI="88" SI="0" default="0" item="CV55.88.0 Bell" mask="XXVXXXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Ditch Lights FWD" CVname="55.88.1" CV="55" PI="88" SI="1" default="0" item="CV55.88.1" mask="XXXXXXVV" include="5050">
+      <ivariable label="Auto Rear Ditch Lights FWD" CVname="55.88.1" CV="55" PI="88" SI="1" default="0" item="CV55.88.1" mask="XXXXXXVV" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2770,27 +1987,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.88.1" CV="55" PI="88" SI="1" default="1" item="CV55.88.1 Horn" mask="XXXXXVXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.88.1" CV="55" PI="88" SI="1" default="1" item="CV55.88.1 Horn" mask="XXXXXVXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.88.1" CV="55" PI="88" SI="1" default="0" item="CV55.88.1 Bell" mask="XXXXVXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.88.1" CV="55" PI="88" SI="1" default="0" item="CV55.88.1 Bell" mask="XXXXVXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Ditch Lights NFF" CVname="55.88.2" CV="55" PI="88" SI="2" default="0" item="CV55.88.2" mask="XXXXXXVV" include="5050">
+      <ivariable label="Auto Rear Ditch Lights NFF" CVname="55.88.2" CV="55" PI="88" SI="2" default="0" item="CV55.88.2" mask="XXXXXXVV" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2806,27 +2012,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.88.2" CV="55" PI="88" SI="2" default="0" item="CV55.88.2 Horn" mask="XXXXXVXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.88.2" CV="55" PI="88" SI="2" default="0" item="CV55.88.2 Horn" mask="XXXXXVXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.88.2" CV="55" PI="88" SI="2" default="0" item="CV55.88.2 Bell" mask="XXXXVXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.88.2" CV="55" PI="88" SI="2" default="0" item="CV55.88.2 Bell" mask="XXXXVXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Ditch Lights REV" CVname="55.88.3" CV="55" PI="88" SI="3" default="0" item="CV55.88.3" mask="XXXXXXVV" include="5050">
+      <ivariable label="Auto Rear Ditch Lights REV" CVname="55.88.3" CV="55" PI="88" SI="3" default="0" item="CV55.88.3" mask="XXXXXXVV" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2842,27 +2037,16 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.88.3" CV="55" PI="88" SI="3" default="0" item="CV55.88.3 Horn" mask="XXXXXVXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.88.3" CV="55" PI="88" SI="3" default="0" item="CV55.88.3 Horn" mask="XXXXXVXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.88.3" CV="55" PI="88" SI="3" default="0" item="CV55.88.3 Bell" mask="XXXXVXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.88.3" CV="55" PI="88" SI="3" default="0" item="CV55.88.3 Bell" mask="XXXXVXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Ditch Lights NFR" CVname="55.88.4" CV="55" PI="88" SI="4" default="0" item="CV55.88.4" mask="XXXXXXVV" include="5050">
+      <ivariable label="Auto Rear Ditch Lights NFR" CVname="55.88.4" CV="55" PI="88" SI="4" default="0" item="CV55.88.4" mask="XXXXXXVV" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2878,48 +2062,44 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.88.4" CV="55" PI="88" SI="4" default="0" item="CV55.88.4 Horn" mask="XXXXXVXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Horn" CVname="55.88.4" CV="55" PI="88" SI="4" default="0" item="CV55.88.4 Horn" mask="XXXXXVXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.88.4" CV="55" PI="88" SI="4" default="0" item="CV55.88.4 Bell" mask="XXXXVXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="No">
-            <choice>No</choice>
-          </ienumChoice>
-          <ienumChoice choice="Yes">
-            <choice>Yes</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Strobe with Bell" CVname="55.88.4" CV="55" PI="88" SI="4" default="0" item="CV55.88.4 Bell" mask="XXXXVXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Strobe Hold Time" CVname="55.88.5" CV="55" PI="88" SI="5" default="5" item="CV55.88.5" include="5050">
+      <ivariable label="Rear Ditch Lights Strobe Hold Time" CVname="55.88.5" CV="55" PI="88" SI="5" default="5" item="CV55.88.5" 
+			include="5050">
         <indexedVal max="31"/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Strobe Period" CVname="55.88.6" CV="55" PI="88" SI="6" default="100" item="CV55.88.6" include="5050">
+      <ivariable label="Rear Ditch Lights Strobe Period" CVname="55.88.6" CV="55" PI="88" SI="6" default="100" item="CV55.88.6" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Intensity" CVname="55.88.10" CV="55" PI="88" SI="10" default="32" item="CV55.88.10" include="5050">
+      <ivariable label="Rear Ditch Lights Intensity" CVname="55.88.10" CV="55" PI="88" SI="10" default="32" item="CV55.88.10" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Max Intensity" CVname="55.88.11" CV="55" PI="88" SI="11" default="255" item="CV55.88.11" include="5050">
+      <ivariable label="Rear Ditch Lights Max Intensity" CVname="55.88.11" CV="55" PI="88" SI="11" default="255" item="CV55.88.11" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Min Intensity" CVname="55.88.12" CV="55" PI="88" SI="12" default="0" item="CV55.88.12" include="5050">
+      <ivariable label="Rear Ditch Lights Min Intensity" CVname="55.88.12" CV="55" PI="88" SI="12" default="0" item="CV55.88.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Ramp Up Rate" CVname="55.88.15" CV="55" PI="88" SI="15" default="25" item="CV55.88.15" include="5050">
+      <ivariable label="Rear Ditch Lights Ramp Up Rate" CVname="55.88.15" CV="55" PI="88" SI="15" default="25" item="CV55.88.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Ditch Lights Ramp Down Rate" CVname="55.88.16" CV="55" PI="88" SI="16" default="25" item="CV55.8.16" include="5050">
+      <ivariable label="Rear Ditch Lights Ramp Down Rate" CVname="55.88.16" CV="55" PI="88" SI="16" default="25" item="CV55.8.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Overhead Beacon Initial State" CVname="55.92.0" CV="55" PI="92" SI="0" default="1" item="CV55.92.0 Auto" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Front Overhead Beacon Initial State" CVname="55.92.0" CV="55" PI="92" SI="0" default="1" item="CV55.92.0 Auto" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2932,7 +2112,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Front Overhead Beacon On with Bell" CVname="55.92.0" CV="55" PI="92" SI="0" default="0" item="CV55.92.0 Bell" mask="XXXXXVXX" include="5000,5050">
+      <ivariable label="Front Overhead Beacon On with Bell" CVname="55.92.0" CV="55" PI="92" SI="0" default="0" item="CV55.92.0 Bell" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Disable">
             <choice>Disable</choice>
@@ -2942,7 +2123,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Front Overhead Beacon Effect" CVname="55.92.0" CV="55" PI="92" SI="0" default="0" item="CV55.92.0 Effect" mask="XXVVXXXX" include="5000,5050">
+      <ivariable label="Front Overhead Beacon Effect" CVname="55.92.0" CV="55" PI="92" SI="0" default="2" item="CV55.92.0 Effect" mask="XXVVXXXX" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Blinking">
             <choice>Blinking</choice>
@@ -2955,7 +2137,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Front Overhead Beacon FWD" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 FWD" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Auto Front Overhead Beacon FWD" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 FWD" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2968,7 +2151,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Front Overhead Beacon NFF" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 NFF" mask="XXXXVVXX" include="5000,5050">
+      <ivariable label="Auto Front Overhead Beacon NFF" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 NFF" mask="XXXXVVXX" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2981,7 +2165,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Front Overhead Beacon REV" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 REV" mask="XXVVXXXX" include="5000,5050">
+      <ivariable label="Auto Front Overhead Beacon REV" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 REV" mask="XXVVXXXX" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -2994,7 +2179,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Front Overhead Beacon NFR" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 NFR" mask="VVXXXXXX" include="5000,5050">
+      <ivariable label="Auto Front Overhead Beacon NFR" CVname="55.92.1" CV="55" PI="92" SI="1" default="1" item="CV55.92.1 NFR" mask="VVXXXXXX" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -3007,22 +2193,28 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Front Overhead Beacon Period" CVname="55.92.6" CV="55" PI="92" SI="6" default="100" item="CV55.92.6" include="5050">
+      <ivariable label="Front Overhead Beacon Period" CVname="55.92.6" CV="55" PI="92" SI="6" default="100" item="CV55.92.6" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Overhead Beacon Min Intensity" CVname="55.92.11" CV="55" PI="92" SI="11" default="4" item="CV55.92.11" include="5050">
+      <ivariable label="Front Overhead Beacon Min Intensity" CVname="55.92.11" CV="55" PI="92" SI="11" default="4" item="CV55.92.11" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Overhead Beacon Max Intensity" CVname="55.92.12" CV="55" PI="92" SI="12" default="255" item="CV55.92.12" include="5050">
+      <ivariable label="Front Overhead Beacon Max Intensity" CVname="55.92.12" CV="55" PI="92" SI="12" default="255" item="CV55.92.12" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Overhead Beacon Ramp Up Rate" CVname="55.92.15" CV="55" PI="92" SI="15" default="25" item="CV55.92.15" include="5050">
+      <ivariable label="Front Overhead Beacon Ramp Up Rate" CVname="55.92.15" CV="55" PI="92" SI="15" default="25" item="CV55.92.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Overhead Beacon Ramp Down Rate" CVname="55.92.16" CV="55" PI="92" SI="16" default="25" item="CV55.92.16" include="5050">
+      <ivariable label="Front Overhead Beacon Ramp Down Rate" CVname="55.92.16" CV="55" PI="92" SI="16" default="25" item="CV55.92.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Auto Rear Overhead Beacon Initial State" CVname="55.96.0" CV="55" PI="96" SI="0" default="1" item="CV55.96.0 Auto" mask="XXXXXXVV" include="5050">
+      <ivariable label="Auto Rear Overhead Beacon Initial State" CVname="55.96.0" CV="55" PI="96" SI="0" default="1" item="CV55.96.0 Auto" mask="XXXXXXVV" 
+			include="5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -3035,7 +2227,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Rear Overhead Beacon On with Bell" CVname="55.96.0" CV="55" PI="96" SI="0" default="0" item="CV55.96.0 Bell" mask="XXXXXVXX" include="5050">
+      <ivariable label="Rear Overhead Beacon On with Bell" CVname="55.96.0" CV="55" PI="96" SI="0" default="0" item="CV55.96.0 Bell" mask="XXXXXVXX" 
+			include="5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Disable">
             <choice>Disable</choice>
@@ -3045,7 +2238,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Rear Overhead Beacon Effect" CVname="55.96.0" CV="55" PI="96" SI="0" default="0" item="CV55.96.0 Effect" mask="XXVVXXXX" include="5050">
+      <ivariable label="Rear Overhead Beacon Effect" CVname="55.96.0" CV="55" PI="96" SI="0" default="2" item="CV55.96.0 Effect" mask="XXVVXXXX" 
+			include="5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Blinking">
             <choice>Blinking</choice>
@@ -3058,7 +2252,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Overhead Beacon FWD" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 FWD" mask="XXXXXXVV" include="5050">
+      <ivariable label="Auto Rear Overhead Beacon FWD" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 FWD" mask="XXXXXXVV" 
+			include="5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -3071,7 +2266,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Overhead Beacon NFF" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 NFF" mask="XXXXVVXX" include="5050">
+      <ivariable label="Auto Rear Overhead Beacon NFF" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 NFF" mask="XXXXVVXX" 
+			include="5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -3084,7 +2280,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Overhead Beacon REV" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 REV" mask="XXVVXXXX" include="5050">
+      <ivariable label="Auto Rear Overhead Beacon REV" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 REV" mask="XXVVXXXX" 
+			include="5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -3097,7 +2294,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Overhead Beacon NFR" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 NFR" mask="VVXXXXXX" include="5050">
+      <ivariable label="Auto Rear Overhead Beacon NFR" CVname="55.96.1" CV="55" PI="96" SI="1" default="1" item="CV55.96.1 NFR" mask="VVXXXXXX" 
+			include="5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off">
             <choice>Off</choice>
@@ -3110,22 +2308,28 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Rear Overhead Beacon Period" CVname="55.96.6" CV="55" PI="96" SI="6" default="100" item="CV55.96.6" include="5050">
+      <ivariable label="Rear Overhead Beacon Period" CVname="55.96.6" CV="55" PI="96" SI="6" default="100" item="CV55.96.6" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Overhead Beacon Min Intensity" CVname="55.96.11" CV="55" PI="96" SI="11" default="4" item="CV55.96.11" include="5050">
+      <ivariable label="Rear Overhead Beacon Min Intensity" CVname="55.96.11" CV="55" PI="96" SI="11" default="4" item="CV55.96.11" 
+			include="5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Overhead Beacon Max Intensity" CVname="55.96.12" CV="55" PI="96" SI="12" default="255" item="CV55.96.12" include="5050">
+      <ivariable label="Rear Overhead Beacon Max Intensity" CVname="55.96.12" CV="55" PI="96" SI="12" default="255" item="CV55.96.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Overhead Beacon Ramp Up Rate" CVname="55.96.15" CV="55" PI="96" SI="15" default="25" item="CV55.96.15" include="5050">
+      <ivariable label="Rear Overhead Beacon Ramp Up Rate" CVname="55.96.15" CV="55" PI="96" SI="15" default="25" item="CV55.96.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Overhead Beacon Ramp Down Rate" CVname="55.96.16" CV="55" PI="96" SI="16" default="25" item="CV55.96.16" include="5050">
+      <ivariable label="Rear Overhead Beacon Ramp Down Rate" CVname="55.96.16" CV="55" PI="96" SI="16" default="25" item="CV55.96.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0" default="1" item="CV55.100.0" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0" default="1" item="CV55.100.0" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -3138,56 +2342,36 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights FWD" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 FWD" mask="XXXXXXXV" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Number Board Lights FWD" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 FWD" mask="XXXXXXXV" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights NFF" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFF" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Number Board Lights NFF" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFF" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights REV" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 REV" mask="XXXVXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Number Board Lights REV" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 REV" mask="XXXVXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights NFR" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFR" mask="XVXXXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Number Board Lights NFR" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFR" mask="XVXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Front Number Board Max Intensity" CVname="55.100.12" CV="55" PI="100" SI="12" default="255" item="CV55.100.12" include="5050">
+      <ivariable label="Front Number Board Max Intensity" CVname="55.100.12" CV="55" PI="100" SI="12" default="255" item="CV55.100.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Number Board Ramp Up Rate" CVname="55.100.15" CV="55" PI="100" SI="15" default="25" item="CV55.100.15" include="5050">
+      <ivariable label="Front Number Board Ramp Up Rate" CVname="55.100.15" CV="55" PI="100" SI="15" default="25" item="CV55.100.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Number Board Ramp Down Rate" CVname="55.100.16" CV="55" PI="100" SI="16" default="25" item="CV55.100.16" include="5050">
+      <ivariable label="Front Number Board Ramp Down Rate" CVname="55.100.16" CV="55" PI="100" SI="16" default="25" item="CV55.100.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Number Board Lights Initial State" CVname="55.102.0" CV="55" PI="102" SI="0" default="1" item="CV55.102.0" mask="XXXXXXVV" include="5050">
+      <ivariable label="Rear Number Board Lights Initial State" CVname="55.102.0" CV="55" PI="102" SI="0" default="1" item="CV55.102.0" mask="XXXXXXVV" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -3200,56 +2384,36 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Number Board Lights FWD" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 FWD" mask="XXXXXXXV" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Number Board Lights FWD" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 FWD" mask="XXXXXXXV" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Number Board Lights NFF" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 NFF" mask="XXXXXVXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Number Board Lights NFF" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 NFF" mask="XXXXXVXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Number Board Lights REV" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 REV" mask="XXXVXXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Number Board Lights REV" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 REV" mask="XXXVXXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Number Board Lights NFR" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 NFR" mask="XVXXXXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Number Board Lights NFR" CVname="55.102.1" CV="55" PI="102" SI="1" default="1" item="CV55.102.1 NFR" mask="XVXXXXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Rear Number Board Max Intensity" CVname="55.102.12" CV="55" PI="102" SI="12" default="255" item="CV55.102.12" include="5050">
+      <ivariable label="Rear Number Board Max Intensity" CVname="55.102.12" CV="55" PI="102" SI="12" default="255" item="CV55.102.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Number Board Ramp Up Rate" CVname="55.102.15" CV="55" PI="102" SI="15" default="25" item="CV55.102.15" include="5050">
+      <ivariable label="Rear Number Board Ramp Up Rate" CVname="55.102.15" CV="55" PI="102" SI="15" default="25" item="CV55.102.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Number Board Ramp Down Rate" CVname="55.102.16" CV="55" PI="102" SI="16" default="25" item="CV55.102.16" include="5050">
+      <ivariable label="Rear Number Board Ramp Down Rate" CVname="55.102.16" CV="55" PI="102" SI="16" default="25" item="CV55.102.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Marker Lights Initial State" CVname="55.104.0" CV="55" PI="104" SI="0" default="1" item="CV55.104.0" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Front Marker Lights Initial State" CVname="55.104.0" CV="55" PI="104" SI="0" default="1" item="CV55.104.0" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -3262,56 +2426,36 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Front Marker Lights FWD" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 FWD" mask="XXXXXXXV" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Marker Lights FWD" CVname="55.104.1" CV="55" PI="104" SI="1" default="0" item="CV55.104.1 FWD" mask="XXXXXXXV" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Marker Lights NFF" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 NFF" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Marker Lights NFF" CVname="55.104.1" CV="55" PI="104" SI="1" default="0" item="CV55.104.1 NFF" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Marker Lights REV" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 REV" mask="XXXVXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Marker Lights REV" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 REV" mask="XXXVXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Marker Lights NFR" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 NFR" mask="XVXXXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Marker Lights NFR" CVname="55.104.1" CV="55" PI="104" SI="1" default="0" item="CV55.104.1 NFR" mask="XVXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Front Marker Lights Max Intensity" CVname="55.104.12" CV="55" PI="104" SI="12" default="255" item="CV55.104.12" include="5050">
+      <ivariable label="Front Marker Lights Max Intensity" CVname="55.104.12" CV="55" PI="104" SI="12" default="255" item="CV55.104.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Marker Lights Ramp Up Rate" CVname="55.104.15" CV="55" PI="104" SI="15" default="25" item="CV55.104.15" include="5050">
+      <ivariable label="Front Marker Lights Ramp Up Rate" CVname="55.104.15" CV="55" PI="104" SI="15" default="25" item="CV55.104.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Marker Lights Ramp Down Rate" CVname="55.104.16" CV="55" PI="104" SI="16" default="25" item="CV55.104.16" include="5050">
+      <ivariable label="Front Marker Lights Ramp Down Rate" CVname="55.104.16" CV="55" PI="104" SI="16" default="25" item="CV55.104.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Marker Lights Initial State" CVname="55.106.0" CV="55" PI="106" SI="0" default="1" item="CV55.106.0" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Rear Marker Lights Initial State" CVname="55.106.0" CV="55" PI="106" SI="0" default="1" item="CV55.106.0" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -3324,56 +2468,36 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Marker Lights FWD" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 FWD" mask="XXXXXXXV" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Marker Lights FWD" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 FWD" mask="XXXXXXXV" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Marker Lights NFF" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 NFF" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Marker Lights NFF" CVname="55.106.1" CV="55" PI="106" SI="1" default="0" item="CV55.106.1 NFF" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Marker Lights REV" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 REV" mask="XXXVXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Marker Lights REV" CVname="55.106.1" CV="55" PI="106" SI="1" default="0" item="CV55.106.1 REV" mask="XXXVXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Marker Lights NFR" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 NFR" mask="XVXXXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Marker Lights NFR" CVname="55.106.1" CV="55" PI="106" SI="1" default="0" item="CV55.106.1 NFR" mask="XVXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Rear Marker Lights Max Intensity" CVname="55.106.12" CV="55" PI="106" SI="12" default="255" item="CV55.106.12" include="5050">
+      <ivariable label="Rear Marker Lights Max Intensity" CVname="55.106.12" CV="55" PI="106" SI="12" default="255" item="CV55.106.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Marker Lights Ramp Up Rate" CVname="55.106.15" CV="55" PI="106" SI="15" default="25" item="CV55.106.15" include="5050">
+      <ivariable label="Rear Marker Lights Ramp Up Rate" CVname="55.106.15" CV="55" PI="106" SI="15" default="25" item="CV55.106.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Marker Lights Ramp Down Rate" CVname="55.106.16" CV="55" PI="106" SI="16" default="25" item="CV55.106.16" include="5050">
+      <ivariable label="Rear Marker Lights Ramp Down Rate" CVname="55.106.16" CV="55" PI="106" SI="16" default="25" item="CV55.106.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Cab Lights Initial State" CVname="55.116.0" CV="55" PI="116" SI="0" default="1" item="CV55.116.0" mask="XXXXXXVV" include="5000,5050">
+      <ivariable label="Front Cab Lights Initial State" CVname="55.116.0" CV="55" PI="116" SI="0" default="1" item="CV55.116.0" mask="XXXXXXVV" 
+			include="5000,5048,5049,5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -3386,56 +2510,36 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Front Cab Lights FWD" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 FWD" mask="XXXXXXXV" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Cab Lights FWD" CVname="55.116.1" CV="55" PI="116" SI="1" default="0" item="CV55.116.1 FWD" mask="XXXXXXXV" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Cab Lights NFF" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 NFF" mask="XXXXXVXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Cab Lights NFF" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 NFF" mask="XXXXXVXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Cab Lights REV" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 REV" mask="XXXVXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Cab Lights REV" CVname="55.116.1" CV="55" PI="116" SI="1" default="0" item="CV55.116.1 REV" mask="XXXVXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Cab Lights NFR" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 NFR" mask="XVXXXXXX" include="5000,5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Front Cab Lights NFR" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 NFR" mask="XVXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Front Cab Lights Max Intensity" CVname="55.116.12" CV="55" PI="116" SI="12" default="255" item="CV55.116.12" include="5050">
+      <ivariable label="Front Cab Lights Max Intensity" CVname="55.116.12" CV="55" PI="116" SI="12" default="255" item="CV55.116.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Cab Lights Ramp Up Rate" CVname="55.116.15" CV="55" PI="116" SI="15" default="25" item="CV55.116.15" include="5050">
+      <ivariable label="Front Cab Lights Ramp Up Rate" CVname="55.116.15" CV="55" PI="116" SI="15" default="25" item="CV55.116.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Cab Lights Ramp Down Rate" CVname="55.116.16" CV="55" PI="116" SI="16" default="25" item="CV55.116.16" include="5050">
+      <ivariable label="Front Cab Lights Ramp Down Rate" CVname="55.116.16" CV="55" PI="116" SI="16" default="25" item="CV55.116.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Cab Lights Initial State" CVname="55.118.0" CV="55" PI="118" SI="0" default="1" item="CV55.118.0" mask="XXXXXXVV" include="5050">
+      <ivariable label="Rear Cab Lights Initial State" CVname="55.118.0" CV="55" PI="118" SI="0" default="1" item="CV55.118.0" mask="XXXXXXVV" 
+			include="5050">
         <ienumVal>
           <ienumChoice choice="Off" value="0">
             <choice>Off</choice>
@@ -3448,546 +2552,184 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Auto Rear Cab Lights FWD" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 FWD" mask="XXXXXXXV" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Cab Lights FWD" CVname="55.118.1" CV="55" PI="118" SI="1" default="0" item="CV55.118.1 FWD" mask="XXXXXXXV" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Cab Lights NFF" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 NFF" mask="XXXXXVXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Cab Lights NFF" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 NFF" mask="XXXXXVXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Cab Lights REV" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 REV" mask="XXXVXXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Cab Lights REV" CVname="55.118.1" CV="55" PI="118" SI="1" default="0" item="CV55.118.1 REV" mask="XXXVXXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Rear Cab Lights NFR" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 NFR" mask="XVXXXXXX" include="5050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Auto Rear Cab Lights NFR" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 NFR" mask="XVXXXXXX" 
+			include="5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Rear Cab Lights Max Intensity" CVname="55.118.12" CV="55" PI="118" SI="12" default="255" item="CV55.118.12" include="5050">
+      <ivariable label="Rear Cab Lights Max Intensity" CVname="55.118.12" CV="55" PI="118" SI="12" default="255" item="CV55.118.12" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Cab Lights Ramp Up Rate" CVname="55.118.15" CV="55" PI="118" SI="15" default="25" item="CV55.118.15" include="5050">
+      <ivariable label="Rear Cab Lights Ramp Up Rate" CVname="55.118.15" CV="55" PI="118" SI="15" default="25" item="CV55.118.15" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Rear Cab Lights Ramp Down Rate" CVname="55.118.16" CV="55" PI="118" SI="16" default="25" item="CV55.118.16" include="5050">
+      <ivariable label="Rear Cab Lights Ramp Down Rate" CVname="55.118.16" CV="55" PI="118" SI="16" default="25" item="CV55.118.16" 
+			include="5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Step Lights" CVname="55.134.0" CV="55" PI="134" SI="0" default="1" item="CV55.134.0 Step" mask="XXXXXVXX" include="5000">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Step Lights" CVname="55.134.0" CV="55" PI="134" SI="0" default="1" item="CV55.134.0 Step" mask="XXXXXVXX" 
+			include="5000">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Headlight" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 70" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Light" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 73" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Mars Light" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 76" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Mars Light" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 80" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Ditch Lights" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 84" mask="XXXVXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Ditch Lights" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 88" mask="XXVXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Front Overhead Beacon" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 92" mask="XVXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Overhead Beacon" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 96" mask="VXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Front Number Board Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 100" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Number Board Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 102" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Front Marker Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 104" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Marker Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 106" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Front Step Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 112" mask="XVXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Step Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 114" mask="VXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Front Cab Lights" CVname="55.136.2" CV="55" PI="136" SI="2" default="0" item="CV55.136.2 116" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Cab Lights" CVname="55.136.2" CV="55" PI="136" SI="2" default="0" item="CV55.136.2 118" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Headlight" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 70" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Light" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 73" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Mars Light" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 76" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Mars Light" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 80" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Ditch Lights" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 84" mask="XXXVXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Ditch Lights" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 88" mask="XXVXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Front Overhead Beacon" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 92" mask="XVXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Overhead Beacon" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 96" mask="VXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Front Number Board Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 100" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Number Board Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 102" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Front Marker Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 104" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Marker Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 106" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Front Step Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 112" mask="XVXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Step Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 114" mask="VXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Front Cab Lights" CVname="55.137.2" CV="55" PI="137" SI="2" default="0" item="CV55.137.2 116" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Cab Lights" CVname="55.137.2" CV="55" PI="137" SI="2" default="0" item="CV55.137.2 118" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Headlight" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 70" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Light" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 73" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Mars Light" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 76" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Mars Light" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 80" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Ditch Lights" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 84" mask="XXXVXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Ditch Lights" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 88" mask="XXVXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Front Overhead Beacon" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 92" mask="XVXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Overhead Beacon" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 96" mask="VXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Front Number Board Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 100" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Number Board Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 102" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Front Marker Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 104" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Marker Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 106" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Front Step Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 112" mask="XVXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Step Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 114" mask="VXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Front Cab Lights" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 116" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Cab Lights" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 118" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0" default="30" item="CV55.154.0" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0" default="30" item="CV55.154.0" mask="XVVVVVVV" 
+			include="500">
         <indexedVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -3995,35 +2737,25 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 1 Hoot/Fancy Ending" CVname="55.154.0" CV="55" PI="154" SI="0" default="0" item="CV55.154.0 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 1 Hoot/Fancy Ending" CVname="55.154.0" CV="55" PI="154" SI="0" default="0" item="CV55.154.0 hoot" mask="VXXXXXXX" 
+			include="500">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0" default="30" item="CV55.154.0" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0" default="30" item="CV55.154.0" mask="XVVVVVVV" 
+			include="5000,5048,5049,5050">
         <indexedVal max="127"/>
       </ivariable>
-      <ivariable label="Crossing Blast 1 Hoot/Fancy Ending" CVname="55.154.0" CV="55" PI="154" SI="0" default="0" item="CV55.154.0 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 1 Hoot/Fancy Ending" CVname="55.154.0" CV="55" PI="154" SI="0" default="0" item="CV55.154.0 hoot" mask="VXXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1" default="15" item="CV55.154.1" include="">
+      <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1" default="15" item="CV55.154.1" 
+			include="500">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -4031,10 +2763,12 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1" default="15" item="CV55.154.1" include="">
+      <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1" default="15" item="CV55.154.1" 
+			include="5000,5048,5049,5050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2" default="30" item="CV55.154.2" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2" default="30" item="CV55.154.2" mask="XVVVVVVV" 
+			include="500">
         <indexedVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -4042,36 +2776,26 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 2 Hoot/Fancy Ending" CVname="55.154.2" CV="55" PI="154" SI="2" default="0" item="CV55.154.2 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 2 Hoot/Fancy Ending" CVname="55.154.2" CV="55" PI="154" SI="2" default="0" item="CV55.154.2 hoot" mask="VXXXXXXX" 
+			include="500">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2" default="30" item="CV55.154.2" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2" default="30" item="CV55.154.2" mask="XVVVVVVV" 
+			include="5000,5048,5049,5050">
         <indexedVal max="127"/>
       </ivariable>
-      <ivariable label="Crossing Blast 2 Hoot/Fancy Ending" CVname="55.154.2" CV="55" PI="154" SI="2" default="0" item="CV55.154.2 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 2 Hoot/Fancy Ending" CVname="55.154.2" CV="55" PI="154" SI="2" default="0" item="CV55.154.2 hoot" mask="VXXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
 	  
-      <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3" default="15" item="CV55.154.3" include="">
+      <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3" default="15" item="CV55.154.3" 
+			include="500">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -4079,11 +2803,13 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3" default="15" item="CV55.154.3" include="">
+      <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3" default="15" item="CV55.154.3" 
+			include="5000,5048,5049,5050">
         <indexedVal/>
       </ivariable>
 	  
-      <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4" default="10" item="CV55.154.4" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4" default="10" item="CV55.154.4" mask="XVVVVVVV" 
+			include="500">
         <indexedVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -4091,36 +2817,26 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 3 Hoot/Fancy Ending" CVname="55.154.4" CV="55" PI="154" SI="4" default="0" item="CV55.154.4 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 3 Hoot/Fancy Ending" CVname="55.154.4" CV="55" PI="154" SI="4" default="0" item="CV55.154.4 hoot" mask="VXXXXXXX" 
+			include="500">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4" default="10" item="CV55.154.4" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4" default="10" item="CV55.154.4" mask="XVVVVVVV" 
+			include="5000,5048,5049,5050">
         <indexedVal max="127"/>
       </ivariable>
-      <ivariable label="Crossing Blast 3 Hoot/Fancy Ending" CVname="55.154.4" CV="55" PI="154" SI="4" default="0" item="CV55.154.4 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 3 Hoot/Fancy Ending" CVname="55.154.4" CV="55" PI="154" SI="4" default="0" item="CV55.154.4 hoot" mask="VXXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
 	  
-      <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5" default="15" item="CV55.154.5" include="">
+      <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5" default="15" item="CV55.154.5" 
+			include="500">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -4128,11 +2844,13 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5" default="15" item="CV55.154.5" include="">
+      <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5" default="15" item="CV55.154.5" 
+			include="5000,5048,5049,5050">
         <indexedVal/>
       </ivariable>
 	  
-      <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6" default="30" item="CV55.154.6" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6" default="30" item="CV55.154.6" mask="XVVVVVVV" 
+			include="500">
         <indexedVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -4140,94 +2858,41 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 4 Hoot/fFancy Ending" CVname="55.154.6" CV="55" PI="154" SI="6" default="0" item="CV55.154.6 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 4 Hoot/fFancy Ending" CVname="55.154.6" CV="55" PI="154" SI="6" default="0" item="CV55.154.6 hoot" mask="VXXXXXXX" 
+			include="500">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6" default="30" item="CV55.154.6" mask="XVVVVVVV" include="">
+      <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6" default="30" item="CV55.154.6" mask="XVVVVVVV" 
+			include="5000,5048,5049,5050">
         <indexedVal max="127"/>
       </ivariable>
-      <ivariable label="Crossing Blast 4 Hoot/Fancy Ending" CVname="55.154.6" CV="55" PI="154" SI="6" default="0" item="CV55.154.6 hoot" mask="VXXXXXXX" include="">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+      <ivariable label="Crossing Blast 4 Hoot/Fancy Ending" CVname="55.154.6" CV="55" PI="154" SI="6" default="0" item="CV55.154.6 hoot" mask="VXXXXXXX" 
+			include="5000,5048,5049,5050">
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
 	  
       <ivariable label="Status Report MPH" CVname="55.178.0" CV="55" PI="178" SI="0" default="1" item="CV55.178.0 MPH" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Status Report BEMF" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 BEMF" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Status Report PWM" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 PWM" mask="XXXXXVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Status Report Temp" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 Temp" mask="XXXXVXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Status Report Miles" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 Miles" mask="XXXVXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Status Report Volts" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 Volts" mask="XXVXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="On">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+			<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Sounds on Power Up" CVname="56.0" CV="56" PI="0" default="1" item="CV56.0 Power" mask="XXXXXXXV">
         <ienumVal>
@@ -4278,7 +2943,8 @@
       <ivariable label="RTC Minimum BEMF" CVname="56.5" CV="56" PI="5" default="1" item="CV56.5">
         <indexedVal max="7"/>
       </ivariable>
-      <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128" include="500" item="CV56.9">
+      <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128" 
+			include="500" item="CV56.9">
         <indexedVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -4286,13 +2952,14 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128" include="5000,5050" item="CV56.9">
+      <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128" item="CV56.9">
         <indexedVal/>
       </ivariable>
       <ivariable label="Very Low Speed Proportional Gain" CVname="56.18.0" CV="56" PI="18" SI="0" default="10" item="CV56.18.0">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Very Low Speed Intergral Gain" CVname="56.18.1" CV="56" PI="18" SI="1" include="5000,5050" default="2" item="CV56.18.1">
+      <ivariable label="Very Low Speed Intergral Gain" CVname="56.18.1" CV="56" PI="18" SI="1" 
+			include="5000,5048,5049,5050" default="2" item="CV56.18.1">
         <indexedVal/>
       </ivariable>
       <ivariable label="Very Low Speed Differential Gain" CVname="56.18.2" CV="56" PI="18" SI="2" default="100" item="CV56.18.2">
@@ -4301,7 +2968,8 @@
       <ivariable label="Low Speed Proportional Gain" CVname="56.19.0" CV="56" PI="19" SI="0" default="10" item="CV56.19.0">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Low Speed Intergral Gain" CVname="56.19.1" CV="56" PI="19" SI="1" include="5000,5050" default="2" item="CV56.19.1">
+      <ivariable label="Low Speed Intergral Gain" CVname="56.19.1" CV="56" PI="19" SI="1" 
+			include="5000,5048,5049,5050" default="2" item="CV56.19.1">
         <indexedVal/>
       </ivariable>
       <ivariable label="Low Speed Differential Gain" CVname="56.19.2" CV="56" PI="19" SI="2" default="20" item="CV56.19.2">
@@ -4310,7 +2978,8 @@
       <ivariable label="Medium Speed Proportional Gain" CVname="56.20.0" CV="56" PI="20" SI="0" default="10" item="CV56.20.0">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Medium Speed Intergral Gain" CVname="56.20.1" CV="56" PI="20" SI="1" include="5000,5050" default="2" item="CV56.20.1">
+      <ivariable label="Medium Speed Intergral Gain" CVname="56.20.1" CV="56" PI="20" SI="1" 
+			include="5000,5048,5049,5050" default="2" item="CV56.20.1">
         <indexedVal/>
       </ivariable>
       <ivariable label="Medium Speed Differential Gain" CVname="56.20.2" CV="56" PI="20" SI="2" default="20" item="CV56.20.2">
@@ -4319,7 +2988,8 @@
       <ivariable label="High Speed Proportional Gain" CVname="56.21.0" CV="56" PI="21" SI="0" default="10" item="CV56.21.0">
         <indexedVal/>
       </ivariable>
-      <ivariable label="High Speed Intergral Gain" CVname="56.21.1" CV="56" PI="21" SI="1" include="5000,5050" default="2" item="CV56.21.1">
+      <ivariable label="High Speed Intergral Gain" CVname="56.21.1" CV="56" PI="21" SI="1" 
+			include="55000,5048,5049,5050" default="2" item="CV56.21.1">
         <indexedVal/>
       </ivariable>
       <ivariable label="High Speed Differential Gain" CVname="56.21.2" CV="56" PI="21" SI="2" default="20" item="CV56.21.2">
@@ -4333,33 +3003,56 @@
       <ivariable label="Hardware Low Byte" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="CV56.254.3">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Sound Set" CVname="56.254.14" CV="56" PI="254" SI="14" include="500" readOnly="yes" item="CV56.254.14">
+      <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="yes" item="CV56.254.4">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Sound Set Number Low Byte" CVname="56.254.14" CV="56" PI="254" SI="14" include="5000,5050" readOnly="yes" item="CV56.254.14">
+      <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="CV56.254.5">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Sound Set Number High Byte" CVname="56.254.15" CV="56" PI="254" SI="15" include="5000,5050" readOnly="yes" item="CV56.254.15">
+      <ivariable label="Firmware Build" CVname="56.254.8" CV="56" PI="254" SI="8" readOnly="yes" item="CV56.254.8">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Firmware Modified Date.Month" CVname="56.254.16" CV="56" PI="254" SI="16" include="5000,5050" readOnly="yes" item="CV56.254.16">
+      <ivariable label="Firmware Build Date.Month" CVname="56.254.10" CV="56" PI="254" SI="10" readOnly="yes" item="CV56.254.10">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Firmware Modified Date.Day" CVname="56.254.17" CV="56" PI="254" SI="17" include="5000,5050" readOnly="yes" item="CV56.254.17">
+      <ivariable label="Firmware Build Date.Day" CVname="56.254.11" CV="56" PI="254" SI="11" readOnly="yes" item="CV56.254.11">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Firmware Modified Date.Year" CVname="56.254.18" CV="56" PI="254" SI="18" include="5000,5050" readOnly="yes" item="CV56.254.18">
+      <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12" readOnly="yes" item="CV56.254.12">
         <indexedVal/>
       </ivariable>
-
-<!-- CV 56.254 About Quantum Decoder -->
-<!-- QSI Product ID -->
-    <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
-
+      <ivariable label="Sound Set" CVname="56.254.14" CV="56" PI="254" SI="14" 
+			include="500" readOnly="yes" item="CV56.254.14">
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Sound Set Number Low Byte" CVname="56.254.14" CV="56" PI="254" SI="14" 
+			include="5000,5048,5049,5050" readOnly="yes" item="CV56.254.14">
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Sound Set Number High Byte" CVname="56.254.15" CV="56" PI="254" SI="15" 
+			include="5000,5048,5049,5050" readOnly="yes" item="CV56.254.15">
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Firmware Modified Date.Month" CVname="56.254.16" CV="56" PI="254" SI="16" 
+			include="55000,5048,5049,5050" readOnly="yes" item="CV56.254.16">
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Firmware Modified Date.Day" CVname="56.254.17" CV="56" PI="254" SI="17" 
+			include="5000,5048,5049,5050" readOnly="yes" item="CV56.254.17">
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Firmware Modified Date.Year" CVname="56.254.18" CV="56" PI="254" SI="18" 
+			include="5000,5048,5049,5050" readOnly="yes" item="CV56.254.18">
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
+        <indexedPairVal highCVname="56.254.4" factor="256"/>
+      </ivariable>
       <ivariable label="Hardware Profile" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="Hardware Profile">
         <indexedPairVal highCVname="56.254.2" factor="256"/>
       </ivariable>
-      <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" include="5000,5050" readOnly="yes">
+      <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" 
+			include="5000,5048,5049,5050" readOnly="yes">
         <indexedPairVal highCVname="56.254.15" factor="256"/>
       </ivariable>
 <!-- CV 56.255 Play Build Information (for ops mode) -->
