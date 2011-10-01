@@ -22,12 +22,12 @@
 <decoder>
 		<family name="Fleischmann Loco Decoders" mfg="Fleischmann" >
 			<model model="FMZ/Selectrix/DCC decoder" numOuts="2" numFns="8" maxMotorCurrent=".6A" formFactor="HO, N" >
-			<size length="16.5" width="9.0" height="4.0" units="mm"/>
-			<versionCV lowVersionID="41" highVersionID="52"/>
+			    <versionCV lowVersionID="41" highVersionID="52"/>
 				<output name="1" label="White"/>
 				<output name="2" label="Yellow"/>
 				<output name="RA" label="Accel-Decel"/>
 				<output name="YD" label="Shunting Spd"/>
+			    <size length="16.5" width="9.0" height="4.0" units="mm"/>
 			</model>
 		</family>
 
