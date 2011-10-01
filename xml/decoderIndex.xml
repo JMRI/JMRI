@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20111001-2310-jake on Sat Oct 01 16:11:03 PDT 2011 $Id$-->
+  <!--Written by JMRI version 20111001-2324-jake on Sat Oct 01 16:24:23 PDT 2011 $Id$-->
   <decoderIndex version="218">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -4673,6 +4673,9 @@
         <functionlabels>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
         </functionlabels>
+      </family>
+      <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
+        <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="06" />
