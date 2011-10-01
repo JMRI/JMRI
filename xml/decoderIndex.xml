@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20110918-2028-jake on Sun Sep 18 13:28:17 PDT 2011 $Id$-->
-  <decoderIndex version="216">
+  <!--Written by JMRI version 20111001-2310-jake on Sat Oct 01 16:11:03 PDT 2011 $Id$-->
+  <decoderIndex version="218">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -442,6 +442,48 @@
           <output name="9" label="Soundslot 6" />
           <output name="10" label="Soundslot 7" />
           <output name="11" label="Soundslot 8" />
+        </model>
+      </family>
+      <family name="Sound Decoder SL (v100 up)" mfg="CT Elektronik" file="CT_Elektronik_Sound_SL_v100.xml">
+        <model model="SL 51" numOuts="8" numFns="15" productID="SL51">
+          <versionCV lowVersionID="100" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Pad 5" />
+          <output name="6" label="Pad 6" />
+          <output name="7" label="Pad 7" />
+          <output name="8" label="Pad 8" />
+          <output name="Ra" label="Yard Mode" />
+          <output name="Se" label="Sound" />
+          <output name="Alt" label="Alt Snds" />
+          <output name="G1" label="Snd Slot 1/9" />
+          <output name="G2" label="Snd Slot 2/10" />
+          <output name="G3" label="Snd Slot 3/11" />
+          <output name="G4" label="Snd Slot 4/12" />
+          <output name="G5" label="Snd Slot 5/13" />
+          <output name="G6" label="Snd Slot 6/14" />
+          <output name="G7" label="Snd Slot 7/15" />
+          <output name="G8" label="Snd Slot 8/16" />
+        </model>
+        <model model="SL 75" numOuts="4" numFns="15" productID="SL75">
+          <versionCV lowVersionID="100" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="Ra" label="Yard Mode" />
+          <output name="Se" label="Sound" />
+          <output name="Alt" label="Alt Snds" />
+          <output name="G1" label="Snd Slot 1/9" />
+          <output name="G2" label="Snd Slot 2/10" />
+          <output name="G3" label="Snd Slot 3/11" />
+          <output name="G4" label="Snd Slot 4/12" />
+          <output name="G5" label="Snd Slot 5/13" />
+          <output name="G6" label="Snd Slot 6/14" />
+          <output name="G7" label="Snd Slot 7/15" />
+          <output name="G8" label="Snd Slot 8/16" />
         </model>
       </family>
       <family name="Sound Decoder SL (v.40 up)" mfg="CT Elektronik" file="CT_Elektronik_Sound_SL_v40.xml">
@@ -2143,8 +2185,27 @@
           <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
         </model>
       </family>
+      <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_FMZ_DCC.xml">
+        <model model="FMZ/Selectrix/DCC decoder" numOuts="2" numFns="8" maxMotorCurrent=".6A" formFactor="HO, N">
+          <versionCV lowVersionID="41" highVersionID="52" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="RA" label="Accel-Decel" />
+          <output name="YD" label="Shunting Spd" />
+          <size length="16.5" width="9.0" height="4.0" units="mm" />
+        </model>
+      </family>
       <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401" file="Fleischmann_Function.xml">
         <model model="686401" maxInputVolts="25 V" maxTotalCurrent="0.80 A" />
+      </family>
+      <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_Twin_DCC.xml">
+        <model model="DCC Twin mode decoder" numOuts="2" numFns="6" maxMotorCurrent="1.0A" formFactor="HO, N">
+          <versionCV lowVersionID="62" highVersionID="73" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="AC" label="Accel-Decel" />
+          <output name="SH" label="Shunting Spd" />
+        </model>
       </family>
       <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories" file="GFB_TT300.xml">
         <model model="TT300" lowVersionID="1" highVersionID="1" />
@@ -3571,6 +3632,8 @@
         <model model="QSI Revolution Articulated Steam" numFns="14" numOuts="0" productID="4050" />
         <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4000" />
         <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4004" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="4048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="4049" />
         <model model="BLI NW Class A" lowVersionID="7" numFns="14" numOuts="14" productID="400">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -3696,6 +3759,8 @@
         <model model="QSI Revolution RDC" numFns="14" numOuts="0" productID="1040" />
         <model model="QSI Magnum Diesel" numFns="14" numOuts="0" productID="1008" />
         <model model="QSI Magnum RDC" numFns="14" numOuts="0" productID="1041" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="1048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="1049" />
         <model model="Atlas B23-7" numFns="14" numOuts="14" productID="127">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -3939,6 +4004,18 @@
           <output name="4" label="" connection="other" />
         </model>
         <model model="CHC RS 18" numFns="14" numOuts="14" productID="123">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka Class 40" numFns="14" numOuts="14" productID="186">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka CPH/CTH Railmotor" numFns="14" numOuts="14" productID="175">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -4209,7 +4286,15 @@
       <family name="QSI Electric Ver. 7" mfg="QSIndustries" lowVersionID="3" highVersionID="7" file="QSI_Electric_Ver7.xml">
         <model model="QSI Revolution Electric" numFns="14" numOuts="0" productID="2050" />
         <model model="QSI Magnum Electric" numFns="14" numOuts="0" productID="2001" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="2048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="2049" />
         <model model="BLI GG-1" productID="200" numFns="14" numOuts="14">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo EF58" productID="202" numFns="14" numOuts="14">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -4243,6 +4328,8 @@
       <family name="QSI Gas Turbine Ver. 7" mfg="QSIndustries" lowVersionID="7" highVersionID="7" file="QSI_Gas_Turbine_Ver7.xml">
         <model model="QSI Revolution Turbine" numFns="14" numOuts="0" productID="5050" />
         <model model="QSI Magnum Turbine" numFns="14" numOuts="0" productID="5000" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="5048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="5049" />
         <model model="Lionel Veranda Turbine" numFns="14" numOuts="14" productID="500">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -4311,6 +4398,8 @@
       <family name="QSI Steam Ver. 7" mfg="QSIndustries" lowVersionID="7" file="QSI_Steam_ver7.xml">
         <model model="QSI Revolution Steam" numFns="14" numOuts="0" productID="3050" />
         <model model="QSI Magnum Steam" numFns="14" numOuts="0" productID="3010" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="3048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="3049" />
         <model model="Austrains C35 Class 4-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="326">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -10383,6 +10472,97 @@
           <output name="9" label="FO 7" />
           <output name="10" label="FO 8" />
           <size length="30" width="15" height="4.5" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX644v28.xml">
+        <model model="MX644D version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MX644C version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX645P16v28.xml">
+        <model model="MX645P16 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX16" numOuts="4" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX645v28.xml">
+        <model model="MX645 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MX645R version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MX645F version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MX645P22 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="30" width="15" height="4" units="mm" />
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX646v25.xml">
