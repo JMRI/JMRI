@@ -80,7 +80,7 @@
 			<longAddressVal/>
 		</variable>
 		
-		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" DEFAULT="0">
+		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
 			<enumVal>
 				<enumChoice choice="Forward"/>
 				<enumChoice choice="Reverse"/>
