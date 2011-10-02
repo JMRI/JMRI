@@ -199,6 +199,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 			Assert.assertEquals("There should be 6 files", 6, backupFileNames.length);
 			for (int j = 0; j < backupFileNames.length; j++) {
 				File file = new File(dirName + File.separator + backupDirectoryNames[i] + File.separator +  backupFileNames[j]);
+				Assert.assertNotNull("operations backup file", file);
 				Assert.assertTrue("delete file", file.delete());
 			}
 			// now delete the directory
