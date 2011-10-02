@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.FileUtil;
 
@@ -44,9 +45,11 @@ public class TrainScriptFrame extends OperationsFrame {
 
 	// script panels
 	JPanel pBuildScript = new JPanel();
+	JPanel pAfterBuildScript = new JPanel();
 	JPanel pMoveScript = new JPanel();
 	JPanel pTerminationScript = new JPanel();
 	JScrollPane buildScriptPane;
+	JScrollPane afterBuildScriptPane;
 	JScrollPane moveScriptPane;
 	JScrollPane terminationScriptPane;
 
@@ -56,9 +59,12 @@ public class TrainScriptFrame extends OperationsFrame {
 
 	// major buttons
 	JButton addBuildScriptButton = new JButton(rb.getString("AddScript"));
+	JButton addAfterBuildScriptButton = new JButton(rb.getString("AddScript"));
 	JButton addMoveScriptButton = new JButton(rb.getString("AddScript"));
 	JButton addTerminationScriptButton = new JButton(rb.getString("AddScript"));
+	
 	JButton runBuildScriptButton = new JButton(rb.getString("RunScripts"));
+	JButton runAfterBuildScriptButton = new JButton(rb.getString("RunScripts"));
 	JButton runMoveScriptButton = new JButton(rb.getString("RunScripts"));
 	JButton runTerminationScriptButton = new JButton(rb.getString("RunScripts"));
 	
@@ -73,6 +79,10 @@ public class TrainScriptFrame extends OperationsFrame {
      	buildScriptPane = new JScrollPane(pBuildScript);
       	buildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       	buildScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsBeforeBuild")));
+      	
+     	afterBuildScriptPane = new JScrollPane(pAfterBuildScript);
+      	afterBuildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+      	afterBuildScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsAfterBuild")));
 
      	moveScriptPane = new JScrollPane(pMoveScript);
       	moveScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -114,6 +124,9 @@ public class TrainScriptFrame extends OperationsFrame {
     	
 		// row 2
     	updateBuildScriptPanel();
+    	
+		// row 3
+    	updateAfterBuildScriptPanel();
     
 		// row 4
     	updateMoveScriptPanel();
@@ -128,17 +141,20 @@ public class TrainScriptFrame extends OperationsFrame {
 		
 		getContentPane().add(p1);
 		getContentPane().add(buildScriptPane);
+		getContentPane().add(afterBuildScriptPane);
 		getContentPane().add(moveScriptPane);
 		getContentPane().add(terminationScriptPane);
       	getContentPane().add(pB);
 		
 		// setup buttons
       	addButtonAction(addBuildScriptButton);
+      	addButtonAction(addAfterBuildScriptButton);
       	addButtonAction(addMoveScriptButton);
-		addButtonAction(addTerminationScriptButton);
+		addButtonAction(addTerminationScriptButton);		
       	addButtonAction(runBuildScriptButton);
+      	addButtonAction(runAfterBuildScriptButton);
       	addButtonAction(runMoveScriptButton);
-		addButtonAction(runTerminationScriptButton);
+		addButtonAction(runTerminationScriptButton);		
 		addButtonAction(saveTrainButton);
 		
 		if (_train != null){
@@ -174,6 +190,32 @@ public class TrainScriptFrame extends OperationsFrame {
     			JLabel pathname = new JLabel(scripts.get(i));
     			addItem(pBuildScript, removeBuildScripts, 0, i+1);
     			addItem(pBuildScript, pathname, 1, i+1);
+    		}
+    	}
+	}
+	
+	private void updateAfterBuildScriptPanel(){
+		pAfterBuildScript.removeAll();
+	   	pAfterBuildScript.setLayout(new GridBagLayout());
+    	addItem(pAfterBuildScript, addAfterBuildScriptButton, 0, 0);
+    	
+    	// load any existing train build scripts
+    	if (_train != null){
+    		List<String> scripts = _train.getAfterBuildScripts();
+    		if (scripts.size()>0)
+    			addItem(pAfterBuildScript, runAfterBuildScriptButton, 1, 0);
+    		for (int i=0; i<scripts.size(); i++){
+    			JButton removeAfterBuildScripts = new JButton(rb.getString("RemoveScript"));
+    			removeAfterBuildScripts.setName(scripts.get(i));
+    			removeAfterBuildScripts.addActionListener(new java.awt.event.ActionListener() {
+    				public void actionPerformed(java.awt.event.ActionEvent e) {
+    					buttonActionRemoveAfterBuildScript(e);
+    				}
+    			});
+    			addButtonAction(removeAfterBuildScripts);
+    			JLabel pathname = new JLabel(scripts.get(i));
+    			addItem(pAfterBuildScript, removeAfterBuildScripts, 0, i+1);
+    			addItem(pAfterBuildScript, pathname, 1, i+1);
     		}
     	}
 	}
@@ -241,6 +283,15 @@ public class TrainScriptFrame extends OperationsFrame {
 					packFrame();
 				}
 			}
+			if (ae.getSource() == addAfterBuildScriptButton){
+				log.debug("train add after build script button actived");
+				File f = selectFile();
+				if (f != null){
+					_train.addAfterBuildScript(FileUtil.getPortableFilename(f));
+					updateAfterBuildScriptPanel();
+					packFrame();
+				}
+			}
 			if (ae.getSource() == addMoveScriptButton){
 				log.debug("train add move script button actived");
 				File f = selectFile();
@@ -261,6 +312,9 @@ public class TrainScriptFrame extends OperationsFrame {
 			}
 			if (ae.getSource() == runBuildScriptButton){
 				runScripts(_train.getBuildScripts());				
+			}
+			if (ae.getSource() == runAfterBuildScriptButton){
+				runScripts(_train.getAfterBuildScripts());				
 			}
 			if (ae.getSource() == runMoveScriptButton){
 				runScripts(_train.getMoveScripts());				
@@ -283,6 +337,16 @@ public class TrainScriptFrame extends OperationsFrame {
 			log.debug("remove build script button actived "+rb.getName());
 			_train.deleteBuildScript(rb.getName());
 			updateBuildScriptPanel();
+			packFrame();
+		}
+	}
+	
+	public void buttonActionRemoveAfterBuildScript(java.awt.event.ActionEvent ae){
+		if (_train != null){
+			JButton rb = (JButton)ae.getSource();
+			log.debug("remove after build script button actived "+rb.getName());
+			_train.deleteAfterBuildScript(rb.getName());
+			updateAfterBuildScriptPanel();
 			packFrame();
 		}
 	}
@@ -341,6 +405,7 @@ public class TrainScriptFrame extends OperationsFrame {
 	
 	private void enableButtons(boolean enabled){
 		addBuildScriptButton.setEnabled(enabled);
+		addAfterBuildScriptButton.setEnabled(enabled);
 		addMoveScriptButton.setEnabled(enabled);
 		addTerminationScriptButton.setEnabled(enabled);
 		saveTrainButton.setEnabled(enabled);
@@ -351,8 +416,8 @@ public class TrainScriptFrame extends OperationsFrame {
  		pack();
  		if(getWidth()<600)
  			setSize(600, getHeight());
- 		if (getHeight()<500)
- 			setSize(getWidth(), 500);
+ 		if (getHeight()<Control.panelHeight)
+ 			setSize(getWidth(), Control.panelHeight);
 		setVisible(true);
     }
 	

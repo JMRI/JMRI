@@ -75,6 +75,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _loadOption = ALLLOADS;// train load restrictions
 	protected String _ownerOption = ALLOWNERS;// train owner name restrictions
 	protected List<String> _buildScripts = new ArrayList<String>(); // list of script pathnames to run before train is built
+	protected List<String> _afterBuildScripts = new ArrayList<String>(); // list of script pathnames to run after train is built
 	protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is moved
 	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
 	protected String _railroadName ="";		// optional railroad name for this train
@@ -1472,6 +1473,26 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Add a script to run after a train is built
+	 * @param pathname The script's pathname
+	 */
+	public void addAfterBuildScript(String pathname){
+		_afterBuildScripts.add(pathname);
+	}
+	
+	public void deleteAfterBuildScript(String pathname){
+		_afterBuildScripts.remove(pathname);
+	}
+	
+	/**
+	 * Gets a list of pathnames (scripts) to run after this train is built
+	 * @return A list of pathnames to run after this train is built
+	 */
+	public List<String> getAfterBuildScripts(){
+		return _afterBuildScripts;
+	}
+	
+	/**
 	 * Add a script to run when train is moved
 	 * @param pathname The script's pathname
 	 */
@@ -1621,12 +1642,14 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void build(){
 		reset();
-		// run any build scripts
+		// run before build scripts
 		runScripts(getBuildScripts());
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);
 		setPrinted(false);
 		setSwitchListStatus(UNKNOWN);
+		// run after build scripts
+		runScripts(getAfterBuildScripts());
 	}
 	
 	/**
@@ -2130,6 +2153,14 @@ public class Train implements java.beans.PropertyChangeListener {
     				addBuildScript(a.getValue());
     			}
     		}
+       		@SuppressWarnings("unchecked")
+    		List<Element> lab = e.getChild("scripts").getChildren("afterBuild");
+    		for (int i=0; i<lab.size(); i++){
+    			Element es = lab.get(i);
+    			if ((a = es.getAttribute("name")) != null ){
+    				addAfterBuildScript(a.getValue());
+    			}
+    		}
     		@SuppressWarnings("unchecked")
     		List<Element> lm = e.getChild("scripts").getChildren("move");
     		for (int i=0; i<lm.size(); i++){
@@ -2250,12 +2281,19 @@ public class Train implements java.beans.PropertyChangeListener {
         	e.setAttribute("carOwners", buf.toString());
         }
         // save list of scripts for this train
-        if (getBuildScripts().size()>0 || getMoveScripts().size()>0 || getTerminationScripts().size()>0){
+        if (getBuildScripts().size()>0 || getAfterBuildScripts().size()>0 || getMoveScripts().size()>0 || getTerminationScripts().size()>0){
         	Element es = new Element("scripts");
         	if (getBuildScripts().size()>0){ 
         		for (int i=0; i<getBuildScripts().size(); i++){
         			Element em = new Element("build");
         			em.setAttribute("name", getBuildScripts().get(i));
+        			es.addContent(em);
+        		}
+        	}
+        	if (getAfterBuildScripts().size()>0){ 
+        		for (int i=0; i<getAfterBuildScripts().size(); i++){
+        			Element em = new Element("afterBuild");
+        			em.setAttribute("name", getAfterBuildScripts().get(i));
         			es.addContent(em);
         		}
         	}
