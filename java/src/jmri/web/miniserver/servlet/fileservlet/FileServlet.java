@@ -2,7 +2,10 @@ package jmri.web.miniserver.servlet.fileservlet;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -287,7 +290,10 @@ public class FileServlet extends AbstractServlet {
             out.flush();
         }
     }
+
     
+	static DateFormat dfGMT;
+
     // Send standard HTTP response (with default values)
     protected void printHeader(PrintWriter out, String mimeType, String responseStatus) {
     	printHeader(out, mimeType, responseStatus, null, -1);
@@ -298,6 +304,11 @@ public class FileServlet extends AbstractServlet {
     }
     
     protected void printHeader(PrintWriter out, String mimeType, String responseStatus, Date fileDate, long fileSize) {
+
+    	if (dfGMT == null) {  //setup format once
+    		dfGMT = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss z");
+    		dfGMT.setTimeZone(TimeZone.getTimeZone("GMT"));
+    	}
     	String s;
     	s = "HTTP/1.1 " + responseStatus + "\r\n" +
     		"Server: JMRI-FileServlet\r\n" +
@@ -305,10 +316,10 @@ public class FileServlet extends AbstractServlet {
     		"Connection: Keep-Alive\r\n";
     	if (fileDate != null) {
     		Date now = new Date();
-    		s += "Date: " + now + "\r\n";
-    		s += "Last-Modified: " + fileDate + "\r\n";
-    		s += "Cache-Control: Public, max-age=" + 5*60 + "\r\n";  //max-age is in seconds
-    		s += "Expires: " + new Date(now.getTime() + 5*60*1000) + "\r\n";  //set expiration to 5 minutes in the future, in ms
+    		s += "Date: " + dfGMT.format(now) + "\r\n";
+    		s += "Last-Modified: " + dfGMT.format(fileDate) + "\r\n";
+    		s += "Cache-Control: public, max-age=" + 5*60 + "\r\n";  //max-age is in seconds
+    		s += "Expires: " + dfGMT.format(new Date(now.getTime() + 5*60*1000)) + "\r\n";  //set expiration to 5 minutes in the future, in ms
     	}
     	if (fileSize != -1) {
     		s += "Content-Length: " + fileSize + "\r\n";
