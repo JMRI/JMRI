@@ -324,7 +324,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         	return engine.getConsistName();
         }
         case LOCATIONCOLUMN: {
-        	String s ="";
+        	String s = engine.getStatus();
         	if (!engine.getLocationName().equals(""))
         		s = engine.getStatus() + engine.getLocationName() + " (" + engine.getTrackName() + ")";
         	return s;

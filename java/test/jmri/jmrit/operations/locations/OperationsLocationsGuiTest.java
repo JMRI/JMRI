@@ -140,7 +140,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// create two interchange tracks
 		f.trackNameTextField.setText("new interchange track");
 		f.trackLengthTextField.setText("321");
-		//f.addTrackButton.doClick();
+		//Assert.assertTrue("Add button is showing", f.addTrackButton.isShowing());
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd interchange track");
@@ -463,7 +463,9 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	public void testScheduleEditFrame(){
 		LocationManager lManager = LocationManager.instance();
 		Location l = lManager.getLocationByName("Test Loc C");
+		Assert.assertNotNull("Location exists", l);
 		Track t = l.getTrackByName("3rd siding track", null);
+		Assert.assertNotNull("Track exists", t);
 		ScheduleEditFrame f = new ScheduleEditFrame();
 		f.setTitle("Test Schedule Frame");
 		f.initComponents(null, l, t);

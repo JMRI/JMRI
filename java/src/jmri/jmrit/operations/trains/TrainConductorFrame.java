@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -40,6 +41,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
 	Train _train = null;
 	CarManager carManager = CarManager.instance();
+	TrainCommon tc = new TrainCommon();
 	
 	JScrollPane pickupPane;
 	JScrollPane setoutPane;
@@ -75,6 +77,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	
 	// check boxes
 	List<JCheckBox> carCheckBoxes = new ArrayList<JCheckBox>();
+	List<RollingStock> rollingStock = new ArrayList<RollingStock>();
 
 
 	public TrainConductorFrame() {
@@ -292,7 +295,9 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	}
 	
 	private void update(){
+		log.debug("update");
 		carCheckBoxes.clear();
+		removePropertyChangeListerners();
 		if (_train != null && _train.getRoute() != null){
 			pPickups.removeAll();
 			pSetouts.removeAll();
@@ -309,7 +314,6 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				List<String> carList = carManager.getByTrainDestinationList(_train);
 				List<String> routeList = _train.getRoute().getLocationsBySequenceList();
 				
-				TrainCommon tc = new TrainCommon();
 				// block pick ups by destination
 				for (int j = 0; j < routeList.size(); j++) {
 					RouteLocation rld = _train.getRoute().getLocationById(routeList.get(j));
@@ -317,35 +321,41 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 						Car car = carManager.getById(carList.get(k));
 						if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 								&& car.getRouteDestination() == rld) {
-							JCheckBox checkBox = new javax.swing.JCheckBox(tc.pickupCar(car));
+							rollingStock.add(car);
+							car.addPropertyChangeListener(this);
+							JCheckBox checkBox = new JCheckBox(tc.pickupCar(car));
 							addCheckBoxAction(checkBox);
 							pPickups.add(checkBox);
 							carCheckBoxes.add(checkBox);
-							moveButton.setEnabled(false);
 						}
 					}
 				}
-				pPickups.repaint();
-				// set outs
-				
+				// set outs				
 				for (int j=0; j<carList.size(); j++){
 					Car car = carManager.getById(carList.get(j));
 					if (car.getRouteDestination() == rl){
-						JCheckBox checkBox = new javax.swing.JCheckBox(tc.dropCar(car));
+						if (!rollingStock.contains(car)){
+							rollingStock.add(car);
+							car.addPropertyChangeListener(this);
+						}
+						JCheckBox checkBox = new JCheckBox(tc.dropCar(car));
 						addCheckBoxAction(checkBox);
 						pSetouts.add(checkBox);
 						carCheckBoxes.add(checkBox);
-						moveButton.setEnabled(false);
 					}
-				}
-				pSetouts.repaint();
+				}				
 				textStatus.setText(getStatus(rl));
+				moveButton.setEnabled(carCheckBoxes.size() == 0);
 			} else {
 				textStatus.setText(rb.getString("TrainTerminatesIn")+ " " + _train.getTrainTerminatesName());
 				moveButton.setEnabled(false);
 			}
-			selectButton.setEnabled(carCheckBoxes.size()>0);
-			clearButton.setEnabled(carCheckBoxes.size()>0);
+			pPickups.repaint();
+			pSetouts.repaint();
+			pPickups.validate();
+			pSetouts.validate();
+			selectButton.setEnabled(carCheckBoxes.size() > 0);
+			clearButton.setEnabled(carCheckBoxes.size() > 0);
 		}
 	}
 	
@@ -372,20 +382,33 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			setSize(getWidth(), Control.panelHeight);
 		setVisible(true);
     }
+    
+    private void removePropertyChangeListerners(){
+		for (int i=0; i<rollingStock.size(); i++){
+			rollingStock.get(i).removePropertyChangeListener(this);
+		}
+		rollingStock.clear();
+    }
 	
 	public void dispose() {
+		removePropertyChangeListerners();
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
 		}
 		super.dispose();
 	}
 
- 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		//if (Control.showProperty && log.isDebugEnabled()) 
+		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		update();
+		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
+				|| (e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
+				|| e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY))
+			update();
 	}
- 	
+
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(TrainConductorFrame.class.getName());
 }

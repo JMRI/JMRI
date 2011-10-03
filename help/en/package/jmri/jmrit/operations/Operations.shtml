@@ -492,7 +492,7 @@ lists use the same codes and descriptions as the csv manifests, plus the followi
 
 <P>There are two other options, "Enable Value Fields" and "Enable Radio Frequency Identification (RFID) Fields".
 You can use these fields to enter the value or cost of your rolling stock and the RFID if you're using them to
-track your rolling stock.</P>
+track your rolling stock.  You can also rename these fields if you wish and use them for other purposes.</P>
 
 
 <A NAME="PrintOptions"></A>

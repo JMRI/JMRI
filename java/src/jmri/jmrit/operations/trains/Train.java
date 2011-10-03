@@ -110,6 +110,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String STOPS_CHANGED_PROPERTY = "TrainStops";
 	public static final String TYPES_CHANGED_PROPERTY = "TrainTypes";
 	public static final String BUILT_CHANGED_PROPERTY = "TrainBuilt";
+	public static final String BUILT_YEAR_CHANGED_PROPERTY = "TrainBuiltYear";
 	public static final String BUILD_CHANGED_PROPERTY = "TrainBuild";
 	public static final String ROADS_CHANGED_PROPERTY = "TrainRoads";
 	public static final String LOADS_CHANGED_PROPERTY = "TrainLoads";
@@ -963,7 +964,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setBuiltStartYear(String year){
     	String old = _builtStartYear;
     	_builtStartYear = year;
-    	firePropertyChange (BUILT_CHANGED_PROPERTY, old, year);
+    	firePropertyChange (BUILT_YEAR_CHANGED_PROPERTY, old, year);
     }
     
     public String getBuiltStartYear(){
@@ -977,7 +978,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setBuiltEndYear(String year){
     	String old = _builtEndYear;
     	_builtEndYear = year;
-    	firePropertyChange (BUILT_CHANGED_PROPERTY, old, year);
+    	firePropertyChange (BUILT_YEAR_CHANGED_PROPERTY, old, year);
     }
     
     public String getBuiltEndYear(){
@@ -1564,7 +1565,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _built;
 		_built = built;
 		if (old != built){
-			firePropertyChange("built", old?"true":"false", built?"true":"false");
+			firePropertyChange(BUILT_CHANGED_PROPERTY, old?"true":"false", built?"true":"false");
 		}
 	}
 	
@@ -1966,7 +1967,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			// run move scripts
 			runScripts(getMoveScripts());
 		}else{
-			log.debug("Train ("+getName()+")terminated");
+			log.debug("Train ("+getName()+") terminated");
 			setStatus(TERMINATED);
 			setBuilt(false);
 			// run termination scripts

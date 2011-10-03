@@ -64,6 +64,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String TRAIN_CHANGED_PROPERTY = "rolling stock train";
 	public static final String LENGTH_CHANGED_PROPERTY = "rolling stock length";
 	public static final String TYPE_CHANGED_PROPERTY = "rolling stock type";
+	public static final String ROUTE_LOCATION_CHANGED_PROPERTY = "rolling stock route location";
 	
 	public static final int COUPLER = 4;		// draw bar length between rolling stocks
 
@@ -578,7 +579,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		RouteLocation old = _routeLocation;
 		_routeLocation = routeLocation;
 		if (old != routeLocation)
-			firePropertyChange("new route location", old, routeLocation);
+			firePropertyChange(ROUTE_LOCATION_CHANGED_PROPERTY, old, routeLocation);
 	}
 	
 	public RouteLocation getRouteLocation(){

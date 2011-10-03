@@ -409,7 +409,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	return c.getKernelName();
         }
         case LOCATIONCOLUMN: {
-        	String s ="";
+        	String s = c.getStatus();
         	if (!c.getLocationName().equals(""))
         		s = c.getStatus() + c.getLocationName() + " (" + c.getTrackName() + ")";
         	return s;
