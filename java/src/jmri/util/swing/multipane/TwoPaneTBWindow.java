@@ -83,7 +83,13 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
                 
     public void resetTopToPreferredSizes() { upDownSplitPane.resetToPreferredSizes(); }
     
+    protected boolean hideBottomPane = false;
+    
     public void hideBottomPane(boolean hide) {
+        if(hideBottomPane==hide){
+            return;
+        }
+        hideBottomPane = hide;
         if(hide){
             upDownSplitPane.setDividerLocation(1.0d);
         } else {
