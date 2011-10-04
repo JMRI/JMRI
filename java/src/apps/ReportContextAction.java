@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
+import javax.swing.Icon;
 
 import jmri.jmrit.mailreport.ReportContext;
 import jmri.util.JmriJFrame;
@@ -27,9 +30,17 @@ import jmri.util.JmriJFrame;
  *
  * @version         $Revision$
  */
-public class ReportContextAction extends AbstractAction {
+public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
 
-    public ReportContextAction() { super();}
+    public ReportContextAction(String s, WindowInterface wi) {
+    	super(s, wi);
+    }
+     
+ 	public ReportContextAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+    }
+
+    public ReportContextAction() { super(rb.getString("TitleContext"));}
 
     JTextArea pane;
     static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
@@ -91,6 +102,11 @@ public class ReportContextAction extends AbstractAction {
     }
     void addProperty(String prop) {
         addString(prop+": "+System.getProperty(prop)+"  ");
+    }
+    
+    // never invoked, because we overrode actionPerformed above
+    public JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
     
 }
