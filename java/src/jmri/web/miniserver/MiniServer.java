@@ -105,7 +105,7 @@ public class MiniServer extends NetworkServer {
                 String request = line.substring(Math.max(0, line.indexOf(" ")+1), line.lastIndexOf(" ")>0 ? line.lastIndexOf(" ") : line.length());
                 //    then drop anything past the ?
                 request = request.substring(0, request.lastIndexOf("?")>0 ? request.lastIndexOf("?") : request.length());
-                if (log.isDebugEnabled()) log.debug("Request ["+request+"]");
+                if (log.isDebugEnabled()) log.debug("Request is ["+request+"]");
             
                 Servlet s = pickServlet(request);
             
@@ -132,7 +132,7 @@ public class MiniServer extends NetworkServer {
         // Search for longest match
         String serviceClass;
         while (name.length()>0) {
-            if (log.isDebugEnabled()) log.debug("Check ["+name+"]");
+            if (log.isDebugEnabled()) log.debug("Checking services for ["+name+"]");
             try {
                 serviceClass = services.getString(name);
                 // found it!

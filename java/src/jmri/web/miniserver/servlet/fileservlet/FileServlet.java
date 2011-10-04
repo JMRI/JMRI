@@ -135,7 +135,7 @@ public class FileServlet extends AbstractServlet {
         // Seach for longest match
         while (name.length()>0) {
             // name is the piece we're going to replace
-            if (log.isDebugEnabled()) log.debug("Check ["+name+"]");
+            if (log.isDebugEnabled()) log.debug("Checking for prefix ["+name+"]");
             try {
                 String prefix = paths.getString(name);
                 // found it!
@@ -185,7 +185,7 @@ public class FileServlet extends AbstractServlet {
 
         // Search for longest match
         while (name.length()>0) {
-            if (log.isDebugEnabled()) log.debug("Check ["+name+"]");
+            if (log.isDebugEnabled()) log.debug("Checking mime type for ["+name+"]");
             try {
                 String type = types.getString(name);
                 // found it!
