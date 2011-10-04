@@ -29,7 +29,7 @@
 </div>
 
 <hr>
-<p><img src="images/Ops_Print.png" width="949" height="585" alt="print">&nbsp;</p>
+<p><img src="images/Ops_Print.png" width="900" height="545" alt="print">&nbsp;</p>
 <p>You can modify the how the program prints the train manifests and the amount of detail  that the build report provides.  </p>
 <h3><strong>Manifest  Options</strong><br>
   <br>
@@ -70,12 +70,18 @@
   </tr>
 </table>
 <p><strong>Manifest Comments</strong><br>
-  Each location can have an optional comment.  You can print these comments on your manifest if the 
+  Each location can have an optional comment.  You can print these comments on your manifest if they are selected.
+    <br>
   <input type="checkbox" name="checkbox" id="checkbox">
-<strong>  Location</strong> is selected. </p>
-<p>Select 
-  <input type="checkbox" name="checkbox2" id="checkbox2"> 
-<strong>Loads and Empties </strong>to show how many car loads and empties are in the train. </p>
+<strong>  Location</strong>. <br>
+<input type="checkbox" name="checkbox3" id="checkbox3"> 
+<strong>Route</strong><br>
+<input type="checkbox" name="checkbox2" id="checkbox2"> 
+<strong>Loads and Empties </strong>to show how many car loads and empties are in the train. <br>
+<input type="checkbox" name="checkbox4" id="checkbox4"> 
+<strong>12hr Format</strong><br>
+<input type="checkbox" name="checkbox5" id="checkbox5"> 
+<strong>Show Timetable</strong></p>
 <p><strong>Logo</strong><br>
   <input type="button" name="button3" id="button3" value="Add Logo"> 
   allows you to add a logo in the top right hand corner of your manifests and switch lists, press 

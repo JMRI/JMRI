@@ -37,40 +37,44 @@ to open the <a href="Ops_AddTrain.shtml"><strong>Add Train </strong></a>window. 
 <h3>Menu Bar</h3>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="15%" valign="top"><img src="images/Ops_TrainsMenu.png" width="238" height="252" alt="menu"></td>
+    <td width="15%" valign="top"><img src="images/Ops_TrainsMenu.png" width="254" height="281" alt="menu"></td>
     <td width="85%" align="left" valign="top"><ul>
       <li><strong>Tools</strong>
 <ul>
+  <li><strong><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></strong>- Opens the Options window.</li>
+  <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong>-- opens<strong> Print Options</strong> window that lets you set up your manifest printing.<strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong>-- opens<strong> Print Options</strong> window that lets you set up your manifest printing.</li>
+  <li><a href="Ops_TrainsModify.shtml"><strong>Modify Trains by Car Type</strong></a>-- opens <strong>Modify by Car Type</strong> window to allow you to modify a train.</li>
+  <li><strong><a href="Ops_Trains_Timetable.shtml">Timetable </a></strong>- opems the <strong>Timetable</strong> window.</li>
+  <li><strong>Copy Train</strong><br>
+    Copy Train dialog opens.
+    <br>
+    <img src="images/Ops_Trains_copy.png" width="400" height="150" alt="copy"><br>
+  </li>
+  <li><strong>Scripts</strong><strong></strong>- Opens the Scripts dialog.<br>
+    <table width="90%" border="0" cellspacing="1" cellpadding="2">
+      <tr>
+        <td width="46%" valign="top"><img src="images/Ops_Train_Scripts.png" width="292" height="191" alt="scripts"></td>
+        <td width="54%" valign="top"><p><strong>Run the following scripts at startup</strong><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="button" name="button2" id="button2" value="Add Script">
+        </p>
+          <p><strong>Run the following scripts at shutdown</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" name="button3" id="button3" value="Add Script">
+          </p>
+          <p>Press
+            <input type="button" name="button4" id="button4" value="Save">
+            to save your scripts.<br>
+          </p></td>
+      </tr>
+    </table>
+  </li>
   <li><strong>Print </strong>-- opens printer dialog for your default printer and prints the list of Trains<br>
     <img src="images/Ops_Trains_PrintList.png" width="723" height="247" alt="print"><br>
   </li>
           <li><strong>Preview </strong>-- opens  default printer preview window.<br>
             <img src="images/Ops_Trains_PrintPreview.png" width="673" height="266" alt="print preview"><br>
           </li>
-          <li><strong><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></strong>- Opens the Options window.</li>
-          <li><strong>Scripts</strong><strong></strong>- Opens the Scripts dialog.<br>
-            <table width="90%" border="0" cellspacing="1" cellpadding="2">
-              <tr>
-                <td width="46%" valign="top"><img src="images/Ops_Train_Scripts.png" width="292" height="191" alt="scripts"></td>
-                <td width="54%" valign="top"><p><strong>Run the following scripts at startup</strong><br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <input type="button" name="button2" id="button2" value="Add Script">
-                </p>
-                  <p><strong>Run the following scripts at shutdown</strong><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" name="button3" id="button3" value="Add Script">
-</p>
-                  <p>Press 
-                    <input type="button" name="button4" id="button4" value="Save">
-                    to save your scripts.<br>
-                  </p></td>
-              </tr>
-            </table>
-            <br>
-          </li>
-          <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong>-- opens<strong> Print Options</strong> window that lets you set up your manifest printing.</li>
-          <li><a href="Ops_TrainsModify.shtml"><strong>Modify Trains by Car Type</strong></a>-- opens <strong>Modify by Car Type</strong> window to allow you to modify a train.</li>
-          <li><strong><a href="Ops_Trains_Timetable.shtml">Timetable </a></strong>- opems the <strong>Timetable</strong> window.</li>
           </ul>
       </li>
       <li><strong>Windows</strong> -- standard JMRI&reg; format.</li>
@@ -220,6 +224,8 @@ and all the Reports and Train Manifest are previewed, then you may print the des
   <strong>Preview Manifests</strong> isn't  selected; or to a preview window if the
   <input name="checkbox12" type="checkbox" id="checkbox16" checked>
   <strong>Preview Manifests</strong> is selected.  The build report can print out different levels of detail, from minimal  to very detailed. See the Settings section <a href="Ops_PrintOptions.shtml">Build  Report Details</a> for more information on how to change the build report  detail level.</p>
+<p>The program now confirms during the build that all of the cars in a kernal have the same departure location and track.</p>
+<p>The program will wait for the scripts to complete prior to building a train.</p>
 <h4>Building Multiple Trains for a Session</h4>
 <p>Most operating sessions require more than one train to keep your  operators busy. The correct way to do this is to build and print all of  the trains needed before terminating them. So if you need a dozen trains  for a session, you must build twelve trains before you terminate any one  train. Terminating a train tells the program that the engines and cars  in that particular train have been delivered to their final locations  and can be used again when building new trains. So always build all,  print all, THEN terminate each train after completing its run! It is  okay to build all trains, print all train, and then use the
   <input type="submit" name="button37" id="button45" value="Save Builds">

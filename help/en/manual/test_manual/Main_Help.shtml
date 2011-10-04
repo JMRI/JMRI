@@ -17,7 +17,6 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -52,7 +51,7 @@
 <p>Opens the<strong> JMRI Context</strong> window that shows the configuration setting for your DecoderPro installation.</p>
 <p align="center"><img src="images/Main_Help_03.png" width="778" height="321" alt="Context"></p>
 <p align="left"><strong>System Console...</strong></p>
-<p align="left">Opens the JMRI System console window that displays the Java Execution activity.</p>
+<p align="left">Opens the JMRI System console window that displays the Java Execution activity. Now Right Click Context menu to copy to clipboard, wrap messages, change color scheme.</p>
 <p><img src="images/Main_Help_02.png" width="800" height="382" alt="console">
 <p><strong>Upload Debugging Info...</strong>
 <p>Opens the <strong>Upload Debugging Info</strong> Window

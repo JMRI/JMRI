@@ -32,14 +32,22 @@
 </div>
 
 <hr>
-<p>The Add Train window is opened from the 
-  <input type="button" name="button45" id="button45" value="Add"> 
-on the Trains window.</p>
 <p>The Edit Train window is opened from the 
   <input type="button" name="button46" id="button46" value="Edit"> 
-  found in each train in the Train window, only the Title bar is different.
+  found in each train in the Train window, only the Title bar is different.</p>
+<p><img src="images/Ops_AddTrainEditTitle.png" width="646" height="103" alt="title"><br>
+From the <strong>Tool</strong> Menu, the<strong> Train Conductor</strong> may be opened. It can also be opened by Right Click on the train icon and select <strong>Conductor</strong>.<br>
 </p>
-<p><img src="images/Ops_AddTrainEditTitle.png" width="646" height="103" alt="title"></p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td><img src="images/Ops_AddTrain_conductor.png" width="274" height="386" alt="Conductor"></td>
+    <td><img src="images/Ops_train_conductor.png" width="600" height="373" alt="conductor"></td>
+  </tr>
+</table>
+<p>You may now aquire a manifest for a train in the Conductor window which will update as the train moves. The window includes a check list for the work needed at each location. </p>
+<p>The Add Train window is opened from the
+  <input type="button" name="button45" id="button45" value="Add">
+on the Trains window.</p>
 <p><img src="images/Ops_AddTrain.png" width="638" height="744" alt="add trains"></p>
 <p><strong>Name</strong>
   <input type="text" name="textfield" id="textfield">
