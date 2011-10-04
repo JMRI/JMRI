@@ -79,15 +79,27 @@ public class PanelEditor extends Editor implements ItemListener {
     public PanelEditor() {}
 
     public PanelEditor(String name) {
-        super(name);
+        super(name, false, true);
         init(name);
     }
 
     protected void init(String name) {
         _debug = log.isDebugEnabled();
+        Runnable r = new Runnable() {
+          public void run() {
+            try {
+            // Build resource catalog and load CatalogTree.xml now
+                jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
+                catalog.createNewBranch("IFJAR", "Program Directory", "resources");
+            } catch (Exception ex) {
+                log.error("Error in trying to setup preferences " + ex.toString());
+            }
+          }
+        };
+        Thread thr = new Thread(r);
+        thr.start();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
         // common items
         JPanel common = new JPanel();
         common.setLayout(new FlowLayout());
@@ -253,11 +265,7 @@ public class PanelEditor extends Editor implements ItemListener {
         p1.add(p2);
         p1.add(_addIconBox);
         contentPane.add(p1);
-
-        // Build resource catalog and load CatalogTree.xml now
-        jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
-        catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-
+        
         // edit, position, control controls
         {
             // edit mode item
@@ -349,6 +357,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     return this;
                 }
             }.init(this));
+        
         // and don't destroy the window
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         // move this editor panel off the panel's position

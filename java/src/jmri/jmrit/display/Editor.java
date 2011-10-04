@@ -164,12 +164,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _debug = log.isDebugEnabled();
     }
 
-    public Editor(String name) {
-        super(name);
+    public Editor(String name, boolean saveSize, boolean savePosition) {
+        super(name, saveSize, savePosition);
         setName(name);
         _debug = log.isDebugEnabled();
         _defaultToolTip = new ToolTip(null, 0, 0);
         setVisible(false);
+    }
+    
+    public Editor(String name) {
+        this(name, true, true);
     }
 
     public void loadFailed() {
