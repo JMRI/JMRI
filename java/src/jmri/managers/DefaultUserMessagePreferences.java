@@ -1192,6 +1192,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
 
     File file;
     public void readUserPreferences() {
+        if(System.getProperty("org.jmri.Apps.configFilename")==null){
+            log.warn("No Configuration file set, unable to save or load user preferences");
+            return;
+        }
         File configFileName = new File(System.getProperty("org.jmri.Apps.configFilename"));
         String userprefsfilename;
         if (!configFileName.isAbsolute()) {
