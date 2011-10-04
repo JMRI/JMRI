@@ -5,6 +5,9 @@ package jmri.jmrit.symbolicprog;
 import jmri.util.davidflanagan.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import java.awt.event.*;
+import jmri.jmrit.roster.RosterEntry;
+import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -19,11 +22,12 @@ import javax.swing.*;
  */
 public class PrintCvAction  extends AbstractAction {
 
-    public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview) {
+    public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview, RosterEntry pRoster) {
         super(actionName);
         mModel = pModel;
         mFrame = pParent;
         isPreview = preview;
+        mRoster = pRoster;
     }
 
     /**
@@ -31,10 +35,32 @@ public class PrintCvAction  extends AbstractAction {
      */
     PaneProgFrame mFrame;
     CvTableModel mModel;
+    RosterEntry mRoster;
     /**
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
+    
+        
+    public void printInfoSection(HardcopyWriter w) {
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
+        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
+        w.write(icon.getImage(), new JLabel(icon));
+        w.setFontStyle(Font.BOLD);
+        //Add a number of blank lines
+        int height = icon.getImage().getHeight(null);
+        int blanks = (height-w.getLineAscent())/w.getLineHeight();
+        
+        try{
+            for(int i = 0; i<blanks; i++){
+                String s = "\n";
+                w.write(s,0,s.length());
+            }
+        } catch (IOException e) { log.warn("error during printing: "+e);
+        }
+        mRoster.printEntry(w);
+        w.setFontStyle(Font.PLAIN);
+    }
 
     public void actionPerformed(ActionEvent e) {
 
@@ -44,7 +70,7 @@ public class PrintCvAction  extends AbstractAction {
             writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5, isPreview);
 
             // print the decoder info section, etc
-            mFrame.printInfoSection(writer);
+            printInfoSection(writer);
             String s = "\n\n";
             writer.write(s, 0, s.length());
 

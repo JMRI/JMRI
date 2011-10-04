@@ -147,12 +147,12 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         JMenu printSubMenu = new JMenu(rbt.getString("MenuPrint"));
         printSubMenu.add(new PrintAction(rbt.getString("MenuPrintAll"), this, false));
-        printSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintCVs"), cvModel, this, false));
+        printSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintCVs"), cvModel, this, false, _rosterEntry));
         fileMenu.add(printSubMenu);
         
         JMenu printPreviewSubMenu = new JMenu(rbt.getString("MenuPrintPreview"));
         printPreviewSubMenu.add(new PrintAction(rbt.getString("MenuPrintPreviewAll"), this, true));
-        printPreviewSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintPreviewCVs"), cvModel, this, true));
+        printPreviewSubMenu.add(new PrintCvAction(rbt.getString("MenuPrintPreviewCVs"), cvModel, this, true, _rosterEntry));
         fileMenu.add(printPreviewSubMenu);
 
         // add "Import" submenu; this is heirarchical because
@@ -1142,119 +1142,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) log.debug("doWrite found nothing to do");
         return false;
     }
-
-    public void doPrintPanes(boolean preview) {
-        //choosePrintItems();
-        HardcopyWriter w = null;
-        try {
-            w = new HardcopyWriter(this, getRosterEntry().getId(), 10, .8, .5, .5, .5, preview);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
-        printInfoSection(w);
-
-        if (_flPane.includeInPrint())
-            _flPane.printPane(w);
-        for (int i=0; i<paneList.size(); i++) {
-            if (log.isDebugEnabled()) log.debug("start printing page "+i);
-            PaneProgPane pane = (PaneProgPane)paneList.get(i);
-            if (pane.includeInPrint())
-                pane.printPane(w);
-        }
-        w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber(),w.getCharactersPerLine() + 1);
-        w.close();
-    }
     
     public void printPanes(final boolean preview) {
-        final JFrame frame = new JFrame("Select Items to Print");
-        JPanel p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
-        JLabel l1 = new JLabel("Select the items that you");
-        p1.add(l1);
-        l1 = new JLabel("wish to appear in the print out");
-        p1.add(l1);
-        JPanel select = new JPanel();
-        final Hashtable<JCheckBox, PaneProgPane> printList = new Hashtable<JCheckBox, PaneProgPane>();
-        select.setLayout(new BoxLayout(select, BoxLayout.PAGE_AXIS));
-        final JCheckBox funct = new JCheckBox("Function List");
-        funct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _flPane.includeInPrint(funct.isSelected());
-            }
-        });
-        _flPane.includeInPrint(false);
-        select.add(funct);
-        for (int i=0; i<paneList.size(); i++){
-            final PaneProgPane pane = (PaneProgPane) paneList.get(i);
-            pane.includeInPrint(false);
-            final JCheckBox item = new JCheckBox(paneList.get(i).getName());
-            printList.put(item, pane);
-            item.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    pane.includeInPrint(item.isSelected());
-                }
-            });
-            select.add(item);
-        }
-        final JCheckBox selectAll = new JCheckBox("Select All");
-        selectAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _flPane.includeInPrint(selectAll.isSelected());
-                funct.setSelected(selectAll.isSelected());
-                Enumeration<JCheckBox> en = printList.keys();
-                while (en.hasMoreElements()) {
-                    JCheckBox check = en.nextElement();
-                    printList.get(check).includeInPrint(selectAll.isSelected());
-                    check.setSelected(selectAll.isSelected());
-                }
-            }
-        });
-        select.add(selectAll);
-        JButton cancel = new JButton("Cancel");
-        JButton ok = new JButton("Okay");
+        PrintRosterEntry pre = new PrintRosterEntry(_rosterEntry, paneList, _flPane, _rMPane, this);
+        pre.printPanes(preview);
         
-        cancel.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    frame.dispose();
-                }
-            });
-        ok.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    doPrintPanes(preview);
-                    frame.dispose();
-                }
-            });
-        JPanel buttons = new JPanel();
-        buttons.add(cancel);
-        buttons.add(ok);
-        p1.add(select);
-        p1.add(buttons);
-        
-        frame.add(p1);
-        frame.pack();
-        frame.setVisible(true);
-    
-    }
-    
-    public void printInfoSection(HardcopyWriter w) {
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
-        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        w.write(icon.getImage(), new JLabel(icon));
-        w.setFontStyle(Font.BOLD);
-        //Add a number of blank lines
-        int height = icon.getImage().getHeight(null);
-        int blanks = (height-w.getLineAscent())/w.getLineHeight();
-        
-        try{
-            for(int i = 0; i<blanks; i++){
-                String s = "\n";
-                w.write(s,0,s.length());
-            }
-        } catch (IOException e) { log.warn("error during printing: "+e);
-        }
-        _rosterEntry.printEntry(w);
-        w.setFontStyle(Font.PLAIN);
     }
 
     boolean _read = true;
