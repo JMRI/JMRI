@@ -327,5 +327,30 @@ $(document).ready(function() {
 	//setup pages based on selected items
 	$sendXMLIOList('<xmlio>' + $getXMLListCommands(true) + '</xmlio>');
 
+	//setup swipes for next and previous pages
+	$('div.ui-page').live("swipeleft", function(){
+		var nextpage = $(this).next('div[data-role="page"]'); //get next page
+		if (nextpage.length <= 0) { //if at end, get first
+			nextpage = $($('div[data-role="page"]')[0]);
+		}
+		if (nextpage.length > 0) { //perform swipe
+			$.mobile.changePage(nextpage, {
+				transition: "slide",
+				reverse: false
+			});
+		}
+	});
+	$('div.ui-page').live("swiperight", function(){
+		var prevpage = $(this).prev('div[data-role="page"]'); //get prev page
+		if (prevpage.length <= 0) { //if at beginning, get last
+			prevpage = $($('div[data-role="page"]')[$('div[data-role="page"]').size()-1]);
+		}
+		if (prevpage.length > 0) { //perform swipe
+			$.mobile.changePage(prevpage, {
+				transition: "slide",
+				reverse: true
+			});
+		}
+	});
 
 });

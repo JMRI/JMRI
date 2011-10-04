@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- See JMRIMobile.js for program notes and TODO list  --->
+<!-- See JMRIMobile.js for program notes and TODO list ===============================-->
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
@@ -14,7 +14,7 @@
 
 <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
 
-<!-- Generic jquery templates for list items -------------------------------------------->
+<!-- Generic jquery templates for list items ==========================================-->
 <script id='genItemTemplate' type='text/html'>
     <li id='name-${safeName}' data-icon='false' >
         <a class='ui-link-inherit two-line-item' href="javascript:$sendChange('${type}','${name}','${nextValue}');">
@@ -31,7 +31,7 @@
         <img class='ui-li-thumb' src='/prefs/resources/${imageIconName}'><h3 class='ui-li-heading'>${name}</h3></a></li>
 </script>
 
-<!-- Generic jquery templates for pages -------------------------------------------->
+<!-- Generic jquery templates for pages ==========================================-->
 <script id='genPageTemplate' type='text/html'>
   <div id='type-${type}' data-url='type-${type}' data-role='page' data-theme='b'>
     <div data-role='header' data-id='header'>
@@ -81,7 +81,7 @@
 </script>
 </head>
 
-<!--actual html for settings page -------------------------->
+<!--actual html for settings page ==========================================-->
 <body>
 
 	<div data-role='page' id='settings' data-theme='b'>
@@ -91,7 +91,7 @@
       <div class='errorMessage'></div>    
 		</div>
 		<div data-role='content' data-theme='b'>
-			<a href='/'  rel='external'><img src='/dist/resources/logo.gif' style='float: right;'> </a>
+			<a href='/'  rel='external'><img src='/dist/resources/logo.gif' style='float: right;' alt='JMRI logo'> </a>
 			<h2>JMRI Mobile</h2>
 			This is an early alpha version of a browser-based UI for controlling a layout with JMRI.  
 			<div id='includes' data-role="fieldcontain">
