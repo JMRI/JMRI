@@ -41,6 +41,7 @@
     <node><name>Print Roster</name>
         <mnemonic>p</mnemonic>
         <node><name>Entry</name>
+            <current>printloco</current>
         </node>
         <node><name>Summary</name>
         <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
@@ -50,6 +51,7 @@
     <node><name>Print Preview Roster</name>
         <mnemonic>v</mnemonic>
         <node><name>Entry</name>
+            <current>printpreviewloco</current>
         </node>
         <node><name>Summary</name>
             <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>

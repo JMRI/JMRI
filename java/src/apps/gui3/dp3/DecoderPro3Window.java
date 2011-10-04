@@ -941,9 +941,9 @@ public class DecoderPro3Window
         } else if(args[0].equals("exportloco")){
              if (checkIfEntrySelected()) exportLoco();
         } else if(args[0].equals("basicprogrammer")){
-             if (checkIfEntrySelected()) startProgrammer(null, re, "Basic");
+             if (checkIfEntrySelected()) startProgrammer(null, re, programmer1);
         } else if(args[0].equals("comprehensiveprogrammer")){
-             if (checkIfEntrySelected()) startProgrammer(null, re, "Comprehensive");
+             if (checkIfEntrySelected()) startProgrammer(null, re, programmer2);
         } else if(args[0].equals("editthrottlelabels")){
              if (checkIfEntrySelected()) startProgrammer(null, re, "dp3"+File.separator+"ThrottleLabels");
         } else if(args[0].equals("editrostermedia")){
@@ -1075,6 +1075,8 @@ public class DecoderPro3Window
         firePropertyChange("closewindow", "setEnabled", true);
     }
     protected void printLoco(boolean boo){
+        PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers"+File.separator+programmer2+".xml");
+        pre.printPanes(boo);
 
     }
 
