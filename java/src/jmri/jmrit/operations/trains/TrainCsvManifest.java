@@ -82,12 +82,15 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			}
 			if (!routeLocationName.equals(previousRouteLocationName)){
 				addLine(fileOut, LN+locationName);
-				if (r == 0){addLine(fileOut, DT+train.getDepartureTime());
-				} else if (!rl.getDepartureTime().equals("")){
-					addLine(fileOut, DTR+rl.getDepartureTime());
-				} else {
+				if (r != 0)
 					addLine(fileOut, AT+train.getExpectedArrivalTime(rl));
-				}
+				if (r == 0)
+					addLine(fileOut, DT+train.getDepartureTime());
+				else if (!rl.getDepartureTime().equals(""))
+					addLine(fileOut, DTR+rl.getDepartureTime());
+				else
+					addLine(fileOut, EDT+train.getExpectedDepartureTime(rl));
+					
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled()){
 					Location l = locationManager.getLocationByName(rl.getName());

@@ -291,6 +291,37 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return expected arrival time
 	 */
 	public String getExpectedArrivalTime(RouteLocation routeLocation){
+		int minutes = getExpectedTravelTimeInMinutes(routeLocation);
+		if (minutes == -1)
+			return "-1";
+		log.debug("Calculate arrival time for train (" +getName()+ ") at ("+routeLocation.getName()+"), minutes from departure: "+minutes);
+		// TODO use fast clock to get current time vs departure time
+		// for now use relative
+		return parseTime(minutes);
+	}
+	
+	public String getExpectedDepartureTime(RouteLocation routeLocation){
+		int minutes = getExpectedTravelTimeInMinutes(routeLocation);
+		if (minutes == -1)
+			return "-1";
+		log.debug("Calculate departure time for train (" +getName()+ ") at ("+routeLocation.getName()+")");
+		
+		CarManager carManager = CarManager.instance();
+		List<String> carList = carManager.getByTrainList(this);
+		// add any work at this location
+		for (int j=0; j<carList.size(); j++){
+			Car car = carManager.getById(carList.get(j));
+			if (car.getRouteLocation() == routeLocation && !car.getTrackName().equals("")){
+				minutes += Setup.getSwitchTime();
+			}
+			if (car.getRouteDestination() == routeLocation){
+				minutes += Setup.getSwitchTime();
+			}
+		}		
+		return parseTime(minutes);
+	}
+	
+	private int getExpectedTravelTimeInMinutes(RouteLocation routeLocation){
 		int minutes = 0;
 		if (!isTrainInRoute()){
 			minutes += _departureTime.get(Calendar.MINUTE); 
@@ -343,11 +374,10 @@ public class Train implements java.beans.PropertyChangeListener {
 				}
 			}
 		}
-		if (minutes == -1)
-			return "-1";
-		log.debug("Calculate arrival time for train (" +getName()+ ") at ("+routeLocation.getName()+"), minutes from departure: "+minutes);
-		// TODO use fast clock to get current time vs departure time
-		// for now use relative
+		return minutes;
+	}
+	
+	private String parseTime(int minutes){
 		int hours = 0;
 		int days = 0;
 				
