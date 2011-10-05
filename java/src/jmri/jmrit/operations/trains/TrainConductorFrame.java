@@ -3,8 +3,11 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,6 +26,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -62,6 +66,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	JButton moveButton = new JButton(rb.getString("Move"));
 	JButton selectButton = new JButton(rb.getString("Select"));
 	JButton clearButton = new JButton(rb.getString("Clear"));
+	JButton setButton = new JButton(rb.getString("Set"));
 
 	// radio buttons
 	
@@ -76,8 +81,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	JPanel pLocationComment = new JPanel();
 	
 	// check boxes
-	List<JCheckBox> carCheckBoxes = new ArrayList<JCheckBox>();
+	Hashtable<String, JCheckBox> carCheckBoxes = new Hashtable<String, JCheckBox>();
 	List<RollingStock> rollingStock = new ArrayList<RollingStock>();
+	
+	// flags
+	boolean setMode = false;
 
 
 	public TrainConductorFrame() {
@@ -196,6 +204,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
       	pWork.setBorder(BorderFactory.createTitledBorder(rb.getString("Work")));      	
        	addItem(pWork, selectButton, 0, 0);
        	addItem(pWork, clearButton, 1, 0);
+       	addItem(pWork, setButton, 2, 0);
        	
        	// row 14b
       	JPanel pButtons = new JPanel();
@@ -220,6 +229,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	addButtonAction(selectButton);
        	addButtonAction(clearButton);
 		addButtonAction(moveButton);
+		addButtonAction(setButton);
 		
 		// tool tips
 		
@@ -271,32 +281,66 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			selectCheckboxes(false);
 		if (ae.getSource() == moveButton)
 			_train.move();
+		if (ae.getSource() == setButton){
+			setMode = !setMode;	// toggle setMode
+			update();
+		}
+	}
+	
+	CarSetFrame csf = null;
+	public void setCarButtonActionPerfomed(java.awt.event.ActionEvent ae) {
+		String name = ((JButton)ae.getSource()).getName();
+		log.debug("Set button for car "+ name);
+		Car car = carManager.getById(name);
+       	if (csf != null)
+       		csf.dispose();
+   		csf = new CarSetFrame();
+		csf.initComponents();
+    	csf.loadCar(car);
+    	csf.setTitle(rb.getString("TitleCarSet"));
+    	csf.setVisible(true);
+    	csf.setExtendedState(Frame.NORMAL);
 	}
 	
 	protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		// confirm that all work is done
-		for (int i=0; i<carCheckBoxes.size(); i++){
-			JCheckBox checkBox = carCheckBoxes.get(i);
+		check();
+	}
+	
+	private void check(){
+		Enumeration<JCheckBox> en =carCheckBoxes.elements();
+		while (en.hasMoreElements()){
+			JCheckBox checkBox = en.nextElement();
 			if (!checkBox.isSelected()){
 				moveButton.setEnabled(false);
+				setButton.setEnabled(true);
 				return;
 			}
 		}
 		// all selected, work done!
 		moveButton.setEnabled(true);
+		setButton.setEnabled(false);
+		setMode = false;
 	}
 	
 	private void selectCheckboxes(boolean enable){
-		for (int i=0; i < carCheckBoxes.size(); i++){
-			JCheckBox checkBox = carCheckBoxes.get(i);
+		Enumeration<JCheckBox> en =carCheckBoxes.elements();
+		while (en.hasMoreElements()){
+			JCheckBox checkBox = en.nextElement();
 			checkBox.setSelected(enable);
 		}
 		moveButton.setEnabled(enable);
+		setButton.setEnabled(!enable);
+	}
+	
+	private void clearAndUpdate(){
+		carCheckBoxes.clear();
+		setMode = false;
+		update();
 	}
 	
 	private void update(){
-		log.debug("update");
-		carCheckBoxes.clear();
+		log.debug("update, setMode "+setMode);
 		removePropertyChangeListerners();
 		if (_train != null && _train.getRoute() != null){
 			pPickups.removeAll();
@@ -323,10 +367,30 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 								&& car.getRouteDestination() == rld) {
 							rollingStock.add(car);
 							car.addPropertyChangeListener(this);
-							JCheckBox checkBox = new JCheckBox(tc.pickupCar(car));
-							addCheckBoxAction(checkBox);
-							pPickups.add(checkBox);
-							carCheckBoxes.add(checkBox);
+							if (carCheckBoxes.containsKey("p"+car.getId())){
+								if (setMode && !carCheckBoxes.get("p"+car.getId()).isSelected()){
+							      	JPanel pSet = new JPanel();
+							      	pSet.setLayout(new GridBagLayout());							      	
+									JButton carSetButton = new JButton(rb.getString("Set"));
+									carSetButton.setName(car.getId());
+									carSetButton.addActionListener(new java.awt.event.ActionListener() {
+										public void actionPerformed(java.awt.event.ActionEvent e) {
+											setCarButtonActionPerfomed(e);
+										}
+									});
+									JLabel label = new JLabel(car.toString());
+									addItem(pSet, label, 0,0);
+									addItem(pSet, carSetButton, 1,0);							
+									pPickups.add(pSet);
+								} else {
+									pPickups.add(carCheckBoxes.get("p"+car.getId()));
+								}
+							} else {
+								JCheckBox checkBox = new JCheckBox(tc.pickupCar(car));
+								addCheckBoxAction(checkBox);
+								pPickups.add(checkBox);
+								carCheckBoxes.put("p"+car.getId(), checkBox);
+							}
 						}
 					}
 				}
@@ -338,14 +402,34 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 							rollingStock.add(car);
 							car.addPropertyChangeListener(this);
 						}
-						JCheckBox checkBox = new JCheckBox(tc.dropCar(car));
-						addCheckBoxAction(checkBox);
-						pSetouts.add(checkBox);
-						carCheckBoxes.add(checkBox);
+						if (carCheckBoxes.containsKey("s"+car.getId())){
+							if (setMode && !carCheckBoxes.get("s"+car.getId()).isSelected()){
+						      	JPanel pSet = new JPanel();
+						      	pSet.setLayout(new GridBagLayout());							      	
+								JButton carSetButton = new JButton(rb.getString("Set"));
+								carSetButton.setName(car.getId());
+								carSetButton.addActionListener(new java.awt.event.ActionListener() {
+									public void actionPerformed(java.awt.event.ActionEvent e) {
+										setCarButtonActionPerfomed(e);
+									}
+								});
+								JLabel label = new JLabel(car.toString());
+								addItem(pSet, label, 0,0);
+								addItem(pSet, carSetButton, 1,0);								
+								pSetouts.add(pSet);
+							} else {
+							pSetouts.add(carCheckBoxes.get("s"+car.getId()));
+							}
+						} else {
+							JCheckBox checkBox = new JCheckBox(tc.dropCar(car));
+							addCheckBoxAction(checkBox);
+							pSetouts.add(checkBox);
+							carCheckBoxes.put("s"+car.getId(), checkBox);
+						}
 					}
 				}				
 				textStatus.setText(getStatus(rl));
-				moveButton.setEnabled(carCheckBoxes.size() == 0);
+				check();
 			} else {
 				textStatus.setText(rb.getString("TrainTerminatesIn")+ " " + _train.getTrainTerminatesName());
 				moveButton.setEnabled(false);
@@ -356,7 +440,15 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			pSetouts.validate();
 			selectButton.setEnabled(carCheckBoxes.size() > 0);
 			clearButton.setEnabled(carCheckBoxes.size() > 0);
+			setButtonText();
 		}
+	}
+	
+	private void setButtonText(){
+		if (setMode)
+			setButton.setText(rb.getString("Done"));
+		else
+			setButton.setText(rb.getString("Set"));
 	}
 	
 	private String getStatus(RouteLocation rl){
@@ -403,9 +495,16 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
 		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
-				|| (e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
+				|| e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY))
+			clearAndUpdate();
+		if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
 				|| e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY))
+			// remove car from list
+			if (e.getSource().getClass().equals(Car.class)){
+				Car car = (Car)e.getSource();
+				carCheckBoxes.remove("p"+car.getId());
+				carCheckBoxes.remove("s"+car.getId());
+			}
 			update();
 	}
 
