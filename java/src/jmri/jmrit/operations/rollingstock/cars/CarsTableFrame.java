@@ -219,6 +219,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		toolMenu.add(new TrainsByCarTypeAction());
 		toolMenu.add(new CarsSetFrameAction(carsModel, carsTable));
 		menuBar.add(toolMenu);
+		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
     	

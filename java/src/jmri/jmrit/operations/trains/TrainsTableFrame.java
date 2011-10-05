@@ -234,6 +234,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
 
 		menuBar.add(toolMenu);
+		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
     
         // add help menu to window

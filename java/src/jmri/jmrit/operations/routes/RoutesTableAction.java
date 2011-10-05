@@ -23,7 +23,7 @@ public class RoutesTableAction extends AbstractAction {
     	super(s);
     }
 
-    RoutesTableFrame f = null;
+    static RoutesTableFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a route table frame
     	if (f == null || !f.isVisible()){

@@ -184,6 +184,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		toolMenu.add(new EngineRosterMenu("Roster", EngineRosterMenu.MAINMENU, this));
 		toolMenu.add(new NceConsistEngineAction(rb.getString("MenuItemNceSync"), this));
 		menuBar.add(toolMenu);
+		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true);
     	

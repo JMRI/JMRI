@@ -329,8 +329,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			JCheckBox checkBox = en.nextElement();
 			checkBox.setSelected(enable);
 		}
-		moveButton.setEnabled(enable);
-		setButton.setEnabled(!enable);
+		setMode = false;
+		update();
 	}
 	
 	private void clearAndUpdate(){
@@ -433,6 +433,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			} else {
 				textStatus.setText(rb.getString("TrainTerminatesIn")+ " " + _train.getTrainTerminatesName());
 				moveButton.setEnabled(false);
+				setButton.setEnabled(false);
 			}
 			pPickups.repaint();
 			pSetouts.repaint();

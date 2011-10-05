@@ -89,6 +89,7 @@ public class RoutesTableFrame extends OperationsFrame {
 		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy")));
 		toolMenu.add(new SetTrainIconPositionAction(rb.getString("MenuSetTrainIcon")));
 		menuBar.add(toolMenu);
+		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
  
 		// add help menu to window

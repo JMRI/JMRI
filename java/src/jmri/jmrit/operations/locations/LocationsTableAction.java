@@ -24,7 +24,7 @@ public class LocationsTableAction extends AbstractAction {
     	super(s);
     }
 
-    LocationsTableFrame f = null;
+    static LocationsTableFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a location table frame
     	if (f == null || !f.isVisible()){

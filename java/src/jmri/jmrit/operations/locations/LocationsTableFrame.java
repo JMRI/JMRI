@@ -95,6 +95,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
 		toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), null));
 		menuBar.add(toolMenu);
+		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
     	

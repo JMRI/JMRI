@@ -346,6 +346,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));
 		toolMenu.add(new ResetAction(rb.getString("ResetOperations")));
 		menuBar.add(toolMenu);
+		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 

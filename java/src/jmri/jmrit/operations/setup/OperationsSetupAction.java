@@ -22,7 +22,7 @@ public class OperationsSetupAction extends AbstractAction {
     	super(s);
     }
 
-    OperationsSetupFrame f = null;
+    static OperationsSetupFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
     	if (f == null || !f.isVisible()){

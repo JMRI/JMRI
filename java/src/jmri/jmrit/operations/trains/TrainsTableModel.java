@@ -229,6 +229,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     		focusTef = false;
     		tef.requestFocus();
     	}
+    	// more funkyness for the conductor window.
+    	if (tcf != null){
+    		tcf.requestFocus();
+    		tcf = null;
+    	}
        	if (row >= sysList.size())
     		return "ERROR row "+row;
     	Train train = manager.getTrainById(sysList.get(row));
@@ -344,6 +349,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	}
     }
     
+    TrainConductorFrame tcf = null;
     private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<String, TrainConductorFrame>();
     private void lauchConductor(Train train){
     	TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
@@ -355,6 +361,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	} else {
     		f.setExtendedState(Frame.NORMAL); 
     	}
+    	tcf = f;
     }
 
     public void propertyChange(PropertyChangeEvent e) {

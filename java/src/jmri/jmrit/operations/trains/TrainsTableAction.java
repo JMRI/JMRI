@@ -22,7 +22,7 @@ public class TrainsTableAction extends AbstractAction {
     	super(s);
     }
 
-    TrainsTableFrame f = null;
+    static TrainsTableFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a train table frame
     	if (f == null || !f.isVisible()){
