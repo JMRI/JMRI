@@ -57,7 +57,7 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 					JMenuItem selectedItem = (JMenuItem)e.getSource();
 					// Since different windows can have the same name, look for the position of the selected menu item
 					int itemCount = getItemCount();
-					// Skip posible other items at the top of the menu (e.g. "Minimize")
+					// Skip possible other items at the top of the menu (e.g. "Minimize")
 					int firstItem = itemCount - framesList.size();
 					for (int i = firstItem; i < itemCount; i++) {
 						if(selectedItem == getItem(i)) {
@@ -65,6 +65,7 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 							// Retrieve the corresponding window
 							if(i < framesList.size()) {	// "i" should always be < framesList.size(), but it's better to make sure
 								framesList.get(i).setVisible(true);
+								framesList.get(i).setExtendedState(Frame.NORMAL);
 								return;
 							}
 						}
