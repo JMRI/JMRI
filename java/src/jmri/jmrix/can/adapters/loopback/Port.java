@@ -17,6 +17,7 @@ import java.io.DataOutputStream;
 public class Port extends AbstractSerialPortController {
 
     public Port() {
+        mPort="(None)";
     }
 
     public void configure() {

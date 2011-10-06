@@ -24,6 +24,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public ConnectionConfigXml() {
         super();
     }
+    
+    static java.util.ResourceBundle rb = 
+        java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
     /**
      * A simulated connection needs no extra information, so
@@ -39,10 +42,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
         if (adapter.getCurrentOption1Setting()!=null)
             e.setAttribute("option1", adapter.getCurrentOption1Setting());
-
+        if (adapter.getCurrentPortName()!=null)
+            e.setAttribute("port", adapter.getCurrentPortName());
+        else e.setAttribute("port", rb.getString("noneSelected"));
         if (adapter.getManufacturer()!=null)
             e.setAttribute("manufacturer", adapter.getManufacturer());
-
+        if (adapter.getDisabled())
+            e.setAttribute("disabled", "yes");
+        else e.setAttribute("disabled", "no");
         e.setAttribute("class", this.getClass().getName());
 
         return e;
@@ -55,7 +62,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
       */
     public boolean load(Element e) {
     	boolean result = true;
-        adapter = new Port();
+        adapter = Port.instance();
         // simulator has fewer options in the XML, so implement
         // just needed ones       
         if (e.getAttribute("option1")!=null) {
@@ -66,6 +73,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         if (e.getAttribute("manufacturer")!=null) {
             String mfg = e.getAttribute("manufacturer").getValue();
             adapter.setManufacturer(mfg);
+        }
+        if (e.getAttribute("port")!=null) {
+            String portName = e.getAttribute("port").getValue();
+            adapter.setPort(portName);
+        }
+        
+        if (e.getAttribute("disabled")!=null) {
+            String yesno = e.getAttribute("disabled").getValue();
+                if ( (yesno!=null) && (!yesno.equals("")) ) {
+                    if (yesno.equals("no")) adapter.setDisabled(false);
+                    else if (yesno.equals("yes")) adapter.setDisabled(true);
+                }
         }
         
         adapter.configure();

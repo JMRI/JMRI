@@ -1,6 +1,7 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.can.adapters.loopback;
+import java.util.Vector;
 
 import java.util.ResourceBundle;
 
@@ -30,7 +31,14 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String name() { return "CAN Simulation"; }
 
     protected void setInstance() {
-        adapter = new Port();
+        adapter = Port.instance();
+    }
+    
+    @SuppressWarnings("unchecked")
+	protected Vector<String> getPortNames() {
+        Vector<String> portNameVector = new Vector<String>();
+        portNameVector.addElement("(None)");
+        return portNameVector;
     }
     
     @Override

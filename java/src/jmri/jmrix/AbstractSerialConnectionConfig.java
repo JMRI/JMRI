@@ -168,7 +168,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             portBox.setRenderer(new ComboBoxRenderer());
         }
         else {
-            
             Vector<String> v2 = getPortNames();
             if (v2.equals(originalList)){
                 log.debug("List of valid Ports has not changed, therefore we will not refresh the port list");
@@ -226,7 +225,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
     
     String value;
-
    
     public void loadDetails(final JPanel details) {
         _details = details;
@@ -591,7 +589,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
     
     @SuppressWarnings("unchecked")
-	private static Vector<String> getPortNames() {
+	protected Vector<String> getPortNames() {
     	//reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen
         Vector<String> portNameVector = new Vector<String>();
@@ -611,12 +609,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     
     static class SerialPortFriendlyName{
         
-        String serialPort = "";
         String serialPortFriendly = "";
         boolean valid = false;
         
         SerialPortFriendlyName(String port, String Friendly){
-            serialPort = port;
             serialPortFriendly = Friendly;
             if(serialPortFriendly==null)
                 serialPortFriendly=port;
