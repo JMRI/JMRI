@@ -32,6 +32,10 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     
     public boolean allowMultipleAdditions() { return false;  }
     
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
+        return prefix+typeLetter()+curAddress;
+    }
+    
    /**
     * A method that creates an array of systems names to allow bulk
     * creation of turnouts.
