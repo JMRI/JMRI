@@ -18,8 +18,8 @@ public class PositionableIcon extends PositionableLabel {
 
     protected Hashtable <String, NamedIcon> _iconMap;
     protected String  _iconFamily;
-    protected double _scale = 1.0;
-    protected int _rotate = 0;
+    protected double _scale = 1.0;			// getScale, getDegrees should come from net result found in one of the icons
+    protected int _rotate = 0;				// setScale, setDegrees need these members to accumulate successive changes
 
     public PositionableIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -121,14 +121,6 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
-    public double getScale(){
-        return _scale;
-    }
-
-    public int getDegrees(){
-        return _rotate;
-    }
-    
     protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map,
                                                              PositionableLabel pos) {
         Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();

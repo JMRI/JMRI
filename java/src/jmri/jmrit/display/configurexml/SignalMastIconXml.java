@@ -37,7 +37,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
-        element.setAttribute("degrees", ""+p.getDegrees());
+        element.setAttribute("degrees", String.valueOf(p.getDegrees()));
         element.setAttribute("scale", String.valueOf(p.getScale()));
         element.setAttribute("imageset", p.useIconSet());
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalMastIconXml");
