@@ -64,6 +64,12 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
     public void dispose(){
        adaptermemo.dispose();
     }
+    
+    public void setDisabled(boolean disabled) { 
+        mDisabled = disabled;
+        if(adaptermemo!=null)
+            adaptermemo.setDisabled(disabled);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSimulatorPortController.class.getName());
 

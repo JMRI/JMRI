@@ -76,6 +76,12 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
        adaptermemo=null;
        log.error("Dispose called");
     }
+    
+    public void setDisabled(boolean disabled) { 
+        mDisabled = disabled;
+        if(adaptermemo!=null)
+            adaptermemo.setDisabled(disabled);
+    }
 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetNetworkPortController.class.getName());
