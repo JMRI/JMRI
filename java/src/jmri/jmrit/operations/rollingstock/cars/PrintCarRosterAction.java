@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import jmri.jmrit.operations.OperationsFrame;
@@ -87,6 +88,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         String load = "";
         String kernel = "";
         String value = "";
+        String rfid = "";
         
 		ownerMaxLen = 5;
 		if (!printCarLoad.isSelected() && !printCarKernel.isSelected() && !printCarColor.isSelected())
@@ -100,7 +102,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         		Car car = manager.getById(cars.get(i));
 
         		location = "";     		
-        		if (!car.getLocationName().equals("")){
+        		if (printCarLocation.isSelected() && !car.getLocationName().equals("")){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
         		} else if (printCarsWithLocation.isSelected())
         			continue;	// car doesn't have a location skip
@@ -138,11 +140,13 @@ public class PrintCarRosterAction  extends AbstractAction {
         		if (printCarBuilt.isSelected())
         			built = padAttribute(car.getBuilt().trim(), Control.MAX_LEN_STRING_BUILT_NAME);
            		if (printCarValue.isSelected())
-           			value = padAttribute(car.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);          		
+           			value = padAttribute(car.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE); 
+           		if (printCarRfid.isSelected())
+           			rfid = padAttribute(car.getRfid().trim(), Control.MAX_LEN_STRING_ATTRIBUTE); 
 
         		String s = number + road + type
         		+ length + weight + color + load + kernel
-        		+ owner + built + value
+        		+ owner + built + value + rfid
         		+ location;
     			if (s.length() > numberCharPerLine)
     				s = s.substring(0, numberCharPerLine);
@@ -167,7 +171,8 @@ public class PrintCarRosterAction  extends AbstractAction {
     	+ (printCarOwner.isSelected()?padAttribute(rb.getString("Owner"),ownerMaxLen):"")
     	+ (printCarBuilt.isSelected()?rb.getString("Built")+" ":"")
     	+ (printCarValue.isSelected()?Setup.getValueLabel()+"        ":"")
-    	+ rb.getString("Location")
+    	+ (printCarRfid.isSelected()?Setup.getRfidLabel()+"        ":"")
+    	+ (printCarLocation.isSelected()?rb.getString("Location"):"")
     	+ newLine;
     	writer.write(s);
     }
@@ -189,7 +194,9 @@ public class PrintCarRosterAction  extends AbstractAction {
     JCheckBox printCarBuilt = new JCheckBox(rb.getString("PrintCarBuilt"));
     JCheckBox printCarLoad = new JCheckBox(rb.getString("PrintCarLoad"));
     JCheckBox printCarKernel = new JCheckBox(rb.getString("PrintKernel"));
-    JCheckBox printCarValue = new JCheckBox(rb.getString("PrintValue"));
+    JCheckBox printCarValue = new JCheckBox(MessageFormat.format(rb.getString("PrintCar"),new Object[]{Setup.getValueLabel()}));
+    JCheckBox printCarRfid = new JCheckBox(MessageFormat.format(rb.getString("PrintCar"),new Object[]{Setup.getRfidLabel()}));
+    JCheckBox printCarLocation = new JCheckBox(rb.getString("PrintCarLocation"));
     JCheckBox printSpace = new JCheckBox(rb.getString("PrintSpace"));
     JCheckBox printPage = new JCheckBox(rb.getString("PrintPage"));
     
@@ -217,6 +224,9 @@ public class PrintCarRosterAction  extends AbstractAction {
     		pPanel.add(printCarBuilt);
     		if (Setup.isValueEnabled())
     			pPanel.add(printCarValue);
+    		if (Setup.isRfidEnabled())
+    			pPanel.add(printCarRfid);
+    		pPanel.add(printCarLocation);
 			pPanel.add(printSpace);
 			pPanel.add(printPage);
     		    		
@@ -230,6 +240,8 @@ public class PrintCarRosterAction  extends AbstractAction {
        		printCarOwner.setSelected(false);
     		printCarBuilt.setSelected(false);
     		printCarValue.setSelected(false);
+    		printCarRfid.setSelected(false);
+    		printCarLocation.setSelected(true);
     		printSpace.setSelected(false);
     		printPage.setSelected(false);
     		

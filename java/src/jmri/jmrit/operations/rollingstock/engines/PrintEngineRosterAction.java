@@ -75,6 +75,7 @@ public class PrintEngineRosterAction  extends AbstractAction {
         String consist = "";
         String built = "";
         String value = "";
+        String rfid = "";
         String location;
  
         List<String> engines = panel.getSortByList();
@@ -84,7 +85,9 @@ public class PrintEngineRosterAction  extends AbstractAction {
 					+ "\t" + rb.getString("Model") + "\t     "
 					+ rb.getString("Type") + "      " + rb.getString("Length")
 					+ " " + (panel.sortByConsist.isSelected()?rb.getString("Consist")+"     ":rb.getString("Owner"))
-					+ " " + (panel.sortByValue.isSelected()?Setup.getValueLabel()+"       ":rb.getString("Built"))
+					+ (panel.sortByValue.isSelected()?" " +padAttribute(Setup.getValueLabel(), Control.MAX_LEN_STRING_ATTRIBUTE):"")
+					+ (panel.sortByRfid.isSelected()?" " +padAttribute(Setup.getRfidLabel(), Control.MAX_LEN_STRING_ATTRIBUTE):"")
+					+ ((!panel.sortByValue.isSelected() && !panel.sortByRfid.isSelected())?" " +rb.getString("Built"):"")
 					+ " " + rb.getString("Location")
 					+ newLine;
         	writer.write(s);
@@ -105,6 +108,8 @@ public class PrintEngineRosterAction  extends AbstractAction {
          		
     			if (panel.sortByValue.isSelected())
     				value = padAttribute(engine.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
+    			else if (panel.sortByRfid.isSelected())
+    				rfid = padAttribute(engine.getRfid().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
     			else
     				built = padAttribute(engine.getBuilt().trim(), Control.MAX_LEN_STRING_BUILT_NAME);
     			
@@ -113,7 +118,7 @@ public class PrintEngineRosterAction  extends AbstractAction {
         			location = engine.getLocationName() + " - " + engine.getTrackName();
         		}
          		          		
-				s = number + road + model + type + length + owner + consist+ value + built + location;			
+				s = number + road + model + type + length + owner + consist+ value + rfid + built + location;			
     			if (s.length() > numberCharPerLine)
     				s = s.substring(0, numberCharPerLine);
         		writer.write(s+newLine);
