@@ -3,6 +3,7 @@
 package jmri.jmrix.cmri.serial.sim;
 
 import javax.swing.*;
+import java.util.Vector;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**
@@ -42,10 +43,19 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
 		details.add(b);
 						
-		b.addActionListener(new NodeConfigAction());		
+		b.addActionListener(new NodeConfigAction());
         
     }
+    
+    @SuppressWarnings("unchecked")
+	protected Vector<String> getPortNames() {
+        Vector<String> portNameVector = new Vector<String>();
+        portNameVector.addElement("(None)");
+        return portNameVector;
+    }
 
+    public boolean isPortAdvanced() { return true; }
+    
     public String name() { return "Simulator"; }
 
     protected void setInstance() { adapter = SimDriverAdapter.instance(); }
