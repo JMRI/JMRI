@@ -127,6 +127,11 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					}
 					//include a "safe" version of name for use as ID   TODO: other cleanup needed?
 					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_");
+					
+					//htmlencode the icon filename TODO: improve this to handle more exceptions
+					if ($currentItem.imageIconName) {
+						$currentItem.imageIconName = $currentItem.imageIconName.replace(/&/g, "%26").replace(/ /g, "%20").replace(/#/g, "%23");
+					}
 
 					//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 					if (!$("#type-" + $type).length) {

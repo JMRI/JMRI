@@ -1,5 +1,8 @@
 package jmri.web.miniserver.servlet.fileservlet;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URLDecoder;
 import java.text.DateFormat;
@@ -7,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
@@ -50,6 +54,19 @@ public class FileServlet extends AbstractServlet {
         if (rqst.equals("/")) rqst = "/index.html";  //if no path passed, set to index.html
 
         if (log.isDebugEnabled()) log.debug("request is : "+rqst);
+        
+        //extract and save resize parameters if found (-1 if not)
+        int maxHeight = -1;
+        try {
+			maxHeight = java.lang.Integer.parseInt(getParmFromString("MaxHeight", rqst));
+		} catch (NumberFormatException e) {
+		}
+        int maxWidth  = -1;
+        try {
+			maxWidth = java.lang.Integer.parseInt(getParmFromString("MaxWidth", rqst));
+		} catch (NumberFormatException e) {
+		}
+
         String filename = getFilename(URLDecoder.decode(rqst.substring(1),  java.nio.charset.Charset.defaultCharset().toString())); // drop leading /
         if (log.isDebugEnabled()) log.debug("resolve to filename: "+filename);
         
@@ -62,12 +79,18 @@ public class FileServlet extends AbstractServlet {
         // now reply
         if (! isDirectory(filename) ) {
         	File tempFile = new File(filename);
+        	String mimeType = getMimeType(filename);
         	if (tempFile.exists()) {
-        		printHeader(out, getMimeType(filename), "200 OK", 
-        				new Date(tempFile.lastModified()), tempFile.length());
-        		copyFileContent(filename, res.getOutputStream());
+        		//if this is an image and resize requested, send resized image
+        		if (mimeType.startsWith("image/") && (maxHeight>0 || maxWidth>0)) {
+        			printHeader(out, mimeType, "200 OK", new Date(tempFile.lastModified())); //TODO: determine and send file size
+        			copyResizedImage(filename, res.getOutputStream(), maxHeight, maxWidth);
+        		} else {  //just copy the bytes out
+        			printHeader(out, mimeType, "200 OK", new Date(tempFile.lastModified()), tempFile.length());
+        			copyFileContent(filename, res.getOutputStream());
+        		}
         	} else {
-        		printHeader(out, getMimeType(filename), "404 Not Found");
+        		printHeader(out, mimeType, "404 Not Found");
         	}
         } else {
             if (filename.endsWith("/")) {
@@ -107,6 +130,28 @@ public class FileServlet extends AbstractServlet {
     Object[] args;
 
 
+    /** 
+     * Return parm value from request string
+     */
+    String getParmFromString(String parmName, String request) {
+
+    	//parm list starts with "?"
+    	String r[] = request.split("\\?");
+    	if (r.length < 2) { 
+    		return null;  //no parms, nothing to search 
+    	} 
+    	String ps[] = r[1].toLowerCase().split("&"); //parms are separated by "&"
+    	for (String p : ps) {
+    		String kv[] = p.split("="); //each parm is "key=value"
+    		if (kv.length == 2) {
+    			if (kv[0].equals(parmName.toLowerCase())) {
+    				return kv[1];
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
     /** 
      * Check if the file is a directory
      */
@@ -225,7 +270,38 @@ public class FileServlet extends AbstractServlet {
         if (thisPath.startsWith(canonicalPrefs)) return true;
         return false;
     }
-    
+
+    //send a resized proportional copy of the requested file, not exceeding maxheight and maxwidth  
+    protected void copyResizedImage(String filename, OutputStream out, int maxHeight, int maxWidth) throws IOException{
+    	try {
+    		//get the original file from disk
+    		BufferedImage orig = ImageIO.read(new File(filename));
+    		//default to current values if max not passed
+    		if (maxHeight <= 0) { maxHeight = orig.getHeight();}
+    		if (maxWidth  <= 0) { maxWidth  = orig.getWidth();}
+    		//calculate new height and width, keeping proportions
+    		float ratio = Math.min((maxWidth / (float)orig.getWidth()), (maxHeight / (float)orig.getHeight()));
+    		int calcHeight = Math.round(orig.getHeight() * ratio);
+    		int calcWidth  = Math.round(orig.getWidth()  * ratio);
+    		//write out the resized image
+    		ImageIO.write(createResizedCopy(orig, calcWidth, calcHeight), "jpg", out);
+    	} finally {
+    		if (out != null) {
+    			out.flush();
+    		}
+    	}
+		if (log.isDebugEnabled()) log.debug("Resized and sent [" + filename + "].");
+    }
+
+    BufferedImage createResizedCopy(BufferedImage originalImage, int scaledWidth, int scaledHeight) {
+        BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = scaledBI.createGraphics();
+        g.setComposite(AlphaComposite.Src);
+        g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
+        g.dispose();
+        return scaledBI;
+    }
+
     
     /* this code based on http://java.sun.com/docs/books/performance/1st_edition/html/JPIOPerformance.fm.html  */
     protected void copyFileContent(String from, OutputStream out) throws IOException{
@@ -253,7 +329,7 @@ public class FileServlet extends AbstractServlet {
           if (out != null) {
              out.flush();
           }
-          if (log.isDebugEnabled()) log.debug("Sent " + bytesWritten + " bytes as " + from + ".");
+          if (log.isDebugEnabled()) log.debug("Sent " + bytesWritten + " bytes as [" + from + "].");
        }
     }
 

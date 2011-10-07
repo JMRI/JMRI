@@ -44,7 +44,7 @@
 				<xsl:if test="(@iconFilePath != '__noIcon.jpg') and (@iconFilePath != '')">
 					<xsl:element name="img">
 						<xsl:attribute name="src">/prefs/resources/<xsl:value-of
-							select="@iconFilePath" /></xsl:attribute>
+							select="@iconFilePath" />?MaxHeight=40</xsl:attribute>
 						<xsl:attribute name="height">40</xsl:attribute>
 						<xsl:attribute name="alt">No icon</xsl:attribute>
 						<xsl:attribute name="title">Click to open throttle</xsl:attribute>
