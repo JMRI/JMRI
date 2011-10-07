@@ -50,6 +50,10 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         // OK, make
         return new CbusSensor(systemName, userName);
     }
+    
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
+        return prefix+typeLetter()+curAddress;
+    }
 
     // ctor has to register for LocoNet events
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
