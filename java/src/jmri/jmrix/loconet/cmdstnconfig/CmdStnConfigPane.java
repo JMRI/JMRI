@@ -85,11 +85,11 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     try {
         name = memo.getSlotManager().getCommandStationType();
         // get first token
-        name = name.substring(0, name.indexOf(' '));
+        if ( name.indexOf(' ') != -1) name = name.substring(0, name.indexOf(' '));
         log.debug("match /"+name+"/");
         rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig."+name+"options");
     } catch (Exception e) {
-        log.warn("Failed to find properties for /"+name+"/ command station type");
+        log.warn("Failed to find properties for /"+name+"/ command station type", e);
         rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions");
     }
 
