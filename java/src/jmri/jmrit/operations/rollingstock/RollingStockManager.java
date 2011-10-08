@@ -467,12 +467,26 @@ public class RollingStockManager {
     	case BY_DESTINATION: return rs.getDestinationName() + rs.getDestinationTrackName();
     	case BY_TRAIN: return rs.getTrainName();
     	case BY_MOVES: return rs.getMoves(); // returns an integer
-    	case BY_BUILT: return rs.getBuilt();
+    	case BY_BUILT: return convertBuildDate(rs.getBuilt());
     	case BY_OWNER: return rs.getOwner();
     	case BY_RFID: return rs.getRfid();
     	case BY_VALUE: return rs.getValue();
     	default: return "unknown";	
     	}
+    }
+    
+    private String convertBuildDate(String date){
+    	String[] built = date.split("-");
+    	if (built.length>1)
+    		try{
+    			int d = Integer.parseInt(built[1]);
+    			if (d<100)
+    				d = d + 1900;
+    			return Integer.toString(d);
+    		} catch (NumberFormatException e2){
+    			log.debug("Unable to parse car built date "+date);
+    		}
+    	return date;
     }
     
     /**
