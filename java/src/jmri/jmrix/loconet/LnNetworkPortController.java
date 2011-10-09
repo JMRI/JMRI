@@ -29,7 +29,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
                                     "DCS51 (Zephyr Xtra)",
                                     "DB150 (Empire Builder)",
                                     "Intellibox",
-                                    "LocoBuffer (PS)"};
+                                    "LocoBuffer (PS)",
+                                    "Mix-Master"};
     
     // There are also "PR3 standalone programmer" and "Stand-alone LocoNet"
     // in pr3/PR3Adapter
@@ -40,7 +41,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     public void setCommandStationType(String value) {
 		if (value == null) return;  // can happen while switching protocols
     	log.debug("setCommandStationType: "+value);
-        if (value.equals("DB150 (Empire Builder)")) {
+        if (value.equals("DB150 (Empire Builder)") || value.equals("Mix-Master")) {
             mCanRead = false;
             mProgPowersOff = true;
         }
