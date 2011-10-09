@@ -33,7 +33,9 @@ public class SprogIIUpdateFrame
       addHelpMenu("package.jmri.jmrix.sprog.update.SprogIIUpdateFrame", true);
       super.initComponents();
     }
-    
+
+  int bootVer = 0;
+
   public void notifyMessage(SprogMessage m) {}
   
   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SWL_SLEEP_WITH_LOCK_HELD")
@@ -43,6 +45,7 @@ public class SprogIIUpdateFrame
   synchronized public void notifyReply(SprogReply m) {
     // If SPROG II is in boot mode, check message framing and checksum
     if ( (bootState != RESETSENT) && tc.isSIIBootMode() && !m.strip()) {
+      stopTimer();
       JOptionPane.showMessageDialog(this, "Malformed  bootloader reply", 
                                         "Connect to Bootloader", JOptionPane.ERROR_MESSAGE);
       log.error("Malformed bootloader reply");
@@ -107,7 +110,9 @@ public class SprogIIUpdateFrame
           sprogTypeInt = 3;
           blockLen = 16;
         } else {
-          // *** problem
+          log.error("Unknown SPROG version");
+          statusBar.setText("Found unknown version");
+          bootState = IDLE;
         }
         if (log.isDebugEnabled()) {
           log.debug("Found " + sprogTypeString);
@@ -119,7 +124,7 @@ public class SprogIIUpdateFrame
         }
         msg = new SprogMessage("b 1 1 1");
         tc.sendSprogMessage(msg, this);
-        if ((sprogTypeInt == 2) || (sprogTypeInt == 3)) {
+        if (sprogTypeInt >= 2) {
           // SPROG II and 3 will not reply to this so just wait a while
           tc.setSprogState(SprogState.SIIBOOTMODE);
           try {
@@ -140,7 +145,7 @@ public class SprogIIUpdateFrame
       }
       // see if reply is the version
       if ( (m.getOpCode() == SprogMessage.RD_VER) && (m.getElement(1) == 2)) {
-        String bootVer = "" + m.getElement(2) + "." + m.getElement(3);
+        bootVer = m.getElement(2);
         if (log.isDebugEnabled()) {
           log.debug("Found bootloader version " + bootVer);
         }
@@ -148,12 +153,14 @@ public class SprogIIUpdateFrame
         // Enable the file chooser button
         setSprogModeButton.setEnabled(true);
         openFileChooserButton.setEnabled(true);
-        if (bootVer.indexOf("11.0") >= 0) {
+        if (bootVer == 11) {
+          // SPROG II 1.x or 2.x
           sprogTypeString = "SPROG II";
           sprogTypeInt = 2;
           blockLen = 8;
         } else {
-          sprogTypeString = "SPROG 3";
+          // SPROG II v3.x or SPROG 3
+          sprogTypeString = "SPROG II v3.x/SPROG 3";
           sprogTypeInt = 3;
           blockLen = 16;
         }
@@ -178,7 +185,7 @@ public class SprogIIUpdateFrame
       if ( (m.getOpCode() == msg.getElement(2)) && (m.getNumDataElements() == 1)) {
         // Don't erase ICD debug executive if in use
         if ((sprogTypeInt == 2) && (eraseAddress < 0x7c00)
-                || (sprogTypeInt == 3) && (eraseAddress < 0x3E00)) {
+                || (sprogTypeInt == 3) && (eraseAddress < 0x3F00)) {
           // More data to erase
           sendErase();
         }
@@ -324,8 +331,8 @@ public class SprogIIUpdateFrame
       msg = null;
     }
     else if (((sprogTypeInt == 2) && (hexFile.getAddress() >= 0x200))
-             || ((sprogTypeInt == 3) && ((hexFile.getAddress() >= 0x2000)
-                                                    && (hexFile.getAddress() < 0x3E00)))) {
+             || ((sprogTypeInt == 3) && ((hexFile.getAddress() >= 0x2200)
+                                                    && (hexFile.getAddress() < 0x3F00)))) {
       // Program code address is above bootloader range and below debug executive
       if (log.isDebugEnabled()) {
         log.debug("Send write Flash " + hexFile.getAddress());
@@ -423,7 +430,7 @@ public class SprogIIUpdateFrame
       else if (sprogTypeInt == 3) {
         // SPROG 3
         // Erase device above bootloader
-        eraseAddress = 0x2000;
+        eraseAddress = 0x2200;
         sendErase();
       }
       else {
