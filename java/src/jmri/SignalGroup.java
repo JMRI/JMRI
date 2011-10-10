@@ -159,13 +159,13 @@ public interface SignalGroup extends NamedBean {
     
      /**
      * Method to get the On State of Signal Head
-     * @param name The name of the SignalHead we are querying
+     * @param signalHead The signal head object we are querying
      */
     public int getSignalHeadOnState(SignalHead signalHead);
     
     /**
      * Method to get the Off State of Signal Head
-     * @param name The name of the SignalHead we are querying
+     * @param signalHead The signal head bean object we are querying
      */
     public int getSignalHeadOffState(SignalHead signalHead);
     
