@@ -65,7 +65,7 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
-    svn cp ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.2
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.2
     
 ( ) If using the CI system, set up CI builds for that branch
 
@@ -145,14 +145,19 @@ Final release steps:
 ( ) Upload the Linux, Mac OS X and Windows files to sourceforge
      
     Download from CI, check integrity (make sure compressed files not expanded), then
-    scp JMRI.2.13.1.* jacobsen,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
-
-    (bandwidth limit at CI engine, so this is fine)
+    
+    ssh user,jmri@shell.sf.net create
+    ssh user,jmri@shell.sf.net 
+    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Release%202.13.2/5/artifact/*zip*/archive.zip"
+    unzip archive.zip
+    cd archive/jmri/dist/release
+    scp JMRI.2.13.2-* jacobsen,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
+    (clean up and logout)
     
     Wait until the downloads have propagated to the mirrors; check 
     by trying to download each file
     
-( ) Any time after "ant packages" is complete, create and upload the JavaDocs
+( ) Create and upload the JavaDocs
     and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
     
 	ant javadoc-uml
