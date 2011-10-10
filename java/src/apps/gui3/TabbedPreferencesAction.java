@@ -82,7 +82,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
               Runnable r = new Runnable() {
               public void run() {
                 try {
-                    inWait = true;
+                    setWait(true);
                     while(jmri.InstanceManager.tabbedPreferencesInstance().init()!=0x02){
                         Thread.sleep(50);
                     }
@@ -90,7 +90,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                     showPreferences();
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
-                    inWait=false;
+                    setWait(false);
                 }
               }
             };
@@ -105,11 +105,15 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         // Update the GUI Look and Feel
         // This is needed as certain controls are instantiated
         // prior to the setup of the Look and Feel
-        inWait = false;
+        setWait(false);
         f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
         f.pack();
         
         f.setVisible(true);
+    }
+    
+    synchronized static void setWait(boolean boo){
+        inWait = boo;
     }
 
     @Override
