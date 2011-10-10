@@ -1825,7 +1825,8 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	/**
 	 * Move train to next location in route.  Will move
-	 * engines, cars, and train icon.
+	 * engines, cars, and train icon.  Will also terminate a
+	 * train after it arrives at its final destination.
 	 */
 	public void move() {
 		log.debug("Move train ("+getName()+")");
@@ -1850,6 +1851,41 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * Move train to a location in the train's route.  Code checks 
+	 * to see if the location requested is part of the train's route and
+	 * if the train hasn't already visited the location.  This command
+	 * can only move the train forward in its route.  Note that you can
+	 * not terminate the train using this command.  See move().
+	 * @param locationName The name of the location to move this train.
+	 * @return true if train was able to move to the named location.
+	 */
+	public boolean move(String locationName){
+		log.info("Move train ("+getName()+") to location ("+locationName+")");
+		if (getRoute() == null || getCurrentLocation() == null)
+			return false;
+		List<String> routeList = getRoute().getLocationsBySequenceList();
+		for (int i = 0; i < routeList.size(); i++) {
+			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
+			if (getCurrentLocation() == rl) {
+				for (int j = i + 1; j < routeList.size(); j++){
+					rl = getRoute().getLocationById(routeList.get(j));
+					if (rl.getName().equals(locationName)){
+						log.debug("Found location ("+locationName+") moving train to this location");
+						for (j = i + 1; j < routeList.size(); j++){
+							rl = getRoute().getLocationById(routeList.get(j));
+							move();
+							if (rl.getName().equals(locationName))
+								return true;
+						}						
+					}
+				}
+				break; // done
+			}
+		}
+		return false;
+	}
+
 	public void loadTrainIcon(){
 		if (getCurrentLocation() != null)
 			moveTrainIcon(getCurrentLocation());

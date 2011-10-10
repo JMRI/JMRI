@@ -5534,7 +5534,17 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e7 destination 1", "Westford Yard 1", e7.getDestinationTrackName());
 		Assert.assertEquals("e8 destination 1", "Westford Yard 1", e8.getDestinationTrackName());
 		
-		train1.reset();
+		// test train move to a specific location
+		Assert.assertFalse("Old Harvard is not part of this trains route", train1.move("Old Harvard"));
+		Assert.assertFalse("Train departs New Harvard already there", train1.move("New Harvard"));
+		Assert.assertTrue("Next location in train's route is New Arlington", train1.move("New Arlington"));
+		Assert.assertFalse("Train is at New Arlington", train1.move("New Arlington"));
+		// next location is New Boston, skip it and go directly to New Chelmsford
+		Assert.assertTrue("New Chelmsford is in train's route", train1.move("New Chelmsford"));
+		Assert.assertTrue("Next location in train's route is New Westford", train1.move("New Westford"));
+		Assert.assertFalse("Train is at New Westford last location in train's route", train1.move("New Westford"));
+		
+		train1.move();	// terminate train
 		Setup.setBuildAggressive(false);
 
 	}
