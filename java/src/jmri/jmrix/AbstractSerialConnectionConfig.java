@@ -154,7 +154,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();
-        if (t!=null) return t;
+        if (t!=null){
+            return getPortFromName(t);
+            //return t;
+        }
         else return JmrixConfigPane.NONE;
     }
     
