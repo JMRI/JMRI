@@ -100,6 +100,30 @@ public class ConditionalVariable {
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, my);
                     break;
+                case Conditional.ITEM_TYPE_LIGHT:
+                    Light l = InstanceManager.lightManagerInstance().getLight(_name);
+                    if (l == null) {
+                        log.error("invalid light name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, l);
+                    break;
+                case Conditional.ITEM_TYPE_SIGNALHEAD:
+                    SignalHead s = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
+                    if (s == null) {
+                        log.error("invalid signalhead name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, s);
+                    break;
+                case Conditional.ITEM_TYPE_SIGNALMAST:
+                    SignalMast sm = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+                    if (sm == null) {
+                        log.error("invalid signalmast name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, sm);
+                    break;
             }
         } catch (java.lang.NumberFormatException ex) {
             //Can be Considered Normal where the logix is loaded prior to any other beans
@@ -161,8 +185,17 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_TURNOUT:
                 bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
                 break;
+            case Conditional.ITEM_TYPE_LIGHT:
+                bean = InstanceManager.lightManagerInstance().getLight(_name);
+                break;
             case Conditional.ITEM_TYPE_MEMORY:
                 bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
+                break;
+            case Conditional.ITEM_TYPE_SIGNALMAST:
+                bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+                break;
+            case Conditional.ITEM_TYPE_SIGNALHEAD:
+                bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
                 break;
         }
 
@@ -303,7 +336,7 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_LIGHT:
-				Light lgt = InstanceManager.lightManagerInstance().getLight(getName());
+				Light lgt = (Light) getBean();
 				if (lgt == null) {
 					log.error("invalid light name= \""+getName()+"\" in state variable");
 					return (false);
@@ -317,7 +350,7 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-				SignalMast f = InstanceManager.signalMastManagerInstance().provideSignalMast(getName());
+				SignalMast f = (SignalMast) getBean();
 				if (f == null) {
 					log.error("invalid signal mast name= \""+getName()+"\" in state variable");
 					return (false);
@@ -336,7 +369,7 @@ public class ConditionalVariable {
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
-				SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(getName());
+				SignalHead h = (SignalHead) getBean();
 				if (h == null) {
 					log.error("invalid signal head name= \""+getName()+"\" in state variable");
 					return (false);
@@ -390,7 +423,7 @@ public class ConditionalVariable {
                 }
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
-				Memory m = InstanceManager.memoryManagerInstance().provideMemory(getName());
+				Memory m = (Memory) getBean();
 				if (m == null) {
 					log.error("invalid memory name= \""+getName()+"\" in state variable");
 					return (false);
