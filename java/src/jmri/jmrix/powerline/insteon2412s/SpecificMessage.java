@@ -74,6 +74,31 @@ public class SpecificMessage extends SerialMessage {
 		            	} else if (len == 22) {
 		            		text.append(" Ext");
 		            	}
+		            	switch (getElement(5) & 0xE0) {
+		            	case Constants.FLAG_TYPE_P2P:
+		            		text.append(" Direct");
+		            		break;
+		            	case Constants.FLAG_TYPE_ACK:
+		            		text.append(" ACK");
+		            		break;
+		            	case Constants.FLAG_TYPE_NAK:
+		            		text.append(" NAK");
+		            		break;
+		            	case Constants.FLAG_TYPE_GBCAST:
+		            		text.append(" Group Broadcast");
+		            		break;
+		            	case Constants.FLAG_TYPE_GBCLEANUP:
+		            		text.append(" Group Broadcast Cleanup");
+		            		break;
+		            	case Constants.FLAG_TYPE_GBCLEANACK:
+		            		text.append(" Group Broadcast Cleanup ACK");
+		            		break;
+		            	case Constants.FLAG_TYPE_GBCLEANNAK:
+		            		text.append(" Group Broadcast Cleanup NAK");
+		            		break;
+		            	}
+		            	text.append(" message,");
+		            	text.append(" " + String.format("%d hops left, %d max hops", (getElement(5) & 0x0C >> 2), (getElement(5) & 0x03)));
 		            	text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
 		            	switch (getElement(6) & 0xFF) {
 		            	case Constants.CMD_LIGHT_ON_RAMP:
