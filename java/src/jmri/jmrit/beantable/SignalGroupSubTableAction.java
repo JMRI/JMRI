@@ -174,15 +174,16 @@ public class SignalGroupSubTableAction {
 
     SignalGroup curSignalGroup = null;
     String curSignal;
+    SignalHead curSignalHead;
 
     void editSignal(SignalGroup g, String signal) {
         curSignalGroup = g;
         curSignal = signal;
+        curSignalHead = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
+        //SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
         
-        SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
-        
-        _OnAppearance = new JComboBox(sig.getValidStateNames());
-        _OffAppearance = new JComboBox(sig.getValidStateNames());
+        _OnAppearance = new JComboBox(curSignalHead.getValidStateNames());
+        _OffAppearance = new JComboBox(curSignalHead.getValidStateNames());
         _systemName= new JLabel(signal);
         _systemName.setVisible(true);
         
@@ -520,7 +521,7 @@ public class SignalGroupSubTableAction {
     int setTurnoutInformation(SignalGroup g) {
         for (int i=0; i<_includedTurnoutList.size(); i++) {
             SignalGroupTurnout t = _includedTurnoutList.get(i);
-            g.setSignalHeadAlignTurnout(curSignal, t.getName(), t.getState());
+            g.setSignalHeadAlignTurnout(curSignalHead, t.getName(), t.getState());
         }
         return _includedTurnoutList.size();
     }
@@ -531,7 +532,7 @@ public class SignalGroupSubTableAction {
     int setSensorInformation(SignalGroup g) {
         for (int i=0; i<_includedSensorList.size(); i++) {
             SignalGroupSensor s = _includedSensorList.get(i);
-            g.setSignalHeadAlignSensor(curSignal, s.getName(), s.getState());
+            g.setSignalHeadAlignSensor(curSignalHead, s.getName(), s.getState());
         }
         return _includedSensorList.size();
     }
@@ -546,8 +547,8 @@ public class SignalGroupSubTableAction {
         initializeIncludedList();
         setTurnoutInformation(curSignalGroup);
         setSensorInformation(curSignalGroup);
-        curSignalGroup.setSignalHeadOnState(curSignal, signalStateFromBox(_OnAppearance));
-        curSignalGroup.setSignalHeadOffState(curSignal, signalStateFromBox(_OffAppearance));
+        curSignalGroup.setSignalHeadOnState(curSignalHead, signalStateFromBox(_OnAppearance));
+        curSignalGroup.setSignalHeadOffState(curSignalHead, signalStateFromBox(_OffAppearance));
         curSignalGroup.setSensorTurnoutOper(curSignal, operFromBox(_SensorTurnoutOper));
         // add control Sensors and a control Turnout if entered in the window
         finishUpdate();

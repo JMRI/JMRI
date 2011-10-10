@@ -157,6 +157,16 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         sh.addSensor(mSen, state);
     }
     
+    public void setSignalHeadAlignTurnout(SignalHead mHead, String mTurn, int state){
+        SignalHeadItem sh = getSignalHeadItem(mHead);
+        sh.addTurnout(mTurn, state);
+    }
+    
+    public void setSignalHeadAlignSensor(SignalHead mHead, String mSen, int state){
+        SignalHeadItem sh = getSignalHeadItem(mHead);
+        sh.addSensor(mSen, state);
+    }
+    
 
     /*
     Returns the 'n' signalheaditem
@@ -203,6 +213,22 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
     
+    public int getSignalHeadOffState(SignalHead bean){
+        try {
+            return getSignalHeadItem(bean).getOffAppearance();
+        } catch (NullPointerException e) {
+            return -1;
+        }
+    }
+    
+    public int getSignalHeadOnState(SignalHead bean){
+        try {
+            return getSignalHeadItem(bean).getOnAppearance();
+        } catch (NullPointerException e) {
+            return -1;
+        }
+    }
+    
     public int getSignalHeadOnStateByIndex(int n){
         try {
             return getSignalHeadItemByIndex(n).getOnAppearance();
@@ -229,10 +255,34 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     
     public void setSignalHeadOnState(String name, int state){
         getSignalHeadItem(name).setOnAppearance(state);
+        firePropertyChange("UpdateCondition", null,null);
     }
     
     public void setSignalHeadOffState(String name, int state){
         getSignalHeadItem(name).setOffAppearance(state);
+        firePropertyChange("UpdateCondition", null,null);
+    }
+    
+    public void setSignalHeadOnState(SignalHead head, int state){
+        getSignalHeadItem(head).setOnAppearance(state);
+        firePropertyChange("UpdateCondition", null,null);
+    }
+    
+    public void setSignalHeadOffState(SignalHead head, int state){
+        getSignalHeadItem(head).setOffAppearance(state);
+        firePropertyChange("UpdateCondition", null,null);
+    }
+    
+    public boolean isSignalIncluded(SignalHead bean) {
+        /*SignalHead mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
+        if (mHead == null) mHead = InstanceManager.signalHeadManagerInstance().getByUserName(pName);*/
+        for (int i=0; i<_signalHeadItem.size(); i++) {
+            if ( _signalHeadItem.get(i).getSignal() == bean ) {
+                // Found turnout
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean isSignalIncluded(String pName) {
@@ -252,7 +302,15 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     private SignalHeadItem getSignalHeadItem(String name) {
         for (int i=0; i<_signalHeadItem.size(); i++) {
             if ( _signalHeadItem.get(i).getName().equals(name) ) {
-                // Found turnout
+                return _signalHeadItem.get(i);
+            }
+        }
+        return null;
+	}
+    
+    private SignalHeadItem getSignalHeadItem(NamedBean bean) {
+        for (int i=0; i<_signalHeadItem.size(); i++) {
+            if ( _signalHeadItem.get(i).getSignal().equals(bean) ) {
                 return _signalHeadItem.get(i);
             }
         }
@@ -330,6 +388,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     
     public void setSensorTurnoutOper(String pSignal, boolean boo){
         getSignalHeadItem(pSignal).setSensorTurnoutOper(boo);
+        firePropertyChange("UpdateCondition", null,null);
     }
     
     public void clearSignalTurnout(String pSignal){
@@ -617,7 +676,32 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     public void setState(int state) {
 
     }
+    
+        /**
+     * Number of current listeners. May return -1 if the 
+     * information is not available for some reason.
+     */
+    public synchronized int getNumPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners().length;
+    }
 
+    public synchronized java.beans.PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+    
+    protected void firePropertyChange(String p, Object old, Object n) { 
+        if (pcs!=null) pcs.firePropertyChange(p,old,n);
+    }
+    
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+    
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+    
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalGroup.class.getName());
 }

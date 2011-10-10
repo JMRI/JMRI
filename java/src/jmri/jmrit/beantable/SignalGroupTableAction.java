@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * @version     $Revision$
  */
 
-public class SignalGroupTableAction extends AbstractTableAction {
+public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
 
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
@@ -64,6 +64,22 @@ public class SignalGroupTableAction extends AbstractTableAction {
     }
     public SignalGroupTableAction() { this(rb.getString("TitleSignalGroupTable"));}
 
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("UpdateCondition")) {
+            for (int i=_signalList.size()-1; i>=0; i--) {
+                SignalGroupSignal signal = _signalList.get(i);
+                //String tSysName = signal.getSysName();
+                SignalHead sigBean = signal.getBean();
+                if (curSignalGroup.isSignalIncluded(sigBean) ) {
+                    signal.setIncluded(true);
+                    signal.setOnState(curSignalGroup.getSignalHeadOnState(sigBean));
+                    signal.setOffState(curSignalGroup.getSignalHeadOffState(sigBean));
+                } else {
+                    signal.setIncluded(false);
+                }
+            }
+        } 
+    }
     /**
      * Create the JTable DataModel, along with the changes
      * for the specific case of SignalGroups
@@ -653,9 +669,9 @@ public class SignalGroupTableAction extends AbstractTableAction {
         
         for (int i=0; i<_includedSignalList.size(); i++){
             SignalGroupSignal s = _includedSignalList.get(i);
-            String sig = s.getDisplayName();
+            SignalHead sig = s.getBean();
             if (!g.isSignalIncluded(sig)){
-                g.addSignalHead(sig);
+                g.addSignalHead(sig.getDisplayName());
                 g.setSignalHeadOnState(sig, s.getOnStateInt());
                 g.setSignalHeadOffState(sig, s.getOffStateInt());
             }
@@ -709,6 +725,8 @@ public class SignalGroupTableAction extends AbstractTableAction {
             // SignalGroup does not exist, so cannot be edited
             return;
         }
+        g.addPropertyChangeListener(this);
+
         // SignalGroup was found, make its system name not changeable
         curSignalGroup = g;
         
@@ -731,11 +749,12 @@ public class SignalGroupTableAction extends AbstractTableAction {
 
          for (int i=_signalList.size()-1; i>=0; i--) {
             SignalGroupSignal signal = _signalList.get(i);
-            String tSysName = signal.getSysName();
-            if (g.isSignalIncluded(tSysName) ) {
+            //String tSysName = signal.getSysName();
+            SignalHead sigBean = signal.getBean();
+            if (g.isSignalIncluded(sigBean) ) {
                 signal.setIncluded(true);
-                signal.setOnState(g.getSignalHeadOnState(tSysName));
-                signal.setOffState(g.getSignalHeadOffState(tSysName));
+                signal.setOnState(g.getSignalHeadOnState(sigBean));
+                signal.setOffState(g.getSignalHeadOffState(sigBean));
                 setRow = i;
             } else {
                 signal.setIncluded(false);
@@ -744,7 +763,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
             }
         }
         _SignalGroupSignalScrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
-        _SignalGroupSignalModel.fireTableDataChanged();  
+        _SignalGroupSignalModel.fireTableDataChanged();
         
         for (int i=0; i<_mastAppearancesList.size(); i++){
             SignalMastAppearances appearance = _mastAppearancesList.get(i);
@@ -807,7 +826,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
     }
 
     void finishUpdate() {
-        
+        curSignalGroup.removePropertyChangeListener(this);
         _systemName.setVisible(true);
         fixedSystemName.setVisible(false);
         _systemName.setText("");
@@ -933,6 +952,8 @@ public class SignalGroupTableAction extends AbstractTableAction {
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 // a new NamedBean is available in the manager
+                fireTableDataChanged();
+            } else if(e.getPropertyName().equals("UpdateCondition")){
                 fireTableDataChanged();
             }
         }
@@ -1115,34 +1136,38 @@ public class SignalGroupTableAction extends AbstractTableAction {
 
     private static class SignalGroupSignal {
     
-        String _sysName=null;
-        String _userName=null;
+        //String _sysName=null;
+        //String _userName=null;
+        SignalHead _signal = null;
         boolean _included;
         
         SignalGroupSignal(String sysName, String userName) {
-            _sysName = sysName;
-            _userName = userName;
+            /*_sysName = sysName;
+            _userName = userName;*/
             _included = false;
-            if (InstanceManager.signalHeadManagerInstance().getBySystemName(_sysName).getClass().getName().contains("SingleTurnoutSignalHead")){
-                jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.signalHeadManagerInstance().getBySystemName(_sysName);
-                _onState=Signal.getOnAppearance();
-                _offState=Signal.getOffAppearance();
+            if (InstanceManager.signalHeadManagerInstance().getBySystemName(sysName).getClass().getName().contains("SingleTurnoutSignalHead")){
+                jmri.implementation.SingleTurnoutSignalHead signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.signalHeadManagerInstance().getBySystemName(sysName);
+                _onState=signal.getOnAppearance();
+                _offState=signal.getOffAppearance();
+                _signal = signal;
             }
+            
+        }
+        
+        SignalHead getBean(){
+            return _signal;
         }
         
         String getSysName() {
-            return _sysName;
+            return _signal.getSystemName();
         }
         String getUserName() {
-            return _userName;
+            return _signal.getUserName();
         }
         
-        String getDisplayName(){
-            if((_userName!=null) && (!_userName.equals("")))
-                return _userName;
-            else
-                return _sysName;
-        }
+        /*String getDisplayName(){
+            return _signal.getDisplayName();
+        }*/
         
         boolean isIncluded() {
             return _included;

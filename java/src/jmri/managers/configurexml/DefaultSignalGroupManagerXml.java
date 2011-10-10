@@ -164,6 +164,7 @@ public class DefaultSignalGroupManagerXml
             if (signalHeadList.size() > 0) {
                 for (int y = 0; y<signalHeadList.size(); y++){
                     String head = signalHeadList.get(y).getAttribute("name").getValue();
+                    
                     m.addSignalHead(head);
                     yesno = signalHeadList.get(y).getAttribute("sensorTurnoutLogic").getValue();
                     inverse = false;
