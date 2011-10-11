@@ -17,7 +17,7 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
 
 	public JMRIClientPowerManager(JMRIClientSystemConnectionMemo memo) {
 		// connect to the TrafficManager
-                this.memo=memo;
+        this.memo=memo;
 		tc = this.memo.getJMRIClientTrafficController();
 		tc.addJMRIClientListener(this);
 	}

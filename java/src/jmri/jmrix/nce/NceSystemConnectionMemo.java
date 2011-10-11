@@ -124,7 +124,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * place.  
      */
     public void configureManagers() {
-    	powerManager = new jmri.jmrix.nce.NcePowerManager(getNceTrafficController(), getSystemPrefix());
+    	powerManager = new jmri.jmrix.nce.NcePowerManager(this);
         InstanceManager.setPowerManager(powerManager);
 
         turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(getNceTrafficController(), getSystemPrefix());
