@@ -163,6 +163,8 @@ public class DecoderPro3Window
     jmri.UserPreferencesManager p;
     final String rosterGroupSelectionCombo = this.getClass().getName()+".rosterGroupSelected";
 
+    JLabel serviceModeProgrammerLabel = new JLabel();
+    JLabel operationsModeProgrammerLabel = new JLabel();
     /*
      * This status bar needs sorting out properly
      */
@@ -172,30 +174,30 @@ public class DecoderPro3Window
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            programmerLabel.setText ("Service Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
-            programmerLabel.setForeground(new Color(0, 128, 0));
+            serviceModeProgrammerLabel.setText ("Service Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getUserName() + " Is Available");
+            serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
         } else {
-            programmerLabel.setText("No Service Mode Programmer Available");
-            programmerLabel.setForeground(Color.red);
+            serviceModeProgrammerLabel.setText("No Service Mode Programmer Available");
+            serviceModeProgrammerLabel.setForeground(Color.red);
         }
         
-        addToStatusBox(programmerLabel, null);
+        addToStatusBox(serviceModeProgrammerLabel, null);
         
-        programmerLabel = new JLabel();
+        operationsModeProgrammerLabel = new JLabel();
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            programmerLabel.setText ("Operations Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
-            programmerLabel.setForeground(new Color(0, 128, 0));
+            operationsModeProgrammerLabel.setText ("Operations Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getUserName() + " Is Available");
+            operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
         } else {
-            programmerLabel.setText("No Operations Mode Programmer Available");
-            programmerLabel.setForeground(Color.red);
+            operationsModeProgrammerLabel.setText("No Operations Mode Programmer Available");
+            operationsModeProgrammerLabel.setForeground(Color.red);
         }
         
-        addToStatusBox(programmerLabel, null);
+        addToStatusBox(operationsModeProgrammerLabel, null);
         
-        programmerLabel = new JLabel("Programmer Status : ");
+        JLabel programmerStatusLabel = new JLabel("Programmer Status : ");
         statusField.setText("idle");
         addToStatusBox(programmerLabel, statusField);
         

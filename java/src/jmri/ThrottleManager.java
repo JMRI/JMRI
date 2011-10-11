@@ -211,5 +211,9 @@ public interface ThrottleManager {
     */
     public void removeListener(DccLocoAddress la, java.beans.PropertyChangeListener p);
     //public void addressNoLongerRequired(DccLocoAddress la);
+    /**
+     * A method to get the Name of the system that the programmer is associated with.
+     */
+    public String getUserName();
     
 }

@@ -14,11 +14,15 @@ import jmri.PowerManager;
 public class NcePowerManager implements PowerManager, NceListener {
 
     public NcePowerManager(NceSystemConnectionMemo memo) {
-        // connect to the TrafficManager
-        this.tc = memo.getNceTrafficController();
-        this.prefix = memo.getSystemPrefix();
-        tc.addNceListener(this);
+        this(memo.getNceTrafficController(), memo.getSystemPrefix());// connect to the TrafficManager
         userName = memo.getUserName();
+    }
+    
+    public NcePowerManager(NceTrafficController tc, String p) {
+        // connect to the TrafficManager
+        this.tc = tc;
+        this.prefix = p;
+        tc.addNceListener(this);
     }
     
     String userName = "NCE";
