@@ -16,8 +16,8 @@ public class LnProgrammerManager  extends DefaultProgrammerManager {
 
     //private Programmer mProgrammer;
 
-    public LnProgrammerManager(SlotManager pSlotManager) {
-        super(pSlotManager);
+    public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
+        super(pSlotManager, memo);
         mSlotManager = pSlotManager;
     }
 

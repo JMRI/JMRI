@@ -25,7 +25,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      */
     public XNetThrottleManager(XNetSystemConnectionMemo memo)
     {
-       super();
+       super(memo);
        // connect to the TrafficManager
        tc = memo.getXNetTrafficController();
 

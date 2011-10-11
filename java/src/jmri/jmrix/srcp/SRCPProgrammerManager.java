@@ -16,8 +16,8 @@ public class SRCPProgrammerManager  extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;
 
-    public SRCPProgrammerManager(Programmer serviceModeProgrammer) {
-        super(serviceModeProgrammer);
+    public SRCPProgrammerManager(Programmer serviceModeProgrammer, SRCPSystemConnectionMemo memo) {
+        super(serviceModeProgrammer, memo);
         //localProgrammer = serviceModeProgrammer;
 
     }

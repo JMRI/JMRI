@@ -22,6 +22,16 @@ import java.beans.PropertyChangeListener;
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
+    
+    public AbstractThrottleManager(){}
+    
+    public AbstractThrottleManager(SystemConnectionMemo memo){
+        userName = memo.getUserName();
+    }
+    
+    protected String userName = "Internal";
+    
+    public String getUserName(){ return userName; }
 	/**
 	 * throttleListeners is indexed by the address, and
 	 * contains as elements an ArrayList of ThrottleListener

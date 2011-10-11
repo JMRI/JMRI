@@ -125,10 +125,10 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         
 
         switch (sprogMode){
-            case OPS :      sprogCSThrottleManager = new jmri.jmrix.sprog.SprogCSThrottleManager();
+            case OPS :      sprogCSThrottleManager = new jmri.jmrix.sprog.SprogCSThrottleManager(this);
                             jmri.InstanceManager.setThrottleManager(sprogCSThrottleManager);
                             break;
-            case SERVICE :  sprogThrottleManager = new jmri.jmrix.sprog.SprogThrottleManager();
+            case SERVICE :  sprogThrottleManager = new jmri.jmrix.sprog.SprogThrottleManager(this);
                             jmri.InstanceManager.setThrottleManager(sprogThrottleManager);
                             break;
 
@@ -143,7 +143,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null){
-            programmerManager = new SprogProgrammerManager(new SprogProgrammer(), sprogMode);
+            programmerManager = new SprogProgrammerManager(new SprogProgrammer(), sprogMode, this);
         }
         return programmerManager;
     }

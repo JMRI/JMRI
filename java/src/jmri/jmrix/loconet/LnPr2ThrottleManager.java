@@ -23,8 +23,8 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor, works via superclass.
      */
-    public LnPr2ThrottleManager() {
-    	super();
+    public LnPr2ThrottleManager(LocoNetSystemConnectionMemo memo) {
+    	super(memo);
     }
 
 	/**

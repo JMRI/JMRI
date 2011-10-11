@@ -56,13 +56,13 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
       
         jmri.InstanceManager.setProgrammerManager(
             new EasyDccProgrammerManager(
-                new EasyDccProgrammer()));
+                new EasyDccProgrammer(), this));
 
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager(this));
 
         jmri.InstanceManager.setTurnoutManager(jmri.jmrix.easydcc.EasyDccTurnoutManager.instance());
         
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.easydcc.EasyDccThrottleManager());
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.easydcc.EasyDccThrottleManager(this));
 
         jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
 

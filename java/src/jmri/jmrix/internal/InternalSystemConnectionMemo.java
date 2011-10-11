@@ -47,7 +47,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         jmri.InstanceManager.setProgrammerManager(programManager);
 
         // Install a debug throttle manager
-        throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager();
+        throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager
                 );
 

@@ -17,8 +17,8 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      */
-    public SprogCSThrottleManager() {
-        super();
+    public SprogCSThrottleManager(SprogSystemConnectionMemo memo) {
+        super(memo);
     }
 
     public void requestThrottleSetup(LocoAddress a, boolean control) {

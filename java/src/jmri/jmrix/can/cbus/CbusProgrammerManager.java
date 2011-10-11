@@ -17,6 +17,8 @@ public class CbusProgrammerManager  extends DefaultProgrammerManager {
     public CbusProgrammerManager() {
         super(null);  // no service mode programmer available
     }
+    
+    public String getUserName() { return "MERG"; }
 
     /**
      * Global not relevant for CBUS

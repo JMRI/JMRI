@@ -16,12 +16,19 @@ import jmri.*;
 public class DefaultProgrammerManager implements ProgrammerManager {
 
     private Programmer mProgrammer;
-
     public DefaultProgrammerManager(Programmer pProgrammer) {
         mProgrammer = pProgrammer;
     }
 
+    public DefaultProgrammerManager(Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
+        this(pProgrammer);
+		this.userName = memo.getUserName();
+	}
+    
+    String userName = "Internal";
 
+    public String getUserName() { return userName; }
+    
     public Programmer getGlobalProgrammer() {
         if (log.isDebugEnabled()) log.debug("return default service-mode programmer");
         return mProgrammer;

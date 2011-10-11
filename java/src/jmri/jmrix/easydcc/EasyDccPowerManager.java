@@ -12,13 +12,20 @@ import jmri.PowerManager;
  */
 public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 
-	public EasyDccPowerManager() {
-		// connect to the TrafficManager
+	public EasyDccPowerManager(EasyDccSystemConnectionMemo memo) {
+        this();
+        this.userName = memo.getUserName();
+	}
+    
+    public EasyDccPowerManager() {
+        // connect to the TrafficManager
 		tc = EasyDccTrafficController.instance();
 		tc.addEasyDccListener(this);
-	}
-
-    public String getUserName() { return "EasyDcc"; }
+    }
+    
+    String userName = "EasyDcc";
+    
+    public String getUserName() { return userName; }
 
 	int power = UNKNOWN;
 

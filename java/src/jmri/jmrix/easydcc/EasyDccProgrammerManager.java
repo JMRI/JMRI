@@ -16,8 +16,8 @@ public class EasyDccProgrammerManager  extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;
 
-    public EasyDccProgrammerManager(Programmer serviceModeProgrammer) {
-        super(serviceModeProgrammer);
+    public EasyDccProgrammerManager(Programmer serviceModeProgrammer, EasyDccSystemConnectionMemo memo) {
+        super(serviceModeProgrammer, memo);
     //    localProgrammer = serviceModeProgrammer;
 
     }

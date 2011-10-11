@@ -24,6 +24,10 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
     public DebugProgrammerManager() {
         super(new ProgDebugger());
     }
+    
+    public DebugProgrammerManager(jmri.jmrix.SystemConnectionMemo memo) {
+        super(new ProgDebugger(), memo);
+    }
 
     /**
      * Save the mapping from addresses to Programmer objects.

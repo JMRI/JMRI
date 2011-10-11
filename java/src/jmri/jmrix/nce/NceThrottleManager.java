@@ -17,10 +17,10 @@ public class NceThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      */
-    public NceThrottleManager(NceTrafficController tc, String prefix) {
+    public NceThrottleManager(NceSystemConnectionMemo memo) {
         super();
-        this.tc = tc;
-        this.prefix = prefix;
+        this.tc = memo.getNceTrafficController();
+        this.prefix = memo.getSystemPrefix();
     }
     
     NceTrafficController tc = null;

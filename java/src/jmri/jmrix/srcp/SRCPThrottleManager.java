@@ -20,8 +20,8 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      */
-    public SRCPThrottleManager() {
-        super();
+    public SRCPThrottleManager(SRCPSystemConnectionMemo memo) {
+        super(memo);
     }
 
     public void requestThrottleSetup(LocoAddress address, boolean control) {
