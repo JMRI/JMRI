@@ -94,6 +94,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
      * @param value
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void setParameter(String key, Object value) {
         if (key.equals("RosterEntries") && value.getClass().equals(ArrayList.class)) {
             rosterEntries = (ArrayList<RosterEntry>)value;
