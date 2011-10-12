@@ -28,6 +28,7 @@ import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -524,25 +525,29 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     // line 4
     JLabel cs4 = new JLabel();
     protected void buildLine4(JPanel pane){
-    	buildLine (0, cs4, pane);
+        if(connection[0]!=-1)
+            buildLine (connection[0], cs4, pane);
     }
    
     // line 5 optional
     JLabel cs5 = new JLabel(); 
     protected void buildLine5(JPanel pane){
-    	buildLine (1, cs5, pane);
+        if(connection[1]!=-1)
+            buildLine (connection[1], cs5, pane);
     }
     
     // line 6 optional
     JLabel cs6 = new JLabel(); 
     protected void buildLine6(JPanel pane){
-    	buildLine (2, cs6, pane);
+        if(connection[2]!=-1)
+            buildLine (connection[2], cs6, pane);
     }
     
     // line 7 optional
     JLabel cs7 = new JLabel(); 
     protected void buildLine7(JPanel pane){
-    	buildLine (3, cs7, pane);
+        if(connection[3]!=-1)
+            buildLine (connection[3], cs7, pane);
     }
     
     protected void buildLine(int number, JLabel cs, JPanel pane){
@@ -613,17 +618,22 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // add listerner for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
-        if (InstanceManager.configureManagerInstance()
-                        .findInstance(jmri.jmrix.ConnectionConfig.class, 0)!=null)
+        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        int i = 0;
+        if (connList!=null){
+            for (int x = 0; x<connList.size(); x++){
+                jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
+                if(!conn.getDisabled()){
+                    connection[i] = x;
+                    i++;
+                }
+                if(i>3)
+                    break;
+            }
+        }
         buildLine4(pane2);
-        if (InstanceManager.configureManagerInstance()
-                        .findInstance(jmri.jmrix.ConnectionConfig.class, 1)!=null)
         buildLine5(pane2);
-        if (InstanceManager.configureManagerInstance()
-                        .findInstance(jmri.jmrix.ConnectionConfig.class, 2)!=null)
         buildLine6(pane2);
-        if (InstanceManager.configureManagerInstance()
-                        .findInstance(jmri.jmrix.ConnectionConfig.class, 3)!=null)
         buildLine7(pane2);
 
         pane2.add(new JLabel(line8()));
@@ -631,6 +641,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         pane1.add(pane2);
         return pane1;
     }
+    
+    int[] connection = {-1,-1,-1,-1};
 
     /**
      * Closing the main window is a shutdown request
@@ -684,18 +696,41 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     static AppConfigBase prefs;
     static public AppConfigBase getPrefs() { return prefs; }
     
+    /**
+    * @deprecated as of 2.13.3, directly access the connection configuration from the instance list 
+    * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+    */
+    @Deprecated
     static public String getConnection1() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
                                 new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0), AppConfigBase.getManufacturerName(0)});
     }
+    
+    /**
+    * @deprecated as of 2.13.3, directly access the connection configuration from the instance list 
+    * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+    */
+    @Deprecated
     static public String getConnection2() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
                                 new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1), AppConfigBase.getManufacturerName(1)});
     }
+    
+    /**
+    * @deprecated as of 2.13.3, directly access the connection configuration from the instance list 
+    * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+    */
+    @Deprecated
     static public String getConnection3() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
                             new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2), AppConfigBase.getManufacturerName(2)});
     }
+    
+    /**
+    * @deprecated as of 2.13.3, directly access the connection configuration from the instance list 
+    * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+    */
+    @Deprecated
     static public String getConnection4() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
                             new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3), AppConfigBase.getManufacturerName(3)});
@@ -921,8 +956,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
     static String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
-    protected static boolean configOK;
-    protected static boolean configDeferredLoadOK;
+    static boolean configOK;
+    static boolean configDeferredLoadOK;
 
     // GUI members
     private JMenuBar menuBar;

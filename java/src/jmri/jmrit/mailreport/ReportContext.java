@@ -5,24 +5,18 @@ package jmri.jmrit.mailreport;
 import java.awt.*;
 import javax.swing.*;
 import jmri.util.JmriInsets;
-import apps.Apps;
 import java.net.SocketException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.ArrayList;
 import jmri.util.zeroconf.ZeroConfService;
 
 
 /**
  * Provide the JMRI context info.
  *<p>
- * Currently uses direct references to the apps.Apps class. 
- * It would be better to have Apps (or whatever) store the
- * needed info in e.g. system parameters, so they can
- * be retrieved without access outside the jmri.jmrit
- * package (or move this to the apps package).  See the
- * example for the configFilename property.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008, 2009
@@ -49,10 +43,13 @@ public class ReportContext {
                     +jmri.util.JmriJFrame.getFrameList().get(0).getTitle()+"  ");	 
 
         addString("JMRI Application: "+jmri.Application.getApplicationName()+"  ");
-        addString("Connection one: "+Apps.getConnection1()+"  ");
-        addString("Connection two: "+Apps.getConnection2()+"  ");
-        addString("Connection three: "+Apps.getConnection3()+"  ");
-        addString("Connection four: "+Apps.getConnection4()+"  ");
+        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        if (connList!=null){
+            for (int x = 0; x<connList.size(); x++){
+                jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
+                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo()+ " Disabled " + conn.getDisabled());
+            }
+        }
 
         String prefs = jmri.jmrit.XmlFile.prefsDir();
         addString("Preferences directory: "+prefs+"  ");
