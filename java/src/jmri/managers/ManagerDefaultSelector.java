@@ -74,12 +74,17 @@ public class ManagerDefaultSelector {
                     }
                 } else if (e.getPropertyName().equals("ConnectionRemoved")){
                     String removedName = (String) e.getOldValue();
+                    ArrayList<Class<?>> tmpArray = new ArrayList<Class<?>>();
                     for (Class c : defaults.keySet()) {
                         String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
                         if(connectionName.equals(removedName)){
                             log.warn("Connection " + removedName + " has been removed, we shall remove it as the default for " + c);
-                            ManagerDefaultSelector.instance.defaults.remove(c);
+                            //ManagerDefaultSelector.instance.defaults.remove(c);
+                            tmpArray.add(c);
                         }
+                    }
+                    for(int i = 0; i<tmpArray.size(); i++){
+                        ManagerDefaultSelector.instance.defaults.remove(tmpArray.get(i));
                     }
                 }
                 notifyPropertyChangeListener("Updated", null, null);
