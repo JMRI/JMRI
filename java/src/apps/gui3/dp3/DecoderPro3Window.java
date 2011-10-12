@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
 import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -199,7 +200,7 @@ public class DecoderPro3Window
         
         JLabel programmerStatusLabel = new JLabel("Programmer Status : ");
         statusField.setText("idle");
-        addToStatusBox(programmerLabel, statusField);
+        addToStatusBox(programmerStatusLabel, statusField);
         
         programmerLabel = new JLabel("Active Roster Group : ");
         addToStatusBox(programmerLabel, activeRosterGroupField);
@@ -260,14 +261,20 @@ public class DecoderPro3Window
             }
         );
 
-        int count = rtable.getModel().getColumnCount();
+        TableModel jModel = rtable.getModel();
+        int count = jModel.getColumnCount();
+        
         for (int i = 0; i <count; i++){
-            if(p.getProperty(getWindowFrameRef(), i)!=null){
-                int sort = (Integer) p.getProperty(getWindowFrameRef(), i);
+            if(p.getProperty(getWindowFrameRef(), "rosterOrder:"+ jModel.getColumnName(i))!=null){
+                int sort = (Integer) p.getProperty(getWindowFrameRef(), "rosterOrder:"+ jModel.getColumnName(i));
                 rtable.getModel().setSortingStatus(i, sort);
             }
+            
+            if(p.getProperty(getWindowFrameRef(), "rosterWidth:"+ jModel.getColumnName(i))!=null){
+                int width = (Integer) p.getProperty(getWindowFrameRef(), "rosterWidth:"+ jModel.getColumnName(i));
+                rtable.getTable().getColumnModel().getColumn(i).setPreferredWidth(width);
+            }
         }
-
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
 
@@ -278,7 +285,7 @@ public class DecoderPro3Window
 
             @Override
             public Transferable createTransferable(JComponent c) {
-                ArrayList Ids = new ArrayList<String>(rtable.getTable().getSelectedRowCount());
+                ArrayList<String> Ids = new ArrayList<String>(rtable.getTable().getSelectedRowCount());
                 for (int i = 0; i < rtable.getTable().getSelectedRowCount(); i++) {
                     Ids.add(rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString());
                 }
@@ -895,8 +902,10 @@ public class DecoderPro3Window
         for (int i = 0; i <count; i++){
             //This should probably store the sort with real names rather than numbers
             //But conversion back on the headers is a pain.
-            p.setProperty(getWindowFrameRef(), i, rtable.getModel().getSortingStatus(i));
+            p.setProperty(getWindowFrameRef(), "rosterOrder:"+rtable.getTable().getColumnName(i), rtable.getModel().getSortingStatus(i));
+            p.setProperty(getWindowFrameRef(), "rosterWidth:"+rtable.getTable().getColumnName(i), rtable.getTable().getColumnModel().getColumn(i).getPreferredWidth());
         }
+        
         
         if(rosterGroupSplitPane.getDividerLocation()>2){
             p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupSplitPane.getDividerLocation());

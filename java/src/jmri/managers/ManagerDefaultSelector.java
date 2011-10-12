@@ -32,6 +32,16 @@ import jmri.*;
 public class ManagerDefaultSelector {
 
     public static final ManagerDefaultSelector instance = new ManagerDefaultSelector();
+    
+    /*public static synchronized ManagerDefaultSelector instance() {
+        if (instance == null) {
+            if (log.isDebugEnabled()) log.debug("Manager Default Selector creating instance");
+            // create and load
+            instance = new ManagerDefaultSelector();
+        }
+        if (log.isDebugEnabled()) log.debug("ManagerDefaultSelector returns instance "+instance);
+        return instance;
+    }*/
 
     private ManagerDefaultSelector() {
         jmri.jmrix.SystemConnectionMemo.addPropertyChangeListener(new PropertyChangeListener(){
@@ -169,19 +179,19 @@ public class ManagerDefaultSelector {
         }
     }
     
-    public static void removePropertyChangeListener(PropertyChangeListener l) {
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
     }
 
-    public static void addPropertyChangeListener(PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered
         if (!listeners.contains(l)) {
             listeners.addElement(l);
         }
     }
-
+    
     /**
      * Trigger the notification of all PropertyChangeListeners
      */
