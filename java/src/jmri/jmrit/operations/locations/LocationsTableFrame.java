@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
@@ -93,7 +94,8 @@ public class LocationsTableFrame extends OperationsFrame {
 		toolMenu.add(new SchedulesTableAction(rb.getString("Schedules")));
 		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocations")));
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
-		toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), null));
+		if (Setup.isVsdPhysicalLocationEnabled())
+			toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), null));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);

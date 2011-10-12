@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -56,6 +57,8 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox generateCvsManifestCheckBox = new JCheckBox(rb.getString("GenerateCsvManifest"));
 	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(rb.getString("GenerateCsvSwitchList"));
 	
+	JCheckBox enableVsdCheckBox = new JCheckBox(rb.getString("EnableVSD"));
+	
 	// text field
 	JTextField rfidTextField = new JTextField(10);
 	JTextField valueTextField = new JTextField(10);
@@ -85,6 +88,7 @@ public class OptionFrame extends OperationsFrame{
 		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
 		generateCvsSwitchListCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
+		enableVsdCheckBox.setSelected(Setup.isVsdPhysicalLocationEnabled());
 		
 		// load text fields
 		rfidTextField.setText(Setup.getRfidLabel());
@@ -94,6 +98,10 @@ public class OptionFrame extends OperationsFrame{
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
 			
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+		JScrollPane panelPane = new JScrollPane(panel);
 		
 		// Build Options panel
 		JPanel pBuild = new JPanel();
@@ -150,17 +158,20 @@ public class OptionFrame extends OperationsFrame{
 		addItemLeft (pOption, valueTextField, 2,2);
 		addItemLeft (pOption, rfidCheckBox, 1,3);
 		addItemLeft (pOption, rfidTextField, 2,3);
+		addItemLeft (pOption, enableVsdCheckBox, 1,4);
 		
 		// row 11
 		JPanel pControl = new JPanel();
 		pControl.setLayout(new GridBagLayout());
 		addItem(pControl, saveButton, 3, 9);
 		
-		getContentPane().add(pBuild);
-		getContentPane().add(pRouter);
-		getContentPane().add(pLogger);
-		getContentPane().add(pOption);
-		getContentPane().add(pControl);
+		panel.add(pBuild);
+		panel.add(pRouter);
+		panel.add(pLogger);
+		panel.add(pOption);
+		panel.add(pControl);
+		
+		getContentPane().add(panelPane);
 
 		// setup buttons
 		addButtonAction(saveButton);
@@ -178,10 +189,10 @@ public class OptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true);
 
 		pack();
-		if (getWidth()<400)
-			setSize(400, getHeight());
-		if (getHeight()<600)		
-			setSize(getWidth(), 600);
+		if (getWidth()<450)
+			setSize(450, getHeight());
+		if (getHeight()<Control.panelHeight)		
+			setSize(getWidth(), Control.panelHeight);
 		setVisible(true);
 	}
 	
@@ -227,6 +238,8 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
 			Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());
 			Setup.setTrainLoggerEnabled(trainLoggerCheckBox.isSelected());
+			// VSD
+			Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 		}
 	}

@@ -207,6 +207,7 @@ public class Setup {
 	private static boolean promptToStaging = false;			// when true prompt user to specify which arrival staging track to use
 	private static boolean generateCsvManifest = false;		// when true generate csv manifest
 	private static boolean generateCsvSwitchList = false;	// when true generate csv switch list
+	private static boolean enableVsdPhysicalLocations = false;
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printRouteComments = false;		// when true print route comments on the manifest
@@ -380,6 +381,14 @@ public class Setup {
 	
 	public static void setGenerateCsvSwitchListEnabled(boolean enabled){
 		generateCsvSwitchList = enabled;
+	}
+	
+	public static boolean isVsdPhysicalLocationEnabled(){
+		return enableVsdPhysicalLocations;
+	}
+	
+	public static void setVsdPhysicalLocationEnabled(boolean enabled){
+		enableVsdPhysicalLocations = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -1196,6 +1205,13 @@ public class Setup {
       	e.addContent(values = new Element("comments"));
     	values.setAttribute("misplacedCars", getMiaComment());
     	
+    	if (isVsdPhysicalLocationEnabled()){
+    		e.addContent(values = new Element("vsd"));
+    		values.setAttribute("enablePhysicalLocations", isVsdPhysicalLocationEnabled()?"true":"false");
+    	}
+    	
+    	
+    	
     	/* all JMRI window position and size are now saved
     	Element options;
     	e.addContent(options = new Element("options"));
@@ -1581,6 +1597,13 @@ public class Setup {
            		String comment = a.getValue();
         		if (log.isDebugEnabled()) log.debug("Misplaced comment: "+comment);
         		setMiaComment(comment);
+        	}
+        }
+        
+        if (operations.getChild("vsd") != null){
+        	if ((a = operations.getChild("vsd").getAttribute("enablePhysicalLocations"))!= null){
+        		String enable = a.getValue();
+        		setVsdPhysicalLocationEnabled(enable.equals("true"));
         	}
         }
         /* all JMRI window position and size are now saved

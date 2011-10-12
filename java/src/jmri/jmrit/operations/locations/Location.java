@@ -501,10 +501,10 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
     
     /**
-	 * Sort ids by track location name. Returns a list of a given location type
-	 * if type is not null, otherwise all track locations are returned.
+	 * Sort ids by track location name. Returns a list of ids of a given track type.
+	 * If type is null returns all track ids for the location.
 	 * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
-	 * @return list of track location ids ordered by name
+	 * @return list of track ids ordered by name
 	 */
     public List<String> getTracksByNameList(String type) {
 		// first get id list
@@ -539,10 +539,10 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
     
     /**
-     * Sort ids by track moves.  Returns a list of a given track type
-     * if type is not null, otherwise all track locations are returned.  
+     * Sort ids by track moves.  Returns a list of ids of a given track type.
+     * If type is null returns all track ids for the location are returned.  
      * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
-     * @return list of track location ids ordered by moves
+     * @return list of track ids ordered by moves
      */
     public List<String> getTracksByMovesList(String type) {
 		// first get id list
