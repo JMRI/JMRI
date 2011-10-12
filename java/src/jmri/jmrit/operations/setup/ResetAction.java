@@ -26,8 +26,8 @@ public class ResetAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
        	int results = JOptionPane.showConfirmDialog(null, 
-       			"Are you sure you want to delete all operation files and databases?",
-    			"Reset operations?" ,
+       			rb.getString("AreYouSureDeleteAll"),
+       			rb.getString("ResetOperations") ,
     			JOptionPane.OK_CANCEL_OPTION);
        	if (results != JOptionPane.OK_OPTION)
        		return;
@@ -42,10 +42,10 @@ public class ResetAction extends AbstractAction {
     	// now delete the operations files
     	backup.reset();
 
-    	JOptionPane.showMessageDialog(null, "You must restart JMRI to complete the reset",
-    			"Reset successful!" ,
+    	JOptionPane.showMessageDialog(null, rb.getString("YouMustRestartAfterReset"),
+    			rb.getString("ResetSuccessful") ,
     			JOptionPane.INFORMATION_MESSAGE);
-    	Apps.handleQuit();		
+    	Apps.handleRestart();		
     }
     
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
