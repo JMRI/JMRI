@@ -264,7 +264,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         if ( name==null || name.trim().length()==0) {
         	return null;
         }
-        while (name != null && _iconMap.get(name)!=null) {
+        while (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(this,
                     java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);

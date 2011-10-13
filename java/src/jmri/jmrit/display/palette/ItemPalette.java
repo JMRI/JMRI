@@ -308,7 +308,6 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
 
         _tabPane = new JTabbedPane();
         _tabIndex = new HashMap<String, ItemPanel>();
-        int index = 0;
         
         ItemPanel itemPanel = new TableItemPanel(this, "Turnout", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
