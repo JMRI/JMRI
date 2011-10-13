@@ -52,6 +52,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     protected String mPort = null;
     public String getCurrentPortName() {
         if (mPort == null) {
+            if(getPortNames()==null){
+                //This shouldn't happen but in the tests for some reason this happens
+                log.error("Port names returned as null");
+                return null;
+            }
             if (getPortNames().size()<=0) {
                 log.error("No usable ports returned");
                 return null;

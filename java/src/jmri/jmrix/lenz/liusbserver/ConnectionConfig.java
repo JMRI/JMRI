@@ -49,12 +49,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      */
     protected void setInstance() { if(adapter==null) adapter = new LIUSBServerAdapter(); }
 
-    public String getInfo() {
-        String t = (String)portBox.getSelectedItem();
-        if (t!=null) return t;
-        else return JmrixConfigPane.NONE;
-    }
-
     public void loadDetails(JPanel details) {
      	super.loadDetails(details);
         hostNameField.setText(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);

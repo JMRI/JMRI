@@ -158,7 +158,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             return getPortFromName(t);
             //return t;
         }
-        else return JmrixConfigPane.NONE;
+        else if ((adapter!=null) && (adapter.getCurrentPortName()!=null)){
+            return adapter.getCurrentPortName();
+        }
+        
+        return JmrixConfigPane.NONE;
     }
     
     Vector<String> v;

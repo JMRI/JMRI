@@ -158,15 +158,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     abstract protected void setInstance();
 
     public String getInfo() {
-        String t = adapter.getHostName();
-        int p = adapter.getPort();
-        if (t != null && !t.equals("")) {
-            if (p!=0){
-                return t+":"+p;
-            }
-            return t;
-        }
-        else return JmrixConfigPane.NONE;
+        return adapter.getCurrentPortName();
     }
 
     //static java.util.ResourceBundle rb = 

@@ -54,6 +54,8 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.datatransfer.RosterEntrySelection;
+import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.ConnectionConfig;
 
 /**
  * Standalone DecoderPro3 Window (new GUI)
@@ -166,6 +168,8 @@ public class DecoderPro3Window
 
     JLabel serviceModeProgrammerLabel = new JLabel();
     JLabel operationsModeProgrammerLabel = new JLabel();
+    ConnectionConfig opsModeProCon = null;
+    ConnectionConfig serModeProCon = null;
     /*
      * This status bar needs sorting out properly
      */
@@ -175,8 +179,19 @@ public class DecoderPro3Window
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            serviceModeProgrammerLabel.setText ("Service Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getUserName() + " Is Available");
+            String serviceModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
+            serviceModeProgrammerLabel.setText ("Service Mode Programmer " +serviceModeProgrammer + " Is Online");
             serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            
+            ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+            if (connList!=null){
+                for (int x = 0; x<connList.size(); x++){
+                    ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
+                    if(conn.getConnectionName().equals(serviceModeProgrammer)){
+                        serModeProCon = conn;
+                    }
+                }
+            }
         } else {
             serviceModeProgrammerLabel.setText("No Service Mode Programmer Available");
             serviceModeProgrammerLabel.setForeground(Color.red);
@@ -189,12 +204,30 @@ public class DecoderPro3Window
                         jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            operationsModeProgrammerLabel.setText ("Operations Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getUserName() + " Is Available");
+            String opsModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
+            operationsModeProgrammerLabel.setText ("Operations Mode Programmer " +opsModeProgrammer + " Is Online");
             operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+            if (connList!=null){
+                for (int x = 0; x<connList.size(); x++){
+                    ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
+                    if(conn.getConnectionName().equals(opsModeProgrammer)){
+                        opsModeProCon=conn;
+                    }
+                }
+            }
         } else {
             operationsModeProgrammerLabel.setText("No Operations Mode Programmer Available");
             operationsModeProgrammerLabel.setForeground(Color.red);
         }
+        
+        ConnectionStatus.instance().addPropertyChangeListener( new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("change")){
+                    updateProgrammerStatus();
+                } 
+            }
+        });
         
         addToStatusBox(operationsModeProgrammerLabel, null);
         
@@ -204,6 +237,27 @@ public class DecoderPro3Window
         
         programmerLabel = new JLabel("Active Roster Group : ");
         addToStatusBox(programmerLabel, activeRosterGroupField);
+    }
+    
+    protected void updateProgrammerStatus(){
+        if(serModeProCon!=null){
+            if(ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())){
+                serviceModeProgrammerLabel.setText ("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Online");
+                serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                serviceModeProgrammerLabel.setText("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Offline");
+                serviceModeProgrammerLabel.setForeground(Color.red);
+            }
+        }
+        if(opsModeProCon!=null){
+            if(ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())){
+                operationsModeProgrammerLabel.setText ("Operations Mode Programmer " + opsModeProCon.getConnectionName() + " Is Online");
+                operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                operationsModeProgrammerLabel.setText("Operations Mode Programmer "+ opsModeProCon.getConnectionName() + " Is Offline");
+                operationsModeProgrammerLabel.setForeground(Color.red);
+            }
+        }
     }
     
     protected void systemsMenu() {

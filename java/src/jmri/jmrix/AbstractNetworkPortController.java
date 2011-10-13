@@ -89,18 +89,30 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         m_port=p;
     }
     
-	public int getPort(){
-        return m_port;
-    }
-        
-    public String getCurrentPortName() {
-        return ""+m_port;
-    }
-    
     public void setPort(String p){
         m_port=Integer.parseInt(p);
     }
-	
+    
+	public int getPort(){
+        return m_port;
+    }
+    
+    /**
+    * Returns the connection name for the network connection in the format of ip_address:port
+    * @return ip_address:port
+    **/
+    public String getCurrentPortName() {
+        String t = getHostName();
+        int p = getPort();
+        if (t != null && !t.equals("")) {
+            if (p!=0){
+                return t+":"+p;
+            }
+            return t;
+        }
+        else return JmrixConfigPane.NONE;
+    }
+    
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
