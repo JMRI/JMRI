@@ -385,8 +385,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     			if (log.isDebugEnabled()) log.debug("makeIconMap: leafName= "+leaf.getName()+", name= "+name);
     			for (int j=0; j<states.length; j++) {
     				if (name.equals(states[j]) ||
-    						leaf.getName().equals("SignalHeadStateDark") ||
-    						leaf.getName().equals("SignalHeadStateHeld")) {
+    						leaf.getName().equals(rbean.getString("SignalHeadStateDark")) ||
+    						leaf.getName().equals(rbean.getString("SignalHeadStateHeld"))) {
     					String path = leaf.getPath();
     					this.setIcon(k++, leaf.getName(), new NamedIcon(path, path));
     					break;
