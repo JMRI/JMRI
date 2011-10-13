@@ -4,6 +4,8 @@ package jmri.jmrit.display.palette;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -22,8 +24,9 @@ public class MultiSensorIconDialog extends IconDialog {
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public MultiSensorIconDialog(String type, String family, ItemPanel parent) {
-        super(type, family, parent); 
+    public MultiSensorIconDialog(String type, String family, ItemPanel parent, 
+    						Hashtable <String, NamedIcon> iconMap, boolean isUpdate) {
+        super(type, family, parent, iconMap, isUpdate); 
     }
 
     protected JPanel makeButtonPanel() {

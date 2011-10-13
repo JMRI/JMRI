@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
+import java.util.Map.Entry;
 import java.io.IOException;
 
 import java.awt.Color;
@@ -374,7 +375,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     	int k=0;
     	if (bean!=null && _type!=null && _type.equals("SignalHead")) {
     		String[] states = ((SignalHead)bean).getValidStateNames();
-    		_iconMap = new HashMap <String, JToggleButton>(states.length+2);
     		for (int i=0; i<list.size(); i++) {
     			CatalogTreeLeaf leaf = list.get(i);
     			String name = leaf.getName();
@@ -441,11 +441,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _table.clearSelection();
             _addButton.setEnabled(false);
             _addButton.setToolTipText(null);
-            if (_type!=null && _type.equals("SignalHead")){
-                makeIconMap(b);
-            	clearIconPanel();
-            	doIconPanel();
-            }
             this.validate();
             if (log.isDebugEnabled()) log.debug("getTableSelection: row= "+row+", bean= "+b.getDisplayName());
             return b;

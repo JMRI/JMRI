@@ -1,6 +1,8 @@
 package jmri.jmrit.display;
 
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.palette.ItemPalette;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -360,6 +362,18 @@ public class PositionableLabel extends JLabel implements Positionable {
         _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
+        _paletteFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            Editor editor;
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                if (ImageIndexEditor.checkImageIndex(editor)) {
+                	ItemPalette.storeIcons();   // write maps to tree
+                }
+            }
+            java.awt.event.WindowAdapter init(Editor ed) {
+                editor = ed;
+                return this;
+            }
+        }.init(_editor));
     }
 
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {

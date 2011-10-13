@@ -23,31 +23,11 @@ public class IndicatorTOIconDialog extends IconDialog {
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key) {
-        super(type, family, parent);
+    public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key, 
+    				Hashtable <String, NamedIcon> iconMap, boolean isUpdate) {
+        super(type, family, parent, iconMap, isUpdate);
         log.debug("ctor type= \""+type+"\", family= \""+family+"\", key= \""+key+"\"");
         _key = key;
-        if (_family!=null) {
-            _familyName.setEditable(false);
-            _iconMap = clone(parent._iconGroupsMap.get(key));
-        } else {
-            ArrayList<String> keys = new ArrayList<String>(); 
-            for (int i=0; i<IndicatorTOItemPanel.STATUS_KEYS.length; i++) {
-                keys.add(IndicatorTOItemPanel.STATUS_KEYS[i]);
-            }
-            Enumeration<String> currentKeys = parent._iconGroupsMap.keys();
-            while (currentKeys.hasMoreElements()) {
-                String k= currentKeys.nextElement();
-                keys.remove(k);
-                log.debug("key= \""+k+"\"");
-            }
-            if (keys.size()>0) {
-                _iconMap = ItemPanel.makeNewIconMap("Turnout");
-                _key = keys.get(keys.size()-1);
-            } else {
-                log.error("Item type \""+type+"\" has null indicator family for key= "+key);
-            }
-        }
         _familyName.setText(_key);
         java.awt.Container comp = getContentPane();
         while (!(comp instanceof JPanel)) {
@@ -62,25 +42,13 @@ public class IndicatorTOIconDialog extends IconDialog {
                                         family+"\", key= \""+key+"\"");
     }
 
-    // override IconDialog initMap. Make placeholder for _iconPanel
+    // override IconDialog initMap. Make place holder for _iconPanel
     protected void initMap(String type, String key) {
         _iconPanel = new JPanel(); 
     }
 
-    private Hashtable<String, NamedIcon> clone(Hashtable<String, NamedIcon> map) {
-        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
-        if (map!=null) {
-            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                clone.put(entry.getKey(), new NamedIcon(entry.getValue()));
-            }
-        }
-        return clone;
-    }
-
     /**
-    * Add/Delete icon family for types that may have more than 1 fammily
+    * Add/Delete icon family for types that may have more than 1 family
     */
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {
         super.makeAddSetButtonPanel(buttonPanel);
@@ -99,8 +67,6 @@ public class IndicatorTOIconDialog extends IconDialog {
         Hashtable<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
         String key = _familyName.getText();
         ItemPalette.addLevel4FamilyMap(_type, _parent._family, key, iconMap);
-    //    IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
-   //     Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
         dispose();
     }
 
@@ -113,7 +79,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
         if (parent._iconGroupsMap.size() < IndicatorTOItemPanel.STATUS_KEYS.length) {
             setVisible(false);
-            new IndicatorTOIconDialog(_type, null, parent, _key);
+            new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap, parent.isUpdate());
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame, 
                     ItemPalette.rbp.getString("AllStatus"), 
@@ -151,7 +117,6 @@ public class IndicatorTOIconDialog extends IconDialog {
         _parent.updateFamiliesPanel();
         _parent._family = family;
         return true;
-//        if (ItemPalette.addLevel4Family(_parent._paletteFrame, _type, family, subFamily, _iconMap)) {
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTOIconDialog.class.getName());

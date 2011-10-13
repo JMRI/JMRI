@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
 
 //import javax.swing.event.ListSelectionListener;
 //import javax.swing.event.ListSelectionEvent;
@@ -34,8 +35,6 @@ import jmri.jmrit.display.SignalHeadIcon;
 
 public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelectionListener {
 
-    int _selectedRow = 0;
-
     public SignalHeadItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
@@ -48,7 +47,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
-        //_table.getSelectionModel().addListSelectionListener(this);
+        _table.getSelectionModel().addListSelectionListener(this);
         _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
@@ -70,7 +69,11 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
     
     protected void showIcons() {
-        updateFamiliesPanel();
+        //updateFamiliesPanel();
+    	_iconFamilyPanel.remove(_iconPanel);
+        _iconPanel = new JPanel();
+        _iconFamilyPanel.add(_iconPanel, 0);
+    	addIconsToPanel(_currentIconMap);
         _iconPanel.setVisible(true);
         if (!_update) {
             _dragIconPanel.setVisible(false);
@@ -90,6 +93,28 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             super.addIconsToPanel(iconMap);
         }
     }
+    /**
+    *  ListSelectionListener action
+    */
+    public void valueChanged(ListSelectionEvent e) {
+        if (_table == null || _updateButton==null) {
+            return;
+        }
+        int row = _table.getSelectedRow();
+        if (log.isDebugEnabled()) log.debug("Table valueChanged: row= "+row);
+        if (row >= 0) {
+            _updateButton.setEnabled(true);
+            _updateButton.setToolTipText(null);
+            if (_family!=null) {            	
+                _currentIconMap = getFilteredIconMap(ItemPalette.getIconMap(_itemType, _family));
+            }
+        } else {
+            _updateButton.setEnabled(false);
+            _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+        }
+        hideIcons();
+    }
+
 
     protected Hashtable<String, NamedIcon> getFilteredIconMap(Hashtable<String, NamedIcon> allIconsMap) {
         if (allIconsMap==null) {
@@ -132,12 +157,12 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     }
 
     protected void openEditDialog() {
-        IconDialog dialog = new SignalHeadIconDialog(_itemType, _family, this);
+        IconDialog dialog = new IconDialog(_itemType, _family, this, _currentIconMap, _update);
         dialog.sizeLocate();
     }
 
     protected void createNewFamily(String type) {
-        IconDialog dialog = new SignalHeadIconDialog(_itemType, null, this);
+        IconDialog dialog = new IconDialog(_itemType, null, this, null, _update);
         dialog.sizeLocate();
     }
 
@@ -169,7 +194,8 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
 
             SignalHeadIcon sh = new SignalHeadIcon(_editor);
             sh.setSignalHead(bean.getDisplayName());
-            Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
+            Hashtable <String, NamedIcon> map = getFilteredIconMap(iconMap);
+            Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
                 sh.setIcon(ItemPalette.rbean.getString(ent.getKey()), new NamedIcon(ent.getValue()));

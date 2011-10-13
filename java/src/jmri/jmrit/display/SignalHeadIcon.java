@@ -4,7 +4,9 @@ package jmri.jmrit.display;
 
 import jmri.SignalHead;
 import jmri.InstanceManager;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.SignalHeadItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import java.awt.event.ActionEvent;
@@ -328,6 +330,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
+                if (ImageIndexEditor.checkImageIndex(_editor)) {
+                	ItemPalette.storeIcons();   // write maps to tree
+                }
             }
         };
         // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
@@ -345,7 +350,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         Hashtable<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
         boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
         if (map1!=null) {
-            // map1 maye be keyed with NamedBean names.  Convert to local name keys.
+            // map1 may be keyed with NamedBean names.  Convert to local name keys.
             // However perhaps keys are local - See above
             Hashtable<String, NamedIcon> map2 = new Hashtable<String, NamedIcon>();
             Iterator<Entry<String, NamedIcon>> it = map1.entrySet().iterator();
@@ -376,7 +381,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     protected void edit() {
         makeIconEditorFrame(this, "SignalHead", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.signalHeadPickModelInstance());
-        _iconEditor.setSelection(getSignalHead());
         Enumeration <String> e = _iconMap.keys();
         int i=0;
         while (e.hasMoreElements()) {
@@ -396,7 +400,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     Hashtable<String, NamedIcon> _saveMap;
-
+    
+    /**
+     * note this method uses member _saveMap, so either updateSignal() or updateSignal()
+     * must be called immediately prior this method. _saveMap is needed to set
+     * the same scale and rotation on the new icons that the original icons had.
+	*/
     private void setIcons(Hashtable<String, NamedIcon> map, boolean scaleRotate) {
         if (log.isDebugEnabled()) log.debug("setIcons: newmap size= "+map.size()+
                                             ", oldmap size= "+_saveMap.size());

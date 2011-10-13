@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import jmri.jmrit.catalog.CatalogPanel;
@@ -48,63 +49,49 @@ public class IconDialog extends ItemDialog {
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public IconDialog(String type, String family, ItemPanel parent) {
+    public IconDialog(String type, String family, ItemPanel parent, Hashtable <String, NamedIcon> iconMap, boolean isUpdate) {
         super(type, family, 
-              java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
-              parent, true);
-        _familyName = new JTextField(family);
-//        if (log.isDebugEnabled()) log.debug("ctor IconDialog type= "+type+", family= "+family);
-
+              java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), parent, true);
+        
+        _iconMap = clone(iconMap);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        
+        _familyName = new JTextField(family);
+        if (_family==null) {
+        	_familyName.setText(ItemPalette.rbp.getString("Unnamed"));
+        }
+        _familyName.setEditable(!isUpdate);
         panel.add(ItemPalette.makeBannerPanel("IconSetName", _familyName));
 
         initMap(type, family);
         panel.add(_iconPanel);
 
-        if (_family!=null) {
-            panel.add(makeButtonPanel());
+        if (_iconMap != null) {
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+            if (!isUpdate) {
+            	makeAddSetButtonPanel(buttonPanel);
+            }
+            makeDoneButtonPanel(buttonPanel);
+            panel.add(buttonPanel);
         } else {
             panel.add(makeCreateButtonPanel());
         }
         _catalog = CatalogPanel.makeDefaultCatalog();
         _catalog.setToolTipText(ItemPalette.rb.getString("ToolTipDragIcon"));
-        panel.add(_catalog);
+        panel.add(new JScrollPane(_catalog));
 
-//        setContentPane(panel);
-        setContentPane(new javax.swing.JScrollPane(panel));
+        setContentPane(panel);
     }
 
     protected void initMap(String type, String family) {
-        _familyName.setEditable(true);
-        if (family!=null) {
-            _iconMap = ItemPalette.getIconMap(type, family);
-            if (_iconMap==null) {
-                JOptionPane.showMessageDialog(_parent._paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(type), family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            }
-        }
-        if (_iconMap==null) {
-            _iconMap = ItemPanel.makeNewIconMap(type);
-            _family = null;
-            _familyName.setText("");
-        }
         _iconPanel = makeIconPanel(_iconMap);
     }
 
-    protected JPanel makeButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        makeAddSetButtonPanel(buttonPanel);
-        makeDoneButtonPanel(buttonPanel);
-        return buttonPanel;
-    }
-
     /**
-    * Add/Delete icon family for types that may have more than 1 fammily
+    * Add/Delete icon family for types that may have more than 1 family
     */
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {
         JPanel panel1 = new JPanel();
@@ -198,28 +185,11 @@ public class IconDialog extends ItemDialog {
     * Action item for makeDoneButtonPanel
     */
     protected boolean doDoneAction() {
-        //check text
-        String family = _familyName.getText();
-        if (_family!=null && _family.equals(family)) {
-            ItemPalette.removeIconMap(_type, family);
-        }
-        if (addFamily(family, _iconMap)) {
-            _parent.updateFamiliesPanel();
-            return true;
-        }
-        return false;
+    	((FamilyItemPanel)_parent)._currentIconMap = _iconMap;
+        _parent.updateFamiliesPanel();
+    	return true;
     }
 
-/*
-    static public void printKeys(Hashtable <String, NamedIcon>  map) {
-        Iterator <String> it = map.keySet().iterator();
-        System.out.print("Keys= ");
-        while (it.hasNext()) {
-            System.out.print(it.next()+", ");
-        }
-        System.out.println();
-    }
-*/
     protected JPanel makeCreateButtonPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -357,5 +327,17 @@ public class IconDialog extends ItemDialog {
         if (log.isDebugEnabled()) log.debug("Size: width= "+lastWidth+", height= "+lastHeight); 
     }
     
+    protected Hashtable<String, NamedIcon> clone(Hashtable<String, NamedIcon> map) {
+        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
+        if (map!=null) {
+            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                clone.put(entry.getKey(), new NamedIcon(entry.getValue()));
+            }
+        }
+        return clone;
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconDialog.class.getName());
 }
