@@ -49,7 +49,7 @@ public class PortNameMapper {
     /*
      * We only go through the windows registry once looking for friendly names
      * if a new device is added then the new friendly name will not be picked up.
-    */
+     */
     private static synchronized void getWindowsSerialPortNames(){
         if(portsRetrieved)
             return;
@@ -162,5 +162,4 @@ public class PortNameMapper {
     
     }
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PortNameMapper.class.getName());
 }
