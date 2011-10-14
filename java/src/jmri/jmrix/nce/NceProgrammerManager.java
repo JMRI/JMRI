@@ -16,9 +16,9 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 	
 	NceTrafficController tc;
 
-    public NceProgrammerManager(NceTrafficController tc, Programmer serviceModeProgrammer) {
-        super(serviceModeProgrammer);
-    	this.tc = tc;
+    public NceProgrammerManager(Programmer serviceModeProgrammer, NceSystemConnectionMemo memo) {
+        super(serviceModeProgrammer, memo);
+    	this.tc = memo.getNceTrafficController();
     }
 
     /**

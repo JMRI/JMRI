@@ -18,6 +18,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
      */
     public SerialThrottleManager() {
         super();
+        userName = "Lionel TMCC";
     }
 
     public void requestThrottleSetup(LocoAddress a, boolean control) {

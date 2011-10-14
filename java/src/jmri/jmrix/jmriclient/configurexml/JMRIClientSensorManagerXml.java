@@ -19,7 +19,7 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class","jmri.jmrix.jmriclient.configurexml.JMRIClientSensorConfigXML");
+        sensors.setAttribute("class","jmri.jmrix.jmriclient.configurexml.JMRIClientSensorConfigXml");
     }
 
     public void load(Element element, Object o) {

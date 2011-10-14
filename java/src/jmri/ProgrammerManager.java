@@ -93,6 +93,8 @@ public interface ProgrammerManager  {
      */
     public boolean isAddressedModePossible();
     
+    public String getUserName();
+    
 }
 
 

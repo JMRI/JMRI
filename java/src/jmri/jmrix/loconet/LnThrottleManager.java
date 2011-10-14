@@ -24,8 +24,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     /**
      * Constructor. Gets a reference to the LocoNet SlotManager.
      */
-    public LnThrottleManager(SlotManager slotManager) {
-    	super();
+    public LnThrottleManager(SlotManager slotManager, LocoNetSystemConnectionMemo memo) {
+    	super(memo);
         this.slotManager = slotManager;
     }
 

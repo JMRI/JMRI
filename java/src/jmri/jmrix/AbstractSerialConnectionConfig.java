@@ -433,7 +433,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public String getConnectionName() { 
         if((adapter!=null) && (adapter.getSystemConnectionMemo()!=null))
             return adapter.getSystemConnectionMemo().getUserName();
-        else return null;
+        else return name();
     }
     
     public void dispose(){

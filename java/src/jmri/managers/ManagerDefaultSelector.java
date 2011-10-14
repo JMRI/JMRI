@@ -3,6 +3,9 @@
 package jmri.managers;
 
 import java.util.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Vector;
 
 import jmri.*;
 
@@ -29,8 +32,64 @@ import jmri.*;
 public class ManagerDefaultSelector {
 
     public static final ManagerDefaultSelector instance = new ManagerDefaultSelector();
+    
+    /*public static synchronized ManagerDefaultSelector instance() {
+        if (instance == null) {
+            if (log.isDebugEnabled()) log.debug("Manager Default Selector creating instance");
+            // create and load
+            instance = new ManagerDefaultSelector();
+        }
+        if (log.isDebugEnabled()) log.debug("ManagerDefaultSelector returns instance "+instance);
+        return instance;
+    }*/
 
     private ManagerDefaultSelector() {
+        jmri.jmrix.SystemConnectionMemo.addPropertyChangeListener(new PropertyChangeListener(){
+            public void propertyChange(PropertyChangeEvent e) {
+                if(e.getPropertyName().equals("ConnectionNameChanged")){
+                    String oldName = (String) e.getOldValue();
+                    String newName = (String) e.getNewValue();
+                    for (Class c : defaults.keySet()) {
+                        String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
+                        if(connectionName.equals(oldName))
+                            ManagerDefaultSelector.instance.defaults.put(c, newName);
+                    }
+                } else if (e.getPropertyName().equals("ConnectionDisabled")){
+                    Boolean newState = (Boolean) e.getNewValue();
+                    if(newState){
+                        jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)e.getSource();
+                        String disabledName = memo.getUserName();
+                        ArrayList<Class<?>> tmpArray = new ArrayList<Class<?>>();
+                        for (Class c : defaults.keySet()) {
+                            String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
+                            if(connectionName.equals(disabledName)){
+                                log.warn("Connection " + disabledName + " has been disabled, we shall remove it as the default for " + c);
+                                tmpArray.add(c);
+//                                ManagerDefaultSelector.instance.defaults.remove(c);
+                            }
+                        }
+                        for(int i = 0; i<tmpArray.size(); i++){
+                            ManagerDefaultSelector.instance.defaults.remove(tmpArray.get(i));
+                        }
+                    }
+                } else if (e.getPropertyName().equals("ConnectionRemoved")){
+                    String removedName = (String) e.getOldValue();
+                    ArrayList<Class<?>> tmpArray = new ArrayList<Class<?>>();
+                    for (Class c : defaults.keySet()) {
+                        String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
+                        if(connectionName.equals(removedName)){
+                            log.warn("Connection " + removedName + " has been removed, we shall remove it as the default for " + c);
+                            //ManagerDefaultSelector.instance.defaults.remove(c);
+                            tmpArray.add(c);
+                        }
+                    }
+                    for(int i = 0; i<tmpArray.size(); i++){
+                        ManagerDefaultSelector.instance.defaults.remove(tmpArray.get(i));
+                    }
+                }
+                notifyPropertyChangeListener("Updated", null, null);
+            }
+        });
     }
     
     /**
@@ -69,13 +128,33 @@ public class ManagerDefaultSelector {
             // 'c' is the class to load
             String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
             // have to find object of that type from proper connection
+            boolean found = false;
             for (int x = 0; x<connList.size(); x++) {
                 jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)connList.get(x);
                 String testName = memo.getUserName();
                 if (testName.equals(connectionName)) {
+                    found = true;
                     // match, store
                     InstanceManager.setDefault(c, memo.get(c));
                     break;
+                }
+            }
+            /*
+             * If the set connection can not be found then we shall set the manager default to use what
+             * has currently been set.
+             */
+            if(!found){
+                String currentName = null;
+                if(c == ThrottleManager.class){
+                    currentName = InstanceManager.throttleManagerInstance().getUserName();
+                } else if(c==PowerManager.class){
+                    currentName = InstanceManager.powerManagerInstance().getUserName();
+                } else if (c==ProgrammerManager.class){
+                    currentName = InstanceManager.programmerManagerInstance().getUserName();
+                }
+                if(currentName!=null){
+                    log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
+                    ManagerDefaultSelector.instance.defaults.put(c, currentName);
                 }
             }
         }
@@ -104,6 +183,43 @@ public class ManagerDefaultSelector {
             this.proxy = proxy;
         }
     }
+    
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        if (listeners.contains(l)) {
+            listeners.removeElement(l);
+        }
+    }
+
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        // add only if not already registered
+        if (!listeners.contains(l)) {
+            listeners.addElement(l);
+        }
+    }
+    
+    /**
+     * Trigger the notification of all PropertyChangeListeners
+     */
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<PropertyChangeListener> v;
+        synchronized(this)
+            {
+                v = (Vector<PropertyChangeListener>) listeners.clone();
+            }
+        // forward to all listeners
+        int cnt = v.size();
+        for (int i=0; i < cnt; i++) {
+            PropertyChangeListener client = v.elementAt(i);
+            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+        }
+    }
+    
+    // data members to hold contact with the property listeners
+    final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ManagerDefaultSelector.class.getName());
 }
 
 /* @(#)ManagerDefaultSelector.java */

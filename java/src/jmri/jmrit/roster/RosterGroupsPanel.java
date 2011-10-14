@@ -73,7 +73,7 @@ public class RosterGroupsPanel extends JPanel {
     private DefaultTreeModel _model;
     private DefaultMutableTreeNode _root;
     private DefaultMutableTreeNode _groups;
-    private DefaultMutableTreeNode _consists;
+    //private DefaultMutableTreeNode _consists;
     private TreeSelectionListener _TSL;
     private boolean _usesActiveRosterGroup;
     private String selectedRosterGroup = "";

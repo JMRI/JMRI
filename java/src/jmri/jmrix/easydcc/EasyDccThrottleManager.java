@@ -20,8 +20,8 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      */
-    public EasyDccThrottleManager() {
-        super();
+    public EasyDccThrottleManager(EasyDccSystemConnectionMemo memo) {
+        super(memo);
     }
 
     public void requestThrottleSetup(LocoAddress address, boolean control) {

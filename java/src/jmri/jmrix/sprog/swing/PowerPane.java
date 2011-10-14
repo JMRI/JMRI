@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.util.ResourceBundle;
+import java.util.List;
 import jmri.jmrix.sprog.*;
 
 /**
@@ -60,7 +61,13 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
 
     private boolean mgrOK() {
         if (p==null) {
-            p = new jmri.jmrix.sprog.SprogPowerManager();
+            List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+            if (connList == null) return false; // nothing to do, no connections are configured
+            for (int x = 0; x<connList.size(); x++) {
+                jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)connList.get(x);
+                if(memo instanceof SprogSystemConnectionMemo)
+                    p = ((SprogSystemConnectionMemo)memo).getPowerManager();
+            }
             if (p == null) {
                 log.error("No power manager instance found, panel not active");
                 return false;

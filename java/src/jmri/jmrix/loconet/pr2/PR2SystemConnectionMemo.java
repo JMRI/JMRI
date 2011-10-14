@@ -38,7 +38,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
         jmri.InstanceManager.setThrottleManager(getPr2ThrottleManager());
 
         jmri.InstanceManager.setProgrammerManager(
-            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager()));
+            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));
 
         /* jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager()); */
 
@@ -60,7 +60,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
         if (getDisabled())
             return null;
         if (throttlePr2Manager == null)
-            throttlePr2Manager = new jmri.jmrix.loconet.LnPr2ThrottleManager();
+            throttlePr2Manager = new jmri.jmrix.loconet.LnPr2ThrottleManager(this);
         return throttlePr2Manager;
     }
     

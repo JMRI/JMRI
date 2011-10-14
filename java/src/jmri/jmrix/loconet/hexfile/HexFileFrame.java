@@ -164,12 +164,12 @@ public class HexFileFrame extends JmriJFrame {
 
         // Install a debug programmer, replacing the existing LocoNet one
         port.getAdapterMemo().setProgrammerManager(
-                new jmri.progdebugger.DebugProgrammerManager());
+                new jmri.progdebugger.DebugProgrammerManager(port.getAdapterMemo()));
         jmri.InstanceManager.setProgrammerManager(
                 port.getAdapterMemo().getProgrammerManager());
 
         // Install a debug throttle manager, replacing the existing LocoNet one
-        port.getAdapterMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager());
+        port.getAdapterMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getAdapterMemo()));
         jmri.InstanceManager.setThrottleManager(
                 port.getAdapterMemo().getThrottleManager());
 

@@ -70,7 +70,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null)
-            programmerManager = new LnProgrammerManager(getSlotManager());
+            programmerManager = new LnProgrammerManager(getSlotManager(), this);
         return programmerManager;
     }
     public void setProgrammerManager(ProgrammerManager p) {
@@ -207,7 +207,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (getDisabled())
             return null;
         if (throttleManager == null)
-            throttleManager = new jmri.jmrix.loconet.LnThrottleManager(getSlotManager());
+            throttleManager = new jmri.jmrix.loconet.LnThrottleManager(getSlotManager(), this);
         return throttleManager;
     }
     

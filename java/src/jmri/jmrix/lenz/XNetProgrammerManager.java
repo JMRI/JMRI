@@ -17,7 +17,7 @@ public class XNetProgrammerManager  extends DefaultProgrammerManager {
    protected XNetTrafficController tc = null;
 
     public XNetProgrammerManager(Programmer pProgrammer,XNetSystemConnectionMemo memo) {
-        super(pProgrammer);
+        super(pProgrammer, memo);
         tc = memo.getXNetTrafficController();
     }
 

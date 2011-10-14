@@ -41,6 +41,13 @@ public class Constants {
     public static final int	FLAG_BIT_STDEXT		= 0x10;
     public static final int	FLAG_STD		= 0x00;
     public static final int	FLAG_EXT		= 0x10;
+    public static final int	FLAG_TYPE_P2P	= 0x00;
+    public static final int	FLAG_TYPE_ACK	= 0x20;
+    public static final int	FLAG_TYPE_NAK	= 0xA0;
+    public static final int	FLAG_TYPE_GBCAST	= 0xC0;
+    public static final int	FLAG_TYPE_GBCLEANUP	= 0x40;
+    public static final int	FLAG_TYPE_GBCLEANACK	= 0x60;
+    public static final int	FLAG_TYPE_GBCLEANNAK	= 0xE0;
     
     public static final int FLAG_BIT_X10_CMDUNIT	= 0x80;
     public static final int FLAG_X10_RECV_CMD	= 0x80;

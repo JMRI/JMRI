@@ -17,8 +17,8 @@ public class SprogThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      */
-    public SprogThrottleManager() {
-        super();
+    public SprogThrottleManager(SprogSystemConnectionMemo memo) {
+        super(memo);
         if (mInstance!=null) log.warn("Creating too many objects");
         mInstance = this;
     }

@@ -117,6 +117,7 @@ abstract public class SystemConnectionMemo {
         if(addSystemPrefix(systemPrefix)){
             prefix = systemPrefix;
             removeSystemPrefix(oldPrefix);
+            notifyPropertyChangeListener("ConnectionPrefixChanged", oldPrefix, systemPrefix);
             return true;
         }
         return false;
@@ -136,6 +137,7 @@ abstract public class SystemConnectionMemo {
         if(addUserName(name)){
             this.userName = name;
             removeUserName(oldUserName);
+            notifyPropertyChangeListener("ConnectionNameChanged", oldUserName, name);
             return true;
         }
         return false;
@@ -160,7 +162,7 @@ abstract public class SystemConnectionMemo {
         removeUserName(userName);
         removeSystemPrefix(prefix);
         jmri.InstanceManager.deregister(this, SystemConnectionMemo.class);
-        notifyPropertyChangeListener("ConnectionRemoved", null, null);
+        notifyPropertyChangeListener("ConnectionRemoved", userName, null);
     }
     
     private boolean mDisabled = false;

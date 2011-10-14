@@ -21,6 +21,10 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         private JMRIClientTrafficController tc=null;
         private String prefix = null;
 
+        /* Static arrays to hold Lenz specific feedback mode information */
+        static String[] modeNames = null;
+        static int[] modeValues = null;
+
 	/**
 	 * JMRIClient turnouts use the turnout number on the remote host.
 	 */
@@ -29,11 +33,48 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
             _number = number;
             tc = memo.getJMRIClientTrafficController();
             prefix=memo.getSystemPrefix();
+	     /* allow monitoring mode feedback, which is the same
+                as direct for this connection (this aids the 
+                transition from directly connected hardware to remotly
+                connected hardware.)*/
+            _validFeedbackTypes |= MONITORING;
+
+            // Default feedback mode is MONITORING
+            _activeFeedbackType = MONITORING;
+
+            setModeInformation(_validFeedbackNames,_validFeedbackModes);
+
+            // set the mode names and values based on the static values.
+            _validFeedbackNames = getModeNames();
+            _validFeedbackModes = getModeValues();
+
             // At construction, register for messages
             tc.addJMRIClientListener(this);
             // Then request status.
             requestUpdateFromLayout();
 	}
+
+    //Set the mode information for JMRIClient Turnouts.
+    synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes){
+        // if it hasn't been done already, create static arrays to hold
+        // the Lenz specific feedback information.
+        if(modeNames == null) {
+           if (feedbackNames.length != feedbackModes.length)
+               log.error("int and string feedback arrays different length");
+           modeNames  = new String[feedbackNames.length+1];
+           modeValues = new int[feedbackNames.length+1];
+           for (int i = 0; i<feedbackNames.length; i++) {
+              modeNames[i] = feedbackNames[i];
+              modeValues[i] = feedbackModes[i];
+           }
+           modeNames[feedbackNames.length] = "MONITORING";
+           modeValues[feedbackNames.length] = MONITORING;
+        }
+    }
+
+    static int[] getModeValues() {return modeValues;}
+    static String[] getModeNames() {return modeNames;}
+
 
 	public int getNumber() { return _number; }
 

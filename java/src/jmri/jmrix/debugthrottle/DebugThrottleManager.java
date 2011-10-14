@@ -14,11 +14,14 @@ import jmri.jmrix.AbstractThrottleManager;
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 
+    public DebugThrottleManager(){
+        super();
+    }
     /**
      * Constructor.
      */
-    public DebugThrottleManager() {
-        super();
+    public DebugThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
+        super(memo);
     }
 
     public void requestThrottleSetup(LocoAddress a, boolean control) {

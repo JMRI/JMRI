@@ -60,7 +60,8 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureManagers() {
     
-	setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer()));
+        setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(), this));
+    
         jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
      
         setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager()); 
@@ -71,7 +72,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         jmri.InstanceManager.setSensorManager(getSensorManager());
         
-        setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager()); 
+        setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager(this)); 
         jmri.InstanceManager.setThrottleManager(getThrottleManager());
 
     }
@@ -107,7 +108,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public ThrottleManager getThrottleManager(){
         if (throttleManager == null)
-            throttleManager = new SRCPThrottleManager();
+            throttleManager = new SRCPThrottleManager(this);
         return throttleManager;
 
     }

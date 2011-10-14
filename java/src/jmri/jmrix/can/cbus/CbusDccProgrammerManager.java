@@ -17,6 +17,8 @@ public class CbusDccProgrammerManager  extends DefaultProgrammerManager {
     public CbusDccProgrammerManager(Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
     }
+    
+    public String getUserName() { return "MERG"; }
 
     /**
      * MERG CAN_CMD supports ops mode 

@@ -17,14 +17,14 @@ public class SprogProgrammerManager  extends DefaultProgrammerManager {
 	//private Programmer localProgrammer;
     private SprogMode mode;
 
-    public SprogProgrammerManager(Programmer serviceModeProgrammer) {
-        super(serviceModeProgrammer);
+    public SprogProgrammerManager(Programmer serviceModeProgrammer, SprogSystemConnectionMemo memo) {
+        super(serviceModeProgrammer, memo);
         //localProgrammer = serviceModeProgrammer;
         this.mode = SprogMode.SERVICE;
     }
 
-    public SprogProgrammerManager(Programmer serviceModeProgrammer, SprogMode mode) {
-        super(serviceModeProgrammer);
+    public SprogProgrammerManager(Programmer serviceModeProgrammer, SprogMode mode, SprogSystemConnectionMemo memo) {
+        super(serviceModeProgrammer, memo);
         //localProgrammer = serviceModeProgrammer;
         this.mode = mode;
     }

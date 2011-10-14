@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
 import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -163,6 +164,8 @@ public class DecoderPro3Window
     jmri.UserPreferencesManager p;
     final String rosterGroupSelectionCombo = this.getClass().getName()+".rosterGroupSelected";
 
+    JLabel serviceModeProgrammerLabel = new JLabel();
+    JLabel operationsModeProgrammerLabel = new JLabel();
     /*
      * This status bar needs sorting out properly
      */
@@ -172,32 +175,32 @@ public class DecoderPro3Window
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            programmerLabel.setText ("Service Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
-            programmerLabel.setForeground(new Color(0, 128, 0));
+            serviceModeProgrammerLabel.setText ("Service Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getUserName() + " Is Available");
+            serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
         } else {
-            programmerLabel.setText("No Service Mode Programmer Available");
-            programmerLabel.setForeground(Color.red);
+            serviceModeProgrammerLabel.setText("No Service Mode Programmer Available");
+            serviceModeProgrammerLabel.setForeground(Color.red);
         }
         
-        addToStatusBox(programmerLabel, null);
+        addToStatusBox(serviceModeProgrammerLabel, null);
         
-        programmerLabel = new JLabel();
+        operationsModeProgrammerLabel = new JLabel();
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            programmerLabel.setText ("Operations Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getClass().getSimpleName() + " Is Available");
-            programmerLabel.setForeground(new Color(0, 128, 0));
+            operationsModeProgrammerLabel.setText ("Operations Mode Programmer " +jmri.InstanceManager.programmerManagerInstance().getUserName() + " Is Available");
+            operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
         } else {
-            programmerLabel.setText("No Operations Mode Programmer Available");
-            programmerLabel.setForeground(Color.red);
+            operationsModeProgrammerLabel.setText("No Operations Mode Programmer Available");
+            operationsModeProgrammerLabel.setForeground(Color.red);
         }
         
-        addToStatusBox(programmerLabel, null);
+        addToStatusBox(operationsModeProgrammerLabel, null);
         
-        programmerLabel = new JLabel("Programmer Status : ");
+        JLabel programmerStatusLabel = new JLabel("Programmer Status : ");
         statusField.setText("idle");
-        addToStatusBox(programmerLabel, statusField);
+        addToStatusBox(programmerStatusLabel, statusField);
         
         programmerLabel = new JLabel("Active Roster Group : ");
         addToStatusBox(programmerLabel, activeRosterGroupField);
@@ -258,14 +261,20 @@ public class DecoderPro3Window
             }
         );
 
-        int count = rtable.getModel().getColumnCount();
+        TableModel jModel = rtable.getModel();
+        int count = jModel.getColumnCount();
+        
         for (int i = 0; i <count; i++){
-            if(p.getProperty(getWindowFrameRef(), i)!=null){
-                int sort = (Integer) p.getProperty(getWindowFrameRef(), i);
+            if(p.getProperty(getWindowFrameRef(), "rosterOrder:"+ jModel.getColumnName(i))!=null){
+                int sort = (Integer) p.getProperty(getWindowFrameRef(), "rosterOrder:"+ jModel.getColumnName(i));
                 rtable.getModel().setSortingStatus(i, sort);
             }
+            
+            if(p.getProperty(getWindowFrameRef(), "rosterWidth:"+ jModel.getColumnName(i))!=null){
+                int width = (Integer) p.getProperty(getWindowFrameRef(), "rosterWidth:"+ jModel.getColumnName(i));
+                rtable.getTable().getColumnModel().getColumn(i).setPreferredWidth(width);
+            }
         }
-
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
 
@@ -276,7 +285,7 @@ public class DecoderPro3Window
 
             @Override
             public Transferable createTransferable(JComponent c) {
-                ArrayList Ids = new ArrayList<String>(rtable.getTable().getSelectedRowCount());
+                ArrayList<String> Ids = new ArrayList<String>(rtable.getTable().getSelectedRowCount());
                 for (int i = 0; i < rtable.getTable().getSelectedRowCount(); i++) {
                     Ids.add(rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString());
                 }
@@ -893,8 +902,10 @@ public class DecoderPro3Window
         for (int i = 0; i <count; i++){
             //This should probably store the sort with real names rather than numbers
             //But conversion back on the headers is a pain.
-            p.setProperty(getWindowFrameRef(), i, rtable.getModel().getSortingStatus(i));
+            p.setProperty(getWindowFrameRef(), "rosterOrder:"+rtable.getTable().getColumnName(i), rtable.getModel().getSortingStatus(i));
+            p.setProperty(getWindowFrameRef(), "rosterWidth:"+rtable.getTable().getColumnName(i), rtable.getTable().getColumnModel().getColumn(i).getPreferredWidth());
         }
+        
         
         if(rosterGroupSplitPane.getDividerLocation()>2){
             p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupSplitPane.getDividerLocation());

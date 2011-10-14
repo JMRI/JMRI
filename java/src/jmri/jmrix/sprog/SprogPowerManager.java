@@ -12,17 +12,17 @@ import jmri.jmrix.AbstractMessage;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @version	$Revision$
  */
-public class SprogPowerManager implements PowerManager, SprogListener {
+public class SprogPowerManager extends jmri.managers.AbstractPowerManager
+    implements PowerManager, SprogListener {
 
     SprogTrafficController trafficController = null;
-    public SprogPowerManager() {
+    public SprogPowerManager(SprogSystemConnectionMemo memo) {
+        super(memo);
         // connect to the TrafficManager
         trafficController = SprogTrafficController.instance();
         trafficController.addSprogListener(this);
     }
-
-    public String getUserName() { return "SPROG"; }
-
+    
     int power = UNKNOWN;
 
     boolean waiting = false;
@@ -69,16 +69,6 @@ public class SprogPowerManager implements PowerManager, SprogListener {
 
     private void checkTC() throws JmriException {
         if (trafficController == null) throw new JmriException("attempt to use SprogPowerManager after dispose");
-    }
-
-    // to hear of changes
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     // to listen for status changes from Sprog system

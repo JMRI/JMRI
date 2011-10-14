@@ -36,6 +36,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     public CbusThrottleManager() {
     	super();
         TrafficController.instance().addCanListener(this);
+        userName = "MERG";
     }
 
 	/**

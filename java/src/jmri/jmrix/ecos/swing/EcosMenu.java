@@ -33,7 +33,11 @@ public class EcosMenu extends JMenu{
         }
         
         if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
-            new jmri.jmrit.beantable.ListedTableFrame();
+            try{
+                new jmri.jmrit.beantable.ListedTableFrame();
+            } catch (java.lang.NullPointerException ex){
+                log.error("Unable to register Ecos table");
+            }
         }
 
         add(new jmri.jmrit.beantable.ListedTableAction("ECoS Loco Database", "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
@@ -60,4 +64,6 @@ public class EcosMenu extends JMenu{
         String name;
         String load;
     }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosMenu.class.getName());
 }

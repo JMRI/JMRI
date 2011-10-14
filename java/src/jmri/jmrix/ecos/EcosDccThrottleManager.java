@@ -21,9 +21,8 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      * Constructor.
      */
     public EcosDccThrottleManager(EcosSystemConnectionMemo memo) {
-        super();
+        super(memo);
         adaptermemo = memo;
-
     }
 
     EcosSystemConnectionMemo adaptermemo;

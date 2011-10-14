@@ -18,11 +18,14 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 		// connect to the TrafficManager
 		tc = memo.getXNetTrafficController();
 		tc.addXNetListener(XNetInterface.CS_INFO, this);
+        userName = memo.getUserName();
 		// request the current command station status
 		tc.sendXNetMessage(XNetMessage.getCSStatusRequestMessage(),this);
 	}
 
     public String getUserName() { return "XPressNet"; }
+    
+    String userName = "XPressNet";
 
 	int power = UNKNOWN;
 

@@ -21,14 +21,14 @@ import jmri.managers.ManagerDefaultSelector;
 public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
 
     public ManagerDefaultsConfigPane() {
-
+    
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         matrix = new JPanel();
         add(matrix);
-        jmri.jmrix.SystemConnectionMemo.addPropertyChangeListener(new PropertyChangeListener(){
+        ManagerDefaultSelector.instance.addPropertyChangeListener(new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent e) {
-                if(e.getPropertyName().startsWith("Connection")){
+                if(e.getPropertyName().equals("Updated")){
                     update();
                 }
             }

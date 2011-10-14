@@ -29,10 +29,10 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
         
         InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
 
-        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
+        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager(this));
         
         jmri.InstanceManager.setProgrammerManager(
-            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager()));
+            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));
 
     }
 
@@ -51,10 +51,10 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 
         InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager(getLnTrafficController(), getSystemPrefix()));
 
-        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(getSlotManager()));
+        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(getSlotManager(), this));
 
         jmri.InstanceManager.setProgrammerManager(
-            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager()));
+            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));
 
         InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(getLnTrafficController(), getSystemPrefix()));
 

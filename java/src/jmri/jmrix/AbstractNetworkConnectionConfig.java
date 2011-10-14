@@ -346,7 +346,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public String getConnectionName() { 
         if(adapter.getSystemConnectionMemo()!=null)
             return adapter.getSystemConnectionMemo().getUserName();
-        else return null;
+        else return name();
     }
     
     public void dispose() { 
