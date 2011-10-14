@@ -29,16 +29,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
     public String name() { return "Network Connection"; }
 
-    /**
-     * Reimplement this method to show the connected host,
-     * rather than the usual port name.
-     * @return human-readable connection information
-     */
-    public String getInfo() {
-        String t = adapter.getHostName();
-        if (t != null && !t.equals("")) return t;
-        else return JmrixConfigPane.NONE;
-    }
     protected void setInstance() {
         adapter = NetworkDriverAdapter.instance();
     }

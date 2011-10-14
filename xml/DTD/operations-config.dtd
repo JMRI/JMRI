@@ -17,7 +17,7 @@
 <!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
- | missingCarFormat | tab | manifest | comments)*>
+ | missingCarFormat | tab | manifest | vsd | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
@@ -40,6 +40,7 @@
 <!ELEMENT setupFrameOptions EMPTY>
 <!ELEMENT tab EMPTY>
 <!ELEMENT manifest EMPTY>
+<!ELEMENT vsd EMPTY>
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
@@ -125,6 +126,8 @@
 <!ATTLIST tab enabled				(true | false ) "false">  
 <!ATTLIST manifest useEditor		(true | false ) "false"> 
 <!ATTLIST manifest hazardousMsg		CDATA #IMPLIED> 
+
+<!ATTLIST vsd enablePhysicalLocations		(true | false ) "false">
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 

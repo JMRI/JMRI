@@ -31,28 +31,32 @@
 		in the head section using value-of instructions. -->
 	<xsl:template match='roster-config'>
 		<table class="rosterTable">
+		    <tr class="header"><th>Icon</th><th>ID</th><th>Address</th><th>Mfg</th><th>Model</th><th>Comment</th></tr>
 			<xsl:apply-templates />
 		</table>
 	</xsl:template>
 
 	<!-- Display each roster entry -->
 	<xsl:template match="roster/locomotive">
-		<tr>
+		<tr class="detail">
 			<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress' />", "<xsl:value-of select='@id' />", "/prefs/resources/<xsl:value-of select='@iconFilePath' />", "<xsl:apply-templates select='functionlabels' />"); 
 			</xsl:attribute>
-			<td class="rosterTD">
+			<td class="icon">
 				<xsl:if test="(@iconFilePath != '__noIcon.jpg') and (@iconFilePath != '')">
 					<xsl:element name="img">
 						<xsl:attribute name="src">/prefs/resources/<xsl:value-of
 							select="@iconFilePath" />?MaxHeight=40</xsl:attribute>
 						<xsl:attribute name="height">40</xsl:attribute>
-						<xsl:attribute name="alt">No icon</xsl:attribute>
+						<xsl:attribute name="alt"><xsl:value-of select="@id" /></xsl:attribute>
 						<xsl:attribute name="title">Click to open throttle</xsl:attribute>
 					</xsl:element>
 				</xsl:if>
-				<xsl:text>          </xsl:text>
-				<xsl:value-of select="@id" />
 			</td>
+			<td class="id"><xsl:value-of select="@id" /></td>
+			<td class="dccAddress"><xsl:value-of select="@dccAddress" /></td>
+			<td class="mfg"><xsl:value-of select="@mfg" />&#160;</td>
+			<td class="model"><xsl:value-of select="@model" />&#160;</td>
+			<td class="comment"><xsl:value-of select="@comment" />&#160;</td>
 		</tr>
 	</xsl:template>
 	

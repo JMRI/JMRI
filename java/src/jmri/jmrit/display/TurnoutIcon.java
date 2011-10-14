@@ -2,7 +2,9 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 
@@ -309,6 +311,9 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
+                if (ImageIndexEditor.checkImageIndex(_editor)) {
+                	ItemPalette.storeIcons();   // write maps to tree
+                }
             }
         };
         // duplicate iconmap with state names rather than int states

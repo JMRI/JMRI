@@ -45,23 +45,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         host = new JTextField(hostName);
         details.add(host);
     }
-
-    /**
-     * Reimplement this method to show the connected host,
-     * rather than the usual port name.
-     * <P>
-     * If the connection isn't active, that's also indicated.
-     * <P>
-     * Do not use this to record the port name, as it also
-     * contains that error information.
-     *
-     * @return Human-readable connection information
-     */
-    public String getInfo() {
-        String t = host.getText();
-        if (t != null && !t.equals("")) return t;
-        else return JmrixConfigPane.NONE;
-    }
     
     public boolean isOptList2Advanced() { return false; }
     

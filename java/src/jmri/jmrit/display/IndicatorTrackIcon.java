@@ -2,10 +2,12 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
 import jmri.jmrit.display.palette.IndicatorItemPanel;
+import jmri.jmrit.display.palette.ItemPalette;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -368,6 +370,9 @@ public class IndicatorTrackIcon extends PositionableIcon
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
+                if (ImageIndexEditor.checkImageIndex(_editor)) {
+                	ItemPalette.storeIcons();   // write maps to tree
+                }
             }
         };
         _trackPanel.init(updateAction, cloneMap(_iconMap, this));

@@ -31,8 +31,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
     JPanel    _bottom2Panel;  // createIconFamilyButton - when all families deleted 
     JButton   _showIconsButton;
     JButton   _updateButton;
-    protected JTextField _familyName;
-    protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging
     protected boolean   _updateWithSameMap = false; // when editing existing icon, do not change family
     protected Hashtable<String, NamedIcon> _currentIconMap;
 
@@ -68,6 +66,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
     public void init(ActionListener doneAction, Hashtable<String, NamedIcon> iconMap) {
+        _update = true;
         if (iconMap!=null) {
             checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
         }
@@ -101,8 +100,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
     * families. if so, return.  if not, does user want to add it to families?
     * if so, add.  If not, save for return when updated.
     */
-    protected void checkCurrentMap(Hashtable<String, NamedIcon> iconMap) {
+    private void checkCurrentMap(Hashtable<String, NamedIcon> iconMap) {
         _currentIconMap = iconMap;
+        _updateWithSameMap = false;
         if (log.isDebugEnabled()) log.debug("checkCurrentMap: for type \""+_itemType+"\", family \""+_family+"\"");
         if (_family!=null && _family.trim().length()>0) {
             Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
@@ -141,20 +141,19 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (families!=null && families.size()>0) {
             JPanel familyPanel = makeFamilyButtons(families.keySet().iterator(),
                                                    (_currentIconMap==null));
-            Hashtable<String, NamedIcon> map = _currentIconMap;
-            if (map==null) {
-                map = families.get(_family);
+            if (_currentIconMap==null) {
+            	_currentIconMap = families.get(_family);
             }
             // make _iconPanel & _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
-            if (map==null) {
+            if (_currentIconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
                         java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"),
                                                        ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
-                addIconsToPanel(map);        // need to have family iconMap identified before calling
-                makeDndIconPanel(map, "BeanStateUnknown");
+                addIconsToPanel(_currentIconMap);        // need to have family iconMap identified before calling
+                makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
             }
         } else {
             addCreatePanels();
@@ -213,7 +212,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         familyPanel.add(buttonPanel);
         if (_family==null && setDefault) {
-            _family = family;       // let last familiy be the selected one
+            _family = family;       // let last family be the selected one
             if (button != null) button.setSelected(true);
             else log.warn("null button after setting family");
         }
@@ -385,8 +384,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
         setSize(getPreferredSize());
     }
-   
-    
+     
     /**
     *  Replacement panel for _bottom1Panel when no icon families exist for _itemType 
     */
@@ -432,7 +430,14 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected void reset() {
         hideIcons();
     }
-    
+ 
+    protected void openEditDialog() {
+        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
+        IconDialog dialog = new IconDialog(_itemType, _family, this, _currentIconMap, _update);
+        // call super ItemDialog to size and locate dialog
+        dialog.sizeLocate();
+    }
+
     /**
     * Action of family radio button
     */
@@ -447,9 +452,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _dragIconPanel = new JPanel();
             _iconFamilyPanel.add(_dragIconPanel, 0);
         }
-        Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
-        addIconsToPanel(iconMap);
-        makeDndIconPanel(iconMap, "BeanStateUnknown");
+        _currentIconMap = ItemPalette.getIconMap(_itemType, _family);
+        addIconsToPanel(_currentIconMap);
+        makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
         _updateWithSameMap = false;     // not using saved update map
         hideIcons();
     }
@@ -460,23 +465,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     // return icon set to panel icon
     public Hashtable <String, NamedIcon> getIconMap() {
-        Hashtable <String, NamedIcon> iconMap = null;
-        if (_updateWithSameMap) {
-            iconMap = _currentIconMap;
-        } else {
-            iconMap = ItemPalette.getIconMap(_itemType, _family);
-        }
-        if (iconMap==null) {
-            iconMap = ItemPalette.getIconMap(_itemType, _family);
-            if (iconMap==null) {
+        if (_currentIconMap==null) {
+        	_currentIconMap = ItemPalette.getIconMap(_itemType, _family);
+            if (_currentIconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
                         java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
                                                        ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                return null;
             }
         }        
-        return iconMap;
+        return _currentIconMap;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FamilyItemPanel.class.getName());

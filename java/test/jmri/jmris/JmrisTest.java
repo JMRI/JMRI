@@ -30,6 +30,7 @@ public class JmrisTest extends TestCase {
 		TestSuite suite = new TestSuite("jmri.jmris.JmrisTest");
 
 		suite.addTest(jmri.jmris.srcp.SRCPTest.suite());
+		suite.addTest(jmri.jmris.simpleserver.SimpleServerTest.suite());
                 return suite;
         }
 

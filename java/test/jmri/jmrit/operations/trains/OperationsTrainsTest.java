@@ -5534,6 +5534,48 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e7 destination 1", "Westford Yard 1", e7.getDestinationTrackName());
 		Assert.assertEquals("e8 destination 1", "Westford Yard 1", e8.getDestinationTrackName());
 		
+		// test departing from staging in aggressive mode
+		Assert.assertTrue(train1.reset());
+		loc1trk1.setLocType(Track.STAGING);
+		loc1trk2.setLocType(Track.STAGING);
+		loc1.setLocationOps(Location.STAGING);
+		train1.build();
+		Assert.assertFalse("Train 1 After Build from staging, eight loco on departure track", train1.isBuilt());
+		
+		// move locos to other departure track
+		Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(loc1, loc1trk2));
+		Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(loc1, loc1trk2));
+		
+		train1.build();
+		Assert.assertTrue("Train 1 After Build from staging, three loco on departure track", train1.isBuilt());
+		
+		// check destinations
+		Assert.assertEquals("c1 destination 2", "Westford Yard 2", c1.getDestinationTrackName());
+		Assert.assertEquals("c2 destination 2", "", c2.getDestinationTrackName());
+		Assert.assertEquals("c3 destination 2", "Westford Yard 2", c3.getDestinationTrackName());
+		Assert.assertEquals("c4 destination 2", "Boston Yard 2", c4.getDestinationTrackName());
+		
+		Assert.assertEquals("c5 destination 2", "", c5.getDestinationTrackName());
+		Assert.assertEquals("c6 destination 2", "Arlington Yard", c6.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 2", "Westford Yard 1", c7.getDestinationTrackName());
+		Assert.assertEquals("c8 destination 2", "Westford Yard 2", c8.getDestinationTrackName());
+		
+		Assert.assertEquals("c9 destination 2", "Westford Yard 2", c9.getDestinationTrackName());
+		Assert.assertEquals("c10 destination 2", "Westford Yard 1", c10.getDestinationTrackName());
+		Assert.assertEquals("c11 destination 2", "Chelmsford Yard 1", c11.getDestinationTrackName());
+
+		Assert.assertEquals("e1 destination 2", "", e1.getDestinationTrackName());
+		Assert.assertEquals("e2 destination 2", "", e2.getDestinationTrackName());
+		Assert.assertEquals("e3 destination 2", "", e3.getDestinationTrackName());
+		Assert.assertEquals("e4 destination 2", "", e4.getDestinationTrackName());
+		Assert.assertEquals("e5 destination 2", "", e5.getDestinationTrackName());
+		Assert.assertEquals("e6 destination 2", "Westford Yard 1", e6.getDestinationTrackName());
+		Assert.assertEquals("e7 destination 2", "Westford Yard 1", e7.getDestinationTrackName());
+		Assert.assertEquals("e8 destination 2", "Westford Yard 1", e8.getDestinationTrackName());
+		
 		// test train move to a specific location
 		Assert.assertFalse("Old Harvard is not part of this trains route", train1.move("Old Harvard"));
 		Assert.assertFalse("Train departs New Harvard already there", train1.move("New Harvard"));

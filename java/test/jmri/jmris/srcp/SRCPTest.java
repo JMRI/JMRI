@@ -28,6 +28,7 @@ public class SRCPTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmris.srcp.SRCPTest");  // no tests in this class itself
+        suite.addTest(jmri.jmris.srcp.JmriSRCPServerTest.suite());
         suite.addTest(jmri.jmris.srcp.parser.SRCPParserTests.suite());
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {

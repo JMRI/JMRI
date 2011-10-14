@@ -3,8 +3,10 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 
 import java.awt.event.ActionEvent;
@@ -398,6 +400,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
+                if (ImageIndexEditor.checkImageIndex(_editor)) {
+                	ItemPalette.storeIcons();   // write maps to tree
+                }
             }
         };
 

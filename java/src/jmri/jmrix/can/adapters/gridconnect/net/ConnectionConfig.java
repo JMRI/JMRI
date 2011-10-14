@@ -105,16 +105,6 @@ import jmri.jmrix.JmrixConfigPane;
         return opt2Box.getSelectedItem().toString();
     }
     
-    /**
-     * Reimplement this method to show the connected host,
-     * rather than the usual port name.
-     * @return human-readable connection information
-     */
-    public String getInfo() {
-        String t = host.getText();
-        if (t != null && !t.equals("")) return t;
-        else return JmrixConfigPane.NONE;
-    }
     protected void setInstance() {
         log.error("Unexpected call to setInstance");
         new Exception().printStackTrace();

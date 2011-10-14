@@ -18,6 +18,7 @@ public abstract class ItemPanel extends JPanel {
     protected String    _itemType;
     protected String    _family;
     protected Editor    _editor;
+    protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -61,12 +62,15 @@ public abstract class ItemPanel extends JPanel {
         return _family;
     }
 
+    protected final boolean isUpdate() {
+    	return _update;
+    }
     /**
     * overriden for many itemTypes.  This is for the remainder
     */
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        IconDialog dialog = new IconDialog(_itemType, _family, this);
+        IconDialog dialog = new IconDialog(_itemType, _family, this, null, _update);
         // call super ItemDialog to size and locate dialog
         dialog.sizeLocate();
     }
@@ -75,7 +79,7 @@ public abstract class ItemPanel extends JPanel {
     * overriden for many itemTypes.  This is for the remainder
     */
     protected void createNewFamily(String type) {
-        IconDialog dialog = new IconDialog(type, null, this);
+        IconDialog dialog = new IconDialog(type, null, this, null, _update);
         dialog.sizeLocate();
     }
 /*

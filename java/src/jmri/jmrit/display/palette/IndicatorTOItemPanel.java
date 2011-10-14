@@ -35,6 +35,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
 
     private DetectionPanel  _detectPanel;
     private JPanel          _tablePanel;
+    private JTextField 		_familyName;
     protected Hashtable<String, Hashtable<String, NamedIcon>> _iconGroupsMap;
     protected Hashtable<String, Hashtable<String, NamedIcon>> _updateGroupsMap;
     
@@ -84,8 +85,9 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     * families. if so, return.  if not, does user want to add it to families?
     * if so, add.  If not, save for return when updated.
     */
-    protected void checkCurrentMaps(Hashtable<String, Hashtable<String, NamedIcon>> iconMaps) {
+    private void checkCurrentMaps(Hashtable<String, Hashtable<String, NamedIcon>> iconMaps) {
         _updateGroupsMap = iconMaps;
+        _updateWithSameMap = false;
         if (_family!=null && _family.trim().length()>0) {
             Hashtable<String, Hashtable<String, NamedIcon>> map = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
             if (map!=null) {
@@ -175,6 +177,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _iconFamilyPanel.add(_iconPanel, 0);
         _iconPanel.setVisible(true);
         setSize(getPreferredSize());
+        validate();
     }
     
     protected void resetFamiliesPanel() {
@@ -352,7 +355,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _tablePanel.setVisible(false);
         }
         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
-        setSize(getPreferredSize());
+//        setSize(getPreferredSize());
     }
 
     void createNewFamily() {
@@ -397,18 +400,17 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _dragIconPanel = new JPanel();
             _iconFamilyPanel.add(_dragIconPanel, 0);
         }
-        Hashtable<String, Hashtable<String, NamedIcon>> iconMaps =
-                                    ItemPalette.getLevel4Family(_itemType, _family);
-        addIcons2Panel(iconMaps);
-        makeDndIconPanel(iconMaps.get("ClearTrack"), "TurnoutStateClosed");
+        _iconGroupsMap = ItemPalette.getLevel4Family(_itemType, _family);
+        addIcons2Panel(_iconGroupsMap);
+        makeDndIconPanel(_iconGroupsMap.get("ClearTrack"), "TurnoutStateClosed");
         _updateWithSameMap = false;     // not using saved update map
         hideIcons();
-//        _paletteFrame.pack();
     }
 
     protected void openEditDialog(String key) {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\" and \""+key+"\"");
-        new IndicatorTOIconDialog(_itemType, _family, this, key);
+        _currentIconMap = _iconGroupsMap.get(key);
+        new IndicatorTOIconDialog(_itemType, _family, this, key, _currentIconMap, _update);
     }
 
     /****************** pseudo inheritance *********************/
@@ -442,19 +444,16 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     public Hashtable <String, Hashtable<String, NamedIcon>> getIconMaps() {
-        Hashtable<String, Hashtable<String, NamedIcon>> iconMaps;
-        if (_updateWithSameMap) {
-            iconMaps = _updateGroupsMap;
-        } else {
-            iconMaps = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
-        }
-        if (iconMaps==null) {
-            JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                   ItemPalette.rbp.getString(_itemType), _family), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-        }
-        return iconMaps;
+        if (_iconGroupsMap==null) {
+        	_iconGroupsMap = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
+            if (_iconGroupsMap==null) {
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                       ItemPalette.rbp.getString(_itemType), _family), 
+                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+             }
+        }        
+        return _iconGroupsMap;
     }
 
     protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {

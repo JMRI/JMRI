@@ -1,27 +1,38 @@
 
 html {
       width:100%;
-      background-color:Gainsboro;
 }
 
 body {
       width:100%;
 	  margin:0px auto;
-      background-color:Gainsboro;
+      background-color:White;
       text-align:center;
       font-family:Tahoma,Arial,Helvetica,sans-serif;
       font-size:100%;
 }
 
-.rosterTable {
-	width:100%;
-}		
+table.rosterTable {
+	border-collapse: collapse;
+	margin: 2em;
+}
 
-.rosterTD {
-	border-width:2px;
+table.rosterTable td {
+	border-width:1px;
 	border-style:solid; 
-	border-color:black;
-}		
+	border-color:LightGray;
+	cursor: pointer;
+}
+table.rosterTable tr.detail:hover {
+      background-color:Gainsboro;
+}
+table.rosterTable td.comment {
+	font-size: 60%;
+}
+
+table.rosterTable td.mfg, table.rosterTable td.model {
+	white-space:nowrap;
+}
 
 .ifrm1 {
       vertical-align:text-top;

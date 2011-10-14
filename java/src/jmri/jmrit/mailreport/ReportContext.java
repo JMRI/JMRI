@@ -2,15 +2,23 @@
 
 package jmri.jmrit.mailreport;
 
-import java.awt.*;
-import javax.swing.*;
 import jmri.util.JmriInsets;
+import gnu.io.CommPortIdentifier;
+import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.net.SocketException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import jmri.util.PortNameMapper;
+import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
 
 
@@ -50,6 +58,9 @@ public class ReportContext {
                 addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo()+ " Disabled " + conn.getDisabled());
             }
         }
+        
+        addString("Available Communication Ports:");
+        addCommunicationPortInfo();
 
         String prefs = jmri.jmrit.XmlFile.prefsDir();
         addString("Preferences directory: "+prefs+"  ");
@@ -230,6 +241,40 @@ public class ReportContext {
             }
         }        
     }
+    
+    /**
+     * Add communication port information
+     */
+    private void addCommunicationPortInfo() {
+        @SuppressWarnings("unchecked")
+        Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
+        
+        ArrayList<CommPortIdentifier> ports = new ArrayList<CommPortIdentifier>();
+        ArrayList<String> portsList = new ArrayList<String>();
+        
+        // find the names of suitable ports
+        while (portIDs.hasMoreElements()) {
+            CommPortIdentifier id = portIDs.nextElement();
+            // filter out line printers 
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) {
+                ports.add(id);
+                portsList.add(id.getName());
+            }
+        }
+        
+        addString(String.format(" Found %s serial ports", ports.size()));
+        
+        // now output the details
+        for (CommPortIdentifier id: ports) {
+            // output details
+            SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(id.getName());
+            	addString(" Port: " + port.getDisplayName()
+                        + (id.isCurrentlyOwned()
+                        ? " - in use by: " + id.getCurrentOwner()
+                        : " - not in use"));
+        }
+    }
+    
 }
 
 /* @(#)ReportContext.java */

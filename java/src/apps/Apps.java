@@ -10,6 +10,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.JmriJFrame;
 import jmri.util.WindowMenu;
@@ -525,57 +526,57 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     // line 4
     JLabel cs4 = new JLabel();
     protected void buildLine4(JPanel pane){
-        if(connection[0]!=-1)
+        if(connection[0]!=null)
             buildLine (connection[0], cs4, pane);
     }
    
     // line 5 optional
     JLabel cs5 = new JLabel(); 
     protected void buildLine5(JPanel pane){
-        if(connection[1]!=-1)
+        if(connection[1]!=null)
             buildLine (connection[1], cs5, pane);
     }
     
     // line 6 optional
     JLabel cs6 = new JLabel(); 
     protected void buildLine6(JPanel pane){
-        if(connection[2]!=-1)
+        if(connection[2]!=null)
             buildLine (connection[2], cs6, pane);
     }
     
     // line 7 optional
     JLabel cs7 = new JLabel(); 
     protected void buildLine7(JPanel pane){
-        if(connection[3]!=-1)
+        if(connection[3]!=null)
             buildLine (connection[3], cs7, pane);
     }
     
-    protected void buildLine(int number, JLabel cs, JPanel pane){
-    	if (AppConfigBase.getConnection(number).equals(JmrixConfigPane.NONE)){
+    protected void buildLine(ConnectionConfig conn, JLabel cs, JPanel pane){
+    	if (conn.name().equals(JmrixConfigPane.NONE)){
     		cs.setText(" ");
     		return;
     	}
-        ConnectionStatus.instance().addConnection(AppConfigBase.getConnection(number), AppConfigBase.getPort(number));
+        ConnectionStatus.instance().addConnection(conn.name(), conn.getInfo());
         cs.setFont(pane.getFont());
-        updateLine(number, cs);
+        updateLine(conn, cs);
         pane.add(cs);
     }
     
-    protected void updateLine(int number, JLabel cs) {
-        if (AppConfigBase.getDisabled(number))
+    protected void updateLine(ConnectionConfig conn, JLabel cs) {
+        if (conn.getDisabled())
             return;
-        String name = AppConfigBase.getConnectionName(number);
+        String name = conn.getConnectionName();
         if (name == null)
-        	name = AppConfigBase.getManufacturerName(number);
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigBase.getPort(number))){
+        	name = conn.getManufacturer();
+    	if (ConnectionStatus.instance().isConnectionOk(conn.getInfo())){
     		cs.setForeground(Color.black);
     		String cf = MessageFormat.format(rb.getString("ConnectionSucceeded"),
-					new Object[] {name, AppConfigBase.getConnection(number), AppConfigBase.getPort(number)});
+					new Object[] {name, conn.name(), conn.getInfo()});
 			cs.setText(cf);
 		} else {
 			cs.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] {name, AppConfigBase.getConnection(number), AppConfigBase.getPort(number)});
+					new Object[] {name, conn.name(), conn.getInfo()});
 			cf = cf.toUpperCase();
 			cs.setText(cf);
 		}
@@ -624,7 +625,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             for (int x = 0; x<connList.size(); x++){
                 jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
                 if(!conn.getDisabled()){
-                    connection[i] = x;
+                    connection[i] = conn;
                     i++;
                 }
                 if(i>3)
@@ -642,7 +643,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         return pane1;
     }
     
-    int[] connection = {-1,-1,-1,-1};
+    //int[] connection = {-1,-1,-1,-1};
+    jmri.jmrix.ConnectionConfig[] connection ={null, null, null, null};
 
     /**
      * Closing the main window is a shutdown request
@@ -1005,10 +1007,18 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     public void propertyChange(PropertyChangeEvent ev){
         if(log.isDebugEnabled())   	
            log.debug("property change: comm port status update");
-    	updateLine(0, cs4);
-    	updateLine(1, cs5);
-    	updateLine(2, cs6);
-    	updateLine(3, cs7);
+        if(connection[0]!=null)
+            updateLine(connection[0], cs4);
+
+        if(connection[1]!=null)
+            updateLine(connection[1], cs5);
+
+        if(connection[2]!=null)
+            updateLine(connection[2], cs6);
+
+        if(connection[3]!=null)
+            updateLine(connection[3], cs7);
+
     }
     
     private static final String jmriLog ="****** JMRI log *******";

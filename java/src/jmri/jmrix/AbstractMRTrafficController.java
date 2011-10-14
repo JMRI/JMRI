@@ -685,6 +685,7 @@ abstract public class AbstractMRTrafficController {
                 e1.printStackTrace();
             }
         }
+        ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         log.error("Exit from rcv loop");
     }
     
@@ -696,8 +697,9 @@ abstract public class AbstractMRTrafficController {
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: "+e.toString());
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
-        if (controller instanceof AbstractNetworkPortController)
+        if (controller instanceof AbstractNetworkPortController){
             portWarnTCP(e);
+        }
     }
     abstract protected AbstractMRReply newReply();
     abstract protected boolean endOfMessage(AbstractMRReply r);
