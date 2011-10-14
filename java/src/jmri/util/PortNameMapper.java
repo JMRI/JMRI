@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Vector;
-import javax.swing.JComboBox;
 
 /**
  * Class used to provide a mapping between port numbers and 'friendly'
