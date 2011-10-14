@@ -19,9 +19,6 @@ import java.util.Vector;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
 import java.util.Map.Entry;
 
 import javax.swing.JComboBox;
@@ -30,7 +27,8 @@ import javax.swing.JPanel;
 
 import gnu.io.CommPortIdentifier;
 
-import at.jta.*;
+import jmri.util.PortNameMapper;
+import jmri.util.PortNameMapper.SerialPortFriendlyName;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -48,7 +46,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         adapter = p;
         addToActionList();
-        getWindowsSerialPortNames();
     }
     
     public jmri.jmrix.SerialPortAdapter getAdapter() { return adapter; }
@@ -60,7 +57,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public AbstractSerialConnectionConfig() {
         adapter = null;
         addToActionList();
-        getWindowsSerialPortNames();
     }
 
     boolean init = false;
@@ -155,7 +151,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();
         if (t!=null){
-            return getPortFromName(t);
+            return PortNameMapper.getPortFromName(t);
             //return t;
         }
         else if ((adapter!=null) && (adapter.getCurrentPortName()!=null)){
@@ -224,7 +220,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         portBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String port = getPortFromName((String)portBox.getSelectedItem());
+                String port = PortNameMapper.getPortFromName((String)portBox.getSelectedItem());
                 adapter.setPort(port);
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".port", (String) portBox.getSelectedItem());
             }
@@ -478,7 +474,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 setBackground(list.getBackground());
             }
             if(invalidPort!=null){
-                String port = getPortFromName(displayName);
+                String port = PortNameMapper.getPortFromName(displayName);
                 if (port.equals(invalidPort)){
                     list.setSelectionForeground(Color.red);
                     setForeground(Color.red);
@@ -491,93 +487,17 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
     }
     
-    static boolean portsRetrieved = false;
-    /*
-    * We only go through the windows registry once looking for friendly names
-    * if a new device is added then the new friendly name will not be picked up.
-    */
-    static synchronized void getWindowsSerialPortNames(){
-        if(portsRetrieved)
-            return;
-        /* Retrieving the friendly name is only available to windows clients 
-           so if the OS is not windows, we make the portsRetrieved as completed
-           and exit out.
-        */
-        if(!System.getProperty("os.name").toLowerCase().contains("windows")){
-            portsRetrieved = true;
-            return;
-        }
-        
-        try {
-            Regor reg = new Regor();
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\FTDIBUS\\", reg);
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\USB\\", reg);
-            //some modems are assigned in the HDAUDIO se we retrieve these
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\HDAUDIO\\", reg);
-            //some PCI software devices are located here
-            getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\PCI\\", reg);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        portsRetrieved = true;
-    }
-    
-    
-    
-    private static void getDetailsFromWinRegistry(String path, Regor reg){
-        ArrayList<String> friendlyName = new ArrayList<String>();
-        try {
-            List regentry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE,path);
-            if(regentry==null)
-                return;
-            for(int i = 0; i<regentry.size(); i++){
-                List regSubEntry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i));
-                if(regSubEntry!=null){
-                    if(regSubEntry.size()>0){
-                        String name = null;
-                        String port = null;
-                        List values = reg.listValueNames(Regor.HKEY_LOCAL_MACHINE,path + regentry.get(i)+"\\"+regSubEntry.get(0));
-                        if(values.contains("Class")){
-                            Key pathKey = reg.openKey(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i)+"\\"+regSubEntry.get(0), Regor.KEY_READ);
-                            String deviceClass = reg.readValueAsString(pathKey,"Class");
-                            if(deviceClass.equals("Ports") || deviceClass.equals("Modem")){
-                                name = reg.readValueAsString(pathKey,"FriendlyName");
-                                Key pathKey2 = reg.openKey(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i)+"\\"+regSubEntry.get(0)+"\\Device Parameters", Regor.KEY_READ);
-                                port = reg.readValueAsString(pathKey2, "PortName");
-                                reg.closeKey(pathKey2);
-                            }
-                            reg.closeKey(pathKey);
-                        }
-                        if((name!=null) && (port!=null)){
-                            serialPortNames.put(port, new SerialPortFriendlyName(port, name));
-                        } else if(name!=null)
-                            friendlyName.add(name);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for (int i = 0; i<friendlyName.size(); i++){
-            int commst = friendlyName.get(i).lastIndexOf('(')+1;
-            int commls = friendlyName.get(i).lastIndexOf(')');
-            String commPort = friendlyName.get(i).substring(commst, commls);
-            serialPortNames.put(commPort, new SerialPortFriendlyName(commPort, friendlyName.get(i)));
-        }
-    }
-    
     protected synchronized static void updateSerialPortNames(String portName, JComboBox portCombo, Vector<String> portList){
-        for(Entry<String, SerialPortFriendlyName> en : serialPortNames.entrySet()){
+        for(Entry<String, SerialPortFriendlyName> en : PortNameMapper.getPortNameMap().entrySet()){
             en.getValue().setValidPort(false);
         }
         
         for (int i=0; i<portList.size(); i++) {
             String commPort = portList.elementAt(i);
-            SerialPortFriendlyName port = serialPortNames.get(commPort);
+            SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(commPort);
             if(port==null){
                 port = new SerialPortFriendlyName(commPort, null);
-                serialPortNames.put(commPort, port);
+                PortNameMapper.getPortNameMap().put(commPort, port);
             }
             port.setValidPort(true);
             portCombo.addItem(port.getDisplayName());
@@ -586,15 +506,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         }
     }
-    
-    static String getPortFromName(String name){
-        for(Entry<String, SerialPortFriendlyName> en : serialPortNames.entrySet()){
-            if(en.getValue().getDisplayName().equals(name))
-                return en.getKey();
-        }
-        return "";
-    }
-    
+        
     @SuppressWarnings("unchecked")
 	protected Vector<String> getPortNames() {
     	//reloadDriver(); // Refresh the list of communication ports
@@ -610,32 +522,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             	portNameVector.addElement(id.getName());
 		  }
          return portNameVector;
-    }
-    
-    static HashMap<String, SerialPortFriendlyName> serialPortNames = new HashMap<String, SerialPortFriendlyName>();
-    
-    static class SerialPortFriendlyName{
-        
-        String serialPortFriendly = "";
-        boolean valid = false;
-        
-        SerialPortFriendlyName(String port, String Friendly){
-            serialPortFriendly = Friendly;
-            if(serialPortFriendly==null)
-                serialPortFriendly=port;
-            else if(!serialPortFriendly.contains(port)){
-                serialPortFriendly = Friendly+" ("+port+")";
-            }
-        }
-        
-        String getDisplayName(){
-            return serialPortFriendly;
-        }
-        
-        boolean isValidPort(){ return valid; }
-        
-        void setValidPort(boolean boo) { valid = boo; }
-    
     }
     
     /**
