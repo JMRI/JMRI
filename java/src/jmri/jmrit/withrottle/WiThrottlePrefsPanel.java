@@ -174,7 +174,7 @@ public class WiThrottlePrefsPanel extends JPanel{
                             BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         eStopCB = new JCheckBox(rb.getString("LabelUseEStop"));
         eStopCB.setToolTipText(rb.getString("ToolTipUseEStop"));
-        SpinnerNumberModel spinMod = new SpinnerNumberModel(10,4,30,2);
+        SpinnerNumberModel spinMod = new SpinnerNumberModel(10,4,60,2);
         delaySpinner = new JSpinner(spinMod);
         ((JSpinner.DefaultEditor)delaySpinner.getEditor()).getTextField().setEditable(false);
         panel.add(eStopCB);
