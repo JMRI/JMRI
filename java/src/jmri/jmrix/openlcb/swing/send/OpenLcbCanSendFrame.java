@@ -45,8 +45,8 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     JToggleButton    mRunButton = new JToggleButton("Go");
 
     JTextField srcAliasField = new JTextField("123");
-    JTextField verifyNodeField = new JTextField("01 02 03 04 05 06 ");
-    JTextField sendEventField = new JTextField("01 02 03 04 05 06 FF FE ");
+    JTextField verifyNodeField = new JTextField("02 03 04 05 06 07 ");
+    JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");
     JTextField dstAliasField = new JTextField(4);
     JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
     JTextField configNumberField = new JTextField("40");
@@ -153,7 +153,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         getContentPane().add(pane2);
-        b = new JButton("Send Verify Node");
+        b = new JButton("Send Verify Nodes");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendVerifyNode(e);
@@ -288,7 +288,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     }
 
     public void sendVerifyNode(java.awt.event.ActionEvent e) {
-        String data = "[180AF"+srcAliasField.getText()+"] "+verifyNodeField.getText();
+        String data = "[180A7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
         System.out.println("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendVerifyNode: "+m);
@@ -296,7 +296,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     }
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
-        String data = "[182BF"+srcAliasField.getText()+"] "+verifyNodeField.getText();
+        String data = "[182B7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
         System.out.println("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendVerifyNode: "+m);
