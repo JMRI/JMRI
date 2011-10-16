@@ -24,6 +24,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.picker.PickListModel;
 
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.JmriJFrame;
 //import jmri.configurexml.*;
 
@@ -1051,7 +1052,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         javax.swing.JLabel mtext = new javax.swing.JLabel();
         mtext.setText(rb.getString("SelectLoco")+":");
         locoRosterFrame.getContentPane().add(mtext);
-        final JComboBox rosterBox = Roster.instance().fullRosterComboBox();
+        final JComboBox rosterBox = new RosterEntryComboBox();
         rosterBox.insertItemAt("", 0);
         rosterBox.setSelectedIndex(0);
         rosterBox.addActionListener(new java.awt.event.ActionListener() {

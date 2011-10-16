@@ -13,6 +13,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 /**
  * Frame object for manipulating consists.
@@ -156,7 +157,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         locoSelector.setToolTipText(rb.getString("LocoSelectorToolTip"));
 	locoSelector.setVisible(true);
         
-        locoRosterBox = Roster.instance().fullRosterComboBox();
+        locoRosterBox = new RosterEntryComboBox();
         locoRosterBox.insertItemAt("",0);
         locoRosterBox.setSelectedIndex(0);
 

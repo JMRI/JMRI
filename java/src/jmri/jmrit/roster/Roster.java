@@ -5,8 +5,6 @@ package jmri.jmrit.roster;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 
-import javax.swing.*;
-
 import java.util.*;
 
 import org.jdom.Document;
@@ -146,108 +144,6 @@ public class Roster extends XmlFile {
                 num++;
         }
         return num;
-    }
-
-    /**
-     * Return a JComboBox containing the entire roster, if a roster group
-     * has been selected, it will only return the entries relating to that 
-     * group.
-     * <P>
-     * The JComboBox is based on a common model object, so it updates
-     * when the roster changes.
-     *
-     */
-    public JComboBox fullRosterComboBox() {
-        return matchingComboBox(null, null, null, null, null, null, null);
-    }
-    
-    /**
-     * Return a JComboBox containing the entire roster, regardless of what
-     * roster group has been selected.
-     * <P>
-     * The JComboBox is based on a common model object, so it updates
-     * when the roster changes.
-     *
-     */
-    
-    public JComboBox fullRosterComboBoxGlobal() {
-        return matchingComboBoxGlobal(null, null, null, null, null, null, null);
-    }
-
-    /**
-     * Get a JComboBox representing the choices that match some information.
-     * If a roster group has been selected then the results will be restricted
-     * to those in the roster group.
-     * <P>
-     * Only entries that exactly match the given parameters will be
-     * returned.  Null parameters mean to ignore that part of the match.
-     * <P>
-     * The JComboBox is based on a common model object, so it updates
-     * when the roster changes.
-     */
-    public JComboBox matchingComboBox(String roadName, String roadNumber, String dccAddress,
-                                      String mfg, String decoderMfgID, String decoderVersionID, String id ) {
-        List<RosterEntry> l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
-        JComboBox b = new JComboBox();
-        b.setRenderer(new RosterComboListRenderer());
-        for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = l.get(i);
-            if(_rostergroup!=null){
-                if(r.getAttribute(getRosterGroupWP())!=null){
-                    if(r.getAttribute(getRosterGroupWP()).equals("yes"))
-                        b.addItem(r.titleString());
-                }
-            }
-            else
-                b.addItem(r.titleString());
-        }
-        return b;
-    }
-    /**
-     * Get a JComboBox representing the choices that match some information
-     * regardless of which roster group has been selected.
-     * <P>
-     * Only entries that exactly match the given parameters will be
-     * returned.  Null parameters mean to ignore that part of the match.
-     * <P>
-     * The JComboBox is based on a common model object, so it updates
-     * when the roster changes.
-     */
-    public JComboBox matchingComboBoxGlobal(String roadName, String roadNumber, String dccAddress,
-                                      String mfg, String decoderMfgID, String decoderVersionID, String id ) {
-        List<RosterEntry> l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
-        JComboBox b = new JComboBox();
-        b.setRenderer(new RosterComboListRenderer());
-        for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = l.get(i);
-            b.addItem(r.titleString());
-        }
-        return b;
-    }
-    
-    public void updateComboBox(JComboBox box) {
-        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null );
-        box.removeAllItems();
-        for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = _list.get(i);
-            if(_rostergroup!=null){
-                if(r.getAttribute(getRosterGroupWP())!=null){
-                    if(r.getAttribute(getRosterGroupWP()).equals("yes"))
-                        box.addItem(r.titleString());
-                }
-            }
-            else
-                box.addItem(r.titleString());
-        }
-    }
-    
-    public void updateComboBoxGlobal(JComboBox box) {
-        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null );
-        box.removeAllItems();
-        for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = _list.get(i);
-            box.addItem(r.titleString());
-        }
     }
 
     /**

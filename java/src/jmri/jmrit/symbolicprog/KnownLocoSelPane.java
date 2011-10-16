@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.util.List;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
@@ -65,7 +66,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
         }
         add(pane2a);
 
-        locoBox = Roster.instance().fullRosterComboBox();
+        locoBox = new RosterEntryComboBox();
         add(locoBox);
 
         addProgrammerBox();

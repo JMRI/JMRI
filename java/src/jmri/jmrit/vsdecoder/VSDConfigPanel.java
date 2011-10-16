@@ -34,6 +34,7 @@ import jmri.util.swing.JmriPanel;
 import jmri.DccLocoAddress;
 import javax.swing.SwingWorker;
 import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 @SuppressWarnings("serial")
 public class VSDConfigPanel extends JmriPanel {
@@ -246,8 +247,7 @@ public class VSDConfigPanel extends JmriPanel {
 	this.add(addressPanel, BorderLayout.CENTER);
 	this.add(rosterPanel, BorderLayout.PAGE_END);
 
-        //rosterComboBox = new javax.swing.JComboBox();
-	rosterComboBox = Roster.instance().fullRosterComboBox();
+	rosterComboBox = new RosterEntryComboBox();
 	rosterComboBox.insertItemAt(new NullRosterBoxItem(), 0);
 	rosterComboBox.setSelectedIndex(0);
 	rosterComboBox.setToolTipText("tool tip for roster box");

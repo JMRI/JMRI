@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
 
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -103,14 +104,14 @@ public class RosterTest extends TestCase {
         
         javax.swing.JComboBox box;
         
-        box = r.matchingComboBox(null, "321", null, null, null, null, null);
+        box = new RosterEntryComboBox(r, null, "321", null, null, null, null, null);
         Assert.assertEquals("search for zero matches", 0, box.getItemCount() );
 
-        box = r.matchingComboBox("UP", null, null, null, null, null, null);
+        box = new RosterEntryComboBox(r, "UP", null, null, null, null, null, null);
         Assert.assertEquals("search for one match", 1, box.getItemCount() );
         Assert.assertEquals("search for one match", "entry 3", box.getItemAt(0) );
 
-        box = r.matchingComboBox(null, "123", null, null, null, null, null);
+        box = new RosterEntryComboBox(r, null, "123", null, null, null, null, null);
         Assert.assertEquals("search for three matches", 3, box.getItemCount() );
         Assert.assertEquals("search for three matches", "entry 1", box.getItemAt(0) );
         Assert.assertEquals("search for three matches", "entry 2", box.getItemAt(1) );

@@ -13,6 +13,7 @@ import java.io.File;
 import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.symbolicprog.ProgDefault;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.nce.consist.NceConsistRoster;
@@ -299,7 +300,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			}
 		});
 
-		rosterBox = Roster.instance().fullRosterComboBox();
+		rosterBox = new RosterEntryComboBox();
 		rosterBox.insertItemAt(new NullComboBoxItem(), 0);
 		rosterBox.setSelectedIndex(0);
 		rosterBox.setToolTipText(rb.getString("SelectLocoFromRosterTT"));

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import jmri.DccLocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
@@ -163,7 +164,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// lead loco
 	JLabel textLoco1 = new JLabel();
 	JTextField locoTextField1 = new JTextField(4);
-	JComboBox locoRosterBox1 = Roster.instance().fullRosterComboBox();
+	JComboBox locoRosterBox1 = new RosterEntryComboBox();
 	JButton adrButton1 = new JButton();
 	JButton cmdButton1 = new JButton();
 	JButton dirButton1 = new JButton();
@@ -171,7 +172,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// rear loco
 	JLabel textLoco2 = new JLabel();
 	JTextField locoTextField2 = new JTextField(4);
-	JComboBox locoRosterBox2 = Roster.instance().fullRosterComboBox();
+	JComboBox locoRosterBox2 = new RosterEntryComboBox();
 	JButton adrButton2 = new JButton();
 	JButton cmdButton2 = new JButton();
 	JButton dirButton2 = new JButton();
@@ -179,7 +180,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco3 = new JLabel();
 	JTextField locoTextField3 = new JTextField(4);
-	JComboBox locoRosterBox3 = Roster.instance().fullRosterComboBox();
+	JComboBox locoRosterBox3 = new RosterEntryComboBox();
 	JButton adrButton3 = new JButton();
 	JButton cmdButton3 = new JButton();
 	JButton dirButton3 = new JButton();
@@ -187,7 +188,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco4 = new JLabel();
 	JTextField locoTextField4 = new JTextField(4);
-	JComboBox locoRosterBox4 = Roster.instance().fullRosterComboBox();
+	JComboBox locoRosterBox4 = new RosterEntryComboBox();
 	JButton adrButton4 = new JButton();
 	JButton cmdButton4 = new JButton();
 	JButton dirButton4 = new JButton();
@@ -195,7 +196,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco5 = new JLabel();
 	JTextField locoTextField5 = new JTextField(4);
-	JComboBox locoRosterBox5 = Roster.instance().fullRosterComboBox();
+	JComboBox locoRosterBox5 = new RosterEntryComboBox();
 	JButton adrButton5 = new JButton();
 	JButton cmdButton5 = new JButton();
 	JButton dirButton5 = new JButton();
@@ -203,7 +204,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// mid loco
 	JLabel textLoco6 = new JLabel();
 	JTextField locoTextField6 = new JTextField(4);
-	JComboBox locoRosterBox6 = Roster.instance().fullRosterComboBox();
+	JComboBox locoRosterBox6 = new RosterEntryComboBox();
 	JButton adrButton6 = new JButton();
 	JButton cmdButton6 = new JButton();
 	JButton dirButton6 = new JButton();

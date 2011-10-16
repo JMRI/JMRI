@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
 /**
@@ -56,7 +57,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     JComboBox typeBox;
     JLabel jLabel = new JLabel("Select the Group");
     JComboBox groupBox;
-    JComboBox rosterBox;
+    RosterEntryComboBox rosterBox;
     JButton okButton = new JButton("Remove");
     JButton cancelButton = new JButton("Exit");
     
@@ -65,7 +66,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         Roster roster = Roster.instance();
         curRosterGroup = Roster.getRosterGroup();
         Roster.instance().setRosterGroup(null);
-        rosterBox = roster.fullRosterComboBox();
+        rosterBox = new RosterEntryComboBox();
         groupBox = new RosterGroupComboBox();
         updateRosterEntry((String) groupBox.getSelectedItem());
         groupBox.addActionListener(new ActionListener() {
@@ -123,7 +124,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         re.deleteAttribute(group);
         re.updateFile();
         Roster.writeRosterFile();
-        Roster.instance().updateComboBox(rosterBox);
+        rosterBox.update();
         frame.pack();
     
     }
@@ -136,7 +137,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     
     public void updateRosterEntry(String group) {
         Roster.instance().setRosterGroup(group);
-        Roster.instance().updateComboBox(rosterBox);
+        rosterBox.update(group);
         Roster.instance().rosterGroupEntryChanged();
         frame.pack();
     }

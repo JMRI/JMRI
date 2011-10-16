@@ -14,6 +14,7 @@ import javax.swing.Icon;
 import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 /**
  * Remove a locomotive from the roster.
@@ -114,7 +115,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
 
     protected String selectRosterEntry(){
         // create a dialog to select the roster entry
-        JComboBox selections = Roster.instance().fullRosterComboBox();
+        JComboBox selections = new RosterEntryComboBox();
         int retval = JOptionPane.showOptionDialog(_who,
                                                   "Select one roster entry", "Delete roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,

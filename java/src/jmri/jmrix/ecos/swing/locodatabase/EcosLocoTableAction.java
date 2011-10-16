@@ -24,6 +24,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.AbstractTableAction;
+import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.util.com.sun.TableSorter;
 
 public class EcosLocoTableAction extends AbstractTableAction {
@@ -240,10 +241,10 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
             
-            JComboBox selections;
+            GlobalRosterEntryComboBox selections;
     
             public void setUpCOMMENTCOL(TableColumn Rosterid){
-                selections = Roster.instance().fullRosterComboBoxGlobal();
+                selections = new GlobalRosterEntryComboBox();
                 selections.insertItemAt(" ",0);
                 selections.setSelectedIndex(-1);
                 Rosterid.setCellEditor(new DefaultCellEditor(selections));
@@ -257,7 +258,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             public void refreshSelections(){
                 if (selections==null)
                     return;
-                Roster.instance().updateComboBoxGlobal(selections);
+                selections.update();
                 selections.insertItemAt(" ",0);
                 selections.setSelectedIndex(-1);
                 fireTableRowsUpdated(0, getRowCount());

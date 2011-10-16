@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 /**
  * Base class for Actions to copy, export and import RosterEntrys.
@@ -82,7 +83,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
 
     boolean selectExistingFromEntry() {
         // create a dialog to select the roster entry to copy
-        JComboBox selections = Roster.instance().fullRosterComboBox();
+        JComboBox selections = new RosterEntryComboBox();
         int retval = JOptionPane.showOptionDialog(mParent,
                                                   "Select one roster entry", "Select roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,

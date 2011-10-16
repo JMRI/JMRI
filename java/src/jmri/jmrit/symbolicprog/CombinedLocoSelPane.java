@@ -22,6 +22,7 @@ import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
 import java.util.List;
+import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
@@ -150,7 +151,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
         pane2a.add(new JLabel(rbt.getString("USE LOCOMOTIVE SETTINGS FOR: ")));
-        locoBox = Roster.instance().fullRosterComboBoxGlobal();
+        locoBox = new GlobalRosterEntryComboBox();
         Roster.instance().addPropertyChangeListener(this);
         locoBox.insertItemAt(rbt.getString("<NONE - NEW LOCO>"),0);
         locoBox.setSelectedIndex(0);
@@ -296,7 +297,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * @param ev Ignored.
      */
     public void propertyChange(PropertyChangeEvent ev) {
-        Roster.instance().updateComboBoxGlobal(locoBox);
+        locoBox.update();
         locoBox.insertItemAt(rbt.getString("<NONE - NEW LOCO>"),0);
         locoBox.setSelectedIndex(0);
     }
@@ -419,7 +420,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         decoderBox.setSelectedIndex(1);
     }
 
-    protected JComboBox locoBox = null;
+    protected GlobalRosterEntryComboBox locoBox = null;
     private JComboBox decoderBox = null;       // private because children will override this
     protected JComboBox programmerBox = null;
     protected JToggleButton iddecoder;
