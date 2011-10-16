@@ -336,7 +336,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     }
 
     public void sendDatagramReply(java.awt.event.ActionEvent e) {
-        String data = "[1e"+dstAliasField.getText()+srcAliasField.getText()+"] 4C";
+        String data = "[1e"+dstAliasField.getText()+srcAliasField.getText()+"] 04";
         System.out.println("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendDatagramPerformed: "+m);
