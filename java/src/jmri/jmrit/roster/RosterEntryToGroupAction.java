@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
 /**
  * Associate a Roster Entry to a Roster Group
@@ -53,7 +54,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         String curRosterGroup = Roster.getRosterGroup();
         Roster.instance().setRosterGroup(null);
 
-        selections = roster.rosterGroupBox();
+        selections = new RosterGroupComboBox();
         if (lastGroupSelect!=null){
             selections.setSelectedItem(lastGroupSelect);
         }

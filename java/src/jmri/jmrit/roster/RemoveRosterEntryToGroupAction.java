@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
 /**
  * Remove a locomotive from a roster grouping.
@@ -65,7 +66,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         curRosterGroup = Roster.getRosterGroup();
         Roster.instance().setRosterGroup(null);
         rosterBox = roster.fullRosterComboBox();
-        groupBox = roster.rosterGroupBox();
+        groupBox = new RosterGroupComboBox();
         updateRosterEntry((String) groupBox.getSelectedItem());
         groupBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

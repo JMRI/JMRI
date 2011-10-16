@@ -12,6 +12,7 @@ import jmri.util.swing.JmriPanel;
 
 import javax.swing.JComboBox;
 import java.beans.PropertyChangeListener;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
 /**
  * Selects a Roster group to work with
@@ -51,7 +52,7 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     
-    JComboBox selections;
+    RosterGroupComboBox selections;
     JmriPanel container;
     boolean init = false;
     
@@ -63,7 +64,7 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
             container.add(new JLabel("Active Roster Group"));
             
             // create a dialog to select the roster entry
-            selections = roster.rosterGroupBox();
+            selections = new RosterGroupComboBox();
             container.add(selections);
             
             comboListener = new ActionListener() {
@@ -97,7 +98,7 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
 
     void updateComboBox(){
         selections.removeActionListener(comboListener);
-        Roster.instance().updateGroupBox(selections);
+        selections.update();
         if(selections.getItemCount()<=1)
             container.setVisible(false);
         else{

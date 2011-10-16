@@ -960,30 +960,7 @@ public class Roster extends XmlFile {
         return new ArrayList<String>(_rosterGroupList);
     }
 
-    public JComboBox rosterGroupBox() {
-        JComboBox b = new JComboBox();
-        updateGroupBox(b);
-        return b;
-    }
-    
-    public void updateGroupBox(JComboBox box){
-        box.removeAllItems();
-        
-        String[] displayList = _rosterGroupList.toArray(new String[_rosterGroupList.size()]);
-        Arrays.sort(displayList);
-        
-        for(String e : displayList){
-            box.addItem(e);
-        }
-        
-        box.insertItemAt(ALLENTRIES,0);
-        if(_rostergroup==null)
-            box.setSelectedIndex(0);
-        else
-            box.setSelectedItem(_rostergroup);
-    }
-    
-    static String ALLENTRIES = "All Entries";
+    public static String ALLENTRIES = "All Entries";
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Roster.class.getName());

@@ -9,6 +9,7 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
     /**
      * Swing action to create and register a Roster Group Table.
@@ -60,7 +61,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
                     * Include an "add" button
                     */
             void extras() {
-                final JComboBox selectCombo = roster.rosterGroupBox();
+                final JComboBox selectCombo = new RosterGroupComboBox();
                 selectCombo.insertItemAt("",0);
                 selectCombo.setSelectedIndex(-1);
                 JPanel p25 = new JPanel();
