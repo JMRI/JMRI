@@ -101,7 +101,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         super();
         throttleWindow = tw;
         initGUI();
-		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().addThrottleFrame(this);
+	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().addThrottleFrame(this);
     }
     
     public ThrottleWindow getThrottleWindow() {
@@ -786,8 +786,10 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
 	public void componentShown(ComponentEvent e) {
 		throttleWindow.setCurrentThrottleFrame(this);
-		if (willSwitch)
+		if (willSwitch) {
 			switchMode();
+                        repaint();
+                }
 		throttleWindow.updateGUI();
 	}
 	

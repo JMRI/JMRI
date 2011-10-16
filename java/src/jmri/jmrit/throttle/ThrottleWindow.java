@@ -319,150 +319,176 @@ public class ThrottleWindow extends JmriJFrame {
     /**
      *  Set up View, Edit and Power Menus
      */
-    private void initializeMenu() {       
-		JMenu fileMenu = new JMenu(throttleBundle.getString("ThrottleFileMenu"));
+    private void initializeMenu() {
+        JMenu fileMenu = new JMenu(throttleBundle.getString("ThrottleFileMenu"));
+
+        JMenuItem fileMenuLoad = new JMenuItem(throttleBundle.getString("ThrottleFileMenuLoadThrottle"));
+        fileMenuLoad.addActionListener(new AbstractAction() {
+
+            public void actionPerformed(ActionEvent e) {
+                getCurrentThrottleFrame().loadThrottle(null);
+            }
+        });
+        fileMenuSave = new JMenuItem(throttleBundle.getString("ThrottleFileMenuSaveThrottle"));
+        fileMenuSave.addActionListener(new AbstractAction() {
+
+            public void actionPerformed(ActionEvent e) {
+                getCurrentThrottleFrame().saveThrottle();
+            }
+        });
+        JMenuItem fileMenuSaveAs = new JMenuItem(throttleBundle.getString("ThrottleFileMenuSaveAsThrottle"));
+        fileMenuSaveAs.addActionListener(new AbstractAction() {
+
+            public void actionPerformed(ActionEvent e) {
+                getCurrentThrottleFrame().saveThrottleAs();
+            }
+        });
         
-		JMenuItem fileMenuLoad = new JMenuItem(throttleBundle.getString("ThrottleFileMenuLoadThrottle"));
-		fileMenuLoad.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				getCurrentThrottleFrame().loadThrottle(null);
-			}
-		});
-		fileMenuSave = new JMenuItem(throttleBundle.getString("ThrottleFileMenuSaveThrottle"));
-		fileMenuSave.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				getCurrentThrottleFrame().saveThrottle();
-			}
-		});
-		JMenuItem fileMenuSaveAs = new JMenuItem(throttleBundle.getString("ThrottleFileMenuSaveAsThrottle"));
-		fileMenuSaveAs.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				getCurrentThrottleFrame().saveThrottleAs();
-			}
-		});
-        fileMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(throttleBundle.getString("MenuItemNewThrottle" )));
-		fileMenu.add(fileMenuLoad);
-		fileMenu.add(fileMenuSave);
-		fileMenu.add(fileMenuSaveAs);
-		
-		JMenu viewMenu = new JMenu(throttleBundle.getString("ThrottleMenuView"));		
-		viewAddressPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewAddressPanel"));
-		viewAddressPanel.setSelected(true);
-		viewAddressPanel.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				getCurrentThrottleFrame().getAddressPanel()
-						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-			}
-		});
+        
+        
+        fileMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(throttleBundle.getString("MenuItemNewThrottle")));
+        fileMenu.add(fileMenuLoad);
+        fileMenu.add(fileMenuSave);
+        fileMenu.add(fileMenuSaveAs);
+        fileMenu.addSeparator();
+        
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle");
+        fileMenu.add(new jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction(rb.getString("MenuItemLoadThrottleLayout")));
+        fileMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(rb.getString("MenuItemSaveThrottleLayout" )));
+        fileMenu.addSeparator();
+        fileMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(rb.getString("MenuItemLoadDefaultThrottleLayout" )));
+        fileMenu.add(new jmri.jmrit.throttle.StoreDefaultXmlThrottlesLayoutAction(rb.getString("MenuItemSaveAsDefaultThrottleLayout" )));
+        fileMenu.addSeparator();
+        fileMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(rb.getString("MenuItemStartWiThrottle")));
 
-		viewControlPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewControlPanel"));
-		viewControlPanel.setSelected(true);
-		viewControlPanel.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				getCurrentThrottleFrame().getControlPanel()
-						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-			}
-		});
-		viewFunctionPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewFunctionPanel"));
-		viewFunctionPanel.setSelected(true);
-		viewFunctionPanel.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				getCurrentThrottleFrame().getFunctionPanel()
-						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-			}
-		});
+        JMenu viewMenu = new JMenu(throttleBundle.getString("ThrottleMenuView"));
+        viewAddressPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewAddressPanel"));
+        viewAddressPanel.setSelected(true);
+        viewAddressPanel.addItemListener(new ItemListener() {
 
-		viewAllButtons = new JMenuItem(throttleBundle.getString("ThrottleMenuViewAllFunctionButtons"));
-		viewAllButtons.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent ev) {
-				getCurrentThrottleFrame().getFunctionPanel().resetFnButtons();
-				getCurrentThrottleFrame().getFunctionPanel().setEnabled();
-			}
-		});
-		
-		JMenuItem makeAllComponentsInBounds = new JMenuItem(throttleBundle.getString("ThrottleMenuViewMakeAllComponentsInBounds"));
-		makeAllComponentsInBounds.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent ev) {
-				getCurrentThrottleFrame().makeAllComponentsInBounds();
-			}
-		});
+            public void itemStateChanged(ItemEvent e) {
+                getCurrentThrottleFrame().getAddressPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            }
+        });
 
-                JMenuItem switchViewMode = new JMenuItem(throttleBundle.getString("ThrottleMenuViewSwitchMode"));
-		switchViewMode.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent ev) {
-				switchMode();
-			}
-		});
-                JMenuItem viewThrottlesList = new JMenuItem(throttleBundle.getString("ThrottleMenuViewViewThrottleList"));
-		viewThrottlesList.addActionListener(new ThrottlesListAction());
+        viewControlPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewControlPanel"));
+        viewControlPanel.setSelected(true);
+        viewControlPanel.addItemListener(new ItemListener() {
 
-		viewMenu.add(viewAddressPanel);
-		viewMenu.add(viewControlPanel);
-		viewMenu.add(viewFunctionPanel);
-		viewMenu.addSeparator();
-		viewMenu.add(viewAllButtons);
-		viewMenu.add(makeAllComponentsInBounds);
-            	viewMenu.addSeparator();
-                viewMenu.add(switchViewMode);
-                viewMenu.add(viewThrottlesList);
+            public void itemStateChanged(ItemEvent e) {
+                getCurrentThrottleFrame().getControlPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            }
+        });
+        viewFunctionPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewFunctionPanel"));
+        viewFunctionPanel.setSelected(true);
+        viewFunctionPanel.addItemListener(new ItemListener() {
 
-		JMenu editMenu = new JMenu(throttleBundle.getString("ThrottleMenuEdit"));
-		JMenuItem preferencesItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditFrameProperties"));
-		editMenu.add(preferencesItem);
-		preferencesItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				editPreferences();
-			}
-		});
-		editMenuExportRoster = new JMenuItem(throttleBundle.getString("ThrottleMenuEditSaveCustoms"));
-		editMenu.add(editMenuExportRoster);
-		editMenuExportRoster.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getCurrentThrottleFrame().saveRosterChanges();
-			}
-		});
+            public void itemStateChanged(ItemEvent e) {
+                getCurrentThrottleFrame().getFunctionPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            }
+        });
 
-		this.setJMenuBar(new JMenuBar());
-		this.getJMenuBar().add(fileMenu);
-		this.getJMenuBar().add(editMenu);
-		this.getJMenuBar().add(viewMenu);
+        viewAllButtons = new JMenuItem(throttleBundle.getString("ThrottleMenuViewAllFunctionButtons"));
+        viewAllButtons.addActionListener(new AbstractAction() {
 
-		if (powerMgr != null) {
-			JMenu powerMenu = new JMenu(throttleBundle.getString("ThrottleMenuPower"));
-			JMenuItem powerOn = new JMenuItem(throttleBundle.getString("ThrottleMenuPowerOn"));
-			powerMenu.add(powerOn);
-			powerOn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						powerMgr.setPower(PowerManager.ON);
-					} catch (JmriException e1) {
-						log.error("Error when setting power "+e1);
-					}
-				}
-			});
+            public void actionPerformed(ActionEvent ev) {
+                getCurrentThrottleFrame().getFunctionPanel().resetFnButtons();
+                getCurrentThrottleFrame().getFunctionPanel().setEnabled();
+            }
+        });
 
-			JMenuItem powerOff = new JMenuItem(throttleBundle.getString("ThrottleMenuPowerOff"));
-			powerMenu.add(powerOff);
-			powerOff.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						powerMgr.setPower(PowerManager.OFF);
-					} catch (JmriException e1) {
-						log.error("Error when setting power "+e1);
-					}
-				}
-			});
+        JMenuItem makeAllComponentsInBounds = new JMenuItem(throttleBundle.getString("ThrottleMenuViewMakeAllComponentsInBounds"));
+        makeAllComponentsInBounds.addActionListener(new AbstractAction() {
 
-			this.getJMenuBar().add(powerMenu);
+            public void actionPerformed(ActionEvent ev) {
+                getCurrentThrottleFrame().makeAllComponentsInBounds();
+            }
+        });
 
-			if ( (! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
-					|| ( ! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingToolBar()) )
-				this.getJMenuBar().add(new SmallPowerManagerButton());
-		}
-		
-		// add help selection
-		addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
-	}
+        JMenuItem switchViewMode = new JMenuItem(throttleBundle.getString("ThrottleMenuViewSwitchMode"));
+        switchViewMode.addActionListener(new AbstractAction() {
+
+            public void actionPerformed(ActionEvent ev) {
+                switchMode();
+            }
+        });
+        JMenuItem viewThrottlesList = new JMenuItem(throttleBundle.getString("ThrottleMenuViewViewThrottleList"));
+        viewThrottlesList.addActionListener(new ThrottlesListAction());
+
+        viewMenu.add(viewAddressPanel);
+        viewMenu.add(viewControlPanel);
+        viewMenu.add(viewFunctionPanel);
+        viewMenu.addSeparator();
+        viewMenu.add(viewAllButtons);
+        viewMenu.add(makeAllComponentsInBounds);
+        viewMenu.addSeparator();
+        viewMenu.add(switchViewMode);
+        viewMenu.add(viewThrottlesList);
+
+        JMenu editMenu = new JMenu(throttleBundle.getString("ThrottleMenuEdit"));
+        JMenuItem preferencesItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditFrameProperties"));
+        editMenu.add(preferencesItem);
+        preferencesItem.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                editPreferences();
+            }
+        });
+        editMenuExportRoster = new JMenuItem(throttleBundle.getString("ThrottleMenuEditSaveCustoms"));
+        editMenu.add(editMenuExportRoster);
+        editMenuExportRoster.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                getCurrentThrottleFrame().saveRosterChanges();
+            }
+        });
+        editMenu.addSeparator();
+        editMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(rb.getString("MenuItemThrottlesPreferences"))); // now in tabbed preferences
+
+        this.setJMenuBar(new JMenuBar());
+        this.getJMenuBar().add(fileMenu);
+        this.getJMenuBar().add(editMenu);
+        this.getJMenuBar().add(viewMenu);
+
+        if (powerMgr != null) {
+            JMenu powerMenu = new JMenu(throttleBundle.getString("ThrottleMenuPower"));
+            JMenuItem powerOn = new JMenuItem(throttleBundle.getString("ThrottleMenuPowerOn"));
+            powerMenu.add(powerOn);
+            powerOn.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        powerMgr.setPower(PowerManager.ON);
+                    } catch (JmriException e1) {
+                        log.error("Error when setting power " + e1);
+                    }
+                }
+            });
+
+            JMenuItem powerOff = new JMenuItem(throttleBundle.getString("ThrottleMenuPowerOff"));
+            powerMenu.add(powerOff);
+            powerOff.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        powerMgr.setPower(PowerManager.OFF);
+                    } catch (JmriException e1) {
+                        log.error("Error when setting power " + e1);
+                    }
+                }
+            });
+
+            this.getJMenuBar().add(powerMenu);
+
+            if ((!jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle())
+                    || (!jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingToolBar())) {
+                this.getJMenuBar().add(new SmallPowerManagerButton());
+            }
+        }
+
+        // add help selection
+        addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
+    }
         
     private void editPreferences(){
         ThrottleFramePropertyEditor editor = new ThrottleFramePropertyEditor();

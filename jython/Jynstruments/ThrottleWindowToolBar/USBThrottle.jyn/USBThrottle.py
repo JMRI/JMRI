@@ -370,7 +370,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                         pass
                         
         # Nothing to customize bellow this point
-        if (event.propertyName == "ThrottleFrame") :  # Curent throttle frame changed
+        if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
             self.speedTimer.stop()
             event.oldValue.getAddressPanel().removeAddressListener(self)
             self.addressPanel = event.newValue.getAddressPanel()
@@ -385,8 +385,8 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.getContext().getCurentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in curent frame
-        self.addressPanel = self.getContext().getCurentThrottleFrame().getAddressPanel()
+        self.getContext().getCurrentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in Current frame
+        self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
         self.throttle = self.addressPanel.getThrottle() # the throttle
         self.roster = self.addressPanel.getRosterEntry() # roster entry if any
         self.speedAction =  SpeedAction()  #Speed increase thread
@@ -432,9 +432,9 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.USBDriver = None
         self.getContext().removePropertyChangeListener(self)
         self.model.removePropertyChangeListener(self)
-        self.getContext().getCurentThrottleFrame().getAddressPanel().removeAddressListener(self)
+        self.getContext().getCurrentThrottleFrame().getAddressPanel().removeAddressListener(self)
 
-# Menu entry changed for curent controller and update driver
+# Menu entry changed for Current controller and update driver
     def setSelectedController(self, ctrl, item):
         for mi in self.ctrlMenuItem :
             if ( mi != item ):  # Force deselection of other ones
