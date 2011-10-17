@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionListener;
 
@@ -883,15 +884,18 @@ public class DecoderPro3Window
             re.addPropertyChangeListener(rosterEntryUpdateListener);
             updateDetails();
             JTable table = rtable.getTable();
+            table.clearSelection();
+          
             int entires = table.getRowCount();
             for (int i = 0; i<entires; i++){
-                if(table.getValueAt(i, 0).equals(re.getId())){
+                if(table.getValueAt(i, jmri.jmrit.roster.swing.RosterTableModel.IDCOL).equals(re.getId())){
                     table.addRowSelectionInterval(i,i);
+                    table.scrollRectToVisible(new Rectangle(table.getCellRect(i, 0, true)));
                 }
             }
         } else {
-            log.warn("Read address "+dccAddress+", but no such loco in roster");
-            JOptionPane.showMessageDialog(null, "No Such loco in the Roster");
+            log.warn("Read address "+dccAddress+", but no such loco in roster");  //"No roster entry found"
+            JOptionPane.showMessageDialog(this, "No roster entry found", "Address " + dccAddress + " was read from the decoder\nbut has not been found in the Roster", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
