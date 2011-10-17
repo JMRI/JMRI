@@ -58,6 +58,7 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(rb.getString("GenerateCsvSwitchList"));
 	
 	JCheckBox enableVsdCheckBox = new JCheckBox(rb.getString("EnableVSD"));
+	JCheckBox createReportersCheckBox = new JCheckBox(rb.getString("CreateReporters"));
 	
 	// text field
 	JTextField rfidTextField = new JTextField(10);
@@ -89,6 +90,7 @@ public class OptionFrame extends OperationsFrame{
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
 		generateCvsSwitchListCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
 		enableVsdCheckBox.setSelected(Setup.isVsdPhysicalLocationEnabled());
+		createReportersCheckBox.setSelected(Setup.isCreateReportersEnabled());
 		
 		// load text fields
 		rfidTextField.setText(Setup.getRfidLabel());
@@ -159,6 +161,7 @@ public class OptionFrame extends OperationsFrame{
 		addItemLeft (pOption, rfidCheckBox, 1,3);
 		addItemLeft (pOption, rfidTextField, 2,3);
 		addItemLeft (pOption, enableVsdCheckBox, 1,4);
+		addItemLeft (pOption, createReportersCheckBox, 1,5);
 		
 		// row 11
 		JPanel pControl = new JPanel();
@@ -240,6 +243,9 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setTrainLoggerEnabled(trainLoggerCheckBox.isSelected());
 			// VSD
 			Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
+			// Reporters
+			Setup.setCreateReportersEnabled(createReportersCheckBox.isSelected());
+			// write the file
 			OperationsSetupXml.instance().writeOperationsFile();
 		}
 	}
