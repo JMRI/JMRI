@@ -141,7 +141,11 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     public void setHeld(boolean state) {
         // set all Heads to state
         for (NamedBeanHandle<SignalHead> h : heads) {
-            h.getBean().setHeld(state);
+            try {
+                h.getBean().setHeld(state);
+            } catch (java.lang.NullPointerException ex){
+                log.error("NPE caused when trying to set Held due to missing signal head in mast " + getDisplayName());
+            }
         }
         super.setHeld(state);
     }
@@ -150,7 +154,11 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     public void setLit(boolean state) {
         // set all Heads to state
         for (NamedBeanHandle<SignalHead> h : heads) {
-            h.getBean().setLit(state);
+            try {
+                h.getBean().setLit(state);
+            }  catch (java.lang.NullPointerException ex){
+                log.error("NPE caused when trying to set Dark due to missing signal head in mast " + getDisplayName());
+            }
         }
         super.setLit(state);
     }

@@ -32,7 +32,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return InstanceManager.signalMastManagerInstance().getBySystemName(name).getAspect();
     }
 
-    public int getColumnCount( ){ return NUMCOLUMN+2;}
+    public int getColumnCount( ){ return NUMCOLUMN+3;}
     public String getColumnName(int col) {
         if (col==VALUECOL) return "Aspect";
         else if (col==EDITLOGICCOL) return "Edit Logic";
