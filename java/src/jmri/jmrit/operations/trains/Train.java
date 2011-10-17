@@ -166,6 +166,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	// Reporter Strings
 	public static final String USER_PREFIX = "OPS TRAIN::";		// prefix on Reporter user name
+	public static final String SYSTEM_PREFIX = "IR_OPS::";		// prefix on Reporter system name
 	public static final String LOCATION = "LOCATION=";			// comment for recognizing a location property change
 	public static final String DONE = "TERMINATED";				// comment for recognizing that the train is done
 	public static final String BUILD = "BUILD";					// comment for building a train
@@ -2124,8 +2125,10 @@ public class Train implements java.beans.PropertyChangeListener {
     	else if ((r = rm.getByUserName(uName)) == null) {
     		if (log.isDebugEnabled()) log.debug("JMRI reporter for train " +
     				_name + " was not found.");
+    		String sName = SYSTEM_PREFIX + _name;
+    		r = rm.newReporter(sName, uName);
     	}
-    	else {
+    	if (r != null) {
     		r.addPropertyChangeListener(new PropertyChangeListener() {
     			public void propertyChange(PropertyChangeEvent change) {
     				log.debug("Train "+getName()+ " Sees reporter property change "+change.getPropertyName());
