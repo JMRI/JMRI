@@ -100,8 +100,10 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         if (s==null) return;  // device is going away anyway
 
         if (col==VALUECOL) {
-            s.setAspect((String)value);
-            fireTableRowsUpdated(row, row);
+        	if ((String)value != null){
+	            s.setAspect((String)value);
+	            fireTableRowsUpdated(row, row);
+        	}
         } 
         else if (col==LITCOL) {
             boolean b = ((Boolean)value).booleanValue();
