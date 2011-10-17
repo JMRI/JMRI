@@ -354,7 +354,7 @@ you would like the program to ask you which track a train should Arrive to stagi
         <tr>
           <td colspan="3"><p>The car parametes for pick up car (PC) and set out car (SC) are road, number, type, length, load, color, location namel, track name, destination name, destination track name, owner name, kernel name, car comment, pick up comment, set out comment, C, F, H, RFID. Where C = Caboose, F = FRED, and H = Hazardous.</p>
             <p>The loco parameters for pick up (PL) and set out loco (SL) are road, number, model, length, type, hp, location name, track name, destination name, destination track name, owner name, consist name, car comment, RFID.</p>
-            <p><a href="http://groups.yahoo.com/group/jmriusers/files/Operations" target="_blank">Examples of custom manifests</a></p></td>
+            <p><a href="http://groups.yahoo.com/group/jmriusers/files/Operations" target="_blank">Examples of custom manifests</a> (requires that you have Yahoo ID and Password to JMRI Groups)</p></td>
         </tr>
       </table></td>
       <td width="34%" valign="top">&nbsp;</td>

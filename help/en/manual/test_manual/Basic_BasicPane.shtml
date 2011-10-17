@@ -46,8 +46,30 @@ control) </li>
 </ol>
 <p>The yellow highlighting indicates  these options are &quot;probable&quot; settings and have not been 
 confirmed from the decoder. Settings that have been changed by the user and  have not 
-been written back to the decoder appear in a orange color. You will see  examples of <br>
-this throughout the manual. </p>
+been written back to the decoder appear in a orange color. </p>
+<p>Color Codes used in the programming panes.</p>
+<DL>
+  <DT STYLE="color:orange; background:#DDD;">Edited</DT>
+  <DD>You've changed this value, or it contains default
+    values from the decoder file.  This is shown as orange, since the
+    value differs from what's in the decoder.
+  <DT STYLE="color:yellow; background:#DDD;">From File</DT>
+  <DD>The field contains values read from a
+    locomotive file.  This is shown as yellow, since we're not
+    certain that the file agrees with the decoder contents.
+  <DT STYLE="color:white; background:#DDD;">Read</DT>
+  <DD>The value shown has been read from the decoder.
+    This is shown as white to indicate that the value is trustworthy.
+  <DT STYLE="color:white; background:#DDD;">Stored</DT>
+  <DD>The value show has been written to the decoder.
+    This is also shown as white.
+  <DT STYLE="color:red; background:#DDD;">Unknown</DT>
+  <DD>If something goes wrong with the read or write process,
+    we might have a completely untrustworthy result.  This results in
+    the variable's state being marked as UNKNOWN and shown as red.
+</DL>
+<p>You will see  examples of <br>
+  this throughout the manual. </p>
 <a name="Read Data"></a>
 To read the actual settings  for these options (and  IF your system and installed decoder will allow readback of decoder values), click  on the  <strong>
 <input type="button" name="button" id="button" value="Read full sheet">

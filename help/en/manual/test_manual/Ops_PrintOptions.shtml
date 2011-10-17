@@ -87,7 +87,8 @@
   allows you to add a logo in the top right hand corner of your manifests and switch lists, press 
   <input type="button" name="button4" id="button4" value="Add Logo"> 
 and select a file with the image you want to display. Each train in your roster may have a different logo, this is set in <strong><a href="Ops_Trains.shtml">Trains Setup</a></strong> </p>
-<p>Missplaced Cars Comment</p>
+<p><strong>Misplaced Cars Comment</strong></p>
+<p>Allows you to add a notification for operators to be  looking for cars that have been misplaced </p>
 <p><strong>Build Report Options </strong><br>
   <br>
   <strong>Detail Level </strong>You can adjust the amount of information that the build report will  show. Select one of the four levels.  The program  when generating the build reports stores the <strong>Very Detailed</strong> information  to disk. <br>

@@ -42,14 +42,18 @@ to open the <a href="Ops_AddTrain.shtml"><strong>Add Train </strong></a>window. 
       <li><strong>Tools</strong>
 <ul>
   <li><strong><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></strong>- Opens the Options window.</li>
-  <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong>-- opens<strong> Print Options</strong> window that lets you set up your manifest printing.<strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong>-- opens<strong> Print Options</strong> window that lets you set up your manifest printing.</li>
+  <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong>-- opens<strong> Print Options</strong> window that lets you set up your manifest printing.</li>
   <li><a href="Ops_TrainsModify.shtml"><strong>Modify Trains by Car Type</strong></a>-- opens <strong>Modify by Car Type</strong> window to allow you to modify a train.</li>
   <li><strong><a href="Ops_Trains_Timetable.shtml">Timetable </a></strong>- opems the <strong>Timetable</strong> window.</li>
-  <li><strong>Copy Train</strong><br>
-    Copy Train dialog opens.
-    <br>
+  <li><strong>Copy Train</strong> - 
+    Copy Train dialog opens.    </li>
+  </ul>
+<blockquote>
+  <p><br>
     <img src="images/Ops_Trains_copy.png" width="400" height="150" alt="copy"><br>
-  </li>
+  </p>
+</blockquote>
+<ul>
   <li><strong>Scripts</strong><strong></strong>- Opens the Scripts dialog.<br>
     <table width="90%" border="0" cellspacing="1" cellpadding="2">
       <tr>
@@ -57,25 +61,25 @@ to open the <a href="Ops_AddTrain.shtml"><strong>Add Train </strong></a>window. 
         <td width="54%" valign="top"><p><strong>Run the following scripts at startup</strong><br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input type="button" name="button2" id="button2" value="Add Script">
-        </p>
+          </p>
           <p><strong>Run the following scripts at shutdown</strong><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="button" name="button3" id="button3" value="Add Script">
-          </p>
+            </p>
           <p>Press
             <input type="button" name="button4" id="button4" value="Save">
             to save your scripts.<br>
-          </p></td>
-      </tr>
-    </table>
+            </p></td>
+        </tr>
+      </table>
   </li>
   <li><strong>Print </strong>-- opens printer dialog for your default printer and prints the list of Trains<br>
     <img src="images/Ops_Trains_PrintList.png" width="723" height="247" alt="print"><br>
   </li>
-          <li><strong>Preview </strong>-- opens  default printer preview window.<br>
-            <img src="images/Ops_Trains_PrintPreview.png" width="673" height="266" alt="print preview"><br>
-          </li>
-          </ul>
+  <li><strong>Preview </strong>-- opens  default printer preview window.<br>
+    <img src="images/Ops_Trains_PrintPreview.png" width="673" height="266" alt="print preview"><br>
+  </li>
+</ul>
       </li>
       <li><strong>Windows</strong> -- standard JMRI&reg; format.</li>
       <li><strong>Help</strong> -- standard JMRI&reg; format.</li>
