@@ -2128,31 +2128,44 @@ public class Train implements java.beans.PropertyChangeListener {
     	else {
     		r.addPropertyChangeListener(new PropertyChangeListener() {
     			public void propertyChange(PropertyChangeEvent change) {
-    				String operation = ((String) _reporter.getCurrentReport()).trim();
-    				String str;
-    				if (operation != null) {
-    					if (operation.startsWith(LOCATION)) {
-    						str = operation.substring(LOCATION.length());
-    						if (str != null)
-    							move(str);
-    						// this is not the right place to report on changes because
-    						// of possible recursion, but I don't know where else to put
-    						// it.  It should be queued to be run after processing of the
-    						// action completes.
-    						str = LENGTH + String.valueOf(getTrainLength()) + " | "
-    								+ TONNAGE + String.valueOf(getTrainWeight());
-    						_reporter.setReport(str);
-    					}
-    					else if (BUILD.equals(operation)) {
-    						build();
-    					}
-    					else if (DONE.equals(operation)) {
-    						terminate();
-    					}
-    					else if (RESET.equals(operation)) {
-    						reset();
-    					}
-    				} 
+    				log.debug("Train "+getName()+ " Sees reporter property change "+change.getPropertyName());
+    				if (change.getPropertyName().equals("currentReport")){
+    					String operation = ((String) _reporter.getCurrentReport()).trim();
+    					String str;
+    					if (operation != null) {
+    						if (operation.startsWith(LOCATION)) {
+    							str = operation.substring(LOCATION.length());
+    							if (str != null)
+    								if (move(str)){
+    									// this is not the right place to report on changes because
+    									// of possible recursion, but I don't know where else to put
+    									// it.  It should be queued to be run after processing of the
+    									// action completes.
+    									str = LENGTH + String.valueOf(getTrainLength()) + " | "
+    											+ TONNAGE + String.valueOf(getTrainWeight());
+    									_reporter.setComment(str);
+    								} else {
+    									str = "Unable to move train to location "+str;
+    									_reporter.setComment(str);
+    								}
+    						}
+    						else if (BUILD.equals(operation)) {
+    							build();
+    							_reporter.setComment(getStatus());
+    						}
+    						else if (DONE.equals(operation)) {
+    							terminate();
+    							_reporter.setComment(getStatus());
+    						}
+    						else if (RESET.equals(operation)) {
+    							reset();
+    							_reporter.setComment(getStatus());
+    						}
+    						else {
+    							_reporter.setComment("Command not known");
+    						}
+    					} 
+    				}
     			}
     		});
     		return r;
