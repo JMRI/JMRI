@@ -4,8 +4,6 @@ package apps;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.swing.AbstractAction;
-
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;

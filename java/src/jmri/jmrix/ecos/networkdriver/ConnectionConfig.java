@@ -4,7 +4,7 @@ package jmri.jmrix.ecos.networkdriver;
 
 //import javax.swing.*;
 
-import jmri.jmrix.JmrixConfigPane;
+
 
 /**
  * Definition of objects to handle configuring an ECOS layout connection

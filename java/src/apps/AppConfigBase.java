@@ -9,8 +9,6 @@ import jmri.jmrix.JmrixConfigPane;
 import jmri.util.swing.JmriPanel;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.ResourceBundle;

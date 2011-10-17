@@ -2,11 +2,7 @@
 // IndicatorTOIconDialog.java
 package jmri.jmrit.display.palette;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;

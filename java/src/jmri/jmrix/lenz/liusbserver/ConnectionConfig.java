@@ -5,8 +5,6 @@ package jmri.jmrix.lenz.liusbserver;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import jmri.jmrix.JmrixConfigPane;
-
 
 /**
  * Handle configuring an XPressNet layout connection

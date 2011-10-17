@@ -22,8 +22,6 @@ package jmri.jmrit.vsdecoder;
 // JMRI and Java stuff
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
-import java.lang.Math;
 import jmri.util.PhysicalLocation;
 
 

@@ -7,8 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import jmri.jmrix.JmrixConfigPane;
-
 /**
  * Definition of objects to handle configuring  the layout connection
  * via LocoNet RMI.

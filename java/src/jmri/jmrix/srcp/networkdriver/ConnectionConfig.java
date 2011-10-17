@@ -2,8 +2,6 @@
 
 package jmri.jmrix.srcp.networkdriver;
 
-import jmri.jmrix.JmrixConfigPane;
-
 /**
  * Definition of objects to handle configuring an EasyDCC layout connection
  * via a NetworkDriverAdapter object.

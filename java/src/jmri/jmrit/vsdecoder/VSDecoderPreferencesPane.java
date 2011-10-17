@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

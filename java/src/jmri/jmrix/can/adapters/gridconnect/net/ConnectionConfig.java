@@ -5,8 +5,6 @@ package jmri.jmrix.can.adapters.gridconnect.net;
 import javax.swing.*;
 import java.util.ResourceBundle;
 
-import jmri.jmrix.JmrixConfigPane;
-
 /**
  * Definition of objects to handle configuring a connection
  * via a NetworkDriverAdapter object.

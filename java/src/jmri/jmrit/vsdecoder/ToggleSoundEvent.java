@@ -25,7 +25,6 @@ import org.jdom.Element;
 
 import javax.swing.JToggleButton;
 import javax.swing.JComponent;
-import java.awt.event.MouseListener;
 
 public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListener {
 

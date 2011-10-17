@@ -3,7 +3,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import jmri.Programmer;
-import jmri.util.davidflanagan.*;
 import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
@@ -13,13 +12,8 @@ import jmri.jmrit.roster.*;
 import jmri.jmrit.symbolicprog.*;
 import jmri.util.JmriJFrame;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Hashtable;
-import java.util.Enumeration;
-
 import javax.swing.*;
 
 import java.util.ArrayList;

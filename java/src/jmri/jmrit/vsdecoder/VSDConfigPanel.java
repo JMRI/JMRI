@@ -31,7 +31,6 @@ import javax.swing.JPanel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriPanel;
-import jmri.DccLocoAddress;
 import javax.swing.SwingWorker;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;

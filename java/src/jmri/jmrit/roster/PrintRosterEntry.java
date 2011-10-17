@@ -10,7 +10,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.List;
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.util.JmriJFrame;

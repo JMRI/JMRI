@@ -2,8 +2,6 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import jmri.jmrix.JmrixConfigPane;
-
 /**
  * Definition of objects to handle configuring a LocoNetOverTcp layout connection
  * via a LnTcpDriverAdapter object.

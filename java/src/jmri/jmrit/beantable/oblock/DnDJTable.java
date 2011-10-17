@@ -40,8 +40,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.JInternalFrame;
 import javax.swing.table.TableModel;
 
-import jmri.util.com.sun.TableSorter;
-
 public class DnDJTable extends JTable implements DropTargetListener,  
                     DragGestureListener, DragSourceListener, Transferable {
 

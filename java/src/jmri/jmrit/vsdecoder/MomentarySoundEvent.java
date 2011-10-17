@@ -25,7 +25,6 @@ import org.jdom.Element;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import java.awt.event.MouseListener;
 
 public class MomentarySoundEvent extends SoundEvent implements PropertyChangeListener {
 

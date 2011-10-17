@@ -20,7 +20,6 @@ package jmri.jmrit.vsdecoder;
  */
 
 import org.jdom.Element;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import jmri.util.PhysicalLocation;

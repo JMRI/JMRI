@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
-import java.util.Map.Entry;
 import java.io.IOException;
 
 import java.awt.Color;

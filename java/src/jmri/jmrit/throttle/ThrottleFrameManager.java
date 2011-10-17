@@ -1,14 +1,12 @@
 package jmri.jmrit.throttle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 
-import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 
 /**
