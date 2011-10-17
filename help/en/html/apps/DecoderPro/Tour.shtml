@@ -76,12 +76,20 @@ provides several different programming interfaces:
 <LI>Basic - A simple one, with just the most popular information
 <LI>Comprehensive - The most complete display, with multiple panes
 of detailed information.
+<LI>Advanced - Adds advanced panes to the Comprehensive Programmer.
 <LI>Registers - Complete configuration for a register-only decoder
 <LI>Sample Club - A sample of how a club might define their own
 programmer format that shows just their set of required variables
 <LI>Tutorial - Not useful for actually programming decoders,
 this contains examples of how various special effects can
 be obtained when you're constructing your own programmer.
+</ul>
+<p>The latest feature added is the DecoderPro3 , which streamlines DecoderPro for simply programming decoders and running trains with JMRI throttles. The main programmers available are:</p>
+<ul>
+  <LI>Basic - A simple one, with just the most popular information
+  <LI>Comprehensive - The most complete display, with multiple panes
+    of detailed information 
+  <LI>Advanced Panes are accessed separately using buttons on the DecoderPro3 intereface.
 </ul>
 You can even define your own programmer if you'd prefer to just see the variables you use.
 For this example, we select the "Comprehensive" decoder
@@ -101,14 +109,14 @@ Programmer" to start working with the decoder.  </p>
 <p class="dl">
 Each of the tabs selects a screen you can use to configure
 different aspects of the decoder.  The "Basic" pane handles the
-address other settings you'll usually need.  Using the buttons
-on the bottom of each screen are buttons that will read values
-from or write values to the decoder.  For example, to do a
-basic configuration, enter values in the fields and click
-<TT>Write sheet</TT>.
-The variable fields are color coded to represent their states:
+address other settings you'll usually need.  
+<p class="dl">Using the buttons
+  -- On the bottom of each screen are buttons that will read values
+  from or write values to the decoder.  For example, to do a
+  basic configuration, enter values in the fields and click <TT>Write sheet</TT>.
+  The variable fields are color coded to represent their states:
 <DL>
-<DT STYLE="color:orange; background:#DDD;">Editted</DT><DD>You've changed this value, or it contains default
+<DT STYLE="color:orange; background:#DDD;">Edited</DT><DD>You've changed this value, or it contains default
 values from the decoder file.  This is shown as orange, since the
 value differs from what's in the decoder.
 <DT STYLE="color:yellow; background:#DDD;">From File</DT><DD>The field contains values read from a
