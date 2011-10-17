@@ -3,6 +3,8 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -12,6 +14,9 @@ import java.util.ResourceBundle;
 
 import org.jdom.Element;
 
+import jmri.InstanceManager;
+import jmri.Reporter;
+import jmri.ReporterManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
@@ -40,6 +45,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
 public class Train implements java.beans.PropertyChangeListener {
@@ -100,6 +106,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _leg3Road = "";				// engine road name 3rd leg 
 	protected String _leg3Model = "";			// engine model 3rd leg
 	protected String _leg3CabooseRoad = "";			// road name for caboose 3rd leg
+
+	protected Reporter _reporter;					// Reporter for interapplication communication
 	
 	public static final int CHANGE_ENGINES = 1;		// change engines
 	public static final int HELPER_ENGINES = 2;		// add helper engines
@@ -155,6 +163,15 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String PRINTED = rb.getString("Printed");
 	
 	public static final String AUTO = rb.getString("Auto");				// how engines are assigned to this train
+
+	// Reporter Strings
+	public static final String USER_PREFIX = "OPS TRAIN::";		// prefix on Reporter user name
+	public static final String LOCATION = "LOCATION=";			// comment for recognizing a location property change
+	public static final String DONE = "TERMINATED";				// comment for recognizing that the train is done
+	public static final String BUILD = "BUILD";					// comment for building a train
+	public static final String RESET = "RESET";					// comment for reseting a train
+	public static final String LENGTH = "LENGTH=";				// comment for reporting a train's length
+	public static final String TONNAGE = "TONNAGE=";			// comment for reporting a train's weight
 	
 	public Train(String id, String name) {
 		log.debug("New train " + name + " " + id);
@@ -2090,7 +2107,59 @@ public class Train implements java.beans.PropertyChangeListener {
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
   
- 	
+/**
+ * creates a JMRI Reporter for the Train through which it can exchange updates
+ * with other applications and scripts.
+ * 
+ * This method first requests a Recorder with a user name constructed from the
+ * train name.  If one is not found, it creates an Internal Recorder.	
+ */
+    private Reporter constructReporter() {
+    	ReporterManager rm = InstanceManager.reporterManagerInstance();
+    	Reporter r = null;
+    	String uName = USER_PREFIX + _name;
+    	if (rm == null) {
+    		if (log.isDebugEnabled()) log.debug("JMRI reporter manager was not created.");
+    	}
+    	else if ((r = rm.getByUserName(uName)) == null) {
+    		if (log.isDebugEnabled()) log.debug("JMRI reporter for train " +
+    				_name + " was not found.");
+    	}
+    	else {
+    		r.addPropertyChangeListener(new PropertyChangeListener() {
+    			public void propertyChange(PropertyChangeEvent change) {
+    				String operation = ((String) _reporter.getCurrentReport()).trim();
+    				String str;
+    				if (operation != null) {
+    					if (operation.startsWith(LOCATION)) {
+    						str = operation.substring(LOCATION.length());
+    						if (str != null)
+    							move(str);
+    						// this is not the right place to report on changes because
+    						// of possible recursion, but I don't know where else to put
+    						// it.  It should be queued to be run after processing of the
+    						// action completes.
+    						str = LENGTH + String.valueOf(getTrainLength()) + " | "
+    								+ TONNAGE + String.valueOf(getTrainWeight());
+    						_reporter.setReport(str);
+    					}
+    					else if (BUILD.equals(operation)) {
+    						build();
+    					}
+    					else if (DONE.equals(operation)) {
+    						terminate();
+    					}
+    					else if (RESET.equals(operation)) {
+    						reset();
+    					}
+    				} 
+    			}
+    		});
+    		return r;
+    	}
+    	return null;
+    }
+    
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
      * detailed DTD in operations-trains.dtd
@@ -2257,6 +2326,7 @@ public class Train implements java.beans.PropertyChangeListener {
         	}
     	}
     	addPropertyChangeListerners();
+    	_reporter = constructReporter();
     }
     
     private void addPropertyChangeListerners(){
