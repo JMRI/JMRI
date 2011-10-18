@@ -112,7 +112,7 @@ public class SignalHeadSignalMastTest extends TestCase {
 	        s.setAspect("Not An Aspect, I Hope");
 	        Assert.fail("should have thrown exception");
         } catch (IllegalArgumentException e1) {
-            jmri.util.JUnitAppender.assertWarnMessage("attempting to set invalid aspect: Not An Aspect, I Hope");
+            jmri.util.JUnitAppender.assertWarnMessage("attempting to set invalid aspect: Not An Aspect, I Hope on mast: user");
         } catch (Exception e2) {Assert.fail("wrong exception: "+e2);}
         
 	    Assert.assertEquals("check clear","Clear",s.getAspect()); // unchanged after failed request
