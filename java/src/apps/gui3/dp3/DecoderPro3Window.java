@@ -121,11 +121,7 @@ public class DecoderPro3Window
         statusBar();
         systemsMenu();
         helpMenu(getMenu(), this);
-        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
-                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            //System.out.println(jmri.managers.ManagerDefaultSelector.instance.getDefault(jmri.ProgrammerManager.class));
-            //System.out.println(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer());
-        }
+
         if((!p.getSimplePreferenceState(DecoderPro3Window.class.getName()+".hideGroups")) && !Roster.instance().getRosterGroupList().isEmpty()){
             hideGroupsPane(false);
         } else {
@@ -206,7 +202,7 @@ public class DecoderPro3Window
             /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
             String opsModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
-            operationsModeProgrammerLabel.setText ("Operations Mode Programmer " +opsModeProgrammer + " Is Online");
+            operationsModeProgrammerLabel.setText("Operations Mode Programmer " +opsModeProgrammer + " Is Online");
             operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
             if (connList!=null){
@@ -224,7 +220,15 @@ public class DecoderPro3Window
         
         ConnectionStatus.instance().addPropertyChangeListener( new PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("change")){
+                if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
+                    updateProgrammerStatus();
+                } 
+            }
+        });
+        
+        jmri.InstanceManager.addPropertyChangeListener( new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if ((e.getPropertyName().equals("programmermanager"))) {
                     updateProgrammerStatus();
                 } 
             }
@@ -241,9 +245,39 @@ public class DecoderPro3Window
     }
     
     protected void updateProgrammerStatus(){
+        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            String serviceModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
+            ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+            if (connList!=null){
+                for (int x = 0; x<connList.size(); x++){
+                    ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
+                    if(conn.getConnectionName().equals(serviceModeProgrammer)){
+                        serModeProCon = conn;
+                    }
+                }
+            }
+        }
+        
+        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
+                        jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
+            /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
+            but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
+            String opsModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
+            ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+            if (connList!=null){
+                for (int x = 0; x<connList.size(); x++){
+                    ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
+                    if(conn.getConnectionName().equals(opsModeProgrammer)){
+                        opsModeProCon=conn;
+                    }
+                }
+            }
+        }
+        
         if(serModeProCon!=null){
             if(ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())){
-                serviceModeProgrammerLabel.setText ("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Online");
+                serviceModeProgrammerLabel.setText("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Online");
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
                 serviceModeProgrammerLabel.setText("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Offline");
@@ -252,7 +286,7 @@ public class DecoderPro3Window
         }
         if(opsModeProCon!=null){
             if(ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())){
-                operationsModeProgrammerLabel.setText ("Operations Mode Programmer " + opsModeProCon.getConnectionName() + " Is Online");
+                operationsModeProgrammerLabel.setText("Operations Mode Programmer " + opsModeProCon.getConnectionName() + " Is Online");
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
                 operationsModeProgrammerLabel.setText("Operations Mode Programmer "+ opsModeProCon.getConnectionName() + " Is Offline");

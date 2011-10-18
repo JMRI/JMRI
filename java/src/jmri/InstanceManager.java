@@ -9,6 +9,10 @@ import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.audio.DefaultAudioManager;
 import apps.gui3.TabbedPreferences;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Vector;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -145,6 +149,7 @@ public class InstanceManager {
 		    && consistManagerInstance() == null) {
 			setConsistManager(new DccConsistManager());
 		}
+        instance().notifyPropertyChangeListener("programmermanager", null, null);
     }
 
     static public SensorManager sensorManagerInstance()  { return instance().sensorManager; }
@@ -389,6 +394,7 @@ public class InstanceManager {
 
     static public void setThrottleManager(ThrottleManager p) {
         store(p, ThrottleManager.class);
+        instance().notifyPropertyChangeListener("throttlemanager", null, null);
     }
 
     private SignalHeadManager signalHeadManager = null;
@@ -482,6 +488,7 @@ public class InstanceManager {
 
     static public void setCommandStation(CommandStation p) {
          store(p, CommandStation.class);
+         instance().notifyPropertyChangeListener("commandstation", null, null);
     }
 
     private ReporterManager reporterManager = null;
@@ -499,6 +506,41 @@ public class InstanceManager {
 	private MemoryManager memoryManager = null;
 	
 	private RosterIconFactory rosterIconFactory = null;
+    
+    public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        if (listeners.contains(l)) {
+            listeners.removeElement(l);
+        }
+    }
+
+    public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        // add only if not already registered
+        if (!listeners.contains(l)) {
+            listeners.addElement(l);
+        }
+    }
+    
+    /**
+     * Trigger the notification of all PropertyChangeListeners
+     */
+    @SuppressWarnings("unchecked")
+	protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<PropertyChangeListener> v;
+        synchronized(this)
+            {
+                v = (Vector<PropertyChangeListener>) listeners.clone();
+            }
+        // forward to all listeners
+        int cnt = v.size();
+        for (int i=0; i < cnt; i++) {
+            PropertyChangeListener client = v.elementAt(i);
+            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+        }
+    }
+    
+    // data members to hold contact with the property listeners
+    final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManager.class.getName());
 }
