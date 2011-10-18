@@ -1,6 +1,6 @@
 // RosterEntryToGroupAction.java
 
-package jmri.jmrit.roster;
+package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
 import javax.swing.AbstractAction;
@@ -8,6 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
 /**

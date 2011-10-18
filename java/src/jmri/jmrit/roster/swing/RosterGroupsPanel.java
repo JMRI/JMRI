@@ -1,5 +1,9 @@
-package jmri.jmrit.roster;
+package jmri.jmrit.roster.swing;
 
+import jmri.jmrit.roster.swing.RenameRosterGroupAction;
+import jmri.jmrit.roster.swing.DeleteRosterGroupAction;
+import jmri.jmrit.roster.swing.CreateRosterGroupAction;
+import jmri.jmrit.roster.swing.CopyRosterGroupAction;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -47,6 +51,9 @@ import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import jmri.jmrit.roster.FullBackupExportAction;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
 

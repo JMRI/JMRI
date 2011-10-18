@@ -71,8 +71,8 @@ public class PaneOpsProgAction 	extends AbstractAction {
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        menuBar.add(new jmri.jmrit.roster.RosterMenu(rbt.getString("MenuRoster"),
-                             jmri.jmrit.roster.RosterMenu.MAINMENU, f));
+        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rbt.getString("MenuRoster"),
+                             jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
         // known loco on main track

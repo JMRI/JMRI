@@ -1,6 +1,6 @@
 // DeleteRosterGroupAction.java
 
-package jmri.jmrit.roster;
+package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -9,6 +9,7 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
 import javax.swing.JOptionPane;
+import jmri.jmrit.roster.Roster;
 
 /**
  * Remove roster group.

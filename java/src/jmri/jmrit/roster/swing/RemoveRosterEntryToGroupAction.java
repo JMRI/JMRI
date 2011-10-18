@@ -1,6 +1,6 @@
 // RemoveRosterEntryToGroupAction.java
 
-package jmri.jmrit.roster;
+package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -16,6 +16,8 @@ import javax.swing.BoxLayout;
 
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 

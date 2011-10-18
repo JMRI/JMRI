@@ -1,6 +1,6 @@
 //SelectRosterGroupAction.java
 
-package jmri.jmrit.roster;
+package jmri.jmrit.roster.swing;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +12,7 @@ import jmri.util.swing.JmriPanel;
 
 import javax.swing.JComboBox;
 import java.beans.PropertyChangeListener;
+import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
 /**
@@ -110,6 +111,6 @@ public class SelectRosterGroupPanelAction extends JmriAbstractAction {
     ActionListener comboListener;
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SelectRosterGroupAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SelectRosterGroupPanelAction.class.getName());
 
 }

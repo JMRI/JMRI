@@ -1,13 +1,24 @@
 // RosterMenu.java
 
-package jmri.jmrit.roster;
+package jmri.jmrit.roster.swing;
 
+import jmri.jmrit.roster.swing.RosterEntryToGroupAction;
+import jmri.jmrit.roster.swing.RemoveRosterEntryToGroupAction;
+import jmri.jmrit.roster.swing.SelectRosterGroupAction;
+import jmri.jmrit.roster.swing.DeleteRosterGroupAction;
+import jmri.jmrit.roster.swing.CreateRosterGroupAction;
 import java.awt.Component;
 import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
+import jmri.jmrit.roster.CopyRosterItemAction;
+import jmri.jmrit.roster.DeleteRosterItemAction;
+import jmri.jmrit.roster.ExportRosterItemAction;
+import jmri.jmrit.roster.FullBackupExportAction;
+import jmri.jmrit.roster.ImportRosterItemAction;
+import jmri.jmrit.roster.PrintRosterAction;
 
 /**
  * Provides a context-specific menu for handling the Roster.

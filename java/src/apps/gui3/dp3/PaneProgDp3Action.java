@@ -96,7 +96,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
         j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintDecoderDefinitions"), f, false));
         j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintPreviewDecoderDefinitions"), f, true));
         menuBar.add(j);
-        menuBar.add(new jmri.jmrit.roster.RosterMenu(rbt.getString("MenuRoster"), jmri.jmrit.roster.RosterMenu.MAINMENU, f));
+        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rbt.getString("MenuRoster"), jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track

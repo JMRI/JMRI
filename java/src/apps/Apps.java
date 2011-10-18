@@ -420,7 +420,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
     protected void rosterMenu(JMenuBar menuBar, JFrame frame) {
-        menuBar.add(new jmri.jmrit.roster.RosterMenu(rb.getString("MenuRoster"), jmri.jmrit.roster.RosterMenu.MAINMENU, this));
+        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rb.getString("MenuRoster"), jmri.jmrit.roster.swing.RosterMenu.MAINMENU, this));
     }
 	
     protected void panelMenu(JMenuBar menuBar, JFrame frame) {

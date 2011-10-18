@@ -161,7 +161,7 @@ public class DecoderPro3Window
         if(apps.gui3.Apps3.buttonSpace()!=null)
             getToolBar().add(apps.gui3.Apps3.buttonSpace());
         getToolBar().add(modePanel);
-        getToolBar().add(new jmri.jmrit.roster.SelectRosterGroupPanelAction("Select Group").makePanel());
+        getToolBar().add(new SelectRosterGroupPanelAction("Select Group").makePanel());
     }
 
     jmri.UserPreferencesManager p;

@@ -242,7 +242,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     public List<JMenu> getMenus() {
 		// build menu
 		JMenu toolMenu = new JMenu("Tools");
-		toolMenu.add(new NceConsistRosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
+		toolMenu.add(new NceConsistRosterMenu("Roster", jmri.jmrit.roster.swing.RosterMenu.MAINMENU, this));
 		List<JMenu> l = new ArrayList<JMenu>();
 		l.add(toolMenu);
 		return l;
