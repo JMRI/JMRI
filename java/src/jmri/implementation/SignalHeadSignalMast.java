@@ -109,8 +109,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         // check it's a choice
         if ( !map.checkAspect(aspect)) {
             // not a valid aspect
-            log.warn("attempting to set invalid aspect: "+aspect);
-            throw new IllegalArgumentException("attempting to set invalid aspect: "+aspect);
+            log.warn("attempting to set invalid aspect: "+aspect+" on mast: "+getDisplayName());
+            throw new IllegalArgumentException("attempting to set invalid aspect: "+aspect+" on mast: "+getDisplayName());
         }
         
         // set the outputs
