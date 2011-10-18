@@ -25,6 +25,12 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
+    public SprogCSSerialDriverAdapter() {
+        super();
+        //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
+        adaptermemo.setUserName("SPROG Command Station");
+    }
+
     /**
      * set up all of the other objects to operate with an Sprog command
      * station connected to this port

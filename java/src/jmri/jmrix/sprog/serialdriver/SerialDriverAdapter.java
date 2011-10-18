@@ -36,6 +36,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     public SerialDriverAdapter() {
         super();
         adaptermemo = new SprogSystemConnectionMemo();
+        //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
+        adaptermemo.setUserName("SPROG");
     }
     
     SerialPort activeSerialPort = null;
