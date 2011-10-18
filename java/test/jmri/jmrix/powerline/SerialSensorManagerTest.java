@@ -20,7 +20,6 @@ public class SerialSensorManagerTest extends TestCase {
 	    // replace the SerialTrafficController to get clean reset
 	    SerialTrafficController t = new jmri.jmrix.powerline.SerialTrafficController() {
 	        SerialTrafficController test() {
-	            setInstance();
 	            return this;
 	        }
          }.test();
