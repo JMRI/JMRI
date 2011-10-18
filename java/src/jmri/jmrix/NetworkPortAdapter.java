@@ -18,8 +18,6 @@ public interface NetworkPortAdapter extends PortAdapter {
      */
     public void connect(String host, int port) throws Exception;
     
-    public void connect() throws Exception;
-
 	/** Configure all of the other jmrix widgets needed to work with this adapter
 	 */
     public void configure();

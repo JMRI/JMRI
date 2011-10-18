@@ -62,6 +62,19 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
             log.error("load (pipe): Exception: "+e.toString());
         }
     }
+    
+    public void connect() throws Exception{
+        jmri.jmrix.loconet.hexfile.HexFileFrame f
+            = new jmri.jmrix.loconet.hexfile.HexFileFrame();
+            
+        f.setAdapter(this);
+        try {
+            f.initComponents();
+        } catch (Exception ex) {
+            //log.error("starting HexFileFrame exception: "+ex.toString());
+        }
+        f.configure();
+    }
 
     public void run() { // invoked in a new thread
         while (true) {

@@ -29,6 +29,11 @@ public interface PortAdapter  {
 	 */
 	public boolean status();
     
+    /**
+     *  Open the connection
+     */
+    public void connect() throws Exception;
+    
     public String getCurrentPortName();
 
 	// returns the InputStream from the port

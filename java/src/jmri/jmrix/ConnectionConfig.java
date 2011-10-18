@@ -18,6 +18,8 @@ public interface ConnectionConfig  {
     public void loadDetails(JPanel details);
     public String getInfo();
     
+    public PortAdapter getAdapter();
+    
     public String getConnectionName();
     public String getManufacturer();
     public void setManufacturer(String Manufacturer);

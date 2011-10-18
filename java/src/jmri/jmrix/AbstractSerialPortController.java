@@ -47,6 +47,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
                 return portName+" not found";
     }
+    
+    public void connect() throws Exception{
+        openPort(mPort, "JMRI app");
+    }
 
     public void setPort(String port) { mPort= port;}
     protected String mPort = null;
