@@ -208,7 +208,7 @@ public class Setup {
 	private static boolean generateCsvManifest = false;		// when true generate csv manifest
 	private static boolean generateCsvSwitchList = false;	// when true generate csv switch list
 	private static boolean enableVsdPhysicalLocations = false;
-	private static boolean enableReporters = false;			// when true create a reporter for each train
+	//private static boolean enableReporters = false;			// when true create a reporter for each train
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printRouteComments = false;		// when true print route comments on the manifest
@@ -392,6 +392,7 @@ public class Setup {
 		enableVsdPhysicalLocations = enabled;
 	}
 	
+	/*
 	public static boolean isCreateReportersEnabled(){
 		return enableReporters;
 	}
@@ -399,6 +400,7 @@ public class Setup {
 	public static void setCreateReportersEnabled(boolean enabled){
 		enableReporters = enabled;
 	}
+	*/
 	
 	public static String getRailroadName(){
 		return railroadName;
@@ -1219,10 +1221,12 @@ public class Setup {
     		values.setAttribute("enablePhysicalLocations", isVsdPhysicalLocationEnabled()?"true":"false");
     	}
     	
+    	/*
     	if (isCreateReportersEnabled()){
     		e.addContent(values = new Element("reporters"));
     		values.setAttribute("enable", isCreateReportersEnabled()?"true":"false");
-    	}   	
+    	} 
+    	*/  	
     	
     	/* all JMRI window position and size are now saved
     	Element options;
@@ -1618,13 +1622,14 @@ public class Setup {
         		setVsdPhysicalLocationEnabled(enable.equals("true"));
         	}
         }
-        
+        /*
         if (operations.getChild("reporters") != null){
         	if ((a = operations.getChild("reporters").getAttribute("enable"))!= null){
         		String enable = a.getValue();
         		setCreateReportersEnabled(enable.equals("true"));
         	}
         }
+        */
         
         /* all JMRI window position and size are now saved
         Element frameOptions;

@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -14,9 +12,6 @@ import java.util.ResourceBundle;
 
 import org.jdom.Element;
 
-import jmri.InstanceManager;
-import jmri.Reporter;
-import jmri.ReporterManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
@@ -107,7 +102,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _leg3Model = "";			// engine model 3rd leg
 	protected String _leg3CabooseRoad = "";			// road name for caboose 3rd leg
 
-	protected Reporter _reporter;					// Reporter for interapplication communication
+	//protected Reporter _reporter;					// Reporter for interapplication communication
 	
 	public static final int CHANGE_ENGINES = 1;		// change engines
 	public static final int HELPER_ENGINES = 2;		// add helper engines
@@ -165,6 +160,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String AUTO = rb.getString("Auto");				// how engines are assigned to this train
 
 	// Reporter Strings
+	/*
 	public static final String USER_PREFIX = "OPS TRAIN::";		// prefix on Reporter user name
 	public static final String SYSTEM_PREFIX = "IR_OPS::";		// prefix on Reporter system name
 	public static final String LOCATION = "LOCATION=";			// action to move a train to a new location
@@ -173,6 +169,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String RESET = "RESET";					// action to reset a train
 	public static final String LENGTH = "LENGTH=";				// comment for reporting a train's length
 	public static final String TONNAGE = "TONNAGE=";			// comment for reporting a train's weight
+	*/
 	
 	public Train(String id, String name) {
 		log.debug("New train " + name + " " + id);
@@ -182,7 +179,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setTypeNames(CarTypes.instance().getNames());
 		setTypeNames(EngineTypes.instance().getNames());
 		addPropertyChangeListerners();
-		constructReporter();
+		//constructReporter();
 	}
 
 	public String getId() {
@@ -2108,12 +2105,13 @@ public class Train implements java.beans.PropertyChangeListener {
 		CarTypes.instance().removePropertyChangeListener(this);
 		EngineTypes.instance().removePropertyChangeListener(this);
 		CarOwners.instance().removePropertyChangeListener(this);
-		if (_reporter != null)
-			InstanceManager.reporterManagerInstance().deregister(_reporter);
+		//if (_reporter != null)
+		//	InstanceManager.reporterManagerInstance().deregister(_reporter);
 			
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
   
+
 /**
  * creates a JMRI Reporter for the Train through which it can exchange updates
  * with other applications and scripts.
@@ -2121,6 +2119,7 @@ public class Train implements java.beans.PropertyChangeListener {
  * This method first requests a Recorder with a user name constructed from the
  * train name.  If one is not found, it creates an Internal Recorder.	
  */
+    /*
     private void constructReporter() {
     	if (Setup.isCreateReportersEnabled() && _reporter == null) {
     		ReporterManager rm = InstanceManager.reporterManagerInstance();
@@ -2182,6 +2181,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		_reporter = r;
     	}
     }
+    */
     
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
@@ -2349,7 +2349,7 @@ public class Train implements java.beans.PropertyChangeListener {
         	}
     	}
     	addPropertyChangeListerners();
-    	constructReporter();
+    	//constructReporter();
     }
     
     private void addPropertyChangeListerners(){
