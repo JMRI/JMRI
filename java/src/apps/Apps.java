@@ -958,8 +958,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
     static String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
-    static boolean configOK;
-    static boolean configDeferredLoadOK;
+    // The following MUST be protected for 3rd party applications 
+    // (such as CATS) which are derived from this class.
+    protected static boolean configOK;
+    protected static boolean configDeferredLoadOK;
 
     // GUI members
     private JMenuBar menuBar;
