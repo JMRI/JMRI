@@ -62,6 +62,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _build = true;		// when true, build this train
 	protected boolean _buildFailed = false;	// when true, build for this train failed
 	protected boolean _printed = false;		// when true, manifest has been printed
+	protected boolean _sendToTerminal = false;	// when true, cars picked up by train only go to terminal
 	protected Route _route = null;
 	protected String _roadOption = ALLROADS;// train road name restrictions
 	protected int _requires = 0;			// train requirements, caboose, FRED
@@ -1609,6 +1610,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		_logoURL = pathName;
 	}
 	
+	public boolean isSendCarsToTerminalEnabled(){
+		return _sendToTerminal;
+	}
+	
+	public void setSendCarsToTerminalEnabled(boolean enable){
+		boolean old = _sendToTerminal;
+		_sendToTerminal = enable;
+		if (old != enable){
+			firePropertyChange("send cars to terminal", old?"true":"false", enable?"true":"false");
+		}
+	}
+
 	public void setBuilt(boolean built) {
 		boolean old = _built;
 		_built = built;
@@ -2276,6 +2289,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_leg2Options = Integer.parseInt(a.getValue());
     	if ((a = e.getAttribute("leg3Options")) != null)
     		_leg3Options = Integer.parseInt(a.getValue());
+    	if ((a = e.getAttribute("toTerminal")) != null)
+    		_sendToTerminal = a.getValue().equals("true");
     	if ((a = e.getAttribute("built")) != null)
     		_built = a.getValue().equals("true");
     	if ((a = e.getAttribute("build")) != null)
@@ -2395,6 +2410,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("engineModel", getEngineModel());
         e.setAttribute("requires", Integer.toString(getRequirements()));
         e.setAttribute("cabooseRoad", getCabooseRoad());
+        e.setAttribute("toTerminal", isSendCarsToTerminalEnabled()?"true":"false");
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");

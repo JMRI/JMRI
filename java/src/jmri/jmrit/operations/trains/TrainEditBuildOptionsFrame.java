@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 //import java.text.MessageFormat;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -14,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -138,6 +140,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     ButtonGroup cabooseOption2Group = new ButtonGroup();
     
     // check boxes
+    JCheckBox sendToTerminalcheckBox = new JCheckBox();
 	
 	// text field
     JTextField builtAfterTextField = new JTextField(10);
@@ -227,6 +230,12 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		
     	p1.add(pName);
     	p1.add(pDesc);
+    	
+    	// row 2
+    	JPanel pOption = new JPanel();
+    	pOption.setLayout(new GridBagLayout());
+    	pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));
+    	addItem(pOption, sendToTerminalcheckBox, 0, 0);
     		
 		// row 3
 		panelRoadNames.setLayout(new GridBagLayout());
@@ -381,6 +390,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		addItem(pB, saveTrainButton, 3, 0);
 		
 		getContentPane().add(p1);
+		getContentPane().add(pOption);
 		getContentPane().add(roadPane);
 		getContentPane().add(loadPane);
 		getContentPane().add(ownerPane);
@@ -434,6 +444,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (_train != null){
 			trainName.setText(_train.getName());
 			trainDescription.setText(_train.getDescription());
+			sendToTerminalcheckBox.setSelected(_train.isSendCarsToTerminalEnabled());
+			sendToTerminalcheckBox.setText(MessageFormat.format(rb.getString("SendToTerminal"),new Object[] {_train.getTrainTerminatesName()}));
 			builtAfterTextField.setText(_train.getBuiltStartYear());
 			builtBeforeTextField.setText(_train.getBuiltEndYear());
 			setBuiltRadioButton();
@@ -864,6 +876,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	private void saveTrain(){
 		if (!checkInput())
 			return;
+		_train.setSendCarsToTerminalEnabled(sendToTerminalcheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 		
@@ -910,14 +923,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if ((!none1.isSelected() && (routePickup1Box.getSelectedItem() == null || routePickup1Box.getSelectedItem().equals("")))
 				|| (!none2.isSelected() && (routePickup2Box.getSelectedItem() == null || routePickup2Box.getSelectedItem().equals("")))){
 			JOptionPane.showMessageDialog(this,
-					"You must select a location for the engine change or start of helper service", rb.getString("CanNotSave"),
+					rb.getString("SelectLocationEngChange"), rb.getString("CanNotSave"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if ((helper1Service.isSelected() && (routeDrop1Box.getSelectedItem() == null || routeDrop1Box.getSelectedItem().equals("")))
 				|| (helper2Service.isSelected() && (routeDrop2Box.getSelectedItem() == null || routeDrop2Box.getSelectedItem().equals("")))){
 			JOptionPane.showMessageDialog(this,
-					"You must select a location for the end of helper service", rb.getString("CanNotSave"),
+					rb.getString("SelectLocationEndHelper"), rb.getString("CanNotSave"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

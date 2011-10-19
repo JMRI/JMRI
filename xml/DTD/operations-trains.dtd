@@ -19,7 +19,7 @@
 <!ELEMENT trainOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
-<!ELEMENT scripts (startUp | shutDown | build | move | terminate)*>
+<!ELEMENT scripts (startUp | shutDown | build | afterBuild | move | terminate)*>
 
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
@@ -48,6 +48,7 @@
 <!ELEMENT startUp EMPTY>
 <!ELEMENT shutDown EMPTY>
 <!ELEMENT build EMPTY>
+<!ELEMENT afterBuild EMPTY>
 <!ELEMENT move EMPTY>
 <!ELEMENT terminate EMPTY>
 
@@ -83,6 +84,7 @@
 <!ATTLIST train cabooseRoad			CDATA #IMPLIED>
 <!ATTLIST train departHour			CDATA #IMPLIED>
 <!ATTLIST train departMinute		CDATA #IMPLIED>
+<!ATTLIST train toTerminal			(true | false) "false">
 <!ATTLIST train built				(true | false) "false">
 <!ATTLIST train build				(true | false) "false">
 <!ATTLIST train buildFailed			(true | false) "false">
@@ -108,6 +110,7 @@
 <!ATTLIST train comment				CDATA #IMPLIED>
 
 <!ATTLIST build name				CDATA #IMPLIED>
+<!ATTLIST afterBuild name			CDATA #IMPLIED>
 <!ATTLIST move name					CDATA #IMPLIED>
 <!ATTLIST terminate name			CDATA #IMPLIED>
 <!ATTLIST startUp name				CDATA #IMPLIED>

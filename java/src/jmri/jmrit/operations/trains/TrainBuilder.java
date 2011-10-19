@@ -2120,6 +2120,11 @@ public class TrainBuilder extends TrainCommon{
 		// more than one location in this route?
 		if (routeList.size()>1)
 			start++;		//yes!, no car drops at departure
+		// all pick ups to terminal?
+		if (train.isSendCarsToTerminalEnabled() && routeIndex>0 && routeEnd == routeList.size()){
+			addLine(buildReport, FIVE, rb.getString("buildSendToTerminal"));
+			start = routeEnd-1;
+		}
 		for (int k = start; k<routeEnd; k++){
 			rld = train.getRoute().getLocationById(routeList.get(k));
 			// if car can be picked up later at same location, set flag	
