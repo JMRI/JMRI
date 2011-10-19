@@ -149,6 +149,23 @@ public class DecoderPro3Window
             }
           }
         };
+        updateProgrammerStatus();
+        
+        ConnectionStatus.instance().addPropertyChangeListener( new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
+                    updateProgrammerStatus();
+                } 
+            }
+        });
+        
+        jmri.InstanceManager.addPropertyChangeListener( new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if ((e.getPropertyName().equals("programmermanager"))) {
+                    updateProgrammerStatus();
+                } 
+            }
+        });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
     }
     
@@ -172,67 +189,8 @@ public class DecoderPro3Window
      */
     void statusBar(){
         JLabel programmerLabel = new JLabel();
-        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
-                        jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
-            but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            String serviceModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
-            serviceModeProgrammerLabel.setText ("Service Mode Programmer " +serviceModeProgrammer + " Is Online");
-            serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
-            
-            ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-            if (connList!=null){
-                for (int x = 0; x<connList.size(); x++){
-                    ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
-                    if(conn.getConnectionName().equals(serviceModeProgrammer)){
-                        serModeProCon = conn;
-                    }
-                }
-            }
-        } else {
-            serviceModeProgrammerLabel.setText("No Service Mode Programmer Available");
-            serviceModeProgrammerLabel.setForeground(Color.red);
-        }
         
         addToStatusBox(serviceModeProgrammerLabel, null);
-        
-        operationsModeProgrammerLabel = new JLabel();
-        if (jmri.InstanceManager.programmerManagerInstance()!=null &&
-                        jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
-            /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
-            but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            String opsModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
-            operationsModeProgrammerLabel.setText("Operations Mode Programmer " +opsModeProgrammer + " Is Online");
-            operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
-            ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-            if (connList!=null){
-                for (int x = 0; x<connList.size(); x++){
-                    ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
-                    if(conn.getConnectionName().equals(opsModeProgrammer)){
-                        opsModeProCon=conn;
-                    }
-                }
-            }
-        } else {
-            operationsModeProgrammerLabel.setText("No Operations Mode Programmer Available");
-            operationsModeProgrammerLabel.setForeground(Color.red);
-        }
-        
-        ConnectionStatus.instance().addPropertyChangeListener( new PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
-                    updateProgrammerStatus();
-                } 
-            }
-        });
-        
-        jmri.InstanceManager.addPropertyChangeListener( new PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ((e.getPropertyName().equals("programmermanager"))) {
-                    updateProgrammerStatus();
-                } 
-            }
-        });
         
         addToStatusBox(operationsModeProgrammerLabel, null);
         
@@ -244,7 +202,14 @@ public class DecoderPro3Window
         addToStatusBox(programmerLabel, activeRosterGroupField);
     }
     
+    /*
+    * this handles setting up and updating the GUI for the types of programmer available.
+    */
     protected void updateProgrammerStatus(){
+    
+        ConnectionConfig oldServMode = serModeProCon;
+        ConnectionConfig oldOpsMode = opsModeProCon;
+    
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             String serviceModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
@@ -261,8 +226,8 @@ public class DecoderPro3Window
         
         if (jmri.InstanceManager.programmerManagerInstance()!=null &&
                         jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
-            /*Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
-            but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
+            //Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
+            //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
             String opsModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
             ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
             if (connList!=null){
@@ -283,6 +248,20 @@ public class DecoderPro3Window
                 serviceModeProgrammerLabel.setText("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Offline");
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
+            if(oldServMode==null){
+                service.setEnabled(true);
+                service.setVisible(true);
+                firePropertyChange("setprogservice", "setEnabled", true);
+            }
+        } else {
+            serviceModeProgrammerLabel.setText("No Service Mode Programmer Available");
+            serviceModeProgrammerLabel.setForeground(Color.red);
+            
+            if(oldServMode!=null){
+                service.setEnabled(false);
+                service.setVisible(false);
+                firePropertyChange("setprogservice", "setEnabled", false);
+            }
         }
         if(opsModeProCon!=null){
             if(ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())){
@@ -292,7 +271,39 @@ public class DecoderPro3Window
                 operationsModeProgrammerLabel.setText("Operations Mode Programmer "+ opsModeProCon.getConnectionName() + " Is Offline");
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
+            if(oldOpsMode==null){
+                ops.setEnabled(true);
+                ops.setVisible(true);
+                firePropertyChange("setprogops", "setEnabled", true);
+            }
+        } else {
+            operationsModeProgrammerLabel.setText("No Operations Mode Programmer Available");
+            operationsModeProgrammerLabel.setForeground(Color.red);
+            if(oldOpsMode!=null){
+                ops.setEnabled(false);
+                ops.setVisible(false);
+                firePropertyChange("setprogops", "setEnabled", false);
+            }
         }
+        
+        String strProgMode;
+        if(service.isEnabled()){
+            service.setSelected(true);
+            strProgMode = "setprogservice";
+            modePanel.setVisible(true);
+        }
+        else if(ops.isEnabled()){
+            ops.setSelected(true);
+            strProgMode = "setprogops";
+            modePanel.setVisible(false);
+        }
+        else{
+            edit.setSelected(true);
+            modePanel.setVisible(false);
+            strProgMode = "setprogedit";
+        }
+        
+        firePropertyChange(strProgMode, "setSelected", true);
     }
     
     protected void systemsMenu() {
@@ -680,7 +691,6 @@ public class DecoderPro3Window
             decoderModel.setText(value);
             decoderFamily.setText(value);
 
-
             id.setText(value);
             roadName.setText(value);
 
@@ -777,10 +787,10 @@ public class DecoderPro3Window
 
         service.setEnabled(false);
         ops.setEnabled(false);
-        edit.setEnabled(false);
+        edit.setEnabled(true);
         firePropertyChange("setprogservice", "setEnabled", false);
         firePropertyChange("setprogops", "setEnabled", false);
-        firePropertyChange("setprogedit", "setEnabled", false);
+        firePropertyChange("setprogedit", "setEnabled", true);
 
         JPanel progModePanel = new JPanel();
         progModePanel.add(service);
@@ -800,7 +810,7 @@ public class DecoderPro3Window
         service.setVisible(false);
         ops.setVisible(false);
         
-        if (jmri.InstanceManager.programmerManagerInstance()!=null){
+        /*if (jmri.InstanceManager.programmerManagerInstance()!=null){
             if(jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
                 service.setEnabled(true);
                 service.setVisible(true);
@@ -833,7 +843,7 @@ public class DecoderPro3Window
             strProgMode = "setprogedit";
         }
         
-        firePropertyChange(strProgMode, "setSelected", true);
+        firePropertyChange(strProgMode, "setSelected", true);*/
         
         panel.add(progModePanel);
 

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -96,7 +97,6 @@ public class GuiLafConfigPane extends JPanel {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        locales = null;
         localeBox = new JComboBox(new String[]{
                         Locale.getDefault().getDisplayName(),
                         "(Please Wait)"});
@@ -105,14 +105,18 @@ public class GuiLafConfigPane extends JPanel {
         // create object to find locales in new Thread
         Runnable r  = new Runnable() {
             public void run() {
-                locales = java.util.Locale.getAvailableLocales();
+                Locale[] locales = java.util.Locale.getAvailableLocales();
                 localeNames = new String[locales.length];
+                locale = new HashMap<String, Locale>();
                 for (int i = 0; i<locales.length; i++) {
+                    locale.put(locales[i].getDisplayName(), locales[i]);
                     localeNames[i] = locales[i].getDisplayName();
                 }
+                java.util.Arrays.sort(localeNames);
                 Runnable update = new Runnable() {
                     public void run() {
                         localeBox.setModel(new javax.swing.DefaultComboBoxModel(localeNames));
+                        //localeBox.setModel(new javax.swing.DefaultComboBoxModel(locale.keySet().toArray()));
                         localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
                     }
                 };
@@ -124,20 +128,21 @@ public class GuiLafConfigPane extends JPanel {
     }
 
     JComboBox localeBox;
-    Locale[] locales;
+    HashMap<String, Locale> locale;
     String[] localeNames;
 
+    public void setLocale(String loc){
+        localeBox.setSelectedItem(loc);
+    }
+    
     /**
      * Get the currently configured Locale
      * or Locale.getDefault if no configuration has been done.
      */
     public Locale getLocale() {
-        if (localeBox==null || locales==null) return Locale.getDefault();
+        if (localeBox==null || locale==null) return Locale.getDefault();
         String desired = (String)localeBox.getSelectedItem();
-        for (int i = 0; i<locales.length; i++) {
-            if (desired.equals(localeNames[i])) return locales[i];
-        }
-        return null;
+        return locale.get(desired);
     }
     
     static int fontSize = 0;
