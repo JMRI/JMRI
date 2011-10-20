@@ -60,7 +60,7 @@ JMRI: NYCS-1937 Signaling Definition
 This directory contains signaling definitions corresponding to 
 the NYCS-1937 rules as described in the 
 September 1937 version of the 
-New York Central System publication "Rules for the Governmant of the Operating Department", 
+New York Central System publication "Rules for the Government of the Operating Department", 
 chapter on Signal Aspects Signal Indications and Signal Rules.
 
 <p>
@@ -79,7 +79,8 @@ Signal Mast definitions:
 <li><a href="appearance-SL-1-low.xml">Single searchlight dwarf signal</a>
 </ul>
 
-    
+    </div>
+</div>
 <!-- Footer -->
     <hr class="hide">
     <div id="footer">

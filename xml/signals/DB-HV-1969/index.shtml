@@ -47,20 +47,22 @@ Signal Mast definitions:
 <ul>
 <li><a href="appearance-block.xml">Block signal</a>
 <li><a href="appearance-distant.xml">Distant signal</a>
-<li><a href="appearance-distant_short.xml"/>Distant signal at short distance from main signal</a>
-<li><a href="appearance-distant_repeater.xml"/>Distant signal repeater</a>
-<li><a href="appearance-block_distant.xml"/>Block signal with distant signal</a>
-<li><a href="appearance-block_distant_short.xml"/>Block signal with distant signal at short distance from main signal</a>
-<li><a href="appearance-entry.xml"/>Entry signal</a>
-<li><a href="appearance-entry_distant.xml"/>Entry signal with distant signal</a>
-<li><a href="appearance-entry_distant_short.xml"/>Entry signal with distant signal at short distance from main signal</a>
-<li><a href="appearance-exit.xml"/>Exit signal</a>
-<li><a href="appearance-exit_distant.xml"/>Exit signal with distant signal</a>
-<li><a href="appearance-exit_distant_short.xml"/>Exit signal with distant signal at short distance from main signal</a>
-<li><a href="appearance-shunting.xml"/>Shunting signal</a>
-<li><a href="appearance-shunting_dwarf.xml"/>Shunting dwarf signal</a>
+<li><a href="appearance-distant_short.xml">Distant signal at short distance from main signal</a>
+<li><a href="appearance-distant_repeater.xml">Distant signal repeater</a>
+<li><a href="appearance-block_distant.xml">Block signal with distant signal</a>
+<li><a href="appearance-block_distant_short.xml">Block signal with distant signal at short distance from main signal</a>
+<li><a href="appearance-entry.xml">Entry signal</a>
+<li><a href="appearance-entry_distant.xml">Entry signal with distant signal</a>
+<li><a href="appearance-entry_distant_short.xml">Entry signal with distant signal at short distance from main signal</a>
+<li><a href="appearance-exit.xml">Exit signal</a>
+<li><a href="appearance-exit_distant.xml">Exit signal with distant signal</a>
+<li><a href="appearance-exit_distant_short.xml">Exit signal with distant signal at short distance from main signal</a>
+<li><a href="appearance-shunting.xml">Shunting signal</a>
+<li><a href="appearance-shunting_dwarf.xml">Shunting dwarf signal</a>
 </ul>
 
+    </div>
+</div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>
