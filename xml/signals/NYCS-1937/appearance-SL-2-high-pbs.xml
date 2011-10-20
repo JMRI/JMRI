@@ -112,4 +112,8 @@
     </appearance>
 
   </appearances>
+  <specificappearances>
+  	<danger>
+  		<aspect>Stop and Proceed</aspect>
+  	</danger></specificappearances>
 </appearancetable>  

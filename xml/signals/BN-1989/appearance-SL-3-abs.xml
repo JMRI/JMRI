@@ -188,4 +188,11 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
     </appearance>
 
   </appearances>
+  <specificappearances>
+  	<danger>
+  		<aspect>Stop</aspect>
+  	</danger>
+  	<held>
+  		<aspect>Stop</aspect>
+  	</held></specificappearances>
 </appearancetable>  
