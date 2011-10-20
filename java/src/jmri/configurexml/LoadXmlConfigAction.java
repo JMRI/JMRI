@@ -23,7 +23,7 @@ import javax.swing.JFileChooser;
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     public LoadXmlConfigAction() {
-        this("Load Panel File ...");
+        this("Open Panel File ...");
     }
 
     public LoadXmlConfigAction(String s) {

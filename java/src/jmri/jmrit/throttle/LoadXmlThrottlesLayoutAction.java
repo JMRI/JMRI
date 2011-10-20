@@ -36,7 +36,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	}
 
 	public LoadXmlThrottlesLayoutAction() {
-		this("Load Throttle");
+		this("Open Throttle");
 	}
 
 	JFileChooser fileChooser;
