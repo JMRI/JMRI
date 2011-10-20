@@ -1,4 +1,4 @@
-package jmri.jmrit.roster;
+package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
 
@@ -10,8 +10,8 @@ import javax.swing.ListCellRenderer;
 import jmri.InstanceManager;
 
 
-public class RosterComboListRenderer extends JLabel implements ListCellRenderer {	
-	public RosterComboListRenderer() {
+public class RosterEntryListCellRenderer extends JLabel implements ListCellRenderer {	
+	public RosterEntryListCellRenderer() {
 		super();
 		setOpaque(true);
 	}

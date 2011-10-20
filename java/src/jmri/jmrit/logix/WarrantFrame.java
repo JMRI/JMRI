@@ -478,7 +478,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
     private void getRoster() {
         List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
-        _rosterBox.setRenderer(new jmri.jmrit.roster.RosterComboListRenderer());
+        _rosterBox.setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
         _rosterBox.addItem(" ");
         for (int i = 0; i < list.size(); i++) {
             RosterEntry r = list.get(i);
