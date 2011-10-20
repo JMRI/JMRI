@@ -140,10 +140,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         InstanceManager.configureManagerInstance().registerUser(this);
         pack();
         setVisible(true);
-
-        // Build resource catalog and load CatalogTree.xml now
-        jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
-        catalog.createNewBranch("IFJAR", "Program Directory", "resources");
     }
 
     protected void makeIconMenu() {
