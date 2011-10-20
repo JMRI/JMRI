@@ -960,7 +960,12 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     static String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
     // The following MUST be protected for 3rd party applications 
     // (such as CATS) which are derived from this class.
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT",
+                                                    justification="The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configOK;
+    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT",
+                                                    justification="The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configDeferredLoadOK;
 
     // GUI members
