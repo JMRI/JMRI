@@ -188,8 +188,6 @@ public class DecoderPro3Window
      * This status bar needs sorting out properly
      */
     void statusBar(){
-        JLabel programmerLabel = new JLabel();
-        
         addToStatusBox(serviceModeProgrammerLabel, null);
         
         addToStatusBox(operationsModeProgrammerLabel, null);
@@ -198,7 +196,7 @@ public class DecoderPro3Window
         statusField.setText("idle");
         addToStatusBox(programmerStatusLabel, statusField);
         
-        programmerLabel = new JLabel("Active Roster Group : ");
+        JLabel programmerLabel = new JLabel("Active Roster Group : ");
         addToStatusBox(programmerLabel, activeRosterGroupField);
     }
     
