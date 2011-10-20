@@ -711,8 +711,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         log.debug("Set Signal Appearances");
         if(getSourceMast().getHeld()){
-            log.debug("Signal is at a held state so will set to danager");
-            getSourceMast().setAspect(getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
+            log.debug("Signal is at a held state so will set to the aspect defined for held or danger");
+            if(getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null){
+                getSourceMast().setAspect(getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
+            } else {
+                getSourceMast().setAspect(getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+            }
             return;
         }
         if (!checkStates()){
@@ -722,7 +726,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         String[] advancedAspect;
         if(destination.getHeld()){
-            advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
+            if(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null){
+                advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD));
+            } else {
+                advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+            }
         } else {
             advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAspect());
         }
