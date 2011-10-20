@@ -78,6 +78,22 @@
               <xs:element name="F10" minOccurs="0" maxOccurs="1"/>
               <xs:element name="F11" minOccurs="0" maxOccurs="1"/>
               <xs:element name="F12" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F13" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F14" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F15" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F16" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F17" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F18" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F19" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F20" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F21" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F22" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F23" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F24" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F25" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F26" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F27" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F28" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -95,6 +111,7 @@
                     <xs:enumeration value="turnout"/>
                     <xs:enumeration value="power"/>
                     <xs:enumeration value="route"/>
+                    <xs:enumeration value="frame"/>
                     <xs:enumeration value="panel"/>
                     <xs:enumeration value="roster"/>
                     <xs:enumeration value="memory"/>

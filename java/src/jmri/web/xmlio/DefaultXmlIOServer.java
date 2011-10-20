@@ -36,9 +36,13 @@ import java.util.*;
 public class DefaultXmlIOServer implements XmlIOServer {
 
     public Element immediateRequest(Element e) throws JmriException {
-    
+
+        // process panels and frames as the same elements through 2.14.
+        // after 2.14, process panels as XML definitions of panels so that
+        // iPads or Android tablet apps could directly render the panels.
+
         // first, process any "list" elements
-    	//  roster, panel, and metadata are immediate only
+    	//  roster, frame, and metadata are immediate only
     	//  power, turnout, sensor, memory and route can be monitored for changes, pass current values to begin
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList(e.getChildren("list"));
@@ -191,8 +195,30 @@ public class DefaultXmlIOServer implements XmlIOServer {
         			e.addContent(n);
             	}
 
+            } else if (type.equals("frame")) {
+            	// list frames, (open JMRI windows)
+            	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
+            	int framesNumber = framesList.size();
+            	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
+            		JmriJFrame iFrame = framesList.get(i);
+            		String frameTitle = iFrame.getTitle();
+            		if (!frameTitle.equals("")) {
+                            Element n = new Element((useAttributes) ? "frame" : "item");
+                            if (useAttributes) {
+                                n.setAttribute("name", frameTitle.replaceAll(" ", "%20"));
+                                n.setAttribute("userName", frameTitle);
+                            } else {
+                        n.addContent(new Element("type").addContent("frame"));
+                        //get rid of spaces in name
+            			n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ","%20")));
+            			n.addContent(new Element("userName").addContent(frameTitle));
+                            }
+            			e.addContent(n);
+            		}
+            	}
+            // identical to "frame" above until after 2.14
             } else if (type.equals("panel")) {
-            	// list panels, (open JMRI windows)
+            	// list frames, (open JMRI windows)
             	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
             	int framesNumber = framesList.size();
             	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
@@ -207,7 +233,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         n.addContent(new Element("type").addContent("panel"));
                         //get rid of spaces in name
             			n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ","%20")));
-            			n.addContent(new Element("userName").addContent(frameTitle)); 
+            			n.addContent(new Element("userName").addContent(frameTitle));
                             }
             			e.addContent(n);
             		}
@@ -274,6 +300,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (type.equals("metadata")) {
                 immediateReadMetadata(name, item);
             } else if (type.equals("roster")) {
+                // nothing to process
+            } else if (type.equals("frame")) {
                 // nothing to process
             } else if (type.equals("panel")) {
                 // nothing to process
@@ -644,8 +672,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
         log.error("no immediate write for roster element");
     }
     
-    void immediateWritePanel(String name, Element item) throws JmriException {
-        log.error("no immediate write for panel element");
+    void immediateWriteFrame(String name, Element item) throws JmriException {
+        log.error("no immediate write for frame element");
     }
     
     void immediateWriteMetadata(String name, Element item) throws JmriException {
