@@ -220,6 +220,7 @@ public class RosterEntryComboBox extends JComboBox {
                 }
             }
         });
+        setRenderer(new jmri.jmrit.roster.RosterComboListRenderer());
     }
 
     /**
