@@ -85,10 +85,10 @@
 
   <specificappearances>
     <danger>
-      <aspect>Stop</aspect>
+      <aspect>Restricting</aspect>
     </danger>
     <held>
-      <aspect>Stop</aspect>
+      <aspect>Restricting</aspect>
     </held>
   </specificappearances>
 
