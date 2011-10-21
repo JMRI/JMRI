@@ -73,34 +73,21 @@ public abstract class AppsBase {
 
         setAndLoadPreferenceFile();
         /*Once all the preferences have been loaded we can initial the preferences
-        doing it in a thread at this stage means we can let it work in the background*/
-        Runnable r = new Runnable() {
-          public void run() {
-            try {
-                 jmri.InstanceManager.tabbedPreferencesInstance().init();
-            } catch (Exception ex) {
-                log.error(ex.toString());
-            }
-          }
-        };
-        Thread thr = new Thread(r);
-        thr.start();
-    }
-        
-    protected void createDemoScaffolding() {
-        InstanceManager.sensorManagerInstance().provideSensor("IS1");
-        InstanceManager.sensorManagerInstance().provideSensor("IS2");
-        InstanceManager.sensorManagerInstance().provideSensor("IS3");
-    }
-
-    protected JComponent getSensorTableDemo() {
-        // put a table in rightTop
-        jmri.jmrit.beantable.BeanTableDataModel dataModel = new jmri.jmrit.beantable.sensor.SensorTableDataModel();
-        jmri.util.com.sun.TableSorter sorter = new jmri.util.com.sun.TableSorter(dataModel);
-    	JTable dataTable = new JTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());        
-        JScrollPane dataScroll	= new JScrollPane(dataTable);
-        return dataScroll;
+        doing it in a thread at this stage means we can let it work in the background
+        if the file doesn't exist then we do not initilise it*/
+        if(preferenceFileExists){
+            Runnable r = new Runnable() {
+              public void run() {
+                try {
+                     jmri.InstanceManager.tabbedPreferencesInstance().init();
+                } catch (Exception ex) {
+                    log.error(ex.toString());
+                }
+              }
+            };
+            Thread thr = new Thread(r);
+            thr.start();
+        }
     }
     
     protected void installConfigurationManager() {

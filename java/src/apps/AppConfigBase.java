@@ -136,7 +136,7 @@ public class AppConfigBase extends JmriPanel {
         items.clear();
     }
 
-    protected void saveContents() {
+    public void saveContents() {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
         // put the new GUI items on the persistance list

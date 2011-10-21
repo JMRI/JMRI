@@ -264,8 +264,6 @@ public class TabbedPreferences extends AppConfigBase {
         ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
         if (connList!=null){
             for (int x = 0; x<connList.size(); x++){
-                /*This extra check is here a some of the original code automatically created four connection instances
-                therefore we need to filter out those that are set to none.*/
                 JmrixConfigPane configPane = jmri.jmrix.JmrixConfigPane.instance(x);
                 addConnection(x, configPane);
             }
@@ -327,7 +325,10 @@ public class TabbedPreferences extends AppConfigBase {
         if (tabtitle==null)
             tabtitle = itemText;
         itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item, tooltip, store);
-        if (store) items.add(item);
+        if (store){
+            items.add(item);
+            //jmri.InstanceManager.configureManagerInstance().registerPref(item);
+        }
     }
     
     /* Method allows for the preference to goto a specific list item */

@@ -67,12 +67,13 @@ public abstract class Apps3 extends apps.AppsBase {
         addToActionModel();
         // create GUI
         initializeHelpSystem();
-        createMainFrame();
-        
-        //A Shutdown manager handles the quiting of the application
-        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        // set to min size for demo
-        displayMainFrame(mainFrame.getMaximumSize());  // or new Dimension(800, 600));
+        if(((!configOK) || (!configDeferredLoadOK)) && (!preferenceFileExists)){
+            apps.gui3.FirstTimeStartUpWizardAction prefsAction = new apps.gui3.FirstTimeStartUpWizardAction("Start Up Wizard");
+            prefsAction.setApp(this);
+            prefsAction.actionPerformed(null);
+            return;
+        }
+        createAndDisplayFrame();
     }
     
         /**
@@ -113,24 +114,18 @@ public abstract class Apps3 extends apps.AppsBase {
             log.error("Unexpected error creating help: "+e3);
         }
     }
-    
-    protected void createDemoScaffolding() {
-        InstanceManager.sensorManagerInstance().provideSensor("IS1");
-        InstanceManager.sensorManagerInstance().provideSensor("IS2");
-        InstanceManager.sensorManagerInstance().provideSensor("IS3");
-    }
-
-    protected JComponent getSensorTableDemo() {
-        // put a table in rightTop
-        jmri.jmrit.beantable.BeanTableDataModel dataModel = new jmri.jmrit.beantable.sensor.SensorTableDataModel();
-        jmri.util.com.sun.TableSorter sorter = new jmri.util.com.sun.TableSorter(dataModel);
-    	JTable dataTable = new JTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());        
-        JScrollPane dataScroll	= new JScrollPane(dataTable);
-        return dataScroll;
-    }
 
     abstract protected void createMainFrame();
+    
+    abstract public String getAppName();
+    
+    public void createAndDisplayFrame(){
+        createMainFrame();
+        
+        //A Shutdown manager handles the quiting of the application
+        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        displayMainFrame(mainFrame.getMaximumSize());
+    }
     
     abstract protected ResourceBundle getActionModelResourceBundle();
     

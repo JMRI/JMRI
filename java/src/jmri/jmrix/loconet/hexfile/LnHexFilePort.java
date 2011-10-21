@@ -170,7 +170,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
     public void configure() {
         log.error("configure should not have been invoked");
-        new Exception().printStackTrace();
+        //new Exception().printStackTrace();
     }
     public String[] validBaudRates() {
         log.error("validBaudRates should not have been invoked");

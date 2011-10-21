@@ -31,7 +31,7 @@ import javax.swing.AbstractAction;
  * @version     $Revision$
  */
 public class DecoderPro3 extends apps.gui3.Apps3 {
-
+    
     protected void createMainFrame() {
         // create and populate main window
         File menuFile = new File("dp3/Gui3Menus.xml");
@@ -107,13 +107,6 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
                 //if the preference file already exists then we will launch the normal preference window
                 AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
                 prefsAction.actionPerformed(null);
-            } else {
-                //if this is down to the preference file missing then we do something else!
-                //would like to create a wizard for setting this up at some point.
-                jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
-                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
-                //AbstractAction prefsAction = new apps.gui3.FirstTimeStartUpWizardAction("Start Up Wizard");
-                prefsAction.actionPerformed(null);
             }
         }
         addToActionModel();
@@ -131,6 +124,8 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         thr.start();
         jmri.InstanceManager.tabbedPreferencesInstance().disablePreferenceItem("STARTUP", "apps.PerformFilePanel");
     }
+    
+    public String getAppName() { return "Decoder Pro3"; }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());
 }

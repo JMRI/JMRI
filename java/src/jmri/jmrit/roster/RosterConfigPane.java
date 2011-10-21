@@ -103,6 +103,11 @@ public class RosterConfigPane extends JPanel {
     public String getDefaultOwner() {
         return owner.getText();
     }
+    
+    public void setDefaultOwner(String defaultOwner){
+        owner.setText(defaultOwner);
+    }
+    
     public String getSelectedItem() {
         return filename.getText();
     }

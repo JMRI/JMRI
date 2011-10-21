@@ -41,6 +41,8 @@ public class Paned extends apps.gui3.Apps3 {
     
     static String nameString = "JMRI program";
     
+    public String getAppName() { return nameString; }
+    
     // Main entry point
     public static void main(String args[]) {
 

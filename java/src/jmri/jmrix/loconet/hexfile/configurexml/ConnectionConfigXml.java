@@ -100,8 +100,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
         // register, so can be picked up
         register();
-        if (adapter.getDisabled())
+        if (adapter.getDisabled()){
+            f.setVisible(false);
             return true;
+        }
         f.configure();
         return true;
     }
