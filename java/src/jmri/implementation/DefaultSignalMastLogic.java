@@ -1450,7 +1450,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     //            log.debug("interrupted at join " + ex);
                 inWait=false;
             }*/
-            thr.setName(getSourceMast().getDisplayName() + " " + destination.getDisplayName());;
+            thr.setName(getSourceMast().getDisplayName() + " " + destination.getDisplayName());
             thr.start();
         }
         
