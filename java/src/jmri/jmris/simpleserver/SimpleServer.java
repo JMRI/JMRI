@@ -56,6 +56,7 @@ public class SimpleServer extends JmriServer{
         SimpleLightServer lightServer = new SimpleLightServer(inStream,outStream);
         SimpleSensorServer sensorServer = new SimpleSensorServer(inStream,outStream);
         SimpleReporterServer reporterServer = new SimpleReporterServer(inStream,outStream);
+        SimpleOperationsServer operationsServer = new SimpleOperationsServer(inStream,outStream);
 
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
@@ -100,6 +101,12 @@ public class SimpleServer extends JmriServer{
                  } else if(cmd.startsWith("REPORTER")){
 	             try {
                        reporterServer.parseStatus(cmd);
+                     } catch(jmri.JmriException je) {
+                       outStream.writeBytes("not supported\n");
+                     }
+                 } else if(cmd.startsWith("OPERATIONS")){
+	             try {
+                       operationsServer.parseStatus(cmd);
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
