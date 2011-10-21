@@ -21,7 +21,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 
 	private SlotManager slotManager=null;
 	private LnTrafficController trafficController=null;
-	private LnThrottleManager throttleManager=null;
+	private jmri.jmrix.AbstractThrottleManager throttleManager=null;
 	private LocoNetSlot leadSlot=null;
 
 	private ArrayList<DccLocoAddress> needToWrite=null;
@@ -43,7 +43,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 		super(address);
 		this.slotManager=lm.getSlotManager();
 		this.trafficController=lm.getLnTrafficController();
-		this.throttleManager=(LnThrottleManager)lm.getThrottleManager();
+		this.throttleManager=(jmri.jmrix.AbstractThrottleManager)lm.getThrottleManager();
 		consistRequestState = LEADREQUESTSTATE;
 		needToWrite=new ArrayList<DccLocoAddress>();
 	        throttleManager.requestThrottle(ConsistAddress,this);
@@ -55,7 +55,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 		super(address);
 		this.slotManager=lm.getSlotManager();
 		this.trafficController=lm.getLnTrafficController();
-		this.throttleManager=(LnThrottleManager)lm.getThrottleManager();
+		this.throttleManager=(jmri.jmrix.AbstractThrottleManager)lm.getThrottleManager();
 		consistRequestState = LEADREQUESTSTATE;
 		needToWrite=new ArrayList<DccLocoAddress>();
 	        throttleManager.requestThrottle(ConsistAddress,this);
@@ -118,11 +118,11 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	public boolean getLocoDirection(DccLocoAddress address) {
 	   log.debug("consist " +ConsistAddress +" obtaining direction for " +address +" Consist List Size " +ConsistList.size());
 	   if(ConsistType==ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
-		//if(address==ConsistAddress) return true;
-		//if(ConsistList.contains(address)) {
+		if(address==ConsistAddress) return true;
+		if(ConsistDir.contains(address)) {
 		  Boolean Direction = ConsistDir.get(address);
 		  return( Direction.booleanValue());
-                //} else return(true);
+                } else return(true);
 	   } else {
 		log.error("Consist Type Not Supported");
 		notifyConsistListeners(address,ConsistListener.NotImplemented);
@@ -361,7 +361,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 		   default:
 			s.removeSlotListener(this);
 		        notifyConsistListeners(new DccLocoAddress(s.locoAddr(),
-				 LnThrottleManager.isLongAddress(s.locoAddr())),
+				 throttleManager.canBeLongAddress(s.locoAddr())),
 				ConsistListener.OPERATION_SUCCESS);	   	
 			if(needToWrite.size()!=0) delayedAdd();
 		}
@@ -371,21 +371,34 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	public void notifyThrottleFound(jmri.DccThrottle t)
 	{
 		log.debug("notified Throttle " +t.getLocoAddress() +" found with mode "+consistRequestState);
-	     if(consistRequestState==LEADREQUESTSTATE) {
-		((LocoNetThrottle) t).setIsForward(true);
-		leadSlot=((LocoNetThrottle) t).getLocoNetSlot();
-	        consistRequestState=IDLESTATE;
-		if(needToWrite.size()!=0) delayedAdd();
-	     } else {
-		LocoNetSlot tempSlot=((LocoNetThrottle) t).getLocoNetSlot();
-		tempSlot.addSlotListener(this);
-		setDirection(((LocoNetThrottle) t));
-	        if(ConsistType==ADVANCED_CONSIST)
-		{
-		   setSlotModeAdvanced(tempSlot);
-		}
-		linkSlots(leadSlot,tempSlot);
-	     }
+	     try {
+	        if(consistRequestState==LEADREQUESTSTATE) {
+		  ((LocoNetThrottle)t).setIsForward(true);
+		  leadSlot=((LocoNetThrottle) t).getLocoNetSlot();
+	          consistRequestState=IDLESTATE;
+		  if(needToWrite.size()!=0) delayedAdd();
+	        } else {
+		  LocoNetSlot tempSlot=((LocoNetThrottle) t).getLocoNetSlot();
+		  tempSlot.addSlotListener(this);
+		  setDirection(((LocoNetThrottle) t));
+	          if(ConsistType==ADVANCED_CONSIST)
+		  {
+		     setSlotModeAdvanced(tempSlot);
+		  }
+		  linkSlots(leadSlot,tempSlot);
+	       }
+	     } catch (java.lang.ClassCastException cce) {
+	       // if the simulator is in use, we will
+               // get a ClassCastException. 
+	       if(consistRequestState==LEADREQUESTSTATE) {
+		 t.setIsForward(true);
+	         consistRequestState=IDLESTATE;
+		 if(needToWrite.size()!=0) delayedAdd();
+	       } else {
+		 setDirection(((LocoNetThrottle) t));
+	       }
+                
+             }
 	}
 
 	public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
