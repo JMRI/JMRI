@@ -687,7 +687,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         Runnable r = new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep(InstanceManager.signalMastLogicManagerInstance().getSignalLogicDelay());
+                    Thread.sleep((InstanceManager.signalMastLogicManagerInstance().getSignalLogicDelay()/2));
                     inWait=false;
                     setMastAppearance();
                 } catch (InterruptedException ex) {
@@ -698,6 +698,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         };
         
         thr = new Thread(r);
+        thr.setName(getSourceMast().getDisplayName());
         thr.start();
     }
     
@@ -1443,12 +1444,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
               }
             };
             thr = new Thread(r);
-            try{
+            /*try{
                 thr.join();
             } catch (InterruptedException ex) {
     //            log.debug("interrupted at join " + ex);
                 inWait=false;
-            }
+            }*/
+            thr.setName(getSourceMast().getDisplayName() + " " + destination.getDisplayName());;
             thr.start();
         }
         
