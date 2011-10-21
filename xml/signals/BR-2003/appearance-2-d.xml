@@ -54,6 +54,15 @@
     </appearance>
   </appearances>
   
+  <specificappearances>
+    <danger>
+      <aspect>Caution</aspect>
+    </danger>
+    <held>
+      <aspect>Caution</aspect>
+    </held>
+  </specificappearances>
+  
   <aspectMappings>
    <aspectMapping>
      <advancedAspect>Danger</advancedAspect>
