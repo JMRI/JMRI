@@ -24,7 +24,7 @@ import javax.servlet.ServletResponse;
  * <p>
  * The suffix of the request determines which.
  * <dl>
- * <dt>.html<dd>Returns a HTML file that displays the panel enabled for 
+ * <dt>.html<dd>Returns a HTML file that displays the frame enabled for
  *      clicking via server side image map; see the .properties file for the content
  * <dt>.png<dd>Just return the image
  * </dl>
