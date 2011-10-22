@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import jmri.util.FileUtil;
 import jmri.web.miniserver.AbstractServlet;
 
 /** 
@@ -406,6 +407,30 @@ public class FileServlet extends AbstractServlet {
     	out.flush();
     }
     
+    /**
+     * Return the relative URL corresponding to a portable filename.
+     * <p>
+     * Returns null if the file is not in the user preferences or program
+     * directories, since files outside these directories cannot be served.
+     *
+     * @param pName The property name of the file.
+     * @see jmri.util.FileUtil
+     */
+    static public String getRelativeURL(String pName) {
+        if (pName == null || pName.length() == 0) {
+            // return null if pName cannot be read
+            return null;
+        }
+        // normalize pName
+        pName = FileUtil.getPortableFilename(pName);
+        log.warn("getting relative URL for: " + pName);
+        if (pName.startsWith("program:")) {
+            return "/dist/" + pName.substring("program:".length());
+        } else if (pName.startsWith("preference:")) {
+            return "/prefs/" + pName.substring("preference:".length());
+        }
+        return null;
+    }
     
     // initialize logging
     static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileServlet.class.getName());

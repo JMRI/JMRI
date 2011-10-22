@@ -2,6 +2,7 @@
 
 package jmri.web.miniserver.servlet.fileservlet;
 
+import java.io.File;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -66,7 +67,16 @@ public class FileServletTest extends TestCase {
         Assert.assertTrue("file above resources", !fs.isSecurityLimitOK(".."));
         Assert.assertTrue("file above prefs", !fs.isSecurityLimitOK(jmri.jmrit.XmlFile.prefsDir()+"/.."));
     }
-    
+
+    public void testRelativeURL() {
+        Assert.assertEquals("file in program", "/dist/resources/logo.gif", FileServlet.getRelativeURL("program:resources/logo.gif"));
+        Assert.assertEquals("file in prefs", "/prefs/index.html", FileServlet.getRelativeURL("preference:index.html"));
+        Assert.assertEquals("file in resources", "/dist/resources/logo.gif", FileServlet.getRelativeURL("resource:resources/logo.gif"));
+        Assert.assertNotNull("file in file", FileServlet.getRelativeURL("file:."));
+        Assert.assertNull("file in home", FileServlet.getRelativeURL("home:/."));
+        Assert.assertNull("absolute path to home", FileServlet.getRelativeURL(System.getProperty("user.home") + File.separator + "."));
+    }
+
     // provide a set of path properties for the test
      public class TestPaths extends java.util.ListResourceBundle {
          public Object[][] getContents() {
