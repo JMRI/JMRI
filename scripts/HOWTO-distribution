@@ -65,7 +65,7 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.2
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.3
     
 ( ) If using the CI system, set up CI builds for that branch
 
@@ -75,7 +75,7 @@ Second, we build the release branch:
     cd ../../branches/jmri/releases
     svn update 2.13.2
     
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.2")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.3")
 
     ( to merge everything to date: svn merge ^/trunk/jmri )
     ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
@@ -105,13 +105,13 @@ Third, we do any necessary release-specific updates.
     cd scripts
     bbedit MacOSXapps/V1/*.app/Contents/Info.plist
 
-    sed -i '' s/2.12/2.13.1/g MacOSXapps/V1/*.app/Contents/Info.plist
+    sed -i '' s/2.12/2.13.3/g MacOSXapps/V1/*.app/Contents/Info.plist
 
 ( ) Update version numbers in Linux scripts
 
     bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
-    sed -i '' s/2.12/2.13.1/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
+    sed -i '' s/2.12/2.13.3/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
 ( ) run "ant alltests"; make sure they all pass
     
@@ -121,7 +121,7 @@ Third, we do any necessary release-specific updates.
 
 ( ) Announce final file set to jmridevelopers with a download URL like:
 
-    http://jmri.svn.sourceforge.net/svnroot/jmri/branches/jmri/releases/2.13.1/
+    http://jmri.svn.sourceforge.net/svnroot/jmri/branches/jmri/releases/2.13.3/
         
 ====================================================================================
 Start the actual build! (This is for local builds; CI builds will already be running)
@@ -144,14 +144,19 @@ Final release steps:
 
 ( ) Upload the Linux, Mac OS X and Windows files to sourceforge
      
-    Download from CI, check integrity (make sure compressed files not expanded), then
+    Download from CI, check integrity (make sure compressed files not expanded), 
+    then do (replace "user" with your SourceForge.net user name; must have SSH
+    keys for SourceForge.net set up)
+    
+    (SourceForge may have disabled CURL in their shell servers, in which
+    case do this somewhere else with good connectivity)
     
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net 
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Release%202.13.2/5/artifact/*zip*/archive.zip"
+    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Release%202.13.3/lastSuccessfulBuild/artifact/jmri/dist/release/*zip*/release.zip"
     unzip archive.zip
     cd archive/jmri/dist/release
-    scp JMRI.2.13.2-* jacobsen,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
+    scp JMRI.2.13.3-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
     (clean up and logout)
     
     Wait until the downloads have propagated to the mirrors; check 
