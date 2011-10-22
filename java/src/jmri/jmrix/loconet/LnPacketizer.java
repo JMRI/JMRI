@@ -442,6 +442,7 @@ public class LnPacketizer extends LnTrafficController {
                             if (!controller.okToSend()) log.debug("LocoNet port not ready to receive");
                             if (debug) log.debug("start write to stream  : "+jmri.util.StringUtil.hexStringFromBytes(msg));
                             ostream.write(msg);
+                            ostream.flush();
                             if (fulldebug) log.debug("end write to stream: "+jmri.util.StringUtil.hexStringFromBytes(msg));
                             messageTransmited(msg);
                         } else {
