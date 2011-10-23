@@ -323,6 +323,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public void setSpeedStepsMode(int speedStepMode)
     {
+        internalAdjust=true;
        	int maxSpeedPCT = 100;
     	if (addressPanel.getRosterEntry() != null)
     		maxSpeedPCT = addressPanel.getRosterEntry().getMaxSpeedPCT();
@@ -359,9 +360,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         /* Set maximum speed based on the max speed stored in the roster as a percentage of the maximum */
         maxSpeed = (int) ((float) intSpeedSteps*((float)maxSpeedPCT)/100);
         
-        // rescale the speed slider to match the new speed step mode
-        internalAdjust=true;
-        
+        // rescale the speed slider to match the new speed step mode                
         speedSlider.setMaximum(maxSpeed);		
         speedSlider.setValue((int)(oldSpeed * maxSpeed));
         speedSlider.setMajorTickSpacing(maxSpeed/2);
@@ -911,9 +910,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public void stop()
     {
-        internalAdjust=true;
         if(this.throttle==null)
             return;
+        internalAdjust=true;
         throttle.setSpeedSetting(-1);
         speedSlider.setValue(0);
         if(speedSpinner!=null)
@@ -1326,7 +1325,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         if ((prevShuntingFn==null) && (e.getAttribute("switchSliderOnFunction") != null))
         	setSwitchSliderFunction( e.getAttribute("switchSliderOnFunction").getValue() );
-        
+        internalAdjust=false;
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);
     }
@@ -1359,7 +1358,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
 
         // Set speed steps
-        internalAdjust=true;
         this.setSpeedStepsMode(throttle.getSpeedStepMode());
 
         this.throttle.addPropertyChangeListener(this);
