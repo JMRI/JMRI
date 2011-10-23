@@ -60,17 +60,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JRadioButton SpeedStep28Button;
     private JRadioButton SpeedStep27Button;
     private JRadioButton SpeedStep14Button;
-    //private GridBagConstraints sliderConstraints;
     private JRadioButton forwardButton, reverseButton;
     private JButton stopButton;
     private JButton idleButton;
     private JPanel buttonPanel;
-    private boolean internalAdjust = false;
+    private boolean internalAdjust = false; // protecting the speed slider, continuous slider and spinner when doing internal adjust
     
     private JPopupMenu propertiesPopup;
     private JPanel speedControlPanel;
-    private	JPanel spinnerPanel;
-    private	JPanel sliderPanel;
+    private JPanel spinnerPanel;
+    private JPanel sliderPanel;
     private JPanel speedSliderContinuousPanel;
 
     private AddressPanel addressPanel; //for access to roster entry
@@ -91,10 +90,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     private boolean trackSlider = false;
     private boolean trackSliderDefault = false;
-    private long trackSliderMinInterval = 200;                    // milliseconds
-    private long trackSliderMinIntervalDefault = 200;       // milliseconds
+    private long trackSliderMinInterval = 200;         // milliseconds
+    private long trackSliderMinIntervalDefault = 200;  // milliseconds
     private long trackSliderMinIntervalMin = 50;       // milliseconds
-    private long trackSliderMinIntervalMax = 1000;       // milliseconds
+    private long trackSliderMinIntervalMax = 1000;     // milliseconds
     private long lastTrackedSliderMovementTime = 0;
     
     public int accelerateKey = 107; // numpad +;
@@ -121,9 +120,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     private boolean speedControllerEnable = false;
 
-    // Siwtch to continuous slider on function...
-	private String switchSliderFunction = "Fxx";
-	private String prevShuntingFn = null;
+    // Switch to continuous slider on function...
+    private String switchSliderFunction = "Fxx";
+    private String prevShuntingFn = null;
     
     /**
      *  Constructor.
@@ -149,7 +148,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSliderContinuous.setValue(0);
         speedSliderContinuous.setFocusable(false);
 	
-	    // add mouse-wheel support
+	// add mouse-wheel support
         speedSliderContinuous.addMouseWheelListener(new MouseWheelListener() {
           public void mouseWheelMoved(MouseWheelEvent e) {
             if(e.getWheelRotation() > 0) 
@@ -200,19 +199,23 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         propertiesPopup = new JPopupMenu();
         initGUI();
     }
-    
-    public void setAddressPanel(AddressPanel addressPanel) {
-		this.addressPanel = addressPanel;
-	}
 
-	public void destroy()
-    {
-        if (throttle != null)
-            {
-                throttle.setSpeedSetting(0);
-                throttle.removePropertyChangeListener(this);
-                throttle = null;
-            }
+    /*
+     * Set the AddressPanel this throttle control is listenning for new throttle event
+     */
+    public void setAddressPanel(AddressPanel addressPanel) {
+        this.addressPanel = addressPanel;
+    }
+
+    /*
+     * "Destructor"
+     */
+    public void destroy() {
+        if (throttle != null) {
+            throttle.setSpeedSetting(0);
+            throttle.removePropertyChangeListener(this);
+            throttle = null;
+        }
     }
 	
     /**
@@ -221,8 +224,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * @param  isEnabled  True if the buttons/slider should be enabled, false
      *      otherwise.
      */
-    public void setEnabled(boolean isEnabled)
-    {
+    public void setEnabled(boolean isEnabled) {
         //super.setEnabled(isEnabled);
         forwardButton.setEnabled(isEnabled);
         reverseButton.setEnabled(isEnabled);
@@ -235,34 +237,37 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         idleButton.setEnabled(isEnabled);
         speedControllerEnable = isEnabled;
         switch(_displaySlider) {
-        case STEPDISPLAY: {
-            if(speedSpinner!=null)
-                speedSpinner.setEnabled(isEnabled);
-            if(speedSliderContinuous!=null)
-            	speedSliderContinuous.setEnabled(false);
-            speedSlider.setEnabled(false);
-            break;
-        }
-        case SLIDERDISPLAYCONTINUOUS: {
-            if(speedSliderContinuous!=null)
-            	speedSliderContinuous.setEnabled(isEnabled);
-            if(speedSpinner!=null)
-                speedSpinner.setEnabled(false);
-            speedSlider.setEnabled(false);
-            break;
-        }        	
-        default: {
-            if(speedSpinner!=null)
-                speedSpinner.setEnabled(false);
-            if(speedSliderContinuous!=null)
-            	speedSliderContinuous.setEnabled(false);
-            speedSlider.setEnabled(isEnabled);
-        }
+            case STEPDISPLAY: {
+                if(speedSpinner!=null)
+                    speedSpinner.setEnabled(isEnabled);
+                if(speedSliderContinuous!=null)
+                    speedSliderContinuous.setEnabled(false);
+                speedSlider.setEnabled(false);
+                break;
+            }
+            case SLIDERDISPLAYCONTINUOUS: {
+                if(speedSliderContinuous!=null)
+                    speedSliderContinuous.setEnabled(isEnabled);
+                if(speedSpinner!=null)
+                    speedSpinner.setEnabled(false);
+                speedSlider.setEnabled(false);
+                break;
+            }
+            default: {
+                if(speedSpinner!=null)
+                    speedSpinner.setEnabled(false);
+                if(speedSliderContinuous!=null)
+                    speedSliderContinuous.setEnabled(false);
+                speedSlider.setEnabled(isEnabled);
+            }
         }
     }	
     
     /**
      *  Set the GUI to match that the loco is set to forward.
+     *
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
      *
      * @param  isForward  True if the loco is set to forward, false otherwise.
      */
@@ -270,18 +275,32 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     {
         forwardButton.setSelected(isForward);
         reverseButton.setSelected(!isForward);
-        if (speedSliderContinuous!=null)
-        	if (isForward)
-        		speedSliderContinuous.setValue(java.lang.Math.abs(speedSliderContinuous.getValue()));
-        	else
-        		speedSliderContinuous.setValue(-java.lang.Math.abs(speedSliderContinuous.getValue()));
+        if (speedSliderContinuous!=null) {
+            internalAdjust = true;
+            if (isForward)
+                speedSliderContinuous.setValue(java.lang.Math.abs(speedSliderContinuous.getValue()));
+            else
+                speedSliderContinuous.setValue(-java.lang.Math.abs(speedSliderContinuous.getValue()));
+            internalAdjust = false;
+        }
     }
-    
+
+    /**
+     *  Get the GUI direction.
+     *
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     *
+     * @return  True if the loco is set to forward, false otherwise.
+     */
     public boolean getIsForward() { return forwardButton.isSelected(); }
     
     /**
      * Set forward/reverse direction in both the 
      * GUI and on the layout
+     *
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
      */
     public void setForwardDirection(boolean isForward) {
         if (isForward) forwardButton.doClick();
@@ -293,6 +312,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  Initialises the speed slider and spinner - including setting their
      *  maximums based on the speed step setting and the max speed for the
      *  particular loco
+     *
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
      *
      * @param  speedStepMode Desired speed step mode. One of:
      * DccThrottle.SpeedStepMode128, DccThrottle.SpeedStepMode28,
@@ -374,8 +396,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinnerModel.setMaximum(Integer.valueOf(maxSpeed));
         speedSpinnerModel.setMinimum(Integer.valueOf(0));
         // rescale the speed value to match the new speed step mode
-        internalAdjust=true;
         speedSpinnerModel.setValue(Integer.valueOf(speedSlider.getValue()));
+        internalAdjust=false;
     }
     
     /**
@@ -401,11 +423,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      *  Set the Speed Control selection method
      *
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     *
      *  @param displaySlider integer value. possible values:
      *	SLIDERDISPLAY  = use speed slider display
      *      STEPDISPLAY = use speed step display
      */
-	public void setSpeedController(int displaySlider) {
+    public void setSpeedController(int displaySlider) {
         _displaySlider=displaySlider;
         switch(displaySlider) {
         case STEPDISPLAY: {
@@ -473,6 +498,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      *  Set the GUI to match that the loco speed.
      *
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     *
      * @param  speedIncrement  The throttle back end's speed increment 
      *                         value - % increase for each speed step.
      * @param  speed           The speed value of the loco.
@@ -493,9 +521,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
       		  speedSliderContinuous.setValue(((Integer)speedSlider.getValue()).intValue());
       	  else
       		  speedSliderContinuous.setValue(-((Integer)speedSlider.getValue()).intValue());
-
+        internalAdjust=false;
     }
-    
+
+    /**
+     * Get the speed slider.
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     */
     public JSlider getSpeedSlider() { return speedSlider; }
     
     /**
@@ -569,8 +602,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                     	  else
                                                     		  speedSliderContinuous.setValue(-((Integer)speedSlider.getValue()).intValue());
                                                   }
-                                              } else {
-                                                  internalAdjust=false;
                                               }
                                           }
                                       });
@@ -635,8 +666,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                       if(speedSlider!=null)
                                                     	  speedSlider.setValue(Integer.valueOf(java.lang.Math.abs(speedSliderContinuous.getValue())));
                                                   }
-                                              } else {
-                                                  internalAdjust=false;
                                               }
                                           }
                                       });        
@@ -674,8 +703,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                            log.warn("no throttle object in stateChanged, ignoring change of speed to "+newSpeed);
                                                        }
                                                        //}
-                                                   } else {
-                                                       internalAdjust=false;
                                                    }
                                                }
                                            });
@@ -877,17 +904,22 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
     
     /**
-     *  Perform an emergency stop
+     * Perform an emergency stop.
+     *
+     * TODO: move to private
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
      */
     public void stop()
     {
+        internalAdjust=true;
+        throttle.setSpeedSetting(-1);
         if(this.throttle==null) return;
         speedSlider.setValue(0);
         if(speedSpinner!=null)
             speedSpinnerModel.setValue(Integer.valueOf(0));
         if(speedSliderContinuous!=null)
        	 	speedSliderContinuous.setValue(Integer.valueOf(0));
-        throttle.setSpeedSetting(-1);
+        internalAdjust=false;
     }
     
     /**
@@ -913,7 +945,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 mainPanel.add(buttonPanel, BorderLayout.SOUTH);
             }
     }
-    
+
+    /* Accelerate of 1
+     * TODO: move to private
+     *
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     */
     public void accelerate1() {
         if (speedSlider.isEnabled()) {
             if (speedSlider.getValue() != speedSlider.getMaximum()) {
@@ -930,7 +967,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
     }
-    
+
+    /* Accelerate of 10
+     * TODO: move to private
+     *
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     */
     public void accelerate10() {
     	if (speedSlider.isEnabled()) {
     		if (speedSlider.getValue() != speedSlider.getMaximum()) {
@@ -952,7 +994,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     		}
     	}
     }
-    
+
+    /* Decelerate of 1
+     * TODO: move to private
+     *
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     */
     public void decelerate1() {
         if (speedSlider.isEnabled()) {
             if (speedSlider.getValue() != speedSlider.getMinimum()) {
@@ -969,7 +1016,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
     }
-    
+
+    /* Decelerate of 10
+     * TODO: move to private
+     *
+     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     */
     public void decelerate10() {
     	if (speedSlider.isEnabled()) {
     		if (speedSlider.getValue() != speedSlider.getMinimum()) {
@@ -1055,6 +1107,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             speedSlider.setValue( newSliderSetting );
             if(speedSpinner!=null)
                 speedSpinner.setValue(Integer.valueOf(newSliderSetting));
+            if (speedSliderContinuous!=null)
+                if (forwardButton.isSelected())
+                    speedSliderContinuous.setValue(((Integer)speedSlider.getValue()).intValue());
+                else
+                    speedSliderContinuous.setValue(-((Integer)speedSlider.getValue()).intValue());
+            internalAdjust=false;
         } else if (e.getPropertyName().equals("SpeedSteps")) {
             int steps=((Integer) e.getNewValue()).intValue();
             setSpeedStepsMode(steps);
@@ -1355,7 +1413,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	}
 	
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());
-	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());	
 }
 

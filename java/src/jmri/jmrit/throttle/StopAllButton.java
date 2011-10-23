@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
+import jmri.DccThrottle;
 
 import jmri.jmrit.catalog.NamedIcon;
 
@@ -21,8 +22,11 @@ public class StopAllButton extends JButton {
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Enumeration<ThrottleFrame> tpi = jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().getEnumeration() ;
-				while ( tpi.hasMoreElements() )
-					tpi.nextElement().getControlPanel().stop();
+				while ( tpi.hasMoreElements() ) {
+                                    DccThrottle th = tpi.nextElement().getAddressPanel().getThrottle();
+                                    if ( th!=null)
+					th.setSpeedSetting(-1);
+                                }
 			}
 		});		
 	}
