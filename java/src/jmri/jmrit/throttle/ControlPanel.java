@@ -912,8 +912,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     public void stop()
     {
         internalAdjust=true;
+        if(this.throttle==null)
+            return;
         throttle.setSpeedSetting(-1);
-        if(this.throttle==null) return;
         speedSlider.setValue(0);
         if(speedSpinner!=null)
             speedSpinnerModel.setValue(Integer.valueOf(0));
