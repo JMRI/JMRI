@@ -1983,6 +1983,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 				if (rld.getName().equals(car.getDestinationName())){
 					locCount++;	// show when this car would be dropped at location
+					log.debug("Car ("+car.toString()+") found a destination in train's route");
 					// are drops allows at this location?
 					if (!rld.canDrop()){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildRouteNoDropsStop"),new Object[]{train.getRoute().getName(), rld.getName(), locCount}));
@@ -2051,6 +2052,7 @@ public class TrainBuilder extends TrainCommon{
 						}
 					// car has a destination track
 					} else {
+						log.debug("Car ("+car.toString()+") has a destination track ("+car.getDestinationTrack().getName()+")");
 						// going into the correct staging track?
 						if (!rld.equals(train.getTrainTerminatesRouteLocation()) || terminateStageTrack == null  || terminateStageTrack == car.getDestinationTrack()){
 							// is train direction correct?
@@ -2075,12 +2077,16 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCanNotDropCar"),new Object[]{car.toString(), car.getDestinationName(), locCount}));
 						if (car.getDestinationTrack() == null){
 							log.debug("Could not find a destination track for location "+car.getDestinationName());
-							// remove destination and change to next destination
-							car.setNextDestination(car.getDestination());
-							car.setDestination(null,null);
 						}
 					}
 				}
+			}
+			if (!carAdded){
+				log.debug("car ("+car.toString()+") not added to train");
+				// remove destination and change to next destination
+				car.setNextDestination(car.getDestination());
+				car.setNextDestTrack(car.getDestinationTrack());
+				car.setDestination(null,null);
 			}
 		}
 		return true;

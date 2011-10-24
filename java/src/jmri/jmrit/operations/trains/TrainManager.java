@@ -22,6 +22,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.com.sun.TableSorter;
 
 /**
@@ -92,6 +93,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			// create and load
 			_instance = new TrainManager();
 			OperationsSetupXml.instance();			// load setup
+			TrainLogger.instance().enableTrainLogging(Setup.isTrainLoggerEnabled());
 			TrainManagerXml.instance();				// load trains
 			log.debug("Trains have been loaded!");
 		}

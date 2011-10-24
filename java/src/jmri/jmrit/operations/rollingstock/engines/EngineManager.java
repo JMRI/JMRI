@@ -13,7 +13,9 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.trains.Train;
 
@@ -50,6 +52,7 @@ public class EngineManager extends RollingStockManager{
 			// create and load
 			_instance = new EngineManager();
 			OperationsSetupXml.instance();					// load setup
+			RollingStockLogger.instance().enableEngineLogging(Setup.isEngineLoggerEnabled());
 	    	// create manager to load engines and their attributes
 	    	EngineManagerXml.instance();
 			log.debug("Engines have been loaded!");

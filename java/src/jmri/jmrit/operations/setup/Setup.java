@@ -1650,21 +1650,22 @@ public class Setup {
         }
         */
         // logging has to be last, causes cars and engines to load
+        // fixed by only configuring the booleans
         if (operations.getChild("settings") != null){
         	if ((a = operations.getChild("settings").getAttribute("carLogger"))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carLogger: "+enable);
-        		setCarLoggerEnabled(enable.equals("true"));
+        		carLogger = enable.equals("true");
         	}
         	if ((a = operations.getChild("settings").getAttribute("engineLogger"))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("engineLogger: "+enable);
-        		setEngineLoggerEnabled(enable.equals("true"));
+        		engineLogger = enable.equals("true");
         	}
            	if ((a = operations.getChild("settings").getAttribute("trainLogger"))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("trainLogger: "+enable);
-        		setTrainLoggerEnabled(enable.equals("true"));
+        		trainLogger = enable.equals("true");
         	}
         }
     }
