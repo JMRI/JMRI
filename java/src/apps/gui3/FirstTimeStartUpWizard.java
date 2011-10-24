@@ -166,7 +166,7 @@ public class FirstTimeStartUpWizard {
     
     Dimension defaultInfoSize = new Dimension(450,400);
     
-    Dimension minFieldDim = new Dimension(350,20);
+    //Dimension minFieldDim = new Dimension(350,20);
     Dimension minHelpFieldDim = new Dimension(160,20);
     Dimension maxHelpFieldDim = new Dimension(160,400);
     

@@ -14,6 +14,11 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.Toolkit;
 
 import java.io.File;
 
@@ -37,6 +42,8 @@ import javax.swing.table.TableModel;
 import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.Timer;
+import javax.swing.JPopupMenu;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -55,6 +62,8 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.datatransfer.RosterEntrySelection;
+import jmri.util.com.sun.TableSorter;
+
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
 
@@ -395,6 +404,21 @@ public class DecoderPro3Window
                 // nothing to do
             }
         });
+        
+        MouseListener rosterMouseListener = new rosterPopupListener();
+        rtable.getTable().addMouseListener(rosterMouseListener);
+        
+        
+        try {
+            clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval")).intValue();
+        } catch(Exception e){
+            try {
+                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time")).intValue();
+            } catch (Exception ex){
+                clickDelay = 500;
+                log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
+            }
+        }
 
         // assemble roster/groups splitpane
         rosterGroupSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
@@ -455,7 +479,9 @@ public class DecoderPro3Window
         
         return rosterGroupSplitPane;
     }
-
+    
+    int clickDelay = 0;
+    
     /**
      * An entry has been selected in the Roster Table, 
      * activate the bottom part of the window
@@ -476,6 +502,86 @@ public class DecoderPro3Window
             re = null;
         }
         updateDetails();
+    }
+    
+    //Popup listener is used against the roster table to display a 
+    class rosterPopupListener extends MouseAdapter {
+    
+        JPopupMenu popUp;
+        javax.swing.Timer clickTimer = null;
+    
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger())
+                showPopup(e);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger())
+                showPopup(e);
+        }
+        
+        public void mouseClicked(MouseEvent e){
+            if (popUp!=null && popUp.isVisible())
+                return;
+            if (e.isPopupTrigger()){
+                showPopup(e);
+                return;
+            }
+            if (clickTimer==null){
+                clickTimer=new Timer(clickDelay, new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    //Single click item is handled else where.
+                }
+                });
+                clickTimer.setRepeats(false);
+            }
+            if (e.getClickCount()==1){
+                clickTimer.start();
+            }
+            else if(e.getClickCount() == 2){
+                clickTimer.stop();
+                startProgrammer(null, re, programmer2);
+            }
+        }
+    }
+    
+    protected void showPopup(MouseEvent e){
+        
+        JPopupMenu popupMenu = new JPopupMenu();
+        /*JMenuItem menuItem = new JMenuItem(AbstractTableAction.rb.getString("Rename"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                renameBean(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Clear"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                removeName(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Move"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                moveBean(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Delete"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                deleteBean(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);*/
+
+        
+        popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
     ProgDebugger programmer = new ProgDebugger();
@@ -808,41 +914,6 @@ public class DecoderPro3Window
         service.setVisible(false);
         ops.setVisible(false);
         
-        /*if (jmri.InstanceManager.programmerManagerInstance()!=null){
-            if(jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-                service.setEnabled(true);
-                service.setVisible(true);
-                firePropertyChange("setprogservice", "setEnabled", true);
-            }
-            if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
-                ops.setEnabled(true);
-                ops.setVisible(true);
-                firePropertyChange("setprogops", "setEnabled", true);
-            }
-        }
-        
-        edit.setEnabled(true);
-        firePropertyChange("setprogedit", "setEnabled", true);
-        
-        String strProgMode;
-        if(service.isEnabled()){
-            service.setSelected(true);
-            strProgMode = "setprogservice";
-            modePanel.setVisible(true);
-        }
-        else if(ops.isEnabled()){
-            ops.setSelected(true);
-            strProgMode = "setprogops";
-            modePanel.setVisible(false);
-        }
-        else{
-            edit.setSelected(true);
-            modePanel.setVisible(false);
-            strProgMode = "setprogedit";
-        }
-        
-        firePropertyChange(strProgMode, "setSelected", true);*/
-        
         panel.add(progModePanel);
 
         JPanel buttonHolder = new JPanel();
@@ -914,6 +985,7 @@ public class DecoderPro3Window
         // raise the button again
         //idloco.setSelected(false);
         // locate that loco
+        inStartProgrammer=false;
         if(re!=null){
             //We remove the propertychangelistener if we had a previoulsy selected entry;
             re.removePropertyChangeListener(rosterEntryUpdateListener);
@@ -941,8 +1013,16 @@ public class DecoderPro3Window
         }
     }
 
+    
+    boolean inStartProgrammer = false;
+    
     protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
             String filename) {
+        if(inStartProgrammer){
+            log.debug("Call to start programmer has been called twice when the first call hasn't opened");
+            return;
+        }
+        inStartProgrammer=true;
         String title = re.getId();
         Programmer pProg = null;
         JFrame progFrame=null;
@@ -972,6 +1052,7 @@ public class DecoderPro3Window
         }
         progFrame.pack();
         progFrame.setVisible(true);
+        inStartProgrammer=false;
     }
 
     boolean allowQuit = true;
@@ -1243,6 +1324,7 @@ public class DecoderPro3Window
         }
         return null;
     }
+    
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3Window.class.getName());
 }
