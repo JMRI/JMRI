@@ -795,7 +795,7 @@ public class Roster extends XmlFile {
      *
      * @param oldName Name of the roster group to be copied
      * @param newName Name of the new roster group
-     * @see RenameRosterGroupAction
+     * @see jmri.jmrit.roster.swing.RenameRosterGroupAction
      */
     public void copyRosterGroupList(String oldName, String newName) {
         if (_rosterGroupList.contains(newName)) {
@@ -820,7 +820,7 @@ public class Roster extends XmlFile {
      *
      * @param oldName Name of the roster group to be renamed
      * @param newName New name for the roster group
-     * @see RenameRosterGroupAction
+     * @see jmri.jmrit.roster.swing.RenameRosterGroupAction
      */
     public void renameRosterGroupList(String oldName, String newName) {
         if (_rosterGroupList.contains(newName)) {
