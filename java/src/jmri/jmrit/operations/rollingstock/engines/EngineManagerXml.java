@@ -5,7 +5,9 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.io.File;
 import java.util.List;
 
+import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsXml;
 
 import org.jdom.Document;
@@ -197,6 +199,8 @@ public class EngineManagerXml extends OperationsXml {
         else {
             log.error("Unrecognized operations engine file contents in file: "+name);
         }
+		log.debug("Engines have been loaded!");
+		RollingStockLogger.instance().enableEngineLogging(Setup.isEngineLoggerEnabled());
     }
     
     public void setOperationsFileName(String name) { operationsFileName = name; }

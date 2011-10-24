@@ -29,7 +29,6 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	File _fileLogger;
-	private boolean _newFile = true;
 	private boolean _trainLog = false;	// when true logging train movements
 	private final String del = ","; 		// delimiter
 
@@ -74,11 +73,13 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 						log.error("backup directory not created");
 					}
 				}
-				if (_fileLogger.createNewFile())
+				if (_fileLogger.createNewFile()){
 					log.debug("new file created");
+					// add header
+					fileOut(getHeader());
+				}
 			} else {
 				_fileLogger = new java.io.File(getFullLoggerFileName());
-				_newFile = false;
 			}
 		} catch (Exception e) {
 			log.error("Exception while making logging directory: "+ e);
@@ -87,11 +88,33 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 	}
 	
 	private void store(Train train){
+		// Note that train status can contain a comma
+		String line = train.getName() +del+ "\""+train.getDescription()+"\""
+		+del+ "\""+train.getCurrentLocationName()+"\""
+		+del+ "\""+train.getNextLocationName()+"\""
+		+del+ "\""+ train.getStatus()+"\"" +del+ getTime();
+		fileOut(line);
+	}
+	
+	private String getHeader(){
+		String header = rb.getString("Name") +del+ rb.getString("Description")
+		+del+ rb.getString("Current")
+		+del+ rb.getString("NextLocation")
+		+del+ rb.getString("Status")
+		+del+ rb.getString("DateAndTime");
+		return header;
+	}
+	
+	/*
+	 * Appends one line to file.
+	 * 
+	 */
+	private void fileOut(String line){
 		if (_fileLogger == null){
 			log.error("Log file doesn't exist");
 			return;
 		}
-		
+
         PrintWriter fileOut;
 
 		try {
@@ -102,20 +125,6 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 			log.error("Exception while opening log file: "+e.getLocalizedMessage());
 			return;
 		}
-		if (_newFile){
-			String header = rb.getString("Name") +del+ rb.getString("Description")
-			+del+ rb.getString("Current")
-			+del+ rb.getString("NextLocation")
-			+del+ rb.getString("Status")
-			+del+ rb.getString("DateAndTime");
-			fileOut.println(header);
-			_newFile = false;
-		}
-		// Note that train status can contain a comma
-		String line = train.getName() +del+ "\""+train.getDescription()+"\""
-		+del+ "\""+train.getCurrentLocationName()+"\""
-		+del+ "\""+train.getNextLocationName()+"\""
-		+del+ "\""+ train.getStatus()+"\"" +del+ getTime();
 		
 		log.debug("Log: "+line);
 

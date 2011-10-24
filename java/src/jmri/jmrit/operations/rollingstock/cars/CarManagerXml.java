@@ -9,9 +9,11 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
+import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsXml;
 
 /**
@@ -218,6 +220,8 @@ public class CarManagerXml extends OperationsXml {
         else {
         	log.error("Unrecognized operations car file contents in file: "+name);
         }
+		log.debug("Cars have been loaded!");
+		RollingStockLogger.instance().enableCarLogging(Setup.isCarLoggerEnabled());
     }
 
     public void setOperationsFileName(String name) { operationsFileName = name; }

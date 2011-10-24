@@ -4,9 +4,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 
 import jmri.jmrit.operations.trains.Train;
@@ -55,10 +53,8 @@ public class CarManager extends RollingStockManager{
 			// create and load
 			_instance = new CarManager();
 			OperationsSetupXml.instance();					// load setup
-			RollingStockLogger.instance().enableCarLogging(Setup.isCarLoggerEnabled());
 	    	// create manager to load cars and their attributes
 	    	CarManagerXml.instance();
-			log.debug("Cars have been loaded!");
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarManager returns instance "+_instance);
 		return _instance;

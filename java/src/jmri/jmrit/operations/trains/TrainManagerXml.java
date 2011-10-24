@@ -7,6 +7,7 @@ import java.util.List;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsXml;
 
 import org.jdom.Document;
@@ -143,6 +144,8 @@ public class TrainManagerXml extends OperationsXml {
     	else {
     		log.error("Unrecognized operations train file contents in file: "+name);
     	}
+		log.debug("Trains have been loaded!");
+		TrainLogger.instance().enableTrainLogging(Setup.isTrainLoggerEnabled());
     }
     
     public boolean isTrainFileLoaded(){
