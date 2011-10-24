@@ -41,6 +41,36 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
         try {
 	  if(statusString.contains("LOCATIONS"))
 		sendLocationList();
+	  else if(statusString.contains("TRAINLENGTH"))
+	       {
+                   int index;
+                   index=statusString.indexOf(" ")+1;
+                   index=statusString.indexOf(" ",index)+1;
+                   sendTrainLength(statusString.substring(index));
+               }
+	  else if(statusString.contains("TRAINLOCATION"))
+	       {
+                   int index,index2;
+                   index=statusString.indexOf(" ")+1;
+                   index=statusString.indexOf(" ",index)+1;
+		   if((index2=statusString.indexOf(" ",index))>0 ) {
+                      // set the location.
+                      log.debug("setting location index = " + index +
+                                "index 2 = " + index2 + " String " +statusString);
+                      setTrainLocation(statusString.substring(index,index2),
+                                       statusString.substring(index2+1));
+                   } else {
+                      // get the location.
+                      sendTrainLocation(statusString.substring(index));
+		   }
+               }
+	  else if(statusString.contains("TRAINSTATUS"))
+	       {
+                   int index;
+                   index=statusString.indexOf(" ")+1;
+                   index=statusString.indexOf(" ",index)+1;
+                   sendTrainStatus(statusString.substring(index));
+               }
 	  else if(statusString.contains("TRAINS"))
 		sendTrainList();
 	  else throw new jmri.JmriException();

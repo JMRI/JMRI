@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.routes.*;
 
 /**
  * Abstract interface between the JMRI operations and a 
@@ -43,6 +44,8 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
 	java.util.List<String> trainList=tm.getTrainsByNameList();
 	for(String trainID : trainList )
 	   sendInfoString(tm.getTrainById(trainID).getName());
+	// end list with a . on a line by itself
+	sendInfoString(".");
    }
 
    /* send a list of locations */
@@ -50,6 +53,37 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
 	java.util.List<String> locationList=lm.getLocationsByNameList();
 	for(String LocationID : locationList )
 	   sendInfoString(lm.getLocationById(LocationID).getName());
+	// end list with a . on a line by itself
+	sendInfoString(".");
+   }
+
+   /* send train status */
+   public void sendTrainStatus(String trainName) throws IOException {
+	Train train=tm.getTrainByName(trainName);
+	sendInfoString("OPERATIONS " + trainName +" STATUS "+train.getStatus());
+   }
+
+   /* send train location */
+   public void sendTrainLocation(String trainName) throws IOException {
+	Train train=tm.getTrainByName(trainName);
+	sendInfoString("OPERATIONS "+ trainName + " LOCATION " + train.getCurrentLocationName());
+   }
+
+   /* Set the current location of the train */
+   public void setTrainLocation(String trainName, String locationName) throws IOException {
+        log.debug("Set train " + trainName + " Location " +locationName);
+	Train train = tm.getTrainByName(trainName);
+	//Location location = lm.getLocationByName(locationName);
+	//train.setCurrentLocation(train.getRoute().getLocationById(location.getId()));
+	if(locationName.equals(train.getNextLocationName()))
+           train.setCurrentLocation(train.getNextLocation());
+	sendTrainLocation(trainName);
+   }
+
+   /* send train length */
+   public void sendTrainLength(String trainName) throws IOException {
+	Train train=tm.getTrainByName(trainName);
+	sendInfoString("OPERATIONS " + trainName + " LENGTH " + train.getTrainLength());
    }
  
    /*
