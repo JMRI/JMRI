@@ -39,6 +39,9 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 		if (p.getTurnoutName().length()>0) {
 			element.setAttribute("turnoutname", p.getTurnoutName());
 		}
+        if (p.getSecondTurnoutName().length()>0) {
+			element.setAttribute("secondturnoutname", p.getSecondTurnoutName());
+		}
 		if (p.getBlockName().length()>0) {
 			element.setAttribute("blockname", p.getBlockName());
 		}
@@ -194,6 +197,10 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 		a = element.getAttribute("turnoutname");
 		if (a != null) {
 			l.tTurnoutName = a.getValue();
+		}
+        a = element.getAttribute("secondturnoutname");
+		if (a != null) {
+			l.tSecondTurnoutName = a.getValue();
 		}
 		a = element.getAttribute("connectaname");
 		if (a != null) {

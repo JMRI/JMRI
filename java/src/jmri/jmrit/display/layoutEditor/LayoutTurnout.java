@@ -6,6 +6,7 @@ import jmri.Turnout;
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
+import jmri.util.swing.JmriBeanComboBox;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -107,6 +108,7 @@ public class LayoutTurnout
 	// operational instance variables (not saved between sessions)
 	//private Turnout turnout = null;
     private NamedBeanHandle<Turnout> namedTurnout = null;
+    private NamedBeanHandle<Turnout> secondNamedTurnout = null;
 	private LayoutBlock block = null;
 	private LayoutBlock blockB = null;  // Xover - second block, if there is one
 	private LayoutBlock blockC = null;  // Xover - third block, if there is one
@@ -119,6 +121,11 @@ public class LayoutTurnout
 	public String ident;   // name of this layout turnout (hidden from user)
 	public String turnoutName = "";   // should be the name (system or user) of
 								//	an existing physical turnout
+    public String secondTurnoutName = "";   /* should be the name (system or user) of
+								an existing physical turnout. Second turnout is
+                                used to allow the throwing of two different turnout
+                                to control one cross-over
+                                */
 	public String blockName = "";  // name for block, if there is one
 	public String blockBName = "";  // Xover - name for second block, if there is one
 	public String blockCName = "";  // Xover - name for third block, if there is one
@@ -253,6 +260,11 @@ public class LayoutTurnout
         if (namedTurnout!=null)
             return namedTurnout.getName();
         return turnoutName;
+    }	
+    public String getSecondTurnoutName() {
+        if (secondNamedTurnout!=null)
+            return secondNamedTurnout.getName();
+        return secondTurnoutName;
     }
 	public String getBlockName() {return blockName;}
 	public String getBlockBName() {return blockBName;}
@@ -367,6 +379,10 @@ public class LayoutTurnout
     
 	public String getLinkedTurnoutName() {return linkedTurnoutName;}
 	public void setLinkedTurnoutName(String s) {linkedTurnoutName = s;}
+    
+    public String setSecondTurnoutName() { return secondTurnoutName; }
+    public void setSecondTuroutName(String s) {secondTurnoutName = s; }
+    
 	public int getLinkType() {return linkType;}
 	public void setLinkType(int type) {linkType = type;}
 	public int getTurnoutType() {return type;}
@@ -399,6 +415,33 @@ public class LayoutTurnout
 		else {
 			turnoutName = "";
             namedTurnout = null;
+		}
+	}
+    
+    public Turnout getSecondTurnout() {
+		if (secondNamedTurnout==null) {
+			// set physical turnout if possible and needed
+			setSecondTurnout(secondTurnoutName);
+            
+            if (secondNamedTurnout==null){
+                return null;
+            }
+		}
+		return secondNamedTurnout.getBean();
+	}
+    
+    public void setSecondTurnout(String tName) {
+		if (secondNamedTurnout!=null) deactivateTurnout();
+		secondTurnoutName = tName;
+		Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().
+                            getTurnout(secondTurnoutName);
+		if (turnout!=null) {
+            secondNamedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(secondTurnoutName, turnout);
+			activateTurnout();
+		}
+		else {
+			secondTurnoutName = "";
+            secondNamedTurnout = null;
 		}
 	}
     
@@ -895,10 +938,16 @@ public class LayoutTurnout
 				}
 			}, namedTurnout.getName(), "Layout Editor Turnout");
 		}
+		if (secondNamedTurnout!=null) {
+			secondNamedTurnout.getBean().addPropertyChangeListener(mTurnoutListener, secondNamedTurnout.getName(), "Layout Editor Turnout");
+		}
 	}
 	private void deactivateTurnout() {
 		if (mTurnoutListener!=null) {
 			namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
+            if(secondNamedTurnout!=null){
+                secondNamedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
+            }
 			mTurnoutListener = null;
 		}
 	}
@@ -916,10 +965,17 @@ public class LayoutTurnout
                 }
             }
 			// toggle turnout
-			if (getTurnout().getKnownState()==jmri.Turnout.CLOSED)
+			if (getTurnout().getKnownState()==jmri.Turnout.CLOSED){
 				getTurnout().setCommandedState(jmri.Turnout.THROWN);
-			else
+                if(getSecondTurnout()!=null)
+                    getSecondTurnout().setCommandedState(jmri.Turnout.THROWN);
+			}
+            else {
 				getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                if(getSecondTurnout()!=null)
+                    getSecondTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                
+            }
 		}
     }
     
@@ -976,6 +1032,7 @@ public class LayoutTurnout
 	public String tBlockCName = "";
 	public String tBlockDName = "";
 	public String tTurnoutName = "";
+	public String tSecondTurnoutName = "";
 	/**
 	 * Initialization method
 	 *   The above variables are initialized by PositionablePointXml, then the following
@@ -1027,6 +1084,20 @@ public class LayoutTurnout
 			else {
 				log.error("bad blockname '"+tBlockDName+"' in layoutturnout "+ident);
 			}
+		}
+        //Do the second one first then the activate is only called the once
+        if (tSecondTurnoutName.length()>0) {
+            Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().
+                                getTurnout(tSecondTurnoutName);
+            if (turnout!=null) {
+                secondNamedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
+                secondTurnoutName = tSecondTurnoutName;
+            }
+            else {
+				log.error("bad turnoutname '"+tSecondTurnoutName+"' in layoutturnout "+ident);
+                secondTurnoutName = "";
+                secondNamedTurnout = null;
+            }
 		}
 		if (tTurnoutName.length()>0) {
             Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().
@@ -1382,6 +1453,8 @@ public class LayoutTurnout
 	// variables for Edit Layout Turnout pane
 	private JmriJFrame editLayoutTurnoutFrame = null;
 	private JTextField turnoutNameField = new JTextField(16);
+    private JmriBeanComboBox secondTurnoutComboBox;
+    private JLabel secondTurnoutLabel;
 	private JTextField blockNameField = new JTextField(16);
 	private JTextField blockBNameField = new JTextField(16);
 	private JTextField blockCNameField = new JTextField(16);
@@ -1398,6 +1471,7 @@ public class LayoutTurnout
 	private boolean editOpen = false;
 	private boolean needRedraw = false;
 	private boolean needsBlockUpdate = false;
+    private JCheckBox additionalTurnout = new JCheckBox(rb.getString("SupportingTurnout"));
 
     /**
      * Edit a Layout Turnout 
@@ -1422,6 +1496,32 @@ public class LayoutTurnout
             panel1.add(turnoutNameField);
             turnoutNameField.setToolTipText( rb.getString("EditTurnoutNameHint") );
             contentPane.add(panel1);
+            if((type ==RH_XOVER) || (type==LH_XOVER) || (type == DOUBLE_XOVER)){
+                JPanel panel1a = new JPanel();
+                panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
+                secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
+                additionalTurnout.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if(additionalTurnout.isSelected()){
+                            secondTurnoutLabel.setEnabled(true);
+                            secondTurnoutComboBox.setEnabled(true);
+                        } else  {
+                            secondTurnoutLabel.setEnabled(false);
+                            secondTurnoutComboBox.setEnabled(false);
+                        }
+                    }
+                });
+                panel1a.add(additionalTurnout);
+                contentPane.add(panel1a);
+                secondTurnoutLabel = new JLabel( rb.getString("Supporting") + rb.getString("Turnout")+" "+rb.getString("Name") );
+                secondTurnoutLabel.setEnabled(false);
+                secondTurnoutComboBox.setEnabled(false);
+                JPanel panel1b = new JPanel();
+                panel1b.add(secondTurnoutLabel);
+                panel1b.add(secondTurnoutComboBox);
+                contentPane.add(panel1b);
+            }
+            
 			// add continuing state choice, if not crossover
 			if ( (type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER) ) { 
 				JPanel panel3 = new JPanel(); 
@@ -1435,7 +1535,8 @@ public class LayoutTurnout
 				panel3.add (new JLabel(rb.getString("ContinuingState")));
 				panel3.add (stateBox);
 				contentPane.add(panel3);
-			}
+			} 
+
 			// setup block name
             JPanel panel2 = new JPanel(); 
             panel2.setLayout(new FlowLayout());
@@ -1531,8 +1632,9 @@ public class LayoutTurnout
 			blockBNameField.setText(blockBName);
 			blockCNameField.setText(blockCName);
 			blockDNameField.setText(blockDName);
-		}	
+		}
 		turnoutNameField.setText(turnoutName);
+            
 		if ( (type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER) ) {
 			if (continuingSense==Turnout.CLOSED) {
 				stateBox.setSelectedIndex(turnoutClosedIndex);
@@ -1540,7 +1642,15 @@ public class LayoutTurnout
 			else {
 				stateBox.setSelectedIndex(turnoutThrownIndex);
 			}
-		}
+		} else {
+            //secondTurnoutNameField.setText(secondTurnoutName);
+            if(secondNamedTurnout!=null){
+                additionalTurnout.setSelected(true);
+                secondTurnoutLabel.setEnabled(true);
+                secondTurnoutComboBox.setEnabled(true);
+            }
+        }
+        
 		editLayoutTurnoutFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
 					turnoutEditCancelPressed(null);
@@ -1691,6 +1801,27 @@ public class LayoutTurnout
 			}
 			needRedraw = true;
 		}
+        
+        if(additionalTurnout.isSelected()){
+            if ( !secondTurnoutName.equals(secondTurnoutComboBox.getSelectedDisplayName()) ) {
+                // turnout has changed
+                String newName = secondTurnoutComboBox.getSelectedDisplayName();
+                if ( layoutEditor.validatePhysicalTurnout(newName,
+                                editLayoutTurnoutFrame) ) {
+                    setSecondTurnout(newName);
+                }
+                else {
+                    additionalTurnout.setSelected(false);
+                    secondNamedTurnout = null;
+                    secondTurnoutName = "";
+                    //secondTurnoutNameField.setText("");
+                }
+                needRedraw = true;
+            }
+        } else {
+            secondNamedTurnout = null;
+            secondTurnoutName = "";
+        }
 		// set the continuing route Turnout State
 		if ( (type==RH_TURNOUT) || (type==LH_TURNOUT) || (type==WYE_TURNOUT) ) {
 			continuingSense = Turnout.CLOSED;

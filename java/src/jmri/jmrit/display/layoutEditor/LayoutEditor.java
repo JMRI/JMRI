@@ -4198,6 +4198,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			t = turnoutList.get(i);
 			log.debug("LT '"+t.getName()+"', Turnout tested '"+t.getTurnoutName()+"' ");
 			Turnout to = t.getTurnout();
+            Turnout to2 = t.getSecondTurnout();
 			if (to!=null) {
 				if ( (to.getSystemName().equals(turnoutName.toUpperCase())) ||
 					((to.getUserName()!=null) && (to.getUserName().equals(turnoutName))) ) {
@@ -4207,7 +4208,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
-			}
+			} 
+            if (to2!=null){
+                if ( (to2.getSystemName().equals(turnoutName.toUpperCase())) ||
+					((to2.getUserName()!=null) && (to2.getUserName().equals(turnoutName))) ) {
+					JOptionPane.showMessageDialog(openPane,
+							java.text.MessageFormat.format(rb.getString("Error4"),
+							new Object[]{turnoutName}),
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+            }
 		}
 		// check that the unique turnout name corresponds to a defined physical turnout
 		Turnout to = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
