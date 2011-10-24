@@ -84,7 +84,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 				File parentDir = fileLogger.getParentFile();
 				if (!parentDir.exists()) {
 					if (!parentDir.mkdirs()) {
-						log.error("backup directory not created");
+						log.error("logger directory not created");
 					}
 				}
 				if (fileLogger.createNewFile()){
@@ -262,11 +262,11 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (e.getPropertyName().equals(RollingStockManager.LISTLENGTH_CHANGED_PROPERTY)){
 			if ((Integer)e.getNewValue() > (Integer)e.getOldValue()){
 				// a car or engine has been added
-				if (e.getClass().equals(CarManager.class)){
+				if (e.getSource().getClass().equals(CarManager.class)){
 					removeCarListeners();
 					addCarListeners();
 				}
-				else if (e.getClass().equals(EngineManager.class)){
+				else if (e.getSource().getClass().equals(EngineManager.class)){
 					removeEngineListeners();
 					addEngineListeners();
 				}		

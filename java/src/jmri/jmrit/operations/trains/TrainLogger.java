@@ -70,7 +70,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 				File parentDir = _fileLogger.getParentFile();
 				if (!parentDir.exists()) {
 					if (!parentDir.mkdirs()) {
-						log.error("backup directory not created");
+						log.error("logger directory not created");
 					}
 				}
 				if (_fileLogger.createNewFile()){
