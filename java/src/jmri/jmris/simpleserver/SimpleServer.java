@@ -35,7 +35,7 @@ public class SimpleServer extends JmriServer{
 
      // Create a new server using the default port
      public SimpleServer() {
-	super(2048);
+	super(java.lang.Integer.parseInt(rb.getString("SimpleServerPort")));
      }
 
      public SimpleServer(int port) {
