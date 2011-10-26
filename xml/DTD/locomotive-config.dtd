@@ -21,7 +21,7 @@
 <!-- decoder must be kept the same as the ones in the roster DTD -->
 <!-- This copy is used if we have to import an existing file into a roster -->
 
-<!ELEMENT locomotive (dateupdated?, decoder, locoaddress*, functionlabels?, attributepairs?, values?) >
+<!ELEMENT locomotive (dateupdated?,dateUpdated?, decoder, locoaddress*, functionlabels?, attributepairs?, values?) >
 <!ATTLIST locomotive id		      CDATA #REQUIRED>          
 <!ATTLIST locomotive fileName	CDATA #IMPLIED>  
 <!ATTLIST locomotive groupName  CDATA #IMPLIED>        
@@ -41,6 +41,7 @@
 <!ATTLIST locomotive IsShuntingOn  CDATA #IMPLIED>
 
 <!ELEMENT dateupdated (#PCDATA) >
+<!ELEMENT dateUpdated (#PCDATA) >
 
 <!-- The decoder optional section defines the type of the installed decoder -->
 <!ELEMENT decoder EMPTY >
