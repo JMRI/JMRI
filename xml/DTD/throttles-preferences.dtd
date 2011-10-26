@@ -11,11 +11,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT throttles-preferences (throttlePreferences)>
+<!ELEMENT throttles-preferences (throttlesPreferences)>
 
+<!ELEMENT throttlesPreferences EMPTY>
 <!ATTLIST throttlesPreferences isUsingExThrottle CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isUsingToolBar CDATA #REQUIRED>
-<!ATTLIST throttlesPreferences isUsingFunctionIcons CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isUsingFunctionIcon CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isResizingWindow CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences windowDimensionWidth CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences windowDimensionHeight CDATA #REQUIRED>
