@@ -105,15 +105,9 @@ public interface SignalGroup extends NamedBean {
     
      /**
      * Add a Signal Head to the Group
-     * @param sh The SignalHead as a Named Bean
+     * @param mHead The SignalHead as a Named Bean
      */
     public void addSignalHead(SignalHead mHead);
-    
-     /**
-     * Add a Signal Head to the Group
-     * @param pName The SignalHead as a Name
-     */
-    //public void addSignalHead(String pName);
     
     public SignalHead getSignalHeadItemBeanByIndex(int n);
     
