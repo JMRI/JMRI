@@ -69,19 +69,16 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String)baudBox.getSelectedItem());
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".baud", (String) portBox.getSelectedItem());
-                pref.disallowSave();
             }
         });
         opt1Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureOption1((String)opt1Box.getSelectedItem());
-                pref.disallowSave();
             }
         });
         opt2Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureOption2((String)opt2Box.getSelectedItem());
-                pref.disallowSave();
             }
         });
         if(adapter.getSystemConnectionMemo()!=null){
@@ -91,7 +88,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
-                    pref.disallowSave();
                 }
             });
             systemPrefixField.addFocusListener( new FocusListener() {
@@ -100,7 +96,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
-                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });
@@ -110,7 +105,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
-                    pref.disallowSave();
                 }
             });
             connectionNameField.addFocusListener( new FocusListener() {
@@ -119,7 +113,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
-                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });

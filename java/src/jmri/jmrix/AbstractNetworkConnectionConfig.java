@@ -48,7 +48,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void actionPerformed(ActionEvent e) {
                 adapter.setHostName(hostNameField.getText());
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", hostNameField.getText());
-                pref.disallowSave();
             }
         });
         hostNameField.addKeyListener( new KeyListener() {
@@ -57,14 +56,12 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyReleased(KeyEvent keyEvent) {
                adapter.setHostName(hostNameField.getText());
                p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", hostNameField.getText());
-               pref.disallowSave();
             }
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
         portField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                pref.disallowSave();
                 try{
                     adapter.setPort(Integer.parseInt(portField.getText()));
                 } catch (java.lang.NumberFormatException ex) {
@@ -77,7 +74,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyPressed(KeyEvent keyEvent) {
             }
             public void keyReleased(KeyEvent keyEvent) {
-                pref.disallowSave();
                try{
                     adapter.setPort(Integer.parseInt(portField.getText()));
                 } catch (java.lang.NumberFormatException ex) {
@@ -89,13 +85,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         });
         opt1Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                pref.disallowSave();
                 adapter.configureOption1((String)opt1Box.getSelectedItem());
             }
         });
         opt2Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                pref.disallowSave();
                 adapter.configureOption2((String)opt2Box.getSelectedItem());
             }
         });
@@ -107,7 +101,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
-                    pref.disallowSave();
                 }
             });
             systemPrefixField.addFocusListener( new FocusListener() {
@@ -116,7 +109,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
-                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });
@@ -126,7 +118,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
-                    pref.disallowSave();
                 }
             });
             connectionNameField.addFocusListener( new FocusListener() {
@@ -135,7 +126,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
-                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });

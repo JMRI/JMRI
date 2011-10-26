@@ -49,6 +49,18 @@ public class JmrixConfigPane extends JPanel {
         if (retval != null) return retval;
         return createPanel(index);
     }
+    
+    public static JmrixConfigPane instance(ConnectionConfig config){
+        Enumeration<Integer> e = configPaneTable.keys();
+        int keyValue;
+        while(e.hasMoreElements()){
+            keyValue = e.nextElement();
+            if(configPaneTable.get(keyValue).ccCurrent==config)
+                return configPaneTable.get(keyValue);
+        }
+        return null;
+    
+    }
     /*
     * Create panel is seperated off from the instance and synchronized, so that only
     * one connection can be configured at once, this prevents multiple threads from
@@ -195,7 +207,6 @@ public class JmrixConfigPane extends JPanel {
         }
         manuBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                p.disallowSave();
                 updateComboConnection();
             }
         });
@@ -247,7 +258,6 @@ public class JmrixConfigPane extends JPanel {
         }
         modeBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                p.disallowSave();
                 if ((String) modeBox.getSelectedItem()!=null){
                     if (!((String) modeBox.getSelectedItem()).equals(NONE_SELECTED))
                         p.addComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
