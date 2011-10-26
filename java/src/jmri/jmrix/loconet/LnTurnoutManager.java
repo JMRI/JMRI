@@ -76,8 +76,6 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         }
         Turnout t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
         t.setUserName(userName);
-        t.addPropertyChangeListener(this);
-
         return t;
     }
 

@@ -140,7 +140,7 @@ abstract public class AbstractManager
         if (userName != null) _tuser.put(userName, s);
         firePropertyChange("length", null, Integer.valueOf(_tsys.size()));
         // listen for name and state changes to forward
-        s.addPropertyChangeListener(this);
+        s.addPropertyChangeListener(this, "", "Manager");
     }
 
     /**
