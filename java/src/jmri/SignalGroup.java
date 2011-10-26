@@ -53,6 +53,12 @@ public interface SignalGroup extends NamedBean {
    
     public void setSignalMast(String pName);
     
+    /**
+     *  Sets the main Signal Mast to which the Group belongs
+     */
+   
+    public void setSignalMast(SignalMast mMast, String pName);
+    
      /**
      *  Get the name of the main Signal Mast
      */
@@ -99,9 +105,17 @@ public interface SignalGroup extends NamedBean {
     
      /**
      * Add a Signal Head to the Group
+     * @param sh The SignalHead as a Named Bean
+     */
+    public void addSignalHead(SignalHead mHead);
+    
+     /**
+     * Add a Signal Head to the Group
      * @param pName The SignalHead as a Name
      */
-    public void addSignalHead(String pName);
+    //public void addSignalHead(String pName);
+    
+    public SignalHead getSignalHeadItemBeanByIndex(int n);
     
     /**
      * Method to get a SignalHead by Index
@@ -126,7 +140,7 @@ public interface SignalGroup extends NamedBean {
     /**
     * Delete Signal Head by Name
     */
-    public void deleteSignalHead(String pName);
+    public void deleteSignalHead(SignalHead pSignal);
     
     /**
     * Delete Signal Head by NamedBean
@@ -138,24 +152,7 @@ public interface SignalGroup extends NamedBean {
     /**
      * Method to inquire if a Signal Head is included in this Group
      */
-    public boolean isSignalIncluded(String systemName);
-    
-    /**
-     * Method to inquire if a Signal Head is included in this Group
-     */
     public boolean isSignalIncluded(SignalHead signalHead);
-    
-     /**
-     * Method to get the On State of Signal Head
-     * @param name The name of the SignalHead we are querying
-     */
-    public int getSignalHeadOnState(String name);
-    
-    /**
-     * Method to get the Off State of Signal Head
-     * @param name The name of the SignalHead we are querying
-     */
-    public int getSignalHeadOffState(String name);
     
      /**
      * Method to get the On State of Signal Head
@@ -168,22 +165,6 @@ public interface SignalGroup extends NamedBean {
      * @param signalHead The signal head bean object we are querying
      */
     public int getSignalHeadOffState(SignalHead signalHead);
-    
-    /**
-     * Sets the On State of the Signal in the Group
-     * @param name The SignalHead Name
-     * @param state The Apperance that the SignalHead will change to 
-     *      when the conditions are met.
-     */
-    public void setSignalHeadOnState(String name, int state);
-    
-    /**
-     * Sets the Off State of the Signal in the Group
-     * @param name The SignalHead Name
-     * @param state The Apperance that the SignalHead will change to 
-     *      when the conditions are NOT met.
-     */    
-    public void setSignalHeadOffState(String name, int state);
     
         /**
      * Sets the On State of the Signal in the Group
@@ -206,7 +187,7 @@ public interface SignalGroup extends NamedBean {
     * calculations or as one, when determining if the signal head should be
     * on or off.
     */
-    public void setSensorTurnoutOper(String pSignal, boolean boo);
+    public void setSensorTurnoutOper(SignalHead pSignal, boolean boo);
     
     public boolean getSensorTurnoutOperByIndex(int x);
     
@@ -217,39 +198,30 @@ public interface SignalGroup extends NamedBean {
      * @return -1 if there are less than 'n' SignalHeads defined
      */
     public int getNumSignalHeadTurnoutsByIndex(int x);
-
-    /**
-    * Method to add a Turnout and its state to a signal head.
-    * <p>
-    * @param mHead SignalHead we are adding the turnout to
-    * @param mTurn Turnout as a String either User or System Name
-    * @param state The State that the turnout must be set to.
-    */
-    public void setSignalHeadAlignTurnout(String mHead, String mTurn, int state);
     
     /**
     * Method to add a Turnout and its state to a signal head.
     * <p>
     * @param mHead SignalHead we are adding the turnout to
-    * @param mTurn Turnout as a String either User or System Name
+    * @param mTurn Turnout Bean
     * @param state The State that the turnout must be set to.
     */
-    public void setSignalHeadAlignTurnout(SignalHead mHead, String mTurn, int state);
+    public void setSignalHeadAlignTurnout(SignalHead mHead, Turnout mTurn, int state);
     
     /**
      * Inquire if a Turnout is included in the Signal Head Calculation.
-     * @param pSignal Name of the Signal Head
-     * @param pTurnout Name of the Turnout
+     * @param pSignal Signal Head Bean
+     * @param pTurnout Turnout Bean
      */
-    public boolean isTurnoutIncluded(String pSignal, String pTurnout);
+    public boolean isTurnoutIncluded(SignalHead pSignal, Turnout pTurnout);
     
     /**
     * Gets the state of the Turnout for the given Signal Head in the group
-    * @param pSignal Name of the Signal Head
+    * @param pSignal Signal Head Bean
     * @param pTurnout Name of the Turnout within the Group
     * @return -1 if the turnout or signal head is invalid
     */
-    public int getTurnoutState(String pSignal, String pTurnout);
+    public int getTurnoutState(SignalHead pSignal, Turnout pTurnout);
     
     /**
     * Gets the state of the Turnout for the given Signal Head at index x
@@ -257,7 +229,7 @@ public interface SignalGroup extends NamedBean {
     * @param pTurnout Name of the Turnout within the Group
     * @return -1 if the turnout or signal head is invalid
     */
-    public int getTurnoutStateByIndex(int x, String pTurnout);
+    public int getTurnoutStateByIndex(int x, Turnout pTurnout);
     
     /**
     * Gets the state of the Turnout at index x, for the given Signal Head at index x
@@ -276,37 +248,36 @@ public interface SignalGroup extends NamedBean {
     public String getTurnoutNameByIndex(int x, int pTurnout);
     
     /**
-    * Method to add a Sensor and its state to a signal head.
-    * <p>
-    * @param mHead SignalHead we are adding the sensor to
-    * @param mSensor Sensor as a String either User or System Name
-    * @param state The State that the sensor must be set to.
+    * Gets the Name of the Turnout at index x, for the given Signal Head at index x
+    * @param x Signal Head at index x
+    * @param pTurnout Turnout at index pTurnout
+    * @return null if the turnout or signal head is invalid
     */
-    public void setSignalHeadAlignSensor(String mHead, String mSensor, int state);
+    public Turnout getTurnoutByIndex(int x, int pTurnout);
     
     /**
     * Method to add a Sensor and its state to a signal head.
     * <p>
     * @param mHead SignalHead we are adding the sensor to
-    * @param mSensor Sensor as a String either User or System Name
+    * @param mSensor Sensor Bean
     * @param state The State that the sensor must be set to.
     */
-    public void setSignalHeadAlignSensor(SignalHead mHead, String mSensor, int state);
+    public void setSignalHeadAlignSensor(SignalHead mHead, Sensor mSensor, int state);
     
     /**
      * Inquire if a Sensor is included in the Signal Head Calculation.
-     * @param pSignal Name of the Signal Head
-     * @param pSensor Name of the Sensor
+     * @param pSignal Signal Head Bean
+     * @param pSensor Sensor Bean
      */
-    public boolean isSensorIncluded(String pSignal, String pSensor);
+    public boolean isSensorIncluded(SignalHead pSignal, Sensor pSensor);
     
     /**
     * Gets the state of the Sensor for the given Signal Head in the group
-    * @param pSignal Name of the Signal Head
+    * @param pSignal Signal Head Bean
     * @param pSensor Name of the Sensor within the Group
     * @return -1 if the sensor or signal head is invalid
     */
-    public int getSensorState(String pSignal, String pSensor);
+    public int getSensorState(SignalHead pSignal, Sensor pSensor);
     
     /**
     * Gets the state of the Sensor for the given Signal Head at index x
@@ -324,7 +295,15 @@ public interface SignalGroup extends NamedBean {
     */
     public String getSensorNameByIndex(int x, int pSensor);
     
-    public boolean getSensorTurnoutOper(String pSignal);
+    /**
+    * Gets the state of the Sensor at index x, for the given Signal Head at index x
+    * @param x Signal Head at index x
+    * @param pSensor Sensor at index pTurnout
+    * @return null if the sensor or signal head is invalid
+    */
+    public Sensor getSensorByIndex(int x, int pSensor);
+    
+    public boolean getSensorTurnoutOper(SignalHead pSignal);
     
     /**
      * Method to get the number of Sensors used to determine the On state
@@ -338,13 +317,13 @@ public interface SignalGroup extends NamedBean {
      * Delete all Turnouts for a given SignalHead in the group
      * @param pSignal SignalHead Name
      */
-    public void clearSignalTurnout(String pSignal);
+    public void clearSignalTurnout(SignalHead pSignal);
     
      /**
      * Delete all Sensors for a given SignalHead in the group
      * @param pSignal SignalHead Name
      */
-    public void clearSignalSensor(String pSignal);
+    public void clearSignalSensor(SignalHead pSignal);
     
     public int getState();
     

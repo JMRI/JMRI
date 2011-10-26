@@ -235,16 +235,16 @@ public class SignalGroupSubTableAction {
             p.add(userLabel);
 
             contentPane.add(p);
-            if (InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal).getClass().getName().contains("SingleTurnoutSignalHead")){
+            if (curSignalHead.getClass().getName().contains("SingleTurnoutSignalHead")){
                 jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.signalHeadManagerInstance().getBySystemName(curSignal);
-                if ((g.getSignalHeadOnState(curSignal)==0x00) && (g.getSignalHeadOffState(curSignal)==0x00)){
-                    g.setSignalHeadOnState(curSignal, Signal.getOnAppearance());
-                    g.setSignalHeadOffState(curSignal, Signal.getOffAppearance());
+                if ((g.getSignalHeadOnState(curSignalHead)==0x00) && (g.getSignalHeadOffState(curSignalHead)==0x00)){
+                    g.setSignalHeadOnState(curSignalHead, Signal.getOnAppearance());
+                    g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
                 }
             }
             
-            setSignalStateBox(g.getSignalHeadOnState(curSignal), _OnAppearance);
-            setSignalStateBox(g.getSignalHeadOffState(curSignal), _OffAppearance);
+            setSignalStateBox(g.getSignalHeadOnState(curSignalHead), _OnAppearance);
+            setSignalStateBox(g.getSignalHeadOffState(curSignalHead), _OffAppearance);
             // add Turnout Display Choice
             JPanel py = new JPanel();
             py.add(new JLabel("Show "));
@@ -444,16 +444,16 @@ public class SignalGroupSubTableAction {
                 }
             });
         addFrame.setVisible(true);
-        setoperBox(curSignalGroup.getSensorTurnoutOper(curSignal), _SensorTurnoutOper);
-        setSignalStateBox(curSignalGroup.getSignalHeadOnState(curSignal), _OnAppearance);
-        setSignalStateBox(curSignalGroup.getSignalHeadOffState(curSignal), _OffAppearance);
+        setoperBox(curSignalGroup.getSensorTurnoutOper(curSignalHead), _SensorTurnoutOper);
+        setSignalStateBox(curSignalGroup.getSignalHeadOnState(curSignalHead), _OnAppearance);
+        setSignalStateBox(curSignalGroup.getSignalHeadOffState(curSignalHead), _OffAppearance);
         int setRow = 0;
         for (int i=_turnoutList.size()-1; i>=0; i--) {
             SignalGroupTurnout turnout = _turnoutList.get(i);
-            String tSysName = turnout.getName();
-            if (curSignalGroup.isTurnoutIncluded(curSignal, tSysName) ) {
+            Turnout tTurnout = turnout.getTurnout();
+            if (curSignalGroup.isTurnoutIncluded(curSignalHead, tTurnout) ) {
                 turnout.setIncluded(true);
-                turnout.setState(curSignalGroup.getTurnoutState(curSignal, tSysName));
+                turnout.setState(curSignalGroup.getTurnoutState(curSignalHead, tTurnout));
                 setRow = i;
             } else {
                 turnout.setIncluded(false);
@@ -469,10 +469,10 @@ public class SignalGroupSubTableAction {
 
         for (int i=_sensorList.size()-1; i>=0; i--) {
             SignalGroupSensor sensor = _sensorList.get(i);
-            String tSysName = sensor.getName();
-            if (curSignalGroup.isSensorIncluded(curSignal, tSysName) ) {
+            Sensor tSensor = sensor.getSensor();
+            if (curSignalGroup.isSensorIncluded(curSignalHead, tSensor) ) {
                 sensor.setIncluded(true);
-                sensor.setState(curSignalGroup.getSensorState(curSignal, tSysName));
+                sensor.setState(curSignalGroup.getSensorState(curSignalHead, tSensor));
                 setRow = i;
             } else {
                 sensor.setIncluded(false);
@@ -521,7 +521,7 @@ public class SignalGroupSubTableAction {
     int setTurnoutInformation(SignalGroup g) {
         for (int i=0; i<_includedTurnoutList.size(); i++) {
             SignalGroupTurnout t = _includedTurnoutList.get(i);
-            g.setSignalHeadAlignTurnout(curSignalHead, t.getName(), t.getState());
+            g.setSignalHeadAlignTurnout(curSignalHead, t.getTurnout(), t.getState());
         }
         return _includedTurnoutList.size();
     }
@@ -532,7 +532,7 @@ public class SignalGroupSubTableAction {
     int setSensorInformation(SignalGroup g) {
         for (int i=0; i<_includedSensorList.size(); i++) {
             SignalGroupSensor s = _includedSensorList.get(i);
-            g.setSignalHeadAlignSensor(curSignalHead, s.getName(), s.getState());
+            g.setSignalHeadAlignSensor(curSignalHead, s.getSensor(), s.getState());
         }
         return _includedSensorList.size();
     }
@@ -541,15 +541,15 @@ public class SignalGroupSubTableAction {
      * Responds to the Update button - update to SignalGroup Table
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup ) {
-        curSignalGroup.clearSignalTurnout(curSignal);
-        curSignalGroup.clearSignalSensor(curSignal);
+        curSignalGroup.clearSignalTurnout(curSignalHead);
+        curSignalGroup.clearSignalSensor(curSignalHead);
 
         initializeIncludedList();
         setTurnoutInformation(curSignalGroup);
         setSensorInformation(curSignalGroup);
         curSignalGroup.setSignalHeadOnState(curSignalHead, signalStateFromBox(_OnAppearance));
         curSignalGroup.setSignalHeadOffState(curSignalHead, signalStateFromBox(_OffAppearance));
-        curSignalGroup.setSensorTurnoutOper(curSignal, operFromBox(_SensorTurnoutOper));
+        curSignalGroup.setSensorTurnoutOper(curSignalHead, operFromBox(_SensorTurnoutOper));
         // add control Sensors and a control Turnout if entered in the window
         finishUpdate();
     }
@@ -813,13 +813,7 @@ public class SignalGroupSubTableAction {
         void setState(int state) {
             _setToState = state;
         }
-        String getName(){
-            if (_userName!=null){
-                if (!_userName.equals(""))
-                    return _userName;
-            }
-            return _sysName;
-        }
+        
     }
 
     private class SignalGroupSensor extends SignalGroupElement {
@@ -842,6 +836,10 @@ public class SignalGroupSubTableAction {
                 _setToState = Sensor.ACTIVE;
             }
         }
+        
+        Sensor getSensor(){
+            return jmri.InstanceManager.sensorManagerInstance().getSensor(_sysName);
+        }
     }
 
     private class SignalGroupTurnout extends SignalGroupElement {
@@ -863,6 +861,10 @@ public class SignalGroupSubTableAction {
             } else if (SET_TO_THROWN.equals(state)) {
                 _setToState = Turnout.THROWN;
             }
+        }
+        
+        Turnout getTurnout(){
+            return jmri.InstanceManager.turnoutManagerInstance().getTurnout(_sysName);
         }
     }
     

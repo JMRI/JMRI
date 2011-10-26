@@ -47,7 +47,6 @@ public class DefaultSignalGroupManagerXml
                 e.addContent(app);
             }
             e.setAttribute("signalMast", p.getSignalMastName());
-            //e.setAttribute("primaryTriggerState", getSignalColour(p.getPrimaryTriggerState()));
             
             for (int x=0; x<p.getNumSignalHeadItems(); x++){
             
@@ -69,8 +68,6 @@ public class DefaultSignalGroupManagerXml
         else
             group.setAttribute("sensorTurnoutLogic", "OR");
 
-        /*if (_group.getSignalHeadItem(x).getSensorName()!=null)
-            group.setAttribute("sensor", _group.getSignalHeadItem(x).getSensorName());*/
         for (int i = 0; i<_group.getNumSignalHeadTurnoutsByIndex(x); i++){
             storeTurnout(group, _group, x, i);
         }
@@ -79,7 +76,6 @@ public class DefaultSignalGroupManagerXml
         }
         
         element.addContent(group);
-        //return group;
     }
     
     private void storeTurnout(Element element, SignalGroup _group, int x, int turn){
@@ -164,50 +160,52 @@ public class DefaultSignalGroupManagerXml
             if (signalHeadList.size() > 0) {
                 for (int y = 0; y<signalHeadList.size(); y++){
                     String head = signalHeadList.get(y).getAttribute("name").getValue();
-                    
-                    m.addSignalHead(head);
+                    SignalHead sigHead = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(head);
+                    m.addSignalHead(sigHead);
                     yesno = signalHeadList.get(y).getAttribute("sensorTurnoutLogic").getValue();
                     inverse = false;
                     if ( (yesno!=null) && (!yesno.equals("")) ) {
                         if (yesno.equals("AND")) inverse=true;
                         else if (yesno.equals("OR")) inverse=false;
                     }
-                    m.setSensorTurnoutOper(head, inverse);
+                    m.setSensorTurnoutOper(sigHead, inverse);
                     
                     try {
-                        m.setSignalHeadOnState(head, getIntFromColour(signalHeadList.get(y).getAttribute("onAppearance").getValue()));
+                        m.setSignalHeadOnState(sigHead, getIntFromColour(signalHeadList.get(y).getAttribute("onAppearance").getValue()));
                     }
                     catch ( NullPointerException ex) {  // considered normal if the attributes are not present
                     }
                     try {
-                        m.setSignalHeadOffState(head,getIntFromColour(signalHeadList.get(y).getAttribute("offAppearance").getValue()));
+                        m.setSignalHeadOffState(sigHead,getIntFromColour(signalHeadList.get(y).getAttribute("offAppearance").getValue()));
                     }
                     catch ( NullPointerException ex) {  // considered normal if the attributes are not present
                     }
                     List<Element> signalTurnoutList = signalHeadList.get(y).getChildren("turnout");
                     if (signalTurnoutList.size() > 0){
                         for(int k = 0; k<signalTurnoutList.size(); k++){
-                            String turnout = signalTurnoutList.get(k).getAttribute("name").getValue();
+                            String tName = signalTurnoutList.get(k).getAttribute("name").getValue();
+                            jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(tName);
                             state = 0;
                             try {
                                 state = signalTurnoutList.get(k).getAttribute("state").getIntValue();
                             } catch (org.jdom.DataConversionException ex) {
                                 log.warn("invalid state attribute value");
                             }
-                            m.setSignalHeadAlignTurnout(head, turnout, state);
+                            m.setSignalHeadAlignTurnout(sigHead, turnout, state);
                         }
                     }
                      List<Element> signalSensorList = signalHeadList.get(y).getChildren("sensor");
                     if (signalSensorList.size() > 0){
                         for(int k = 0; k<signalSensorList.size(); k++){
-                            String sensor = signalSensorList.get(k).getAttribute("name").getValue();
+                            String sName = signalSensorList.get(k).getAttribute("name").getValue();
+                            jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(sName);
                             state = 0;
                             try {
                                 state = signalSensorList.get(k).getAttribute("state").getIntValue();
                             } catch (org.jdom.DataConversionException ex) {
                                 log.warn("invalid style attribute value");
                             }
-                            m.setSignalHeadAlignSensor(head, sensor, state);
+                            m.setSignalHeadAlignSensor(sigHead, sensor, state);
                         }
                     }
                 }
