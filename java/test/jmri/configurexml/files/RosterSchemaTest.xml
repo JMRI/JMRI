@@ -478,10 +478,10 @@
         <dcclocoaddress number="9137" longaddress="no" />
       </locoaddress>
     </locomotive>
-    <locomotive id="TC 10003" fileName="BronsonTextDecoder.xml" roadNumber="" roadName="" mfg="" owner="" model="" dccAddress="1003" comment="" imageFilePath="__noImage.jpg" iconFilePath="__noIcon.jpg" URL="">
+    <locomotive id="TC 10003" fileName="BronsonTextDecoder.xml" roadNumber="" roadName="" mfg="" owner="" model="" dccAddress="10003" comment="" imageFilePath="__noImage.jpg" iconFilePath="__noIcon.jpg" URL="">
       <decoder model="TC-64" family="Tower Controller" comment="" />
       <locoaddress>
-        <dcclocoaddress number="1003" longaddress="no" />
+        <dcclocoaddress number="10003" longaddress="no" />
       </locoaddress>
     </locomotive>
     <locomotive id="test all short" fileName="test_all_short.xml" roadNumber="" roadName="" mfg="" owner="" model="" dccAddress="31" comment="" imageFilePath="__noImage.jpg" iconFilePath="__noIcon.jpg" URL="">
