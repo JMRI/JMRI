@@ -73,7 +73,7 @@
     <locomotive id="8705 trainmaster" fileName="PRR_trainmaster.xml" roadNumber="8705" roadName="PRR" mfg="Atlas" owner="" model="Trainmaster" dccAddress="15227" comment="No sound. Will install &lt;?p?&gt;Soundtraxx" imageFilePath="__noImage.jpg" iconFilePath="__noIcon.jpg" URL="">
       <decoder model="Four Function Dual Mode" family="Four Function Dual Mode" comment="" />
       <locoaddress>
-        <dcclocoaddress number="15227" longaddress="no" />
+        <dcclocoaddress number="1527" longaddress="no" />
       </locoaddress>
       <attributepairs>
         <keyvaluepair>
