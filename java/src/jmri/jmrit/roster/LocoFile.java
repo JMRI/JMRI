@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and
- * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
+ * in memory.  The interal storage is a JDOM tree. See locomotive-config.xsd
  * <P>
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
@@ -159,7 +159,12 @@ class LocoFile extends XmlFile {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = newDocument(root, dtdLocation+"locomotive-config.dtd");
+            root.setAttribute("noNamespaceSchemaLocation",
+                "http://jmri.org/xml/schema/locomotive-config"+Roster.schemaVersion+".xsd",
+                org.jdom.Namespace.getNamespace("xsi",
+                    "http://www.w3.org/2001/XMLSchema-instance"));
+            
+            Document doc = newDocument(root);
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>

@@ -15,7 +15,7 @@ import org.jdom.ProcessingInstruction;
  * Roster manages and manipulates a roster of locomotives.
  * <P>
  * It works
- * with the "roster-config" XML DTD to load and store its information.
+ * with the "roster-config" XML schema to load and store its information.
  *<P>
  * This is an in-memory representation of the roster xml file (see below
  * for constants defining name and location).  As such, this class is
@@ -297,6 +297,9 @@ public class Roster extends XmlFile {
         writeFile (file);
     }
  
+ 
+    static final public String schemaVersion = "";
+    
     /**
      * Write the entire roster to a file object. This does not do backup; that has
      * to be done separately. See writeRosterFile() for a public function that
@@ -310,7 +313,11 @@ public class Roster extends XmlFile {
     void writeFile (File file) throws java.io.IOException {
         // create root element
         Element root = new Element("roster-config");
-        Document doc = newDocument(root, dtdLocation+"roster-config.dtd");
+        root.setAttribute("noNamespaceSchemaLocation",
+            "http://jmri.org/xml/schema/roster"+schemaVersion+".xsd",
+            org.jdom.Namespace.getNamespace("xsi",
+              "http://www.w3.org/2001/XMLSchema-instance"));
+        Document doc = newDocument(root);
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/roster.xsl"?>
