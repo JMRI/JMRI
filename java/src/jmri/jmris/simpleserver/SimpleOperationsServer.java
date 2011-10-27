@@ -73,6 +73,13 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
                }
 	  else if(statusString.contains("TRAINS"))
 		sendTrainList();
+	  else if(statusString.contains("TERMINATE"))
+	       {
+                   int index;
+                   index=statusString.indexOf(" ")+1;
+                   index=statusString.indexOf(" ",index)+1;
+                   terminateTrain(statusString.substring(index));
+               }
 	  else throw new jmri.JmriException();
        } catch (java.io.IOException ioe) {
 	 throw new jmri.JmriException();
