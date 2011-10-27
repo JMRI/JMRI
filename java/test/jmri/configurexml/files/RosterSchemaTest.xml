@@ -316,10 +316,10 @@
         <dcclocoaddress number="0" longaddress="yes" />
       </locoaddress>
     </locomotive>
-    <locomotive id="New empty entry" fileName="New_empty_entry.xml" roadNumber="" roadName="" mfg="" owner="" model="" dccAddress="" comment="" imageFilePath="__noImage.jpg" iconFilePath="__noIcon.jpg" URL="">
+    <locomotive id="New empty entry" fileName="New_empty_entry.xml" roadNumber="" roadName="" mfg="" owner="" model="" dccAddress="3" comment="" imageFilePath="__noImage.jpg" iconFilePath="__noIcon.jpg" URL="">
       <decoder model="LE030" family="Lenz 4th gen BEMF decoders" comment="" />
       <locoaddress>
-        <dcclocoaddress number="" longaddress="no" />
+        <dcclocoaddress number="3" longaddress="no" />
       </locoaddress>
     </locomotive>
     <locomotive id="NW2 9247" fileName="NW2_9247.xml" roadNumber="9247" roadName="PRR" mfg="Broadway Ltd." owner="" model="NW2" dccAddress="9247" comment="" imageFilePath="__noImage.jpg" iconFilePath="__noIcon.jpg" URL="">
