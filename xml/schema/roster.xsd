@@ -32,6 +32,8 @@
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
             "
         >
+  <xs:include schemaLocation="http://jmri.org/xml/schema/locomotive-config.xsd"/>
+  
   <xs:element name="roster-config">
     <xs:annotation>
         <xs:documentation>
@@ -47,85 +49,7 @@
         <xs:element name="roster" minOccurs="1" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              
-              <xs:element name="locomotive" minOccurs="1" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    
-                    <xs:element name="dateupdated" minOccurs="0" maxOccurs="1">
-                        <xs:annotation>
-                            <xs:documentation>
-                              This is an unchecked, unparsed field intended to hold a system-local date.
-                            </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                    
-                    <xs:element name="decoder" minOccurs="1" maxOccurs="1">
-                      <xs:complexType>
-                        <xs:attribute name="family" type="xs:string"/>
-                        <xs:attribute name="model" type="xs:string"/>
-                        <xs:attribute name="comment" type="xs:string"/>
-                      </xs:complexType>
-                    </xs:element>
-                    
-                    <xs:element name="locoaddress" minOccurs="0" maxOccurs="1">
-                      <xs:complexType><xs:sequence>
-                          <xs:element name="dcclocoaddress" minOccurs="1" maxOccurs="1">
-                            <xs:complexType>
-                              <xs:attribute name="number" type="xs:string"/>
-                              <xs:attribute name="longaddress" type="xs:string"/>
-                            </xs:complexType>
-                          </xs:element>
-                      </xs:sequence></xs:complexType>
-                    </xs:element>
-                    
-                    <xs:element name="functionlabels" minOccurs="0" maxOccurs="1">
-                      <xs:complexType><xs:sequence>
-                          <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:simpleContent>
-                                <xs:extension base="xs:string">
-                                  <xs:attribute name="num" type="xs:string"/>
-                                  <xs:attribute name="lockable" type="xs:string"/>
-                                </xs:extension>
-                              </xs:simpleContent>
-                            </xs:complexType>
-                          </xs:element>
-                      </xs:sequence></xs:complexType>
-                    </xs:element>
-                    
-                    <xs:element name="attributepairs" minOccurs="0" maxOccurs="1">
-                      <xs:complexType><xs:sequence>
-                          <xs:element name="keyvaluepair" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType><xs:sequence>
-                                <xs:element name="key" minOccurs="1" maxOccurs="1"/>
-                                <xs:element name="value" minOccurs="1" maxOccurs="1"/>
-                            </xs:sequence></xs:complexType>
-                          </xs:element>
-                      </xs:sequence></xs:complexType>
-                    </xs:element>
-                    
-                  </xs:sequence>
-                  <xs:attribute name="id" type="xs:string"/>
-                  <xs:attribute name="dccAddress" type="xs:string"/> <!-- deprecated -->
-                  <xs:attribute name="fileName" type="xs:string"/>
-                  <xs:attribute name="imageFilePath" type="xs:string"/>
-                  <xs:attribute name="iconFilePath" type="xs:string"/>
-                  <xs:attribute name="URL" type="xs:string"/>
-                  <xs:attribute name="IsShuntingOn" type="xs:string"/>
-                  <xs:attribute name="groupName" type="xs:string"/>
-                  <xs:attribute name="roadName" type="xs:string"/>
-                  <xs:attribute name="roadNumber" type="xs:string"/>
-                  <xs:attribute name="mfg" type="xs:string"/>
-                  <xs:attribute name="owner" type="xs:string"/>
-                  <xs:attribute name="model" type="xs:string"/>
-                  <xs:attribute name="comment" type="xs:string"/>
-                  <xs:attribute name="maxSpeed" type="xs:float">
-                    <xs:annotation><xs:documentation>
-                     maximum speed as a fraction from 0 to 1.0
-                    </xs:documentation></xs:annotation>
-                  </xs:attribute>
-                </xs:complexType>
+                <xs:element name="locomotive"  type="LocomotiveType" minOccurs="1" maxOccurs="unbounded">
               </xs:element>
             </xs:sequence>
           </xs:complexType>
@@ -149,4 +73,5 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  
 </xs:schema>
