@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!DOCTYPE pane SYSTEM "xml/DTD/programmer-config.dtd">
 <pane name="Sound">
     <column>
         <display item="Sound Option 1"/>

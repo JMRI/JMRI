@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!DOCTYPE pane SYSTEM "xml/DTD/programmer-config.dtd">
 <pane name="Motor">
     <column>
         <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction"/>

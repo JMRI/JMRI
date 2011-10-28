@@ -395,7 +395,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
                 for (int i=0; i<paneList.size(); i++) {
                     // load each pane
-                    String pname = paneList.get(i).getAttribute("name").getValue();
+                    String pname = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(i), "name");
                     newPane( pname, paneList.get(i), modelElem, true);  // show even if empty??
                 }
             }
@@ -634,7 +634,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");
         for (int i=0; i<paneList.size(); i++) {
             // load each pane
-            String name = paneList.get(i).getAttribute("name").getValue();
+            String name = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(i), "name");
             newPane( name, paneList.get(i), modelElem, false);  // dont force showing if empty
         }
     }

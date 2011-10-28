@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE pane SYSTEM "programmer-config.dtd">
 <pane name="Basic">
+    <name xml:lang="fr">Basic(fr)</name>
     <column>
         <dccaddress/>
         <label label=" "/>

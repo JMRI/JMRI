@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!DOCTYPE pane SYSTEM "xml/DTD/programmer-config.dtd">
 <pane name="Advanced">
     <column>
         <display item="Advanced Ack" tooltip="Enable advanced acknowledgment"/>

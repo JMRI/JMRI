@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!DOCTYPE pane SYSTEM "xml/DTD/programmer-config.dtd">
 <pane name="Analog Controls">
     <column>
         <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)"/>
