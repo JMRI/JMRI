@@ -102,7 +102,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				var $type = $currentItem.type;  //shortcut since this is used so many times
 
 				//remove non-monitorable from xml
-				if ($type == 'roster' || $type == 'panel' || $type == 'metadata') {
+				if ($type == 'roster' || $type == 'frame' || $type == 'metadata') {
 					$(this).remove();
 				}
 
@@ -260,7 +260,7 @@ function $getXMLListCommands($includeMonitorables) {
 	var $cmdStr = '';
 	$.each($('#includes input:checkbox:checked'),function(i,e){
 		var $t = $(e).attr("id").substring(8);
-		if ($includeMonitorables || ($t != 'roster' && $t != 'panel' ))  {
+		if ($includeMonitorables || ($t != 'roster' && $t != 'frame' ))  {
 			// add each checked value to list
 			$cmdStr += '<list><type>' + $t  + '</type></list>';  //drop "include-" from string
 		}
@@ -312,7 +312,7 @@ $(document).ready(function() {
 	$.mobile.showPageLoadingMsg();  //show pageloading message
 
 	//retrieve checked values from localstorage and set checkboxes to match
-	var $savedInputs = ["turnout","panel"];  //default selections
+	var $savedInputs = ["turnout","frame"];  //default selections
 	if (localStorage['savedInputs']) {
 		$savedInputs=JSON.parse(localStorage['savedInputs']);
 	}
