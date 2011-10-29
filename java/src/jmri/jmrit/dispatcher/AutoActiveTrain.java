@@ -172,6 +172,7 @@ public class AutoActiveTrain implements ThrottleListener {
 			_activeTrain.setMode(ActiveTrain.DISPATCHED);
 			return;
 		}
+        if (log.isDebugEnabled()) log.debug("throttle address= " +_throttle.getLocoAddress().toString());
 		_autoEngineer = new AutoEngineer();
 		new Thread(_autoEngineer).start();
 		_activeTrain.setMode(ActiveTrain.AUTOMATIC);
@@ -233,7 +234,7 @@ public class AutoActiveTrain implements ThrottleListener {
 	}
 	protected void handleSectionOccupancyChange(AllocatedSection as) {
 		if (!isInAllocatedList(as)) {
-			log.warn("Unnexpected occupancy change notification - Section "+as.getSection().getSystemName());
+			if (log.isDebugEnabled()) log.debug("Unexpected occupancy change notification - Section "+as.getSection().getSystemName());
 			return;
 		}
 		if (as.getSection().getOccupancy()==Section.OCCUPIED) {		
@@ -277,22 +278,23 @@ public class AutoActiveTrain implements ThrottleListener {
 				else {
 					// reached last block in this transit
 					removeCurrentSignal();
-					log.debug("block occupied stop in Current Section, Block - "+b.getUserName());	
+					if (log.isDebugEnabled()) log.debug("block occupied stop in Current Section, Block - "+b.getUserName());	
 					stopInCurrentSection(NO_TASK);
 				}
 			}
 			else if (b != _currentBlock) {
-				log.warn("block going occupied - "+b.getUserName()+" - is not _nextBlock or _currentBlock - ignored.");
+				if (log.isDebugEnabled()) log.debug("block going occupied - "+b.getUserName()+" - is not _nextBlock or _currentBlock - ignored.");
 				return;
 			}
 		}
 		else if (b.getState()==Block.UNOCCUPIED) {
-			log.debug("Reached handleBlockStateChange to UNOCCUPIED - Section "+as.getSection().getSystemName()+
+			if (log.isDebugEnabled()) log.debug("Reached handleBlockStateChange to UNOCCUPIED - Section "+as.getSection().getSystemName()+
 											", Block - "+b.getUserName()+", speed = "+_targetSpeed);													
 			if ( _stoppingByBlockOccupancy && (b == _stoppingBlock) ) {
-				log.debug ("setStopNow from Block unoccupied, Block = "+b.getSystemName());							
+				if (log.isDebugEnabled()) log.debug ("setStopNow from Block unoccupied, Block = "+b.getSystemName());	
 				_stoppingByBlockOccupancy = false;
 				_stoppingBlock = null;
+// djd may need more code here
 				if (_needSetSpeed) {
 					_needSetSpeed = false;
 					setSpeedBySignal();
@@ -423,11 +425,11 @@ public class AutoActiveTrain implements ThrottleListener {
 						}
 					}
 				});
-			log.debug("new current signal = "+sh.getSystemName());
+			if (log.isDebugEnabled()) log.debug("new current signal = "+sh.getSystemName());
 			setSpeedBySignal();			
 		}
 		// Note: null signal head will result when exiting throat-to-throat blocks.
-		else log.debug("new current signal is null - sometimes OK");
+		else if (log.isDebugEnabled()) log.debug("new current signal is null - sometimes OK");
 	}
 	private Block getNextBlock(Block b, AllocatedSection as) {
 		if ( ((_currentBlock==_activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd() &&
@@ -747,8 +749,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		if (DispatcherFrame.instance().getUseScaleMeters()) return (int)(fLength*0.001f);			
 		return (int)(fLength*0.00328084f);
 	}
-	
-// _______________________________________________________________________________________________________________	
+    
 	/**
 	 * Initiates running in manual mode with external throttle
 	 *	   This method is triggered by an action in the Transit
@@ -760,8 +761,8 @@ public class AutoActiveTrain implements ThrottleListener {
 				_autoEngineer.setHalt(true);
 				waitUntilStopped();
 				_autoEngineer.abort();
-				_throttle.release();
-				_autoEngineer = null;
+                InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, this);
+  				_autoEngineer = null;
 				_throttle = null;
 			}
 			_activeTrain.setMode(ActiveTrain.MANUAL);
@@ -790,8 +791,7 @@ public class AutoActiveTrain implements ThrottleListener {
 				}
 			}
 		}
-	}
-	
+	}	
 	/** 
 	 * Resumes automatic running after a working session using an external throttle
 	 *    This method is triggered by the dispatcher hitting the "Resume Auto Running" button
@@ -836,8 +836,14 @@ public class AutoActiveTrain implements ThrottleListener {
 		}			
 		_autoTrainAction.clearRemainingActions();
 		if (_autoEngineer!=null) {
+            _autoEngineer.setHalt(true);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                // ignore this exception
+            }            
 			_autoEngineer.abort();
-			_throttle.release();
+            InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, this);
 		}
 	}
     
@@ -968,17 +974,19 @@ public class AutoActiveTrain implements ThrottleListener {
 		private boolean _currentForward = true;
 		private int _targetCount[] = {0,1,2,3,4};
 		private int _rampTargetCount = 0;
-		private int _rampCount = 0;    
+		private int _rampCount = 0; 
 
         public void run() {
+            _abort = false;
+            setHalt(false);
 			_throttle.setIsForward(_forward);
 			_currentForward = _forward;
 			_throttle.setSpeedSetting(_currentSpeed);
-			setSpeedStep(_throttle.getSpeedStepMode());		
+			setSpeedStep(_throttle.getSpeedStepMode());	
+            _ramping = false;
 			// this is the running loop
             while (!_abort) {				
 				if (_halt && !_halted) {
-					_throttle.setSpeedSetting(-1.0f);
 					_throttle.setSpeedSetting(0.0f);
 					_currentSpeed = 0.0f;
 					_halted = true;
@@ -994,45 +1002,45 @@ public class AutoActiveTrain implements ThrottleListener {
 						if (_currentRampRate==RAMP_NONE) {
 							// set speed immediately
 							_currentSpeed = _targetSpeed;
-							_ramping = false;
+                            _throttle.setSpeedSetting(_currentSpeed);
 						}
 						else if (!_ramping) {
-							// initialize ramping
-							_ramping = true;
-							_rampCount = 1;
-							_rampTargetCount = _targetCount[_currentRampRate];
-						}
-						else {
-							// ramping the speed
-							_rampCount ++;
-							if (_rampCount>_rampTargetCount) {
-								// step the speed
-								if (_currentSpeed<_targetSpeed) {
-									// ramp up
-									_currentSpeed += _minSpeedStep;
-									if (_currentSpeed>=_targetSpeed) {
-										_currentSpeed = _targetSpeed;
-										_ramping = false;
-									}
-									else {
-										_rampCount = 0;
-									}
-								}
-								else {
-									// ramp down
-									_currentSpeed -= _minSpeedStep;
-									if (_currentSpeed<=_targetSpeed) {
-										_currentSpeed = _targetSpeed;
-										_ramping = false;
-									}
-									else {
-										_rampCount = 0;
-									}
-								}
-							}
+                            // initialize ramping
+                            _ramping = true;
+                            _rampCount = 1;
+                            _rampTargetCount = _targetCount[_currentRampRate];
+                        }
+                        else {
+                            // ramping the speed
+                            _rampCount ++;
+                            if (_rampCount>_rampTargetCount) {
+                                // step the speed
+                                if (_currentSpeed<_targetSpeed) {
+                                    // ramp up
+                                    _currentSpeed += _minSpeedStep;
+                                    if (_currentSpeed>=_targetSpeed) {
+                                        _currentSpeed = _targetSpeed;
+                                        _ramping = false;
+                                    }
+                                    else {
+                                        _rampCount = 0;
+                                    }
+                                }
+                                else {
+                                    // ramp down
+                                    _currentSpeed -= _minSpeedStep;
+                                    if (_currentSpeed<=_targetSpeed) {
+                                        _currentSpeed = _targetSpeed;
+                                        _ramping = false;
+                                    }
+                                    else {
+                                        _rampCount = 0;
+                                    }
+                                }
+                                _throttle.setSpeedSetting(_currentSpeed);
+                            }
 						}
 					}
-					_throttle.setSpeedSetting(_currentSpeed);
 				}
 				// delay
 				synchronized(this) {
@@ -1107,8 +1115,6 @@ public class AutoActiveTrain implements ThrottleListener {
         */
         public void abort() {
             _abort = true;
-            _throttle.setSpeedSetting(-1.0f);
-            _throttle.setSpeedSetting(0.0f);
         }
 
         protected void setFunction(int cmdNum, boolean isSet) {
