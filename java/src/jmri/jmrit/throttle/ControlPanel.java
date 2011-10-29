@@ -1374,6 +1374,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	
 	public void setSwitchSliderFunction(String fn) {
 		switchSliderFunction = fn;
+                if ((switchSliderFunction==null) || (switchSliderFunction.isEmpty()))
+                    return;
 		if (throttle != null) { // Update UI depending on function state
 			try {
 				java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
@@ -1384,12 +1386,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		        	else
 		        		setSpeedController(SLIDERDISPLAY);
 				}
-	        } catch (java.lang.NoSuchMethodException ex1) {
-				log.warn("Exception in setSwitchSliderFunction: " + ex1);
-			} catch (java.lang.IllegalAccessException ex2) {
-				log.warn("Exception in setSwitchSliderFunction: " + ex2);
-			} catch (java.lang.reflect.InvocationTargetException ex3) {
-				log.warn("Exception in setSwitchSliderFunction: " + ex3);
+	        } catch (java.lang.Exception ex) {
+				log.debug("Exception in setSwitchSliderFunction: " + ex+" while looking for function "+switchSliderFunction);
 			}
 		}
 	}
