@@ -103,7 +103,7 @@ public class SlipIconAdder extends IconAdder {
     *   If not, then look to change the icon image (super). 
     */
     @SuppressWarnings("null")
-    public void makeIconPanel() {
+    public void makeIconPanel(boolean useDefaults) {
         if (_iconPanel != null) {
             this.remove(_iconPanel);
         }
@@ -154,10 +154,10 @@ public class SlipIconAdder extends IconAdder {
             group.add(upperWestToUpperEastButton);
             lowerWestToLowerEastButton.setText(rb.getString("LowerWestToLowerEast"));
             upperWestToUpperEastButton.setText(rb.getString("UpperWestToUpperEast"));            
-            JPanel _buttonPanel = new JPanel();
-            _buttonPanel.add(lowerWestToLowerEastButton);
-            _buttonPanel.add(upperWestToUpperEastButton);
-            _iconPanel.add(_buttonPanel);
+            JPanel _buttonSlipPanel = new JPanel();
+            _buttonSlipPanel.add(lowerWestToLowerEastButton);
+            _buttonSlipPanel.add(upperWestToUpperEastButton);
+            _iconPanel.add(_buttonSlipPanel);
             lowerWestToLowerEastButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
                     updateSingleSlipRoute(false);
@@ -174,20 +174,20 @@ public class SlipIconAdder extends IconAdder {
             upperWestToUpperEastButton.setText(rb.getString("ToUpper"));
             group.add(lowerWestToLowerEastButton);
             group.add(upperWestToUpperEastButton);
-            JPanel _buttonPanel = new JPanel();
-            _buttonPanel.add(lowerWestToLowerEastButton);
-            _buttonPanel.add(upperWestToUpperEastButton);
-            _iconPanel.add(_buttonPanel);
+            JPanel _buttonSlipPanel = new JPanel();
+            _buttonSlipPanel.add(lowerWestToLowerEastButton);
+            _buttonSlipPanel.add(upperWestToUpperEastButton);
+            _iconPanel.add(_buttonSlipPanel);
         } else if (getTurnoutType()==0x08){
             ButtonGroup group = new ButtonGroup();
             lowerWestToLowerEastButton.setText("4 Turnouts");
             upperWestToUpperEastButton.setText("2 Turnouts");
             group.add(lowerWestToLowerEastButton);
             group.add(upperWestToUpperEastButton);
-            JPanel _buttonPanel = new JPanel();
-            _buttonPanel.add(lowerWestToLowerEastButton);
-            _buttonPanel.add(upperWestToUpperEastButton);
-            _iconPanel.add(_buttonPanel);
+            JPanel _buttonSlipPanel = new JPanel();
+            _buttonSlipPanel.add(lowerWestToLowerEastButton);
+            _buttonSlipPanel.add(upperWestToUpperEastButton);
+            _iconPanel.add(_buttonSlipPanel);
             lowerWestToLowerEastButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
                     changeNumScissorTurnouts();
@@ -339,7 +339,7 @@ public class SlipIconAdder extends IconAdder {
             _turnoutMap.remove("lowerwest");
             _turnoutMap.remove("lowereast");
         }
-        makeIconPanel();
+        makeIconPanel(true);
     }
     
     void slipUpdate(int slip){
@@ -414,7 +414,7 @@ public class SlipIconAdder extends IconAdder {
                 break;
         }
         doubleSlip=slip;
-        makeIconPanel();
+        makeIconPanel(true);
     }
 
     /**
@@ -535,7 +535,7 @@ public class SlipIconAdder extends IconAdder {
             setIcon(4, "Slip", 
                 "resources/icons/smallschematics/tracksegments/os-slip-lower-west-lower-east.gif");
         }
-        makeIconPanel();
+        makeIconPanel(true);
     }
     
     public void setSingleSlipRoute(boolean single){
@@ -608,7 +608,7 @@ public class SlipIconAdder extends IconAdder {
                         JPanel panel = (JPanel)target.getComponent();
                         JComponent comp = (JLabel)panel.getComponent(0);
                         if (putTurnout(comp.getName(), turnout)) {
-                            makeIconPanel();
+                            makeIconPanel(true);
                         }
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) log.debug("DropPanel.drop COMPLETED for "+

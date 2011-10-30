@@ -622,7 +622,10 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     SlipIconAdder _iconEditor;
     
     protected void edit() {
-        makeIconEditorFrame(this, "SlipTOEditor", true, null);
+        if (_iconEditor==null){
+            _iconEditor = new SlipIconAdder();
+        }
+        makeIconEditorFrame(this, "SlipTOEditor", true, _iconEditor);
             _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.turnoutPickModelInstance());
         _iconEditor.setTurnoutType(getTurnoutType());
         switch(getTurnoutType()){
@@ -661,7 +664,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         _iconEditor.setTurnout("west", namedTurnoutWest);
         _iconEditor.setTurnout("east", namedTurnoutEast);
 
-        _iconEditor.makeIconPanel();
+        _iconEditor.makeIconPanel(true);
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
