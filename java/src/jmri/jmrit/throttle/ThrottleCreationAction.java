@@ -15,10 +15,18 @@ public class ThrottleCreationAction extends JmriAbstractAction {
 
     public ThrottleCreationAction(String s, WindowInterface wi) {
     	super(s, wi);
+        // disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            setEnabled(false);
+        }
     }
      
- 	public ThrottleCreationAction(String s, Icon i, WindowInterface wi) {
+    public ThrottleCreationAction(String s, Icon i, WindowInterface wi) {
     	super(s, i, wi);
+        // disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            setEnabled(false);
+        }
     }
     
     /**

@@ -20,10 +20,18 @@ import java.awt.event.ActionEvent;
  
     public ConsistToolAction(String s, WindowInterface wi) {
     	super(s, wi);
+        // disable ourself if there is no consist manager available
+        if (jmri.InstanceManager.consistManagerInstance()==null) {
+            setEnabled(false);
+        }
     }
      
  	public ConsistToolAction(String s, Icon i, WindowInterface wi) {
     	super(s, i, wi);
+        // disable ourself if there is no consist manager available
+        if (jmri.InstanceManager.consistManagerInstance()==null) {
+            setEnabled(false);
+        }
     }
     
     public ConsistToolAction(String s) {
