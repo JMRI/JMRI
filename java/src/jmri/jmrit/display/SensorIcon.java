@@ -6,7 +6,6 @@ import jmri.NamedBeanHandle;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 
 import java.awt.event.ActionEvent;
@@ -400,13 +399,21 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
-                if (ImageIndexEditor.checkImageIndex(_editor)) {
-                	ItemPalette.storeIcons();   // write maps to tree
-                }
             }
         };
-
-        _itemPanel.init(updateAction, _iconMap);
+        // duplicate _iconMap map with unscaled and unrotated icons
+        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            NamedIcon oldIcon = entry.getValue();
+            NamedIcon newIcon = cloneIcon(oldIcon, this);
+            newIcon.rotate(0, this);
+            newIcon.scale(1.0, this);
+            newIcon.setRotation(4, this);
+            map.put(entry.getKey(), newIcon);
+        }
+        _itemPanel.init(updateAction, map);
         _itemPanel.setSelection(getSensor());
         _paletteFrame.add(_itemPanel);
         _paletteFrame.pack();
@@ -418,7 +425,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         setSensor(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
-        boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
         if (iconMap!=null) {
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -426,13 +432,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
                 NamedIcon newIcon = entry.getValue();
                 NamedIcon oldIcon = oldMap.get(entry.getKey());
-                if (scaleRotate) {
-                    newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-                    newIcon.setRotation(oldIcon.getRotation(), this);
-                }
+                newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                newIcon.setRotation(oldIcon.getRotation(), this);
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

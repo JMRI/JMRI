@@ -209,14 +209,6 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         return _model.getBeanAt(row);
     }
 
-    /**
-    *  Return from icon dialog
-    */
-    protected void reset() {
-        hideIcons();
-        _table.clearSelection();
-    }
-
     protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }

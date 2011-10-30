@@ -20,28 +20,19 @@ public class IndicatorTOIconDialog extends IconDialog {
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key, 
-    				Hashtable <String, NamedIcon> iconMap, boolean isUpdate) {
-        super(type, family, parent, iconMap, isUpdate);
-        log.debug("ctor type= \""+type+"\", family= \""+family+"\", key= \""+key+"\"");
+    				Hashtable <String, NamedIcon> iconMap) {
+        super(type, family, parent, iconMap);
         _key = key;
         _familyName.setText(_key);
-        java.awt.Container comp = getContentPane();
-        while (!(comp instanceof JPanel)) {
-            comp = (java.awt.Container)comp.getComponent(0);
-        }
-        ((JPanel)comp).remove(1);
-        _iconPanel = makeIconPanel(_iconMap);
-        _iconPanel.setVisible(true);
-        ((JPanel)comp).add(_iconPanel, 1);
         sizeLocate();
         log.debug("IndicatorTOIconDialog ctor done. type= \""+type+"\", family= \""+
                                         family+"\", key= \""+key+"\"");
     }
 
-    // override IconDialog initMap. Make place holder for _iconPanel
+    /* override IconDialog initMap. Make place holder for _iconPanel
     protected void initMap(String type, String key) {
         _iconPanel = new JPanel(); 
-    }
+    }*/
 
     /**
     * Add/Delete icon family for types that may have more than 1 family
@@ -75,7 +66,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
         if (parent._iconGroupsMap.size() < IndicatorTOItemPanel.STATUS_KEYS.length) {
             setVisible(false);
-            new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap, parent.isUpdate());
+            new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame, 
                     ItemPalette.rbp.getString("AllStatus"), 

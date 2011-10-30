@@ -4,7 +4,6 @@ package jmri.jmrit.display;
 
 import jmri.SignalHead;
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.SignalHeadItemPanel;
@@ -66,6 +65,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
 //    private SignalHead mHead;
     private NamedBeanHandle<SignalHead> namedHead;
+    
+    Hashtable <String, NamedIcon> _saveMap;
+
 
     /**
      * Attached a signalhead element to this display item
@@ -330,14 +332,22 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
-                if (ImageIndexEditor.checkImageIndex(_editor)) {
-                	ItemPalette.storeIcons();   // write maps to tree
-                }
             }
         };
         // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
-        _itemPanel.init(updateAction, _iconMap);
-        _saveMap = _iconMap;        // setting signalHead creates new map
+        // duplicate _iconMap map with unscaled and unrotated icons
+        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            NamedIcon oldIcon = entry.getValue();
+            NamedIcon newIcon = cloneIcon(oldIcon, this);
+            newIcon.rotate(0, this);
+            newIcon.scale(1.0, this);
+            newIcon.setRotation(4, this);
+            map.put(entry.getKey(), newIcon);
+        }
+        _itemPanel.init(updateAction, map);
         _itemPanel.setSelection(getSignalHead());
         _paletteFrame.add(_itemPanel);
         _paletteFrame.pack();
@@ -345,10 +355,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     void updateItem() {
+    	_saveMap = _iconMap; 	// setSignalHead() clears _iconMap.  we need a copy for setIcons()
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());
         Hashtable<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
-        boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
         if (map1!=null) {
             // map1 may be keyed with NamedBean names.  Convert to local name keys.
             // However perhaps keys are local - See above
@@ -358,9 +368,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
                 Entry<String, NamedIcon> entry = it.next();
                 map2.put(jmri.jmrit.display.palette.ItemPalette.convertText(entry.getKey()), entry.getValue());
             }
-            setIcons(map2, scaleRotate);
+            setIcons(map2);
         }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();
@@ -387,8 +398,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             String key = e.nextElement();
             _iconEditor.setIcon(i++, key, new NamedIcon(_iconMap.get(key)));
         }
-        _saveMap = _iconMap;
-        _iconEditor.makeIconPanel(false);
+         _iconEditor.makeIconPanel(false);
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -399,36 +409,33 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         _iconEditor.setSelection(getSignalHead());
     }
 
-    Hashtable<String, NamedIcon> _saveMap;
-    
     /**
-     * note this method uses member _saveMap, so either updateSignal() or updateSignal()
-     * must be called immediately prior this method. _saveMap is needed to set
-     * the same scale and rotation on the new icons that the original icons had.
+     * replace the icons in _iconMap with those from map, but 
+     * preserve the scale and rotation.
 	*/
-    private void setIcons(Hashtable<String, NamedIcon> map, boolean scaleRotate) {
-        if (log.isDebugEnabled()) log.debug("setIcons: newmap size= "+map.size()+
-                                            ", oldmap size= "+_saveMap.size());
+    private void setIcons(Hashtable<String, NamedIcon> map) {
+        Hashtable<String, NamedIcon> tempMap = new Hashtable<String, NamedIcon>();        
         Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             String name = entry.getKey();
             NamedIcon icon = entry.getValue();
-            NamedIcon oldIcon = _saveMap.get(name);
+            NamedIcon oldIcon = _saveMap.get(name);	// setSignalHead() has cleared _iconMap	
             if (log.isDebugEnabled()) log.debug("key= "+entry.getKey()+", localKey= "+name+
                                                 ", newIcon= "+icon+", oldIcon= "+oldIcon);
-            if (oldIcon!=null && scaleRotate) {
+            if (oldIcon!=null) {
+                icon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
                 icon.setRotation(oldIcon.getRotation(), this);
-                icon.rotate(oldIcon.getDegrees(), this);
-                icon.scale(oldIcon.getScale(), this);
             }
-            _iconMap.put(name, icon);
+            tempMap.put(name, icon);
         }
+        _iconMap = tempMap;
     }
 
     void updateSignal() {
+    	_saveMap = _iconMap; 	// setSignalHead() clears _iconMap.  we need a copy for setIcons()
         setSignalHead(_iconEditor.getTableSelection().getDisplayName());
-        setIcons(_iconEditor.getIconMap(), true);
+        setIcons(_iconEditor.getIconMap());
         displayState(headState());
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;

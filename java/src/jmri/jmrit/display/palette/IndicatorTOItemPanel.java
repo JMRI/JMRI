@@ -73,10 +73,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
     public void initUpdate(ActionListener doneAction, Hashtable<String, Hashtable<String, NamedIcon>> iconMaps) {
+        checkCurrentMaps(iconMaps);   // is map in families?, does user want to add it? etc
         super.init(doneAction, null);
         _detectPanel= new DetectionPanel(this);
         add(_detectPanel, 1);
-        checkCurrentMaps(iconMaps);   // is map in families?, does user want to add it? etc
         add(_iconFamilyPanel, 2);
     }
 
@@ -87,7 +87,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     */
     private void checkCurrentMaps(Hashtable<String, Hashtable<String, NamedIcon>> iconMaps) {
         _updateGroupsMap = iconMaps;
-        _updateWithSameMap = false;
         if (_family!=null && _family.trim().length()>0) {
             Hashtable<String, Hashtable<String, NamedIcon>> map = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
             if (map!=null) {
@@ -98,7 +97,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 ItemPalette.rb.getString("questionTitle"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.NO_OPTION) {
-            _updateWithSameMap = true;
             return;
         }
         if (_family!=null && _family.trim().length()>0) {
@@ -111,7 +109,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                     ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
-                _updateWithSameMap = true;
                 return;
             }
         } while (!ItemPalette.addLevel4Family(_paletteFrame, _itemType, _family, iconMaps));
@@ -403,14 +400,13 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _iconGroupsMap = ItemPalette.getLevel4Family(_itemType, _family);
         addIcons2Panel(_iconGroupsMap);
         makeDndIconPanel(_iconGroupsMap.get("ClearTrack"), "TurnoutStateClosed");
-        _updateWithSameMap = false;     // not using saved update map
         hideIcons();
     }
 
     protected void openEditDialog(String key) {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\" and \""+key+"\"");
         _currentIconMap = _iconGroupsMap.get(key);
-        new IndicatorTOIconDialog(_itemType, _family, this, key, _currentIconMap, _update);
+        new IndicatorTOIconDialog(_itemType, _family, this, key, _currentIconMap);
     }
 
     /****************** pseudo inheritance *********************/

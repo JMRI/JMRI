@@ -26,23 +26,25 @@ import jmri.jmrit.catalog.NamedIcon;
 
 
 public class DropJLabel extends JLabel implements DropTargetListener {
-    DataFlavor dataFlavor;
-    protected Hashtable <String, NamedIcon>   _iconMap;
+	private DataFlavor 				_dataFlavor;
+    private Hashtable <String, NamedIcon>   _iconMap;
+    private boolean 				_update;
     
     
     DropJLabel (Icon icon) {
         super(icon);
         try {
-            dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
+            _dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
         } catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
         //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
     }
-    DropJLabel (Icon icon,  Hashtable <String, NamedIcon> iconMap) {
+    DropJLabel (Icon icon,  Hashtable <String, NamedIcon> iconMap, boolean update) {
     	this(icon);
     	_iconMap = iconMap;
+    	_update = update;
     }
 
     public void dragExit(DropTargetEvent dte) {
@@ -60,8 +62,8 @@ public class DropJLabel extends JLabel implements DropTargetListener {
     public void drop(DropTargetDropEvent e) {
         try {
             Transferable tr = e.getTransferable();
-            if(e.isDataFlavorSupported(dataFlavor)) {
-                NamedIcon newIcon = new NamedIcon((NamedIcon)tr.getTransferData(dataFlavor));
+            if(e.isDataFlavorSupported(_dataFlavor)) {
+                NamedIcon newIcon = new NamedIcon((NamedIcon)tr.getTransferData(_dataFlavor));
                 accept(e, newIcon);
             } else if(e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 String text = (String)tr.getTransferData(DataFlavor.stringFlavor);
@@ -96,6 +98,9 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         label.setIcon(newIcon);
 //        _catalog.setBackground(label);
         _iconMap.put(label.getName(), newIcon);
+        if (!_update) {		// only prompt for save from palette
+        	ImageIndexEditor.indexChanged(true);
+        }
         e.dropComplete(true);
         if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
                                              ", "+(newIcon!=null ? newIcon.getURL().toString():" newIcon==null "));

@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
@@ -370,12 +369,21 @@ public class IndicatorTrackIcon extends PositionableIcon
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
-                if (ImageIndexEditor.checkImageIndex(_editor)) {
-                	ItemPalette.storeIcons();   // write maps to tree
-                }
             }
         };
-        _trackPanel.init(updateAction, cloneMap(_iconMap, this));
+        // duplicate _iconMap map with unscaled and unrotated icons
+        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            NamedIcon oldIcon = entry.getValue();
+            NamedIcon newIcon = cloneIcon(oldIcon, this);
+            newIcon.rotate(0, this);
+            newIcon.scale(1.0, this);
+            newIcon.setRotation(4, this);
+            map.put(entry.getKey(), newIcon);
+        }
+        _trackPanel.init(updateAction, map);
         if (namedOccSensor!=null) {
             _trackPanel.setOccDetector(namedOccSensor.getName());
         }
@@ -398,7 +406,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         _iconFamily = _trackPanel.getFamilyName();
         _paths = _trackPanel.getPaths();
         Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
-        boolean scaleRotate = !_trackPanel.isUpdateWithSameMap();
         if (iconMap!=null) {
             Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
@@ -407,13 +414,12 @@ public class IndicatorTrackIcon extends PositionableIcon
                 if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
                 NamedIcon newIcon = entry.getValue();
                 NamedIcon oldIcon = oldMap.get(entry.getKey());
-                if (scaleRotate) {
-                    newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-                    newIcon.setRotation(oldIcon.getRotation(), this);
-                }
+                newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                newIcon.setRotation(oldIcon.getRotation(), this);
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
         _paletteFrame.dispose();
         _paletteFrame = null;
         _trackPanel.dispose();

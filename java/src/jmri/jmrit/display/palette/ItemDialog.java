@@ -31,15 +31,6 @@ public class ItemDialog extends JDialog {
         setVisible(true);
         pack();
     }
-    
-    protected boolean addFamily(String family, Hashtable<String, NamedIcon> iconMap) {
-        if (ItemPalette.addFamily(_parent._paletteFrame, _type, family, iconMap) ) {
-            _parent._family = family;
-            _parent.reset();
-            return true;
-        }
-        return false;
-    }
 
     protected String getDialogType() {
         return _type;

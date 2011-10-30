@@ -6,11 +6,20 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import jmri.util.JmriJFrame;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 
 /**
 *  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.
+*  
+*  Devices such as these have sets of icons to display their various states.  such sets are called
+*  a "family" in the code.  These devices then may have sets of families to provide the user with
+*  a choice of the icon set to use for a particular device.  The subclass FamilyItemPanel.java
+*  and its subclasses handles these devices.
+*  
+*  Other devices, e.g. backgrounds or memory, may use only one or no icon to display.  The subclass 
+*  IconItemPanel.java and its subclasses handles these devices.
 */
 public abstract class ItemPanel extends JPanel {
 
@@ -18,7 +27,7 @@ public abstract class ItemPanel extends JPanel {
     protected String    _itemType;
     protected String    _family;
     protected Editor    _editor;
-    protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging
+    protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging. set in init()
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -36,6 +45,10 @@ public abstract class ItemPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
+    /**
+     * Initializes panel for selecting a new control panel item or for updating an existing item.
+     * Adds table if item is a bean.  i.e. customizes for the item type
+     */
     abstract public void init();
 
     /* Methods used upon return from Icon dialogs
@@ -53,11 +66,11 @@ public abstract class ItemPanel extends JPanel {
     }
     protected void reset() {
     }
-    public void dispose() {
-    }
     protected void updateFamiliesPanel() {
     }
-
+    public void dispose() {
+    } 
+    
     public String getFamilyName() {
         return _family;
     }
@@ -65,23 +78,8 @@ public abstract class ItemPanel extends JPanel {
     protected final boolean isUpdate() {
     	return _update;
     }
-    /**
-    * overriden for many itemTypes.  This is for the remainder
-    */
-    protected void openEditDialog() {
-        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        IconDialog dialog = new IconDialog(_itemType, _family, this, null, _update);
-        // call super ItemDialog to size and locate dialog
-        dialog.sizeLocate();
-    }
+    
 
-    /**
-    * overriden for many itemTypes.  This is for the remainder
-    */
-    protected void createNewFamily(String type) {
-        IconDialog dialog = new IconDialog(type, null, this, null, _update);
-        dialog.sizeLocate();
-    }
 /*
     static final Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
         Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>();

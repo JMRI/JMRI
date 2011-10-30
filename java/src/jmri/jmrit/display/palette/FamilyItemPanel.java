@@ -31,7 +31,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
     JPanel    _bottom2Panel;  // createIconFamilyButton - when all families deleted 
     JButton   _showIconsButton;
     JButton   _updateButton;
-    protected boolean   _updateWithSameMap = false; // when editing existing icon, do not change family
     protected Hashtable<String, NamedIcon> _currentIconMap;
 
     /**
@@ -102,7 +101,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
     */
     private void checkCurrentMap(Hashtable<String, NamedIcon> iconMap) {
         _currentIconMap = iconMap;
-        _updateWithSameMap = false;
         if (log.isDebugEnabled()) log.debug("checkCurrentMap: for type \""+_itemType+"\", family \""+_family+"\"");
         if (_family!=null && _family.trim().length()>0) {
             Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
@@ -114,20 +112,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
                             ItemPalette.rbp.getString("NoFamilyName"), ItemPalette.rb.getString("questionTitle"),
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.NO_OPTION) {
-            _updateWithSameMap = true;
             return;
         }
-        if (_family!=null && _family.trim().length()>0) {
-            if (ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap)) {
-                return;
-            }
-        }
+        if (_family!=null && _family.trim().length()>0 && ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap)) {
+            return;
+        } 
         do {
             _family = JOptionPane.showInputDialog(_paletteFrame, ItemPalette.rbp.getString("EnterFamilyName"), 
                     ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
-                _updateWithSameMap = true;
                 return;
             }
         } while (!ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap));
@@ -394,7 +388,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         JButton newFamilyButton = new JButton(ItemPalette.rbp.getString("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    createNewFamily(_itemType);
+                    createNewFamilySet(_itemType);
                 }
         });
         newFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
@@ -408,6 +402,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         });
         panel.add(cancelButton);
         return panel;
+    }
+    private void createNewFamilySet(String type) {
+        IconDialog dialog = new IconDialog(type, null, this, null);
+        dialog.sizeLocate();
     }
 
     // add update buttons to  bottom1Panel
@@ -433,7 +431,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
  
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        IconDialog dialog = new IconDialog(_itemType, _family, this, _currentIconMap, _update);
+        IconDialog dialog = new IconDialog(_itemType, _family, this, _currentIconMap);
         // call super ItemDialog to size and locate dialog
         dialog.sizeLocate();
     }
@@ -455,15 +453,13 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _currentIconMap = ItemPalette.getIconMap(_itemType, _family);
         addIconsToPanel(_currentIconMap);
         makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
-        _updateWithSameMap = false;     // not using saved update map
         hideIcons();
     }
 
-    public boolean isUpdateWithSameMap() {
-        return _updateWithSameMap;
-    }
-
-    // return icon set to panel icon
+    /** 
+     * return icon set to panel icon display class
+     * @return updating map
+     */
     public Hashtable <String, NamedIcon> getIconMap() {
         if (_currentIconMap==null) {
         	_currentIconMap = ItemPalette.getIconMap(_itemType, _family);

@@ -409,11 +409,18 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         Iterator <JToggleButton> iter = _iconMap.values().iterator();
         int lastWidth = 0;
         int lastHeight = 0;
+        boolean first = true;
         while (iter.hasNext()) {
             JToggleButton but = iter.next();
+        	if (first) {
+                lastWidth = but.getIcon().getIconWidth();
+                lastHeight = but.getIcon().getIconHeight();
+                first = false;
+                continue;
+        	}
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
-            if ((lastWidth>0 && lastWidth != nextWidth) || (lastHeight>0 && lastHeight != nextHeight)) {
+            if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - lastHeight) > 3)) {
                 JOptionPane.showMessageDialog(this, rb.getString("IconSizeDiff"), rb.getString("warnTitle"),
                                                      JOptionPane.WARNING_MESSAGE);
                 return;

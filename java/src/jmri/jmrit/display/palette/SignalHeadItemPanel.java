@@ -156,16 +156,6 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         return allIconsMap;
     }
 
-    protected void openEditDialog() {
-        IconDialog dialog = new IconDialog(_itemType, _family, this, _currentIconMap, _update);
-        dialog.sizeLocate();
-    }
-
-    protected void createNewFamily(String type) {
-        IconDialog dialog = new IconDialog(_itemType, null, this, null, _update);
-        dialog.sizeLocate();
-    }
-
     protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }

@@ -25,10 +25,10 @@ public class MultiSensorIconDialog extends IconDialog {
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public MultiSensorIconDialog(String type, String family, ItemPanel parent, 
-    						Hashtable <String, NamedIcon> iconMap, boolean isUpdate) {
-        super(type, family, parent, iconMap, isUpdate); 
+    						Hashtable <String, NamedIcon> iconMap) {
+        super(type, family, parent, iconMap); 
     }
-
+/*
     protected JPanel makeButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -37,9 +37,14 @@ public class MultiSensorIconDialog extends IconDialog {
         makeDoneButtonPanel(buttonPanel);
         return buttonPanel;
     }
-
+*/
     protected String getIconName() {
         return MultiSensorItemPanel.POSITION[_iconMap.size()-3];
+    }
+    
+    protected void makeAddSetButtonPanel(JPanel buttonPanel) {
+        makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
+        super.makeAddSetButtonPanel(buttonPanel);
     }
 
     /**

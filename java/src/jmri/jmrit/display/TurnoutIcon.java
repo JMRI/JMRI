@@ -311,17 +311,19 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
-                if (ImageIndexEditor.checkImageIndex(_editor)) {
-                	ItemPalette.storeIcons();   // write maps to tree
-                }
             }
         };
-        // duplicate iconmap with state names rather than int states
+        // duplicate icon map with state names rather than int states and unscaled and unrotated
         Hashtable<String, NamedIcon> strMap = new Hashtable<String, NamedIcon>();
         Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<Integer, NamedIcon> entry = it.next();
-            strMap.put(_state2nameMap.get(entry.getKey()), cloneIcon(entry.getValue(), this));
+            NamedIcon oldIcon = entry.getValue();
+            NamedIcon newIcon = cloneIcon(oldIcon, this);
+            newIcon.rotate(0, this);
+            newIcon.scale(1.0, this);
+            newIcon.setRotation(4, this);
+            strMap.put(_state2nameMap.get(entry.getKey()), newIcon);
         }
         _itemPanel.init(updateAction, strMap);
         _itemPanel.setSelection(getTurnout());
@@ -335,7 +337,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         setTurnout(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
-        boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
         if (iconMap!=null) {
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -343,13 +344,12 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                 if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
                 NamedIcon newIcon = entry.getValue();
                 NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
-                if (scaleRotate) {
-                    newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-                    newIcon.setRotation(oldIcon.getRotation(), this);
-                }
+                newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                newIcon.setRotation(oldIcon.getRotation(), this);
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

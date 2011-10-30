@@ -501,7 +501,12 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<Integer, NamedIcon> ent = iter.next();
-                clone.put(_state2nameMap.get(ent.getKey()), cloneIcon(ent.getValue(), this));
+                NamedIcon oldIcon = ent.getValue();
+                NamedIcon newIcon = cloneIcon(oldIcon, this);
+                newIcon.rotate(0, this);
+                newIcon.scale(1.0, this);
+                newIcon.setRotation(4, this);
+                clone.put(_state2nameMap.get(ent.getKey()), newIcon);
             }
         }
         _TOPanel.initUpdate(updateAction, iconMaps);
@@ -528,7 +533,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _iconFamily = _TOPanel.getFamilyName();
         _paths = _TOPanel.getPaths();
         Hashtable<String, Hashtable<String, NamedIcon>> iconMap = _TOPanel.getIconMaps();
-        boolean scaleRotate = !_TOPanel.isUpdateWithSameMap();
         if (iconMap!=null) {
             Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -542,14 +546,13 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                     if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
                     NamedIcon newIcon = cloneIcon(ent.getValue(), this);
                     NamedIcon oldIcon = oldMap.get(_name2stateMap.get(ent.getKey()));
-                    if (scaleRotate) {
-                        newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-                        newIcon.setRotation(oldIcon.getRotation(), this);
-                    }
+                    newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                    newIcon.setRotation(oldIcon.getRotation(), this);
                     setIcon(status, ent.getKey(), newIcon);
                 }
             }
         }   // otherwise retain current map
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
         _paletteFrame.dispose();
         _paletteFrame = null;
         _TOPanel.dispose();
