@@ -279,7 +279,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		constraints.gridy = 0;
 
 		constraints.ipadx = -16;
-                if (jmri.util.SystemType.getType() == jmri.util.SystemType.LINUX )
+                if (jmri.util.SystemType.isLinux())
                     constraints.ipady = 0;
                 else
                     constraints.ipady = -16;

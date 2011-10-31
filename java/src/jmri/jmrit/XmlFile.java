@@ -11,6 +11,7 @@ import java.net.URL;
 
 import java.util.Calendar;
 import java.util.List;
+import jmri.util.SystemType;
 import org.jdom.Comment;
 import org.jdom.Document;
 import org.jdom.DocType;
@@ -580,8 +581,6 @@ public abstract class XmlFile {
         if (jmriPrefsDir.length()>0) return jmriPrefsDir+File.separator;
         
         // not present, work through other choices
-        String osName       = System.getProperty("os.name","<unknown>");
-        String mrjVersion   = System.getProperty("mrj.version","<unknown>");
         String userHome     = System.getProperty("user.home","");
 
         // add a File.separator to userHome here, so can ignore whether its empty later on
@@ -589,35 +588,25 @@ public abstract class XmlFile {
 
         String result;          // no value; that allows compiler to check completeness of algorithm
 
-        if ( !mrjVersion.equals("<unknown>")) {
-            // Macintosh, test for OS X
-            if (osName.toLowerCase().equals("mac os x")) {
+        switch (SystemType.getType()) {
+            case SystemType.MACOSX:
                 // Mac OS X
-                result = userHome+"Library"+File.separator+"Preferences"
-                    +File.separator+"JMRI"+File.separator;
-            } else {
-                // Mac Classic, by elimination. Check consistency of mrjVersion
-                // with that assumption
-                if (!(mrjVersion.charAt(0)=='2'))
-                    log.error("Decided Mac Classic, but mrj.version is \""
-                              +mrjVersion+"\" os.name is \""
-                              +osName+"\"");
-                // userHome is the overall preferences directory
-                result = userHome+"JMRI"+File.separator;
-            }
-        } else if (osName.equals("Linux")) {
-            // Linux, so use an invisible file
-            result = userHome+".jmri"+File.separator;
-        } else {
-            // Could be Windows, other
-            result = userHome+"JMRI"+File.separator;
+                result = userHome + "Library" + File.separator + "Preferences"
+                        + File.separator + "JMRI" + File.separator;
+                break;
+            case SystemType.LINUX:
+                // Linux, so use an invisible file
+                result = userHome + ".jmri" + File.separator;
+                break;
+            default:
+                // Could be Windows, other
+                result = userHome + "JMRI" + File.separator;
+                break;
         }
 
         if (log.isDebugEnabled()) log.debug("prefsDir defined as \""+result+
                                             "\" based on os.name=\""
-                                            +osName
-                                            +"\" mrj.version=\""
-                                            +mrjVersion
+                                            +SystemType.getOSName()
                                             +"\" user.home=\""
                                             +userHome
                                             +"\"");

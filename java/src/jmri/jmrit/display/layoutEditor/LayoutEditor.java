@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.ResourceBundle;
+import jmri.util.SystemType;
 
 
 /**
@@ -535,19 +536,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		help2.add(new JLabel(rb.getString("Help2")));
 		helpBar.add(help2);
         JPanel help3 = new JPanel();
-		int system = jmri.util.SystemType.getType();
-		if (system==jmri.util.SystemType.MACOSX) {
-			help3.add(new JLabel(rb.getString("Help3Mac")));
-		}
-		else if (system==jmri.util.SystemType.WINDOWS) {
-			help3.add(new JLabel(rb.getString("Help3Win")));
-		}
-		else if (system==jmri.util.SystemType.LINUX) {
-			help3.add(new JLabel(rb.getString("Help3Win")));
-		}
-		else {
-			help3.add(new JLabel(rb.getString("Help3")));
-		}
+                switch (SystemType.getType()) {
+                    case SystemType.MACOSX:
+                        help3.add(new JLabel(rb.getString("Help3Mac")));
+                        break;
+                    case SystemType.WINDOWS:
+                        help3.add(new JLabel(rb.getString("Help3Win")));
+                        break;
+                    case SystemType.LINUX:
+                        help3.add(new JLabel(rb.getString("Help3Win")));
+                        break;
+                    default:
+                        help3.add(new JLabel(rb.getString("Help3")));
+                }
 		helpBar.add(help3);
 
         contentPane.add(helpBar);

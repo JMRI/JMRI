@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import jmri.util.SystemType;
 import net.roydesign.mac.MRJAdapter;
 
 /**
@@ -45,8 +46,6 @@ import net.roydesign.mac.MRJAdapter;
  * @version     $Revision$
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
-
-    boolean onMac = (System.getProperty("mrj.version") != null);
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD","SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
     public Apps(JFrame frame) {
@@ -329,7 +328,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // for testing startup time
         log.debug("start building menus");
 
-        if (onMac) {
+        if (SystemType.isMacOSX()) {
         // Let MRJAdapter do all of the dirty work in hooking up the Macintosh application menu
 //          MRJAdapter.addAboutListener(new ActionListener() { public void actionPerformed(ActionEvent e) { about(); } });
             MRJAdapter.addPreferencesListener(new ActionListener() { public void actionPerformed(ActionEvent e) { doPreferences(); } });
@@ -362,7 +361,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintPreviewDecoderDefinitions"), frame, true));
 
         // On a Mac, MRJAdapter already takes care of Quit
-        if (!onMac) {
+        if (!SystemType.isMacOSX()) {
             fileMenu.add(new JSeparator());
             fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
