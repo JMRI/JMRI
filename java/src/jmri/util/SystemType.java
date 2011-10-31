@@ -12,7 +12,7 @@ package jmri.util;
 
 public class SystemType {
 
-    static final public int MACCLASSIC = 1;
+    static final public int MACCLASSIC = 1; // no longer supported - latest JVM is 1.1.8
     static final public int MACOSX     = 2;
     static final public int WINDOWS    = 4;
     static final public int LINUX      = 5;
@@ -23,34 +23,80 @@ public class SystemType {
     static boolean isSet = false;
 
     static String osName;
-    static String mrjVersion;
-    
+
+    /**
+     * Get the integer constant for the OS. Useful in switch statements.
+     *
+     * @return Type as an integer
+     */
     public static int getType() {
         setType();
         return type;
     }
-    
+
+    /**
+     * The os.name property
+     *
+     * @return OS name
+     */
+    public static String getOSName() {
+        setType();
+        return osName;
+    }
+
+    /**
+     * Convenience method to determine if OS is Mac OS X. Useful if an exception
+     * needs to be made for Mac OS X.
+     *
+     * @return true if on Mac OS X.
+     */
+    public static boolean isMacOSX() {
+        setType();
+        return (type == MACOSX);
+    }
+
+    /**
+     * Convenience method to determine if OS is Linux. Useful if an exception
+     * needs to be made for Linux.
+     *
+     * @return true if on Linux
+     */
+    public static boolean isLinux() {
+        setType();
+        return (type == LINUX);
+    }
+
+    /**
+     * Convenience method to determine if OS is Microsoft Windows. Useful if an
+     * exception needs to be made for Microsoft Windows.
+     *
+     * @return true if on Microsoft Windows
+     */
+    public static boolean isWindows() {
+        setType();
+        return (type == WINDOWS);
+    }
+
+    /**
+     * Convenience method to determine if OS is OS/2. Useful if an exception
+     * needs to be made for OS/2.
+     * 
+     * @return true if on OS/2
+     */
+    public static boolean osOS2() {
+        setType();
+        return (type == OS2);
+    }
+
     static void setType() {
         if (isSet) return;
         isSet = true;
         
-        osName       = System.getProperty("os.name","<unknown>");
-        mrjVersion   = System.getProperty("mrj.version","<unknown>");
+        osName = System.getProperty("os.name", "<unknown>");
 
-        if ( !mrjVersion.equals("<unknown>")) {
-            // Macintosh, test for OS X
-            if (osName.toLowerCase().equals("mac os x")) {
-                // Mac OS X
-                type = MACOSX;
-            } else {
-                // Mac Classic, by elimination. Check consistency of mrjVersion
-                // with that assumption
-                if (!(mrjVersion.charAt(0)=='2'))
-                    log.error("Decided Mac Classic, but mrj.version is \""
-                              +mrjVersion+"\" os.name is \""
-                              +osName+"\"");
-                type = MACCLASSIC;
-            }
+        if (osName.startsWith("Mac OS X")) { // Prefered test per http://developer.apple.com/library/mac/#technotes/tn2002/tn2110.html
+            // Mac OS X
+            type = MACOSX;
         } else if (osName.equals("Linux")) {
             // Linux
             type = LINUX;
