@@ -73,11 +73,10 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
    public void setTrainLocation(String trainName, String locationName) throws IOException {
         log.debug("Set train " + trainName + " Location " +locationName);
 	Train train = tm.getTrainByName(trainName);
-	//Location location = lm.getLocationByName(locationName);
-	//train.setCurrentLocation(train.getRoute().getLocationById(location.getId()));
-	if(locationName.equals(train.getNextLocationName()))
-           train.setCurrentLocation(train.getNextLocation());
-	sendTrainLocation(trainName);
+	if(train.move(locationName))
+	   sendTrainLocation(trainName);
+        else sendInfoString("OPERATIONS ERROR Move of " +trainName + 
+                            " to location " + locationName + " failed.");
    }
 
    /* send train length */
