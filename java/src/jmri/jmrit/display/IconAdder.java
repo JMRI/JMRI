@@ -476,7 +476,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             JToggleButton button = _iconMap.get(key);
             if (log.isDebugEnabled()) log.debug("getIconMap: key= "+key+", button.isSelected()= "+button.isSelected());
             if (!_allowDeletes || !button.isSelected()) {
-                iconMap.put(key, (NamedIcon)button.getIcon());
+                iconMap.put(key, new NamedIcon((NamedIcon)button.getIcon()));
             }
         }
         return iconMap;
