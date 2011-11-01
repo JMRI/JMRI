@@ -414,7 +414,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         if (SystemType.isMacOSX()) {
             Application.getApplication().setPreferencesHandler(new EventHandler() {
 
-                @Override
                 public boolean eventHandled(EventObject eo) {
                     doPreferences();
                     return true;
