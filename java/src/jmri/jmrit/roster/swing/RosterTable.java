@@ -53,11 +53,7 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // resize columns as requested
-        for (int i=0; i<dataTable.getColumnCount(); i++) {
-            int width = dataModel.getPreferredWidth(i);
-            dataTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-        dataTable.sizeColumnsToFit(-1);
+        resetColumnWidths();
 
         // general GUI config
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -83,6 +79,14 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
 	   
 	public JTable getTable() { return dataTable; }
 	public TableSorter getModel() { return sorter; }
+
+    public void resetColumnWidths(){
+        for (int i=0; i<dataTable.getColumnCount(); i++) {
+            int width = dataModel.getPreferredWidth(i);
+            dataTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+        dataTable.sizeColumnsToFit(-1);
+    }
 	
     public void dispose() {
         if (dataModel != null)
