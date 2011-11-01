@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 
 import java.io.File;
 
@@ -44,6 +45,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.Timer;
 import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -51,6 +54,9 @@ import javax.swing.JSplitPane;
 import javax.swing.TransferHandler;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
+import javax.swing.ImageIcon;
+
+import javax.imageio.ImageIO;
 
 import jmri.Programmer;
 import jmri.progdebugger.*;
@@ -176,6 +182,10 @@ public class DecoderPro3Window
             }
         });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
+        
+        if(jmri.jmrit.symbolicprog.ProgDefault.getDefaultProgFile()!=null){
+            programmer1 = jmri.jmrit.symbolicprog.ProgDefault.getDefaultProgFile();
+        }
     }
     
     void additionsToToolBar(){
@@ -256,6 +266,8 @@ public class DecoderPro3Window
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if(oldServMode==null){
+                contextService.setEnabled(true);
+                contextService.setVisible(true);
                 service.setEnabled(true);
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
@@ -265,6 +277,8 @@ public class DecoderPro3Window
             serviceModeProgrammerLabel.setForeground(Color.red);
             
             if(oldServMode!=null){
+                contextService.setEnabled(false);
+                contextService.setVisible(false);
                 service.setEnabled(false);
                 service.setVisible(false);
                 firePropertyChange("setprogservice", "setEnabled", false);
@@ -279,6 +293,8 @@ public class DecoderPro3Window
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if(oldOpsMode==null){
+                contextOps.setEnabled(true);
+                contextOps.setVisible(true);
                 ops.setEnabled(true);
                 ops.setVisible(true);
                 firePropertyChange("setprogops", "setEnabled", true);
@@ -287,6 +303,8 @@ public class DecoderPro3Window
             operationsModeProgrammerLabel.setText("No Operations Mode Programmer Available");
             operationsModeProgrammerLabel.setForeground(Color.red);
             if(oldOpsMode!=null){
+                contextOps.setEnabled(false);
+                contextOps.setVisible(false);
                 ops.setEnabled(false);
                 ops.setVisible(false);
                 firePropertyChange("setprogops", "setEnabled", false);
@@ -295,16 +313,19 @@ public class DecoderPro3Window
         
         String strProgMode;
         if(service.isEnabled()){
+            contextService.setSelected(true);
             service.setSelected(true);
             strProgMode = "setprogservice";
             modePanel.setVisible(true);
         }
         else if(ops.isEnabled()){
+            contextOps.setSelected(true);
             ops.setSelected(true);
             strProgMode = "setprogops";
             modePanel.setVisible(false);
         }
         else{
+            contextEdit.setSelected(true);
             edit.setSelected(true);
             modePanel.setVisible(false);
             strProgMode = "setprogedit";
@@ -477,6 +498,15 @@ public class DecoderPro3Window
             }
         });
         
+        if(Roster.instance().numEntries()==0){
+            try{
+                BufferedImage myPicture = ImageIO.read(new File("resources/dp3first.gif"));
+                rosters.add(new JLabel(new ImageIcon( myPicture )), BorderLayout.CENTER);
+            } catch (java.io.IOException ex) {
+                // handle exception...
+            }
+            
+        }
         return rosterGroupSplitPane;
     }
     
@@ -540,45 +570,91 @@ public class DecoderPro3Window
             }
             else if(e.getClickCount() == 2){
                 clickTimer.stop();
-                startProgrammer(null, re, programmer2);
+                startProgrammer(null, re, programmer1);
             }
         }
     }
     
+    JRadioButtonMenuItem contextService = new JRadioButtonMenuItem("Programming Track");
+    JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem("Programming On Main");
+    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem("Edit");
+    
     protected void showPopup(MouseEvent e){
         
         JPopupMenu popupMenu = new JPopupMenu();
-        /*JMenuItem menuItem = new JMenuItem(AbstractTableAction.rb.getString("Rename"));
+        JMenuItem menuItem = new JMenuItem("Program");
         menuItem.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                renameBean(rowindex, 0);
+                startProgrammer(null, re, programmer1);
             }
         });
         popupMenu.add(menuItem);
         
-        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Clear"));
+        ButtonGroup group = new ButtonGroup();
+        group.add(contextService);
+        group.add(contextOps);
+        group.add(contextEdit);
+        JMenu progMenu = new JMenu("Programmer type");
+
+        contextService.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                service.setSelected(true);
+                updateProgMode();
+            }
+        });
+        progMenu.add(contextService);
+        
+        contextOps.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                ops.setSelected(true);
+                updateProgMode();
+            }
+        });
+        progMenu.add(contextOps);
+        
+        contextEdit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+               edit.setSelected(true);
+               updateProgMode();
+            }
+        });
+        progMenu.add(contextEdit);
+        
+        popupMenu.add(progMenu);
+        
+        popupMenu.addSeparator();
+        menuItem = new JMenuItem("Labels and Media");
         menuItem.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                removeName(rowindex, 0);
+                editMediaButton();
             }
         });
         popupMenu.add(menuItem);
         
-        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Move"));
+        menuItem = new JMenuItem("Throttle");
         menuItem.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                moveBean(rowindex, 0);
+                ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+                tf.toFront();
+                tf.getAddressPanel().setRosterEntry(re);
             }
         });
         popupMenu.add(menuItem);
-        
-        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Delete"));
+        popupMenu.addSeparator();
+        menuItem = new JMenuItem("Duplicate");
         menuItem.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                deleteBean(rowindex, 0);
+                copyLoco();
             }
         });
-        popupMenu.add(menuItem);*/
+        popupMenu.add(menuItem);
+        menuItem = new JMenuItem("Delete");
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                deleteLoco();
+            }
+        });
+        popupMenu.add(menuItem);
 
         
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -619,6 +695,7 @@ public class DecoderPro3Window
 
     JTextPane filename 		= new JTextPane();
     JTextPane dateUpdated   	= new JTextPane();
+    JTextPane dccAddress    = new JTextPane();
     JTextPane decoderModel 	= new JTextPane();
     JTextPane decoderFamily 	= new JTextPane();
 
@@ -715,8 +792,15 @@ public class DecoderPro3Window
         panel.add(model);
 
         cL.gridy = 6;
+        JLabel row6Label = new JLabel(rbroster.getString("FieldDCCAddress")+":");
+        gbLayout.setConstraints(row6Label,cL);
+        panel.add(row6Label);
 
         cR.gridy = 6;
+        dccAddress.setMinimumSize(minFieldDim);
+        gbLayout.setConstraints(dccAddress,cR);
+        formatTextAreaAsLabel(dccAddress);
+        panel.add(dccAddress);
 
         cL.gridy = 7;
 
@@ -767,14 +851,14 @@ public class DecoderPro3Window
         panel.add(filename);
 
         cL.gridy = 13;
-        JLabel row13Label = new JLabel(rbroster.getString("FieldDateUpdated")+":");
+        /*JLabel row13Label = new JLabel(rbroster.getString("FieldDateUpdated")+":");
         gbLayout.setConstraints(row13Label,cL);
-        panel.add(row13Label);
+        panel.add(row13Label);*/
 
         cR.gridy = 13;
-        filename.setMinimumSize(minFieldDim);
+        /*filename.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(dateUpdated,cR);
-        panel.add(dateUpdated);
+        panel.add(dateUpdated);*/
         formatTextAreaAsLabel(dateUpdated);
         JPanel retval = new JPanel(new FlowLayout(FlowLayout.LEFT));
         retval.add(panel);
@@ -797,7 +881,7 @@ public class DecoderPro3Window
 
             id.setText(value);
             roadName.setText(value);
-
+            dccAddress.setText(value);
             roadNumber.setText(value);
             mfg.setText(value);
             model.setText(value);
@@ -809,7 +893,7 @@ public class DecoderPro3Window
             decoderModel.setText(re.getDecoderModel());
             decoderFamily.setText(re.getDecoderFamily());
 
-
+            dccAddress.setText(re.getDccAddress());
             id.setText(re.getId());
             roadName.setText(re.getRoadName());
 
@@ -833,17 +917,19 @@ public class DecoderPro3Window
         }
     }
 
-    JRadioButton service = new JRadioButton("<HTML>Service Mode<br>(Programming Track)</HTML>");
-    JRadioButton ops = new JRadioButton("<HTML>Operations Mode<br>(Programming On Main)</HTML>");
-    JRadioButton edit = new JRadioButton("<HTML>Edit Only</HTML>");
+    //JRadioButton service = new JRadioButton("<HTML>Service Mode (Programming Track)</HTML>");
+    //JRadioButton ops = new JRadioButton("<HTML>Operations Mode (Programming On Main)</HTML>");
+    JRadioButton service = new JRadioButton("Programming Track");
+    JRadioButton ops = new JRadioButton("Programming On Main");
+    JRadioButton edit = new JRadioButton("Edit Only");
 
     jmri.jmrit.progsupport.ProgModeSelector modePanel = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
-    JButton prog1Button = new JButton("Basic Programmer");
-    JButton prog2Button = new JButton("Comprehensive Programmer");
+    JButton prog2Button = new JButton("Basic Programmer");
+    JButton prog1Button = new JButton("Program");
     JButton throttleLabels = new JButton("Throttle Labels");
-    JButton rosterMedia = new JButton("Roster Media");
-    JButton throttleLaunch = new JButton("Launch Throttle");
+    JButton rosterMedia = new JButton("Labels & Media");
+    JButton throttleLaunch = new JButton("Throttle");
 
     ActionListener programModeListener;
 
@@ -863,6 +949,18 @@ public class DecoderPro3Window
 
         firePropertyChange(progMode, "setSelected", true);
     }
+    
+    void editMediaButton(){
+        //Because of the way that programmers work, we need to use edit mode for displaying the media pane, so that the read/write buttons do not appear.
+        boolean serviceSelected = service.isSelected();
+        boolean opsSelected = ops.isSelected();
+        
+        edit.setSelected(true);
+        startProgrammer(null, re, "dp3"+File.separator+"MediaPane");
+        
+        service.setSelected(serviceSelected);
+        ops.setSelected(opsSelected);
+    }
     /**
      * Simple method to change over the programmer buttons, this should be impliemented button
      * with the buttons in their own class etc, but this will work for now.
@@ -878,8 +976,8 @@ public class DecoderPro3Window
         }
     }
 
-    String programmer1 = "Basic";
-    String programmer2 = "Comprehensive";
+    String programmer1 = "Comprehensive";
+    String programmer2 = "Basic";
 
     JPanel bottomRight(){
         JPanel panel = new JPanel();
@@ -896,10 +994,23 @@ public class DecoderPro3Window
         firePropertyChange("setprogops", "setEnabled", false);
         firePropertyChange("setprogedit", "setEnabled", true);
 
+        ops.setOpaque(false);
+        service.setOpaque(false);
+        edit.setOpaque(false);
+        /*ops.setBorder(null);
+        service.setBorder(null);
+        edit.setBorder(null);*/
+
         JPanel progModePanel = new JPanel();
+        //progModePanel.setLayout(new BoxLayout(progModePanel, BoxLayout.Y_AXIS));
+        GridLayout buttonLayout = new GridLayout(4, 1, 0, 0);
+        progModePanel.setLayout(buttonLayout);
+        //progModePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         progModePanel.add(service);
         progModePanel.add(ops);
         progModePanel.add(edit);
+        //progModePanel.setBackground(Color.RED);
+        progModePanel.add(prog1Button);
 
         programModeListener = new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -917,12 +1028,14 @@ public class DecoderPro3Window
         panel.add(progModePanel);
 
         JPanel buttonHolder = new JPanel();
-        GridLayout buttonLayout = new GridLayout(3, 2, 5, 5);
-        buttonHolder.setLayout(buttonLayout);
+        GridLayout button2Layout = new GridLayout(0, 2, 1, 1);
+        buttonHolder.setLayout(button2Layout);
 
-        buttonHolder.add(prog1Button);
-        buttonHolder.add(prog2Button);
-        buttonHolder.add(throttleLabels);
+       // buttonHolder.add(prog1Button);
+    //    buttonHolder.add(prog2Button);
+    //    buttonHolder.add(throttleLabels);
+    
+        //buttonHolder.setLayout(new BoxLayout(buttonHolder, BoxLayout.Y_AXIS));
         buttonHolder.add(rosterMedia);
         buttonHolder.add(throttleLaunch);
 
@@ -946,8 +1059,7 @@ public class DecoderPro3Window
         throttleLabels.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
-                edit.setSelected(true);
-                    startProgrammer(null, re, "dp3"+File.separator+"ThrottleLabels");
+                editMediaButton();
             }
         });
         rosterMedia.setEnabled(false);
@@ -955,7 +1067,7 @@ public class DecoderPro3Window
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
                 edit.setSelected(true);
-                    startProgrammer(null, re, "dp3"+File.separator+"MediaPane");
+                startProgrammer(null, re, "dp3"+File.separator+"MediaPane");
             }
         });
 
@@ -1133,9 +1245,9 @@ public class DecoderPro3Window
         } else if(args[0].equals("exportloco")){
              if (checkIfEntrySelected()) exportLoco();
         } else if(args[0].equals("basicprogrammer")){
-             if (checkIfEntrySelected()) startProgrammer(null, re, programmer1);
-        } else if(args[0].equals("comprehensiveprogrammer")){
              if (checkIfEntrySelected()) startProgrammer(null, re, programmer2);
+        } else if(args[0].equals("comprehensiveprogrammer")){
+             if (checkIfEntrySelected()) startProgrammer(null, re, programmer1);
         } else if(args[0].equals("editthrottlelabels")){
              if (checkIfEntrySelected()) startProgrammer(null, re, "dp3"+File.separator+"ThrottleLabels");
         } else if(args[0].equals("editrostermedia")){
