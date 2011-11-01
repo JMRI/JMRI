@@ -83,7 +83,7 @@ public class SystemType {
      * 
      * @return true if on OS/2
      */
-    public static boolean osOS2() {
+    public static boolean isOS2() {
         setType();
         return (type == OS2);
     }
