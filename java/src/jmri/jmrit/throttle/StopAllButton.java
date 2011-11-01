@@ -2,7 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -21,9 +21,9 @@ public class StopAllButton extends JButton {
 		setHorizontalTextPosition(JButton.CENTER);
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Enumeration<ThrottleFrame> tpi = jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().getEnumeration() ;
-				while ( tpi.hasMoreElements() ) {
-                                    DccThrottle th = tpi.nextElement().getAddressPanel().getThrottle();
+				Iterator<ThrottleFrame> tpi = jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().getTableModel().iterator();
+				while ( tpi.hasNext() ) {
+                                    DccThrottle th = tpi.next().getAddressPanel().getThrottle();
                                     if ( th!=null)
 					th.setSpeedSetting(-1);
                                 }

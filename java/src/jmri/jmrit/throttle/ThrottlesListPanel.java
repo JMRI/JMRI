@@ -6,42 +6,46 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Enumeration;
 import java.util.ResourceBundle;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import org.jdom.Element;
 
-import jmri.DccThrottle;
 import jmri.jmrit.catalog.NamedIcon;
 
 
-public class ThrottlesListPanel extends JPanel implements AddressListener {
+public class ThrottlesListPanel extends JPanel {
 	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 
-	private DefaultListModel throttleFramesLM;
-	private JList throttleFrames;
+	private ThrottlesTableModel throttleFramesLM;
+	private JTable throttleFrames;
 
 	public ThrottlesListPanel() {
-		super();
-		throttleFramesLM = new DefaultListModel();
-		initGUI();
+            super();
+            throttleFramesLM = new ThrottlesTableModel();
+            initGUI();
 	}
+
+        public ThrottlesTableModel getTableModel() {
+            return throttleFramesLM;
+        }
 	
 	private void initGUI() {
-		throttleFrames = new JList(throttleFramesLM);
-		throttleFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
-		throttleFrames.setCellRenderer(new ThrottlesListCellRenderer());
-		throttleFrames.addMouseListener( new MouseListener() {
+            throttleFrames = new JTable(throttleFramesLM);
+            throttleFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
+            throttleFrames.setRowHeight(ThrottlesTableCellRenderer.height);
+            throttleFrames.setTableHeader(null);
+            throttleFrames.setDefaultRenderer(Object.class, new ThrottlesTableCellRenderer());
+            throttleFrames.addMouseListener( new MouseListener() {
 		    public void mouseClicked(MouseEvent e) {
-		    	throttleFrames.setSelectedIndex(throttleFrames.locationToIndex(e.getPoint()));
-		    	((ThrottleFrame)throttleFrames.getSelectedValue()).toFront();
+                        int row=throttleFrames.rowAtPoint(e.getPoint());
+                        throttleFrames.getSelectionModel().setSelectionInterval(row, row);
+		    	((ThrottleFrame)throttleFramesLM.getValueAt(row, 0)).toFront();
 		    }
 			public void mouseEntered(MouseEvent arg0) {}
 			public void mouseExited(MouseEvent arg0) {}
@@ -83,44 +87,18 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 	    jbPreferences.addActionListener( new ThrottlesPreferencesAction() );
 	    throttleToolBar.add(jbPreferences);
 	}
-	
-	@SuppressWarnings("unchecked")
-	public Enumeration<ThrottleFrame> getEnumeration() {
-		return  (Enumeration<ThrottleFrame>) throttleFramesLM.elements() ;
-	}
-	
-	public void addThrottleFrame(ThrottleFrame tf) {
-		throttleFramesLM.addElement(tf);
-	}
-	
-	public void removeThrottleFrame(ThrottleFrame tf) {
-		throttleFramesLM.removeElement(tf);
-	}
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesListPanel.class.getName());
-
-	public void notifyAddressChosen(int newAddress, boolean isLong) {		
-	}
-
-	public void notifyAddressReleased(int address, boolean isLong) {
-		repaint();
-	}
-
-	public void notifyAddressThrottleFound(DccThrottle throttle) {
-		repaint();
-	}
 
 	public Element getXml() {
-		Element me  = new Element("ThrottlesListPanel");
-        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);        
-        children.add(WindowPreferences.getPreferences(this.getTopLevelAncestor()));       
-        me.setContent(children);        
-        return me;
+            Element me  = new Element("ThrottlesListPanel");
+            java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
+            children.add(WindowPreferences.getPreferences(this.getTopLevelAncestor()));
+            me.setContent(children);
+            return me;
 	}
 
 	public void setXml(Element tlp) {
-        Element window = tlp.getChild("window");
-        if (window!=null)
-        	WindowPreferences.setPreferences(this.getTopLevelAncestor(), window);		
+            Element window = tlp.getChild("window");
+            if (window!=null)
+                    WindowPreferences.setPreferences(this.getTopLevelAncestor(), window);
 	}
 }
