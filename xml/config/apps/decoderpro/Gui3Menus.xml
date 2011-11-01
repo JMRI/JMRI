@@ -153,25 +153,16 @@
   
   <node><name>Actions</name>
     <mnemonic>a</mnemonic>
-    <node><name>Basic Programmer</name>
-        <current>basicprogrammer</current>
-    </node>
-    <node><name>Comprehensive Programmer</name>
+    <node><name>Program</name>
         <current>comprehensiveprogrammer</current>
     </node>
-    <node><name>Single CV Programmer</name>
-        <adapter>jmri.jmrit.simpleprog.SimpleProgAction</adapter>
-    </node>
-    <node><name>Edit Throttle Labels</name>
-        <current>editthrottlelabels</current>
-    </node>
-    <node><name>Edit Roster Media</name>
+    <node><name>Labels and Media</name>
         <current>editrostermedia</current>
     </node>
-    <node>separator</node>
     <node><name>New Throttle</name>
         <adapter>jmri.jmrit.throttle.ThrottleCreationAction</adapter>
     </node>
+    <node>separator</node>
     <node><name>Consisting Tool</name>
         <adapter>jmri.jmrit.consisttool.ConsistToolAction</adapter>
     </node>
@@ -183,6 +174,9 @@
     </node>
     <node><name>SpeedoMeter</name>
         <adapter>jmri.jmrit.speedometer.SpeedometerAction</adapter>
+    </node>
+    <node><name>Single CV Programmer</name>
+        <adapter>jmri.jmrit.simpleprog.SimpleProgAction</adapter>
     </node>
     <node>separator</node>
     <node><name>Start WiThrottle Server</name>
