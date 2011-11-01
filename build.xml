@@ -143,6 +143,7 @@
     <!-- jars that are needed at build time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
+        <pathelement location="${libdir}/AppleJavaExtensions.jar" /> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/annotations.jar" /> <!-- findbugs build-time only-->
         <pathelement location="${libdir}/jsr305.jar" />      <!-- findbugs build-time only-->
     </path>

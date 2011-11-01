@@ -83,6 +83,7 @@
     <delete file="Windows/JMRI/lib/junit.jar" />
     <delete file="Windows/JMRI/lib/jfcunit.jar" />
     <delete file="Windows/JMRI/lib/ecj.jar" />
+    <delete file="Windows/JMRI/lib/AppleJavaExtensions.jar" />
     <delete dir="Windows/lib/linux"/>
     <delete dir="Windows/lib/macosx"/>
     <delete dir="Windows/JMRI/lib/win32" />
@@ -124,6 +125,7 @@
     <delete file="MacOSX/JMRI/lib/jfcunit.jar" />
     <delete file="MacOSX/JMRI/lib/Serialio.jar" />
     <delete file="MacOSX/JMRI/lib/ecj.jar" />
+    <delete file="MaxOSX/JMRI/lib/AppleJavaExtensions.jar" />
     <delete dir="MacOSX/lib/linux"/>
     <delete dir="MacOSX/lib/windows"/>
     <delete dir="MacOSX/JMRI/lib/win32" />
@@ -184,6 +186,7 @@
     <delete file="Linux/JMRI/lib/jfcunit.jar" />
     <delete file="Linux/JMRI/lib/Serialio.jar" />
     <delete file="Linux/JMRI/lib/ecj.jar" />
+    <delete file="Linux/JMRI/lib/AppleJavaExtensions.jar" />
     <delete dir="Linux/lib/linux"/>
     <delete dir="Linux/lib/windows"/>
     <delete dir="Linux/JMRI/lib/win32" />

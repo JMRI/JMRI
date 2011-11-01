@@ -14,6 +14,7 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.JmriJFrame;
 import jmri.util.WindowMenu;
+import jmri.util.SystemType;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
 
@@ -31,10 +32,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
+import java.util.EventObject;
 import javax.swing.*;
+import jmri.plaf.macosx.Application;
+import jmri.plaf.macosx.EventHandler;
 
-import jmri.util.SystemType;
-import net.roydesign.mac.MRJAdapter;
 
 /**
  * Base class for Jmri applications.
@@ -329,11 +331,13 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         log.debug("start building menus");
 
         if (SystemType.isMacOSX()) {
-        // Let MRJAdapter do all of the dirty work in hooking up the Macintosh application menu
-//          MRJAdapter.addAboutListener(new ActionListener() { public void actionPerformed(ActionEvent e) { about(); } });
-            MRJAdapter.addPreferencesListener(new ActionListener() { public void actionPerformed(ActionEvent e) { doPreferences(); } });
-			MRJAdapter.addQuitApplicationListener(new ActionListener() { public void actionPerformed(ActionEvent e) { 
-				handleQuit(); } });
+            Application.getApplication().setQuitHandler(new EventHandler() {
+
+                public boolean eventHandled(EventObject eo) {
+                    handleQuit();
+                    return true;
+                }
+            });
         }
         
         fileMenu(menuBar, frame);
@@ -360,8 +364,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintDecoderDefinitions"), frame, false));
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintPreviewDecoderDefinitions"), frame, true));
 
-        // On a Mac, MRJAdapter already takes care of Quit
-        if (!SystemType.isMacOSX()) {
+        // Use Mac OS X native Quit if using Aqua look and feel
+        if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
             fileMenu.add(new JSeparator());
             fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
@@ -406,7 +410,21 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         // prefs
         prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
-        editMenu.add(prefsAction);
+        // Put prefs in Apple's prefered area on Mac OS X
+        if (SystemType.isMacOSX()) {
+            Application.getApplication().setPreferencesHandler(new EventHandler() {
+
+                @Override
+                public boolean eventHandled(EventObject eo) {
+                    doPreferences();
+                    return true;
+                }
+            });
+        }
+        // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
+        if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
+            editMenu.add(prefsAction);
+        }
 
     }
 
