@@ -366,14 +366,16 @@ public class DecoderPro3Window
         Roster.instance().setRosterGroup(rosterGroup);
         activeRosterGroupField.setText(Roster.getRosterGroupName());
         
-        JPanel rosters = new JPanel();
         JPanel groups = new RosterGroupsPanel();
+        final JPanel rosters = new JPanel();
+        //JPanel tableArea = new JPanel();
         rosters.setLayout(new BorderLayout());
 
         // set up roster table
 
         rtable = new RosterTable(false, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         rosters.add(rtable, BorderLayout.CENTER);
+        //tableArea.add(rtable);
         // add selection listener
         rtable.getTable().getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
@@ -470,7 +472,6 @@ public class DecoderPro3Window
               } else {
                 hideGroups=false;
               }
-              //p.setSimplePreferenceState(DecoderPro3Window.class.getName() + ".hideGroups", hideGroups);
               Integer last = (Integer) changeEvent.getNewValue();
               if(current>=2)
                 groupSplitPaneLocation = current;
@@ -494,6 +495,11 @@ public class DecoderPro3Window
                     // if the pane is hidden, show it when 1st group is created
                     hideGroupsPane(false);
                     enableRosterGroupMenuItems(true);
+                } else if (!rtable.isVisible() && (e.getPropertyName().equals("saved"))){
+                    if(firstHelpLabel!=null)
+                        firstHelpLabel.setVisible(false);
+                    rtable.setVisible(true);
+                    rtable.resetColumnWidths();
                 }
             }
         });
@@ -501,7 +507,12 @@ public class DecoderPro3Window
         if(Roster.instance().numEntries()==0){
             try{
                 BufferedImage myPicture = ImageIO.read(new File("resources/dp3first.gif"));
-                rosters.add(new JLabel(new ImageIcon( myPicture )), BorderLayout.CENTER);
+                //rosters.add(new JLabel(new ImageIcon( myPicture )), BorderLayout.CENTER);
+                firstHelpLabel = new JLabel(new ImageIcon( myPicture ));
+                rtable.setVisible(false);
+                rosters.add(firstHelpLabel,BorderLayout.NORTH);
+                //tableArea.add(firstHelpLabel);
+                rtable.setVisible(false);
             } catch (java.io.IOException ex) {
                 // handle exception...
             }
@@ -509,6 +520,9 @@ public class DecoderPro3Window
         }
         return rosterGroupSplitPane;
     }
+
+    JLabel firstHelpLabel;
+    //int firstTimeAddedEntry = 0x00;
     
     int clickDelay = 0;
     
@@ -1274,6 +1288,8 @@ public class DecoderPro3Window
             closeWindow(null);
         } else if (args[0].equals("newwindow")){
             newWindow();
+        } else if (args[0].equals("resettablecolumns")){
+            rtable.resetColumnWidths();
         }
         else
             log.error ("method " + args[0] + " not found");

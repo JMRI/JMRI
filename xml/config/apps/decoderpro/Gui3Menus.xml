@@ -97,6 +97,10 @@
     </node>
     <node><name>Reset Window Sizes</name>
     </node>
+    <node><name>Reset Column Widths</name>
+        <mnemonic>w</mnemonic>
+        <current>resettablecolumns</current>
+    </node>
     <node><name>Hide/Show Roster Image</name>
         <mnemonic>i</mnemonic>
         <current>hiderosterimage</current>
