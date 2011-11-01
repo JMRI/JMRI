@@ -519,7 +519,6 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
       </variable>
       <variable label="In3 Input Direction" CV="147" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePaired.xml"/>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/>
       </variable>
       <variable label="In3 Secondary 1" CV="147" mask="XXXXVVXX">
