@@ -208,6 +208,8 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
                 default : 
                         selectedItem = nBean.getDisplayName();
             }
+        } else if (_firstBlank) {
+            _lastSelected="";
         }
         _lastSelected = selectedItem;
         updateComboBox(_lastSelected);
