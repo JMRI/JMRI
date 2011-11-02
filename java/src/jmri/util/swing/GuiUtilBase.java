@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.io.File;
 import org.jdom.*;
 import java.util.Map;
+import jmri.util.jdom.LocaleSelector;
 
 /**
  * Common utility methods for working with GUI items
@@ -22,10 +23,17 @@ public class GuiUtilBase {
         Icon icon = null;
         
         HashMap<String, String> parameters = new HashMap<String, String>();
-        
-        if (child.getChild("name") != null) {
-            name = child.getChild("name").getText();
+        if(child==null){
+            log.warn("Action from node called without child");
+            return createEmptyMenuItem(null, "<none>");
         }
+        name = LocaleSelector.getAttribute(child, "name");
+        if((name==null) || (name.equals(""))){
+            if (child.getChild("name") != null) {
+                name = child.getChild("name").getText();
+            }
+        }
+
         if (child.getChild("icon") != null) {
             icon = new ImageIcon(child.getChild("icon").getText());
         }

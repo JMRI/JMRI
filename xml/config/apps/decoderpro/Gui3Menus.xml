@@ -7,197 +7,209 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
 
-  <node><name>File</name>
+  <node name="File">
+    <name xml:lang="en">Something British</name>
+    <name xml:lang="fr">Fichier</name>
     <mnemonic>f</mnemonic>
-    <node><name>New DecoderPro Window</name>
+    <node name="New DecoderPro Window">
         <mnemonic>n</mnemonic>
         <current>newwindow</current>
     </node>
-    <node><name>Import Roster</name>
+    <node name="Import Roster">
+        <name xml:lang="fr">Importer Listes</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
-    <node><name>Import Roster Entry</name>
+    <node name="Import Roster Entry">
         <adapter>jmri.jmrit.roster.ImportRosterItemAction</adapter>
     </node>
-    <node><name>Import Decoder File</name>
+    <node name="Import Decoder File">
         <adapter>jmri.jmrit.decoderdefn.InstallDecoderFileAction</adapter>
     </node>
-    <node><name>Import Decoder URL</name>
+    <node name="Import Decoder URL">
         <adapter>jmri.jmrit.decoderdefn.InstallDecoderURLAction</adapter>
     </node>
     <node>separator</node>
-    <node><name>Export Roster Entry</name>
+    <node name="Export Roster Entry">
         <current>exportloco</current>
     </node>
-    <node><name>Export Complete Roster</name>
+    <node name="Export Complete Roster">
+        <name xml:lang="fr">Exporter Listes</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
     </node>
     <node>separator</node>
-    <node><name>Close Window</name>
+    <node name="Close Window">
+        <name xml:lang="fr">Fermer</name>
         <mnemonic>c</mnemonic>
         <current>closewindow</current>
     </node>
     <node>separator</node>
-    <node><name>Print Roster</name>
+    <node name="Print Roster">
+        <name xml:lang="fr">Imprimer Listes</name>
         <mnemonic>p</mnemonic>
-        <node><name>Entry</name>
+        <node name="Entry">
             <current>printloco</current>
         </node>
-        <node><name>Summary</name>
-        <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
+        <node name="Summary">
+            <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
             <option class="boolean.class" setting="false">isPreview</option>
         </node>
     </node>
-    <node><name>Print Preview Roster</name>
+    <node name="Print Preview Roster">
         <mnemonic>v</mnemonic>
-        <node><name>Entry</name>
+        <node name="Entry">
             <current>printpreviewloco</current>
         </node>
-        <node><name>Summary</name>
+        <node name="Summary">
             <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
             <option class="boolean.class" setting="true">isPreview</option>
         </node>
     </node>
     <node>separator</node>
-    <node><name>Quit</name>
+    <node name="Quit">
+        <name xml:lang="fr">Quitter</name>
         <mnemonic>q</mnemonic>
         <current>quit</current>
     </node>
   </node>
 
-  <node><name>Edit</name>
+  <node name="Edit">
+    <name xml:lang="fr">Édition</name>
     <mnemonic>e</mnemonic>
-    <node><name>Cut</name>
-    <mnemonic>t</mnemonic>
+    <node name="Cut">
+        <name xml:lang="fr">Couper</name>
+        <mnemonic>t</mnemonic>
     </node>
-    <node><name>Copy</name>
-    <mnemonic>c</mnemonic>
+    <node name="Copy">
+        <name xml:lang="fr">Copier</name>
+        <mnemonic>c</mnemonic>
     </node>
-    <node><name>Paste</name>
-    <mnemonic>p</mnemonic>
+    <node name="Paste">
+        <name xml:lang="fr">Coller</name>
+        <mnemonic>p</mnemonic>
     </node>
-    <node><name>Duplicate Loco</name>
+    <node name="Duplicate Loco">
         <current>copyloco</current>
     </node>
-    <node><name>Delete Loco</name>
+    <node name="Delete Loco">
         <current>deleteloco</current>
     </node>
     <node>separator</node>
-    <node><name>Preferences</name>
+    <node name="Preferences">
+        <name xml:lang="fr">Préférences</name>
         <adapter>apps.gui3.TabbedPreferencesAction</adapter>
         <mnemonic>s</mnemonic>
     </node>
   </node>
 
-  <node><name>Settings</name>
+  <node name="Settings">
     <mnemonic>s</mnemonic>
-    <node><name>Hide/Show Summary Pane</name>
+    <node name="Hide/Show Summary Pane">
         <current>summarypane</current>
         <type>checkbox</type>
     </node>
-    <node><name>Reset Window Sizes</name>
+    <node name="Reset Window Sizes">
     </node>
-    <node><name>Reset Column Widths</name>
+    <node name="Reset Column Widths">
         <mnemonic>w</mnemonic>
         <current>resettablecolumns</current>
     </node>
-    <node><name>Hide/Show Roster Image</name>
+    <node name="Hide/Show Roster Image">
         <mnemonic>i</mnemonic>
         <current>hiderosterimage</current>
     </node>
-    <node><name>Hide/Show Roster Groups</name>
+    <node name="Hide/Show Roster Groups">
         <current>groupspane</current>
         <type>checkbox</type>
     </node>
     <node>separator</node>
-    <node>group<name>Programming</name>
+    <node name="Programming">group
         <mnemonic>p</mnemonic>
-        <node>
-            <name>Service Mode</name>
+        <node name="Service Mode">
             <current>setprogservice</current>
         </node>
-        <node>
-            <name>Operations Mode</name>
+        <node name="Operations Mode">
             <current>setprogops</current>
         </node>
-        <node>
-            <name>Edit Mode</name>
+        <node name="Edit Mode">
             <current>setprogedit</current>
         </node>
     </node>
     <node>separator</node>
-    <node><name>Create Roster Group</name>
+    <node name="Create Roster Group">
+        <name xml:lang="fr">Créer un groupe</name>
         <mnemonic>c</mnemonic>
         <adapter>jmri.jmrit.roster.swing.CreateRosterGroupAction</adapter>
     </node>
-    <node><name>Rename Roster Group</name>
+    <node name="Rename Roster Group">
         <mnemonic>r</mnemonic>
         <adapter>jmri.jmrit.roster.swing.RenameRosterGroupAction</adapter>
         </node>
-    <node><name>Duplicate Roster Group</name>
+    <node name="Duplicate Roster Group">
         <adapter>jmri.jmrit.roster.swing.CopyRosterGroupAction</adapter>
         </node>
-    <node><name>Delete Roster Group</name>
+    <node name="Delete Roster Group">
+        <name xml:lang="fr">Supprimer un groupe</name>
         <mnemonic>d</mnemonic>
         <adapter>jmri.jmrit.roster.swing.DeleteRosterGroupAction</adapter>
         <current>deletegroup</current>
     </node>
     <node>separator</node>
-    <node><name>Set Active Roster Group</name>
+    <node name="Set Active Roster Group">
+        <name xml:lang="fr">Sélectionner le groupe actif</name>
         <mnemonic>a</mnemonic>
         <adapter>jmri.jmrit.roster.swing.SelectRosterGroupAction</adapter>
         <current>activegroup</current>
     </node>
-    <node><name>Roster Group Table Association</name>
+    <node name="Roster Group Table Association">
         <mnemonic>t</mnemonic>
         <adapter>jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction</adapter>
         <current>grouptable</current>
     </node>
   </node>
   
-  <node><name>Actions</name>
+  <node name="Actions">
     <mnemonic>a</mnemonic>
-    <node><name>Program</name>
+    <node name="Program">
         <current>comprehensiveprogrammer</current>
     </node>
-    <node><name>Labels and Media</name>
+    <node name="Labels and Media">
         <current>editrostermedia</current>
     </node>
-    <node><name>New Throttle</name>
+    <node name="New Throttle">
         <adapter>jmri.jmrit.throttle.ThrottleCreationAction</adapter>
     </node>
     <node>separator</node>
-    <node><name>Consisting Tool</name>
+    <node name="Consisting Tool">
         <adapter>jmri.jmrit.consisttool.ConsistToolAction</adapter>
     </node>
-    <node><name>Turnout Control</name>
+    <node name="Turnout Control">
         <adapter>jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction</adapter>
     </node>
-    <node><name>Power Control</name>
+    <node name="Power Control">
         <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
     </node>
-    <node><name>SpeedoMeter</name>
+    <node name="SpeedoMeter">
         <adapter>jmri.jmrit.speedometer.SpeedometerAction</adapter>
     </node>
-    <node><name>Single CV Programmer</name>
+    <node name="Single CV Programmer">
         <adapter>jmri.jmrit.simpleprog.SimpleProgAction</adapter>
     </node>
     <node>separator</node>
-    <node><name>Start WiThrottle Server</name>
+    <node name="Start WiThrottle Server">
         <adapter>jmri.jmrit.withrottle.WiThrottleCreationAction</adapter>
     </node>
-    <node><name>Start Mini WebServer</name>
+    <node name="Start Mini WebServer">
         <adapter>jmri.web.miniserver.MiniServerAction</adapter>
     </node>
     <node>separator</node>
-    <node><name>Recreate Roster Index</name>
+    <node name="Recreate Roster Index">
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
-    <node><name>Recreate Decoder Index</name>
+    <node name="Recreate Decoder Index">
         <adapter>jmri.jmrit.decoderdefn.DecoderIndexCreateAction</adapter>
     </node>
     <node>separator</node>
-    <node><name>Run Script</name>
+    <node name="Run Script">
         <adapter>jmri.jmrit.jython.RunJythonScript</adapter>
     </node>
   </node>

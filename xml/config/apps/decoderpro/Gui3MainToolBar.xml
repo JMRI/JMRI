@@ -8,16 +8,16 @@
 >
   <name>DecoderPro</name>
 
-   <node><name>Help</name>
+   <node name="Help">
      <help>package.apps.gui3.dp3.DecoderPro3</help>
    </node>
   
-    <node><name>New Loco</name>
+    <node name="New Loco">
         <icon>resources/icons/misc/gui3/NewLocoButton.png</icon>
         <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
     </node>
     
-    <node><name>Identify</name>
+    <node name="Identify">
         <current>identifyloco</current>
         <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
     </node>

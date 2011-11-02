@@ -20,7 +20,7 @@
 
     <programmer 
             decoderFilePanes="no" showEmptyPanes="no"
-            showFnLanelPane="no" showRosterMediaPane="yes"
+            showFnLanelPane="yes" showRosterMediaPane="yes"
             showRosterPane="no">
     
     <!-- all panes -->

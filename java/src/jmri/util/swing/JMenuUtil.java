@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.*;
 import org.jdom.*;
 import java.beans.PropertyChangeListener;
+import jmri.util.jdom.LocaleSelector;
 
 /**
  * Common utility methods for working with JMenus.
@@ -47,8 +48,17 @@ public class JMenuUtil extends GuiUtilBase {
     
     static JMenu jMenuFromElement(Element main, WindowInterface wi, Object context) {
         String name = "<none>";
-        Element e = main.getChild("name");
-        if (e != null) name = e.getText();
+        if(main==null){
+            log.warn("Menu from element called without an element");
+            return new JMenu(name);
+        }
+        name = LocaleSelector.getAttribute(main, "name");
+        //Next statement left in if the xml file hasn't been converted
+        if((name==null) || (name.equals(""))){
+            if (main.getChild("name") != null) {
+                name = main.getChild("name").getText();
+            }
+        }
         JMenu menu = new JMenu(name);
         ArrayList<Integer> mnemonicList = new ArrayList<Integer>();
         for (Object item : main.getChildren("node")) {
@@ -88,8 +98,17 @@ public class JMenuUtil extends GuiUtilBase {
     
     static JMenu createMenuGroupFromElement(Element main, WindowInterface wi, Object context){
         String name = "<none>";
-        Element e = main.getChild("name");
-        if (e != null) name = e.getText();
+        if(main==null){
+            log.warn("Menu from element called without an element");
+            return new JMenu(name);
+        }
+        name = LocaleSelector.getAttribute(main, "name");
+        //Next statement left in if the xml file hasn't been converted
+        if((name==null) || (name.equals(""))){
+            if (main.getChild("name") != null) {
+                name = main.getChild("name").getText();
+            }
+        }
         JMenu menu = new JMenu(name);
         ButtonGroup group = new ButtonGroup();
         for (Object item : main.getChildren("node")) {
