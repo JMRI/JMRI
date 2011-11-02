@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriBeanComboBox;
 
 /**
  * Swing action to create and register a Route Table
@@ -303,16 +304,18 @@ public class RouteTableAction extends AbstractTableAction {
 
     JTextField soundFile = new JTextField(20);
     JTextField scriptFile = new JTextField(20);
-    JTextField turnoutsAlignedSensor = new JTextField(8);
+    JmriBeanComboBox turnoutsAlignedSensor = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
 
-    JTextField sensor1 = new JTextField(8);
+    JmriBeanComboBox sensor1 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+    
     JComboBox  sensor1mode = new JComboBox(sensorInputModes);
-    JTextField sensor2 = new JTextField(8);
+    JmriBeanComboBox sensor2 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
     JComboBox  sensor2mode = new JComboBox(sensorInputModes);
-    JTextField sensor3 = new JTextField(8);
+    JmriBeanComboBox sensor3 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
     JComboBox  sensor3mode = new JComboBox(sensorInputModes);
-    JTextField cTurnout = new JTextField(8);
-    JTextField cLockTurnout = new JTextField(8);
+    
+    JmriBeanComboBox cTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
+    JmriBeanComboBox cLockTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
 	JTextField timeDelay = new JTextField(5);
 
     JComboBox cTurnoutStateBox = new JComboBox(turnoutInputModes);
@@ -584,6 +587,8 @@ public class RouteTableAction extends AbstractTableAction {
             p27.setLayout(new FlowLayout());
             p27.add(new JLabel("Enter Sensor that Activates when Route Turnouts are correctly aligned (optional):"));
             p27.add(turnoutsAlignedSensor);
+            turnoutsAlignedSensor.setFirstItemBlank(true);
+            turnoutsAlignedSensor.setSelectedBean(null);
             turnoutsAlignedSensor.setToolTipText("Enter a Sensor system name or nothing");
             contentPane.add(p27);
            
@@ -595,15 +600,31 @@ public class RouteTableAction extends AbstractTableAction {
             p3.add(p31);
             JPanel p32 = new JPanel();
             p32.add(new JLabel("Sensors: "));
-            p32.add(sensor1);
-            p32.add(sensor1mode);
-            p32.add(sensor2);
-            p32.add(sensor2mode);
-            p32.add(sensor3);
-            p32.add(sensor3mode);
-            sensor1.setText("");
-            sensor2.setText("");
-            sensor3.setText("");
+            Border pSBorder = BorderFactory.createEtchedBorder();
+            JPanel pS = new JPanel();
+            pS.setBorder(pSBorder);
+            pS.add(sensor1);
+            pS.add(sensor1mode);
+            p32.add(pS);
+                
+            pS = new JPanel();
+            pS.setBorder(pSBorder);
+            pS.add(sensor2);
+            pS.add(sensor2mode);
+            p32.add(pS);
+            
+            pS = new JPanel();
+            pS.setBorder(pSBorder);
+            pS.add(sensor3);
+            pS.add(sensor3mode);
+            p32.add(pS);
+            
+            sensor1.setFirstItemBlank(true);
+            sensor2.setFirstItemBlank(true);
+            sensor3.setFirstItemBlank(true);
+            sensor1.setSelectedBean(null);
+            sensor2.setSelectedBean(null);
+            sensor3.setSelectedBean(null);
             String sensorHint = "Enter a Sensor system name or nothing";
             sensor1.setToolTipText(sensorHint);
             sensor2.setToolTipText(sensorHint);
@@ -616,7 +637,8 @@ public class RouteTableAction extends AbstractTableAction {
             JPanel p34 = new JPanel();
             p34.add(new JLabel("Turnout: "));
             p34.add(cTurnout);
-            cTurnout.setText("");
+            cTurnout.setFirstItemBlank(true);
+            cTurnout.setSelectedBean(null);
             cTurnout.setToolTipText("Enter a Turnout system name (real or phantom)");
             p34.add(new JLabel("   Condition: "));
             cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route");
@@ -648,7 +670,8 @@ public class RouteTableAction extends AbstractTableAction {
             JPanel p44 = new JPanel();
             p44.add(new JLabel("Turnout: "));
             p44.add(cLockTurnout);
-            cLockTurnout.setText("");
+            cLockTurnout.setFirstItemBlank(true);
+            cLockTurnout.setSelectedBean(null);
             cLockTurnout.setToolTipText("Enter a Turnout system name (real or phantom)");
             p44.add(new JLabel("   Condition: "));
             cLockTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will lock Route");
@@ -894,63 +917,38 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void setControlInformation(Route g) {
         // Get sensor control information if any
-        String sensorSystemName = sensor1.getText();
-        if (sensorSystemName.length() > 0) {
-            Sensor s1 = InstanceManager.sensorManagerInstance().
-                            provideSensor(sensorSystemName);
-            if ( (s1==null) || (!g.addSensorToRoute(sensorSystemName, sensorModeFromBox(sensor1mode))) ) {
-                log.error("Unexpected failure to add Sensor '"+sensorSystemName+
+        if(sensor1.getSelectedBean()!=null){
+            if ( (!g.addSensorToRoute(sensor1.getSelectedDisplayName(), sensorModeFromBox(sensor1mode))) ) {
+                log.error("Unexpected failure to add Sensor '"+sensor1.getSelectedDisplayName()+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
         }
-        sensorSystemName = sensor2.getText();
-        if (sensorSystemName.length() > 0) {
-            Sensor s2 = InstanceManager.sensorManagerInstance().
-                            provideSensor(sensorSystemName);
-            if ( (s2==null) || (!g.addSensorToRoute(sensorSystemName, sensorModeFromBox(sensor2mode))) ) {
-                log.error("Unexpected failure to add Sensor '"+sensorSystemName+
+
+        if(sensor2.getSelectedBean()!=null){
+            if ((!g.addSensorToRoute(sensor2.getSelectedDisplayName(), sensorModeFromBox(sensor2mode))) ) {
+                log.error("Unexpected failure to add Sensor '"+sensor2.getSelectedDisplayName()+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
         }
-        sensorSystemName = sensor3.getText();
-        if (sensorSystemName.length() > 0) {
-            Sensor s3 = InstanceManager.sensorManagerInstance().
-                            provideSensor(sensorSystemName);
-            if ( (s3==null) || (!g.addSensorToRoute(sensorSystemName, sensorModeFromBox(sensor3mode))) ) {
-                log.error("Unexpected failure to add Sensor '"+sensorSystemName+
+
+        if(sensor3.getSelectedBean()!=null){
+            if ((!g.addSensorToRoute(sensor3.getSelectedDisplayName(), sensorModeFromBox(sensor3mode))) ) {
+                log.error("Unexpected failure to add Sensor '"+sensor3.getSelectedDisplayName()+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
         }
         
         //turnouts aligned sensor
-        sensorSystemName = turnoutsAlignedSensor.getText();
-        if (sensorSystemName.length() > 0) {
-            Sensor tas = InstanceManager.sensorManagerInstance().provideSensor(sensorSystemName);
-            if (tas==null){
-                log.error("Unexpected failure to add Turnouts Aligned Sensor '"+sensorSystemName+
-                                            "' to Route '"+g.getSystemName()+"'.");
-            }
-            else
-            {
-            g.setTurnoutsAlignedSensor(sensorSystemName);
-            }
+        if(turnoutsAlignedSensor.getSelectedBean()!=null){
+            g.setTurnoutsAlignedSensor(turnoutsAlignedSensor.getSelectedDisplayName());
         }
         
         // Set turnout information if there is any
-        String turnoutSystemName = cTurnout.getText();
-        if (turnoutSystemName.length() > 0) {
-            Turnout t = InstanceManager.turnoutManagerInstance().
-                                    provideTurnout(turnoutSystemName);
-            if (t!=null) {
-                g.setControlTurnout(turnoutSystemName);
-                // set up control turnout state
-                g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
-            }
-            else {
-                g.setControlTurnout("");
-                log.error("Unexpected failure to add control Turnout '"+
-                        turnoutSystemName+"' to Route '"+g.getSystemName()+"'.");
-            }
+        
+        if (cTurnout.getSelectedBean()!=null) {
+            g.setControlTurnout(cTurnout.getSelectedDisplayName());
+            // set up control turnout state
+            g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
         } else {
             // No control Turnout was entered
             g.setControlTurnout("");
@@ -975,20 +973,10 @@ public class RouteTableAction extends AbstractTableAction {
 		g.setRouteCommandDelay(addDelay);
 		
 	    // Set lock turnout information if there is any
-        String turnoutLockSystemName = cLockTurnout.getText();
-        if (turnoutLockSystemName.length() > 0) {
-            Turnout t = InstanceManager.turnoutManagerInstance().
-                                    provideTurnout(turnoutLockSystemName);
-            if (t!=null) {
-                g.setLockControlTurnout(turnoutLockSystemName);
-                // set up control turnout state
-                g.setLockControlTurnoutState(turnoutModeFromBox(cLockTurnoutStateBox));
-            }
-            else {
-                g.setLockControlTurnout("");
-                log.error("Unexpected failure to add lock control Turnout '"+
-                        turnoutLockSystemName+"' to Route '"+g.getSystemName()+"'.");
-            }
+        if (cLockTurnout.getSelectedBean()!=null) {
+            g.setLockControlTurnout(cLockTurnout.getSelectedDisplayName());
+            // set up control turnout state
+            g.setLockControlTurnoutState(turnoutModeFromBox(cLockTurnoutStateBox));
         } else {
             // No control Turnout was entered
             g.setLockControlTurnout("");
@@ -1106,31 +1094,31 @@ public class RouteTableAction extends AbstractTableAction {
         soundFile.setText(g.getOutputSoundName());
         
         // get turnout aligned sensor
-        turnoutsAlignedSensor.setText(g.getTurnoutsAlignedSensor());
+        turnoutsAlignedSensor.setSelectedBean(g.getTurnoutsAlgdSensor());
 
         // set up Sensors if there are any
-        String[] temNames = new String[Route.MAX_CONTROL_SENSORS];
+        Sensor[] temNames = new Sensor[Route.MAX_CONTROL_SENSORS];
         int[] temModes = new int[Route.MAX_CONTROL_SENSORS];
         for (int k = 0; k<Route.MAX_CONTROL_SENSORS; k++) {
-            temNames[k] = g.getRouteSensorName(k);
+            temNames[k] = g.getRouteSensor(k);
             temModes[k] = g.getRouteSensorMode(k);
         }
-        sensor1.setText(temNames[0]);
+        sensor1.setSelectedBean(temNames[0]);
         setSensorModeBox(temModes[0], sensor1mode);
 
-        sensor2.setText(temNames[1]);
+        sensor2.setSelectedBean(temNames[1]);
         setSensorModeBox(temModes[1], sensor2mode);
 
-        sensor3.setText(temNames[2]);
+        sensor3.setSelectedBean(temNames[2]);
         setSensorModeBox(temModes[2], sensor3mode);
 
         // set up control Turnout if there is one
-        cTurnout.setText(g.getControlTurnout()); 
+        cTurnout.setSelectedBean(g.getCtlTurnout()); 
         
         setTurnoutModeBox(g.getControlTurnoutState(), cTurnoutStateBox);
         
         // set up lock control Turnout if there is one
-        cLockTurnout.setText(g.getLockControlTurnout()); 
+        cLockTurnout.setSelectedBean(g.getLockCtlTurnout()); 
         
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
         
@@ -1228,12 +1216,12 @@ public class RouteTableAction extends AbstractTableAction {
         _systemName.setVisible(true);
         _systemName.setText("");
         _userName.setText("");
-        sensor1.setText("");
-        sensor2.setText("");
-        sensor3.setText("");
-        cTurnout.setText("");
-        cLockTurnout.setText("");
-        turnoutsAlignedSensor.setText("");
+        sensor1.setSelectedBean(null);
+        sensor2.setSelectedBean(null);
+        sensor3.setSelectedBean(null);
+        cTurnout.setSelectedBean(null);
+        cLockTurnout.setSelectedBean(null);
+        turnoutsAlignedSensor.setSelectedBean(null);
         soundFile.setText("");
         scriptFile.setText("");
         for (int i=_turnoutList.size()-1; i>=0; i--) { 
@@ -1375,16 +1363,18 @@ public class RouteTableAction extends AbstractTableAction {
                                           vetoList, logix, logixSystemName, uName); 
 
 	    ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
-        String sensorSystemName = turnoutsAlignedSensor.getText();
-        if (sensorSystemName.length() > 0) {
+        //String sensorSystemName = turnoutsAlignedSensor.getText();
+        if (turnoutsAlignedSensor.getSelectedBean()!=null) {
             // verify name (logix doesn't use "provideXXX") 
-            Sensor s = InstanceManager.sensorManagerInstance().getByUserName(sensorSystemName);
-            if (s == null) {
+            //Sensor s = turnoutsAlignedSensor.getSelectedBean();
+            /*if (s == null) {
                 s = InstanceManager.sensorManagerInstance().getBySystemName(sensorSystemName);
-            }
-            if (s != null) {
+            }*/
+            //if (s != null) {
+                String sensorSystemName = turnoutsAlignedSensor.getSelectedDisplayName();
                 cSystemName = logixSystemName+"1A";
-                cUserName = sensorSystemName+"A "+uName;
+                cUserName = turnoutsAlignedSensor.getSelectedDisplayName()+"A "+uName;
+                
                 ArrayList <ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
                 for (int i=0; i<_includedTurnoutList.size(); i++) {
                     RouteTurnout rTurnout = _includedTurnoutList.get(i);
@@ -1416,37 +1406,45 @@ public class RouteTableAction extends AbstractTableAction {
                 c.setAction(actionList);
                 logix.addConditional(cSystemName, 0);
                 c.calculate(true, null);
-            }
+            //}
         }
 
 	    ///////////////// Set lock turnout information if there is any //////////////////////////
-        String turnoutLockSystemName = cLockTurnout.getText();
-        if (turnoutLockSystemName.length() > 0) {
+        if (cLockTurnout.getSelectedBean()!=null) {
+            String turnoutLockSystemName = cLockTurnout.getSelectedDisplayName();
             // verify name (logix doesn't use "provideXXX") 
-            Turnout t = InstanceManager.turnoutManagerInstance().getByUserName(turnoutLockSystemName);
-            if (t == null) {
-                t = InstanceManager.turnoutManagerInstance().getBySystemName(turnoutLockSystemName);
+            cSystemName = logixSystemName+"1L";
+            cUserName = turnoutLockSystemName+"L "+uName;
+            ArrayList <ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
+            //String devName = cTurnout.getText();
+            int mode = turnoutModeFromBox(cTurnoutStateBox);
+            int type = Conditional.TYPE_TURNOUT_CLOSED;
+            if (mode == Route.ONTHROWN) {
+                type = Conditional.TYPE_TURNOUT_THROWN;
             }
-            if (t != null) {
-                cSystemName = logixSystemName+"1L";
-                cUserName = turnoutLockSystemName+"L "+uName;
-                ArrayList <ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
-                //String devName = cTurnout.getText();
-                int mode = turnoutModeFromBox(cTurnoutStateBox);
-                int type = Conditional.TYPE_TURNOUT_CLOSED;
-                if (mode == Route.ONTHROWN) {
-                    type = Conditional.TYPE_TURNOUT_THROWN;
-                }
-                variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
-                                                         type, turnoutLockSystemName, true));
+            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+                                                     type, turnoutLockSystemName, true));
 
-                actionList = new ArrayList<ConditionalAction>();
-                int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-                type = Turnout.LOCKED;
-                if (mode == Route.ONCHANGE) {
-                    option = Conditional.ACTION_OPTION_ON_CHANGE;
-                    type = Route.TOGGLE;
+            actionList = new ArrayList<ConditionalAction>();
+            int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
+            type = Turnout.LOCKED;
+            if (mode == Route.ONCHANGE) {
+                option = Conditional.ACTION_OPTION_ON_CHANGE;
+                type = Route.TOGGLE;
+            }
+            for (int i=0; i<_includedTurnoutList.size(); i++) {
+                RouteTurnout rTurnout = _includedTurnoutList.get(i);
+                String name = rTurnout.getUserName();
+                if (name == null || name.length() == 0) {
+                     name = rTurnout.getSysName();
                 }
+                actionList.add(new DefaultConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
+                                                     name, type, ""));
+            }
+            if (mode != Route.ONCHANGE) {
+                // add non-toggle actions on
+                option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
+                type = Turnout.UNLOCKED;
                 for (int i=0; i<_includedTurnoutList.size(); i++) {
                     RouteTurnout rTurnout = _includedTurnoutList.get(i);
                     String name = rTurnout.getUserName();
@@ -1456,29 +1454,15 @@ public class RouteTableAction extends AbstractTableAction {
                     actionList.add(new DefaultConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
                                                          name, type, ""));
                 }
-                if (mode != Route.ONCHANGE) {
-                    // add non-toggle actions on
-                    option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
-                    type = Turnout.UNLOCKED;
-                    for (int i=0; i<_includedTurnoutList.size(); i++) {
-                        RouteTurnout rTurnout = _includedTurnoutList.get(i);
-                        String name = rTurnout.getUserName();
-                        if (name == null || name.length() == 0) {
-                             name = rTurnout.getSysName();
-                        }
-                        actionList.add(new DefaultConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
-                                                             name, type, ""));
-                    }
-                }
-
-               // add new Conditionals for action on 'locks'
-                Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
-                c.setStateVariables(variableList);
-                c.setLogicType(Conditional.ALL_AND, "");
-                c.setAction(actionList);
-                logix.addConditional(cSystemName, 0);
-                c.calculate(true, null);
             }
+
+           // add new Conditionals for action on 'locks'
+            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            c.setStateVariables(variableList);
+            c.setLogicType(Conditional.ALL_AND, "");
+            c.setAction(actionList);
+            logix.addConditional(cSystemName, 0);
+            c.calculate(true, null);
         }
         logix.activateLogix();
         if (curRoute != null) {
@@ -1500,11 +1484,11 @@ public class RouteTableAction extends AbstractTableAction {
         return false;
     }
 
-    int makeSensorConditional(JTextField nameText, JComboBox sensorbox, int numConds, 
+    int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox sensorbox, int numConds, 
                         boolean onChange, ArrayList<ConditionalAction>actionList,
                         ArrayList<ConditionalVariable>vetoList, Logix logix, String prefix, String uName) 
     {
-        ConditionalVariable cVar = makeCtrlSensorVar(nameText, sensorbox, false, onChange);
+        ConditionalVariable cVar = makeCtrlSensorVar(jmriBox, sensorbox, false, onChange);
         if (cVar != null) {
             ArrayList <ConditionalVariable> varList = new ArrayList<ConditionalVariable>();
             varList.add(cVar);
@@ -1512,7 +1496,7 @@ public class RouteTableAction extends AbstractTableAction {
                 varList.add(cloneVariable(vetoList.get(i)));
             }
             String cSystemName = prefix+numConds+"T";
-            String cUserName = nameText.getText()+numConds+"C "+uName;
+            String cUserName = jmriBox.getSelectedDisplayName()+numConds+"C "+uName;
             Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
@@ -1525,11 +1509,11 @@ public class RouteTableAction extends AbstractTableAction {
         return numConds;
     }
 
-    int makeTurnoutConditional(JTextField nameText, JComboBox box, int numConds, 
+    int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox box, int numConds, 
                         boolean onChange, ArrayList<ConditionalAction>actionList,
                         ArrayList<ConditionalVariable>vetoList, Logix logix, String prefix, String uName) 
     {
-        ConditionalVariable cVar = makeCtrlTurnoutVar(nameText, box, false, onChange);
+        ConditionalVariable cVar = makeCtrlTurnoutVar(jmriBox, box, false, onChange);
         if (cVar != null) {
             ArrayList <ConditionalVariable> varList = new ArrayList<ConditionalVariable>();
             varList.add(cVar);
@@ -1537,7 +1521,7 @@ public class RouteTableAction extends AbstractTableAction {
                 varList.add(cloneVariable(vetoList.get(i)));
             }
             String cSystemName = prefix+numConds+"T";
-            String cUserName = nameText.getText()+numConds+"C "+uName;
+            String cUserName = jmriBox.getSelectedDisplayName()+numConds+"C "+uName;
             Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
@@ -1569,131 +1553,111 @@ public class RouteTableAction extends AbstractTableAction {
         return list;
     }
 
-	ConditionalVariable makeCtrlSensorVar(JTextField nameText, JComboBox sensorbox,
+	ConditionalVariable makeCtrlSensorVar(JmriBeanComboBox jmriBox, JComboBox sensorbox,
                                            boolean makeVeto, boolean onChange) {
-        String devName = nameText.getText();
-        if (devName == null || devName.length() == 0) {
+        String devName = jmriBox.getSelectedDisplayName();
+        if (jmriBox.getSelectedBean() == null /*|| devName.length() == 0*/) {
             return null;
         }
-        if (devName.length()>0) {
-            // verify name (logix doesn't use "provideXXX") 
-            Sensor s = InstanceManager.sensorManagerInstance().getByUserName(devName);
-            if (s == null) {
-                s = InstanceManager.sensorManagerInstance().getBySystemName(devName);
-                if (s == null) {
+        int oper = Conditional.OPERATOR_AND;
+        int mode = sensorModeFromBox(sensorbox);
+        boolean trigger = true;
+        boolean negated = false;
+        int type = 0;
+        switch (mode) {
+            case Route.ONACTIVE:    // route fires if sensor goes active
+                if (makeVeto || onChange){
                     return null;
                 }
-            }
-            int oper = Conditional.OPERATOR_AND;
-            int mode = sensorModeFromBox(sensorbox);
-            boolean trigger = true;
-            boolean negated = false;
-            int type = 0;
-            switch (mode) {
-                case Route.ONACTIVE:    // route fires if sensor goes active
-                    if (makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_SENSOR_ACTIVE;
-                    break;
-                case Route.ONINACTIVE:  // route fires if sensor goes inactive
-                    if (makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_SENSOR_INACTIVE;
-                    break;
-                case Route.ONCHANGE:  // route fires if sensor goes active or inactive 
-                    if (makeVeto || !onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_SENSOR_ACTIVE;
-                    break;
-                case Route.VETOACTIVE:  // sensor must be active for route to fire
-                    if (!makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_SENSOR_ACTIVE;
-                    negated = true;
-                    trigger = false;
-                    break;
-                case Route.VETOINACTIVE:
-                    if (!makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_SENSOR_INACTIVE;
-                    negated = true;
-                    trigger = false;
-                    break;
-                default:
-                    log.error("Control Sensor "+devName+" has bad mode= "+mode);
+                type = Conditional.TYPE_SENSOR_ACTIVE;
+                break;
+            case Route.ONINACTIVE:  // route fires if sensor goes inactive
+                if (makeVeto || onChange){
                     return null;
-            }
-            return new ConditionalVariable(negated, oper, type, devName, trigger);
+                }
+                type = Conditional.TYPE_SENSOR_INACTIVE;
+                break;
+            case Route.ONCHANGE:  // route fires if sensor goes active or inactive 
+                if (makeVeto || !onChange){
+                    return null;
+                }
+                type = Conditional.TYPE_SENSOR_ACTIVE;
+                break;
+            case Route.VETOACTIVE:  // sensor must be active for route to fire
+                if (!makeVeto || onChange){
+                    return null;
+                }
+                type = Conditional.TYPE_SENSOR_ACTIVE;
+                negated = true;
+                trigger = false;
+                break;
+            case Route.VETOINACTIVE:
+                if (!makeVeto || onChange){
+                    return null;
+                }
+                type = Conditional.TYPE_SENSOR_INACTIVE;
+                negated = true;
+                trigger = false;
+                break;
+            default:
+                log.error("Control Sensor "+devName+" has bad mode= "+mode);
+                return null;
         }
-        return null;
+        return new ConditionalVariable(negated, oper, type, devName, trigger);
     }
 
-	ConditionalVariable makeCtrlTurnoutVar(JTextField nameText, JComboBox box,
+	ConditionalVariable makeCtrlTurnoutVar(JmriBeanComboBox jmriBox, JComboBox box,
                                             boolean makeVeto, boolean onChange) {
-        String devName = nameText.getText();
-        if (devName.length() == 0) {
+        
+        if (jmriBox.getSelectedBean() == null) {
             return null;
         }
-        if (devName.length()>0) {
-            Turnout t = InstanceManager.turnoutManagerInstance().getByUserName(devName);
-            if (t == null) {
-                t = InstanceManager.turnoutManagerInstance().getBySystemName(devName);
-                if (t == null) {
+        String devName = jmriBox.getSelectedDisplayName();
+        int mode = turnoutModeFromBox(box);
+        int oper = Conditional.OPERATOR_AND;
+        int type = 0;
+        boolean negated = false;
+        boolean trigger = true;
+        switch (mode) {
+            case Route.ONCLOSED:    // route fires if turnout goes closed
+                if (makeVeto || onChange){
                     return null;
                 }
-            }
-            int mode = turnoutModeFromBox(box);
-            int oper = Conditional.OPERATOR_AND;
-            int type = 0;
-            boolean negated = false;
-            boolean trigger = true;
-            switch (mode) {
-                case Route.ONCLOSED:    // route fires if turnout goes closed
-                    if (makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_TURNOUT_CLOSED;
-                    break;
-                case Route.ONTHROWN:  // route fires if turnout goes thrown
-                    if (makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_TURNOUT_THROWN;
-                    break;
-                case Route.ONCHANGE:    // route fires if turnout goes active or inactive
-                    if (makeVeto || !onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_TURNOUT_CLOSED;
-                    break;
-                case Route.VETOCLOSED:  // turnout must be closed for route to fire
-                    if (!makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_TURNOUT_CLOSED;
-                    trigger = false;
-                    negated = true;
-                    break;
-                case Route.VETOTHROWN:  // turnout must be thrown for route to fire
-                    if (!makeVeto || onChange){
-                        return null;
-                    }
-                    type = Conditional.TYPE_TURNOUT_THROWN;
-                    trigger = false;
-                    negated = true;
-                    break;
-                default:
-                    log.error("Control Turnout "+devName+" has bad mode= "+mode);
+                type = Conditional.TYPE_TURNOUT_CLOSED;
+                break;
+            case Route.ONTHROWN:  // route fires if turnout goes thrown
+                if (makeVeto || onChange){
                     return null;
-            }
-            return new ConditionalVariable(negated, oper, type, devName, trigger);
+                }
+                type = Conditional.TYPE_TURNOUT_THROWN;
+                break;
+            case Route.ONCHANGE:    // route fires if turnout goes active or inactive
+                if (makeVeto || !onChange){
+                    return null;
+                }
+                type = Conditional.TYPE_TURNOUT_CLOSED;
+                break;
+            case Route.VETOCLOSED:  // turnout must be closed for route to fire
+                if (!makeVeto || onChange){
+                    return null;
+                }
+                type = Conditional.TYPE_TURNOUT_CLOSED;
+                trigger = false;
+                negated = true;
+                break;
+            case Route.VETOTHROWN:  // turnout must be thrown for route to fire
+                if (!makeVeto || onChange){
+                    return null;
+                }
+                type = Conditional.TYPE_TURNOUT_THROWN;
+                trigger = false;
+                negated = true;
+                break;
+            default:
+                log.error("Control Turnout "+devName+" has bad mode= "+mode);
+                return null;
         }
-        return null;
+        return new ConditionalVariable(negated, oper, type, devName, trigger);
     }
 
     /**

@@ -184,10 +184,15 @@ public interface Route extends NamedBean {
      */
     public void setTurnoutsAlignedSensor (String sensorSystemName);
     
-     /**
+    /**
      * Method to get system name of turnouts aligned sensor.
      */
     public String getTurnoutsAlignedSensor();
+    
+    /**
+     * Method to get sensor of turnouts aligned sensor.
+     */
+    public Sensor getTurnoutsAlgdSensor();
 
     // Interface for control inputs
     
@@ -224,6 +229,16 @@ public interface Route extends NamedBean {
     public String getRouteSensorName(int index);
     
     /**
+     * Method to get the Sensor of a control Sensor in this Route.
+     *
+     *@param index The index in the Sensor array of the requested 
+     *      Sensor.  
+     *@return  null If there is no Sensor with that 'index', or if 'index'
+     *      is not in the range 0 thru MAX_SENSORS-1.
+     */
+    public Sensor getRouteSensor(int index);
+    
+    /**
      * Method to get the mode of a particular Sensor in this Route.
      *
      *@param index The index in the Sensor array of the requested 
@@ -242,6 +257,11 @@ public interface Route extends NamedBean {
      * Method to get the SystemName of a control Turnout for this Route.
      */
     public String getControlTurnout();
+    
+    /**
+     * Method to get the Turnout of a control Turnout for this Route.
+     */
+    public Turnout getCtlTurnout();
 
     /**
      * Method to set the State of control Turnout that fires this Route.
@@ -262,6 +282,11 @@ public interface Route extends NamedBean {
      * Method to get the SystemName of a lock control Turnout for this Route.
      */
     public String getLockControlTurnout();
+    
+    /**
+     * Method to get the Turnout of a lock control Turnout for this Route.
+     */
+    public Turnout getLockCtlTurnout();
 
     /**
      * Method to set the State of the lock control Turnout that locks this Route.

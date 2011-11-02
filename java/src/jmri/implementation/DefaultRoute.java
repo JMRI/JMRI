@@ -462,7 +462,7 @@ public class DefaultRoute extends AbstractNamedBean
         return mTurnoutsAlignedSensor;
     }
     
-    private Sensor getTurnoutsAlgdSensor(){
+    public Sensor getTurnoutsAlgdSensor(){
         if(mTurnoutsAlignedNamedSensor!=null){
             return mTurnoutsAlignedNamedSensor.getBean();
         }
@@ -576,7 +576,7 @@ public class DefaultRoute extends AbstractNamedBean
         return mControlTurnout;
     }
     
-    private Turnout getCtlTurnout(){
+    public Turnout getCtlTurnout(){
         if(mControlNamedTurnout!=null){
             return mControlNamedTurnout.getBean();
         }
@@ -617,7 +617,7 @@ public class DefaultRoute extends AbstractNamedBean
         return mLockControlTurnout;
     }
     
-    private Turnout getLockCtlTurnout(){
+    public Turnout getLockCtlTurnout(){
         if(mLockControlNamedTurnout!=null){
             return mLockControlNamedTurnout.getBean();
         }
