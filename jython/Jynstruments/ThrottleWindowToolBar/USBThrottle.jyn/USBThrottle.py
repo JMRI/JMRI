@@ -15,17 +15,17 @@
 # The customizable part bellow are the throttles calls
 #
 
-import jmri.jmrit.jython.Jynstrument as Jynstrument
-import java.beans.PropertyChangeListener as PropertyChangeListener
-import jmri.jmrit.throttle.AddressListener as AddressListener
-import javax.swing.Timer as Timer
-import java.util.Calendar as Calendar
-import thread
 import sys
-import net.java.games.input.Controller as Controller
-import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
-import javax.swing.JButton as JButton
+import thread
+
+import java.beans.PropertyChangeListener as PropertyChangeListener
+import java.util.Calendar as Calendar
 import javax.swing.ImageIcon as ImageIcon
+import javax.swing.JButton as JButton
+import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
+import javax.swing.Timer as Timer
+import jmri.jmrit.jython.Jynstrument as Jynstrument
+import jmri.jmrit.throttle.AddressListener as AddressListener
 import org.jdom.Element as Element
 
 # Some default speeds that will be used in the program
@@ -95,7 +95,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                         pass
                     
                     try:
-                        # Speed
+                        # Speed - dynamic controler (joystick going back to neutral position)
                         if ((component == self.driver.componentSpeedIncrease) or (component == self.driver.componentSpeedDecrease) or (component == self.driver.componentSpeed)):
                             if ((component == self.driver.componentSpeedIncrease) and (value == self.driver.valueSpeedIncrease)) :
                                 self.speedAction.setSpeedIncrement( 0.03 )
@@ -113,7 +113,19 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                                 self.speedTimer.stop()
                     except AttributeError:
                         self.speedTimer.stop() # just in case, stop it, really should never get there
-    
+                    
+                    try:
+                        # Speed v2 - static controler (lever on RailDriver or AAR105)
+                        if (component == self.driver.componentSpeedSet):
+                            # negative is lever front, positive is lever back
+                            # limit range to only positive side of lever
+                            if (value < self.driver.valueSpeedSetMinValue) : value = self.driver.valueSpeedSetMinValue
+                            if (value > self.driver.valueSpeedSetMaxValue) : value = self.driver.valueSpeedSetMaxValue
+                            # convert fraction of input to speed step
+                            self.throttle.setSpeedSetting((value-self.driver.valueSpeedSetMinValue)/(self.driver.valueSpeedSetMaxValue-self.driver.valueSpeedSetMinValue))
+                            print "Slider Speed:", self.controlPanel.getDisplaySlider()
+                    except AttributeError:
+                        pass
                     # Direction
                     try:
                         if ((component == self.driver.componentDirectionForward) and (value == self.driver.valueDirectionForward)) :
@@ -139,7 +151,12 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     except AttributeError:
                         pass
                     try:   # EStop
-                        if ((component == self.driver.componentEStopSpeed) and (value == self.driver.valueEStopSpeed)) :
+                        if ((component == self.driver.componentEStopSpeed) and (value == self.driver.valueEStopSpeed)):
+                            self.throttle.setSpeedSetting(EStopSpeed)
+                    except AttributeError:
+                        pass
+                    try:   # EStop
+                        if ((component == self.driver.componentEStopSpeedBis) and (value == self.driver.valueEStopSpeedBis)):
                             self.throttle.setSpeedSetting(EStopSpeed)
                     except AttributeError:
                         pass
@@ -368,6 +385,13 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                             self.throttle.setF28( not self.throttle.getF28() )
                     except AttributeError:
                         pass
+                    try:
+                        if ((component == self.driver.componentF29) and (value == self.driver.valueF29)) :
+                            self.throttle.setF29( not self.throttle.getF29() )
+                        if ((self.roster != None) and (not self.roster.getFunctionLockable(29)) and (component == self.driver.componentF29) and (value == self.driver.valueF29Off)) :
+                            self.throttle.setF29( not self.throttle.getF29() )
+                    except AttributeError:
+                        pass
                         
         # Nothing to customize bellow this point
         if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
@@ -393,7 +417,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.speedAction.setThrottle( self.throttle )
         self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
         self.speedTimer.setRepeats(True)
-        self.label = JButton(ImageIcon(self.getFolder() + "/USBControl.png","WiiMote")) #label
+        self.label = JButton(ImageIcon(self.getFolder() + "/USBControl.png","USBThrottle")) #label
         self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         self.add(self.label)
         self.model = jmri.jmrix.jinput.TreeModel.instance() # USB
