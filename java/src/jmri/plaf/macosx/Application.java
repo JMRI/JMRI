@@ -33,7 +33,6 @@ public class Application {
     
     private static Application sharedApplication = null;
     private com.apple.eawt.Application application = null;
-    private Class applicationClass = null;
     private ApplicationListener legacyListener = null;
     
     public static Application getApplication() {
