@@ -3086,6 +3086,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 util.setTextFontMenu(popup);
                 util.setBackgroundMenu(popup);
                 util.setTextJustificationMenu(popup);
+                popup.addSeparator();
+                util.propertyUtil(popup);
                 popupSet = true;
             }
             if (popupSet) { 
