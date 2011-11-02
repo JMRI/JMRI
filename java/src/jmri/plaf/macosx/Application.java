@@ -4,8 +4,6 @@ package jmri.plaf.macosx;
 import com.apple.eawt.AppEvent.PreferencesEvent;
 import com.apple.eawt.AppEvent.QuitEvent;
 import com.apple.eawt.ApplicationEvent;
-import com.apple.eawt.PreferencesHandler;
-import com.apple.eawt.QuitHandler;
 import com.apple.eawt.QuitResponse;
 import jmri.util.SystemType;
 
@@ -54,13 +52,13 @@ public class Application {
         }
     }
 
-    public void setPreferencesHandler(final EventHandler handler) {
+    public void setPreferencesHandler(final PreferencesHandler handler) {
         try {
             if (handler != null) {
-                application.setPreferencesHandler(new PreferencesHandler() {
+                application.setPreferencesHandler(new com.apple.eawt.PreferencesHandler() {
 
                     public void handlePreferences(PreferencesEvent pe) {
-                        handler.eventHandled(pe);
+                        handler.handlePreferences(pe);
                     }
                 });
             } else {
@@ -72,13 +70,13 @@ public class Application {
         }
     }
     
-    public void setQuitHandler(final EventHandler handler) {
+    public void setQuitHandler(final QuitHandler handler) {
         try {
             if (handler != null) {
-                application.setQuitHandler(new QuitHandler() {
+                application.setQuitHandler(new com.apple.eawt.QuitHandler() {
 
                     public void handleQuitRequestWith(QuitEvent qe, QuitResponse qr) {
-                        if (handler.eventHandled(qe)) {
+                        if (handler.handleQuitRequest(qe)) {
                             qr.performQuit();
                         } else {
                             qr.cancelQuit();
@@ -104,14 +102,14 @@ public class Application {
 
     // Support Java 1.5
     private class ApplicationListener implements com.apple.eawt.ApplicationListener {
-        private EventHandler quitHandler = null;
-        private EventHandler preferencesHandler = null;
+        private QuitHandler quitHandler = null;
+        private PreferencesHandler preferencesHandler = null;
 
-        protected void setPreferencesHandler(EventHandler handler) {
+        protected void setPreferencesHandler(PreferencesHandler handler) {
             preferencesHandler = handler;
         }
 
-        protected void setQuitHandler(EventHandler handler) {
+        protected void setQuitHandler(QuitHandler handler) {
             quitHandler = handler;
         }
 
@@ -129,7 +127,7 @@ public class Application {
 
         public void handlePreferences(ApplicationEvent ae) {
             if (preferencesHandler != null) {
-                preferencesHandler.eventHandled(ae);
+                preferencesHandler.handlePreferences(ae);
             }
         }
 
@@ -139,7 +137,7 @@ public class Application {
 
         public void handleQuit(ApplicationEvent ae) {
             if (quitHandler != null) {
-                quitHandler.eventHandled(ae);
+                quitHandler.handleQuitRequest(ae);
             }
         }
 

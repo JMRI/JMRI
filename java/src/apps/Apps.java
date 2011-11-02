@@ -35,7 +35,8 @@ import java.util.ArrayList;
 import java.util.EventObject;
 import javax.swing.*;
 import jmri.plaf.macosx.Application;
-import jmri.plaf.macosx.EventHandler;
+import jmri.plaf.macosx.PreferencesHandler;
+import jmri.plaf.macosx.QuitHandler;
 
 
 /**
@@ -331,9 +332,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         log.debug("start building menus");
 
         if (SystemType.isMacOSX()) {
-            Application.getApplication().setQuitHandler(new EventHandler() {
+            Application.getApplication().setQuitHandler(new QuitHandler() {
 
-                public boolean eventHandled(EventObject eo) {
+                public boolean handleQuitRequest(EventObject eo) {
                     handleQuit();
                     return true;
                 }
@@ -412,11 +413,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
         // Put prefs in Apple's prefered area on Mac OS X
         if (SystemType.isMacOSX()) {
-            Application.getApplication().setPreferencesHandler(new EventHandler() {
+            Application.getApplication().setPreferencesHandler(new PreferencesHandler() {
 
-                public boolean eventHandled(EventObject eo) {
+                public void handlePreferences(EventObject eo) {
                     doPreferences();
-                    return true;
                 }
             });
         }
