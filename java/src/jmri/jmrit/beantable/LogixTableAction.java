@@ -2748,7 +2748,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 Conditional.ITEM_TO_SIGNAL_MAST_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 if (testType==Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
-                    loadJComboBoxWithSignalAspects(_variableSignalBox, _curVariable.getName());
+                    loadJComboBoxWithMastAspects(_variableSignalBox, _curVariable.getName());
                     _variableSignalBox.setSelectedItem(_curVariable.getDataString());
                     _variableSignalPanel.setVisible(true);
                 }
@@ -3804,7 +3804,7 @@ public class LogixTableAction extends AbstractTableAction {
                     return false;
                 }
                 if (testType==Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
-                    if (_variableSignalBox.getSelectedIndex()<=0) {
+                    if (_variableSignalBox.getSelectedIndex()<0) {
                         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                                 rbx.getString("ErrorAspect"), rbx.getString("ErrorTitle"), 
                                 javax.swing.JOptionPane.ERROR_MESSAGE);
