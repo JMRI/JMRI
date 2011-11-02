@@ -107,6 +107,11 @@ public class Application {
 
         protected void setPreferencesHandler(PreferencesHandler handler) {
             preferencesHandler = handler;
+            if (handler != null) {
+                application.addPreferencesMenuItem();
+            } else {
+                application.removePreferencesMenuItem();
+            }
         }
 
         protected void setQuitHandler(QuitHandler handler) {
@@ -118,7 +123,7 @@ public class Application {
         }
 
         public void handleOpenApplication(ApplicationEvent ae) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            // Do not take any special activity if a user opens the application
         }
 
         public void handleOpenFile(ApplicationEvent ae) {
@@ -137,12 +142,12 @@ public class Application {
 
         public void handleQuit(ApplicationEvent ae) {
             if (quitHandler != null) {
-                quitHandler.handleQuitRequest(ae);
+                ae.setHandled(quitHandler.handleQuitRequest(ae));
             }
         }
 
         public void handleReOpenApplication(ApplicationEvent ae) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            // Do not take any special activity if a user opens the application
         }
 
     }
