@@ -1221,7 +1221,7 @@ public class DecoderPro3Window
             p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", groupSplitPaneLocation);
         }
 
-        if (allowQuit){
+        if (allowQuit && openWindowInstances == 1) {
             handleQuit(e);
         } else {
             //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
@@ -1234,7 +1234,7 @@ public class DecoderPro3Window
     }
     
     void handleQuit(java.awt.event.WindowEvent e){
-        if(openWindowInstances>1){
+        if (e != null && openWindowInstances == 1) {
             if (JOptionPane.showConfirmDialog(null,
                         rb.getString("MessageLongCloseWarning"),
                         rb.getString("MessageShortCloseWarning"),
