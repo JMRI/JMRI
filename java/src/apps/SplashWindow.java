@@ -36,6 +36,7 @@ public class SplashWindow extends JmriJFrame {
 
     public void splashWindowDisplay(JPanel splashMsg) {
         //super("JMRI");
+       this.setUndecorated(true);
 
         // get the splash image
        MediaTracker mt = new MediaTracker(this);
