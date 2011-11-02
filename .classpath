@@ -25,6 +25,7 @@
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/mailapi.jar"/>
 	<classpathentry kind="lib" path="lib/MRJAdapter.jar"/>
+	<classpathentry kind="lib" path="lib/AppleJavaExtensions.jar"/>
 	<classpathentry kind="lib" path="lib/openlcb.jar"/>
 	<classpathentry kind="lib" path="lib/rscbundlecheck.jar"/>
 	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
