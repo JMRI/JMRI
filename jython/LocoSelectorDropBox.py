@@ -15,9 +15,7 @@
 # The next line is maintained by CVS, please don't change it
 # $Revision$
 
-import java
 import javax.swing
-import jarray
 import jmri
 
 class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
@@ -70,8 +68,7 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
         # create the drop-box from the roster, 
 		# getEntriesWithAttributeKeyValue(String key, String value) 
         self.roster = jmri.jmrit.roster.Roster.instance()
-        self.box = self.roster.fullRosterComboBoxGlobal()
-        # self.box = myRoster.fullRosterComboBoxGlobal()
+        self.box = jmri.jmrit.roster.swing.RosterEntryComboBox()
         self.box.itemStateChanged = self.rosterBoxChange
 
         # create the text field
