@@ -68,7 +68,7 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
         # create the drop-box from the roster, 
 		# getEntriesWithAttributeKeyValue(String key, String value) 
         self.roster = jmri.jmrit.roster.Roster.instance()
-        self.box = jmri.jmrit.roster.swing.RosterEntryComboBox()
+        self.box = jmri.jmrit.roster.swing.GlobalRosterEntryComboBox()
         self.box.itemStateChanged = self.rosterBoxChange
 
         # create the text field
