@@ -108,7 +108,9 @@ public class Application {
             preferencesHandler = handler;
             if (handler != null) {
                 application.addPreferencesMenuItem();
+                application.setEnabledPreferencesMenu(true);
             } else {
+                application.setEnabledPreferencesMenu(false);
                 application.removePreferencesMenuItem();
             }
         }
