@@ -29,45 +29,82 @@
 
 <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
 
-<xs:element name="nodes">
+<xs:complexType name="NodeType">
+  <xs:annotation>
+    <xs:documentation>
+      Define the XML stucture for storing the one node in the GUI tree
+    </xs:documentation>
+    <xs:appinfo>
+        <jmri:usingclass configurexml="false">jmri.util.swing.GuiUtilBase</jmri:usingclass>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="name" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Name or title of item described by this node
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="mnemonic" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Keyboard mnemonic for this node
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="icon" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Image icon file name to display
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="help" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Help page to be invoked
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="adapter" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Adapter class to invoke
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="panel" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Panel class to invoke
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="current" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Action method to invoke in current window
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="type" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Define type of visual presentation (this schema element should have additional restrictions added to e.g. checkbox only)
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="option" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Optional parameters
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="node" type="NodeType" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
 
+
+<xs:element name="nodes">
     <xs:annotation>
         <xs:documentation>
           XML Schema describing GUI node files for JMRI
         </xs:documentation>
-        <xs:appinfo>
-            <jmri:usingclass configurexml="false">jmri.util.swing.GuiUtilBase</jmri:usingclass>
-        </xs:appinfo>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
 
-        <xs:element name="list" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="name" minOccurs="0" maxOccurs="1">
           <xs:annotation><xs:documentation>
-          Return a list of elements for each object of the relevant type.
+          Name or title of this set of controls
           </xs:documentation></xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="type" minOccurs="0" maxOccurs="unbounded">
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
         </xs:element>
      
-        <xs:element name="throttle" minOccurs="0" maxOccurs="unbounded">
-          <xs:annotation><xs:documentation>
-          Request a throttle setting.
-          The first request just allocates the throttle.
-          Sub-elements present in subsequent requests are set on the throttle.
-          </xs:documentation></xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="address" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="speed" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="F28" minOccurs="0" maxOccurs="1"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
+        <xs:element name="node" type="NodeType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation><xs:documentation>
@@ -80,8 +117,6 @@
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="sensor"/>
                     <xs:enumeration value="turnout"/>
-                    <xs:enumeration value="power"/>
-                    <xs:enumeration value="route"/>
                     <xs:enumeration value="frame"/>
                     <xs:enumeration value="panel"/>
                     <xs:enumeration value="roster"/>
