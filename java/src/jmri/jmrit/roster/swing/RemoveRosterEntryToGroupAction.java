@@ -65,7 +65,6 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent event) {
         frame = new JmriJFrame("DisAssociate Loco from Group");
-        Roster roster = Roster.instance();
         curRosterGroup = Roster.getRosterGroup();
         Roster.instance().setRosterGroup(null);
         rosterBox = new RosterEntryComboBox();
