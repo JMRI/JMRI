@@ -53,7 +53,6 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        final Roster roster = Roster.instance();
 
         // create the frame
         f = new RosterGroupTableFrame(m, helpTarget()){
