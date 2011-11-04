@@ -2008,7 +2008,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			if (getIconName().length() > 9) {
 				_trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
 			}
-			_trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
+			if (getCurrentLocation() != null)
+				_trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
 			// add throttle if there's a throttle manager
 			if (jmri.InstanceManager.throttleManagerInstance()!=null) {
 				// add throttle if JMRI loco roster entry exist
