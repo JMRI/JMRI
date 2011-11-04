@@ -10,7 +10,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.Enumeration;
+import java.util.EventObject;
 import java.util.ResourceBundle;
+import jmri.util.SystemType;
 
 
 /**
@@ -72,6 +74,9 @@ public abstract class Apps3 extends apps.AppsBase {
             prefsAction.setApp(this);
             prefsAction.actionPerformed(null);
             return;
+        }
+        if (SystemType.isMacOSX()) {
+            initMacOSXMenus();
         }
         createAndDisplayFrame();
     }
@@ -255,6 +260,23 @@ public abstract class Apps3 extends apps.AppsBase {
         }).start();
     }
 
+    protected void initMacOSXMenus() {
+        jmri.plaf.macosx.Application macApp = jmri.plaf.macosx.Application.getApplication();
+        macApp.setPreferencesHandler(new jmri.plaf.macosx.PreferencesHandler() {
+
+            public void handlePreferences(EventObject eo) {
+                new apps.gui3.TabbedPreferencesAction("Preferences").actionPerformed();
+            }
+        });
+        macApp.setQuitHandler(new jmri.plaf.macosx.QuitHandler() {
+
+            public boolean handleQuitRequest(EventObject eo) {
+                handleQuit();
+                return true;
+            }
+        });
+    }
+
     protected static void setApplication(String name) {
         try {
             // Enable access to name field
@@ -273,7 +295,7 @@ public abstract class Apps3 extends apps.AppsBase {
             log.warn("Unable to set application name " + ex);
         }
     }
-    
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps3.class.getName());
     
 }
