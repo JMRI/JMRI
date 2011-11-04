@@ -213,11 +213,11 @@ var $getValueText = function($type, $value){
 		}
 	} else if ($type == 'power' || $type == 'route' || $type == 'sensor') {
 		if ($value=='2') {
-			return '<img src="/web/inControl/PowerGreen24.png">';
+			return '<img src="/web/images/PowerGreen.png">';
 		} else if ($value=='4') {
-			return '<img src="/web/inControl/PowerRed24.png">';
+			return '<img src="/web/images/PowerRed.png">';
 		} else {
-			return '<img src="/web/inControl/PowerGrey24.png">';
+			return '<img src="/web/images/PowerGrey.png">';
 		}
 	} else if ($type == 'memory' || ($type == 'metadata')) {
 		return $value;

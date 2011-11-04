@@ -1,0 +1,57 @@
+/* For 'Scan2BeInControl.html' */
+
+/* Generic ****************************************************************************************/
+html, body {
+	background-color:white;
+    color:black;
+}
+
+body {
+	font-family:sans-serif;
+}
+
+table {
+	width:100%;
+}
+
+td {
+	padding:10px;
+}
+
+hr {
+	background-color:transparent;
+	border-width:0 0 2px 0;
+	border-style:dashed;
+}
+
+.pointer {
+	cursor:pointer;
+}
+
+/* Items ******************************************************************************************/
+#help {
+    color:blue;
+	font-weight:bold;
+	text-align:right;
+}
+
+#roster {
+	width:100%;
+}
+
+.divLoco {
+	margin:10px;
+}		
+
+.imgLoco, .tittleLoco, .lnkLoco, .infoLoco {
+	display:inline;
+}		
+
+/* For print **************************************************************************************/
+@media print {
+
+	#help {
+		display:none;
+	}
+
+}
