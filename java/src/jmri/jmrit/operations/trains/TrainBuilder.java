@@ -1110,8 +1110,9 @@ public class TrainBuilder extends TrainCommon{
 	 * 	The route must allow set outs at the destination.
 	 * 	The route must allow the correct number of set outs.
 	 * 	The destination must accept all cars in the pick up block.
+	 * @throws BuildFailedException 
 	 */
-	private void blockCarsFromStaging(){
+	private void blockCarsFromStaging() throws BuildFailedException{
 		if (departStageTrack == null || !departStageTrack.isBlockCarsEnabled()){
 			return;		
 		}
@@ -1143,24 +1144,29 @@ public class TrainBuilder extends TrainCommon{
     		}
     	}
    		// now block out cars, send the largest block of cars to the locations requesting the greatest number of moves
+    	RouteLocation rl = train.getTrainDepartsRouteLocation();
     	while(true){
     		String blockId = getLargestBlock();	// get the id of the largest block of cars
     		if (blockId.equals(""))
     			break;	// done
-    		RouteLocation rl = getLocationWithMaximumMoves(routeList);	// get the location with the greatest number of moves
-    		if (rl == null)
+    		RouteLocation rld = getLocationWithMaximumMoves(routeList);	// get the location with the greatest number of moves
+    		if (rld == null)
     			break;	// done
     		// check to see if there are enough moves for all of the cars departing staging
-    		if (rl.getMaxCarMoves() > numOfBlocks.get(blockId)){
+    		if (rld.getMaxCarMoves() > numOfBlocks.get(blockId)){
     			// remove the largest block and maximum moves RouteLocation from the lists
     			numOfBlocks.remove(blockId);
-    			routeList.remove(rl.getId());
+    			routeList.remove(rld.getId());
     			Location loc = locationManager.getLocationById(blockId);
-    			Location setOutLoc = locationManager.getLocationByName(rl.getName());
-    			if (loc != null && setOutLoc != null && checkDropTrainDirection(rl)){
+    			Location setOutLoc = locationManager.getLocationByName(rld.getName());
+    			if (loc != null && setOutLoc != null && checkDropTrainDirection(rld)){
     				for (carIndex=0; carIndex<carList.size(); carIndex++){
     					Car car = carManager.getById(carList.get(carIndex));
     					if (car.getTrack() == departStageTrack && car.getLastLocationId().equals(blockId)){
+    						if (car.getDestination() != null){
+    							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleDest"),new Object[]{car.toString(), car.getDestinationName()}));
+    							continue;
+    						}
     						if (car.getNextDestination() != null){
     							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleFinalDest"),new Object[]{car.toString(), car.getNextDestination().getName()}));
     							continue;
@@ -1169,11 +1175,9 @@ public class TrainBuilder extends TrainCommon{
     							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCustomLoad"),new Object[]{car.toString(), car.getLoad()}));
     							continue;
     						}
-    						if (setOutLoc.acceptsTypeName(car.getType())){
-    							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockingCar"),new Object[]{car.toString(), loc.getName(), rl.getName()}));
-    							car.setNextDestination(setOutLoc);
-    						} else {
-    							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCarType"),new Object[]{car.toString(), rl.getName(), car.getType()}));
+    						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockingCar"),new Object[]{car.toString(), loc.getName(), rld.getName()}));
+    						if (!findDestinationAndTrack(car, rl, rld)){
+    							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCarType"),new Object[]{car.toString(), rld.getName(), car.getType()}));
     						}
     					}
     				}
