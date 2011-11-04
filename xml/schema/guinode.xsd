@@ -39,9 +39,9 @@
     </xs:appinfo>
   </xs:annotation>
   <xs:sequence>
-    <xs:element name="name" minOccurs="0" maxOccurs="1">
+    <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
       <xs:annotation><xs:documentation>
-      Name or title of item described by this node
+      Name or title of item described by this node, perhaps I8N'd
       </xs:documentation></xs:annotation>
     </xs:element>
     <xs:element name="mnemonic" minOccurs="0" maxOccurs="1">
@@ -86,6 +86,7 @@
     </xs:element>
     <xs:element name="node" type="NodeType" minOccurs="0" maxOccurs="unbounded"/>
   </xs:sequence>
+  <xs:attribute name="name"/>
 </xs:complexType>
 
 
