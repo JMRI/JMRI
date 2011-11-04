@@ -30,7 +30,6 @@
     <pathelement location="../lib/junit.jar" />
     <pathelement location="../lib/jython.jar" />
     <pathelement location="../lib/javacsv.jar" />
-    <pathelement location="../lib/MRJAdapter.jar" />
     <pathelement location="classes/" />
   </path>
 

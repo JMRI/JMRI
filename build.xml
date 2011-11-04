@@ -110,7 +110,6 @@
          packages
     -->
     <path id="runtime.class.path">
-        <pathelement location="${libdir}/MRJAdapter.jar" />
         <pathelement location="${libdir}/RXTXcomm.jar" />
         <pathelement location="${libdir}/Serialio.jar" />
         <pathelement location="${libdir}/ch.ntb.usb.jar" />

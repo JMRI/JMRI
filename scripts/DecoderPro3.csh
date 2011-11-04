@@ -17,7 +17,7 @@
 if ( ! $?JMRI_OPTIONS ) setenv JMRI_OPTIONS ""
 
 java -noverify -Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw \
-     -cp .:java/classes:jmriplugins.jar:lib/jmriplugins.jar:jmri.jar:lib/MRJAdapter.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/comm.jar:lib/crimson.jar:lib/javacsv.jar:lib/jdom.jar:lib/jhall.jar:lib/jinput.jar:java/lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/servlet.jar:lib/vecmath.jar:lib/activation.jar:lib/mailapi.jar:lib/smtp.jar:lib/ExternalLinkContentViewerUI.jar:/System/Library/Java \
+     -cp .:java/classes:jmriplugins.jar:lib/jmriplugins.jar:jmri.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/comm.jar:lib/crimson.jar:lib/javacsv.jar:lib/jdom.jar:lib/jhall.jar:lib/jinput.jar:java/lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/servlet.jar:lib/vecmath.jar:lib/activation.jar:lib/mailapi.jar:lib/smtp.jar:lib/ExternalLinkContentViewerUI.jar:/System/Library/Java \
      $JMRI_OPTIONS \
      apps.gui3.dp3.DecoderPro3
 

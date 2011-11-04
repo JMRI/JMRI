@@ -12,7 +12,6 @@
     <path>[lib/Serialio.jar]</path>
     <path>[lib/RXTXcomm.jar]</path>
     <path>[lib/jython.jar]</path>
-    <path>[lib/MRJAdapter.jar]</path>
     <path>[lib/jinput.jar]</path>
     <path>[lib/vecmath.jar]</path>
     <path>[lib/activation.jar]</path>

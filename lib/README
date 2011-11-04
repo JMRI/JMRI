@@ -35,7 +35,10 @@ jhall.jar
 log4j.jar
  version 1.2.15
 
-MRJAdapter.jar
+AppleJavaExtensions.jar
+ version 1.5
+ from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
+ Used for building only, not at runtime
 
 openlcb.jar
     0.3 development version from http://openlcb.org/trunk/prototypes/java
@@ -166,3 +169,6 @@ Older, no longer present:
 # from <http://xml.apache.org/crimson/>
 # No longer used as of JMRI 2.7.6
 
+#MRJAdaper.jar
+# version, source unknown
+# No longer used as of JMRI 2.13.4
