@@ -1083,6 +1083,35 @@ the types of loads the train departing from staging is allowed to
 service. See "Select loads serviced by this train" under Edit-&gt;Train,
 then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
 
+<H3>Blocking Cars from Staging</H3>
+
+The program provides a very simplistic algorithm to block cars from
+staging. Since cars that have been sent to staging can reside
+anywhere in the train, the program uses the last location where the
+cars where picked up to block an outgoing train from staging. So for example, if
+a train that terminated into staging had three stops, A, B, and C, 
+the cars from A would be blocked together when the next
+train departed staging. The same goes for previous pick ups from B and C,
+those cars would remain together. The program when attempting to find
+destinations for the cars departing staging, starts with the largest
+block of cars, and then checks the departure train's route, and attempts to send the
+largest block to the location requesting the most moves. After doing
+that, the program does the same with the next block of cars, it finds
+the second location in the route and sends the cars there. This is a
+very simplistic approach to blocking cars, it assumes that cars previously
+picked up at a location were placed into the train as a group. This
+blocking feature doesn't consider where in the train the cars are, as
+some operators when picking up cars, will add the cars to any part of
+the train. So the first stop in the departure train's route may not have the
+cars at the head of the train, but they should be in a group,
+somewhere in the train. The first time you depart staging with this
+feature on, the cars will not be blocked for you, you need to first
+terminate a new train into staging, those cars will have the blocking
+tags assigned to them. To enable this feature, see Edit Staging
+Track, "Optional Car Blocking" in the lower right corner of the
+window.  There are many reasons why this option will not block cars
+correctly.  See the train's build report for more details.
+
 <H3>Looping Trains through Staging</H3>
 
 Sometimes for operations a train enters staging at one location (call it
