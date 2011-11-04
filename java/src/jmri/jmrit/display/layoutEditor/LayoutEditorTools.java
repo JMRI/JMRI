@@ -10,6 +10,7 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.Logix;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.InstanceManager;
 
 import java.awt.*;
 import java.awt.BorderLayout;
@@ -7221,14 +7222,88 @@ public class LayoutEditorTools
             if (po!=boundary){
                 if ((po.getEastBoundSensor()!=null) &&
                         (po.getEastBoundSensor().equals(sName) || ((uName!=null) &&
-                        (po.getEastBoundSensor().equals(uName))))) return true;
+                        (po.getEastBoundSensor().equals(uName))))){
+                            if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                                return true;
+
+                        }
                 if ((po.getWestBoundSensor()!=null) &&
                         (po.getWestBoundSensor().equals(sName) || ((uName!=null) &&
-                        (po.getWestBoundSensor().equals(uName))))) return true;
+                        (po.getWestBoundSensor().equals(uName))))){
+                            if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                                return true;
+                }
             }
+		}
+        
+        for (int i=0;i<layoutEditor.turnoutList.size();i++) {
+			LayoutTurnout to = layoutEditor.turnoutList.get(i);
+			if ((to.getSensorA()!=null) &&
+					(to.getSensorA().equals(sName) || ((uName!=null) && 
+					(to.getSensorA().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((to.getSensorB()!=null) &&
+					(to.getSensorB().equals(sName) || ((uName!=null) && 
+					(to.getSensorB().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((to.getSensorC()!=null) &&
+					(to.getSensorC().equals(sName) || ((uName!=null) && 
+					(to.getSensorC().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((to.getSensorD()!=null) &&
+					(to.getSensorD().equals(sName) || ((uName!=null) && 
+					(to.getSensorD().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+		}
+
+		for (int i=0;i<layoutEditor.xingList.size();i++) {
+			LevelXing x = layoutEditor.xingList.get(i);
+			if ((x.getSensorAName()!=null) &&
+					(x.getSensorAName().equals(sName) || ((uName!=null) && 
+					(x.getSensorAName().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((x.getSensorBName()!=null) &&
+					(x.getSensorBName().equals(sName) || ((uName!=null) && 
+					(x.getSensorBName().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((x.getSensorCName()!=null) &&
+					(x.getSensorCName().equals(sName) || ((uName!=null) && 
+					(x.getSensorCName().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((x.getSensorDName()!=null) &&
+					(x.getSensorDName().equals(sName) || ((uName!=null) && 
+					(x.getSensorDName().equals(uName))))){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
 		}
 		return false;
 	}
+    
+    boolean sensorAssignedElseWhere(String sensor){
+            int i = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(rb.getString("DuplicateSensorAssign"),
+					new Object[]{ sensor }),
+            rb.getString("DuplicateSensorAssignTitle"),
+            JOptionPane.YES_NO_OPTION);
+        if(i ==0) {
+            return true;
+        }
+        return false;
+    }
 	/**
 	 * Removes the assignment of the specified Sensor to either a turnout, 
 	 *		a positionable point, or a level crossing wherever it is assigned
@@ -7586,6 +7661,7 @@ public class LayoutEditorTools
 		} else if (boundaryFromMenu) {
             getSavedAnchorSignalMasts(null);
         }
+        refreshSignalMastAtBoundaryComboBox();
         setSignalMastsAtBoundaryFrame.setPreferredSize(null);
         setSignalMastsAtBoundaryFrame.pack();
         setSignalMastsAtBoundaryFrame.setVisible(true);		
@@ -7646,6 +7722,47 @@ public class LayoutEditorTools
 					(po.getWestBoundSignalMast().equals(sName) || ((uName!=null) && 
 					(po.getWestBoundSignalMast().equals(uName))))) return true;
 		}
+        
+        for (int i=0;i<layoutEditor.turnoutList.size();i++) {
+			LayoutTurnout to = layoutEditor.turnoutList.get(i);
+			if ((to.getSignalAMast()!=null) &&
+					(to.getSignalAMast().equals(sName) || ((uName!=null) && 
+					(to.getSignalAMast().equals(uName)))))
+                            return true;
+			if ((to.getSignalBMast()!=null) &&
+					(to.getSignalBMast().equals(sName) || ((uName!=null) && 
+					(to.getSignalBMast().equals(uName)))))
+                            return true;
+			if ((to.getSignalCMast()!=null) &&
+					(to.getSignalCMast().equals(sName) || ((uName!=null) && 
+					(to.getSignalCMast().equals(uName)))))
+                            return true;
+			if ((to.getSignalDMast()!=null) &&
+					(to.getSignalDMast().equals(sName) || ((uName!=null) && 
+					(to.getSignalDMast().equals(uName)))))
+                              return true;
+		}
+
+		for (int i=0;i<layoutEditor.xingList.size();i++) {
+			LevelXing x = layoutEditor.xingList.get(i);
+			if ((x.getSignalAMastName()!=null) &&
+					(x.getSignalAMastName().equals(sName) || ((uName!=null) && 
+					(x.getSignalAMastName().equals(uName)))))
+                            return true;
+			if ((x.getSignalBMastName()!=null) &&
+					(x.getSignalBMastName().equals(sName) || ((uName!=null) && 
+					(x.getSignalBMastName().equals(uName)))))
+                            return true;
+			if ((x.getSignalCMastName()!=null) &&
+					(x.getSignalCMastName().equals(sName) || ((uName!=null) && 
+					(x.getSignalCMastName().equals(uName)))))
+                            return true;
+			if ((x.getSignalDMastName()!=null) &&
+					(x.getSignalDMastName().equals(sName) || ((uName!=null) && 
+					(x.getSignalDMastName().equals(uName)))))
+                            return true;
+		}
+        
 		return false;
 	}
 	/**
@@ -7728,6 +7845,14 @@ public class LayoutEditorTools
 		boundaryFromMenu = false;
 		setSignalMastsAtBoundaryFrame.setVisible(false);
 	}
+    
+    void refreshSignalMastAtBoundaryComboBox(){
+        createListUsedSignalMasts();
+        usedMasts.remove(eastSignalMast.getBean());
+        usedMasts.remove(westSignalMast.getBean());
+        eastSignalMast.getCombo().excludeItems(usedMasts);
+        westSignalMast.getCombo().excludeItems(usedMasts);
+    }
     
 	private void setSignalMastsAtBoundaryDonePressed (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
@@ -8431,6 +8556,60 @@ public class LayoutEditorTools
 		setSignalMastsAtTurnouts();
     }
     
+    java.util.List<jmri.NamedBean> usedMasts = new ArrayList<jmri.NamedBean>();
+    
+    void createListUsedSignalMasts(){
+        usedMasts = new ArrayList<jmri.NamedBean>();
+        for (int i=0;i<layoutEditor.pointList.size();i++) {
+			PositionablePoint po = layoutEditor.pointList.get(i);
+            //We allow the same sensor to be allocated in both directions.
+            if (po!=boundary){
+                if (po.getEastBoundSignalMast()!=null && !po.getEastBoundSignalMast().equals(""))
+                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(po.getEastBoundSignalMast()));
+                if (po.getWestBoundSignalMast()!=null && !po.getWestBoundSignalMast().equals(""))
+                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(po.getWestBoundSignalMast()));
+            }
+		}
+        
+        for (int i=0;i<layoutEditor.turnoutList.size();i++) {
+			LayoutTurnout to = layoutEditor.turnoutList.get(i);
+            //if(to!=layoutTurnout){
+                if (to.getSignalAMast()!=null && !to.getSignalAMast().equals(""))
+                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalAMast()));
+                if (to.getSignalBMast()!=null && !to.getSignalBMast().equals(""))
+                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalBMast()));
+                if (to.getSignalCMast()!=null && !to.getSignalCMast().equals(""))
+                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalCMast()));
+                if (to.getSignalDMast()!=null && !to.getSignalDMast().equals("") )
+                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalDMast()));
+            //}
+		}
+
+		for (int i=0;i<layoutEditor.xingList.size();i++) {
+			LevelXing x = layoutEditor.xingList.get(i);
+			if (x.getSignalAMastName()!=null && !x.getSignalAMastName().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalAMastName()));
+			if (x.getSignalBMastName()!=null && !x.getSignalBMastName().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalBMastName()));
+			if (x.getSignalCMastName()!=null && !x.getSignalCMastName().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalCMastName()));
+			if (x.getSignalDMastName()!=null && !x.getSignalDMastName().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalDMastName()));
+		}
+    }
+    
+    void refreshSignalMastAtTurnoutComboBox(){
+        createListUsedSignalMasts();
+        usedMasts.remove(turnoutSignalMastA.getBean());
+        usedMasts.remove(turnoutSignalMastB.getBean());
+        usedMasts.remove(turnoutSignalMastC.getBean());
+        usedMasts.remove(turnoutSignalMastD.getBean());
+        turnoutSignalMastA.getCombo().excludeItems(usedMasts);
+        turnoutSignalMastB.getCombo().excludeItems(usedMasts);
+        turnoutSignalMastC.getCombo().excludeItems(usedMasts);
+        turnoutSignalMastD.getCombo().excludeItems(usedMasts);
+    }
+    
     public void setSignalMastsAtTurnouts(){
 		if (setSignalMastsOpen) {
             //We will do a refresh in case the block boundaries have changed.
@@ -8447,7 +8626,6 @@ public class LayoutEditorTools
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 			JPanel panel1 = new JPanel(); 
             panel1.setLayout(new FlowLayout());
-            
             turnoutSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
             turnoutSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
             turnoutSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
@@ -8535,6 +8713,7 @@ public class LayoutEditorTools
 			});
 			if (turnoutFromMenu) turnoutSignalMastsGetSaved(null);
 		}
+        refreshSignalMastAtTurnoutComboBox();
         signalMastsJmriFrame.setPreferredSize(null);
         signalMastsJmriFrame.pack();
         signalMastsJmriFrame.setVisible(true);
@@ -9141,11 +9320,24 @@ public class LayoutEditorTools
 			});
 			if (xingMastFromMenu) xingSignalMastsGetSaved(null);
 		}
+        refreshSignalMastAtXingComboBox();
         signalMastsAtXingFrame.setPreferredSize(null);
         signalMastsAtXingFrame.pack();
         signalMastsAtXingFrame.setVisible(true);
 		setSignalMastsAtXingOpen = true;
 	}
+
+    void refreshSignalMastAtXingComboBox(){
+        createListUsedSignalMasts();
+        usedMasts.remove(xingSignalMastA.getBean());
+        usedMasts.remove(xingSignalMastB.getBean());
+        usedMasts.remove(xingSignalMastC.getBean());
+        usedMasts.remove(xingSignalMastD.getBean());
+        xingSignalMastA.getCombo().excludeItems(usedMasts);
+        xingSignalMastB.getCombo().excludeItems(usedMasts);
+        xingSignalMastC.getCombo().excludeItems(usedMasts);
+        xingSignalMastD.getCombo().excludeItems(usedMasts);
+    }
     
 	private void xingSignalMastsGetSaved (ActionEvent a) {
 		if ( !getLevelCrossingMastInformation() ) return;
@@ -10679,6 +10871,10 @@ public class LayoutEditorTools
             return beanCombo.getSelectedDisplayName();
         }
         
+        jmri.NamedBean getBean(){
+            return beanCombo.getSelectedBean();
+        }
+        
         JPanel getDetailsPanel(){
             return detailsPanel;
         }
@@ -10701,6 +10897,10 @@ public class LayoutEditorTools
         
         void setBoundaryLabel(String label){
             boundaryBlocks.setText(label);
+        }
+        
+        JmriBeanComboBox getCombo(){
+            return beanCombo;
         }
         
         JPanel positionLeftRight(){

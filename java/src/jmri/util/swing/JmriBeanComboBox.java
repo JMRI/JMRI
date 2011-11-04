@@ -58,10 +58,10 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         displayToBean = new HashMap<String, NamedBean>();
         removeAllItems();
         ArrayList<String> nameList = new ArrayList(Arrays.asList(_manager.getSystemNameArray()));
-        
-        
+
         for(NamedBean bean : exclude){
-            nameList.remove(bean.getSystemName());
+            if(bean!=null)
+                nameList.remove(bean.getSystemName());
         }
         
         String[] displayList = new String[nameList.size()];
@@ -110,7 +110,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
             }
         }
         java.util.Arrays.sort(displayList);
-
+        
         for(int i = 0; i<displayList.length; i++){
             addItem(displayList[i]);
             if ((select!=null) && (displayList[i].equals(select))){
@@ -119,7 +119,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         }
         if(_firstBlank){
             super.insertItemAt("",0);
-            if (_lastSelected.equals("")){
+            if (_lastSelected==null || _lastSelected.equals("")){
                 setSelectedIndex(0);
             }
         }
@@ -230,6 +230,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     
     public void excludeItems(List<NamedBean> exclude){
         this.exclude = exclude;
+        _lastSelected = getSelectedDisplayName();
         updateComboBox(_lastSelected);
     }
     
