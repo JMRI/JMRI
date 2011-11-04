@@ -354,7 +354,7 @@ public class AddSignalMastPanel extends JPanel {
             List<SignalHead> alreadyUsedHeads = InstanceManager.signalMastManagerInstance().getSignalHeadsUsed();
             alreadyUsed = new ArrayList<NamedBean>();
             for(SignalHead head : alreadyUsedHeads){
-                alreadyUsed.add((NamedBean)head);
+                alreadyUsed.add((head);
             }
         }
         
