@@ -8,7 +8,7 @@
 >
 
   <node name="File">
-    <name xml:lang="en">Something British</name>
+    <name xml:lang="en">File</name>
     <name xml:lang="fr">Fichier</name>
     <mnemonic>f</mnemonic>
     <node name="New DecoderPro Window">

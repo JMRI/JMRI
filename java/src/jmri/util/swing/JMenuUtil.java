@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.*;
 import org.jdom.*;
 import java.beans.PropertyChangeListener;
+import jmri.util.SystemType;
 import jmri.util.jdom.LocaleSelector;
 
 /**
@@ -47,6 +48,7 @@ public class JMenuUtil extends GuiUtilBase {
     }
     
     static JMenu jMenuFromElement(Element main, WindowInterface wi, Object context) {
+        boolean addSep = false;
         String name = "<none>";
         if(main==null){
             log.warn("Menu from element called without an element");
@@ -66,12 +68,28 @@ public class JMenuUtil extends GuiUtilBase {
             Element child = (Element) item;
             if (child.getChildren("node").size() == 0) {  // leaf
                 if ((child.getText().trim()).equals("separator"))
-                    menu.addSeparator();
+                    addSep = true;
                 else {
-                    Action act = actionFromNode(child, wi, context);
-                    menu.add(menuItem = new JMenuItem(act));
+                    if (!(SystemType.isMacOSX()
+                            && UIManager.getLookAndFeel().isNativeLookAndFeel()
+                            && ((child.getChild("adapter") != null
+                            && child.getChild("adapter").getText().equals("apps.gui3.TabbedPreferencesAction"))
+                            || (child.getChild("current") != null
+                            && child.getChild("current").getText().equals("quit"))
+                            ))) {
+                        if (addSep) {
+                            menu.addSeparator();
+                            addSep = false;
+                        }
+                        Action act = actionFromNode(child, wi, context);
+                        menu.add(menuItem = new JMenuItem(act));
+                    }
                 }
             } else {
+                if (addSep) {
+                    menu.addSeparator();
+                    addSep = false;
+                }
                 if((child.getText().trim()).equals("group")){
                     //A seperate method is required for creating radio button groups
                     menu.add(createMenuGroupFromElement(child, wi, context));
@@ -81,7 +99,6 @@ public class JMenuUtil extends GuiUtilBase {
             }
             if(menuItem!=null && child.getChild("current") != null){
                 setMenuItemInterAction(context, child.getChild("current").getText(), menuItem);
-            
             }
             if(menuItem!=null && child.getChild("mnemonic")!=null){
                 int mnemonic = convertStringToKeyEvent(child.getChild("mnemonic").getText());
