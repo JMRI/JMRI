@@ -171,7 +171,7 @@ public class Engine extends RollingStock {
 	protected void moveRollingStock(RouteLocation old, RouteLocation next){
 		if(old == getRouteLocation()){
 			if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))){
-				if (getTrain() != null && getTrain().getLeadEngine() != this){
+				if (getTrain() != null && getRouteLocation() != getRouteDestination() && getTrain().getLeadEngine() != this){
 					log.debug("New lead engine ("+toString()+") for train " + getTrain().getName());
 					getTrain().setLeadEngine(this);
 					getTrain().createTrainIcon();
