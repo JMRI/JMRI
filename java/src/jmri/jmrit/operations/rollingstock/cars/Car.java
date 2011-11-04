@@ -41,11 +41,11 @@ public class Car extends RollingStock {
 	// schedule items
 	protected String _scheduleId = "";			// the schedule id assigned to this car
 	protected String _nextLoad = "";			// next load by schedule	
-	protected int _nextWait = 0;				// next wait by schedule
+	protected int _nextWait = 0;				// next wait by schedule	
 	protected Location _nextDestination = null;	// next destination by schedule or router
 	protected Track _nextDestTrack = null;		// next track by schedule or router
 	protected Location _previousNextDestination = null;	// previous next destination (for train resets)
-	protected Track _previousNextDestTrack = null;		// previous next track (for train resets)
+	protected Track _previousNextDestTrack = null;		// previous next track (for train resets)	
 		
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
 	public static final String WAIT_CHANGED_PROPERTY = "Car wait changed";
@@ -650,6 +650,10 @@ public class Car extends RollingStock {
 		updateKernel();
 	}
 	
+	/**
+	 * Updates all cars in a kernel.  After the update, the cars
+	 * will all have the same next destination, load, and next load.
+	 */
 	public void updateKernel(){
 		if (getKernel() != null && getKernel().isLead(this)){
 			List<Car> cars = getKernel().getCars();

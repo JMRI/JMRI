@@ -187,6 +187,11 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _id;
 	}
 
+	/**
+	 * Sets the name of this train, normally a short name that
+	 * can fit within the train icon.
+	 * @param name the train's name.
+	 */
 	public void setName(String name) {
 		String old = _name;
 		_name = name;
@@ -434,7 +439,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	
 	/**
-	 * Set train requirements
+	 * Set train requirements.  If NONE, then train doesn't require
+	 * a caboose or car with FRED.
 	 * @param requires NONE CABOOSE FRED
 	 */	
 	public void setRequirements(int requires){
@@ -532,7 +538,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	/**
 	 * Set train's current route location
 	 */
-	public void setCurrentLocation(RouteLocation location) {
+	protected void setCurrentLocation(RouteLocation location) {
 		RouteLocation old = _current;
 		_current = location;
 		if ((old != null && !old.equals(location)) || (old == null && location != null)){
@@ -1622,7 +1628,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 
-	public void setBuilt(boolean built) {
+	protected void setBuilt(boolean built) {
 		boolean old = _built;
 		_built = built;
 		if (old != built){
@@ -1761,7 +1767,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		return true;
 	}
 	
-	public void setBuildFailed(boolean status) {
+	protected void setBuildFailed(boolean status) {
 		boolean old = _buildFailed;
 		_buildFailed = status;
 		if (old != status){
@@ -1887,7 +1893,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * to see if the location requested is part of the train's route and
 	 * if the train hasn't already visited the location.  This command
 	 * can only move the train forward in its route.  Note that you can
-	 * not terminate the train using this command.  See move().
+	 * not terminate the train using this command.  See move() or terminate().
 	 * @param locationName The name of the location to move this train.
 	 * @return true if train was able to move to the named location.
 	 */
@@ -1934,7 +1940,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			createTrainIcon();
 		}
 		// is the lead engine still in train
-		if (getLeadEngine() != null && getLeadEngine().getRouteDestination() == rl){
+		if (getLeadEngine() != null && getLeadEngine().getRouteDestination() == rl && rl != null){
 			log.debug("Engine ("+getLeadEngine().toString()+") arriving at destination "+rl.getName());			
 		}
 		if (_trainIcon != null && _trainIcon.isActive()){

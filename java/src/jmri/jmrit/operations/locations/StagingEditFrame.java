@@ -24,6 +24,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 	JCheckBox emptyCustomCheckBox = new JCheckBox(rb.getString("EmptyCarLoads"));
 	JCheckBox loadCheckBox = new JCheckBox(rb.getString("LoadCarLoads"));
 	JCheckBox loadAnyCheckBox = new JCheckBox(rb.getString("LoadAnyCarLoads"));
+	JCheckBox blockCarsCheckBox = new JCheckBox(rb.getString("BlockCars"));
 
 	JPanel panelLoad = panelOpt4;
 	
@@ -49,8 +50,16 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		addItemLeft(p2, loadCheckBox, 0, 1);
 		addItemLeft(p2, loadAnyCheckBox, 0, 2);
 		
+		JPanel p3 = new JPanel();
+		p3.setLayout(new GridBagLayout());
+		p3.setBorder(BorderFactory.createTitledBorder(rb.getString("OptionalBlocking")));
+		addItemLeft(p3, blockCarsCheckBox, 0, 0);
+		
+		blockCarsCheckBox.setToolTipText(rb.getString("TipBlockByPickUp"));
+		
 		panelLoad.add(p1);
 		panelLoad.add(p2);
+		panelLoad.add(p3);
 		
 		super.initComponents(location, track);
 		_type = Track.STAGING;
@@ -73,6 +82,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 			emptyCustomCheckBox.setSelected(_track.isRemoveLoadsEnabled());
 			loadCheckBox.setSelected(_track.isAddLoadsEnabled());
 			loadAnyCheckBox.setSelected(_track.isAddLoadsEnabledAnySiding());
+			blockCarsCheckBox.setSelected(_track.isBlockCarsEnabled());
 		}
 		
 		addCheckBoxAction(swapLoadsCheckBox);
@@ -90,6 +100,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		track.enableRemoveLoads(emptyCustomCheckBox.isSelected());
 		track.enableAddLoads(loadCheckBox.isSelected());
 		track.enableAddLoadsAnySiding(loadAnyCheckBox.isSelected());
+		track.enableBlockCars(blockCarsCheckBox.isSelected());
 		super.saveTrack(track);
 	}
 	

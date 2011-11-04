@@ -166,6 +166,11 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _locationOps;
 	}
 	
+	/**
+	 * Sets the train directions that this location can service.
+	 * EAST means that an Eastbound train can service the location.
+	 * @param direction Any combination of EAST WEST NORTH SOUTH
+	 */
 	public void setTrainDirections(int direction){
 		int old = _trainDir;
 		_trainDir = direction;
@@ -251,6 +256,11 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _status;
 	}
 	
+	/**
+	 * Sets the train icon coordinates for an eastbound train
+	 * arriving at this location.
+	 * @param point The XY coordinates on the panel.
+	 */
 	public void setTrainIconEast(Point point){
 		_trainIconEast = point;
 	}

@@ -71,6 +71,9 @@ public class Track {
 	private static final int GENERATE_SCHEDULE_LOADS_ANY_SIDING = 8;
 	private static final int EMPTY_GENERIC_LOADS = 16;
 	
+	protected int _blockOptions = 0;
+	private static final int BLOCK_CARS = 1;
+	
 	// order cars are serviced
 	protected String _order = NORMAL;
 	public static final String NORMAL = rb.getString("Normal");
@@ -1183,6 +1186,21 @@ public class Track {
 		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS_ANY_SIDING));
 	}
 	
+	public void enableBlockCars(boolean enable){
+		if (enable)
+			_blockOptions = _blockOptions | BLOCK_CARS;
+		else
+			_blockOptions = _blockOptions & 0xFFFF-BLOCK_CARS;
+	}
+	
+	/**
+	 * When enabled block cars from staging.
+	 * @return true if blocking is enabled.
+	 */
+	public boolean isBlockCarsEnabled(){
+		return (0 < (_blockOptions & BLOCK_CARS));
+	}
+	
 	public void setPool(Pool pool){
 		Pool old = _pool;
 		_pool = pool;
@@ -1273,6 +1291,7 @@ public class Track {
         if ((a = e.getAttribute("alternative")) != null ) _alternativeTrackId = a.getValue();
         
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("blockOptions")) != null ) _blockOptions = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("order")) != null ) _order = a.getValue();
         if ((a = e.getAttribute("pool")) != null ){
         	setPool(_location.addPool(a.getValue()));
@@ -1348,6 +1367,8 @@ public class Track {
     	}
     	if (_loadOptions != 0)
     		e.setAttribute("loadOptions", Integer.toString(_loadOptions));
+    	if (_blockOptions != 0)
+    		e.setAttribute("blockOptions", Integer.toString(_blockOptions));
     	if (!getServiceOrder().equals(NORMAL))
     		e.setAttribute("order", getServiceOrder());
     	e.setAttribute("comment", getComment());

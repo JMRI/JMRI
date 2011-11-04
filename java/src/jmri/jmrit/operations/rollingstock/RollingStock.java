@@ -52,6 +52,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	protected RouteLocation _routeLocation = null;
 	protected RouteLocation _routeDestination = null;
 	protected int _moves = 0;
+	protected String _lastLocationId = LOCATION_UNKNOWN;		// the rollingstock's last location id
+	public static final String LOCATION_UNKNOWN = "0";
 	
 	public int number = 0;	// used by managers for sort by number
 	
@@ -124,6 +126,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return getRoad()+" "+getNumber();
 	}
 
+	/**
+	 * Sets the type of rolling stock.  "Boxcar" for example is a type of car.
+	 * @param type The type of rolling stock.
+	 */
 	public void setType(String type) {
 		String old = _type;
 		_type = type;
@@ -182,7 +188,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	}
 	
 	/**
-	 * 
+	 * Sets the full scale weight in tons.
 	 * @param weight full scale rolling stock weight in tons.
 	 */
 	public void setWeightTons(String weight) {
@@ -216,6 +222,13 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return weightTons;
 	}
 
+	/**
+	 * Set the date that the rolling stock was built.  Use 4 digits for the year,
+	 * or the format MM-YY where MM is the two digit month, and YY is the last two
+	 * years if the rolling stock was built in the 1900s.  Use MM-YYYY for units
+	 * build after 1999.
+	 * @param built
+	 */
 	public void setBuilt(String built) {
 		String old = _built;
 		_built = built;
@@ -439,7 +452,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				// Need to know if destination name changes so we can forward to listeners 
 				_trackDestination.addPropertyChangeListener(this);
 			} else {
-				// rolling stock has been terminated bump rolling stock moves
+				// rolling stock has been terminated or reset, bump rolling stock moves
 				if (getTrain() != null && getTrain().getRoute() != null)
 					setSavedRouteId(getTrain().getRoute().getId());								
 				if (getRouteDestination() != null)
@@ -523,10 +536,23 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return "";
 	}
 	
-	public String getDestinationTrackId() {
+	public String getDestinationTrackId(){
 		if (_trackDestination != null)
 			return _trackDestination.getId();
 		return "";
+	}
+	
+	/**
+	 * Used to block cars from staging
+	 * @param id The location id from where the car came from before
+	 * going into staging.
+	 */
+	public void setLastLocationId(String id){
+		_lastLocationId = id;
+	}
+	
+	public String getLastLocationId(){
+		return _lastLocationId;
 	}
 	
 	public void setMoves(int moves){
@@ -596,6 +622,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _routeId;
 	}
 	
+	/**
+	 * Sets the id of the route that was used to set out the rolling stock.
+	 * Used to determine if the rolling stock can be pick ups from an interchange
+	 * track.
+	 * @param id The route id.
+	 */
 	public void setSavedRouteId(String id){
 		_routeId = id;
 	}
@@ -719,7 +751,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _comment;
 	}
 	
-	public void moveRollingStock(RouteLocation old, RouteLocation next){
+	protected void moveRollingStock(RouteLocation old, RouteLocation next){
 		if(old == getRouteLocation()){	
 			// Arriving at destination?
 			if(getRouteLocation() == getRouteDestination()){
@@ -803,6 +835,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 					+") track ("+trackDestination.getName()+") because of ("+status+")");
 		if ((a = e.getAttribute("moves")) != null)
 			_moves = Integer.parseInt(a.getValue());
+		if ((a = e.getAttribute("lastLocationId")) != null)
+			_lastLocationId = a.getValue();
 		if ((a = e.getAttribute("train")) != null){
 			setTrain(TrainManager.instance().getTrainByName(a.getValue()));
 			if (_train != null && _train.getRoute() != null && (a = e.getAttribute("routeLocationId")) != null){
@@ -832,7 +866,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store(org.jdom.Element e) {
+	protected org.jdom.Element store(org.jdom.Element e) {
 		e.setAttribute("id", getId());
 		e.setAttribute("roadName", getRoad());
 		e.setAttribute("roadNumber", getNumber());
@@ -867,6 +901,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			e.setAttribute("desTrack", getDestinationTrackName());
 		}
 		e.setAttribute("moves", Integer.toString(getMoves()));
+		if (!getLastLocationId().equals(LOCATION_UNKNOWN))
+			e.setAttribute("lastLocationId", getLastLocationId());
 		if (!getTrainName().equals(""))
 			e.setAttribute("train",	getTrainName());
 		if (!getOwner().equals(""))

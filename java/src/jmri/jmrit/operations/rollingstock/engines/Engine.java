@@ -168,7 +168,7 @@ public class Engine extends RollingStock {
 		return super.testDestination(destination, track);
 	}
 	
-	public void moveRollingStock(RouteLocation old, RouteLocation next){
+	protected void moveRollingStock(RouteLocation old, RouteLocation next){
 		if(old == getRouteLocation()){
 			if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))){
 				if (getTrain() != null && getTrain().getLeadEngine() != this){
