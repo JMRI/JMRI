@@ -62,9 +62,20 @@ public interface SignalMastManager extends Manager {
     public SignalMast getByUserName(String s);
     public SignalMast getBySystemName(String s);
     /**
-     * Get a list of all SignalHead system names.
+     * Get a list of all SignalMast system names.
      */
     public List<String> getSystemNameList();
+    
+    /**
+    * Get a list of all the signal heads currently used by all the signal masts
+    */
+    public List<SignalHead> getSignalHeadsUsed();
+    
+    /**
+    * Find out if a given signal head is current assigned against a signal mast
+    * @return null if not assinged, the displayname of the signalmast that it is assigned to
+    */
+    public String isHeadUsed(SignalHead head);
 
 }
 

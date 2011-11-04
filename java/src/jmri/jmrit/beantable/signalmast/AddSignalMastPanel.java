@@ -4,6 +4,7 @@ package jmri.jmrit.beantable.signalmast;
 
 import jmri.*;
 import jmri.util.StringUtil;
+import jmri.util.swing.JmriBeanComboBox;
 
 import java.awt.event.*;
 import java.io.*;
@@ -22,7 +23,20 @@ import org.jdom.*;
 
 public class AddSignalMastPanel extends JPanel {
 
+    /*This currently doesn't use the most efficient way of creating head place holders in the mast.
+    This class might need a re-write at some point to deal with signal mast hardware that can be directly controlled
+    using accessory or signalling addresses rather than via signal heads.
+    */
+
+    jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+    String systemSelectionCombo = this.getClass().getName()+".SignallingSystemSelected";
+    String mastSelectionCombo = this.getClass().getName()+".SignallingMastSelected";
+    List<NamedBean> alreadyUsed = new ArrayList<NamedBean>();
+    
     public AddSignalMastPanel() {
+    
+        refreshComboBox();
+        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p;
         p = new JPanel(); 
@@ -52,6 +66,13 @@ public class AddSignalMastPanel extends JPanel {
         p.add(h);
         
         add(p);
+        
+        add(includeUsed);
+        includeUsed.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                refreshComboBox();
+            }
+        });
 
         JButton ok;
         add(ok = new JButton(rb.getString("ButtonOK")));
@@ -67,6 +88,8 @@ public class AddSignalMastPanel extends JPanel {
         for (int i = 0; i < names.length; i++) {
             sigSysBox.addItem(man.getSystem(names[i]).getUserName());
         }
+        if(prefs.getComboBoxLastSelection(systemSelectionCombo)!=null)
+            sigSysBox.setSelectedItem(prefs.getComboBoxLastSelection(systemSelectionCombo));
      
         loadMastDefinitions();
         enableHeadFields();
@@ -80,11 +103,12 @@ public class AddSignalMastPanel extends JPanel {
     JTextField userName = new JTextField(20);
     JComboBox sigSysBox = new JComboBox();
     JComboBox mastBox = new JComboBox(new String[]{"select a system first"});
-    JTextField head1 = new JTextField(5);
-    JTextField head2 = new JTextField(5);
-    JTextField head3 = new JTextField(5);
-    JTextField head4 = new JTextField(5);
-    JTextField head5 = new JTextField(5);
+    JmriBeanComboBox head1 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+    JmriBeanComboBox head2 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+    JmriBeanComboBox head3 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+    JmriBeanComboBox head4 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+    JmriBeanComboBox head5 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+    JCheckBox includeUsed = new JCheckBox(rb.getString("IncludeUsedHeads"));
     
     String sigsysname;
     ArrayList<File> mastNames = new ArrayList<File>();
@@ -138,6 +162,9 @@ public class AddSignalMastPanel extends JPanel {
         });
         enableHeadFields();
         
+        if(prefs.getComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()))!=null)
+            mastBox.setSelectedItem(prefs.getComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem())));
+        
     }
     
     HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -175,20 +202,28 @@ public class AddSignalMastPanel extends JPanel {
                         +sigsysname
                         +":"+mastname.substring(11,mastname.length()-4);
 
+        if(!check()){
+            return;
+        }
         // add head names by brute force
         if (head1.isEnabled())
-            name += "("+StringUtil.parenQuote(head1.getText())+")";
+            name += "("+StringUtil.parenQuote(head1.getSelectedDisplayName())+")";
         if (head2.isEnabled())
-            name += "("+StringUtil.parenQuote(head2.getText())+")";
+            name += "("+StringUtil.parenQuote(head2.getSelectedDisplayName())+")";
         if (head3.isEnabled())
-            name += "("+StringUtil.parenQuote(head3.getText())+")";
+            name += "("+StringUtil.parenQuote(head3.getSelectedDisplayName())+")";
         if (head4.isEnabled())
-            name += "("+StringUtil.parenQuote(head4.getText())+")";
+            name += "("+StringUtil.parenQuote(head4.getSelectedDisplayName())+")";
         if (head5.isEnabled())
-            name += "("+StringUtil.parenQuote(head5.getText())+")";
+            name += "("+StringUtil.parenQuote(head5.getSelectedDisplayName())+")";
             
         log.debug("add signal: "+name);
-        SignalMast m;
+        SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        if(m!=null){
+            JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(rb.getString("DuplicateMast"),
+					new Object[]{ m.getDisplayName() }) , rb.getString("DuplicateMastTitle"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         try {
             m = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
         } catch (IllegalArgumentException ex) {
@@ -198,6 +233,136 @@ public class AddSignalMastPanel extends JPanel {
         }
         String user = userName.getText();
         if (!user.equals("")) m.setUserName(user);
+        prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
+        prefs.addComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()), (String) mastBox.getSelectedItem());
+        refreshComboBox();
+    }
+    
+    boolean check(){
+        if (head1.isEnabled()){
+            NamedBean h1 = head1.getSelectedBean();
+            if((head2.isEnabled()) && head2.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
+                    return false;
+            }
+            
+            if((head3.isEnabled()) && head3.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
+                    return false;
+            }
+            if((head4.isEnabled()) && head4.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
+                    return false;
+            }
+            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
+                    return false;
+            }
+            if(includeUsed.isSelected()){
+                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
+                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
+                    return false;
+                }
+            }
+            
+        }
+        
+        if (head2.isEnabled()){
+            NamedBean h1 = head2.getSelectedBean();
+            if((head3.isEnabled()) && head3.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head2.getSelectedDisplayName()))
+                    return false;
+            }
+            if((head4.isEnabled()) && head4.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head2.getSelectedDisplayName()))
+                    return false;
+            }
+            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head2.getSelectedDisplayName()))
+                    return false;
+            }
+            if(includeUsed.isSelected()){
+                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
+                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
+                    return false;
+                }
+            }
+        }
+        
+        if (head3.isEnabled()){
+            NamedBean h1 = head3.getSelectedBean();
+            if((head4.isEnabled()) && head4.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head3.getSelectedDisplayName()))
+                    return false;
+            }
+            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head4.getSelectedDisplayName()))
+                    return false;
+            }
+            if(includeUsed.isSelected()){
+                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
+                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
+                    return false;
+                }
+            }
+        }
+        
+        if (head4.isEnabled()){
+            NamedBean h1 = head4.getSelectedBean();
+            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
+                if(!duplicateHeadAssigned(head4.getSelectedDisplayName()))
+                    return false;
+            }
+            if(includeUsed.isSelected()){
+                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
+                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    boolean duplicateHeadAssigned(String head){
+        int i = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(rb.getString("DuplicateHeadAssign"),
+					new Object[]{ head }),
+            rb.getString("DuplicateHeadAssignTitle"),
+            JOptionPane.YES_NO_OPTION);
+            
+        if(i ==0) {
+            return true;
+        }
+        return false;
+    }
+    
+    boolean headAssignedElseWhere(String head, String mast){
+        int i = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(rb.getString("AlreadyAssinged"),
+					new Object[]{ head, mast }),
+            rb.getString("DuplicateHeadAssignTitle"),
+            JOptionPane.YES_NO_OPTION);
+        if(i ==0) {
+            return true;
+        }
+        return false;
+    
+    }
+    
+    void refreshComboBox(){
+        if(includeUsed.isSelected()){
+            alreadyUsed = new ArrayList<NamedBean>();
+        } else {
+            List<SignalHead> alreadyUsedHeads = InstanceManager.signalMastManagerInstance().getSignalHeadsUsed();
+            alreadyUsed = new ArrayList<NamedBean>();
+            for(SignalHead head : alreadyUsedHeads){
+                alreadyUsed.add((NamedBean)head);
+            }
+        }
+        
+        head1.excludeItems(alreadyUsed);
+        head2.excludeItems(alreadyUsed);
+        head3.excludeItems(alreadyUsed);
+        head4.excludeItems(alreadyUsed);
+        head5.excludeItems(alreadyUsed);
     }
 
     void handleCreateException(String sysName) {

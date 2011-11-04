@@ -4,7 +4,8 @@ package jmri.managers;
 
 import jmri.*;
 import jmri.managers.AbstractManager;
-
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Default implementation of a SignalMastManager.
@@ -69,6 +70,29 @@ public class DefaultSignalMastManager extends AbstractManager
 
     public SignalMast getByUserName(String key) {
         return (SignalMast)_tuser.get(key);
+    }
+    
+    public List<SignalHead> getSignalHeadsUsed(){
+        List<SignalHead> headsUsed = new ArrayList<SignalHead>();
+        for(NamedBean val : _tsys.values()){
+            java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)val).getHeadsUsed();
+            for(NamedBeanHandle bean : masthead){
+                headsUsed.add((SignalHead)bean.getBean());
+            }
+        }
+        return headsUsed;
+    }
+    
+    public String isHeadUsed(SignalHead head){
+        for(NamedBean val : _tsys.values()){
+            java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)val).getHeadsUsed();
+            for(NamedBeanHandle bean : masthead){
+                if(((SignalHead)bean.getBean())==head)
+                    return ((jmri.implementation.SignalHeadSignalMast)val).getDisplayName();
+            }
+        }
+        return null;
+    
     }
 
 

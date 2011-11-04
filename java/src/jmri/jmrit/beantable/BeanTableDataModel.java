@@ -762,7 +762,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 }
             }
             fireTableRowsUpdated(row, row);
-            JOptionPane.showMessageDialog(null, getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"));
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                showInfoMessage("Reminder",getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"),BeanTableDataModel.class.getName(), "remindSaveReLoad");
+            //JOptionPane.showMessageDialog(null, getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"));
         }
     
     }

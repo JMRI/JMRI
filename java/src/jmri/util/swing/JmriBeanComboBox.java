@@ -3,6 +3,9 @@ package jmri.util.swing;
 import jmri.NamedBean;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JComboBox;
 
 public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyChangeListener{
@@ -54,15 +57,23 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     void updateComboBox(String select){
         displayToBean = new HashMap<String, NamedBean>();
         removeAllItems();
-        String[] nameList = _manager.getSystemNameArray();
-        String[] displayList = new String[nameList.length];
+        ArrayList<String> nameList = new ArrayList(Arrays.asList(_manager.getSystemNameArray()));
+        
+        
+        for(NamedBean bean : exclude){
+            nameList.remove(bean.getSystemName());
+        }
+        
+        String[] displayList = new String[nameList.size()];
         
         if(_displayOrder==SYSTEMNAME){
-            displayList = nameList;
+            displayList = nameList.toArray(displayList);
         } else {
-            for(int i = 0; i<nameList.length; i++){
+            //for(String name: nameList){
+            for(int i = 0; i<nameList.size(); i++){
+                String name = nameList.get(i);
                 NamedBean nBean = null;
-                nBean = _manager.getBeanBySystemName(nameList[i]);
+                nBean = _manager.getBeanBySystemName(name);
                 
                 if (nBean!=null){
                     switch(_displayOrder){
@@ -74,21 +85,21 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
                                 if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
                                     displayList[i] = nBean.getUserName();
                                 else
-                                    displayList[i] = nameList[i];
+                                    displayList[i] = name;
                                 break;
                                 
                         case USERNAMESYSTEMNAME :
                                 if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
-                                    displayList[i] = nBean.getUserName() + " - " + nameList[i];
+                                    displayList[i] = nBean.getUserName() + " - " + name;
                                 else
-                                    displayList[i] = nameList[i];
+                                    displayList[i] = name;
                                 break;
                                
                         case SYSTEMNAMEUSERNAME : 
                                 if(nBean.getUserName()!=null && !nBean.getUserName().equals(""))
-                                    displayList[i] = nameList[i] + " - " + nBean.getUserName();
+                                    displayList[i] = name + " - " + nBean.getUserName();
                                 else 
-                                    displayList[i] = nameList[i];
+                                    displayList[i] = name;
                                 break; 
                                 
                         default : 
@@ -212,6 +223,13 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
             _lastSelected="";
         }
         _lastSelected = selectedItem;
+        updateComboBox(_lastSelected);
+    }
+    
+    List<NamedBean> exclude = new ArrayList<NamedBean>();
+    
+    public void excludeItems(List<NamedBean> exclude){
+        this.exclude = exclude;
         updateComboBox(_lastSelected);
     }
     

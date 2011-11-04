@@ -167,6 +167,10 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
     
+    public List<NamedBeanHandle<SignalHead>> getHeadsUsed(){
+        return heads;
+    }
+    
     static final protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());
 }
 
