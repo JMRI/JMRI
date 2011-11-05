@@ -3,7 +3,10 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Create a new throttle.
@@ -11,8 +14,23 @@ import javax.swing.AbstractAction;
  *  @author		Lionel Jeanson      Copyright 2009
  *  @version $Revision$
  */
-public class LoadDefaultXmlThrottlesLayoutAction extends AbstractAction {
+public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
 
+    public LoadDefaultXmlThrottlesLayoutAction(String s, WindowInterface wi) {
+    	super(s, wi);
+        // disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            setEnabled(false);
+        }
+    }
+
+    public LoadDefaultXmlThrottlesLayoutAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
+        // disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            setEnabled(false);
+        }
+    }
     /**
      * Constructor
      * @param s Name for the action.
@@ -49,5 +67,10 @@ public class LoadDefaultXmlThrottlesLayoutAction extends AbstractAction {
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleCreationAction.class.getName());
+
+    @Override
+    public JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
 
 }

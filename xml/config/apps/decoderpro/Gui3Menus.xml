@@ -178,6 +178,9 @@
     <node name="New Throttle">
         <adapter>jmri.jmrit.throttle.ThrottleCreationAction</adapter>
     </node>
+    <node name="Load default throttle layout">
+        <adapter>jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction</adapter>
+    </node>    
     <node>separator</node>
     <node name="Consisting Tool">
         <adapter>jmri.jmrit.consisttool.ConsistToolAction</adapter>
