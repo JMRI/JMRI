@@ -60,21 +60,38 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
 
         if (tf.getAddressPanel().getThrottle()!=null) {
             JPanel ctrlPanel = new JPanel();
+            ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();
             JLabel dir = new JLabel();
-            if (thr.getIsForward()) {
-                dir.setIcon(fwdIcon);
+            if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+                    && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+                if (thr.getIsForward()) {
+                    dir.setIcon(fwdIcon);
+                } else {
+                    dir.setIcon(bckIcon);
+                }
             } else {
-                dir.setIcon(bckIcon);
+                if (thr.getIsForward()) {
+                    dir.setText(throttleBundle.getString("ButtonForward"));
+                } else {
+                    dir.setText(throttleBundle.getString("ButtonReverse"));
+                }
             }
             dir.setVerticalAlignment(JLabel.CENTER);
-            ctrlPanel.add(dir);
-            JProgressBar speedBar = new javax.swing.JProgressBar();
-            speedBar.setPreferredSize(new Dimension(64,height-8));
-            speedBar.setMinimum(0);
-            speedBar.setMaximum(100);
-            speedBar.setValue((int)(thr.getSpeedSetting()*100f));
-            ctrlPanel.add(speedBar);
+            ctrlPanel.add(dir, BorderLayout.WEST);
+            if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+                    && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+                JProgressBar speedBar = new javax.swing.JProgressBar();
+                speedBar.setPreferredSize(new Dimension(64, height - 8));
+                speedBar.setMinimum(0);
+                speedBar.setMaximum(100);
+                speedBar.setValue((int) (thr.getSpeedSetting() * 100f));
+                ctrlPanel.add(speedBar, BorderLayout.CENTER);
+            } else {
+                JLabel speedLabel = new JLabel("");
+                speedLabel.setText(" "+(int)(thr.getSpeedSetting() * 100f)+"%");
+                ctrlPanel.add(speedLabel, BorderLayout.CENTER);
+            }
             retPanel.add(ctrlPanel, BorderLayout.EAST);
         }
 
