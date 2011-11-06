@@ -202,7 +202,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// first try car routing with just one location
 		c3.setNextDestination(Acton);
-		Assert.assertTrue("Try routing next destination equal to current", router.setDestination(c3, null, null));
+		Assert.assertFalse("Try routing next destination equal to current", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
 		// now try with next track not equal to current
@@ -214,7 +214,7 @@ public class OperationsCarRouterTest extends TestCase {
 		// now try with next track equal to current
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS1);
-		Assert.assertTrue("Try routing next track equal to current", router.setDestination(c3, null, null));
+		Assert.assertFalse("Try routing next track equal to current", router.setDestination(c3, null, null));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
 		// create a local train servicing Acton

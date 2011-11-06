@@ -1116,15 +1116,10 @@ public class TrainBuilder extends TrainCommon{
 		if (departStageTrack == null || !departStageTrack.isBlockCarsEnabled()){
 			return;		
 		}
-		
-		if (numOfBlocks.size() < 2){
-			addLine(buildReport, SEVEN, rb.getString("blockUnable"));
-			return;
-		}
-		
+			
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockDepartureHasBlocks"),new Object[]{departStageTrack.getName(),numOfBlocks.size()}));
 		
-    	Enumeration<String> en = numOfBlocks.keys();
+		Enumeration<String> en = numOfBlocks.keys();
     	while (en.hasMoreElements()) {
     		String locId = en.nextElement();
     		int numCars = numOfBlocks.get(locId);
@@ -1132,7 +1127,11 @@ public class TrainBuilder extends TrainCommon{
     		Location l = locationManager.getLocationById(locId);
     		if (l != null)
     			locName = l.getName();
-    		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockFromHasCars"),new Object[]{locId, locName, numCars}));    	
+    		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockFromHasCars"),new Object[]{locId, locName, numCars})); 
+    		if (numOfBlocks.size() < 2){
+    			addLine(buildReport, SEVEN, rb.getString("blockUnable"));
+    			return;
+    		}
     	}
     	// start at the second location in the route to begin blocking
     	List<String> routeList = train.getRoute().getLocationsBySequenceList();
@@ -1149,13 +1148,16 @@ public class TrainBuilder extends TrainCommon{
     		String blockId = getLargestBlock();	// get the id of the largest block of cars
     		if (blockId.equals(""))
     			break;	// done
-    		RouteLocation rld = getLocationWithMaximumMoves(routeList);	// get the location with the greatest number of moves
+    		RouteLocation rld = getLocationWithMaximumMoves(routeList, blockId);	// get the location with the greatest number of moves
     		if (rld == null)
     			break;	// done
     		// check to see if there are enough moves for all of the cars departing staging
     		if (rld.getMaxCarMoves() > numOfBlocks.get(blockId)){
     			// remove the largest block and maximum moves RouteLocation from the lists
     			numOfBlocks.remove(blockId);
+    			// block 0 cars have never left staging.
+    			if (blockId.equals("0"))
+    				continue;
     			routeList.remove(rld.getId());
     			Location loc = locationManager.getLocationById(blockId);
     			Location setOutLoc = locationManager.getLocationByName(rld.getName());
@@ -1206,13 +1208,18 @@ public class TrainBuilder extends TrainCommon{
 	/*
 	 * Returns the routeLocation with the most moves.
 	 */
-	private RouteLocation getLocationWithMaximumMoves(List<String> routeList){
+	private RouteLocation getLocationWithMaximumMoves(List<String> routeList, String blockId){
 		RouteLocation rlMax = null;
 		int maxMoves = 0;
     	for (int i=1; i<routeList.size(); i++){
     		RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
     		if (rl.getMaxCarMoves()-rl.getCarMoves() > maxMoves){
     			maxMoves = rl.getMaxCarMoves()-rl.getCarMoves();
+    			rlMax = rl;
+    		}
+    		// if two locations have the same number of moves, return the one that doesn't match the block id
+    		Location loc = locationManager.getLocationByName(rl.getName());    		
+    		if (rl.getMaxCarMoves()-rl.getCarMoves() == maxMoves && !loc.getId().equals(blockId)){
     			rlMax = rl;
     		}
     	}
@@ -1444,8 +1451,8 @@ public class TrainBuilder extends TrainCommon{
 		car.setRouteLocation(rl);
 		car.setRouteDestination(rld);
 		car.setDestination(destination, track);
-		// update car's last location going into staging and not departing staging
-		if (track.getLocType().equals(Track.STAGING) && !car.getTrack().getLocType().equals(Track.STAGING))
+		// update car's last location going into staging
+		if (track.getLocType().equals(Track.STAGING) && routeList.size() > 2)
 				car.setLastLocationId(car.getLocationId());
 		int length = Integer.parseInt(car.getLength())+ Car.COUPLER;
 		int weightTons = car.getAdjustedWeightTons();

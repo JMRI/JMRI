@@ -86,10 +86,10 @@ public class Router extends TrainCommon {
 		// Has the car arrived at the car's next destination?
 		if (car.getLocation() != null && car.getLocation().equals(car.getNextDestination()) 
 				&& (car.getTrack().equals(car.getNextDestTrack()) || car.getNextDestTrack() == null)){
-			log.debug("Car ("+car.toString()+") has arrieved at next destination");
+			log.debug("Car ("+car.toString()+") has arrived at next destination");
 			car.setNextDestination(null);
 			car.setNextDestTrack(null);
-			return true;
+			return false;
 		}
 		// is car part of kernel?
 		if (car.getKernel() != null && !car.getKernel().isLead(car))
