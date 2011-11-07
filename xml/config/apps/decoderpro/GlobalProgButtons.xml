@@ -4,11 +4,12 @@
 <nodes
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
 >
   <name>DecoderPro</name>
 
-  <node><name>Read All</name>
+  <node>
+    <name>Read All</name>
   </node>
   <node><name>Write All</name>
   </node>
