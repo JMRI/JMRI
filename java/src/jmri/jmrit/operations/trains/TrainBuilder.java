@@ -1451,9 +1451,9 @@ public class TrainBuilder extends TrainCommon{
 		car.setRouteLocation(rl);
 		car.setRouteDestination(rld);
 		car.setDestination(destination, track);
-		// update car's last location going into staging
-		if (track.getLocType().equals(Track.STAGING) && routeList.size() > 2)
-				car.setLastLocationId(car.getLocationId());
+		// don't update car's previous location if just re-staging car
+		if (routeList.size() > 2)
+			car.setLastLocationId(car.getLocationId());
 		int length = Integer.parseInt(car.getLength())+ Car.COUPLER;
 		int weightTons = car.getAdjustedWeightTons();
 		// car could be part of a kernel

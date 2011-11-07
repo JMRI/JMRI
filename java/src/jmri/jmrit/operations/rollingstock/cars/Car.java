@@ -508,16 +508,16 @@ public class Car extends RollingStock {
 					return Track.OKAY;
 				else
 					return SCHEDULE + " (" + track.getScheduleName()
-							+ ") request car "+Track.TYPE+" (" + si.getType()
+							+ ") "+rb.getString("requestCar")+" "+Track.TYPE+" (" + si.getType()
 							+ ") "+Track.ROAD+" (" + si.getRoad() + ") "+Track.LOAD+" ("
 							+ si.getLoad() + ")";
 			else
 				return SCHEDULE + " (" + track.getScheduleName()
-						+ ") request car "+Track.TYPE+" (" + si.getType()
+						+ ") "+rb.getString("requestCar")+" "+Track.TYPE+" (" + si.getType()
 						+ ") "+Track.ROAD+" (" + si.getRoad() + ")";
 		} else
 			return SCHEDULE + " (" + track.getScheduleName()
-					+ ") request car "+Track.TYPE+" (" + si.getType() + ")";		
+					+ ") "+rb.getString("requestCar")+" "+Track.TYPE+" (" + si.getType() + ")";		
 	}
 	
 	/**

@@ -68,7 +68,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String TYPE_CHANGED_PROPERTY = "rolling stock type";
 	public static final String ROUTE_LOCATION_CHANGED_PROPERTY = "rolling stock route location";
 	
-	public static final int COUPLER = 4;		// draw bar length between rolling stocks
+	public static final int COUPLER = Integer.parseInt(rb.getString("DrawBarLength"));	// draw bar length between rolling stocks
 
 	LocationManager locationManager = LocationManager.instance();
 	
