@@ -94,6 +94,54 @@ for names, formatting, etc are really useful.
 If you find that you can't read a piece of code, these will help
 make it better.
 
+<h2>Deprecating Code</h2>
+
+As development proceeds, sometimes old ways of doing things have to be replaced by
+new ways.  
+In many cases, you can just change all the using code in SVN, 
+and move forward.  
+For general interfaces that might be used externally to JMRI, 
+such as in scripts and CATS, 
+it can be good to leave the old interface in place for a while, 
+marking it as "deprecated" so that people can discover that it 
+will eventually go away.  
+After a suitable number of release cycles, the
+deprecated interface can then be removed.
+<p>
+Note that a deprecated interface is meant to still work.  
+Deprecated should only mean that you 
+can't count on the deprecated interface working in the future, 
+so that it would be good to code away from it while it's still working.
+
+<p>
+You may want to work with the deprecation checks "on" during compilation.  
+To do that, change this line of build.xml:
+
+<code><pre>
+&lt;property name="deprecation" value="on" /&gt;
+</pre></code>
+
+<p>
+This lets you pay attention to new deprecation warnings as you code.
+
+<p>
+There are two forms of marking something as deprecated (JavaDoc tag and Annotation), 
+and both allow you to add additional information. A nice discussion 
+of the technicalities is 
+<A href="http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">here</a>.
+
+We use them this way:
+
+<code><pre>
+* @deprecated 2.7.8
+
+@Deprecated // 2.7.8
+</pre></code>
+
+where the line contains the version in which the deprecation is applied.  
+That lets you easily know how long ago it was deprecated.
+
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
