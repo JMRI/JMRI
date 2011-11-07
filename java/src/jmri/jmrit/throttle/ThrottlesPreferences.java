@@ -21,7 +21,6 @@ public class ThrottlesPreferences {
     private boolean _enableAutoLoad = true;
     private boolean _hideUndefinedFunButton = false;
     private boolean _ignoreThrottlePosition = true;
-    private boolean _cleaningOnClose = false;
     private boolean _saveThrottleOnLayoutSave = true;
 
     private Dimension _winDim = new Dimension(800,600);
@@ -65,7 +64,6 @@ public class ThrottlesPreferences {
     	if ((a = e.getAttribute("isAutoLoading")) != null )  setAutoLoad( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isHidingUndefinedFunctionButtons")) != null )  setHideUndefinedFuncButt( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isIgnoringThrottlePosition")) != null )  setIgnoreThrottlePosition( a.getValue().compareTo("true") == 0 );
-    	if ((a = e.getAttribute("isCleaningOnClose")) != null )  setCleanOnClose( a.getValue().compareTo("true") == 0 );
     }
 
 	/**
@@ -88,7 +86,6 @@ public class ThrottlesPreferences {
     	e.setAttribute("isAutoLoading", ""+isAutoLoading());
     	e.setAttribute("isHidingUndefinedFunctionButtons", ""+isHidingUndefinedFuncButt());
     	e.setAttribute("isIgnoringThrottlePosition", ""+isIgnoringThrottlePosition());
-    	e.setAttribute("isCleaningOnClose", ""+isCleaningOnClose());
     	return e;
     }
 
@@ -105,7 +102,6 @@ public class ThrottlesPreferences {
     	setAutoLoad(tp.isAutoLoading());
     	setHideUndefinedFuncButt(tp.isHidingUndefinedFuncButt());
     	setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
-    	setCleanOnClose(tp.isCleaningOnClose() );
     	
     	if (listeners != null)
     		for (int i = 0; i < listeners.size(); i++) {
@@ -126,8 +122,7 @@ public class ThrottlesPreferences {
     			isUsingRosterImage() != tp.isUsingRosterImage()||
     			isEnablingRosterSearch() != tp.isEnablingRosterSearch()||
     			isAutoLoading() != tp.isAutoLoading() ||
-    			isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt() ||
-    			isCleaningOnClose() != tp.isCleaningOnClose() );
+    			isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt() );
     }
     
     public void save() {
@@ -225,12 +220,6 @@ public class ThrottlesPreferences {
 	}    
 	public boolean isIgnoringThrottlePosition() {
 		return _ignoreThrottlePosition;
-	}
-	public void setCleanOnClose(boolean b) {
-		_cleaningOnClose = b;
-	}
-	public boolean isCleaningOnClose() {
-		return _cleaningOnClose;
 	}
 	public void setSaveThrottleOnLayoutSave(boolean b) {
 		_saveThrottleOnLayoutSave = b;

@@ -36,7 +36,6 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     private javax.swing.JCheckBox cbEnableAutoLoad;
     private javax.swing.JCheckBox cbHideUndefinedButtons;
     private javax.swing.JCheckBox cbIgnoreThrottlePosition;
-    private javax.swing.JCheckBox cbCleanOnDispose;
     private javax.swing.JCheckBox cbSaveThrottleOnLayoutSave;
     private javax.swing.JLabel	labelApplyWarning;
     private javax.swing.JButton jbApply;
@@ -155,7 +154,6 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbEnableAutoLoad  = new javax.swing.JCheckBox();
         cbHideUndefinedButtons = new javax.swing.JCheckBox();
         cbIgnoreThrottlePosition = new javax.swing.JCheckBox();
-        cbCleanOnDispose = new javax.swing.JCheckBox();
         cbSaveThrottleOnLayoutSave = new javax.swing.JCheckBox();
 
         labelApplyWarning = new javax.swing.JLabel();
@@ -170,7 +168,6 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbHideUndefinedButtons.setText(throttleBundle.getString("ExThrottleHideUndefinedFunctionButtons")); 
         cbIgnoreThrottlePosition.setText(throttleBundle.getString("ExThrottleIgnoreThrottlePosition"));         
         labelApplyWarning.setText(throttleBundle.getString("ExThrottleLabelApplyWarning"));
-        cbCleanOnDispose.setText(throttleBundle.getString("ExThrottleCleanOnDispose"));
         cbSaveThrottleOnLayoutSave.setText(throttleBundle.getString("ExThrottleSaveThrottleOnLayoutSave"));
 
         java.awt.event.ActionListener al = new java.awt.event.ActionListener() {
@@ -219,8 +216,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         this.add(cbHideUndefinedButtons, gridBagConstraints11);
         this.add(cbIgnoreThrottlePosition, gridBagConstraints10);
         this.add(cbUseToolBar, gridBagConstraints12);
-        this.add(cbUseFunctionIcon, gridBagConstraints15);
-        this.add(cbCleanOnDispose, gridBagConstraints14);
+        this.add(cbUseFunctionIcon, gridBagConstraints14);
         this.add(labelApplyWarning, gridBagConstraints13);
     }
 
@@ -236,7 +232,6 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbEnableAutoLoad.setSelected( tp.isAutoLoading() );
         cbHideUndefinedButtons.setSelected( tp.isHidingUndefinedFuncButt() );
         cbIgnoreThrottlePosition.setSelected( tp.isIgnoringThrottlePosition() );
-        cbCleanOnDispose.setSelected( tp.isCleaningOnClose() );
     }
     
     private ThrottlesPreferences getThrottlesPreferences()
@@ -252,7 +247,6 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     	tp.setAutoLoad( cbEnableAutoLoad.isSelected() );
     	tp.setHideUndefinedFuncButt( cbHideUndefinedButtons.isSelected() );
     	tp.setIgnoreThrottlePosition( cbIgnoreThrottlePosition.isSelected() );
-    	tp.setCleanOnClose(cbCleanOnDispose.isSelected());
     	return tp;
     }
     
@@ -267,7 +261,6 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbResizeWinImg.setEnabled( cbUseExThrottle.isSelected()  &&  cbUseRosterImage.isSelected() );
         cbHideUndefinedButtons.setEnabled( cbUseExThrottle.isSelected() );
         cbIgnoreThrottlePosition.setEnabled( cbUseExThrottle.isSelected() && cbEnableAutoLoad.isSelected() );
-        cbCleanOnDispose.setEnabled( cbUseExThrottle.isSelected() );
         if ( cbUseExThrottle.isSelected() ) {
         	if ( cbUseToolBar.isSelected() ) {
         		cbIgnoreThrottlePosition.setSelected( true );

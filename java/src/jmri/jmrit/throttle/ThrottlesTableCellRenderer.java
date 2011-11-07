@@ -20,6 +20,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
     private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
     private static final ImageIcon fwdIcon = new ImageIcon("resources/icons/throttles/up-green.png");
     private static final ImageIcon bckIcon = new ImageIcon("resources/icons/throttles/down-green.png");
+    private static final ImageIcon estopIcon = new ImageIcon("resources/icons/throttles/estop24.png");
     private static final RosterIconFactory iconFactory =  new RosterIconFactory(32);
     public static int height = 42;
 
@@ -81,15 +82,27 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             ctrlPanel.add(dir, BorderLayout.WEST);
             if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
                     && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
-                JProgressBar speedBar = new javax.swing.JProgressBar();
-                speedBar.setPreferredSize(new Dimension(64, height - 8));
-                speedBar.setMinimum(0);
-                speedBar.setMaximum(100);
-                speedBar.setValue((int) (thr.getSpeedSetting() * 100f));
-                ctrlPanel.add(speedBar, BorderLayout.CENTER);
+                if (thr.getSpeedSetting()==-1) {
+                    JLabel estop = new JLabel();
+                    estop.setPreferredSize(new Dimension(64, height - 8));
+                    estop.setHorizontalAlignment(JLabel.CENTER);
+                    estop.setIcon(estopIcon);
+                    ctrlPanel.add(estop, BorderLayout.CENTER);
+                } else {
+                    JProgressBar speedBar = new javax.swing.JProgressBar();
+                    speedBar.setPreferredSize(new Dimension(64, height - 8));
+                    speedBar.setMinimum(0);
+                    speedBar.setMaximum(100);
+                    speedBar.setValue((int) (thr.getSpeedSetting() * 100f));
+                    ctrlPanel.add(speedBar, BorderLayout.CENTER);
+                }
             } else {
                 JLabel speedLabel = new JLabel("");
-                speedLabel.setText(" "+(int)(thr.getSpeedSetting() * 100f)+"%");
+                if (thr.getSpeedSetting()==-1) {
+                     speedLabel.setText(" "+throttleBundle.getString("ButtonEStop")+" ");
+                } else {
+                    speedLabel.setText(" "+(int)(thr.getSpeedSetting() * 100f)+"% ");
+                }
                 ctrlPanel.add(speedLabel, BorderLayout.CENTER);
             }
             retPanel.add(ctrlPanel, BorderLayout.EAST);
