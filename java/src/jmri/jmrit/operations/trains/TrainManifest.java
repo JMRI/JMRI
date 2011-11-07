@@ -183,7 +183,7 @@ public class TrainManifest extends TrainCommon {
 							buf.append((cars-emptyCars)+" "+rb.getString("Loads")+", "+emptyCars+" "+rb.getString("Empties")+", ");
 						else
 							buf.append(cars +" "+rb.getString("cars")+", ");
-						String s = rl.getTrainLength()+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons");
+						String s = rl.getTrainLength()+" "+Setup.getLengthUnit().toLowerCase()+", "+rl.getTrainWeight()+" "+rb.getString("tons");
 						if (buf.length()+s.length()>lineLength()){
 							addLine(fileOut, buf.toString());
 							buf = new StringBuffer();

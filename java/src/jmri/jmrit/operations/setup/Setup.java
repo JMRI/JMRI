@@ -136,6 +136,10 @@ public class Setup {
 	public static final String GREEN = rb.getString("Green");
 	public static final String RED = rb.getString("Red");
 	
+	// Unit of Length
+	public static final String FEET = rb.getString("Feet");
+	public static final String METER = rb.getString("Meter");
+	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
 	private static int ratioTons = HO_RATIO_TONS;
@@ -172,6 +176,7 @@ public class Setup {
 	private static int carSwitchTime = 3;		// how long it take to move a car
 	private static int travelTime = 4;// how long it take a train to move one location
 	private static String yearModeled = ""; 	// year being modeled
+	private static String lengthUnit = FEET;
 	private static String iconNorthColor ="";
 	private static String iconSouthColor ="";
 	private static String iconEastColor ="";
@@ -465,6 +470,14 @@ public class Setup {
 	
 	public static void setPanelName(String name){
 		panelName = name;
+	}
+	
+	public static String getLengthUnit(){
+		return lengthUnit;
+	}
+	
+	public static void setLengthUnit(String unit){
+		lengthUnit = unit;
 	}
 	
 	public static String getYearModeled(){
@@ -1109,6 +1122,7 @@ public class Setup {
        	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
        	values.setAttribute("printTimetable", isPrintTimetableNameEnabled()?"true":"false");
        	values.setAttribute("use12hrFormat", is12hrFormatEnabled()?"true":"false");
+       	values.setAttribute("lengthUnit", getLengthUnit());
        	values.setAttribute("yearModeled", getYearModeled());
        	
        	e.addContent(values = new Element("pickupEngFormat"));
@@ -1373,6 +1387,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("use12hrFormat: "+enable);
         		set12hrFormatEnabled(enable.equals("true"));
+        	}
+         	if ((a = operations.getChild("settings").getAttribute("lengthUnit"))!= null){
+        		String unit = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("lengthUnit: "+unit);
+        		setLengthUnit(unit);
         	}
          	if ((a = operations.getChild("settings").getAttribute("yearModeled"))!= null){
         		String year = a.getValue();

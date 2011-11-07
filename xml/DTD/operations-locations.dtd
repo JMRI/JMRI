@@ -71,6 +71,7 @@
 <!ATTLIST track pool			CDATA #IMPLIED>
 <!ATTLIST track minLength		CDATA #IMPLIED>
 <!ATTLIST track comment			CDATA #IMPLIED>
+<!ATTLIST track blockOptions	CDATA #IMPLIED>
 
 <!ATTLIST schedule id			CDATA #REQUIRED>      
 <!ATTLIST schedule name			CDATA #IMPLIED>

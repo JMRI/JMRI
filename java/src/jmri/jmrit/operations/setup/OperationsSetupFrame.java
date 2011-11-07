@@ -69,6 +69,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     
     JRadioButton typeDesc = new JRadioButton(rb.getString("Descriptive"));
     JRadioButton typeAAR = new JRadioButton(rb.getString("AAR"));
+    
+    JRadioButton feetUnit = new JRadioButton(rb.getString("Feet"));
+    JRadioButton meterUnit = new JRadioButton(rb.getString("Meter"));
 		    
     // check boxes
     JCheckBox eastCheckBox = new JCheckBox(rb.getString("eastwest"));
@@ -230,13 +233,22 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		carTypeGroup.add(typeDesc);
 		carTypeGroup.add(typeAAR);
 		pCarTypeButtons.add(typeDesc);
-		pCarTypeButtons.add(typeAAR);
-		
-		p9.add(pCarTypeButtons);
-		
+		pCarTypeButtons.add(typeAAR);		
+		p9.add(pCarTypeButtons);		
 		setCarTypes();
 		
 		// row 4b
+		JPanel pLengthUnit = new JPanel();
+		pLengthUnit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLength")));
+		ButtonGroup lengthUnitGroup = new ButtonGroup();
+		lengthUnitGroup.add(feetUnit);
+		lengthUnitGroup.add(meterUnit);
+		pLengthUnit.add(feetUnit);
+		pLengthUnit.add(meterUnit);
+		p9.add(pLengthUnit);
+		setLengthUnit();
+		
+		// row 4c
 		JPanel pYearModeled = new JPanel();
 		pYearModeled.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutYearModeled")));
 		pYearModeled.add(yearTextField);
@@ -500,6 +512,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			if (scaleG.isSelected())
 				Setup.setScale(Setup.G_SCALE);
 			Setup.setRailroadName(railroadNameTextField.getText());
+			// Set Unit of Length
+			if (feetUnit.isSelected())
+				Setup.setLengthUnit(Setup.FEET);
+			if (meterUnit.isSelected())
+				Setup.setLengthUnit(Setup.METER);
 			Setup.setYearModeled(yearTextField.getText());
 			/* all JMRI window position and size are now saved
 			// save panel size and position
@@ -590,6 +607,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		northComboBox.setVisible((direction & Setup.NORTH) >0);
 		textIconSouth.setVisible((direction & Setup.NORTH) >0);
 		southComboBox.setVisible((direction & Setup.NORTH) >0);
+	}
+	
+	private void setLengthUnit(){
+		feetUnit.setSelected(Setup.getLengthUnit().equals(Setup.FEET));
+		meterUnit.setSelected(Setup.getLengthUnit().equals(Setup.METER));
 	}
 	
 	private void loadIconComboBox (JComboBox comboBox){

@@ -75,6 +75,7 @@
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
 <!ATTLIST settings yearModeled		CDATA #IMPLIED> 
+<!ATTLIST settings lengthUnit		CDATA #IMPLIED>
 
 <!ATTLIST panel name				CDATA #IMPLIED>
 <!ATTLIST panel trainIconXY			(true | false ) "true"> 
