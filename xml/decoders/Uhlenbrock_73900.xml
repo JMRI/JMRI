@@ -73,6 +73,7 @@
         <enumVal>
           <enumChoice choice="Normal"/>
           <enumChoice choice="Reversed"/>
+        </enumVal>
         <label>Consist Direction</label>
       </variable>      
       <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
@@ -301,7 +302,6 @@
        <separator/>
       <display item="Dimming outputs A1 and A2"/>
     </column>
-      <separator/>
     <column>
        <separator/>
       <display item="Output A3"/> 
