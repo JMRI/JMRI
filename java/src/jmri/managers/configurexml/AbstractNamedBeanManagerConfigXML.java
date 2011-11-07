@@ -110,7 +110,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      */
     protected String getUserName(Element elem) {
         if ( elem.getChild("userName") != null) {
-            elem.getChild("userName").getText();
+            return elem.getChild("userName").getText();
         }
         if ( elem.getAttribute("userName") != null) {
             return elem.getAttribute("userName").getValue();
@@ -128,7 +128,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      */
     protected String getSystemName(Element elem) {
         if ( elem.getChild("systemName") != null) {
-            elem.getChild("systemName").getText();
+            return elem.getChild("systemName").getText();
         }
         if ( elem.getAttribute("systemName") != null) {
             return elem.getAttribute("systemName").getValue();
