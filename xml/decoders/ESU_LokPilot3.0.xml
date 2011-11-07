@@ -15,6 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
+  <version author="Jos Wils, wilsjos@orcon.net.nz" version="2.0" lastUpdate="20111103"/>
 <!--
      This decoder configuration file is based on ESU_LokPilotDCC.xml
      V 4, dated 20050619, by Walter Thompson. Which also acknowledged
@@ -39,6 +40,7 @@
         1.1 - 18 Feb 2009
               Added family lowVersionID & highVersionID, range 0-255 because CV 7 doesn't seem
                  to match software version number
+        2.0 - Added CV246, CV247, CV248 Uncoupling functions added by Firmware update May 2010.
 -->
   <decoder>
     <family name="ESU LokPilot 3.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
@@ -391,7 +393,7 @@
         </enumVal>
         <label>Consist Address Active For F10 in Reverse</label>
       </variable>
-      <variable label="Enable address broadcast on channel 1" CV="28" mask="XXXXXXXV" default="0">
+      <variable label="Enable address broadcast on channel 1" CV="28" mask="XXXXXXXV" default="0"  item="Advanced Group 1 Option 6">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -402,7 +404,7 @@
         </enumVal>
         <label>Enable address broadcast on channel 1</label>
       </variable>
-      <variable label="Allow data transfer on channel 2" CV="28" mask="XXXXXXVX" default="0">
+      <variable label="Allow data transfer on channel 2" CV="28" mask="XXXXXXVX" default="0"  item="Advanced Group 1 Option 7">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -413,7 +415,7 @@
         </enumVal>
         <label>Allow data transfer on channel 2</label>
       </variable>
-      <variable label="Allow command confirmation on channel 1" CV="28" mask="XXXXXVXX" default="0">
+      <variable label="Allow command confirmation on channel 1" CV="28" mask="XXXXXVXX" default="0"  item="Advanced Group 1 Option 8">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -457,7 +459,7 @@
         </enumVal>
         <label>Analogue mode</label>
       </variable>
-      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" default="0">
+      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" default="0"  item="Advanced Group 1 Option 5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -534,7 +536,7 @@
         </enumVal>
         <label>Marklin 2. address</label>
       </variable>
-      <variable label="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1" tooltip="CV49">
+      <variable label="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1" item="Advanced Group 1 Option 1" tooltip="CV49">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -5949,6 +5951,18 @@
         </enumVal>
         <label>F15 Back up B Dynamic Brake</label>
       </variable>
+       <variable label="Auto Uncoupling Speed" CV="246" default="0" item="Advanced Group 1 Option 2">
+        <decVal/>
+        <label>Auto Uncoupling Speed</label>
+      </variable>
+      <variable label="Auto Uncoupling Push Time" CV="247" default="0" item="Advanced Group 1 Option 3">
+        <decVal/>
+        <label>Auto Uncoupling Push Time</label>
+      </variable>
+      <variable label="Auto Uncoupling Move Away Time" CV="248" default="0" item="Advanced Group 1 Option 4">
+        <decVal/>
+        <label>Auto Uncoupling Remove Time</label>
+      </variable>
       <variable label="Start delay" CV="253" default="0" tooltip="Delays the start (range 0-255). Allows synchronized starting of locos with LokSound decoders (for consist operation). CV253">
         <decVal min="0" max="255"/>
         <label>Start delay</label>
@@ -7572,30 +7586,11 @@
       </label>
     </column>
     <name>Function Map</name>
-  </pane>
-  <pane name="RailCom">
-    <column>
-      <display item="Enable RailCom" format="checkbox" tooltip="CV 29 bit 3"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Enable address broadcast on channel 1" tooltip="CV 28 bit 0"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Allow data transfer on channel 2" tooltip="CV 28 bit 1"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Allow command confirmation on channel 1" tooltip="CV 28 bit 2"/>
-    </column>
-    <name>RailCom</name>
-  </pane>
+  </pane> 
   <pane name="ESU">
     <column>
       <display item="Marklin Delta Mode"/>
       <display item="Marklin 2. address"/>
-      <display item="Automatic speed step detection"/>
       <display item="LGB Function button mode"/>
       <display item="ZIMO Manual function"/>
       <display item="Bit for incorrect travel (Motorola)"/>
