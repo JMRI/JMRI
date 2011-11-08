@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
+import jmri.DccLocoAddress;
 
 public class ThrottlesTableModel extends AbstractTableModel implements AddressListener, java.beans.PropertyChangeListener {
 
@@ -39,7 +40,9 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
     }
 
     public void notifyAddressReleased(int address, boolean isLong) {
+        DccLocoAddress la = new DccLocoAddress(address,isLong);
         fireTableDataChanged();
+        jmri.InstanceManager.throttleManagerInstance().removeListener(la, this);
     }
 
     public void notifyAddressThrottleFound(DccThrottle throttle) {
