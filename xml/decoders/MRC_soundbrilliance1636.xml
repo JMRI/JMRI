@@ -13,12 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="4" lastUpdated="20111107"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
   <version author="Bob Jacobsen" version="2" lastUpdated="20071223"/>
   <version author="Paul Bender" version="1" lastUpdated="20060723"/>
 <!-- made from the MRC_1631 file by Rick Beaber -->
 <!-- version 2 fixed a problem in CV 115/116 -->
 <!-- version 3 added many tooltips -->
+<!-- restore function variables which were accidentaly removed -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -130,6 +132,15 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
+
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+          item="Address Format">
+          <enumVal>
+             <enumChoice choice="2 digit addressing"/>
+             <enumChoice choice="4 digit addressing"/>
+          </enumVal>
+      </variable>
+
       <variable label="Sound On/Off" CV="49" tooltip="CV49 turns sound on or off" item="Sound Option 1" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off">
@@ -226,7 +237,7 @@
         <label>User ID #2</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Auto Brake squeal" item="Sound Option 4" CV="117" default="1">
+      <variable label="Auto Brake squeal" item="Sound Option 4" CV="115" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
