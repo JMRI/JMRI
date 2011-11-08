@@ -67,7 +67,6 @@ public class Roster extends XmlFile {
             } catch (Exception e) {
                 log.error("Exception during roster reading: "+e);
             }
-            ALLENTRIES = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ALLENTRIES");
         }
         if (log.isDebugEnabled()) log.debug("Roster returns instance "+_instance);
         return _instance;
@@ -863,7 +862,7 @@ public class Roster extends XmlFile {
         return new ArrayList<String>(_rosterGroupList);
     }
 
-    public static String ALLENTRIES = "All Entries";
+    public final static String ALLENTRIES = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ALLENTRIES");
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Roster.class.getName());

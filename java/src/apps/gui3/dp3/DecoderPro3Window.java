@@ -565,8 +565,6 @@ public class DecoderPro3Window
         }
         
         public void mouseClicked(MouseEvent e){
-            if (popUp!=null && popUp.isVisible())
-                return;
             if (e.isPopupTrigger()){
                 showPopup(e);
                 return;

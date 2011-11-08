@@ -43,7 +43,6 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
 
     // GUI member declarations
     JComboBox box;
-    ActionListener boxListener;
     ArrayList<Integer> modes = new ArrayList<Integer>();
 
     /**
@@ -102,7 +101,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
         }
         box.setEnabled((!modes.isEmpty()));
 
-        boxListener = new ActionListener() {
+        ActionListener boxListener = new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 connect();

@@ -106,9 +106,17 @@ public class PrintRosterEntry implements PaneContainer {
         Element decoderRoot;
         try {
             decoderRoot = d.rootFromName(DecoderFile.fileLocation+d.getFilename());
-        } catch (Exception e) {
+        
+        }
+        catch (org.jdom.JDOMException exj) {
+            log.error("could not parse "+d.getFilename()+": "+exj.getMessage());
             return;
         }
+        catch (java.io.IOException exj) {
+            log.error("could not read "+d.getFilename()+": "+exj.getMessage());
+            return;
+        }
+
         d.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         if (variableModel.piCv() >= 0) {
             resetModel.setPiCv(variableModel.piCv());

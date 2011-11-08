@@ -20,10 +20,6 @@ import javax.swing.JTextField;
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
-    javax.swing.JComboBox portBox = new javax.swing.JComboBox();
-
-
-
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
