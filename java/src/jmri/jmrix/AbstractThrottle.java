@@ -4,6 +4,7 @@ import jmri.DccThrottle;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.ThrottleListener;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -335,22 +336,27 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     // register for notification if any of the properties change
     public void removePropertyChangeListener(PropertyChangeListener l) {
+        log.debug("Removing property change " + l);
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
-        log.debug("listeners size is " + listeners.size());
-
+        log.debug("remove listeners size is " + listeners.size());
         if ((listeners.size()==0)){
-            log.debug("Listener Size is 0 so will call the dispose in the InstanceManger");
-            InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
+            log.debug("Listener Size is 0 so will call the dispose in the InstanceManger with an empty throttleListenr null value");
+            InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener(){
+                public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){ }
+                public void notifyThrottleFound(DccThrottle t) { }
+            });
         }
     }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
+        log.debug("listeners added " + l);
         // add only if not already registered
         if (!listeners.contains(l)) {
             listeners.addElement(l);
         }
+        log.debug("listeners size is " + listeners.size());
     }
 
     /**
@@ -390,19 +396,37 @@ abstract public class AbstractThrottle implements DccThrottle {
     @Deprecated
     public void dispose() {
         if (!active) log.error("Dispose called when not active");
+        log.warn("Dispose called without knowing the original throttle listener");
         InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
+    }
+    
+    public void dispose(ThrottleListener l) {
+        if (!active) log.error("Dispose called when not active");
+        InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
     }
     
     @Deprecated
     public void dispatch() {
         if (!active) log.warn("dispatch called when not active");
+        log.warn("dispatch called without knowing the original throttle listener");
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, null);
+    }
+    
+    public void dispatch(ThrottleListener l) {
+        if (!active) log.warn("dispatch called when not active");
+        InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
     }
     
     @Deprecated
     public void release() {
         if (!active) log.warn("release called when not active");
+        log.warn("Release called without knowing the original throttle listener");
         InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
+    }
+    
+    public void release(ThrottleListener l) {
+        if (!active) log.warn("release called when not active");
+        InstanceManager.throttleManagerInstance().releaseThrottle(this, l);
     }
 
     abstract protected void throttleDispose();

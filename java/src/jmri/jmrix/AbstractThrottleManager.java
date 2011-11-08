@@ -341,8 +341,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     protected boolean addressReleased(DccLocoAddress la, ThrottleListener l){
         if (addressThrottles.containsKey(la)){
             if(addressThrottles.get(la).containsListener(l)){
+                log.debug("decrementUse called with listener " + l);
                 addressThrottles.get(la).decrementUse();
                 addressThrottles.get(la).removeListener(l);
+            } else if (l==null){
+                log.debug("decrementUse called withOUT listener");
+                /*The release release has been called, but as no listener has 
+                been specified, we can only decrement the use flag*/
+                addressThrottles.get(la).decrementUse();
             }
         }
         if (addressThrottles.containsKey(la)){
@@ -473,14 +479,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         void setThrottle(DccThrottle throttle){
             DccThrottle old = this.throttle;
             this.throttle = throttle;
-            if (old==null){
+            if ((old==null) || (old==throttle)){
                 return;
             }
 
             //As the throtte has changed, we need to inform the listeners
             //However if a throttle hasn't used the new code, it will not have been
             //removed and will get a notification.
-            log.info(throttle.getLocoAddress() + " throttle assigned " +
+            log.debug(throttle.getLocoAddress() + " throttle assigned " +
                     "has been changed need to notify throttle users");
 
             this.throttle = throttle;
