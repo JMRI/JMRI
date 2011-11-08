@@ -551,7 +551,6 @@ public class DecoderPro3Window
     //Popup listener is used against the roster table to display a 
     class rosterPopupListener extends MouseAdapter {
     
-        JPopupMenu popUp;
         javax.swing.Timer clickTimer = null;
     
         public void mousePressed(MouseEvent e) {
