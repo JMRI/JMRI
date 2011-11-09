@@ -69,7 +69,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String ROUTE_LOCATION_CHANGED_PROPERTY = "rolling stock route location";
 	
 	// the draw bar length must only be calculated once at startup
-	public static int COUPLER = Setup.getLengthUnit().equals(Setup.FEET)?
+	public static final int COUPLER = Setup.getLengthUnit().equals(Setup.FEET)?
 			Integer.parseInt(rb.getString("DrawBarLengthFeet"))
 					:Integer.parseInt(rb.getString("DrawBarLengthMeter"));	// draw bar length between rolling stocks
 
