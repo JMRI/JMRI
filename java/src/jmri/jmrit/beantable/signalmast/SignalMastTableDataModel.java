@@ -24,6 +24,7 @@ import jmri.util.com.sun.TableSorter;
 
 public class SignalMastTableDataModel extends BeanTableDataModel {
 
+    static public final int EDITMASTCOL = 99;
     static public final int EDITLOGICCOL = NUMCOLUMN;
     static public final int LITCOL = EDITLOGICCOL+1;
     static public final int HELDCOL = LITCOL+1;
@@ -35,6 +36,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     public int getColumnCount( ){ return NUMCOLUMN+3;}
     public String getColumnName(int col) {
         if (col==VALUECOL) return "Aspect";
+        else if (col==EDITMASTCOL) return "Edit";
         else if (col==EDITLOGICCOL) return "Edit Logic";
         else if (col==LITCOL) return "Lit";
         else if (col==HELDCOL) return "Held";
@@ -42,6 +44,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
     public Class<?> getColumnClass(int col) {
         if (col==VALUECOL) return JComboBox.class;
+        else if (col==EDITMASTCOL) return JButton.class;
         else if (col==EDITLOGICCOL) return JButton.class;
         else if (col==LITCOL) return Boolean.class;
         else if (col==HELDCOL) return Boolean.class;
@@ -51,11 +54,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         if (col==LITCOL) return new JTextField(4).getPreferredSize().width;
         else if (col==HELDCOL) return new JTextField(4).getPreferredSize().width;
         else if (col==EDITLOGICCOL) return new JTextField(8).getPreferredSize().width;
+        else if (col==EDITMASTCOL) return new JTextField(8).getPreferredSize().width;
         else return super.getPreferredWidth(col);
     }
     public boolean isCellEditable(int row, int col) {
         if (col==LITCOL) return true;
         else if (col==EDITLOGICCOL) return true;
+        else if (col==EDITMASTCOL) return true;
         else if (col==HELDCOL) return true;
         else return super.isCellEditable(row,col);
     }
@@ -90,6 +95,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
         else if (col==EDITLOGICCOL) {
             return rb.getString("EditSignalLogicButton");
+        }        
+        else if (col==EDITMASTCOL) {
+            return "EDIT MAST";//rb.getString("EditSignalLogicButton");
         }
         else return super.getValueAt(row, col);
     }
@@ -116,6 +124,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         else if (col==EDITLOGICCOL){
             editLogic(row, col);
         }
+        else if (col==EDITMASTCOL){
+            editMast(row, col);
+        }
         else super.setValueAt(value, row, col);
     }
     
@@ -128,6 +139,21 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             public void run() {
                 SignallingSourceAction action = new SignallingSourceAction(rb.getString("TitleSignalMastLogicTable"), (SignalMast) getBySystemName(sysNameList.get(row)));
                 action.actionPerformed(null);
+            }
+        }
+        WindowMaker t = new WindowMaker(row);
+        javax.swing.SwingUtilities.invokeLater(t);
+    }
+    
+    void editMast(int row, int col){
+        class WindowMaker implements Runnable {
+            int row;
+            WindowMaker(int r){
+                row = r;
+            }
+            public void run() {
+                /*AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame((SignalMast) getBySystemName(sysNameList.get(row)));
+                editFrame.setVisible(true);*/
             }
         }
         WindowMaker t = new WindowMaker(row);

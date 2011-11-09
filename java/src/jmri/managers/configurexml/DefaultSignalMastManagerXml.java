@@ -3,7 +3,7 @@ package jmri.managers.configurexml;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.managers.DefaultSignalMastManager;
-
+import jmri.configurexml.XmlAdapter;
 import java.util.List;
 
 import org.jdom.Element;
@@ -30,16 +30,26 @@ public class DefaultSignalMastManagerXml
 
         Element element = new Element("signalmasts");
         element.setAttribute("class", this.getClass().getName());
-
-        // include contents
-        List<String> names = m.getSystemNameList();
-        for (int i = 0; i < names.size(); i++) {
-            Element e = new Element("signalmast");
-            SignalMast p = m.getSignalMast(names.get(i));
-            e.setAttribute("systemName", p.getSystemName()); // deprecated for 2.9.* series
-            e.addContent(new Element("systemName").addContent(p.getSystemName()));
-            storeCommon(p, e);
-            element.addContent(e);
+        if(m!=null){
+            // include contents
+            List<String> names = m.getSystemNameList();
+            for (int i = 0; i < names.size(); i++) {
+                //Element e = new Element("signalmast");
+                SignalMast p = m.getSignalMast(names.get(i));
+                try {
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
+                    if (e!=null) element.addContent(e);
+                } catch (Exception e) {
+                    log.error("Error storing signalhead: "+e);
+                    e.printStackTrace();
+                }
+                
+                
+                /*e.setAttribute("systemName", p.getSystemName()); // deprecated for 2.9.* series
+                e.addContent(new Element("systemName").addContent(p.getSystemName()));
+                storeCommon(p, e);
+                element.addContent(e);*/
+            }
         }
         return element;
     }
@@ -55,16 +65,29 @@ public class DefaultSignalMastManagerXml
         List<Element> list = element.getChildren("signalmast");
 
         for (int i = 0; i < list.size(); i++) {
-            SignalMast m;
             Element e = list.get(i);
-            String sys = getSystemName(e);
-            m = InstanceManager.signalMastManagerInstance()
-                        .provideSignalMast(sys);
-            
-            if (getUserName(e) != null)
-                m.setUserName(getUserName(e));
-            
-            loadCommon(m, e);
+            if(e.getAttribute("class")==null){
+                SignalMast m;
+                String sys = getSystemName(e);
+                m = InstanceManager.signalMastManagerInstance()
+                            .provideSignalMast(sys);
+                
+                if (getUserName(e) != null)
+                    m.setUserName(getUserName(e));
+                
+                loadCommon(m, e);
+            } else {
+                String adapterName = e.getAttribute("class").getValue();
+                log.debug("load via "+adapterName);
+                try {
+                    XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                    // and do it
+                    adapter.load(e);
+                } catch (Exception ex) {
+                    log.error("Exception while loading "+e.getName()+":"+ex);
+                    ex.printStackTrace();
+                }
+            }
         }
         
         return true;

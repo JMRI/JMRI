@@ -86,10 +86,6 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
     
     protected void addPressed(ActionEvent e) {
-        if(jmri.InstanceManager.signalHeadManagerInstance().getSystemNameList().size()==0){
-            JOptionPane.showMessageDialog(null, rb.getString("DefineHeadsFirst"), rb.getString("SignalMast"), JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
         if (addFrame==null) {
             addFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame();
         }

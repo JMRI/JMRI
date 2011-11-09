@@ -4,7 +4,15 @@ package jmri.jmrit.beantable.signalmast;
 
 import jmri.*;
 import jmri.util.StringUtil;
+
+import jmri.util.swing.BeanSelectCreatePanel;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.implementation.TurnoutSignalMast;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import java.text.DecimalFormat;
 
 import java.awt.event.*;
 import java.io.*;
@@ -23,21 +31,26 @@ import org.jdom.*;
 
 public class AddSignalMastPanel extends JPanel {
 
-    /*This currently doesn't use the most efficient way of creating head place holders in the mast.
-    This class might need a re-write at some point to deal with signal mast hardware that can be directly controlled
-    using accessory or signalling addresses rather than via signal heads.
-    */
-
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName()+".SignallingSystemSelected";
     String mastSelectionCombo = this.getClass().getName()+".SignallingMastSelected";
     List<NamedBean> alreadyUsed = new ArrayList<NamedBean>();
+    
+    //These might change to a combo box later
+    JRadioButton turnoutDriverMast = new JRadioButton(rb.getString("TurnCtlMast"));
+    JRadioButton signalHeadDriverMast = new JRadioButton(rb.getString("HeadCtlMast"));
+    
+    JPanel signalHeadPanel = new JPanel();
+    JPanel turnoutMastPanel = new JPanel();
+    
+    SignalMast mast = null;
     
     public AddSignalMastPanel() {
     
         refreshComboBox();
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        
         JPanel p;
         p = new JPanel(); 
         p.setLayout(new jmri.util.javaworld.GridLayout2(4,2));
@@ -46,39 +59,61 @@ public class AddSignalMastPanel extends JPanel {
         p.add(l);
         p.add(userName);
 
-        l = new JLabel("Signal system: ");
+        l = new JLabel(rb.getString("SigSys")+": ");
         p.add(l);
         p.add(sigSysBox);
         
-        l = new JLabel("Mast type: ");
+        l = new JLabel(rb.getString("MastType")+": ");
         p.add(l);
         p.add(mastBox);
-
-        l = new JLabel("Heads: ");
-        p.add(l);
-        JPanel h = new JPanel();
-        h.setLayout(new BoxLayout(h, BoxLayout.Y_AXIS ));
-        h.add(head1);
-        h.add(head2);
-        h.add(head3);
-        h.add(head4);
-        h.add(head5);
-        p.add(h);
         
         add(p);
         
-        add(includeUsed);
-        includeUsed.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                refreshComboBox();
-            }
-        });
-
+        JPanel select = new JPanel();
+        TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border.setTitle(rb.getString("SelectDrv"));
+        select.setBorder(border);
+        select.setLayout(new BoxLayout(select, BoxLayout.X_AXIS));
+        select.add(signalHeadDriverMast);
+        signalHeadDriverMast.setToolTipText(rb.getString("SigHeadDrvToolTip"));
+        turnoutDriverMast.setToolTipText(rb.getString("TurnDrvToolTip"));
+        select.add(turnoutDriverMast);
+        ButtonGroup mastDriver = new ButtonGroup();
+        mastDriver.add(turnoutDriverMast);
+        mastDriver.add(signalHeadDriverMast);
+        signalHeadDriverMast.setSelected(true);
+        add(select);
+        
+        border.setTitle("Signal Heads");
+        signalHeadPanel.setBorder(border);
+        signalHeadPanel.setVisible(false);
+        add(signalHeadPanel);
+        
+        JScrollPane turnoutMastScroll = new JScrollPane(turnoutMastPanel);
+        turnoutMastPanel.setVisible(false);
+        add(turnoutMastScroll);
+        
         JButton ok;
         add(ok = new JButton(rb.getString("ButtonOK")));
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
+            }
+        });
+        signalHeadDriverMast.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateSelectedDriver();
+            }
+        });
+        turnoutDriverMast.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateSelectedDriver();
+            }
+        });
+        
+        includeUsed.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                refreshComboBox();
             }
         });
     
@@ -92,22 +127,45 @@ public class AddSignalMastPanel extends JPanel {
             sigSysBox.setSelectedItem(prefs.getComboBoxLastSelection(systemSelectionCombo));
      
         loadMastDefinitions();
-        enableHeadFields();
+        updateSelectedDriver();
         sigSysBox.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) { loadMastDefinitions(); }
+            public void itemStateChanged(ItemEvent e) {
+                loadMastDefinitions();
+                updateSelectedDriver();
+            }
         });
     }
     
-    // IF$shsm:basic:one-searchlight:IH1
+    public AddSignalMastPanel(SignalMast mast) {
+        this();
+        this.mast=mast;
+        sigSysBox.setEnabled(false);
+        mastBox.setEnabled(false);
+        turnoutDriverMast.setEnabled(false);
+    }
+    
+    void updateSelectedDriver(){
+        signalHeadPanel.setVisible(false);
+        turnoutMastPanel.setVisible(false);
+        if(turnoutDriverMast.isSelected()){
+            updateTurnoutAspectPanel();
+            turnoutMastPanel.setVisible(true);
+        }
+        if(signalHeadDriverMast.isSelected()){
+            updateHeads();
+            signalHeadPanel.setVisible(true);
+        }
+        validate();
+        if (getTopLevelAncestor()!=null){
+            ((jmri.util.JmriJFrame)getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)getTopLevelAncestor()).getPreferredSize());
+            ((jmri.util.JmriJFrame)getTopLevelAncestor()).pack();
+        }
+        repaint();
+    }
     
     JTextField userName = new JTextField(20);
     JComboBox sigSysBox = new JComboBox();
-    JComboBox mastBox = new JComboBox(new String[]{"select a system first"});
-    JmriBeanComboBox head1 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
-    JmriBeanComboBox head2 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
-    JmriBeanComboBox head3 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
-    JmriBeanComboBox head4 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
-    JmriBeanComboBox head5 = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+    JComboBox mastBox = new JComboBox(new String[]{rb.getString("MastEmpty")});
     JCheckBox includeUsed = new JCheckBox(rb.getString("IncludeUsedHeads"));
     
     String sigsysname;
@@ -158,9 +216,11 @@ public class AddSignalMastPanel extends JPanel {
             log.warn("in loadMastDefinitions", e);
         }
         mastBox.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) { enableHeadFields(); }
+            public void itemStateChanged(ItemEvent e) { 
+                updateSelectedDriver();
+            }
         });
-        enableHeadFields();
+        updateSelectedDriver();
         
         if(prefs.getComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()))!=null)
             mastBox.setSelectedItem(prefs.getComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem())));
@@ -169,153 +229,153 @@ public class AddSignalMastPanel extends JPanel {
     
     HashMap<String, Integer> map = new HashMap<String, Integer>();
     
-    void enableHeadFields() {
+    void updateHeads(){
+        if(!signalHeadDriverMast.isSelected())
+            return;
         if (mastBox.getSelectedItem()==null)
             return;
         int count = map.get(mastBox.getSelectedItem()).intValue();
-        head1.setEnabled(count>=1);
-        head1.setVisible(count>=1);
-
-        head2.setEnabled(count>=2);
-        head2.setVisible(count>=2);
-
-        head3.setEnabled(count>=3);
-        head3.setVisible(count>=3);
-
-        head4.setEnabled(count>=4);
-        head4.setVisible(count>=4);
-        
-        head5.setEnabled(count>=5);
-        head5.setVisible(count>=5);
-        
-        validate();
-        if (getTopLevelAncestor()!=null){
-            ((jmri.util.JmriJFrame)getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame)getTopLevelAncestor()).pack();
+        headList = new ArrayList<JmriBeanComboBox>(count);
+        signalHeadPanel.removeAll();
+        signalHeadPanel.setLayout(new jmri.util.javaworld.GridLayout2(count+1,1));
+        for(int i = 0; i<count; i++){
+            JmriBeanComboBox head = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+            head.excludeItems(alreadyUsed);
+            headList.add(head);
+            signalHeadPanel.add(head);
         }
-        repaint();
+        signalHeadPanel.add(includeUsed);
     }
     
     void okPressed(ActionEvent e) {
         String mastname = mastNames.get(mastBox.getSelectedIndex()).getName();
-        String name = "IF$shsm:"
+
+        String user = userName.getText().trim();
+        if(user.equals("")){
+            int i = JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",
+                "No UserName Given",
+                JOptionPane.YES_NO_OPTION);
+            if(i !=0) {
+                return;
+            }
+        }
+        if(mast==null){
+            if(signalHeadDriverMast.isSelected()){
+                if((!checkSignalHeadUse()) || (!checkUserName(userName.getText()))){
+                    return;
+                }
+                String name = "IF$shsm:"
                         +sigsysname
                         +":"+mastname.substring(11,mastname.length()-4);
 
-        if(!check()){
-            return;
+                for(JmriBeanComboBox head : headList){
+                    name += "("+StringUtil.parenQuote(head.getSelectedDisplayName())+")";
+                }
+                    
+                log.debug("add signal: "+name);
+                SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+                if(m!=null){
+                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(rb.getString("DuplicateMast"),
+                            new Object[]{ m.getDisplayName() }) , rb.getString("DuplicateMastTitle"), JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                try {
+                    m = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+                } catch (IllegalArgumentException ex) {
+                    // user input no good
+                    handleCreateException(name);
+                    return; // without creating       
+                }
+                if (!user.equals("")) m.setUserName(user);
+            } else if (turnoutDriverMast.isSelected()) {
+                if(!checkUserName(userName.getText()))
+                    return;
+                String name = "IF$tsm:"
+                        +sigsysname
+                        +":"+mastname.substring(11,mastname.length()-4);
+                name += "($"+(paddedNumber.format(TurnoutSignalMast.getLastRef()+1))+")";
+                TurnoutSignalMast turnMast = new TurnoutSignalMast(name);
+                for(String aspect: turnoutAspect.keySet()){
+                    turnoutAspect.get(aspect).setReference(name + ":" + aspect);
+                    turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
+                    turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
+                }
+                if (!user.equals("")) turnMast.setUserName(user);
+                InstanceManager.signalMastManagerInstance().register(turnMast);
+            }
+
+            prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
+            prefs.addComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()), (String) mastBox.getSelectedItem());
+            refreshComboBox();
         }
-        // add head names by brute force
-        if (head1.isEnabled())
-            name += "("+StringUtil.parenQuote(head1.getSelectedDisplayName())+")";
-        if (head2.isEnabled())
-            name += "("+StringUtil.parenQuote(head2.getSelectedDisplayName())+")";
-        if (head3.isEnabled())
-            name += "("+StringUtil.parenQuote(head3.getSelectedDisplayName())+")";
-        if (head4.isEnabled())
-            name += "("+StringUtil.parenQuote(head4.getSelectedDisplayName())+")";
-        if (head5.isEnabled())
-            name += "("+StringUtil.parenQuote(head5.getSelectedDisplayName())+")";
+        else {
+            //@TODO For use with editing the signal mast
+            if(signalHeadDriverMast.isSelected()){
             
-        log.debug("add signal: "+name);
-        SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(name);
-        if(m!=null){
-            JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(rb.getString("DuplicateMast"),
-					new Object[]{ m.getDisplayName() }) , rb.getString("DuplicateMastTitle"), JOptionPane.INFORMATION_MESSAGE);
-            return;
+            } else if (turnoutDriverMast.isSelected()){
+                String name = "IF$tsm:"
+                    +sigsysname
+                    +":"+mastname.substring(11,mastname.length()-4);
+                TurnoutSignalMast turnMast = (TurnoutSignalMast) mast;
+                for(String aspect: turnoutAspect.keySet()){
+                    turnoutAspect.get(aspect).setReference(name + ":" + aspect);
+                    turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
+                    turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
+                }
+            
+            }
         }
-        try {
-            m = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
-        } catch (IllegalArgumentException ex) {
-            // user input no good
-            handleCreateException(name);
-            return; // without creating       
-        }
-        String user = userName.getText();
-        if (!user.equals("")) m.setUserName(user);
-        prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
-        prefs.addComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()), (String) mastBox.getSelectedItem());
-        refreshComboBox();
     }
     
-    boolean check(){
-        if (head1.isEnabled()){
-            NamedBean h1 = head1.getSelectedBean();
-            if((head2.isEnabled()) && head2.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
-                    return false;
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+    
+    boolean checkUserName(String nam){
+        if (!((nam==null) || (nam.equals("")))) {
+            // user name changed, check if new name already exists
+            NamedBean nB = InstanceManager.signalMastManagerInstance().getByUserName(nam);
+            if (nB != null) {
+                log.error("User name is not unique " + nam);
+                String msg = java.text.MessageFormat.format(rb
+                        .getString("WarningUserName"), new Object[] { ("" + nam) });
+                JOptionPane.showMessageDialog(null, msg,
+                            rb.getString("WarningTitle"),
+                                JOptionPane.ERROR_MESSAGE);
+                return false;
             }
-            
-            if((head3.isEnabled()) && head3.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
-                    return false;
-            }
-            if((head4.isEnabled()) && head4.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
-                    return false;
-            }
-            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head1.getSelectedDisplayName()))
-                    return false;
-            }
-            if(includeUsed.isSelected()){
-                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
-                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
-                    return false;
-                }
-            }
-            
-        }
-        
-        if (head2.isEnabled()){
-            NamedBean h1 = head2.getSelectedBean();
-            if((head3.isEnabled()) && head3.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head2.getSelectedDisplayName()))
-                    return false;
-            }
-            if((head4.isEnabled()) && head4.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head2.getSelectedDisplayName()))
-                    return false;
-            }
-            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head2.getSelectedDisplayName()))
-                    return false;
-            }
-            if(includeUsed.isSelected()){
-                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
-                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
-                    return false;
-                }
+            //Check to ensure that the username doesn't exist as a systemname.
+            nB = InstanceManager.signalMastManagerInstance().getBySystemName(nam);
+            if (nB!=null){
+                log.error("User name is not unique " + nam + " It already exists as a System name");
+                String msg = java.text.MessageFormat.format(rb
+                        .getString("WarningUserNameAsSystem"), new Object[] { ("" + nam) });
+                JOptionPane.showMessageDialog(null, msg,
+                            rb.getString("WarningTitle"),
+                                JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
-        
-        if (head3.isEnabled()){
-            NamedBean h1 = head3.getSelectedBean();
-            if((head4.isEnabled()) && head4.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head3.getSelectedDisplayName()))
-                    return false;
-            }
-            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head4.getSelectedDisplayName()))
-                    return false;
-            }
-            if(includeUsed.isSelected()){
-                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
-                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
-                    return false;
+        return true;
+    
+    }
+    
+    boolean checkSystemName(String nam){
+        return false;
+    }
+    
+    boolean checkSignalHeadUse(){
+        for(int i = 0; i<headList.size(); i++){
+            JmriBeanComboBox head = headList.get(i);
+            NamedBean h = headList.get(i).getSelectedBean();
+            for(int j = i; j<headList.size(); j++){
+                JmriBeanComboBox head2check = headList.get(j);
+                if((head2check != head) && (head2check.getSelectedBean()==h)){
+                    if(!duplicateHeadAssigned(headList.get(i).getSelectedDisplayName()))
+                        return false;
                 }
             }
-        }
-        
-        if (head4.isEnabled()){
-            NamedBean h1 = head4.getSelectedBean();
-            if((head5.isEnabled()) && head5.getSelectedBean()==h1){
-                if(!duplicateHeadAssigned(head4.getSelectedDisplayName()))
-                    return false;
-            }
             if(includeUsed.isSelected()){
-                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h1);
-                if((isUsed!=null) && (!headAssignedElseWhere(h1.getDisplayName(), isUsed))){
+                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h);
+                if((isUsed!=null) && (!headAssignedElseWhere(h.getDisplayName(), isUsed))){
                     return false;
                 }
             }
@@ -344,10 +404,11 @@ public class AddSignalMastPanel extends JPanel {
             return true;
         }
         return false;
-    
     }
     
     void refreshComboBox(){
+        if(!signalHeadDriverMast.isSelected())
+            return;
         if(includeUsed.isSelected()){
             alreadyUsed = new ArrayList<NamedBean>();
         } else {
@@ -358,11 +419,9 @@ public class AddSignalMastPanel extends JPanel {
             }
         }
         
-        head1.excludeItems(alreadyUsed);
-        head2.excludeItems(alreadyUsed);
-        head3.excludeItems(alreadyUsed);
-        head4.excludeItems(alreadyUsed);
-        head5.excludeItems(alreadyUsed);
+        for(JmriBeanComboBox head : headList){
+            head.excludeItems(alreadyUsed);
+        }
     }
 
     void handleCreateException(String sysName) {
@@ -373,7 +432,94 @@ public class AddSignalMastPanel extends JPanel {
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
+    
+    void updateTurnoutAspectPanel(){
+        if(!turnoutDriverMast.isSelected())
+            return;
+        turnoutAspect = new HashMap<String, TurnoutAspectPanel>();
+        //jmri.implementation.DefaultSignalAppearanceMap sigMap = new jmri.implementation.DefaultSignalAppearanceMap((String) sigSysBox.getSelectedItem(), (String)mastBox.getSelectedItem());
+        String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
+        mastType =  mastType.substring(11, mastType.indexOf(".xml"));
+        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap((String) sigSysBox.getSelectedItem(), mastType);
+        java.util.Enumeration<String> aspects = sigMap.getAspects();
+        while(aspects.hasMoreElements()){ 
+            String aspect = aspects.nextElement();
+            TurnoutAspectPanel aPanel = new TurnoutAspectPanel(aspect);
+            turnoutAspect.put(aspect, aPanel);
+        }
+        
+        turnoutMastPanel.removeAll();
+        turnoutMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(turnoutAspect.size(),2));
+        for(String aspect: turnoutAspect.keySet()){
+            //turnoutMastPanel.add(new JLabel(aspect));
+            turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
+        }
+        
 
+    }
+    
+    ArrayList<JmriBeanComboBox> headList = new ArrayList<JmriBeanComboBox>(5);
+    
+    HashMap<String, TurnoutAspectPanel> turnoutAspect = new HashMap<String, TurnoutAspectPanel>(10);
+    
+    static class TurnoutAspectPanel{
+        BeanSelectCreatePanel beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
+        //Border blackline = BorderFactory.createLineBorder(Color.black);
+        
+        String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
+        String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
+        String[] turnoutStates = new String[]{stateClosed, stateThrown};
+        int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
+        
+        JComboBox turnoutState = new JComboBox(turnoutStates);
+        String aspect = "";
+        
+        TurnoutAspectPanel(String aspect){
+            this.aspect = aspect;
+        }
+        
+        TurnoutAspectPanel(String turnoutName, int state){
+            beanBox.setDefaultNamedBean((NamedBean)InstanceManager.turnoutManagerInstance().getTurnout(turnoutName));
+        }
+        
+        void setReference(String reference){
+            beanBox.setReference(reference);
+        }
+        
+        int getTurnoutState(){
+            return turnoutStateValues[turnoutState.getSelectedIndex()];
+        }
+        
+        String getTurnoutName(){
+            return beanBox.getDisplayName();
+        }
+        
+        NamedBean getTurnout(){
+            try {
+                return beanBox.getNamedBean();
+            } catch (jmri.JmriException ex){
+                log.warn("skipping creation of turnout");
+                return null;
+            }
+        }
+        
+        JPanel panel;
+        
+        JPanel getPanel(){
+            if(panel==null){
+                panel = new JPanel();
+                panel.add(beanBox);
+                panel.add(new JLabel("Set State"));
+                panel.add(turnoutState);
+                TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+                border.setTitle(aspect);
+                panel.setBorder(border);
+            }
+            return panel;
+        }
+    
+    }
+    
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddSignalMastPanel.class.getName());
 }
