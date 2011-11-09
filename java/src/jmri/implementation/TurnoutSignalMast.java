@@ -52,9 +52,6 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
         }
         
-        String interim = systemName.substring(prefix.length()+1+system.length()+1);
-        /*String parenstring = interim.substring(interim.indexOf("("), interim.length());
-        java.util.List<String> parens = jmri.util.StringUtil.splitParens(parenstring);*/
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
     }

@@ -40,7 +40,7 @@ public class TurnoutSignalMastXml
         if(appMap!=null){
             java.util.Enumeration<String> aspects = appMap.getAspects();
             while(aspects.hasMoreElements()){
-                String key = (String) aspects.nextElement();
+                String key = aspects.nextElement();
                 Element el = new Element("aspect");
                 el.setAttribute("defines", key);
                 el.addContent(new Element("turnout").addContent(p.getTurnoutName(key)));
@@ -69,6 +69,7 @@ public class TurnoutSignalMastXml
         
         loadCommon(m, element);
         
+        @SuppressWarnings("unchecked")
         List<Element> list = element.getChildren("aspect");
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);
