@@ -10,6 +10,7 @@ import javax.imageio.*;
 import javax.swing.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 import jmri.util.JmriJFrame;
 import jmri.web.miniserver.MiniServerManager;
@@ -17,6 +18,8 @@ import jmri.web.miniserver.MiniServerManager;
 import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
+import org.jdom.Element;
 
 /** 
  * A simple servlet that returns a JMRI window as
@@ -27,6 +30,7 @@ import javax.servlet.ServletResponse;
  * <dt>.html<dd>Returns a HTML file that displays the frame enabled for
  *      clicking via server side image map; see the .properties file for the content
  * <dt>.png<dd>Just return the image
+ * <dt>no name<dd>Return an HTML page with links to available images
  * </dl>
  *<P>
  * The associated .properties file contains the HTML fragments used to 
@@ -62,102 +66,144 @@ public class JmriJFrameServlet implements Servlet {
     public javax.servlet.ServletConfig getServletConfig() { return null; }
 
     public void service(ServletRequest req, ServletResponse res) throws java.io.IOException {
-        
-        // get the reader from the request
-        BufferedReader in = req.getReader();
-        
-        // read in the info
-        String[] inputLines = new String[maxRequestLines];
 
-        int i=0;
-        try {
-            for (i=0; i<maxRequestLines; i++) {
-                inputLines[i] = in.readLine();
-                if (inputLines[i] == null) // Client closed connection.
-                    break;
-                if (inputLines[i].length() == 0) { // Blank line.
-                    if (usingPost(inputLines)) {
-                        readPostData(inputLines, i, in);
-                        i = i + 2;
-                    }
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            log.error("IO Exception reading request: "+e);
-        }
+    	// get the reader from the request
+    	BufferedReader in = req.getReader();
 
-        // get the writer from the response
-        PrintWriter out = res.getWriter();
-        
-        // parse request
-        String frameName = parseRequest(inputLines, i);
-        
-        // remove any modifiers
-        String modifiers = null;
-        if (frameName.contains("?")) {
-            modifiers = frameName.substring(frameName.indexOf("?"), frameName.length());
-            if (modifiers.length()>0) modifiers = modifiers.substring(1, modifiers.length());
-            frameName = frameName.substring(0,frameName.indexOf("?"));
-        }
-        
-        // if the click time is being updated, find that and remove from modifiers
-        if (modifiers != null && modifiers.startsWith("retry=")) {
-            modifiers = modifiers.substring(6);
-            int end = modifiers.indexOf("?");
-            if (end<=0) end = modifiers.length();
-            noclickRetryTime = modifiers.substring(0, end);
-            modifiers = modifiers.substring(Math.min(end+1, modifiers.length()));
-            if (modifiers.length() == 0) modifiers = null;
-        }
-        // remove any type suffix
-        String suffix = null;
-        if (frameName.contains(".")) {
-            suffix = frameName.substring(frameName.lastIndexOf("."), frameName.length());
-            if (suffix.length()>0) suffix = suffix.substring(1, suffix.length());
-            frameName = frameName.substring(0,frameName.indexOf("."));
-        }
-        log.debug("requested frame +["+frameName+"] suffix ["+suffix+"] modifiers ["+modifiers+"]");
-        
-        // Find the frame
-        JmriJFrame frame = JmriJFrame.getFrame(frameName);
-        if (frame == null) {
-            handleError("Can't find frame ["+frameName+"]", 404, res);
-            return;
-        }
-        if (!frameName.equals(frame.getTitle())) {
-            log.warn("Request for ["+frameName+"] found title ["+frame.getTitle()+"], mismatched");
-        }
-        
-        // If there's a click modifier, parse it and execute
-        boolean click = false;
-        if ( modifiers!=null && modifiers.contains(",")) try {
-                int x = Integer.parseInt(modifiers.substring(0,modifiers.indexOf(",")));
-                int y = Integer.parseInt(modifiers.substring(modifiers.indexOf(",")+1,modifiers.length()));
-                if (log.isDebugEnabled()) log.debug("Attempt click at "+x+","+y);
-                // log.debug("Component is "+frame.getContentPane().findComponentAt(x,y).toString());
-                Component c = frame.getContentPane().findComponentAt(x,y);
-                // ((javax.swing.JButton) frame.getContentPane().findComponentAt(x,y) ).doClick();
-                click = true;
-                sendClick(frameName, c, x, y, frame.getContentPane());
-            } catch (Exception ec) {
-                log.error("Exception in click code: "+ec);
-            }
+    	// read in the info
+    	String[] inputLines = new String[maxRequestLines];
 
-        // Send a reply depending on type
-        if (suffix == null) 
-            imageReply(frameName, out, frame, res);
-        else if (suffix.toLowerCase().equals("png"))
-            imageReply(frameName, out, frame, res);
-        else if (suffix.toLowerCase().equals("html"))
-            htmlReply(frameName, out, frame, res, click);
-        else
-            handleError("Can't handle suffix ["+suffix+"], use .png or .html", 400, res);
+    	int i=0;
+    	try {
+    		for (i=0; i<maxRequestLines; i++) {
+    			inputLines[i] = in.readLine();
+    			if (inputLines[i] == null) // Client closed connection.
+    				break;
+    			if (inputLines[i].length() == 0) { // Blank line.
+    				if (usingPost(inputLines)) {
+    					readPostData(inputLines, i, in);
+    					i = i + 2;
+    				}
+    				break;
+    			}
+    		}
+    	} catch (IOException e) {
+    		log.error("IO Exception reading request: "+e);
+    	}
+
+    	// get the writer from the response
+    	PrintWriter out = res.getWriter();
+
+    	// parse request
+    	String frameName = parseRequest(inputLines, i);
+
+    	//if no frame passed, send list of available frames
+    	if (frameName.equals("")) {
+    		listReply(out, res);
+    		return;
+    	}
+    		
+    	// remove any modifiers
+    	String modifiers = null;
+    	if (frameName.contains("?")) {
+    		modifiers = frameName.substring(frameName.indexOf("?"), frameName.length());
+    		if (modifiers.length()>0) modifiers = modifiers.substring(1, modifiers.length());
+    		frameName = frameName.substring(0,frameName.indexOf("?"));
+    	}
+
+    	// if the click time is being updated, find that and remove from modifiers
+    	if (modifiers != null && modifiers.startsWith("retry=")) {
+    		modifiers = modifiers.substring(6);
+    		int end = modifiers.indexOf("?");
+    		if (end<=0) end = modifiers.length();
+    		noclickRetryTime = modifiers.substring(0, end);
+    		modifiers = modifiers.substring(Math.min(end+1, modifiers.length()));
+    		if (modifiers.length() == 0) modifiers = null;
+    	}
+    	// remove any type suffix
+    	String suffix = null;
+    	if (frameName.contains(".")) {
+    		suffix = frameName.substring(frameName.lastIndexOf("."), frameName.length());
+    		if (suffix.length()>0) suffix = suffix.substring(1, suffix.length());
+    		frameName = frameName.substring(0,frameName.indexOf("."));
+    	}
+    	log.debug("requested frame +["+frameName+"] suffix ["+suffix+"] modifiers ["+modifiers+"]");
+
+    	// Find the frame
+    	JmriJFrame frame = JmriJFrame.getFrame(frameName);
+    	if (frame == null) {
+    		handleError("Can't find frame ["+frameName+"]", 404, res);
+    		return;
+    	}
+    	if (!frameName.equals(frame.getTitle())) {
+    		log.warn("Request for ["+frameName+"] found title ["+frame.getTitle()+"], mismatched");
+    	}
+
+    	// If there's a click modifier, parse it and execute
+    	boolean click = false;
+    	if ( modifiers!=null && modifiers.contains(",")) try {
+    		int x = Integer.parseInt(modifiers.substring(0,modifiers.indexOf(",")));
+    		int y = Integer.parseInt(modifiers.substring(modifiers.indexOf(",")+1,modifiers.length()));
+    		if (log.isDebugEnabled()) log.debug("Attempt click at "+x+","+y);
+    		// log.debug("Component is "+frame.getContentPane().findComponentAt(x,y).toString());
+    		Component c = frame.getContentPane().findComponentAt(x,y);
+    		// ((javax.swing.JButton) frame.getContentPane().findComponentAt(x,y) ).doClick();
+    		click = true;
+    		sendClick(frameName, c, x, y, frame.getContentPane());
+    	} catch (Exception ec) {
+    		log.error("Exception in click code: "+ec);
+    	}
+    	
+    	// Send a reply depending on type
+    	if (suffix == null) 
+    		imageReply(frameName, out, frame, res);
+    	else if (suffix.toLowerCase().equals("png"))
+    		imageReply(frameName, out, frame, res);
+    	else if (suffix.toLowerCase().equals("html"))
+    		htmlReply(frameName, out, frame, res, click);
+    	else
+    		handleError("Can't handle suffix ["+suffix+"], use .png or .html", 400, res);
     }
     
     void imageReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res ) 
             throws java.io.IOException {
     	putFrameImage(frame, res.getOutputStream());
+    }
+    
+    //send html list of available frames
+    void listReply(PrintWriter out, ServletResponse res) {
+        String h = rb.getString("StandardHeader");
+        String s = rb.getString("StandardDocType");
+        s += rb.getString("ListFront");
+    	// list frames, (open JMRI windows)
+    	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
+    	int framesNumber = framesList.size();
+    	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
+    		JmriJFrame iFrame = framesList.get(i);
+    		String frameTitle = iFrame.getTitle();
+    		if (!frameTitle.equals("")) {
+    			//format a table row for each valid window (frame)
+    			String frameURLhtml = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".html";
+    			String frameURLpng = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".png";
+    			s += "<TR><TD>" + frameTitle + "</TD>\n";
+    			s += "<TD><A href='"+frameURLhtml+"'><IMG src='"+frameURLpng+"' /></A></TD>\n"; 
+    			s += "<TD><A href='"+frameURLpng +"'><IMG src='"+frameURLpng+"' /></A></TD></TR>\n"; 
+    		}
+    	}
+
+    	s += "</TABLE>";
+        
+        s += rb.getString("StandardBack");
+
+        h += s.length() + "\r\n";
+        Date now = new Date();
+		h += "Date: " + now + "\r\n";
+		h += "Last-Modified: " + now + "\r\n";
+		out.println(h);  //write header with calculated fields
+        out.println(s);  //write out rest of html page
+        out.flush();
+//        out.close();
+        if (log.isDebugEnabled()) log.debug("Sent " + s.length() + " bytes html.");
     }
     
     void htmlReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res, boolean click ) {
@@ -347,12 +393,21 @@ public class JmriJFrameServlet implements Servlet {
     String parseRequest(String[] input, int len) {
         // expect "GET /key/Frame HTTP/1.1"
         //
-        // remove GET and key from front
-        String part = input[0].substring(5, input[0].length());
-        part = part.substring(part.indexOf('/'), part.length());
-        
         // remove HTTP from back
-        String rawRequest = part.substring(0, part.lastIndexOf(" HTTP"));
+    	String part = input[0].substring(0, input[0].lastIndexOf(" HTTP"));
+        
+        // remove "GET /" from front
+        part = part.substring(5, part.length());
+        
+        //return empty string now if no frame passed
+        int pos = part.indexOf('/');
+        if (pos == -1) {
+            if (log.isDebugEnabled()) log.debug("request is key-only");
+        	return "";
+        }
+        
+        //remove key from front
+        String rawRequest = part.substring(part.indexOf('/'), part.length());
         
         // decode
         String request = "<error>";

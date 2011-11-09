@@ -61,24 +61,39 @@ address {
 	margin: 0 2em;
 }
 /* Tables */
-	table.data {
+	table {
 		border-collapse: collapse;
 		margin: 0.5em 2em;
 		border: 1px solid #BEBFD7;
 		font-size: 90%;
 	}
 
-	table.data caption {
+	table caption {
 		margin: 1em auto 0.2em;
 		font-size: small;
 		font-style: italic;
 		text-align: center;
 	}
 
-	table.data th,
-	table.data td {
+	table th,
+	table td {
 		padding: 0.2em 0.4em;
 		border: 1px solid;
+	}
+
+	table th {
+		font-weight: normal;
+		font-style: italic;
+		font-size: 90%;
+	}
+
+	table.frame-list td a img {
+		max-height: 80px;
+	}
+
+table.frame-list td a img:hover {
+		max-height: 76px;
+		border: 2px solid #554FA0;	
 	}
 
 /*body*/
