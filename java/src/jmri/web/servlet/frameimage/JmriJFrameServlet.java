@@ -193,7 +193,7 @@ public class JmriJFrameServlet implements Servlet {
 
     	s += "</TABLE>";
         
-        s += rb.getString("StandardBack");
+        s += rb.getString("ListBack");
 
         h += s.length() + "\r\n";
         Date now = new Date();
