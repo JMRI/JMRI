@@ -479,7 +479,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         TurnoutAspectPanel(String turnoutName, int state){
-            beanBox.setDefaultNamedBean((NamedBean)InstanceManager.turnoutManagerInstance().getTurnout(turnoutName));
+            beanBox.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(turnoutName));
         }
         
         void setReference(String reference){

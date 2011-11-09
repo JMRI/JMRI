@@ -147,9 +147,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     
     void editMast(int row, int col){
         class WindowMaker implements Runnable {
-            int row;
+            //int row;
             WindowMaker(int r){
-                row = r;
+                //row = r;
             }
             public void run() {
                 /*AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame((SignalMast) getBySystemName(sysNameList.get(row)));
