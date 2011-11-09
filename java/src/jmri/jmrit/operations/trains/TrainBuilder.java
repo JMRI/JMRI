@@ -968,6 +968,14 @@ public class TrainBuilder extends TrainCommon{
     				carIndex--;
     				continue;
         		}
+           		// does car have a wait count?
+        		if (c.getWait() > 0){
+    				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarWait"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName()), c.getWait()}));
+    				c.setWait(c.getWait()-1);	// decrement wait count
+    				carList.remove(c.getId());
+    				carIndex--;
+    				continue;
+        		}
     		}
     		// is car at interchange?
     		if (c.getTrack().getLocType().equals(Track.INTERCHANGE)){
@@ -1000,14 +1008,6 @@ public class TrainBuilder extends TrainCommon{
     					continue;
     				}
     			}
-    		}
-    		// does car have a wait count?
-    		if (c.getWait() > 0){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarWait"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName()), c.getWait()}));
-				c.setWait(c.getWait()-1);	// decrement wait count
-				carList.remove(c.getId());
-				carIndex--;
-				continue;
     		}
 		}
 
