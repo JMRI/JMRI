@@ -26,7 +26,7 @@ var $isLocalhost;
 var $xmlRosterPath = "/prefs/roster.xml";
 var $inControlURL;
 var $help =
-	"Version 1.0 - by Oscar Moutinho" +
+	"Version 1.1 - by Oscar Moutinho" +
 	"\n" +
 	"\nThis application lists the roster (locos) defined in JMRI." +
 	"\n" +
@@ -67,6 +67,7 @@ var $loadRoster = function(){
 					roadNumber: $.trim($(this).attr("roadNumber")),
 					address: parseInt($(this).attr("dccAddress"), 10),
 					image: $.trim($(this).attr("imageFilePath")),
+					shunt: $.trim($(this).attr("IsShuntingOn")),
 					functions: []
 				};
 				var $functions = [];
@@ -110,6 +111,7 @@ var $loadRoster = function(){
 				$queryString = "loconame=" + encodeURIComponent($locos[i].name);
 				$queryString+= "&locoaddress=" + encodeURIComponent($locos[i].address);
 				if($locos[i].image.length > 0) $queryString+= "&locoimage=" + encodeURIComponent($locos[i].image);
+				$queryString+= "&" + encodeURIComponent($locos[i].shunt) + "shunt=x";
 				for(var j = 0; j < $locos[i].functions.length; j++){
 					$queryString+= "&f" + $locos[i].functions[j].number + "active=x";
 					if($locos[i].functions[j].toggle) $queryString+= "&f" + $locos[i].functions[j].number + "toggle=x";

@@ -17,7 +17,7 @@ window.onerror = function(errMsg, errUrl, errLineNumber) {
 }
 
 //----------------------------------------- Vertical Slider (uses function $errorLoadingImage)
-function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWidth, levelInit, callbackFunction){	// Top and Left relative to parent
+function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWidth, levelInit, _middleZero, callbackFunction){	// Top and Left relative to parent
 	var $parent;
 	var sliderId = "verticalSlider" + (Math.random() + "").split(".")[1];	//Math.random(): for uniqueness of several instances
 	var sliderButtonId = sliderId + "Button";
@@ -26,6 +26,7 @@ function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWid
 	var w = false;
 	var enable;
 	var level;
+	var middleZero;
 	var slider_t;
 	var slider_l;
 	var slider_h;
@@ -39,15 +40,16 @@ function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWid
 		", sliderHeight: " + sliderHeight + ", sliderWidth: " + sliderWidth +
 		", enable: " + enable + ", level: " + level;
 	};
-	this.setLevel = function(_level) {
+	this.setLevel = function(_level, _middleZero) {
 		level = Math.round(_level);
 		if(level > 100) level = 100;
 		if(level < 0) level = 0;
+		middleZero = _middleZero;
 		buttonPositionFromLevel();
 	};
 	this.setEnable = function(_enable) {
 		enable = _enable;
-		$("#" + sliderId).css("background", (enable) ? ((level == 0) ? "red" : "navy") : "grey");
+		$("#" + sliderId).css("background", enable ? ((level == (middleZero ? 50 : 0)) ? "red" : "navy") : "grey");
 	};
 	this.mouse = function(e) {
 		e.preventDefault();
@@ -70,7 +72,7 @@ function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWid
 		if(e.type == "touchmove" && w) setNewPositionFromPointer(e.changedTouches[0].clientY);
 	};
 	var buttonPositionFromLevel = function(){
-		$("#" + sliderId).css("background", (enable) ? ((level == 0) ? "red" : "navy") : "grey");
+		$("#" + sliderId).css("background", enable ? ((level == (middleZero ? 50 : 0)) ? "red" : "navy") : "grey");
 		sb_pos_t = (slider_h - (sb_hw / 2) - level * slider_h / 100);
 		$("#" + sliderButtonId).css("top",sb_pos_t);
 	};
@@ -85,10 +87,10 @@ function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWid
 		if(sb_pos_t < -sb_hw / 2) sb_pos_t = -sb_hw / 2;
 		$("#" + sliderButtonId).css("top",sb_pos_t);
 		levelFromButtonPosition();
-		$("#" + sliderId).css("background",(level == 0) ? "red" : "navy");
+		$("#" + sliderId).css("background", (level == (middleZero ? 50 : 0)) ? "red" : "navy");
 	};
 	$parent = ((typeof(_parent) == "string") ? $parent = $("#" + _parent) : ((typeof(_parent) == "object" && null != _parent) ? $parent = _parent : $parent = $("body")));
-	this.setLevel(levelInit);
+	this.setLevel(levelInit, _middleZero);
 	this.setEnable(false);
 	sb_hw = sliderWidth;
 	slider_t = sliderTop;
@@ -144,8 +146,16 @@ var $xmlioSendGetPower = function(){
 }
 
 //----------------------------------------- Send XMLIO Set Loco speed
-var $xmlioSendSetLocoSpeed = function(speed){
-	$xmlioSend("<xmlio>\n  <throttle>\n    <address>" + $paramLocoAddress + "</address>\n    <speed>" + (speed / 100) + "</speed>\n  </throttle>\n</xmlio>");
+var $xmlioSendSetLocoSpeed = function(_speed){
+	var speed;
+	var forward;
+	if($shunt && _speed >= 0){
+		forward = ((_speed >= 50) ? $forward : !$forward);
+		speed = Math.abs(_speed - 50);
+		$xmlioSend("<xmlio>\n  <throttle>\n    <address>" + $paramLocoAddress + "</address>\n    <speed>" + (speed / 100) + "</speed>\n    <forward>" + (forward ? "true": "false") + "</forward>\n  </throttle>\n</xmlio>");
+	} else {
+		$xmlioSend("<xmlio>\n  <throttle>\n    <address>" + $paramLocoAddress + "</address>\n    <speed>" + (_speed / 100) + "</speed>\n  </throttle>\n</xmlio>");
+	}
 }
 
 //----------------------------------------- Send XMLIO Set Loco direction
@@ -192,6 +202,7 @@ var $xmlioSend = function(xml){
 			var $xmlNode;
 			var address;
 			var int;
+			var frw;
 			var s;
 			if($responseForThrottle){
 				$xmlNode = $xmlReturned.find("throttle");
@@ -204,8 +215,13 @@ var $xmlioSend = function(xml){
 					int = Math.round(parseFloat($xmlNode.find("speed").text()) * 100);
 					if(int > 100) int = 100;
 					if(int < 0) int = 0;
+					frw = ("true" == $xmlNode.find("forward").text());
+					if($shunt){
+						if(frw == $forward) int+= 50; else int = 50 - int;
+						frw = $forward;
+					}
 					$speedValue = int;
-					$forward = ("true" == $xmlNode.find("forward").text());
+					$forward = frw;
 					$updateSpeed();
 				}
 				for(var i = 0; i < 29; i++){
@@ -214,6 +230,7 @@ var $xmlioSend = function(xml){
 						if(s.length > 0){
 							$FnPressed[i] = ("true" == s);
 							$updateFn(i);
+							if($paramFnAutoUnpress[i] && $FnPressed[i]) $xmlioSendSetLocoFunction(typeof($paramFnAddress[i]) != "number" ? $paramLocoAddress : $paramFnAddress[i], i, false);
 						}
 					}
 				}
@@ -313,6 +330,7 @@ var $inHelp = false;
 var $powerStatus= -1;
 var $speedValue = 0;
 var $forward = true;
+var $shunt;
 var $LocoNameList = [];
 var $FnPressed = [];
 var $SettingsLocoFunctionSelected = 0;
@@ -330,29 +348,33 @@ var $paramLocoImage;
 var $paramLocoNoSpeedCtrl;
 var $paramFnActive = [];
 var $paramFnToggle = [];
+var $paramFnAutoUnpress = [];
 var $paramFnLabel = [];
 var $paramFnImage = [];
 var $paramFnImagePressed = [];
 var $paramFnAddress = [];
+var $paramFnShunt = [];
 var $paramXmlioDebug;
 var $QueryStringText =
 	"- RemoveFromLocalStorage &nbsp;&nbsp;(all parameters)" +
-	"<br />- LocoName&lt;i&gt; &nbsp;&nbsp;(multiple throttles)" +
+	"<br />- LocoName&lt;i&gt; &nbsp;&nbsp;(multiple throttles - case sensitive name)" +
 	"<br />- TextSize &nbsp;&nbsp;(s[mall] n[ormal] l[arge])" +
 	"<br />- Power &nbsp;&nbsp;(power button)" +
 	"<br />- SpeedCtrlRight &nbsp;&nbsp;(speed control on right)" +
 	"<br />- SpeedCtrlButtons &nbsp;&nbsp;(speed control with buttons)" +
 	"<br />- PanelName (display a panel - case sensitive name - instead of a throttle)" +
-	"<br />- LocoName (loco or function only decoder)" +
+	"<br />- LocoName (loco or function only decoder - case sensitive name)" +
 	"<br />- LocoAddress (loco or function only decoder)" +
 	"<br />- LocoImage &nbsp;&nbsp;(URL)" +
 	"<br />- LocoNoSpeedCtrl &nbsp;&nbsp;(no speed control)" +
 	"<br />- F&lt;i&gt;Active" +					//also true if any param exists					i: de 0 a 28
 	"<br />- F&lt;i&gt;Toggle" +					//also true if param 'f<i>imagepressed' exists
+	"<br />- F&lt;i&gt;AutoUnpress" +
 	"<br />- F&lt;i&gt;Label" +
 	"<br />- F&lt;i&gt;Image &nbsp;&nbsp;(URL)" +
 	"<br />- F&lt;i&gt;ImagePressed &nbsp;&nbsp;(URL)" +
 	"<br />- F&lt;i&gt;Address &nbsp;&nbsp;(alternative device address)" +
+	"<br />- F&lt;i&gt;Shunt &nbsp;&nbsp;(activate half speed with bidirectional control)" +
 	"<br />- xmlioDebug &nbsp;&nbsp;(display XML in/out)" +
 	"<br />[all parameters are optional and their names are not case sensitive]" +
 	"<br />[boolean parameters: empty (no) / anything (yes)]" +
@@ -363,7 +385,7 @@ var $QueryStringText =
 	"<br />http://localhost:12080/web/inControl.html?Panelname=myPanel" +
 	"";
 var $HelpText =
-	"<br />Version 2.0 - by Oscar Moutinho" +
+	"<br />Version 2.1 - by Oscar Moutinho" +
 	"<br />" +
 	"<br />All browsers: set zoom to 100%." +
 	"<br />Google Chrome: deactivate 'instant' functionality." +
@@ -553,6 +575,7 @@ var $onStart_inControl = function(){
 		$saveParametersByLocoName($paramLocoName);
 	}
 	for(var i = 0; i < 29; i++) $FnPressed[i] = false;
+	$shunt = false;
 	$sizeAndBuild();
 	$xmlioSendGetPower();
 	$xmlioSendGetLoco();
@@ -604,10 +627,12 @@ var $DisplayCurrentLocoInfo = function(){
 	for(var i = 0; i < 29; i++) {
 		s+= "\nF" + i + "Active [" + $paramFnActive[i] + "] ... ";
 		s+= "F" + i + "Toggle [" + $paramFnToggle[i] + "] ... ";
-		s+= "F" + i + "paramFnLabel [" + $paramFnLabel[i] + "] ... ";
+		s+= "F" + i + "AutoUnpress [" + $paramFnAutoUnpress[i] + "] ... ";
+		s+= "F" + i + "Label [" + $paramFnLabel[i] + "] ... ";
 		s+= "F" + i + "Image [" + $paramFnImage[i] + "] ... ";
 		s+= "F" + i + "ImagePressed [" + $paramFnImagePressed[i] + "] ... ";
 		s+= "F" + i + "Address [" + $paramFnAddress[i] + "] ... ";
+		s+= "F" + i + "Shunt [" + $paramFnShunt[i] + "] ... ";
 	}
 	alert(s);
 }
@@ -671,6 +696,7 @@ var $readParametersFromQueryString = function(){
 	for(var i = 0; i < 29; i++){
 		if(typeof(allUrlParameters["f" + i + "active"]) == "undefined") $paramFnActive[i] = ""; else $paramFnActive[i] = ($.trim(allUrlParameters["f" + i + "active"]).length > 0);
 		if(typeof(allUrlParameters["f" + i + "toggle"]) == "undefined") $paramFnToggle[i] = ""; else $paramFnToggle[i] = ($.trim(allUrlParameters["f" + i + "toggle"]).length > 0);
+		if(typeof(allUrlParameters["f" + i + "autounpress"]) == "undefined") $paramFnAutoUnpress[i] = ""; else $paramFnAutoUnpress[i] = ($.trim(allUrlParameters["f" + i + "autounpress"]).length > 0);
 		if(typeof(allUrlParameters["f" + i + "label"]) == "undefined") allUrlParameters["f" + i + "label"] = "";
 		$paramFnLabel[i] = $.trim(allUrlParameters["f" + i + "label"]);
 		if(typeof(allUrlParameters["f" + i + "image"]) == "undefined") allUrlParameters["f" + i + "image"] = "";
@@ -686,8 +712,9 @@ var $readParametersFromQueryString = function(){
 				$paramFnAddress[i] = parseInt($paramFnAddress[i].slice(-4), 10);
 			}
 		}
-		if(typeof($paramFnActive[i]) != "boolean" && (typeof($paramFnToggle[i]) == "boolean" || $paramFnLabel[i] != "" || $paramFnImage[i] != "" || $paramFnImagePressed[i] != "")) $paramFnActive[i] = true;
-		if(typeof($paramFnToggle[i]) != "boolean" && $paramFnImagePressed[i] != "") $paramFnToggle[i] = true;
+		if(typeof(allUrlParameters["f" + i + "shunt"]) == "undefined") $paramFnShunt[i] = ""; else $paramFnShunt[i] = ($.trim(allUrlParameters["f" + i + "shunt"]).length > 0);
+		if(typeof($paramFnActive[i]) != "boolean" && (typeof($paramFnToggle[i]) == "boolean" || typeof($paramFnAutoUnpress[i]) == "boolean" || $paramFnLabel[i] != "" || $paramFnImage[i] != "" || $paramFnImagePressed[i] != "" || typeof($paramFnShunt[i]) == "boolean")) $paramFnActive[i] = true;
+		if(typeof($paramFnToggle[i]) != "boolean" && ($paramFnImagePressed[i] != "" || typeof($paramFnShunt[i]) == "boolean")) $paramFnToggle[i] = true;
 	}
 }
 
@@ -755,12 +782,15 @@ var $cleanParametersByLocoName = function(loconame){
 	for(var i = 0; i < 29; i++) {
 		$paramFnActive[i] = "";
 		$paramFnToggle[i] = "";
+		$paramFnAutoUnpress[i] = "";
 		$paramFnLabel[i] = "";
 		$paramFnImage[i] = "";
 		$paramFnImagePressed[i] = "";
 		$paramFnAddress[i] = "";
+		$paramFnShunt[i] = "";
 		$FnPressed[i] = false;
 	}
+	$shunt = false;
 }
 
 //----------------------------------------- Save parameters by loco name
@@ -771,16 +801,19 @@ var $saveParametersByLocoName = function(loconame){
 	for(var i = 0; i < 29; i++) {
 		$.saveLocalInfo("inControl.loco(" + loconame + ")FnActive[" + i + "]", ($paramFnActive[i] ? "true" : ""));
 		$.saveLocalInfo("inControl.loco(" + loconame + ")FnToggle[" + i + "]", ($paramFnToggle[i] ? "true" : ""));
+		$.saveLocalInfo("inControl.loco(" + loconame + ")FnAutoUnpress[" + i + "]", ($paramFnAutoUnpress[i] ? "true" : ""));
 		$.saveLocalInfo("inControl.loco(" + loconame + ")FnLabel[" + i + "]", $paramFnLabel[i]);
 		$.saveLocalInfo("inControl.loco(" + loconame + ")FnImage[" + i + "]", $paramFnImage[i]);
 		$.saveLocalInfo("inControl.loco(" + loconame + ")FnImagePressed[" + i + "]", $paramFnImagePressed[i]);
 		$.saveLocalInfo("inControl.loco(" + loconame + ")FnAddress[" + i + "]", $paramFnAddress[i]);
+		$.saveLocalInfo("inControl.loco(" + loconame + ")FnShunt[" + i + "]", ($paramFnShunt[i] ? "true" : ""));
 	}
 }
 
 //----------------------------------------- Load parameters by loco name
 var $loadParametersByLocoName = function(loconame){
 	var s;
+	var auxShunt = false;
 //Load only if 'string empty'
 	if($paramLocoAddress == ""){
 		$paramLocoAddress = $loadLocoAddressByLocoName(loconame);
@@ -806,6 +839,11 @@ var $loadParametersByLocoName = function(loconame){
 			s = $.loadLocalInfo("inControl.loco(" + loconame + ")FnToggle[" + i + "]");
 			$paramFnToggle[i] = ((typeof(s) != "undefined") && s.length > 0);
 		}
+//Load only if 'typeof() != boolean'
+		if(typeof($paramFnAutoUnpress[i]) != "boolean"){
+			s = $.loadLocalInfo("inControl.loco(" + loconame + ")FnAutoUnpress[" + i + "]");
+			$paramFnAutoUnpress[i] = ((typeof(s) != "undefined") && s.length > 0);
+		}
 //Load only if 'string empty'
 		if($paramFnLabel[i] == ""){
 			$paramFnLabel[i] = $.loadLocalInfo("inControl.loco(" + loconame + ")FnLabel[" + i + "]");
@@ -825,6 +863,13 @@ var $loadParametersByLocoName = function(loconame){
 		if($paramFnAddress[i] == ""){
 			$paramFnAddress[i] = $loadAddressByLocoNameAndFn(loconame, i);
 		}
+//Load only if 'typeof() != boolean'
+		if(typeof($paramFnShunt[i]) != "boolean"){
+			s = $.loadLocalInfo("inControl.loco(" + loconame + ")FnShunt[" + i + "]");
+			$paramFnShunt[i] = ((typeof(s) != "undefined") && s.length > 0);
+		}
+		if(auxShunt || typeof($paramFnAddress[i]) == "number") $paramFnShunt[i] = false;
+		if($paramFnShunt[i]) auxShunt = true;
 	}
 }
 
@@ -861,10 +906,12 @@ var $removeParametersByLocoName = function(loconame){
 	for(var i = 0; i < 29; i++){
 		$.removeLocalInfo("inControl.loco(" + loconame + ")FnActive[" + i + "]");
 		$.removeLocalInfo("inControl.loco(" + loconame + ")FnToggle[" + i + "]");
+		$.removeLocalInfo("inControl.loco(" + loconame + ")FnAutoUnpress[" + i + "]");
 		$.removeLocalInfo("inControl.loco(" + loconame + ")FnLabel[" + i + "]");
 		$.removeLocalInfo("inControl.loco(" + loconame + ")FnImage[" + i + "]");
 		$.removeLocalInfo("inControl.loco(" + loconame + ")FnImagePressed[" + i + "]");
 		$.removeLocalInfo("inControl.loco(" + loconame + ")FnAddress[" + i + "]");
+		$.removeLocalInfo("inControl.loco(" + loconame + ")FnShunt[" + i + "]");
 	}
 }
 
@@ -1060,7 +1107,7 @@ var $buildSpeedLayout = function(){
 	} else {																//Slider Speed Control
 		$speedCtrl.width($speed.width());
 		$speedCtrl.height(height);
-		$VerticalSlider = new $verticalSlider($speedCtrl, 0, Math.floor(($speedCtrl.width() - $speedCtrl.width() / 1.5) / 2), $speedCtrl.height(), Math.floor($speedCtrl.width() / 1.5), $speedValue, $LevelChange);
+		$VerticalSlider = new $verticalSlider($speedCtrl, 0, Math.floor(($speedCtrl.width() - $speedCtrl.width() / 1.5) / 2), $speedCtrl.height(), Math.floor($speedCtrl.width() / 1.5), $speedValue, $shunt, $LevelChange);
 	}
 	$divRSF.css("top", $speedCtrl.position().top + $speedCtrl.height());
 	$updateSpeed();
@@ -1276,8 +1323,12 @@ var $buildSettingsLocoLayout = function(){
 		"<label id='lblSettingsLocoFunctionToggle' class='pointer settingsLabelsFi'>- Toggle button (on/off)</label>" +
 		"<label id='chkSettingsLocoFunctionToggle' class='pointer settingsCheckboxes settingsOptions'>" + ($paramFnToggle[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]") + "</label>" +
 		"</div>" +
+		"<div class='pointer divSettingsParams' onclick='$SettingsLocoFunctionAutoUnpressChange()'>" +
+		"<label id='lblSettingsLocoFunctionAutoUnpress' class='pointer settingsLabelsFi'>- Auto unpress (turn off)</label>" +
+		"<label id='chkSettingsLocoFunctionAutoUnpress' class='pointer settingsCheckboxes settingsOptions'>" + ($paramFnAutoUnpress[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]") + "</label>" +
+		"</div>" +
 		"<div class='pointer divSettingsParams' onclick='$SettingsLocoFunctionLabelChange()'>" +
-		"<label id='lblSettingsLocoFunctionLabel' class='pointer settingsLabelsFi'>&nbsp;&nbsp;- Button label</label>" +
+		"<label id='lblSettingsLocoFunctionLabel' class='pointer settingsLabelsFi'>- Button label</label>" +
 		"<label id='txtSettingsLocoFunctionLabel' class='pointer settingsInputText settingsOptions'>" + $("<div />").text($paramFnLabel[$SettingsLocoFunctionSelected]).html() + "</label>" +	// HTML encode
 		"</div>" +
 		"<div class='pointer divSettingsParams' onclick='$SettingsLocoFunctionImageChange()'>" +
@@ -1291,6 +1342,10 @@ var $buildSettingsLocoLayout = function(){
 		"<div class='pointer divSettingsParams' onclick='$SettingsLocoFunctionAddressChange()'>" +
 		"<label id='lblSettingsLocoFunctionAddress' class='pointer settingsLabelsFi'>- Alternative device address</label>" +
 		"<label id='txtSettingsLocoFunctionAddress' class='pointer settingsInputText settingsOptions'>" + $paramFnAddress[$SettingsLocoFunctionSelected] + "</label>" +
+		"</div>" +
+		"<div class='pointer divSettingsParams' onclick='$SettingsLocoFunctionShuntChange()'>" +
+		"<label id='lblSettingsLocoFunctionShunt' class='pointer settingsLabelsFi'>- Shunt</label>" +
+		"<label id='chkSettingsLocoFunctionShunt' class='pointer settingsCheckboxes settingsOptions'>" + ($paramFnShunt[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]") + "</label>" +
 		"</div>";
 	$divSettingsLocoParams.html(s);
 	$imgSettingsLocoTrash.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Trash.png?MaxHeight=" + $imgSettingsLocoTrash.height() + "&MaxWidth=" + $imgSettingsLocoTrash.width()));
@@ -1467,7 +1522,7 @@ var $ChooseImage = function(promptText, defaultValue){
 	}
 }
 
-//----------------------------------------- Buid choose image layout
+//----------------------------------------- Build choose image layout
 var $buildChooseImageLayout = function(){
 	var s = "";
 	var $chooseImage;
@@ -1674,10 +1729,12 @@ var $SettingsLocoFunctionClick = function(value){
 	$SettingsLocoFunctionSelected = v;
 	$("#chkSettingsLocoFunctionActive").html($paramFnActive[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]");
 	$("#chkSettingsLocoFunctionToggle").html($paramFnToggle[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]");
+	$("#chkSettingsLocoFunctionAutoUnpress").html($paramFnAutoUnpress[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]");
 	$("#txtSettingsLocoFunctionLabel").text($paramFnLabel[$SettingsLocoFunctionSelected]);
 	$("#txtSettingsLocoFunctionImage").text($paramFnImage[$SettingsLocoFunctionSelected]);
 	$("#txtSettingsLocoFunctionImagePressed").text($paramFnImagePressed[$SettingsLocoFunctionSelected]);
 	$("#txtSettingsLocoFunctionAddress").text($paramFnAddress[$SettingsLocoFunctionSelected]);
+	$("#chkSettingsLocoFunctionShunt").html($paramFnShunt[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]");
 }
 
 //----------------------------------------- Settings LocoFunctionActive change
@@ -1693,6 +1750,13 @@ var $SettingsLocoFunctionToggleChange = function(){
 	$paramFnToggle[$SettingsLocoFunctionSelected] = !$paramFnToggle[$SettingsLocoFunctionSelected];
 	$("#chkSettingsLocoFunctionToggle").html($paramFnToggle[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]");
 	$.saveLocalInfo("inControl.loco(" + $paramLocoName + ")FnToggle[" + $SettingsLocoFunctionSelected + "]", ($paramFnToggle[$SettingsLocoFunctionSelected] ? "true" : ""));
+}
+
+//----------------------------------------- Settings LocoFunctionAutoUnpress change
+var $SettingsLocoFunctionAutoUnpressChange = function(){
+	$paramFnAutoUnpress[$SettingsLocoFunctionSelected] = !$paramFnAutoUnpress[$SettingsLocoFunctionSelected];
+	$("#chkSettingsLocoFunctionAutoUnpress").html($paramFnAutoUnpress[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]");
+	$.saveLocalInfo("inControl.loco(" + $paramLocoName + ")FnAutoUnpress[" + $SettingsLocoFunctionSelected + "]", ($paramFnAutoUnpress[$SettingsLocoFunctionSelected] ? "true" : ""));
 }
 
 //----------------------------------------- Settings LocoFunctionLabel change
@@ -1738,6 +1802,10 @@ var $SettingsLocoFunctionAddressChange = function(){
 		$xmlioSendGetDevice($paramLocoAddress);
 		return;
 	}
+	if($paramFnShunt[$SettingsLocoFunctionSelected]){
+		alert("Cannot apply an Alternative Device Address when Shunting is enabled.");
+		return;
+	}
 	s = parseInt(s, 10);
 	ok = !isNaN(s);
 	if(ok){
@@ -1752,6 +1820,24 @@ var $SettingsLocoFunctionAddressChange = function(){
 	$("#txtSettingsLocoFunctionAddress").text($paramFnAddress[$SettingsLocoFunctionSelected]);
 	$.saveLocalInfo("inControl.loco(" + $paramLocoName + ")FnAddress[" + $SettingsLocoFunctionSelected + "]", $paramFnAddress[$SettingsLocoFunctionSelected]);
 	$xmlioSendGetDevice($paramFnAddress[$SettingsLocoFunctionSelected]);
+}
+
+//----------------------------------------- Settings LocoFunctionShunt change
+var $SettingsLocoFunctionShuntChange = function(){
+	var auxShunt = false;
+	for(var i = 0; i < 29; i++) if($paramFnShunt[i] && i != $SettingsLocoFunctionSelected) auxShunt = true;
+	if(auxShunt && !$paramFnShunt[$SettingsLocoFunctionSelected]){
+		alert("Another Function Key already defined for Shunting.");
+		return;
+	}
+	if(!$paramFnShunt[$SettingsLocoFunctionSelected] && typeof($paramFnAddress[$SettingsLocoFunctionSelected]) == "number"){
+		alert("Cannot apply Shunting when there is an Alternative Device Address.");
+		return;
+	}
+	if($paramFnShunt[$SettingsLocoFunctionSelected]) $shunt = false;
+	$paramFnShunt[$SettingsLocoFunctionSelected] = !$paramFnShunt[$SettingsLocoFunctionSelected];
+	$("#chkSettingsLocoFunctionShunt").html($paramFnShunt[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]");
+	$.saveLocalInfo("inControl.loco(" + $paramLocoName + ")FnShunt[" + $SettingsLocoFunctionSelected + "]", ($paramFnShunt[$SettingsLocoFunctionSelected] ? "true" : ""));
 }
 
 //----------------------------------------- Click Power (2 - ON, 4 - OFF, other - undefined)
@@ -1813,7 +1899,7 @@ var $Rev = function(){
 
 //----------------------------------------- Click STOP
 var $STOP = function(){
-	$speedValue = 0;
+	$speedValue = ($shunt ? 50 : 0);
 	$xmlioSendSetLocoSpeed(-100);
 	$updateSpeed();
 }
@@ -1830,31 +1916,43 @@ var $Frw = function(){
 var $Fn = function(func){
 	if ($powerStatus != 2) return;
 	$FnPressed[func] = !$FnPressed[func];
+	if($paramFnShunt[func]){
+		$shunt = $FnPressed[func];
+		$updateSpeed();
+	}
 	$xmlioSendSetLocoFunction((typeof($paramFnAddress[func]) == "number") ? $paramFnAddress[func] : $paramLocoAddress, func, $FnPressed[func]);
 	$updateFn(func);
 }
 
 //----------------------------------------- Power updade
 var $updatePower = function(){
+	var $html = $("html");
+	var $body = $("body");
 	var $imgPower = $("#imgPower");
 	if(!$paramSpeedCtrlButtons && !$paramLocoNoSpeedCtrl) $VerticalSlider.setEnable($powerStatus == 2);	//Slider Speed Control
+	if($html.hasClass("powerUndefined")) $html.removeClass("powerUndefined");
+	if($html.hasClass("powerOff")) $html.removeClass("powerOff");
+	if($html.hasClass("powerOn")) $html.removeClass("powerOn");
+	if($body.hasClass("powerUndefined")) $body.removeClass("powerUndefined");
+	if($body.hasClass("powerOff")) $body.removeClass("powerOff");
+	if($body.hasClass("powerOn")) $body.removeClass("powerOn");
 	switch($powerStatus) {
 		case 2: {		//power on
-			$("html").css("background-color", "palegreen");
-			$("body").css("background-color", "palegreen");
+			$html.addClass("powerOn");
+			$body.addClass("powerOn");
 			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/PowerRed.png?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
 			break;
 		}
 		case 4: {		//power off
-			$("html").css("background-color", "tomato");
-			$("body").css("background-color", "tomato");
+			$html.addClass("powerOff");
+			$body.addClass("powerOff");
 			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/PowerGreen.png?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
 			break;
 		}
 		default: {		//undefined
 			$powerStatus = 0;
-			$("html").css("background-color", "gainsboro");
-			$("body").css("background-color", "gainsboro");
+			$html.addClass("powerUndefined");
+			$body.addClass("powerUndefined");
 			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/PowerGrey.png?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
 			break;
 		}
@@ -1868,7 +1966,7 @@ var $updateSpeed = function(){
 	var $imgRevR = $("#imgRevR");
 	var $imgFrw = $("#imgFrw");
 	var $imgFrwR = $("#imgFrwR");
-	if($paramSpeedCtrlButtons) $("#lblSpeed").text($speedValue); else $VerticalSlider.setLevel($speedValue);					//Buttons Speed Control or Slider Speed Control
+	if($paramSpeedCtrlButtons) $("#lblSpeed").text($shunt ? $speedValue - 50 : $speedValue); else $VerticalSlider.setLevel($speedValue, $shunt);	//Buttons Speed Control or Slider Speed Control
 	if($forward){
 		$imgRev.hide();
 		$imgRevR.show();

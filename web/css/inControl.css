@@ -10,6 +10,18 @@ body {
 	font-family:sans-serif;
 }
 
+.powerUndefined {
+	background-color:gainsboro;
+}
+
+.powerOff {
+	background-color:tomato;
+}
+
+.powerOn {
+	background-color:palegreen;
+}
+
 #throttles, #powerButton, #settingsButton, #imgPlusPlus, #imgPlus, #imgMinus, #imgMinusMinus, #divRSF, #functions, #imgSettingsLocoTrash {
 	position:absolute;
 }
