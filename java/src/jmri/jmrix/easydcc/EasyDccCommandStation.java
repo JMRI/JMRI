@@ -12,7 +12,7 @@ import jmri.CommandStation;
  */
 public class EasyDccCommandStation implements CommandStation {
 
-	public EasyDccCommandStation() {}
+	public EasyDccCommandStation(EasyDccSystemConnectionMemo memo) { this.memo = memo; }
 
     /**
      * Send a specific packet to the rails.
@@ -52,6 +52,18 @@ public class EasyDccCommandStation implements CommandStation {
 		EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
 
 	}
+    
+    EasyDccSystemConnectionMemo memo=null;
+    
+    public String getUserName() { 
+        if(memo==null) return "EasyDCC";
+        return memo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(memo==null) return "E";
+        return memo.getSystemPrefix();
+    }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccCommandStation.class.getName());
 

@@ -423,6 +423,22 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         }
     }
     
+   public void setSystemConnectionMemo(NceSystemConnectionMemo memo){
+        adaptermemo = memo;
+    }
+    
+    NceSystemConnectionMemo adaptermemo;
+   
+    public String getUserName() { 
+        if(adaptermemo==null) return "NCE";
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "N";
+        return adaptermemo.getSystemPrefix();
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTrafficController.class.getName());
 }
 

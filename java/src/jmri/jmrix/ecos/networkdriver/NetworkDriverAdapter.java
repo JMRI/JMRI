@@ -28,7 +28,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
 
     public EcosSystemConnectionMemo getSystemConnectionMemo() {return adaptermemo; }
     
-    boolean allowConnectionRecovery;
+    //boolean allowConnectionRecovery;
     /**
      * set up all of the other objects to operate with an ECOS command
      * station connected to this port

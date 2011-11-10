@@ -199,6 +199,22 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
 
    private XNetTrafficController _tc = null;
 
+   public void setSystemConnectionMemo(XNetSystemConnectionMemo memo){
+        adaptermemo = memo;
+    }
+    
+    XNetSystemConnectionMemo adaptermemo;
+   
+    public String getUserName() { 
+        if(adaptermemo==null) return "XPressnet";
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "X";
+        return adaptermemo.getSystemPrefix();
+    }
+    
     /*
      * We need to register for logging
      */

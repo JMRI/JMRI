@@ -91,6 +91,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         sm.setCanRead(mCanRead);
         sm.setProgPowersOff(mProgPowersOff);
         sm.setCommandStationType(name);
+        sm.setSystemConnectionMemo(this);
         
         // store as CommandStation object
         jmri.InstanceManager.setCommandStation(sm);
@@ -122,6 +123,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return true;
         if (type.equals(jmri.ClockControl.class))
             return true;
+        if (type.equals(jmri.CommandStation.class))
+            return true;
         return false; // nothing, by default
     }
     
@@ -148,6 +151,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return (T)getReporterManager();
         if (T.equals(jmri.ConsistManager.class))
             return (T)getConsistManager();
+        if (T.equals(jmri.CommandStation.class))
+            return (T)getSlotManager();
         return null; // nothing, by default
     }
     

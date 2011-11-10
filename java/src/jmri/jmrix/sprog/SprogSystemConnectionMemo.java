@@ -71,6 +71,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             case OPS : 
                     log.debug("start command station queuing thread");
                     slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
+                    SprogCommandStation.instance().setSystemConnectionMemo(this);
                     slotThread.start();
                     jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
                     break;
@@ -89,6 +90,12 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.ThrottleManager.class))
             return true;
+        if ((type.equals(jmri.ThrottleManager.class))){
+            switch(sprogMode){
+                case OPS : return true;
+                case SERVICE : return false;
+            }
+        }
         return false; // nothing, by default
     }
 
@@ -101,9 +108,10 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getProgrammerManager();
         if (T.equals(jmri.PowerManager.class))
             return (T)getPowerManager();
-        if (T.equals(jmri.ThrottleManager.class)){
+        if (T.equals(jmri.ThrottleManager.class))
             return (T)getThrottleManager();
-        }
+        if (T.equals(jmri.CommandStation.class))
+            return (T)SprogCommandStation.instance();
         return null; // nothing, by default
     }
     /**

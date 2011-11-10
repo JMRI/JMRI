@@ -80,8 +80,10 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Configure the programming manager and "command station" objects
      */
+    SRCPCommandStation commandStation = null;
     public void configureCommandStation() {
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.srcp.SRCPCommandStation());
+        commandStation = new jmri.jmrix.srcp.SRCPCommandStation(this);
+        jmri.InstanceManager.setCommandStation(commandStation);
 
         // start the connection
         et.sendSRCPMessage(new SRCPMessage("SET PROTOCOL SRCP 0.8.3\n"), null);

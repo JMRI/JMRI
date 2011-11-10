@@ -152,6 +152,10 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         return "0.0";
     }
     
+    public String getUserName() { return "MERG"; }
+    
+    public String getSystemPrefix() { return "M"; }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusCommandStation.class.getName());
 }
 

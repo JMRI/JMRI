@@ -498,6 +498,22 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     	}
     	return false;
     }
+    
+    public void setSystemConnectionMemo(SprogSystemConnectionMemo memo){
+        adaptermemo = memo;
+    }
+    
+    SprogSystemConnectionMemo adaptermemo;
+   
+    public String getUserName() { 
+        if(adaptermemo==null) return "Sprog";
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "S";
+        return adaptermemo.getSystemPrefix();
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCommandStation.class.getName());

@@ -336,6 +336,16 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             
         }
     }
+    
+    public String getUserName() { 
+        if(adaptermemo==null) return "ECoS";
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "U";
+        return adaptermemo.getSystemPrefix();
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTrafficController.class.getName());
 }
 

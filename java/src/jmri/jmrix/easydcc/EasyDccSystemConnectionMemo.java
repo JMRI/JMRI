@@ -66,9 +66,13 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
 
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());
+        commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
+
+        jmri.InstanceManager.setCommandStation(commandStation);
 
     }
+    
+    private EasyDccCommandStation commandStation;
     
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.easydcc.EasyDccActionListBundle");

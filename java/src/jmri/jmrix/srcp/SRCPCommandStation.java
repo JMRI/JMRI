@@ -12,7 +12,9 @@ import jmri.CommandStation;
  */
 public class SRCPCommandStation implements CommandStation {
 
-	public SRCPCommandStation() {}
+	public SRCPCommandStation(SRCPSystemConnectionMemo memo) {
+        adaptermemo = memo;
+    }
 
     /**
      * Send a specific packet to the rails.
@@ -52,6 +54,18 @@ public class SRCPCommandStation implements CommandStation {
 		SRCPTrafficController.instance().sendSRCPMessage(m, null);
 
 	}
+    
+    SRCPSystemConnectionMemo adaptermemo;
+   
+    public String getUserName() { 
+        if(adaptermemo==null) return "SRCP";
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "D";
+        return adaptermemo.getSystemPrefix();
+    }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPCommandStation.class.getName());
 

@@ -41,7 +41,11 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public NceTrafficController getNceTrafficController() { return nceTrafficController; }
     private NceTrafficController nceTrafficController;
-    public void setNceTrafficController(NceTrafficController tc) { nceTrafficController = tc; }
+    public void setNceTrafficController(NceTrafficController tc) { 
+        nceTrafficController = tc;
+        if(tc!=null)
+            tc.setSystemConnectionMemo(this);
+    }
     
     private ProgrammerManager programmerManager;
     
@@ -84,6 +88,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.ClockControl.class))
             return true;
+        if (type.equals(jmri.CommandStation.class))
+            return true;
         return false; // nothing, by default
     }
     
@@ -108,6 +114,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getLightManager();
         if (T.equals(jmri.ClockControl.class))
             return (T)getClockControl();
+        if (T.equals(jmri.CommandStation.class))
+            return (T)getNceTrafficController();
         return null; // nothing, by default
     }
 

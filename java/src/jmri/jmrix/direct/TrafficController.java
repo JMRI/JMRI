@@ -134,6 +134,14 @@ public class TrafficController implements jmri.CommandStation {
     // data members to hold the streams
     protected DataInputStream istream = null;
     protected OutputStream ostream = null;
+    
+    public String getUserName() { 
+        return "Others";
+    }
+    
+    public String getSystemPrefix() { 
+        return "N";
+    }
 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficController.class.getName());

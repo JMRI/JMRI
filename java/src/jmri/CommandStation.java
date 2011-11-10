@@ -34,6 +34,10 @@ public interface CommandStation {
      * @param repeats Number of times to repeat the transmission.
      */
     public void sendPacket(byte[] packet, int repeats);
+    
+    public String getUserName();
+    
+    public String getSystemPrefix();
 
 }
 

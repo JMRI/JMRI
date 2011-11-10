@@ -1060,6 +1060,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return result;
     }
     
+   public void setSystemConnectionMemo(LocoNetSystemConnectionMemo memo){
+        adaptermemo = memo;
+    }
+    
+    LocoNetSystemConnectionMemo adaptermemo;
+   
+    public String getUserName() { 
+        if(adaptermemo==null) return "LocoNet";
+        return adaptermemo.getUserName();
+    }
+    
+    public String getSystemPrefix() { 
+        if(adaptermemo==null) return "L";
+        return adaptermemo.getSystemPrefix();
+    }
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SlotManager.class.getName());
 }
