@@ -431,10 +431,13 @@ public class CarLoads {
 		// store loads based on car types
 		Enumeration<String> en = list.keys();
 		while(en.hasMoreElements()) {
-			String key = en.nextElement();
+			String carType = en.nextElement();
+			// check to see if car type still exists
+			if (!CarTypes.instance().containsName(carType))
+				continue;
 			Element load = new Element("load");
-			load.setAttribute("type", key);
-			List<CarLoad> loads = getSortedList(key);
+			load.setAttribute("type", carType);
+			List<CarLoad> loads = getSortedList(carType);
 			StringBuffer buf = new StringBuffer();
 			for (int j=0; j<loads.size(); j++){
 				buf.append(loads.get(j).getName());
