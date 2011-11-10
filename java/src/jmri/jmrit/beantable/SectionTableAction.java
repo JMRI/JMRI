@@ -1113,16 +1113,11 @@ public class SectionTableAction extends AbstractTableAction {
    
     private void autoSystemName(){
         if (_autoSystemName.isSelected()){
-            create.setEnabled(true);
             sysName.setEnabled(false);
             sysName.setText("");
             sysNameLabel.setEnabled(false);
         }
         else {
-            if (sysName.getText().length() > 0)
-                create.setEnabled(true);
-            else
-                create.setEnabled(false);
             sysName.setEnabled(true);  
             sysNameLabel.setEnabled(true);            
         }
