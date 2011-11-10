@@ -36,7 +36,7 @@ There are eight columns in the table:
 <UL>
 <LI>The system name is assigned to the signal head when it's created, 
 and can't be changed.
-<LI>If you're interested in having your signal hreads carry "human readable"
+<LI>If you're interested in having your signal heads carry "human readable"
 names, you can click in the "User Name" column and change that information
 to whatever you want.
 <LI>As the signal head changes, for whatever reason, the current
