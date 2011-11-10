@@ -36,13 +36,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if (!parts[0].equals("IF$tsm")) {
             log.warn("SignalMast system name should start with IF: "+systemName);
         }
-        String prefix = parts[0];
         String system = parts[1];
-        String mast = new String(parts[2]);
-        String reg = new String(parts[2]);
+        String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
-        String tmp = reg.substring(reg.indexOf("($")+2, reg.indexOf(")"));
+        String tmp = parts[2].substring(parts[2].indexOf("($")+2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
             if (autoNumber > lastRef) {
@@ -77,17 +75,19 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("attempting to set invalid aspect: "+aspect+" on mast: "+getDisplayName());
         }
         
-        int stateToSet = turnouts.get(aspect).getTurnoutState();
-        Turnout turnToSet = turnouts.get(aspect).getTurnout();
-        //Clear all the current states, this will result in the signalmast going blank for a very short time.
-        for(String appearances: turnouts.keySet()){
-            int setState = Turnout.CLOSED;
-            if(turnouts.get(appearances).getTurnoutState()==Turnout.CLOSED)
-                setState = Turnout.THROWN;
-            if(turnouts.get(appearances).getTurnout().getKnownState()!=setState){
-                turnouts.get(appearances).getTurnout().setCommandedState(setState);
+        if(resetPreviousStates){
+            //Clear all the current states, this will result in the signalmast going blank for a very short time.
+            for(String appearances: turnouts.keySet()){
+                int setState = Turnout.CLOSED;
+                if(turnouts.get(appearances).getTurnoutState()==Turnout.CLOSED)
+                    setState = Turnout.THROWN;
+                if(turnouts.get(appearances).getTurnout().getKnownState()!=setState){
+                    turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                }
             }
         }
+        Turnout turnToSet = turnouts.get(aspect).getTurnout();
+        int stateToSet = turnouts.get(aspect).getTurnoutState();
         //Set the new signal mast state
         turnToSet.setCommandedState(stateToSet);
         super.setAspect(aspect);
@@ -151,11 +151,21 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     
     HashMap<String, TurnoutAspect> turnouts = new HashMap<String, TurnoutAspect>();
     
+    boolean resetPreviousStates = false;
+    
+    /**
+    * If the signal mast driver requires the previous state to be cleared down before the next
+    * state is set.
+    */
+    public void resetPreviousStates(boolean boo) { resetPreviousStates = boo; }
+    
+    public boolean resetPreviousStates() { return resetPreviousStates; }
+    
     static class TurnoutAspect{
         
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
-    
+        
         TurnoutAspect(String turnoutName, int turnoutState){
             Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
             namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);

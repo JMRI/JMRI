@@ -42,6 +42,7 @@ public class AddSignalMastPanel extends JPanel {
     
     JPanel signalHeadPanel = new JPanel();
     JPanel turnoutMastPanel = new JPanel();
+    JScrollPane turnoutMastScroll;
     
     SignalMast mast = null;
     
@@ -89,8 +90,8 @@ public class AddSignalMastPanel extends JPanel {
         signalHeadPanel.setVisible(false);
         add(signalHeadPanel);
         
-        JScrollPane turnoutMastScroll = new JScrollPane(turnoutMastPanel);
-        turnoutMastPanel.setVisible(false);
+        turnoutMastScroll = new JScrollPane(turnoutMastPanel);
+        turnoutMastScroll.setVisible(false);
         add(turnoutMastScroll);
         
         JButton ok;
@@ -146,10 +147,10 @@ public class AddSignalMastPanel extends JPanel {
     
     void updateSelectedDriver(){
         signalHeadPanel.setVisible(false);
-        turnoutMastPanel.setVisible(false);
+        turnoutMastScroll.setVisible(false);
         if(turnoutDriverMast.isSelected()){
             updateTurnoutAspectPanel();
-            turnoutMastPanel.setVisible(true);
+            turnoutMastScroll.setVisible(true);
         }
         if(signalHeadDriverMast.isSelected()){
             updateHeads();
@@ -167,6 +168,7 @@ public class AddSignalMastPanel extends JPanel {
     JComboBox sigSysBox = new JComboBox();
     JComboBox mastBox = new JComboBox(new String[]{rb.getString("MastEmpty")});
     JCheckBox includeUsed = new JCheckBox(rb.getString("IncludeUsedHeads"));
+    JCheckBox resetPreviousState = new JCheckBox(rb.getString("ResetPrevious"));
     
     String sigsysname;
     ArrayList<File> mastNames = new ArrayList<File>();
@@ -264,14 +266,18 @@ public class AddSignalMastPanel extends JPanel {
                 if((!checkSignalHeadUse()) || (!checkUserName(userName.getText()))){
                     return;
                 }
-                String name = "IF$shsm:"
+                /*String name = "IF$shsm:"
                         +sigsysname
-                        +":"+mastname.substring(11,mastname.length()-4);
-
+                        +":"+mastname.substring(11,mastname.length()-4);*/
+                
+                StringBuilder build = new StringBuilder();
+                build.append("IF$shsm:"
+                        +sigsysname
+                        +":"+mastname.substring(11,mastname.length()-4));
                 for(JmriBeanComboBox head : headList){
-                    name += "("+StringUtil.parenQuote(head.getSelectedDisplayName())+")";
+                    build.append("("+StringUtil.parenQuote(head.getSelectedDisplayName())+")");
                 }
-                    
+                String name = build.toString();
                 log.debug("add signal: "+name);
                 SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(name);
                 if(m!=null){
@@ -300,6 +306,7 @@ public class AddSignalMastPanel extends JPanel {
                     turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
                     turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
                 }
+                turnMast.resetPreviousStates(resetPreviousState.isSelected());
                 if (!user.equals("")) turnMast.setUserName(user);
                 InstanceManager.signalMastManagerInstance().register(turnMast);
             }
@@ -449,11 +456,13 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         turnoutMastPanel.removeAll();
-        turnoutMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(turnoutAspect.size(),2));
+        turnoutMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(turnoutAspect.size()+1,2));
         for(String aspect: turnoutAspect.keySet()){
             //turnoutMastPanel.add(new JLabel(aspect));
             turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
         }
+        
+        turnoutMastPanel.add(resetPreviousState);
         
 
     }

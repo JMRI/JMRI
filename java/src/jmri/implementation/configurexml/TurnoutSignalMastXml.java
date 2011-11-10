@@ -51,6 +51,8 @@ public class TurnoutSignalMastXml
                 e.addContent(el);
             }
         }
+        if(p.resetPreviousStates())
+            e.addContent(new Element("resetPreviousStates").addContent("yes"));
         return e;
     }
 
@@ -81,8 +83,11 @@ public class TurnoutSignalMastXml
                 turnState = Turnout.CLOSED;
             m.setTurnout(aspect, turnout, turnState);
         }
+        if (( element.getChild("resetPreviousStates") != null) && 
+            element.getChild("resetPreviousStates").getText().equals("yes") ){
+                m.resetPreviousStates(true);
+        }
         
-    
         InstanceManager.signalMastManagerInstance()
             .register(m);
         
