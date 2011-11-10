@@ -39,7 +39,7 @@
 	<!-- Display each roster entry -->
 	<xsl:template match="roster/locomotive">
 		<tr class="detail">
-			<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress' />", "<xsl:value-of select='@id' />", "/prefs/resources/<xsl:value-of select='@iconFilePath' />", "<xsl:apply-templates select='functionlabels' />"); 
+			<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress' />", "<xsl:value-of select='@id' />", "<xsl:value-of select='@imageFilePath' />", "<xsl:apply-templates select='functionlabels' />"); 
 			</xsl:attribute>
 			<td class="icon">
 				<xsl:if test="(@iconFilePath != '__noIcon.jpg') and (@iconFilePath != '')">
@@ -67,7 +67,7 @@
 	<!-- Generates URL parameters for inControl function buttons-->
 	<!-- Escaping of function labels to be done -->
 	<xsl:template match="roster/locomotive/functionlabels">
-		<xsl:for-each select="functionlabel">f<xsl:value-of select="@num" />label=<xsl:value-of select="." />&amp;<xsl:if test="@functionImage != ''">f<xsl:value-of select="@num" />image=/prefs/resources/<xsl:value-of select="@functionImage" />&amp;</xsl:if><xsl:if test="@lockable = 'true'">f<xsl:value-of select="@num" />imagepressed=<xsl:if test="@functionImageSelected != ''">/prefs/resources/<xsl:value-of select="@functionImageSelected" /></xsl:if><xsl:if test="@functionImageSelected = ''">x</xsl:if>&amp;</xsl:if></xsl:for-each>
+		<xsl:for-each select="functionlabel">f<xsl:value-of select="@num" />label=<xsl:value-of select="." />&amp;<xsl:if test="@functionImage != ''">f<xsl:value-of select="@num" />image=<xsl:value-of select="@functionImage" />&amp;</xsl:if><xsl:if test="@lockable = 'true'">f<xsl:value-of select="@num" />imagepressed=<xsl:if test="@functionImageSelected != ''"><xsl:value-of select="@functionImageSelected" /></xsl:if><xsl:if test="@functionImageSelected = ''">x</xsl:if>&amp;</xsl:if></xsl:for-each>
 	</xsl:template>
 </xsl:stylesheet>
 

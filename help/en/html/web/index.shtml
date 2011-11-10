@@ -153,11 +153,20 @@ Note that this is your roster.xml file displayed only using a xslt transformatio
 
 To use the throttle web application, you can go to:
 <code><pre>
-<a href="http://localhost:12080/prefs/roster.html">http://localhost:12080/prefs/roster.html</a>
+<a href="http://localhost:12080/web/Scan2BeInControl.html" target="Scan2BeInControl">http://localhost:12080/web/Scan2BeInControl.html</a>
 </pre></code>
-it will display a clickable locomotive list generated using using your JMRI roster, each click on a locomotive will generate and open a inControl web throttle in a new browser window.  
+It will generate and display a scannable and clickable locomotive list from your JMRI roster.
+<br />Each smartphone scan will open an inControl web throttle in it.
+<br />Each click on a link will open a new inControl web throttle browser window or tab.  
 
-Or use the inControl.html directly using its parameters to configure it. (see mini web server starting page for info)
+You may also call the <b>inControl</b> directly:
+<code><pre>
+<a href="http://localhost:12080/web/inControl.html" target="_blank">http://localhost:12080/web/inControl.html</a>
+</pre></code>
+See <b>mini web server</b> starting page for more info or jump to the <b>inControl</b> help page:
+<code><pre>
+<a href="/help/en/package/jmri/jmrit/inControl/inControl.shtml">/help/en/package/jmri/jmrit/inControl/inControl.shtml</a>
+</pre></code>
 
 <h3>To Display a Clickable JMRI Window</h3>
 
