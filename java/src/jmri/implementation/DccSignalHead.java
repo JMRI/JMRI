@@ -38,7 +38,6 @@ public class DccSignalHead extends AbstractSignalHead {
 
   public DccSignalHead( String sys, String user ) {
     super(sys, user);
-    c = InstanceManager.commandStationInstance();
     //New method seperates the system name and address using $
     if(sys.contains("$")){
         DccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
@@ -133,7 +132,6 @@ public class DccSignalHead extends AbstractSignalHead {
   }
 
   protected void updateOutput() {
-    CommandStation c = InstanceManager.commandStationInstance();
     if (c != null) {
       int aspect = 0 ;  // SignalHead.DARK
 
