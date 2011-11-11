@@ -15,7 +15,9 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -33,6 +35,7 @@ public class MiniServerPrefsPanel extends JPanel{
 
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;
+    JTextArea disallowedFrames;
     JCheckBox rebuildIndexCB;
     JCheckBox showCommCB;
     JTextField port;
@@ -74,6 +77,7 @@ public class MiniServerPrefsPanel extends JPanel{
     private void setGUI(){
         clickDelaySpinner.setValue(localPrefs.getClickDelay());
         refreshDelaySpinner.setValue(localPrefs.getRefreshDelay());
+        disallowedFrames.setText(localPrefs.getDisallowedFrames());
         rebuildIndexCB.setSelected(localPrefs.isRebuildIndex());
         showCommCB.setSelected(localPrefs.isShowComm());
         port.setText(localPrefs.getPort());
@@ -95,6 +99,7 @@ public class MiniServerPrefsPanel extends JPanel{
         boolean didSet = true;
         localPrefs.setClickDelay((Integer)clickDelaySpinner.getValue());
         localPrefs.setRefreshDelay((Integer)refreshDelaySpinner.getValue());
+        localPrefs.setDisallowedFrames(disallowedFrames.getText());
         localPrefs.setRebuildIndex(rebuildIndexCB.isSelected());
         localPrefs.setShowComm(showCommCB.isSelected());
         int portNum;
@@ -164,6 +169,13 @@ public class MiniServerPrefsPanel extends JPanel{
         ((JSpinner.DefaultEditor)refreshDelaySpinner.getEditor()).getTextField().setEditable(false);
         panel.add(refreshDelaySpinner);
         panel.add(new JLabel(rb.getString("LabelRefreshDelay")));
+
+        disallowedFrames = new JTextArea(4,20);
+        disallowedFrames.setText(rb.getString("DefaultDisallowedFrames"));
+
+        panel.add(new JScrollPane(disallowedFrames));
+        panel.add(new JLabel(rb.getString("LabelDisallowedFrames")));
+        
         return panel;
     }
     

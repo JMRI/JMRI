@@ -9,6 +9,8 @@ import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -56,7 +58,11 @@ public class JmriJFrameServlet implements Servlet {
     
     static java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
-            
+
+	static ArrayList<String> disallowedFrames = new ArrayList<String>(
+			Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
+	
+
     public void destroy() {}
     
     public void init(javax.servlet.ServletConfig config) {}
@@ -129,6 +135,11 @@ public class JmriJFrameServlet implements Servlet {
     	}
     	log.debug("requested frame +["+frameName+"] suffix ["+suffix+"] modifiers ["+modifiers+"]");
 
+    	//check for disallowed frame
+    	if (disallowedFrames.contains(frameName)) {
+    		handleError("Frame ["+frameName+"] not allowed (check Prefs)", 403, res);
+    		return;
+    	}
     	// Find the frame
     	JmriJFrame frame = JmriJFrame.getFrame(frameName);
     	if (frame == null) {
@@ -172,19 +183,21 @@ public class JmriJFrameServlet implements Servlet {
     
     //send html list of available frames
     void listReply(PrintWriter out, ServletResponse res) {
+
         String h = rb.getString("StandardHeader");
         String s = rb.getString("StandardDocType");
         s += rb.getString("ListFront");
     	// list frames, (open JMRI windows)
     	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
     	int framesNumber = framesList.size();
-    	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
+    	for (int i = 0; i < framesNumber; i++) { //get all frame titles
     		JmriJFrame iFrame = framesList.get(i);
     		String frameTitle = iFrame.getTitle();
-    		if (!frameTitle.equals("")) {
+    		//don't add to list if blank or disallowed
+    		if (!frameTitle.equals("") && !disallowedFrames.contains(frameTitle)) {
     			//format a table row for each valid window (frame)
     			String frameURLhtml = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".html";
-    			String frameURLpng = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".png";
+    			String frameURLpng  = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".png";
     			s += "<TR><TD>" + frameTitle + "</TD>\n";
     			s += "<TD><A href='"+frameURLhtml+"'><IMG src='"+frameURLpng+"' /></A></TD>\n"; 
     			s += "<TD><A href='"+frameURLpng +"'><IMG src='"+frameURLpng+"' /></A></TD></TR>\n"; 
@@ -354,6 +367,9 @@ public class JmriJFrameServlet implements Servlet {
             case 400:
                 statusDescription = "Bad Request";
                 break;
+            case 403:
+                statusDescription = "Forbidden";
+                break;
             case 404:
                 statusDescription = "Not Found";
                 break;
@@ -367,23 +383,11 @@ public class JmriJFrameServlet implements Servlet {
                 statusDescription = "";
                 break;
         }
-        out.println
-            ("HTTP/1.1 " + statusCode + " " + statusDescription + "\r\n" +
-             "Server: " + serverName + "\r\n" +
-             "Content-Type: text/html\r\n" +
-             "\r\n" +
-             "<!DOCTYPE HTML PUBLIC " +
-             "\"-//W3C//DTD HTML 4.0 Transitional//EN\">\n" +
-             "<HTML>\n" +
-             "<HEAD>\n" +
-             "  <TITLE>" + error + "</TITLE>\n" +
-             "</HEAD>\n" +
-             "\n" +
-             "<BODY BGCOLOR=\"#FDF5E6\">\n" +
-             "<H1 ALIGN=\"CENTER\">" + error +
-             "\n" +
-             "</BODY>\n" +
-             "</HTML>\n");        
+        //set up replacements and put in html
+    	Object[] args = new String[] {"localhost", Integer.toString(statusCode), statusDescription, error};
+        String s = java.text.MessageFormat.format(rb.getString("ErrorPage"), args);
+
+        out.println(s);
     }
     
     /**

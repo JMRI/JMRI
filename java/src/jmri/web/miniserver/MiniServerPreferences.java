@@ -1,6 +1,8 @@
 package jmri.web.miniserver;
 
 
+import java.util.ResourceBundle;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -9,6 +11,7 @@ import org.jdom.Element;
  *	@version $Revision$
  */
 public class MiniServerPreferences extends AbstractMiniServerPreferences{
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.miniserver.MiniServerBundle");
     
     //  Flag that prefs have not been saved:
     private boolean isDirty = false;
@@ -16,6 +19,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     // initial defaults if prefs not found
     private int clickDelay = 1;
     private int refreshDelay = 5;
+    private String disallowedFrames = rb.getString("DefaultDisallowedFrames");
     private boolean rebuildIndex = false;
     private boolean showComm = false;
     private String port = "12080";
@@ -42,6 +46,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         		log.debug(e);
         	}
         }
+        if ((a = child.getAttribute("getDisallowedFrames")) != null )  setDisallowedFrames(a.getValue());
         if ((a = child.getAttribute("isRebuildIndex")) != null )  setRebuildIndex(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("isShowComm")) != null )  setShowComm(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("getPort")) != null ) setPort(a.getValue());
@@ -50,6 +55,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     public boolean compareValuesDifferent(MiniServerPreferences prefs){
         if (getClickDelay() != prefs.getClickDelay()) return true;
         if (getRefreshDelay() != prefs.getRefreshDelay()) return true;
+        if (!(getDisallowedFrames().equals(prefs.getDisallowedFrames()))) return true;
         if (isRebuildIndex() != prefs.isRebuildIndex()) return true;
         if (isShowComm() != prefs.isShowComm()) return true;
         if (!(getPort().equals(prefs.getPort()))) return true;
@@ -59,6 +65,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     public void apply(MiniServerPreferences prefs){
         setClickDelay(prefs.getClickDelay());
         setRefreshDelay(prefs.getRefreshDelay());
+        setDisallowedFrames(prefs.getDisallowedFrames());
         setRebuildIndex(prefs.isRebuildIndex());
         setShowComm(prefs.isShowComm());
         setPort(prefs.getPort());
@@ -68,6 +75,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     	Element element = new Element("MiniServerPreferences");
         element.setAttribute("getClickDelay", "" + getClickDelay());
         element.setAttribute("getRefreshDelay", "" + getRefreshDelay());
+        element.setAttribute("getDisallowedFrames", "" + getDisallowedFrames());
         element.setAttribute("isRebuildIndex", "" + isRebuildIndex());
         element.setAttribute("isShowComm", "" + isShowComm());
         element.setAttribute("getPort", "" + getPort());
@@ -94,6 +102,13 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     }
     public void setRefreshDelay(int value){
         refreshDelay = value;
+    }
+    
+    public String getDisallowedFrames(){
+        return disallowedFrames;
+    }
+    public void setDisallowedFrames(String value){
+    	disallowedFrames = value;
     }
     
     public boolean isRebuildIndex(){
