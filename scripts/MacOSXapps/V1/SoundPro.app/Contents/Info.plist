@@ -11,11 +11,11 @@
 	<key>CFBundleSignature</key>
 	<string>JMRS</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.12</string>
+    <string>2.13.4</string>
     <key>CFBundleLongVersionString</key>
-    <string>2.12, Copyright 1998-2011 JMRI Project</string>
+    <string>2.13.4, Copyright 1998-2011 JMRI Project</string>
     <key>CFBundleGetInfoString</key>
-    <string>SoundPro 2.12, Copyright 1998-2011 JMRI Project</string>
+    <string>SoundPro 2.13.4, Copyright 1998-2011 JMRI Project</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleExecutable</key>
