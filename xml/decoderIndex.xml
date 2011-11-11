@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20111014-2341-jake on Fri Oct 14 16:42:21 PDT 2011 $Id$-->
-  <decoderIndex version="220">
+  <!--Written by JMRI version 20111111-1747-jake on Fri Nov 11 09:47:12 PST 2011 $Id$-->
+  <decoderIndex version="222">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1232,6 +1232,84 @@
           <output name="4" label="Aux2" />
           <output name="5" label="Shunting" />
           <output name="6" label="Acc/Dec off" />
+        </model>
+      </family>
+      <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
+        <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="AUX 5" maxcurrent="5mA" />
+          <output name="8" label="AUX 6" maxcurrent="5mA" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Fire" />
+          <output name="13" label="Dim" />
+          <output name="14" label="Cross" />
+          <output name="15" label="Shift" />
+          <size length="21.3" width="15.5" height="5.5" units="mm" />
+          <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
+        </model>
+        <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="AUX 5" maxcurrent="5mA" />
+          <output name="8" label="AUX 6" maxcurrent="5mA" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Fire" />
+          <output name="13" label="Dim" />
+          <output name="14" label="Cross" />
+          <output name="15" label="Shift" />
+          <size length="21.3" width="15.5" height="5.5" units="mm" />
+          <!-- connector="NEM651, NEM 652, 21MTC" -->
+        </model>
+        <model model="LokPilot Micro V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
+          <output name="1" label="Headlight" maxcurrent="150mA" />
+          <output name="2" label="Rear light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="150mA" />
+          <output name="4" label="AUX 2" maxcurrent="150mA" />
+          <output name="5" label="AUX 3" maxcurrent="5mA" />
+          <output name="6" label="AUX 4" maxcurrent="5mA" />
+          <output name="7" label="AUX 5" />
+          <output name="8" label="AUX 6" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Fire" />
+          <output name="13" label="Dim" />
+          <output name="14" label="Cross" />
+          <output name="15" label="Shift" />
+          <size length="10.5" width="5.8" height="2.8" units="mm" />
+          <!-- connector="NEM651, NEM 652, Next18" -->
+        </model>
+        <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
+          <output name="1" label="Headlight" maxcurrent="150mA" />
+          <output name="2" label="Rear light" maxcurrent="150mA" />
+          <output name="3" label="AUX 1" maxcurrent="150mA" />
+          <output name="4" label="AUX 2" maxcurrent="150mA" />
+          <output name="5" label="AUX 3" maxcurrent="5mA" />
+          <output name="6" label="AUX 4" maxcurrent="5mA" />
+          <output name="7" label="AUX 5" />
+          <output name="8" label="AUX 6" />
+          <output name="9" label="ABV" />
+          <output name="10" label="Shunt" />
+          <output name="11" label="DB" />
+          <output name="12" label="Fire" />
+          <output name="13" label="Dim" />
+          <output name="14" label="Cross" />
+          <output name="15" label="Shift" />
+          <size length="10.5" width="5.8" height="2.8" units="mm" />
+          <!-- connector="NEM651, Next18" -->
         </model>
       </family>
       <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" highVersionID="22" file="ESU_LokSound2_21.xml">
@@ -8422,6 +8500,9 @@
       <family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" file="Uhlenbrock_73500.xml">
         <model model="73500" />
         <model model="73510" />
+      </family>
+      <family name="Mini-Function Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_73900.xml">
+        <model model="73900" />
       </family>
       <family name="Standard Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="1" highVersionID="20" file="Uhlenbrock_74400.xml">
         <model model="74400" />
