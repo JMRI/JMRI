@@ -96,11 +96,11 @@
 
 <mapID target="manual.test_manual.Installing_JMRI_InstallJMRI" url="manual/test_manual/Installing_JMRI.shtml#InstallJMRI"/>
 
+<mapID target="manual.Ops_Routes_Top" url="manual/Ops_Routes.shtml#Top"/>
+
 <mapID target="html.apps.PanelPro.ShowPanel" url="html/apps/PanelPro/ShowPanel.shtml"/>
 
 <mapID target="html.doc.Technical.XmlDtdUsage" url="html/doc/Technical/XmlDtdUsage.shtml"/>
-
-<mapID target="manual.Ops_Routes_Top" url="manual/Ops_Routes.shtml#Top"/>
 
 <mapID target="html.doc.Technical.TurnoutFeedback" url="html/doc/Technical/TurnoutFeedback.shtml"/>
 
@@ -469,6 +469,8 @@
 <mapID target="manual.Basic_Programming" url="manual/Basic_Programming.shtml"/>
 
 <mapID target="manual.Start_Preferences_Connections" url="manual/Start_Preferences.shtml#Connections"/>
+
+<mapID target="manual.dp3_manual.dp3_Main_file_print_entry_Top" url="manual/dp3_manual/dp3_Main_file_print_entry.shtml#Top"/>
 
 <mapID target="manual.test_manual.Basic_BasicPane" url="manual/test_manual/Basic_BasicPane.shtml"/>
 
@@ -885,6 +887,8 @@
 <mapID target="manual.test_manual.Main_SECSI" url="manual/test_manual/Main_SECSI.shtml"/>
 
 <mapID target="manual.test_manual.Main_Roster_Export" url="manual/test_manual/Main_Roster.shtml#Export"/>
+
+<mapID target="package.jmri.jmrit.inControl.inControl" url="package/jmri/jmrit/inControl/inControl.shtml"/>
 
 <mapID target="html.apps.DecoderPro.FAQ_newdecoder" url="html/apps/DecoderPro/FAQ.shtml#newdecoder"/>
 
@@ -2535,6 +2539,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_MisplacedCarsComment" url="package/jmri/jmrit/operations/Operations.shtml#MisplacedCarsComment"/>
 
 <mapID target="manual.test_manual.Ops_Engines_Top" url="manual/test_manual/Ops_Engines.shtml#Top"/>
+
+<mapID target="manual.dp3_manual.dp3_Main_file_print_entry" url="manual/dp3_manual/dp3_Main_file_print_entry.shtml"/>
 
 <mapID target="manual.test_manual.Ops_TripThruOperations" url="manual/test_manual/Ops_TripThruOperations.shtml"/>
 
