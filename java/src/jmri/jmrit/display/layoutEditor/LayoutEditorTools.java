@@ -10,8 +10,6 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.Logix;
 import jmri.util.swing.JmriBeanComboBox;
-import jmri.InstanceManager;
-
 import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.geom.*;

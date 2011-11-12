@@ -1,15 +1,10 @@
 package jmri.implementation.configurexml;
 
 import jmri.InstanceManager;
-import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.implementation.TurnoutSignalMast;
 import jmri.SignalAppearanceMap;
-import jmri.managers.DefaultSignalMastManager;
-
 import java.util.List;
-import java.util.Enumeration;
-
 import org.jdom.Element;
 
 /**

@@ -68,8 +68,6 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.datatransfer.RosterEntrySelection;
-import jmri.util.com.sun.TableSorter;
-
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
 

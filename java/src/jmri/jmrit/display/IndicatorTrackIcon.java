@@ -6,8 +6,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
 import jmri.jmrit.display.palette.IndicatorItemPanel;
-import jmri.jmrit.display.palette.ItemPalette;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

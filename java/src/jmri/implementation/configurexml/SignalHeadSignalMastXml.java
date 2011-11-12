@@ -3,10 +3,6 @@ package jmri.implementation.configurexml;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.SignalHeadSignalMast;
-import jmri.managers.DefaultSignalMastManager;
-
-import java.util.List;
-
 import org.jdom.Element;
 
 /**

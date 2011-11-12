@@ -8,7 +8,6 @@ import jmri.util.StringUtil;
 import jmri.util.swing.BeanSelectCreatePanel;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.implementation.TurnoutSignalMast;
-import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;

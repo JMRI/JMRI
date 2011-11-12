@@ -6,7 +6,6 @@ import jmri.*;
 import jmri.managers.AbstractManager;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Default implementation of a SignalMastManager.

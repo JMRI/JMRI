@@ -4,11 +4,8 @@ package jmri.jmris;
 
 import java.io.*;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.routes.*;
 
 /**
  * Abstract interface between the JMRI operations and a 

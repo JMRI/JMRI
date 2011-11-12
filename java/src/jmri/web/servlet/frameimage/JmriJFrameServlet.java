@@ -21,8 +21,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.jdom.Element;
-
 /** 
  * A simple servlet that returns a JMRI window as
  * a PNG image or enclosing HTML file.

@@ -3,7 +3,6 @@
 package apps.gui3;
 
 import apps.SplashWindow;
-import jmri.*;
 import jmri.util.JmriJFrame;
 
 import java.awt.*;

@@ -1,7 +1,6 @@
 package jmri.jmrit.roster.swing.rostergroup;
 
 
-import jmri.jmrit.roster.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;

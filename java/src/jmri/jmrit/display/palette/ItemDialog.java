@@ -1,10 +1,7 @@
 // ItemDialog.java
 package jmri.jmrit.display.palette;
 
-import java.util.Hashtable;
 import javax.swing.JDialog;
-
-import jmri.jmrit.catalog.NamedIcon;
 
 /**
  * @author Pete Cressman  Copyright (c) 2010

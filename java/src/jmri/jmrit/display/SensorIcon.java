@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.catalog.NamedIcon;

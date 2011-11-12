@@ -6,7 +6,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import jmri.util.JmriJFrame;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 

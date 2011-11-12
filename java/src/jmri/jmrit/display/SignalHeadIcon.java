@@ -5,7 +5,6 @@ package jmri.jmrit.display;
 import jmri.SignalHead;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.SignalHeadItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import java.awt.event.ActionEvent;

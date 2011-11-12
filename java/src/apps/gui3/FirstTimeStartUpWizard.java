@@ -6,10 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
-import javax.swing.JSeparator;
 import javax.swing.JOptionPane;
 import javax.swing.border.BevelBorder;
-import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 

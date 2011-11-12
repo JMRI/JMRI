@@ -4,11 +4,6 @@ package jmri.jmris.simpleserver;
 
 import java.io.*;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.jmrit.operations.trains.*;
-import jmri.jmrit.operations.locations.*;
-
 /**
  * Simple interface between the JMRI operations and a 
  * network connection

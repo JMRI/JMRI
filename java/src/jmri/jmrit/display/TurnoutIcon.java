@@ -2,9 +2,7 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 
