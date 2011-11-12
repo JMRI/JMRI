@@ -155,7 +155,6 @@ class EngineSound extends VSDSound {
 	return(me);
     }
 
-    @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	// Do only the stuff common...
 	this.setName(e.getAttribute("name").getValue());

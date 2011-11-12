@@ -110,8 +110,8 @@ public class DefaultSignalMastManager extends AbstractManager
         for(NamedBean val : _tsys.values()){
             if(val instanceof jmri.implementation.SignalHeadSignalMast){
                 java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)val).getHeadsUsed();
-                for(NamedBeanHandle bean : masthead){
-                    headsUsed.add((SignalHead)bean.getBean());
+                for(NamedBeanHandle<SignalHead> bean : masthead){
+                    headsUsed.add(bean.getBean());
                 }
             }
         }
@@ -121,8 +121,8 @@ public class DefaultSignalMastManager extends AbstractManager
     public String isHeadUsed(SignalHead head){
         for(NamedBean val : _tsys.values()){
             java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)val).getHeadsUsed();
-            for(NamedBeanHandle bean : masthead){
-                if(((SignalHead)bean.getBean())==head)
+            for(NamedBeanHandle<SignalHead> bean : masthead){
+                if((bean.getBean())==head)
                     return ((jmri.implementation.SignalHeadSignalMast)val).getDisplayName();
             }
         }

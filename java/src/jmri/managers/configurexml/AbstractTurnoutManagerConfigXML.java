@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.TurnoutManager;
 import jmri.Turnout;
 import jmri.TurnoutOperation;
@@ -72,7 +73,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                                 
                 // include feedback info
                 elem.setAttribute("feedback", t.getFeedbackModeName());
-                NamedBeanHandle s;
+                NamedBeanHandle<Sensor> s;
                 s = t.getFirstNamedSensor();
                 if (s!=null) elem.setAttribute("sensor1", s.getName());
                 s = t.getSecondNamedSensor();

@@ -107,11 +107,10 @@ public class InstanceManager {
      * Dump generic content of InstanceManager
      * by type.
      */
-    @SuppressWarnings("unchecked")   // checked by construction
     static public String contentsToString() {
 
         StringBuffer retval = new StringBuffer();
-        for (Class c : managerLists.keySet()) {
+        for (Class<?> c : managerLists.keySet()) {
             retval.append("List of");
             retval.append(c);
             retval.append(" with ");

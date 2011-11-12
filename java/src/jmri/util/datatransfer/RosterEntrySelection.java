@@ -44,7 +44,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
         RosterEntrySelection.rosterEntryFlavor
     };
     
-    private static final List flavorList = Arrays.asList(flavors);
+    private static final List<DataFlavor> flavorList = Arrays.asList(flavors);
 
     /**
      * Create the transferable.

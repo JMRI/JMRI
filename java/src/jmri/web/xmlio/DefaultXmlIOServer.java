@@ -45,7 +45,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     	//  roster, frame, and metadata are immediate only
     	//  power, turnout, sensor, memory and route can be monitored for changes, pass current values to begin
         @SuppressWarnings("unchecked")
-        List<Element> lists = new ArrayList(e.getChildren("list"));
+        List<Element> lists = new ArrayList<Element>(e.getChildren("list"));
         for (Element list : lists) {
             e.removeContent(list);
             // if there is no attribute named "type", type is null
@@ -55,6 +55,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
             if (!useAttributes) {
                 // if type is null, set type from a child element named "type"
                 type = list.getChild("type").getText();
+            }
+            if (type == null){
+            	log.error("type not found!");
+            	continue;		         			
             }
             if (type.equals("turnout")) {
                 // add an element for each turnout

@@ -184,7 +184,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _errNamedSensor.getBean();
     }
     
-    public NamedBeanHandle getNamedErrorSensor() {
+    public NamedBeanHandle<Sensor> getNamedErrorSensor() {
         return _errNamedSensor;
     }
 

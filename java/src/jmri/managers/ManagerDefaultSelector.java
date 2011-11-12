@@ -49,7 +49,7 @@ public class ManagerDefaultSelector {
                 if(e.getPropertyName().equals("ConnectionNameChanged")){
                     String oldName = (String) e.getOldValue();
                     String newName = (String) e.getNewValue();
-                    for (Class c : defaults.keySet()) {
+                    for (Class<?> c : defaults.keySet()) {
                         String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
                         if(connectionName.equals(oldName))
                             ManagerDefaultSelector.instance.defaults.put(c, newName);
@@ -60,7 +60,7 @@ public class ManagerDefaultSelector {
                         jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)e.getSource();
                         String disabledName = memo.getUserName();
                         ArrayList<Class<?>> tmpArray = new ArrayList<Class<?>>();
-                        for (Class c : defaults.keySet()) {
+                        for (Class<?> c : defaults.keySet()) {
                             String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
                             if(connectionName.equals(disabledName)){
                                 log.warn("Connection " + disabledName + " has been disabled, we shall remove it as the default for " + c);
@@ -75,7 +75,7 @@ public class ManagerDefaultSelector {
                 } else if (e.getPropertyName().equals("ConnectionRemoved")){
                     String removedName = (String) e.getOldValue();
                     ArrayList<Class<?>> tmpArray = new ArrayList<Class<?>>();
-                    for (Class c : defaults.keySet()) {
+                    for (Class<?> c : defaults.keySet()) {
                         String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
                         if(connectionName.equals(removedName)){
                             log.warn("Connection " + removedName + " has been removed, we shall remove it as the default for " + c);

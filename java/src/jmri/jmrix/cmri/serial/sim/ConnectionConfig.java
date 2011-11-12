@@ -47,7 +47,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         
     }
     
-    @SuppressWarnings("unchecked")
 	protected Vector<String> getPortNames() {
         Vector<String> portNameVector = new Vector<String>();
         portNameVector.addElement("(None)");

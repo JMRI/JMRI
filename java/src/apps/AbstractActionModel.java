@@ -33,9 +33,9 @@ public abstract class AbstractActionModel{
     }
 
     public String getName() {
-        Iterator iterator = classList.keySet().iterator();
+        Iterator<Class<?>> iterator = classList.keySet().iterator();
         while (iterator.hasNext()) {
-          Class<?> key = (Class<?>) iterator.next();
+          Class<?> key = iterator.next();
           if(key.getName().equals(className))
             return classList.get(key);
         }
@@ -43,9 +43,9 @@ public abstract class AbstractActionModel{
     }
 
     public void setName(String n) {
-        Iterator iterator = classList.keySet().iterator();
+        Iterator<Class<?>> iterator = classList.keySet().iterator();
         while (iterator.hasNext()) {
-          Class<?> key = (Class<?>) iterator.next();
+          Class<?> key = iterator.next();
           if(classList.get(key).equals(n)){
             className = key.getName();
             return;

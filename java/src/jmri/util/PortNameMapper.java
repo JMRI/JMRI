@@ -83,16 +83,16 @@ public class PortNameMapper {
     private static void getDetailsFromWinRegistry(String path, Regor reg){
         ArrayList<String> friendlyName = new ArrayList<String>();
         try {
-            List regentry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE,path);
+            List<?> regentry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE,path);
             if(regentry==null)
                 return;
             for(int i = 0; i<regentry.size(); i++){
-                List regSubEntry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i));
+                List<?> regSubEntry = reg.listKeys(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i));
                 if(regSubEntry!=null){
                     if(regSubEntry.size()>0){
                         String name = null;
                         String port = null;
-                        List values = reg.listValueNames(Regor.HKEY_LOCAL_MACHINE,path + regentry.get(i)+"\\"+regSubEntry.get(0));
+                        List<?> values = reg.listValueNames(Regor.HKEY_LOCAL_MACHINE,path + regentry.get(i)+"\\"+regSubEntry.get(0));
                         if(values.contains("Class")){
                             Key pathKey = reg.openKey(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i)+"\\"+regSubEntry.get(0), Regor.KEY_READ);
                             String deviceClass = reg.readValueAsString(pathKey,"Class");

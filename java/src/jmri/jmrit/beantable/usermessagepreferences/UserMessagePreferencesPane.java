@@ -71,7 +71,6 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
     private Hashtable<JComboBox, ListItems> _comboBoxes = new Hashtable<JComboBox, ListItems>();
     private Hashtable<JCheckBox, ListItems> _checkBoxes = new Hashtable<JCheckBox, ListItems>();
     
-    @SuppressWarnings("unchecked")
     private void newMessageTab(){
         remove(tab);
         tab = new JTabbedPane();
@@ -152,13 +151,13 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
                 }
             }
         }
-        Enumeration keys = _comboBoxes.keys();
+        Enumeration<JComboBox> keys = _comboBoxes.keys();
         Hashtable<String, ArrayList<ListItems>> countOfItems = new Hashtable<String, ArrayList<ListItems>>();
         Hashtable<String, ArrayList<JCheckBox>> countOfItemsCheck = new Hashtable<String, ArrayList<JCheckBox>>();
         Hashtable<String, ArrayList<JComboBox>> countOfItemsCombo = new Hashtable<String, ArrayList<JComboBox>>();
         while ( keys.hasMoreElements() )
            {
-                JComboBox key = (JComboBox)keys.nextElement();
+                JComboBox key = keys.nextElement();
                 if (!_comboBoxes.get(key).isIncluded()){
                     String strItem = _comboBoxes.get(key).getItem();
                     if (!countOfItems.containsKey(strItem)){
@@ -166,18 +165,18 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
                         countOfItemsCombo.put(strItem, new ArrayList<JComboBox>());
                     }
                     
-                    ArrayList a = countOfItems.get(strItem);
+                    ArrayList<ListItems> a = countOfItems.get(strItem);
                     a.add(_comboBoxes.get(key));
                     
-                    a = countOfItemsCombo.get(strItem);
-                    a.add(key);
+                    ArrayList<JComboBox> acb = countOfItemsCombo.get(strItem);
+                    acb.add(key);
                 }
            }
            
-        keys = _checkBoxes.keys();
-        while ( keys.hasMoreElements() )
+        Enumeration<JCheckBox> cbKeys = _checkBoxes.keys();
+        while ( cbKeys.hasMoreElements() )
            {
-               JCheckBox key = (JCheckBox)keys.nextElement();
+               JCheckBox key = cbKeys.nextElement();
                if (!_checkBoxes.get(key).isIncluded()){
                     String strItem = _checkBoxes.get(key).getItem();
                     
@@ -185,23 +184,23 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
                         countOfItems.put(strItem, new ArrayList<ListItems>());
                         countOfItemsCheck.put(strItem, new ArrayList<JCheckBox>());
                     }
-                    ArrayList a = countOfItems.get(strItem);
+                    ArrayList<ListItems> a = countOfItems.get(strItem);
                     a.add(_checkBoxes.get(key));  
                     
-                    a = countOfItemsCheck.get(strItem);
-                    a.add(key);
+                    ArrayList<JCheckBox> acb = countOfItemsCheck.get(strItem);
+                    acb.add(key);
                }
            }
-        keys = countOfItems.keys();
+        Enumeration<String> skeys = countOfItems.keys();
         JPanel miscPanel = new JPanel();
         miscPanel.setLayout(new BoxLayout(miscPanel, BoxLayout.Y_AXIS));
         
         JPanel mischolder = new JPanel();
         mischolder.setLayout(new BorderLayout());
         mischolder.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        while (keys.hasMoreElements())
+        while (skeys.hasMoreElements())
             {
-                String item = (String)keys.nextElement();
+                String item = skeys.nextElement();
                 ArrayList<ListItems> a = countOfItems.get(item);
                 ArrayList<JCheckBox> chb = countOfItemsCheck.get(item);
                 ArrayList<JComboBox> cob = countOfItemsCombo.get(item);

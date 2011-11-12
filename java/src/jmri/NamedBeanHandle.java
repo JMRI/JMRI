@@ -37,7 +37,7 @@ public class NamedBeanHandle<T> implements java.io.Serializable {
             if(!(getClass()==obj.getClass()))
                 return false;
             else{
-                NamedBeanHandle tmp = (NamedBeanHandle)obj;
+                NamedBeanHandle<?> tmp = (NamedBeanHandle<?>)obj;
                 if(!tmp.getName().equals(this.getName()))
                     return false;
                 if(tmp.getBean()!=this.getBean())

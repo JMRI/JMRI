@@ -240,7 +240,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 value = Turnout.THROWN;
                             Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnout);
                             if(turn!=null){
-                                NamedBeanHandle namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
+                                NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
                                 list.put(namedTurnout, value);
                             } else if (debug)
                                 log.debug("Unable to add Turnout " + turnout + " as it does not exist in the panel file");
@@ -263,7 +263,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
                             Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
                             if(sen!=null){
-                                NamedBeanHandle namedSensor = nbhm.getNamedBeanHandle(sensorName, sen);
+                                NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sen);
                                 list.put(namedSensor, value);
                             } else if (debug)
                                 log.debug("Unable to add sensor " + sensorName + " as it does not exist in the panel file");

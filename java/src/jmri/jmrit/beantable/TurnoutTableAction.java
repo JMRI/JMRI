@@ -5,6 +5,7 @@ package jmri.jmrit.beantable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
@@ -273,11 +274,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                     });
                     return c;
                 } else if (col==SENSOR1COL && showFeedback) {
-                    NamedBeanHandle s = t.getFirstNamedSensor();
+                    NamedBeanHandle<Sensor> s = t.getFirstNamedSensor();
                     if (s!=null) return s.getName();
                     else return "";
                 } else if (col==SENSOR2COL && showFeedback) {
-                    NamedBeanHandle s = t.getSecondNamedSensor();
+                    NamedBeanHandle<Sensor> s = t.getSecondNamedSensor();
                     if (s!=null) return s.getName();
                     else return "";
                 } else if (col==OPSONOFFCOL && showFeedback) {

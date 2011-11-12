@@ -96,7 +96,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         return element;
     }
     
-    Element storeNamedBean(String elemName, NamedBeanHandle nb) {
+    Element storeNamedBean(String elemName, NamedBeanHandle<?> nb) {
         Element elem = new Element(elemName);
         elem.addContent(nb.getName());
         return elem;

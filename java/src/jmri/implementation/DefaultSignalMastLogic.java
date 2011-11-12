@@ -1373,7 +1373,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 return -1;
             Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
             while (en.hasMoreElements()) {
-                NamedBeanHandle namedSensor = en.nextElement();
+                NamedBeanHandle<Sensor> namedSensor = en.nextElement();
                 if (namedSensor.getBean()==sensor)
                     return sensors.get(namedSensor);
             }
@@ -1385,7 +1385,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 return -1;
             Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
             while (en.hasMoreElements()) {
-                NamedBeanHandle namedTurnout = en.nextElement();
+                NamedBeanHandle<Turnout> namedTurnout = en.nextElement();
                 if (namedTurnout.getBean()==turnout)
                     return turnouts.get(namedTurnout);
             }
