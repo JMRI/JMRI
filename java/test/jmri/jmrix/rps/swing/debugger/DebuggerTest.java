@@ -35,6 +35,9 @@ public class DebuggerTest extends TestCase {
         // data
         f.notify(r);
         f.notify(m);
+        
+        // close
+        f.dispose();
     }
     
     

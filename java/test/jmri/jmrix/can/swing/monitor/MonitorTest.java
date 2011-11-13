@@ -59,6 +59,9 @@ public class MonitorTest extends TestCase {
         r.setElement(2, (byte)0x33);
         
         f.reply(r);
+        
+        // close panel
+        f.dispose();
     }
 
     // Main entry point

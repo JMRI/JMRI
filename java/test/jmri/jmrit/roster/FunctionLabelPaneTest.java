@@ -68,6 +68,9 @@ public class FunctionLabelPaneTest extends TestCase {
         j.pack();
         j.setVisible(true);
         
+        // Now close
+        j.dispose();
+        
     }
     
     public void testGuiChanged1() {

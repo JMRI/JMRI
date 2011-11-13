@@ -20,6 +20,9 @@ public class PackageTest extends TestCase {
         );
         f.setSize(new java.awt.Dimension(400,400));
         f.setVisible(true);
+        
+        // close
+        f.dispose();
     }
         
     // from here down is testing infrastructure

@@ -28,8 +28,9 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testDirectionCheckBoxes(){
 		OperationsSetupFrame f = new OperationsSetupFrame();
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents();
-		
+				
 		//both east/west and north/south checkboxes should be set	
 		Assert.assertTrue("North selected", f.northCheckBox.isSelected());
 		Assert.assertTrue("East selected", f.eastCheckBox.isSelected());
@@ -55,6 +56,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		Setup.setCarTypes(Setup.AAR);
 		
 		OperationsSetupFrame f = new OperationsSetupFrame();
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents();
 		
 		f.railroadNameTextField.setText("Test Railroad Name");
@@ -83,6 +85,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testSetupFrameRead(){
 		OperationsSetupFrame f = new OperationsSetupFrame();
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents();
 		
 		Assert.assertEquals("railroad name", "Test Railroad Name", f.railroadNameTextField.getText());
@@ -121,7 +124,8 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 
 	public void testOptionFrameWrite(){
 		OptionFrame f = new OptionFrame();
-		f.initComponents();
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+		f.initComponents();		
 		
 		// confirm defaults
 		Assert.assertTrue("build normal", f.buildNormal.isSelected());
@@ -166,7 +170,8 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testOptionFrameRead(){
 		OptionFrame f = new OptionFrame();
-		f.initComponents();
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+		f.initComponents();		
 		
 		Assert.assertFalse("build normal",f.buildNormal.isSelected());
 		Assert.assertTrue("build aggressive",f.buildAggressive.isSelected());

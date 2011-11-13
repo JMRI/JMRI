@@ -256,9 +256,11 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		TrainEditFrame trainEditFrame = new TrainEditFrame();
 		trainEditFrame.setTitle("Test Build Options Train Frame");
+		trainEditFrame.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		trainEditFrame.initComponents(t);
 		
 		TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents(trainEditFrame);
 		f.setTitle("Test Train Build Options");
 		

@@ -46,6 +46,9 @@ public class SerialMonTest extends TestCase {
         r.setElement(3, (byte)0x31);
         
         f.reply(r);
+        
+        //close frame
+        f.dispose();
     }
 
     // Main entry point

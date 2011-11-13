@@ -135,6 +135,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Location l = lManager.getLocationByName("Test Loc C");
 		InterchangeEditFrame f = new InterchangeEditFrame();
 		f.setTitle("Test Interchange Add Frame");
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents(l, null);
 		
 		// create two interchange tracks
@@ -202,6 +203,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Location l = lManager.getLocationByName("Test Loc C");
 		SidingEditFrame f = new SidingEditFrame();
 		f.setTitle("Test Siding Add Frame");
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents(l, null);
 		
 		// create three siding tracks
@@ -282,6 +284,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Location l = lManager.getLocationByName("Test Loc A");
 		StagingEditFrame f = new StagingEditFrame();
 		f.setTitle("Test Staging Add Frame");
+		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents(l, null);
 		
 		// create four staging tracks

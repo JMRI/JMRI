@@ -70,6 +70,9 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
+        
+        // close
+        jf.dispose();
 
 	}
 
@@ -96,6 +99,9 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
+        
+        // close
+        jf.dispose();
 
 	}
 
