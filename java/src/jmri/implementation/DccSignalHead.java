@@ -38,35 +38,15 @@ public class DccSignalHead extends AbstractSignalHead {
 
   public DccSignalHead( String sys, String user ) {
     super(sys, user);
-    //New method seperates the system name and address using $
-    if(sys.contains("$")){
-        DccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
-        String commandStationPrefix = sys.substring(sys.indexOf("$")-1);
-        java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-        for(int x = 0; x < connList.size(); x++){
-            jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
-            if(station.getSystemPrefix().equals(commandStationPrefix)){
-                c = station;
-                break;
-            }
-        }
-        if(c==null){
-            c = InstanceManager.commandStationInstance();
-            log.error("No match against the command station, so will use the default");
-        }
-    } else {
-        //Old method
-        c = InstanceManager.commandStationInstance();
-        if (( sys.length() > 2 ) && (( sys.charAt(1) == 'H' ) || ( sys.charAt(1) == 'h' )))
-          DccSignalDecoderAddress = Integer.parseInt(sys.substring(2,sys.length()));
-        else
-          DccSignalDecoderAddress = Integer.parseInt(sys);
-    }
+    configureHead(sys);
   }
 
   public DccSignalHead( String sys ) {
     super(sys);
-    
+    configureHead(sys);
+  }
+
+  void configureHead(String sys){
     //New method seperates the system name and address using $
     if(sys.contains("$")){
         DccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
@@ -81,7 +61,7 @@ public class DccSignalHead extends AbstractSignalHead {
         }
         if(c==null){
             c = InstanceManager.commandStationInstance();
-            log.error("No match against the command station, so will use the default");
+            log.error("No match against the command station for " + sys + ", so will use the default");
         }
     } else {
         c = InstanceManager.commandStationInstance();
