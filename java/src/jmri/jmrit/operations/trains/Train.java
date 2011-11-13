@@ -63,6 +63,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _buildFailed = false;	// when true, build for this train failed
 	protected boolean _printed = false;		// when true, manifest has been printed
 	protected boolean _sendToTerminal = false;	// when true, cars picked up by train only go to terminal
+	protected boolean _buildNormal = false;	// when true build this train in normal mode
 	protected Route _route = null;
 	protected String _roadOption = ALLROADS;// train road name restrictions
 	protected int _requires = 0;			// train requirements, caboose, FRED
@@ -102,8 +103,6 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _leg3Road = "";				// engine road name 3rd leg 
 	protected String _leg3Model = "";			// engine model 3rd leg
 	protected String _leg3CabooseRoad = "";			// road name for caboose 3rd leg
-
-	//protected Reporter _reporter;					// Reporter for interapplication communication
 	
 	public static final int CHANGE_ENGINES = 1;		// change engines
 	public static final int HELPER_ENGINES = 2;		// add helper engines
@@ -1627,6 +1626,18 @@ public class Train implements java.beans.PropertyChangeListener {
 			firePropertyChange("send cars to terminal", old?"true":"false", enable?"true":"false");
 		}
 	}
+	
+	public boolean isBuildTrainNormalEnabled(){
+		return _buildNormal;
+	}
+	
+	public void setBuildTrainNormalEnabled(boolean enable){
+		boolean old = _buildNormal;
+		_buildNormal = enable;
+		if (old != enable){
+			firePropertyChange("build train normal", old?"true":"false", enable?"true":"false");
+		}
+	}
 
 	protected void setBuilt(boolean built) {
 		boolean old = _built;
@@ -2296,6 +2307,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_leg2Options = Integer.parseInt(a.getValue());
     	if ((a = e.getAttribute("leg3Options")) != null)
     		_leg3Options = Integer.parseInt(a.getValue());
+    	if ((a = e.getAttribute("buildNormal")) != null)
+    		_buildNormal = a.getValue().equals("true");
     	if ((a = e.getAttribute("toTerminal")) != null)
     		_sendToTerminal = a.getValue().equals("true");
     	if ((a = e.getAttribute("built")) != null)
@@ -2417,6 +2430,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("engineModel", getEngineModel());
         e.setAttribute("requires", Integer.toString(getRequirements()));
         e.setAttribute("cabooseRoad", getCabooseRoad());
+        e.setAttribute("buildNormal", isBuildTrainNormalEnabled()?"true":"false");
         e.setAttribute("toTerminal", isSendCarsToTerminalEnabled()?"true":"false");
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");

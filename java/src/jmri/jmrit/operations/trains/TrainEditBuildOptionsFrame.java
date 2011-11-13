@@ -140,6 +140,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     ButtonGroup cabooseOption2Group = new ButtonGroup();
     
     // check boxes
+    JCheckBox buildNormalcheckBox = new JCheckBox(rb.getString("NormalModeWhenBuilding"));
     JCheckBox sendToTerminalcheckBox = new JCheckBox();
 	
 	// text field
@@ -235,7 +236,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	JPanel pOption = new JPanel();
     	pOption.setLayout(new GridBagLayout());
     	pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));
-    	addItem(pOption, sendToTerminalcheckBox, 0, 0);
+    	addItem(pOption, buildNormalcheckBox, 0, 0);
+    	addItem(pOption, sendToTerminalcheckBox, 1, 0);
     		
 		// row 3
 		panelRoadNames.setLayout(new GridBagLayout());
@@ -444,6 +446,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (_train != null){
 			trainName.setText(_train.getName());
 			trainDescription.setText(_train.getDescription());
+			buildNormalcheckBox.setSelected(_train.isBuildTrainNormalEnabled());
 			sendToTerminalcheckBox.setSelected(_train.isSendCarsToTerminalEnabled());
 			sendToTerminalcheckBox.setText(MessageFormat.format(rb.getString("SendToTerminal"),new Object[] {_train.getTrainTerminatesName()}));
 			builtAfterTextField.setText(_train.getBuiltStartYear());
@@ -876,6 +879,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	private void saveTrain(){
 		if (!checkInput())
 			return;
+		_train.setBuildTrainNormalEnabled(buildNormalcheckBox.isSelected());
 		_train.setSendCarsToTerminalEnabled(sendToTerminalcheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());

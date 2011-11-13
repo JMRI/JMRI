@@ -433,7 +433,7 @@ public class TrainBuilder extends TrainCommon{
 		// now find destinations for cars 
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrain"),new Object[]{requested, train.getName(), carList.size()}));
 		// try to block cars departing staging
-		if (Setup.isBuildAggressive()){
+		if (Setup.isBuildAggressive() && !train.isBuildTrainNormalEnabled()){
 			// perform a two pass build for this train
 			placeCars(50);	// find destination for 50% of the available moves
 		}		

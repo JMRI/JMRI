@@ -84,6 +84,7 @@
 <!ATTLIST train cabooseRoad			CDATA #IMPLIED>
 <!ATTLIST train departHour			CDATA #IMPLIED>
 <!ATTLIST train departMinute		CDATA #IMPLIED>
+<!ATTLIST train buildNormal			(true | false) "false">
 <!ATTLIST train toTerminal			(true | false) "false">
 <!ATTLIST train built				(true | false) "false">
 <!ATTLIST train build				(true | false) "false">
