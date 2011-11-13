@@ -299,11 +299,13 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
          * @param follow is the slot which will follow the leader
          */
 	private void linkSlots(LocoNetSlot lead, LocoNetSlot follow){
-	   LocoNetMessage msg = new LocoNetMessage(4);
-	   msg.setOpCode(LnConstants.OPC_LINK_SLOTS);
-	   msg.setElement(1,follow.getSlot());		
-	   msg.setElement(2,lead.getSlot());		
-           trafficController.sendLocoNetMessage(msg);	   	
+           if(lead!=follow) {
+	     LocoNetMessage msg = new LocoNetMessage(4);
+	     msg.setOpCode(LnConstants.OPC_LINK_SLOTS);
+	     msg.setElement(1,follow.getSlot());		
+	     msg.setElement(2,lead.getSlot());		
+             trafficController.sendLocoNetMessage(msg);	   	
+           }
 	   consistRequestState=IDLESTATE;
 	}
 
@@ -313,11 +315,13 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
          * @param follow is the slot which was following the leader
          */
 	private void unlinkSlots(LocoNetSlot lead, LocoNetSlot follow){
-	   LocoNetMessage msg = new LocoNetMessage(4);
-	   msg.setOpCode(LnConstants.OPC_UNLINK_SLOTS);
-	   msg.setElement(1,follow.getSlot());	
-	   msg.setElement(2,lead.getSlot());		
-           trafficController.sendLocoNetMessage(msg);	   	
+           if(lead!=follow) {
+	     LocoNetMessage msg = new LocoNetMessage(4);
+	     msg.setOpCode(LnConstants.OPC_UNLINK_SLOTS);
+	     msg.setElement(1,follow.getSlot());	
+	     msg.setElement(2,lead.getSlot());		
+             trafficController.sendLocoNetMessage(msg);	   	
+           }
 	   consistRequestState=IDLESTATE;
 	}
 
@@ -334,7 +338,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 
 	private void setSlotModeAdvanced(LocoNetSlot s){
             // set the slot so that it can be an advanced consist
-	    int oldstatus=leadSlot.slotStatus();
+	    int oldstatus=s.slotStatus();
 	    int newstatus=oldstatus|LnConstants.STAT1_SL_SPDEX;
 	    trafficController.sendLocoNetMessage(s.writeStatus(newstatus));
 	}
