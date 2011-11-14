@@ -2,6 +2,9 @@
 
 package jmri.jmrix.rps.swing.polling;
 
+import javax.swing.JFrame;
+
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,6 +20,11 @@ public class PollTableActionTest extends TestCase {
     // Show the window
     public void testDisplay() {
         new PollTableAction().actionPerformed(null);
+        // confirm window was created
+    	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Polling Control");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
     // from here down is testing infrastructure

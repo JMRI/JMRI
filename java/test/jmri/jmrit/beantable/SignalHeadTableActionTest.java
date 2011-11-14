@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import javax.swing.JFrame;
+
 import junit.framework.*;
 
 import jmri.InstanceManager;
@@ -51,6 +53,13 @@ public class SignalHeadTableActionTest extends TestCase {
 
         new SignalHeadTableAction().actionPerformed(null);
         
+    }
+    
+    public void testX() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Signal Head Table");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
 

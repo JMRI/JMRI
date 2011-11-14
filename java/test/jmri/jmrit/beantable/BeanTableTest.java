@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import javax.swing.JFrame;
+
 import junit.framework.*;
 
 /**
@@ -17,6 +19,13 @@ public class BeanTableTest extends TestCase {
 
     public void testExecute() {
         new MemoryTableAction().actionPerformed(null);
+    }
+    
+    public void testXCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Memory Table");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
     // from here down is testing infrastructure

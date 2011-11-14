@@ -2,6 +2,8 @@
 
 package jmri.jmrit.beantable;
 
+import javax.swing.JFrame;
+
 import junit.framework.*;
 
 
@@ -19,6 +21,13 @@ public class RouteTableActionTest extends TestCase {
 
     public void testInvoke() {
         new RouteTableAction().actionPerformed(null);
+    }
+    
+    public void testX() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Route Table");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
 

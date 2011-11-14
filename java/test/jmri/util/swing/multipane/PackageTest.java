@@ -3,6 +3,7 @@
 package jmri.util.swing.multipane;
 
 import junit.framework.*;
+
 import java.io.File;
 import javax.swing.*;
 
@@ -22,6 +23,11 @@ public class PackageTest extends TestCase {
     	        new File("xml/config/apps/panelpro/Gui3Menus.xml"), 
     	        new File("xml/config/apps/panelpro/Gui3MainToolBar.xml")
         ).setVisible(true);
+        
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Test of empty Multi Pane Window");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     public void testAction() {
@@ -45,6 +51,11 @@ public class PackageTest extends TestCase {
             m.getLowerRight().add(b);            
         }
         m.setVisible(true);
+        
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Test of Multi Pane Window function");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     // from here down is testing infrastructure

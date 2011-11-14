@@ -61,6 +61,9 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
+        
+        // close
+        jf.dispose();
 
 	}
 
@@ -105,7 +108,9 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
-
+        
+        // close
+        jf.dispose();
 	}
 
 	// from here down is testing infrastructure

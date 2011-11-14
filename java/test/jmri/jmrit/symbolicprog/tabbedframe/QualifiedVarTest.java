@@ -40,6 +40,9 @@ public class QualifiedVarTest extends TestCase {
         p.readConfig(root, new RosterEntry());
         p.pack();
         p.setVisible(true);
+        
+        // close
+        p.dispose();
     }
 
     // static variables for internal classes to report their interpretations
