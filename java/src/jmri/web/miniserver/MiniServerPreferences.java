@@ -19,6 +19,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     // initial defaults if prefs not found
     private int clickDelay = 1;
     private int refreshDelay = 5;
+    private boolean useAjax = true;
     private String disallowedFrames = rb.getString("DefaultDisallowedFrames");
     private boolean rebuildIndex = false;
     private boolean showComm = false;
@@ -46,6 +47,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         		log.debug(e);
         	}
         }
+        if ((a = child.getAttribute("useAjax")) != null )  setUseAjax(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("getDisallowedFrames")) != null )  setDisallowedFrames(a.getValue());
         if ((a = child.getAttribute("isRebuildIndex")) != null )  setRebuildIndex(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("isShowComm")) != null )  setShowComm(a.getValue().equalsIgnoreCase("true"));
@@ -55,6 +57,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     public boolean compareValuesDifferent(MiniServerPreferences prefs){
         if (getClickDelay() != prefs.getClickDelay()) return true;
         if (getRefreshDelay() != prefs.getRefreshDelay()) return true;
+        if (useAjax() != prefs.useAjax()) return true;
         if (!(getDisallowedFrames().equals(prefs.getDisallowedFrames()))) return true;
         if (isRebuildIndex() != prefs.isRebuildIndex()) return true;
         if (isShowComm() != prefs.isShowComm()) return true;
@@ -65,6 +68,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     public void apply(MiniServerPreferences prefs){
         setClickDelay(prefs.getClickDelay());
         setRefreshDelay(prefs.getRefreshDelay());
+        setUseAjax(prefs.useAjax());
         setDisallowedFrames(prefs.getDisallowedFrames());
         setRebuildIndex(prefs.isRebuildIndex());
         setShowComm(prefs.isShowComm());
@@ -75,6 +79,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     	Element element = new Element("MiniServerPreferences");
         element.setAttribute("getClickDelay", "" + getClickDelay());
         element.setAttribute("getRefreshDelay", "" + getRefreshDelay());
+        element.setAttribute("useAjax", "" + useAjax());
         element.setAttribute("getDisallowedFrames", "" + getDisallowedFrames());
         element.setAttribute("isRebuildIndex", "" + isRebuildIndex());
         element.setAttribute("isShowComm", "" + isShowComm());
@@ -106,6 +111,12 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     
     public String getDisallowedFrames(){
         return disallowedFrames;
+    }
+    public boolean useAjax(){
+        return useAjax;
+    }
+    public void setUseAjax(boolean value){
+        useAjax = value;
     }
     public void setDisallowedFrames(String value){
     	disallowedFrames = value;

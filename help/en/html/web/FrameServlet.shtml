@@ -35,7 +35,9 @@ or converted to an icon (MacOS X and Linux).
 
 <p>
 The MiniServer Preferences can be used to adjust the default delay after 
-a click and adjust the periodic refresh between clicks.
+a click and adjust the periodic refresh between clicks.  You can also
+enter a list of frames which are not to be allowed, and enable ajax 
+refresh (new) or use the older meta-refresh.
 
 <p>
 The jmri/web/servlet/frameimage/JmriJFrameServlet.properties

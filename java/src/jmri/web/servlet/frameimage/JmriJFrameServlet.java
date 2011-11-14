@@ -48,18 +48,16 @@ import javax.servlet.ServletResponse;
 
 public class JmriJFrameServlet implements Servlet {
 
-    String clickRetryTime = ((Integer)MiniServerManager.miniServerPreferencesInstance().getClickDelay()).toString();
-    String noclickRetryTime = ((Integer)MiniServerManager.miniServerPreferencesInstance().getRefreshDelay()).toString();
-
+    static String clickRetryTime = ((Integer)MiniServerManager.miniServerPreferencesInstance().getClickDelay()).toString();
+    static String noclickRetryTime = ((Integer)MiniServerManager.miniServerPreferencesInstance().getRefreshDelay()).toString();
+	static ArrayList<String> disallowedFrames = new ArrayList<String>(
+			Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
+	static boolean useAjax = MiniServerManager.miniServerPreferencesInstance().useAjax();
     protected int maxRequestLines = 50;
     protected String serverName = "JMRI-JFrameServer";
     
     static java.util.ResourceBundle rb 
             = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
-
-	static ArrayList<String> disallowedFrames = new ArrayList<String>(
-			Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
-	
 
     public void destroy() {}
     
@@ -182,8 +180,8 @@ public class JmriJFrameServlet implements Servlet {
     //send html list of available frames
     void listReply(PrintWriter out, ServletResponse res) {
 
-        String h = rb.getString("StandardHeader");
-        String s = rb.getString("StandardDocType");
+        String h = rb.getString("FrameHeader");
+        String s = rb.getString("FrameDocType");
         s += rb.getString("ListFront");
     	// list frames, (open JMRI windows)
     	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
@@ -204,7 +202,7 @@ public class JmriJFrameServlet implements Servlet {
 
     	s += "</TABLE>";
         
-        s += rb.getString("ListBack");
+        s += rb.getString("ListFooter");
 
         h += s.length() + "\r\n";
         Date now = new Date();
@@ -223,10 +221,16 @@ public class JmriJFrameServlet implements Servlet {
         // 2 is retry in META tag, click or noclick retry
         // 3 is retry in next URL, future retry
     	Object[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime, noclickRetryTime};
-        String h = rb.getString("StandardHeader");
-        String s = java.text.MessageFormat.format(rb.getString("StandardDocType"), args);
-        s += java.text.MessageFormat.format(rb.getString("StandardFront"), args);
-        s += java.text.MessageFormat.format(rb.getString("StandardBack"), args);
+        String h = rb.getString("FrameHeader");
+        String s = rb.getString("FrameDocType");
+        s += java.text.MessageFormat.format(rb.getString("FramePart1"), args);
+        if (useAjax) {
+        	s += java.text.MessageFormat.format(rb.getString("AjaxRefresh"), args);
+        } else {
+            s += java.text.MessageFormat.format(rb.getString("NonAjaxRefresh"), args);
+        }
+        s += java.text.MessageFormat.format(rb.getString("FramePart2"), args);
+        s += rb.getString("FrameFooter");
 
         h += s.length() + "\r\n";
         Date now = new Date();

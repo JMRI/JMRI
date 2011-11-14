@@ -26,20 +26,13 @@ JMRI: Mini Web Server
 
 The JMRI mini web server is meant to be a quick and easy
 way for model railroaders, not Masters of the Web, 
-to get a web connection to JMRI up and running.  If you really
-want to have a powerful web server, you're better off
-downloading a copy of 
-<a href="http://httpd.apache.org/">Apache</a>
-and 
-<a href="http://tomcat.apache.org/">Tomcat</a>
-and learning to configure those, rather than trying to get a
-lot of performance out of the JMRI mini web server.  But if you
-must reconfigure it, this page provides some additional information.
+to get a web connection to JMRI up and running.
 
 <h2>Configuration</h2>
 
 Several properties files configure the JMRI mini web server and its
-default features.
+default features.  There is also a MiniServer Preferences area where
+many of these values can be modified.
 
 <dl>
 <dt>jmri/web/miniserver/Services.properties

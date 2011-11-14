@@ -36,6 +36,7 @@ public class MiniServerPrefsPanel extends JPanel{
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;
     JTextArea disallowedFrames;
+    JCheckBox useAjaxCB;
     JCheckBox rebuildIndexCB;
     JCheckBox showCommCB;
     JTextField port;
@@ -78,6 +79,7 @@ public class MiniServerPrefsPanel extends JPanel{
         clickDelaySpinner.setValue(localPrefs.getClickDelay());
         refreshDelaySpinner.setValue(localPrefs.getRefreshDelay());
         disallowedFrames.setText(localPrefs.getDisallowedFrames());
+        useAjaxCB.setSelected(localPrefs.useAjax());
         rebuildIndexCB.setSelected(localPrefs.isRebuildIndex());
         showCommCB.setSelected(localPrefs.isShowComm());
         port.setText(localPrefs.getPort());
@@ -100,6 +102,7 @@ public class MiniServerPrefsPanel extends JPanel{
         localPrefs.setClickDelay((Integer)clickDelaySpinner.getValue());
         localPrefs.setRefreshDelay((Integer)refreshDelaySpinner.getValue());
         localPrefs.setDisallowedFrames(disallowedFrames.getText());
+        localPrefs.setUseAjax(useAjaxCB.isSelected());
         localPrefs.setRebuildIndex(rebuildIndexCB.isSelected());
         localPrefs.setShowComm(showCommCB.isSelected());
         int portNum;
@@ -169,6 +172,10 @@ public class MiniServerPrefsPanel extends JPanel{
         ((JSpinner.DefaultEditor)refreshDelaySpinner.getEditor()).getTextField().setEditable(false);
         panel.add(refreshDelaySpinner);
         panel.add(new JLabel(rb.getString("LabelRefreshDelay")));
+
+        useAjaxCB = new JCheckBox(rb.getString("LabelUseAjax"));
+        useAjaxCB.setToolTipText(rb.getString("ToolTipUseAjax"));
+        panel.add(useAjaxCB);
 
         disallowedFrames = new JTextArea(4,20);
         disallowedFrames.setText(rb.getString("DefaultDisallowedFrames"));

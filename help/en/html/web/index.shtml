@@ -131,7 +131,7 @@ display whatever you want; by default, JMRI won't modify if it exists.
 You can include links to web pages outside JMRI, and 
 links to various JMRI-served pages, see below.
 On the other hand, we periodically improve the 
-page, you might want to turn on "Rebuild index.html?" in Preferences 
+page, so you might want to turn on "Rebuild index.html?" in Preferences 
 to let JMRI replace it with the newest version.
 
 <a id="URLs">
@@ -173,7 +173,7 @@ See <b>mini web server</b> starting page for more info or jump to the <b>inContr
 To display any <i>open</i> JMRI window as a clickable
 image that periodically refreshes, use a URL like:
 <code><pre>
-<a href="http://localhost:12080/panel/Power%20Control.html">http://localhost:12080/panel/Power%20Control.html</a>
+<a href="http://localhost:12080/frame/Power%20Control.html">http://localhost:12080/frame/Power%20Control.html</a>
 </pre></code>
 where the last part of the URL is the name
 of the desired window.  Note that you have to 
@@ -181,18 +181,24 @@ replace spaces by "%20" to make the name a
 valid URL, and that the name ends in ".html".
 <p>
 By default, that image refreshes every 5 seconds, and also refreshes one
-second after you click on it.  You can change the refresh interval in MiniServer Preferences
-or by adding a modifier to the end of the URL:
+second after you click on it.  You can change the refresh intervals in MiniServer Preferences
+or by adding a modifier to the end of the URL.  Also, you can enable ajax refresh (new) or use a meta refresh (older).
 <code><pre>
-<a href="http://localhost:12080/panel/Power%20Control.html?retry=12.3">http://localhost:12080/panel/Power%20Control.html?retry=12.3</a>
+<a href="http://localhost:12080/frame/Power%20Control.html?retry=12.3">http://localhost:12080/frame/Power%20Control.html?retry=12.3</a>
 </pre></code>
+<p>
+For current list of available windows, use a URL like this:
+<code><pre>
+    <A HREF="http://localhost:12080/frame">http://localhost:12080/frame</a>
+</pre></code>
+Use the MiniServer Preferences to specify a list of windows which you do NOT want to allow web access to.
 
 <h3>To Display a JMRI Window as an Image</h3>
 
 To display the contents of any <i>open</i> JMRI window as an image, use
 a URL like:
 <code><pre>
-<a href="http://localhost:12080/panel/Power%20Control.png">http://localhost:12080/panel/Power%20Control.png</a>
+<a href="http://localhost:12080/frame/Power%20Control.png">http://localhost:12080/frame/Power%20Control.png</a>
 </pre></code>
 where the "file name" part of the URL is the name
 of the desired window.  Note that you have to 
