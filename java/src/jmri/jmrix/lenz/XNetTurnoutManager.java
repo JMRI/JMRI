@@ -48,28 +48,33 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 		// parse message type
         	int addr = l.getTurnoutMsgAddr(i);
         	if (addr>=0) {
-        	   if (log.isDebugEnabled()) 
+                   // check to see if the address has been operated before
+                   // continuing.
+                   int a2=l.getElement(i+1);
+                   if((a2 & 0x03)!=0) {
+        	     if (log.isDebugEnabled()) 
 			log.debug("message has address: "+addr);
-        	   // reach here for switch command; make sure we know 
-                   // about this one
-        	   String s = prefix+typeLetter()+addr;
-                   if (null == getBySystemName(s)) {
-                      // need to create a new one, and send the message on 
-                      // to the newly created object.
-                      ((XNetTurnout)provideTurnout(s)).initmessage(l);
-                   } else {
-                      // The turnout exists, forward this message to the 
-                      // turnout
-                      ((XNetTurnout)getBySystemName(s)).message(l);
+        	     // reach here for switch command; make sure we know 
+                     // about this one
+        	     String s = prefix+typeLetter()+addr;
+                     if (null == getBySystemName(s)) {
+                        // need to create a new one, and send the message on 
+                        // to the newly created object.
+                        ((XNetTurnout)provideTurnout(s)).initmessage(l);
+                     } else {
+                        // The turnout exists, forward this message to the 
+                        // turnout
+                        ((XNetTurnout)getBySystemName(s)).message(l);
+                     }
                    }
                    if (addr%2!=0) {
                    // If the address we got was odd, we need to check to 
                    // see if the even address should be added as well.
-                   int a2=l.getElement(i+1);
+                   a2=l.getElement(i+1);
                    if((a2 & 0x0c)!=0) {
                       // reach here for switch command; make sure we know 
                       // about this one
-                      s = prefix+typeLetter()+(addr+1);
+                      String s = prefix+typeLetter()+(addr+1);
                       if (null == getBySystemName(s)) {
                          // need to create a new one, and send the message on 
                          // to the newly created object.
