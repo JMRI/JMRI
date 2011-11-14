@@ -2,6 +2,9 @@
 
 package jmri.jmrix.rps.rpsmon;
 
+import javax.swing.JFrame;
+
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,6 +20,13 @@ public class RpsMonTest extends TestCase {
     // show the window
     public void testDisplay() {
         new RpsMonAction().actionPerformed(null);
+    }
+    
+    public void testFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Monitor");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
 

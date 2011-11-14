@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.swing;
 
+import jmri.util.JmriJFrame;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -23,11 +24,12 @@ public class AffineEntryPanelTest extends TestCase {
     }
     
     public void testListener() {
-        JFrame f = new JFrame();
+        JmriJFrame f = new JmriJFrame();
         AffineEntryPanel p = new AffineEntryPanel();
         f.add(p);
         f.pack();
-        f.setVisible(true);
+        f.setTitle("Test RPS Listener");
+        f.setVisible(true);      
         java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("value"))
@@ -42,6 +44,13 @@ public class AffineEntryPanelTest extends TestCase {
         AffineTransform t = new AffineTransform(2., 3., 4., 5., 6., 7.);
         p.setTransform(t);
         Assert.assertTrue(p.getTransform().equals(t));
+    }
+    
+    public void testFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Test RPS Listener");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();    	
     }
     
     // from here down is testing infrastructure

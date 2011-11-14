@@ -41,6 +41,8 @@ public class SwingTestCaseTest extends SwingTestCase {
         
         // test for selected
         Assert.assertTrue(testBox.isSelected());
+        
+        f.dispose();
     }
     
 	// from here down is testing infrastructure

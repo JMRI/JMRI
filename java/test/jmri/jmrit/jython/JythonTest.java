@@ -2,6 +2,8 @@
 
 package jmri.jmrit.jython;
 
+import javax.swing.JFrame;
+
 import junit.framework.*;
 
 /**
@@ -41,6 +43,17 @@ public class JythonTest extends TestCase {
     
     public void testInput() {
         new InputWindowAction().actionPerformed(null);
+    }
+    
+    public void testXXFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Script Entry");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
+    	f = jmri.util.JmriJFrame.getFrame("Script Output");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     // from here down is testing infrastructure

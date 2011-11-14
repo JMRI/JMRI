@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.trackingpanel;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -85,6 +86,13 @@ public class RpsTrackingPanelTest extends TestCase {
             p.notify(m);
         }
         
+    }
+    
+    public void testXFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Test Tracking Panel");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     // from here down is testing infrastructure

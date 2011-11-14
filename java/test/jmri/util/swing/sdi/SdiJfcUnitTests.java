@@ -43,11 +43,15 @@ public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(f2, this);
         Assert.assertEquals("one pane disposed", 1, SamplePane.disposed.size() );
         Assert.assertEquals("pane 2 disposed", Integer.valueOf(2), SamplePane.disposed.get(0) );
+        f2 = jmri.util.JmriJFrame.getFrame("SamplePane 2");
+        Assert.assertTrue("frame 2 has been disposed", f2 ==null );
 
         // Close 1 directly
         TestHelper.disposeWindow(f1, this);
         Assert.assertEquals("one pane disposed", 2, SamplePane.disposed.size() );
         Assert.assertEquals("pane 1 disposed", Integer.valueOf(1), SamplePane.disposed.get(1) );
+        f1 = jmri.util.JmriJFrame.getFrame("SamplePane 1");
+        Assert.assertTrue("frame 1 has been disposed", f1 ==null );
 
     }
             

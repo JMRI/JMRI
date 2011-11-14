@@ -8,6 +8,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.rps.*;
+import jmri.util.JmriJFrame;
 
 
 /**
@@ -23,7 +24,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
             new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
 
 	public void testShow() {
-        JFrame jf = new JFrame("RpsPositionIcon Test");
+        JmriJFrame jf = new JmriJFrame("RpsPositionIcon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         rpsIcon = new RpsPositionIcon(panel);
@@ -94,6 +95,13 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     }
     public void locoButtonPushed(String newID) {
         id = newID;
+    }
+    
+    public void testXFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("RpsPositionIcon Test");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
 	// from here down is testing infrastructure

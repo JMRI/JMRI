@@ -4,6 +4,8 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.jdom.DocType;
@@ -41,6 +43,11 @@ public class PaneProgFrameTest extends TestCase {
         p.readConfig(root, new RosterEntry());
         Assert.assertEquals("paneList length ", 4, p.paneList.size());
         // three panes in root, plus roster entry pane
+        
+    	JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
 
@@ -63,6 +70,11 @@ public class PaneProgFrameTest extends TestCase {
         p.readConfig(root, new RosterEntry());
         p.pack();
         p.setVisible(true);
+        
+    	JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
 
     // static variables for internal classes to report their interpretations

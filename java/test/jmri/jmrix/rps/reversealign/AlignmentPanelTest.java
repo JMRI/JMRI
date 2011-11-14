@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.reversealign;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,8 +16,8 @@ import javax.swing.*;
  */
 public class AlignmentPanelTest extends TestCase {
 
-	public void testShow(){
-        JFrame f = new jmri.util.JmriJFrame("RPS Alignment");
+	public void testShow() {
+		jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("RPS Alignment");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
                         
         AlignmentPanel panel = new AlignmentPanel();
@@ -25,6 +26,13 @@ public class AlignmentPanelTest extends TestCase {
         f.pack();
         f.setVisible(true);
 	}
+	
+    public void testXFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Alignment");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
+    }
         
 
 	// from here down is testing infrastructure

@@ -2,12 +2,14 @@
 
 package jmri.jmrix.rps.trackingpanel;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.rps.*;
 
+import javax.swing.JFrame;
 import javax.vecmath.Point3d;
 
 /**
@@ -45,6 +47,13 @@ public class RpsTrackingFrameTest extends TestCase {
         m = new Measurement(loco, 5., 0., 0.0, 0.133, 5, "source");
         p.notify(m);
 
+    }
+    
+    public void testXFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Test RPS Tracking");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     // from here down is testing infrastructure

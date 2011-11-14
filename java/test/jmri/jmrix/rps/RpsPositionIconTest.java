@@ -2,6 +2,9 @@
 
 package jmri.jmrix.rps;
 
+import javax.swing.JFrame;
+
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,6 +28,13 @@ public class RpsPositionIconTest extends TestCase {
         Distributor.instance().submitMeasurement(m);
         
   	}
+	
+    public void testXPanelCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Location Test");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();    	
+    }
         
 	// from here down is testing infrastructure
 

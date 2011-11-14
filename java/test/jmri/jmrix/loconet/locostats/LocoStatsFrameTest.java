@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.locostats;
 
+import javax.swing.JFrame;
+
 import junit.framework.*;
 
 import jmri.jmrix.loconet.*;
@@ -32,6 +34,10 @@ public class LocoStatsFrameTest extends TestCase {
 
     public void testDefaultFormat() throws Exception {
         getFrame("Default LocoStats Window",0);
+    	JFrame f = jmri.util.JmriJFrame.getFrame("Default LocoStats Window");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     public void testLocoBufferFormat()throws Exception {
@@ -41,6 +47,10 @@ public class LocoStatsFrameTest extends TestCase {
             new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x50, 0x50, 0x01, 0x0,
                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         ));
+        JFrame f = jmri.util.JmriJFrame.getFrame("LocoBuffer Stats Window");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     public void testPR2Format() throws Exception {
@@ -52,6 +62,10 @@ public class LocoStatsFrameTest extends TestCase {
                         0x00, 5, 6, 0, 0, 
                       0}
         ));
+    	JFrame f = jmri.util.JmriJFrame.getFrame("PR2 Stats Window");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
     }
     
     public void testMS100Format() throws Exception {
@@ -63,7 +77,11 @@ public class LocoStatsFrameTest extends TestCase {
                         0x00, 5, 6, 0, 0, 
                       0}
         ));
-    }
+        JFrame f = jmri.util.JmriJFrame.getFrame("MS100 Stats Window");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();
+    }   
     
     // from here down is testing infrastructure
 

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can.cbus.swing.configtool;
 
+import javax.swing.JFrame;
+
 import jmri.jmrix.can.TestTrafficController;
 
 import junit.framework.Assert;
@@ -27,6 +29,13 @@ public class ConfigToolActionTest extends TestCase {
         TestTrafficController t = new TestTrafficController();
         new ConfigToolAction().actionPerformed(null);
         Assert.assertNotNull("exists", t );
+    }
+    
+    public void testFrameCreation() {
+    	JFrame f = jmri.util.JmriJFrame.getFrame("CBUS Event Capture Tool");
+    	Assert.assertTrue("found frame", f !=null );
+    	if (f != null)
+    		f.dispose();    	
     }
 
     // Main entry point
