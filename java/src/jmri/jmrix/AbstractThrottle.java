@@ -723,12 +723,17 @@ abstract public class AbstractThrottle implements DccThrottle {
                 a.getNumber(), a.isLongAddress(), 
                 getF13(), getF14(), getF15(), getF16(),
                 getF17(), getF18(), getF19(), getF20());
-        // send it 3 times
+        
+        //if the result returns as null, we should quit.
+        if (result==null)
+            return;
         CommandStation c;
         if((adapterMemo!=null) && (adapterMemo.get(jmri.CommandStation.class)!=null))
             c = adapterMemo.get(jmri.CommandStation.class);
         else
             c = InstanceManager.commandStationInstance();
+            
+        // send it 3 times
         if (c != null) 
             c.sendPacket(result,3);
         else
@@ -749,12 +754,16 @@ abstract public class AbstractThrottle implements DccThrottle {
                 a.getNumber(), a.isLongAddress(), 
                 getF21(), getF22(), getF23(), getF24(),
                 getF25(), getF26(), getF27(), getF28());
-        // send it 3 times
+        //if the result returns as null, we should quit.
+        if (result==null)
+            return;
         CommandStation c;
         if((adapterMemo!=null) && (adapterMemo.get(jmri.CommandStation.class)!=null))
             c = adapterMemo.get(jmri.CommandStation.class);
         else
             c = InstanceManager.commandStationInstance();
+            
+        // send it 3 times
         if (c != null) 
             c.sendPacket(result,3);
         else

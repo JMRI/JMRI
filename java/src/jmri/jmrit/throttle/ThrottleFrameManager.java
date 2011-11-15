@@ -93,12 +93,13 @@ public class ThrottleFrameManager
 	{
 		if (frame != null)
 		{
-			throttleWindows.remove(throttleWindows.indexOf(frame));
 			destroyThrottleWindow(frame);
+            throttleWindows.remove(throttleWindows.indexOf(frame));
 			if (throttleWindows.size() > 0)
 			{
 				requestFocusForNextFrame();
 			}
+            
 		}
 	}
 
