@@ -443,6 +443,26 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
+	protected void handleModified() {
+		if (getModifiedFlag()) {
+			ResourceBundle rbu = ResourceBundle.getBundle("jmri.util.UtilBundle");
+			int result = javax.swing.JOptionPane.showOptionDialog(this,
+					rb.getString("PromptQuitWindowNotWritten"),
+					rb.getString("PromptSaveQuit"),
+					javax.swing.JOptionPane.YES_NO_OPTION,
+					javax.swing.JOptionPane.WARNING_MESSAGE,
+					null, // icon
+					new String[]{rbu.getString("WarnYesSave"),rbu.getString("WarnNoClose")},
+					rbu.getString("WarnYesSave")
+					);
+			if (result == javax.swing.JOptionPane.NO_OPTION) {
+				return;
+			}
+			// user wants to save
+			storeValues();
+		}
+	}
+	
 	protected void storeValues(){
 		/* all JMRI window position and size are now saved
 		trainManager.setTrainsFrame(this);					//save frame size and location
@@ -472,6 +492,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				}
 
 				public boolean doPrompt() {
+					storeValues();
+					return true;
+				}
+				
+				public boolean doClose() {
 					storeValues();
 					return true;
 				}

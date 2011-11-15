@@ -74,9 +74,11 @@ public class SwingShutDownTask extends AbstractShutDownTask {
             } else if (selectedValue == 2) {
                 // take action and try again
                 return doPrompt();
+            } else if (selectedValue == -1) {
+                // dialog window closed
+                return doClose();
             } else {
                 // unexpected value, log but continue
-                // (Can see -1 if dialog dismissed)
                 log.error("unexpected selection: "+selectedValue);
                 return true;
             }
@@ -105,6 +107,15 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      */
     protected boolean doPrompt() {
         return true;
+    }
+    
+    /**
+     * Provide a subclass-specific method to handle the case
+     * where the user has chosen the close window option.
+     * @return true if ready to shutdown, false to end shutdown
+     */
+    protected boolean doClose() {
+    	return true;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SwingShutDownTask.class.getName());
