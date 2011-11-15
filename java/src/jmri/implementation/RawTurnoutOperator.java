@@ -16,19 +16,35 @@ public class RawTurnoutOperator extends TurnoutOperator {
 	long interval;
 	int maxTries;
 	int tries = 0;
-        int address = 0;
+    int address = 0;
+    CommandStation c;
 	
 	public RawTurnoutOperator(AbstractTurnout t, long i, int mt) {
 		super(t);
-                address=Integer.parseInt(t.getSystemName().substring(2));
+        String sysName = t.getSystemName();
+        int startAddress = sysName.lastIndexOf("T");
+        address=Integer.parseInt(sysName.substring(startAddress+1, sysName.length()));
+        String prefix = t.getSystemName().substring(0, startAddress);
+        java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        for(int x = 0; x < connList.size(); x++){
+            jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+            if(station.getSystemPrefix().equals(prefix)){
+                c = station;
+                break;
+            }
+        }
+        if(c==null){
+            c = InstanceManager.commandStationInstance();
+            log.error("No match against the command station for " + sysName + ", so will use the default");
+        }
 		interval = i;
 		maxTries = mt;
 	}
 
-        private void sendCommand(){
-            byte pkt[]=jmri.NmraPacket.accDecoderPkt(address,myTurnout.getCommandedState()==Turnout.CLOSED);
-            jmri.InstanceManager.commandStationInstance().sendPacket(pkt,1);
-        }
+    private void sendCommand(){
+        byte pkt[]=jmri.NmraPacket.accDecoderPkt(address,myTurnout.getCommandedState()==Turnout.CLOSED);
+        c.sendPacket(pkt,1);
+    }
 	
 	/**
 	 * Do the autmation for a turnout with no feedback. This means try
