@@ -100,19 +100,19 @@ public class LocoIO {
              );
     }
 
-    public static void programLocoIOAddress(int address, int subAddress) {
+    public static void programLocoIOAddress(int address, int subAddress, LnTrafficController ln) {
         LocoNetMessage msg;
         msg = LocoIO.writeCV(0x0100, 0, 1, address&0xFF);
-        LnTrafficController.instance().sendLocoNetMessage(msg);
+        ln.sendLocoNetMessage(msg);
         if (subAddress != 0) {
             msg = LocoIO.writeCV(0x0100, 0, 2, subAddress);
-            LnTrafficController.instance().sendLocoNetMessage(msg);
+            ln.sendLocoNetMessage(msg);
         }
     }
 
-    public static void probeLocoIOs() {
+    public static void probeLocoIOs(LnTrafficController ln) {
         LocoNetMessage msg;
         msg = LocoIO.readCV(0x0100, 0, 2);
-        LnTrafficController.instance().sendLocoNetMessage(msg);
+        ln.sendLocoNetMessage(msg);
     }
 }

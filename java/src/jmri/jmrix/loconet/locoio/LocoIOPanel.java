@@ -15,6 +15,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import java.beans.*;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LnTrafficController;
 
 /**
  * Panel displaying and programming a LocoIO configuration.
@@ -33,7 +34,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        ln = memo.getLnTrafficController();
         // creating the table (done here to ensure order OK)
         data        = new LocoIOData(Integer.valueOf(addrField.getText(),16).intValue(),
                                      Integer.valueOf(subAddrField.getText(),16).intValue(),
@@ -89,7 +90,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
             new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     data.setLIOVersion("<Not found>");
-                    LocoIO.probeLocoIOs();
+                    LocoIO.probeLocoIOs(ln);
                 }
             });
         p1.add(probeButton);
@@ -184,6 +185,8 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     }
 
+    LnTrafficController ln;
+    
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.locoio.LocoIOFrame"; }
     public String getTitle() { 
         return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoIOProgrammer")); 
@@ -220,7 +223,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 			", was " + subAddress);
 	    address    = 0x0100 | (address&0x07F);  // range is [1..79, 81..127]
 	    subAddress = subAddress & 0x07F;	// range is [1..126]
-        LocoIO.programLocoIOAddress(address, subAddress);
+        LocoIO.programLocoIOAddress(address, subAddress, ln);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
