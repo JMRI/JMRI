@@ -217,7 +217,7 @@ public class JmriJFrameServlet implements Servlet {
     
     void htmlReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res, boolean click ) {
         // 0 is host
-        // 1 is name
+        // 1 is frame name
         // 2 is retry in META tag, click or noclick retry
         // 3 is retry in next URL, future retry
     	Object[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime, noclickRetryTime};
@@ -225,11 +225,10 @@ public class JmriJFrameServlet implements Servlet {
         String s = rb.getString("FrameDocType");
         s += java.text.MessageFormat.format(rb.getString("FramePart1"), args);
         if (useAjax) {
-        	s += java.text.MessageFormat.format(rb.getString("AjaxRefresh"), args);
+        	s += java.text.MessageFormat.format(rb.getString("FramePart2Ajax"), args);
         } else {
-            s += java.text.MessageFormat.format(rb.getString("NonAjaxRefresh"), args);
+            s += java.text.MessageFormat.format(rb.getString("FramePart2NonAjax"), args);
         }
-        s += java.text.MessageFormat.format(rb.getString("FramePart2"), args);
         s += rb.getString("FrameFooter");
 
         h += s.length() + "\r\n";

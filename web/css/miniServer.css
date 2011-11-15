@@ -158,6 +158,9 @@ div.frame-footer a:hover {
 	text-decoration: underline;
 }
 
+div#frame_image_wrapper img:hover {
+	cursor: pointer;
+}
 /*body*/
 #mainContent {
 	background: #fff;
