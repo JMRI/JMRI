@@ -24,6 +24,7 @@ public class LocoIOData
     private int sv0;
     private int unitAddress;
     private int unitSubAddress;
+    private LnTrafficController tc;
 
     /*
      * This data model is shared between several views; each
@@ -65,7 +66,7 @@ public class LocoIOData
     private LocoIOModeList validmodes;
 
     /** Creates a new instance of LocoIOData */
-    public LocoIOData(int unitAddr, int unitSubAddr) {
+    public LocoIOData(int unitAddr, int unitSubAddr, LnTrafficController tc) {
         timeoutcounter = 0;
         unitAddress    = unitAddr;
         unitSubAddress = unitSubAddr;
@@ -85,8 +86,8 @@ public class LocoIOData
         // addPropertyChangeListener(this);
 
         // for now, we're always listening to LocoNet
-        if (LnTrafficController.instance() != null) {
-            LnTrafficController.instance().addLocoNetListener(~0, this);
+        if (tc!=null) {
+            tc.addLocoNetListener(~0, this);
         } else {
             log.error("No LocoNet interface available");
         }
@@ -697,7 +698,7 @@ public class LocoIOData
         // System.out.println("sendReadCommand(to " + Integer.toHexString(locoIOAddress) + "/" +
         //        Integer.toHexString(locoIOSubAddress) + " SV" + cv);
 
-        LnTrafficController.instance().sendLocoNetMessage(
+        tc.sendLocoNetMessage(
                 LocoIO.readCV(locoIOAddress, locoIOSubAddress, cv));
         startTimer();        // and set timeout on reply
     }
@@ -715,7 +716,7 @@ public class LocoIOData
         reading = false;
         //writing = true;
 
-        LnTrafficController.instance().sendLocoNetMessage(
+        tc.sendLocoNetMessage(
                 LocoIO.writeCV(locoIOAddress, locoIOSubAddress, cv, data));
         startTimer();        // and set timeout on reply
     }
@@ -724,7 +725,7 @@ public class LocoIOData
         if (log.isDebugEnabled()) log.debug("dispose");
         // disconnect from future events
         stopTimer();
-        LnTrafficController.instance().removeLocoNetListener(~0, this);
+        tc.removeLocoNetListener(~0, this);
 
         // null references, so that they can be gc'd even if this isn't.
         addr = null;

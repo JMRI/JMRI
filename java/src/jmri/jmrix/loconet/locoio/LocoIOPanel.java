@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import java.beans.*;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Panel displaying and programming a LocoIO configuration.
@@ -26,13 +27,17 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 
         public LocoIOPanel() {
-
-        super();
+            super();
+        
+        }
+        
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // creating the table (done here to ensure order OK)
         data        = new LocoIOData(Integer.valueOf(addrField.getText(),16).intValue(),
-                                     Integer.valueOf(subAddrField.getText(),16).intValue());
+                                     Integer.valueOf(subAddrField.getText(),16).intValue(),
+                                     memo.getLnTrafficController());
         model       = new LocoIOTableModel(data);
         table       = new JTable(model);
         scroll      = new JScrollPane(table);
