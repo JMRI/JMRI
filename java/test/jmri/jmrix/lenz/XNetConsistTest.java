@@ -18,7 +18,7 @@ public class XNetConsistTest extends TestCase {
        // infrastructure objects
        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
-        XNetConsist c = new XNetConsist(5,tc);
+        XNetConsist c = new XNetConsist(5,tc, new XNetSystemConnectionMemo(tc));
         Assert.assertNotNull(c);
     }
 

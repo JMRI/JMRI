@@ -18,14 +18,14 @@ public class XNetThrottleTest extends TestCase {
        // infrastructure objects
        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
-        XNetThrottle t = new XNetThrottle(tc);
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), tc);
         Assert.assertNotNull(t);
     }
 
     // Test the constructor with an address specified.
     public void testCtorWithArg() throws Exception {
 	XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetThrottle t = new XNetThrottle(new jmri.DccLocoAddress(3,false),tc);
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3,false),tc);
         Assert.assertNotNull(t);
     }
   
@@ -33,7 +33,7 @@ public class XNetThrottleTest extends TestCase {
     public void testInitSequence() throws Exception {
 	XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new jmri.DccLocoAddress(3,false),tc);
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3,false),tc);
         Assert.assertNotNull(t);
         while(n==tc.outbound.size()) {} // busy loop.  Wait for
                                         // outbound size to change.

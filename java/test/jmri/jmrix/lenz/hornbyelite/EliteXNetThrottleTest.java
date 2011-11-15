@@ -21,7 +21,7 @@ public class EliteXNetThrottleTest extends TestCase {
        // infrastructure objects
        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
 
-        EliteXNetThrottle t = new EliteXNetThrottle(tc);
+        EliteXNetThrottle t = new EliteXNetThrottle(new jmri.jmrix.lenz.XNetSystemConnectionMemo(tc), tc);
         Assert.assertNotNull(t);
     }
 
