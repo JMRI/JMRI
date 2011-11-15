@@ -51,7 +51,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 
         InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager(getLnTrafficController(), getSystemPrefix()));
 
-        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(getSlotManager(), this));
+        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(this));
 
         jmri.InstanceManager.setProgrammerManager(
             new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));

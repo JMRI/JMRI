@@ -83,7 +83,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     SRCPCommandStation commandStation = null;
     public void configureCommandStation() {
         commandStation = new jmri.jmrix.srcp.SRCPCommandStation(this);
-        jmri.InstanceManager.setCommandStation(commandStation);
+        jmri.InstanceManager.setCommandStation(getCommandStation());
 
         // start the connection
         et.sendSRCPMessage(new SRCPMessage("SET PROTOCOL SRCP 0.8.3\n"), null);
@@ -160,9 +160,55 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void setTurnoutManager(TurnoutManager t){
          turnoutManager = t;
     }
+    
+    public CommandStation getCommandStation(){
+        return commandStation;
+    }
 
     private TurnoutManager turnoutManager=null;
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T get(Class<?> T) {
+        if (getDisabled())
+            return null;
+        if (T.equals(jmri.ProgrammerManager.class))
+            return (T)getProgrammerManager();
+        if (T.equals(jmri.PowerManager.class))
+            return (T)getPowerManager();
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
+        if (T.equals(jmri.SensorManager.class))
+            return (T)getSensorManager();
+        if (T.equals(jmri.TurnoutManager.class))
+            return (T)getTurnoutManager();
+        if (T.equals(jmri.CommandStation.class))
+            return (T)getCommandStation();
+        return null; // nothing, by default
+    }
+    
+    /** 
+     * Tells which managers this provides by class
+     */
+    @Override
+    public boolean provides(Class<?> type) {
+        if (getDisabled())
+            return false;
+        if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
+        if (type.equals(jmri.PowerManager.class))
+            return true;
+        if (type.equals(jmri.SensorManager.class))
+            return true;
+        if (type.equals(jmri.TurnoutManager.class))
+            return true;
+        if (type.equals(jmri.CommandStation.class))
+            return true;
+        return false; // nothing, by default
+    }
+    
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.srcp.SrcpActionListBundle");
     }

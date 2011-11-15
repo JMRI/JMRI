@@ -30,25 +30,31 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
         protected XNetTrafficController tc = null; // hold the traffic controller associated with this consist.
 	// Initialize a consist for the specific address
         // the Default consist type is an advanced consist 
-	public XNetConsist(int address, XNetTrafficController controller) {
+	public XNetConsist(int address, XNetTrafficController controller, XNetSystemConnectionMemo systemMemo) {
 		super(address);
-                tc=controller;
+        tc=controller;
+        this.systemMemo = systemMemo;
 	 	// At construction, register for messages
-        	tc.addXNetListener(XNetInterface.COMMINFO|
+        tc.addXNetListener(XNetInterface.COMMINFO|
 				   XNetInterface.CONSIST, 
 				   this); 
 	}
+    
+    
 
 	// Initialize a consist for the specific address
         // the Default consist type is an advanced consist 
-	public XNetConsist(DccLocoAddress address,XNetTrafficController controller) {
+	public XNetConsist(DccLocoAddress address,XNetTrafficController controller, XNetSystemConnectionMemo systemMemo) {
 		super(address);
-                tc=controller;
+        tc=controller;
+        this.systemMemo = systemMemo;
 	 	// At construction, register for messages
         	tc.addXNetListener(XNetInterface.COMMINFO|
 				   XNetInterface.CONSIST, 
 				   this); 
 	}
+    
+    XNetSystemConnectionMemo systemMemo;
 
 	// Clean Up local storage, and remove the XNetListener
 	public void dispose() {
@@ -346,9 +352,9 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
            // and check that the direction of the trailing locomotive
            // is correct relative to the lead locomotive.
            DccLocoAddress address = ConsistList.get(0);
-           XNetThrottle lead= new XNetThrottle(address,tc);
+           XNetThrottle lead= new XNetThrottle(systemMemo, address,tc);
 		
-	   XNetThrottle trail = new XNetThrottle(LocoAddress,tc);
+	   XNetThrottle trail = new XNetThrottle(systemMemo, LocoAddress,tc);
 
            if(directionNormal) {
               if(log.isDebugEnabled()) log.debug("DOUBLE HEADER: Set direction of trailing locomotive same as lead locomotive");

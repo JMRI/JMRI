@@ -4,6 +4,7 @@ import jmri.LocoAddress;
 
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * An implementation of DccThrottle with code specific to a
@@ -21,18 +22,18 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
     /**
      * Constructor
      */
-    public EliteXNetThrottle(XNetTrafficController tc)
+    public EliteXNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController tc)
     {
-        super(tc);
+        super(memo, tc);
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor"); }
     }
     
     /**
      * Constructor
      */
-    public EliteXNetThrottle(LocoAddress address,XNetTrafficController tc)
+    public EliteXNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address,XNetTrafficController tc)
     {
-        super(address,tc);
+        super(memo, address,tc);
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor called for address " + address ); }
     }
     

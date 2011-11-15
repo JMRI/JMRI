@@ -21,9 +21,9 @@ public class SprogThrottle extends AbstractThrottle
     /**
      * Constructor.
      */
-    public SprogThrottle(LocoAddress address)
+    public SprogThrottle(SprogSystemConnectionMemo memo, LocoAddress address)
     {
-        super();
+        super(memo);
 
         // cache settings.
         this.speedSetting = 0;

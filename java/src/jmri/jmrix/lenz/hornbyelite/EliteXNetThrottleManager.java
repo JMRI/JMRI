@@ -30,7 +30,7 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
         if(throttles.containsKey(address))
            notifyThrottleKnown(throttles.get(address),address);
         else {
-           throttle=new EliteXNetThrottle(address,tc);
+           throttle=new EliteXNetThrottle((XNetSystemConnectionMemo)adapterMemo, address,tc);
            throttles.put(address,throttle);
            notifyThrottleKnown(throttle,address);
         }

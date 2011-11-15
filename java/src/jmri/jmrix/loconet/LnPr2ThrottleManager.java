@@ -25,7 +25,10 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
      */
     public LnPr2ThrottleManager(LocoNetSystemConnectionMemo memo) {
     	super(memo);
+        this.tc = memo.getLnTrafficController();
     }
+    
+    private LnTrafficController tc;
 
 	/**
 	 * PR2 allows only one throttle
@@ -45,7 +48,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         // station to allocate slot, so immediately trigger the callback.
         activeAddress = (DccLocoAddress) address;
         log.debug("new Pr2Throttle for "+activeAddress);
-        notifyThrottleKnown(new Pr2Throttle(activeAddress), activeAddress);
+        notifyThrottleKnown(new Pr2Throttle((LocoNetSystemConnectionMemo)adapterMemo, activeAddress), activeAddress);
 	}
 	    
 	DccLocoAddress activeAddress = null;
@@ -103,11 +106,11 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         LocoNetThrottle lnt = (LocoNetThrottle) t;
         LocoNetSlot tSlot = lnt.getLocoNetSlot();
 
-        LnTrafficController.instance().sendLocoNetMessage(
+        tc.sendLocoNetMessage(
                 tSlot.writeStatus(LnConstants.LOCO_COMMON));
 
         // and dispatch to slot 0
-        LnTrafficController.instance().sendLocoNetMessage(tSlot.dispatchSlot());
+        tc.sendLocoNetMessage(tSlot.dispatchSlot());
 
         super.dispatchThrottle(t, l);
     }
@@ -116,7 +119,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         LocoNetThrottle lnt = (LocoNetThrottle) t;
         LocoNetSlot tSlot = lnt.getLocoNetSlot();
         if (tSlot != null)
-        	LnTrafficController.instance().sendLocoNetMessage(
+        	tc.sendLocoNetMessage(
         			tSlot.writeStatus(LnConstants.LOCO_COMMON));
         super.releaseThrottle(t, l);
     }

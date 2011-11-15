@@ -22,10 +22,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      */
     public EcosDccThrottleManager(EcosSystemConnectionMemo memo) {
         super(memo);
-        adaptermemo = memo;
     }
-
-    EcosSystemConnectionMemo adaptermemo;
 
     static private EcosDccThrottleManager mInstance = null;
     static public EcosDccThrottleManager instance() {
@@ -34,7 +31,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
     public void reply(EcosReply m) {
         //We are not sending commands from here yet!
-
    }
 
    public void message(EcosMessage m) {
@@ -46,8 +42,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         The ecos throttle in turn will notify the throttle manager of a successful or
         unsuccessful throttle connection. */
         log.debug("new EcosDccThrottle for "+address);
-        new EcosDccThrottle((DccLocoAddress)address, adaptermemo, control);
-        //notifyThrottleKnown(new EcosDccThrottle((DccLocoAddress)address), address);
+        new EcosDccThrottle((DccLocoAddress)address, (EcosSystemConnectionMemo)adapterMemo, control);
     }
 
     @Override

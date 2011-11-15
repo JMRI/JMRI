@@ -26,7 +26,7 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
         // station for this, so immediately trigger the callback
         DccLocoAddress address = (DccLocoAddress) a;
         log.debug("new SprogThrottle for "+address);
-        notifyThrottleKnown(new SprogCSThrottle(address), address);
+        notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo)adapterMemo, address), address);
     }
 
     /**

@@ -212,7 +212,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (getDisabled())
             return null;
         if (throttleManager == null)
-            throttleManager = new jmri.jmrix.loconet.LnThrottleManager(getSlotManager(), this);
+            throttleManager = new jmri.jmrix.loconet.LnThrottleManager(this);
         return throttleManager;
     }
     

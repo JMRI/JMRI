@@ -26,7 +26,7 @@ public class CbusThrottle extends AbstractThrottle {
      * @param address The address this throttle relates to.
      */
     public CbusThrottle(LocoAddress address, int handle) {
-        super();
+        super(null);
 
         log.debug("Throttle created");
         DccLocoAddress dccAddress = (DccLocoAddress)address;

@@ -27,7 +27,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("new SRCPThrottle for "+address);
         // Notify ready to go (without waiting for OK?)
-        notifyThrottleKnown(new SRCPThrottle((DccLocoAddress)address), address);
+        notifyThrottleKnown(new SRCPThrottle((SRCPSystemConnectionMemo)adapterMemo, (DccLocoAddress)address), address);
     }
     
     // KSL 20040409 - SRCP does not have a 'dispatch' function.
@@ -72,7 +72,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
                 +"\n";
 
         // and send it
-            SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage(msg), null);
+            ((SRCPSystemConnectionMemo)adapterMemo).getTrafficController().sendSRCPMessage(new SRCPMessage(msg), null);
             return true;
         }
         return false;

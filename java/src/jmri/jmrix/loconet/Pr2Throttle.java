@@ -22,8 +22,8 @@ public class Pr2Throttle extends AbstractThrottle {
     /**
      * Constructor
      */
-    public Pr2Throttle(DccLocoAddress address) {
-        super();
+    public Pr2Throttle(LocoNetSystemConnectionMemo memo, DccLocoAddress address) {
+        super(memo);
         this.address = address;
         addr = address.getNumber();
         this.speedIncrement = 1;  // 128 step mode only
@@ -102,8 +102,9 @@ public class Pr2Throttle extends AbstractThrottle {
         l.setElement(i++, f19 & 0x7F);      // EXPD_F19_F13
         l.setElement(i++, f27 & 0x7F);      // EXPD_F27_F21
         // rest are zero
-
-        LnTrafficController.instance().sendLocoNetMessage(l);
+        
+        ((LocoNetSystemConnectionMemo)adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
+        //LnTrafficController.instance().sendLocoNetMessage(l);
     }
 
     /**

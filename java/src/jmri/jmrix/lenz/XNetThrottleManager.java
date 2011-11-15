@@ -43,7 +43,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
         if(throttles.containsKey(address))
            notifyThrottleKnown(throttles.get(address),address);
         else {
-	   throttle=new XNetThrottle(address,tc);
+	   throttle=new XNetThrottle((XNetSystemConnectionMemo) adapterMemo, address,tc);
            throttles.put(address,throttle);
 	   notifyThrottleKnown(throttle,address);	
         }

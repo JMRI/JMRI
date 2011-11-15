@@ -35,10 +35,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Constructor
      * @param slot The LocoNetSlot this throttle will talk on.
      */
-    public LocoNetThrottle(LocoNetSlot slot) {
-        super();
+    public LocoNetThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot slot) {
+        super(memo);
         this.slot = slot;
-        network = LnTrafficController.instance();
+        network = memo.getLnTrafficController();
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
         msg.setElement(1, slot.getSlot());
@@ -183,7 +183,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
                                          getF9(), getF10(), getF11(), getF12());
 
-        InstanceManager.commandStationInstance().sendPacket(result, 4); // repeat = 4
+        ((jmri.CommandStation)adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
     }
 
     /**

@@ -41,9 +41,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /**
      * Constructor
      */
-    public XNetThrottle(XNetTrafficController controller)
+    public XNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController controller)
     {
-        super();
+        super(memo);
         tc=controller;
         requestList = new LinkedBlockingQueue<RequestMessage>();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
@@ -52,9 +52,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /**
      * Constructor
      */
-    public XNetThrottle(LocoAddress address,XNetTrafficController controller)
+    public XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address,XNetTrafficController controller)
     {
-        super();
+        super(memo);
         this.tc=controller;
         this.setDccAddress(((DccLocoAddress)address).getNumber());
         this.speedIncrement=SPEED_STEP_128_INCREMENT;

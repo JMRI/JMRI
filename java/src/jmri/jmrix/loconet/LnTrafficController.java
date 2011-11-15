@@ -21,7 +21,9 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * static function returning the LnTrafficController instance to use.
      * @return The registered LnTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated 2.13.4
      */
+    @Deprecated
     static public LnTrafficController instance() {
         return self;
     }

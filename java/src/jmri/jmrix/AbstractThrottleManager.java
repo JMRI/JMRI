@@ -26,12 +26,18 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public AbstractThrottleManager(){}
     
     public AbstractThrottleManager(SystemConnectionMemo memo){
-        userName = memo.getUserName();
+        adapterMemo = memo;
     }
+    
+    protected SystemConnectionMemo adapterMemo;
     
     protected String userName = "Internal";
     
-    public String getUserName(){ return userName; }
+    public String getUserName(){ 
+        if(adapterMemo!=null)   
+            return adapterMemo.getUserName();
+        return userName;
+    }
 	/**
 	 * throttleListeners is indexed by the address, and
 	 * contains as elements an ArrayList of ThrottleListener

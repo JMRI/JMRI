@@ -20,9 +20,9 @@ public class SRCPThrottle extends AbstractThrottle
     /**
      * Constructor.
      */
-    public SRCPThrottle(DccLocoAddress address)
+    public SRCPThrottle(SRCPSystemConnectionMemo memo, DccLocoAddress address)
     {
-        super();
+        super(memo);
         super.speedStepMode = SpeedStepMode128;
 
         // cache settings. It would be better to read the
@@ -48,7 +48,7 @@ public class SRCPThrottle extends AbstractThrottle
         String msg = "INIT 1 GL "
             +(address.getNumber())
             +" N 1 128 5\n";
-        SRCPTrafficController.instance()
+        memo.getTrafficController()
                 .sendSRCPMessage(new SRCPMessage(msg), null);
     }
 
@@ -149,7 +149,7 @@ public class SRCPThrottle extends AbstractThrottle
         // send the result
         SRCPMessage m = new SRCPMessage(msg+"\n");
 
-        SRCPTrafficController.instance().sendSRCPMessage(m, null);
+        ((SRCPSystemConnectionMemo)adapterMemo).getTrafficController().sendSRCPMessage(m, null);
     }
 
     public LocoAddress getLocoAddress() {

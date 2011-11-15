@@ -22,7 +22,7 @@ public class Throttle extends AbstractThrottle
      */
     public Throttle(int address)
     {
-        super();
+        super(null);
 
         // cache settings.
         this.speedSetting = 0;

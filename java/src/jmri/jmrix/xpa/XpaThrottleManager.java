@@ -17,7 +17,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
      */
     public XpaThrottleManager()
     {
-       super();
+       super(null);
        userName = "XPA";
     }
 

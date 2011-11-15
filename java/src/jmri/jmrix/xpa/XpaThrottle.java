@@ -20,7 +20,7 @@ public class XpaThrottle extends AbstractThrottle {
      * Constructor
      */
     public XpaThrottle(LocoAddress address) {
-       super();
+       super(null);
        this.address      = ((DccLocoAddress) address).getNumber();
        this.speedIncrement = 1;
        this.isForward    = true;

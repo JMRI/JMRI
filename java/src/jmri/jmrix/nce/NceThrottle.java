@@ -30,10 +30,10 @@ public class NceThrottle extends AbstractThrottle{
     /**
      * Constructor.
      */
-    public NceThrottle(NceTrafficController t, DccLocoAddress address)
+    public NceThrottle(NceSystemConnectionMemo memo, DccLocoAddress address)
     {
-        super();
-        this.tc = t;
+        super(memo);
+        this.tc = memo.getNceTrafficController();
         super.speedStepMode = SpeedStepMode128;
 
         // cache settings. It would be better to read the

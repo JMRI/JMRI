@@ -23,9 +23,9 @@ public class SprogCSThrottle extends AbstractThrottle
     /**
      * Constructor.
      */
-    public SprogCSThrottle(LocoAddress address)
+    public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address)
     {
-        super();
+        super(memo);
 
         // cache settings.
         this.speedSetting = 0;
@@ -50,7 +50,11 @@ public class SprogCSThrottle extends AbstractThrottle
         //@see AbstractThrottleManager.supportedSpeedModes()
 
         // Find our command station
-        commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
+        //commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
+        if((memo!=null) && (memo.get(jmri.CommandStation.class)!=null))
+            commandStation = memo.get(jmri.CommandStation.class);
+        else
+            commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
 
     }
 

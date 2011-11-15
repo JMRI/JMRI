@@ -20,7 +20,8 @@ public class SerialThrottle extends AbstractThrottle
      */
     public SerialThrottle(DccLocoAddress address)
     {
-        super();
+        //This will need to include system adapter memo once converted
+        super(null);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this

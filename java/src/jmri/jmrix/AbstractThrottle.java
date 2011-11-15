@@ -51,9 +51,12 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     protected boolean active;
 
-    public AbstractThrottle() {
-		active = true;
+    public AbstractThrottle(SystemConnectionMemo memo) {
+        active = true;
+        adapterMemo = memo;
     }
+    
+    protected SystemConnectionMemo adapterMemo;
 
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound parameter.
@@ -721,7 +724,11 @@ abstract public class AbstractThrottle implements DccThrottle {
                 getF13(), getF14(), getF15(), getF16(),
                 getF17(), getF18(), getF19(), getF20());
         // send it 3 times
-        CommandStation c = InstanceManager.commandStationInstance();
+        CommandStation c;
+        if((adapterMemo!=null) && (adapterMemo.get(jmri.CommandStation.class)!=null))
+            c = adapterMemo.get(jmri.CommandStation.class);
+        else
+            c = InstanceManager.commandStationInstance();
         if (c != null) 
             c.sendPacket(result,3);
         else
@@ -743,7 +750,11 @@ abstract public class AbstractThrottle implements DccThrottle {
                 getF21(), getF22(), getF23(), getF24(),
                 getF25(), getF26(), getF27(), getF28());
         // send it 3 times
-        CommandStation c = InstanceManager.commandStationInstance();
+        CommandStation c;
+        if((adapterMemo!=null) && (adapterMemo.get(jmri.CommandStation.class)!=null))
+            c = adapterMemo.get(jmri.CommandStation.class);
+        else
+            c = InstanceManager.commandStationInstance();
         if (c != null) 
             c.sendPacket(result,3);
         else

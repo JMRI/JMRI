@@ -48,7 +48,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             for (int j=0; j<addr.length(); j++)
                 m.setElement(i++, addr.charAt(j));
             SprogTrafficController.instance().sendSprogMessage(m, null);
-            notifyThrottleKnown(new SprogThrottle(address), address);
+            notifyThrottleKnown(new SprogThrottle((SprogSystemConnectionMemo)adapterMemo, address), address);
         } else {
             failedThrottleRequest((DccLocoAddress)address, "Only one Throttle can be in use at anyone time with the Sprog.");
             //javax.swing.JOptionPane.showMessageDialog(null,"Only one Throttle can be in use at anyone time with the Sprog.","Sprog Throttle",javax.swing.JOptionPane.WARNING_MESSAGE);

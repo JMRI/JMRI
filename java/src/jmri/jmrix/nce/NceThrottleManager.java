@@ -31,7 +31,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
         // station for this, so immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;
         log.debug("new NceThrottle for "+address);
-        notifyThrottleKnown(new NceThrottle(tc, address), address);
+        notifyThrottleKnown(new NceThrottle((NceSystemConnectionMemo)adapterMemo, address), address);
     }
 
     /**

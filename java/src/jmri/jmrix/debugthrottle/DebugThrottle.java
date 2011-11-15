@@ -17,7 +17,7 @@ public class DebugThrottle extends AbstractThrottle
      */
     public DebugThrottle(DccLocoAddress address)
     {
-        super();
+        super(null);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this

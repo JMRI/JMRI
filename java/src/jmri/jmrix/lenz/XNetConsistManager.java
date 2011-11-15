@@ -27,6 +27,7 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
         public XNetConsistManager(XNetSystemConnectionMemo systemMemo){
               super();
               tc=systemMemo.getXNetTrafficController();
+              this.systemMemo = systemMemo;
               // Initilize the consist reader thread.
 	      initThread = new Thread(new XNetConsistReader());
               int it=initThread.getPriority();
@@ -34,6 +35,8 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
               initThread.setPriority(it);
               initThread.start();
         }
+        
+        XNetSystemConnectionMemo systemMemo;
 
 	/**
          *    This implementation does command station consists, so 
@@ -53,7 +56,7 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
 	 */
 	public Consist addConsist(DccLocoAddress address){ 
 		        XNetConsist consist;
-                        consist = new XNetConsist(address,tc);
+                        consist = new XNetConsist(address,tc, systemMemo);
                         consistTable.put(address,consist);
                         consistList.add(address);
                         return(consist);

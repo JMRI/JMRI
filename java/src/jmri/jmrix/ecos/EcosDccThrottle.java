@@ -23,7 +23,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
     private EcosLocoAddressManager objEcosLocoManager;
-    private EcosSystemConnectionMemo adaptermemo;
     final EcosPreferences p;
     //This boolean is used to prevent un-necessary commands from being sent to the ECOS if we have already lost
     //control of the object
@@ -33,12 +32,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control)
     {
-        super();
+        super(memo);
         super.speedStepMode = SpeedStepMode128;
-        adaptermemo = memo;
-        p = adaptermemo.getPreferenceManager();
-        tc=adaptermemo.getTrafficController();
-        objEcosLocoManager = adaptermemo.getLocoAddressManager();
+        p = memo.getPreferenceManager();
+        tc=memo.getTrafficController();
+        objEcosLocoManager = memo.getLocoAddressManager();
         //The script will go through and read the values from the Ecos
 
         this.speedSetting = 0;
@@ -84,7 +82,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         this._control      = control;
 
         ecosretry         = 0;
-        //objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
 
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
@@ -148,10 +145,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             return (int)(fSpeed * 126.f + 0.5) + 1 ;
           else
             return (int)(fSpeed * 27.f + 0.5) + 1 ;
-        }
-   // }
+    }
     
-    //private jmri.ThrottleManager tmp;
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
@@ -405,12 +400,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     EcosTrafficController tc;
 
     public void setIsForward(boolean forward) {
-        //super.setIsForward(forward);
+
         if(!_haveControl) return;
-        //isForward = forward;
         int dir=1;
-        //if (forward = true) dir=0;
-        //setSpeedSetting(speedSetting);  // send the command
 
         EcosMessage m;
         if (forward==true) dir=0;
@@ -418,7 +410,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         String message = "set("+this.objectNumber+", dir["+dir+"])";
         m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
-
     }
 
     private DccLocoAddress address;
@@ -716,7 +707,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 if(_control)
                     _haveControl = true;
                 if (!_hadControl){
-                    adaptermemo.getThrottleManager().throttleSetup(this, this.address, true);
+                    ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, true);
+                    //adapterMemo.getThrottleManager().throttleSetup(this, this.address, true);
                 }
                 getInitialStates();
             }
@@ -800,7 +792,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     _hadControl=false;
                     ecosretry=0;
                 } else
-                    adaptermemo.getThrottleManager().throttleSetup(this, this.address, false);
+                     ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, false);
                 
                 log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
         }
@@ -809,9 +801,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             ecosretry=0;
             if(_hadControl) {
                 notifyPropertyChangeListener("LostControl", 0, 0);
-            } else
-                adaptermemo.getThrottleManager().throttleSetup(this, this.address, false);
-            jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
+            } else{
+               // adapterMemo.getThrottleManager().throttleSetup(this, this.address, false);
+                ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, false);
+            }
+             ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).releaseThrottle(this, null);
+            //jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         }
     }
     

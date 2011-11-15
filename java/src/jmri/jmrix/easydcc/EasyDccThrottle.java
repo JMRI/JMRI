@@ -22,10 +22,11 @@ public class EasyDccThrottle extends AbstractThrottle
     /**
      * Constructor.
      */
-    public EasyDccThrottle(DccLocoAddress address)
+    public EasyDccThrottle(EasyDccSystemConnectionMemo memo, DccLocoAddress address)
     {
-        super();
+        super(memo);
         super.speedStepMode = SpeedStepMode128;
+        tc=memo.getTrafficController();
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -45,7 +46,6 @@ public class EasyDccThrottle extends AbstractThrottle
         this.f12           = false;
         this.address      = address;
         this.isForward    = true;
-
     }
 
 
@@ -75,8 +75,7 @@ public class EasyDccThrottle extends AbstractThrottle
             m.addIntAsTwoHex(result[j]&0xFF,i);
             i = i+2;
         }
-
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+        tc.sendEasyDccMessage(m, null);
     }
 
     /**
@@ -101,8 +100,7 @@ public class EasyDccThrottle extends AbstractThrottle
             m.addIntAsTwoHex(result[j]&0xFF,i);
             i = i+2;
         }
-
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+        tc.sendEasyDccMessage(m, null);
     }
 
     /**
@@ -127,8 +125,7 @@ public class EasyDccThrottle extends AbstractThrottle
             m.addIntAsTwoHex(result[j]&0xFF,i);
             i = i+2;
         }
-
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+        tc.sendEasyDccMessage(m, null);
     }
 
     /**
@@ -174,7 +171,8 @@ public class EasyDccThrottle extends AbstractThrottle
             i = i+2;
         }
 
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+        tc.sendEasyDccMessage(m, null);
+
         if (oldSpeed != this.speedSetting)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
@@ -188,6 +186,8 @@ public class EasyDccThrottle extends AbstractThrottle
     }
 
     private DccLocoAddress address;
+    
+    EasyDccTrafficController tc;
     
     public LocoAddress getLocoAddress() {
         return address;

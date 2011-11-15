@@ -19,14 +19,16 @@ import jmri.jmrix.AbstractThrottleManager;
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
+    private LnTrafficController tc;
     //private HashMap throttleListeners;
 
     /**
      * Constructor. Gets a reference to the LocoNet SlotManager.
      */
-    public LnThrottleManager(SlotManager slotManager, LocoNetSystemConnectionMemo memo) {
+    public LnThrottleManager(LocoNetSystemConnectionMemo memo) {
     	super(memo);
-        this.slotManager = slotManager;
+        this.slotManager = memo.getSlotManager();//slotManager;
+        this.tc = memo.getLnTrafficController();
     }
 
 	/**
@@ -57,7 +59,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      */
     public void notifyChangedSlot(LocoNetSlot s) {
-    	DccThrottle throttle = new LocoNetThrottle(s);
+    	DccThrottle throttle = new LocoNetThrottle((LocoNetSystemConnectionMemo)adapterMemo, s);
     	notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(),isLongAddress(s.locoAddr()) ) );
     }
 
@@ -101,12 +103,12 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 // set status to common
         LocoNetThrottle lnt = (LocoNetThrottle) t;
         LocoNetSlot tSlot = lnt.getLocoNetSlot();
-
-        LnTrafficController.instance().sendLocoNetMessage(
+        
+        tc.sendLocoNetMessage(
                 tSlot.writeStatus(LnConstants.LOCO_COMMON));
 
         // and dispatch to slot 0
-        LnTrafficController.instance().sendLocoNetMessage(tSlot.dispatchSlot());
+        tc.sendLocoNetMessage(tSlot.dispatchSlot());
 
         super.releaseThrottle(t, l);
     }
@@ -115,7 +117,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         LocoNetThrottle lnt = (LocoNetThrottle) t;
         LocoNetSlot tSlot = lnt.getLocoNetSlot();
         if (tSlot != null)
-        	LnTrafficController.instance().sendLocoNetMessage(
+        	tc.sendLocoNetMessage(
         			tSlot.writeStatus(LnConstants.LOCO_COMMON));
         super.releaseThrottle(t, l);
     }
