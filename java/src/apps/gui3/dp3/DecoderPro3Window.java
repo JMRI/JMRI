@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
@@ -43,6 +44,8 @@ import javax.swing.table.TableModel;
 import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelListener;
+import javax.swing.event.TableModelEvent;
 import javax.swing.Timer;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
@@ -366,24 +369,26 @@ public class DecoderPro3Window
         
         JPanel groups = new RosterGroupsPanel();
         final JPanel rosters = new JPanel();
-        //JPanel tableArea = new JPanel();
         rosters.setLayout(new BorderLayout());
 
         // set up roster table
-
         rtable = new RosterTable(false, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         rosters.add(rtable, BorderLayout.CENTER);
-        //tableArea.add(rtable);
+
         // add selection listener
         rtable.getTable().getSelectionModel().addListSelectionListener(
-                new ListSelectionListener() {
+            tableSelectionListener = new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
                             if (rtable.getTable().getSelectedRowCount() == 1) {
                                 locoSelected(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
+                                
                             } else if (rtable.getTable().getSelectedRowCount() > 1) {
                                 locoSelected(null);
                             } // leave last selected item visible if no selection
+                        } else if(e.getFirstIndex()==-1){
+                            //A reorder of the table might of occured therefore we are going to make sure that the selected item is still in view
+                           moveTableViewToSelected();
                         }
                     }
             }
@@ -428,7 +433,6 @@ public class DecoderPro3Window
         
         MouseListener rosterMouseListener = new rosterPopupListener();
         rtable.getTable().addMouseListener(rosterMouseListener);
-        
         
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval")).intValue();
@@ -517,6 +521,26 @@ public class DecoderPro3Window
             
         }
         return rosterGroupSplitPane;
+    }
+    
+    protected ListSelectionListener tableSelectionListener;
+    
+    protected void moveTableViewToSelected(){
+        //Remove the listener as this change will re-activate it and we end up in a loop!
+        rtable.getTable().getSelectionModel().removeListSelectionListener(tableSelectionListener);
+
+        JTable table = rtable.getTable();
+        table.clearSelection();
+        int entires = table.getRowCount();
+        for (int i = 0; i<entires; i++){
+            if(table.getValueAt(i, jmri.jmrit.roster.swing.RosterTableModel.IDCOL).equals(re.getId())){
+                table.addRowSelectionInterval(i,i);
+                table.scrollRectToVisible(new Rectangle(table.getCellRect(i, 0, true)));
+            }
+        }
+        
+        rtable.getTable().getSelectionModel().addListSelectionListener(tableSelectionListener);
+    
     }
 
     JLabel firstHelpLabel;
@@ -1118,22 +1142,12 @@ public class DecoderPro3Window
             re = l.get(0);
             re.addPropertyChangeListener(rosterEntryUpdateListener);
             updateDetails();
-            JTable table = rtable.getTable();
-            table.clearSelection();
-          
-            int entires = table.getRowCount();
-            for (int i = 0; i<entires; i++){
-                if(table.getValueAt(i, jmri.jmrit.roster.swing.RosterTableModel.IDCOL).equals(re.getId())){
-                    table.addRowSelectionInterval(i,i);
-                    table.scrollRectToVisible(new Rectangle(table.getCellRect(i, 0, true)));
-                }
-            }
+            moveTableViewToSelected();
         } else {
             log.warn("Read address "+dccAddress+", but no such loco in roster");  //"No roster entry found"
             JOptionPane.showMessageDialog(this, "No roster entry found", "Address " + dccAddress + " was read from the decoder\nbut has not been found in the Roster", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
     
     boolean inStartProgrammer = false;
     
