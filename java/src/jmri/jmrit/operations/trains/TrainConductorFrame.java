@@ -490,15 +490,20 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		super.dispose();
 	}
 
-	public void propertyChange(java.beans.PropertyChangeEvent e) {
+	public void propertyChange(java.beans.PropertyChangeEvent e){
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY))
 			clearAndUpdate();
+		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)){
+			// Move property change to end of list so car updates happen before the conduction determines train length, etc.
+			_train.removePropertyChangeListener(this);
+			_train.addPropertyChangeListener(this);
+			clearAndUpdate();
+		}
 		if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
-				|| e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY))
+				|| e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)){
 			// remove car from list
 			if (e.getSource().getClass().equals(Car.class)){
 				Car car = (Car)e.getSource();
@@ -506,6 +511,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				carCheckBoxes.remove("s"+car.getId());
 			}
 			update();
+		}
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
