@@ -84,7 +84,7 @@ public class LocoIOData
             capture[i]    = false;
         }
         // addPropertyChangeListener(this);
-
+        this.tc = tc;
         // for now, we're always listening to LocoNet
         if (tc!=null) {
             tc.addLocoNetListener(~0, this);

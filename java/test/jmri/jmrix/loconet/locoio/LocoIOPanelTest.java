@@ -4,6 +4,7 @@ package jmri.jmrix.loconet.locoio;
 
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -28,7 +29,10 @@ public class LocoIOPanelTest extends TestCase {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
         LocoIOPanel f = new LocoIOPanel();
-
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        memo.setLnTrafficController(lnis);
+        f.initComponents(memo);
+        
         // click button
         f.readAllButton.doClick();
 
@@ -50,6 +54,9 @@ public class LocoIOPanelTest extends TestCase {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
         LocoIOPanel f = new LocoIOPanel();
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        memo.setLnTrafficController(lnis);
+        f.initComponents(memo);
 
         f.addrField.setText("1234");
         f.addrField.postActionEvent();
@@ -76,7 +83,10 @@ public class LocoIOPanelTest extends TestCase {
         LocoIOPanel f = new LocoIOPanel(){
             protected int cautionAddrSet() { return 1;}
         };
-
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        memo.setLnTrafficController(lnis);
+        f.initComponents(memo);
+        
         f.addrField.setText("0134");
 
         // click button
