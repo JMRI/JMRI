@@ -4353,14 +4353,14 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateMemoryReference(String name) {
         Memory m = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            m = InstanceManager.memoryManagerInstance().getByUserName(name);
-            if (m != null) {
-                //return m.getSystemName();
-                return name;
-            }
-            // check memory system name
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	m = InstanceManager.memoryManagerInstance().getByUserName(name);
+            	if (m != null) {
+            		return name;
+            	}
+        	}
             m = InstanceManager.memoryManagerInstance().getBySystemName(name);
         }
         if (m == null) {
@@ -4375,13 +4375,14 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateTurnoutReference(String name) {
         Turnout t = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            t = InstanceManager.turnoutManagerInstance().getByUserName(name);
-            if (t != null) {
-                //return t.getSystemName();
-                return name;
-            }
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	t = InstanceManager.turnoutManagerInstance().getByUserName(name);
+            	if (t != null) {
+            		return name;
+            	}
+        	}
             t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
         }
         if (t == null) {
@@ -4396,13 +4397,14 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
-            if (h != null) {
-                //return h.getSystemName();
-                return name;
-            }
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+            	if (h != null) {
+            		return name;
+            	}
+        	}
             h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
         }
         if (h == null) {
@@ -4416,8 +4418,17 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateSignalMastReference(String name) {
         SignalMast h = null;
-        name = name.trim();
-        try {
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	h = InstanceManager.signalMastManagerInstance().getByUserName(name);
+            	if (h != null) {
+            		return name;
+            	}
+        	}
+            h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+        }
+/*        try {
             if ((name != null) && (!name.equals(""))) {
                 h = InstanceManager.signalMastManagerInstance().getByUserName(name);
                 if (h != null) {
@@ -4429,6 +4440,7 @@ public class LogixTableAction extends AbstractTableAction {
         } catch (IllegalArgumentException iae) {
             log.info(iae.getMessage());
         }
+        */
         if (h == null) {
             messageInvalidActionItemName(name, "SignalMast");
             return null;
@@ -4437,13 +4449,14 @@ public class LogixTableAction extends AbstractTableAction {
     }
     String validateWarrantReference(String name) {
         Warrant w = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            w = InstanceManager.warrantManagerInstance().getByUserName(name);
-            if (w != null) {
-                //return h.getSystemName();
-                return name;
-            }
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	w = InstanceManager.warrantManagerInstance().getByUserName(name);
+            	if (w != null) {
+            		return name;
+            	}
+        	}
             w = InstanceManager.warrantManagerInstance().getBySystemName(name);
         }
         if (w == null) {
@@ -4454,13 +4467,14 @@ public class LogixTableAction extends AbstractTableAction {
     }
     String validateOBlockReference(String name) {
         OBlock b = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            b = InstanceManager.oBlockManagerInstance().getByUserName(name);
-            if (b != null) {
-                //return h.getSystemName();
-                return name;
-            }
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	b = InstanceManager.oBlockManagerInstance().getByUserName(name);
+            	if (b != null) {
+            		return name;
+            	}
+        	}
             b = InstanceManager.oBlockManagerInstance().getBySystemName(name);
         }
         if (b == null) {
@@ -4475,15 +4489,17 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateSensorReference(String name) {
         Sensor s = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            s = InstanceManager.sensorManagerInstance().getByUserName(name);
-            if (s != null) {
-                //return s.getSystemName();
-                return name;
-            }
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	s = InstanceManager.sensorManagerInstance().getByUserName(name);
+            	if (s != null) {
+            		return name;
+            	}
+        	}
             s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         }
+        s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         if (s == null) {
             messageInvalidActionItemName(name, "Sensor");
             return null;
@@ -4496,13 +4512,14 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateLightReference(String name) {
         Light l = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            l = InstanceManager.lightManagerInstance().getByUserName(name);
-            if (l != null) {
-                //return l.getSystemName();
-                return name;
-            }
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	l = InstanceManager.lightManagerInstance().getByUserName(name);
+            	if (l != null) {
+            		return name;
+            	}
+        	}
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
@@ -4518,17 +4535,14 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateConditionalReference(String name) {
         Conditional c = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            c = _conditionalManager.getByUserName(_curLogix, name);
-            if (c != null) {
-//                return c.getSystemName();
-                return name;
-            }
-            c = _conditionalManager.getByUserName(name);
-            if (c != null) {
-                return name;
-            }
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	c = _conditionalManager.getByUserName(name);
+            	if (c != null) {
+            		return name;
+            	}
+        	}
             c = _conditionalManager.getBySystemName(name);
         }
         if (c == null) {
@@ -4543,13 +4557,14 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateLogixReference(String name) {
         Logix l = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            l = _logixManager.getByUserName(name);
-            if (l != null) {
-                return name;
-            }
-            // check memory system name
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	l = _logixManager.getByUserName(name);
+            	if (l != null) {
+            		return name;
+            	}
+        	}
             l = _logixManager.getBySystemName(name);
         }
         if (l == null) {
@@ -4563,13 +4578,14 @@ public class LogixTableAction extends AbstractTableAction {
     */
     String validateRouteReference(String name) {
         Route r = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            r = InstanceManager.routeManagerInstance().getByUserName(name);
-            if (r != null) {
-                return name;
-            }
-            // check memory system name
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	r = InstanceManager.routeManagerInstance().getByUserName(name);
+            	if (r != null) {
+            		return name;
+            	}
+        	}
             r = InstanceManager.routeManagerInstance().getBySystemName(name);
         }
         if (r == null) {
@@ -4581,13 +4597,14 @@ public class LogixTableAction extends AbstractTableAction {
 
     String validateAudioReference(String name) {
         Audio a = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            a = InstanceManager.audioManagerInstance().getByUserName(name);
-            if (a != null) {
-                return name;
-            }
-            // check memory system name
+        if (name != null) {
+            name = name.trim();
+        	if (name.length()>0) {
+            	a = InstanceManager.audioManagerInstance().getByUserName(name);
+            	if (a != null) {
+            		return name;
+            	}
+        	}
             a = InstanceManager.audioManagerInstance().getBySystemName(name);
         }
         if (a == null || ( a.getSubType()!=Audio.SOURCE && a.getSubType()!=Audio.LISTENER) ) {
