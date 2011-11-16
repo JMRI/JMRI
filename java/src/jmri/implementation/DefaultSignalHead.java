@@ -37,8 +37,10 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
             (newAppearance != FLASHRED) &&
             (newAppearance != FLASHLUNAR) ) )
                 stopFlash();
-                
-  		if (oldAppearance != newAppearance) {
+
+        /* there are circumstances (admittedly rare) where signals and turnouts can get out of sync
+         * allow 'newAppearance' to be set to resync these cases - P Cressman
+  		 if (oldAppearance != newAppearance) */{
 		    updateOutput();
 		
             // notify listeners, if any
