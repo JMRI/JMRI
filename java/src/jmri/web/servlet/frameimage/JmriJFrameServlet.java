@@ -229,7 +229,7 @@ public class JmriJFrameServlet implements Servlet {
         } else {
             s += java.text.MessageFormat.format(rb.getString("FramePart2NonAjax"), args);
         }
-        s += rb.getString("FrameFooter");
+        s += java.text.MessageFormat.format(rb.getString("FrameFooter"), args);
 
         h += s.length() + "\r\n";
         Date now = new Date();

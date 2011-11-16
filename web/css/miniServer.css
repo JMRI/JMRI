@@ -158,9 +158,24 @@ div.frame-footer a:hover {
 	text-decoration: underline;
 }
 
+div.frame-footer span.info {
+	font-size: 80%;
+	font-style: italic;
+}
+
+div#frame_image_wrapper img {
+	border-right: solid 1px #888;
+	border-bottom: solid 1px #888;
+	-moz-box-shadow: 5px 5px 5px #ccc;
+  	-webkit-box-shadow: 5px 5px 5px #ccc;
+  	box-shadow: 5px 5px 5px #ccc;
+}
+
 div#frame_image_wrapper img:hover {
 	cursor: pointer;
 }
+
+
 /*body*/
 #mainContent {
 	background: #fff;
