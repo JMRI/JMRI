@@ -487,7 +487,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
             numCol--;
         }
         int numRow = leaves.size()/numCol;
-        int cnt = 0;
         boolean newCol = false;
         _noMemory = false;
         // VM launches another thread to run ImageFetcher.
@@ -504,7 +503,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         c.gridx = -1;
         for (int i=0; i<leaves.size(); i++) {
             if (_noMemory) {
-                cnt++;
                 continue;
             }
             CatalogTreeLeaf leaf = leaves.get(i);
@@ -577,7 +575,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 log.debug(leaf.getName()+" inserted at ("+c.gridx+", "+c.gridy+
                               ") w= "+icon.getIconWidth()+", h= "+icon.getIconHeight());
             }
-            cnt++;
         }
         c.gridy++;
         c.gridx++;

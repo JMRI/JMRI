@@ -266,7 +266,6 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     }
 
     static Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> loadDefaultIndicatorTOMap(List<Element> typeList)
-                    throws org.jdom.JDOMException
     {
         Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> familyTOMap =
                 new Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> ();     // Map of all families of type, typeName
