@@ -43,6 +43,8 @@ public class AddSignalMastPanel extends JPanel {
     JPanel turnoutMastPanel = new JPanel();
     JScrollPane turnoutMastScroll;
     
+    JButton cancel = new JButton(rb.getString("ButtonCancel"));
+    
     SignalMast mast = null;
     
     public AddSignalMastPanel() {
@@ -94,12 +96,18 @@ public class AddSignalMastPanel extends JPanel {
         add(turnoutMastScroll);
         
         JButton ok;
-        add(ok = new JButton(rb.getString("ButtonOK")));
+        JPanel buttonHolder = new JPanel();
+        buttonHolder.add(ok = new JButton(rb.getString("ButtonOK")));
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             }
         });
+        cancel.setVisible(false);
+        buttonHolder.add(cancel);
+        
+        add(buttonHolder);
+        
         signalHeadDriverMast.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateSelectedDriver();
@@ -136,12 +144,60 @@ public class AddSignalMastPanel extends JPanel {
         });
     }
     
+    boolean inEditMode = false;
+
     public AddSignalMastPanel(SignalMast mast) {
         this();
+        inEditMode=true;
         this.mast=mast;
         sigSysBox.setEnabled(false);
         mastBox.setEnabled(false);
-        turnoutDriverMast.setEnabled(false);
+        signalHeadDriverMast.setEnabled(false);
+        userName.setText(mast.getUserName());
+        userName.setEnabled(false);
+        sigSysBox.setSelectedItem(mast.getSignalSystem().getSystemName());
+        loadMastDefinitions();
+        
+        //jmri.implementation.AbstractSignalMast aMast = (jmri.implementation.AbstractSignalMast) mast;
+        String mastType = "appearance-" + extractMastTypeFromMast(((jmri.implementation.AbstractSignalMast)mast).getSystemName())+".xml";
+        for(int i = 0; i<mastNames.size(); i++){
+            if (mastNames.get(i).getName().endsWith(mastType)){
+                mastBox.setSelectedIndex(i);
+                break;
+            }
+        }
+        mastNames.get(mastBox.getSelectedIndex()).getName();
+        
+        
+        if(mast instanceof jmri.implementation.TurnoutSignalMast){
+            turnoutDriverMast.setSelected(true);
+            updateSelectedDriver();
+            SignalAppearanceMap appMap = mast.getAppearanceMap();
+            TurnoutSignalMast tmast = (TurnoutSignalMast) mast;
+            
+            if(appMap!=null){
+                java.util.Enumeration<String> aspects = appMap.getAspects();
+                while(aspects.hasMoreElements()){
+                    String key = aspects.nextElement();
+                    TurnoutAspectPanel turnPanel = turnoutAspect.get(key);
+                    turnPanel.setSelectedTurnout(tmast.getTurnoutName(key));
+                    turnPanel.setTurnoutState(tmast.getTurnoutState(key));
+                }
+            }
+        }
+        
+        cancel.setVisible(true);
+        cancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ((jmri.util.JmriJFrame)getTopLevelAncestor()).dispose();
+            }
+        });
+        
+    }
+    
+    String extractMastTypeFromMast(String name){
+        String[] parts = name.split(":");
+        return parts[2].substring(0, parts[2].indexOf("("));
     }
     
     void updateSelectedDriver(){
@@ -496,6 +552,18 @@ public class AddSignalMastPanel extends JPanel {
         
         int getTurnoutState(){
             return turnoutStateValues[turnoutState.getSelectedIndex()];
+        }
+        
+        void setSelectedTurnout(String name){
+            beanBox.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(name));
+        }
+        
+        void setTurnoutState(int state){
+            if(state==Turnout.CLOSED){
+                turnoutState.setSelectedItem(stateClosed);
+            } else {
+                turnoutState.setSelectedItem(stateThrown);
+            }
         }
         
         String getTurnoutName(){

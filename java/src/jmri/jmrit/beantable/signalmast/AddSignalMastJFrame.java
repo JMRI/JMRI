@@ -27,6 +27,17 @@ public class AddSignalMastJFrame extends JmriJFrame {
         pack();
     }
     
+    public AddSignalMastJFrame(jmri.SignalMast mast) {
+        super(ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle")
+                .getString("TitleAddSignalMast"),false, true);
+        
+        addHelpMenu("package.jmri.jmrit.beantable.SignalMastAddEdit", true);
+        getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+
+        add(new AddSignalMastPanel(mast));
+        pack();
+    }
+    
 }
 
 

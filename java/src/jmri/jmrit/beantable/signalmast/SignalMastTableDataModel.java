@@ -24,8 +24,8 @@ import jmri.util.com.sun.TableSorter;
 
 public class SignalMastTableDataModel extends BeanTableDataModel {
 
-    static public final int EDITMASTCOL = 99;
-    static public final int EDITLOGICCOL = NUMCOLUMN;
+    static public final int EDITMASTCOL = NUMCOLUMN;
+    static public final int EDITLOGICCOL = EDITMASTCOL+1;
     static public final int LITCOL = EDITLOGICCOL+1;
     static public final int HELDCOL = LITCOL+1;
 
@@ -33,7 +33,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return InstanceManager.signalMastManagerInstance().getBySystemName(name).getAspect();
     }
 
-    public int getColumnCount( ){ return NUMCOLUMN+3;}
+    public int getColumnCount( ){ return NUMCOLUMN+4;}
     public String getColumnName(int col) {
         if (col==VALUECOL) return "Aspect";
         else if (col==EDITMASTCOL) return "Edit";
@@ -60,7 +60,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     public boolean isCellEditable(int row, int col) {
         if (col==LITCOL) return true;
         else if (col==EDITLOGICCOL) return true;
-        else if (col==EDITMASTCOL) return true;
+        else if (col==EDITMASTCOL){
+            String name = sysNameList.get(row);
+            SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+            if(s instanceof jmri.implementation.TurnoutSignalMast)
+                return true;
+            else return false;
+        }
         else if (col==HELDCOL) return true;
         else return super.isCellEditable(row,col);
     }
@@ -97,7 +103,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             return rb.getString("EditSignalLogicButton");
         }        
         else if (col==EDITMASTCOL) {
-            return "EDIT MAST";//rb.getString("EditSignalLogicButton");
+            if(s instanceof jmri.implementation.TurnoutSignalMast)
+                return rb.getString("ButtonEdit");
+            return "";
         }
         else return super.getValueAt(row, col);
     }
@@ -147,13 +155,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     
     void editMast(int row, int col){
         class WindowMaker implements Runnable {
-            //int row;
+            int row;
             WindowMaker(int r){
-                //row = r;
+                row = r;
             }
             public void run() {
-                /*AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame((SignalMast) getBySystemName(sysNameList.get(row)));
-                editFrame.setVisible(true);*/
+                AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame((SignalMast) getBySystemName(sysNameList.get(row)));
+                editFrame.setVisible(true);
             }
         }
         WindowMaker t = new WindowMaker(row);
