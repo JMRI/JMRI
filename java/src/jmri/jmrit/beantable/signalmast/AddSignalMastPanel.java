@@ -184,6 +184,8 @@ public class AddSignalMastPanel extends JPanel {
                     turnPanel.setTurnoutState(tmast.getTurnoutState(key));
                 }
             }
+            if(tmast.resetPreviousStates())
+                resetPreviousState.setSelected(true);
         }
         
         cancel.setVisible(true);
@@ -384,7 +386,7 @@ public class AddSignalMastPanel extends JPanel {
                     turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
                     turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
                 }
-            
+                turnMast.resetPreviousStates(resetPreviousState.isSelected());
             }
         }
     }
