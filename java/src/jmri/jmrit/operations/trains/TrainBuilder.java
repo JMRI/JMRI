@@ -1074,7 +1074,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			// does car have a destination that is part of this train's route?
 			if (c.getDestination() != null) {
-				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasAssignedDest"),new Object[]{c.toString(), (c.getDestinationName()+", "+c.getDestinationTrackName())}));
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarHasAssignedDest"),new Object[]{c.toString(), (c.getDestinationName()+", "+c.getDestinationTrackName())}));
 				RouteLocation rld = train.getRoute().getLastLocationByName(c.getDestinationName());
 				if (rld == null){
 					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarDestNotPartRoute"),new Object[]{c.toString(), c.getDestinationName(), train.getRoute().getName()}));
@@ -1466,7 +1466,7 @@ public class TrainBuilder extends TrainCommon{
 				Car kCar = kCars.get(i);
 				if (kCar == car)
 					continue;
-				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{kCar.toString(), (destination.getName()+", "+track.getName())}));
+				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarKernelAssignedDest"),new Object[]{kCar.toString(), kCar.getKernelName(), (destination.getName()+", "+track.getName())}));
 				kCar.setTrain(train);
 				kCar.setRouteLocation(rl);
 				kCar.setRouteDestination(rld);
@@ -2100,7 +2100,7 @@ public class TrainBuilder extends TrainCommon{
 	private boolean checkCarForDestinationAndTrack(Car car, RouteLocation rl, int routeIndex) throws BuildFailedException{
 		if (car.getDestination() == null)
 			return false;
-		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasAssignedDest"),new Object[]{car.toString(), (car.getDestinationName()+", "+car.getDestinationTrackName())}));
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarHasAssignedDest"),new Object[]{car.toString(), (car.getDestinationName()+", "+car.getDestinationTrackName())}));
 		RouteLocation rld = train.getRoute().getLastLocationByName(car.getDestinationName());
 		if (rld == null){
 			// car has a destination that isn't serviced by this train (destination loaded by router)

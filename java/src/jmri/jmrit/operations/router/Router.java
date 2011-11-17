@@ -112,8 +112,7 @@ public class Router extends TrainCommon {
 			testTrain = null;
 		}
 		if (testTrain != null){
-			log.debug("Car ("+car.toString()+") destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
-					+") can be serviced by a single train ("+testTrain.getName()+")");
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterCarSingleTrain"),new Object[]{car.toString(),clone.getDestinationName(),clone.getDestinationTrackName(),testTrain.getName()}));
 			// now check to see if specific train can service car directly
 			if (_train != null && !_train.servicesCar(clone)){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (clone.getDestinationName()+", "+clone.getDestinationTrackName())}));

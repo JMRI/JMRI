@@ -251,6 +251,10 @@ names like "XM" and "T" for boxcars and tank cars respectively. Select
 the one that you prefer.  You can add or delete car types by using
 the <A HREF="#CarTypeLengthWeight">car type edit</A> window.
 
+<H3>Unit of Length</H3>
+
+You can use feet or meters when entering the length of your rolling stock and tracks.
+
 <H3>Optional Year Modeled</H3>
 
 You can optionally enter the year you want printed on your train manifests.
@@ -995,6 +999,14 @@ various trains.</P>
 
 <A NAME="Staging"></A>
 <H3>Staging Tracks</H3>
+
+Staging tracks are normally used to represent locations that generate traffic to and from your
+layout. Many times physical access to staging tracks is limited, therefore the program places
+significant restrictions on how staging tracks are used.
+
+<P>
+<img src="images/EditStaging.png">
+</P>
 
 A staging track allows you to have all cars and locomotives in a train
 delivered to one track. When terminating a train into staging, the
