@@ -248,7 +248,8 @@ public class JmriJFrameServlet implements Servlet {
         // log.debug("component is "+c);
         if (log.isDebugEnabled()) log.debug("Local click at "+x+","+y);
         
-        if (c.getClass().equals(JButton.class)) {            ((JButton)c).doClick();
+        if (c.getClass().equals(JButton.class)) {
+        	((JButton)c).doClick();
             return;
         }
         else if( c.getClass().equals(JCheckBox.class)) {
@@ -263,10 +264,34 @@ public class JmriJFrameServlet implements Servlet {
             if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener");
             sendClickSequence((MouseListener)c, c, x, y);
             return;
+
+        } else if (c instanceof jmri.jmrit.display.MultiSensorIcon) {
+            if (log.isDebugEnabled()) log.debug("Invoke Clicked on MultiSensorIcon");
+            MouseEvent e = new MouseEvent(c,
+            		MouseEvent.MOUSE_CLICKED,
+            		0,      // time
+            		0,      // modifiers
+            		xg,yg,    // this component expects global positions for some reason
+            		1,      // one click
+            		false   // not a popup
+            );
+            ((jmri.jmrit.display.Positionable)c).doMouseClicked(e);
+            return;
+           
         } else if (c instanceof jmri.jmrit.display.Positionable) {
-            if (log.isDebugEnabled()) log.debug("Invoke Clicked on Positionable");
+            if (log.isDebugEnabled()) log.debug("Invoke Pressed and Clicked on Positionable");
 
             MouseEvent e = new MouseEvent(c,
+            		MouseEvent.MOUSE_PRESSED,
+            		0,      // time
+            		0,      // modifiers
+            		x,y,    // x, y not in this component?
+            		1,      // one click
+            		false   // not a popup
+            );
+            ((jmri.jmrit.display.Positionable)c).doMousePressed(e);
+
+            e = new MouseEvent(c,
             		MouseEvent.MOUSE_CLICKED,
             		0,      // time
             		0,      // modifiers
@@ -275,8 +300,8 @@ public class JmriJFrameServlet implements Servlet {
             		false   // not a popup
             );
             ((jmri.jmrit.display.Positionable)c).doMouseClicked(e);
-
             return;
+
         } else {
             MouseListener[] la = c.getMouseListeners();
             if (log.isDebugEnabled()) log.debug("Invoke "+la.length+" contained mouse listeners");
