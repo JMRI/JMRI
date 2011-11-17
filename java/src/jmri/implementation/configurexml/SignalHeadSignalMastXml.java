@@ -37,25 +37,15 @@ public class SignalHeadSignalMastXml
      * @return true if successful
      */
     public boolean load(Element element) {
-        // loop over contained signalmast elements
-        //@SuppressWarnings("unchecked")
-        //List<Element> list = element.getChildren("signalmast");
-        //System.out.println(list);
-        //for (int i = 0; i < list.size(); i++) {
-            SignalMast m;
-            //Element e = list.get(i);
-            String sys = getSystemName(element);
-            System.out.println(sys);
-            System.out.println(element);
-            m = InstanceManager.signalMastManagerInstance()
-                        .provideSignalMast(sys);
-            
-            if (getUserName(element) != null)
-                m.setUserName(getUserName(element));
-            
-            loadCommon(m, element);
-        //}
+        SignalMast m;
+        String sys = getSystemName(element);
+        m = InstanceManager.signalMastManagerInstance()
+                    .provideSignalMast(sys);
         
+        if (getUserName(element) != null)
+            m.setUserName(getUserName(element));
+        
+        loadCommon(m, element);
         return true;
     }
 
