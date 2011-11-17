@@ -1891,7 +1891,7 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNoDestTrackSpace"),
 								new Object[]{car.toString(), track.getLocation().getName(), track.getName(), track.getNumberOfCarsInRoute(), track.getReservedInRoute(), track.getReservationFactor()}));
 					} else {
-						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildSetFinalDestination"),
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSetFinalDestination"),
 								new Object[]{car.toString(), car.getLoad(), track.getLocation().getName(), track.getName()}));
 						// send car to this destination
 						car.setNextDestination(track.getLocation());
