@@ -60,6 +60,7 @@ public class ListedTableAction extends AbstractAction {
         // create the frame
         f = new ListedTableFrame(title){
         };
+        f.initComponents();
         addToFrame(f);
         
         f.gotoListItem(gotoListItem);

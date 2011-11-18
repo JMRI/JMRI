@@ -67,11 +67,6 @@ public class ListedTableFrame extends BeanTableFrame {
             //We add this to the instanceManager so that other components can add to the table
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
-        
-        actionList = new ActionJList(this);
-        
-        detailpanel = new JPanel();
-        detailpanel.setLayout(new CardLayout());
         if (!init){
             /*Add the default tables to the static list array, this should only be done
             once when first loaded*/
@@ -94,21 +89,33 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.IdTagTableAction", rbs.getString("MenuItemIdTagTable"), true);
             init=true;
         }
-        tabbedTableArray = new ArrayList<tabbedTableItem>();
+    }
+    
+    public void initComponents(){
+        actionList = new ActionJList(this);
+        
+        detailpanel = new JPanel();
+        detailpanel.setLayout(new CardLayout());
+        tabbedTableArray = new ArrayList<tabbedTableItem>(tabbedTableItemListArray.size());
+        ArrayList<tabbedTableItemList> removeItem = new ArrayList<tabbedTableItemList>(5);
         for(int x=0; x<tabbedTableItemListArray.size(); x++){
             /* Here we add all the tables into the panel*/
-            
             tabbedTableItemList item = tabbedTableItemListArray.get(x);
-            tabbedTableItem itemModel = new tabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
-            itemBeingAdded = itemModel;
-            tabbedTableArray.add(itemModel);
             try {
+                tabbedTableItem itemModel = new tabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
+                itemBeingAdded = itemModel;
                 detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
                 itemBeingAdded.getAAClass().addToFrame(this);
+                tabbedTableArray.add(itemModel);
             } catch (Exception ex){
-                detailpanel.add(errorPanel(item.getItemString()), itemModel.getClassAsString());
+                detailpanel.add(errorPanel(item.getItemString()), item.getClassAsString());
                 log.error("Error when adding " + item.getClassAsString() + " to display\n" + ex);
+                removeItem.add(item);
             }
+        }
+        
+        for(tabbedTableItemList dead : removeItem){
+            tabbedTableItemListArray.remove(dead);
         }
         
         list = new JList(new Vector<String>(getChoices()));
@@ -149,6 +156,7 @@ public class ListedTableFrame extends BeanTableFrame {
         getContentPane().add(cardHolder);
         pack();
         actionList.selectListItem(0);
+    
     }
     
     JPanel errorPanel(String text){
