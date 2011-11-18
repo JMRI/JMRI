@@ -2797,7 +2797,7 @@ public class LogixTableAction extends AbstractTableAction {
         _editVariableFrame.pack();
         _editVariableFrame.transferFocusBackward();
     }       /* initializeStateVariables */
-
+/*
     String getConditionalUserName(String name) {
         Conditional c = _conditionalManager.getBySystemName(name);
         if (c != null) {
@@ -4249,8 +4249,7 @@ public class LogixTableAction extends AbstractTableAction {
     * Checks if String is an integer or references an integer
     */
     boolean validateIntegerReference(int actionType, String intReference) {
-        intReference = intReference.trim();
-        if (intReference == null || intReference.length() == 0) {
+        if (intReference == null || intReference.trim().length() == 0) {
             displayBadIntegerReference(actionType);
             return false;
         }
@@ -4258,9 +4257,12 @@ public class LogixTableAction extends AbstractTableAction {
             return validateInteger(actionType, Integer.valueOf(intReference).intValue());
         } catch (NumberFormatException e) {
             intReference = validateMemoryReference(intReference);
-            if (intReference != null)
+            if (intReference != null)		// memory named 'intReference' exits
             {
-                Memory m = getMemory(intReference);
+                Memory m = InstanceManager.memoryManagerInstance().getByUserName(intReference);
+                if (m == null) {
+                    m = InstanceManager.memoryManagerInstance().getBySystemName(intReference);
+                }
                 try {
                     return validateInteger(actionType, Integer.valueOf((String)m.getValue()).intValue());
                 } catch (NumberFormatException ex) {
@@ -4349,7 +4351,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * Checks Memory reference of text.  Upshifts text of field if it is a system name
+    * Checks Memory reference of text.
     */
     String validateMemoryReference(String name) {
         Memory m = null;
@@ -4371,7 +4373,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * Checks Turnout reference of text.  Upshifts text of field if it is a system name
+    * Checks Turnout reference of text.
     */
     String validateTurnoutReference(String name) {
         Turnout t = null;
@@ -4393,7 +4395,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * Checks SignalHead reference of text.  Upshifts text of field if it is a system name
+    * Checks SignalHead reference of text.
     */
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
@@ -4428,19 +4430,6 @@ public class LogixTableAction extends AbstractTableAction {
         	}
             h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
         }
-/*        try {
-            if ((name != null) && (!name.equals(""))) {
-                h = InstanceManager.signalMastManagerInstance().getByUserName(name);
-                if (h != null) {
-                    //return h.getSystemName();
-                    return name;
-                }
-                h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
-            }
-        } catch (IllegalArgumentException iae) {
-            log.info(iae.getMessage());
-        }
-        */
         if (h == null) {
             messageInvalidActionItemName(name, "SignalMast");
             return null;
@@ -4485,7 +4474,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * Checks Sensor reference of text.  Upshifts text of field if it is a system name
+    * Checks Sensor reference of text.
     */
     String validateSensorReference(String name) {
         Sensor s = null;
@@ -4508,7 +4497,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * Checks Light reference of text.  Upshifts text of field if it is a system name
+    * Checks Light reference of text.
     */
     String validateLightReference(String name) {
         Light l = null;
@@ -4530,7 +4519,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * Checks Conditional reference of text.  Upshifts text of field if it is a system name
+    * Checks Conditional reference of text.
     * Forces name to System name
     */
     String validateConditionalReference(String name) {
@@ -4553,7 +4542,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * Checks Logix reference of text.  Upshifts text of field if it is a system name
+    * Checks Logix reference of text.
     */
     String validateLogixReference(String name) {
         Logix l = null;
@@ -4574,7 +4563,7 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
     /**
-    * Checks Route reference of text.  Upshifts text of field if it is a system name
+    * Checks Route reference of text.
     */
     String validateRouteReference(String name) {
         Route r = null;
@@ -4615,56 +4604,15 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-    * get Coditional instance.  Upshifts text of string if it is a system name
-    */
-    Conditional getConditional(String name) {
-        Conditional c = null;
-
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            c = _conditionalManager.getByUserName(_curLogix, name);
-            if (c != null) {
-                return c;
-            }
-            c = _conditionalManager.getByUserName(name);
-            if (c != null) {
-                return c;
-            }
-            c = _conditionalManager.getBySystemName(name);
-        }
-        if (c == null) {
-            messageInvalidActionItemName(name, "Conditional");
-        }
-        return c;
-    }
-
-    /**
-    * get Memory instance.  Upshifts text of string if it is a system name
-    */
-    Memory getMemory(String name) {
-        Memory m = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            m = InstanceManager.memoryManagerInstance().getByUserName(name);
-            if (m != null) {
-                return m;
-            }
-            // check memory system name
-            m = InstanceManager.memoryManagerInstance().getBySystemName(name);
-        }
-        if (m == null) {
-            messageInvalidActionItemName(name, "Memory");
-        }
-        return m;
-    }
-
-    /**
-    * get Light instance.  Upshifts text of string if it is a system name
+    * get Light instance.
     */
     Light getLight(String name) {
+    	if (name==null) {
+    		return null;
+    	}
         Light l = null;
         name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
+        if (name.length()>0) {
             l = InstanceManager.lightManagerInstance().getByUserName(name);
             if (l != null) {
                 return l;
@@ -4676,95 +4624,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         return l;
     }
-
-    /**
-    * get sensor instance.  Upshifts text of string if it is a system name
-    */
-    Sensor getSensor(String name) {
-        Sensor s = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            s = InstanceManager.sensorManagerInstance().getByUserName(name);
-            if (s != null) {
-                return s;
-            }
-            s = InstanceManager.sensorManagerInstance().getBySystemName(name);
-        }
-        if (s == null) {
-            messageInvalidActionItemName(name, "Sensor");
-        }
-        return s;
-    }
-
-    /**
-    * get Turnout instance.  Upshifts text of string if it is a system name
-    */
-    Turnout getTurnout(String name) {
-        Turnout t = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            t = InstanceManager.turnoutManagerInstance().getByUserName(name);
-            if (t != null) {
-                return t;
-            }
-            t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
-        }
-        if (t == null) {
-            messageInvalidActionItemName(name, "Turnout");
-        }
-        return t;
-    }
-
-    /**
-    * get SignalHead instance.  Upshifts text of string if it is a system name
-    */
-    SignalHead getSignalHead(String name) {
-        SignalHead h = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
-            if (h != null) {
-                return h;
-            }
-            h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
-        }
-        if (h == null) {
-            messageInvalidActionItemName(name, "SignalHead");
-        }
-        return h;
-    }
-
-    /**
-    * get SignalMast instance.
-    */
-    SignalMast getSignalMast(String name) {
-        SignalMast h = null;
-        name = name.trim();
-        if ((name != null) && (!name.equals(""))) {
-            h = InstanceManager.signalMastManagerInstance().getByUserName(name);
-            if (h != null) {
-                return h;
-            }
-            h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
-        }
-        if (h == null) {
-            messageInvalidActionItemName(name, "SignalMast");
-        }
-        return h;
-    }
-
-	/**
-	 * Parses time in hh:mm format given a string in the correct format
-	 * <P>
-	 * Returns integer = hh*60 + mm (minutes since midnight) if parse is
-	 * successful, else returns -1.
-	 * <P>
-	 * If errors in format are found, an error message is sent to the user and
-	 * logged
-	 * 
-	 * @param s -
-	 *            string with time in hh:mm format
-	 */
+    
 	int parseTime(String s) {
 		int nHour = 0;
 		int nMin = 0;
