@@ -563,8 +563,8 @@ public class TrainBuilder extends TrainCommon{
 				continue;
 			}
 			// skip engines models that train does not service
-			if (!train.getEngineModel().equals("") && !engine.getModel().equals(train.getEngineModel())){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeEngineModel"),new Object[]{engine.toString(), engine.getModel()}));
+			if (!model.equals("") && !engine.getModel().equals(model)){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeEngineModel"),new Object[]{engine.toString(), engine.getModel(), engine.getLocationName()}));
 				continue;
 			}
 			// Does the train have a very specific engine road name requirement?
