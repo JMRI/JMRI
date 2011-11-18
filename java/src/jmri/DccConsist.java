@@ -330,16 +330,23 @@ public class DccConsist implements Consist, ProgListener{
          * the direction bits of each locomotive.
          */
 	public void reverse(){
-        // reverse the direction of the list 
-        java.util.Collections.reverse(ConsistList);
-        // and itterate through the list to reverse the directions of the 
-        // individual elements of the list.
-        java.util.Iterator<DccLocoAddress> i= ConsistList.iterator();
-        while(i.hasNext()){
-          DccLocoAddress locoaddress=i.next() ;
-	  add(locoaddress,getLocoDirection(locoaddress));  
-	  if(ConsistPosition.contains(locoaddress))
-	  {
+          // save the old lead locomotive direction.
+          Boolean oldDir=ConsistDir.get(ConsistList.get(0));
+          // reverse the direction of the list 
+          java.util.Collections.reverse(ConsistList);
+          // and then save the new lead locomotive direction
+          Boolean newDir=ConsistDir.get(ConsistList.get(0));
+          // and itterate through the list to reverse the directions of the 
+          // individual elements of the list.
+          java.util.Iterator<DccLocoAddress> i= ConsistList.iterator();
+          while(i.hasNext()){
+            DccLocoAddress locoaddress=i.next();
+            if(oldDir==newDir)
+	      add(locoaddress,getLocoDirection(locoaddress));
+            else 
+	      add(locoaddress,!getLocoDirection(locoaddress));
+	    if(ConsistPosition.contains(locoaddress))
+	    {
 		if(getPosition(locoaddress)==Consist.POSITION_LEAD)
 		   setPosition(locoaddress,Consist.POSITION_TRAIL);
 		else if(getPosition(locoaddress)==Consist.POSITION_TRAIL)
@@ -347,9 +354,8 @@ public class DccConsist implements Consist, ProgListener{
 		else 
 		   setPosition(locoaddress,
                             ConsistList.size()-getPosition(locoaddress));
-	  }
-        }
-
+	    }
+          }
 	}
 
 

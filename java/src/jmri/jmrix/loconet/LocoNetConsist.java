@@ -119,7 +119,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	   log.debug("consist " +ConsistAddress +" obtaining direction for " +address +" Consist List Size " +ConsistList.size());
 	   if(ConsistType==ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
 		if(address==ConsistAddress) return true;
-		if(ConsistDir.contains(address)) {
+		if(ConsistList.contains(address)) {
 		  Boolean Direction = ConsistDir.get(address);
 		  return( Direction.booleanValue());
                 } else return(true);
@@ -135,8 +135,11 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	 */
 	private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
 	        Boolean Direction = Boolean.valueOf(directionNormal);
-		if(!(ConsistList.contains(LocoAddress))) 
+		if(!(ConsistList.contains(LocoAddress)))
 					ConsistList.add(LocoAddress);
+                if(ConsistDir.containsKey(LocoAddress)) {
+                   ConsistDir.remove(LocoAddress);
+                }
 		ConsistDir.put(LocoAddress,Direction);
 	}	
 
@@ -162,12 +165,22 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 		notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);	   	
 	      }	
 	      else if(ConsistType==ADVANCED_CONSIST) {
+		    if(ConsistList.contains(LocoAddress)){
+		       // we are changing the direction, so remove first, 
+                       // then add
+                       removeFromAdvancedConsist(LocoAddress); 
+                    }
 	            addToConsistList(LocoAddress,directionNormal);
 		    if(leadSlot==null || consistRequestState!=IDLESTATE)
 			needToWrite.add(LocoAddress);
 		    else
 	               addToAdvancedConsist(LocoAddress, directionNormal);
 	      } else if(ConsistType==CS_CONSIST) {
+		    if(ConsistList.contains(LocoAddress)){
+		       // we are changing the direction, so remove first, 
+                       // then add
+                       removeFromCSConsist(LocoAddress); 
+                    }
 		    addToConsistList(LocoAddress,directionNormal);
 		    if(leadSlot==null || consistRequestState!=IDLESTATE)
 			needToWrite.add(LocoAddress);
@@ -307,6 +320,7 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
              trafficController.sendLocoNetMessage(msg);	   	
            }
 	   consistRequestState=IDLESTATE;
+	   if(needToWrite.size()!=0) delayedAdd();
 	}
 
 	/*
@@ -323,9 +337,11 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
              trafficController.sendLocoNetMessage(msg);	   	
            }
 	   consistRequestState=IDLESTATE;
+	   if(needToWrite.size()!=0) delayedAdd();
 	}
 
 	private void setDirection(LocoNetThrottle t){
+	   log.debug("consist " +ConsistAddress +" set direction for " + t.getLocoAddress());
 	    // send a command to set the direction
 	    // of the locomotive in the slot.
             Boolean directionNormal=getLocoDirection((DccLocoAddress) t.getLocoAddress());
@@ -345,7 +361,10 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 
 	// slot listener interface functions
 	public void notifyChangedSlot(LocoNetSlot s) {
-		log.debug("notified Slot " +s.getSlot() +" changed with mode "+consistRequestState);
+		log.debug("Notified slot " +s.getSlot() +
+                          " changed with mode " +consistRequestState + 
+                          " slot consist state: " + 
+                          LnConstants.CONSIST_STAT(s.consistStatus()) );
 		switch(consistRequestState){
 		   case LEADREQUESTSTATE:
 			leadSlot=s;
@@ -368,6 +387,8 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 				 throttleManager.canBeLongAddress(s.locoAddr())),
 				ConsistListener.OPERATION_SUCCESS);	   	
 			if(needToWrite.size()!=0) delayedAdd();
+	                else 
+                          consistRequestState=IDLESTATE;
 		}
 	}
 
@@ -385,11 +406,6 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 		  LocoNetSlot tempSlot=((LocoNetThrottle) t).getLocoNetSlot();
 		  tempSlot.addSlotListener(this);
 		  setDirection(((LocoNetThrottle) t));
-	          if(ConsistType==ADVANCED_CONSIST)
-		  {
-		     setSlotModeAdvanced(tempSlot);
-		  }
-		  linkSlots(leadSlot,tempSlot);
 	       }
 	     } catch (java.lang.ClassCastException cce) {
 	       // if the simulator is in use, we will
