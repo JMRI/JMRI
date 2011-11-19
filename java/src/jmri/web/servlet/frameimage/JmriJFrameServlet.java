@@ -275,11 +275,11 @@ public class JmriJFrameServlet implements Servlet {
             		1,      // one click
             		false   // not a popup
             );
-            ((jmri.jmrit.display.Positionable)c).doMouseClicked(e);
+            ((jmri.jmrit.display.MultiSensorIcon)c).doMouseClicked(e);
             return;
            
         } else if (c instanceof jmri.jmrit.display.Positionable) {
-            if (log.isDebugEnabled()) log.debug("Invoke Pressed and Clicked on Positionable");
+            if (log.isDebugEnabled()) log.debug("Invoke Pressed, Released and Clicked on Positionable");
 
             MouseEvent e = new MouseEvent(c,
             		MouseEvent.MOUSE_PRESSED,
@@ -290,6 +290,16 @@ public class JmriJFrameServlet implements Servlet {
             		false   // not a popup
             );
             ((jmri.jmrit.display.Positionable)c).doMousePressed(e);
+
+            e = new MouseEvent(c,
+            		MouseEvent.MOUSE_RELEASED,
+            		0,      // time
+            		0,      // modifiers
+            		x,y,    // x, y not in this component?
+            		1,      // one click
+            		false   // not a popup
+            );
+            ((jmri.jmrit.display.Positionable)c).doMouseReleased(e);
 
             e = new MouseEvent(c,
             		MouseEvent.MOUSE_CLICKED,
