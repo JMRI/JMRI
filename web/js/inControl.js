@@ -211,6 +211,17 @@ var $xmlioSend = function(xml){
 					$xmlioSend(jqXHR.responseText);
 					return;
 				}
+				for(var i = 0; i < 29; i++){
+					if($paramFnActive[i] && (((typeof($paramFnAddress[i]) != "number") && address == $paramLocoAddress) || address == $paramFnAddress[i])){
+						s = $xmlNode.find("F" + i).text();
+						if(s.length > 0){
+							$FnPressed[i] = ("true" == s);
+							if($paramFnShunt[i]) $shunt = $FnPressed[i];
+							$updateFn(i);
+							if($paramFnAutoUnpress[i] && $FnPressed[i]) $xmlioSendSetLocoFunction(typeof($paramFnAddress[i]) != "number" ? $paramLocoAddress : $paramFnAddress[i], i, false);
+						}
+					}
+				}
 				if(address == $paramLocoAddress){
 					int = Math.round(parseFloat($xmlNode.find("speed").text()) * 100);
 					if(int > 100) int = 100;
@@ -223,16 +234,6 @@ var $xmlioSend = function(xml){
 					$speedValue = int;
 					$forward = frw;
 					$updateSpeed();
-				}
-				for(var i = 0; i < 29; i++){
-					if($paramFnActive[i] && (((typeof($paramFnAddress[i]) != "number") && address == $paramLocoAddress) || address == $paramFnAddress[i])){
-						s = $xmlNode.find("F" + i).text();
-						if(s.length > 0){
-							$FnPressed[i] = ("true" == s);
-							$updateFn(i);
-							if($paramFnAutoUnpress[i] && $FnPressed[i]) $xmlioSendSetLocoFunction(typeof($paramFnAddress[i]) != "number" ? $paramLocoAddress : $paramFnAddress[i], i, false);
-						}
-					}
 				}
 			} else {
 				$xmlNode = $xmlReturned.find("item");
@@ -250,9 +251,12 @@ var $xmlioSend = function(xml){
 var $imagesInDir = function(dir){
 	$.ajax({
 		url: dir,
-		cache: true,
+		async: false,
 		type: "GET",
 		dataType: "html",
+		error: function(jqXHR, textStatus, errorThrown){
+			if(jqXHR.status == 404) alert("Error calling '" + dir + "' page."); else alert("AJAX error.\n\nStatus:\n" + jqXHR.status + "\n\nResponse:\n" + jqXHR.responseText + "\n\nError:\n" + errorThrown);
+		},
 		success: function(htmlReturned, status, jqXHR){
 			var $htmlReturned = $(htmlReturned);
 			var files = [];
@@ -301,13 +305,16 @@ var $resizeFunctionImage = function(thisObj){
 }
 
 //----------------------------------------- Vars
+var $xmlRosterPath = "/prefs/roster.xml";
 var $xmlioPath = "/xmlio";
 var $imagesPath = "/web/images/";
 var $userImagesPath = "/prefs/resources/";
+var allUrlParameters;
 var $selectAux;
 var $imagesFileList = [];
 var $imagesFileListLoaded = false;
 var $ResizeCheckInterval = 500;												//ms
+var $RetrieveFrameInterval = 3000;											//ms
 var $SizeReference;
 var $SizeReferenceMin = 30;													//px minimum
 var $SizeReferencePercent = 7;												//%
@@ -317,6 +324,8 @@ var $TextSizeRatioL = 1.3;													//large
 var $LocoImageLayoutHeightPercent = 18;										//%
 var $viewportWidth = 0;
 var $viewportHeight = 0;
+var $frameInitHeight = -1;
+var $frameInitWidth = -1;
 var $isMultiPage;
 var $insideMulti;
 var $iframeId = "";
@@ -341,7 +350,7 @@ var $paramTextSizeRatio;
 var $paramPower;
 var $paramSpeedCtrlRight;
 var $paramSpeedCtrlButtons;
-var $paramPanelName;
+var $paramFrameName;
 var $paramLocoName;
 var $paramLocoAddress;
 var $paramLocoImage;
@@ -362,7 +371,7 @@ var $QueryStringText =
 	"<br />- Power &nbsp;&nbsp;(power button)" +
 	"<br />- SpeedCtrlRight &nbsp;&nbsp;(speed control on right)" +
 	"<br />- SpeedCtrlButtons &nbsp;&nbsp;(speed control with buttons)" +
-	"<br />- PanelName (display a panel - case sensitive name - instead of a throttle)" +
+	"<br />- FrameName (display a frame - case sensitive name - instead of a throttle)" +
 	"<br />- LocoName (loco or function only decoder - case sensitive name)" +
 	"<br />- LocoAddress (loco or function only decoder)" +
 	"<br />- LocoImage &nbsp;&nbsp;(URL)" +
@@ -382,16 +391,20 @@ var $QueryStringText =
 	"<br />Examples:" +
 	"<br />http://localhost:12080/web/inControl.html?loconame7=loco1" +
 	"<br />http://localhost:12080/web/inControl.html?POWER=x&LocoName=loco1" +
-	"<br />http://localhost:12080/web/inControl.html?Panelname=myPanel" +
+	"<br />http://localhost:12080/web/inControl.html?Framename=myFrame" +
 	"";
 var $HelpText =
-	"<br />Version 2.1 - by Oscar Moutinho" +
+	"<br />Version 2.3 - by Oscar Moutinho" +
 	"<br />" +
 	"<br />All browsers: set zoom to 100%." +
 	"<br />Google Chrome: deactivate 'instant' functionality." +
-	"<br />This page may be opened in iFrames of any size - you may create sets of throttle/panel controls in HTML pages." +
+	"<br />This page may be opened in iFrames of any size - you may create sets of throttle/frame controls in HTML pages." +
 	"<br />" +
-	"<br />You may select any image from the internet. Just write the correct URL." +
+	"<br />The Locos in the roster file are always loaded." +
+	"<br />" +
+	"<br />To correctly display JMRI Frames, you must select 'No scrollbars' in 'Panel editor'." +
+	"<br />" +
+	"<br />For Loco or Function Keys, you may select any image from the internet. Just write the correct URL." +
 	"<br />Example: http://www.anysite.org/images/Loco3.jpg" +
 	"<br />You may also select images from JMRI '/web/images/' directory (directly from the list)." +
 	"<br />The images already stored in JMRI user resources '/prefs/resources/' must be written without directory info (ex.: MyHorn.png)." +
@@ -400,10 +413,8 @@ var $HelpText =
 //----------------------------------------- Run at start up
 $(document).ready(function(){
 	$readParametersFromQueryString();
-	if(!$paramRemoveFromLocalStorage && $paramPanelName.length > 0){
-		$("body").html("<iframe id='ifrmPanel' scrolling='no' frameborder='0' style='margin: -4px 0 0 -4px;'></iframe>");	//-4px to fix iframe margins
-		$("body").css("overflow", "hidden");	//to fix iframe margins
-		$managePanelDisplay();
+	if(!$paramRemoveFromLocalStorage && $paramFrameName.length > 0){
+		$manageFrameDisplay();
 		return;
 	};
 	$("body").html(
@@ -435,52 +446,59 @@ $(document).ready(function(){
 	}
 });
 
-//----------------------------------------- Manage panel display
-var $managePanelDisplay = function(){
-	var $ifrmPanel = $("#ifrmPanel");
-	$ifrmPanel.load(function(){
-		$buildPanelLayout();
+//----------------------------------------- Manage frame display
+var $manageFrameDisplay = function(){
+	$viewportHeight = $(window).height() - 1;	// -1 to prevent some resize issues
+	$viewportWidth = $(window).width() - 1;		// -1 to prevent some resize issues
+	$("body").css("overflow", "hidden");		//to fix possible margins overflow
+	$("body").html("<img id='imgFrame' alt='" + $paramFrameName + "' title='" + $paramFrameName + "' border='0' ismap='ismap' style='margin: -8px -8px -8px -8px;' />");	//to fix iframe margins (top, right, bottom, left)
+	var $imgFrame = $("#imgFrame");
+	$imgFrame.load(function(){
+		if($frameInitHeight >= 0 && $frameInitWidth >= 0) return;
+		$frameInitHeight = $imgFrame.height();
+		$frameInitWidth = $imgFrame.width();
+		$imgFrame.height($viewportHeight);
+		$imgFrame.width($viewportWidth);
+		window.setInterval(
+			"$('#imgFrame').attr('src', '/frame/' + encodeURIComponent($paramFrameName) + '.png?loop=' + Math.floor(Math.random() * 9999));"	//URL must be different to force retrieve
+			, $RetrieveFrameInterval
+		);
+		window.setInterval(							// -1 to prevent some resize issues
+			"if(($viewportHeight != $(window).height() - 1) || ($viewportWidth != $(window).width() - 1)){" +
+			"	$viewportHeight = $(window).height() - 1;" +
+			"	$viewportWidth = $(window).width() - 1;" +
+			"	var $imgFrame = $('#imgFrame');" +
+			"	$imgFrame.height($viewportHeight);" +
+			"	$imgFrame.width($viewportWidth);" +
+			"}"
+			, $ResizeCheckInterval
+		);
 	});
-	$ifrmPanel.height($(window).height() - 1);
-	$ifrmPanel.width($(window).width() - 1);
-	$ifrmPanel.attr("src", "/panel/" + encodeURIComponent($paramPanelName) + ".html");
-	window.setInterval(	// -1 to prevent some resize issues
-		"if(($viewportHeight != $(window).height() - 1) || ($viewportWidth != $(window).width() - 1)){" +
-			"$viewportHeight = $(window).height() - 1;" +
-			"$viewportWidth = $(window).width() - 1;" +
-			"$('#ifrmPanel').height($viewportHeight);" +
-			"$('#ifrmPanel').width($viewportWidth);" +
-			"$buildPanelLayout();" +	
-		"}"
-		, $ResizeCheckInterval
-	);
-}
-
-//----------------------------------------- Build panel layout
-var $buildPanelLayout = function(){
-	var $ifrmPanel = $("#ifrmPanel");
-	var $iframePageImg = $($ifrmPanel[0].contentWindow.document.body).find("a img");
-	var $initHeight = $iframePageImg.height();
-	var $initWidth = $iframePageImg.width();
-	$iframePageImg.height($ifrmPanel.height());
-	$iframePageImg.width($ifrmPanel.width());
-	$iframePageImg.offset({top: -8, left: -8});
-	$iframePageImg.click(function(e){
-		var $Y = Math.round(e.clientY * $initHeight / $ifrmPanel.height());
-		var $X = Math.round(e.clientX * $initWidth / $ifrmPanel.width());
-		$ifrmPanel[0].contentWindow.location.href = $iframePageImg.parent().attr("href") + "?" + $X + "," + $Y;
-		return false;
+	$imgFrame.error(function(){
+		$frameInitHeight = $viewportHeight;
+		$frameInitWidth = $viewportWidth;
+		alert("Could not load frame '" + $paramFrameName + "'.");
 	});
+	$imgFrame.click(function(e){
+		var $imgFrame = $("#imgFrame");
+		var $Y = Math.round(e.clientY * $frameInitHeight / $imgFrame.height());
+		var $X = Math.round(e.clientX * $frameInitWidth / $imgFrame.width());
+		$.get("/frame/" + encodeURIComponent($paramFrameName) + ".html?" + $X + "," + $Y, function(data) {
+			$("#imgFrame").attr("src", "/frame/" + encodeURIComponent($paramFrameName) + ".png?click=" + Math.floor(Math.random() * 9999));		//URL must be different to force retrieve
+		});
+		e.preventDefault();
+	});
+	$imgFrame.attr("src", "/frame/" + encodeURIComponent($paramFrameName) + ".png");
 }
 
 //----------------------------------------- Run at start (inControlMulti)
 var $onStart_inControlMulti = function(){
 	$buildLayoutMulti();
-	window.setInterval(	// -1 to prevent some resize issues
+	window.setInterval(							// -1 to prevent some resize issues
 		"if(($viewportHeight != $(window).height() - 1) || ($viewportWidth != $(window).width() - 1)){" +
-			"$viewportHeight = $(window).height() - 1;" +
-			"$viewportWidth = $(window).width() - 1;" +
-			"$rebuildLayoutMulti();" +	
+		"	$viewportHeight = $(window).height() - 1;" +
+		"	$viewportWidth = $(window).width() - 1;" +
+		"	$rebuildLayoutMulti();" +	
 		"}"
 		, $ResizeCheckInterval
 	);
@@ -549,16 +567,18 @@ var $rebuildLayoutMulti = function(){
 //----------------------------------------- Run at start (inControl)
 var $onStart_inControl = function(){
 	var f;
-	$.ajaxSetup({url: $xmlioPath, cache: false, type: "POST", dataType: "xml"});
+	$.ajaxSetup({url: $xmlioPath, async: true, cache: false, type: "POST", dataType: "xml"});
 	$imagesInDir($imagesPath);
 	$("#settings").hide();
-	$loadApplicationParameters();
 	if($paramRemoveFromLocalStorage){
 		$removeApplicationParameters();
 		alert("Parameters removed from Local Storage.");
 		self.close();
 		return;
 	}
+	$loadApplicationParameters();
+	$loadRoster();
+	if($paramLocoName == "" && $LocoNameList.length > 0) $paramLocoName = $LocoNameList[0];
 	$loadParametersByLocoName($paramLocoName);
 //$DisplayAllParameters();														//For debug
 	f = false;
@@ -579,14 +599,137 @@ var $onStart_inControl = function(){
 	$sizeAndBuild();
 	$xmlioSendGetPower();
 	$xmlioSendGetLoco();
-	window.setInterval(	// -1 to prevent some resize issues
+	window.setInterval(							// -1 to prevent some resize issues
 		"if(($viewportHeight != $(window).height() - 1) || ($viewportWidth != $(window).width() - 1)) $sizeAndBuild();"
 		, $ResizeCheckInterval
 	);
 };
 
+//----------------------------------------- Retrieve roster
+var $loadRoster = function(){
+	$.ajax({
+		url: $xmlRosterPath,
+		async: false,
+		type: "GET",
+		error: function(jqXHR, textStatus, errorThrown){
+			if(jqXHR.status == 404) alert("Roster empty.\nNo locos defined in JMRI."); else alert("AJAX error.\n\nStatus:\n" + jqXHR.status + "\n\nResponse:\n" + jqXHR.responseText + "\n\nError:\n" + errorThrown);
+		},
+		success: function(xmlReturned, status, jqXHR){
+			var $locoName = $paramLocoName;
+			var $locoAddress = $paramLocoAddress;
+			var $locoImage = $paramLocoImage;
+			var $locoNoSpeedCtrl = $paramLocoNoSpeedCtrl;
+			var $locoFnActive = [];
+			var $locoFnToggle = [];
+			var $locoFnAutoUnpress = [];
+			var $locoFnLabel = [];
+			var $locoFnImage = [];
+			var $locoFnImagePressed = [];
+			var $locoFnAddress = [];
+			var $locoFnShunt = [];
+			for(var i = 0; i < 29; i++){
+				$locoFnActive[i] = $paramFnActive[i];
+				$locoFnToggle[i] = $paramFnToggle[i];
+				$locoFnAutoUnpress[i] = $paramFnAutoUnpress[i];
+				$locoFnLabel[i] = $paramFnLabel[i];
+				$locoFnImage[i] = $paramFnImage[i];
+				$locoFnImagePressed[i] = $paramFnImagePressed[i];
+				$locoFnAddress[i] = $paramFnAddress[i];
+				$locoFnShunt[i] = $paramFnShunt[i];
+			}
+			var $xmlReturned = $(xmlReturned);
+			var $locos = [];
+			$xmlReturned.find("roster-config roster locomotive").each(function(){ 
+				var $loco = {
+					name: $.trim($(this).attr("id")),
+					address: parseInt($(this).attr("dccAddress"), 10),
+					icon: $.trim($(this).attr("iconFilePath")),
+					image: $.trim($(this).attr("imageFilePath")),
+					shunt: $.trim($(this).attr("IsShuntingOn")),
+					functions: []
+				};
+				var $functions = [];
+				$(this).find("functionlabels functionlabel").each(function(){ 
+					var $function = {
+						number: parseInt($(this).attr("num"), 10),
+						toggle: ($(this).attr("lockable") == "true"),
+						label: $.trim($(this).text()),
+						image: $.trim($(this).attr("functionImage")),
+						imagePressed: $.trim($(this).attr("functionImageSelected"))
+					};
+					$functions.push($function);
+				});
+				$loco.functions = $functions;
+				$locos.push($loco);
+			});
+			var $auxImg;
+			var $auxInt;
+			var f;
+			for(var i = 0; i < $locos.length; i++){
+				$paramLocoName = $locos[i].name;
+				$cleanParametersByLocoName($paramLocoName);
+				$loadParametersByLocoName($paramLocoName);
+				$paramLocoAddress = $locos[i].address;
+				$auxImg = $auxImage($locos[i].image, $locos[i].icon);
+				if($auxImg.length > 0) if($auxImg.indexOf("/") != 0) $auxImg = $userImagesPath + $auxImg;
+				if($auxImg.length > 0) $paramLocoImage = $auxImg;
+				for(var j = 0; j < $locos[i].functions.length; j++){
+					$paramFnActive[$locos[i].functions[j].number] = true;
+					$paramFnToggle[$locos[i].functions[j].number] = $locos[i].functions[j].toggle;
+					if($locos[i].functions[j].label.length > 0) $paramFnLabel[$locos[i].functions[j].number] = $locos[i].functions[j].label;
+					$auxImg = $auxImage($locos[i].functions[j].image);
+					if($auxImg.length > 0) if($auxImg.indexOf("/") != 0) $auxImg = $userImagesPath + $auxImg;
+					if($auxImg.length > 0) $paramFnImage[$locos[i].functions[j].number] = $auxImg;
+					$auxImg = $auxImage($locos[i].functions[j].imagePressed);
+					if($auxImg.length > 0) if($auxImg.indexOf("/") != 0) $auxImg = $userImagesPath + $auxImg;
+					if($auxImg.length > 0) $paramFnImagePressed[$locos[i].functions[j].number] = $auxImg;
+				}
+				if($locos[i].shunt.length > 1){
+					$auxInt = parseInt($locos[i].shunt.substr(1), 10);
+					$paramFnActive[$auxInt] = true;
+					$paramFnToggle[$auxInt] = true;
+					$paramFnShunt[$auxInt] = true;
+				}
+				f = false;
+				for(var l = 0; l < $LocoNameList.length; l++){
+					if($LocoNameList[l] == $paramLocoName){
+						f = true;
+						break;
+					}
+				}
+				if(!f) $LocoNameList.push($paramLocoName);
+				$saveParametersByLocoName($paramLocoName);
+			}
+			$LocoNameList.sort();
+			$saveLocoNameList();
+			$paramLocoName = $locoName;
+			$paramLocoAddress = $locoAddress;
+			$paramLocoImage = $locoImage;
+			$locoNoSpeedCtrl = $paramLocoNoSpeedCtrl;
+			for(var i = 0; i < 29; i++){
+				$paramFnActive[i] = $locoFnActive[i];
+				$paramFnToggle[i] = $locoFnToggle[i];
+				$paramFnAutoUnpress[i] = $locoFnAutoUnpress[i];
+				$paramFnLabel[i] = $locoFnLabel[i];
+				$paramFnImage[i] = $locoFnImage[i];
+				$paramFnImagePressed[i] = $locoFnImagePressed[i];
+				$paramFnAddress[i] = $locoFnAddress[i];
+				$paramFnShunt[i] = $locoFnShunt[i];
+			}
+		}
+	});
+}
+
+//----------------------------------------- Aux image URL
+var $auxImage = function(Url1, Url2){
+	var Url = "";
+	if(Url1) if(Url1.length > 0 && Url1.image != "__noImage.jpg") Url = Url1;
+	if(Url.length == 0) if(Url2) if(Url2.length > 0 && Url2.image != "__noImage.jpg") Url = Url2;
+	return Url;
+}
+
 //----------------------------------------- Standard size and build repeat
-var $sizeAndBuild = function(){	// -1 to prevent some resize issues
+var $sizeAndBuild = function(){					// -1 to prevent some resize issues
 	$changeBothSizes = (($viewportWidth != $(window).width() - 1) && ($viewportHeight != $(window).height() - 1));
 	$viewportWidth = $(window).width() - 1;
 	$viewportHeight = $(window).height() - 1;
@@ -603,7 +746,7 @@ var $DisplayAllParameters = function(){
 	s+= "\nPower [" + $paramPower + "]";
 	s+= "\nSpeedCtrlRight [" + $paramSpeedCtrlRight + "]";
 	s+= "\nSpeedCtrlButtons [" + $paramSpeedCtrlButtons + "]";
-	s+= "\nPanelName [" + $paramPanelName + "]";
+	s+= "\nFrameName [" + $paramFrameName + "]";
 	alert(s);
 	$DisplayLocoNameList();
 	$DisplayCurrentLocoInfo();
@@ -642,7 +785,7 @@ var $readParametersFromQueryString = function(){
 	var s;
 	var n;
 	var nThrottles = 0;
-	var allUrlParameters = $.getUrlParameters();
+	allUrlParameters = $.getUrlParameters();
 	$paramRemoveFromLocalStorage = (typeof(allUrlParameters["removefromlocalstorage"]) != "undefined" && $.trim(allUrlParameters["removefromlocalstorage"]).length > 0);
 	$paramXmlioDebug = (typeof(allUrlParameters["xmliodebug"]) != "undefined" && $.trim(allUrlParameters["xmliodebug"]).length > 0);
 	for(var i = 0; i < allUrlParameters.length; i++){
@@ -670,8 +813,8 @@ var $readParametersFromQueryString = function(){
 	if(typeof(allUrlParameters["power"]) == "undefined") $paramPower = ""; else $paramPower = ($.trim(allUrlParameters["power"]).length > 0);
 	if(typeof(allUrlParameters["speedctrlright"]) == "undefined") $paramSpeedCtrlRight = ""; else $paramSpeedCtrlRight = ($.trim(allUrlParameters["speedctrlright"]).length > 0);
 	if(typeof(allUrlParameters["speedctrlbuttons"]) == "undefined") $paramSpeedCtrlButtons = ""; else $paramSpeedCtrlButtons = ($.trim(allUrlParameters["speedctrlbuttons"]).length > 0);
-	if(typeof(allUrlParameters["panelname"]) == "undefined") allUrlParameters["panelname"] = "";
-	$paramPanelName = $.trim(allUrlParameters["panelname"]);
+	if(typeof(allUrlParameters["framename"]) == "undefined") allUrlParameters["framename"] = "";
+	$paramFrameName = $.trim(allUrlParameters["framename"]);
 	if(typeof(allUrlParameters["loconame"]) == "undefined"){
 		$paramLocoName = "";
 	} else {
@@ -2013,7 +2156,10 @@ var $updateFn = function(func){
 $.extend({
 	getUrlParameters: function(){							//Item 'undefined' if index not found
 		var vars = [], hash, key;
-		var hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
+		var hashes;
+		var auxInt = window.location.href.indexOf("?");
+		if(auxInt < 0) return vars;
+		hashes = window.location.href.slice(auxInt + 1).split("&");
 		for(var i = 0; i < hashes.length; i++){
 			if (hashes[i].indexOf("=") == -1) hashes[i]+= "=";
 			hash = hashes[i].split("=");

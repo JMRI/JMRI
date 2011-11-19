@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright ($Author: Oscar Moutinho $) 2011 -->
 <!-- $Id: inControl.shtml 17977 2011-11-04 22:00:00Z Oscar Moutinho $ -->
-<title>JMRI: inControl - Web Throttles and Panels</title>
+<title>JMRI: inControl - Web Throttles and Frames</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -19,7 +19,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>JMRI: inControl - Web Throttles and Panels (inControl.html application)</h1>
+<h1>JMRI: inControl - Web Throttles and Frames (inControl.html application)</h1>
 <p>
 This application is a single web page that runs on the most recent browsers in computers, smartphones and tablets.
 <br /><b>There is nothing to install !</b>
@@ -28,14 +28,14 @@ This application is a single web page that runs on the most recent browsers in c
 To start using JMRI through a web browser, you just need to activate the included <b>Mini Web Server</b>.
 You may found additional information <a href="/help/en/html/web/index.shtml">here</a>.
 </p>
-<p>It controls not only locomotives and function decoders, as a web throttle, but also turnouts, lights and other devices through JMRI active panels.</p>
+<p>It controls not only locomotives and function decoders, as a web throttle, but also turnouts, lights and other devices through JMRI active frames.</p>
 <p><b>inControl</b> is completely resizable and it ajusts automatically to the size and orientation of the device screen.</p>
 <p>Anyone can create web pages with iframes containing <b>inControl.html</b>, in order to create more or less complex control panels.</p>
 <h3>Screen samples ...</h3>
 <p>
-<img src="images/Panel.png?Maxheigth=300" height="300" title="A panel example">
+<img src="images/Panel.png?Maxheigth=300" height="300" title="A frame example">
 &nbsp;&nbsp;
-<img src="images/AnalogClock.png?Maxheigth=300" height="300" title="An analog clock panel">
+<img src="images/AnalogClock.png?Maxheigth=300" height="300" title="An analog clock frame">
 &nbsp;&nbsp;
 <img src="images/Throttle1.png?Maxheigth=300" height="300" title="A throttle">
 &nbsp;&nbsp;

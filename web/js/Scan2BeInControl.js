@@ -26,7 +26,7 @@ var $isLocalhost;
 var $xmlRosterPath = "/prefs/roster.xml";
 var $inControlURL;
 var $help =
-	"Version 1.2 - by Oscar Moutinho" +
+	"Version 1.3 - by Oscar Moutinho" +
 	"\n" +
 	"\nThis application lists the roster (locos) defined in JMRI." +
 	"\n" +
@@ -57,7 +57,6 @@ var $loadRoster = function(){
 	$.ajax({
 		success: function(xmlReturned, status, jqXHR){
 			var $xmlReturned = $(xmlReturned);
-			var $xmlLocomotive = $(xmlReturned);
 			var $locos = [];
 			$xmlReturned.find("roster-config roster locomotive").each(function(){ 
 				var $loco = {
@@ -91,7 +90,6 @@ var $loadRoster = function(){
 			var $lnkLoco;
 			var $infoLoco;
 			var $auxLocoImg;
-			var $auxImg;
 			for(var i = 0; i < $locos.length; i++){
 				s+= "<div id='loco" + i + "' class='divLoco'>";
 				s+= "<table><tr><td>";
@@ -111,20 +109,8 @@ var $loadRoster = function(){
 			$("#roster").html(s);
 			for(var i = 0; i < $locos.length; i++){
 				if(i > 0) $("#loco" + i).css("page-break-before", "always");
-				$queryString = "loconame=" + encodeURIComponent($locos[i].name);
-				$queryString+= "&locoaddress=" + encodeURIComponent($locos[i].address);
 				$auxLocoImg = $auxImage($locos[i].image, $locos[i].icon);
-				if($auxLocoImg.length > 0) $queryString+= "&locoimage=" + encodeURIComponent($auxLocoImg);
-				if($locos[i].shunt.length > 0) $queryString+= "&" + encodeURIComponent($locos[i].shunt) + "shunt=x";
-				for(var j = 0; j < $locos[i].functions.length; j++){
-					$queryString+= "&f" + $locos[i].functions[j].number + "active=x";
-					if($locos[i].functions[j].toggle) $queryString+= "&f" + $locos[i].functions[j].number + "toggle=x";
-					if($locos[i].functions[j].label.length > 0) $queryString+= "&f" + $locos[i].functions[j].number + "label=" + encodeURIComponent($locos[i].functions[j].label);
-					$auxImg = $auxImage($locos[i].functions[j].image);
-					if($auxImg.length > 0) $queryString+= "&f" + $locos[i].functions[j].number + "image=" + encodeURIComponent($auxImg);
-					$auxImg = $auxImage($locos[i].functions[j].imagePressed);
-					if($auxImg.length > 0) $queryString+= "&f" + $locos[i].functions[j].number + "imagepressed=" + encodeURIComponent($auxImg);
-				}
+				$queryString = "loconame=" + encodeURIComponent($locos[i].name);
 				$qrCode = $("#qrCode" + i);
 				$tittleLoco = $("#tittleLoco" + i);
 				$lnkLoco = $("#lnkLoco" + i);
