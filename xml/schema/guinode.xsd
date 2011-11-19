@@ -29,8 +29,8 @@
 
 <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
 
-<xs:complexType name="NodeType">
-  <xs:annotation>
+<xs:complexType name="NodeType" mixed="true">
+    <xs:annotation>
     <xs:documentation>
       Define the XML stucture for storing the one node in the GUI tree
     </xs:documentation>
