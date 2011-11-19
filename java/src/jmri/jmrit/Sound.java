@@ -34,7 +34,10 @@ public class Sound  {
 			 streaming = true;
 			 _fileName = filename;
 		 }		 
-         else loadingSound(filename);
+         else {
+             streaming = false;
+             loadingSound(filename);
+         }
      }
 
 	/*
@@ -205,6 +208,7 @@ public class Sound  {
 		private AudioInputStream stream = null;
 		private AudioFormat format = null;
 		private SourceDataLine line = null;
+        private jmri.Sensor streamingSensor = null;
 		
 		public void run() {
 			// Note: some of the following is based on code from 
@@ -240,6 +244,17 @@ public class Sound  {
 				log.error("IOException "+e.getMessage()); 
 				return;
 			}
+            streamingStop = false;
+            if (streamingSensor==null) {
+               streamingSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISSOUNDSTREAMING"); 
+            }
+            if (streamingSensor!=null) {
+                try {
+                    streamingSensor.setState(jmri.Sensor.ACTIVE);
+                } catch (jmri.JmriException ex) {
+                    log.error("Exception while setting ISSOUNDSTREAMING sensor to ACTIVE");
+                }
+            }
 			if (!streamingStop) {
 				// set up the SourceDataLine going to the JVM's mixer
 				try {
@@ -261,6 +276,13 @@ public class Sound  {
 			}
 			if (streamingStop) {
 				line.close();
+                if (streamingSensor!=null) {
+                    try {
+                        streamingSensor.setState(jmri.Sensor.INACTIVE);
+                    } catch (jmri.JmriException ex) {
+                        log.error("Exception while setting ISSOUNDSTREAMING sensor to INACTIVE - 2");
+                    }
+                }
 				return;
 			}
 			// Read  the sound file in chunks of bytes into buffer, and
@@ -285,6 +307,13 @@ public class Sound  {
 			line.drain();
 			line.stop();
 			line.close();
+            if (streamingSensor!=null) {
+                try {
+                    streamingSensor.setState(jmri.Sensor.INACTIVE);
+                } catch (jmri.JmriException ex) {
+                    log.error("Exception while setting ISSOUNDSTREAMING sensor to INACTIVE");
+                }
+            }
 		}
 	}	
 	
