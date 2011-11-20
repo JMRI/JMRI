@@ -60,12 +60,12 @@ You may found additional information <a href="/help/en/html/web/index.shtml">her
 <h3>Help </h3>
 <p><img src="images/Help.png?Maxheigth=600" height="600" title="Generic Help"></p>
 <h2>Scan to be in control (Scan2BeInControl.html application)</h2>
-<p><b>Just point the smartphone and start controlling a loco !</b></p>
-<p>This application lists the roster (locos) defined in JMRI.</p>
-<p>To open a web throttle using <b>inControl</b>, users may:
+<p><b>Just point the smartphone and start controlling a loco or frame !</b></p>
+<p>This application lists the roster (locos) and frames defined in JMRI.</p>
+<p>To open a web throttle or frame using <b>inControl</b>, users may:
 <br />- scan the image using a smartphone (with qrCode compatible reader application)
-<br />- click or touch the Loco image or link
-<p>The parameters from JMRI are merged with the ones already stored in your device (computer, tablet or smartphone).
+<br />- click or touch the Loco or Frame image or link
+<p>For locos, the parameters from JMRI are merged with the ones already stored in your device (computer, tablet or smartphone).
 <br />If you want to use only the parameters from JMRI, you must delete the loco from your device before scanning the qrCode graph or use the link.</p>
 <p>Non functional image sample:</p>
 <p><img src="images/Scan2BeInControl.png" width="100%" title="Just point the smartphone and start using it"></p>

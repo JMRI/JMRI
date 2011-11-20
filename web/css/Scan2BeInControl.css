@@ -35,15 +35,15 @@ hr {
 	text-align:right;
 }
 
-#roster {
+#roster, #frames {
 	width:100%;
 }
 
-.divLoco {
+.divLoco, divFrame {
 	margin:10px;
 }		
 
-.imgLoco, .tittleLoco, .lnkLoco, .infoLoco {
+.imgLoco, .titleLoco, .lnkLoco, .infoLoco, .imgFrame, .titleFrame, .lnkFrame {
 	display:inline;
 }		
 
