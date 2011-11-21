@@ -149,6 +149,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 	
 	protected boolean change(Car car){
+
 		// set final destination fields before destination in case there's a schedule at destination
 		if (!ignoreFinalDestinationCheckBox.isSelected()){
 			if (finalDestinationBox.getSelectedItem() == null || finalDestinationBox.getSelectedItem().equals("")) {
@@ -178,6 +179,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				car.setNextDestTrack(finalDestTrack);
 			}
 		}
+		// save car's track
+		Track saveTrack = car.getTrack();
 		if (!super.change(car))
 			return false;
 		// return when empty fields
@@ -217,9 +220,46 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			if (CarLoads.instance().containsName(car.getType(), load))
 				car.setLoad(load);
 		}
+		// check to see if there's a schedule when placing the car at a spur
+		if (trackLocationBox.getSelectedItem() != null && !trackLocationBox.getSelectedItem().equals("") 
+				&& saveTrack != trackLocationBox.getSelectedItem()){
+			Track track = (Track)trackLocationBox.getSelectedItem();
+			if (track.getSchedule() != null){
+				if (JOptionPane.showConfirmDialog(this,
+						getRb().getString("rsDoYouWantSchedule"),
+						MessageFormat.format(getRb().getString("rsSpurHasSchedule"),new Object[]{track.getName(), track.getScheduleName()}),					
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+					String results = car.testSchedule(track);
+					if (!results.equals(Track.OKAY)){
+						JOptionPane.showMessageDialog(this,
+								MessageFormat.format(getRb().getString("rsNotAbleToApplySchedule"),new Object[]{results}),
+								getRb().getString("rsApplyingScheduleFailed"),
+								JOptionPane.ERROR_MESSAGE);
+						// restore previous location and track so we'll ask to test schedule again
+						if (saveTrack != null)
+							car.setLocation(saveTrack.getLocation(), saveTrack);
+						else
+							car.setLocation(null, null);
+						return false;
+					}
+					// now apply schedule to car
+					car.scheduleNext(track);
+					// change load to ship load
+					if (!car.getNextLoad().equals("")){
+						car.setLoad(car.getNextLoad());
+						car.setNextLoad("");
+					}
+					// change next wait to wait now!
+					if (car.getNextWait() > 0){
+						car.setWait(car.getNextWait());
+						car.setNextWait(0);
+					}
+				}
+			}
+		}
+		// determine if train services this car's load
 		if (car.getTrain() != null){
-			Train train = car.getTrain();
-			// determine if train services this car's load
+			Train train = car.getTrain();		
 			if (!train.acceptsLoadName(car.getLoad())){
 				JOptionPane.showMessageDialog(this,
 						MessageFormat.format(rb.getString("carTrainNotServLoad"), new Object[]{car.getLoad(), train.getName()}),
@@ -234,6 +274,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				return false;
 			}
 		}
+
 		// is this car part of a kernel?
 		if (car.getKernel() != null){
 			if (JOptionPane.showConfirmDialog(this,
@@ -305,7 +346,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			if (finalDestinationBox.getSelectedItem().equals("")){
 				finalDestTrackBox.removeAllItems();
 			}else{
-				log.debug("CarSetFrame sees destination: "+ finalDestinationBox.getSelectedItem());
+				log.debug("CarSetFrame sees final destination: "+ finalDestinationBox.getSelectedItem());
 				Location l = (Location)finalDestinationBox.getSelectedItem();
 				l.updateComboBox(finalDestTrackBox, _car, autoFinalDestTrackCheckBox.isSelected(), true);
 				if (_car != null && _car.getNextDestination() != null && _car.getNextDestination().equals(l) && _car.getNextDestTrack() != null)
@@ -358,7 +399,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		if (e.getPropertyName().equals(Car.NEXT_DESTINATION_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Car.NEXT_DESTINATION_TRACK_CHANGED_PROPERTY))
 			updateFinalDestinationComboBoxes();
-		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)){
 			updateLoadComboBox();
 		}
 	}

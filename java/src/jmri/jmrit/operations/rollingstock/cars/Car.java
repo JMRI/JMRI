@@ -573,11 +573,12 @@ public class Car extends RollingStock {
 	
 	/**
 	 * Check to see if track has schedule and if it does will schedule the next
-	 * item in the list.  Load the car with the next schedule load if one exists.
+	 * item in the list.  Load the car with the next schedule load if one exists,
+	 * and set the car's final destination if there's one in the schedule.
 	 * 
 	 * @param track
 	 */
-	private void scheduleNext(Track track){
+	protected void scheduleNext(Track track){
 		if ((track == null || track.getScheduleId().equals("")) 
 				&& getDestination() != null 
 				&& getDestination().equals(getNextDestination())
