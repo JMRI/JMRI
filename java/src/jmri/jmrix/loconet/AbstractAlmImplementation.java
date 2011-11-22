@@ -49,12 +49,15 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      */
     protected boolean mImage;
 
-    public AbstractAlmImplementation(int pNumber, boolean pImage) {
+    public AbstractAlmImplementation(int pNumber, boolean pImage, LnTrafficController tc) {
         mNumber = pNumber;
         mImage  = pImage;
         initData();
-	LnTrafficController.instance().addLocoNetListener(~0, this);
+        this.tc = tc;
+        tc.addLocoNetListener(~0, this);
     }
+    
+    LnTrafficController tc;
 
     /**
      * Interpret LocoNet traffic.

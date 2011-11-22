@@ -24,7 +24,10 @@ import jmri.util.StringUtil;
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @version			$Revision$
+ * @deprecated 2.13.5, Does not work with the multi-connection correctly, believe not 
+ * to work correctly before hand and that the feature is not used.
  */
+@Deprecated
 public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
     public AlmBrowserFrame() {

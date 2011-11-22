@@ -13,7 +13,10 @@ import jmri.jmrix.loconet.LnTrafficController;
 
  * @author			Bob Jacobsen    Copyright (C) 2002
  * @version			$Version:$
+ * @deprecated 2.13.5, Does not work with the multi-connection correctly, believe not 
+ * to work correctly before hand and that the feature is not used.
  */
+@Deprecated
 public class AlmBrowserAction 			extends AbstractAction {
 
 	public AlmBrowserAction(String s) { super(s);}

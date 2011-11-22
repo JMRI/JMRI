@@ -21,8 +21,11 @@ package jmri.jmrix.loconet;
  *
  * @author Bob Jacobsen     Copyright 2002
  * @version $Revision$
+ * @deprecated 2.13.5, Does not work with the multi-connection correctly, believe not 
+ * to work correctly before hand and that the feature is not used.
  */
-
+ 
+@Deprecated
 public class Se8AlmImplementation extends AbstractAlmImplementation {
 
     public static final int ENTRYSIZE = 64; // number of arguments per entry, must be power of two
@@ -32,8 +35,8 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * @param pNumber Number of this ALM
      * @param pImage Does this appear on LocoNet?
      */
-    public Se8AlmImplementation(int pNumber, boolean pImage) {
-        super(pNumber, pImage);
+    public Se8AlmImplementation(int pNumber, boolean pImage, LnTrafficController tc) {
+        super(pNumber, pImage, tc);
         initData();
     }
 

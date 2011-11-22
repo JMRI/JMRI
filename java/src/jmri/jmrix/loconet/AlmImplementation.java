@@ -17,8 +17,11 @@ package jmri.jmrix.loconet;
  *
  * @author Bob Jacobsen     Copyright 2002
  * @version $Revision$
+ * @deprecated 2.13.5, Does not work with the multi-connection correctly, believe not 
+ * to work correctly before hand and that the feature is not used.
  */
-
+ 
+@Deprecated
 public class AlmImplementation implements LocoNetListener {
 
     // constants for the ATASK value
@@ -36,12 +39,15 @@ public class AlmImplementation implements LocoNetListener {
      */
     //private boolean mImage;
 
-    public AlmImplementation(int pNumber, boolean pImage) {
+    public AlmImplementation(int pNumber, boolean pImage, LnTrafficController tc) {
         mNumber = pNumber;
         //mImage  = pImage;
         initData();
-	LnTrafficController.instance().addLocoNetListener(~0, this);
+        this.tc = tc;
+        tc.addLocoNetListener(~0, this);
     }
+    
+    LnTrafficController tc;
 
     /**
      * Interpret LocoNet traffic.
