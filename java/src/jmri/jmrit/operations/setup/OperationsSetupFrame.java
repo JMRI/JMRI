@@ -4,6 +4,7 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -25,6 +26,9 @@ import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
 
 
@@ -100,6 +104,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JComboBox westComboBox = new JComboBox();
 	JComboBox localComboBox = new JComboBox();
 	JComboBox terminateComboBox = new JComboBox();
+	
+	protected static final String NEW_LINE = "\n";
 
 	public OperationsSetupFrame() {
 		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitleOperationsSetup"));
@@ -390,142 +396,183 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			rf.initComponents();
 		}
 		if (ae.getSource() == saveButton){
-			String addOwner = ownerTextField.getText();
-			if (addOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("OwnerText"), new Object[]{Integer.toString(Control.MAX_LEN_STRING_ATTRIBUTE)}),
-						rb.getString("CanNotAddOwner"),
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			// check input fields
-			try {
-				Integer.parseInt(maxLengthTextField.getText());
-			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, rb.getString("MaxLength"),
-						rb.getString("CanNotAcceptNumber"),
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			try {
-				Integer.parseInt(maxEngineSizeTextField.getText());
-			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, rb.getString("MaxEngine"),
-						rb.getString("CanNotAcceptNumber"),
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			try {
-				Integer.parseInt(switchTimeTextField.getText());
-			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, rb.getString("MoveTime"),
-						rb.getString("CanNotAcceptNumber"),
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			try {
-				Integer.parseInt(travelTimeTextField.getText());
-			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, rb.getString("TravelTime"),
-						rb.getString("CanNotAcceptNumber"),
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			// add owner name to setup
-			Setup.setOwnerName(addOwner);
-			// add owner name to list
-			CarOwners.instance().addName(addOwner);
-			// set car types
-			if (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE) ||
-					typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR)){
-				// backup files before changing car type descriptions
-			   	Backup backup = new Backup();
-		    	String backupName = backup.createBackupDirectoryName();
-		    	// now backup files
-		    	boolean success = backup.backupFiles(backupName);
-		    	if(!success){
-		    		log.error("Could not backup files");
-		    		return;
-		    	}
-		    	if (typeDesc.isSelected()){
-		    		CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
-		    		Setup.setCarTypes(Setup.DESCRIPTIVE);
-		    	} else {
-		    		CarTypes.instance().changeDefaultNames(Setup.AAR);
-		    		Setup.setCarTypes(Setup.AAR);
-		    	}
-		    	// save all the modified files
-	    		TrainManager.instance().save();
-			}				
-			// main menu enabled?
-			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
-			Setup.setCloseWindowOnSaveEnabled(closeOnSaveCheckBox.isSelected());
-			// RFID enabled?
-			// Setup.setRfidEnabled(rfidCheckBox.isSelected());
-			// add panel name to setup
-			Setup.setPanelName(panelTextField.getText());
-			// train Icon X&Y
-			Setup.setTrainIconCordEnabled(iconCheckBox.isSelected());
-			Setup.setTrainIconAppendEnabled(appendCheckBox.isSelected());
-			// save train icon colors
-			Setup.setTrainIconColorNorth((String)northComboBox.getSelectedItem());
-			Setup.setTrainIconColorSouth((String)southComboBox.getSelectedItem());
-			Setup.setTrainIconColorEast((String)eastComboBox.getSelectedItem());
-			Setup.setTrainIconColorWest((String)westComboBox.getSelectedItem());
-			Setup.setTrainIconColorLocal((String)localComboBox.getSelectedItem());
-			Setup.setTrainIconColorTerminate((String)terminateComboBox.getSelectedItem());
-			// set train direction
-			int direction = 0;
-			if (eastCheckBox.isSelected())
-				direction = Setup.EAST + Setup.WEST;
-			if (northCheckBox.isSelected())
-				direction += Setup.NORTH + Setup.SOUTH;
-			Setup.setTrainDirection(direction);
-			// set max train length
-			Setup.setTrainLength(Integer.parseInt(maxLengthTextField.getText()));
-			// set max engine length
-			Setup.setEngineSize(Integer.parseInt(maxEngineSizeTextField.getText()));
-			// set switch time
-			Setup.setSwitchTime(Integer.parseInt(switchTimeTextField.getText()));
-			// set travel time
-			Setup.setTravelTime(Integer.parseInt(travelTimeTextField.getText()));
-			// set scale
-			if (scaleZ.isSelected())
-				Setup.setScale(Setup.Z_SCALE);
-			if (scaleN.isSelected())
-				Setup.setScale(Setup.N_SCALE);
-			if (scaleTT.isSelected())
-				Setup.setScale(Setup.TT_SCALE);
-			if (scaleOO.isSelected())
-				Setup.setScale(Setup.OO_SCALE);
-			if (scaleHOn3.isSelected())
-				Setup.setScale(Setup.HOn3_SCALE);
-			if (scaleHO.isSelected())
-				Setup.setScale(Setup.HO_SCALE);
-			if (scaleSn3.isSelected())
-				Setup.setScale(Setup.Sn3_SCALE);
-			if (scaleS.isSelected())
-				Setup.setScale(Setup.S_SCALE);
-			if (scaleOn3.isSelected())
-				Setup.setScale(Setup.On3_SCALE);
-			if (scaleO.isSelected())
-				Setup.setScale(Setup.O_SCALE);
-			if (scaleG.isSelected())
-				Setup.setScale(Setup.G_SCALE);
-			Setup.setRailroadName(railroadNameTextField.getText());
-			// Set Unit of Length
-			if (feetUnit.isSelected())
-				Setup.setLengthUnit(Setup.FEET);
-			if (meterUnit.isSelected())
-				Setup.setLengthUnit(Setup.METER);
-			Setup.setYearModeled(yearTextField.getText());
-			/* all JMRI window position and size are now saved
-			// save panel size and position
-			Setup.setOperationsSetupFrame(this);
-			*/
-			OperationsSetupXml.instance().writeOperationsFile();
-			if (Setup.isCloseWindowOnSaveEnabled())
-				dispose();
+			save();
 		}
+	}
+	
+	private void save() {
+		String addOwner = ownerTextField.getText();
+		if (addOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE) {
+			JOptionPane.showMessageDialog(this, MessageFormat.format(rb
+					.getString("OwnerText"), new Object[] { Integer
+					.toString(Control.MAX_LEN_STRING_ATTRIBUTE) }), rb
+					.getString("CanNotAddOwner"), JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		// check input fields
+		try {
+			Integer.parseInt(maxLengthTextField.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, rb.getString("MaxLength"),
+					rb.getString("CanNotAcceptNumber"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		try {
+			Integer.parseInt(maxEngineSizeTextField.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, rb.getString("MaxEngine"),
+					rb.getString("CanNotAcceptNumber"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		try {
+			Integer.parseInt(switchTimeTextField.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, rb.getString("MoveTime"),
+					rb.getString("CanNotAcceptNumber"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		try {
+			Integer.parseInt(travelTimeTextField.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, rb.getString("TravelTime"),
+					rb.getString("CanNotAcceptNumber"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		// if max train length has changed, check routes
+		int maxLength = Integer.parseInt(maxLengthTextField.getText());
+		if (maxLength < Setup.getTrainLength()) {
+			StringBuffer sb = new StringBuffer();
+			RouteManager rm = RouteManager.instance();
+			List<String> routes = rm.getRoutesByNameList();
+			int count = 0;
+			for (int i = 0; i < routes.size(); i++) {
+				Route r = rm.getRouteById(routes.get(i));
+				List<String> locations = r.getLocationsBySequenceList();
+				for (int j = 0; j < locations.size(); j++) {
+					RouteLocation rl = r.getLocationById(locations.get(j));
+					if (rl.getMaxTrainLength() > maxLength){
+						String s = MessageFormat.format(rb.getString("RouteMaxLengthExceeds"),new Object[]{r.getName(), rl.getName(), 
+								rl.getMaxTrainLength(), maxLength});
+						log.info(s);
+						sb.append(s+NEW_LINE);
+						count++;
+						break;
+					}
+				}
+				// maximum of 20 route warnings
+				if (count > 20){
+					sb.append(rb.getString("More")+NEW_LINE);
+					break;
+				}
+			}
+			if (sb.length() > 0){
+				JOptionPane.showMessageDialog(null, sb.toString(),
+						rb.getString("YouNeedToAdjustRoutes"),
+						JOptionPane.WARNING_MESSAGE);
+			}
+		}
+		// add owner name to setup
+		Setup.setOwnerName(addOwner);
+		// add owner name to list
+		CarOwners.instance().addName(addOwner);
+		// set car types
+		if (typeDesc.isSelected()
+				&& !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)
+				|| typeAAR.isSelected()
+				&& !Setup.getCarTypes().equals(Setup.AAR)) {
+			// backup files before changing car type descriptions
+			Backup backup = new Backup();
+			String backupName = backup.createBackupDirectoryName();
+			// now backup files
+			boolean success = backup.backupFiles(backupName);
+			if (!success) {
+				log.error("Could not backup files");
+				return;
+			}
+			if (typeDesc.isSelected()) {
+				CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
+				Setup.setCarTypes(Setup.DESCRIPTIVE);
+			} else {
+				CarTypes.instance().changeDefaultNames(Setup.AAR);
+				Setup.setCarTypes(Setup.AAR);
+			}
+			// save all the modified files
+			TrainManager.instance().save();
+		}
+		// main menu enabled?
+		Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
+		Setup.setCloseWindowOnSaveEnabled(closeOnSaveCheckBox.isSelected());
+		// RFID enabled?
+		// Setup.setRfidEnabled(rfidCheckBox.isSelected());
+		// add panel name to setup
+		Setup.setPanelName(panelTextField.getText());
+		// train Icon X&Y
+		Setup.setTrainIconCordEnabled(iconCheckBox.isSelected());
+		Setup.setTrainIconAppendEnabled(appendCheckBox.isSelected());
+		// save train icon colors
+		Setup.setTrainIconColorNorth((String) northComboBox.getSelectedItem());
+		Setup.setTrainIconColorSouth((String) southComboBox.getSelectedItem());
+		Setup.setTrainIconColorEast((String) eastComboBox.getSelectedItem());
+		Setup.setTrainIconColorWest((String) westComboBox.getSelectedItem());
+		Setup.setTrainIconColorLocal((String) localComboBox.getSelectedItem());
+		Setup.setTrainIconColorTerminate((String) terminateComboBox
+				.getSelectedItem());
+		// set train direction
+		int direction = 0;
+		if (eastCheckBox.isSelected())
+			direction = Setup.EAST + Setup.WEST;
+		if (northCheckBox.isSelected())
+			direction += Setup.NORTH + Setup.SOUTH;
+		Setup.setTrainDirection(direction);
+		// set max train length
+		Setup.setTrainLength(Integer.parseInt(maxLengthTextField.getText()));
+		// set max engine length
+		Setup.setEngineSize(Integer.parseInt(maxEngineSizeTextField.getText()));
+		// set switch time
+		Setup.setSwitchTime(Integer.parseInt(switchTimeTextField.getText()));
+		// set travel time
+		Setup.setTravelTime(Integer.parseInt(travelTimeTextField.getText()));
+		// set scale
+		if (scaleZ.isSelected())
+			Setup.setScale(Setup.Z_SCALE);
+		if (scaleN.isSelected())
+			Setup.setScale(Setup.N_SCALE);
+		if (scaleTT.isSelected())
+			Setup.setScale(Setup.TT_SCALE);
+		if (scaleOO.isSelected())
+			Setup.setScale(Setup.OO_SCALE);
+		if (scaleHOn3.isSelected())
+			Setup.setScale(Setup.HOn3_SCALE);
+		if (scaleHO.isSelected())
+			Setup.setScale(Setup.HO_SCALE);
+		if (scaleSn3.isSelected())
+			Setup.setScale(Setup.Sn3_SCALE);
+		if (scaleS.isSelected())
+			Setup.setScale(Setup.S_SCALE);
+		if (scaleOn3.isSelected())
+			Setup.setScale(Setup.On3_SCALE);
+		if (scaleO.isSelected())
+			Setup.setScale(Setup.O_SCALE);
+		if (scaleG.isSelected())
+			Setup.setScale(Setup.G_SCALE);
+		Setup.setRailroadName(railroadNameTextField.getText());
+		// Set Unit of Length
+		if (feetUnit.isSelected())
+			Setup.setLengthUnit(Setup.FEET);
+		if (meterUnit.isSelected())
+			Setup.setLengthUnit(Setup.METER);
+		Setup.setYearModeled(yearTextField.getText());
+		/*
+		 * all JMRI window position and size are now saved // save panel size
+		 * and position Setup.setOperationsSetupFrame(this);
+		 */
+		OperationsSetupXml.instance().writeOperationsFile();
+		if (Setup.isCloseWindowOnSaveEnabled())
+			dispose();
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
