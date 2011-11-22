@@ -261,7 +261,7 @@ public class JmriJFrameServlet implements Servlet {
         	return;
         }
         else if (c instanceof MouseListener) {
-            if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener");
+            if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener, at "+x+","+y);
             sendClickSequence((MouseListener)c, c, x, y);
             return;
 
@@ -315,18 +315,20 @@ public class JmriJFrameServlet implements Servlet {
         } else {
             MouseListener[] la = c.getMouseListeners();
             if (log.isDebugEnabled()) log.debug("Invoke "+la.length+" contained mouse listeners");
-            log.debug("component is "+c);
+            if (log.isDebugEnabled()) log.debug("component is "+c);
             /*  Using c.getLocation() above we adjusted the click position for the offset of the control relative to the frame.
              *  That works fine in the cases above.  
              *  In this case getLocation only provides the offset of the control relative to the Component.  
              *  So we also need to adjust the click position for the offset of the Component relative to the frame.
              */
-            Point pc = c.getLocationOnScreen();
-            Point pf = FrameContentPane.getLocationOnScreen();
-           	x -= (int)(pc.getX() - pf.getX());
-           	y -= (int)(pc.getY() - pf.getY());
+// was incorrect for zoomed panels, turned off
+//            Point pc = c.getLocationOnScreen();
+//            Point pf = FrameContentPane.getLocationOnScreen();
+//           	x -= (int)(pc.getX() - pf.getX());
+//           	y -= (int)(pc.getY() - pf.getY());
            	
             for (int i = 0; i<la.length; i++) {
+                if (log.isDebugEnabled()) log.debug("Send click sequence at "+x+","+y);
                 sendClickSequence(la[i], c, x, y);
             }
            return;
