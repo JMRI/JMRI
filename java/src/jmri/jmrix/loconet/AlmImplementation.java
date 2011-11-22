@@ -39,15 +39,12 @@ public class AlmImplementation implements LocoNetListener {
      */
     //private boolean mImage;
 
-    public AlmImplementation(int pNumber, boolean pImage, LnTrafficController tc) {
+    public AlmImplementation(int pNumber, boolean pImage) {
         mNumber = pNumber;
         //mImage  = pImage;
         initData();
-        this.tc = tc;
-        tc.addLocoNetListener(~0, this);
+	LnTrafficController.instance().addLocoNetListener(~0, this);
     }
-    
-    LnTrafficController tc;
 
     /**
      * Interpret LocoNet traffic.
