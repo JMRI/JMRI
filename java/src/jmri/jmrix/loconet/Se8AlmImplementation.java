@@ -35,8 +35,8 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * @param pNumber Number of this ALM
      * @param pImage Does this appear on LocoNet?
      */
-    public Se8AlmImplementation(int pNumber, boolean pImage, LnTrafficController tc) {
-        super(pNumber, pImage, tc);
+    public Se8AlmImplementation(int pNumber, boolean pImage) {
+        super(pNumber, pImage);
         initData();
     }
 
