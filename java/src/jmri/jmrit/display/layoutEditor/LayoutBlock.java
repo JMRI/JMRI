@@ -127,7 +127,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	protected void initializeLayoutBlock() {
 		// get/create a jmri.Block object corresponding to this LayoutBlock
 		block = InstanceManager.blockManagerInstance().getByUserName(blockName);
-        //System.out.println("From " + this.getDisplayName()+ " block initialise called");
 		if (block==null) {
 			// not found, create a new jmri.Block
 			String s = "";
@@ -177,7 +176,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         useExtraColor = b;
         if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
             stateUpdate();
-            //System.out.println("Do something if an advanced route is used");
         }
     }
 	public void incrementUse() {useCount ++;}
@@ -640,7 +638,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
             stateUpdate();
-            //System.out.println("Do something if an advanced route is used");
         }
 
 	}
@@ -670,6 +667,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	JTextField memoryNameField = new JTextField(16);
     JTextField metricField = new JTextField(10);
     JComboBox senseBox = new JComboBox();
+    JCheckBox permissiveCheck = new JCheckBox("Permissive Working Allowed");
     int senseActiveIndex;
     int senseInactiveIndex;
     JComboBox trackColorBox = new JComboBox();
@@ -680,7 +678,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	JButton blockEditDone;
 	JButton blockEditCancel;
 	boolean editOpen = false;
-
+    JComboBox attachedBlocks = new JComboBox();
     /**
      * Edit a Layout Block 
      */
@@ -767,13 +765,41 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             memoryNameField.setToolTipText( rb.getString("MemoryVariableTip") );
             contentPane.add(panel8);
             
+            if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+                JPanel panel19 = new JPanel();
+                panel19.setLayout(new FlowLayout());
+                JLabel metricLabel = new JLabel("Block Metric");
+                panel19.add(metricLabel);
+                panel19.add(metricField);
+                metricField.setToolTipText("set the cost for going over this block");
+                contentPane.add(panel19);
+                neighbourDir = new ArrayList<JComboBox>(getNumberOfNeighbours());
+                for(int i = 0; i<getNumberOfNeighbours(); i++){
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new FlowLayout());
+                    panel.add(new JLabel(getNeighbourAtIndex(i).getDisplayName()));
+                    panel.add(new JLabel(neighbours.get(i).getPacketFlow() + " " + getNeighbourPacketFlowAsString(i)));
+                    JComboBox dir = new JComboBox(working);
+                    Block blk = neighbours.get(i).getBlock();
+                    if(block.isBlockDenied(blk))
+                        dir.setSelectedIndex(2);
+                    else if (blk.isBlockDenied(block))
+                        dir.setSelectedIndex(1);
+                    else
+                        dir.setSelectedIndex(0);
+                    panel.add(dir);
+                    neighbourDir.add(dir);
+                    contentPane.add(panel);
+                }
+            }
             contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-            JPanel panel19 = new JPanel();
-            panel19.setLayout(new FlowLayout());
-            JLabel metricLabel = new JLabel("Block Metric");
-            panel19.add(metricLabel);
-            panel19.add(metricField);
-            metricField.setToolTipText("set the cost for going over this block");
+            JPanel panel20 = new JPanel();
+            panel20.setLayout(new FlowLayout());
+            panel20.add(permissiveCheck);
+            permissiveCheck.setToolTipText("Is another train allowed to enter the block when it is already occupied");
+            contentPane.add(panel20);
+            
             
 			// set up Done and Cancel buttons
 			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -813,7 +839,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		setColorCombo(extraColorBox,blockExtraColor);
 		memoryNameField.setText(memoryName);
         metricField.setText(Integer.toString(metric));
-		editLayoutBlockFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+
+        if(block!=null)
+            permissiveCheck.setSelected(block.getPermissiveWorking());
+        editLayoutBlockFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
 					blockEditCancelPressed(null);
 				}
@@ -821,7 +850,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         editLayoutBlockFrame.pack();
         editLayoutBlockFrame.setVisible(true);		
 		editOpen = true;
-	}	
+	}
+    
+    String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
+    
+    ArrayList<JComboBox> neighbourDir;
 	void blockEditDonePressed(ActionEvent a) {
 		boolean needsRedraw = false;
 		// check if Sensor changed
@@ -876,6 +909,23 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         int m = Integer.parseInt(metricField.getText().trim());
         if (m!=metric)
             setBlockMetric(m);
+        block.setPermissiveWorking(permissiveCheck.isSelected());
+        for(int i = 0; i<neighbourDir.size(); i++){
+            int neigh = neighbourDir.get(i).getSelectedIndex();
+            neighbours.get(i).getBlock().removeBlockDenyList(this.block);
+            this.block.removeBlockDenyList(neighbours.get(i).getBlock());
+            switch(neigh){
+                case 0 : neighbours.get(i).setPacketFlow(RXTX);
+                        break;
+                case 1 : neighbours.get(i).setPacketFlow(TXONLY);
+                        neighbours.get(i).getBlock().addBlockDenyList(this.block.getDisplayName());
+                        break;
+                case 2 : neighbours.get(i).setPacketFlow(RXONLY);
+                        this.block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
+                        break;
+            
+            }
+        }
 		// complete
 		editOpen = false;
 		editLayoutBlockFrame.setVisible(false);
@@ -1156,6 +1206,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 //if we only transmit routes to this neighbour then we do not want to listen to thier broadcast messages
                 if (workingDirection==RXTX || workingDirection==RXONLY){
                     blk.addPropertyChangeListener(this);
+                    //log.info("From " + this.getDisplayName() + " add property change " + blk.getDisplayName());
                 } else {
                     blk.removePropertyChangeListener(this);
                 }
@@ -1234,17 +1285,26 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 log.info("From " + this.getDisplayName() + " neighbour " + block.getDisplayName() + " passed " + decodePacketFlow(workingDirection) + " we have " + decodePacketFlow(adj.getPacketFlow()) + " this will be updated to " + decodePacketFlow(newPacketFlow));
             adj.setPacketFlow(newPacketFlow);
 
-            Routes neighRoute = getValidRoute(this.getBlock(), adj.getBlock());
-            if (neighRoute.getMetric()!=adj.getMetric()){
-                if(enableAddRouteLogging)
-                    log.info("From " + this.getDisplayName() + " The value of the metric we have for this route is not correct " + this.getBlock().getDisplayName() + ", stored " + neighRoute.getMetric() + " v " + adj.getMetric());
-                neighRoute.setMetric(adj.getMetric());
-                //This update might need to be more selective
-                RoutingPacket update = new RoutingPacket(UPDATE, adj.getBlock(), -1, (adj.getMetric()+metric), -1, getNextPacketID());
-                firePropertyChange("routing", null, update);
+            //If we are only set to transmit routing information to the adj, then we will not have it appearing in the routing table
+            if(newPacketFlow!=TXONLY){
+                Routes neighRoute = getValidRoute(this.getBlock(), adj.getBlock());
+                //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " valid routes returned as " + neighRoute);
+                //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " " + neighRoute);
+                if(neighRoute==null){
+                    log.info("Null route so will bomb out");
+                    return false;
+                }
+                  if (neighRoute.getMetric()!=adj.getMetric()){
+                    if(enableAddRouteLogging)
+                        log.info("From " + this.getDisplayName() + " The value of the metric we have for this route is not correct " + this.getBlock().getDisplayName() + ", stored " + neighRoute.getMetric() + " v " + adj.getMetric());
+                    neighRoute.setMetric(adj.getMetric());
+                    //This update might need to be more selective
+                    RoutingPacket update = new RoutingPacket(UPDATE, adj.getBlock(), -1, (adj.getMetric()+metric), -1, getNextPacketID());
+                    firePropertyChange("routing", null, update);
+                }
+                getRouteByDestBlock(block).setMetric(lBlock.getBlockMetric());
             }
             
-            getRouteByDestBlock(block).setMetric(lBlock.getBlockMetric());
 
             if(enableAddRouteLogging)
                 log.info("From " + this.getDisplayName() + " We were not a mutual adjacency with " + lBlock.getDisplayName() + " but now are");
@@ -1283,8 +1343,31 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return true;
     }
     
-    //determineAdjWorkingDirection
     int determineAdjPacketFlow(int our, int neigh){
+        //Both are the same
+        if (enableUpdateRouteLogging)
+            log.info("From " + this.getDisplayName() + " values passed our " + decodePacketFlow(our) + " neigh " + decodePacketFlow(neigh));
+        if((our==RXTX) && (neigh==RXTX)){
+            return RXTX;
+        }
+        /*First off reverse the neighbour flow, as it will be telling us if it will allow or deny traffic from us.
+        So if it is set to RX, then we can TX to it.*/
+        if(neigh==RXONLY)
+            neigh=TXONLY;
+        else if(neigh==TXONLY)
+            neigh=RXONLY;
+            
+        if(our==neigh){
+            return our;
+        }
+        return NONE;
+    }
+    
+    //This needs to be re-written.
+    
+    
+    //determineAdjWorkingDirection
+   /* int determineAdjPacketFlow(int our, int neigh){
         //Both are the same
         if (enableUpdateRouteLogging)
             log.info("From " + this.getDisplayName() + " values passed our " + decodePacketFlow(our) + " neigh " + decodePacketFlow(neigh));
@@ -1320,7 +1403,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             return TXONLY;
         }
         return neigh;
-    }
+    }*/
     
     void informNeighbourOfValidRoutes(Block newblock){
        // java.sql.Timestamp t1 = new java.sql.Timestamp(System.nanoTime());
@@ -1344,8 +1427,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         //We only send packets on to our neighbor that are registered as being on a valid through path and are mutual.
         LayoutBlock lBnewblock =null;
         Adjacencies adj = getAdjacency(newblock);
-        if(adj.isMutual())
+        if(adj.isMutual()){
+            if(enableAddRouteLogging)
+                log.info("From " + this.getDisplayName() + "adj with " + newblock.getDisplayName() + " is mutual");
             lBnewblock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(newblock);
+        }
+        else if(enableAddRouteLogging) {
+            log.info("From " + this.getDisplayName() + "adj with " + newblock.getDisplayName() + " is NOT mutual");
+        }
         if (lBnewblock==null){
             return;
         }
@@ -1389,7 +1478,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if(enableAddRouteLogging)
             log.info("From " + this.getDisplayName() + " path to be added " + addPath.getBlock().getDisplayName() + " " + Path.decodeDirection(addPath.getToBlockDirection()));    
 
-        int ourWorkingDirection = this.getBlock().getWorkingDirection();
+        Block destBlockToAdd = addPath.getBlock();
+        int ourWorkingDirection = RXTX;
+        if(this.getBlock().isBlockDenied(destBlockToAdd.getDisplayName())){
+            ourWorkingDirection=RXONLY;
+        } else if(destBlockToAdd.isBlockDenied(this.getBlock().getDisplayName())){
+            ourWorkingDirection=TXONLY;
+        }
+        /*int ourWorkingDirection = this.getBlock().getWorkingDirection();
 
         if (ourWorkingDirection!=0){
             if(ourWorkingDirection == addPath.getToBlockDirection()){
@@ -1401,10 +1497,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
         } else {
             ourWorkingDirection=RXTX;
-        }
+        }*/
         if(enableAddRouteLogging)
-            log.info("From " + this.getDisplayName() + " working direction " + Path.decodeDirection(this.getBlock().getWorkingDirection()) + " to block " + addPath.getBlock().getDisplayName() + " we should therefore be... " + decodePacketFlow(ourWorkingDirection));
-        
+            log.info("From " + this.getDisplayName() +/* " working direction " + Path.decodeDirection(this.getBlock().getWorkingDirection()) +*/ " to block " + addPath.getBlock().getDisplayName() + " we should therefore be... " + decodePacketFlow(ourWorkingDirection));        
         addNeighbour(addPath.getBlock(), addPath.getToBlockDirection(), ourWorkingDirection);
         
     }
@@ -1694,9 +1789,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     addThroughPath(neighbours.get(i).getBlock(), newAdj);
                 } else if ((packetFlow==TXONLY) && (neighPacketFlow==RXONLY)){
                     addThroughPath(newAdj, neighbours.get(i).getBlock());
-                } else if ((packetFlow==RXTX) && (neighPacketFlow==RXONLY)){
+                } else if ((packetFlow==RXTX) && (neighPacketFlow==TXONLY)){ //was RX
                     addThroughPath(neighbours.get(i).getBlock(), newAdj);
-                } else if ((packetFlow==RXTX) && (neighPacketFlow==TXONLY)){
+                } else if ((packetFlow==RXTX) && (neighPacketFlow==RXONLY)){  //was TX
                     addThroughPath(newAdj, neighbours.get(i).getBlock());
                 } else if ((packetFlow==RXONLY) && (neighPacketFlow==RXTX)){
                     addThroughPath(neighbours.get(i).getBlock(), newAdj);
@@ -1994,8 +2089,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     String decodePacketFlow(int value){
         switch(value){
             case RXTX : return "Bi-Direction Operation";
-            case RXONLY : return "Uni-Directional - Trains can only exit to this block";
-            case TXONLY : return "Uni-Directional - Trains can not be sent down this block";
+            case RXONLY : return "Uni-Directional - Trains can only exit to this block (RX) ";
+            case TXONLY : return "Uni-Directional - Trains can not be sent down this block (TX) ";
             case NONE : return "None routing updates will be passed";
         }
         return "Unknown";
@@ -2322,10 +2417,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     Routes getValidRoute(Block nxtBlock, Block dstBlock){
         ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
         if (rtr==null){
+            log.info("From " + this.getDisplayName() + "No routes returned in get valid routes");
             return null;
         }
         for (int i = 0; i<rtr.size(); i++){
+//            log.info("From " + this.getDisplayName() + ", found dest " + rtr.get(i).getDestBlock().getDisplayName() + ", required dest " + dstBlock.getDisplayName());
             if (rtr.get(i).getDestBlock()==dstBlock){
+//                log.info("From " + this.getDisplayName() + " matched");
                 return rtr.get(i);
             }
         }
@@ -2800,7 +2898,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         int getPacketFlow() { return packetFlow; }
         
-        void setPacketFlow(int flow) { packetFlow=flow; }
+        void setPacketFlow(int flow) { 
+            
+            if(flow!=packetFlow){
+                int oldFlow = packetFlow;
+                packetFlow=flow;
+                firePropertyChange("neighbourpacketflow", oldFlow, packetFlow); 
+            }
+            
+        }
         
         
         //The metric could just be read directly from the neighbour as we have no need to specifically keep a copy of it here this is here just to fire off the change
