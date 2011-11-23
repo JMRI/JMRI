@@ -64,10 +64,12 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
              while (iter.hasNext()) {
                 String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
-                //Block b = tm.getBySystemName(sname);
+                Block b = tm.getBySystemName(sname);
                 Element elem = new Element("block")
                             .setAttribute("systemName", sname);
                 elem.addContent(new Element("systemName").addContent(sname));
+                if(!b.getUserName().equals(""))
+                    elem.addContent(new Element("userName").addContent(b.getUserName()));
                 if (log.isDebugEnabled()) log.debug("initial store Block "+sname);
                 
                 // and put this element out
@@ -101,6 +103,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 // Add content. First, the sensor.
                 if (b.getNamedSensor()!=null) {
                     elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
+                }
+                
+                if(b.getDeniedBlocks().size()>0){
+                    Element denied = new Element("deniedBlocks");
+                    for(String deniedBlock : b.getDeniedBlocks()){
+                        denied.addContent(new Element("block").addContent(deniedBlock));
+                    }
+                    elem.addContent(denied);
                 }
 
                 // Now the Reporter
@@ -233,6 +243,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 if (element.getChild("permissive").getText().equals("yes"))
                     permissive = true;
                 block.setPermissiveWorking(permissive);
+            }
+            Element deniedBlocks = element.getChild("deniedBlocks");
+            if(deniedBlocks!=null){
+                List<Element> denyBlock = deniedBlocks.getChildren("block");
+                for(Element deny: denyBlock){
+                    block.addBlockDenyList(deny.getText());
+                }
             }
             // load common parts
             loadCommon(block, element);

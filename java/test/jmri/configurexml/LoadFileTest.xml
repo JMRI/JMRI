@@ -114,6 +114,7 @@
   <blocks class="jmri.configurexml.BlockManagerXml">
     <block systemName="IB1">
       <systemName>IB1</systemName>
+      <userName>Block 1</userName>
     </block>
     <block systemName="IB1" length="25.4" curve="0" userName="Block 1">
       <systemName>IB1</systemName>

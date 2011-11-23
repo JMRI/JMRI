@@ -144,25 +144,6 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         }
     }
     
-    /*public void setSensor(Sensor sensor) {
-        if (_sensor!=null) {
-			// remove sensor listener
-			if (_sensorListener != null) {
-				_sensor.removePropertyChangeListener(_sensorListener);
-				_sensorListener = null;
-			}
-        }        
-        _sensor = sensor;                
-        if (_sensor != null) {
-            // attach listener
-            _sensor.addPropertyChangeListener(_sensorListener = new java.beans.PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) { handleSensorChange(e); }
-            });
-            _current = _sensor.getState();
-        } else {
-            _current = UNOCCUPIED;    // return to default state at init.
-        }
-    }*/
     public Sensor getSensor() { 
         if (_namedSensor!=null)
             return _namedSensor.getBean();
@@ -285,9 +266,76 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     }
     public int getDirection() { return _direction; }
     
-    public int getWorkingDirection() { return _workingDirection; }
-    public void setWorkingDirection(int w) { _workingDirection=w; }
-    private int _workingDirection=0x00;
+    //Deny traffic entering from this block
+    ArrayList<NamedBeanHandle<Block>> blockDenyList = new ArrayList<NamedBeanHandle<Block>>(1);
+    
+    /**
+    * The block deny list, is used by higher level code, to determine if 
+    * traffic/trains should be allowed to enter from an attached block,
+    * the list only deals with blocks that access should be denied from.
+    * If we want to prevent traffic from following from this block to another
+    * then this block must be added to the deny list of the other block.
+    * By default no block is barred, so traffic flow is bi-directional.
+    */
+    public void addBlockDenyList(String pName){
+        Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(pName);
+        NamedBeanHandle namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
+        if(!blockDenyList.contains(namedBlock))
+            blockDenyList.add(namedBlock);
+    }
+    
+    public void addBlockDenyList(Block blk){
+        NamedBeanHandle namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
+        if(!blockDenyList.contains(namedBlock))
+            blockDenyList.add(namedBlock);
+    }
+    
+    public void removeBlockDenyList(String blk){
+        NamedBeanHandle<Block> toremove = null;
+        for(NamedBeanHandle bean: blockDenyList){
+            if(bean.getName().equals(blk))
+                toremove=bean;
+        }
+        if(toremove!=null){
+            blockDenyList.remove(toremove);
+        }
+    }
+    
+    public void removeBlockDenyList(Block blk){
+        NamedBeanHandle<Block> toremove = null;
+        for(NamedBeanHandle bean: blockDenyList){
+            if(bean.getBean()==blk)
+                toremove=bean;
+        }
+        if(toremove!=null){
+            blockDenyList.remove(toremove);
+        }
+    }
+    
+    public List<String> getDeniedBlocks(){
+        List<String> list = new ArrayList<String>(blockDenyList.size());
+        for(NamedBeanHandle bean: blockDenyList){
+            list.add(bean.getName());
+        }
+        return list;
+    }
+    
+    public boolean isBlockDenied(String deny){
+        for(NamedBeanHandle bean: blockDenyList){
+            if(bean.getName().equals(deny))
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean isBlockDenied(Block deny){
+        for(NamedBeanHandle bean: blockDenyList){
+            if(bean.getBean()==deny)
+                return true;
+        }
+        return false;
+    }
+    
     public boolean getPermissiveWorking() { return _permissiveWorking; }
     public void setPermissiveWorking(boolean w) { _permissiveWorking=w; }
     private boolean _permissiveWorking=false;
@@ -302,7 +350,6 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         
         try {
             return new Float(speed);
-            //return Integer.parseInt(_blockSpeed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
