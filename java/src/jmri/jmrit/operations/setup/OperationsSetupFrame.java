@@ -29,6 +29,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManager;
 
 
@@ -443,38 +444,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			return;
 		}
 		// if max train length has changed, check routes
-		int maxLength = Integer.parseInt(maxLengthTextField.getText());
-		if (maxLength < Setup.getTrainLength()) {
-			StringBuffer sb = new StringBuffer();
-			RouteManager rm = RouteManager.instance();
-			List<String> routes = rm.getRoutesByNameList();
-			int count = 0;
-			for (int i = 0; i < routes.size(); i++) {
-				Route r = rm.getRouteById(routes.get(i));
-				List<String> locations = r.getLocationsBySequenceList();
-				for (int j = 0; j < locations.size(); j++) {
-					RouteLocation rl = r.getLocationById(locations.get(j));
-					if (rl.getMaxTrainLength() > maxLength){
-						String s = MessageFormat.format(rb.getString("RouteMaxLengthExceeds"),new Object[]{r.getName(), rl.getName(), 
-								rl.getMaxTrainLength(), maxLength});
-						log.info(s);
-						sb.append(s+NEW_LINE);
-						count++;
-						break;
-					}
-				}
-				// maximum of 20 route warnings
-				if (count > 20){
-					sb.append(rb.getString("More")+NEW_LINE);
-					break;
-				}
-			}
-			if (sb.length() > 0){
-				JOptionPane.showMessageDialog(null, sb.toString(),
-						rb.getString("YouNeedToAdjustRoutes"),
-						JOptionPane.WARNING_MESSAGE);
-			}
-		}
+		checkRoutes();
 		// add owner name to setup
 		Setup.setOwnerName(addOwner);
 		// add owner name to list
@@ -573,6 +543,57 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		OperationsSetupXml.instance().writeOperationsFile();
 		if (Setup.isCloseWindowOnSaveEnabled())
 			dispose();
+	}
+	
+	// if max train length has changed, check routes
+	private void checkRoutes(){
+		int maxLength = Integer.parseInt(maxLengthTextField.getText());
+		if (maxLength < Setup.getTrainLength()) {
+			StringBuffer sb = new StringBuffer();
+			RouteManager rm = RouteManager.instance();
+			List<String> routes = rm.getRoutesByNameList();
+			int count = 0;
+			for (int i = 0; i < routes.size(); i++){
+				Route r = rm.getRouteById(routes.get(i));
+				List<String> locations = r.getLocationsBySequenceList();
+				for (int j = 0; j < locations.size(); j++){
+					RouteLocation rl = r.getLocationById(locations.get(j));
+					if (rl.getMaxTrainLength() > maxLength){
+						String s = MessageFormat.format(rb.getString("RouteMaxLengthExceeds"),new Object[]{r.getName(), rl.getName(), 
+								rl.getMaxTrainLength(), maxLength});
+						log.info(s);
+						sb.append(s+NEW_LINE);
+						count++;
+						break;
+					}
+				}
+				// maximum of 20 route warnings
+				if (count > 20){
+					sb.append(rb.getString("More")+NEW_LINE);
+					break;
+				}
+			}
+			if (sb.length() > 0){
+				JOptionPane.showMessageDialog(null, sb.toString(),
+						rb.getString("YouNeedToAdjustRoutes"),
+						JOptionPane.WARNING_MESSAGE);
+				if (JOptionPane.showConfirmDialog(null, "Change maximum train departure length to "+maxLength+"?", "Modify all routes?",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+					for (int i = 0; i < routes.size(); i++){
+						Route r = rm.getRouteById(routes.get(i));
+						List<String> locations = r.getLocationsBySequenceList();
+						for (int j = 0; j < locations.size(); j++){
+							RouteLocation rl = r.getLocationById(locations.get(j));
+							if (rl.getMaxTrainLength() > maxLength){
+								log.debug("Setting route ("+r.getName()+") routeLocation ("+rl.getName()+") max traim length to "+maxLength);
+								rl.setMaxTrainLength(maxLength);
+							}
+						}
+					}
+					// save the route changes
+					RouteManagerXml.instance().writeOperationsFile();
+				}
+			}
+		}
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
