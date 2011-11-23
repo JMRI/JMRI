@@ -279,20 +279,20 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     */
     public void addBlockDenyList(String pName){
         Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(pName);
-        NamedBeanHandle namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
+        NamedBeanHandle<Block> namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
         if(!blockDenyList.contains(namedBlock))
             blockDenyList.add(namedBlock);
     }
     
     public void addBlockDenyList(Block blk){
-        NamedBeanHandle namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
+        NamedBeanHandle<Block> namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
         if(!blockDenyList.contains(namedBlock))
             blockDenyList.add(namedBlock);
     }
     
     public void removeBlockDenyList(String blk){
         NamedBeanHandle<Block> toremove = null;
-        for(NamedBeanHandle bean: blockDenyList){
+        for(NamedBeanHandle<Block> bean: blockDenyList){
             if(bean.getName().equals(blk))
                 toremove=bean;
         }
@@ -303,7 +303,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     
     public void removeBlockDenyList(Block blk){
         NamedBeanHandle<Block> toremove = null;
-        for(NamedBeanHandle bean: blockDenyList){
+        for(NamedBeanHandle<Block> bean: blockDenyList){
             if(bean.getBean()==blk)
                 toremove=bean;
         }
