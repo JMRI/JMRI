@@ -68,14 +68,14 @@ public abstract class Apps3 extends apps.AppsBase {
         addToActionModel();
         // create GUI
         initializeHelpSystem();
+        if (SystemType.isMacOSX()) {
+            initMacOSXMenus();
+        }
         if(((!configOK) || (!configDeferredLoadOK)) && (!preferenceFileExists)){
             apps.gui3.FirstTimeStartUpWizardAction prefsAction = new apps.gui3.FirstTimeStartUpWizardAction("Start Up Wizard");
             prefsAction.setApp(this);
             prefsAction.actionPerformed(null);
             return;
-        }
-        if (SystemType.isMacOSX()) {
-            initMacOSXMenus();
         }
         createAndDisplayFrame();
     }
