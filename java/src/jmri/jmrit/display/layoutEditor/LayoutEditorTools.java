@@ -7105,17 +7105,13 @@ public class LayoutEditorTools
                     eastBoundSensor.getDetailsPanel().setBackground(new Color(200,255,255));
                     main.add(eastBoundSensor.getDetailsPanel());
                 } else if (boundaryFromMenu) {
-                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
+                    westBoundSensor.setBoundaryLabelText("Protecting Block : " + boundary.getConnect1().getLayoutBlock().getDisplayName());
                     westBoundSensor.getDetailsPanel().setBackground(new Color(255,255,200));
                     main.add(westBoundSensor.getDetailsPanel());
                 }
-                /*if((boundary!=null) && (boundary.getType()!=PositionablePoint.ANCHOR))
-                    westBoundSensor.getDetailsPanel().setVisible(false);*/
             }
             main.add(new JSeparator(JSeparator.HORIZONTAL));
             theContentPane.add(main, BorderLayout.CENTER);
-            /*westBoundSensor.getDetailsPanel().setBackground(new Color(200,255,255));
-            theContentPane.add(westBoundSensor.getDetailsPanel());*/
             
             JPanel panel6 = new JPanel();
             panel6.setLayout(new FlowLayout());
@@ -7308,6 +7304,8 @@ public class LayoutEditorTools
 	 */
 	public void removeSensorAssignment(Sensor sensor) 
 	{
+        if(sensor==null)
+            return;
 		String sName = sensor.getSystemName();
 		String uName = sensor.getUserName();
 		for (int i=0;i<layoutEditor.pointList.size();i++) {
@@ -7387,11 +7385,13 @@ public class LayoutEditorTools
 		if ( !getSimpleBlockInformation() ) return;
 		Sensor eastSensor = getSensorFromEntry(eastBoundSensor.getText(),false,setSensorsAtBoundaryFrame);
 		Sensor westSensor = getSensorFromEntry(westBoundSensor.getText(),false,setSensorsAtBoundaryFrame);
-		if ( (eastSensor==null) && (westSensor==null) ) {
-			JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
-							rb.getString("SensorsError12"),
-								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
-			return;
+		if (eastSensor==null) {
+            removeSensorAssignment(jmri.InstanceManager.sensorManagerInstance().getSensor(boundary.getEastBoundSensor()));
+            boundary.setEastBoundSensor(null);
+		}
+        if (westSensor==null) {
+            removeSensorAssignment(jmri.InstanceManager.sensorManagerInstance().getSensor(boundary.getWestBoundSensor()));
+            boundary.setWestBoundSensor(null);
 		}
 		// place or update signals as requested
 		if ( (eastSensor!=null) && eastBoundSensor.addToPanel() ) {
@@ -7404,21 +7404,6 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-                removeSensorFromPanel(boundary.getEastBoundSensor());
-
-                /*if(boundary.getEastBoundSignalMast()!=null){
-                    String mastName = boundary.getEastBoundSignalMast();
-                    for(int i = 0; i<editor.signalMastList.size(); i++){
-                        SignalMastIcon icon = editor.signalMastList.get(i);
-                        if(icon.getNamedSensor().getName().equals(mastName)){
-                        
-                        }
-                    }
-                    PositionableIcon p = signalMastList
-                } else if (boundary.getEastBoundSignal()!=null) {
-                    PositionableIcon p = signalList
-                }*/
-                
 				placeEastBoundIcon(getSensorIcon(eastBoundSensor.getText()), eastBoundSensor.isRightSelected(), 0.0);
 				removeSensorAssignment(eastSensor);
 				boundary.setEastBoundSensor(eastBoundSensor.getText());
@@ -7436,20 +7421,15 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSensorFromPanel(boundary.getEastBoundSensor());
 				removeSensorAssignment(eastSensor);
 				boundary.setEastBoundSensor(eastBoundSensor.getText());
 			}
 		}
 		else if ( (eastSensor!=null) &&  
 				(eastSensor==getSensorFromName(boundary.getWestBoundSensor())) ) {
-// need to figure out what to do in this case.			
+            boundary.setEastBoundSensor(eastBoundSensor.getText());
 		}
-        if (boundary.getType()==PositionablePoint.END_BUMPER){
-            //We simply store the same sensor for an anchor in both directions.
-            boundary.setWestBoundSensor(eastBoundSensor.getText());
-            return;
-        }
+        
 		if ( (westSensor!=null) && westBoundSensor.addToPanel() ) {
 			if (isSensorAssignedAnywhere(westSensor) &&
 					(westSensor!=getSensorFromName(boundary.getWestBoundSensor()))) { 
@@ -7460,7 +7440,6 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSensorFromPanel(boundary.getWestBoundSensor());
 				placeWestBoundIcon(getSensorIcon(westBoundSensor.getText()),  westBoundSensor.isRightSelected(), 0.0);
 				removeSensorAssignment(westSensor);
 				boundary.setWestBoundSensor(westBoundSensor.getText());
@@ -7479,13 +7458,13 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSensorFromPanel(boundary.getWestBoundSensor());
 				removeSensorAssignment(westSensor);
 				boundary.setWestBoundSensor(westBoundSensor.getText());
 			}
 		}
 		else if ( (westSensor!=null) &&  
 				(westSensor==getSensorFromName(boundary.getEastBoundSensor())) ) {
+            boundary.setWestBoundSensor(westBoundSensor.getText());
 // need to figure out what to do in this case.			
 		}
 		setSensorsAtBoundaryOpen = false;
