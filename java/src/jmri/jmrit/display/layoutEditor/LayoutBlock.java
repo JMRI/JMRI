@@ -153,7 +153,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				block.setNamedSensor(occupancyNamedSensor);
 			}
 		}
-            if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){                
+            if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
                 setBlockMetric();
                 for (int i = 0; i<block.getPaths().size(); i++){
                     addAdjacency(block.getPaths().get(i));
@@ -2746,6 +2746,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     * Gets the direction of travel to our neighbouring block.
     */
     public int getNeighbourDirection(LayoutBlock neigh){
+        if(neigh==null)
+            return Path.NONE;
         Block neighbourBlock = neigh.getBlock();
         for(int i = 0; i<neighbours.size(); i++){
             if (neighbours.get(i).getBlock()==neighbourBlock)
