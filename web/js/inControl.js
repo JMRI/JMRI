@@ -345,12 +345,14 @@ var $FnPressed = [];
 var $SettingsLocoFunctionSelected = 0;
 var $VerticalSlider;
 var $paramRemoveFromLocalStorage;
+var $paramFrameName;
+var $paramTurnouts;
+var $paramRoutes;
 var $paramThrottles = [];
 var $paramTextSizeRatio;
 var $paramPower;
 var $paramSpeedCtrlRight;
 var $paramSpeedCtrlButtons;
-var $paramFrameName;
 var $paramLocoName;
 var $paramLocoAddress;
 var $paramLocoImage;
@@ -366,12 +368,14 @@ var $paramFnShunt = [];
 var $paramXmlioDebug;
 var $QueryStringText =
 	"- RemoveFromLocalStorage &nbsp;&nbsp;(all parameters)" +
-	"<br />- LocoName&lt;i&gt; &nbsp;&nbsp;(multiple throttles - case sensitive name)" +
+	"<br />- FrameName (display a frame - case sensitive name - instead of a loco throttle)" +
+	"<br />- Turnouts &nbsp;&nbsp;(display the turnouts list instead of a loco throttle)" +
+	"<br />- Routes &nbsp;&nbsp;(display the routes list instead of a loco throttle)" +
+	"<br />- LocoName&lt;i&gt; &nbsp;&nbsp;(multiple loco throttles - case sensitive name)" +
 	"<br />- TextSize &nbsp;&nbsp;(s[mall] n[ormal] l[arge])" +
 	"<br />- Power &nbsp;&nbsp;(power button)" +
 	"<br />- SpeedCtrlRight &nbsp;&nbsp;(speed control on right)" +
 	"<br />- SpeedCtrlButtons &nbsp;&nbsp;(speed control with buttons)" +
-	"<br />- FrameName (display a frame - case sensitive name - instead of a throttle)" +
 	"<br />- LocoName (loco or function only decoder - case sensitive name)" +
 	"<br />- LocoAddress (loco or function only decoder)" +
 	"<br />- LocoImage &nbsp;&nbsp;(URL)" +
@@ -394,7 +398,7 @@ var $QueryStringText =
 	"<br />http://localhost:12080/web/inControl.html?Framename=myFrame" +
 	"";
 var $HelpText =
-	"<br />Version 2.3 - by Oscar Moutinho" +
+	"<br />Version 2.4 - by Oscar Moutinho" +
 	"<br />" +
 	"<br />All browsers: set zoom to 100%." +
 	"<br />Google Chrome: deactivate 'instant' functionality." +
@@ -402,7 +406,7 @@ var $HelpText =
 	"<br />" +
 	"<br />The Locos in the roster file are always loaded." +
 	"<br />" +
-	"<br />To correctly display JMRI Frames, you must select 'No scrollbars' in 'Panel editor'." +
+	"<br />To best display full JMRI Frames, you should resize the frame window in 'Panel editor' to show the full diagram and select 'No scrollbars'." +
 	"<br />" +
 	"<br />For Loco or Function Keys, you may select any image from the internet. Just write the correct URL." +
 	"<br />Example: http://www.anysite.org/images/Loco3.jpg" +
@@ -415,6 +419,14 @@ $(document).ready(function(){
 	$readParametersFromQueryString();
 	if(!$paramRemoveFromLocalStorage && $paramFrameName.length > 0){
 		$manageFrameDisplay();
+		return;
+	};
+	if(!$paramRemoveFromLocalStorage && $paramTurnouts){
+		$manageTurnoutsDisplay();
+		return;
+	};
+	if(!$paramRemoveFromLocalStorage && $paramRoutes){
+		$manageRoutesDisplay();
 		return;
 	};
 	$("body").html(
@@ -489,6 +501,18 @@ var $manageFrameDisplay = function(){
 		e.preventDefault();
 	});
 	$imgFrame.attr("src", "/frame/" + encodeURIComponent($paramFrameName) + ".png");
+}
+
+//----------------------------------------- Manage turnouts display
+var $manageTurnoutsDisplay = function(){
+alert("Sorry, Turnouts not yet available.\nWork in progress ...");
+self.close();
+}
+
+//----------------------------------------- Manage routes display
+var $manageRoutesDisplay = function(){
+alert("Sorry, Routes not yet available.\nWork in progress ...");
+self.close();
 }
 
 //----------------------------------------- Run at start (inControlMulti)
@@ -787,7 +811,10 @@ var $readParametersFromQueryString = function(){
 	var nThrottles = 0;
 	allUrlParameters = $.getUrlParameters();
 	$paramRemoveFromLocalStorage = (typeof(allUrlParameters["removefromlocalstorage"]) != "undefined" && $.trim(allUrlParameters["removefromlocalstorage"]).length > 0);
-	$paramXmlioDebug = (typeof(allUrlParameters["xmliodebug"]) != "undefined" && $.trim(allUrlParameters["xmliodebug"]).length > 0);
+	if(typeof(allUrlParameters["framename"]) == "undefined") allUrlParameters["framename"] = "";
+	$paramFrameName = $.trim(allUrlParameters["framename"]);
+	$paramTurnouts = (typeof(allUrlParameters["turnouts"]) != "undefined" && $.trim(allUrlParameters["turnouts"]).length > 0);
+	$paramRoutes = (typeof(allUrlParameters["routes"]) != "undefined" && $.trim(allUrlParameters["routes"]).length > 0);
 	for(var i = 0; i < allUrlParameters.length; i++){
 		if(allUrlParameters[i].length > 8 && allUrlParameters[i].substr(0, 8) == "loconame"){
 			n = parseInt(allUrlParameters[i].substr(8), 10);
@@ -813,8 +840,6 @@ var $readParametersFromQueryString = function(){
 	if(typeof(allUrlParameters["power"]) == "undefined") $paramPower = ""; else $paramPower = ($.trim(allUrlParameters["power"]).length > 0);
 	if(typeof(allUrlParameters["speedctrlright"]) == "undefined") $paramSpeedCtrlRight = ""; else $paramSpeedCtrlRight = ($.trim(allUrlParameters["speedctrlright"]).length > 0);
 	if(typeof(allUrlParameters["speedctrlbuttons"]) == "undefined") $paramSpeedCtrlButtons = ""; else $paramSpeedCtrlButtons = ($.trim(allUrlParameters["speedctrlbuttons"]).length > 0);
-	if(typeof(allUrlParameters["framename"]) == "undefined") allUrlParameters["framename"] = "";
-	$paramFrameName = $.trim(allUrlParameters["framename"]);
 	if(typeof(allUrlParameters["loconame"]) == "undefined"){
 		$paramLocoName = "";
 	} else {
@@ -859,6 +884,7 @@ var $readParametersFromQueryString = function(){
 		if(typeof($paramFnActive[i]) != "boolean" && (typeof($paramFnToggle[i]) == "boolean" || typeof($paramFnAutoUnpress[i]) == "boolean" || $paramFnLabel[i] != "" || $paramFnImage[i] != "" || $paramFnImagePressed[i] != "" || typeof($paramFnShunt[i]) == "boolean")) $paramFnActive[i] = true;
 		if(typeof($paramFnToggle[i]) != "boolean" && ($paramFnImagePressed[i] != "" || typeof($paramFnShunt[i]) == "boolean")) $paramFnToggle[i] = true;
 	}
+	$paramXmlioDebug = (typeof(allUrlParameters["xmliodebug"]) != "undefined" && $.trim(allUrlParameters["xmliodebug"]).length > 0);
 }
 
 //----------------------------------------- Save Locos list
@@ -1789,6 +1815,7 @@ var $SettingsLocoRemove = function(){
 			$LocoNameList.sort();
 			$LocoNameList.shift();
 			$saveLocoNameList();
+			$.removeLocalInfo("inControl.locoList[" + $LocoNameList.length + "]");
 			$removeParametersByLocoName($paramLocoName);
 			$paramLocoName = $LocoNameList[0];
 			$("#txtSettingsLocoName").text($paramLocoName);

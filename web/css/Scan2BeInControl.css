@@ -35,11 +35,11 @@ hr {
 	text-align:right;
 }
 
-#roster, #frames {
+#first, #roster, #frames {
 	width:100%;
 }
 
-.divLoco, divFrame {
+.divFirst, .divLoco, .divFrame {
 	margin:10px;
 }		
 
@@ -47,10 +47,24 @@ hr {
 	display:inline;
 }		
 
+.selLoco {
+    color:navy;
+	font-weight:bold;
+}
+
+/* For screen only ********************************************************************************/
+@media screen, handheld {
+
+	.noScreen {
+		display:none;
+	}
+
+}
+
 /* For print **************************************************************************************/
 @media print {
 
-	#help {
+	.noPrint {
 		display:none;
 	}
 

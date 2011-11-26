@@ -26,14 +26,16 @@ var $isLocalhost;
 var $xmlRosterPath = "/prefs/roster.xml";
 var $htmlFramesPath = "/frame";
 var $inControlURL;
+var $locos = [];
+var $selectedLocos = [];
 var $help =
-	"Version 1.4 - by Oscar Moutinho" +
+	"Version 1.5 - by Oscar Moutinho" +
 	"\n" +
 	"\nThis application lists the roster (locos) and frames defined in JMRI." +
 	"\n" +
-	"\nTo open a web throttle or frame using 'inControl', users may:" +
-	"\n- scan the image using a smartphone (with qrCode reader application)" +
-	"\n- click or touch the loco or frame image or link" +
+	"\nTo clean stored info in your device or to open a web throttle to control locos, turnouts, routes or frames using 'inControl', users may:" +
+	"\n- scan a graph image using a smartphone (with qrCode reader application)" +
+	"\n- click or touch an image or link" +
 	"\n" +
 	"\nFor locos, the parameters from JMRI are merged with the ones already stored in your device (computer, tablet or smartphone)." +
 	"\nIf you want to use only the parameters from JMRI, you must delete the loco from your device before scan the qrCode graph or use the link." +
@@ -41,7 +43,6 @@ var $help =
 
 //----------------------------------------- Run at start up
 $(document).ready(function(){
-	var $hasLocos = false;
 	var $currentHost = window.location.host;
 	var $currentPath = window.location.pathname;
 	var $aux = $currentHost.split(":")[0];
@@ -49,11 +50,149 @@ $(document).ready(function(){
 	if($isLocalhost) alert("Don't use 'localhost' or '127.0.0.1' to call this page.\nUse the computer name or IP address (must be known by the network) in order to generate qrCode graphs.");
 	$aux = $currentPath.slice(0, $currentPath.lastIndexOf("/") + 1);
 	$inControlURL = "http://" + $currentHost + $aux + "inControl.html";
-	$("body").html("<div id='help' class='pointer' title='Help' onclick='alert($help)'>?</div><div id='roster'></div><div id='frames'></div>");
+	$("body").html("<div id='help' class='noPrint pointer' title='Help' onclick='alert($help)'>?</div><div id='first'></div><div id='roster'></div><div id='frames'></div>");
 	$.ajaxSetup({async: false, cache: false, type: "GET"});
+	$showFirst();
 	$loadRoster();
 	$loadFrames();
 });
+
+//----------------------------------------- Show 'RemoveFromLocalStorage', 'Selected Locos', 'Turnouts' and 'Routes'
+var $showFirst = function(){
+	var s = "";
+	var $queryString;
+	var $title;
+	var $lnk;
+	var $prt;
+	var $qrCode;
+	s+= "<div id='first1' class='divFirst'>";
+	s+= "<table><tr width='100%'><td width='50%'>";
+	s+= "<div id='titleClean' class='titleFirst'></div>";
+	s+= "</td><td width='50%'>";
+	s+= "<div id='titleMulti' class='titleFirst'></div>";
+	s+= "</td></tr><tr><td>";
+	s+= "<a id='lnkClean' class='noPrint lnkFirst'></a>";
+	s+= "<span id='prtClean' class='noScreen lnkFirst'></span>";
+	s+= "</td><td>";
+	s+= "<a id='lnkMulti' class='noPrint lnkFirst'></a>";
+	s+= "<span id='prtMulti' class='noScreen lnkFirst'></span>";
+	s+= "</td></tr><tr><td align='center'>";
+	s+= "<div id='qrCodeClean' class='imgFirst'></div>";
+	s+= "</td><td id='TDqrCodeMulti' align='center'>";
+	s+= "<div id='qrCodeMulti' class='imgFirst'></div>";
+	s+= "</td></tr></table>";
+	s+= "<hr />";
+	s+= "</div>";
+	s+= "<div id='first2' class='divFirst'>";
+	s+= "<table><tr width='100%'><td width='50%'>";
+	s+= "<div id='titleTurnouts' class='titleFirst'></div>";
+	s+= "</td><td>";
+	s+= "<div id='titleRoutes' class='titleFirst'></div>";
+	s+= "</td></tr><tr><td>";
+	s+= "<a id='lnkTurnouts' class='noPrint lnkFirst'></a>";
+	s+= "<span id='prtTurnouts' class='noScreen lnkFirst'></span>";
+	s+= "</td><td>";
+	s+= "<a id='lnkRoutes' class='noPrint lnkFirst'></a>";
+	s+= "<span id='prtRoutes' class='noScreen lnkFirst'></span>";
+	s+= "</td></tr><tr><td align='center'>";
+	s+= "<div id='qrCodeTurnouts' class='imgFirst'></div>";
+	s+= "</td><td align='center'>";
+	s+= "<div id='qrCodeRoutes' class='imgFirst'></div>";
+	s+= "</td></tr></table>";
+	s+= "<hr />";
+	s+= "</div>";
+	$("#first").html(s);
+	$("#first2").css("page-break-before", "always");
+	$queryString = "RemoveFromLocalStorage=x";
+	$title = $("#titleClean");
+	$lnk = $("#lnkClean");
+	$prt = $("#prtClean");
+	$qrCode = $("#qrCodeClean");
+	$title.html(($isLocalhost ? "" : "Point your smartphone qrCode scanner to the square graph below to clean stored info in your device."));
+	$lnk.attr("href", $inControlURL + "?" + $queryString);
+	$lnk.html("Click here to clean stored info in this computer.");
+	$lnk.attr("target", "RemoveFromLocalStorage");
+	$prt.html("<b>Link to clean stored info in this computer:</b><br />" + $("<div />").text($inControlURL).html() + "?<wbr>" + $("<div />").text($queryString).html().replace(/&amp;/g, "&amp;<wbr>"));
+	if(!$isLocalhost) $qrCode.qrcode($inControlURL + "?" + $queryString);
+	$manageSelectedLocos();
+	$queryString = "Turnouts=x";
+	$title = $("#titleTurnouts");
+	$lnk = $("#lnkTurnouts");
+	$prt = $("#prtTurnouts");
+	$qrCode = $("#qrCodeTurnouts");
+	$title.html(($isLocalhost ? "" : "Point your smartphone qrCode scanner to the square graph below to open a throttle in your device to control Turnouts."));
+	$lnk.attr("href", $inControlURL + "?" + $queryString);
+	$lnk.html("Click here to open a throttle in this computer to control Turnouts.");
+	$lnk.attr("target", "Turnouts");
+	$prt.html("<b>Link to open a throttle in this computer to control Turnouts:</b><br />" + $("<div />").text($inControlURL).html() + "?<wbr>" + $("<div />").text($queryString).html().replace(/&amp;/g, "&amp;<wbr>"));
+	if(!$isLocalhost) $qrCode.qrcode($inControlURL + "?" + $queryString);
+	$queryString = "Routes=x";
+	$title = $("#titleRoutes");
+	$lnk = $("#lnkRoutes");
+	$prt = $("#prtRoutes");
+	$qrCode = $("#qrCodeRoutes");
+	$title.html(($isLocalhost ? "" : "Point your smartphone qrCode scanner to the square graph below to open a throttle in your device to control Routes."));
+	$lnk.attr("href", $inControlURL + "?" + $queryString);
+	$lnk.html("Click here to open a throttle in this computer to control Routes.");
+	$lnk.attr("target", "Routes");
+	$prt.html("<b>Link to open a throttle in this computer to control Routes:</b><br />" + $("<div />").text($inControlURL).html() + "?<wbr>" + $("<div />").text($queryString).html().replace(/&amp;/g, "&amp;<wbr>"));
+	if(!$isLocalhost) $qrCode.qrcode($inControlURL + "?" + $queryString);
+}
+
+//----------------------------------------- Select loco
+var $selectLoco = function(locoIndex){
+	var locoName = $locos[locoIndex].name;
+	var l = -1;
+	var $selLocoChecked = $("#selLoco" + locoIndex).is(":checked");
+	for(var i = 0; i < $selectedLocos.length; i++){
+		if($selectedLocos[i] == locoName){
+			l = i;
+			break;
+		}
+	}
+	if($selLocoChecked && l == -1){
+		$selectedLocos.push(locoName);
+		$selectedLocos.sort();
+	}
+	if(!$selLocoChecked && l > -1){
+		$selectedLocos[l] = "";
+		$selectedLocos.sort();
+		$selectedLocos.shift();
+	}
+	$manageSelectedLocos();
+}
+
+//----------------------------------------- Manage selected locos
+var $manageSelectedLocos = function(){
+	var $queryString = "";
+	var $title;
+	var $lnk;
+	var $prt;
+	for(var i = 0; i < $selectedLocos.length; i++){
+		$queryString+= "LocoName" + (i + 1) + "=" + encodeURIComponent($selectedLocos[i]);
+		if(i < ($selectedLocos.length - 1)) $queryString+= "&";
+	}
+	$title = $("#titleMulti");
+	$lnk = $("#lnkMulti");
+	$prt = $("#prtMulti");
+	if($selectedLocos.length > 0){
+		$title.html(($isLocalhost ? "" : "Point your smartphone qrCode scanner to the square graph below to open a throttle of multiple selected Locos in your device."));
+		$lnk.attr("href", $inControlURL + "?" + $queryString);
+		$lnk.html("Click here to open a throttle of multiple selected Locos in this computer.");
+		$lnk.attr("target", "Multi");
+		$prt.html("<b>Link to open a throttle of multiple selected Locos in this computer:</b><br />" + $("<div />").text($inControlURL).html() + "?<wbr>" + $("<div />").text($queryString).html().replace(/&amp;/g, "&amp;<wbr>"));
+		$("#qrCodeMulti").empty();
+		$("#TDqrCodeMulti").add("<div id='qrCodeMulti' class='imgFirst'></div>");
+		if(!$isLocalhost) $("#qrCodeMulti").qrcode($inControlURL + "?" + $queryString);
+	} else {
+		$title.html("");
+		$lnk.attr("href", "");
+		$lnk.html("");
+		$lnk.attr("target", "nothing");
+		$prt.html("");
+		$("#qrCodeMulti").empty();
+	}
+}
 
 //----------------------------------------- Retrieve roster
 var $loadRoster = function(){
@@ -65,7 +204,6 @@ var $loadRoster = function(){
 		},
 		success: function(xmlReturned, status, jqXHR){
 			var $xmlReturned = $(xmlReturned);
-			var $locos = [];
 			$xmlReturned.find("roster-config roster locomotive").each(function(){ 
 				var $loco = {
 					name: $.trim($(this).attr("id")),
@@ -95,21 +233,25 @@ var $loadRoster = function(){
 			var $queryString;
 			var $qrCode;
 			var $titleLoco;
+			var $titlePrtLoco;
 			var $lnkLoco;
+			var $prtLoco;
 			var $infoLoco;
 			var $auxLocoImg;
 			for(var i = 0; i < $locos.length; i++){
-				$hasLocos = true;
 				s+= "<div id='loco" + i + "' class='divLoco'>";
 				s+= "<table><tr><td>";
 				s+= "<div id='qrCode" + i + "' class='imgLoco'></div>";
 				s+= "</td><td>";
 				s+= "<table><tr><td>";
-				s+= "<div id='titleLoco" + i + "' class='titleLoco'></div>";
+				s+= "<div id='titleLoco" + i + "' class='noPrint titleLoco'></div>";
+				s+= "<div id='titlePrtLoco" + i + "' class='noScreen titleLoco'></div>";
 				s+= "</td></tr><tr><td>";
-				s+= "<a id='lnkLoco" + i + "' class='lnkLoco'></a>";
+				s+= "<a id='lnkLoco" + i + "' class='noPrint lnkLoco'></a>";
+				s+= "<span id='prtLoco" + i + "' class='noScreen lnkLoco'></span>";
 				s+= "</td></tr><tr><td>";
 				s+= "<label id='infoLoco" + i + "' class='infoLoco'></label>";
+				s+= "<div class='noPrint selLoco'>&nbsp;&nbsp;&nbsp;<input id='selLoco" + i + "' type='checkbox' onclick='$selectLoco(" + i + ")' />Select for multiple locos throttle</div>";
 				s+= "</td></tr></table>";
 				s+= "</td></tr></table>";
 				s+= "<hr />";
@@ -117,18 +259,22 @@ var $loadRoster = function(){
 			}
 			$("#roster").html(s);
 			for(var i = 0; i < $locos.length; i++){
-				if(i > 0) $("#loco" + i).css("page-break-before", "always");
+				$("#loco" + i).css("page-break-before", "always");
 				$auxLocoImg = $auxImage($locos[i].image, $locos[i].icon);
-				$queryString = "loconame=" + encodeURIComponent($locos[i].name);
+				$queryString = "LocoName=" + encodeURIComponent($locos[i].name);
 				$qrCode = $("#qrCode" + i);
 				$titleLoco = $("#titleLoco" + i);
+				$titlePrtLoco = $("#titlePrtLoco" + i);
 				$lnkLoco = $("#lnkLoco" + i);
+				$prtLoco = $("#prtLoco" + i);
 				$infoLoco = $("#infoLoco" + i);
 				if(!$isLocalhost) $qrCode.qrcode($inControlURL + "?" + $queryString);
 				$titleLoco.html(($isLocalhost ? "" : "Point your smartphone qrCode scanner to the square graph to open the throttle in your device.<br />") + "To open the throttle in this computer, click at the " +  ($auxLocoImg.length > 0 ? "Loco image." : "link."));
+				$titlePrtLoco.html($isLocalhost ? "<b>Link to open the throttle:</b>" : "Point your smartphone qrCode scanner to the square graph to open the throttle in your device.");
 				$lnkLoco.attr("href", $inControlURL + "?" + $queryString);
 				$lnkLoco.attr("target", $locos[i].name);
 				if($auxLocoImg.length > 0) $lnkLoco.html("<img src='/prefs/resources/" + $auxLocoImg + "?MaxHeight=120' title='Open a throttle to control this Loco' />"); else $lnkLoco.html($("<div />").text($inControlURL).html() + "?<wbr>" + $("<div />").text($queryString).html().replace(/&amp;/g, "&amp;<wbr>"));				// HTML encode
+				$prtLoco.html((($auxLocoImg.length > 0) ? "<img src='/prefs/resources/" + $auxLocoImg + "?MaxHeight=120' />" : "") + "<br />" + $("<div />").text($inControlURL).html() + "?<wbr>" + $("<div />").text($queryString).html().replace(/&amp;/g, "&amp;<wbr>"));
 				$infoLoco.html(
 					"<b>Loco name (DCC address):</b> " + $("<div />").text($locos[i].name).html() + " (" + $("<div />").text($locos[i].address).html() + ")" +				// HTML encode
 					"<br /><b>Road name / number:</b> " + $("<div />").text($locos[i].roadName).html() + " / " + $("<div />").text($locos[i].roadNumber).html()	// HTML encode
@@ -162,16 +308,20 @@ var $loadFrames = function(){
 			var $queryString;
 			var $qrCode;
 			var $titleFrame;
+			var $titlePrtFrame;
 			var $lnkFrame;
+			var $prtFrame;
 			for(var i = 0; i < $frames.length; i++){
 				s+= "<div id='frame" + i + "' class='divFrame'>";
 				s+= "<table><tr><td>";
 				s+= "<div id='qrCodeF" + i + "' class='imgFrame'></div>";
 				s+= "</td><td>";
 				s+= "<table><tr><td>";
-				s+= "<div id='titleFrame" + i + "' class='titleFrame'></div>";
+				s+= "<div id='titleFrame" + i + "' class='noPrint titleFrame'></div>";
+				s+= "<div id='titlePrtFrame" + i + "' class='noScreen titleFrame'></div>";
 				s+= "</td></tr><tr><td>";
-				s+= "<a id='lnkFrame" + i + "' class='lnkFrame'></a>";
+				s+= "<a id='lnkFrame" + i + "' class='noPrint lnkFrame'></a>";
+				s+= "<span id='prtFrame" + i + "' class='noScreen lnkFrame'></span>";
 				s+= "</td></tr></table>";
 				s+= "</td></tr></table>";
 				s+= "<hr />";
@@ -179,16 +329,20 @@ var $loadFrames = function(){
 			}
 			$("#frames").html(s);
 			for(var i = 0; i < $frames.length; i++){
-				if(i > 0 || $hasLocos) $("#frame" + i).css("page-break-before", "always");
-				$queryString = "framename=" + $frames[i];
+				$("#frame" + i).css("page-break-before", "always");
+				$queryString = "FrameName=" + $frames[i];
 				$qrCode = $("#qrCodeF" + i);
 				$titleFrame = $("#titleFrame" + i);
+				$titlePrtFrame = $("#titlePrtFrame" + i);
 				$lnkFrame = $("#lnkFrame" + i);
+				$prtFrame = $("#prtFrame" + i);
 				if(!$isLocalhost) $qrCode.qrcode($inControlURL + "?" + $queryString);
 				$titleFrame.html(($isLocalhost ? "" : "Point your smartphone qrCode scanner to the square graph to open the frame in your device.<br />") + "To open the frame in this computer, click at the Frame image.");
+				$titlePrtFrame.html($isLocalhost ? "<b>Link to open the frame:</b>" : "Point your smartphone qrCode scanner to the square graph to open the frame in your device.");
 				$lnkFrame.attr("href", $inControlURL + "?" + $queryString);
 				$lnkFrame.attr("target", $frames[i]);
 				$lnkFrame.html("<img src='/frame/" + $frames[i] + ".png?MaxHeight=120' title='Open this Frame to control it' />");
+				$prtFrame.html("<img src='/frame/" + $frames[i] + ".png?MaxHeight=120' />" + "<br />" + $("<div />").text($inControlURL).html() + "?<wbr>" + $("<div />").text($queryString).html().replace(/&amp;/g, "&amp;<wbr>"));
 			}
 		}
 	});
