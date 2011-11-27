@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.                                       -->
 <!-- See the GNU General Public License for more details.                    -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jim Wolters" version="2" lastUpdated="20111115"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20100227"/>
 <!--   version 1 created from MRC 1800 ver. 2 definition-->
   <decoder>
