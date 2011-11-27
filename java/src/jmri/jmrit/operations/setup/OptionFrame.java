@@ -98,6 +98,8 @@ public class OptionFrame extends OperationsFrame{
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
+		rfidTextField.setToolTipText(rb.getString("EnterNameRfidTip"));
+		valueTextField.setToolTipText(rb.getString("EnterNameValueTip"));
 			
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		

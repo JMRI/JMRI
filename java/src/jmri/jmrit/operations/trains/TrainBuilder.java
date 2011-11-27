@@ -647,8 +647,11 @@ public class TrainBuilder extends TrainCommon{
 			if (terminateTrack != null){
 				String status = engine.testDestination(terminateTrack.getLocation(), terminateTrack);
 				if (status.equals(Track.OKAY)){
-					if (addEngineToTrain(engine, rl, rld, terminateTrack))				
+					if (addEngineToTrain(engine, rl, rld, terminateTrack)){	
+						engineList.remove(indexEng);
+						indexEng--;
 						return true;	// done
+					}
 				} else {
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropEngineToTrack"),new Object[]{engine.toString(), terminateTrack.getName(), status}));
 				}
@@ -662,8 +665,11 @@ public class TrainBuilder extends TrainCommon{
 						continue;
 					String status = engine.testDestination(location, track);
 					if (status.equals(Track.OKAY)){
-						if (addEngineToTrain(engine, rl, rld, track))				
+						if (addEngineToTrain(engine, rl, rld, track)){	
+							engineList.remove(indexEng);
+							indexEng--;
 							return true;	// done
+						}
 					} else {
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropEngineToTrack"),new Object[]{engine.toString(), track.getName(), status}));
 					}

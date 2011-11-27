@@ -360,7 +360,7 @@ all trains are terminated or reset.
 The next set of options control local car movements when using
 <A HREF="#SwitcherService">switcher</A> to service a location.
 Normally it is better not to allow a car to move from one spur
-directly to another spur in the same location. This type of move can
+directly to another spur at the same location. This type of move can
 be very unrealistic, picture moving a boxcar from a shoe manufacture
 directly to an auto manufacture. Also moving a car from one yard
 track to another can have your operators wondering what kind of busy
@@ -402,7 +402,7 @@ in staging that meet the train's requirements.
 <A NAME="CarRouting"></A>
 <H3>Car Routing</H3>
 
-<P>When car routing is enabled, the program will use multiple trains
+When car routing is enabled, the program will use multiple trains
 to deliver a car to it final destination. It is recommended that you
 leave this option enabled. With car routing enabled, you can use a <A
 	HREF="#Schedules">Schedule</A> to deliver a car to a specific location.
@@ -412,7 +412,7 @@ then yards to move cars. Routing through staging is disabled by default.
 The algorithm will try and find a route using a maximum of five trains
 to complete the car move.  Note that the program never gives up trying to
 route a car.  If a car has been assigned a "Final Destination" the program
-will try and route the car after every move.</P>
+will try and route the car after every move.
 
 <A NAME="LoggingOptions"></A>
 <H3>Logging Options</H3>
@@ -420,7 +420,8 @@ will try and route the car after every move.</P>
 If you want the operations program to log your locomotive, car, or train movements to
 a file, select the appropriate checkboxes.  The program will create a new
 directory called "logger" in the operations directory.  For each day's session
-the program will create a new file (.csv) using the day's date.
+the program will create a new file (.csv) using the day's date.  Use a program like MS Excel
+to view the file.
 
 <A NAME="ManifestOptions"></A>
 <H3>Options</H3>
