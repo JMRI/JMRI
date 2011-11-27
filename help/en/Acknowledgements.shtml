@@ -149,7 +149,7 @@
 	<LI>Bob Coleman added the CTI Acela support and did a huge
 	amount of work on the operations code tests.
     <LI>John Crellin contributed a new and improved
-    decoder definitions for MRC decoders.
+    decoder definitions for MRC decoders and the Kato FL11.
     <li>Peter Cressman provided a major improvement to Logix, improved
     Sensor Groups, fixed some problems in Routes,
     and provided the Warrant system for scripted running
@@ -463,6 +463,7 @@
     added a command station option to the TCP connection.
     <li>Jos Wils updated the ESU decoder definitions, and extended
     the Comprehensive programmer format for really-high-functionality decoders.
+    <li>Jim Wolters updated the MRC Sound Brilliance 1812 decoder definition.
     <li>Randall Wood updated the fast clock support, and improved
     the XMLIO support with some fixed memory variables
 <a name="X"></A>
