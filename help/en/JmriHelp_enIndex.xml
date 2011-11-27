@@ -411,6 +411,8 @@
 
   <indexitem text="Wii Remote as Throttle " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
 
+  <indexitem text="inControl - Web Throttles and Panels " target="package.jmri.jmrit.inControl.inControl"/>
+
  </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
 

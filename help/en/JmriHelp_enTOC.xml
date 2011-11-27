@@ -143,6 +143,8 @@
 
   <tocitem text="iPhone/iPod Touch as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
+  <tocitem text="inControl - Web Throttles and Panels " target="package.jmri.jmrit.inControl.inControl"/>
+
  </tocitem>
  <tocitem text="PanelPro " target="html.apps.PanelPro.PanelPro">
   <tocitem text="Intro " target="html.apps.PanelPro.PanelPro"/>
