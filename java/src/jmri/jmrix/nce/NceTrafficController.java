@@ -28,6 +28,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
 	public NceTrafficController() {
         super();
+        jmri.InstanceManager.setCommandStation(this);
     }
 
     // The methods to implement the NceInterface
