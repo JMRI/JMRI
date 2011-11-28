@@ -436,7 +436,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                 if (noNeigh==1){
                     if(log.isDebugEnabled())
                         log.debug("We have a dead end " + curBlk.getDisplayName());
-                    SignalMast destMast = lbm.getFacingSignalMast(curBlk);
+                    SignalMast destMast = lbm.getSignalMastAtEndBumper(curBlk, null);
                     if(destMast!=null){
                         FacingProtecting toadd = new FacingProtecting(curBlk, null, destMast);
                         if(!signalMastList.contains(toadd))
