@@ -33,7 +33,8 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
 
     public void removeThrottleFrame(ThrottleFrame tf, DccLocoAddress la) {
         throttleFrames.remove(tf);
-        jmri.InstanceManager.throttleManagerInstance().removeListener(la, this);
+        if(la!=null)
+            jmri.InstanceManager.throttleManagerInstance().removeListener(la, this);
         fireTableDataChanged();
     }
 
