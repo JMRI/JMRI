@@ -55,6 +55,8 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		p3.setBorder(BorderFactory.createTitledBorder(rb.getString("OptionalBlocking")));
 		addItemLeft(p3, blockCarsCheckBox, 0, 0);
 		
+		// load tool tips
+		loadCheckBox.setToolTipText(rb.getString("TipIgnoresAlternate"));
 		blockCarsCheckBox.setToolTipText(rb.getString("TipBlockByPickUp"));
 		
 		panelLoad.add(p1);
@@ -87,6 +89,8 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		
 		addCheckBoxAction(swapLoadsCheckBox);
 		addCheckBoxAction(emptyCheckBox);
+		addCheckBoxAction(loadCheckBox);
+		addCheckBoxAction(loadAnyCheckBox);
 		
 		// finish
 		panelOrder.setVisible(false);	// Car order out of staging isn't necessary
@@ -121,6 +125,14 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		else if (ae.getSource() == emptyCheckBox){
 			if (emptyCheckBox.isSelected())
 				swapLoadsCheckBox.setSelected(false);
+		}
+		if (ae.getSource() == loadCheckBox){
+			if (loadCheckBox.isSelected())
+				loadAnyCheckBox.setSelected(false);
+		}
+		if (ae.getSource() == loadAnyCheckBox){
+			if (loadAnyCheckBox.isSelected())
+				loadCheckBox.setSelected(false);
 		}
 		else super.checkBoxActionPerformed(ae);
 	}
