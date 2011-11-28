@@ -42,7 +42,7 @@ import jmri.jmrit.display.layoutEditor.TrackSegment;
  * <p>
  * Initial implementation only handles the setting up of turnouts on a path.
  
- * @author Kevin Dickerson  Copyright (C) 2007
+ * @author Kevin Dickerson  Copyright (C) 2011
  */
 public class EntryExitPairs {
 
@@ -1639,8 +1639,9 @@ public class EntryExitPairs {
     * This uses the layout editor to check if the destination location is 
     * reachable from the source location
     *
-    * @param sourceBean Source Bean
-    * @param destBean Destination Bean
+    * @param facing Layout Block that is considered our first block
+    * @param protecting Layout Block that is considered first block +1
+    * @param dest Layout Block that we want to get to
     * @return true if valid, false if not valid.
     */
     

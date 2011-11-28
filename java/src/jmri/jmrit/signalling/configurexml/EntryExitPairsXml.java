@@ -107,7 +107,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * Load, starting with the layoutblock element, then
      * all the value-icon pairs
      * @param element Top level Element to unpack.
-     * @param o  LayoutEditor as an Object
      */
     @SuppressWarnings({ "unchecked", "null" })
     public boolean load(Element element) {

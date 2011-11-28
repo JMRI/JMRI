@@ -609,6 +609,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     }
 	
 	LayoutEditorTools tools = null;
+    jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
 	void setupToolsMenu(JMenuBar menuBar) {
 		JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
 		menuBar.add(toolsMenu);
@@ -730,65 +731,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					tools.setSignalsAt3WayTurnout(signalIconEditor,signalFrame);
                 }
             });
-        toolsMenu.addSeparator();
-        JMenuItem signalMastBoundaryItem = new JMenuItem(rb.getString("SignalMastsAtBoundary")+"...");
-        toolsMenu.add(signalMastBoundaryItem);
-        signalMastBoundaryItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					if (tools == null) {
-						tools = new LayoutEditorTools(thisPanel);
-					}
-					// bring up signals at block boundary tool dialog
-					tools.setSignalMastsAtBlockBoundary();
-                }
-            });
 
-        /* These tools not yet supported
-        JMenuItem turnoutSignalMastItem = new JMenuItem(rb.getString("SignalMastsAtTurnout")+"...");
-        toolsMenu.add(turnoutSignalMastItem);
-        turnoutSignalMastItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					if (tools == null) {
-						tools = new LayoutEditorTools(thisPanel);
-					}
-					// bring up signals at turnout tool dialog
-					tools.setSignalMastsAtTurnouts(signalFrame);
-                }
-            });
-        JMenuItem xingMastItem = new JMenuItem(rb.getString("SignalMastsAtLevelXing")+"...");
-        toolsMenu.add(xingMastItem);
-        xingMastItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					if (tools == null) {
-						tools = new LayoutEditorTools(thisPanel);
-					}
-					// bring up signals at level crossing tool dialog
-					tools.setSignalMastsAtLevelXing(signalFrame);
-                }
-            });*/
-
-        JMenuItem sensorBoundaryItem = new JMenuItem(rb.getString("SensorsAtBoundary")+"...");
-        toolsMenu.add(sensorBoundaryItem);
-        sensorBoundaryItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					if (tools == null) {
-						tools = new LayoutEditorTools(thisPanel);
-					}
-					// bring up signals at block boundary tool dialog
-					tools.setSensorsAtBlockBoundary(sensorIconEditor,sensorFrame);
-                }
-            });
-        JMenuItem sensorEndBumperItem = new JMenuItem(/*rb.getString("SensorsAtBoundary")*/"Sensor at End Bumper"+"...");
-        toolsMenu.add(sensorEndBumperItem);
-        sensorBoundaryItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					if (tools == null) {
-						tools = new LayoutEditorTools(thisPanel);
-					}
-					// bring up signals at block boundary tool dialog
-					tools.setSensorsAtBlockBoundary(sensorIconEditor,sensorFrame);
-                }
-            });
+        JMenuItem entryExitItem = new JMenuItem("Entry Exit"+"...");
+        toolsMenu.add(entryExitItem);
+        entryExitItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event){
+                if(entryExit == null)
+                    entryExit = new jmri.jmrit.signalling.AddEntryExitPairAction("ENTRY EXIT", thisPanel);
+                entryExit.actionPerformed(event);
+            }
+        });
+        
 	}
 
 	protected JMenu setupOptionMenu(JMenuBar menuBar) {
