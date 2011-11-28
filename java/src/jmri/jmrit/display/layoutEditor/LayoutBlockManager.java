@@ -1061,7 +1061,7 @@ public class LayoutBlockManager extends AbstractManager {
 	 * Method to return the named bean of either a Sensor or signalmast facing into a specified Block from a specified protected Block.
 	 * <P>
      * @param facingBlock
-     * @param protectedBlock
+     * @param panel
      * @return The assigned sensor or signal mast as a named bean
      */
     public jmri.NamedBean getNamedBeanAtEndBumper(Block facingBlock, LayoutEditor panel){
