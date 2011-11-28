@@ -66,6 +66,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureCommandStation(int val) {
     	getNceTrafficController().setCommandOptions(val);
+        jmri.InstanceManager.setCommandStation(nceTrafficController);
     }
 
     /** 
