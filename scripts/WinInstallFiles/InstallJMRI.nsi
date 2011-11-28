@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.19.0
+; - Remove DecoderPro desktop shortcut from standard installation - now
+; - only installed when selected
+; -------------------------------------------------------------------------
 ; - Version 0.1.18.0
 ; - Remove DecoderPro3 from Tools and Demos and place in main JMRI start
 ; - menu along with Desktop shortcut
@@ -191,7 +195,7 @@
   !define RELEASEDIR ".."
 !endif
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.18.0"                    ; Installer version
+!define INST_VER  "0.1.19.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -633,8 +637,8 @@ SectionGroupEnd ; SEC_SMSC
 
 SectionGroup "Desktop Shortcuts" SEC_DTSC
   ; -- Create Desktop shortcuts
-  Section "DecoderPro" SEC_DPDTSC
-    SectionIn 1 2
+  Section /o "DecoderPro" SEC_DPDTSC
+    SectionIn 2
     CreateShortcut "$DESKTOP\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.DecoderPro.DecoderPro" \
