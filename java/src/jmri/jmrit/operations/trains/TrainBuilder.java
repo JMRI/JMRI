@@ -1032,8 +1032,8 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
 						numCarsFromStaging++;
 						// populate car blocking hashtable
-						// don't block cabooses, cars with FRED, or passenger
-						if (!c.isCaboose() && !c.hasFred() && !c.isPassenger()){
+						// don't block cabooses, cars with FRED, or passenger.  Only block lead cars in kernel
+						if (!c.isCaboose() && !c.hasFred() && !c.isPassenger() && (c.getKernel() == null || c.getKernel().isLead(c))){
 							log.debug("last location id: "+c.getLastLocationId());
 							Integer number = 1;
 							if (numOfBlocks.containsKey(c.getLastLocationId())){
@@ -1139,7 +1139,16 @@ public class TrainBuilder extends TrainCommon{
     			return;
     		}
     	}
-    	// start at the second location in the route to begin blocking
+    	blockByLocationMoves();
+    	addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockDone"),new Object[]{departStageTrack.getName()}));
+	}
+	
+	/*
+	 * Blocks cars out of staging by assigning the largest blocks of cars to locations
+	 * requesting the most moves.
+	 */
+	private void blockByLocationMoves() throws BuildFailedException{
+	   	// start at the second location in the route to begin blocking
     	List<String> routeList = train.getRoute().getLocationsBySequenceList();
     	for (int i=1; i<routeList.size(); i++){
     		RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
@@ -1152,7 +1161,7 @@ public class TrainBuilder extends TrainCommon{
     	RouteLocation rl = train.getTrainDepartsRouteLocation();
     	while(true){
     		String blockId = getLargestBlock();	// get the id of the largest block of cars
-    		if (blockId.equals(""))
+    		if (blockId.equals("") || numOfBlocks.get(blockId) == 1)
     			break;	// done
     		RouteLocation rld = getLocationWithMaximumMoves(routeList, blockId);	// get the location with the greatest number of moves
     		if (rld == null)
@@ -1193,7 +1202,7 @@ public class TrainBuilder extends TrainCommon{
     		} else {
     			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockDestNotEnoughMoves"),new Object[]{rl.getName(), blockId}));
     			numOfBlocks.remove(blockId);	// block is too large for any stop along this train's route
-    		}   		
+    		} 
     	}
 	}
 	
