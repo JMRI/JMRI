@@ -6,6 +6,7 @@ import jmri.*;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
+import jmri.web.miniserver.MiniServerManager;
 
 import org.jdom.*;
 
@@ -34,6 +35,9 @@ import java.util.*;
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
+	
+	static ArrayList<String> disallowedFrames = new ArrayList<String>(
+			Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
 
     public Element immediateRequest(Element e) throws JmriException {
 
@@ -200,13 +204,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
             	}
 
             } else if (type.equals("frame")) {
+            	
             	// list frames, (open JMRI windows)
             	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
             	int framesNumber = framesList.size();
             	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
             		JmriJFrame iFrame = framesList.get(i);
             		String frameTitle = iFrame.getTitle();
-            		if (!frameTitle.equals("")) {
+            		if (!frameTitle.equals("") && !disallowedFrames.contains(frameTitle)) {
                             Element n = new Element((useAttributes) ? "frame" : "item");
                             if (useAttributes) {
                                 n.setAttribute("name", frameTitle.replaceAll(" ", "%20"));
@@ -228,7 +233,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
             		JmriJFrame iFrame = framesList.get(i);
             		String frameTitle = iFrame.getTitle();
-            		if (!frameTitle.equals("")) {
+            		if (!frameTitle.equals("") && !disallowedFrames.contains(frameTitle)) {
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
                                 n.setAttribute("name", frameTitle.replaceAll(" ", "%20"));
