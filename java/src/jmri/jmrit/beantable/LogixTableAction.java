@@ -5054,7 +5054,7 @@ public class LogixTableAction extends AbstractTableAction {
                 case ROWNUM_COLUMN:
                     return (rbx.getString("rowAbrev") + (r + 1));
                 case AND_COLUMN:
-                    if (r==0) {
+                    if (r==0 || _logicType==Conditional.MIXED) {
                         return "";
                     }
                     return variable.getOpernString();
