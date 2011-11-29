@@ -89,14 +89,18 @@ public class MiniServer extends NetworkServer {
         
         // get the request string, being sure to be able to put Reader back
         in.mark(2000);   // If this is exceeded, probably should be using POST
-        String line = in.readLine();
-
+        
+        String line = null;
+        try {
+			line = in.readLine();
+		} catch (IOException e) {
+            if (log.isDebugEnabled()) log.debug("IOException on in.readLine ["+e+"]");
+		}
         try {
 			in.reset();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
+            if (log.isDebugEnabled()) log.debug("IOException on in.reset ["+e+"]");
 		}
-
         
         if (line != null) {
             try {
