@@ -55,7 +55,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     public JComponent getSplitPane(){
         return upDownSplitPane;
     }
-    WindowInterface topBottomWI;
     
     protected void buildGUI(File menubarFile, File toolbarFile) {
         configureFrame();
@@ -65,8 +64,6 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     }
     
     protected void configureFrame() {
-                       
-        topBottomWI = new jmri.util.swing.sdi.JmriJFrameInterface();  // TODO figure out what WI is used here
  
         //rightTop.setBorder(BorderFactory.createLineBorder(Color.black));
         top.setLayout(new BoxLayout(top, BoxLayout.X_AXIS));
@@ -102,7 +99,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     protected void addMainMenuBar(File menuFile) {
         if (menuFile == null) return;
         
-        JMenu[] menus = JMenuUtil.loadMenu(menuFile, topBottomWI, this);
+        JMenu[] menus = JMenuUtil.loadMenu(menuFile, this, this);
         for (JMenu j : menus) 
             menuBar.add(j);
 
@@ -116,7 +113,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     protected void addMainToolBar(File toolBarFile) {
         if (toolBarFile == null) return;
           
-        toolBar = JToolBarUtil.loadToolBar(toolBarFile, topBottomWI, this);
+        toolBar = JToolBarUtil.loadToolBar(toolBarFile, this, this);
 
         // this takes up space at the top until pulled to floating
         add(toolBar, BorderLayout.NORTH);
@@ -168,13 +165,12 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
         statusBox.add(comp, statusBoxIndex);
         ++statusBoxIndex;
     }
-    
+
     /**
      * Only close frame, etc, dispose() disposes of all 
      * cached panes
      */
     public void dispose() {
-        topBottomWI.dispose();
         super.dispose();
     }
     

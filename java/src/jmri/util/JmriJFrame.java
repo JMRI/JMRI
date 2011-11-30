@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
@@ -13,6 +14,14 @@ import javax.swing.KeyStroke;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.HashSet;
+import jmri.beans.Beans;
+import jmri.beans.BeanInterface;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
+import jmri.util.swing.sdi.JmriJFrameInterface;
  
 /**
  * JFrame extended for common JMRI use.
@@ -54,7 +63,7 @@ import java.awt.event.KeyEvent;
  * GT 28-AUG-2008 Added window menu
  */
 
-public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag, java.awt.event.ComponentListener {
+public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag, java.awt.event.ComponentListener, WindowInterface, BeanInterface {
 
     /**
      * Creates a JFrame
@@ -66,9 +75,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         reuseFrameSavedPosition=savePosition;
         reuseFrameSavedSized=saveSize;
-	    self = this;
         addWindowListener(this);
         addComponentListener(this);
+        windowInterface = new JmriJFrameInterface();
         
         /* This ensures that different jframes do not get placed directly on top 
         of each other, but offset by the top inset.  However a saved preferences
@@ -356,8 +365,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return (escapeKeyActionClosesWindow && getEscapeKeyAction() != null);
     }
 
-    JmriJFrame self;
-    
     /**
      * Provide a maximum frame size that is limited
      * to what can fit on the screen after toolbars, etc
@@ -660,6 +667,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             }
         }
         log.debug("dispose "+getTitle());
+        if (windowInterface != null) {
+            windowInterface.dispose();
+        }
         if (task != null) {
             jmri.InstanceManager.shutDownManagerInstance().deregister(task);
             task = null;
@@ -672,4 +682,74 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriJFrame.class.getName());
 
+    /*
+     * This field contains a list of properties that do not correspond to the
+     * JavaBeans properties coding pattern, or known properties that do correspond
+     * to that pattern. The default JmriJFrame implementation of 
+     * BeanInstance.hasProperty checks this hashmap before using introspection
+     * to find properties corresponding to the JavaBean properties
+     * coding pattern.
+     */
+    protected HashMap<String, Object> properties = new HashMap<String, Object>();
+    
+    // subclasses should override this method with something more direct and faster
+    public void setProperty(String key, Object value) {
+        if (Beans.hasIntrospectedProperty(this, key)) {
+            Beans.setIntrospectedProperty(this, key, value);
+        } else {
+            properties.put(key, value);
+        }
+    }
+
+    // subclasses should override this method with something more direct and faster
+    public Object getProperty(String key) {
+        if (properties.containsKey(key)) {
+            return properties.get(key);
+        }
+        return Beans.getIntrospectedProperty(this, key);
+    }
+
+    public boolean hasProperty(String key) {
+        if (properties.containsKey(key)) {
+            return true;
+        } else {
+            return Beans.hasIntrospectedProperty(this, key);
+        }
+    }
+    
+    protected WindowInterface windowInterface = null;
+    
+    public void show(JmriPanel child, JmriAbstractAction action) {
+        if (null != windowInterface) {
+            windowInterface.show(child, action);
+        }
+    }
+
+    public void show(JmriPanel child, JmriAbstractAction action, Hint hint) {
+        if (null != windowInterface) {
+            windowInterface.show(child, action, hint);
+        }
+    }
+
+    public boolean multipleInstances() {
+        if (null != windowInterface) {
+            return windowInterface.multipleInstances();
+        }
+        return false;
+    }
+
+    public void setWindowInterface(WindowInterface wi) {
+        windowInterface = wi;
+    }
+    
+    public WindowInterface getWindowInterface() {
+        return windowInterface;
+    }
+
+    public Set<String> getPropertyNames() {
+        HashSet<String> names = new HashSet<String>();
+        names.addAll(properties.keySet());
+        names.addAll(Beans.getIntrospectedPropertyNames(this));
+        return names;
+    }
 }
