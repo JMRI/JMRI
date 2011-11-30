@@ -32,9 +32,9 @@ public class Beans extends java.beans.Beans {
      */
     public static void setProperty(Object object, String key, Object value) {
         if (implementsBeanInterface(object)) {
-            ((BeanInterface)object).setProperty(null, value);
+            ((BeanInterface)object).setProperty(key, value);
         } else {
-            setIntrospectedProperty(object, null, value);
+            setIntrospectedProperty(object, key, value);
         }
     }
     
@@ -88,9 +88,9 @@ public class Beans extends java.beans.Beans {
      */
     public static Object getProperty(Object object, String key) {
         if (implementsBeanInterface(object)) {
-            return ((BeanInterface)object).getProperty(null);
+            return ((BeanInterface)object).getProperty(key);
         } else {
-            return getIntrospectedProperty(object, null);
+            return getIntrospectedProperty(object, key);
         }
     }
     
@@ -143,9 +143,9 @@ public class Beans extends java.beans.Beans {
      */
     public static boolean hasProperty(Object object, String key) {
         if (implementsBeanInterface(object)) {
-            return ((BeanInterface)object).hasProperty(null);
+            return ((BeanInterface)object).hasProperty(key);
         } else {
-            return hasIntrospectedProperty(object, null);
+            return hasIntrospectedProperty(object, key);
         }
     }
     
