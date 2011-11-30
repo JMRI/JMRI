@@ -778,8 +778,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 for(int i = 0; i<getNumberOfNeighbours(); i++){
                     JPanel panel = new JPanel();
                     panel.setLayout(new FlowLayout());
-                    panel.add(new JLabel(getNeighbourAtIndex(i).getDisplayName()));
-                    panel.add(new JLabel(neighbours.get(i).getPacketFlow() + " " + getNeighbourPacketFlowAsString(i)));
+                    panel.add(new JLabel("Attached Block: " + getNeighbourAtIndex(i).getDisplayName()));
                     JComboBox dir = new JComboBox(working);
                     Block blk = neighbours.get(i).getBlock();
                     if(block.isBlockDenied(blk))
