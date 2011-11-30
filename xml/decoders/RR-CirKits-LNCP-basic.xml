@@ -13,13 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.071" lastUpdated="20111116"/>
+  <version author="dick@rr-cirkits.com" version="0.07" lastUpdated="20110928"/>
   <!-- Version 0.01  Working version modified from TC-64 -->
   <!-- Version 0.04  Added presets for input lines -->
   <!-- Version 0.05  Added logic table entries -->
   <!-- Version 0.06  Corrected output port for signal mode -->
   <!-- Version 0.07  Switched to xi:include for many items to control file size. -->
-  <!-- Version 0.071 Typo in reset default comment. -->
   <decoder>
     <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode">
       <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01"/>
@@ -440,7 +439,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In1 Effect" CV="132" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In1 Timing" CV="132" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -486,7 +485,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In2 Effect" CV="140" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In2 Timing" CV="140" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -532,7 +531,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In3 Effect" CV="148" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In3 Timing" CV="148" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -578,7 +577,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In4 Effect" CV="156" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In4 Timing" CV="156" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -624,7 +623,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In5 Effect" CV="164" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In5 Timing" CV="164" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -670,7 +669,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In6 Effect" CV="172" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In6 Timing" CV="172" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -716,7 +715,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In7 Effect" CV="180" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In7 Timing" CV="180" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -762,7 +761,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="In8 Effect" CV="188" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="In8 Timing" CV="188" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -808,7 +807,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="BOD1 Effect" CV="196" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="BOD1 Timing" CV="196" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -854,7 +853,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="BOD2 Effect" CV="204" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="BOD2 Timing" CV="204" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -900,7 +899,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="BOD3 Effect" CV="212" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="BOD3 Timing" CV="212" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -946,7 +945,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="BOD4 Effect" CV="220" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="BOD4 Timing" CV="220" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -992,7 +991,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="BOD5 Effect" CV="228" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="BOD5 Timing" CV="228" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
@@ -1038,7 +1037,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
       </variable>
       <variable label="BOD6 Effect" CV="236" mask="XVVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputEffect.xml"/>
       </variable>
       <variable label="BOD6 Timing" CV="236" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
