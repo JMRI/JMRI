@@ -96,7 +96,7 @@ import jmri.jmrix.ConnectionConfig;
  */
 
 public class DecoderPro3Window
-        extends jmri.util.swing.multipane.TwoPaneTBWindow{
+        extends jmri.util.swing.multipane.TwoPaneTBWindow {
 
     static int openWindowInstances = 0;
 
@@ -104,10 +104,8 @@ public class DecoderPro3Window
      * Loads Decoder Pro 3 with the default set of menus and toolbars
      */
     public DecoderPro3Window(){
-        super("DecoderPro",
-                new File("xml/config/apps/decoderpro/Gui3Menus.xml"),
+        this(new File("xml/config/apps/decoderpro/Gui3Menus.xml"),
                 new File("xml/config/apps/decoderpro/Gui3MainToolBar.xml"));
-        buildWindow();
     }
 
     /**
@@ -569,7 +567,7 @@ public class DecoderPro3Window
         }
         updateDetails();
     }
-    
+
     //Popup listener is used against the roster table to display a 
     class rosterPopupListener extends MouseAdapter {
     
@@ -1454,14 +1452,25 @@ public class DecoderPro3Window
         }
     }
 
-    public Object getRemoteObject(String value){
-        value=value.toLowerCase();
-        if(value.equals("hidesummary")){
-            return hideBottomPane;
-        }
-        return null;
+    public Object getRemoteObject(String value) {
+        return getProperty(value);
+    }
+
+    public String getSelectedRosterGroup() {
+        return Roster.getRosterGroup();
     }
     
+    @Override
+    public Object getProperty(String key) {
+        if (key.toString().equalsIgnoreCase("selectedRosterGroup")) {
+            return getSelectedRosterGroup();
+        } else if (key.toString().equalsIgnoreCase("hideSummary")) {
+            return hideBottomPane;
+        }
+        // call parent getProperty method to return any properties defined
+        // in the class heirarchy.
+        return super.getProperty(key);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3Window.class.getName());
 }
