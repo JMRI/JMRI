@@ -28,9 +28,7 @@
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-
+<div id="mainContent">
 
 <H2>JMRI: Entry Exit (NX) Routing Documentation</H2>
 
