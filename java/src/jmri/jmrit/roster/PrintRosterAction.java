@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.io.IOException;
 
 import java.util.List;
+import jmri.beans.Beans;
 
 
 /**
@@ -59,6 +60,12 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         Roster r = Roster.instance();
         String title = "DecoderPro Roster";
         String rosterGroup = Roster.getRosterGroup();
+        // rosterGroup may legitimately be null
+        // but getProperty returns null if the property cannot be found, so
+        // we test that the property exists before attempting to get its value
+        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
+            rosterGroup = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        }
         if(rosterGroup==null){
             title = title + " All Entries";
         } else {
@@ -90,17 +97,16 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
-        int i=-1;
         log.debug("Roster list size: "+l.size());
-        for (i = 0; i<l.size(); i++) {
+        for (RosterEntry re : l) {
             if(rosterGroup!=null){
-                if(l.get(i).getAttribute(Roster.getRosterGroupWP())!=null){
-                    if(l.get(i).getAttribute(Roster.getRosterGroupWP()).equals("yes"))
-                        l.get(i).printEntry(writer);
+                if(re.getAttribute(Roster.getRosterGroupProperty(rosterGroup))!=null){
+                    if(re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes"))
+                        re.printEntry(writer);
                 }
             }
             else {
-                l.get(i).printEntry(writer);
+                re.printEntry(writer);
             }
         }
 
