@@ -948,8 +948,6 @@ public class DecoderPro3Window
         }
     }
 
-    //JRadioButton service = new JRadioButton("<HTML>Service Mode (Programming Track)</HTML>");
-    //JRadioButton ops = new JRadioButton("<HTML>Operations Mode (Programming On Main)</HTML>");
     JRadioButton service = new JRadioButton("Programming Track");
     JRadioButton ops = new JRadioButton("Programming On Main");
     JRadioButton edit = new JRadioButton("Edit Only");
@@ -1028,20 +1026,15 @@ public class DecoderPro3Window
         ops.setOpaque(false);
         service.setOpaque(false);
         edit.setOpaque(false);
-        /*ops.setBorder(null);
-        service.setBorder(null);
-        edit.setBorder(null);*/
 
         JPanel progModePanel = new JPanel();
-        //progModePanel.setLayout(new BoxLayout(progModePanel, BoxLayout.Y_AXIS));
-        GridLayout buttonLayout = new GridLayout(4, 1, 0, 0);
+        
+        GridLayout buttonLayout = new GridLayout(3, 1, 0, 0);
         progModePanel.setLayout(buttonLayout);
-        //progModePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
         progModePanel.add(service);
         progModePanel.add(ops);
         progModePanel.add(edit);
-        //progModePanel.setBackground(Color.RED);
-        progModePanel.add(prog1Button);
 
         programModeListener = new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1058,17 +1051,36 @@ public class DecoderPro3Window
         
         panel.add(progModePanel);
 
-        JPanel buttonHolder = new JPanel();
-        GridLayout button2Layout = new GridLayout(0, 2, 1, 1);
-        buttonHolder.setLayout(button2Layout);
+        JPanel buttonHolder = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        
+        c.weightx =1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTH;
+        c.gridx = 0;
+        c.ipady = 20;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.gridy = 0;
+        c.insets = new Insets(2, 2, 2, 2);
+        buttonHolder.add(prog1Button, c);
+        
+        c.weightx =1;
+        c.fill = GridBagConstraints.NONE;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.ipady = 0;
+        buttonHolder.add(rosterMedia, c);
 
-       // buttonHolder.add(prog1Button);
-    //    buttonHolder.add(prog2Button);
-    //    buttonHolder.add(throttleLabels);
-    
-        //buttonHolder.setLayout(new BoxLayout(buttonHolder, BoxLayout.Y_AXIS));
-        buttonHolder.add(rosterMedia);
-        buttonHolder.add(throttleLaunch);
+        c.weightx =1.0;
+        c.fill = GridBagConstraints.NONE;
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridwidth = 1;
+         c.ipady = 0;
+        buttonHolder.add(throttleLaunch, c);
+        
+        //buttonHolder.add(throttleLaunch);
 
         panel.add(buttonHolder);
 
@@ -1079,20 +1091,20 @@ public class DecoderPro3Window
                 startProgrammer(null, re, programmer1);
             }
         });
-        prog2Button.setEnabled(false);
+        /*prog2Button.setEnabled(false);
         prog2Button.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
                 startProgrammer(null, re, programmer2);
             }
-        });
-        throttleLabels.setEnabled(false);
+        });*/
+        /*throttleLabels.setEnabled(false);
         throttleLabels.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Open programmer pressed");
                 editMediaButton();
             }
-        });
+        });*/
         rosterMedia.setEnabled(false);
         rosterMedia.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
