@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.awt.BorderLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +169,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JPanel pane = new JPanel();
 
         // general GUI config
-        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        pane.setLayout(new BorderLayout());
 
         // configure GUI elements
         
@@ -243,30 +244,33 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // most of the GUI is done from XML in readConfig() function
         // which configures the tabPane
-        pane.add(tabPane);
+        pane.add(tabPane, BorderLayout.CENTER);
 
         // see if programming mode is available
         modePane = getModePane();
         if (modePane!=null) {
             // if so, configure programming part of GUI
-            
-            // add buttons
             JPanel bottom = new JPanel();
-            bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-            bottom.add(readChangesButton);
-            bottom.add(writeChangesButton);
-            bottom.add(readAllButton);
-            bottom.add(writeAllButton);
-            pane.add(bottom);
+            bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+            // add buttons
+            JPanel bottomButtons = new JPanel();
+            bottomButtons.setLayout(new BoxLayout(bottomButtons, BoxLayout.X_AXIS));
+            
+            bottomButtons.add(readChangesButton);
+            bottomButtons.add(writeChangesButton);
+            bottomButtons.add(readAllButton);
+            bottomButtons.add(writeAllButton);
+            bottom.add(bottomButtons);
             
             // add programming mode
-            pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-            pane.add(modePane);
+            bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+            bottom.add(modePane);
 
             // add programming status message
-            pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+            bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
             progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-            pane.add(progStatus);
+            bottom.add(progStatus);
+            pane.add(bottom, BorderLayout.SOUTH);
         }
 
         // and put that pane into the JFrame
