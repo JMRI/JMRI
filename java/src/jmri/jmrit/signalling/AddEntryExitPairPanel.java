@@ -47,8 +47,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     JComboBox selectPanel = new JComboBox();
     JComboBox fromPoint = new JComboBox();
     JComboBox toPoint = new JComboBox();
-    ActionListener selectPanelListener;
-    ActionListener addButton;
     ArrayList<LayoutEditor> panels;
     
     protected static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.EntryExitBundle");
@@ -60,31 +58,21 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         
         JPanel top = new JPanel();
         top.setLayout(new GridLayout(3,2));
-        //JPanel p;
-        //p = new JPanel();
-        //p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+
         top.add(new JLabel(rb.getString("SelectPanel")));
         top.add(selectPanel);
-        selectPanel.removeActionListener(selectPanelListener);
         selectPanel.removeAllItems();
         panels = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
         for (int i = 0; i<panels.size(); i++){
             selectPanel.addItem(panels.get(i).getLayoutName());
-            /*if(panels.get(i).getLayoutName().equals(panel.getLayoutName()))
-                selectPanel.setSelect*/
         }
         if(panel!=null)
             selectPanel.setSelectedItem(panel.getLayoutName());
-        selectPanel.addActionListener(selectPanelListener);
-        JButton ok;
-        //add(p);
+        
 
-        //p = new JPanel();
-        //p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         top.add(new JLabel(rb.getString("FromLocation")));
         top.add(fromPoint);
-        //add(p);
-        selectPanelListener = new ActionListener() {
+        ActionListener selectPanelListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     beanComboBox(fromPoint, null);
                     beanComboBox(toPoint, null);
@@ -94,15 +82,14 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         beanComboBox(fromPoint, null);
         beanComboBox(toPoint, null);
         selectPanel.addActionListener(selectPanelListener);
-        //p = new JPanel();
-        //p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+
         top.add(new JLabel(rb.getString("ToLocation")));
         top.add(toPoint);
         add(top);
 
         JPanel p=new JPanel();
-        
-        p.add(ok = new JButton(rb.getString("Add")));
+        JButton ok = new JButton(rb.getString("Add"));
+        p.add(ok);
         ok.addActionListener(
         new ActionListener() {
             public void actionPerformed(ActionEvent e){
@@ -165,16 +152,22 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                                                   JOptionPane.YES_NO_OPTION,
                                                   JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (retval == 0) {
+            final PropertyChangeListener propertyNXListener = new PropertyChangeListener(){
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if (evt.getPropertyName().equals("autoGenerateComplete")){
+                        if (entryExitFrame!=null)
+                            entryExitFrame.setVisible(false);
+                        EntryExitPairs.instance().removePropertyChangeListener(this);
+                        JOptionPane.showMessageDialog(null, "Generation of Entry Exit Pairs Completed");
+                    }
+                }
+            };
             try {
-                //InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(this);
                 EntryExitPairs entryexit = EntryExitPairs.instance();
                 entryexit.addPropertyChangeListener(propertyNXListener);
                 entryexit.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()));
-                //InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverEntryExitPairs();
-                    
             } catch (jmri.JmriException e){
                 EntryExitPairs.instance().removePropertyChangeListener(propertyNXListener);
-                //InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
                 JOptionPane.showMessageDialog(null, e.toString());
                 entryExitFrame.setVisible(false);
             }
@@ -213,17 +206,19 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             String description = "";
             NamedBean source = null;
             /* Initial release to deal with sensors only
-            if ((pp.get(i).getWestBoundSignalMast()!=null) && (!pp.get(i).getWestBoundSignalMast().equals(""))){
-                description = pp.get(i).getWestBoundSignalMast();
-                source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getWestBoundSignalMast());
-                
-            } 
+
             else if((pp.get(i).getWestBoundSignal()!=null) && (!pp.get(i).getWestBoundSignal().equals(""))){
                 description = pp.get(i).getWestBoundSignal();
                 source = InstanceManager.signalHeadManagerInstance().getSignalHead(pp.get(i).getWestBoundSignal());
-            } else*/ if ((pp.get(i).getWestBoundSensor()!=null) && (!pp.get(i).getWestBoundSensor().equals(""))){
-                description = pp.get(i).getWestBoundSensor();
-                source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getWestBoundSensor());
+            } else*/ 
+            if ((pp.get(i).getWestBoundSensor()!=null) && (!pp.get(i).getWestBoundSensor().equals(""))){
+                /*if ((pp.get(i).getWestBoundSignalMast()!=null) && (!pp.get(i).getWestBoundSignalMast().equals(""))){
+                    description = pp.get(i).getWestBoundSignalMast();
+                    source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getWestBoundSignalMast());
+                } else {*/
+                    description = pp.get(i).getWestBoundSensor();
+                    source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getWestBoundSensor());
+                //}
             }
 
             if(source!=null){
@@ -244,9 +239,15 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 description = pp.get(i).getEastBoundSignal();
                 source = InstanceManager.signalHeadManagerInstance().getSignalHead(pp.get(i).getEastBoundSignal());
 
-            } else*/ if ((pp.get(i).getEastBoundSensor()!=null) && (!pp.get(i).getEastBoundSensor().equals(""))){
-                description = pp.get(i).getEastBoundSensor();
-                source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getEastBoundSensor());
+            } else*/ 
+            if ((pp.get(i).getEastBoundSensor()!=null) && (!pp.get(i).getEastBoundSensor().equals(""))){
+                /*if ((pp.get(i).getEastBoundSignalMast()!=null)&& (!pp.get(i).getEastBoundSignalMast().equals(""))){
+                    description = pp.get(i).getEastBoundSignalMast();
+                    source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getEastBoundSignalMast());
+                } else {*/
+                    description = pp.get(i).getEastBoundSensor();
+                    source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getEastBoundSensor());
+                //}
             }
             if(source!=null){
                 //description = getPointAsString(pp.get(i),true);
@@ -548,38 +549,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         }
         
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-           // updateNameList();
             if (e.getPropertyName().equals("length")) {
                 updateNameList();
-                //log.debug("Table changed length to "+signalMastLogicList.size());
                 fireTableDataChanged();
-            }/* else if (e.getSource() instanceof SignalMastLogic) {
-                SignalMastLogic logic = (SignalMastLogic)e.getSource();
-                if (matchPropertyName(e)){
-                    for (int i = 0; i< signalMastLogicList.size(); i++) {
-                        Hashtable<SignalMastLogic, SignalMast> b = signalMastLogicList.get(i);
-                        Enumeration<SignalMastLogic> en = b.keys();
-                        while (en.hasMoreElements()) {
-                            SignalMastLogic sm = en.nextElement();
-                            if (sm==logic){
-                                fireTableRowsUpdated(i, i);
-                            }
-                        }
-                    }
-                }
-            } else if (e.getSource() instanceof jmri.SignalMast){
-                jmri.SignalMast sigMast = (jmri.SignalMast)e.getSource();
-                for (int i = 0; i<signalMastLogicList.size(); i++){
-                    Hashtable<SignalMastLogic, SignalMast> b = signalMastLogicList.get(i);
-                    Enumeration<SignalMastLogic> en = b.keys();
-                    while (en.hasMoreElements()) {
-                        SignalMastLogic sm = en.nextElement();
-                        //SignalMast dest = b.get(sm);
-                        if(sm.getSourceMast()==sigMast)
-                            fireTableRowsUpdated(i, i);
-                    }
-                }
-            }*/
+            }
         }
     }
     
@@ -609,10 +582,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 .setPreferredWidth((sample.getPreferredSize().width)+4);
         }
 
-    class ValidPoints{
+    static class ValidPoints{
 
         NamedBean bean;
-        boolean direction;
         String description;
 
         ValidPoints(NamedBean bean, String description){
@@ -628,38 +600,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             return description;
         }
     }
-    
-    /*protected PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener(){
-        public void propertyChange(PropertyChangeEvent e) {
-            if(e.getPropertyName().equals("topology")){
-                //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
-                boolean newValue = (Boolean) e.getNewValue();
-                if(newValue){
-                //    for(int i = 0; i <signalMastLogic.size(); i++){
-               //         signalMastLogic.get(i).setupLayoutEditorDetails();
-               //     }
-                    if(runWhenStablised){
-                        try {
-                           EntryExitPairs.instance().automaticallyDiscoverEntryExitPairs(toUseWhenStable);
-                        } catch (JmriException je){
-                            //Considered normal if routing not enabled
-                        }
-                    }
-                }
-            }
-        }
-    };*/
-    
-    protected PropertyChangeListener propertyNXListener = new PropertyChangeListener(){
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("autoGenerateComplete")){
-                if (entryExitFrame!=null)
-                    entryExitFrame.setVisible(false);
-                EntryExitPairs.instance().removePropertyChangeListener(propertyNXListener);
-                JOptionPane.showMessageDialog(null, "Generation of Entry Exit Pairs Completed");
-            }
-        }
-    };
     
     boolean runWhenStablised = false;
     LayoutEditor toUseWhenStable;

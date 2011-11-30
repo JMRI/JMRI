@@ -404,8 +404,8 @@ public class EntryExitPairs {
         LayoutBlock protecting;
         jmri.SignalMastLogic sml;
         String ref = "Empty";
-        boolean reverseRoute = false;
-        boolean uniDirection = true;
+        //boolean reverseRoute = false;
+        //boolean uniDirection = true;
 
         //Using Object here rather than sourceSensor, working on the basis that it might
         //one day be possible to have a signal icon selectable on a panel and 
@@ -552,13 +552,13 @@ public class EntryExitPairs {
                         //We have a problem, the destination point is already setup with a route, therefore we would need to 
                         //check some how that a route hasn't been set to it.
                         destination = activatedEndPoint.getFacing();/*= getFacingTrackSegment(activeEndPoint, point.getDirection());*/
-                        reverseRoute = false;
+                       // reverseRoute = false;
                     } else {
                         destination = this.protecting;
                         protect = activatedEndPoint.getProtecting();
                         start = activatedEndPoint.getFacing();
                         destination = this.start;
-                        reverseRoute = true;
+                        //reverseRoute = true;
                         try{
                         if(!InstanceManager.layoutBlockManagerInstance().checkValidDest(start, protect, this.protecting, this.start)){
                             start = activatedEndPoint.getProtecting();
@@ -686,6 +686,7 @@ public class EntryExitPairs {
                         log.debug(ref + "  all blocks have automatically been cleared down");
                     } else {
                         log.debug(ref + "  No blocks were cleared down " + routeDetails.size());
+                        //Might need to consider if this is a reversed route
                         try{
                             log.debug(ref + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getSensor().getDisplayName());
                             routeDetails.get(0).getBlock().getSensor().setState(Sensor.ACTIVE);
@@ -740,7 +741,7 @@ public class EntryExitPairs {
                     smlm.removeSignalMastLogic(sml);
                 sml=null;
                 destSignal=null;
-                reverseRoute = false;
+                //reverseRoute = false;
             }
 
             if ((state) && (entryExitType!=SETUPTURNOUTSONLY)){
@@ -828,7 +829,7 @@ public class EntryExitPairs {
             for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
                 PointDetails point = (en.getKey()).getPoint();
                 if(point.equals(dest)){
-                    if(revDestObject.get(dest) instanceof Sensor){
+                    if(revDestObject.get(en.getKey()) instanceof Sensor){
                         Sensor sen = (Sensor) revDestObject.get(dest);
                         sen.removePropertyChangeListener(propertyDestinationListener);
                     }
@@ -838,7 +839,6 @@ public class EntryExitPairs {
                     destPoint2Remove = en.getKey();
                     destObject.remove(revDestObject.get(en.getKey()));
                 }
-                
             }
             revDestObject.remove(destPoint2Remove);
         }
@@ -870,8 +870,13 @@ public class EntryExitPairs {
             return rtn;
         }
         
-        boolean isDestinationValid(PointDetails dest){
-            return revDestObject.containsKey(dest);
+        boolean isDestinationValid(PointDetails destPoint){
+            boolean exists = false;
+            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
+                if((en.getKey()).getPoint().equals(destPoint))
+                    exists = true;
+            }
+            return exists;
         }
         
         boolean getUniDirection(Object dest, LayoutEditor panel){
@@ -900,7 +905,7 @@ public class EntryExitPairs {
         }
         
         boolean isRouteActive(PointDetails endpoint){
-            if((activeEntryExit) && (endpoint.equals(activeEndPoint)))
+            if((activeEntryExit) && (endpoint.equals(activeEndPoint.getPoint())))
                 return true;
             return false;
         }
@@ -915,7 +920,7 @@ public class EntryExitPairs {
         
             PointDetails point = null;
             Boolean uniDirection = true;
-            int repeatActivation = 0x00;
+            //int repeatActivation = 0x00;
         
             DestinationPoints(PointDetails point){
                 this.point=point;
