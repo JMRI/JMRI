@@ -540,14 +540,17 @@ public class EntryExitPairs {
                 }
             } else {
                 
-                DestinationPoints destPoint = destObject.get(dest);
-                if (destPoint.isRouteToPointSet()){
+                DestinationPoints activatedEndPoint = destObject.get(dest);
+                if(activatedEndPoint==null)
+                    return;
+                else if (activatedEndPoint.isRouteToPointSet()){
                     log.debug(ref + "  route to this point is set therefore can not set another to it " /*+ destPoint.getPoint().getID()*/);
+                    return;
                 } else {
                     LayoutBlock start = this.start;
                     LayoutBlock protect = this.protecting;
                     LayoutBlock destination;
-                    DestinationPoints activatedEndPoint = destObject.get(dest);
+                    activatedEndPoint = destObject.get(dest);
                     if(!reverseDirection){
                         //We have a problem, the destination point is already setup with a route, therefore we would need to 
                         //check some how that a route hasn't been set to it.
@@ -830,7 +833,7 @@ public class EntryExitPairs {
                 PointDetails point = (en.getKey()).getPoint();
                 if(point.equals(dest)){
                     if(revDestObject.get(en.getKey()) instanceof Sensor){
-                        Sensor sen = (Sensor) revDestObject.get(dest);
+                        Sensor sen = (Sensor) revDestObject.get(en.getKey());
                         sen.removePropertyChangeListener(propertyDestinationListener);
                     }
                     if(point.getSensor()!=null){
