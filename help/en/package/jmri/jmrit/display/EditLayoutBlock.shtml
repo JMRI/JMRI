@@ -110,6 +110,27 @@ Name:</b> field. Assigning a memory variable is optional. An assigned memory
 variable will contain as its "value" the "value" of the Block, and is useful 
 in identifying trains as they are tracked around the layout (see above).
 <p>
+The <b>Permissive Working Allowed<b> check box allows the block to be set so that if it is
+already occupied, then another train is allowed to enter that block.  This feature is 
+mainly used within the SignalMast logic.
+<p>
+If layout block routing has been enabled for use with the Signalmast Logic additional
+fields will be presented.<p>
+The <b>Block Metric</b> assigns a cost against a perticular block so it is possible 
+to determine if the signal logic should use this block over another block if there 
+are multiple paths.  The lower the metric the more prefered it is. By default Main Line
+blocks have a vlaue of 50, while a Side Track has a value of 200<p>
+The <b>Attached Block</b> fields represent each block that is connected to this one, 
+here you can determine if a route to a next block can be used bothways or only in one
+direction in working out the signalling logic.  The options are.<br>
+<b>Bi-Directional</b> traffic can flow freely between each block.<br>
+<b>Send Only</b> is where this block can only be used to send traffic to the neighbouring 
+block, the neighbouring block can not send traffic to us.<br>
+<b>Recieve Only</b>, this block can only recieve traffic from the adjacent block we can not 
+send traffic to it.<br>
+So for example you might have a passing loop on a single section of line, you can use this
+ so that trains always use the left hand path.
+<p>
 Since blocks are items on the physical layout, the same block may be used in 
 more than one panel. Consequently, block information is saved in the non-
 panel specific portion of the layout information, when panels are saved to a
