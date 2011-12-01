@@ -68,7 +68,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 Element elem = new Element("block")
                             .setAttribute("systemName", sname);
                 elem.addContent(new Element("systemName").addContent(sname));
-                if(!b.getUserName().equals(""))
+                if((b.getUserName()!=null)&&(!b.getUserName().equals("")))
                     elem.addContent(new Element("userName").addContent(b.getUserName()));
                 if (log.isDebugEnabled()) log.debug("initial store Block "+sname);
                 
