@@ -1406,6 +1406,7 @@ public class Setup {
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("pickupEngFormat: "+setting);
         		String[] format = setting.split(",");
+        		fixLocaleBug(format);
         		setPickupEngineMessageFormat(format);
         	}
         }
@@ -1416,6 +1417,7 @@ public class Setup {
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("dropEngFormat: "+setting);
         		String[] format = setting.split(",");
+        		fixLocaleBug(format);
         		setDropEngineMessageFormat(format);
         	}
         }
@@ -1427,6 +1429,7 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("pickupCarFormat: "+setting);
         		String[] format = setting.split(",");
         		replaceOldFormat(format);
+        		fixLocaleBug(format);
         		setPickupCarMessageFormat(format);
         	}
         }
@@ -1438,6 +1441,7 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("dropCarFormat: "+setting);
         		String[] format = setting.split(",");
         		replaceOldFormat(format);
+        		fixLocaleBug(format);
         		setDropCarMessageFormat(format);
         	}
         }
@@ -1448,6 +1452,7 @@ public class Setup {
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("localFormat: "+setting);
         		String[] format = setting.split(",");
+        		fixLocaleBug(format);
         		setLocalMessageFormat(format);
         	}
         }
@@ -1456,6 +1461,7 @@ public class Setup {
         		String setting = a.getValue();
         		if (log.isDebugEnabled()) log.debug("missingCarFormat: "+setting);
         		String[] format = setting.split(",");
+        		fixLocaleBug(format);
         		setMissingCarMessageFormat(format);
         	}
         }
@@ -1696,7 +1702,18 @@ public class Setup {
     		if (format[i].equals("Pickup Msg"))
     			format[i] = PICKUP_COMMENT;
     		if (format[i].equals("Drop Msg"))
-    			format[i] = DROP_COMMENT;   			
+    			format[i] = DROP_COMMENT; 
+    	}
+    }
+    
+    // bogus fix for change in locale US to and from UK
+    // TODO code needs to change, should be saving tag and not actual string
+    private static void fixLocaleBug(String[] format){
+    	for (int i=0; i<format.length; i++){
+    		if (ROAD.equals("Road") && format[i].equals("Railway"))
+    			format[i] = ROAD;
+    		else if (ROAD.equals("Railway") && format[i].equals("Road"))
+    			format[i] = ROAD;
     	}
     }
 	

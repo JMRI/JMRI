@@ -265,7 +265,7 @@ public class TrainCommon {
 			return " "+rs.getComment();
 		else if (attribute.equals(Setup.NONE))
 			return "";
-		return " error ";		
+		return " ("+rb.getString("ErrorPrintOptions")+") ";	// maybe user changed locale
 	}
 	
 	protected String getDate(){
