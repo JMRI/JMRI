@@ -29,7 +29,7 @@ var $inControlURL;
 var $locos = [];
 var $selectedLocos = [];
 var $help =
-	"Version 1.5 - by Oscar Moutinho" +
+	"Version 1.6 - by Oscar Moutinho" +
 	"\n" +
 	"\nThis application lists the roster (locos) and frames defined in JMRI." +
 	"\n" +
@@ -175,7 +175,7 @@ var $manageSelectedLocos = function(){
 	$title = $("#titleMulti");
 	$lnk = $("#lnkMulti");
 	$prt = $("#prtMulti");
-	if($selectedLocos.length > 0){
+	if($selectedLocos.length > 1){
 		$title.html(($isLocalhost ? "" : "Point your smartphone qrCode scanner to the square graph below to open a throttle of multiple selected Locos in your device."));
 		$lnk.attr("href", $inControlURL + "?" + $queryString);
 		$lnk.html("Click here to open a throttle of multiple selected Locos in this computer.");
@@ -185,7 +185,7 @@ var $manageSelectedLocos = function(){
 		$("#TDqrCodeMulti").add("<div id='qrCodeMulti' class='imgFirst'></div>");
 		if(!$isLocalhost) $("#qrCodeMulti").qrcode($inControlURL + "?" + $queryString);
 	} else {
-		$title.html("");
+		$title.html("To open a throttle of multiple selected Locos, you need to select first the desired Locos.");
 		$lnk.attr("href", "");
 		$lnk.html("");
 		$lnk.attr("target", "nothing");
@@ -350,8 +350,8 @@ var $loadFrames = function(){
 //----------------------------------------- Aux image URL
 var $auxImage = function(Url1, Url2){
 	var Url = "";
-	if(Url1) if(Url1.length > 0 && Url1.image != "__noImage.jpg") Url = Url1;
-	if(Url.length == 0) if(Url2) if(Url2.length > 0 && Url2.image != "__noImage.jpg") Url = Url2;
+	if(Url1) if(Url1.length > 0 && Url1 != "__noImage.jpg") Url = Url1;
+	if(Url.length == 0) if(Url2) if(Url2.length > 0 && Url2 != "__noImage.jpg") Url = Url2;
 	return Url;
 }
 

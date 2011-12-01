@@ -259,27 +259,19 @@ var $imagesInDir = function(dir){
 		},
 		success: function(htmlReturned, status, jqXHR){
 			var $htmlReturned = $(htmlReturned);
-			var files = [];
 			$htmlReturned.find("td a").each(function(){ 
 				var f = $(this).attr("href");
 				var e = f.slice(f.lastIndexOf(".") + 1).toLowerCase();
-				if("ico" == e || "gif" == e || "png" == e || "jpg" == e || "jpeg" == e) files.push(f);
+				if("ico" == e || "gif" == e || "png" == e || "jpg" == e || "jpeg" == e) $imagesFileList.push(f);
 			});
-			files.sort();
-			$imagesInDirDone(files, true);
+			$imagesFileList.sort();
 		}
 	});
 }
 
-//----------------------------------------- Retrieved images file list from dir
-var $imagesInDirDone = function(files, done){
-	$imagesFileList = files;
-	$imagesFileListLoaded = done;
-}
-
 //----------------------------------------- Error loading image
 var $errorLoadingImage = function(obj){
-	alert("Error loading image: " + obj.attr("src").split("?")[0] + "\n\nPlease check if file exists.");
+	alert("Error loading image: " + obj.attr("src").split("?")[0] + "\n\nPlease check if file exists.\nIf it exists, please refresh the page.");
 }
 
 //----------------------------------------- Host resize helper (to show ICO, GIF and PNG with tranparency, do not resize at the host)
@@ -312,7 +304,6 @@ var $userImagesPath = "/prefs/resources/";
 var allUrlParameters;
 var $selectAux;
 var $imagesFileList = [];
-var $imagesFileListLoaded = false;
 var $ResizeCheckInterval = 500;												//ms
 var $RetrieveFrameInterval = 3000;											//ms
 var $SizeReference;
@@ -398,7 +389,7 @@ var $QueryStringText =
 	"<br />http://localhost:12080/web/inControl.html?Framename=myFrame" +
 	"";
 var $HelpText =
-	"<br />Version 2.4 - by Oscar Moutinho" +
+	"<br />Version 2.5 - by Oscar Moutinho" +
 	"<br />" +
 	"<br />All browsers: set zoom to 100%." +
 	"<br />Google Chrome: deactivate 'instant' functionality." +
@@ -460,11 +451,12 @@ $(document).ready(function(){
 
 //----------------------------------------- Manage frame display
 var $manageFrameDisplay = function(){
-	$viewportHeight = $(window).height() - 1;	// -1 to prevent some resize issues
-	$viewportWidth = $(window).width() - 1;		// -1 to prevent some resize issues
+	$viewportHeight = $(window).height();
+	$viewportWidth = $(window).width();
 	$("body").css("overflow", "hidden");		//to fix possible margins overflow
 	$("body").html("<img id='imgFrame' alt='" + $paramFrameName + "' title='" + $paramFrameName + "' border='0' ismap='ismap' style='margin: -8px -8px -8px -8px;' />");	//to fix iframe margins (top, right, bottom, left)
 	var $imgFrame = $("#imgFrame");
+	$imgFrame.css("cursor", "pointer");
 	$imgFrame.load(function(){
 		if($frameInitHeight >= 0 && $frameInitWidth >= 0) return;
 		$frameInitHeight = $imgFrame.height();
@@ -475,10 +467,10 @@ var $manageFrameDisplay = function(){
 			"$('#imgFrame').attr('src', '/frame/' + encodeURIComponent($paramFrameName) + '.png?loop=' + Math.floor(Math.random() * 9999));"	//URL must be different to force retrieve
 			, $RetrieveFrameInterval
 		);
-		window.setInterval(							// -1 to prevent some resize issues
-			"if(($viewportHeight != $(window).height() - 1) || ($viewportWidth != $(window).width() - 1)){" +
-			"	$viewportHeight = $(window).height() - 1;" +
-			"	$viewportWidth = $(window).width() - 1;" +
+		window.setInterval(
+			"if(($viewportHeight != $(window).height()) || ($viewportWidth != $(window).width())){" +
+			"	$viewportHeight = $(window).height();" +
+			"	$viewportWidth = $(window).width();" +
 			"	var $imgFrame = $('#imgFrame');" +
 			"	$imgFrame.height($viewportHeight);" +
 			"	$imgFrame.width($viewportWidth);" +
@@ -489,10 +481,15 @@ var $manageFrameDisplay = function(){
 	$imgFrame.error(function(){
 		$frameInitHeight = $viewportHeight;
 		$frameInitWidth = $viewportWidth;
-		alert("Could not load frame '" + $paramFrameName + "'.");
+		alert("Could not load frame '" + $paramFrameName + "'." + "\n\nPlease check if it is opened.\nIf yes, please refresh the page.");
 	});
 	$imgFrame.click(function(e){
 		var $imgFrame = $("#imgFrame");
+		$imgFrame.css("cursor", "crosshair");
+   		window.setTimeout(
+        	"$('#imgFrame').css('cursor', 'pointer');"
+			, 200
+		); 
 		var $Y = Math.round(e.clientY * $frameInitHeight / $imgFrame.height());
 		var $X = Math.round(e.clientX * $frameInitWidth / $imgFrame.width());
 		$.get("/frame/" + encodeURIComponent($paramFrameName) + ".html?" + $X + "," + $Y, function(data) {
@@ -518,10 +515,10 @@ self.close();
 //----------------------------------------- Run at start (inControlMulti)
 var $onStart_inControlMulti = function(){
 	$buildLayoutMulti();
-	window.setInterval(							// -1 to prevent some resize issues
-		"if(($viewportHeight != $(window).height() - 1) || ($viewportWidth != $(window).width() - 1)){" +
-		"	$viewportHeight = $(window).height() - 1;" +
-		"	$viewportWidth = $(window).width() - 1;" +
+	window.setInterval(
+		"if(($viewportHeight != $(window).height()) || ($viewportWidth != $(window).width())){" +
+		"	$viewportHeight = $(window).height();" +
+		"	$viewportWidth = $(window).width();" +
 		"	$rebuildLayoutMulti();" +	
 		"}"
 		, $ResizeCheckInterval
@@ -592,15 +589,15 @@ var $rebuildLayoutMulti = function(){
 var $onStart_inControl = function(){
 	var f;
 	$.ajaxSetup({url: $xmlioPath, async: true, cache: false, type: "POST", dataType: "xml"});
-	$imagesInDir($imagesPath);
 	$("#settings").hide();
+	$loadApplicationParameters();
 	if($paramRemoveFromLocalStorage){
 		$removeApplicationParameters();
 		alert("Parameters removed from Local Storage.");
 		self.close();
 		return;
 	}
-	$loadApplicationParameters();
+	$imagesInDir($imagesPath);
 	$loadRoster();
 	if($paramLocoName == "" && $LocoNameList.length > 0) $paramLocoName = $LocoNameList[0];
 	$loadParametersByLocoName($paramLocoName);
@@ -623,8 +620,8 @@ var $onStart_inControl = function(){
 	$sizeAndBuild();
 	$xmlioSendGetPower();
 	$xmlioSendGetLoco();
-	window.setInterval(							// -1 to prevent some resize issues
-		"if(($viewportHeight != $(window).height() - 1) || ($viewportWidth != $(window).width() - 1)) $sizeAndBuild();"
+	window.setInterval(
+		"if(($viewportHeight != $(window).height()) || ($viewportWidth != $(window).width())) $sizeAndBuild();"
 		, $ResizeCheckInterval
 	);
 };
@@ -747,16 +744,16 @@ var $loadRoster = function(){
 //----------------------------------------- Aux image URL
 var $auxImage = function(Url1, Url2){
 	var Url = "";
-	if(Url1) if(Url1.length > 0 && Url1.image != "__noImage.jpg") Url = Url1;
-	if(Url.length == 0) if(Url2) if(Url2.length > 0 && Url2.image != "__noImage.jpg") Url = Url2;
+	if(Url1) if(Url1.length > 0 && Url1 != "__noImage.jpg") Url = Url1;
+	if(Url.length == 0) if(Url2) if(Url2.length > 0 && Url2 != "__noImage.jpg") Url = Url2;
 	return Url;
 }
 
 //----------------------------------------- Standard size and build repeat
-var $sizeAndBuild = function(){					// -1 to prevent some resize issues
-	$changeBothSizes = (($viewportWidth != $(window).width() - 1) && ($viewportHeight != $(window).height() - 1));
-	$viewportWidth = $(window).width() - 1;
-	$viewportHeight = $(window).height() - 1;
+var $sizeAndBuild = function(){
+	$changeBothSizes = (($viewportWidth != $(window).width()) && ($viewportHeight != $(window).height()));
+	$viewportWidth = $(window).width();
+	$viewportHeight = $(window).height();
 	$portrait = ($viewportWidth <= $viewportHeight);
 	$buildLayout();
 }
@@ -930,7 +927,7 @@ var $loadApplicationParameters = function(){
 	for(var i = 0; i < l; i++) $LocoNameList[i] = $.loadLocalInfo("inControl.locoList[" + i + "]");
 }
 
-//----------------------------------------- Remove all application parameters	(not used - just for cleaning)
+//----------------------------------------- Remove all application parameters
 var $removeApplicationParameters = function(){
 	$.removeLocalInfo("inControl.TextSizeRatio");
 	$.removeLocalInfo("inControl.Power");
@@ -1418,9 +1415,10 @@ var $buildSettingsLayout = function(){
 		"<div class='divSettingsParamsClick'>" +
 		"<label id='lblHelp' class='pointer' onclick='$Help()'>More help ...</label>" +
 		"</div>";
-	$divSettingsParams.html(s);
+	$divSettingsParams.html("<div>" + s + "</div>");
 	$(".divSettingsParams").css("font-size", $SizeReference * 0.4 * $paramTextSizeRatio);
 	$(".divSettingsParamsClick").css("font-size", $SizeReference * 0.6 * $paramTextSizeRatio);
+	$divSettingsParams.jScrollPane();
 }
 
 //----------------------------------------- Buid settings loco layout
@@ -1516,9 +1514,10 @@ var $buildSettingsLocoLayout = function(){
 		"<label id='lblSettingsLocoFunctionShunt' class='pointer settingsLabelsFi'>- Shunt</label>" +
 		"<label id='chkSettingsLocoFunctionShunt' class='pointer settingsCheckboxes settingsOptions'>" + ($paramFnShunt[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]") + "</label>" +
 		"</div>";
-	$divSettingsLocoParams.html(s);
+	$divSettingsLocoParams.html("<div>" + s + "</div>");
 	$imgSettingsLocoTrash.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Trash.png?MaxHeight=" + $imgSettingsLocoTrash.height() + "&MaxWidth=" + $imgSettingsLocoTrash.width()));
 	$(".divSettingsParams").css("font-size", $SizeReference * 0.4 * $paramTextSizeRatio);
+	$divSettingsLocoParams.jScrollPane();
 	$SettingsLocoFunctionClick(0);
 }
 
@@ -1552,8 +1551,9 @@ var $buildQueryStringLayout = function(){
 	$divQueryStringText.css("top", $SizeReference + $.calcTotalMBP($QueryStringTitle, false) + parseInt($divQueryStringText.css("padding-top").replace("px",""), 10));
 	$divQueryStringText.width($queryString.width() - $.calcTotalMBP($divQueryStringText, true));
 	$divQueryStringText.height($queryString.height() -  $QueryStringTitle.height() - $.calcTotalMBP($QueryStringTitle, false) - $.calcTotalMBP($divQueryStringText, false));
-	$divQueryStringText.html($QueryStringText);
+	$divQueryStringText.html("<div>" + $QueryStringText + "</div>");
 	$divQueryStringText.css("font-size", $SizeReference * 0.4 * $paramTextSizeRatio);
+	$divQueryStringText.jScrollPane();
 }
 
 //----------------------------------------- Buid help layout
@@ -1586,8 +1586,9 @@ var $buildHelpLayout = function(){
 	$divHelpText.css("top", $SizeReference + $.calcTotalMBP($HelpTitle, false) + parseInt($divHelpText.css("padding-top").replace("px",""), 10));
 	$divHelpText.width($help.width() - $.calcTotalMBP($divHelpText, true));
 	$divHelpText.height($help.height() -  $HelpTitle.height() - $.calcTotalMBP($HelpTitle, false) - $.calcTotalMBP($divHelpText, false));
-	$divHelpText.html($HelpText);
+	$divHelpText.html("<div>" + $HelpText + "</div>");
 	$divHelpText.css("font-size", $SizeReference * 0.4 * $paramTextSizeRatio);
+	$divHelpText.jScrollPane();
 }
 
 //----------------------------------------- LocoList select
@@ -1679,7 +1680,6 @@ var $HelpClose = function(){
 var $ChooseImage = function(promptText, defaultValue){
 	var s = "";
 	if(confirm("Select from a list ?\n(Press [Cancel] to write the file location URL)")){
-		if(!$imagesFileListLoaded) return null;
 		$buildChooseImageLayout();
 		return null;
 	} else {
@@ -1710,12 +1710,12 @@ var $buildChooseImageLayout = function(){
 	s+= "<label id='lblChooseImageTitle'>Images list</label>";
 	s+= "<img id='imgChooseImageClose' alt='Close' title='Close' class='buttons' onclick='$ChooseImageClose()' />";
 	s+= "</div>";
-	s+= "<div id='divChooseImageList'>";
+	s+= "<div id='divChooseImageList'><div>";
 	for(var i = 0; i < $imagesFileList.length; i++){
 		if(i > 0) s+= " &nbsp;&nbsp; ";
 		s+= "<label id='lblImageItem' class='pointer' onclick='$ChooseImageClick(\"" + $imagesFileList[i] +"\")'>" + $("<div />").text($imagesFileList[i]).html() + "</label>";	// HTML encode
 	}
-	s+= "</div>";
+	s+= "</div></div>";
 	$chooseImage.html(s);
 	$ChooseImageTitle = $("#ChooseImageTitle");
 	$lblChooseImageTitle = $("#lblChooseImageTitle");
@@ -1731,6 +1731,7 @@ var $buildChooseImageLayout = function(){
 	$divChooseImageList.width($chooseImage.width() - $.calcTotalMBP($divChooseImageList, true));
 	$divChooseImageList.height($chooseImage.height() -  $ChooseImageTitle.height() - $.calcTotalMBP($ChooseImageTitle, false) - $.calcTotalMBP($divChooseImageList, false));
 	$divChooseImageList.css("font-size", $SizeReference * 0.4 * $paramTextSizeRatio);
+	$divChooseImageList.jScrollPane();
 	$("#settingsLoco").hide();
 }
 

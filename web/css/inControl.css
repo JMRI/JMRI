@@ -150,6 +150,7 @@ body {
 	position:absolute;
     padding:2px;
 	text-align:left;
+	overflow:auto;
 }
 
 .divSettingsParamsSpace {
