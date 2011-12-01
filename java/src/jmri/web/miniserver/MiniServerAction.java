@@ -110,8 +110,7 @@ public class MiniServerAction extends JmriAbstractAction {
                             frame.setTitle("JMRI Mini Web Server");
 //                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             frame.getContentPane().add(panel);
-                            java.net.URL imageURL = ClassLoader.getSystemResource("resources/jmri32x32.gif");
-                            frame.setIconImage(new ImageIcon(imageURL).getImage());
+                            frame.setIconImage(frame.getToolkit().getImage("resources/jmri32x32.gif"));
                             frame.pack();
                             frame.setVisible(true);
                         }
