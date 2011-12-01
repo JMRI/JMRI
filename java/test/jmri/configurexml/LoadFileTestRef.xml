@@ -119,11 +119,19 @@
       <systemName>IB1</systemName>
       <userName>Block 1</userName>
     </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+    </block>
     <block systemName="IB1" length="25.4" curve="0" userName="Block 1">
       <systemName>IB1</systemName>
       <userName>Block 1</userName>
       <comment>Length 1</comment>
       <permissive>no</permissive>
+    </block>
+    <block systemName="IB2" length="15.8" curve="0">
+      <systemName>IB2</systemName>
+      <comment>Length 900</comment>
+      <permissive>yes</permissive>
     </block>
   </blocks>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
