@@ -587,22 +587,19 @@ the comment to your liking.
 <A NAME="BuildReportDetails"></A>
 <H3>Build Report Details</H3>
 
-You can adjust the amount of information that the build report will
-show. Select one of the four levels using the radio buttons. The program
-when generating the build reports stores the "Very Detailed" information
-to disk. The radio buttons control how much of that data is actually
-printed. The "Minimal" radio button provides the least amount of
-information and "Very Detailed" provides the most. If you're only
-interested why a train won't build, the "Minimal" setting can provide
-you with this information. The "Normal" setting shows which locomotives and
-cars are being excluded from the train, and which locomotives and cars are
-being picked up and set out. The "Detailed" setting will generate quite
-a few pages depending on the size of your railroad. It will show all
-available cars and locomotives, and a bit how the program finds destinations
-for the cars and locomotives. The "Very Detailed" setting produces the most
-pages, and will show why cars are not picked up or set out. Be sure and
-press "Save" after changing the build report selection.
-
+   You can adjust the amount of information that the build report will show. Select one of the four
+   levels using the radio buttons in the Print Options window. The program when generating the build reports stores the "Very
+   Detailed" information to disk. The radio buttons control how much of that data is actually
+   printed. The "Minimal" radio button provides the least amount of information and "Very Detailed"
+   provides the most. If you're only interested why a train won't build, the "Minimal" setting can
+   provide you with this information. The "Normal" setting shows the train's route and requirements,
+   along with the choices the program makes for setting out locomotives and cars. The "Detailed"
+   provides additional comments about the build and shows all of the available cars for the train. 
+   The "Very
+   Detailed" setting produces the most pages, and will show why cars are excluded from the train,
+   and why they are not picked up or set out. Be sure and press "Save" after changing the build
+   report selection. 
+   
 <A NAME="Locations"></A>
 <H2>Locations</H2>
 
@@ -666,7 +663,7 @@ appropriate.
 
 <H3>Location Rolling Stock</H3>
 
-You can control the rolling stock a location can service. Push the
+You can control the rolling stock a location can service. Press the
 "Clear All" button to deselect all types, or "Select All" to select all
 types, then select or deselect the rolling stock you wish the location
 to accept. After configuring the tracks for a location, you can use the
