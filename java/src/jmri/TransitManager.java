@@ -3,6 +3,9 @@
 package jmri;
 
 import jmri.managers.AbstractManager;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.text.DecimalFormat;
 
 /**
@@ -29,7 +32,7 @@ import java.text.DecimalFormat;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author      Dave Duchamp Copyright (C) 2008
+ * @author      Dave Duchamp Copyright (C) 2008, 2011
  * @version	$Revision$
  */
 public class TransitManager extends AbstractManager
@@ -137,6 +140,26 @@ public class TransitManager extends AbstractManager
         deregister(z);
 		z.dispose();
     }
+	/**
+	 * Returns a list of Transits which use a specified Section
+	 */
+	public ArrayList<Transit> getListUsingSection(Section s) {
+		ArrayList<Transit> list = new ArrayList<Transit>();
+		List<String> tList = getSystemNameList();
+		for (int i = 0; i < tList.size(); i++) {
+			String tName = tList.get(i);
+			if ( (tName!=null) && (tName.length()>0) ) {
+				Transit tTransit = getTransit(tName);
+				if (tTransit!=null) {
+					if (tTransit.containsSection(s)) {
+						// this Transit uses the specified Section
+						list.add(tTransit);
+					}
+				}
+			}
+		}
+		return list;
+	}
 	
     static TransitManager _instance = null;
     static public TransitManager instance() {
