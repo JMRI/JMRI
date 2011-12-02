@@ -119,7 +119,9 @@ In the rest of this page, we provide links to the various examples of those two 
     This is advertised on Bonjour/Zeroconf as a "_loconetovertcpserver._tcp.local." service. (Name
     pending approval from the original protocol developers)
 <li>Via providing an <a href="http://srcpd.sourceforge.net/">SRCP</a> server implementation.
-<li>Via providing a <a href="../../hardware/jNRIClient/index.shtml">JMRI Server</a> implementation.
+    <p>
+    This is advertised on Bonjour/Zeroconf as a "_srcp._tcp.local." service.
+<li>Via providing a <a href="../../hardware/JMRIClient/index.shtml">JMRI Server</a> implementation.
 </ul>
 
 See also the 
