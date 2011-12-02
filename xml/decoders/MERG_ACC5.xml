@@ -4,25 +4,12 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id$ -->
 <decoder-config>
-		<version author="ncliffe" version="4b" lastUpdated="20090330"/>
-			<!--  Version 4b (beta) by Nigel Cliffe    -->
-			<!--  re-written main programming pane to be more intuitive -->
-			<!--  not necessary to duplicate pane for CV's in 500 region as their role duplicates low ranges -->
-			<!-- 
-				Extensive abuse of standard labelling conventions to make decoder address appear in "basic" pane. 
-				This decoder has address range of 1-511, split over CV1 and CV9.  By manipulating the way the address
-				range (1-511) and the base turnout address (1-2017 in steps of four), these can appear as the addresses
-				on the Basic Pane and in the Roster.
-				Current arrangement has the base turnout address show in the Roster (Short Address).  
-				 
-				
-				Version 5.2 decoder has output inversion capability added. 
-				
+		<version author="ncliffe" version="4c" lastUpdated="20111116"/>
+			<!--  Version 4c (beta) by Nigel Cliffe    -->
+			<!--  Uses decoder indexed variables for address range setting
 			-->
 			
 <decoder>
-	
-	
 	<!--  lowVersionID="4" highVersionID="52"   -->
 	<family name="ACC Decoders"  mfg="MERG"  comment="DCCACC5 is steady state MERG decoder.">
 	<model model="DCCACC5 to V5.1" productID="51">
@@ -110,7 +97,7 @@
 	
 
 			
-		<variable label="Turnout Address of Output 1 (1-2041)" CV="1" mask="XXVVVVVV" default="1" item="Short Address"
+		<variable label="Turnout Address of Output 1 (1-2041)" CV="1" mask="XXVVVVVV" default="1" item="Short Address_1"
 			tooltip="Range 1-2041">
 			<splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3" /> </variable>
 		<variable label="Turnout Address 2" CV="1" mask="XXVVVVVV" default="2"
@@ -124,7 +111,7 @@
 			<splitVal highCV="9" upperMask="XXXXXVVV" factor="4" /> </variable>
 
 		<variable label="Decoder Address (1-511)" CV="1" mask="XXVVVVVV" default="1" 
-			tooltip="Range 1-511" item="Long Address">
+			tooltip="Range 1-511" item="Long Address_1">
 			<splitVal highCV="9" upperMask="XXXXXVVV"/> </variable>
 
 
@@ -244,13 +231,51 @@
 					default="15" >
 					<decVal min="0" max = "255"></decVal>
 		</variable>
-	
+		
+		<constant label="PICV" default="33" comment="CV used for Primary Index"/>
+		<ivariable label="Address Range 1" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" /> 
+		</ivariable>
+
+	 	<ivariable label="Address Range 2" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" /> 
+		</ivariable>
+		
+		<ivariable label="Turnout Address 1st output (1-2041)" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-3" /> 
+		</ivariable>
+		<ivariable label="Turnout Address 2nd output" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-2" /> 
+		</ivariable>
+		<ivariable label="Turnout Address 3rd output" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-1" /> 
+		</ivariable>
+		<ivariable label="Turnout Address 4th output" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-0" /> 
+		</ivariable>
+
+		<ivariable label="Turnout Address 5th output (1-2041)" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-3" /> 
+		</ivariable>
+		<ivariable label="Turnout Address 6th output" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-2" /> 
+		</ivariable>
+		<ivariable label="Turnout Address 7th output" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-1" /> 
+		</ivariable>
+		<ivariable label="Turnout Address 8th output" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-0" /> 
+		</ivariable>
+
+
 	</variables>	
 		
 	
 </decoder>
 
-<pane name="DCCACC5 Settings">
+
+<!--
+<pane name="DCCACC5 Settings (old)">
 	<column>
 		<row> 
 			<column>
@@ -398,6 +423,177 @@
 		</row>
 	</column>
 </pane>
+-->
 
-</decoder-config>
+  
+  <pane name="DCCACC5 Settings">
+	<column>
+		<row>
+			<column>
+				<label label="If requiring 8 independent addresses, set dual address to on and set both the first and second address blocks" />
+				<label label="Lenz Toggle Mode (bits set) gives a toggle action for Lenz systems." />
+				<label label=" "/>
+			</column>
+		</row>
+		<row>
+			<column>
+				<display item="Dual Address Mode" label="Dual Address Mode  "/>
+				<label label=" "/>
+				<label label="Addressing first block" />
+				<separator />
+				<label label=" "/>
+				<row>
+					<column>
+					<label label="Decoder Address (1-511) "/>
+					<display item="Address Range 1" />
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+					</column>
+					<column>
+					<label label="    Turnout Address in blocks"/>
+					<label label="    of 4, range 1-2044"/>
+					<display item="Turnout Address 1st output (1-2041)" />
+					<display item="Turnout Address 2nd output" />
+					<display item="Turnout Address 3rd output" />
+					<display item="Turnout Address 4th output" />
+					</column>
+				</row>
+				<label label=" "/>
+				<label label="Addressing second block" />
+				<separator />
+				<label label=" "/>
+				<row>
+					<column>
+					<label label="Decoder Address (1-511) "/>
+					<display item="Address Range 2" />
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+					<label label=" "/>
+					</column>
+					<column>
+					<label label="    Turnout Address in blocks"/>
+					<label label="    of 4, range 1-2044"/>
+					<display item="Turnout Address 5th output (1-2041)" />
+					<display item="Turnout Address 6th output" />
+					<display item="Turnout Address 7th output" />
+					<display item="Turnout Address 8th output" />
+					</column>
+				</row>
+			</column>
+
+			<column>
+				<label label="              "/>
+			</column>
+
+			<column>
+				<label label="Output operation, select / deselect as required" />
+				<separator/>
+				<label label=" "/>
+				<row>
+				<column>
+					<display item="Output Active bit 0" format="checkbox" label="Output Active   1" />
+					<label label=" "/>
+					<display item="Invert bit 0" format="checkbox" label="Invert Outputs:   1" />
+				</column>
+				<column>
+					<display item="Output Active bit 1" format="checkbox" label="  2" />
+					<label label=" "/>
+					<display item="Invert bit 1" format="checkbox" label="  2" />
+				</column>
+				<column>
+					<display item="Output Active bit 2" format="checkbox" label="  3" />
+					<label label=" "/>
+					<display item="Invert bit 2" format="checkbox" label="  3" />
+				</column>
+				<column>
+					<display item="Output Active bit 3" format="checkbox" label="  4" />
+					<label label=" "/>
+					<display item="Invert bit 3" format="checkbox" label="  4" />
+				</column>
+				<column>
+					<display item="Output Active bit 4" format="checkbox" label="  5" />
+					<label label=" "/>
+					<display item="Invert bit 4" format="checkbox" label="  5" />
+				</column>
+				<column>
+					<display item="Output Active bit 5" format="checkbox" label="  6" />
+					<label label=" "/>
+					<display item="Invert bit 5" format="checkbox" label="  6" />
+				</column>
+				<column>
+					<display item="Output Active bit 6" format="checkbox" label="  7" />
+					<label label=" "/>
+					<display item="Invert bit 6" format="checkbox" label="  7" />
+				</column>
+				<column>
+					<display item="Output Active bit 7" format="checkbox" label="  8" />
+					<label label=" "/>
+					<display item="Invert bit 7" format="checkbox" label="  8" />
+				</column>
+				</row>
+				<label label=" "/>
+
+			
+				<label label=" "/>
+				<label label=" "/>
+				<label label=" "/>
+				<label label="Output Duration and Toggle Mode"/>
+				<separator />
+				<row>
+				<column>
+					<label label= "Duration of Output" />
+					<display item="A Output (x10) Millisecs" label= "1+2 " />
+					<display item="B Output (x10) Millisecs" label= "3+4 "/>
+					<display item="C Output (x10) Millisecs" label= "5+6 " />
+					<display item="D Output (x10) Millisecs" label= "7+8 " />
+					<label label= "(x10 MilliSecs)" />
+					<label label= "0 = continous output"/>
+				</column>
+				<column>
+					<label label= "         " />
+				</column>
+				<column>
+					<label label ="Toggle Mode Outputs" />
+					<display item="Toggle Mode output 1" format="checkbox" label="1+2" />
+					<display item="Toggle Mode output 2" format="checkbox" label="3+4" />
+					<display item="Toggle Mode output 3" format="checkbox" label="5+6" />
+					<display item="Toggle Mode output 4" format="checkbox" label="7+8" />
+					<label label ="Not used in dual"/>
+					<label label ="address mode"/>
+					</column>
+				</row>
+				<label label=" "/>
+				<label label=" "/>
+				
+			</column>
+							
+		</row>
+
+
+		
+	</column>
+  </pane>
+
+<pane name="Indexed CVs">
+    <column>
+      <row>
+        <column>
+          <label label="JMRI 2.8 or later is required to use this definition" />
+          <label label=" " />
+        </column>
+      </row>
+      <row>
+        <column>
+          <indxcvtable/>
+        </column>
+      </row>
+    </column>
+  </pane>
+  
+  </decoder-config>
 
