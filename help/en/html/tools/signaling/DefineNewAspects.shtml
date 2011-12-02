@@ -34,8 +34,10 @@ directory.
 
 <h2>Creating a New Signaling System</h2>
 
-For now, you need to manually create a new directory under
-the "xml/signals" directory to hold your new signal definition.
+For now, you need to manually create a new directory the JMRI 
+system file directory under the "xml/signals" or in the user 
+preferences directory "resources/signals" (from 2.13.5) these 
+will then hold your new signal definition.
 By convention, the name of this directory (e.g. "basic" or
 "AAR-1946") provides the system name for your signal definition.
 Think ahead a little bit:  Will there be variants of this
@@ -175,7 +177,10 @@ for user-readable documentation.
 
 <p>
 The imagelink element, if present, should point to
-a image file (.gif, .png or .jpg) showing what this appearance looks like.
+a image file (.gif, .png or .jpg) showing what this appearance looks like.<br>
+If you are creating or using custom images then these should be placed in a 
+sub-directory within the user preference area, the image link should then 
+be prefixed with "preference:" followed by the remainder of the path.
 <h4>Specific Appearances</h4>
 As the appearance names are all user defined and can be in any language, 
 it is necessary to identify some specifically used aspects that various 
@@ -240,6 +245,25 @@ The first checks the basic format: Are all the &lt; and &gt;
 characters in the right place? Etc.  The second makes sure that 
 the right elements are in the right places, and is a little more
 intensive.
+
+<h3>Amendments to an Existing Signaling System<h3>
+
+There are a number of signalling definitions already provided within JMRI which are 
+located in the "xml/signals" directory, some of these may generally meet your existing 
+requirements however some might require changes to suit the hardware that you use, 
+or there are local variation in operations, or simply that you do not have the facility to 
+work to a fully prototypical set of signals.
+<p>
+In this case it is possible to amend and create your own appearance files that will 
+over-ride the JMRI provided ones. You will need to first create a sub-directory in 
+the resource directory located in the user preference area called "signals", you will 
+then need to create a sub-directory in there which has exactly the same name as the 
+JMRI provided one. From there any appearance files you create or copy into will either
+be added to the mast list for that signalling system or overwrite the predefined JMRI 
+signal mast.
+<p>
+The advantage of placing new and amended signal mast appearance files here is that when 
+JMRI is updated, then these files will not get overwritten and lost!
 </div>
 <!--#include virtual="/Footer" -->
 </body>
