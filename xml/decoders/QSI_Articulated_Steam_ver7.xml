@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="12" lastUpdated="2011003"/>
   <version author="Michael Mosher" version="11" lastUpdated="20110922"/>
   <version author="Michael Mosher" version="10" lastUpdated="20101228"/>
   <version author="Michael Mosher" version="9" lastUpdated="20100323"/>
@@ -36,6 +37,8 @@
 <!-- version 9 - Use subversion CV display (Q1a & Q2 have differing subversions) -->
 <!-- version 10 - Add hoot/fancy ending bit to CV55.154.x & add model 411 -->
 <!-- version 11 - add models 4048,4049 -->
+<!-- version 12 - removed factor="256" from paired vars -->
+
   <decoder>
     <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7">
       <model model="QSI Revolution Articulated Steam" numFns="14" numOuts="0" productID="4050">
@@ -2378,7 +2381,7 @@
       </ivariable>
       <ivariable label="Wheel Diameter" CVname="56.24.0" CV="56" PI="24" SI="0" 
 			include="4000,4004,4050">
-        <indexedPairVal highCVname="56.24.1" factor="256"/>
+        <indexedPairVal highCVname="56.24.1" />
       </ivariable>
       <ivariable label="Locomotive Scale Low Byte" CVname="56.25.0" CV="56" PI="25" SI="0" default="0" item="CV56.25.0" 
 			include="4000,4004,4050">
@@ -2390,7 +2393,7 @@
       </ivariable>
       <ivariable label="Locomotive Scale" CVname="56.25.0" CV="56" PI="25" SI="0" 
 			include="4000,4004,4050">
-        <indexedPairVal highCVname="56.25.1" factor="256"/>
+        <indexedPairVal highCVname="56.25.1" />
       </ivariable>
 <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
 <!-- CV 56.254 About Quantum Decoder -->
@@ -2443,14 +2446,14 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Product Model" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
-        <indexedPairVal highCVname="56.254.4" factor="256"/>
+        <indexedPairVal highCVname="56.254.4" />
       </ivariable>
       <ivariable label="Hardware Profile" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="Hardware Profile">
-        <indexedPairVal highCVname="56.254.2" factor="256"/>
+        <indexedPairVal highCVname="56.254.2" />
       </ivariable>
       <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" 
 			include="4000,4002,4004,4048,4049,4050">
-        <indexedPairVal highCVname="56.254.15" factor="256"/>
+        <indexedPairVal highCVname="56.254.15" />
       </ivariable>
 <!-- CV 56.255 Play Build Information (for ops mode) -->
       <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_0" default="0">
