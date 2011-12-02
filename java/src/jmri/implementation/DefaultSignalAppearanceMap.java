@@ -11,6 +11,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 
 import jmri.NamedBeanHandle;
+import jmri.jmrit.XmlFile;
 
 import jmri.SignalHead;
 import jmri.SignalSystem;
@@ -48,13 +49,20 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             new DefaultSignalAppearanceMap("map:"+signalSystemName+":"+aspectMapName);
         maps.put("map:"+signalSystemName+":"+aspectMapName, map);
 
-        File file = new File("xml"+File.separator
+        File file = new File(XmlFile.prefsDir()+java.io.File.separator
+                                +"resources"+File.separator
                                 +"signals"+File.separator
                                 +signalSystemName+File.separator
                                 +"appearance-"+aspectMapName+".xml");
-        if (!file.exists()) {
-            log.error("appearance file doesn't exist: "+file.getPath());
-            throw new IllegalArgumentException("appearance file doesn't exist: "+file.getPath());
+        if(!file.exists()){
+            file = new File("xml"+File.separator
+                                    +"signals"+File.separator
+                                    +signalSystemName+File.separator
+                                    +"appearance-"+aspectMapName+".xml");
+            if (!file.exists()) {
+                log.error("appearance file doesn't exist: "+file.getPath());
+                throw new IllegalArgumentException("appearance file doesn't exist: "+file.getPath());
+            }
         }
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         Element root;

@@ -74,6 +74,8 @@ public class DefaultSignalSystemManager extends AbstractManager
         List<String> retval = new ArrayList<String>();
         // first locate the signal system directory
         // and get names of systems
+        
+        //First get the default pre-configured signalling systems
         File signalDir = new File("xml"+File.separator+"signals");
         File[] files = signalDir.listFiles();
         for (int i=0; i<files.length; i++) {
@@ -86,23 +88,64 @@ public class DefaultSignalSystemManager extends AbstractManager
                 }
             }
         }
+        //Now get the user defined systems.
+        signalDir = new File(XmlFile.prefsDir()+
+            java.io.File.separator+"resources"+File.separator+"signals");
+        files = signalDir.listFiles();
+        if(files!=null){
+            for (int i=0; i<files.length; i++) {
+                if (files[i].isDirectory()) {
+                    // check that there's an aspects.xml file
+                    File aspects = new File(files[i].getPath()+File.separator+"aspects.xml");
+                    if ((aspects.exists()) && (!retval.contains(files[i].getName()))) {
+                        log.debug("found system: "+files[i].getName());
+                        retval.add(files[i].getName());
+                    }
+                }
+            }
+        }
         return retval;
     }
 
     SignalSystem makeBean(String name) {
+        
+        //First check to see if the bean is in the default system directory
         String filename = "xml"+File.separator+"signals"
                             +File.separator+name
                             +File.separator+"aspects.xml";
         log.debug("load from "+filename);
         XmlFile xf = new AspectFile();
-        try {
-            Element root = xf.rootFromName(filename);
-            DefaultSignalSystem s = new DefaultSignalSystem(name);
-            loadBean(s, root);
-            return s;
-        } catch (Exception e) {
-            log.error("Could not parse aspect file \""+filename+"\" due to: "+e);
+        File file = new File(filename);
+        if(file.exists()){
+            try {
+                Element root = xf.rootFromName(filename);
+                DefaultSignalSystem s = new DefaultSignalSystem(name);
+                loadBean(s, root);
+                return s;
+            } catch (Exception e) {
+                log.error("Could not parse aspect file \""+filename+"\" due to: "+e);
+            }
         }
+
+        //if the file doesn't exist or fails the load from the default location then try the user directory
+        filename = XmlFile.prefsDir()+"resources"
+                            +File.separator+"signals"
+                            +File.separator+name
+                            +File.separator+"aspects.xml";
+        log.debug("load from "+filename);
+        file = new File(filename);
+        if(file.exists()){
+            xf = new AspectFile();
+            try {
+                Element root = xf.rootFromName(filename);
+                DefaultSignalSystem s = new DefaultSignalSystem(name);
+                loadBean(s, root);
+                return s;
+            } catch (Exception e) {
+                log.error("Could not parse aspect file \""+filename+"\" due to: "+e);
+            }
+        }
+        
         return null;
     }
 

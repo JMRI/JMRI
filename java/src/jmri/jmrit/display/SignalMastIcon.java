@@ -120,7 +120,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 log.error("No icon found for appearance " + aspect);
             return true;
         } else {
-            s = s.substring(s.indexOf("resources"));
+            if(!s.contains("preference:"))
+                s = s.substring(s.indexOf("resources"));
             NamedIcon n = new NamedIcon(s,s);
             _iconMap.put(s, n);
             if(_rotate!=0){
@@ -399,7 +400,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                     that is not support or configured, such as dark or held */
                     return;
                 }
-                s = s.substring(s.indexOf("resources"));
+                if(!s.contains("preference:"))
+                    s = s.substring(s.indexOf("resources"));
                 
                 // tiny global cache, due to number of icons
                 if (_iconMap==null) getIcons();
