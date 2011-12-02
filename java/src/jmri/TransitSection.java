@@ -67,9 +67,14 @@ public class TransitSection {
 	private String tSectionName = "";
 	private boolean needsInitialization = false;
 	private void initialize() {
-		mSection = InstanceManager.sectionManagerInstance().getSection(tSectionName);
-		if (mSection==null) 
-			log.error("Missing Section - "+tSectionName+" - when initializing a TransitSection");
+        if (tSectionName.equals("null")) {
+            log.error("Null Section Name when initializing a TransitSection");
+        }
+        else {                
+            mSection = InstanceManager.sectionManagerInstance().getSection(tSectionName);
+            if (mSection==null) 
+                log.error("Missing Section - "+tSectionName+" - when initializing a TransitSection");
+        }
 		needsInitialization = false;
 	}
 	
