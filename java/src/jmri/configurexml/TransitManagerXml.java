@@ -62,7 +62,9 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
 					TransitSection ts = tsList.get(k);
 					if (ts!=null) {						
 						tsElem = new Element ("transitsection");
-						tsElem.setAttribute("sectionname",ts.getSection().getSystemName());
+                        Section tSection = ts.getSection();
+                        if (tSection!=null) tsElem.setAttribute("sectionname",tSection.getSystemName());
+                        else tsElem.setAttribute("sectionname","null");
 						tsElem.setAttribute("sequence",Integer.toString(ts.getSequenceNumber()));
 						tsElem.setAttribute("direction",Integer.toString(ts.getDirection()));
 						tsElem.setAttribute("alternate",""+(ts.isAlternate()?"yes":"no"));                
@@ -157,6 +159,9 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
 					int dir = Section.UNKNOWN;
 					boolean alt = false;
 					String sectionName = elem.getAttribute("sectionname").getValue();
+                    if (sectionName.equals("null")) {
+                        log.warn("When loading configuration - missing Section in Transit "+sysName);
+                    }
 					try {
 						seq = elem.getAttribute("sequence").getIntValue();
 						dir = elem.getAttribute("direction").getIntValue();
