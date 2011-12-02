@@ -26,7 +26,7 @@ public class TurnoutSignalMastXml
      */
     public Element store(Object o) {
         TurnoutSignalMast p = (TurnoutSignalMast)o;
-        Element e = new Element("signalmast");
+        Element e = new Element("turnoutsignalmast");
         e.setAttribute("class", this.getClass().getName());
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 

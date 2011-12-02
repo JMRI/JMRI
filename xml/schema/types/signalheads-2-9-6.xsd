@@ -34,8 +34,8 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="signalhead" type="SignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
-        <xs:element name="dccsignalhead" type="DccSignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
+        <xs:element name="signalhead" type="SignalHeadType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="dccsignalhead" type="DccSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>
@@ -72,9 +72,30 @@
           <xs:complexType>
             <xs:attribute name="systemName" type="systemNameType" use="required" />
             <xs:attribute name="userName" type="userNameType" />
+            <xs:attribute name="state" type="xs:string" />
           </xs:complexType>
         </xs:element>
-
+        
+        <xs:element name="appearance" minOccurs="0" maxOccurs="unbounded" >
+          <xs:complexType> 
+            <xs:simpleContent>
+              <xs:annotation><xs:documentation>
+              Define the XML stucture for storing the contents a Signal Appearance;
+              for a given state on a single output signal
+              </xs:documentation>
+              <xs:appinfo>
+                <jmri:usingclass configurexml="true">jmri.managers.configurexml.SingleTurnoutSignalHeadXml</jmri:usingclass>
+              </xs:appinfo>
+              </xs:annotation>
+              <xs:extension base="signalColorType">
+                <xs:attribute name="defines" type="turnoutStateType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the appearance which is associated with the turnout state</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        
         <xs:element name="turnoutname" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType >
             <xs:simpleContent>
@@ -95,30 +116,11 @@
                           <xs:enumeration value="high"/>
                           <xs:enumeration value="input1"/>
                           <xs:enumeration value="input2"/>
+                          <xs:enumeration value="input3"/>
                           <xs:enumeration value="aspect"/>
                         </xs:restriction>
                       </xs:simpleType>
                     </xs:union></xs:simpleType>
-                </xs:attribute>
-              </xs:extension>
-            </xs:simpleContent>
-          </xs:complexType>
-        </xs:element>
-        
-        <xs:element name="appearance" minOccurs="0" maxOccurs="unbounded" >
-          <xs:complexType> 
-            <xs:simpleContent>
-              <xs:annotation><xs:documentation>
-              Define the XML stucture for storing the contents a Signal Appearance;
-              for a given state on a single output signal
-              </xs:documentation>
-              <xs:appinfo>
-                <jmri:usingclass configurexml="true">jmri.managers.configurexml.SingleTurnoutSignalHeadXml</jmri:usingclass>
-              </xs:appinfo>
-              </xs:annotation>
-              <xs:extension base="signalColorType">
-                <xs:attribute name="defines" type="turnoutStateType" use="required">
-                  <xs:annotation><xs:documentation>Specifies the appearance which is associated with the turnout state</xs:documentation></xs:annotation>
                 </xs:attribute>
               </xs:extension>
             </xs:simpleContent>

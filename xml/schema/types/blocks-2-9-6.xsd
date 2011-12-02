@@ -60,6 +60,14 @@
                   <xs:attribute name="useCurrent" type="yesNoType" />
                 </xs:complexType>
               </xs:element>
+              <xs:element name="deniedBlocks" minOccurs="0" maxOccurs="1" >
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="block" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              
               <xs:element name="path" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                     <xs:sequence>

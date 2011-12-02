@@ -33,7 +33,8 @@
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastManagerXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:sequence>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="turnoutsignalmast" type="TurnoutSignalMastType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />      
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
@@ -46,10 +47,10 @@
           Generally dealt with by the manager implemenation
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastManagerXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.SignalHeadSignalMastXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:sequence>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
 
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
@@ -62,6 +63,35 @@
       <xs:attribute name="userName" type="userNameType">
         <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
       </xs:attribute>
+      <xs:attribute name="class" type="classType" />
+    </xs:complexType>
+    
+    <xs:complexType name="TurnoutSignalMastType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one Turnout Based Signal Mast implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.TurnoutSignalMastXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="turnout" type="xs:string"/>
+              <xs:element name="turnoutstate" type="xs:string" />
+            </xs:sequence>
+            <xs:attribute name="defines"  use="required">
+                <xs:annotation><xs:documentation>Specifies which appearance the turnout drives</xs:documentation></xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>
 
 </xs:schema>
