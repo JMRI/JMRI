@@ -16,12 +16,14 @@
 
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
+<!-- version 3 - Add support for V8 -->
 
 <pane name="Function Output">
   <column>
     <row>
       <column>
-       	<label label="JMRI 2.9.5 or later is required to use this definition"/>
+       	<label label="JMRI 2.9.5 or later is required for QSI V7"/>
+       	<label label="JMRI 2.13.2 or later is required for QSI V8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
     	<display item="CV56.254.6"/>
@@ -189,12 +191,18 @@
         <display item="CV53.15.0"/>
       </column>
       <column>
+        <display item="CV53.15.1"/>
+      </column>
+      <column>
         <label label=" F13"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.16.0"/>
+      </column>
+      <column>
+        <display item="CV53.16.1"/>
       </column>
       <column>
         <label label=" F14"/>
@@ -205,12 +213,18 @@
         <display item="CV53.17.0"/>
       </column>
       <column>
+        <display item="CV53.17.1"/>
+      </column>
+      <column>
         <label label=" F15"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.18.0"/>
+      </column>
+      <column>
+        <display item="CV53.18.1"/>
       </column>
       <column>
         <label label=" F16"/>
@@ -221,12 +235,18 @@
         <display item="CV53.19.0"/>
       </column>
       <column>
+        <display item="CV53.19.1"/>
+      </column>
+      <column>
         <label label=" F17"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.20.0"/>
+      </column>
+      <column>
+        <display item="CV53.20.1"/>
       </column>
       <column>
         <label label=" F18"/>
@@ -237,12 +257,18 @@
         <display item="CV53.21.0"/>
       </column>
       <column>
+        <display item="CV53.21.1"/>
+      </column>
+      <column>
         <label label=" F19"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.22.0"/>
+      </column>
+      <column>
+        <display item="CV53.22.1"/>
       </column>
       <column>
         <label label=" F20"/>
@@ -253,12 +279,18 @@
         <display item="CV53.23.0"/>
       </column>
       <column>
+        <display item="CV53.23.1"/>
+      </column>
+      <column>
         <label label=" F21"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.24.0"/>
+      </column>
+      <column>
+        <display item="CV53.24.1"/>
       </column>
       <column>
         <label label=" F22"/>
@@ -269,12 +301,18 @@
         <display item="CV53.25.0"/>
       </column>
       <column>
+        <display item="CV53.25.1"/>
+      </column>
+      <column>
         <label label=" F23"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.26.0"/>
+      </column>
+      <column>
+        <display item="CV53.26.1"/>
       </column>
       <column>
         <label label=" F24"/>
@@ -285,12 +323,18 @@
         <display item="CV53.27.0"/>
       </column>
       <column>
+        <display item="CV53.27.1"/>
+      </column>
+      <column>
         <label label=" F25"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.28.0"/>
+      </column>
+      <column>
+        <display item="CV53.28.1"/>
       </column>
       <column>
         <label label=" F26"/>
@@ -301,12 +345,18 @@
         <display item="CV53.29.0"/>
       </column>
       <column>
+        <display item="CV53.29.1"/>
+      </column>
+      <column>
         <label label=" F27"/>
       </column>
     </row>
     <row>
       <column>
         <display item="CV53.30.0"/>
+      </column>
+      <column>
+        <display item="CV53.30.1"/>
       </column>
       <column>
         <label label=" F28"/>
