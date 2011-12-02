@@ -361,7 +361,7 @@ public class AutoAllocate {
 			}
 		}
 // djd debugging 
-log.error("auto allocating Section "+ar.getSection().getUserName());
+log.info("auto allocating Section "+ar.getSection().getUserName());
 		_dispatcher.allocateSection(ar,null);
 		return true;
 	}

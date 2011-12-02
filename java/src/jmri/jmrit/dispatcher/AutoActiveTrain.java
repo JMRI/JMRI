@@ -114,7 +114,10 @@ public class AutoActiveTrain implements ThrottleListener {
 	public boolean getForward() {return _forward;}
 	public void setForward(boolean set) {_forward = set;}
 	public synchronized float getTargetSpeed() {return _targetSpeed;}
-	public synchronized void setTargetSpeed(float speed) {_targetSpeed = speed;}
+	public synchronized void setTargetSpeed(float speed) {
+        _targetSpeed = speed;
+        if (speed>0.002) _autoEngineer.setHalt(false);
+    }
 	public int getSavedStatus() {return _savedStatus;}
 	public void setSavedStatus(int status) {_savedStatus=status;}
 	public synchronized void setCurrentRampRate(int rate) {_currentRampRate = rate;}
@@ -665,7 +668,7 @@ public class AutoActiveTrain implements ThrottleListener {
 			// train will fit, but no way to stop it reliably
 			setStopNow();
 		}
-		if (task>0) {
+		if (task>NO_TASK) {
 			Runnable waitForStop = new WaitForTrainToStop(task);
 			Thread tWait = new Thread(waitForStop);
 			tWait.start();
@@ -895,9 +898,10 @@ public class AutoActiveTrain implements ThrottleListener {
 		public void run() {
 			// set to pause at a fast ramp rate
 			_pausingActive = true;
-			setCurrentRampRate(RAMP_FAST);
 			_savedTargetSpeed = getTargetSpeed();
-			setTargetSpeed(0.0f);
+            _savedRampRate = getRampRate();
+			setCurrentRampRate(RAMP_FAST);
+            stopInCurrentSection(NO_TASK);
 			// wait for train to stop
 			boolean waitNow = true;
 			boolean keepGoing = true;
@@ -912,6 +916,7 @@ public class AutoActiveTrain implements ThrottleListener {
 					}
 				}
 				catch (InterruptedException e) {
+                    log.error("InterruptedException while watiting to stop for pause - "+e);
 					waitNow = false;
 					keepGoing = false;
 				}
@@ -931,27 +936,29 @@ public class AutoActiveTrain implements ThrottleListener {
 				waitNow = true;
 				while (waitNow) {
 					try {
-						Thread.sleep(101);
+						Thread.sleep(501);
 						if (_fastMinutes<=0) waitNow = false;
 					}
 					catch (InterruptedException e) {
+                        log.error("InterruptedException while waiting when paused - "+e);
 						keepGoing = false;
 					}
 				}
 				_clock.removeMinuteChangeListener(_clockListener);
 			}
+			_pausingActive = false;
 			if (keepGoing) {
 				// this thread was not interrupted
 				//   resume running - restore speed, status, and ramp rate
-				setCurrentRampRate(getRampRate());
+				setCurrentRampRate(_savedRampRate);
 				setTargetSpeed(_savedTargetSpeed);
 				setSpeedBySignal();
 				_activeTrain.setStatus(ActiveTrain.RUNNING);
 			}
-			_pausingActive = false;
 		}
 		private int _fastMinutes = 0;
 		private float _savedTargetSpeed = 0.0f;
+        private int _savedRampRate = RAMP_NONE;
 	}
 		
 // _________________________________________________________________________________________
@@ -974,7 +981,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		private boolean _currentForward = true;
 		private int _targetCount[] = {0,1,2,3,4};
 		private int _rampTargetCount = 0;
-		private int _rampCount = 0; 
+		private int _rampCount = 0;
 
         public void run() {
             _abort = false;
@@ -1046,9 +1053,9 @@ public class AutoActiveTrain implements ThrottleListener {
 				synchronized(this) {
 					try {
 						if (!_ramping)
-							wait(300);
+							wait(500);
 						else	
-							wait(50);
+							wait(200);
 					} catch (InterruptedException ie) {
 						log.error("InterruptedException in AutoEngineer"+ie);
 					}
