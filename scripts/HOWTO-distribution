@@ -25,7 +25,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     If so, remake the decoder index. 
         Delete old index from preferences
         ant remakedecoderindex
-        Change file to Unix line ends.
+        Change file to Unix line ends.  (ant might eventually do this with <fixcrlf file="path/to/file" eol="unix" />, but be careful with cross-platform SVN expectations)
         Diff w file in SVN tree as a check.
         Copy the new file from preferences into the SVN tree.
         Update the internal version number by hand, adding 2.
@@ -39,16 +39,13 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     cd help/en/
     ./JHelpDev.csh   (See the doc page for setup)
     (navigate to JHelpDev.xml in release & open it)
-    (click "generate all")
+    (click "create all")
 
     In that same directory, also remake the index and toc web
     pages by doing invoking ant (no argument needed). 
     
     ant
-    
-    (You may need to remove the DOCTYPE lines, as the Sun DTD may be
-    unavailable:  Map.jhm, JmriHelp_enTOC.xml, JmriHelp_enIndex.xml)
-    
+        
     Run the program and make sure help works.
     
     Commit any changed files.
@@ -66,7 +63,7 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.4
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.5
     
 ( ) If using the CI system, set up CI builds for that branch
 
@@ -74,9 +71,9 @@ Second, we build the release branch:
     and update to get the release copy:
     
     cd ../../branches/jmri/releases
-    svn update 2.13.4
+    svn update 2.13.5
     
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.4")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.5")
 
     ( to merge everything to date: svn merge ^/trunk/jmri )
     ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
@@ -89,30 +86,30 @@ Third, we do any necessary release-specific updates.
     release.is_branched=true
     
     Edit the "release.build=" clause here and on trunk so that here
-    it's the current build number, and on trunk its the next number.
+    it's the current build number, and on trunk it's the _next_ number.
 
     <property name="release.major" value="2" />
     <property name="release.minor" value="13" />
-    <property name="release.build" value="4" />
+    <property name="release.build" value="5" />
 
-( ) Edit the version number into the top help page on the branch:
+( ) Edit the version number into the top help page on the branch (one place):
     bbedit help/en/index.html
                    
 ( ) Edit the "manifest" file in the branch java/ directory, and make sure that the
     version number is correct in four places (this file comes from java/, not scripts/)
-        
+    bbedit java/manifest
+    
 ( ) Update the branch MacOS X bundle version numbers (three version refs):
     
     cd scripts
-    bbedit MacOSXapps/V1/*.app/Contents/Info.plist
+    sed -i '' s/2.12/2.13.5/g MacOSXapps/V1/*.app/Contents/Info.plist
 
-    sed -i '' s/2.12/2.13.4/g MacOSXapps/V1/*.app/Contents/Info.plist
+    To do it with an editor instead:
+    bbedit MacOSXapps/V1/*.app/Contents/Info.plist
 
 ( ) Update the version numbers in the branch Linux scripts
 
-    bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
-
-    sed -i '' s/2.12/2.13.4/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
+    sed -i '' s/2.12/2.13.5/g  DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
 ( ) run "ant alltests"; make sure they all pass
     
@@ -123,7 +120,7 @@ Third, we do any necessary release-specific updates.
 
 ( ) Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Release%202.13.4/ws/jmri/dist/release/
+    http://builds.jmri.org/jenkins/job/Test%20Release%202.13.5/ws/jmri/dist/release/
     
     or from your local build files.
         
@@ -153,10 +150,10 @@ Final release steps:
     
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net 
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Release%202.13.4/lastSuccessfulBuild/artifact/jmri/dist/release/*zip*/release.zip"
+    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Release%202.13.5/lastSuccessfulBuild/artifact/jmri/dist/release/*zip*/release.zip"
     unzip archive.zip
     cd archive/jmri/dist/release
-    scp JMRI.2.13.4-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
+    scp JMRI.2.13.5-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
     (clean up and logout)
     
     Wait until the downloads have propagated to the mirrors; check 
