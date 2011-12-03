@@ -6,6 +6,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Section;
 import jmri.SectionManager;
+import jmri.Transit;
 import jmri.EntryPoint;
 import jmri.Block;
 import jmri.BlockManager;
@@ -43,7 +44,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  *
- * @author	Dave Duchamp    Copyright (C) 2008
+ * @author	Dave Duchamp    Copyright (C) 2008, 2011
  * @version     $Revision$
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
@@ -161,6 +162,9 @@ public class SectionTableAction extends AbstractTableAction {
                     WindowMaker t = new WindowMaker(row);
 					javax.swing.SwingUtilities.invokeLater(t);
 				} 
+				else if (col == DELETECOL) {
+					deleteSectionPressed (sysNameList.get(row));
+				}
 				else super.setValueAt(value, row, col);
     		}
 
@@ -874,9 +878,41 @@ public class SectionTableAction extends AbstractTableAction {
 				(epList.get(0)).setTypeReverse();
 			}
 		}
+// djd debugging
 // here add code to use Layout Editor connectivity if desired in the future	
+/*		if (!manualEntryPoints) {
+			// use Layout Editor connectivity to set directions of Entry Points that have UNKNOWN direction
+			// check entry points for first Block
+			ArrayList<EntryPoint> tEPList = getSubEPListForBlock(beginBlock);
+			EntryPoint firstEP = null;
+			int numUnknown = 0;
+			for (int i = 0; i<tEPList.size(); i++) {
+				if (tEPList.get(i).getDirection==EntryPoint.UNKNOWN) numUnknown ++;
+				else if (firstEP==null) firstEP = tEPList.get(i);
+			}
+			if (numUnknown>0) {
+				// first Block has unknown entry point(s)
+				if ( (firstEP!=null) && (blockList.getSize()==1) ) {
+					firstEP = tEPList.get(0);
+					firstEP.setTypeForward();
+				}
+				else if (firstEP==null) {
+					// find connection from the second Block
+			}
+		}   */
 		entryPointTableModel.fireTableDataChanged();			
 	}
+/*	private ArrayList<EntryPoint> getSubEPListForBlock(Block b) {
+		ArrayList<EntryPoint> tList = new ArrayList<EntryPoint>0;
+		for (int i=0; i<eplist.size(); i++) {
+			EntryPoint tep = epList.get(i);
+			if (epList.getBlock()==b) {
+				tList.add(tep);
+			}
+		}
+		return tList;  
+	} */
+// end djd debugging	
 	private EntryPoint getEntryPointInList(ArrayList<EntryPoint> list, Block b, Block pb, String pbDir) {
 		for (int i = 0; i<list.size(); i++) {
 			EntryPoint ep = list.get(i);
@@ -894,8 +930,87 @@ public class SectionTableAction extends AbstractTableAction {
 		return list;
 	}
 	
-    //private boolean noWarn = false;
-    
+	/**
+	 * Special processing when user requests deletion of a Section
+	 *     Standard BeanTable processing results in misleading information
+	 */
+	private void deleteSectionPressed(String sName){
+		final Section s = jmri.InstanceManager.sectionManagerInstance().getBySystemName(sName);
+		String fullName = sName;
+		if (s.getUserName().length()>0) {
+			fullName = fullName+"("+s.getUserName()+")";
+		}
+		ArrayList<Transit> affectedTransits = jmri.InstanceManager.transitManagerInstance().getListUsingSection(s);
+		final JDialog dialog = new JDialog();
+		String msg = "";
+		dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
+		dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+		dialog.getContentPane().setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
+		JPanel p1 = new JPanel();
+		p1.setLayout(new FlowLayout());
+		if (affectedTransits.size() > 0) {
+			// special warning if Section is used in Transits
+			JLabel iLabel = new JLabel(java.text.MessageFormat.format(rbx.getString("Message17"), fullName));
+			p1.add(iLabel);
+			dialog.add(p1);
+			for (int i=0; i<affectedTransits.size(); i++) {
+				Transit aTransit = affectedTransits.get(i);
+				String tFullName = aTransit.getSystemName();
+				if (aTransit.getUserName().length()>0) {
+					tFullName = tFullName+"("+aTransit.getUserName()+")";
+				}
+				p1 = new JPanel();
+				p1.setLayout(new FlowLayout());
+				iLabel = new JLabel("   "+tFullName);
+				p1.add(iLabel);
+				dialog.add(p1);
+			}
+			dialog.add(p1);
+			JPanel p3 = new JPanel();
+			p3.setLayout(new FlowLayout());
+			JLabel question = new JLabel(rbx.getString("Message18"));
+			JPanel p4 = new JPanel();
+			p4.setLayout(new FlowLayout());
+			question = new JLabel(rbx.getString("Message18a"));
+			p4.add(question);
+			dialog.add(p4);
+		}	
+		else {
+			msg = java.text.MessageFormat.format(rbx.getString("Message19"), fullName);
+			JLabel question = new JLabel(msg);
+			p1.add(question);
+			dialog.add(p1);
+		}
+		JPanel p6 = new JPanel();
+		p6.setLayout(new FlowLayout());
+		JLabel quest = new JLabel(rbx.getString("Message20"));
+		p6.add(quest);
+		dialog.add(p6);
+		JButton yesButton = new JButton(rbx.getString("YesDeleteIt"));
+		JButton noButton = new JButton(rbx.getString("NoCancel"));
+		JPanel button = new JPanel();
+		button.add(yesButton);
+		button.add(noButton);
+		dialog.add(button);
+		
+		noButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				// user cancelled delete request
+				dialog.dispose();
+			}
+		});
+		
+		yesButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				jmri.InstanceManager.sectionManagerInstance().deregister(s);
+				s.dispose();
+				dialog.dispose();
+			}
+		});
+		dialog.pack();
+		dialog.setModal(true);
+		dialog.setVisible(true);
+	}
     /**
      * Add the Tools menu item
      */

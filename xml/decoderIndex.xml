@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20111111-1747-jake on Fri Nov 11 09:47:12 PST 2011 $Id$-->
-  <decoderIndex version="222">
+  <!--Written by JMRI version 20111203-1853-jake on Sat Dec 03 10:53:45 PST 2011 $Id$-->
+  <decoderIndex version="224">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -319,7 +319,7 @@
           <output name="12" label="Brown" />
         </model>
       </family>
-      <family name="DCX Series (v.66 and higher)" mfg="CT Elektronik" lowVersionID="66" highVersionID="66" comment="DCX74, DCX75, with variants" file="CT_Elektronik_DCX_V66_plus.xml">
+      <family name="DCX Series (v.66 and higher)" mfg="CT Elektronik" lowVersionID="66" comment="DCX74, DCX75, with variants" file="CT_Elektronik_DCX_V66_plus.xml">
         <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
           <output name="Ra" label="Yard Mode" />
         </model>
@@ -2322,6 +2322,9 @@
       </family>
       <family name="Digital" mfg="Hornby" file="HornbyDigitalFnOnly.xml">
         <model model="DCC-Fitted Function Only (Unmotored trailers)" options="unmotored" numOuts="2" numFns="1" nmraWarrant="no" formFactor="DCC Fitted" comment="Pendolino trailer" />
+      </family>
+      <family name="Function Only, with transponding" mfg="Kato" type="locomotive" file="Kato_FL11.xml">
+        <model model="FL11" lowVersionID="0" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="Function Only, with transponding" mfg="Kato" type="locomotive" file="Kato_FL12.xml">
         <model model="FL12" lowVersionID="0" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
@@ -4752,6 +4755,32 @@
           <functionlabel num="8" lockable="true">Mute</functionlabel>
         </functionlabels>
       </family>
+      <family name="QSI Ver. 8" mfg="QSIndustries" lowVersionID="8" file="QSI_ver8.xml">
+        <model model="Titan Diesel" numFns="14" numOuts="0" productID="1100" />
+        <model model="Titan RDC" numFns="14" numOuts="0" productID="1112" />
+        <model model="Titan Electrtic" numFns="14" numOuts="0" productID="2100" />
+        <model model="Titan Steam" numFns="14" numOuts="0" productID="3100" />
+        <model model="Titan Articulated Steam" numFns="14" numOuts="0" productID="4100" />
+        <model model="Titan Gas Turbine" numFns="14" numOuts="0" productID="5100" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+          <functionlabel num="26" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="27" lockable="true">Maintenance</functionlabel>
+          <functionlabel num="28" lockable="true">Water Loading</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
       </family>
@@ -5279,10 +5308,10 @@
           <output name="FX6" label="Mode" />
           <output name="Dynamics" />
           <output name="Short Horn" />
-          <output name="Fans(+)" />
+          <output name="Fans(+)" label="(Turbine On)" />
           <output name="Dimming" />
           <output name="Mute" />
-          <output name="Comp(-)" />
+          <output name="Comp(-)" label="(Turbine Off)" />
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
@@ -5526,6 +5555,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-1000 GE FDL-16 (Dual Motors)" numOuts="4" numFns="14" connector="9pin" productID="827124" comment="Model 827124">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-1000 GE Gevo-12" numOuts="4" numFns="14" connector="9pin" productID="827116" comment="Model 827116">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -5564,10 +5608,10 @@
           <output name="4" label="  FX6  " />
           <output name="Dynamics" />
           <output name="Short Horn" />
-          <output name="Fans(+)" />
+          <output name="Fans(+)" label="(Turbine On)" />
           <output name="Dimming" />
           <output name="Mute" />
-          <output name="Comp(-)" />
+          <output name="Comp(-)" label="(Turbine Off)" />
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
@@ -7180,6 +7224,9 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+      </family>
+      <family name="AC1" mfg="Spectrum Engineering" comment="AC1 is an animation accessory decoder with secondary OPS access as a LOCO" file="Spectrum_AC8824.xml">
+        <model model="AC1" lowVersionID="16" highVersionID="16" />
       </family>
       <family name="Standard Decoder" mfg="Tams Elektronik GmbH" lowVersionID="10" highVersionID="10" file="TAMS_LD-G-21.xml">
         <model model="LD-G-21" numOuts="4" numFns="10">

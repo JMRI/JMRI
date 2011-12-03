@@ -17,12 +17,14 @@
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add minor version to top of pane -->
 <!-- version 3 - Add CV55.154.x hoot/fancy ending -->
+<!-- version 4 - Add support for V8 -->
 
 <pane name="Sound Control">
   <column>
     <row>
 		<column>
-       		<label label="JMRI 2.9.5 or later is required to use this definition"/>
+			<label label="JMRI 2.9.5 or later is required for QSI V7"/>
+			<label label="JMRI 2.13.2 or later is required for QSI V8"/>
         	<label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
 			<label label=" "/>
     		<display item="CV56.254.6"/>
@@ -57,6 +59,16 @@
 		    </row>
 		    <label label=" "/>
 		    <row>
+		     	<display item="CV55.12.1" layout="above" label="" />
+		     	<display item="CV55.12.1" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
+		     	<display item="CV55.12.2" layout="above" label="" />
+		     	<display item="CV55.12.2" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
 		    	<display item="CV55.21.0" layout="above" label="" />
 		    	<display item="CV55.21.0" layout="above" format="hslider"/>
 		    </row>
@@ -70,6 +82,11 @@
 		     	<display item="CV56.13" layout="above" label="" />
 		     	<display item="CV56.13" layout="above" format="hslider"/>
 		    </row>
+		    <label label=" "/>
+		    <row>
+		     	<display item="CV56.14" layout="above" label="" />
+		     	<display item="CV56.14" layout="above" format="hslider"/>
+		    </row>
 		</column>
       	<label label="      "/>
 		<column>
@@ -80,6 +97,18 @@
         	<display item="CV51.2 Heavy" format="checkbox"/>
         	<display item="CV51.2 Cocks1" format="checkbox"/>
         	<display item="CV51.2 Cocks2" format="checkbox"/>
+        	<display item="CV51.2 Bell" format="checkbox"/>
+        	<display item="CV51.3 Air" format="checkbox"/>
+		    <display item="CV55.178.0 MPH" format="checkbox"/>
+		    <display item="CV55.178.0 BEMF" format="checkbox"/>
+		    <display item="CV55.178.0 PWM" format="checkbox"/>
+		    <display item="CV55.178.0 Temp" format="checkbox"/>
+		    <display item="CV55.178.0 Miles" format="checkbox"/>
+		    <display item="CV55.178.0 Volts" format="checkbox"/>
+		</column>
+      	<label label="      "/>
+		<column>
+        	<display item="CV51.3 Fuel" />
         	<display item="CV55.3.0" />
         	<display item="CV55.3.1" />
         	<display item="CV55.3.5 Auto" />
@@ -88,57 +117,55 @@
 	    	<display item="CV56.0 Cal" />
 	    	<display item="CV56.0 Sync" />
 	    	<display item="CV56.0 Odo" />
+	    	<display item="CV56.0 Cap" />
 	    	<display item="CV56.0 Reed" />
-	    	<display item="Wheel Diameter" />
-	    	<display item="Locomotive Scale" />
-		    <display item="CV55.178.0 MPH" format="checkbox"/>
-		    <display item="CV55.178.0 BEMF" format="checkbox"/>
-		    <display item="CV55.178.0 PWM" format="checkbox"/>
-		    <display item="CV55.178.0 Temp" format="checkbox"/>
-		    <display item="CV55.178.0 Miles" format="checkbox"/>
-		    <display item="CV55.178.0 Volts" format="checkbox"/>
+        	<display item="CV56.32.0" />
 	        <label label=" "/>
 		</column>
     </row>
     <label label=" "/>
     <row>
-     <column>
-        <row>
-	        <display item="CV55.154.0" layout="above" label="" />
-	        <display item="CV55.154.0" layout="above" format="hslider"/>
-	        <display item="CV55.154.0 hoot" format="checkbox" />
-        </row>
-        <row>
-	        <display item="CV55.154.2" layout="above" label="" />
-	        <display item="CV55.154.2" layout="above" format="hslider"/>
-	        <display item="CV55.154.2 hoot" format="checkbox" />
-        </row>
-        <row>
-	        <display item="CV55.154.4" layout="above" label="" />
-	        <display item="CV55.154.4" layout="above" format="hslider"/>
-	        <display item="CV55.154.4 hoot" format="checkbox" />
-        </row>
-        <row>
-	        <display item="CV55.154.6" layout="above" label="" />
-	        <display item="CV55.154.6" layout="above" format="hslider"/>
-	        <display item="CV55.154.6 hoot" format="checkbox" />
-        </row>
-      </column>
-      <label label="        "/>
-      <column>
-        <row>
-	        <display item="CV55.154.1" layout="above" label="" />
-	        <display item="CV55.154.1" layout="above" format="hslider"/>
-        </row>
-        <row>
-	        <display item="CV55.154.3" layout="above" label="" />
-	        <display item="CV55.154.3" layout="above" format="hslider"/>
-        </row>
-        <row>
-	        <display item="CV55.154.5" layout="above" label="" />
-	        <display item="CV55.154.5" layout="above" format="hslider"/>
-        </row>
-      </column>
+		<column>
+			<row>
+				<display item="CV55.154.0" layout="above" label="" />
+				<display item="CV55.154.0" layout="above" format="hslider"/>
+			</row>
+			<display item="CV55.154.0 hoot" format="checkbox" />
+			<row>
+				<display item="CV55.154.2" layout="above" label="" />
+				<display item="CV55.154.2" layout="above" format="hslider"/>
+			</row>
+			<display item="CV55.154.2 hoot" format="checkbox" />
+			<row>
+				<display item="CV55.154.4" layout="above" label="" />
+				<display item="CV55.154.4" layout="above" format="hslider"/>
+			</row>
+			<display item="CV55.154.4 hoot" format="checkbox" />
+			<row>
+				<display item="CV55.154.6" layout="above" label="" />
+				<display item="CV55.154.6" layout="above" format="hslider"/>
+			</row>
+			<display item="CV55.154.6 hoot" format="checkbox" />
+		</column>
+		<label label="        "/>
+		<column>
+			<row>
+				<display item="CV55.154.1" layout="above" label="" />
+				<display item="CV55.154.1" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<label label=" "/>
+			<row>
+				<display item="CV55.154.3" layout="above" label="" />
+				<display item="CV55.154.3" layout="above" format="hslider"/>
+			</row>
+			<label label=" "/>
+			<label label=" "/>
+			<row>
+				<display item="CV55.154.5" layout="above" label="" />
+				<display item="CV55.154.5" layout="above" format="hslider"/>
+			</row>
+		</column>
      </row>
       <label label="    "/>
       <label label="If Hoot/Fancy Ending checked and value is 9 or less then hoot sound used, if value is 10 or greater then fancy ending sound used"/>

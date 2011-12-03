@@ -24,6 +24,7 @@
   <version author="Jack Shall lcrr@bellsouth.net" version="8" lastUpdated="20100830"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="9" lastUpdated="20110303"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="10" lastUpdated="20110818"/>
+  <version author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20111023"/>
 
 <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
@@ -57,6 +58,9 @@
 <!--			GE FDL-16 (Modern) (827117)(828038)(828057), ALCO 251C (Supercharged) (828037).		-->
 <!--			Also added TSU-750 UP Gas Turbine (827015), TSU-GN1000 EMD 710 G3C-T2 (828053) and	-->
 <!--			TSU-KT1000 for KATO GP35 (828067)													-->
+<!-- version 11	Added new TSU-1000 series decoder: GE FDL-16 (Dual Motors) (827124).  Modified a	-->
+<!-- 			few of the control labels for the Gas Turbine definition to help clarify the intent	-->
+<!-- 			of these controls.  Slight rearrangement of Sound controls to improve clarity.		-->
 
 
 <!-- Decoder Model information follows -->
@@ -234,10 +238,10 @@
         <output name="FX6" label="Mode"/>
         <output name="Dynamics"/>
         <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Fans(+)" label="(Turbine On)"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Comp(-)" label="(Turbine Off)"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -499,6 +503,22 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+      <model model="TSU-1000 GE FDL-16 (Dual Motors)" numOuts="4" numFns="14" connector="9pin"
+		productID="827124" comment="Model 827124">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
 	  <model model="TSU-1000 GE Gevo-12" numOuts="4" numFns="14" connector="9pin"
 		productID="827116" comment="Model 827116">
         <versionCV lowVersionID="64"/>
@@ -540,10 +560,10 @@
         <output name="4" label="  FX6  "/>
         <output name="Dynamics"/>
         <output name="Short Horn"/>
-        <output name="Fans(+)"/>
+        <output name="Fans(+)" label="(Turbine On)"/>
         <output name="Dimming"/>
         <output name="Mute"/>
-        <output name="Comp(-)"/>
+        <output name="Comp(-)" label="(Turbine Off)"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
@@ -3968,7 +3988,7 @@
       </variable>
 
       <variable label="Auto Air Compressor Enable" CV="112" mask="XXXXXXXV"
-			item="Sound Option 2" default="0"
+			item="Sound Option 6" default="0"
 			tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <enumVal>
           <enumChoice choice="Turns on and off manually with a mapped function (default is F10)">
@@ -3982,7 +4002,7 @@
       </variable>
 
       <variable label="Auto Radiator Fan Enable" CV="112" mask="XXXXXXVX"
-			item="Sound Option 3" default="0"
+			item="Sound Option 5" default="0"
 			tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
         <enumVal>
           <enumChoice choice="Turns on and off manually with a mapped function (default is F9)  ">
@@ -4046,7 +4066,7 @@
 
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067"
+			include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,827124,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067"
 			tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco A2">
@@ -4104,7 +4124,7 @@
 
       <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067"
+			include="827001,827004,827008,827011,827012,827014,827015,827018,827101,827104,827106,827108,827111,827112,827113,827114,827118,827119,827124,828020,828023,828025,828037,828039,828040,828043,828045,828047,828049,828050,828065,828067"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short horn blast">
@@ -4811,74 +4831,8 @@
 <!-- End Airhorn Selection -->
 
 
-      <variable label="Auto Engine Start Enable" CV="116" mask="XXVXXXXX"
-			item="Sound Option 1" default="1"
-			tooltip="&lt;html&gt;Determines whether prime mover will start up automatically or manually&lt;br&gt;
-					Note: This feature is not available in early decoders&lt;/html&gt;">
-        <enumVal>
-          <enumChoice choice="Prime mover starts up at speed step 1">
-            <choice>Prime mover starts up at speed step 1</choice>
-          </enumChoice>
-          <enumChoice choice="Prime mover starts up when track is powered on">
-            <choice>Prime mover starts up when track is powered on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Auto Engine Start Enable</label>
-      </variable>
-
-      <variable label="Dynamic Brake Override" CV="116" mask="VVXXXXXX"
-			item="Sound Option 4" default="0" exclude="827015,827114" comment="For all models except Gas Turbine"
-			tooltip="Controls how the dynamic brakes interact with the engine RPMs">
-        <enumVal>
-          <enumChoice choice="Dynamic Brakes operate independently of engine RPMs">
-            <choice>Dynamic Brakes operate independently of engine RPMs</choice>
-          </enumChoice>
-          <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to drop to idle">
-            <choice>Turning on Dynamic Brakes forces engine RPMs to drop to idle</choice>
-          </enumChoice>
-          <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to drop to notch 4">
-            <choice>Turning on Dynamic Brakes forces engine RPMs to drop to notch 4</choice>
-          </enumChoice>
-          <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to full speed">
-            <choice>Turning on Dynamic Brakes forces engine RPMs to full speed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dynamic Brake Override</label>
-      </variable>
-
-      <variable label="Dynamic Brake Mode" CV="116" mask="VVXXXXXX"
-			item="Sound Option 4" default="0" include="827015,827114" comment="This version for Gas Turbine only"
-			tooltip="Controls how the dynamic brakes interact with the turbine and the diesel engine RPMs">
-        <enumVal>
-          <enumChoice choice="Dynamic brakes on with function F4">
-            <choice>Dynamic brakes on with function F4</choice>
-          </enumChoice>
-          <enumChoice choice="Turning on dynamic brakes forces diesel engine RPMs to drop to notch 2 and shuts the turbine OFF">
-            <choice>Turning on dynamic brakes forces diesel engine RPMs to drop to notch 2 and shuts the turbine OFF</choice>
-          </enumChoice>
-          <enumChoice choice="Turbine drops to idle before dynamic brakes active">
-            <choice>Turbine drops to idle before dynamic brakes active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Dynamic Brake Mode</label>
-      </variable>
-
-      <variable label="Engine RPM Interlock" CV="116" mask="XXXVXXXX"
-			item="Sound Option 5" default="0"
-			tooltip="When this option AND manual (notching) engine control is enabled, locomotive will not move until engine starts">
-        <enumVal>
-          <enumChoice choice="Interlock is disabled">
-            <choice>Interlock is disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Under manual control, locomotive will not move until engine starts ">
-            <choice>Under manual control, locomotive will not move until engine starts </choice>
-          </enumChoice>
-        </enumVal>
-        <label>Engine RPM Interlock</label>
-      </variable>
-
       <variable label="Engine Notch Rate" CV="116" mask="XXXXVVVV"
-			item="Sound Option 6" default="7"
+			item="Sound Option 1" default="7"
 			tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
         <enumVal>
           <enumChoice choice="Manual notching, engine RPM controlled by F9/F10">
@@ -4931,6 +4885,72 @@
           </enumChoice>
         </enumVal>
         <label>Engine Notch Rate</label>
+      </variable>
+
+      <variable label="Engine RPM Interlock" CV="116" mask="XXXVXXXX"
+			item="Sound Option 2" default="0"
+			tooltip="When this option AND manual (notching) engine control is enabled, locomotive will not move until engine starts">
+        <enumVal>
+          <enumChoice choice="Interlock is disabled">
+            <choice>Interlock is disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Under manual control, locomotive will not move until engine starts ">
+            <choice>Under manual control, locomotive will not move until engine starts </choice>
+          </enumChoice>
+        </enumVal>
+        <label>Engine RPM Interlock</label>
+      </variable>
+	  
+      <variable label="Engine Auto Start Enable" CV="116" mask="XXVXXXXX"
+			item="Sound Option 3" default="1"
+			tooltip="&lt;html&gt;Determines whether prime mover will start up automatically or manually&lt;br&gt;
+					Note: This feature is not available in early decoders&lt;/html&gt;">
+        <enumVal>
+          <enumChoice choice="Prime mover starts up at speed step 1">
+            <choice>Prime mover starts up at speed step 1</choice>
+          </enumChoice>
+          <enumChoice choice="Prime mover starts up when power is supplied to track">
+            <choice>Prime mover starts up when power is supplied to track</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Engine Auto Start Enable</label>
+      </variable>
+
+      <variable label="Dynamic Brake Override" CV="116" mask="VVXXXXXX"
+			item="Sound Option 4" default="0" exclude="827015,827114" comment="For all models except Gas Turbine"
+			tooltip="Controls how the dynamic brakes interact with the engine RPMs">
+        <enumVal>
+          <enumChoice choice="Dynamic Brakes operate independently of engine RPMs">
+            <choice>Dynamic Brakes operate independently of engine RPMs</choice>
+          </enumChoice>
+          <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to drop to idle">
+            <choice>Turning on Dynamic Brakes forces engine RPMs to drop to idle</choice>
+          </enumChoice>
+          <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to drop to notch 4">
+            <choice>Turning on Dynamic Brakes forces engine RPMs to drop to notch 4</choice>
+          </enumChoice>
+          <enumChoice choice="Turning on Dynamic Brakes forces engine RPMs to full speed">
+            <choice>Turning on Dynamic Brakes forces engine RPMs to full speed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Dynamic Brake Override</label>
+      </variable>
+
+      <variable label="Dynamic Brake Mode" CV="116" mask="VVXXXXXX"
+			item="Sound Option 4" default="0" include="827015,827114" comment="This version for Gas Turbine only"
+			tooltip="Controls how the dynamic brakes interact with the turbine and the diesel engine RPMs">
+        <enumVal>
+          <enumChoice choice="Dynamic brakes on with function F4">
+            <choice>Dynamic brakes on with function F4</choice>
+          </enumChoice>
+          <enumChoice choice="Turning on dynamic brakes forces diesel engine RPMs to drop to notch 2 and shuts the turbine OFF">
+            <choice>Turning on dynamic brakes forces diesel engine RPMs to drop to notch 2 and shuts the turbine OFF</choice>
+          </enumChoice>
+          <enumChoice choice="Turbine drops to idle before dynamic brakes active">
+            <choice>Turbine drops to idle before dynamic brakes active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Dynamic Brake Mode</label>
       </variable>
 
       <variable label="Motor Recovery Speed (0-255)" CV="118"
@@ -5317,12 +5337,12 @@
         <label>Turbine Start Speed</label>
       </variable>
 
-      <variable label="Turbine Timeout" CV="200"
+      <variable label="Turbine Timeout/Semi Auto-notching Mode" CV="200"
 			item="Sound Group 3 Option 7" default="10" include="827015,827114" comment="This CV for Gas Turbine only"
-			tooltip="&lt;html&gt;A value of zero allows the turbine to be turned on using functions F9 and F10 in semi-automatic notching mode.&lt;br&gt;
-					Values of 1-255 specify the number of seconds before the turbine will turn off in automatic engine notching mode.&lt;/html&gt;">
+			tooltip="&lt;html&gt;Values of 1-255 specify the number of seconds before the turbine will turn off in Automatic Engine Notching Mode.&lt;br&gt;
+					Set to zero to enable Semi Auto-notching Mode (allows turbine to be turned on using functions F9 and F10).&lt;/html&gt;">
         <decVal/>
-        <label>Turbine Timeout</label>
+        <label>Turbine Timeout/Semi Auto-notching Mode</label>
       </variable>
 
 <!-- End of variables for file-specific panes -->

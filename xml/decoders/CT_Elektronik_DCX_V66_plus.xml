@@ -13,8 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="ncliffe@btinternet.com" version="1.7" lastUpdated="2009/9/01"/>
-  <version author="ncliffe@btinternet.com" version="1.6" lastUpdated="2009/4/02"/>
+  <version author="ncliffe@btinternet.com" version="1.8" lastUpdated="2011/11/30"/>
 <!-- previous version credit:  					  -->
 <!-- 		<version author="peter.brandenburg@t-online.de"   -->
 <!--			version="1" lastUpdated="2006/11/20"/>      -->
@@ -28,8 +27,12 @@
 <!-- Version 1.7, Nigel Cliffe, 2009/09/01  -->
 <!--    Improved function mapping, in line with Tran (CT) documentation  -->
 <!--    Subsequent changes to a few screens to move features to function map -->
+<!-- Version 1.8, Nigel Cliffe, 2011/11/30  -->
+<!--    removed decoder "highVersion" as those on sale appear to have many version numbers -->
+<!--    and upper limit used by CT is not known  -->
+
   <decoder>
-    <family name="DCX Series (v.66 and higher)" mfg="CT Elektronik" lowVersionID="66" highVersionID="66" comment="DCX74, DCX75, with variants">
+    <family name="DCX Series (v.66 and higher)" mfg="CT Elektronik" lowVersionID="66" comment="DCX74, DCX75, with variants">
       <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
         <output name="Ra" label="Yard Mode"/>
       </model>

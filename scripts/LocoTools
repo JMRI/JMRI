@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Script to start a JMRI 2.12 application
+# Script to start a JMRI 2.13.5 application
 #
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
