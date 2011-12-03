@@ -20,14 +20,14 @@
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-	<!-- Need to instruct the XSLT processor to use HTML output rules. See http://www.w3.org/TR/xslt#output 
+	<!-- Need to instruct the XSLT processor to use HTML output rules. See http://www.w3.org/TR/xslt#output
 		for more details -->
 	<xsl:output method="html" encoding="ISO-8859-1" />
 
-	<!-- This first template matches our root element in the input file. This 
-		will trigger the generation of the HTML skeleton document. In between we 
-		let the processor recursively process any contained elements, which is what 
-		the apply-templates instruction does. We also pick some stuff out explicitly 
+	<!-- This first template matches our root element in the input file. This
+		will trigger the generation of the HTML skeleton document. In between we
+		let the processor recursively process any contained elements, which is what
+		the apply-templates instruction does. We also pick some stuff out explicitly
 		in the head section using value-of instructions. -->
 	<xsl:template match='roster-config'>
 		<table class="rosterTable">
@@ -39,7 +39,7 @@
 	<!-- Display each roster entry -->
 	<xsl:template match="roster/locomotive">
 		<tr class="detail">
-			<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress' />", "<xsl:value-of select='@id' />", "<xsl:value-of select='@imageFilePath' />", "<xsl:apply-templates select='functionlabels' />"); 
+			<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress' />", "<xsl:value-of select='@id' />", "<xsl:value-of select='@iconFilePath' />", "<xsl:apply-templates select='functionlabels' />");
 			</xsl:attribute>
 			<td class="icon">
 				<xsl:if test="(@iconFilePath != '__noIcon.jpg') and (@iconFilePath != '')">
@@ -59,7 +59,7 @@
 			<td class="comment"><xsl:value-of select="@comment" />&#160;</td>
 		</tr>
 	</xsl:template>
-	
+
 	<!-- Do nothing with groups -->
 	<xsl:template match='rosterGroup'>
 	</xsl:template>
@@ -67,7 +67,17 @@
 	<!-- Generates URL parameters for inControl function buttons-->
 	<!-- Escaping of function labels to be done -->
 	<xsl:template match="roster/locomotive/functionlabels">
-		<xsl:for-each select="functionlabel">f<xsl:value-of select="@num" />label=<xsl:value-of select="." />&amp;<xsl:if test="@functionImage != ''">f<xsl:value-of select="@num" />image=<xsl:value-of select="@functionImage" />&amp;</xsl:if><xsl:if test="@lockable = 'true'">f<xsl:value-of select="@num" />imagepressed=<xsl:if test="@functionImageSelected != ''"><xsl:value-of select="@functionImageSelected" /></xsl:if><xsl:if test="@functionImageSelected = ''">x</xsl:if>&amp;</xsl:if></xsl:for-each>
+		<xsl:for-each select="functionlabel">f<xsl:value-of 
+                select="@num" />label=<xsl:comment><![CDATA[<script language="javascript">escape("]]></xsl:comment><xsl:value-of
+                select="."/><xsl:comment><![CDATA[ ")</script>]]></xsl:comment>&amp;<xsl:if
+                    test="@functionImage != ''">f<xsl:value-of
+                    select="@num" />image=<xsl:value-of
+                    select="@functionImage" />&amp;</xsl:if><xsl:if
+                test="@lockable = 'true'">f<xsl:value-of
+                    select="@num" />imagepressed=<xsl:if
+                test="@functionImageSelected != ''"><xsl:value-of
+                    select="@functionImageSelected" /></xsl:if><xsl:if
+                test="@functionImageSelected = ''">x</xsl:if>&amp;</xsl:if></xsl:for-each>
 	</xsl:template>
 </xsl:stylesheet>
 
