@@ -20,6 +20,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     private int clickDelay = 1;
     private int refreshDelay = 5;
     private boolean useAjax = true;
+    private boolean plain = false;
     private String disallowedFrames = rb.getString("DefaultDisallowedFrames");
     private boolean rebuildIndex = false;
     private boolean showComm = false;
@@ -48,6 +49,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         	}
         }
         if ((a = child.getAttribute("useAjax")) != null )  setUseAjax(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute("simple")) != null )  setPlain(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("getDisallowedFrames")) != null )  setDisallowedFrames(a.getValue());
         if ((a = child.getAttribute("isRebuildIndex")) != null )  setRebuildIndex(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("isShowComm")) != null )  setShowComm(a.getValue().equalsIgnoreCase("true"));
@@ -80,6 +82,7 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         element.setAttribute("getClickDelay", "" + getClickDelay());
         element.setAttribute("getRefreshDelay", "" + getRefreshDelay());
         element.setAttribute("useAjax", "" + useAjax());
+        element.setAttribute("simple", "" + isPlain());
         element.setAttribute("getDisallowedFrames", "" + getDisallowedFrames());
         element.setAttribute("isRebuildIndex", "" + isRebuildIndex());
         element.setAttribute("isShowComm", "" + isShowComm());
@@ -115,9 +118,19 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     public boolean useAjax(){
         return useAjax;
     }
+
     public void setUseAjax(boolean value){
         useAjax = value;
     }
+
+    public boolean isPlain() {
+        return plain;
+    }
+    
+    public void setPlain(boolean value) {
+        plain = value;
+    }
+    
     public void setDisallowedFrames(String value){
     	disallowedFrames = value;
     }

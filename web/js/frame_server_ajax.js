@@ -3,7 +3,7 @@
 
 $(function () {
 	//add an image for showing cursor click position
-	$('div.frame-footer').append("<img style='position:absolute;display:none;' id='crosshair' src='/images/crosshair.png'/>");
+	$('body').append("<img style='position:absolute;display:none;' id='crosshair' src='/images/crosshair.png'/>");
 	
 	//setup infinite image refresh loop  
 	setInterval(function () {
