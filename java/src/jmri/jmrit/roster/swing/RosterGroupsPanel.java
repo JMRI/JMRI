@@ -1,9 +1,5 @@
 package jmri.jmrit.roster.swing;
 
-import jmri.jmrit.roster.swing.RenameRosterGroupAction;
-import jmri.jmrit.roster.swing.DeleteRosterGroupAction;
-import jmri.jmrit.roster.swing.CreateRosterGroupAction;
-import jmri.jmrit.roster.swing.CopyRosterGroupAction;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -49,11 +45,13 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.ExpandVetoException;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import jmri.jmrit.roster.FullBackupExportAction;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.IterableEnumeration;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
 
@@ -285,8 +283,7 @@ public class RosterGroupsPanel extends JPanel {
         if (group == null || group.equals(Roster.ALLENTRIES) || group.equals("")) {
             _tree.setSelectionPath(new TreePath(_model.getPathToRoot(_groups.getFirstChild())));
         } else {
-            for (Enumeration<DefaultMutableTreeNode> e = _groups.children(); e.hasMoreElements();) {
-                DefaultMutableTreeNode n = e.nextElement();
+            for (TreeNode n : new IterableEnumeration<TreeNode>(_groups.children())) {
                 if (n.toString().equals(group)) {
                     _tree.setSelectionPath(new TreePath(_model.getPathToRoot(n)));
                 }
