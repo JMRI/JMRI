@@ -65,19 +65,18 @@
 	</xsl:template>
 
 	<!-- Generates URL parameters for inControl function buttons-->
-	<!-- Escaping of function labels to be done -->
 	<xsl:template match="roster/locomotive/functionlabels">
 		<xsl:for-each select="functionlabel">f<xsl:value-of 
-                select="@num" />label=<xsl:comment><![CDATA[<script language="javascript">escape("]]></xsl:comment><xsl:value-of
-                select="."/><xsl:comment><![CDATA[ ")</script>]]></xsl:comment>&amp;<xsl:if
-                    test="@functionImage != ''">f<xsl:value-of
+                select="@num" />label=<xsl:value-of
+                select="."/>&amp;<xsl:if
+                test="@functionImage != ''">f<xsl:value-of
                     select="@num" />image=<xsl:value-of
                     select="@functionImage" />&amp;</xsl:if><xsl:if
                 test="@lockable = 'true'">f<xsl:value-of
                     select="@num" />imagepressed=<xsl:if
-                test="@functionImageSelected != ''"><xsl:value-of
-                    select="@functionImageSelected" /></xsl:if><xsl:if
-                test="@functionImageSelected = ''">x</xsl:if>&amp;</xsl:if></xsl:for-each>
+                    test="@functionImageSelected != ''"><xsl:value-of
+                        select="@functionImageSelected" /></xsl:if><xsl:if
+                    test="@functionImageSelected = ''">x</xsl:if>&amp;</xsl:if></xsl:for-each>
 	</xsl:template>
 </xsl:stylesheet>
 

@@ -7,11 +7,19 @@
 function openThrottle(address, id, imageURL, fnlabels) {
 	var inParameters="locoaddress="+address;
 	if (id)
-		inParameters=inParameters+"&loconame="+escape(id);
+		inParameters=inParameters+"&loconame="+encodeURIComponent(id);
 	if (imageURL && (imageURL!="/prefs/resources/__noIcon.jpg"))
-		inParameters=inParameters+"&locoimage="+escape(imageURL);
-	if (fnlabels)
-		inParameters=inParameters+"&"+fnlabels; // Need escaping for function buttons (to be done in xslt file)
+		inParameters=inParameters+"&locoimage="+encodeURIComponent(imageURL);
+        var fnLabelsEncoded = ""; // Escaping for function buttons 
+	if (fnlabels) {
+            	var hashes = fnlabels.split("&");
+		for(var i = 0; i < hashes.length; i++){
+			if (hashes[i].indexOf("=") == -1) hashes[i]+= "=";
+			hash = hashes[i].split("=");
+                        fnLabelsEncoded = fnLabelsEncoded + hash[0] + encodeURIComponent(hash[1]) +"&";
+		}
+		inParameters=inParameters+"&"+fnLabelsEncoded; 
+        }
 	var winref = window.open("/web/inControl.html?"+inParameters, address); // We use address as a window id so that we won't open other ones on that client for that address   
 	winref.focus();
 }
