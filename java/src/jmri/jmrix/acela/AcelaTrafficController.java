@@ -18,7 +18,7 @@ import java.io.DataInputStream;
  * which then carry sequences of characters for transmission.
  * Note that this processing is handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the
+ * This handles the state transitions, based on the
  * necessary state in each message.
  
  * <P>
@@ -73,7 +73,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     private boolean acelaTrafficControllerState = false;    //  Flag to indicate which state we are in: 
                                                             //  false == Initiallizing Acela Network
                                                             //  true == Polling Sensors
-    private boolean reallyReadyToPoll = false;   //  Flag to indicate that we are really ready to poll
+    private boolean reallyReadyToPoll = false;   //  Flag to indicate that we are really ready to poll nodes
     transient private boolean needToPollNodes = true;   //  Flag to indicate that nodes have not yet been created
     private boolean needToInitAcelaNetwork = true;   //  Flag to indicate that Acela network must be initialized
     private int needToCreateNodesState = 0;     //  Need to do a few things:
@@ -85,6 +85,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                                                    //  false == No active sensor
                                                    //  true == Active sensor, need to poll sensors
     
+    private int acelaSensorInitCount = 0;     //  Need to count sensors initialized so we know when we can poll them
+        
     private static int SPECIALNODE = 0;         //  Needed to initialize system
 
     /**
@@ -122,6 +124,16 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         acelaSensorsState = newstate;
     }
     
+    public void incrementAcelaSensorInitCount() {
+        acelaSensorInitCount++;
+        log.debug("Number of Acela sensors initialized: " + getAcelaSensorInitCount());
+
+    }
+    
+    public int getAcelaSensorInitCount() {
+        return acelaSensorInitCount;
+    }
+    
     public synchronized boolean getNeedToPollNodes() {
         return needToPollNodes;
     }
@@ -135,6 +147,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
     
     public void setReallyReadyToPoll(boolean newstate) {
+      	log.debug("setting really ready to poll (nodes): "+newstate);
         reallyReadyToPoll = newstate;
     }
     
@@ -263,18 +276,16 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         		}
         		curAcelaNodeIndex = SPECIALNODE;
         		AcelaMessage m = AcelaMessage.getAcelaResetMsg();
-            	log.debug("send init message: "+m);
+            	log.debug("send Acela reset (init step 1) message: "+m);
             	m.setTimeout(1000);  // wait for init to finish (milliseconds)
-//            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
             	mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
             	return m;
             }
             if (needToCreateNodesState == 1) {
             	AcelaMessage m = AcelaMessage.getAcelaOnlineMsg();
-            	log.debug("send init2 message: "+m);
+            	log.debug("send Acela Online (init step 2) message: "+m);
             	m.setTimeout(1000);  // wait for init to finish (milliseconds)
-//            	m.setTimeout(10000);  // wait for init to finish (milliseconds)
             	mCurrentMode = NORMALMODE;
                 needToCreateNodesState++;
         	return m;
@@ -282,9 +293,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             if (needToPollNodes) {
                 if (needToCreateNodesState == 2) {
                     AcelaMessage m = AcelaMessage.getAcelaPollNodesMsg();
-                    log.debug("send poll message: "+m);
+                    log.debug("send Acela poll nodes message: "+m);
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
-//                    m.setTimeout(8000);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
                     needToInitAcelaNetwork = false;
                     needToPollNodes = false;
@@ -317,9 +327,9 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                     byte tempbaddr = (byte) (tempiaddr);
                     m.setElement(2, tempbaddr);
                     m.setElement(3, node.sensorConfigArray[s]);
-                    log.debug("send Config Sesnsor message: "+m);
+                    log.debug("send Aclea Config Sensor message: "+m);
+                    incrementAcelaSensorInitCount();
                     m.setTimeout(100);  // wait for init to finish (milliseconds)
-//                    m.setTimeout(2000);  // wait for init to finish (milliseconds)
                     mCurrentMode = NORMALMODE;
                     node.sensorHasBeenInit[s] = true;
                     node.sensorNeedInit[s] = false;
@@ -330,23 +340,28 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         
         // send Output packet if needed
         if (getNode(curAcelaNodeIndex).mustSend()) {
-            log.debug("request write command to send");
             getNode(curAcelaNodeIndex).resetMustSend();
             AbstractMRMessage m = getNode(curAcelaNodeIndex).createOutPacket();
             m.setTimeout(100);  // no need to wait for output to answer
-//            m.setTimeout(400);  // no need to wait for output to answer Before adding WM
-        	mCurrentMode = NORMALMODE;
+            log.debug("request write command to send: "+m);
+            mCurrentMode = NORMALMODE;
             return m;
         }
 
-        // poll for Sensor input
+        // Trying to serialize Acela initiatization so system is stable
+        // So we will not poll sensors or send om/off commands until we have
+        // initialized all of the sensor modules -- this can take several seconds
+        // during a cold system startup.
+        if ((currentSensorAddress == 0) | (currentSensorAddress != getAcelaSensorInitCount())) {
+            return null;
+        }
+
         if (acelaSensorsState) {    //  Flag to indicate whether we have an active sensor and therefore need to poll
-        	AcelaMessage m = AcelaMessage.getAcelaPollSensorsMsg();
-        	log.debug("send poll message: "+m);
-        	m.setTimeout(100);  // wait for init to finish (milliseconds)
-//        	m.setTimeout(600);  // wait for init to finish (milliseconds) Before adding WM
-        	mCurrentMode = NORMALMODE;
-        	return m;
+            AcelaMessage m = AcelaMessage.getAcelaPollSensorsMsg();
+            log.debug("send Acela poll sensors message: "+m);
+            m.setTimeout(100);  // wait for init to finish (milliseconds)
+            mCurrentMode = NORMALMODE;
+            return m;
         } else {
             // no Sensors (inputs) are active for this node
             return null;
@@ -356,8 +371,9 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     protected synchronized void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // inform node, and if it resets then reinitialize        
-        if (getNode(curAcelaNodeIndex).handleTimeout(m,l)) 
+        if (getNode(curAcelaNodeIndex).handleTimeout(m,l)) {
             setMustInit(curAcelaNodeIndex, true);
+        }
     }
     
     protected synchronized void resetTimeout(AbstractMRMessage m) {
@@ -371,7 +387,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Forward a preformatted message to the actual interface.
+     * Forward a pre-formatted message to the actual interface.
      */
     public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
         sendMessage(m, reply);

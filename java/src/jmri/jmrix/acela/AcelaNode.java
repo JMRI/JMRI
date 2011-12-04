@@ -101,7 +101,6 @@ public class AcelaNode extends AbstractNode {
     protected boolean[] sensorNeedInit = new boolean[MAXSENSORBITS];    // used to indicate if sensor needs to be configured
     protected boolean[] sensorHasBeenInit = new boolean[MAXSENSORBITS]; // used to indicate if sensor has been configured
     protected int[] sensorLastSetting = new int[MAXSENSORBITS];
-    protected int[] sensorTempSetting = new int[MAXSENSORBITS];
     protected int[] sensorType = new int[MAXSENSORBITS];
     protected int[] sensorPolarity = new int[MAXSENSORBITS];
     protected int[] sensorThreshold = new int[MAXSENSORBITS];
@@ -162,7 +161,6 @@ public class AcelaNode extends AbstractNode {
             sensorNeedInit[i] = false;
             sensorHasBeenInit[i] = false;
             sensorLastSetting[i] = Sensor.UNKNOWN;
-            sensorTempSetting[i] = Sensor.UNKNOWN;
             sensorType[i] = 2; // Car Gap
             sensorPolarity[i] = 1; // Inverse
             sensorThreshold[i] = 4; // Normal -- 0010 0
@@ -224,7 +222,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method setting starting output addresss
+     * Public method setting starting output addresses
      *    Used to help linear address search
      */
     public void setStartingOutputAddress(int startingAddress) {
@@ -232,7 +230,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method getting starting output addresss
+     * Public method getting starting output addresses
      *    Used to help linear address search
      */
     public int getStartingOutputAddress() {
@@ -240,7 +238,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method setting ending output addresss
+     * Public method setting ending output addresses
      *    Used to help linear address search
      */
     public void setEndingOutputAddress(int endingAddress) {
@@ -248,7 +246,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method getting ending output addresss
+     * Public method getting ending output addresses
      *    Used to help linear address search
      */
     public int getEndingOutputAddress() {
@@ -256,7 +254,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method setting starting sensor addresss
+     * Public method setting starting sensor addresses
      *    Used to help linear address search
      */
     public void setStartingSensorAddress(int startingAddress) {
@@ -264,7 +262,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method getting starting sensor addresss
+     * Public method getting starting sensor addresses
      *    Used to help linear address search
      */
     public int getStartingSensorAddress() {
@@ -272,7 +270,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method setting ending sensor addresss
+     * Public method setting ending sensor addresses
      *    Used to help linear address search
      */
     public void setEndingSensorAddress(int endingAddress) {
@@ -280,7 +278,7 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method getting ending sensor addresss
+     * Public method getting ending sensor addresses
      *    Used to help linear address search
      */
     public int getEndingSensorAddress() {
@@ -646,7 +644,6 @@ public class AcelaNode extends AbstractNode {
     public AbstractMRMessage createOutPacket() {
         //  Set up variables that will be used at the end to send the msg.
         int cmdlen = 3;         // Message length == 3, 4, or 5
-//        byte cmdcode = 0x01;    // Message command: default == activate output
         byte cmdcode = 0x03;    // Message command: default == activate output
         byte addrhi = 0x00;     // Used to address more than 255 nodes
         byte addrlo = 0x00;     // Address of node
@@ -909,13 +906,6 @@ public class AcelaNode extends AbstractNode {
             }
         }
 
-        //  Hook for debugging:
-/*        
-        if ((addrlo == 0x00) && (cmdcode == 0x03)) {
-            addrhi = 0x00;
-            addrlo = 0x00;
-        }
- */ 
         AcelaMessage m = new AcelaMessage(cmdlen);
         m.setElement(0, cmdcode);
         m.setElement(1, addrhi);
@@ -934,14 +924,6 @@ public class AcelaNode extends AbstractNode {
         return m;
     }
     boolean warned = false;
-
-    void warn(String s) {
-        if (warned) {
-            return;
-        }
-        warned = true;
-        log.warn(s);
-    }
 
     /**
      * Use the contents of the poll reply to mark changes
@@ -962,35 +944,29 @@ public class AcelaNode extends AbstractNode {
         int firstBitAt = startingSensorAddress % 8; // mod operator
         //int numBytes = 1;   // For TB there are only 4 sensors so always 1 byte
 
-        if (nodeType == WM) {
-            if (firstBitAt != 0) {
-                //numBytes = 2;   //  8 bits, but straddling two bytes
-            }
-        }
+        log.debug("Sensor Parsing for module type: "+moduleNames[nodeType]);
+        log.debug("Sensor Parsing has startingSensorAddress: "+startingSensorAddress);
+        log.debug("Sensor Parsing has firstByteNum: "+firstByteNum);
+        log.debug("Sensor Parsing has firstBitAt: "+firstBitAt);
 
-        if (nodeType == SY) {
-            if (firstBitAt == 0) {
-                //numBytes = 2;  // 16 bits, aligned in two bytes
-            } else {
-                //numBytes = 3;  // 16 bits, straddling three bytes
-            }
-        }
-
-        //  Maybe unnecessary, but trying to minimize reads to getElement 
+        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
         int rawvalue = l.getElement(firstByteNum);
+        log.debug("Sensor Parsing has first rawvalue: "+Integer.toHexString(rawvalue));
 
         int usingByteNum = 0;
 
         try {
             for (int i = 0; i < sensorbitsPerCard; i++) {
                 if (sensorArray[i] == null) {
+                    log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" was skipped");
                     continue;
                 } // skip ones that don't exist
 
-                //  Maybe unnecessary, but trying to minimize reads to getElement 
+                log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i);
+
                 int relvalue = rawvalue;
 
-                //  Need a temporary counter within the byte  
+                //  Need a temporary counter within the byte so we can shift 
                 int tempi = i;
 
                 //  If necessary, shift by four before we start  
@@ -999,45 +975,48 @@ public class AcelaNode extends AbstractNode {
                         for (int j = 0; j < firstBitAt; j++) {
                             relvalue = relvalue >> 1;
                         }
+                        log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" shifted by 4: "+Integer.toHexString(relvalue));
                     }
                 }
 
                 //  If necessary, get next byte  
                 if (firstBitAt == 4) {
-                    if (i == 4) {
-                        usingByteNum++;
-                        //  Maybe unnecessary, but trying to minimize reads to getElement 
-                        rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        relvalue = rawvalue;
-                    }
-                    if (i >= 4) {
-                        tempi = i - 4;  // tempi needs to shift down by 4
-                    }
-                    if (i == 12) {  // Will only get here if there are 16 sensors
-                        usingByteNum++;
-                        //  Maybe unnecessary, but trying to minimize reads to getElement 
-                        rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        relvalue = rawvalue;
-                    }
                     if (i >= 12) {  // Will only get here if there are 16 sensors
+                        usingByteNum = 2;
+                        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
+                        rawvalue = l.getElement(usingByteNum + firstByteNum);
+                        log.debug("Sensor Parsing (1stat4) has third rawvalue: "+Integer.toHexString(rawvalue));
+                        relvalue = rawvalue;
                         tempi = i - 12;  // tempi needs to shift down by 12
+                    } else {
+                        if (i >= 4) {
+                            usingByteNum = 1;
+                            //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
+                            rawvalue = l.getElement(usingByteNum + firstByteNum);
+                            log.debug("Sensor Parsing (1stat4) has second rawvalue: "+Integer.toHexString(rawvalue));
+                            relvalue = rawvalue;
+                            tempi = i - 4;  // tempi needs to shift down by 4
+                        }
                     }
                 } else {
-                    if (i == 8) {  // Will only get here if there are 16 sensors
-                        usingByteNum++;
-                        //  Maybe unnecessary, but trying to minimize reads to getElement 
-                        rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        relvalue = rawvalue;
-                    }
                     if (i >= 8) {  // Will only get here if there are 16 sensors
+                        usingByteNum = 1;
+                        //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
+                        rawvalue = l.getElement(usingByteNum + firstByteNum);
+                        log.debug("Sensor Parsing has second rawvalue: "+Integer.toHexString(rawvalue));
+                        relvalue = rawvalue;
                         tempi = i - 8;  // tempi needs to shift down by 8
                     }
                 }
 
-                //  Finally we can isolate the bit from the poll
+                log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" has tempi: "+tempi);
+
+                //  Finally we can isolate the bit from the poll result
                 for (int j = 0; j < tempi; j++) {
                     relvalue = relvalue >> 1;
                 }
+
+                log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" has relvalue: "+Integer.toHexString(relvalue));
 
                 // Now that we have the relvalue need to compare to last time
                 boolean nooldstate = false;
@@ -1055,6 +1034,9 @@ public class AcelaNode extends AbstractNode {
                 byte newstate = (byte) (newerstate);
 
                 if ((nooldstate) || (oldstate != newstate)) {
+                    if (nooldstate) {
+                        log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+"  had no old state.");
+                    }
                     if (newstate == 0x00) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
                         sensorArray[i].setKnownState(sensorLastSetting[i]);
@@ -1062,6 +1044,9 @@ public class AcelaNode extends AbstractNode {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(sensorLastSetting[i]);
                     }
+                    log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+ " changed state: " + sensorLastSetting[i] + " rawvalue: "+Integer.toHexString(rawvalue));
+                } else {
+                    log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+ " did NOT change state: " + sensorLastSetting[i] + " rawvalue: "+Integer.toHexString(rawvalue));
                 }
             }
         } catch (JmriException e) {
