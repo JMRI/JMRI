@@ -22,13 +22,13 @@ public class Beans extends java.beans.Beans {
      * Set property <i>key</i> of <i>object</i> to <i>value</i>.
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
-     * {@link jmri.beans.BeanInterface#setProperty(java.lang.Object, java.lang.Object)},
+     * {@link jmri.beans.BeanInterface#setProperty(java.lang.String, java.lang.Object)},
      * otherwise it calls 
-     * {@link jmri.beans.Beans#setIntrospectedProperty(java.lang.Object, java.lang.Object, java.lang.Object)}.
+     * {@link jmri.beans.Beans#setIntrospectedProperty(java.lang.Object, java.lang.String, java.lang.Object)}.
      * 
      * @param object
      * @param value
-     * @see jmri.beans.BeanInterface#setProperty(java.lang.Object, java.lang.Object) 
+     * @see jmri.beans.BeanInterface#setProperty(java.lang.String, java.lang.Object) 
      */
     public static void setProperty(Object object, String key, Object value) {
         if (implementsBeanInterface(object)) {
@@ -79,12 +79,12 @@ public class Beans extends java.beans.Beans {
      * If the property <i>key</i> cannot be found, this method returns null.
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
-     * {@link jmri.beans.BeanInterface#getProperty(java.lang.Object)}, otherwise it calls 
-     * {@link jmri.beans.Beans#getIntrospectedProperty(java.lang.Object, java.lang.Object)}.
+     * {@link jmri.beans.BeanInterface#getProperty(java.lang.String)}, otherwise it calls 
+     * {@link jmri.beans.Beans#getIntrospectedProperty(java.lang.String, java.lang.Object)}.
      * 
      * @param object
      * @return value of property <i>key</i>
-     * @see jmri.beans.BeanInterface#getProperty(java.lang.Object) 
+     * @see jmri.beans.BeanInterface#getProperty(java.lang.String) 
      */
     public static Object getProperty(Object object, String key) {
         if (implementsBeanInterface(object)) {
@@ -135,8 +135,8 @@ public class Beans extends java.beans.Beans {
      * Test if <i>object</i> has the property <i>key</i>.
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
-     * {@link jmri.beans.BeanInterface#hasProperty(java.lang.Object)}, otherwise it calls 
-     * {@link jmri.beans.Beans#hasIntrospectedProperty(java.lang.Object, java.lang.Object)}.
+     * {@link jmri.beans.BeanInterface#hasProperty(java.lang.String)}, otherwise it calls 
+     * {@link jmri.beans.Beans#hasIntrospectedProperty(java.lang.String, java.lang.Object)}.
      * 
      * @param object
      * @return true if <i>object</i> has property <i>key</i>
