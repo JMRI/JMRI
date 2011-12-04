@@ -80,7 +80,7 @@ public class Beans extends java.beans.Beans {
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
      * {@link jmri.beans.BeanInterface#getProperty(java.lang.String)}, otherwise it calls 
-     * {@link jmri.beans.Beans#getIntrospectedProperty(java.lang.String, java.lang.Object)}.
+     * {@link jmri.beans.Beans#getIntrospectedProperty(java.lang.Object, java.lang.String)}.
      * 
      * @param object
      * @return value of property <i>key</i>
@@ -136,7 +136,7 @@ public class Beans extends java.beans.Beans {
      * <p>
      * If <i>object</i> implements {@link BeanInterface}, this method calls
      * {@link jmri.beans.BeanInterface#hasProperty(java.lang.String)}, otherwise it calls 
-     * {@link jmri.beans.Beans#hasIntrospectedProperty(java.lang.String, java.lang.Object)}.
+     * {@link jmri.beans.Beans#hasIntrospectedProperty(java.lang.Object, java.lang.String)}.
      * 
      * @param object
      * @return true if <i>object</i> has property <i>key</i>
