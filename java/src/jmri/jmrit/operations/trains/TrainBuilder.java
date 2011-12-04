@@ -1362,15 +1362,17 @@ public class TrainBuilder extends TrainCommon{
 				// don't use this location again
 				//rl.setCarMoves(rl.getMaxCarMoves());
 			}
-			if (routeIndex == 0 && percent == 100)
-				checkDepartureForStaging();
+			if (routeIndex == 0)
+				checkDepartureForStaging(percent);	// report ASAP that the build has failed
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
 				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
-		}	
-		return;
+		}
+		checkDepartureForStaging(percent);	// covers the cases: no pick ups, wrong train direction and train skips, 
 	}
 	
-	private void checkDepartureForStaging() throws BuildFailedException{
+	private void checkDepartureForStaging(int percent) throws BuildFailedException{
+		if (percent != 100)
+			return;	// only check departure track after last pass is complete
 		// is train departing staging?
 		if (departStageTrack == null)
 			return; //no
@@ -1391,8 +1393,7 @@ public class TrainBuilder extends TrainCommon{
 			log.debug(carCount +" cars stuck in staging");
 			String msg = MessageFormat.format(rb.getString("buildStagingCouldNotFindDest"),new Object[]{carCount, departStageTrack.getLocation().getName(), departStageTrack.getName()});
 			throw new BuildFailedException(msg + buf.toString(), BuildFailedException.STAGING);
-		}
-		
+		}		
 	}
 	
 	private boolean addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track){
