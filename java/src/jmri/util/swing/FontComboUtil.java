@@ -58,12 +58,10 @@ public class FontComboUtil {
     private static List<String> character = null;
     private static List<String> symbol = null;
     
+    private static boolean prepared = false;
+    
     public static List<String> getFonts(int which) {
-        if (monospaced == null ||
-            proportional == null ||
-            character == null ||
-            symbol == null ||
-            all == null) {
+        if (!prepared) {
             prepareFontLists();
         }
 
@@ -88,16 +86,23 @@ public class FontComboUtil {
      * @return true if a symbol font; false if not
      */
     public static boolean isSymbolFont(String font) {
-        if (symbol == null) {
+        if (!prepared) {
             prepareFontLists();
         }
         return symbol.contains(font);
     }
-
+    
     /**
      * Method to initialise the font lists on first access
      */
     public static synchronized void prepareFontLists() {
+        
+        if (prepared) {
+            // Normally we shouldn't get here except when the initialisation
+            // thread has taken a bit longer than normal.
+            log.debug("Subsequent call - no need to prepare");
+            return;
+        }
 
         log.debug("Prepare font lists...");
 
@@ -146,6 +151,7 @@ public class FontComboUtil {
         }
 
         log.debug("...font lists built");
+        prepared = true;
     }
 
     /**
