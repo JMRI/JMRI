@@ -149,9 +149,8 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
                         Integer.parseInt(ce.getAttributeValue("height")));
             }
 
-            result = true;
-        } catch (Exception ex) {
-            log.error("Exception while setting System Console parameters: "+ex);
+        } catch (NumberFormatException ex) {
+            log.error("NumberFormatException while setting System Console parameters: "+ex);
             result = false;
         }
 
