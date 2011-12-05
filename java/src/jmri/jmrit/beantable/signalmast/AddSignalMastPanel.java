@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import jmri.jmrit.XmlFile;
 
 import javax.swing.*;
 
@@ -50,7 +51,6 @@ public class AddSignalMastPanel extends JPanel {
     public AddSignalMastPanel() {
     
         refreshComboBox();
-        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         JPanel p;
@@ -136,6 +136,8 @@ public class AddSignalMastPanel extends JPanel {
      
         loadMastDefinitions();
         updateSelectedDriver();
+        updateHeads();
+        refreshComboBox();
         sigSysBox.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent e) {
                 loadMastDefinitions();
@@ -248,23 +250,26 @@ public class AddSignalMastPanel extends JPanel {
             
             // do file IO to get all the appearances
             // gather all the appearance files
+            //Look for the default system defined ones first
             File[] apps = new File("xml"+File.separator+"signals"+File.separator+sigsysname).listFiles();
-            for (int j=0; j<apps.length; j++) {
-                if (apps[j].getName().startsWith("appearance")
-                            && apps[j].getName().endsWith(".xml")) {
-                    log.debug("   found file: "+apps[j].getName());
-                    // load it and get name 
-                    mastNames.add(apps[j]);
-                    
-                    jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
-                    Element root = xf.rootFromFile(apps[j]);
-                    String name = root.getChild("name").getText();
-                    mastBox.addItem(name);
-                    
-                    map.put(name, Integer.valueOf(root.getChild("appearances")
-                                    .getChild("appearance")
-                                    .getChildren("show")
-                                    .size()));
+            if(apps!=null){
+                for (int j=0; j<apps.length; j++) {
+                    if (apps[j].getName().startsWith("appearance")
+                                && apps[j].getName().endsWith(".xml")) {
+                        log.debug("   found file: "+apps[j].getName());
+                        // load it and get name 
+                        mastNames.add(apps[j]);
+                        
+                        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
+                        Element root = xf.rootFromFile(apps[j]);
+                        String name = root.getChild("name").getText();
+                        mastBox.addItem(name);
+                        
+                        map.put(name, Integer.valueOf(root.getChild("appearances")
+                                        .getChild("appearance")
+                                        .getChildren("show")
+                                        .size()));
+                    }
                 }
             }
         } catch (org.jdom.JDOMException e) {
@@ -272,6 +277,42 @@ public class AddSignalMastPanel extends JPanel {
             log.warn("in loadMastDefinitions", e);
         } catch (java.io.IOException e) {
             mastBox.addItem("Failed to read definition, did you select a system?");
+            log.warn("in loadMastDefinitions", e);
+        }
+        
+        try {
+            File[] apps = new File(XmlFile.prefsDir()+"resources"+File.separator
+                    +"signals"+File.separator+sigsysname).listFiles();
+            if(apps!=null){
+                for (int j=0; j<apps.length; j++) {
+                    if (apps[j].getName().startsWith("appearance")
+                                && apps[j].getName().endsWith(".xml")) {
+                        log.debug("   found file: "+apps[j].getName());
+                        // load it and get name 
+                        //If the mast file name already exists no point in re-adding it
+                        if(!mastNames.contains(apps[j])){
+                            mastNames.add(apps[j]);
+                            
+                            jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
+                            Element root = xf.rootFromFile(apps[j]);
+                            String name = root.getChild("name").getText();
+                            //if the mast name already exist no point in readding it.
+                            if(!map.containsKey(name)){
+                                mastBox.addItem(name);
+                                map.put(name, Integer.valueOf(root.getChild("appearances")
+                                                .getChild("appearance")
+                                                .getChildren("show")
+                                                .size()));
+                            }
+                        }
+                    }
+                }
+            }
+        
+        } catch (org.jdom.JDOMException e) {
+            log.warn("in loadMastDefinitions", e);
+        } catch (java.io.IOException e) {
+            //Can be considered normal
             log.warn("in loadMastDefinitions", e);
         }
         mastBox.addItemListener(new ItemListener(){
