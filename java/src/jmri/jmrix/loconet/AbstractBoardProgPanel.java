@@ -15,6 +15,9 @@ import javax.swing.*;
 /**
  * Display and modify an Digitrax board configuration.
  * <P>
+ * Supports boards which can be read and write using LocoNet
+ * opcode OPC_MULTI_SENSE, such as PM4, DS64, SE8c, BDL16x.
+ * <P>
  * The read and write require a sequence of operations, which
  * we handle with a state variable.
  * <P>
@@ -37,17 +40,64 @@ import javax.swing.*;
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel 
         implements LocoNetListener {
 
+    JPanel contents = new JPanel();
+    java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.AbstractBoardProgPanel");
+
+    public JToggleButton readAllButton  = null;
+    public JToggleButton writeAllButton = null;
+    public JTextField addrField = new JTextField(4);
+    JLabel status = new JLabel();
+
+    public boolean read = false;
+    public int state = 0;
+    boolean awaitingReply = false;
+
+    /* The responseTimer provides a timeout mechanism for OpSw read and write
+     * requests.
+     */
+    public javax.swing.Timer responseTimer = null;
+    
+    
+    /* The pacing timer is used to reduce the speed of this tool's requests to
+     * LocoNet.
+     */
+    public javax.swing.Timer pacingTimer = null;
+    
+    /* The boolean field onlyOneOperation is intended to allow accesses to 
+     * a single OpSw value at a time.  This is un-tested functionality.
+     */
+    public boolean onlyOneOperation = false;
+    int address = 0;
+
+    /* typeWord provides the encoded device type number, and is used within the
+     * LocoNet OpSw Read and Write request messages.  Different Digitrax boards
+     *  respond to different encoded device type values, as shown here:
+     *      PM4/PM42                0x70
+     *      BDL16/BDL162/BDL168     0x71
+     *      SE8C                    0x72
+     *      DS64                    0x73
+     */
+    int typeWord;
+    
+    boolean readOnInit;
+
+    /**
+     * True is "closed", false is "thrown". This matches how we
+     * do the check boxes also, where we use the terminology for the
+     * "closed" option.  Note that opsw[0] is not a legal OpSwitch.
+     */
+    protected boolean[] opsw = new boolean[65];
+    private final static int HALF_A_SECOND = 500;
+    private final static int FIFTIETH_OF_A_SECOND = 20; // 20 milliseconds = 1/50th of a second
+    
     /**
      * Constructor which assumes the board ID number is 1
      */
     protected AbstractBoardProgPanel() {
-        this(1);
+        this(1,false);
     }
-    /**
-     * Constructor which allows the caller to pass in the board ID number
-     * @param boardNum
-     */
-    protected AbstractBoardProgPanel(int boardNum) {
+    
+    protected AbstractBoardProgPanel(int boardNum, boolean readOnInit) {
         super();
 
         // basic formatting: Create pane to hold contents
@@ -58,32 +108,79 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
         // and prep for display
         addrField.setText(Integer.toString(boardNum));
-    }
-
-    JPanel contents = new JPanel();
-    
-    public void initComponents(LocoNetSystemConnectionMemo memo) {
-        this.memo = memo;
-
-        // listen for message traffic
-        if (memo.getLnTrafficController()!=null)
-            memo.getLnTrafficController().addLocoNetListener(~0, this);
-        else
-            log.error("No LocoNet connection available, can't function");
+        this.readOnInit = readOnInit;
     }
     
     /**
-     * Provide read, write buttons and address
+     * Constructor which allows the caller to pass in the board ID number
+     * <p>
+     * @param boardNum
+     */
+    protected AbstractBoardProgPanel(int boardNum) {
+        this(boardNum,false);
+    }
+
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
+        super.initComponents(memo);
+
+        // listen for message traffic
+        if (memo.getLnTrafficController()!=null) {
+            memo.getLnTrafficController().addLocoNetListener(~0, this);
+            if (readOnInit == true) {
+                readAllButton.setSelected(true);
+                readAllButton.updateUI();
+                readAll();
+            }
+        }
+        else {
+            log.error("No LocoNet connection available, this tool cannot function");
+        }
+    }
+    
+    public void initComponents() {
+        initializeResponseTimer();
+        initializePacingTimer();
+    }
+
+    /**
+     * Set the Board ID number (also known as board address number)
+     * <p>
+     * @param boardId 
+     */
+    public void setBoardIdValue(Integer boardId) {
+        if (boardId <1) return;
+        if (boardId > 256) return;
+        addrField.setText(Integer.toString(boardId));
+        address = boardId-1;
+    }
+
+    public Integer getBoardIdValue() {
+        return Integer.parseInt(addrField.getText());
+    }
+
+    /**
+     * Provide GUI elements for read and write buttons and address entry field
      */
     protected JPanel provideAddressing(String type) {
         JPanel pane0 = new JPanel();
         pane0.setLayout(new FlowLayout());
-            pane0.add(new JLabel("Unit address: "));
-            pane0.add(addrField);
-            pane0.add(readAllButton);
-            pane0.add(writeAllButton);
-            readAllButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ FROM ")+type);
-            writeAllButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE TO ")+type);
+        pane0.add(new JLabel(rb.getString("LABEL_UNIT_ADDRESS") +" "));
+        pane0.add(addrField);
+        readAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ FROM ")+" "+type);
+        writeAllButton = new JToggleButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE TO ")+" "+type);
+
+        // make both buttons a little bit bigger, with identical (preferred) sizes
+        // (width increased because some computers/displays trim the button text)
+        java.awt.Dimension d = writeAllButton.getPreferredSize();
+        int w = d.width;
+        d = readAllButton.getPreferredSize();
+        if (d.width > w) w = d.width;
+        writeAllButton.setPreferredSize(new java.awt.Dimension((int)(w * 1.1), d.height));
+        readAllButton.setPreferredSize(new java.awt.Dimension((int)(w * 1.1), d.height));
+
+        pane0.add(readAllButton);
+        pane0.add(writeAllButton);
+
         // install read all, write all button handlers
         readAllButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -99,22 +196,24 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         );
         return pane0;
     }
-    public JToggleButton readAllButton  = new JToggleButton();
-    public JToggleButton writeAllButton = new JToggleButton();
-    JTextField addrField = new JTextField(4);
+    
     /**
-     * provide the status line for the GUI
+     * creates the status line for the GUI
      */
     protected JComponent provideStatusLine() {
         return status;
     }
-    JLabel status = new JLabel();
+    
+    /**
+     * updates the status line
+     * @param msg 
+     */
     protected void setStatus(String msg) {
         status.setText(msg);
     }
     
     /**
-     * Handle layout details during construction.
+     * Handle GUI layout details during construction.
      * <P>
      * @param c component to put on a single line
      */
@@ -123,19 +222,25 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         contents.add(c);
     }
 
-    public boolean read = false;
-    int state = 0;
-    
+    /** Provides a mechanism to read several OpSw values in 
+     * a sequence.  The sequence is defined by the nextState method.
+     */
     public void readAll() {
         // check the address
         try {
             setAddress(256);
         } catch (Exception e) {
-            log.debug("readAll aborted due to invalid address");
+            log.debug(rb.getString("ERROR_READALL_INVALID_ADDRESS"));
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
-            status.setText("");
+            status.setText(" ");
             return;
+        }
+        if (responseTimer == null) {
+            initializeResponseTimer();
+        }
+        if (pacingTimer == null) {
+            initializePacingTimer();
         }
         // Start the first operation
         read = true;
@@ -143,9 +248,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         nextRequest();
     }
 
-    int address = 0;
-    int typeWord;
-    
     /**
      * Configure the type word in the LocoNet messages.
      * <P>
@@ -154,18 +256,23 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      *<LI>0x70 - PM4
      *<LI>0x71 - BDL16
      *<LI>0x72 - SE8
+     *<LI>0x73 - DS64
      *</ul>
      */
     protected void setTypeWord(int type) {
         typeWord = type;
     }
 
-    public boolean onlyOneOperation = false;
 
-    void nextRequest() {
+    /** Triggers the next read or write request.  Is executed by the
+     * "pacing" delay timer, which allows time between any two OpSw 
+     * accesses. 
+     */
+    private final void delayedNextRequest() {
+        pacingTimer.stop();
         if (read) {
             // read op
-            status.setText("Reading opsw "+state);
+            status.setText(rb.getString("STATUS_READING_OPSW")+" "+state);
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x62;
@@ -177,9 +284,12 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             int bit = (state-1)-loc*8;
             l.setElement(4, loc*16+bit*2);
             memo.getLnTrafficController().sendLocoNetMessage(l);
+            awaitingReply = true;
+            responseTimer.stop();
+            responseTimer.restart();
         } else {
             //write op
-            status.setText("Writing opsw "+state);
+            status.setText(rb.getString("STATUS_WRITING_OPSW")+" "+state);
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_MULTI_SENSE);
             int element = 0x72;
@@ -191,13 +301,25 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             int bit = (state-1)-loc*8;
             l.setElement(4, loc*16+bit*2+(opsw[state]?1:0));
             memo.getLnTrafficController().sendLocoNetMessage(l);
+            awaitingReply = true;
+            responseTimer.stop();
+            responseTimer.restart();
         }
     }
 
+    /** 
+     * Starts the pacing timer, which, at timeout, will begin the next OpSw 
+     * access request.
+     */
+    private final void nextRequest() {
+        pacingTimer.stop();
+        pacingTimer.restart();
+    }
+
     /**
-      * Turn the textfield containing the address into 
-      * a valid integer address, handling user-input
-      * errors as needed
+      * Converts the GUI text field containing the address into 
+      * a valid integer address, and handles user-input
+      * errors as needed.
       */
     void setAddress(int maxValid) throws Exception {
         try {
@@ -205,22 +327,24 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         } catch (Exception e) {
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
-            status.setText("Input Error");
-            JOptionPane.showMessageDialog(this,"Invalid Address",
-                    "Error",JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing Rate Field: "+e);
+            status.setText(rb.getString("STATUS_INPUT_BAD"));
+            JOptionPane.showMessageDialog(this,rb.getString("STATUS_INVALID_ADDRESS"),
+                    rb.getString("STATUS_TYPE_ERROR"),JOptionPane.ERROR_MESSAGE);
+            log.error(rb.getString("ERROR_PARSING_ADDRESS")+" "+e);
             throw e;
         }
         // parsed OK, check range
         if (address > (maxValid-1) || address < 0) {
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
-            status.setText("Input Error");
+            status.setText(rb.getString("STATUS_INPUT_BAD"));
             JOptionPane.showMessageDialog(this,
-                "Address out of range, must be 1 to "+maxValid,
+                    rb.getString("STATUS_INVALID_ADDRESS_VALUE_BEGIN") +
+                    " 1 "+ rb.getString("STATUS_INVALID_ADDRESS_VALUE_MIDDLE") +
+                    " "+maxValid,
                 "Error",JOptionPane.ERROR_MESSAGE);
             log.error("Invalid address value");
-            throw new jmri.JmriException("Address out of range: "+address);
+            throw new jmri.JmriException(rb.getString("ERROR_INVALID_ADDRESS") + " " + address);
         }
         return;  // OK
     }
@@ -228,29 +352,45 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * Copy from the GUI to the opsw array. 
      * <p>
-     * Used before write operations start
+     * Used before a write operation is started.
      */
     abstract protected void copyToOpsw();
     
+    /**
+     * Update the GUI based on the contents of opsw[]. 
+     * <p>
+     * This method is executed after completion of a read operation 
+     * sequence.
+     */
     abstract protected void updateDisplay();
     
     /**
-     * Specify which opsw (and which sequence) need to be read/written
+     * Specify which OpSws (and which sequence) need to be read/written
      */
     abstract protected int nextState(int state);
     
-    void writeAll() {
+    /** Provides a mechanism to write several OpSw values
+     * in a sequence.  The sequence is defined by the nextState method.
+     */
+    public void writeAll() {
         // check the address
         try {
             setAddress(256);
         } catch (Exception e) {
-            log.debug("writeAll aborted due to invalid address"+e);
+            if (log.isDebugEnabled()) log.debug(rb.getString("ERROR_WRITEALL_ABORTED") + " " + e);
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
-            status.setText("");
+            status.setText(" ");
             return;
         }
-        
+
+        if (responseTimer == null) {
+            initializeResponseTimer();
+        }
+        if (pacingTimer == null) {
+            initializePacingTimer();
+        }
+
         // copy over the display
         copyToOpsw();
         
@@ -262,24 +402,32 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         nextRequest();
     }
 
-        public void writeOne(int startIndex) {
+    /** writeOne() is intended to provide a mechanism to write a single
+     * OpSw value (specified by opswIndex), rather than a sequence of OpSws 
+     * as done by writeAll().
+     * <p>
+     * @param opswIndex
+     * <p>
+     * @see jmri.jmrix.loconet.AbstractBoardProgPanel.writeAll()
+     */
+    public void writeOne(int opswIndex) {
         // check the address
         try {
             setAddress(256);
         } catch (Exception e) {
-            log.debug("writeOne aborted due to invalid address"+e);
+            if (log.isDebugEnabled()) log.debug(rb.getString("ERROR_WRITEONE_ABORTED") + " " + e);
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
-            status.setText("");
+            status.setText(" ");
             return;
         }
 
-        // copy over the display
+        // copy over the displayed value
         copyToOpsw();
 
         // Start the first operation
         read = false;
-        state = startIndex;
+        state = opswIndex;
 
         // specify as single request, not multiple
         onlyOneOperation = true;
@@ -287,19 +435,14 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     }
 
     /**
-     * True is "closed", false is "thrown". This matches how we
-     * do the check boxes also, where we use the terminology for the
-     * "closed" option.  Note that opsw[0] is not a legal OpSwitch.
-     */
-    protected boolean[] opsw = new boolean[65];
-
-    /**
-     * Processes incoming LocoNet messages for OpSw read and write operations,
-     * and automatically advances to the next OpSw operation as directed by
-     * nextState()
+     * Processes incoming LocoNet message m for OpSw responses to read and write 
+     * operation messages, and automatically advances to the next OpSw operation 
+     * as directed by nextState().
+     * <p>
      * @param m
-     */public void message(LocoNetMessage m) {
-        if (log.isDebugEnabled()) log.debug("get message "+m);
+     */
+    public void message(LocoNetMessage m) {
+        if (log.isDebugEnabled()) log.debug(rb.getString("DEBUG_PARSING_LOCONET_MESSAGE") + " " + m);
         // are we reading? If not, ignore
         if (state == 0) return;
         // check for right type, unit
@@ -309,32 +452,120 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         // LACK with 0 in opcode; assume its to us.  Note that there
         // should be a 0x50 in the opcode, not zero, but this is what we
         // see...
+        
+        if (awaitingReply == true) {
+            if (responseTimer != null) {
+                if (responseTimer.isRunning()) {
+                // stop the response timer!
+                    responseTimer.stop();
+                }
+            }
+        }
 
         boolean value = false;
         if ( (m.getElement(2)&0x20) != 0) value = true;
 
-        // record this bit
-        opsw[state] = value;
+        // update opsw array if LACK return status is not 0x7F
+        if ((m.getElement(2) != 0x7f)) {
+            // record this bit
+            opsw[state] = value;
+        }
 
         // show what we've got so far
         if (read) updateDisplay();
 
         // and continue through next state, if any
-        state = nextState(state);
-        if (state == 0) {
-            // done
+        doTheNextThing();
+    }
+     
+
+    /**
+     * Helps continue sequences of OpSw accesses.
+     * <p>
+     * Handles aborting a sequence of reads or writes when the GUI Read 
+     * button or the GUI Write button (as appropriate for the current 
+     * operation) is de-selected.
+     */
+    public void doTheNextThing() {
+        int origState;
+        origState = state;
+        if (origState != 0)
+            state = nextState(state);
+        if ((origState == 0) || (state == 0)) {
+            // done with sequence
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
-            status.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("DONE"));
+            if (origState != 0) {
+                status.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("DONE"));
+            }
+            else {
+                status.setText(rb.getString("ERROR_ABORTED_DUE_TO_TIMEOUT"));
+            }
+            // nothing more to do
             return;
-        } else {
-            // create next
+        }
+        else {
+            // are not yet done, so create and send the next OpSw request message
             nextRequest();
             return;
         }
     }
 
-    public void initComponents() {
+    private java.awt.event.ActionListener responseTimerListener = new java.awt.event.ActionListener() {
+
+        public void actionPerformed(ActionEvent e) {
+            if (responseTimer.isRunning()) {
+                // odd case - not sure why would get an event if the timer is not running.
+            }
+            else {
+                if (awaitingReply == true) {
+                    // have a case where are awaiting a reply from the device, 
+                    // but the response timer has expired without a reply.
+                    // Need to cancel the ongoing process and update the status 
+                    // line.
+                    awaitingReply = false;
+                    responseTimer.stop();
+                    state = 0;
+                    doTheNextThing();
+                    }
+            }
+        }
+    };
+
+    private void initializeResponseTimer () {
+        if (responseTimer == null) {
+            responseTimer = new javax.swing.Timer(HALF_A_SECOND, responseTimerListener);
+            responseTimer.setRepeats(false);
+            responseTimer.stop();
+            responseTimer.setInitialDelay(HALF_A_SECOND);
+            responseTimer.setDelay(HALF_A_SECOND);
+        }
+        return;
+    }
+    
+    private java.awt.event.ActionListener pacingTimerListener = new java.awt.event.ActionListener() {
+
+        public void actionPerformed(ActionEvent e) {
+            if (pacingTimer.isRunning()) {
+                // odd case - not sure why would get an event if the timer is not running.
+                log.warn("Unexpected pacing timer event while OpSw access timer is running.");
+            }
+            else {
+                pacingTimer.stop();
+                delayedNextRequest();
+            }
+        }
+    };
+
+    private void initializePacingTimer () {
+        if (pacingTimer == null) {
+            pacingTimer = new javax.swing.Timer(FIFTIETH_OF_A_SECOND, pacingTimerListener);
+            pacingTimer.setRepeats(false);
+            pacingTimer.stop();
+            pacingTimer.setInitialDelay(FIFTIETH_OF_A_SECOND);
+            pacingTimer.setDelay(FIFTIETH_OF_A_SECOND);
+        }
+        return;
     }
     
     public void dispose() {
@@ -342,8 +573,16 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         if (memo.getLnTrafficController()!=null)
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         super.dispose();
+        
+        // stop all timers (if necessary) before disposing of this class
+        if (responseTimer != null) {
+            responseTimer.stop();
+        }
+        if (pacingTimer != null) {
+            pacingTimer.stop();
+        }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgPanel.class.getName());
+     org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgPanel.class.getName());
 
 }

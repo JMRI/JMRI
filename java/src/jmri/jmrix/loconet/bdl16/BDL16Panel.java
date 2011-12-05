@@ -5,13 +5,13 @@ package jmri.jmrix.loconet.bdl16;
 import javax.swing.JCheckBox;
 
 /**
- * Panel displaying and programming a BDL16 configuration.
+ * Panel displaying and programming a BDL16x configuration.
  * <P>
  * The read and write require a sequence of operations, which
  * we handle with a state variable.
  * <P>
- * Programming of the BDL16 is done via configuration messages, so
- * the BDL16 should not be put into programming mode via the
+ * Programming of the BDL16x is done via configuration messages, so
+ * the BDL16x should not be put into programming mode via the
  * built-in pushbutton while this tool is in use.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -30,9 +30,8 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
     public BDL16Panel(int boardNum) {
         super(boardNum);
-
-        appendLine(provideAddressing("BDL16"));  // add read/write buttons, address
-
+        appendLine(provideAddressing("BDL16x"));  // add read/write buttons, address
+        
         appendLine(commonrail);
         appendLine(polarity);
         appendLine(transpond);
@@ -56,10 +55,9 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         appendLine(setdefault);
 
         appendLine(provideStatusLine());
-        setStatus("The BDL16 should be in normal mode (Don't push the buttons on the BDL16!)");
+        setStatus("The BDL16x should be in its normal mode. (Do not push any of the buttons on the BDL16x!)");
 
-        setTypeWord(0x71);  // configure BDL16 message type
-
+        setTypeWord(0x71);  // configure BDL16x message type
     }
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.bdl16.BDL16Frame"; }
@@ -154,12 +152,12 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JCheckBox commonrail            = new JCheckBox("OpSw 01: Common rail wiring");  // opsw 01
     JCheckBox polarity              = new JCheckBox("OpSw 03: Reverse polarity for detection"); // opsw 03
     JCheckBox transpond             = new JCheckBox("OpSw 05: Enable transponding"); // opsw 05
-    JCheckBox rx4connected1         = new JCheckBox("OpSw 06: Reserved (Unset if RX4 connected)"); // opsw 06
-    JCheckBox rx4connected2         = new JCheckBox("OpSw 07: Reserved (Unset if RX4 connected)"); // opsw 07
+    JCheckBox rx4connected1         = new JCheckBox("OpSw 06: Reserved (Unset if RX4 is connected)"); // opsw 06
+    JCheckBox rx4connected2         = new JCheckBox("OpSw 07: Reserved (Unset if RX4 is connected)"); // opsw 07
     JCheckBox forceoccupied         = new JCheckBox("OpSw 09: Show unoccupied when power off");  // opsw 09
     JCheckBox section16qualpower    = new JCheckBox("OpSw 10: Section 16 used to sense power");  // opsw 10
-    JCheckBox nomaster              = new JCheckBox("OpSw 11: Do not allow BDL16 to be LocoNet master");  // opsw 11
-    JCheckBox noterminate           = new JCheckBox("OpSw 12: Do not allow BDL16 to terminate LocoNet");  // opsw 12
+    JCheckBox nomaster              = new JCheckBox("OpSw 11: Do not allow BDL16x to be LocoNet master");  // opsw 11
+    JCheckBox noterminate           = new JCheckBox("OpSw 12: Do not allow BDL16x to terminate LocoNet");  // opsw 12
     JCheckBox delayhalfsecond       = new JCheckBox("OpSw 13: Delay only 1/2 second at power up");  // opsw 13
     JCheckBox highthreshold         = new JCheckBox("OpSw 19: High threshold sense (10kohms)");  // opsw 19
     JCheckBox drivefromswitch       = new JCheckBox("OpSw 25: Drive LEDs from switch commands, not occupancy");  // opsw 25
