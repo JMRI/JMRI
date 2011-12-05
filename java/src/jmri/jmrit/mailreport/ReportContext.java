@@ -227,7 +227,11 @@ public class ReportContext {
         }
                     
         Collection<ZeroConfService> services = ZeroConfService.allServices();
-        addString("ZeroConfService host: " + ZeroConfService.hostName() + " running " + services.size() + " service(s)");
+        try {
+            addString("ZeroConfService host: " + ZeroConfService.hostName() + " running " + services.size() + " service(s)");
+        } catch (NullPointerException ex) {
+            addString("ZeroConfService host not running");
+        }
         if (services.size()>0) {
             for (ZeroConfService service: services) {
                 addString("ZeroConfService: " + service.serviceInfo().getQualifiedName() + "  ");
@@ -239,7 +243,7 @@ public class ReportContext {
                 addString(" URL: " + service.serviceInfo().getURL() + "  ");
                 addString(" Published: " + (service.isPublished()?"yes":"no"));
             }
-        }        
+        }
     }
     
     /**
