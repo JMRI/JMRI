@@ -206,6 +206,8 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             // a NamedBean added or deleted
             makePickList();
             fireTableDataChanged();
+        } else if (e.getPropertyName().equals("DisplayListName")){
+            //This is a call from the manager, which can be ignored
         } else {
             // a value changed.  Find it, to avoid complete redraw
             NamedBean bean = (NamedBean)e.getSource();
