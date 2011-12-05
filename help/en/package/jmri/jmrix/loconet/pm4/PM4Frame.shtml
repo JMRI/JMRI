@@ -23,34 +23,49 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure Digitrax PM4
-</H1>
+<H1>Configure Digitrax PM4x</H1>
+        <a href="PM4xConfigTool.png">
+            <img src="PM4xConfigTool.png" 
+                 alt="PM4x Configuration Tool Screen Capture">
+        </a>
     
-<!-- 
-<a href="../../../../../html/apps/LocoTools/images/DS64.jpg">  
-<img src="../../../../../html/apps/LocoTools/images/DS64.jpg" 
-align="right" height="271" width="245" alt="panel image"></a>
- -->
 <p>
-The JMRI PM4 programming tool lets you configure 
-the internal options of a PM4 directly from your computer.
+The JMRI PM4x programming tool lets you configure 
+the internal options of a PM4 or PM42 directly from your computer.
 <p>
-To open this tool from the JMRI start page select the Loconet tab 
+To open this tool from the JMRI start page select the LocoNet tab 
 then find the tool on the drop down list.
 <p>
-To use it, you put the address of a PM4 board in the text field
-and click "Read from PM4".  The tool will read back the current
+To use it, you put the address of a PM4x board in the text field
+and click "Read from PM4x".  The tool will read back the current
 state of the various options, and set the check boxes to correspond to 
 their current values.
 <p>
-You can then, if you wish, change the checkboxes and click "Write to DS64" 
+You can then, if you wish, change the checkboxes and click "Write to PM4x" 
 to make your changes permanent.
 
-<h3>Limitations</h3>
+<h2>Limitations</h2>
 
-Because of the way the PM4 board works, this tool can't change
-the basic address of the unit.
+<ul>
+    <li>
+        This tool is able to access PM4x boards with addresses between 1 and 
+        256.  Users are advised to avoid using the factory default board 
+        address (board address 1) as it will be difficult to program new boards
+        with unique data if any in-service board is using the factory default 
+        board address.
+    </li>
+    <li>
+        Because of the way the PM4x board works, this tool can't change the 
+        basic address of the unit.  The PM4x documentation describes how to 
+        change the board address.
+    </li>
+</ul>
 
+<h2>See Also</h2>
+<p>Documentation for the PM4 and PM42 can be found at the 
+    <a href="http://www.digitrax.com">Digitrax Web Site.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

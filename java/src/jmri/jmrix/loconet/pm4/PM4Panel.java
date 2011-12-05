@@ -33,7 +33,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     public PM4Panel(int boardNum) {
         super(boardNum);
 
-        appendLine(provideAddressing("PM4"));  // add read/write buttons, address
+        appendLine(provideAddressing("PM4x"));  // add read/write buttons, address
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
@@ -83,7 +83,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
         // add status
         appendLine(provideStatusLine());
-        setStatus("The PM4 should be in normal mode. (Don't push the buttons on the PM4)");
+        setStatus("The PM4x should be in normal mode. (Don't push the buttons on the PM4x)");
         
         setTypeWord(0x70);  // configure PM4 message type
        
