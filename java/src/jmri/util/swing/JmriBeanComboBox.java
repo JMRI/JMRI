@@ -39,7 +39,8 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
             _lastSelected = (String)getSelectedItem();
             updateComboBox(_lastSelected);
             log.debug("Update triggered in name list");
-        }
+        } else if (e.getPropertyName().equals("DisplayListName"))
+            refreshCombo();
     }
     
     String _lastSelected = "";

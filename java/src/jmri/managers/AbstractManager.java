@@ -172,6 +172,9 @@ abstract public class AbstractManager
             NamedBean t = (NamedBean)e.getSource();
             if (old!= null) _tuser.remove(old);
             if (now!= null) _tuser.put(now, t);
+            
+            //called DisplayListName, as DisplayName might get used at some point by a NamedBean
+            firePropertyChange("DisplayListName", old, now);
         }
     }
 
