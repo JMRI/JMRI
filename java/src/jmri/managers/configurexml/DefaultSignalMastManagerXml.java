@@ -59,9 +59,9 @@ public class DefaultSignalMastManagerXml
      * @param element Top level Element to unpack.
      * @return true if successful
      */
+    @SuppressWarnings("unchecked")
     public boolean load(Element element) {
         // loop over contained signalmast elements
-        @SuppressWarnings("unchecked")
         List<Element> list = element.getChildren("signalmast");
 
         for (int i = 0; i < list.size(); i++) {
@@ -90,7 +90,7 @@ public class DefaultSignalMastManagerXml
             }
         }
         
-        @SuppressWarnings("unchecked")
+        
         list = element.getChildren("turnoutsignalmast");
         if(list!=null){
             for (int i = 0; i < list.size(); i++) {
