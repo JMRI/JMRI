@@ -7,7 +7,7 @@ import java.util.Iterator;
 /**
  * Provide an {@link Iterable} interface for an Enumeration
  * <p>
- * From {@link http://www.javaspecialists.eu/archive/Issue107.html}
+ * From <a href="http://www.javaspecialists.eu/archive/Issue107.html">JavaSpecialists issue 107</a>
  * 
  * @author rhwood
  */
