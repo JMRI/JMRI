@@ -23,14 +23,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure Digitrax SE8c
-</H1>
+<H1>Configure Digitrax SE8c</H1>
+        <a href="SE8cConfigTool.png">
+            <img src="SE8cConfigTool.png" 
+                 alt="SE8c Configuration Tool Screen Capture">
+        </a>
     
-<!-- 
-<a href="../../../../../html/apps/LocoTools/images/DS64.jpg">  
-<img src="../../../../../html/apps/LocoTools/images/DS64.jpg" 
-align="right" height="271" width="245" alt="panel image"></a>
- -->
 <p>
 The JMRI SE8c programming tool lets you configure 
 the internal options of a SE8c directly from your computer.
@@ -46,10 +44,25 @@ their current values.
 You can then, if you wish, change the checkboxes and click "Write to SE8c" 
 to make your changes permanent.
 
-<h3>Limitations</h3>
+<h2>Limitations</h2>
 
-Because of the way the SE8c board works, this tool can't change
-the basic address of the unit.
+    <UL>
+        <LI>Because of the way the SE8c board works, this tool can't change
+            the basic address of the unit.</LI>
+        <LI>The SE8c can be configured to send Sensor status on the Loconet in 
+            response to a "track power on" command. The SE8c does not send 
+            Turnout status in response to a "track power on" command.</LI>
+        <LI>This tool is able to access SE8c boards with addresses between 1 and 
+            36.  Users are advised to avoid using the factory default board 
+            address (board address 1) as it will be difficult to program new boards
+            with unique data if any in-service board is using the factory default 
+            board address.</LI>
+    </UL>
+<h2>See Also</h2>
+<p>Documentation for the SE8c can be found at the 
+    <a href="http://www.digitrax.com">Digitrax Web Site.</a></p>
+    </div>
+  </div>
 
 <!--#include virtual="/Footer" -->
 </body>
