@@ -217,8 +217,7 @@ public class JmriJFrameServlet implements Servlet {
     			String frameURLhtml = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".html";
     			String frameURLpng  = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".png";
     			s += "<TR><TD>" + frameTitle + "</TD>\n";
-    			s += "<TD><A href='"+frameURLhtml+"'><IMG src='"+frameURLpng+"' /></A></TD>\n"; 
-    			s += "<TD><A href='"+frameURLpng +"'><IMG src='"+frameURLpng+"' /></A></TD></TR>\n"; 
+    			s += "<TD><A href='"+frameURLhtml+"'><IMG src='"+frameURLpng+"' /></A></TD></TR>\n"; 
     		}
     	}
 
