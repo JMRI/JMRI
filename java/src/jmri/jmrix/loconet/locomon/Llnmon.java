@@ -35,7 +35,11 @@ import jmri.util.StringUtil;
  * <P>
  * Reverse engineering of the Duplex Group/Password/Channel management was
  * provided by Leo Bicknell with help from B. Milhaupt, used with permission.
- * 
+ * <P>
+ * Reverse-engineering of device-specific OpSw messages, throttle text
+ * message, and throttle semaphore message was provided by B. Milhaupt, used
+ * with permission.
+ * <P>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @version $Revision$
  */
@@ -61,10 +65,10 @@ public class Llnmon {
      * should be included.
      */
     protected boolean forceHex = false;
- 
+
     /**
      * Convert bytes from LocoNet packet into a locomotive address.
-     * 
+     *
      * @param a1
      *            Byte containing the upper bits.
      * @param a2
@@ -78,7 +82,7 @@ public class Llnmon {
     /**
      * Convert bytes from LocoNet packet into a 1-based address for a sensor or
      * turnout.
-     * 
+     *
      * @param a1
      *            Byte containing the upper bits
      * @param a2
@@ -94,15 +98,15 @@ public class Llnmon {
      * as used by the LocoIO protocol
      * Example:  123 => 1.2.3
      */
-    
+
     /**
      * Take the LocoIO version number and convert to human friendly format.
-     * 
+     *
      * @param val
      *            The LocoIO version.
      * @return String with human readable format.
      */
-    private String dotme(int val) {
+    public static String dotme(int val) {
         int dit;
         int x = val;
         StringBuffer ret = new StringBuffer();
@@ -117,10 +121,10 @@ public class Llnmon {
         }
         return ret.toString();
     } // end of private String dotme(int val)
-    
+
     /**
      * Convert throttle ID to a human friendly format.
-     * 
+     *
      * @param id1
      *            Byte #1 of the ID.
      * @param id2
@@ -137,7 +141,7 @@ public class Llnmon {
      * This function creates a string representation of the loco address in
      * addressLow & addressHigh in a form appropriate for the type of address (2
      * or 4 digit) using the Digitrax 'mixed mode' if necessary.
-     * 
+     *
      * @param addressLow
      * @param addressHigh
      * @return
@@ -181,10 +185,10 @@ public class Llnmon {
         /*
          * 2 Byte MESSAGE OPCODES * ; FORMAT = <OPC>,<CKSUM> * ; *
          */
-     
+
             /*
              * OPC_IDLE 0x85 ;FORCE IDLE state, Broadcast emergency STOP
-             * 
+             *
              * Page 8 of LocoNet Personal Edition v1.0.
              */
         case LnConstants.OPC_IDLE: {
@@ -193,25 +197,25 @@ public class Llnmon {
 
             /*
              * OPC_GPON 0x83 ;GLOBAL power ON request
-             * 
+             *
              * Page 8 of LocoNet Personal Edition v1.0.
              */
        case LnConstants.OPC_GPON: {
             return "Global Power ON.\n";
        } // case LnConstants.OPC_GPON
-            
+
             /*
              * OPC_GPOFF 0x82 ;GLOBAL power OFF request
-             * 
+             *
              * Page 8 of LocoNet Personal Edition v1.0.
              */
         case LnConstants.OPC_GPOFF: {
             return "Global Power OFF.\n";
         } // case LnConstants.OPC_GPOFF
-            
+
             /*
              * OPC_GPBUSY 0x81 ;MASTER busy code, NULL
-             * 
+             *
              * Page 8 of LocoNet Personal Edition v1.0.
              */
         case LnConstants.OPC_GPBUSY: {
@@ -236,7 +240,7 @@ public class Llnmon {
              *                         ; and sends DATA/STATUS return <E7>......
              *                         ; IF no FREE slot, Fail LACK,0 is returned
              *                         ; [<B4>,<3F>,<0>,<CHK>]
-             *                         
+             *
              * Page 8 of LocoNet Personal Edition v1.0.
              */
         case LnConstants.OPC_LOCO_ADR: {
@@ -291,7 +295,7 @@ public class Llnmon {
                    + ((sw2 & LnConstants.OPC_SW_ACK_OUTPUT) != 0 ? " (Output On)"
                            : " (Output Off)") + " with acknowledgement.\n";
        } // case LnConstants.OPC_SW_ACK
-            
+
            /*
             * OPC_SW_STATE     0xBC   ; REQ state of SWITCH
             *                         ; Follow on message: LACK
@@ -345,7 +349,7 @@ public class Llnmon {
                 return "Request data/status for slot " + slot + ".\n";
             }
         } // case LnConstants.OPC_RQ_SL_DATA
-           
+
             /*
              * OPC_MOVE_SLOTS   0xBA   ; MOVE slot SRC to DEST
              *                         ; Follow on message: <E7>SLOT READ
@@ -362,7 +366,7 @@ public class Llnmon {
              *                         ;    RETURN Fail LACK code if illegal move
              *                         ;       <B4>,<3A>,<0>,<chk>, illegal to move to/from
              *                         ;       slots 120/127
-             *                         
+             *
              * Page 8 of LocoNet Personal Edition v1.0.
              */
         case LnConstants.OPC_MOVE_SLOTS: {
@@ -433,11 +437,11 @@ public class Llnmon {
                    + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
                    + "F3="
                    + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
-                   + "F4=" 
+                   + "F4="
                    + ((dirf & LnConstants.DIRF_F4) != 0 ? "On" : "Off")
                    + ".\n";
         } // case LnConstants.OPC_CONSIST_FUNC
-        
+
             /*
              * OPC_SLOT_STAT1   0xB5   ; WRITE slot stat1
              *                         ; <0xB5>,<SLOT>,<STAT1>,<CHK> WRITE stat1
@@ -447,12 +451,12 @@ public class Llnmon {
         case LnConstants.OPC_SLOT_STAT1: {
             int slot = l.getElement(1);
             int stat = l.getElement(2);
-            return "Write slot " + slot + " with status value " + stat 
-                   + " (0x"+ Integer.toHexString(stat) + ") - Loco is " 
-                   + LnConstants.CONSIST_STAT(stat) + ", " + LnConstants.LOCO_STAT(stat) 
+            return "Write slot " + slot + " with status value " + stat
+                   + " (0x"+ Integer.toHexString(stat) + ") - Loco is "
+                   + LnConstants.CONSIST_STAT(stat) + ", " + LnConstants.LOCO_STAT(stat)
                    + "\n\tand operating in " + LnConstants.DEC_MODE(stat) + " speed step mode.\n";
         } // case LnConstants.OPC_SLOT_STAT1
-        
+
             /*
              * OPC_LONG_ACK     0xB4   ; Long acknowledge
              *                         ; <0xB4>,<LOPC>,<ACK1>,<CHK> Long acknowledge
@@ -470,11 +474,11 @@ public class Llnmon {
             case (LnConstants.OPC_LOCO_ADR):
                 // response for OPC_LOCO_ADR
                 return "LONG_ACK: NO FREE SLOTS!\n";
-            
+
             case (LnConstants.OPC_LINK_SLOTS):
                 // response for OPC_LINK_SLOTS
                 return "LONG_ACK: Invalid consist, unable to link.\n";
-            
+
             case (LnConstants.OPC_SW_ACK):
                 // response for OPC_SW_ACK
                 if (ack1 == 0) {
@@ -528,7 +532,7 @@ public class Llnmon {
                            + Integer.toHexString(ack1) + ".\n";
                 }
 
-            case LnConstants.OPC_IMM_PACKET: 
+            case LnConstants.OPC_IMM_PACKET:
                 // response for OPC_IMM_PACKET
                 if (ack1 == 0) {
                     return "LONG_ACK: the Send IMM Packet command was rejected, the buffer is full/busy.\n";
@@ -545,18 +549,23 @@ public class Llnmon {
                 return "LONG_ACK: the Lim Master responded to the Send IMM Packet command with "
                        + ack1 + " (0x" + Integer.toHexString(ack1) + ").\n";
 
-            case LnConstants.RE_LACK_SPEC_CASE1 : // 0x50:
-            case LnConstants.RE_LACK_SPEC_CASE2 : //0x00:
+            case (LnConstants.RE_LACK_SPEC_CASE1 | 0x80) : // 0x50 plus opcode bit so can match the switch'd value:
+            case (LnConstants.RE_LACK_SPEC_CASE2 | 0x80): //0x00 plus opcode bit so can match the switch'd value:
                 // OpSwitch read response reverse-engineered by B. Milhaupt and
                 // used with permission
-                int responseValue = l.getElement(2) & 0x20;
-                String state = ( responseValue == 0x20) ? "1 (Closed).\n" : "0 (Thrown).\n";
-                return "LONG_ACK: OpSwitch report - opSwitch is " +
-                        state;
+                int responseValue = l.getElement(2);
+                if (responseValue == 0x7f) {
+                    return "LONG_ACK: OpSwitch operation accepted.\n";
+                }
+                else {
+                    String state = ( (responseValue & 0x20) == 0x20) ? "1 (Closed).\n" : "0 (Thrown).\n";
+                    return "LONG_ACK: OpSwitch report - opSwitch is " +
+                            state;
+                }
 
             default:
                 // forceHex = TRUE;
-                return "LONG_ACK: Response " + ack1 
+                return "LONG_ACK: Response " + ack1
                        + " (0x" + Integer.toHexString(ack1) + ") to opcode 0x"
                        + Integer.toHexString(opcode) + " not decoded.\n";
             } // switch (opcode | 0x80)
@@ -620,12 +629,12 @@ public class Llnmon {
 
             // There is no way to tell what kind of a board sent the message.
             // To be user friendly, we just print all the known combos.
-            return "Sensor " 
+            return "Sensor "
                    + sensorSystemName + " " + sensorUserName
                    + " is "
                    + ((in2 & LnConstants.OPC_INPUT_REP_HI) != 0 ? "Hi" : "Lo")
                    + ".  (" + bdl + "; DS54/64"
-                   + (sensor < 289 ? "/SE8c #" : " #") 
+                   + (sensor < 289 ? "/SE8c #" : " #")
                    + boardid + ", "
                    + ds54sensors[boardindex] + "/" + ds64sensors[boardindex]
                    + ((sensor < 289) ? "/" + se8csensors[boardindex] : "")
@@ -691,8 +700,8 @@ public class Llnmon {
                        + (((sn2 & LnConstants.OPC_SW_REP_HI) != 0) ? "Closed (input off)"
                                : "Thrown (input on)") + ".\n";
             } else { // OPC_SW_REP_INPUTS is 0
-                return "Turnout "  
-                       + turnoutSystemName + " " + turnoutUserName + " " 
+                return "Turnout "
+                       + turnoutSystemName + " " + turnoutUserName + " "
                        +  " output state: Closed output is "
                        + ((sn2 & LnConstants.OPC_SW_REP_CLOSED) != 0 ? "ON (sink)" : "OFF (open)")
                        + ", Thrown output is "
@@ -744,7 +753,7 @@ public class Llnmon {
              * units have, and to query units 1, 9, 17... then 2, 10, 18... and
              * so on such that if they are all in a row they don't get hit at
              * the same time.
-             * 
+             *
              * This is also part of the poor code structure, as it is only used
              * by 2 of the three cases.
              */
@@ -773,8 +782,8 @@ public class Llnmon {
             }
             addrListB.append("\n");
 
-            String addrList = new String(addrListB); 
-            
+            String addrList = new String(addrListB);
+
             if (((sw2 & 0xCF) == 0x0F) && ((sw1 & 0xFC) == 0x78)) {
                 // broadcast address LPU V1.0 page 12
                 retVal = "Interrogate Stationary Decoders with bits a/c/b of " + a + "/" + c + "/"
@@ -841,17 +850,17 @@ public class Llnmon {
             int dirf = l.getElement(2);
 
             return "Set loco in slot " + slot + " direction to "
-                   + ((dirf & LnConstants.DIRF_DIR) != 0 ? "REV" : "FWD") 
+                   + ((dirf & LnConstants.DIRF_DIR) != 0 ? "REV" : "FWD")
                    + ", F0="
-                   + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,") 
+                   + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
                    + " F1="
-                   + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,") 
+                   + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,")
                    + " F2="
-                   + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,") 
+                   + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
                    + " F3="
-                   + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,") 
+                   + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
                    + " F4="
-                   + ((dirf & LnConstants.DIRF_F4) != 0 ? "On" : "Off") 
+                   + ((dirf & LnConstants.DIRF_F4) != 0 ? "On" : "Off")
                    + ".\n";
         } // case LnConstants.OPC_LOCO_DIRF
 
@@ -912,7 +921,7 @@ public class Llnmon {
             /*
              * OPC_PANEL_RESPONSE 0xD7 messages used by throttles to discover
              * panels
-             * 
+             *
              * This op code is not documented by Digitrax. Reverse engineering
              * performed by Leo Bicknell.  The opcode "name" OPC_PANEL_RESPONSE
              * is not necessarily the name used by Digitrax.
@@ -925,14 +934,14 @@ public class Llnmon {
                 // Bit 3 (0x08 in hex) is set by every UR-92 we've ever captured.
             	// The hypothesis is this indicates duplex enabled, but this has
             	// not been confirmed with Digitrax.
-                return "UR-92 Responding with LocoNet ID " + (l.getElement(3) & 0x07)
+                return "UR92 Responding with LocoNet ID " + (l.getElement(3) & 0x07)
                        + ((l.getElement(3) & 0x08) == 0x08 ? ", duplex enabled.\n" : ".\n");
             }
             case 0x17: {
-                return "UR-90 Responding with LocoNet ID " + l.getElement(3) + ".\n";
+                return "UR90 Responding with LocoNet ID " + l.getElement(3) + ".\n";
             }
             case 0x1F: {
-                return "UR-91 Responding with LocoNet ID " + l.getElement(3) + ".\n";
+                return "UR91 Responding with LocoNet ID " + l.getElement(3) + ".\n";
             }
             default: {
                 return "Unknown Tetherless Receiver of type 0x" + Integer.toHexString(l.getElement(1))
@@ -945,10 +954,10 @@ public class Llnmon {
             /*
              * OPC_MULTI_SENSE 0xD0 messages about power management and
              * transponding
-             * 
+             *
              * If byte 1 high nibble is 0x20 or 0x00 this is a transponding
              * message
-             * 
+             *
              * This op code is not documented by Digitrax. Reverse engineering
              * performed by Al Silverstein, and corrections added by B. Milhaupt.
              */
@@ -966,32 +975,59 @@ public class Llnmon {
                     // autoreverse
                     int cm1 = l.getElement(3);
                     int cm2 = l.getElement(4);
-                    return "PM4 " + (l.getElement(2) + 1) + " ch1 "
-                           + ((cm1 & 1) != 0 ? "AR " : "SC ") 
-                           + ((cm2 & 1) != 0 ? "ACT;" : "OK;")
-                           + " ch2 " 
-                           + ((cm1 & 2) != 0 ? "AR " : "SC ")
-                           + ((cm2 & 2) != 0 ? "ACT;" : "OK;") 
-                           + " ch3 "
-                           + ((cm1 & 4) != 0 ? "AR " : "SC ") 
-                           + ((cm2 & 4) != 0 ? "ACT;" : "OK;")
-                           + " ch4 " 
-                           + ((cm1 & 8) != 0 ? "AR " : "SC ")
-                           + ((cm2 & 8) != 0 ? "ACT;" : "OK;") 
-                           + "\n";
+                    StringBuilder s = new StringBuilder("PM4x (Board ID ");
+                    s.append((l.getElement(2) + 1)+(((l.getElement(1)&0x1)==1)?128:0));
+                    s.append(") Power Status Report\n\tSub-District 1 - ");
+                    if ((cm1 & 1) != 0) {
+                        s.append ("AutoReversing mode - ");
+                        s.append(((cm2&1)!=0)?"Reversed":"Normal");
+                    } else {
+                        s.append ("CircuitBreaker mode - ");
+                        s.append(((cm2&1)!=0)?"Shorted":"Unshorted");
+                    }
+
+                    s.append("\n\tSub-District 2 - ");
+                    if ((cm1 & 2) != 0) {
+                        s.append ("AutoReversing mode - ");
+                        s.append(((cm2&2)!=0)?"Reversed":"Normal");
+                    } else {
+                        s.append ("CircuitBreaker mode - ");
+                        s.append(((cm2&2)!=0)?"Shorted":"Unshorted");
+                    }
+
+                    s.append("\n\tSub-District 3 - ");
+                    if ((cm1 & 4) != 0) {
+                        s.append ("AutoReversing mode - ");
+                        s.append(((cm2&4)!=0)?"Reversed":"Normal");
+                    } else {
+                        s.append ("CircuitBreaker mode - ");
+                        s.append(((cm2&4)!=0)?"Shorted":"Unshorted");
+                    }
+
+                    s.append("\n\tSub-District 4 - ");
+                    if ((cm1 & 8) != 0) {
+                        s.append ("AutoReversing mode - ");
+                        s.append(((cm2&8)!=0)?"Reversed":"Normal");
+                    } else {
+                        s.append ("CircuitBreaker mode - ");
+                        s.append(((cm2&8)!=0)?"Shorted":"Unshorted");
+                    }
+                    s.append(".\n");
+
+                    return s.toString();
                 } else if (pCMD == 0x70) {
                     // programming
                     int deviceType = l.getElement(3) & 0x7;
                     String device;
-                    if (deviceType == 0)
+                    if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X)
                         device = "PM4(x) ";
-                    else if (deviceType == 1)
+                    else if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X)
                         device = "BDL16(x) ";
-                    else if (deviceType == 2)
+                    else if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8)
                         device = "SE8 ";
                     // DS64 device type response reverse-engineered by B. Milhaupt and
                     // used with permission
-                    else if (deviceType == 3)
+                    else if (deviceType == LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64)
                         device = "DS64 ";
                     else
                         device = "(unknown type) ";
@@ -1007,7 +1043,7 @@ public class Llnmon {
                            + bdaddr
                            + (((l.getElement(1) & 0x10) != 0) ? " write config bit "
                                    : " read config bit ") + wrd + "," + bit + " (opsw " + opsw
-                           + ") val=" + val + (val == 1 ? " (closed) " : " (thrown) ");
+                           + ") val=" + val + (val == 1 ? " (closed)" : " (thrown)");
                     if ((deviceType == 0) && (bdaddr == 0) && (bit == 0 ) && ( val == 0) && (wrd == 0) && (opsw ==1))  {
                         returnVal += " - Also acts as device query for some device types";
                     }
@@ -1049,7 +1085,7 @@ public class Llnmon {
                     // in response to a query of attached devices
                     // Note - this scheme is supported by only some Digitrax devices.
                     //
-                    // A VersionNumber of 0 implies the hardware does not report 
+                    // A VersionNumber of 0 implies the hardware does not report
                     // a valid version number.
                     //
                     // Device type report reverse-engineered by B. Milhaupt and
@@ -1058,7 +1094,7 @@ public class Llnmon {
                     if ((l.getElement(3) & 0x7) == 0)
                         device = "PM4x ";
                     else if ((l.getElement(3) & 0x7) == 1)
-                        device = "BDl16x ";
+                        device = "BDL16x ";
                     else if ((l.getElement(3) & 0x7) == 2)
                         device = "SE8c ";
                     else if ((l.getElement(3) & 0x7) == 3)
@@ -1072,17 +1108,18 @@ public class Llnmon {
                     int verNum = l.getElement(4);
                     String versionNumber;
                     if (verNum > 0)
-                        versionNumber= Integer.toBinaryString(l.getElement(4));
+                        versionNumber= Integer.toBinaryString(verNum);
                     else
                         versionNumber = "(unknown)";
 
                     return "Device type report - " +
                             device
+                           + "Board ID "
                            + bdaddr
-                           + "Version " + versionNumber +
+                           + " Version " + versionNumber +
                            " is present.\n";
 
-                } else { 
+                } else {
                     // beats me
                     forceHex = true;
                     return "OPC_MULTI_SENSE power message PM4 " + (l.getElement(2) + 1)
@@ -1124,7 +1161,7 @@ public class Llnmon {
                     reporterUserName = "()";
                 }
                 return "Transponder address "
-                        + ((l.getElement(3) == 0x7d) ? 
+                        + ((l.getElement(3) == 0x7d) ?
                             (l.getElement(4) +" (short)") :
                             (l.getElement(3) * 128 + l.getElement(4) + " (long)"))
                         + ((type == LnConstants.OPC_MULTI_SENSE_PRESENT) ?" present at " : " absent at ")
@@ -1640,8 +1677,14 @@ public class Llnmon {
                                 operation += "Failed, Service Mode programming track empty: ";
                             }
                             if ((pstat & 0xF0) != 0) {
+                                if ((pstat & 0xF0) == 0x10) {
+                                    // response from transponding decoder
+                                    operation += "Was successful via RX4/BDL16x:";
+
+                                } else {
                                 operation += "Unable to decode response = 0x"
                                              + Integer.toHexString(pstat) + ": ";
+                                }
                             }
                         } else {
                             operation += "Was Successful, set ";
@@ -1668,71 +1711,72 @@ public class Llnmon {
                  **************************************************/
                 logString = mode
                             + " Comand Station OpSw that are Closed (non-default):\n"
-                            + ((l.getElement(3) & 0x80) > 0 ? "\tOpSw1=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x40) > 0 ? "\tOpSw2=c, DCS100 booster only.\n" : "")
-                            + ((l.getElement(3) & 0x20) > 0 ? "\tOpSw3=c, Booster Autoreversing.\n" : "")
-                            + ((l.getElement(3) & 0x10) > 0 ? "\tOpSw4=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x08) > 0 ? "\tOpSw5=c, Master Mode.\n" : "")
-                            + ((l.getElement(3) & 0x04) > 0 ? "\tOpSw6=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x02) > 0 ? "\tOpSw7=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x01) > 0 ? "\tOpSw8=c, reserved.\n" : "")
-                            + ((l.getElement(4) & 0x80) > 0 ? "\tOpSw9=c, Allow Motorola trinary echo 1-256.\n" : "")
-                            + ((l.getElement(4) & 0x40) > 0 ? "\tOpSw10=c, Expand trinary switch echo.\n" : "")
-                            + ((l.getElement(4) & 0x20) > 0 ? "\tOpSw11=c, Make certian trinary switches long duration.\n" : "")
-                            + ((l.getElement(4) & 0x10) > 0 ? "\tOpSw12=c, Trinary addresses 1-80 allowed.\n" : "")
-                            + ((l.getElement(4) & 0x08) > 0 ? "\tOpSw13=c, Raise loco address purge time to 600 seconds.\n" : "")
-                            + ((l.getElement(4) & 0x04) > 0 ? "\tOpSw14=c, Disable loco address purging.\n" : "")
-                            + ((l.getElement(4) & 0x02) > 0 ? "\tOpSw15=c, Purge will force loco to zero speed.\n" : "")
-                            + ((l.getElement(4) & 0x01) > 0 ? "\tOpSw16=c, reserved.\n" : "")
-                            + ((l.getElement(5) & 0x80) > 0 ? "\tOpSw17=c, Automatic advanced consists are disabled.\n" : "")
-                            + ((l.getElement(5) & 0x40) > 0 ? "\tOpSw18=c, Extend booster short shutdown to 1/2 second.\n" : "")
-                            + ((l.getElement(5) & 0x20) > 0 ? "\tOpSw19=c, reserved.\n" : "")
-                            + ((l.getElement(5) & 0x10) > 0 ? "\tOpSw20=c, Disable address 00 analog operation.\n" : "")
-                            + ((l.getElement(5) & 0x08) > 0 ? "\tOpSw21=c, Global default for new loco is FX.\n" : "")
-                            + ((l.getElement(5) & 0x04) > 0 ? "\tOpSw22=c, Global default for new loco is 28 step.\n" : "")
-                            + ((l.getElement(5) & 0x02) > 0 ? "\tOpSw23=c, Global default for new loco is 14 step.\n" : "")
-                            + ((l.getElement(5) & 0x01) > 0 ? "\tOpSw24=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x80) > 0 ? "\tOpSw25=c, Disable aliasing.\n" : "")
-                            + ((l.getElement(6) & 0x40) > 0 ? "\tOpSw26=c, Enable routes.\n" : "")
-                            + ((l.getElement(6) & 0x20) > 0 ? "\tOpSw27=c, Disable normal switch commands (Bushby bit).\n" : "")
-                            + ((l.getElement(6) & 0x10) > 0 ? "\tOpSw28=c, Disable DS54/64/SE8C interrogate at power on.\n" : "")
-                            + ((l.getElement(6) & 0x08) > 0 ? "\tOpSw29=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x04) > 0 ? "\tOpSw30=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x02) > 0 ? "\tOpSw31=c, Meter route/switch output when not in trinary.\n" : "")
-                            + ((l.getElement(6) & 0x01) > 0 ? "\tOpSw32=c, reserved.\n" : "")
-                            // 7 skipped intentionally
-                            + ((l.getElement(8) & 0x80) > 0 ? "\tOpSw33=c, Restore track power to previous state at power on.\n" : "")
-                            + ((l.getElement(8) & 0x40) > 0 ? "\tOpSw34=c, Allow track to power up to run state.\n" : "")
-                            + ((l.getElement(8) & 0x20) > 0 ? "\tOpSw35=c, reserved.\n" : "")
-                            + ((l.getElement(8) & 0x10) > 0 ? "\tOpSw36=c, Clear all moble decoder information and consists.\n" : "")
-                            + ((l.getElement(8) & 0x08) > 0 ? "\tOpSw37=c, Clear all routes.\n" : "")
-                            + ((l.getElement(8) & 0x04) > 0 ? "\tOpSw38=c, Clear loco roster.\n" : "")
-                            + ((l.getElement(8) & 0x02) > 0 ? "\tOpSw39=c, Clear internal memory.\n" : "")
-                            + ((l.getElement(8) & 0x01) > 0 ? "\tOpSw40=c, reserved.\n" : "")
-                            + ((l.getElement(9) & 0x80) > 0 ? "\tOpSw41=c, Diagnostic click when LocoNet command is received.\n" : "")
-                            + ((l.getElement(9) & 0x40) > 0 ? "\tOpSw42=c, Disable 3 beeps when loco address is purged.\n" : "")
-                            + ((l.getElement(9) & 0x20) > 0 ? "\tOpSw43=c, Disable LocoNet update of track status.\n" : "")
-                            + ((l.getElement(9) & 0x10) > 0 ? "\tOpSw44=c, Expand slots to 120.\n" : "")
-                            + ((l.getElement(9) & 0x08) > 0 ? "\tOpSw45=c, Disable replay for switch state request.\n" : "")
-                            + ((l.getElement(9) & 0x04) > 0 ? "\tOpSw46=c, reserved.\n" : "")
-                            + ((l.getElement(9) & 0x02) > 0 ? "\tOpSw47=c, Programming track is break generator.\n" : "")
-                            + ((l.getElement(9) & 0x01) > 0 ? "\tOpSw48=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x80) > 0 ? "\tOpSw49=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x40) > 0 ? "\tOpSw50=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x20) > 0 ? "\tOpSw51=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x10) > 0 ? "\tOpSw52=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x08) > 0 ? "\tOpSw53=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x04) > 0 ? "\tOpSw54=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x02) > 0 ? "\tOpSw55=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x01) > 0 ? "\tOpSw56=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x80) > 0 ? "\tOpSw57=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x40) > 0 ? "\tOpSw58=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x20) > 0 ? "\tOpSw59=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x10) > 0 ? "\tOpSw60=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x08) > 0 ? "\tOpSw61=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x04) > 0 ? "\tOpSw62=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x02) > 0 ? "\tOpSw63=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x01) > 0 ? "\tOpSw64=c, reserved.\n" : "");
+                            + ((l.getElement(3) & 0x01) > 0 ? "\tOpSw1=c, reserved.\n" : "")
+                            + ((l.getElement(3) & 0x02) > 0 ? "\tOpSw2=c, DCS100 booster only.\n" : "")
+                            + ((l.getElement(3) & 0x04) > 0 ? "\tOpSw3=c, Booster Autoreversing.\n" : "")
+                            + ((l.getElement(3) & 0x08) > 0 ? "\tOpSw4=c, reserved.\n" : "")
+                            + ((l.getElement(3) & 0x10) > 0 ? "\tOpSw5=c, Master Mode.\n" : "")
+                            + ((l.getElement(3) & 0x20) > 0 ? "\tOpSw6=c, reserved.\n" : "")
+                            + ((l.getElement(3) & 0x40) > 0 ? "\tOpSw7=c, reserved.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(3) & 0x80) > 0 ? "\tOpSw8=c, reserved.\n" : "")
+                            + ((l.getElement(4) & 0x01) > 0 ? "\tOpSw9=c, Allow Motorola trinary echo 1-256.\n" : "")
+                            + ((l.getElement(4) & 0x02) > 0 ? "\tOpSw10=c, Expand trinary switch echo.\n" : "")
+                            + ((l.getElement(4) & 0x04) > 0 ? "\tOpSw11=c, Make certian trinary switches long duration.\n" : "")
+                            + ((l.getElement(4) & 0x08) > 0 ? "\tOpSw12=c, Trinary addresses 1-80 allowed.\n" : "")
+                            + ((l.getElement(4) & 0x10) > 0 ? "\tOpSw13=c, Raise loco address purge time to 600 seconds.\n" : "")
+                            + ((l.getElement(4) & 0x20) > 0 ? "\tOpSw14=c, Disable loco address purging.\n" : "")
+                            + ((l.getElement(4) & 0x40) > 0 ? "\tOpSw15=c, Purge will force loco to zero speed.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(4) & 0x80) > 0 ? "\tOpSw16=c, reserved.\n" : "")
+                            + ((l.getElement(5) & 0x01) > 0 ? "\tOpSw17=c, Automatic advanced consists are disabled.\n" : "")
+                            + ((l.getElement(5) & 0x02) > 0 ? "\tOpSw18=c, Extend booster short shutdown to 1/2 second.\n" : "")
+                            + ((l.getElement(5) & 0x04) > 0 ? "\tOpSw19=c, reserved.\n" : "")
+                            + ((l.getElement(5) & 0x08) > 0 ? "\tOpSw20=c, Disable address 00 analog operation.\n" : "")
+                            + ((l.getElement(5) & 0x10) > 0 ? "\tOpSw21=c, Global default for new loco is FX.\n" : "")
+                            + ((l.getElement(5) & 0x20) > 0 ? "\tOpSw22=c, Global default for new loco is 28 step.\n" : "")
+                            + ((l.getElement(5) & 0x40) > 0 ? "\tOpSw23=c, Global default for new loco is 14 step.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(5) & 0x80) > 0 ? "\tOpSw24=c, reserved.\n" : "")
+                            + ((l.getElement(6) & 0x01) > 0 ? "\tOpSw25=c, Disable aliasing.\n" : "")
+                            + ((l.getElement(6) & 0x02) > 0 ? "\tOpSw26=c, Enable routes.\n" : "")
+                            + ((l.getElement(6) & 0x04) > 0 ? "\tOpSw27=c, Disable normal switch commands (Bushby bit).\n" : "")
+                            + ((l.getElement(6) & 0x08) > 0 ? "\tOpSw28=c, Disable DS54/64/SE8C interrogate at power on.\n" : "")
+                            + ((l.getElement(6) & 0x10) > 0 ? "\tOpSw29=c, reserved.\n" : "")
+                            + ((l.getElement(6) & 0x20) > 0 ? "\tOpSw30=c, reserved.\n" : "")
+                            + ((l.getElement(6) & 0x40) > 0 ? "\tOpSw31=c, Meter route/switch output when not in trinary.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(6) & 0x80) > 0 ? "\tOpSw32=c, reserved.\n" : "")
+// element 7 is skipped intentionally - it contains the "Track Status" byte
+                            + ((l.getElement(8) & 0x01) > 0 ? "\tOpSw33=c, Restore track power to previous state at power on.\n" : "")
+                            + ((l.getElement(8) & 0x02) > 0 ? "\tOpSw34=c, Allow track to power up to run state.\n" : "")
+                            + ((l.getElement(8) & 0x04) > 0 ? "\tOpSw35=c, reserved.\n" : "")
+                            + ((l.getElement(8) & 0x08) > 0 ? "\tOpSw36=c, Clear all moble decoder information and consists.\n" : "")
+                            + ((l.getElement(8) & 0x10) > 0 ? "\tOpSw37=c, Clear all routes.\n" : "")
+                            + ((l.getElement(8) & 0x20) > 0 ? "\tOpSw38=c, Clear loco roster.\n" : "")
+                            + ((l.getElement(8) & 0x40) > 0 ? "\tOpSw39=c, Clear internal memory.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(8) & 0x80) > 0 ? "\tOpSw40=c, reserved.\n" : "")
+                            + ((l.getElement(9) & 0x01) > 0 ? "\tOpSw41=c, Diagnostic click when LocoNet command is received.\n" : "")
+                            + ((l.getElement(9) & 0x02) > 0 ? "\tOpSw42=c, Disable 3 beeps when loco address is purged.\n" : "")
+                            + ((l.getElement(9) & 0x04) > 0 ? "\tOpSw43=c, Disable LocoNet update of track status.\n" : "")
+                            + ((l.getElement(9) & 0x08) > 0 ? "\tOpSw44=c, Expand slots to 120.\n" : "")
+                            + ((l.getElement(9) & 0x10) > 0 ? "\tOpSw45=c, Disable replay for switch state request.\n" : "")
+                            + ((l.getElement(9) & 0x20) > 0 ? "\tOpSw46=c, reserved.\n" : "")
+                            + ((l.getElement(9) & 0x40) > 0 ? "\tOpSw47=c, Programming track is break generator.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(9) & 0x80) > 0 ? "\tOpSw48=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x01) > 0 ? "\tOpSw49=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x02) > 0 ? "\tOpSw50=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x04) > 0 ? "\tOpSw51=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x08) > 0 ? "\tOpSw52=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x10) > 0 ? "\tOpSw53=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x20) > 0 ? "\tOpSw54=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x40) > 0 ? "\tOpSw55=c, reserved.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(10) & 0x80) > 0 ? "\tOpSw56=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x01) > 0 ? "\tOpSw57=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x02) > 0 ? "\tOpSw58=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x04) > 0 ? "\tOpSw59=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x08) > 0 ? "\tOpSw60=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x10) > 0 ? "\tOpSw61=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x20) > 0 ? "\tOpSw62=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x40) > 0 ? "\tOpSw63=c, reserved.\n" : "")
+// this bit implies an OpCode, so ignore it!                            + ((l.getElement(11) & 0x80) > 0 ? "\tOpSw64=c, reserved.\n" : "")
+                            ;
             } else {
                 /**************************************************
                  * normal slot read/write message - see info above *
@@ -1750,13 +1794,13 @@ public class Llnmon {
                                 + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
                                 + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Foward")
                                 + " at speed " + spd + ",\n" + "\tF0="
-                                + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
                                 + " F1="
-                                + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,")
                                 + " F2="
-                                + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
                                 + " F3="
-                                + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
                                 + " F4="
                                 + ((dirf & LnConstants.DIRF_F4) != 0 ? "On, " : "Off,")
                                 + " Sound1/F5="
@@ -1768,11 +1812,11 @@ public class Llnmon {
                                 + " Sound4/F8=" + ((snd & LnConstants.SND_F8) != 0 ? "On" : "Off")
                                 + "\n\tMaster: "
                                 + ((trk & LnConstants.GTRK_MLOK1) != 0 ? "LocoNet 1.1" : "DT-200")
-                                + "; Track: " 
+                                + "; Track: "
                                 + ((trk & LnConstants.GTRK_IDLE) != 0 ? "On" : "Off")
                                 + "; Programming Track: "
                                 + ((trk & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
-                                + "; SS2=0x" + Integer.toHexString(ss2) 
+                                + "; SS2=0x" + Integer.toHexString(ss2)
                                 + ", ThrottleID=" + idString(id1, id2) + "\n";
                 } else {
                     logString = mode + " slot " + slot + " information:\n\tLoco " + locoAdrStr
@@ -1781,13 +1825,13 @@ public class Llnmon {
                                 + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
                                 + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Foward")
                                 + " at speed " + spd + ",\n" + "\tF0="
-                                + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
                                 + " F1="
-                                + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F1) != 0 ? "On, " : "Off,")
                                 + " F2="
-                                + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F2) != 0 ? "On, " : "Off,")
                                 + " F3="
-                                + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,") 
+                                + ((dirf & LnConstants.DIRF_F3) != 0 ? "On, " : "Off,")
                                 + " F4="
                                 + ((dirf & LnConstants.DIRF_F4) != 0 ? "On, " : "Off,")
                                 + " Sound1/F5="
@@ -1797,7 +1841,7 @@ public class Llnmon {
                                 + " Sound3/F7="
                                 + ((snd & LnConstants.SND_F7) != 0 ? "On, " : "Off,")
                                 + " Sound4/F8=" + ((snd & LnConstants.SND_F8) != 0 ? "On" : "Off")
-                                + "\n\tSS2=0x" + Integer.toHexString(ss2) 
+                                + "\n\tSS2=0x" + Integer.toHexString(ss2)
                                 + ", ThrottleID =" + idString(id1, id2) + "\n";
                 }
                 // end normal slot read/write case
@@ -1824,19 +1868,19 @@ public class Llnmon {
                 } else if (l.getElement(3) == 0) {
                     message = message + " (ID)";
                 }
-                return message + " BLKL=" + l.getElement(4) 
+                return message + " BLKL=" + l.getElement(4)
                                + " BLKH=" + l.getElement(5)
-                               + " LOGIC=" + l.getElement(6) 
+                               + " LOGIC=" + l.getElement(6)
                                + "\n      "
                                + " ARG1L=0x" + Integer.toHexString(l.getElement(7))
                                + " ARG1H=0x" + Integer.toHexString(l.getElement(8))
                                + " ARG2L=0x" + Integer.toHexString(l.getElement(9))
-                               + " ARG2H=0x" + Integer.toHexString(l.getElement(10)) 
+                               + " ARG2H=0x" + Integer.toHexString(l.getElement(10))
                                + "\n      "
                                + " ARG3L=0x" + Integer.toHexString(l.getElement(11))
                                + " ARG3H=0x" + Integer.toHexString(l.getElement(12))
                                + " ARG4L=0x" + Integer.toHexString(l.getElement(13))
-                               + " ARG4H=0x" + Integer.toHexString(l.getElement(14)) 
+                               + " ARG4H=0x" + Integer.toHexString(l.getElement(14))
                                + "\n";
             } else if (l.getElement(1) == 0x15) {
                 // write extended master message
@@ -1857,14 +1901,14 @@ public class Llnmon {
 
             /*
              * OPC_PEER_XFER   0xE5    ; move 8 bytes PEER to PEER, SRC->DST   NO resp
-             *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,<D2>,<D3>,<D4>, 
+             *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,<D2>,<D3>,<D4>,
              *                         ; <PXCT2>,<D5>,<D6>,<D7>,<D8>,<CHK>
              *                         ; SRC/DST are 7 bit args. DSTL/H=0 is BROADCAST msg
              *                         ;     SRC=0 is MASTER
              *                         ;     SRC=0x70-0x7E are reserved
              *
              * Page 10 of LocoNet Personal Edition v1.0.
-             * 
+             *
              * Duplex group management reverse engineered by Leo Bicknell, with input from
              * B. Milhaupt.
              */
@@ -1942,7 +1986,18 @@ public class Llnmon {
                         int sub = pxct2 & 0x70;
                         switch (sub) {
                         case 0x00: // setup
-                            return "Download message, setup.\n";
+                            StringBuilder s = new StringBuilder("Download setup message: mfg ");
+                            s.append(l.getElement(6));
+                            s.append(", hw ver ");
+                            s.append(l.getElement(8));
+                            s.append(", sw ver ");
+                            s.append(l.getElement(9));
+                            s.append(", device 0x");
+                            s.append((Integer.toHexString(l.getElement(7))).toUpperCase());
+                            s.append(", options ");
+                            s.append(l.getElement(11));
+                            s.append("\n");
+                            return s.toString();
                         case 0x10: // set address
                             return "Download message, set address "
                                    + StringUtil.twoHexFromInt(d[0])
@@ -1974,7 +2029,7 @@ public class Llnmon {
                             return "LocoBuffer => LocoIO@"
                                    + ((dst_l == 0) ? "broadcast" : Integer.toHexString(dst_l) + dst_subaddrx)
                                    + " "
-                                   + (d[0] == 2 ? "Read SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
+                                   + (d[0] == 2 ? "Query SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
                                    + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
                         }
                     }
@@ -1988,9 +2043,13 @@ public class Llnmon {
                         String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
                                              : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
                                            : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
+                        String operation = (src == 0x50) ? 
+                                ((d[0] == 2) ? "Query" : "Write") :
+                                ((d[0] == 2) ? "Report" : "Write")
+                                ;
 
                         return src_dev + "=> " + dst_dev + " "
-                               + ((dst_h == 0x01) ? ((d[0] == 2 ? "Read" : "Write") + " SV" + d[1]) : "")
+                               + ((dst_h == 0x01) ? (operation + " SV" + d[1]) : "")
                                + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
                                  : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
                                            : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
@@ -2007,6 +2066,44 @@ public class Llnmon {
                         // We don't know what to do with them yet.
                         return "SV Programming Protocol v2: " + generic + "\n\t"
                                + data;
+                    }
+                    if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
+                        && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
+                        // throttle semaphore symbol message
+                        return "Throttle Semaphore Symbol Control: Loco " +
+                                ((d[0]*128)+d[1]) +
+                                " Semaphore body " +
+                                (((d[2]&0x10)==0x10) ? "lit, " : "unlit, ") +
+                                "Vertical arm " +
+                                (((d[2]&0x08)==0x08) ? "lit, " : "unlit, ") +
+                                "Diagonal arm " +
+                                (((d[2]&0x04)==0x04) ? "lit, " : "unlit, ") +
+                                "Horizontal arm " +
+                                (((d[2]&0x02)==0x02) ? "lit, " : "unlit, ") +
+                                "Any lit arms are " +
+                                (((d[2]&0x01)==0x01) ? "blinking.\n" : "unblinking.\n");
+                    }
+                    if ((src == 0x7F) && ((pxct1 & 0x70) == 0x00) ) {
+                        // throttle text message
+                        StringBuilder s = new StringBuilder("Send Throttle Text Message to ");
+                        if ((dst_l == 0x00) && (dst_h == 0x00)) {
+                            s.append("all throttles");
+                        } else {
+                            s.append("Throttle ");
+                            s.append(StringUtil.twoHexFromInt(dst_h));
+                            s.append(StringUtil.twoHexFromInt(dst_l));
+                        }
+                        s.append(" with message '");
+                        s.append((char) d[0]);
+                        s.append((char) d[1]);
+                        s.append((char) d[2]);
+                        s.append((char) d[3]);
+                        s.append((char) d[4]);
+                        s.append((char) d[5]);
+                        s.append((char) d[6]);
+                        s.append((char) d[7]);
+                        s.append("'.\n");
+                        return s.toString();
                     }
 
                     // no specific type, return generic format
@@ -2027,6 +2124,9 @@ public class Llnmon {
                         stat = " (- key during msg) ";
                     else if (tcntrl == 0x41)
                         stat = " (R/S key during msg, aborts) ";
+                    else if (tcntrl == 0x4e) {
+                        return "Throttle response to Semaphore Display Command\n";
+                    }
                     else
                         stat = " (unknown) ";
 
@@ -2039,7 +2139,9 @@ public class Llnmon {
                 } // case 0x0A
 
                 case 0x14: {
-                    // Duplex Radio Management and DigiIPL
+                    // Duplex Radio Management
+                    // DigiIPL messages
+                    // LocoIO, LocoServo, LocoBuffer, LocoBooster configuration messages
 
                     switch (l.getElement(2)) {
                         case 0x01: {
@@ -2116,7 +2218,7 @@ public class Llnmon {
 
                             switch (l.getElement(3)) {
                                 case 0x00: {
-                                    return "Set Duplex Group Name to '" + groupName + ".\n";
+                                    return "Set Duplex Group Name to '" + groupName + "'.\n";
                                 }
                                 case 0x08: {
                                     return "Query Duplex Group Information.\n";
@@ -2142,7 +2244,7 @@ public class Llnmon {
 
                             switch (l.getElement(3)) {
                                 case 0x00: {
-                                    return "Set Duplex Group ID to '" + Integer.toString(id) + ".\n";
+                                    return "Set Duplex Group ID to '" + Integer.toString(id) + "'.\n";
                                 }
                                 case 0x08: {
                                     return "Query Duplex Group ID.\n";
@@ -2166,7 +2268,7 @@ public class Llnmon {
 
                             switch (l.getElement(3)) {
                                 case 0x00: {
-                                    return "Set Duplex Group Password is '" + groupPassword + "'.\n";
+                                    return "Set Duplex Group Password to '" + groupPassword + "'.\n";
                                 }
                                 case 0x08: {
                                     return "Query Duplex Group Password.\n";
@@ -2691,7 +2793,7 @@ public class Llnmon {
                                     +((l.getElement(3) == 0x7d) ? " (short)" : " (long)")
                                     + " present at "
                                     + reporterSystemName + " " + reporterUserName
-                                    + " (BDL16x Board " + (section + 1)  + " RX4 zone " + zone
+                                    + " (BDL16x Board " + section  + " RX4 zone " + zone
                                     + ").\n";
                         }
                         default: {
@@ -2775,7 +2877,7 @@ public class Llnmon {
                     return "Unrecognized OPC_LISSY_UPDATE command varient.\n";
                 }
             } // case LnConstants.OPC_LISSY_UPDATE
-        
+
             /*
              * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
              *                         ; Follow on message: LACK
@@ -3060,11 +3162,11 @@ public class Llnmon {
         } // end switch over opcode type - default handles unrecognized cases,
           // so can't reach here
     } // end of protected String format(LocoNetMessage l)
-    
+
     /**
      * This function creates a string representation of a LocoNet buffer. The
      * string may be more than one line, and is terminated with a newline.
-     * 
+     *
      * @return The created string representation.
      */
     public String displayMessage(LocoNetMessage l) {
