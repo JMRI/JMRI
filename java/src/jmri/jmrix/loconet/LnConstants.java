@@ -380,6 +380,7 @@ public final static int KEY_WR_SL_DATA		= 1<< 22;
 
 // reverse-engineered constants
 public final static int RE_IPL_MFR_DIGITRAX            = 0x00;
+public final static int RE_IPL_MFR_ALL                 = 0x00;
 public final static int RE_IPL_DIGITRAX_HOST_UT4       = 0x04;
 public final static int RE_IPL_DIGITRAX_HOST_UR92      = 0x5C;
 public final static int RE_IPL_DIGITRAX_HOST_DCS51     = 0x33;
@@ -393,6 +394,71 @@ public final static int RE_IPL_IDENTITY_OPERATION      = 0x0f;
 public final static int RE_LACK_SPEC_CASE1             = 0x50; // special case LACK response for OpSw accesses
 public final static int RE_LACK_SPEC_CASE2             = 0x00; // special case LACK response for OpSw accesses
 public final static int RE_OPC_PR3_MODE                = 0xD3;
+public final static int RE_MULTI_SENSE_DEV_TYPE_PM4X   = 0x00;
+public final static int RE_MULTI_SENSE_DEV_TYPE_BDL16X = 0x01;
+public final static int RE_MULTI_SENSE_DEV_TYPE_SE8    = 0x02;
+public final static int RE_MULTI_SENSE_DEV_TYPE_DS64   = 0x03;
+
+// Below data is assumed, based on firmware files available from RR-Cirkits web site
+public final static int RE_IPL_MFR_RR_CIRKITS          = 87;
+public final static int RE_IPL_RRCIRKITS_HOST_TC64     = 11;
+public final static int RE_IPL_RRCIRKITS_SLAVE_ALL     = 00;
+
+// Constants associated with OPC_PEER_XFR for Duplex operations
+public final static int RE_DPLX_OP_TYPE_WRITE              = 0x00;
+public final static int RE_DPLX_OP_TYPE_QUERY              = 0x08;
+public final static int RE_DPLX_OP_TYPE_REPORT             = 0x10;
+public final static int RE_DPLX_OP_LEN                     = 0x14;
+public final static int RE_IPL_OP_LEN                      = 0x14;
+public final static int RE_IPL_OP_QUERY                    = 0x08;
+public final static int RE_IPL_OP_REPORT                   = 0x10;
+public final static int RE_IPL_OP_SLV_QUERY                = 0x00;
+public final static int RE_IPL_OP_HFW_QUERY                = 0x00;
+public final static int RE_IPL_OP_HSNM_QUERY               = 0x00;
+public final static int RE_IPL_OP_SFW_QUERY                = 0x00;
+public final static int RE_IPL_OP_HSN0_QUERY               = 0x01;
+public final static int RE_IPL_OP_HSN1_QUERY               = 0x00;
+public final static int RE_IPL_OP_HSN2_QUERY               = 0x00;
+public final static int RE_IPL_OP_SSNM_QUERY               = 0x00;
+public final static int RE_IPL__OP_SSN0_QUERY              = 0x00;
+public final static int RE_IPL_OP_SSN1_QUERY               = 0x00;
+public final static int RE_IPL_OP_SSN2_QUERY               = 0x00;
+public final static int RE_IPL_OP_SSN3_QUERY               = 0x00;
+public final static int RE_DPLX_GP_CHAN_TYPE               = 2;
+public final static int RE_DPLX_GP_NAME_TYPE               = 3;
+public final static int RE_DPLX_GP_ID_TYPE                 = 4;
+public final static int RE_DPLX_GP_PW_TYPE                 = 7;
+public final static int RE_DPLX_OPC_BAD                    = 0x80;
+public final static int RE_DPLX_MSB1_BIT                   = 1;
+public final static int RE_DPLX_MSB2_BIT                   = 2;
+public final static int RE_DPLX_MSB3_BIT                   = 4;
+public final static int RE_DPLX_MSB4_BIT                   = 8;
+public final static int RE_DPLX_BUMP_MSB1_BIT              = 7;
+public final static int RE_DPLX_BUMP_MSB2_BIT              = 6;
+public final static int RE_DPLX_BUMP_MSB3_BIT              = 5;
+public final static int RE_DPLX_BUMP_MSB4_BIT              = 4;
+public final static int RE_DPLX_7BITS_MAX                  = 127;
+public final static int RE_DPLX_MAX_NOT_OPC                = 0x7F;
+public final static int RE_DPLX_ALT_CH_MSB_BIT             = 0x4;
+public final static int RE_DPLX_ALT_CH_MSB_SHIFT           = 0x5;
+public final static int RE_DPLX_ALT_ID_MSB_BIT             = 0x8;
+public final static int RE_DPLX_ALT_ID_MSB_SHIFT           = 0x4;
+public final static int RE_DPLX_ALT_PW1_MSB_BIT            = 0x1;
+public final static int RE_DPLX_ALT_PW1_MSB_SHIFT          = 0x3;
+public final static int RE_DPLX_ALT_PW3_MSB_BIT            = 0x2;
+public final static int RE_DPLX_ALT_PW3_MSB_SHIFT          = 0x2;
+
+public final static int RE_DPLX_DATA_LS_NIBBLE             = 0x0F;
+public final static int RE_DPLX_DATA_MS_NIBBLE             = 0x70;
+public final static int RE_DPLX_DATA_MS_NIBBLE_SHIFT       = 4;
+
+// Duplex Group Scan Operation Constants
+public final static int RE_DPLX_SCAN_OP_LEN                = 0x14 ;
+public final static int RE_DPLX_SCAN_QUERY_B2              = 0x10 ;
+public final static int RE_DPLX_SCAN_QUERY_B3              = 0x08 ;
+public final static int RE_DPLX_SCAN_QUERY_B4              = 0x00 ;
+public final static int RE_DPLX_SCAN_REPORT_B2             = 0x10 ;
+public final static int RE_DPLX_SCAN_REPORT_B3             = 0x10 ;
 
 }
 
