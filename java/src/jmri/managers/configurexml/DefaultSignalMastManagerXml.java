@@ -90,6 +90,7 @@ public class DefaultSignalMastManagerXml
             }
         }
         
+        @SuppressWarnings("unchecked")
         list = element.getChildren("turnoutsignalmast");
         if(list!=null){
             for (int i = 0; i < list.size(); i++) {
