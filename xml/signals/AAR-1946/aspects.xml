@@ -61,12 +61,18 @@
         <authorinitials>DB</authorinitials>
         <revremark>Add speed and route information</revremark>
     </revision>
+    <revision>
+         <revnumber>2.4</revnumber>
+        <date>2011-12-06</date>
+        <authorinitials>KC</authorinitials>
+        <revremark>Normalize all aspect names to not have hyphens</revremark>
+    </revision>
   </revhistory>
 
   <aspects>
 
     <aspect>
-      <name>Clear-alt</name>
+      <name>Clear Alt</name>
       <rule>Rule 281-alt</rule>
       <indication>Proceed</indication>
       <reference>Page 42</reference>
@@ -106,7 +112,7 @@
     </aspect>
 
     <aspect>
-      <name>Limited-Clear</name>
+      <name>Limited Clear</name>
       <rule>Rule 281C</rule>
       <indication>Proceed; limited speed within interlocking limits</indication>
       <reference>Page 43</reference>
@@ -136,7 +142,7 @@
     </aspect>
 
     <aspect>
-      <name>Medium-Clear</name>
+      <name>Medium Clear</name>
       <rule>Rule 283</rule>
       <indication>Proceed; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
@@ -146,7 +152,7 @@
     </aspect>
 
     <aspect>
-      <name>Medium-Advance Approach</name>
+      <name>Medium Advance Approach</name>
       <rule>Rule 283A</rule>
       <indication>Proceed preparing to stop at second signal; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
@@ -156,7 +162,7 @@
     </aspect>
 
     <aspect>
-      <name>Medium-Approach Slow</name>
+      <name>Medium Approach Slow</name>
       <rule>Rule 283B</rule>
       <indication>Proceed at medium speed approaching next signal at slow speed</indication>
       <reference>Page 46</reference>
@@ -185,7 +191,7 @@
     </aspect>
 
     <aspect>
-      <name>Medium-Approach</name>
+      <name>Medium Approach</name>
       <rule>Rule 286</rule>
       <indication>Proceed at medium speed preparing to stop at next signal</indication>
       <reference>Page 47</reference>
@@ -195,7 +201,7 @@
     </aspect>
 
     <aspect>
-      <name>Slow-Clear</name>
+      <name>Slow Clear</name>
       <rule>Rule 287</rule>
       <indication>Proceed; slow speed within interlocking limits.</indication>
       <reference>Page 48</reference>
@@ -205,7 +211,7 @@
     </aspect>
 
     <aspect>
-      <name>Slow-Approach</name>
+      <name>Slow Approach</name>
       <rule>Rule 288</rule>
       <indication>Proceed preparing to stop at next signal; slow speed within interlocking limits.</indication>
       <reference>Page 48</reference>
@@ -225,7 +231,7 @@
     </aspect>
 
     <aspect>
-      <name>Permissive-medium</name>
+      <name>Permissive Medium</name>
       <rule>Rule 289-medium</rule>
       <indication>Block occupied; proceed prepared to stop short of train ahead on medium speed route.</indication>
       <reference>Page 49</reference>
@@ -256,7 +262,7 @@
     </aspect>
 
     <aspect>
-      <name>Stop and Proceed-medium</name>
+      <name>Stop and Proceed Medium</name>
       <rule>Rule 291-medium</rule>
       <indication>Stop; then proceed at restricted speed on medium speed route.</indication>
       <reference>Page 50</reference>

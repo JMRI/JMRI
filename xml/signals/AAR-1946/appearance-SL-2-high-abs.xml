@@ -50,7 +50,13 @@
         <date>2011-06-24</date>
         <authorinitials>DB</authorinitials>
         <revremark>Added mapping information</revremark>
-     </revision>    
+     </revision>
+    <revision>
+         <revnumber>2.3</revnumber>
+        <date>2011-12-06</date>
+        <authorinitials>KC</authorinitials>
+        <revremark>Normalize all aspect names to not have hyphens</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>AAR-2</aspecttable>
@@ -61,7 +67,7 @@
   <appearances>
 
     <appearance>
-      <aspectname>Clear-alt</aspectname>
+      <aspectname>Clear Alt</aspectname>
       <show>green</show>
       <show>green</show>
       <reference>Page 42 E</reference>

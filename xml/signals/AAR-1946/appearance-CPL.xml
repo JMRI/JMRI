@@ -40,6 +40,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Add Aspect Mapping and Specific Aspects</revremark>
     </revision>
+    <revision>
+         <revnumber>1.2</revnumber>
+        <date>2011-12-06</date>
+        <authorinitials>KC</authorinitials>
+        <revremark>Normalize all aspect names to not have hyphens</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>AAR-2</aspecttable>
@@ -141,7 +147,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Permissive medium</aspectname>
+      <aspectname>Permissive Medium</aspectname>
       <show>dark</show>
       <show>lunar</show>
       <show>green</show>
@@ -170,7 +176,7 @@
     </appearance>
 
      <appearance>
-      <aspectname>Stop and Proceed-medium</aspectname>
+      <aspectname>Stop and Proceed Medium</aspectname>
       <show>dark</show>
       <show>red</show>
       <show>green</show>
