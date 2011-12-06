@@ -2,17 +2,17 @@
 
 package jmri.jmrit.beantable;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.JTableUtil;
@@ -40,22 +40,23 @@ import jmri.util.com.sun.TableSorter;
  */
 public class AudioTablePanel extends JPanel {
 
-    AudioTableDataModel             listenerDataModel;
-    AudioTableDataModel             bufferDataModel;
-    AudioTableDataModel             sourceDataModel;
-    JTable                          listenerDataTable;
-    JTable                          bufferDataTable;
-    JTable                          sourceDataTable;
-    JScrollPane                     listenerDataScroll;
-    JScrollPane                     bufferDataScroll;
-    JScrollPane                     sourceDataScroll;
+    private AudioTableDataModel     listenerDataModel;
+    private AudioTableDataModel     bufferDataModel;
+    private AudioTableDataModel     sourceDataModel;
+    private JTable                  listenerDataTable;
+    private JTable                  bufferDataTable;
+    private JTable                  sourceDataTable;
+    private JScrollPane             listenerDataScroll;
+    private JScrollPane             bufferDataScroll;
+    private JScrollPane             sourceDataScroll;
+    private JTabbedPane             audioTabs;
     Box bottomBox;  		    // panel at bottom for extra buttons etc
     int bottomBoxIndex;             // index to insert extra stuff
 
     static final int bottomStrutWidth = 20;
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
+    //private static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    private static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
     public AudioTablePanel(AudioTableDataModel listenerModel,
                            AudioTableDataModel bufferModel,
@@ -102,40 +103,24 @@ public class AudioTablePanel extends JPanel {
         sourceDataModel.configEditColumn(sourceDataTable);
 
         // general GUI config
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
 
         // install items in GUI
-        add(new JLabel(rba.getString("LabelListener")));
-        add(listenerDataScroll);
-
-        add(new JLabel(rba.getString("LabelBuffers")));
-        add(bufferDataScroll);
-
-        add(new JLabel(rba.getString("LabelSources")));
-        add(sourceDataScroll);
-
+        audioTabs = new JTabbedPane();
+        audioTabs.addTab(rba.getString("LabelListener"), listenerDataScroll);
+        audioTabs.addTab(rba.getString("LabelBuffers"), bufferDataScroll);
+        audioTabs.addTab(rba.getString("LabelSources"), sourceDataScroll);
+        
+        add(audioTabs, BorderLayout.CENTER);
+        
         bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
         bottomBoxIndex = 0;
 
-        add(bottomBox);
+        add(bottomBox, BorderLayout.SOUTH);
 
         // add extras, if desired by subclass
         extras();
-
-        // set Viewport preferred size from size of table
-        java.awt.Dimension listenerDataTableSize = listenerDataTable.getPreferredSize();
-        java.awt.Dimension bufferDataTableSize = bufferDataTable.getPreferredSize();
-        java.awt.Dimension sourceDataTableSize = sourceDataTable.getPreferredSize();
-
-        // width is right, but if table is empty, it's not high
-        // enough to reserve much space.
-        listenerDataTableSize.height = Math.max(listenerDataTableSize.height, 30);
-        listenerDataScroll.getViewport().setPreferredSize(listenerDataTableSize);
-        bufferDataTableSize.height = Math.max(bufferDataTableSize.height, 100);
-        bufferDataScroll.getViewport().setPreferredSize(bufferDataTableSize);
-        sourceDataTableSize.height = Math.max(sourceDataTableSize.height, 200);
-        sourceDataScroll.getViewport().setPreferredSize(sourceDataTableSize);
 
         // set preferred scrolling options
         listenerDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
