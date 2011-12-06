@@ -1806,6 +1806,12 @@ public class LogixTableAction extends AbstractTableAction {
 		if (alreadyEditingActionOrVariable()) {
             return;
 		}
+		if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                    rbx.getString("Error49"), rbx.getString("ErrorTitle"),
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		_showReminder = true;
         ConditionalVariable variable = new ConditionalVariable();
 		_variableList.add(variable);
@@ -1933,12 +1939,14 @@ public class LogixTableAction extends AbstractTableAction {
             return;
 		}
         // clean up empty variable and actions
-        for (int i=0; i<_variableList.size(); i++) {
-            if (_variableList.get(i).getType() == Conditional.TYPE_NONE) {
-                _variableList.remove(i);
-                _variableTableModel.fireTableRowsDeleted(i, i);
-            }
-        }
+		if (!LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+	        for (int i=0; i<_variableList.size(); i++) {
+	            if (_variableList.get(i).getType() == Conditional.TYPE_NONE) {
+	                _variableList.remove(i);
+	                _variableTableModel.fireTableRowsDeleted(i, i);
+	            }
+	        }
+		}
         for (int i=0; i<_actionList.size(); i++) {
             if (_actionList.get(i).getType() == Conditional.ACTION_NONE) {
                 _actionList.remove(i);
@@ -2168,7 +2176,7 @@ public class LogixTableAction extends AbstractTableAction {
     *  Check the antecedent and logic type
     */
     boolean validateAntecedent() {
-        if (_logicType !=Conditional.MIXED) {
+        if (_logicType !=Conditional.MIXED || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
             return true;
         }
         _antecedent = _antecedentField.getText();
@@ -5110,6 +5118,12 @@ public class LogixTableAction extends AbstractTableAction {
                     variable.setTriggerActions(!variable.doTriggerActions());
                     break;
                 case EDIT_COLUMN:
+            		if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+            			javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                                rbx.getString("Error49"), rbx.getString("ErrorTitle"),
+            					javax.swing.JOptionPane.ERROR_MESSAGE);
+            			break;
+            		}
                     // Use separate Thread so window is created on top
                     class WindowMaker implements Runnable {
                         int row;
