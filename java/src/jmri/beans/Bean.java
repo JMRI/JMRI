@@ -37,8 +37,8 @@ public abstract class Bean implements BeanInterface {
             properties = new HashMap<String, Object>();
         }
         // use write method for property if it exists
-        if (Beans.hasIntrospectedProperty(this, null)) {
-            Beans.setIntrospectedProperty(this, null, value);
+        if (Beans.hasIntrospectedProperty(this, key)) {
+            Beans.setIntrospectedProperty(this, key, value);
         } else {
             properties.put(key, value);
         }
@@ -62,7 +62,7 @@ public abstract class Bean implements BeanInterface {
         if (properties != null && properties.containsKey(key)) {
             return properties.get(key);
         }
-        return Beans.getIntrospectedProperty(this, null);
+        return Beans.getIntrospectedProperty(this, key);
     }
 
     /**
@@ -79,7 +79,7 @@ public abstract class Bean implements BeanInterface {
         if (properties != null && properties.containsKey(key)) {
             return true;
         }
-        return Beans.hasIntrospectedProperty(this, null);
+        return Beans.hasIntrospectedProperty(this, key);
     }
 
     /**
