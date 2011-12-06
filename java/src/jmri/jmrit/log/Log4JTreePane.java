@@ -2,11 +2,15 @@
 
 package jmri.jmrit.log;
 
-import java.util.*;
-
-import javax.swing.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerRepository;
 
 /**
  * Show the current Log4J Logger tree; not dynamic.
@@ -27,6 +31,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     /**
      * Provide a recommended title for an enclosing frame.
      */
+    @Override
     public String getTitle() { 
         return ResourceBundle.getBundle("jmri.jmrit.JmritDebugBundle").getString("MenuItemLogTreeAction"); 
     }
@@ -45,34 +50,42 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
      * the constructor is complete.
      */
     @SuppressWarnings("unchecked")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
-	public void initComponents() throws Exception {
-        org.apache.log4j.spi.LoggerRepository repo 
-            = Logger.getRootLogger().getLoggerRepository();
-            
+    @Override
+    public void initComponents() throws Exception {
+        LoggerRepository repo = Logger.getRootLogger().getLoggerRepository();
+        
         List<String> list = new ArrayList<String>();
         for (java.util.Enumeration<Logger> e = repo.getCurrentLoggers() ; e.hasMoreElements() ;) {
-            list.add((e.nextElement()).getName());
+            Logger l = e.nextElement();
+            list.add(l.getName() + " - "
+                    + (l.getLevel()!=null
+                        ? "[" + l.getLevel().toString() + "]"
+                        : "{" + Logger.getRootLogger().getLevel().toString() + "}"));
         }
         java.util.Collections.sort(list);
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (String s : list) {
-            result = result+s+"\n";
+            result.append(s).append("\n");
         }
         
         JTextArea text = new JTextArea();
-        text.setText(result);
+        text.setText(result.toString());
         JScrollPane scroll = new JScrollPane(text);
         add(scroll);
+        
+        // start scrolled to top
+        text.setCaretPosition(0);
+        JScrollBar b = scroll.getVerticalScrollBar();
+        b.setValue(b.getMaximum());
     }
     
     /**
      * 3rd stage of initialization, invoked after
      * Swing components exist.
      */
+    @Override
     public void initContext(Object context) throws Exception {}
     
+    @Override
     public void dispose() {}
 }
