@@ -12,6 +12,11 @@
 #
 # Author: Bob Jacobsen, copyright 2010
 # Part of the JMRI distribution
+# Ver 1.2 01/11/2011 NW Changes to the input code
+# Ver 1.3 02/11/2011 NW 1. Added a "Type" to the BSC message format
+#			2. Tried to create a new output called light. See def processLight(self, fmtMsg, message) :
+#			   No idea if this is actually a valid type or not. Having trouble fnding examples
+#			   ie light = lights.provideLight("IT:xPA:xAPBSC:"+fmtMsg.getSource())
 #
 # The next line is maintained by CVS, please don't change it
 # $Revision$
@@ -36,6 +41,14 @@ print "getVendor() ", properties.getVendor()
 print "getxAPAddress() ", properties.getxAPAddress() 
 print
 
+#properties.setBroadcastIP("10.0.0.255")
+#myNetwork.setProperties(properties) 
+#properties = myNetwork.getProperties()
+#print "getBroadcastIP()", properties.getBroadcastIP() 
+
+
+
+
 # Define thexAPRxEventListener: Print some
 # information when event arrives
 class InputListener(xAPlib.xAPRxEventListener):
@@ -51,15 +64,31 @@ class InputListener(xAPlib.xAPRxEventListener):
     print "uid:    ", fmtMsg.getUID()
     if (fmtMsg.getClassName() == "xAPBSC.info" or fmtMsg.getClassName() == "xAPBSC.event") :
         print "    --- Acting on "+fmtMsg.getClassName()+" ---"
-        if (fmtMsg.getNameValuePair("output.state","State") != None) :
+        
+        if (fmtMsg.getNameValuePair("output.state","Type") != None) :
             print "        --- Acting on output.state ---"
-            self.processTurnout(fmtMsg, message)
-        if (fmtMsg.getNameValuePair("input.state","State") != None) :
-            print "        --- Acting on input.state ---"
-            self.processSensor(fmtMsg, message)
+            pair = fmtMsg.getNameValuePair("output.state","Type")
+            if (pair == None) :
+              print "No Type, ending"
+              return
+    	    type = pair.getValue().upper()
+            print "NWE Type:", type,":"
+            if (type == "TURNOUT" or type == "SIGNAL") :
+                print "NWE Turnout/Signal"
+            	self.processTurnout(fmtMsg, message)
+            
+        if (fmtMsg.getNameValuePair("input.state","Type") != None) :
+            pair = fmtMsg.getNameValuePair("input.state","Type")
+    	    type = pair.getValue().upper()
+            if (type == "SENSOR") :
+                print "NWE Sensor"
+            	print "        --- Acting on input.state ---"
+            	self.processSensor(fmtMsg, message)
     print "=============="
     return
 
+
+# Process Turnout 
   def processTurnout(self, fmtMsg, message) :
     pair = fmtMsg.getNameValuePair("output.state","Name")
     if (pair == None) :
@@ -85,47 +114,50 @@ class InputListener(xAPlib.xAPRxEventListener):
     value = CLOSED
     if (state == "ON") :
         value = THROWN
-    turnout = turnouts.getTurnout("IT:xAP:xAPBSC:"+fmtMsg.getSource())
+    turnout = turnouts.getTurnout("IT:xPA:xAPBSC:"+fmtMsg.getSource())
     if (turnout == None) :
-        print "    create turnout IT:xAP:xAPBSC:"+fmtMsg.getSource()
-        turnout = turnouts.provideTurnout("IT:xAP:xAPBSC:"+fmtMsg.getSource())
+        print "    create turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()
+        turnout = turnouts.provideTurnout("IT:xPA:xAPBSC:"+fmtMsg.getSource())
         if (name != None) :
             turnout.setUserName(name)
     turnout.setCommandedState(value)
-    print "    set turnout IT:xAP:xAPBSC:"+fmtMsg.getSource()+" to", value
+    print "    set turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()+" to", value
     return
     
+# Process Sensor
   def processSensor(self, fmtMsg, message) :
     pair = fmtMsg.getNameValuePair("input.state","Name")
     if (pair == None) :
-        print "no Name"
-        return
-    name = pair.getValue()
-    print "        Name:", name
+        print "No Name"
+        name = None
+    else :
+        name = pair.getValue()
+        print "        Name:", name
     pair = fmtMsg.getNameValuePair("input.state","Location")
     if (pair == None) :
-        print "no Location"
-        return
-    location = pair.getValue()
-    print "        Location: ", location
+        print "No Location"
+        location = None
+    else :
+        location = pair.getValue()
+        print "        Location: ", location
     pair = fmtMsg.getNameValuePair("input.state","State")
     if (pair == None) :
-        print "no State"
+        print "No State, ending"
         return
     state = pair.getValue().upper()
     print "        State: ", state
-    # now create a Turnout and set
+    # now create a Sensor and set
     value = INACTIVE
     if (state == "ON") :
         value = ACTIVE
-    sensor = sensors.getSensor("IS:xAP:xAPBSC:"+fmtMsg.getSource())
+    sensor = sensors.getSensor("IS:xPA:xAPBSC:"+fmtMsg.getSource())
     if (sensor == None) :
-        print "    create sensor IS:xAP:xAPBSC:"+fmtMsg.getSource()
-        sensor = sensors.provideSensor("IS:xAP:xAPBSC:"+fmtMsg.getSource())
-        sensor.setUserName(name)
+        print "    create sensor IS:xPA:xAPBSC:"+fmtMsg.getSource()
+        sensor = sensors.provideSensor("IS:xPA:xAPBSC:"+fmtMsg.getSource())
+        if (name != None) :
+        	sensor.setUserName(name)
     sensor.setState(value)
-    print "    set sensor IS:xAP:xAPBSC:"+fmtMsg.getSource()+" to ", value
-    
+    print "    set sensor IS:xPA:xAPBSC:"+fmtMsg.getSource()+" to ", value
     return
     
 # register xAPRxEvents listener
