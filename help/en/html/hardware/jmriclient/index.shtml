@@ -71,7 +71,7 @@ state changes are shown on both the client and the server.</p>
 
 <h2>Operational Examples</h2>
 
-<h3>simple Connection Replication</h3>
+<h3>Simple Connection Replication</h3>
 
 <p>The simplest operational use of the JMRIClient and the simple server
 is having one computer connected directly to the layout (the server computer) 
