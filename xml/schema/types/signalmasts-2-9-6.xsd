@@ -91,6 +91,9 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
+      <xs:attribute name="userName" type="userNameType">
+        <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>
 
