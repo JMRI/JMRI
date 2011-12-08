@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Connecting a LocoBuffer II to LocoNet
+      JMRI Hardware Guide: Connecting a LocoBuffer-II to LocoNet
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -26,12 +26,12 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: Connecting a LocoBuffer II to LocoNet
+      JMRI Hardware Guide: Connecting a LocoBuffer-II to LocoNet
       </h1>
 
 
 <p>
-The LocoBuffer II provides a very reliable way to 
+The LocoBuffer-II provides a very reliable way to 
 connect a computer serial port to a LocoNet.  
 It was produced by Dick Bronson's
 <A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
@@ -45,19 +45,29 @@ which uses a USB connection.
 
 <h2>Recommended setup</h2>
 <p>
-The recommended setup for the LocoBuffer II is:
+    The recommended LocoBuffer-II option switch settings are:</p>
+<ul>
+    <LI>19,200 baud or 57,600 baud</LI>
+    <LI>RS-232 echo off</LI>
+    <LI>LocoBuffer mode</LI>
+    <LI>ICSP Program Mode off</LI>
+    <LI>Boot Program Mode off</LI>
+    <LI>Isolated power (<a href="#locoBufferIIPower">see below</a>)</LI>
+</ul>
+    
+<p>The recommended JMRI setup for the LocoBuffer-II is:
 </p>
 
 <UL>
 <LI>Set all switches off (toward the front label side).
-<LI>Connect the LocoBuffer II to a suitable power supply, for example
+<LI>Connect the LocoBuffer-II to a suitable power supply, for example
 a wall-wart of the correct voltage.
 <LI>
 Start DecoderPro or other program and configure it for:
 <UL>
 <LI>LocoNet LocoBuffer-II
 <LI>Select your port
-<LI>19,200 baud
+<LI>19,200 baud or 57,600 baud, to match the LocoBuffer-II internal option switch settings
 <LI>Hardware flow control
 </UL>
 </UL>
@@ -66,7 +76,7 @@ Start DecoderPro or other program and configure it for:
 <p>
 The LocoBuffer-II input circuit and code actually reads from the LocoNet 
 output jack, so if you install the LocoNet terminator 
-(the small circuit that was shipped with the LocoBuffer II) 
+(the small circuit that was shipped with the LocoBuffer-II) 
 and set SW7-8 to 
 ON (down) so that the input circuitry gets it's power from the 
 wall-wart, then you have created a loop back test. The only thing that is not 
@@ -90,28 +100,30 @@ LocoBuffer-II activity LED should blink
 <li>Remove the terminator (unless your application requires it)
 <LI>Restore the LocoBuffer-II option switches to their normal settings for your application
 </OL>
-</p>
 
-<h2>LocoBuffer II Power</h2>
+<h2><a name="locoBufferIIPower">LocoBuffer-II Power</a></h2>
 
-When powered by an external supply, the LocoBuffer II completely
+When powered by an external supply, the LocoBuffer-II completely
 isolates your computer from the LocoNet, removing the possibility
 of ground currents flowing through the LocoNet cable.
 <P>
 If you are using an isolated computer, for example a laptop that's
-not connected to any peripherals, you can configure the LocoBuffer II
-so that it doesn't need an external power supply. It will then get it's
-power from the RailSynch leads in the LocoNet.
+not connected to any peripherals, you can configure the LocoBuffer-II
+for "Local Power" so that it doesn't need an external power supply. It 
+will then get it's power from the RailSync leads in the LocoNet.
 <P>
 It is strongly advised that you get your computer connection working
-properly with an external power source before you do this.  That way,
-if any problems arise when you try to use internal power, you'll know
-what caused them and they'll be much easier to diagnose.
+properly with an external power source in "Isolated Power" mode before 
+you do this.  That way, if any problems arise when you try to use 
+Internal Power, you'll know what caused them and they'll be much 
+easier to diagnose.
 <P>
-To do this, remove the power connection and 
-set switches 7 and 8 to ON (down, toward the switch 
+To configure the LocoBuffer-II for "Local Power", remove the power 
+connection and set switches 7 and 8 to ON (down, toward the switch 
 illustration).
 
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

@@ -40,7 +40,7 @@ has taken over for people who want to build their own.
 The 
 <A HREF="LocoBufferII.shtml">LocoBuffer II</a>
 is currently the most reliable commercially-available way to 
-connect a computer to a LocoNet.  It produced by Dick Bronson's
+connect a computer to a LocoNet.  It is produced by Dick Bronson's
 <A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
 company, based in part on the original LocoBuffer design.
 </p>
@@ -83,8 +83,7 @@ Start DecoderPro or other program and configure it for:
 	  If you got your LocoBuffer chip after February 2002, this should
 	  not be a problem for you.</p>
 
-<A NAME="flow">
-<h2>LocoBuffer flow control</h2></a>
+<h2><A NAME="flow">LocoBuffer flow control</a></h2>
 
 	  <p>Some Windows versions, in particular Win2000, cannot handle
 	  the LocoBuffer's control leads properly.  You'll see this as
@@ -113,7 +112,8 @@ Start DecoderPro or other program and configure it for:
 	  and 8 (without traces).  Be careful not to short to pin 7, which
 	  is already connected.  </p>
 	  
-
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

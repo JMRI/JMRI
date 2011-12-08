@@ -40,7 +40,7 @@ provide a completely reliable connection to the LocoNet.
 The 
 <A HREF="LocoBufferUSB.shtml">LocoBuffer USB</a>
 is currently the most reliable way to 
-connect a computer to a LocoNet.  It produced by Dick Bronson's
+connect a computer to a LocoNet.  It is produced by Dick Bronson's
 <A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
 company, based in part on the original LocoBuffer design.
 </p>
@@ -92,6 +92,8 @@ stty speed 38400 &lt; /dev/ttyS0
 This has been reported to work
 with both RH9 and FC3.
       <hr class="hide">
+    </div>
+  </div>
 
 <!--#include virtual="/Footer" -->
 </body>

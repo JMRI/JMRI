@@ -52,7 +52,8 @@ available to convert the wiring.)
 The PR2 is not a LocoNet interface, and
 does not connect to the LocoNet on your layout in any way.
 It cannot attach to a command station like the
-LocoBuffer does. The cable that comes with it is not a LocoNet
+MS100, PR3, LocoBuffer, LocoBuffer-II, and LocoBuffer-USB do. 
+The cable that comes with the PR2 is not a LocoNet
 cable, and you should not plug a LocoNet cable into the PR2.
 
 <p>
@@ -110,7 +111,8 @@ draw enough motor current to trip the PR2 internal circuit breakers.
 This will cause JMRI to mark track power as "off". Just wait a couple
 seconds and turn the track power back on to recover.
 	  
-
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

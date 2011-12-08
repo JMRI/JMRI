@@ -210,9 +210,10 @@ classes that connect to serial ports with specific protocols.
 <h4>MS100</h4>
 
 Note that the current MS100 implementation is not as robust as we really need it to be.
-In particular, back-off and retransmit is not being checked.  The best solution
-available right now is to use a LocoBuffer instead of an MS100 for access to the
-LocoNet; that has a PIC in it that handles all this properly.
+In particular, back-off and retransmit is not being checked.  Other interface devices, 
+such as the Digitrax PR3, the LocoBuffer, LocoBuffer-II, and LocoBuffer-USB all
+implement an internal microcontroller which handles back-off and retransmit
+operations properly and are therefore preferred over the MS100.
 <P>
 
 The MS100Action class (package jmrix.loconet.ms100) starts up a LocoNet connection
@@ -288,6 +289,7 @@ slot, the jmri.Programmer interface is also implemented by the loconet.SlotManag
 This greatly complicates the class, but is acceptable for now.
 
 <!--#include virtual="/Footer" -->
-
+    </div>
+  </div>
 </body>
 </html>
