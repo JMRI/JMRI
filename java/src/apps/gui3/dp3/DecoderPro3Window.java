@@ -1209,7 +1209,6 @@ public class DecoderPro3Window
     protected void allowQuit(boolean allowQuit){
         this.allowQuit=allowQuit;
         firePropertyChange("quit", "setEnabled", allowQuit);
-        firePropertyChange("restart", "setEnabled", allowQuit);
         //if we are not allowing quit, ie opened from JMRI classic
         //then we must at least allow the window to be closed
         if(!allowQuit)
@@ -1266,19 +1265,6 @@ public class DecoderPro3Window
         }
     }
     
-    void handleRestart(java.awt.event.WindowEvent e){
-        if (e != null && openWindowInstances == 1) {
-            if (JOptionPane.showConfirmDialog(null,
-                        rb.getString("MessageLongCloseWarning"),
-                        rb.getString("MessageShortCloseWarning"),
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    apps.AppsBase.handleRestart();
-                }
-        } else {
-            apps.AppsBase.handleRestart();            
-        }
-    }
-
     //Matches the first argument in the array against a locally know method
     public void remoteCalls(String args[]){
         args[0] = args[0].toLowerCase();
@@ -1317,8 +1303,6 @@ public class DecoderPro3Window
             hideGroups();
         } else if (args[0].equals("quit")){
             handleQuit(null);
-        } else if (args[0].equals("restart")){
-            handleRestart(null);
         } else if (args[0].equals("closewindow")){
             closeWindow(null);
         } else if (args[0].equals("newwindow")){

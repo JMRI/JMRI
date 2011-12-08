@@ -65,11 +65,6 @@
         </node>
     </node>
     <node>separator</node><!-- separator -->
-    <node name="Restart">
-        <name xml:lang="fr">Redémarrer</name>
-        <mnemonic>r</mnemonic>
-        <current>restart</current>
-    </node>
     <node name="Quit">
         <name xml:lang="fr">Quitter</name>
         <mnemonic>q</mnemonic>
