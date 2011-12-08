@@ -109,14 +109,14 @@ class InputListener(xAPlib.xAPRxEventListener):
     value = CLOSED
     if (state == "ON") :
         value = THROWN
-    turnout = turnouts.getTurnout("IT:xAP:xAPBSC:"+fmtMsg.getSource())
+    turnout = turnouts.getTurnout("IT:XAP:XAPBSC:"+fmtMsg.getSource())
     if (turnout == None) :
-        print "    create x turnout IT:xAP:xAPBSC:"+fmtMsg.getSource()
-        turnout = turnouts.provideTurnout("IT:xAP:xAPBSC:"+fmtMsg.getSource())
+        print "    create x turnout IT:XAP:XAPBSC:"+fmtMsg.getSource()
+        turnout = turnouts.provideTurnout("IT:XAP:XAPBSC:"+fmtMsg.getSource())
         if (name != None) :
             turnout.setUserName(name)
     turnout.setCommandedState(value)
-    print "    set turnout IT:xAP:xAPBSC:"+fmtMsg.getSource()+" to", value
+    print "    set turnout IT:XAP:XAPBSC:"+fmtMsg.getSource()+" to", value
     return
     
 # Process Sensor
@@ -145,14 +145,14 @@ class InputListener(xAPlib.xAPRxEventListener):
     value = INACTIVE
     if (state == "ON") :
         value = ACTIVE
-    sensor = sensors.getSensor("IS:xAP:xAPBSC:"+fmtMsg.getSource())
+    sensor = sensors.getSensor("IS:XAP:XAPBSC:"+fmtMsg.getSource())
     if (sensor == None) :
-        print "    create x sensor IS:xAP:xAPBSC:"+fmtMsg.getSource()
-        sensor = sensors.provideSensor("IS:xAP:xAPBSC:"+fmtMsg.getSource())
+        print "    create x sensor IS:XAP:XAPBSC:"+fmtMsg.getSource()
+        sensor = sensors.provideSensor("IS:XAP:XAPBSC:"+fmtMsg.getSource())
         if (name != None) :
         	sensor.setUserName(name)
     sensor.setState(value)
-    print "    set sensor IS:xAP:xAPBSC:"+fmtMsg.getSource()+" to ", value
+    print "    set sensor IS:XAP:XAPBSC:"+fmtMsg.getSource()+" to ", value
     return
 
 
