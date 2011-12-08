@@ -309,8 +309,9 @@
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
 	<LI>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.
-    <LI>Bob Milhaupt, who fixed a problem with transponding messages in the LocoNet monitor
-        and provided a lot of usability improvements in the LocoNet monitor
+    <LI>Bob Milhaupt, who fixed a problem with transponding messages in the LocoNet monitor,
+        provided a lot of usability improvements in the LocoNet monitor, and updated several
+        LocoNet-related help pages.
 	<LI>Dennis Miller, who greatly improved the CV printing, added the
 	run-time help system and repackaged the window icons
 	<LI>Jon Miller, who has been doing user support and decoder testing, plus contributing 
