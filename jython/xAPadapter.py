@@ -27,6 +27,7 @@ import xAPlib
 
 # create the network
 print "opening "
+global myNetwork
 myNetwork = xAPlib.xAPNetwork("listener.xap")
 
 # display some info
@@ -159,9 +160,55 @@ class InputListener(xAPlib.xAPRxEventListener):
     sensor.setState(value)
     print "    set sensor IS:xPA:xAPBSC:"+fmtMsg.getSource()+" to ", value
     return
+
+
+# Define the turnout listener class, which drives output messages
+class TurnoutListener(java.beans.PropertyChangeListener):
+  def propertyChange(self, event):
+    global myNetwork
+    print "change",event.propertyName
+    print "from", event.oldValue, "to", event.newValue
+    print "source systemName", event.source.systemName
+    print "source userName", event.source.userName
+    # format and send the message
+	# the final message will look like this on the wire:
+	#  
+	#						xap-header
+	#						{
+	#						v=12
+	#						class=xaplib.test
+	#						uid=FFFFFFFF
+	#						source=rocket.test.1
+	#						hop=1
+	#						}
+	#						message
+	#						{
+	#						text=Hello World
+	#						}
+	#	                                                     *                                                     
+    myProperties = myNetwork.getProperties()
+    myMessage = xAPlib.xAPMessage("xaplib.test", myProperties.getxAPAddress())
+    if (event.newValue == CLOSED) :
+        myMessage.addNameValuePair( "message", "text", "Closed")
+    else :
+        myMessage.addNameValuePair( "message", "text", "Thrown")
+    myNetwork.sendMessage(myMessage)
+    print myMessage.toString()
+    return
     
+    
+def defineTurnout(name) :
+    t = turnouts.provideTurnout(name)
+    m = TurnoutListener()
+    t.addPropertyChangeListener(m)
+    return
+
 # register xAPRxEvents listener
 print "register"
 myNetwork.addMyEventListener(InputListener())
+
+# define the turnouts
+defineTurnout("IT:XPA:XAPBSC.NWE.EVA485.DEFAULT:2")
+defineTurnout("IT:XPA:XAPBSC.NWE.EVA485.DEFAULT:4")
 
 print "End of Script"
