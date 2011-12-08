@@ -184,14 +184,14 @@ class TurnoutListener(java.beans.PropertyChangeListener):
 	#						}
 	#	                                                     *                                                     
     myProperties = myNetwork.getProperties()
-#    myMessage = xAPlib.setuid("FF112233")   # This doesn't work
     myMessage = xAPlib.xAPMessage("xAPBSC.cmd", myProperties.getxAPAddress())
+    myMessage.setUID("FF112233")
     if (event.newValue == CLOSED) :
-        myMessage.addNameValuePair( "output.state.1", "ID", "08")             # This is hard coded. The 08 should come from the last two chars of the uid field of the original device
+        myMessage.addNameValuePair( "output.state.1", "ID", self.id)
         myMessage.addNameValuePair( "output.state.1", "State", "OFF")
         myMessage.addNameValuePair( "output.state.1", "Text", "CLOSED")       # Optional
     else :
-        myMessage.addNameValuePair( "output.state.1", "ID", "08")             # This is hard coded. The 08 should come from the last two chars of the uid field of the original device
+        myMessage.addNameValuePair( "output.state.1", "ID", self.id)
         myMessage.addNameValuePair( "output.state.1", "State", "ON")
         myMessage.addNameValuePair( "output.state.1", "Text", "THROWN")       # Optional
     myNetwork.sendMessage(myMessage)
@@ -199,9 +199,10 @@ class TurnoutListener(java.beans.PropertyChangeListener):
     return
     
     
-def defineTurnout(name) :
+def defineTurnout(name, id) :
     t = turnouts.provideTurnout(name)
     m = TurnoutListener()
+    m.id = id
     t.addPropertyChangeListener(m)
     return
 
@@ -210,8 +211,6 @@ print "register"
 myNetwork.addMyEventListener(InputListener())
 
 # define the turnouts
-# defineTurnout("IT:xAP:XAPBSC.NWE.EVA485.DEFAULT:8")
-defineTurnout("IT:xAP:FF0101:08")
-# defineTurnout("IT:xAP:XAPBSC.NWE.EVA485.DEFAULT:4")
+defineTurnout("IT:xAP:FF0101:08", "08")
 
 print "End of Script"
