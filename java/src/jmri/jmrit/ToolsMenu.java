@@ -5,6 +5,7 @@
 package jmri.jmrit;
 
 import javax.swing.*;
+
 import java.util.*;
 
 /**
@@ -134,6 +135,11 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // operations menu
         add(new jmri.jmrit.operations.OperationsMenu());
+
+        add(new JSeparator());
+        // add start miniserver
+        add(new jmri.web.miniserver.MiniServerAction());
+
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToolsMenu.class.getName());
