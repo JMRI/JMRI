@@ -59,7 +59,7 @@ Check that you can properly communicate with and operate your layout.
 <p>
 <img src="images/Startup.jpg" align="right" height="117" width="312"/>
 To start web access from the menus, select "Start Mini Web Server"
-under the "Debug" menu. A small window will open to confirm that
+under the "Tools" menu. A small window will open to confirm that
 it started, and to show you the URL that it's using.
 
 <p>
