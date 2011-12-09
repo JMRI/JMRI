@@ -104,6 +104,11 @@ hr {
 address {
 	margin: 0 2em;
 }
+
+ul {
+	margin-top: 2px;
+}
+
 /* Tables */
 table {
 	border-collapse: collapse;
@@ -171,7 +176,7 @@ div#frame_image_wrapper img {
   	box-shadow: 5px 5px 5px #ccc;
 }
 
-div#frame_image_wrapper img:hover {
+div#frame_image_wrapper:hover {
 	cursor: pointer;
 }
 
