@@ -106,7 +106,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
             }
         }
         if (immediate) {
-            logComm("immediate reply");
+            log.debug("immediate reply");
             try {
                 srv.immediateRequest(root);  // modifies 'doc' in place
             } catch (jmri.JmriException e1) {
@@ -121,16 +121,16 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
             // start processing the request
             thread = Thread.currentThread();
             srv.monitorRequest(root, this);
-            logComm("stalling thread, waiting for reply");
+            log.debug("stalling thread, waiting for reply");
             
             try {
 //                Thread.sleep(10000000000000L);  // really long
                 Thread.sleep(300000);  // not quite so long (5 minutes)
-            	logComm("Thread sleep completed.");
+            	log.debug("Thread sleep completed.");
             } catch (InterruptedException e) {
-            	logComm("Interrupted");
+            	log.debug("Interrupted");
             }
-            logComm("thread resumes and replies");
+            log.debug("thread resumes and replies");
             sendReply(doc); 
         } catch (jmri.JmriException e1) {
             log.error("JmriException while creating reply: "+e1, e1);
@@ -166,7 +166,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         out.println();  
         
         out.println(strDoc);  //write out the xml string
-        if (log.isInfoEnabled()) { logComm("Returned:" + strDoc.replaceAll("\\n","").replaceAll("\\r","")); }
+        if (log.isDebugEnabled()) { log.debug("Returned:" + strDoc.replaceAll("\\n","").replaceAll("\\r","")); }
         
     }
     
@@ -199,7 +199,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
 			} catch (UnsupportedEncodingException e) {
 				request = "<error/>";
 			}
-            if (log.isInfoEnabled()) logComm("xml request is ["+request.replaceAll("\\n"," ").replaceAll("\\r"," ")+"]");
+            if (log.isDebugEnabled()) log.debug("xml request is ["+request.replaceAll("\\n"," ").replaceAll("\\r"," ")+"]");
             
             return request;
         
@@ -221,7 +221,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
                 i++;
             }
 
-            if (log.isInfoEnabled()) logComm("xml request is ["+new String(request).replaceAll("\\n","").replaceAll("\\r","")+"]");
+            if (log.isDebugEnabled()) log.debug("xml request is ["+new String(request).replaceAll("\\n","").replaceAll("\\r","")+"]");
             
             return new String(request);
         } else {
@@ -278,16 +278,6 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         tok.nextToken();
         return(Integer.parseInt(tok.nextToken()));
     }
-    
-    private void logComm(String s) {
-    	if (MiniServerManager.miniServerPreferencesInstance().isShowComm()) {
-    		log.info(s);
-    	} else {
-    		log.debug(s);
-    	}
-    	return;
-    }
-    
-    
+       
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XMLIOServlet.class.getName());
 }

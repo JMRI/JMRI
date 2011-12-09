@@ -23,7 +23,6 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     private boolean plain = false;
     private String disallowedFrames = rb.getString("DefaultDisallowedFrames");
     private boolean rebuildIndex = false;
-    private boolean showComm = false;
     private String port = "12080";
     
     public MiniServerPreferences(String fileName){
@@ -52,7 +51,6 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         if ((a = child.getAttribute("simple")) != null )  setPlain(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("getDisallowedFrames")) != null )  setDisallowedFrames(a.getValue());
         if ((a = child.getAttribute("isRebuildIndex")) != null )  setRebuildIndex(a.getValue().equalsIgnoreCase("true"));
-        if ((a = child.getAttribute("isShowComm")) != null )  setShowComm(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("getPort")) != null ) setPort(a.getValue());
     }
 
@@ -62,7 +60,6 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         if (useAjax() != prefs.useAjax()) return true;
         if (!(getDisallowedFrames().equals(prefs.getDisallowedFrames()))) return true;
         if (isRebuildIndex() != prefs.isRebuildIndex()) return true;
-        if (isShowComm() != prefs.isShowComm()) return true;
         if (!(getPort().equals(prefs.getPort()))) return true;
         return false;
     }
@@ -73,7 +70,6 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         setUseAjax(prefs.useAjax());
         setDisallowedFrames(prefs.getDisallowedFrames());
         setRebuildIndex(prefs.isRebuildIndex());
-        setShowComm(prefs.isShowComm());
         setPort(prefs.getPort());
     }
 
@@ -85,7 +81,6 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
         element.setAttribute("simple", "" + isPlain());
         element.setAttribute("getDisallowedFrames", "" + getDisallowedFrames());
         element.setAttribute("isRebuildIndex", "" + isRebuildIndex());
-        element.setAttribute("isShowComm", "" + isShowComm());
         element.setAttribute("getPort", "" + getPort());
         setIsDirty(false);  //  Resets only when stored
         return element;
@@ -141,14 +136,6 @@ public class MiniServerPreferences extends AbstractMiniServerPreferences{
     public void setRebuildIndex(boolean value){
         rebuildIndex = value;
     }
-
-    public boolean isShowComm(){
-        return showComm;
-    }
-    public void setShowComm(boolean value){
-        showComm = value;
-    }
-
     public String getPort(){
         return port;
     }
