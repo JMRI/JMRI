@@ -8,6 +8,7 @@ import jmri.util.StringUtil;
 import jmri.util.swing.BeanSelectCreatePanel;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.implementation.TurnoutSignalMast;
+import jmri.implementation.VirtualSignalMast;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
@@ -34,11 +35,10 @@ public class AddSignalMastPanel extends JPanel {
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName()+".SignallingSystemSelected";
     String mastSelectionCombo = this.getClass().getName()+".SignallingMastSelected";
+    String driverSelectionCombo = this.getClass().getName()+".SignallingDriverSelected";
     List<NamedBean> alreadyUsed = new ArrayList<NamedBean>();
     
-    //These might change to a combo box later
-    JRadioButton turnoutDriverMast = new JRadioButton(rb.getString("TurnCtlMast"));
-    JRadioButton signalHeadDriverMast = new JRadioButton(rb.getString("HeadCtlMast"));
+    JComboBox signalMastDriver;
     
     JPanel signalHeadPanel = new JPanel();
     JPanel turnoutMastPanel = new JPanel();
@@ -49,7 +49,11 @@ public class AddSignalMastPanel extends JPanel {
     SignalMast mast = null;
     
     public AddSignalMastPanel() {
-    
+        
+        signalMastDriver = new JComboBox(new String[]{
+                rb.getString("HeadCtlMast"), rb.getString("TurnCtlMast"), rb.getString("VirtualMast")
+            });
+        
         refreshComboBox();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
@@ -70,22 +74,14 @@ public class AddSignalMastPanel extends JPanel {
         p.add(mastBox);
         
         add(p);
+
+        l = new JLabel(rb.getString("DriverType")+": ");
+        p.add(l);
+        p.add(signalMastDriver);
+        add(p);
         
-        JPanel select = new JPanel();
+        
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border.setTitle(rb.getString("SelectDrv"));
-        select.setBorder(border);
-        select.setLayout(new BoxLayout(select, BoxLayout.X_AXIS));
-        select.add(signalHeadDriverMast);
-        signalHeadDriverMast.setToolTipText(rb.getString("SigHeadDrvToolTip"));
-        turnoutDriverMast.setToolTipText(rb.getString("TurnDrvToolTip"));
-        select.add(turnoutDriverMast);
-        ButtonGroup mastDriver = new ButtonGroup();
-        mastDriver.add(turnoutDriverMast);
-        mastDriver.add(signalHeadDriverMast);
-        signalHeadDriverMast.setSelected(true);
-        add(select);
-        
         border.setTitle("Signal Heads");
         signalHeadPanel.setBorder(border);
         signalHeadPanel.setVisible(false);
@@ -108,12 +104,10 @@ public class AddSignalMastPanel extends JPanel {
         
         add(buttonHolder);
         
-        signalHeadDriverMast.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateSelectedDriver();
-            }
-        });
-        turnoutDriverMast.addActionListener(new ActionListener() {
+        if(prefs.getComboBoxLastSelection(driverSelectionCombo)!=null)
+            signalMastDriver.setSelectedItem(prefs.getComboBoxLastSelection(driverSelectionCombo));
+            
+        signalMastDriver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateSelectedDriver();
             }
@@ -154,7 +148,7 @@ public class AddSignalMastPanel extends JPanel {
         this.mast=mast;
         sigSysBox.setEnabled(false);
         mastBox.setEnabled(false);
-        signalHeadDriverMast.setEnabled(false);
+        signalMastDriver.setEnabled(false);
         userName.setText(mast.getUserName());
         userName.setEnabled(false);
         sigSysBox.setSelectedItem(mast.getSignalSystem().getSystemName());
@@ -172,7 +166,9 @@ public class AddSignalMastPanel extends JPanel {
         
         
         if(mast instanceof jmri.implementation.TurnoutSignalMast){
-            turnoutDriverMast.setSelected(true);
+            //turnoutDriverMast.setSelected(true);
+            signalMastDriver.setSelectedItem(rb.getString("TurnCtlMast"));
+            signalMastDriver.setEnabled(false);
             updateSelectedDriver();
             SignalAppearanceMap appMap = mast.getAppearanceMap();
             TurnoutSignalMast tmast = (TurnoutSignalMast) mast;
@@ -207,13 +203,16 @@ public class AddSignalMastPanel extends JPanel {
     void updateSelectedDriver(){
         signalHeadPanel.setVisible(false);
         turnoutMastScroll.setVisible(false);
-        if(turnoutDriverMast.isSelected()){
+        if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
+        //if(turnoutDriverMast.isSelected()){
             updateTurnoutAspectPanel();
             turnoutMastScroll.setVisible(true);
-        }
-        if(signalHeadDriverMast.isSelected()){
+        } else if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
+        //if(signalHeadDriverMast.isSelected()){
             updateHeads();
             signalHeadPanel.setVisible(true);
+        } else if(rb.getString("VirtualMast").equals(signalMastDriver.getSelectedItem())){
+            //Do nothing at this stage
         }
         validate();
         if (getTopLevelAncestor()!=null){
@@ -330,7 +329,7 @@ public class AddSignalMastPanel extends JPanel {
     HashMap<String, Integer> map = new HashMap<String, Integer>();
     
     void updateHeads(){
-        if(!signalHeadDriverMast.isSelected())
+        if(!rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
         if (mastBox.getSelectedItem()==null)
             return;
@@ -360,7 +359,8 @@ public class AddSignalMastPanel extends JPanel {
             }
         }
         if(mast==null){
-            if(signalHeadDriverMast.isSelected()){
+            if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
+            //if(signalHeadDriverMast.isSelected()){
                 if((!checkSignalHeadUse()) || (!checkUserName(userName.getText()))){
                     return;
                 }
@@ -391,7 +391,7 @@ public class AddSignalMastPanel extends JPanel {
                     return; // without creating       
                 }
                 if (!user.equals("")) m.setUserName(user);
-            } else if (turnoutDriverMast.isSelected()) {
+            } else if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
                 if(!checkUserName(userName.getText()))
                     return;
                 String name = "IF$tsm:"
@@ -407,17 +407,27 @@ public class AddSignalMastPanel extends JPanel {
                 turnMast.resetPreviousStates(resetPreviousState.isSelected());
                 if (!user.equals("")) turnMast.setUserName(user);
                 InstanceManager.signalMastManagerInstance().register(turnMast);
+            } else if(rb.getString("VirtualMast").equals(signalMastDriver.getSelectedItem())){
+                if(!checkUserName(userName.getText()))
+                    return;
+                String name = "IF$vsm:"
+                        +sigsysname
+                        +":"+mastname.substring(11,mastname.length()-4);
+                name += "($"+(paddedNumber.format(VirtualSignalMast.getLastRef()+1))+")";
+                VirtualSignalMast virtMast = new VirtualSignalMast(name);
+                if (!user.equals("")) virtMast.setUserName(user);
+                InstanceManager.signalMastManagerInstance().register(virtMast);
             }
-
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
+            prefs.addComboBoxLastSelection(driverSelectionCombo, (String) signalMastDriver.getSelectedItem());
             prefs.addComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()), (String) mastBox.getSelectedItem());
-            refreshComboBox();
+                        refreshComboBox();
         }
         else {
             //@TODO For use with editing the signal mast
-            if(signalHeadDriverMast.isSelected()){
+            if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
             
-            } else if (turnoutDriverMast.isSelected()){
+            } else if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
                 String name = "IF$tsm:"
                     +sigsysname
                     +":"+mastname.substring(11,mastname.length()-4);
@@ -512,7 +522,7 @@ public class AddSignalMastPanel extends JPanel {
     }
     
     void refreshComboBox(){
-        if(!signalHeadDriverMast.isSelected())
+        if(!rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
         if(includeUsed.isSelected()){
             alreadyUsed = new ArrayList<NamedBean>();
@@ -539,7 +549,7 @@ public class AddSignalMastPanel extends JPanel {
     }
     
     void updateTurnoutAspectPanel(){
-        if(!turnoutDriverMast.isSelected())
+        if(!rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
         turnoutAspect = new HashMap<String, TurnoutAspectPanel>();
         //jmri.implementation.DefaultSignalAppearanceMap sigMap = new jmri.implementation.DefaultSignalAppearanceMap((String) sigSysBox.getSelectedItem(), (String)mastBox.getSelectedItem());
