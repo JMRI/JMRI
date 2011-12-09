@@ -87,6 +87,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/editors.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/entryexitpair.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
 
   <xs:element name="layout-config">
@@ -309,13 +310,13 @@ signals - obsolete, EMPTY, never used
         <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded">
           <xs:key name="signalMastSystemName">
             <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
-            <xs:selector xpath="./signalmast"/> 
-            <xs:field xpath="@systemName"/>           
+            <xs:selector xpath="./signalmast/systemName | ./turnoutsignalmast/systemName "/> 
+            <xs:field xpath="."/>           
           </xs:key>
           <xs:unique name="signalMastUserName">
             <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
-            <xs:selector xpath="./signalmast"/> 
-            <xs:field xpath="@userName"/>           
+            <xs:selector xpath="./signalmast/userName | ./turnoutsignalmast/userName"/> 
+            <xs:field xpath="."/>           
           </xs:unique>
         </xs:element>
 
@@ -339,6 +340,8 @@ signals - obsolete, EMPTY, never used
 
         <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" />
+        
+        <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
 

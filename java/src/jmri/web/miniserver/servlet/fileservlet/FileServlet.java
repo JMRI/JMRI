@@ -285,7 +285,7 @@ public class FileServlet extends AbstractServlet {
     		int calcHeight = Math.round(orig.getHeight() * ratio);
     		int calcWidth  = Math.round(orig.getWidth()  * ratio);
     		//write out the resized image
-    		ImageIO.write(createResizedCopy(orig, calcWidth, calcHeight), "jpg", out);
+    		ImageIO.write(createResizedCopy(orig, calcWidth, calcHeight), "PNG", out);
     	} finally {
     		if (out != null) {
     			out.flush();
@@ -295,7 +295,7 @@ public class FileServlet extends AbstractServlet {
     }
 
     BufferedImage createResizedCopy(BufferedImage originalImage, int scaledWidth, int scaledHeight) {
-        BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB);
+        BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = scaledBI.createGraphics();
         g.setComposite(AlphaComposite.Src);
         g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);

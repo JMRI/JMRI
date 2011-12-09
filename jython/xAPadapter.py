@@ -13,10 +13,11 @@
 # Author: Bob Jacobsen, copyright 2010
 # Part of the JMRI distribution
 # Ver 1.2 01/11/2011 NW Changes to the input code
-# Ver 1.3 02/11/2011 NW 1. Added a "Type" to the BSC message format
-#			2. Tried to create a new output called light. See def processLight(self, fmtMsg, message) :
-#			   No idea if this is actually a valid type or not. Having trouble fnding examples
-#			   ie light = lights.provideLight("IT:xPA:xAPBSC:"+fmtMsg.getSource())
+# Ver 1.3 07/11/2011 NW Added a "Type" to the BSC message format
+# Ver 1.4 07/12/2011 NW Changes to xAP Tx Message area
+#			 
+#			   
+#			   
 #
 # The next line is maintained by CVS, please don't change it
 # $Revision$
@@ -27,6 +28,7 @@ import xAPlib
 
 # create the network
 print "opening "
+global myNetwork
 myNetwork = xAPlib.xAPNetwork("listener.xap")
 
 # display some info
@@ -40,13 +42,6 @@ print "getUID() ", properties.getUID()
 print "getVendor() ", properties.getVendor() 
 print "getxAPAddress() ", properties.getxAPAddress() 
 print
-
-#properties.setBroadcastIP("10.0.0.255")
-#myNetwork.setProperties(properties) 
-#properties = myNetwork.getProperties()
-#print "getBroadcastIP()", properties.getBroadcastIP() 
-
-
 
 
 # Define thexAPRxEventListener: Print some
@@ -114,14 +109,14 @@ class InputListener(xAPlib.xAPRxEventListener):
     value = CLOSED
     if (state == "ON") :
         value = THROWN
-    turnout = turnouts.getTurnout("IT:xPA:xAPBSC:"+fmtMsg.getSource())
+    turnout = turnouts.getTurnout("IT:XAP:XAPBSC:"+fmtMsg.getSource())
     if (turnout == None) :
-        print "    create turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()
-        turnout = turnouts.provideTurnout("IT:xPA:xAPBSC:"+fmtMsg.getSource())
+        print "    create x turnout IT:XAP:XAPBSC:"+fmtMsg.getSource()
+        turnout = turnouts.provideTurnout("IT:XAP:XAPBSC:"+fmtMsg.getSource())
         if (name != None) :
             turnout.setUserName(name)
     turnout.setCommandedState(value)
-    print "    set turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()+" to", value
+    print "    set turnout IT:XAP:XAPBSC:"+fmtMsg.getSource()+" to", value
     return
     
 # Process Sensor
@@ -150,18 +145,72 @@ class InputListener(xAPlib.xAPRxEventListener):
     value = INACTIVE
     if (state == "ON") :
         value = ACTIVE
-    sensor = sensors.getSensor("IS:xPA:xAPBSC:"+fmtMsg.getSource())
+    sensor = sensors.getSensor("IS:XAP:XAPBSC:"+fmtMsg.getSource())
     if (sensor == None) :
-        print "    create sensor IS:xPA:xAPBSC:"+fmtMsg.getSource()
-        sensor = sensors.provideSensor("IS:xPA:xAPBSC:"+fmtMsg.getSource())
+        print "    create x sensor IS:XAP:XAPBSC:"+fmtMsg.getSource()
+        sensor = sensors.provideSensor("IS:XAP:XAPBSC:"+fmtMsg.getSource())
         if (name != None) :
         	sensor.setUserName(name)
     sensor.setState(value)
-    print "    set sensor IS:xPA:xAPBSC:"+fmtMsg.getSource()+" to ", value
+    print "    set sensor IS:XAP:XAPBSC:"+fmtMsg.getSource()+" to ", value
+    return
+
+
+# Define the turnout listener class, which drives output messages
+class TurnoutListener(java.beans.PropertyChangeListener):
+  def propertyChange(self, event):
+    global myNetwork
+    print " ************** Sending xAP Message **************"
+    print "change",event.propertyName
+    print "from", event.oldValue, "to", event.newValue
+    print "source systemName", event.source.systemName
+    print "source userName", event.source.userName
+    # format and send the message
+	# the final message will look like this on the wire:
+	#  
+	#						xap-header
+	#						{
+	#						v=12
+	#						hop=1
+	#						uid=FFFF0000
+	#						class=xAPBSC.cmd
+	#						source=JMRI.DecoderPro.1
+	#						destination=NWE.EVA485.DEFAULT:08
+	#						}
+	#						output.state.1
+	#						{
+	#						ID=08
+	#						State=ON
+	#						}
+	#	                                                     *                                                     
+    myProperties = myNetwork.getProperties()
+    myMessage = xAPlib.xAPMessage("xAPBSC.cmd", myProperties.getxAPAddress())
+    myMessage.setUID("FF112233")
+    if (event.newValue == CLOSED) :
+        myMessage.addNameValuePair( "output.state.1", "ID", self.id)
+        myMessage.addNameValuePair( "output.state.1", "State", "OFF")
+        myMessage.addNameValuePair( "output.state.1", "Text", "CLOSED")       # Optional
+    else :
+        myMessage.addNameValuePair( "output.state.1", "ID", self.id)
+        myMessage.addNameValuePair( "output.state.1", "State", "ON")
+        myMessage.addNameValuePair( "output.state.1", "Text", "THROWN")       # Optional
+    myNetwork.sendMessage(myMessage)
+    print myMessage.toString()
     return
     
+    
+def defineTurnout(name, id) :
+    t = turnouts.provideTurnout(name)
+    m = TurnoutListener()
+    m.id = id
+    t.addPropertyChangeListener(m)
+    return
+
 # register xAPRxEvents listener
 print "register"
 myNetwork.addMyEventListener(InputListener())
+
+# define the turnouts
+defineTurnout("IT:xAP:FF0101:08", "08")
 
 print "End of Script"

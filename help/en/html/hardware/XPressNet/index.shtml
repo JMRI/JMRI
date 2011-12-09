@@ -175,6 +175,12 @@ this page
         of other operating systems to configure their LIUSB as well.  On 
         Windows, starting with version 2.7.2, JMRI supports interfacing with 
         the LIUSB through the Lenz LIUSBServer.
+
+        <li>The Lenz LI-USB-Ethernet is a revised version of the LIUSB which includes a
+        built in Ethernet adapter.  Connection via the USB port appears to be identical to 
+        the LIUSB, and is supported now.  Connection via the Ethernet connection appears 
+        to require a slight modification to the existing support for the LIUSB server and will
+        be made available as time permits.
 	
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an

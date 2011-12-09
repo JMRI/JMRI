@@ -1798,6 +1798,7 @@ public class TrainBuilder extends TrainCommon{
 		}
 		if (!Setup.isTrainIntoStagingCheckEnabled())
 			return true;
+		addLine(buildReport, FIVE,rb.getString("buildOptionRestrictStaging"));
 		// check go see if location/track will accept the train's car and engine types
 		String[] types = train.getTypeNames();
 		for (int i=0; i<types.length; i++){

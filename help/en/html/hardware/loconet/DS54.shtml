@@ -118,7 +118,22 @@ Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.
             <code>[b1 8 70 36]</code> Turnout 9 Switch input is Closed (input off)
         </td></tr>
 </table>
-
+<H1>Programming the DS54</H1>
+<p>The DS54 CV values can be programmed via JMRI using the JMRI programming tools
+    using the "Service Mode" programming track.  This requires a JMRI connection
+    to a command station, and the DS54's track inputs must be connected to the
+    programming track.  As described in the DS54 documentation, it is necessary to 
+    connect a 100 Ohm 2 Watt resistor between one of the programming track 
+    rails and the "Yellow" input wire of one of the DS54's output connectors.  
+    It is also necessary to disconnect all other input signal sources.</p>
+<p>Once the connections described above have been made, place the programming 
+    jumper across the programming jumper pins and open the JMRI "Service-Mode 
+    Programmer" tool.  Navigate to the "Digitrax" entry, and select DS54 as the
+    decoder type, and press the "Open Programmer" button.  You may then read and
+    write the CVs just like any mobile decoder.</p>    
+<p>When ready to place the DS54 back in normal service, disconnect the programming
+    track connections and programming resistor, and be sure to remove the 
+    programming jumper.</p>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

@@ -51,9 +51,9 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         this.memo = memo;
         // connect to the LnTrafficController
         memo.getLnTrafficController().addLocoNetListener(~0, this);
-        llnmon.setLocoNetTurnoutManager(jmri.InstanceManager.turnoutManagerInstance());
-        llnmon.setLocoNetSensorManager(jmri.InstanceManager.sensorManagerInstance());
-        llnmon.setLocoNetReporterManager(jmri.InstanceManager.reporterManagerInstance());
+        llnmon.setLocoNetTurnoutManager((jmri.TurnoutManager)memo.get(jmri.TurnoutManager.class));
+        llnmon.setLocoNetSensorManager((jmri.SensorManager)memo.get(jmri.SensorManager.class));
+        llnmon.setLocoNetReporterManager((jmri.ReporterManager)memo.get(jmri.ReporterManager.class));
     }
 
     

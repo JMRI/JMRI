@@ -1264,7 +1264,7 @@ public class DecoderPro3Window
             apps.AppsBase.handleQuit();
         }
     }
-
+    
     //Matches the first argument in the array against a locally know method
     public void remoteCalls(String args[]){
         args[0] = args[0].toLowerCase();

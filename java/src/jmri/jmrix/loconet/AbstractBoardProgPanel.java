@@ -408,7 +408,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * <p>
      * @param opswIndex
      * <p>
-     * @see jmri.jmrix.loconet.AbstractBoardProgPanel.writeAll()
+     * @see jmri.jmrix.loconet.AbstractBoardProgPanel#writeAll()
      */
     public void writeOne(int opswIndex) {
         // check the address

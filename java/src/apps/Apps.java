@@ -373,11 +373,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 					handleQuit();
                 }
             });
-            fileMenu.add(new AbstractAction(rb.getString("MenuItemRestart")){
-                public void actionPerformed(ActionEvent e) {
-					handleRestart();
-                }
-            });
         }
     }
 
